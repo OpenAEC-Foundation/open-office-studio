@@ -1,8 +1,8 @@
 # Werkbundels voor de bestaande Tauri-suite
 
 Momentopname bij de indeling: 6 november 2026; 101 open issues.
-Na het mergen van PR #154, #155 en #159 en de ondertekeningsaudit zijn zeven
-daarvan aantoonbaar gesloten; 94 blijven open. De eerdere administratie staat in
+Na het mergen van PR #154, #155, #159 en #163 en de ondertekeningsaudit zijn acht
+daarvan aantoonbaar gesloten; 93 blijven open. De eerdere administratie staat in
 [het issueregister](2026-11-05-tauri-issuelus.md). Deze indeling verandert geen
 issue-status en voegt geen extra verzamelissues toe. Iedere melding staat precies
 één keer in deze momentopname. Het parallelle native interfacetraject (#116)
@@ -32,11 +32,12 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
 - #70: de native tegenproef bevestigt verkeerde voorrang bij gelijke werkmap-
   en bladnamen en een verouderde naam na bladwisselen. PR #162 herstelt
   deze bediening en is na zes groene platformcontroles gemerged als `c3e9acc7`.
-  De opvolgende kandidaat voegt het naambeheervenster, namen uit koppen en
-  formuleaanvulling toe. Alle vijf criteria slagen lokaal, inclusief native
-  bewaren/heropenen; 1.806 app-proeven slagen. #70 blijft open tot de opvolgende
-  platformcontroles en merge. Zie het [naamvakverslag](2026-11-06-naamvak.md)
-  en [naambeheerverslag](2026-11-06-naambeheer.md).
+  PR #163 voegt het naambeheervenster, namen uit koppen en formuleaanvulling
+  toe. Alle vijf criteria slagen, inclusief native bewaren/heropenen; 1.806
+  app-proeven en zes platformcontroles slagen. PR #163 is gemerged als
+  `6d19f37b`; #70 is gesloten en alle vijf criteria zijn afgetekend. Zie het
+  [naamvakverslag](2026-11-06-naamvak.md), [naambeheerverslag](2026-11-06-naambeheer.md)
+  en [platformbewijs](naambeheer-platformen-2026-11-06.json).
 - PR #154 is gemerged als `7f2d317a`. IFCX-opslag en herstel van Writer-invoer
   en opslagstatus zijn lokaal en met zes geslaagde platformcontroles geverifieerd.
   #126, #135, #152 en #153 zijn gesloten met afzonderlijk testbewijs. Zie de

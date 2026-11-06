@@ -33,16 +33,32 @@ export function herstelRekenbladKern(bron: string): string {
     bron.replace(INGANG, "new URL(rekenbladKernUrl,import.meta.url)");
 }
 
+/** De tekenlaag meet ook verkorte Algemene getallen in de bestandsregio. */
+export function herstelAlgemeneRegio(bron: string): string {
+  const som = createHash("sha256").update(bron).digest("hex");
+  if (som !== "e8584112166834b46220ff65a0ff33c10b45c98051a12285f42ba01e6cc66b72")
+    throw new Error("De rekenbladtekenlaag is gewijzigd; controleer de regioaansluiting.");
+  const ingang = "Ie(n.general,n.width,e)";
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De aansluiting voor Algemene getalnotatie is niet eenduidig.");
+  return 'import { passendAlgemeen as oosPassendAlgemeen } from "openaec-rekenblad-regio";\n' +
+    bron.replace(ingang, 'oosPassendAlgemeen(Ie,n.general,n.width,e,n.decimal??".")');
+}
+
 export function rekenbladengineCompatibiliteit(): Plugin {
   return {
     name: "rekenbladengine-lange-ketens",
     enforce: "pre",
     buildStart() { controleerRekenbladKern(); },
     resolveId(id) {
+      if (id === "openaec-rekenblad-regio")
+        return fileURLToPath(new URL("../src/rekenblad/algemeenPassend.ts", import.meta.url));
       if (id === "openaec-rekenblad-kern")
         return fileURLToPath(new URL("../src/rekenblad/kern.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/xlsx\/dist\/index\.js(?:\?.*)?$/.test(id))
+        return { code: herstelAlgemeneRegio(bron), map: null };
       if (/\/@betteroffice\/xlsx\/dist\/chunk-K7TMSGNA\.js(?:\?.*)?$/.test(id))
         return { code: herstelRekenbladKern(bron), map: null };
     },

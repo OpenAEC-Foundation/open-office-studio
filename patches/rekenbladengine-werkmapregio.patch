@@ -1,0 +1,2364 @@
+diff --git a/crates/betteroffice-xlsx/src/structured/walk.rs b/crates/betteroffice-xlsx/src/structured/walk.rs
+index bbbf3a8..10f2f00 100644
+--- a/crates/betteroffice-xlsx/src/structured/walk.rs
++++ b/crates/betteroffice-xlsx/src/structured/walk.rs
+@@ -17,7 +17,7 @@ use xlsx_parse::{
+     DrawingObjectKind, InspectionBudget, PreservedPackage, SharedStringCells, SheetAxes,
+     SheetInventory, SheetVisibility, SourceCellFacts, SourceObject, SourceSheetKind,
+ };
+-use xlsx_render::{display_text, format_code_for_cell};
++use xlsx_render::format_code_for_cell;
+ 
+ use super::*;
+ use crate::CalculationResult;
+@@ -332,6 +332,7 @@ pub(super) fn export_within(
+         ));
+     }
+     let mut walk = Walk {
++        locale: source.model.number_locale(),
+         source,
+         used: floor - reserve,
+         max_bytes: limits.max_bytes - reserve,
+@@ -435,6 +436,7 @@ fn failure_cells(calculation: &CalculationResult) -> [HashSet<(u32, u32, u32)>;
+ }
+ 
+ struct Walk<'a> {
++    locale: xlsx_model::numfmt::NumberLocale,
+     source: &'a ExportSource<'a>,
+     content: XlsxStructuredContent,
+     used: usize,
+@@ -1324,7 +1326,12 @@ impl Walk<'_> {
+             anchor,
+             value,
+             formula: cell.formula.clone(),
+-            display_text: display_text(&model.styles, model.date_system, cell),
++            display_text: xlsx_render::display_text_in_locale(
++                &model.styles,
++                model.date_system,
++                cell,
++                self.locale,
++            ),
+             number_format: format_code_for_cell(&model.styles, cell),
+             formula_result,
+             merge: merges.at(at).map(|range| XlsxCellMerge {
+diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
+index 92d84d5..66e1a57 100644
+--- a/crates/betteroffice-xlsx/src/workbook.rs
++++ b/crates/betteroffice-xlsx/src/workbook.rs
+@@ -59,7 +59,7 @@ use xlsx_render::scaled;
+ use xlsx_render::{
+     ChartRegion, DisplayList, GhostEdit, GridGeometry, PrintMetrics, RenderError, Viewport,
+     build_display_list_with_geometry, build_print_display_list_with_charts, chart_at_point,
+-    display_text, display_viewport_with_geometry, moved_chart_anchor, resolve_chart_anchor,
++    display_viewport_with_geometry, moved_chart_anchor, resolve_chart_anchor,
+     visible_merged_ranges_with_geometry,
+ };
+ 
+@@ -1400,13 +1400,22 @@ impl Workbook {
+     }
+ 
+     pub fn cell(&self, sheet: SheetId, cell: CellRef) -> Result<CellEdit> {
++        self.cell_in_locale(sheet, cell, self.model.number_locale_setting())
++    }
++
++    fn cell_in_locale(
++        &self,
++        sheet: SheetId,
++        cell: CellRef,
++        locale: Option<xlsx_model::numfmt::NumberLocale>,
++    ) -> Result<CellEdit> {
+         self.validate_cell(cell)?;
+         let sheet_ref = self.sheet(sheet)?;
+         let (input, is_formula) = match sheet_ref.cell(cell) {
+             Some(stored) => match &stored.formula {
+                 Some(formula) => (format!("={formula}"), true),
+                 None => (
+-                    value_to_input(&self.model, sheet, cell, &stored.value),
++                    value_to_input(&self.model, sheet, cell, &stored.value, locale),
+                     false,
+                 ),
+             },
+@@ -1432,10 +1441,16 @@ impl Workbook {
+         }
+         let limit = limit.unwrap_or(DEFAULT_TEXT_SEARCH_LIMIT);
+         let folded_query = (!case_sensitive).then(|| query.to_lowercase());
++        let locale = self.model.number_locale();
+         let mut matches = Vec::new();
+         for (sheet_index, sheet) in self.model.sheets.iter().enumerate() {
+             for (cell_ref, cell) in sheet.iter_cells() {
+-                let text = display_text(&self.model.styles, self.model.date_system, cell);
++                let text = xlsx_render::display_text_in_locale(
++                    &self.model.styles,
++                    self.model.date_system,
++                    cell,
++                    locale,
++                );
+                 let found = match &folded_query {
+                     Some(needle) => contains_lowercased(&text, needle),
+                     None => text.contains(query),
+@@ -1460,11 +1475,12 @@ impl Workbook {
+ 
+     pub fn range_cells(&self, sheet: SheetId, range: CellRange) -> Result<Vec<Vec<CellEdit>>> {
+         let (rows, cols) = self.validate_bounded_range(sheet, range)?;
++        let locale = self.model.number_locale_setting();
+         let mut cells = Vec::with_capacity(rows as usize);
+         for row in range.start.row..=range.end.row {
+             let mut row_cells = Vec::with_capacity(cols as usize);
+             for col in range.start.col..=range.end.col {
+-                row_cells.push(self.cell(sheet, CellRef::new(row, col))?);
++                row_cells.push(self.cell_in_locale(sheet, CellRef::new(row, col), locale)?);
+             }
+             cells.push(row_cells);
+         }
+@@ -1719,7 +1735,14 @@ impl Workbook {
+         mark: &mut dyn FnMut(EditStage),
+     ) -> Result<MutationResult> {
+         self.validate_target(sheet, cell)?;
+-        let (state, format) = edit_cell_state(&self.model, sheet, cell, input, options.now_serial);
++        let (state, format) = edit_cell_state_in_locale(
++            &self.model,
++            sheet,
++            cell,
++            input,
++            options.now_serial,
++            self.model.number_locale_setting(),
++        );
+         validate_cell_state(&state)?;
+         if format.is_none()
+             && cell_states_semantically_equal(&current_cell_state(&self.model, sheet, cell), &state)
+@@ -1769,11 +1792,18 @@ impl Workbook {
+         let mut touched = Vec::with_capacity(edits.len());
+         let mut ops = Vec::with_capacity(edits.len());
+         let mut preview = self.model.clone();
++        let locale = self.model.number_locale_setting();
+         let mut per_op = Vec::with_capacity(edits.len());
+         for edit in edits {
+             self.validate_cell(edit.cell)?;
+-            let (state, format) =
+-                edit_cell_state(&preview, sheet, edit.cell, &edit.input, options.now_serial);
++            let (state, format) = edit_cell_state_in_locale(
++                &preview,
++                sheet,
++                edit.cell,
++                &edit.input,
++                options.now_serial,
++                locale,
++            );
+             validate_cell_state(&state)?;
+             let old = current_cell_state(&preview, sheet, edit.cell);
+             if format.is_none() && cell_states_semantically_equal(&old, &state) {
+@@ -2270,6 +2300,7 @@ impl Workbook {
+         }
+         rebuild_and_recalc_all_with_seed(&mut preview, options.now_serial, self.rand_seed);
+ 
++        let locale = self.model.number_locale();
+         let mut edits = Vec::with_capacity(request.edits.len());
+         for edit in request.edits {
+             edits.push(ProposedEdit {
+@@ -2280,8 +2311,8 @@ impl Workbook {
+                 old_state: current_cell_state(&self.model, edit.sheet, edit.cell),
+                 number_format: edit.number_format,
+                 a1: edit.cell.to_a1(),
+-                old_text: display_text_at(&self.model, edit.sheet, edit.cell)?,
+-                new_text: display_text_at(&preview, edit.sheet, edit.cell)?,
++                old_text: display_text_at(&self.model, edit.sheet, edit.cell, locale)?,
++                new_text: display_text_at(&preview, edit.sheet, edit.cell, locale)?,
+             });
+         }
+         let ghosts = proposal_ghosts(&self.model, &preview, &edits)?;
+@@ -2383,12 +2414,14 @@ impl Workbook {
+         if !force {
+             let mut review = preview.clone();
+             rebuild_and_recalc_all_with_seed(&mut review, options.now_serial, self.rand_seed);
++            let locale = review.number_locale();
+             let mut refreshed = proposal.clone();
+             for edit in &mut refreshed.edits {
+                 edit.new_text = display_text_at(
+                     &review,
+                     SheetId(edit.sheet),
+                     CellRef::new(edit.row, edit.col),
++                    locale,
+                 )?;
+             }
+             refreshed.ghosts = proposal_ghosts(&self.model, &review, &refreshed.edits)?;
+@@ -4570,6 +4603,45 @@ fn edit_cell_state(
+     (state, format)
+ }
+ 
++/// Directe editorinvoer gebruikt de bestandsregio. De expliciete batch-API
++/// behoudt canonieke getallen, zodat berekende waarden niet opnieuw worden
++/// geïnterpreteerd. Waarde en afgeleide notatie vormen één transactie.
++fn edit_cell_state_in_locale(
++    workbook: &WorkbookModel,
++    sheet: SheetId,
++    cell: CellRef,
++    input: &str,
++    now_serial: Option<f64>,
++    locale: Option<xlsx_model::numfmt::NumberLocale>,
++) -> (CellState, Option<Op>) {
++    // Bestanden zonder expliciete instelling behouden het bestaande gedrag.
++    let Some(locale) = locale else {
++        return edit_cell_state(workbook, sheet, cell, input, now_serial);
++    };
++    let style = workbook
++        .sheet(sheet)
++        .and_then(|sheet| sheet.effective_style(cell));
++    let number_format = workbook
++        .styles
++        .resolved_format(Some(style.unwrap_or(0)))
++        .number_format;
++    let (parsed, inferred) = xlsx_ops::parse_input_in_locale(
++        input,
++        number_format,
++        workbook.date_system,
++        now_serial,
++        locale,
++    );
++    let mut state = xlsx_ops::cell_state_from_parsed(input, parsed);
++    state.style = written_cell_style(workbook, sheet, cell, input.is_empty());
++    let format = inferred.map(|pattern| Op::SetRangeNumberFormat {
++        sheet,
++        range: CellRange::new(cell, cell),
++        format: NumberFormatMutation::Custom { pattern },
++    });
++    (state, format)
++}
++
+ fn current_cell_state(workbook: &WorkbookModel, sheet: SheetId, cell: CellRef) -> CellState {
+     workbook
+         .sheet(sheet)
+@@ -4626,10 +4698,20 @@ fn models_semantically_equal(left: &WorkbookModel, right: &WorkbookModel) -> boo
+     })
+ }
+ 
+-fn display_text_at(workbook: &WorkbookModel, sheet: SheetId, cell: CellRef) -> Result<String> {
++fn display_text_at(
++    workbook: &WorkbookModel,
++    sheet: SheetId,
++    cell: CellRef,
++    locale: xlsx_model::numfmt::NumberLocale,
++) -> Result<String> {
+     let sheet_ref = workbook.sheet(sheet).ok_or(Error::SheetOutOfRange(sheet))?;
+     Ok(match sheet_ref.cell(cell) {
+-        Some(cell) => display_text(&workbook.styles, workbook.date_system, cell),
++        Some(cell) => xlsx_render::display_text_in_locale(
++            &workbook.styles,
++            workbook.date_system,
++            cell,
++            locale,
++        ),
+         None => String::new(),
+     })
+ }
+@@ -4701,6 +4783,7 @@ fn proposal_ghosts(
+         .iter()
+         .map(|edit| (edit.sheet, edit.row, edit.col))
+         .collect();
++    let locale = committed.number_locale();
+     let mut ghosts = edits
+         .iter()
+         .map(|edit| ProposalGhost {
+@@ -4734,8 +4817,8 @@ fn proposal_ghosts(
+         if !committed_formula || !preview_formula {
+             continue;
+         }
+-        let old_text = display_text_at(committed, address.sheet, address.cell)?;
+-        let new_text = display_text_at(preview, address.sheet, address.cell)?;
++        let old_text = display_text_at(committed, address.sheet, address.cell, locale)?;
++        let new_text = display_text_at(preview, address.sheet, address.cell, locale)?;
+         if old_text == new_text {
+             continue;
+         }
+@@ -4784,10 +4867,13 @@ fn value_to_input(
+     sheet: SheetId,
+     cell: CellRef,
+     value: &CellValue,
++    locale: Option<xlsx_model::numfmt::NumberLocale>,
+ ) -> String {
+     match value {
+         CellValue::Empty => String::new(),
+-        CellValue::Number { value } => value.to_string(),
++        CellValue::Number { value } => value
++            .to_string()
++            .replace('.', locale.unwrap_or_default().decimal()),
+         CellValue::Bool { value } => if *value { "TRUE" } else { "FALSE" }.to_string(),
+         CellValue::Text { value } => {
+             let style = workbook
+@@ -4802,7 +4888,10 @@ fn value_to_input(
+                 .all(|format| {
+                     [None, Some(LEAP_YEAR_SERIAL)].into_iter().all(|now| {
+                         matches!(
+-                            xlsx_ops::parse_input_with_context(value, format.clone(), workbook.date_system, now).0,
++                            match locale {
++                                Some(locale) => xlsx_ops::parse_input_in_locale(value, format.clone(), workbook.date_system, now, locale).0,
++                                None => xlsx_ops::parse_input_with_context(value, format.clone(), workbook.date_system, now).0,
++                            },
+                             xlsx_ops::ParsedInput::Text(text) if text == *value
+                         )
+                     })
+diff --git a/crates/betteroffice-xlsx/src/workbook/batch.rs b/crates/betteroffice-xlsx/src/workbook/batch.rs
+index 617c31e..aa43eb5 100644
+--- a/crates/betteroffice-xlsx/src/workbook/batch.rs
++++ b/crates/betteroffice-xlsx/src/workbook/batch.rs
+@@ -15,7 +15,6 @@ use xlsx_calc::graph::DepGraph;
+ use xlsx_calc::{RecalcResult, parse_formula, recalc_after_with_seed};
+ use xlsx_model::{CellRange, CellRef, CellValue, Sheet, SheetId};
+ use xlsx_ops::{CellState, NumberFormatMutation, Op, OpError, StylePatch, StyleProperty};
+-use xlsx_render::display_text;
+ 
+ use super::staging::CommitHistory;
+ use super::target::{CellTarget, FindRequest, RangeTarget, ReadRequest, Resolved, cell_target};
+@@ -561,6 +560,7 @@ impl Workbook {
+         sheet: SheetId,
+         at: CellRef,
+         guard: &CellGuard,
++        locale: xlsx_model::numfmt::NumberLocale,
+     ) -> Option<&'static str> {
+         let stored = self.model.sheet(sheet).and_then(|sheet| sheet.cell(at));
+         if let Some(value) = &guard.value
+@@ -575,7 +575,12 @@ impl Workbook {
+         }
+         if let Some(text) = &guard.display_text {
+             let current = stored.map_or_else(String::new, |cell| {
+-                display_text(&self.model.styles, self.model.date_system, cell)
++                xlsx_render::display_text_in_locale(
++                    &self.model.styles,
++                    self.model.date_system,
++                    cell,
++                    locale,
++                )
+             });
+             if current != *text {
+                 return Some("display text");
+@@ -738,8 +743,9 @@ impl Workbook {
+             ));
+         }
+         if let Some(guard) = &step.expect {
++            let locale = self.model.number_locale();
+             for (cell, guard) in resolved.iter().zip(guard.cells.iter().flatten()) {
+-                if let Some(field) = self.guard_mismatch(resolved.sheet, cell, guard) {
++                if let Some(field) = self.guard_mismatch(resolved.sheet, cell, guard, locale) {
+                     return Err(at(
+                         EditFailureCode::ContentMismatch,
+                         format!("the {field} of {} does not match its guard", cell.to_a1()),
+diff --git a/crates/betteroffice-xlsx/src/workbook/target.rs b/crates/betteroffice-xlsx/src/workbook/target.rs
+index ede4b9f..26a93ad 100644
+--- a/crates/betteroffice-xlsx/src/workbook/target.rs
++++ b/crates/betteroffice-xlsx/src/workbook/target.rs
+@@ -3,7 +3,6 @@
+ use serde::{Deserialize, Serialize};
+ use xlsx_model::workbook::ColumnDefaults;
+ use xlsx_model::{CellRange, CellRef, CellValue, MAX_COLS, MAX_ROWS, Sheet, SheetId};
+-use xlsx_render::display_text;
+ 
+ use super::Workbook;
+ use super::batch::{
+@@ -407,6 +406,7 @@ impl Workbook {
+             }
+             resolved.push(range);
+         }
++        let locale = self.model.number_locale();
+         let mut text_bytes = 0_usize;
+         let mut ranges = Vec::with_capacity(resolved.len());
+         for range in resolved {
+@@ -415,7 +415,7 @@ impl Workbook {
+             for row in range.range.start.row..=range.range.end.row {
+                 let mut read_row = Vec::with_capacity(range.cols());
+                 for col in range.range.start.col..=range.range.end.col {
+-                    let read = self.read_cell(sheet, CellRef::new(row, col));
++                    let read = self.read_cell(sheet, CellRef::new(row, col), locale);
+                     text_bytes += read.display_text.len()
+                         + read.formula.as_ref().map_or(0, String::len)
+                         + match &read.value {
+@@ -479,13 +479,23 @@ impl Workbook {
+         }))
+     }
+ 
+-    fn read_cell(&self, sheet: &Sheet, at: CellRef) -> CellRead {
++    fn read_cell(
++        &self,
++        sheet: &Sheet,
++        at: CellRef,
++        locale: xlsx_model::numfmt::NumberLocale,
++    ) -> CellRead {
+         match sheet.cell(at) {
+             Some(cell) => CellRead {
+                 a1: at.to_a1(),
+                 value: cell.value.clone(),
+                 formula: cell.formula.clone(),
+-                display_text: display_text(&self.model.styles, self.model.date_system, cell),
++                display_text: xlsx_render::display_text_in_locale(
++                    &self.model.styles,
++                    self.model.date_system,
++                    cell,
++                    locale,
++                ),
+             },
+             None => CellRead {
+                 a1: at.to_a1(),
+@@ -542,11 +552,17 @@ impl Workbook {
+                 sheets
+             }
+         };
++        let locale = self.model.number_locale();
+         let mut matches = Vec::new();
+         let mut text_bytes = 0_usize;
+         for index in sheets {
+             for (at, cell) in self.model.sheets[index].iter_cells() {
+-                let text = display_text(&self.model.styles, self.model.date_system, cell);
++                let text = xlsx_render::display_text_in_locale(
++                    &self.model.styles,
++                    self.model.date_system,
++                    cell,
++                    locale,
++                );
+                 if !text.contains(request.text.as_str()) {
+                     continue;
+                 }
+diff --git a/crates/betteroffice-xlsx/tests/werkmapregio.rs b/crates/betteroffice-xlsx/tests/werkmapregio.rs
+new file mode 100644
+index 0000000..ce4d78d
+--- /dev/null
++++ b/crates/betteroffice-xlsx/tests/werkmapregio.rs
+@@ -0,0 +1,433 @@
++use betteroffice_xlsx::{
++    CalculationOptions, Cell, CellRange, CellRef, CellValue, DrawCmd, NumberFormatMutation, Sheet,
++    SheetId, Viewport, Workbook, WorkbookModel,
++};
++use xlsx_ops::Op;
++
++const REGIO: &str = "_OpenAEC_NumberLocale";
++fn at(naam: &str) -> CellRef {
++    CellRef::parse_a1(naam).unwrap()
++}
++fn getal(n: f64) -> CellValue {
++    CellValue::Number { value: n }
++}
++fn bestand() -> Workbook {
++    let mut blad = Sheet::new("Gegevens");
++    for (cel, waarde, formule) in [
++        ("A1", 1234.5, None),
++        ("A2", 46023.0, None),
++        ("A3", 0.15, None),
++        ("B1", 0.0, Some("TEXT(A1,\"#,##0.00\")")),
++    ] {
++        blad.set_cell(
++            at(cel),
++            Cell {
++                value: getal(waarde),
++                formula: formule.map(str::to_owned),
++                ..Default::default()
++            },
++        );
++    }
++    let mut boek = Workbook::from_model(WorkbookModel {
++        sheets: vec![blad],
++        ..Default::default()
++    })
++    .unwrap();
++    for (cel, code) in [
++        ("A1", "#,##0.00"),
++        ("A2", "dddd d mmmm yyyy"),
++        ("A3", "0.0%"),
++    ] {
++        boek.set_range_number_format(
++            SheetId(0),
++            CellRange::new(at(cel), at(cel)),
++            NumberFormatMutation::Custom {
++                pattern: code.into(),
++            },
++            CalculationOptions::default(),
++        )
++        .unwrap();
++    }
++    boek
++}
++fn regio(boek: &mut Workbook, tag: &str) {
++    boek.apply_ops(
++        vec![Op::SetDefinedName {
++            name: REGIO.into(),
++            refers_to: format!("\"{tag}\""),
++            scope: None,
++            hidden: Some(true),
++        }],
++        CalculationOptions::default(),
++    )
++    .unwrap();
++}
++fn getoond(boek: &Workbook, cel: &str) -> String {
++    xlsx_render::workbook_display_text(boek.model(), boek.model().sheets[0].cell(at(cel)).unwrap())
++}
++fn tekenlijst(boek: &Workbook) -> Vec<String> {
++    boek.display_list(&Viewport {
++        x: 0.0,
++        y: 0.0,
++        width: 640.0,
++        height: 300.0,
++    })
++    .unwrap()
++    .commands
++    .iter()
++    .filter_map(|cmd| match cmd {
++        DrawCmd::Text { text, .. } => Some(text.to_string()),
++        _ => None,
++    })
++    .collect()
++}
++#[test]
++fn bestanden_hebben_een_eigen_regio_voor_cijfers_datum_en_textformule() {
++    let mut nederlands = bestand();
++    let mut engels = bestand();
++    regio(&mut nederlands, "nl-NL");
++    regio(&mut engels, "en-US");
++    assert_eq!(getoond(&nederlands, "A1"), "1.234,50");
++    assert_eq!(getoond(&engels, "A1"), "1,234.50");
++    assert_eq!(getoond(&nederlands, "A2"), "donderdag 1 januari 2026");
++    assert_eq!(getoond(&engels, "A2"), "Thursday 1 January 2026");
++    assert_eq!(getoond(&nederlands, "A3"), "15,0%");
++    assert_eq!(getoond(&nederlands, "B1"), "1.234,50");
++    assert_eq!(getoond(&engels, "B1"), "1,234.50");
++    assert!(tekenlijst(&nederlands).iter().any(|s| s == "1.234,50"));
++    assert!(tekenlijst(&engels).iter().any(|s| s == "1,234.50"));
++    assert_eq!(
++        nederlands.model().sheets[0].cell(at("A1")).unwrap().value,
++        getal(1234.5)
++    );
++}
++#[test]
++fn regiowissel_undo_redo_en_heropenen_behouden_waarden_en_codes() {
++    let mut boek = bestand();
++    regio(&mut boek, "nl-NL");
++    let stijl = boek.model().styles.clone();
++    regio(&mut boek, "fr-FR");
++    assert_eq!(getoond(&boek, "A1"), "1\u{202f}234,50");
++    assert_eq!(getoond(&boek, "B1"), "1\u{202f}234,50");
++    boek.undo(CalculationOptions::default()).unwrap();
++    assert_eq!(getoond(&boek, "A1"), "1.234,50");
++    assert_eq!(getoond(&boek, "B1"), "1.234,50");
++    boek.redo(CalculationOptions::default()).unwrap();
++    assert_eq!(getoond(&boek, "A1"), "1\u{202f}234,50");
++    assert_eq!(boek.model().styles, stijl);
++    let bewaard = boek.save().unwrap();
++    let heropend = Workbook::open(&bewaard).unwrap();
++    assert_eq!(getoond(&heropend, "A1"), "1\u{202f}234,50");
++    assert_eq!(getoond(&heropend, "B1"), "1\u{202f}234,50");
++    assert_eq!(
++        heropend.model().sheets[0].cell(at("A1")).unwrap().value,
++        getal(1234.5)
++    );
++    assert_eq!(
++        heropend
++            .model()
++            .defined_names
++            .iter()
++            .find(|n| n.name == REGIO)
++            .unwrap()
++            .formula,
++        "\"fr-FR\""
++    );
++}
++#[test]
++fn onbekende_of_uitvoerbare_regiodefinities_worden_niet_uitgevoerd() {
++    let mut boek = bestand();
++    for formule in [
++        "\"onbekend\"",
++        "CONCAT(\"nl\",\"-NL\")",
++        "\"nl-NL\"&\"\"",
++        "1",
++    ] {
++        boek.apply_ops(
++            vec![Op::SetDefinedName {
++                name: REGIO.into(),
++                refers_to: formule.into(),
++                scope: None,
++                hidden: Some(true),
++            }],
++            CalculationOptions::default(),
++        )
++        .unwrap();
++        assert_eq!(getoond(&boek, "A1"), "1,234.50");
++    }
++    boek.apply_ops(
++        vec![Op::SetDefinedName {
++            name: REGIO.into(),
++            refers_to: "\"nl-NL\"".into(),
++            scope: Some(SheetId(0)),
++            hidden: Some(true),
++        }],
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    assert_eq!(getoond(&boek, "A1"), "1,234.50");
++}
++#[test]
++fn gesynchroniseerde_werkmap_behoudt_regio_en_weigert_verboden_structuurwijzigingen() {
++    let mut bron = bestand();
++    regio(&mut bron, "nl-NL");
++    let bytes = bron.save().unwrap();
++    let mut bron = Workbook::open_collaborative(&bytes, 6401).unwrap();
++    let mut peer = Workbook::open_collaborative(&bytes, 6402).unwrap();
++    // Naamdefinities wijzigen is al uitgesloten in deze samenwerkingsmodus.
++    // Een regiowijziging mag deze bestaande weigering niet omzeilen.
++    let resultaat = bron.apply_ops(
++        vec![Op::SetDefinedName {
++            name: REGIO.into(),
++            refers_to: "\"de-DE\"".into(),
++            scope: None,
++            hidden: Some(true),
++        }],
++        CalculationOptions::default(),
++    );
++    assert!(matches!(
++        resultaat,
++        Err(betteroffice_xlsx::Error::CollaborativeStructureOperation)
++    ));
++    bron.edit_cell(
++        SheetId(0),
++        at("A1"),
++        "2.345,60",
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    let update = bron.encode_state_as_update_v1();
++    peer.apply_update_v1(&update, CalculationOptions::default())
++        .unwrap();
++    assert_eq!(getoond(&peer, "A1"), "2.345,60");
++    assert_eq!(getoond(&peer, "A2"), "donderdag 1 januari 2026");
++    assert_eq!(getoond(&peer, "B1"), "2.345,60");
++}
++
++#[test]
++fn invoer_wordt_in_een_stap_met_notatie_bewaard_en_ongedaan_gemaakt() {
++    for (raw, value, display) in [
++        ("12,5", 12.5, "12,5"),
++        ("1.234", 1234.0, "1234"),
++        ("1.234,50", 1234.5, "1234,5"),
++        ("15%", 0.15, "15%"),
++        ("12,5%", 0.125, "12,5%"),
++        ("€ 1.234,50", 1234.5, "€ 1.234,50"),
++        ("1-1-2026", 46023.0, "01-01-2026"),
++        ("14:30", 14.5 / 24.0, "14:30"),
++    ] {
++        let mut boek = bestand();
++        regio(&mut boek, "nl-NL");
++        boek.edit_cell(SheetId(0), at("C1"), raw, CalculationOptions::default())
++            .unwrap();
++        assert_eq!(
++            boek.model().sheets[0].cell(at("C1")).unwrap().value,
++            getal(value),
++            "{raw}"
++        );
++        assert_eq!(getoond(&boek, "C1"), display, "{raw}");
++        let style = boek.model().sheets[0].cell(at("C1")).unwrap().style;
++        boek.undo(CalculationOptions::default()).unwrap();
++        assert!(
++            boek.model().sheets[0]
++                .cell(at("C1"))
++                .is_none_or(|c| c.value == CellValue::Empty)
++        );
++        boek.redo(CalculationOptions::default()).unwrap();
++        assert_eq!(getoond(&boek, "C1"), display, "Redo {raw}");
++        assert_eq!(boek.model().sheets[0].cell(at("C1")).unwrap().style, style);
++        let bytes = boek.save().unwrap();
++        assert_eq!(
++            getoond(&Workbook::open(&bytes).unwrap(), "C1"),
++            display,
++            "heropenen {raw}"
++        );
++    }
++}
++
++#[test]
++fn tekstnotatie_en_apostrof_voorkomen_automatische_omzetting() {
++    let mut boek = bestand();
++    regio(&mut boek, "nl-NL");
++    boek.set_range_number_format(
++        SheetId(0),
++        CellRange::new(at("C1"), at("C1")),
++        NumberFormatMutation::PlainText,
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    for raw in ["12,5", "15%", "1-1-2026", "=1+1"] {
++        boek.edit_cell(SheetId(0), at("C1"), raw, CalculationOptions::default())
++            .unwrap();
++        assert_eq!(
++            boek.model().sheets[0].cell(at("C1")).unwrap().value,
++            CellValue::Text { value: raw.into() }
++        );
++    }
++    boek.edit_cell(SheetId(0), at("C2"), "'12,5", CalculationOptions::default())
++        .unwrap();
++    assert_eq!(getoond(&boek, "C2"), "12,5");
++    assert_eq!(boek.cell(SheetId(0), at("C2")).unwrap().input, "'12,5");
++    boek.edit_cell(
++        SheetId(0),
++        at("C3"),
++        "31-2-2026",
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    assert_eq!(
++        boek.model().sheets[0].cell(at("C3")).unwrap().value,
++        CellValue::Text {
++            value: "31-2-2026".into()
++        }
++    );
++}
++
++#[test]
++fn getal_in_editveld_keert_zonder_waardeverandering_terug() {
++    let mut boek = bestand();
++    regio(&mut boek, "nl-NL");
++    let input = boek.cell(SheetId(0), at("A1")).unwrap().input;
++    assert_eq!(input, "1234,5");
++    boek.edit_cell(SheetId(0), at("A1"), &input, CalculationOptions::default())
++        .unwrap();
++    assert_eq!(
++        boek.model().sheets[0].cell(at("A1")).unwrap().value,
++        getal(1234.5)
++    );
++    assert_eq!(getoond(&boek, "A1"), "1.234,50");
++}
++
++#[test]
++fn amerikaanse_en_frans_gegroepeerde_invoer_volgen_hun_eigen_bestand() {
++    for (tag, raw, expected) in [
++        ("en-US", "1,234.50", 1234.5),
++        ("fr-FR", "1\u{202f}234,50", 1234.5),
++        ("fr-FR", "1 234,50", 1234.5),
++        ("de-DE", "-1.234,50", -1234.5),
++        ("nl-NL", "(1.234,50)", -1234.5),
++    ] {
++        let mut boek = bestand();
++        regio(&mut boek, tag);
++        boek.edit_cell(SheetId(0), at("C1"), raw, CalculationOptions::default())
++            .unwrap();
++        assert_eq!(
++            boek.model().sheets[0].cell(at("C1")).unwrap().value,
++            getal(expected),
++            "{tag} {raw}"
++        );
++    }
++}
++
++#[test]
++fn datum_in_een_getalcel_volgt_de_bestandsregio_en_het_datumstelsel() {
++    let mut boek = bestand();
++    regio(&mut boek, "nl-NL");
++    boek.edit_cell(
++        SheetId(0),
++        at("A1"),
++        "1-2-2026",
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    // 01-02-2026 ligt 31 dagen na 01-01-2026 (46023).
++    assert_eq!(
++        boek.model().sheets[0].cell(at("A1")).unwrap().value,
++        getal(46054.0)
++    );
++    let mut model = WorkbookModel::default();
++    model.date_system = xlsx_model::DateSystem::V1904;
++    model.sheets.push(Sheet::new("Gegevens"));
++    let mut boek = Workbook::from_model(model).unwrap();
++    regio(&mut boek, "nl-NL");
++    boek.edit_cell(
++        SheetId(0),
++        at("C1"),
++        "1-1-2026",
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    // Beide bestaande datumstelsels verschillen voor deze datum 1462 dagen.
++    assert_eq!(
++        boek.model().sheets[0].cell(at("C1")).unwrap().value,
++        getal(46023.0 - 1462.0)
++    );
++    assert_eq!(getoond(&boek, "C1"), "01-01-2026");
++}
++
++#[test]
++fn grote_naamtabel_gebruikt_dezelfde_regio_voor_lezen_export_en_bulkbewerking() {
++    let mut model = bestand().model().clone();
++    model.sheets[0] = Sheet::new("Gegevens");
++    for row in 0..2000 {
++        model.sheets[0].set_cell(
++            CellRef::new(row, 0),
++            Cell {
++                value: getal(12.5),
++                ..Default::default()
++            },
++        );
++    }
++    model.defined_names = (0..40_000)
++        .map(|i| xlsx_model::DefinedName {
++            name: format!("_Proef{i}"),
++            formula: "1".into(),
++            local_sheet: None,
++            hidden: true,
++        })
++        .collect();
++    model.defined_names.push(xlsx_model::DefinedName {
++        name: REGIO.into(),
++        formula: "\"nl-NL\"".into(),
++        local_sheet: None,
++        hidden: true,
++    });
++    let mut boek = Workbook::from_model(model).unwrap();
++    let request = serde_json::from_value(serde_json::json!({
++        "ranges": [{"sheetId":"sheet:0","range":{"kind":"a1","a1":"A1:A2000"}}]
++    }))
++    .unwrap();
++    let lezing = boek.read_cells(&request).unwrap().unwrap();
++    assert_eq!(lezing.ranges[0].cells.len(), 2000);
++    assert!(
++        lezing.ranges[0]
++            .cells
++            .iter()
++            .all(|r| r[0].display_text == "12,5")
++    );
++    let invoer = boek
++        .range_cells(SheetId(0), CellRange::new(at("A1"), at("A2000")))
++        .unwrap();
++    assert!(invoer.iter().all(|r| r[0].input == "12,5"));
++    let options = serde_json::from_value(serde_json::json!({
++        "scope":[{"sheet":0,"range":"A1:A2000"}], "maxCells":2000,
++        "includeDefinedNames":false, "includeHiddenSheets":true
++    }))
++    .unwrap();
++    let export = boek.export_structured(&options).unwrap().unwrap();
++    assert!(
++        !export.content.sheets.is_empty(),
++        "{:?}",
++        export.content.diagnostics
++    );
++    let cellen = &export.content.sheets[0].cells;
++    assert_eq!(cellen.len(), 2000);
++    assert!(cellen.iter().all(|c| c.display_text == "12,5"));
++    let edits = (0..2000)
++        .map(|row| betteroffice_xlsx::CellInput {
++            cell: CellRef::new(row, 0),
++            input: "13,5".into(),
++        })
++        .collect::<Vec<_>>();
++    boek.edit_cells(SheetId(0), &edits, CalculationOptions::default())
++        .unwrap();
++    assert_eq!(getoond(&boek, "A2000"), "13,5");
++    boek.edit_cell(
++        SheetId(0),
++        at("B1"),
++        "=TEXT(A2000,\"0.0\")",
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    assert_eq!(getoond(&boek, "B1"), "13,5");
++}
+diff --git a/crates/xlsx-calc/src/engine.rs b/crates/xlsx-calc/src/engine.rs
+index 1cd5659..7ebfcec 100644
+--- a/crates/xlsx-calc/src/engine.rs
++++ b/crates/xlsx-calc/src/engine.rs
+@@ -267,6 +267,8 @@ fn run_recalc_with_budget(
+     mut recomputed: Option<&mut HashSet<Key>>,
+     budget: Rc<EvaluationBudget>,
+ ) -> RecalcResult {
++    // Eén regiobepaling per herberekening, ook bij veel benoemde formules.
++    budget.number_locale.set(Some(wb.number_locale()));
+     {
+         let mut previous = graph
+             .currency_coercion
+diff --git a/crates/xlsx-calc/src/eval.rs b/crates/xlsx-calc/src/eval.rs
+index f8d9631..92c80fe 100644
+--- a/crates/xlsx-calc/src/eval.rs
++++ b/crates/xlsx-calc/src/eval.rs
+@@ -37,6 +37,7 @@ thread_local! {
+ }
+ 
+ pub(crate) struct EvaluationBudget {
++    pub(crate) number_locale: Cell<Option<xlsx_model::numfmt::NumberLocale>>,
+     remaining: Cell<u64>,
+     text: Cell<u64>,
+     refused: Cell<bool>,
+@@ -86,6 +87,7 @@ impl EvaluationBudget {
+ 
+     pub(crate) fn with_text(cells: u64, bytes: u64) -> Self {
+         Self {
++            number_locale: Cell::new(None),
+             remaining: Cell::new(cells),
+             text: Cell::new(bytes),
+             refused: Cell::new(false),
+@@ -157,6 +159,7 @@ fn take(left: &Cell<u64>, count: u64) -> bool {
+ /// evaluation environment: the cell source, the sheet unqualified refs resolve
+ /// against, and the cell the formula belongs to.
+ pub struct EvalContext<'a> {
++    pub(crate) number_locale: xlsx_model::numfmt::NumberLocale,
+     pub provider: &'a dyn CellProvider,
+     pub sheet: SheetId,
+     /// the cell this formula belongs to; `None` -> referenceless ROW()/COLUMN()
+@@ -226,6 +229,10 @@ impl<'a> EvalContext<'a> {
+ 
+     pub fn new(provider: &'a dyn CellProvider, sheet: SheetId) -> Self {
+         Self {
++            number_locale: provider
++                .workbook()
++                .map(|wb| wb.number_locale())
++                .unwrap_or_default(),
+             provider,
+             sheet,
+             cell: None,
+@@ -268,6 +275,10 @@ impl<'a> EvalContext<'a> {
+ 
+     pub fn with_now(provider: &'a dyn CellProvider, sheet: SheetId, now_serial: f64) -> Self {
+         Self {
++            number_locale: provider
++                .workbook()
++                .map(|wb| wb.number_locale())
++                .unwrap_or_default(),
+             provider,
+             sheet,
+             cell: None,
+@@ -303,6 +314,12 @@ impl<'a> EvalContext<'a> {
+         budget: Rc<EvaluationBudget>,
+     ) -> Self {
+         Self {
++            number_locale: budget.number_locale.get().unwrap_or_else(|| {
++                provider
++                    .workbook()
++                    .map(|wb| wb.number_locale())
++                    .unwrap_or_default()
++            }),
+             provider,
+             sheet,
+             cell: None,
+@@ -331,6 +348,7 @@ impl<'a> EvalContext<'a> {
+ 
+     fn for_sheet(&self, sheet: SheetId) -> Self {
+         Self {
++            number_locale: self.number_locale,
+             provider: self.provider,
+             sheet,
+             cell: self.cell,
+diff --git a/crates/xlsx-calc/src/functions/text.rs b/crates/xlsx-calc/src/functions/text.rs
+index b6f3f0d..c922142 100644
+--- a/crates/xlsx-calc/src/functions/text.rs
++++ b/crates/xlsx-calc/src/functions/text.rs
+@@ -511,7 +511,8 @@ pub(crate) fn text_fn(args: &[Expr], ctx: &EvalContext<'_>) -> CellValue {
+     if format.is_empty() {
+         return text(ctx, "");
+     }
+-    let formatted = numfmt::format_value(&value, &format, ctx.date_system);
++    let formatted =
++        numfmt::format_value_in_locale(&value, &format, ctx.date_system, ctx.number_locale);
+     limited_text(ctx, formatted.text)
+ }
+ 
+diff --git a/crates/xlsx-model/src/numfmt.rs b/crates/xlsx-model/src/numfmt.rs
+index ab8f071..960cd9d 100644
+--- a/crates/xlsx-model/src/numfmt.rs
++++ b/crates/xlsx-model/src/numfmt.rs
+@@ -10,6 +10,9 @@ use serde::{Deserialize, Serialize};
+ use crate::date::DateSystem;
+ use crate::value::CellValue;
+ 
++mod locale;
++pub use locale::NumberLocale;
++
+ /// the display string plus the `#rrggbb` color a bracket prefix (`[Red]`) requested.
+ #[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
+ pub struct FormattedValue {
+@@ -79,6 +82,18 @@ impl FormattedValue {
+         }
+     }
+ 
++    // Alleen cijferdelen lokaliseren; aangehaalde tekst blijft bytegelijk.
++    fn locale_digits(&mut self, text: &str, locale: NumberLocale) {
++        for character in text.chars() {
++            match character {
++                ' ' => self.padding('0'),
++                ',' => self.push_str(locale.group()),
++                '.' => self.push_str(locale.decimal()),
++                _ => self.push(character),
++            }
++        }
++    }
++
+     fn append(&mut self, mut other: Self) {
+         for part in &mut other.layout {
+             part.offset += self.text.len();
+@@ -100,6 +115,16 @@ impl From<String> for FormattedValue {
+ /// format a cell value with a number-format code. bools, errors, and empties
+ /// ignore the code; text uses the 4th section or an `@` placeholder.
+ pub fn format_value(value: &CellValue, code: &str, date_system: DateSystem) -> FormattedValue {
++    format_value_in_locale(value, code, date_system, NumberLocale::default())
++}
++
++/// Getalweergave met een werkmapregio; de opgeslagen waarde en notatiecode blijven gelijk.
++pub fn format_value_in_locale(
++    value: &CellValue,
++    code: &str,
++    date_system: DateSystem,
++    locale: NumberLocale,
++) -> FormattedValue {
+     match value {
+         CellValue::Bool { value } => FormattedValue {
+             text: if *value { "TRUE" } else { "FALSE" }.to_string(),
+@@ -113,7 +138,7 @@ pub fn format_value(value: &CellValue, code: &str, date_system: DateSystem) -> F
+         },
+         CellValue::Empty => FormattedValue::default(),
+         CellValue::Text { value } => format_text_value(value, code),
+-        CellValue::Number { value } => format_number_value(*value, code, date_system),
++        CellValue::Number { value } => format_number_value(*value, code, date_system, locale),
+     }
+ }
+ 
+@@ -219,6 +244,7 @@ struct Section {
+     color: Option<String>,
+     condition: Option<Condition>,
+     fraction: Option<FractionPattern>,
++    date_locale: Option<NumberLocale>,
+ }
+ 
+ impl Section {
+@@ -532,7 +558,7 @@ fn match_general(chars: &[char], i: usize) -> bool {
+ }
+ 
+ /// interpret a `[...]` prefix: color, condition, elapsed-time field, or
+-/// `[$sym-locale]` currency (strip locale, keep symbol). unknown -> drop.
++/// `[$sym-locale]` currency and date language; unknown markers are ignored.
+ fn parse_bracket(inner: &str, section: &mut Section) {
+     let trimmed = inner.trim();
+     if let Some(hex) = color_hex(trimmed) {
+@@ -548,7 +574,12 @@ fn parse_bracket(inner: &str, section: &mut Section) {
+         return;
+     }
+     if let Some(rest) = trimmed.strip_prefix('$') {
+-        let sym = rest.split_once('-').map_or(rest, |(s, _)| s);
++        let (sym, marker) = rest
++            .split_once('-')
++            .map_or((rest, None), |(s, l)| (s, Some(l)));
++        if let Some(locale) = marker.and_then(NumberLocale::from_marker) {
++            section.date_locale = Some(locale);
++        }
+         if !sym.is_empty() {
+             section.toks.push(Tok::Literal(sym.to_string()));
+         }
+@@ -653,11 +684,11 @@ fn select(parsed: &[Section], n: f64) -> (usize, bool) {
+     }
+ }
+ 
+-fn format_number_value(n: f64, code: &str, ds: DateSystem) -> FormattedValue {
++fn format_number_value(n: f64, code: &str, ds: DateSystem, locale: NumberLocale) -> FormattedValue {
+     let trimmed = code.trim();
+     if trimmed.is_empty() || trimmed.eq_ignore_ascii_case("general") {
+         return FormattedValue {
+-            text: format_general(n),
++            text: localized_general(n, locale),
+             color: None,
+             layout: Vec::new(),
+         };
+@@ -666,9 +697,9 @@ fn format_number_value(n: f64, code: &str, ds: DateSystem) -> FormattedValue {
+     let (idx, auto_minus) = select(&parsed, n);
+     let sec = &parsed[idx];
+     let mut formatted = if sec.has_date() {
+-        render_date_section(sec, n, ds)
++        render_date_section(sec, n, ds, locale)
+     } else {
+-        let mut body = render_number_section(sec, n.abs());
++        let mut body = render_number_section(sec, n.abs(), locale);
+         if auto_minus {
+             body.text.insert(0, '-');
+             for part in &mut body.layout {
+@@ -711,23 +742,28 @@ fn degrades_to_general(sec: &Section) -> bool {
+         && sec.fraction.is_none()
+ }
+ 
+-fn render_number_section(sec: &Section, mag: f64) -> FormattedValue {
++fn render_number_section(sec: &Section, mag: f64, locale: NumberLocale) -> FormattedValue {
+     if sec.has(|t| matches!(t, Tok::General)) {
+-        return render_general_section(sec, mag);
++        return render_general_section(sec, mag, locale);
+     }
+     if degrades_to_general(sec) {
+-        return format_general(mag).into();
++        return localized_general(mag, locale).into();
+     }
+     if sec.has(|t| matches!(t, Tok::Exp(_))) {
+-        return render_scientific(sec, mag);
++        return render_scientific(sec, mag, locale);
+     }
+     if let Some(pattern) = sec.fraction {
+-        return render_fraction(sec, mag, pattern);
++        return render_fraction(sec, mag, pattern, locale);
+     }
+-    render_decimal_tokens(&sec.toks, mag, true)
++    render_decimal_tokens(&sec.toks, mag, true, locale)
+ }
+ 
+-fn render_decimal_tokens(toks: &[Tok], mag: f64, apply_scaling: bool) -> FormattedValue {
++fn render_decimal_tokens(
++    toks: &[Tok],
++    mag: f64,
++    apply_scaling: bool,
++    locale: NumberLocale,
++) -> FormattedValue {
+     let total_ph = toks.iter().filter(|t| matches!(t, Tok::Digit(_))).count();
+     let has_at = toks.iter().any(|t| matches!(t, Tok::At));
+     if total_ph == 0 && !has_at {
+@@ -778,7 +814,7 @@ fn render_decimal_tokens(toks: &[Tok], mag: f64, apply_scaling: bool) -> Formatt
+                         })
+                         .count();
+                     let end = int_number.len().saturating_sub(remaining);
+-                    out.digits(&int_number[int_cursor..end]);
++                    out.locale_digits(&int_number[int_cursor..end], locale);
+                     int_cursor = end;
+                 } else {
+                     let j = frac_placeholder;
+@@ -795,15 +831,15 @@ fn render_decimal_tokens(toks: &[Tok], mag: f64, apply_scaling: bool) -> Formatt
+             Tok::Dot => {
+                 passed_dot = true;
+                 if int_kinds.is_empty() {
+-                    out.digits(&int_number);
++                    out.locale_digits(&int_number, locale);
+                 }
+                 if !frac_str.is_empty() {
+-                    out.push('.');
++                    out.push_str(locale.decimal());
+                 }
+             }
+             Tok::Comma => {}
+             Tok::Percent => out.push('%'),
+-            Tok::At => out.push_str(&format_general(mag)),
++            Tok::At => out.push_str(&localized_general(mag, locale)),
+             Tok::Literal(s) => out.push_str(s),
+             Tok::Width(c) => out.padding(*c),
+             Tok::Fill(c) => out.fill(*c),
+@@ -926,14 +962,20 @@ fn fraction_parts(mag: f64, pattern: FractionPattern) -> Option<(u64, u64, u64)>
+     Some((whole, numerator, denominator))
+ }
+ 
+-fn render_fraction(sec: &Section, mag: f64, pattern: FractionPattern) -> FormattedValue {
++fn render_fraction(
++    sec: &Section,
++    mag: f64,
++    pattern: FractionPattern,
++    locale: NumberLocale,
++) -> FormattedValue {
+     let Some((whole, numerator, denominator)) = fraction_parts(mag, pattern) else {
+-        return format_general(mag).into();
++        return localized_general(mag, locale).into();
+     };
+     let numerator_kinds = digit_kinds(&sec.toks[pattern.numerator..pattern.slash]);
+     let denominator_kinds = digit_kinds(&sec.toks[pattern.slash + 1..pattern.denominator_end]);
+     let hidden = pattern.mixed && numerator == 0 && !numerator_kinds.contains(&'0');
+-    let mut out = render_decimal_tokens(&sec.toks[..pattern.numerator], whole as f64, false);
++    let mut out =
++        render_decimal_tokens(&sec.toks[..pattern.numerator], whole as f64, false, locale);
+     if hidden {
+         for _ in &numerator_kinds {
+             out.padding('0');
+@@ -1120,11 +1162,11 @@ fn emit_literals_only(toks: &[Tok]) -> FormattedValue {
+     out
+ }
+ 
+-fn render_general_section(sec: &Section, mag: f64) -> FormattedValue {
++fn render_general_section(sec: &Section, mag: f64, locale: NumberLocale) -> FormattedValue {
+     let mut out = FormattedValue::default();
+     for t in &sec.toks {
+         match t {
+-            Tok::General => out.push_str(&format_general(mag)),
++            Tok::General => out.push_str(&localized_general(mag, locale)),
+             Tok::Literal(s) => out.push_str(s),
+             Tok::Width(c) => out.padding(*c),
+             Tok::Fill(c) => out.fill(*c),
+@@ -1136,7 +1178,7 @@ fn render_general_section(sec: &Section, mag: f64) -> FormattedValue {
+ 
+ /// `0.00E+00` / engineering `##0.0E+0`: the count of integer placeholders sets
+ /// the exponent step, so the mantissa's integer part fills 1..=p digits.
+-fn render_scientific(sec: &Section, mag: f64) -> FormattedValue {
++fn render_scientific(sec: &Section, mag: f64, locale: NumberLocale) -> FormattedValue {
+     let exp_idx = sec
+         .toks
+         .iter()
+@@ -1188,18 +1230,23 @@ fn render_scientific(sec: &Section, mag: f64) -> FormattedValue {
+     } else {
+         ""
+     };
+-    let mut out = render_decimal_tokens(mant_toks, mantissa, false);
++    let mut out = render_decimal_tokens(mant_toks, mantissa, false, locale);
+     out.push_str(&format!("E{sign}"));
+     out.append(render_decimal_tokens(
+         exp_toks,
+         exp_val.unsigned_abs() as f64,
+         false,
++        locale,
+     ));
+     out
+ }
+ 
+ /// excel's "general" render: signed, ~11 significant digits, switching to
+ /// scientific outside roughly 1e-4 .. 1e11.
++fn localized_general(n: f64, locale: NumberLocale) -> String {
++    format_general(n).replace('.', locale.decimal())
++}
++
+ fn format_general(n: f64) -> String {
+     if !n.is_finite() {
+         return if n.is_nan() {
+@@ -1272,7 +1319,28 @@ pub fn is_general(value: &CellValue, code: &str) -> bool {
+     parsed[select(&parsed, *value).0].toks == [Tok::General]
+ }
+ 
+-pub fn fit_general(value: f64, width: f32, mut measure: impl FnMut(&str) -> f32) -> Option<String> {
++pub fn fit_general(value: f64, width: f32, measure: impl FnMut(&str) -> f32) -> Option<String> {
++    fit_general_in_locale(value, width, NumberLocale::default(), measure)
++}
++
++/// Meet de werkelijk getoonde cijfers: ook de verkorte Algemene notatie
++/// behoudt de decimale scheiding van het bestand.
++pub fn fit_general_in_locale(
++    value: f64,
++    width: f32,
++    locale: NumberLocale,
++    measure: impl FnMut(&str) -> f32,
++) -> Option<String> {
++    fit_general_with_decimal(value, width, locale.decimal(), measure)
++}
++
++/// De tekenlijst bewaart alleen de nodige decimale scheiding voor versmallen.
++pub fn fit_general_with_decimal(
++    value: f64,
++    width: f32,
++    decimal: &str,
++    mut measure: impl FnMut(&str) -> f32,
++) -> Option<String> {
+     if !value.is_finite() || value == 0.0 {
+         return None;
+     }
+@@ -1281,7 +1349,9 @@ pub fn fit_general(value: f64, width: f32, mut measure: impl FnMut(&str) -> f32)
+         for decimals in (0..=(10 - exponent).clamp(0, 15) as usize).rev() {
+             let mut candidate = round_fixed(value, decimals);
+             trim_trailing_zeros(&mut candidate);
+-            if candidate.parse::<f64>().ok() != Some(0.0) && measure(&candidate) <= width {
++            let nonzero = candidate.parse::<f64>().ok() != Some(0.0);
++            let candidate = candidate.replace('.', decimal);
++            if nonzero && measure(&candidate) <= width {
+                 return Some(candidate);
+             }
+         }
+@@ -1293,6 +1363,7 @@ pub fn fit_general(value: f64, width: f32, mut measure: impl FnMut(&str) -> f32)
+         } else {
+             body
+         };
++        let candidate = candidate.replace('.', decimal);
+         if measure(&candidate) <= width {
+             return Some(candidate);
+         }
+@@ -1347,33 +1418,14 @@ fn format_text_value(text: &str, code: &str) -> FormattedValue {
+     }
+ }
+ 
+-const MONTH_FULL: [&str; 12] = [
+-    "January",
+-    "February",
+-    "March",
+-    "April",
+-    "May",
+-    "June",
+-    "July",
+-    "August",
+-    "September",
+-    "October",
+-    "November",
+-    "December",
+-];
+-
+-const DAY_FULL: [&str; 7] = [
+-    "Sunday",
+-    "Monday",
+-    "Tuesday",
+-    "Wednesday",
+-    "Thursday",
+-    "Friday",
+-    "Saturday",
+-];
+-
+ /// render a serial through a date/time section; negatives show excel's `#######`.
+-fn render_date_section(sec: &Section, serial: f64, ds: DateSystem) -> FormattedValue {
++fn render_date_section(
++    sec: &Section,
++    serial: f64,
++    ds: DateSystem,
++    locale: NumberLocale,
++) -> FormattedValue {
++    let date_locale = sec.date_locale.unwrap_or(locale);
+     if serial < 0.0 {
+         return "#######".to_string().into();
+     }
+@@ -1407,10 +1459,10 @@ fn render_date_section(sec: &Section, serial: f64, ds: DateSystem) -> FormattedV
+                 if minute_flags[i] {
+                     out.push_str(&fmt_two(minute, *c));
+                 } else {
+-                    out.push_str(&fmt_month(month, *c));
++                    out.push_str(&fmt_month(month, *c, date_locale));
+                 }
+             }
+-            Tok::Day(c) => out.push_str(&fmt_day(day, weekday, *c)),
++            Tok::Day(c) => out.push_str(&fmt_day(day, weekday, *c, date_locale)),
+             Tok::Hour(c) => {
+                 let h = if ampm {
+                     ((hour24 + 11) % 12) + 1
+@@ -1428,7 +1480,13 @@ fn render_date_section(sec: &Section, serial: f64, ds: DateSystem) -> FormattedV
+                 };
+                 out.push_str(&format!("{val:0width$}", width = *c as usize));
+             }
+-            Tok::AmPm(am, pm) => out.push_str(if hour24 < 12 { am } else { pm }),
++            Tok::AmPm(am, pm) => {
++                if date_locale.english() {
++                    out.push_str(if hour24 < 12 { am } else { pm });
++                } else {
++                    out.push_str(date_locale.period(hour24 < 12));
++                }
++            }
+             Tok::Dot => {
+                 let mut cnt = 0;
+                 let mut j = i + 1;
+@@ -1438,7 +1496,7 @@ fn render_date_section(sec: &Section, serial: f64, ds: DateSystem) -> FormattedV
+                 }
+                 if cnt > 0 {
+                     let padded = format!("{frac_units:0width$}", width = secfrac as usize);
+-                    out.push('.');
++                    out.push_str(locale.decimal());
+                     out.push_str(&padded[..cnt.min(padded.len())]);
+                     i = j;
+                     continue;
+@@ -1520,23 +1578,28 @@ fn fmt_two(v: i64, c: u8) -> String {
+     }
+ }
+ 
+-fn fmt_month(m: i64, c: u8) -> String {
++fn fmt_month(m: i64, c: u8, locale: NumberLocale) -> String {
+     let idx = (m.clamp(1, 12) - 1) as usize;
+     match c {
+         1 => format!("{m}"),
+         2 => format!("{m:02}"),
+-        3 => MONTH_FULL[idx][..3].to_string(),
+-        4 => MONTH_FULL[idx].to_string(),
+-        _ => MONTH_FULL[idx][..1].to_string(),
++        3 => locale.month(idx, true).to_string(),
++        4 => locale.month(idx, false).to_string(),
++        _ => locale
++            .month(idx, false)
++            .chars()
++            .next()
++            .map(String::from)
++            .unwrap_or_default(),
+     }
+ }
+ 
+-fn fmt_day(d: i64, weekday: usize, c: u8) -> String {
++fn fmt_day(d: i64, weekday: usize, c: u8, locale: NumberLocale) -> String {
+     match c {
+         1 => format!("{d}"),
+         2 => format!("{d:02}"),
+-        3 => DAY_FULL[weekday][..3].to_string(),
+-        _ => DAY_FULL[weekday].to_string(),
++        3 => locale.day(weekday, true).to_string(),
++        _ => locale.day(weekday, false).to_string(),
+     }
+ }
+ 
+@@ -1595,3 +1658,6 @@ fn weekday_sun0(y: i64, m: i64, d: i64) -> usize {
+ 
+ #[cfg(test)]
+ mod tests;
++
++#[cfg(test)]
++mod regio_tests;
+diff --git a/crates/xlsx-model/src/numfmt/locale.rs b/crates/xlsx-model/src/numfmt/locale.rs
+new file mode 100644
+index 0000000..8e17b63
+--- /dev/null
++++ b/crates/xlsx-model/src/numfmt/locale.rs
+@@ -0,0 +1,433 @@
++// Vaste regiogegevens uit Intl (Node 24.22.1, ICU 78.3).
++// Engelse maandafkortingen behouden de bestaande drielettervorm.
++// De kalender is expliciet Gregoriaans; dag- en maandnamen zijn geen normtekst.
++
++#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
++pub struct NumberLocale(usize);
++
++struct LocaleData {
++    tag: &'static str,
++    decimal: &'static str,
++    group: &'static str,
++    months: [&'static str; 12],
++    months_short: [&'static str; 12],
++    days: [&'static str; 7],
++    days_short: [&'static str; 7],
++    am: &'static str,
++    pm: &'static str,
++}
++
++impl NumberLocale {
++    pub fn from_tag(tag: &str) -> Option<Self> {
++        let tag = tag.replace('_', "-");
++        LOCALES
++            .iter()
++            .position(|l| l.tag.eq_ignore_ascii_case(&tag))
++            .map(Self)
++    }
++    pub fn tag(self) -> &'static str {
++        self.data().tag
++    }
++    pub(super) fn from_marker(marker: &str) -> Option<Self> {
++        if let Ok(lcid) = u32::from_str_radix(marker, 16) {
++            match lcid & 0xffff {
++                0x809 => Some(Self(0)),
++                0x409 => Some(Self(1)),
++                0x413 => Some(Self(2)),
++                0x407 => Some(Self(3)),
++                0x40c => Some(Self(4)),
++                0x40a | 0xc0a => Some(Self(5)),
++                0x410 => Some(Self(6)),
++                0x416 => Some(Self(7)),
++                0x804 => Some(Self(8)),
++                0x454 => Some(Self(9)),
++                _ => None,
++            }
++        } else {
++            Self::from_tag(marker)
++        }
++    }
++    fn data(self) -> &'static LocaleData {
++        &LOCALES[self.0]
++    }
++    pub fn decimal(self) -> &'static str {
++        self.data().decimal
++    }
++    pub fn group(self) -> &'static str {
++        self.data().group
++    }
++    pub(super) fn month(self, index: usize, short: bool) -> &'static str {
++        if short {
++            self.data().months_short[index]
++        } else {
++            self.data().months[index]
++        }
++    }
++    pub(super) fn day(self, index: usize, short: bool) -> &'static str {
++        if short {
++            self.data().days_short[index]
++        } else {
++            self.data().days[index]
++        }
++    }
++    pub(super) fn period(self, morning: bool) -> &'static str {
++        if morning {
++            self.data().am
++        } else {
++            self.data().pm
++        }
++    }
++    pub(super) fn english(self) -> bool {
++        self.0 < 2
++    }
++}
++
++const LOCALES: &[LocaleData] = &[
++    LocaleData {
++        tag: "en-GB",
++        decimal: ".",
++        group: ",",
++        months: [
++            "January",
++            "February",
++            "March",
++            "April",
++            "May",
++            "June",
++            "July",
++            "August",
++            "September",
++            "October",
++            "November",
++            "December",
++        ],
++        months_short: [
++            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
++        ],
++        days: [
++            "Sunday",
++            "Monday",
++            "Tuesday",
++            "Wednesday",
++            "Thursday",
++            "Friday",
++            "Saturday",
++        ],
++        days_short: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
++        am: "am",
++        pm: "pm",
++    },
++    LocaleData {
++        tag: "en-US",
++        decimal: ".",
++        group: ",",
++        months: [
++            "January",
++            "February",
++            "March",
++            "April",
++            "May",
++            "June",
++            "July",
++            "August",
++            "September",
++            "October",
++            "November",
++            "December",
++        ],
++        months_short: [
++            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
++        ],
++        days: [
++            "Sunday",
++            "Monday",
++            "Tuesday",
++            "Wednesday",
++            "Thursday",
++            "Friday",
++            "Saturday",
++        ],
++        days_short: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
++        am: "AM",
++        pm: "PM",
++    },
++    LocaleData {
++        tag: "nl-NL",
++        decimal: ",",
++        group: ".",
++        months: [
++            "januari",
++            "februari",
++            "maart",
++            "april",
++            "mei",
++            "juni",
++            "juli",
++            "augustus",
++            "september",
++            "oktober",
++            "november",
++            "december",
++        ],
++        months_short: [
++            "jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec",
++        ],
++        days: [
++            "zondag",
++            "maandag",
++            "dinsdag",
++            "woensdag",
++            "donderdag",
++            "vrijdag",
++            "zaterdag",
++        ],
++        days_short: ["zo", "ma", "di", "wo", "do", "vr", "za"],
++        am: "a.m.",
++        pm: "p.m.",
++    },
++    LocaleData {
++        tag: "de-DE",
++        decimal: ",",
++        group: ".",
++        months: [
++            "Januar",
++            "Februar",
++            "März",
++            "April",
++            "Mai",
++            "Juni",
++            "Juli",
++            "August",
++            "September",
++            "Oktober",
++            "November",
++            "Dezember",
++        ],
++        months_short: [
++            "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
++        ],
++        days: [
++            "Sonntag",
++            "Montag",
++            "Dienstag",
++            "Mittwoch",
++            "Donnerstag",
++            "Freitag",
++            "Samstag",
++        ],
++        days_short: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
++        am: "AM",
++        pm: "PM",
++    },
++    LocaleData {
++        tag: "fr-FR",
++        decimal: ",",
++        group: " ",
++        months: [
++            "janvier",
++            "février",
++            "mars",
++            "avril",
++            "mai",
++            "juin",
++            "juillet",
++            "août",
++            "septembre",
++            "octobre",
++            "novembre",
++            "décembre",
++        ],
++        months_short: [
++            "janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.",
++            "nov.", "déc.",
++        ],
++        days: [
++            "dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi",
++        ],
++        days_short: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
++        am: "AM",
++        pm: "PM",
++    },
++    LocaleData {
++        tag: "es-ES",
++        decimal: ",",
++        group: ".",
++        months: [
++            "enero",
++            "febrero",
++            "marzo",
++            "abril",
++            "mayo",
++            "junio",
++            "julio",
++            "agosto",
++            "septiembre",
++            "octubre",
++            "noviembre",
++            "diciembre",
++        ],
++        months_short: [
++            "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic",
++        ],
++        days: [
++            "domingo",
++            "lunes",
++            "martes",
++            "miércoles",
++            "jueves",
++            "viernes",
++            "sábado",
++        ],
++        days_short: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
++        am: "a. m.",
++        pm: "p. m.",
++    },
++    LocaleData {
++        tag: "it-IT",
++        decimal: ",",
++        group: ".",
++        months: [
++            "gennaio",
++            "febbraio",
++            "marzo",
++            "aprile",
++            "maggio",
++            "giugno",
++            "luglio",
++            "agosto",
++            "settembre",
++            "ottobre",
++            "novembre",
++            "dicembre",
++        ],
++        months_short: [
++            "gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic",
++        ],
++        days: [
++            "domenica",
++            "lunedì",
++            "martedì",
++            "mercoledì",
++            "giovedì",
++            "venerdì",
++            "sabato",
++        ],
++        days_short: ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
++        am: "AM",
++        pm: "PM",
++    },
++    LocaleData {
++        tag: "pt-BR",
++        decimal: ",",
++        group: ".",
++        months: [
++            "janeiro",
++            "fevereiro",
++            "março",
++            "abril",
++            "maio",
++            "junho",
++            "julho",
++            "agosto",
++            "setembro",
++            "outubro",
++            "novembro",
++            "dezembro",
++        ],
++        months_short: [
++            "jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.",
++            "dez.",
++        ],
++        days: [
++            "domingo",
++            "segunda-feira",
++            "terça-feira",
++            "quarta-feira",
++            "quinta-feira",
++            "sexta-feira",
++            "sábado",
++        ],
++        days_short: ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "sáb."],
++        am: "AM",
++        pm: "PM",
++    },
++    LocaleData {
++        tag: "zh-CN",
++        decimal: ".",
++        group: ",",
++        months: [
++            "一月",
++            "二月",
++            "三月",
++            "四月",
++            "五月",
++            "六月",
++            "七月",
++            "八月",
++            "九月",
++            "十月",
++            "十一月",
++            "十二月",
++        ],
++        months_short: [
++            "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",
++        ],
++        days: [
++            "星期日",
++            "星期一",
++            "星期二",
++            "星期三",
++            "星期四",
++            "星期五",
++            "星期六",
++        ],
++        days_short: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
++        am: "上午",
++        pm: "下午",
++    },
++    LocaleData {
++        tag: "lo-LA",
++        decimal: ",",
++        group: ".",
++        months: [
++            "ມັງກອນ",
++            "ກຸມພາ",
++            "ມີນາ",
++            "ເມສາ",
++            "ພຶດສະພາ",
++            "ມິຖຸນາ",
++            "ກໍລະກົດ",
++            "ສິງຫາ",
++            "ກັນຍາ",
++            "ຕຸລາ",
++            "ພະຈິກ",
++            "ທັນວາ",
++        ],
++        months_short: [
++            "ມ.ກ.",
++            "ກ.ພ.",
++            "ມ.ນ.",
++            "ມ.ສ.",
++            "ພ.ພ.",
++            "ມິ.ຖ.",
++            "ກ.ລ.",
++            "ສ.ຫ.",
++            "ກ.ຍ.",
++            "ຕ.ລ.",
++            "ພ.ຈ.",
++            "ທ.ວ.",
++        ],
++        days: [
++            "ວັນອາທິດ",
++            "ວັນຈັນ",
++            "ວັນອັງຄານ",
++            "ວັນພຸດ",
++            "ວັນພະຫັດ",
++            "ວັນສຸກ",
++            "ວັນເສົາ",
++        ],
++        days_short: ["ອາທິດ", "ຈັນ", "ອັງຄານ", "ພຸດ", "ພະຫັດ", "ສຸກ", "ເສົາ"],
++        am: "ກ່ອນທ່ຽງ",
++        pm: "ຫຼັງທ່ຽງ",
++    },
++];
+diff --git a/crates/xlsx-model/src/numfmt/regio_tests.rs b/crates/xlsx-model/src/numfmt/regio_tests.rs
+new file mode 100644
+index 0000000..b219e45
+--- /dev/null
++++ b/crates/xlsx-model/src/numfmt/regio_tests.rs
+@@ -0,0 +1,135 @@
++use super::*;
++
++fn datum(code: &str) -> String {
++    // 01-01-2026 is donderdag; het bestaande datumstelsel geeft seriegetal 46023.
++    format_value(
++        &CellValue::Number { value: 46023.0 },
++        code,
++        DateSystem::V1900,
++    )
++    .text
++}
++
++#[test]
++fn nederlandse_landcode_gebruikt_nederlandse_dagnamen() {
++    assert_eq!(datum("[$-413]dddd d mmmm yyyy"), "donderdag 1 januari 2026");
++}
++#[test]
++fn taalcode_wordt_ook_herkend() {
++    assert_eq!(
++        datum("[$-nl-NL]dddd d mmmm yyyy"),
++        "donderdag 1 januari 2026"
++    );
++}
++#[test]
++fn korte_maandnaam_volgt_de_landcode() {
++    assert_eq!(datum("[$-0413]mmm"), "jan");
++}
++#[test]
++fn aangehaalde_tekst_blijft_ongewijzigd() {
++    assert_eq!(
++        datum("[$-413]\"January literal \"mmmm"),
++        "January literal januari"
++    );
++}
++#[test]
++fn onbekende_landcode_behoudt_de_bestaande_terugval() {
++    assert_eq!(datum("[$-FFFF]dddd d mmmm yyyy"), "Thursday 1 January 2026");
++}
++#[test]
++fn niet_gelokaliseerde_notatie_blijft_gelijk() {
++    assert_eq!(datum("dddd d mmmm yyyy"), "Thursday 1 January 2026");
++}
++
++fn getal(n: f64, code: &str, tag: &str) -> FormattedValue {
++    format_value_in_locale(
++        &CellValue::Number { value: n },
++        code,
++        DateSystem::V1900,
++        NumberLocale::from_tag(tag).unwrap(),
++    )
++}
++
++#[test]
++fn decimaal_en_groepering_volgen_de_werkmapregio() {
++    assert_eq!(getal(1234.5, "#,##0.00", "nl-NL").text, "1.234,50");
++    assert_eq!(getal(1234.5, "#,##0.00", "en-US").text, "1,234.50");
++    assert_eq!(getal(1234.5, "#,##0.00", "fr-FR").text, "1\u{202f}234,50");
++    assert_eq!(getal(12.5, "General", "nl-NL").text, "12,5");
++}
++
++#[test]
++fn valuta_taalcode_overschrijft_de_getalscheiding_niet() {
++    assert_eq!(
++        getal(1234.5, "[$€-407] #,##0.00", "nl-NL").text,
++        "€ 1.234,50"
++    );
++}
++
++#[test]
++fn letterlijke_getallen_blijven_bytegelijk() {
++    assert_eq!(
++        getal(1234.5, "0.00\" literal 1,234.50\"", "nl-NL").text,
++        "1234,50 literal 1,234.50"
++    );
++}
++
++#[test]
++fn procent_wetenschappelijk_en_breuken_behouden_hun_waarde() {
++    assert_eq!(getal(0.125, "0.00%", "nl-NL").text, "12,50%");
++    assert_eq!(getal(1234.5, "0.00E+00", "nl-NL").text, "1,23E+03");
++    assert_eq!(getal(1.5, "# ?/?", "nl-NL").text, "1 1/2");
++    let rood = getal(-1234.5, "#,##0.00;[Red](#,##0.00)", "nl-NL");
++    assert_eq!(rood.text, "(1.234,50)");
++    assert_eq!(rood.color.as_deref(), Some("#FF0000"));
++}
++
++#[test]
++fn franse_meerbyte_groepering_behoudt_de_opmaakposities() {
++    let v = getal(1234.5, "#,##0.00_)", "fr-FR");
++    assert_eq!(v.text, "1\u{202f}234,50 ");
++    assert_eq!(
++        v.layout,
++        vec![FormatPart {
++            offset: "1\u{202f}234,50".len(),
++            kind: FormatPartKind::Padding,
++            character: ')'
++        }]
++    );
++    for part in &v.layout {
++        assert!(v.text.is_char_boundary(part.offset));
++    }
++}
++
++#[test]
++fn de_parsecache_mengt_geen_werkmapregios() {
++    for _ in 0..300 {
++        assert_eq!(getal(1234.5, "#,##0.00", "nl-NL").text, "1.234,50");
++        assert_eq!(getal(1234.5, "#,##0.00", "en-US").text, "1,234.50");
++    }
++}
++
++#[test]
++fn niet_latijnse_maandnamen_worden_op_tekengrenzen_afgekort() {
++    assert_eq!(getal(46023.0, "mmmm", "zh-CN").text, "一月");
++    assert_eq!(getal(46023.0, "mmmmm", "zh-CN").text, "一");
++    let lao = getal(46023.0, "mmmmm_)", "lo-LA");
++    assert!(!lao.text.is_empty());
++    assert!(lao.text.is_char_boundary(lao.layout[0].offset));
++}
++
++#[test]
++fn expliciete_datumtaal_is_los_van_de_werkmapregio() {
++    assert_eq!(
++        getal(46023.0, "dddd d mmmm yyyy", "nl-NL").text,
++        "donderdag 1 januari 2026"
++    );
++    assert_eq!(
++        getal(46023.0, "[$-409]dddd d mmmm yyyy", "nl-NL").text,
++        "Thursday 1 January 2026"
++    );
++    assert_eq!(
++        getal(46023.0, "[$-407]dddd d mmmm yyyy", "nl-NL").text,
++        "Donnerstag 1 Januar 2026"
++    );
++}
+diff --git a/crates/xlsx-model/src/workbook.rs b/crates/xlsx-model/src/workbook.rs
+index a3b6642..7d974bb 100644
+--- a/crates/xlsx-model/src/workbook.rs
++++ b/crates/xlsx-model/src/workbook.rs
+@@ -909,6 +909,24 @@ pub struct Workbook {
+ }
+ 
+ impl Workbook {
++    /// De bestandsregio is een verborgen werkmapconstante; celwaarden en
++    /// notatiecodes blijven in hun oorspronkelijke, taalonafhankelijke vorm.
++    pub fn number_locale(&self) -> crate::numfmt::NumberLocale {
++        self.number_locale_setting().unwrap_or_default()
++    }
++
++    pub fn number_locale_setting(&self) -> Option<crate::numfmt::NumberLocale> {
++        self.defined_names
++            .iter()
++            .find(|name| {
++                name.local_sheet.is_none()
++                    && name.hidden
++                    && name.name.eq_ignore_ascii_case("_OpenAEC_NumberLocale")
++            })
++            .and_then(|name| name.formula.strip_prefix('"')?.strip_suffix('"'))
++            .and_then(crate::numfmt::NumberLocale::from_tag)
++    }
++
+     pub fn sheet(&self, id: SheetId) -> Option<&Sheet> {
+         self.sheets.get(id.0 as usize)
+     }
+diff --git a/crates/xlsx-ops/src/input.rs b/crates/xlsx-ops/src/input.rs
+index 829c45f..98640fc 100644
+--- a/crates/xlsx-ops/src/input.rs
++++ b/crates/xlsx-ops/src/input.rs
+@@ -1,6 +1,9 @@
+ //! turning raw editor input into a `CellState`, classified the way excel does:
+ //! leading `=` is a formula, leading `'` forces text, numbers/booleans coerce.
+ 
++mod locale;
++pub use locale::parse_input_in_locale;
++
+ use xlsx_calc::{EvalContext, evaluate, parse_formula};
+ use xlsx_model::{CellProvider, CellValue, DateSystem, FormatCode, SheetId};
+ 
+@@ -91,6 +94,10 @@ fn parse_literal(input: &str) -> ParsedInput {
+ }
+ 
+ fn day_first(format: &FormatCode<'_>) -> bool {
++    date_order(format).unwrap_or(false)
++}
++
++fn date_order(format: &FormatCode<'_>) -> Option<bool> {
+     let code = match format {
+         FormatCode::Builtin(id) => xlsx_model::numfmt::builtin_format_code(*id).unwrap_or(""),
+         FormatCode::Custom(code) => code,
+@@ -129,7 +136,7 @@ fn day_first(format: &FormatCode<'_>) -> bool {
+             _ => {}
+         }
+     }
+-    has_day && has_month && first == Some('d')
++    (has_day && has_month).then_some(first == Some('d'))
+ }
+ 
+ fn parse_grouped_number(input: &str) -> Option<f64> {
+diff --git a/crates/xlsx-ops/src/input/locale.rs b/crates/xlsx-ops/src/input/locale.rs
+new file mode 100644
+index 0000000..d34e23b
+--- /dev/null
++++ b/crates/xlsx-ops/src/input/locale.rs
+@@ -0,0 +1,147 @@
++use super::{ParsedInput, parse_input_with_context, parse_timestamp};
++use xlsx_model::{DateSystem, FormatCode, numfmt::NumberLocale};
++
++/// Invoer uit het raster. Een datum blijft een datumgetal; alleen de passende
++/// notatie wordt voorgesteld, uitsluitend bij een Algemene celnotatie.
++pub fn parse_input_in_locale(
++    input: &str,
++    format: FormatCode<'_>,
++    date_system: DateSystem,
++    now_serial: Option<f64>,
++    locale: NumberLocale,
++) -> (ParsedInput, Option<String>) {
++    if input.is_empty()
++        || input.starts_with(['=', '\''])
++        || input.eq_ignore_ascii_case("true")
++        || input.eq_ignore_ascii_case("false")
++        || matches!(format, FormatCode::Builtin(49) | FormatCode::Custom("@"))
++    {
++        return (
++            parse_input_with_context(input, format, date_system, now_serial).0,
++            None,
++        );
++    }
++    let general = matches!(format, FormatCode::Builtin(0))
++        || matches!(format, FormatCode::Custom(code) if code.eq_ignore_ascii_case("general"));
++    let raw = input.trim();
++    if let Some((value, pattern)) = typed_number(raw, locale) {
++        return (ParsedInput::Number(value), pattern.filter(|_| general));
++    }
++    // Een expliciete datumcode bepaalt de invoervolgorde; een Algemene cel
++    // volgt de bestandsregio. De klok is de bestaande, aangeleverde rekenklok.
++    let day_first = super::date_order(&format).unwrap_or(locale.tag() != "en-US");
++    if let Some((value, id)) = parse_timestamp(raw, day_first, date_system, now_serial) {
++        let pattern = match id {
++            14 if day_first => "dd-mm-yyyy",
++            14 => "mm/dd/yyyy",
++            22 if day_first => "dd-mm-yyyy h:mm",
++            22 => "mm/dd/yyyy h:mm",
++            other => xlsx_model::numfmt::builtin_format_code(other).unwrap_or("General"),
++        };
++        return (
++            ParsedInput::Number(value),
++            general.then(|| pattern.to_owned()),
++        );
++    }
++    (ParsedInput::Text(input.to_owned()), None)
++}
++
++fn typed_number(raw: &str, locale: NumberLocale) -> Option<(f64, Option<String>)> {
++    let (body, negative) = match (raw.strip_prefix('('), raw.strip_suffix(')')) {
++        (Some(left), Some(_)) => (left.strip_suffix(')')?.trim(), true),
++        (None, None) => (raw, false),
++        _ => return None,
++    };
++    if negative && body.starts_with(['+', '-']) {
++        return None;
++    }
++    let (body, percentage) = match body.strip_suffix('%') {
++        Some(body) => (body.trim(), true),
++        None => (body, false),
++    };
++    let mut currency = None;
++    let mut number = body;
++    for symbol in ["CHF", "R$", "€", "$", "£", "¥", "₭"] {
++        if let Some(rest) = body
++            .strip_prefix(symbol)
++            .or_else(|| body.strip_suffix(symbol))
++        {
++            currency = Some(symbol);
++            number = rest.trim();
++            break;
++        }
++    }
++    if percentage && currency.is_some() {
++        return None;
++    }
++    let value = local_number(number, locale)? * if negative { -1.0 } else { 1.0 };
++    let pattern = if percentage {
++        let decimals = number
++            .split(locale.decimal())
++            .nth(1)
++            .map_or(0, |part| part.split(['e', 'E']).next().unwrap_or("").len());
++        Some(if decimals == 0 {
++            "0%".into()
++        } else {
++            format!("0.{}%", "0".repeat(decimals.min(30)))
++        })
++    } else {
++        currency.map(|symbol| format!("\"{symbol} \"#,##0.00"))
++    };
++    Some((if percentage { value / 100.0 } else { value }, pattern))
++}
++
++fn local_number(raw: &str, locale: NumberLocale) -> Option<f64> {
++    let raw = raw.strip_prefix('+').unwrap_or(raw);
++    let (sign, raw) = raw.strip_prefix('-').map_or(("", raw), |r| ("-", r));
++    let mut exponent = raw.split(['e', 'E']);
++    let mantissa = exponent.next()?;
++    let power = exponent.next();
++    if exponent.next().is_some() {
++        return None;
++    }
++    if power.is_some_and(|s| {
++        let s = s.strip_prefix(['+', '-']).unwrap_or(s);
++        s.is_empty() || !s.bytes().all(|c| c.is_ascii_digit())
++    }) {
++        return None;
++    }
++    // Alle Franse spatievormen zijn gebruikelijke plak-/toetsenbordinvoer.
++    let mantissa = if locale.group() == "\u{202f}" {
++        mantissa.replace([' ', '\u{a0}'], "\u{202f}")
++    } else {
++        mantissa.to_owned()
++    };
++    let mut decimal = mantissa.split(locale.decimal());
++    let integer = decimal.next()?;
++    let fraction = decimal.next();
++    if decimal.next().is_some()
++        || fraction.is_some_and(|s| s.is_empty() || !s.bytes().all(|c| c.is_ascii_digit()))
++    {
++        return None;
++    }
++    let groups: Vec<_> = integer.split(locale.group()).collect();
++    if groups.len() > 1
++        && (groups[0].is_empty() || groups[0].len() > 3 || groups[1..].iter().any(|s| s.len() != 3))
++    {
++        return None;
++    }
++    if groups
++        .iter()
++        .any(|s| !s.bytes().all(|c| c.is_ascii_digit()))
++        || (integer.is_empty() && fraction.is_none())
++    {
++        return None;
++    }
++    let mut canonical = format!("{sign}{}", groups.concat());
++    if let Some(fraction) = fraction {
++        canonical.push('.');
++        canonical.push_str(fraction);
++    }
++    if let Some(power) = power {
++        canonical.push('e');
++        canonical.push_str(power);
++    }
++    let value: f64 = canonical.parse().ok()?;
++    value.is_finite().then_some(value)
++}
+diff --git a/crates/xlsx-ops/src/lib.rs b/crates/xlsx-ops/src/lib.rs
+index fa65029..a396f18 100644
+--- a/crates/xlsx-ops/src/lib.rs
++++ b/crates/xlsx-ops/src/lib.rs
+@@ -21,7 +21,7 @@ pub use formatting::{
+ };
+ pub use input::{
+     ParsedInput, cell_state_for_input, cell_state_for_input_no_eval, cell_state_from_parsed,
+-    parse_input, parse_input_with_context,
++    parse_input, parse_input_in_locale, parse_input_with_context,
+ };
+ pub use op::{CellState, Op, Provenance, Transaction};
+ pub use proposals::{Proposal, ProposalGhost, ProposalSet, ProposedEdit};
+diff --git a/crates/xlsx-render/src/lib.rs b/crates/xlsx-render/src/lib.rs
+index edaada6..763ae84 100644
+--- a/crates/xlsx-render/src/lib.rs
++++ b/crates/xlsx-render/src/lib.rs
+@@ -20,7 +20,7 @@ use std::ops::{Range, RangeInclusive};
+ 
+ use serde::{Deserialize, Serialize};
+ 
+-use xlsx_model::numfmt::{builtin_format_code, format_value};
++use xlsx_model::numfmt::{NumberLocale, builtin_format_code, format_value, format_value_in_locale};
+ use xlsx_model::styles::{BorderEdge, BorderStyle, FormatCode, Stylesheet};
+ use xlsx_model::value::CellValue;
+ use xlsx_model::workbook::{ColumnDefaults, Hyperlink, Sheet};
+@@ -752,6 +752,7 @@ where
+         });
+     };
+ 
++    let locale = wb.number_locale();
+     let styles = &wb.styles;
+     let theme = &styles.theme;
+     let hyperlink_color: Arc<str> = theme.slot(10).unwrap_or(HYPERLINK_COLOR).into();
+@@ -963,7 +964,7 @@ where
+         }
+         let hyperlink = link_index.at(at);
+         let xf = &**fx.xf_at(at);
+-        let primary = cell_display_text(xf, wb.date_system, cell, &text_color);
++        let primary = cell_display_text(xf, wb.date_system, locale, cell, &text_color);
+         let hyperlink_only = primary.is_none();
+         let Some((text, color, parts)) = primary.or_else(|| {
+             hyperlink
+@@ -1020,6 +1021,7 @@ where
+                 left: cell_box.x + left_pad + left_indent,
+                 width: text_width,
+                 parts,
++                decimal: locale.decimal().into(),
+                 general: match cell.value {
+                     CellValue::Number { value }
+                         if value.is_finite()
+@@ -1052,6 +1054,7 @@ where
+             &merge_index,
+             &mut fx,
+             wb.date_system,
++            locale,
+             at,
+             cell,
+             align,
+@@ -1748,6 +1751,7 @@ fn spill_clip(
+     merges: &MergeIndex,
+     fx: &mut FrameStyles,
+     date_system: xlsx_model::DateSystem,
++    locale: NumberLocale,
+     at: CellRef,
+     cell: &xlsx_model::Cell,
+     align: Align,
+@@ -1770,7 +1774,8 @@ fn spill_clip(
+         let neighbour = CellRef::new(at.row, col);
+         merges.covering(neighbour).is_none()
+             && sheet.cell(neighbour).is_none_or(|cell| {
+-                cell_display_text(fx.xf(cell.style), date_system, cell, default_color).is_none()
++                cell_display_text(fx.xf(cell.style), date_system, locale, cell, default_color)
++                    .is_none()
+             })
+             && !draws_hyperlink_label(links, neighbour)
+     };
+@@ -2165,13 +2170,14 @@ impl<'a> FrameStyles<'a> {
+ fn cell_display_text(
+     xf: &ResolvedXf,
+     date_system: xlsx_model::DateSystem,
++    locale: NumberLocale,
+     cell: &xlsx_model::Cell,
+     default_color: &Arc<str>,
+ ) -> Option<(Arc<str>, Arc<str>, Vec<xlsx_model::numfmt::FormatPart>)> {
+     if matches!(cell.value, CellValue::Empty) {
+         return None;
+     }
+-    let formatted = format_value(&cell.value, &xf.format_code, date_system);
++    let formatted = format_value_in_locale(&cell.value, &xf.format_code, date_system, locale);
+     if formatted.text.is_empty() && formatted.layout.is_empty() {
+         return None;
+     }
+@@ -2213,6 +2219,26 @@ pub fn display_text(
+     format_value(&cell.value, &code, date_system).text
+ }
+ 
++/// Exporteren en kopiëren gebruiken dezelfde bestandsregio als het raster.
++pub fn workbook_display_text(workbook: &Workbook, cell: &xlsx_model::Cell) -> String {
++    display_text_in_locale(
++        &workbook.styles,
++        workbook.date_system,
++        cell,
++        workbook.number_locale(),
++    )
++}
++
++pub fn display_text_in_locale(
++    styles: &Stylesheet,
++    date_system: xlsx_model::DateSystem,
++    cell: &xlsx_model::Cell,
++    locale: NumberLocale,
++) -> String {
++    let code = format_code_for_cell(styles, cell);
++    format_value_in_locale(&cell.value, &code, date_system, locale).text
++}
++
+ /// horizontal anchor for a cell: an explicit xf alignment wins, otherwise the
+ /// value type decides (numbers right, booleans center, text/errors left).
+ fn resolve_align(h: Option<HAlign>, value: &CellValue) -> Align {
+diff --git a/crates/xlsx-render/src/number_format.rs b/crates/xlsx-render/src/number_format.rs
+index b3f4543..bbb09bd 100644
+--- a/crates/xlsx-render/src/number_format.rs
++++ b/crates/xlsx-render/src/number_format.rs
+@@ -10,6 +10,8 @@ pub struct NumberFormatLayout {
+     pub parts: Vec<FormatPart>,
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub general: Option<f64>,
++    /// Alleen de cijfernotatie verandert; letterlijke tekst blijft intact.
++    pub decimal: String,
+     #[serde(skip_serializing_if = "is_false")]
+     pub overflow: bool,
+ }
+@@ -40,9 +42,14 @@ pub fn paint_number_format(
+     }
+     fixed += measure(&text[cursor..]);
+     if layout.overflow && fixed > layout.width {
+-        let fitted = layout
+-            .general
+-            .and_then(|value| xlsx_model::numfmt::fit_general(value, layout.width, &mut measure));
++        let fitted = layout.general.and_then(|value| {
++            xlsx_model::numfmt::fit_general_with_decimal(
++                value,
++                layout.width,
++                &layout.decimal,
++                &mut measure,
++            )
++        });
+         let fitted = fitted.unwrap_or_else(|| {
+             let advance = measure("#");
+             let count = if advance > 0.0 && layout.width > 0.0 {
+@@ -120,6 +127,7 @@ mod tests {
+                 parts: formatted.layout.clone(),
+                 general: None,
+                 overflow: true,
++                decimal: ".".into(),
+             };
+             let mut runs = Vec::new();
+             paint_number_format(
+@@ -158,6 +166,7 @@ mod tests {
+                 parts: Vec::new(),
+                 general,
+                 overflow: true,
++                decimal: ".".into(),
+             };
+             let mut runs = Vec::new();
+             paint_number_format(
+@@ -176,4 +185,24 @@ mod tests {
+             );
+         }
+     }
++    #[test]
++    fn versmalde_algemene_notatie_behoudt_de_decimale_komma() {
++        let layout = NumberFormatLayout {
++            left: 0.0,
++            width: 76.0,
++            parts: vec![],
++            general: Some(1234.56789),
++            overflow: true,
++            decimal: ",".into(),
++        };
++        let mut runs = Vec::new();
++        paint_number_format(
++            "1234,56789",
++            &layout,
++            Align::Right,
++            |s| s.chars().count() as f32 * 10.0,
++            |s, x| runs.push((s.to_owned(), x)),
++        );
++        assert_eq!(runs, vec![("1234,57".into(), 6.0)]);
++    }
+ }

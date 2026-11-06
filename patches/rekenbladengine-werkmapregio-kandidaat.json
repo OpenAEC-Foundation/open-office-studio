@@ -1,0 +1,42 @@
+{
+  "stand": "Kandidaat voor #64, nog niet aangesloten op de app of uitgegeven.",
+  "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+  "naPatch": "rekenbladengine-lange-ketens.patch",
+  "naPatchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
+  "patch": "rekenbladengine-werkmapregio.patch",
+  "patchSha256": "a446b11af4889b8a836327bdc1f75813c7a6c953a60e88a2e7e47cc8dc27d372",
+  "regiogegevens": {
+    "generator": "Intl",
+    "node": "24.22.1",
+    "icu": "78.3",
+    "kalender": "gregory",
+    "tijdzone": "UTC"
+  },
+  "gewijzigdeBestanden": 17,
+  "afzonderlijkeWerkmapproeven": 10,
+  "modelproeven": 111,
+  "nieuweWasmGeleverd": false,
+  "rustc": "1.98.1",
+  "wasmBindgen": "0.2.129",
+  "wasmOpt": "132",
+  "wasmOptArgumenten": [
+    "-O3"
+  ],
+  "eersteKandidaat": {
+    "patchSha256": "62fecf9d0266113aad5322bd2e0b86487a86c008183c388b8b65236df6833f61",
+    "wasmSha256": "1df70b43eb29ce0ddf4a58082028f162f1445c1fe530c4acd1bf1267788df336",
+    "wasmBytes": 7692037,
+    "gerichteWasmProeven": 5,
+    "regressie": "Brede native controle vond tekst 1/15 die in een bestand zonder regio als datum kon worden vastgelegd; huidige bron herstelt de oude invoerroute.",
+    "jsWasmContractGelijk": true
+  },
+  "actueleWasm": "Tweede, nog niet aangesloten kandidaat: zes gerichte WASM-proeven groen; volledige kernnacontrole loopt.",
+  "gerichteNativeNacontrole": 38,
+  "clippy": "groen (--lib, vijf XLSX-pakketten, -D warnings)",
+  "wasmKandidaatSha256": "e4becef5e4a50fc9a95b5d8e454d0e06aa4748e6f6a420f24be17f2366eee265",
+  "wasmKandidaatBytes": 7692571,
+  "wasmGerichteProeven": 6,
+  "jsWasmContractGelijk": true,
+  "rustfmt": "groen (cargo fmt --all --check)",
+  "herbouwBytegelijk": true
+}
