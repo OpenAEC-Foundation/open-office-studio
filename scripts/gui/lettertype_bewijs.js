@@ -13,30 +13,6 @@
   const teksten = s.paragraphs('body').map(p => p.text);
   uit.alinea_aantal = teksten.length;
   uit.tekst_sha256 = [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(teksten))))].map(n => n.toString(16).padStart(2, '0')).join('');
-  window.addEventListener('error', vensterfout);
-  window.addEventListener('unhandledrejection', vensterfout);
-  Worker.prototype.postMessage = function(b, ...rest) {
-    if (!workers.has(this)) {
-      const bericht = e => {
-        if (e.data?.type === 'error' || e.data?.ok === false) meld('workerbericht', e.data.error ?? e.data.message ?? 'Workerantwoord afgekeurd');
-      };
-      const fout = e => meld('workerfout', e.message);
-      this.addEventListener('message', bericht); this.addEventListener('error', fout);
-      workers.set(this, { nummer: workers.size + 1, bericht, fout });
-    }
-    verzoeken.push({ worker: workers.get(this).nummer, type: b?.type, id: b?.id, fase, variant, bronversie_bij_stap: stapversie, expectedFrameEpoch: b?.expectedFrameEpoch, snapshotRevision: b?.snapshot?.layoutRevision });
-    if (verzoeken.length > 32) verzoeken.shift();
-    // Een fontbehoefte kan al in het native voorstel zijn berekend. In dat
-    // geval verstuurt de renderer alleen de layoutbron, geen tweede preflight.
-    // Gebruik uitsluitend de echte input van deze documentworker; de volledige
-    // worker-/hostvergelijking, versiecontrole en DOCX-controle blijven verplicht.
-    if (this === eigenWorker && b?.type === 'fontRequirements' && typeof b.layoutInput === 'string' && b.layoutInput.length)
-      laatste = { input: b.layoutInput, versie: s.version(), herkomst: 'fontRequirements' };
-    if (this === eigenWorker && b?.type === 'sync' && typeof b.snapshot?.layoutInput === 'string' && b.snapshot.layoutInput.length)
-      laatste = { input: b.snapshot.layoutInput, versie: s.version(), herkomst: 'sync.snapshot.layoutInput',
-        frameEpoch: b.expectedFrameEpoch, snapshotRevision: b.snapshot.layoutRevision };
-    return oud.call(this, b, ...rest);
-  };
   const client = () => {
     const el = document.querySelector('.office-tabpaneel:not([hidden]) .canvas-page');
     for (let f = el?.[Object.keys(el).find(k => k.startsWith('__reactFiber$'))]; f; f = f.return)
@@ -46,7 +22,7 @@
       }
     throw Error('Actieve eigen lettertypeworker niet gevonden');
   };
-  const eigenWorker = client().worker;
+  let eigenWorker = null, metingGeplaatst = false;
   const controleerBron = () => {
     if (proefApi()?.getEditorRef()?.getYrsSession() !== s) throw Error('Actieve documentbron vervangen tijdens lettertypeproef');
     if (client().hasFailed()) throw Error('Lettertypeworker is uitgevallen');
@@ -55,6 +31,33 @@
   };
   const stap = naam => { fase = naam; controleerBron(); stapversie = s.version(); };
   try {
+    // Zoek de brongebonden worker vóór tijdelijke omwikkelingen te plaatsen.
+    eigenWorker = client().worker;
+    window.addEventListener('error', vensterfout);
+    window.addEventListener('unhandledrejection', vensterfout);
+    Worker.prototype.postMessage = function(b, ...rest) {
+      if (!workers.has(this)) {
+        const bericht = e => {
+          if (e.data?.type === 'error' || e.data?.ok === false) meld('workerbericht', e.data.error ?? e.data.message ?? 'Workerantwoord afgekeurd');
+        };
+        const fout = e => meld('workerfout', e.message);
+        this.addEventListener('message', bericht); this.addEventListener('error', fout);
+        workers.set(this, { nummer: workers.size + 1, bericht, fout });
+      }
+      verzoeken.push({ worker: workers.get(this).nummer, type: b?.type, id: b?.id, fase, variant, bronversie_bij_stap: stapversie, expectedFrameEpoch: b?.expectedFrameEpoch, snapshotRevision: b?.snapshot?.layoutRevision });
+      if (verzoeken.length > 32) verzoeken.shift();
+      // Een fontbehoefte kan al in het native voorstel zijn berekend. In dat
+      // geval verstuurt de renderer alleen de layoutbron, geen tweede preflight.
+      // Gebruik uitsluitend de echte input van deze documentworker; de volledige
+      // worker-/hostvergelijking, versiecontrole en DOCX-controle blijven verplicht.
+      if (this === eigenWorker && b?.type === 'fontRequirements' && typeof b.layoutInput === 'string' && b.layoutInput.length)
+        laatste = { input: b.layoutInput, versie: s.version(), herkomst: 'fontRequirements' };
+      if (this === eigenWorker && b?.type === 'sync' && typeof b.snapshot?.layoutInput === 'string' && b.snapshot.layoutInput.length)
+        laatste = { input: b.snapshot.layoutInput, versie: s.version(), herkomst: 'sync.snapshot.layoutInput',
+          frameEpoch: b.expectedFrameEpoch, snapshotRevision: b.snapshot.layoutRevision };
+      return oud.call(this, b, ...rest);
+    };
+    metingGeplaatst = true;
     for (const v of [
       { naam: 'caladea', opdracht: 'fontFamily', args: { family: 'Caladea' }, familie: 'Caladea' },
       { naam: 'carlito', opdracht: 'fontFamily', args: { family: 'Carlito' }, familie: 'Carlito' },
@@ -103,13 +106,25 @@
   } catch (fout) {
     uit.fout = String(fout);
     uit.diagnose = { fase, variant, fouten, verzoeken, bron_actief: false };
+    // Alleen begrensde gereedheidsmetadata; geen documenttekst of bronbytes.
+    try {
+      const el = document.querySelector('.office-tabpaneel:not([hidden]) .canvas-page');
+      const refs = [];
+      for (let f = el?.[Object.keys(el).find(k => k.startsWith('__reactFiber$'))]; f; f = f.return)
+        for (let h = f.memoizedState, n = 0; h && n < 1500; n++, h = h.next) {
+          const v = h.memoizedState?.current;
+          if (!v?.client || refs.length >= 16) continue;
+          refs.push({ eigen_engine: v.engine === s, fontfunctie: typeof v.client.fontRequirements === 'function', worker: !!v.client.worker });
+        }
+      uit.diagnose.gereedheid = { canvas_aanwezig: !!el, refs, meting_geplaatst: metingGeplaatst };
+    } catch (fout) { uit.diagnose.gereedheidsfout = String(fout); }
     try {
       Object.assign(uit.diagnose, { bron_actief: proefApi()?.getEditorRef()?.getYrsSession() === s,
         bronversie: s.version(), worker_uitgevallen: client().hasFailed(), laatste_lettertypeversie: laatste?.versie ?? null });
     } catch (diagnosefout) { uit.diagnose.inspectiefout = String(diagnosefout); }
     return uit;
   } finally {
-    Worker.prototype.postMessage = oud;
+    if (metingGeplaatst) Worker.prototype.postMessage = oud;
     window.removeEventListener('error', vensterfout);
     window.removeEventListener('unhandledrejection', vensterfout);
     for (const [worker, h] of workers) {
