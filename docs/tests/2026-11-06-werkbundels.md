@@ -1,7 +1,8 @@
 # Werkbundels voor de bestaande Tauri-suite
 
 Momentopname bij de indeling: 6 november 2026; 101 open issues.
-Na het mergen van PR #154 zijn vier daarvan aantoonbaar gesloten; 97 blijven open. De eerdere administratie staat in
+Na het mergen van PR #154 en #155 en de ondertekeningsaudit zijn zes daarvan
+aantoonbaar gesloten; 95 blijven open. De eerdere administratie staat in
 [het issueregister](2026-11-05-tauri-issuelus.md). Deze indeling verandert geen
 issue-status en voegt geen extra verzamelissues toe. Iedere melding staat precies
 één keer in deze momentopname. Het parallelle native interfacetraject (#116)
@@ -9,9 +10,8 @@ valt buiten de opdracht.
 
 ## Voorrang en afhandeling
 
-De open meldingen van externe bijdragers zijn #144 (`jungle-diff`) en #135
-(`oscar981-op`). #135 zit in de geteste opslagronde van PR #154. #144 krijgt
-voorrang in de eerstvolgende herstelbundel. Daarna volgen Writer en Spreadsheet.
+De externe meldingen #144 (`jungle-diff`) en #135 (`oscar981-op`) zijn getoetst en
+gesloten via respectievelijk PR #155 en #154. Daarna volgen Writer en Spreadsheet.
 Database blijft het laatste ontwikkelonderdeel.
 
 Een werkbundel bevat ongeveer tien samenhangende meldingen. De indeling voorkomt
@@ -33,11 +33,26 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
   slaagt. De documentposities en cursorgeometrie van meerletterige labels zijn hersteld.
   De aangesloten kandidaat slaagt in 598 layoutproeven en de volledige Office-set
   (1.664 tests); de native bediening, opslag en heropening zijn eveneens geverifieerd.
-  De platformcontroles van de PR volgen.
-  #144 blijft open tot de reparatie is gemerged. Zie de
+  Alle zes platformcontroles van de PR zijn geslaagd. PR #155 is gemerged als
+  `b7d1b990`; #144 is daarna gesloten. Zie de
   [afzonderlijke bewijzen](2026-11-06-nootnummering.md).
 - #130: de eerdere beperkte structuurproef reproduceerde de breedteverschuiving
-  niet. De zichtbare geometrie en bediening moeten aanvullend worden onderzocht.
+  niet. Ook de getekende tweedeling verschuift de onderste grenzen niet. Wel
+  gereproduceerd: onjuiste rasterverdeling bij drie of meer nieuwe cellen.
+  De rastercorrectie slaagt in de geometrieproeven en native bediening. De
+  aanvullende bestandsproef reproduceert wel nieuwe procentuele voorkeuren in
+  niet-geselecteerde cellen; de PR blijft concept en #130 blijft open.
+  Zie [het werkverslag](2026-11-06-celsplitsing.md).
+- #113 is gesloten na controle van de actuele release v2026.45.1 én de door de
+  website vast gekoppelde v2026.44.8: elk 60 bestanden, 28 installers en veertien
+  geldige Linux-pakkethandtekeningen. Platformsigning en publicatiecontroles zijn
+  in beide releasebouwen geslaagd. Het volledige
+  [controlebewijs](https://github.com/OpenAEC-Foundation/open-office-studio/issues/113#issuecomment-6674072326)
+  staat bij het issue. Automatische updates (#26) blijven afzonderlijk open.
+- #51: vijf nummernotaties vallen onder de bewezen nootcorrectie van #144.
+  De aangeboden Chicago-symboolnotatie geeft in beide nootsoorten nog `3`
+  tegenover de verwachte derde markering `‡`. Dit is ook met de exact gemergde
+  kern gereproduceerd en [bij #51 vastgelegd](https://github.com/OpenAEC-Foundation/open-office-studio/issues/51#issuecomment-6673990113).
 
 ## 0. Afgeronde opslagronde — PR #154
 

@@ -1,0 +1,1109 @@
+{
+  "datum": "2026-11-06",
+  "omgeving": "Native Tauri op Linux, productiefrontend, eigen X11-scherm en leeg profiel",
+  "basisCommit": "b7d1b99083b6fbddd2007a13d3bcb727d6aa96c6",
+  "wasmSha256": "b5624e380efd667199e7a9d00b0d8aa63aaed2402447290c5388653454d04069",
+  "layoutWasmSha256": "ef5d7f51632bf0ee2afc2d616245b26a3e33bb78d6fea5445a1dd1ee106dba47",
+  "nativeAssetSha256Bevestigd": "b5624e380efd667199e7a9d00b0d8aa63aaed2402447290c5388653454d04069",
+  "bediening": "Table Design > Split Cell, aantal met toetsenbord; Ctrl+Z, Ctrl+Shift+Z, Ctrl+S; tab sluiten en Ctrl+O met native bestandskiezer",
+  "geometrieGeslaagd": true,
+  "opslagGetrouwheidGeslaagd": false,
+  "openControlepunt": "In de bron ontbreekt tcW; na native opslaan hebben ook niet-geselecteerde cellen nieuwe pct-voorkeuren. Dit blijft een open controlepunt voor #48.",
+  "consolefouten": [],
+  "stappen": {
+    "voor": {
+      "fase": "voor",
+      "title": "Celsplitsing.docx — Open Office Studio (Text)",
+      "rijen": [
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 1, cel 1Rij 1, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 2, cel 1"
+          },
+          {
+            "kolom": "2",
+            "span": null,
+            "tekst": "Rij 2, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 3, cel 1"
+          },
+          {
+            "kolom": "2",
+            "span": null,
+            "tekst": "Rij 3, cel 2"
+          }
+        ]
+      ],
+      "lijnen": [
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 95.9995,
+          "w": 624,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 161.6665,
+          "w": 624,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        }
+      ]
+    },
+    "na-driedeling": {
+      "fase": "na-driedeling",
+      "title": "Celsplitsing.docx • — Open Office Studio (Text)",
+      "rijen": [
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 1, cel 1Rij 1, cel 2"
+          },
+          {
+            "kolom": "2",
+            "span": "2",
+            "tekst": ""
+          },
+          {
+            "kolom": "4",
+            "span": null,
+            "tekst": ""
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 2, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 2, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 3, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 3, cel 2"
+          }
+        ]
+      ],
+      "lijnen": [
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 320.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        }
+      ]
+    },
+    "ongedaan-gereed": {
+      "fase": "ongedaan-gereed",
+      "title": "Celsplitsing.docx • — Open Office Studio (Text)",
+      "rijen": [
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 1, cel 1Rij 1, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 2, cel 1"
+          },
+          {
+            "kolom": "2",
+            "span": null,
+            "tekst": "Rij 2, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 3, cel 1"
+          },
+          {
+            "kolom": "2",
+            "span": null,
+            "tekst": "Rij 3, cel 2"
+          }
+        ]
+      ],
+      "lijnen": [
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 95.9995,
+          "w": 624,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 161.6665,
+          "w": 624,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        }
+      ]
+    },
+    "opnieuw-gereed": {
+      "fase": "opnieuw-gereed",
+      "title": "Celsplitsing.docx • — Open Office Studio (Text)",
+      "rijen": [
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 1, cel 1Rij 1, cel 2"
+          },
+          {
+            "kolom": "2",
+            "span": "2",
+            "tekst": ""
+          },
+          {
+            "kolom": "4",
+            "span": null,
+            "tekst": ""
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 2, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 2, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 3, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 3, cel 2"
+          }
+        ]
+      ],
+      "lijnen": [
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 320.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        }
+      ]
+    },
+    "opgeslagen": {
+      "fase": "opgeslagen",
+      "title": "Celsplitsing.docx — Open Office Studio (Text)",
+      "rijen": [
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 1, cel 1Rij 1, cel 2"
+          },
+          {
+            "kolom": "2",
+            "span": "2",
+            "tekst": ""
+          },
+          {
+            "kolom": "4",
+            "span": null,
+            "tekst": ""
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 2, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 2, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 3, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 3, cel 2"
+          }
+        ]
+      ],
+      "lijnen": [
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 320.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        }
+      ]
+    },
+    "tab-gesloten": {
+      "fase": "tab-gesloten",
+      "rijen": 0,
+      "title": "Open Office Studio"
+    },
+    "heropend-gereed": {
+      "fase": "heropend-gereed",
+      "title": "Celsplitsing.docx — Open Office Studio (Text)",
+      "rijen": [
+        [
+          {
+            "kolom": "1",
+            "span": null,
+            "tekst": "Rij 1, cel 1Rij 1, cel 2"
+          },
+          {
+            "kolom": "2",
+            "span": "2",
+            "tekst": ""
+          },
+          {
+            "kolom": "4",
+            "span": null,
+            "tekst": ""
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 2, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 2, cel 2"
+          }
+        ],
+        [
+          {
+            "kolom": "1",
+            "span": "2",
+            "tekst": "Rij 3, cel 1"
+          },
+          {
+            "kolom": "3",
+            "span": "2",
+            "tekst": "Rij 3, cel 2"
+          }
+        ]
+      ],
+      "lijnen": [
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 320.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 320.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 95.9995,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 96,
+          "w": 0.667,
+          "h": 66
+        },
+        {
+          "rol": "table-border",
+          "x": 528.8,
+          "y": 161.6665,
+          "w": 208,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 162,
+          "w": 0.667,
+          "h": 34
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 195.6665,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 424.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 112.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        },
+        {
+          "rol": "table-border",
+          "x": 112.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 736.4665,
+          "y": 196,
+          "w": 0.667,
+          "h": 33.587
+        },
+        {
+          "rol": "table-border",
+          "x": 424.8,
+          "y": 228.9195,
+          "w": 312,
+          "h": 0.667
+        }
+      ]
+    }
+  },
+  "bestand": {
+    "sha256": "05a57a31356bd1b6c47cc07010cb980ea42e4275a4241f6705ece2a33c3a8865",
+    "bronVoorkeuren": [
+      [
+        null
+      ],
+      [
+        null,
+        null
+      ],
+      [
+        null,
+        null
+      ]
+    ],
+    "opgeslagenVoorkeuren": [
+      [
+        {
+          "waarde": "33",
+          "soort": "pct"
+        },
+        {
+          "waarde": "33",
+          "soort": "pct"
+        },
+        {
+          "waarde": "33",
+          "soort": "pct"
+        }
+      ],
+      [
+        {
+          "waarde": "50",
+          "soort": "pct"
+        },
+        {
+          "waarde": "50",
+          "soort": "pct"
+        }
+      ],
+      [
+        {
+          "waarde": "50",
+          "soort": "pct"
+        },
+        {
+          "waarde": "50",
+          "soort": "pct"
+        }
+      ]
+    ],
+    "grid": [
+      3120,
+      1560,
+      1560,
+      3120
+    ]
+  },
+  "opslagproef": "Mtime, XML-raster/spans/tekst en een minimaal twee seconden schone native titel slaagden; de aanvullende voorkeursbreedte-assertie mislukte. Geen volledige opslagaftekening."
+}

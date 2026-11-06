@@ -63,6 +63,14 @@ export function herstelNootKern(bron: string, soort: "edit" | "layout" = "edit")
     + bron.replace(ingang, `assetUrl:()=>${sleutel}`);
 }
 
+/** Rasterstroken bepalen geen minimumaantal zichtbare cellen bij splitsen. */
+export function herstelCelSplitsMinimum(bron: string): string {
+  const ingang = 'function Dt(t,e){let o=t>1||e>1;return {minRows:t,minCols:e,initialRows:t,initialCols:o?e:e+1}}';
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de cel-splitsdialoog.");
+  return bron.replace(ingang, ingang.replace("minCols:e", "minCols:1"));
+}
+
 /** Meldt een bevestigde versie direct; de dure Document-projectie blijft vertraagd. */
 export function herstelDirecteVersiemelding(bron: string): string {
   const callback = 'vg=useCallback(()=>{!da$1(U.current)&&Et.session&&po(Et.session.version()),Va$1();},[po,Va$1,Et.session]);cn.current=';
@@ -176,6 +184,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/utils\/index\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelCelSplitsMinimum(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-WCH3MOFU\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelNootKern(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-MGTUODRA\.mjs(?:\?.*)?$/.test(id))

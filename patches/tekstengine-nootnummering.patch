@@ -306,3 +306,277 @@
 +                }
 +                prepared.push(PreparedRun::Text(text));
 +            }
+--- a/crates/docx-edit/src/ops/table.rs
++++ b/crates/docx-edit/src/ops/table.rs
+@@ -2523,0 +2524,25 @@
++        // Bij horizontaal samenvoegen hoort de voorkeur van de hele bovenste
++        // celrij bij de overblijvende cel. Alleen de eerste voorkeur bewaren
++        // zou na opnieuw splitsen iedere nieuwe cel te smal beschrijven.
++        let merged_width = if rect.right - rect.left > target.colspan
++            && match target.cell.tc_pr.get("widthType") {
++                None => true,
++                Some(Any::String(kind)) => &**kind == "dxa" || &**kind == "pct",
++                _ => false,
++            }
++        {
++            selected
++                .iter()
++                .filter(|anchor| anchor.row == rect.top)
++                .map(|anchor| {
++                    (anchor.cell.tc_pr.get("widthType") == target.cell.tc_pr.get("widthType"))
++                        .then(|| any_number(anchor.cell.tc_pr.get("width")))
++                        .flatten()
++                        .filter(|value| value.is_finite() && *value > 0.0)
++                })
++                .collect::<Option<Vec<_>>>()
++                .map(|widths| widths.into_iter().sum::<f64>())
++                .filter(|width| width.is_finite() && *width > 0.0)
++        } else {
++            None
++        };
+@@ -2561,0 +2587,3 @@
++        if let Some(width) = merged_width {
++            survivor.cell.tc_pr.insert("width".to_owned(), Any::Number(width));
++        }
+@@ -2604 +2632,3 @@
+-        if requested_rows < target.rowspan || requested_columns < target.colspan {
++        // Een zichtbare cel kan meerdere rasterstroken beslaan. Minder
++        // gewenste kolommen verwijdert geen oude grens uit het verfijnde raster.
++        if requested_rows < target.rowspan {
+@@ -2615 +2644,0 @@
+-        let delta_columns = requested_columns - target.colspan;
+@@ -2617,0 +2647,58 @@
++        ensure_grid(&mut data, existing_columns);
++        let total_width: f64 = data.grid.iter().filter_map(|v| any_number(Some(v))).sum();
++        let mut old_edges = vec![0.0_f64];
++        for value in &data.grid[target.column..target_column_end] {
++            let next = old_edges.last().copied().unwrap() + any_number(Some(value)).unwrap_or(0.0);
++            if !next.is_finite() || next <= *old_edges.last().unwrap() || !total_width.is_finite() {
++                return Err(invalid("column widths must be positive and finite"));
++            }
++            old_edges.push(next);
++        }
++        let split_width = *old_edges.last().unwrap();
++        let segment = (split_width / requested_columns as f64).floor();
++        let remainder = split_width - segment * requested_columns as f64;
++        let mut requested_edges = (0..=requested_columns)
++            .map(|index| {
++                if segment > 0.0 {
++                    segment * index as f64 + remainder.min(index as f64)
++                } else {
++                    split_width * index as f64 / requested_columns as f64
++                }
++            })
++            .collect::<Vec<_>>();
++        requested_edges[requested_columns] = split_width;
++        // Bewaar de oude scheidingslijnen naast de nieuwe celgrenzen.
++        // Twee helften naar drie derden vraagt vier rasterstroken: de
++        // middelste nieuwe cel beslaat twee stroken, geen extra zichtbare cel.
++        let mut refined_edges = old_edges.clone();
++        refined_edges.extend(requested_edges.iter().copied());
++        refined_edges.sort_by(f64::total_cmp);
++        refined_edges.dedup();
++        let edge_index = |position: f64| {
++            refined_edges
++                .binary_search_by(|edge| edge.total_cmp(&position))
++                .unwrap()
++        };
++        let new_columns = refined_edges.len() - 1;
++        let column_map = (0..=existing_columns)
++            .map(|column| {
++                if column < target.column {
++                    column
++                } else if column <= target_column_end {
++                    target.column + edge_index(old_edges[column - target.column])
++                } else {
++                    column + new_columns - target.colspan
++                }
++            })
++            .collect::<Vec<_>>();
++        let split_columns = requested_edges
++            .windows(2)
++            .map(|edges| {
++                let start = edge_index(edges[0]);
++                (
++                    target.column + start,
++                    edge_index(edges[1]) - start,
++                    edges[1] - edges[0],
++                )
++            })
++            .collect::<Vec<_>>();
+@@ -2631,3 +2718,3 @@
+-            if anchor.column >= target_column_end {
+-                anchor.column += delta_columns;
+-            }
++            let new_start = column_map[anchor.column];
++            anchor.colspan = column_map[column_end] - new_start;
++            anchor.column = new_start;
+@@ -2636,3 +2722,0 @@
+-            }
+-            if delta_columns > 0 && column_intersects && !row_intersects {
+-                anchor.colspan += delta_columns;
+@@ -2649 +2733,19 @@
+-            for column in target.column..target.column + requested_columns {
++            for &(column, colspan, width) in &split_columns {
++                let mut cell = reset_cell_spans(target.cell.clone());
++                // Een gekopieerde voorkeur voor de hele oudercel mag de
++                // nieuwe cellen niet elk weer tot die volledige breedte rekken.
++                let share_preference = match cell.tc_pr.get("widthType") {
++                    None => true,
++                    Some(Any::String(kind)) => &**kind == "pct" || &**kind == "dxa",
++                    _ => false,
++                };
++                if requested_columns > 1 && share_preference {
++                    if let Some(preferred) = any_number(cell.tc_pr.get("width"))
++                        .filter(|value| value.is_finite() && *value > 0.0)
++                    {
++                        cell.tc_pr.insert(
++                            "width".to_owned(),
++                            Any::Number(preferred * (width / split_width)),
++                        );
++                    }
++                }
+@@ -2651 +2752,0 @@
+-                    let cell = reset_cell_spans(target.cell.clone());
+@@ -2656 +2757 @@
+-                        colspan: 1,
++                        colspan,
+@@ -2664 +2764,0 @@
+-                let mut cell = reset_cell_spans(target.cell.clone());
+@@ -2670 +2770 @@
+-                    colspan: 1,
++                    colspan,
+@@ -2696,11 +2796,3 @@
+-        ensure_grid(&mut data, existing_columns);
+-        let split_width: f64 = data.grid[target.column..target_column_end]
+-            .iter()
+-            .filter_map(|width| any_number(Some(width)))
+-            .sum();
+-        let segment_width = (split_width / requested_columns as f64).floor();
+-        let remainder = split_width - segment_width * requested_columns as f64;
+-        let replacement = (0..requested_columns)
+-            .map(|index| {
+-                Any::Number(segment_width + if (index as f64) < remainder { 1.0 } else { 0.0 })
+-            })
++        let replacement = refined_edges
++            .windows(2)
++            .map(|edges| Any::Number(edges[1] - edges[0]))
+@@ -3766,0 +3859,118 @@
++    fn samenvoegen_telt_horizontale_voorkeuren_op_en_behoudt_verticale() {
++        for (kind, preferred) in [("dxa", 2000.0), ("pct", 50.0)] {
++            for horizontal in [true, false] {
++                let doc = seed_table();
++                for row in 0..2 {
++                    for column in 0..2 {
++                        doc.set_cell_text_format(&direct(), &TableRange::cell(cell(row, column)),
++                            &HashMap::from([
++                                ("widthType".to_owned(), Any::from(kind)),
++                                ("width".to_owned(), Any::Number(preferred)),
++                            ])).unwrap();
++                    }
++                }
++                let end = if horizontal { cell(0, 1) } else { cell(1, 0) };
++                doc.merge_cells(&direct(), &TableRange::new(cell(0, 0), end)).unwrap();
++                let (_, _, rows) = table_value(&doc);
++                // Twee kolommen van 2000 twips worden 4000 twips; twee
++                // percentages van 50 worden 100. Twee rijen tellen niet mee.
++                let expected = preferred * if horizontal { 2.0 } else { 1.0 };
++                assert_eq!(rows[0]["cells"][0]["tcPr"]["width"], expected);
++                yrs_doc_to_layout_blocks(&doc, "body", &RenderEnv::default()).unwrap();
++            }
++        }
++    }
++
++    #[test]
++    fn splitsen_bewaart_oude_grenzen_en_voorkeursbreedtes_bij_derden() {
++        for (kind, preferred) in [
++            ("dxa", 4000.0),
++            ("dxa", 6000.0),
++            ("pct", 100.0),
++            ("pct", 80.0),
++        ] {
++            let doc = seed_table();
++            doc.merge_cells(&direct(), &TableRange::new(cell(0, 0), cell(0, 1)))
++                .unwrap();
++            doc.set_cell_text_format(
++                &direct(),
++                &TableRange::cell(cell(0, 0)),
++                &HashMap::from([
++                    ("widthType".to_owned(), Any::from(kind)),
++                    ("width".to_owned(), Any::Number(preferred)),
++                ]),
++            )
++            .unwrap();
++            let receipt = doc
++                .split_cell_grid(&direct(), &cell(0, 0), Some(1), Some(3))
++                .unwrap();
++            assert_eq!(receipt.columns, 4);
++            let (_, grid, rows) = table_value(&doc);
++            // 4000 / 3: 1334, 1333, 1333 twips. De oude grens op
++            // 2000 blijft bestaan: 0, 1334, 2000, 2667, 4000.
++            assert_eq!(grid, serde_json::json!([1334, 666, 667, 1333]));
++            assert_eq!(rows[0]["cells"].as_array().unwrap().len(), 3);
++            let upper = &rows[0]["cells"];
++            assert_eq!(upper[0]["tcPr"]["colspan"], 1);
++            assert_eq!(upper[1]["tcPr"]["colspan"], 2);
++            assert_eq!(upper[2]["tcPr"]["colspan"], 1);
++            assert_eq!(rows[1]["cells"][0]["tcPr"]["colspan"], 2);
++            assert_eq!(rows[1]["cells"][1]["tcPr"]["colspan"], 2);
++            assert_eq!(
++                grid[0].as_f64().unwrap() + grid[1].as_f64().unwrap(),
++                2000.0
++            );
++            for (i, twips) in [1334.0, 1333.0, 1333.0].into_iter().enumerate() {
++                let expected = preferred * twips / 4000.0;
++                assert!((upper[i]["tcPr"]["width"].as_f64().unwrap() - expected).abs() < 1e-9);
++            }
++            yrs_doc_to_layout_blocks(&doc, "body", &RenderEnv::default()).unwrap();
++        }
++    }
++
++    #[test]
++    fn opnieuw_splitsen_mag_minder_zichtbare_kolommen_dan_rasterstroken_geven() {
++        let doc = seed_table();
++        doc.merge_cells(&direct(), &TableRange::new(cell(0, 0), cell(0, 1)))
++            .unwrap();
++        doc.split_cell_grid(&direct(), &cell(0, 0), Some(1), Some(3))
++            .unwrap();
++        doc.merge_cells(&direct(), &TableRange::new(cell(0, 0), cell(0, 3)))
++            .unwrap();
++        doc.split_cell_grid(&direct(), &cell(0, 0), Some(1), Some(2))
++            .unwrap();
++        let (_, grid, rows) = table_value(&doc);
++        // De vier stroken bewaren zowel derden als de oude helftgrens.
++        // Twee zichtbare helften beslaan elk twee van die stroken.
++        assert_eq!(grid, serde_json::json!([1334, 666, 667, 1333]));
++        for row in rows.as_array().unwrap() {
++            let cells = row["cells"].as_array().unwrap();
++            assert_eq!(cells.len(), 2);
++            assert_eq!(cells[0]["tcPr"]["colspan"], 2);
++            assert_eq!(cells[1]["tcPr"]["colspan"], 2);
++        }
++        yrs_doc_to_layout_blocks(&doc, "body", &RenderEnv::default()).unwrap();
++    }
++
++    #[test]
++    fn verticaal_splitsen_behoudt_de_horizontale_voorkeur() {
++        let doc = seed_table();
++        doc.set_cell_text_format(
++            &direct(),
++            &TableRange::cell(cell(0, 0)),
++            &HashMap::from([
++                ("widthType".to_owned(), Any::from("pct")),
++                ("width".to_owned(), Any::Number(75.0)),
++            ]),
++        )
++        .unwrap();
++        doc.split_cell_grid(&direct(), &cell(0, 0), Some(2), Some(1))
++            .unwrap();
++        let (_, grid, rows) = table_value(&doc);
++        assert_eq!(grid, serde_json::json!([2000, 2000]));
++        assert_eq!(rows[0]["cells"][0]["tcPr"]["width"], 75.0);
++        assert_eq!(rows[1]["cells"][0]["tcPr"]["width"], 75.0);
++        yrs_doc_to_layout_blocks(&doc, "body", &RenderEnv::default()).unwrap();
++    }
++
++    #[test]
