@@ -82,8 +82,11 @@ Een afzonderlijke proef met de beschikbare native formaatconverter geeft
 bij DOCX → ODT → DOCX een afwijkende nootpositie terug: `sectEnd` in plaats
 van de aangeleverde `pageBottom`/`docEnd`. Bij de PDF-uitvoer telt de derde
 voetnoot door naar `v`, waar de aangeleverde sectieherstart `iii` vraagt.
-Dit is met dezelfde bron vóór de nieuwe conversieactie gevonden; de oorzaak
-en de volledige export-/importroute moeten nog worden hersteld en getest.
+Dit is met dezelfde bron vóór de nieuwe conversieactie gevonden. De
+[eigen Office-PDF-route is daarna afzonderlijk gecontroleerd](2026-11-06-pdf-nootkoppelingen.md):
+die bewaart wel de juiste sectieherstart en paginering. Het vervolgverslag
+onderscheidt bovendien de stabiele converter van de ontwikkelruntime; hun
+teruggeschreven positie verschilt. De volledige ODT-route is nog niet afgetekend.
 Daarom blijft het ODT-/PDF-criterium van #51 open. Ook inline nootbewerking
 en alle native invoegsneltoetsen zijn in deze ronde niet volledig afgetekend.
 

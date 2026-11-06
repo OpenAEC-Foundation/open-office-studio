@@ -1,0 +1,29 @@
+{
+  "basis": "cbf9bde17bfbb24c7c2c33285a45275fd6e0273d",
+  "commandoTest": "node node_modules/vitest/vitest.mjs run --maxWorkers=2 --minWorkers=2",
+  "typecontrole": "node node_modules/typescript/bin/tsc --noEmit; exit 0",
+  "logboeken": {
+    "appvolledig-pdf-koppelingen.log": {
+      "sha256": "7f4b330e8255157046e33d01034aedd09ac9606d1b9c45834ae9bccddad9c1cd",
+      "einde": "pdates.test.ts (6 tests) 233ms\n ✓ src/lint/sneltoetsen.test.ts (6 tests) 221ms\n ✓ src/venstertitel.test.ts (6 tests) 238ms\n ✓ src/nederlands-toegankelijk.test.ts (5 tests) 234ms\n ✓ src/export/pdf/pdf.test.ts (7 tests) 232ms\n ✓ src/tekst/afbeelding/afbeelding.test.ts (9 tests) 232ms\n ✓ src/werkruimte/werkruimte.test.ts (4 tests) 224ms\n ✓ src/lint/presentatie-zoeken.test.ts (5 tests) 254ms\n ✓ src/tekst/stijlen/model.test.ts (6 tests) 247ms\n ✓ src/rekenbladinvoer.test.ts (6 tests) 255ms\n ✓ src/werkbestand.test.ts (6 tests) 232ms\n ✓ src/rekenblad/naamAanvullingen.test.ts (5 tests) 262ms\n ✓ src/rekenblad/klembord-maten.test.ts (9 tests) 228ms\n ✓ src/tabelvoorbeeld/meten.test.ts (3 tests) 284ms\n ✓ src/VensterMenu.test.ts (3 tests) 259ms\n ✓ src/wasmGeheugen.test.ts (1 test) 250ms\n ✓ src/useTabSneltoetsen.test.ts (9 tests) 262ms\n ✓ src/tekst/gedeeld/enginevenster.test.ts (3 tests) 207ms\n ✓ src/Neerzetzone.test.ts (2 tests) 222ms\n ✓ src/openaec-lint/focus.test.ts (1 test) 229ms\n ✓ src/instellingen.test.ts (2 tests) 231ms\n ✓ src/tekst/menu/miniwerkbalk.test.ts (3 tests) 214ms\n\n Test Files  163 passed (163)\n      Tests  1898 passed | 7 skipped (1905)\n   Start at  13:14:07\n   Duration  132.05s (transform 13.33s, setup 31.25s, collect 19.80s, tests 153.53s, environment 49ms, prepare 17.90s)\n\n"
+    },
+    "productie-pdf-koppelingen.log": {
+      "sha256": "fdf8b9fcc84d041645042a1b89bd50e5fab574f25ca970e9c06f25e4342ab4d3",
+      "einde": "t-pdf-koppelingen/assets/i18n-zh-CN-DTQaeE3O.js                                 300.62 kB │ gzip:   106.18 kB\n.local/dist-pdf-koppelingen/assets/i18n-de-B72fbTG6.js                                    360.38 kB │ gzip:   111.02 kB\n.local/dist-pdf-koppelingen/assets/i18n-it-DehPljm7.js                                    364.58 kB │ gzip:   109.95 kB\n.local/dist-pdf-koppelingen/assets/i18n-pt-BR-Clj3SVcK.js                                 364.85 kB │ gzip:   110.48 kB\n.local/dist-pdf-koppelingen/assets/i18n-es-BX1dmdG6.js                                    365.54 kB │ gzip:   110.44 kB\n.local/dist-pdf-koppelingen/assets/i18n-fr-CE2fy5mM.js                                    380.34 kB │ gzip:   113.37 kB\n.local/dist-pdf-koppelingen/assets/editors-DJMeY7tl.js                                  1,671.63 kB │ gzip:   535.74 kB\n.local/dist-pdf-koppelingen/assets/index-D1jX1rsq.js                                    2,940.89 kB │ gzip:   906.87 kB\n\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n✓ built in 41.75s\n"
+    },
+    "nativebouw-pdf.log": {
+      "sha256": "1ba2879c054a154a2d5758a4a64acd128060c953df66ab2ce6e10cb11a860ddd",
+      "einde": "        Info Looking up installed tauri packages to check mismatched versions...\n   Compiling open-office-studio v2026.45.2 (<thuis>/.cache/open-office-qa/regio-bron-20261106/src-tauri)\nwarning: struct `Tekst` is never constructed\n  --> src/email/fout.rs:63:12\n   |\n63 | pub struct Tekst {\n   |            ^^^^^\n   |\n   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: associated items `nieuw` and `waarde` are never used\n  --> src/email/fout.rs:72:12\n   |\n71 | impl Tekst {\n   | ---------- associated items in this implementation\n72 |     pub fn nieuw(sleutel: &'static str, melding: impl Into<String>) -> Self {\n   |            ^^^^^\n...\n79 |     pub fn waarde(mut self, naam: &'static str, waarde: impl ToString) -> Self {\n   |            ^^^^^^\n\nwarning: function `huidige` is never used\n   --> src/taal.rs:108:8\n    |\n108 | pub fn huidige() -> &'static str {\n    |        ^^^^^^^\n\nwarning: `open-office-studio` (bin \"open-office-studio\") generated 3 warnings\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 33.55s\n       Built application at: <thuis>/Documenten/GitHub/ops-wt/office-namenbeheer-volledig/.local/native-target/debug/open-office-getalnotatie-proef\n"
+    }
+  },
+  "bronbestanden": {
+    "src/afdrukken/bronTekst.ts": "034c3d7483eb040390379c22a9de26818cabda67ba596d0bedb45fd82291ed1c",
+    "src/afdrukken/tekstKoppelingen.ts": "7f292fb7337537f29d04b35419e7e91e14f53e5d9729de6029b77fee1bc512d8",
+    "src/afdrukken/tekstKoppelingen-engine.test.ts": "24b97cbbebafdffda4b6a9c18fa5dd93e8f5a9e419efbbe2773b941b5a2124eb"
+  },
+  "primaireConverterBron": {
+    "commit": "5685292b8c92051cab306731ca083117ad0682cd",
+    "bestand": "sw/source/writerfilter/dmapper/DomainMapper.cxx",
+    "sha256": "b780705e4215eb150c12553aa1c1a445492c264afccb5da436c82446ca9c08be"
+  }
+}
