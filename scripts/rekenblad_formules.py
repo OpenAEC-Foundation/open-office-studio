@@ -3,6 +3,8 @@
 Een kleine evaluator in Python-standaardbibliotheek voor precies de functies die de fixtures
 gebruiken. Hij leest alleen de invoerwaarden en formuleteksten uit het XLSX-pakket; opgeslagen
 formule-uitkomsten (<v> bij een formule) worden genegeerd en gelden niet als bewijs.
+De afzonderlijke optie --opgeslagen leest uitsluitend gemeten exportwaarden
+voor vergelijking met deze verwachting; die optie berekent niets.
 
 Gebruik:
   python3 scripts/rekenblad_formules.py bestand.xlsx [--wijzig Blad!A1=20 ...]
@@ -65,7 +67,7 @@ def splits(ref):
     return int(m.group(2)), kolomnummer(m.group(1))
 
 
-def lees_werkboek(pad):
+def lees_werkboek(pad, met_opgeslagen_uitkomsten=False):
     """Geeft {'bladen': [...], 'cellen': {(blad, A1): waarde}, 'formules': {...}, 'namen': {...}}."""
     with zipfile.ZipFile(pad) as archief:
         if sum(i.file_size for i in archief.infolist()) > MAX_INHOUD:
@@ -91,10 +93,11 @@ def lees_werkboek(pad):
                     if f.get('t') == 'shared':
                         if tekst:
                             gedeelde_formules[f.get('si')] = (ref, tekst)
-                        else:
+                        elif not met_opgeslagen_uitkomsten:
                             raise NietNagebouwd('Gedeelde formules zonder eigen tekst worden niet ondersteund.')
                     formules[(naam, ref)] = tekst
-                    continue
+                    if not met_opgeslagen_uitkomsten:
+                        continue
                 if soort == 'inlineStr':
                     cellen[(naam, ref)] = ''.join(t.text or '' for t in c.iter(M + 't'))
                 elif v is None:
@@ -521,10 +524,18 @@ def verwacht(pad, wijzigingen=None):
     return {f'{blad}!{ref}': als_json(rekenaar.cel(blad, ref)) for (blad, ref) in sorted(rekenaar.formules, key=lambda s: (werkboek['bladen'].index(s[0]), splits(s[1])))}
 
 
+def opgeslagen(pad):
+    """Lees een engine-export ná herberekening; dit zijn gemeten uitkomsten, geen verwachtingen."""
+    werkboek = lees_werkboek(pad, met_opgeslagen_uitkomsten=True)
+    return {f'{blad}!{ref}': als_json(werkboek['cellen'].get((blad, ref)))
+            for blad, ref in werkboek['formules']}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('bestand')
     parser.add_argument('--wijzig', action='append', default=[], metavar='BLAD!CEL=INVOER')
+    parser.add_argument('--opgeslagen', action='store_true', help='Lees gemeten exportwaarden; rekent niet en bewijst geen juistheid.')
     args = parser.parse_args()
     wijzigingen = {}
     for item in args.wijzig:
@@ -532,7 +543,9 @@ def main():
         blad, ref = doel.rsplit('!', 1)
         wijzigingen[(blad, ref)] = invoer
     try:
-        print(json.dumps(verwacht(args.bestand, wijzigingen), ensure_ascii=False, indent=1))
+        if args.opgeslagen and wijzigingen:
+            raise ValueError('Opgeslagen waarden lezen kan niet met een rekenwijziging worden gecombineerd.')
+        print(json.dumps(opgeslagen(args.bestand) if args.opgeslagen else verwacht(args.bestand, wijzigingen), ensure_ascii=False, indent=1))
     except (NietNagebouwd, ValueError, KeyError, zipfile.BadZipFile) as fout:
         print(json.dumps({'fout': str(fout)}, ensure_ascii=False), file=sys.stderr)
         return 2

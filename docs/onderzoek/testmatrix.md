@@ -32,6 +32,12 @@ D1–D3 en P1–P3 zijn op 26 oktober 2026 met synthetische fixtures uitgevoerd:
 `scripts/matrix_kenmerken.py`, uitvoer in `.local/matrix/documenten/`).
 Praktijkbestanden en de GUI-proef met deze bestanden staan nog open.
 
+R1–R3 zijn eveneens eerder uitgevoerd; het oorspronkelijke
+[rekenbladverslag](../tests/2026-10-26-rekenbladen.md) betreft de oudere kern.
+De [herhaalde rekenbladmatrix van 6 november](../tests/2026-11-06-rekenbladmatrix.md)
+gebruikt de actuele productiekern, controleert ook de werkelijk opgeslagen
+formulewaarden en vergelijkt dezelfde bestanden met een vastgezette tweede kern.
+
 ## Per bestand uitvoeren
 
 Eerst openen en opslaan zonder wijziging, daarna een beperkte wijziging en
