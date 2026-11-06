@@ -1,0 +1,144 @@
+{
+  "datum_utc": "2026-11-06T23:33:53.240792+00:00",
+  "status": "Diagnose afgerond, geen productwijziging of snelheidsfix. Ernstige invoer-/tekenvertraging blijft open.",
+  "branch": "codex/native-rust-office-integratie",
+  "broncommit": "62648efa",
+  "rondes": [
+    {
+      "ronde": "v2-ronde-1",
+      "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "script_sha256": "94f9e23d9240db953c900c51c20fa5e45cb4bbacea6f895b8883c2160395d93c",
+      "geslaagd": true,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "getekende_tekst_ms": 14380,
+      "keyup": {
+        "aantal": 351,
+        "eerste_ms": 22143,
+        "laatste_ms": 28223,
+        "tijdspan_ms": 6080
+      },
+      "gebeurtenissen": {
+        "beforeinput": 351,
+        "keyup": 354
+      },
+      "directe_invoer_tot_microtaak_ms": {
+        "max": 2,
+        "som": 235.99999999996362,
+        "mediaan": 1
+      },
+      "laatste_keyup_tot_stop_ms": 8021.0,
+      "framepauze_max_ms": 3379,
+      "gemist": 0,
+      "pending_bij_stop": false,
+      "vaste_uitsnede_rgb_exact_buiten_cursor": true
+    },
+    {
+      "ronde": "v2-ronde-2",
+      "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "script_sha256": "94f9e23d9240db953c900c51c20fa5e45cb4bbacea6f895b8883c2160395d93c",
+      "geslaagd": true,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "getekende_tekst_ms": 22999,
+      "keyup": {
+        "aantal": 351,
+        "eerste_ms": 22703,
+        "laatste_ms": 30498,
+        "tijdspan_ms": 7795
+      },
+      "gebeurtenissen": {
+        "beforeinput": 351,
+        "keyup": 354
+      },
+      "directe_invoer_tot_microtaak_ms": {
+        "max": 1.000000000003638,
+        "som": 232.99999999997817,
+        "mediaan": 1
+      },
+      "laatste_keyup_tot_stop_ms": 14917,
+      "framepauze_max_ms": 3669,
+      "gemist": 0,
+      "pending_bij_stop": false,
+      "vaste_uitsnede_rgb_exact_buiten_cursor": true
+    },
+    {
+      "ronde": "v4-ronde-1",
+      "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "script_sha256": "966ac15a362cbea8dcf78e782f3471df77b0d512d4f155855f2cc9d9bbdd4466",
+      "geslaagd": true,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "getekende_tekst_ms": 19984,
+      "keyup": {
+        "aantal": 351,
+        "eerste_ms": 32009.999999999996,
+        "laatste_ms": 42501,
+        "tijdspan_ms": 10491.000000000004
+      },
+      "gebeurtenissen": {
+        "beforeinput": 351,
+        "keyup": 354
+      },
+      "directe_invoer_tot_microtaak_ms": {
+        "max": 4,
+        "som": 256.00000000008004,
+        "mediaan": 1
+      },
+      "laatste_keyup_tot_stop_ms": 8890,
+      "framepauze_max_ms": 3819,
+      "gemist": 0,
+      "pending_bij_stop": false,
+      "vaste_uitsnede_rgb_exact_buiten_cursor": true,
+      "rustketen": {
+        "groepen": 23,
+        "uitkomsten": {
+          "rust": 23
+        },
+        "overgeslagen": 0,
+        "duur_som_ms": 6020.9999999999745,
+        "rust_binnen_som_ms": 3709,
+        "stappen_som_ms": {
+          "cursor": 36.99999999998545,
+          "bron": 178.00000000001455,
+          "hash": 1014.0000000000146,
+          "aanvraag": 11.999999999985448,
+          "transport": 4200.999999999989,
+          "binding": 22.000000000003638,
+          "mutatie": 175.99999999999636,
+          "selectie": 379.9999999999927
+        }
+      }
+    }
+  ],
+  "conclusie": "Alle351 gewone beforeinput-gebeurtenissen komen binnen, hun synchrone pad tot de aansluitende microtaak duurt maximaal1–4ms bij de WebKit-klokresolutie. Na de laatste keyup blijft8.021/14.917/8.890s over tot de waarnemer na gelijke tekstpixels stopt. Dit laatste meetpunt omvat de pixelpoll en een inspectiecommando; geen exacte tijd van de laatste commit. Framepauzes lopen tot3.819s. De vervolgverwerking/tekening is aantoonbaar traag; deze meting bewijst nog geen ene oorzaak.",
+  "rustketen": "In de derde geldige ronde23groepen, alle viaRust, geen retries/skips: circa6.021s totale gemeten koppelingswandtijd, waaronder4.201s transport,1.014s hash; de Rust-binnenmeting bedraagt3.709s en overlapt met transport. Niet optellen als CPU-tijden en geen percentage van de totale schildertijd afleiden. Andere SDK-publicatie-/React-/layout-/tekenstappen vallen buiten deze meting.",
+  "controles": [
+    "Begrensde waarnemer: geen invoertekst, maximaal1024regels, geen bronlezingen; late microtaak/frame na stop, afmelden, herstart, annulering en begrenzing lokaal gecontroleerd.",
+    "Alle drie geldige native rondes:1537verhalen/3329teksten exact,351ontvangen gewone tekens, geen gemiste meetregels of achtergebleven invoer bij stop, lege GUI-/engine-/consolefoutlijsten.",
+    "Documentuitsnede395,298–1065,366 RGB-exact tegenover behouden referentie buiten de vastgelegde cursorzone; geen volledige UI-pixelacceptatie."
+  ],
+  "afkeuringen": [
+    "Eerste twee instrumentatierondes gebruiken ten onrechte hasPendingInput op de buitenste API: TypeError; onbruikbaar als succesvolle functionele meting. Ruwe context behouden.",
+    "Eerste uitbreiding met Rust-tijden bevat een Python-aanhalingstekenfout en start geen app. Behouden; gecorrigeerde bron is vooraf gecompileerd en de native ronde slaagt.",
+    "Eerdere afgekeurde SDK-publicatiepoort is niet teruggeplaatst; deze diagnostiek gebruikt exact de behouden c88-referentie."
+  ],
+  "niet_gedaan": [
+    "Geen appcode/SDKversie, installatie, officiële release, issueafsluiting, nieuwe nativebuild of volledige frontend-/Rustsuite gewijzigd/uitgevoerd.",
+    "Geen reproduceerbare90safkeuring in deze drie geldige rondes; eerder vastgelegde afkeuring blijft staan.",
+    "Geen algemeen FPS-/snelheids-, volledigeRust-/suite-/platform-/editie- of volledige visuele acceptatie."
+  ],
+  "volgende_stap": "Onderzoek de werkelijk aangeboden opeenvolgende native tekstaanvragen van uitsluitend de eigen testkopie. Meet in Rust hoeveel cachehergebruik en tijd de import, snapshotserialisatie, vector-/bronbinding en fragmentvoorbereiding gebruiken; bestaande meet_bronkosten.rs en clipboard_batch.rs vormen het startpunt. Koppel daarna SDK-publicatie-/renderwerk aan dezelfde tijdlijn. Bronbindings-, Undo- en selectievoorwaarden niet versoepelen.",
+  "bewijs": {
+    "docs/tests/writer-invoerketen-2026-11-07/bewijs.tar.gz": "ac76cba55b8af3a9dae71288ef5a86c08d501f8df7e76d8f1342ed9dc9c7b468"
+  }
+}
