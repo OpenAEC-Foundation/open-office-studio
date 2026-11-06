@@ -19,6 +19,7 @@ import { gzipSync } from "node:zlib";
 import { build } from "vite";
 import { zipSync, unzipSync, strFromU8, strToU8 } from "fflate";
 
+await mkdir(resolve(".local"), { recursive: true });
 const uit = await mkdtemp(resolve(".local/voorbeeldproef-"));
 const pakketMap = join(uit, "pakket");
 const app = join(uit, "host");
