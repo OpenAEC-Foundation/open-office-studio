@@ -14,6 +14,13 @@ bewaard en verandert geen celwaarden bij een regiowissel. Ingebouwde datumcodes
 14 en 22 volgen de bekende bestandsregio; eigen datumcodes behouden hun
 volgorde. Expliciete lage valutacodes worden eveneens uit het bestand gelezen.
 
+De [opslagpatch](../../patches/rekenbladengine-herberekende-opslag.patch)
+vergelijkt het actuele model met de bron vóór de korte bewaarroutine. Zo
+worden bij expliciet opslaan ook de bij openen herberekende uitkomsten
+geschreven, inclusief gedeelde en uitvloeiende formules. Een gelijk model
+behoudt het oorspronkelijke ZIP-archief. Onbekende functies behouden hun
+opgeslagen uitkomst; de app blijft daarvoor waarschuwen.
+
 Herkomst, broncommit, gereedschapsversies en checksums staan in
 [de metadata](../../patches/rekenbladengine-lange-ketens.json). De
 [bronpatch](../../patches/rekenbladengine-lange-ketens.patch) bevat ook de
@@ -37,7 +44,7 @@ Met `--bronarchief` kan hetzelfde gecontroleerde bronarchief lokaal worden
 meegegeven. `--wasm-bindgen` en `--wasm-opt` kiezen de uitvoerbare bestanden.
 Het script weigert een afwijkend bronarchief, gereedschap, bronpatch,
 JS/WASM-interface of eindresultaat. De schone herbouw levert bytegelijk de
-vastgelegde module van 7.693.941 bytes op. Een expliciete `CARGO_TARGET_DIR`
+vastgelegde module van 7.693.796 bytes op. Een expliciete `CARGO_TARGET_DIR`
 kan een bestaande compilatiecache hergebruiken; de bronmap blijft nieuw.
 
 Zie [lange ketens](../../docs/tests/2026-11-06-lange-formuleketens.md) en

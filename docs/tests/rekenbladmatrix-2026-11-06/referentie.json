@@ -1,0 +1,1104 @@
+{
+  "referentie": {
+    "naam": "@ironcalc/wasm-xlsx",
+    "versie": "0.9.1",
+    "licentie": "MIT OR Apache-2.0",
+    "url": "https://registry.npmjs.org/@ironcalc/wasm-xlsx/-/wasm-xlsx-0.9.1.tgz",
+    "integriteit": "daihrrjAGGv55bgv+yqHmiyn1URmWaxZ6CFWmqbNUJpl5SYgbwO0HmX8vbG4+8OeAA7aTCNqXNmgFF9eFqsj5A==",
+    "bron": "https://github.com/ironcalc/IronCalc/tree/ae1fccd3dae89ab919e58ed299c525e6d6ba0ad5/bindings/wasm",
+    "pakketSha256": "c709018b4dd9a9a5199f93ca8c69e2332935236ce3d828354221c67e350ce0e1",
+    "wasmSha256": "03235ab1bccd87d0847dceba2c9defdd4f4ba9f47f9ddf098e53a423b3cc196c",
+    "noticesSha256": "144ac7ae599d21f617b4d59a655f431a327928da0e132c6f008f6965208c410e"
+  },
+  "productie": {
+    "pakket": "@betteroffice/xlsx@0.5.1",
+    "wasm": "0.0.0",
+    "kernPad": "vendor/rekenbladengine/xlsx_wasm_bg.wasm",
+    "kernSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+    "route": "productiekern"
+  },
+  "node": "v24.22.1",
+  "gevallen": [
+    {
+      "naam": "r1-kruisverwijzingen",
+      "matrix": "R1",
+      "bronhash": "e3fa8bf1ee0c51f6395b1a2721fe8fb73dd51bb18d0fc5dded1c308d447a7c83",
+      "openenMs": 174,
+      "opslaanNoopMs": 20,
+      "formulesNaOpenen": {
+        "gecontroleerd": 8,
+        "afwijkend": []
+      },
+      "bewerkenMs": 3,
+      "opslaanMs": 5,
+      "formulesNaBewerking": {
+        "gecontroleerd": 8,
+        "afwijkend": []
+      },
+      "uitvoerhash": "643a07fc997c783a14b52b049638fc741186c6fbee078b7d796ba0981f04936a",
+      "heropenenMs": 14,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 8,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 165,
+        "toenameMiB": 104
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml",
+          "xl/worksheets/sheet2.xml",
+          "xl/worksheets/sheet3.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "r2-grafiek-namen",
+      "matrix": "R2",
+      "bronhash": "a7e11812f7fa15212d5fa48fd343ac103c98b743e7e96c78abcc4c942edcfa83",
+      "openenMs": 190,
+      "opslaanNoopMs": 25,
+      "formulesNaOpenen": {
+        "gecontroleerd": 3,
+        "afwijkend": []
+      },
+      "bewerkenMs": 8,
+      "opslaanMs": 7,
+      "formulesNaBewerking": {
+        "gecontroleerd": 3,
+        "afwijkend": []
+      },
+      "uitvoerhash": "0bcce8bcc2905bbc3a19ed1cf51f779733e374dffef4c2355b6263883b826d0d",
+      "heropenenMs": 8,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 3,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 163,
+        "toenameMiB": 105
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "grafieken",
+            "voor": [
+              {
+                "blad": "Gegevens",
+                "onderdeel": "xl/charts/chart1.xml",
+                "bronnen": [
+                  "Gegevens!$B$1",
+                  "Gegevens!$A$2:$A$5",
+                  "Gegevens!$B$2:$B$5"
+                ]
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "pagina_instellingen",
+            "voor": [
+              {
+                "blad": "Gegevens",
+                "paperSize": "9",
+                "orientation": "landscape",
+                "scale": "85",
+                "fitToHeight": "0"
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "grafieken",
+            "voor": [
+              {
+                "blad": "Gegevens",
+                "onderdeel": "xl/charts/chart1.xml",
+                "bronnen": [
+                  "Gegevens!$B$1",
+                  "Gegevens!$A$2:$A$5",
+                  "Gegevens!$B$2:$B$5"
+                ]
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "pagina_instellingen",
+            "voor": [
+              {
+                "blad": "Gegevens",
+                "paperSize": "9",
+                "orientation": "landscape",
+                "scale": "85",
+                "fitToHeight": "0"
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [
+          "xl/charts/chart1.xml",
+          "xl/drawings/_rels/drawing1.xml.rels",
+          "xl/drawings/drawing1.xml",
+          "xl/worksheets/_rels/sheet1.xml.rels"
+        ],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml",
+          "xl/worksheets/sheet2.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet2.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "r3-validatie-draaitabel",
+      "matrix": "R3",
+      "bronhash": "243fdeafc561c5d2b13a29417bb734a6ea2cbbd3ffafad075360b55e704533e7",
+      "openenMs": 203,
+      "opslaanNoopMs": 16,
+      "formulesNaOpenen": {
+        "gecontroleerd": 2,
+        "afwijkend": []
+      },
+      "bewerkenMs": 6,
+      "opslaanMs": 6,
+      "formulesNaBewerking": {
+        "gecontroleerd": 2,
+        "afwijkend": []
+      },
+      "uitvoerhash": "4ee559157c4dfd243d8e704ad02f05b200a9c355c8759408acc40db328422370",
+      "heropenenMs": 8,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 2,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 299,
+        "toenameMiB": 241
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "draaitabellen",
+            "voor": [
+              {
+                "blad": "Draai",
+                "onderdeel": "xl/pivotTables/pivotTable1.xml",
+                "naam": "Draaitabel1",
+                "locatie": "A3:B6",
+                "cache": [
+                  "xl/pivotCache/pivotCacheDefinition1.xml"
+                ]
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "draaicaches",
+            "voor": [
+              {
+                "cacheId": "1",
+                "definitie": "xl/pivotCache/pivotCacheDefinition1.xml",
+                "records": [
+                  "xl/pivotCache/pivotCacheRecords1.xml"
+                ]
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "validaties",
+            "voor": [
+              {
+                "blad": "Data",
+                "type": "decimal",
+                "sqref": "C2:C5",
+                "formule1": "0"
+              },
+              {
+                "blad": "Data",
+                "type": "list",
+                "sqref": "D2:D5",
+                "formule1": "\"Ja,Nee\""
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [
+              {
+                "onderdeel": "xl/openaec/onbekend-onderdeel.xml",
+                "relatie": "http://schemas.openaec.org/relationships/onbekend-onderdeel",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openaec.onbekend+xml"
+              }
+            ],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "draaitabellen",
+            "voor": [
+              {
+                "blad": "Draai",
+                "onderdeel": "xl/pivotTables/pivotTable1.xml",
+                "naam": "Draaitabel1",
+                "locatie": "A3:B6",
+                "cache": [
+                  "xl/pivotCache/pivotCacheDefinition1.xml"
+                ]
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "draaicaches",
+            "voor": [
+              {
+                "cacheId": "1",
+                "definitie": "xl/pivotCache/pivotCacheDefinition1.xml",
+                "records": [
+                  "xl/pivotCache/pivotCacheRecords1.xml"
+                ]
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "validaties",
+            "voor": [
+              {
+                "blad": "Data",
+                "type": "decimal",
+                "sqref": "C2:C5",
+                "formule1": "0"
+              },
+              {
+                "blad": "Data",
+                "type": "list",
+                "sqref": "D2:D5",
+                "formule1": "\"Ja,Nee\""
+              }
+            ],
+            "na": []
+          },
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [
+              {
+                "onderdeel": "xl/openaec/onbekend-onderdeel.xml",
+                "relatie": "http://schemas.openaec.org/relationships/onbekend-onderdeel",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openaec.onbekend+xml"
+              }
+            ],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [
+          "xl/openaec/onbekend-onderdeel.xml",
+          "xl/pivotCache/_rels/pivotCacheDefinition1.xml.rels",
+          "xl/pivotCache/pivotCacheDefinition1.xml",
+          "xl/pivotCache/pivotCacheRecords1.xml",
+          "xl/pivotTables/_rels/pivotTable1.xml.rels",
+          "xl/pivotTables/pivotTable1.xml",
+          "xl/worksheets/_rels/sheet2.xml.rels"
+        ],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml",
+          "xl/worksheets/sheet2.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet2.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "verouderde-cache",
+      "matrix": "extra",
+      "bronhash": "2ad2923236079342af35e1b8bb725ffb3f08ff30ad186ee4dc2e45870a6440b2",
+      "openenMs": 183,
+      "opslaanNoopMs": 21,
+      "formulesNaOpenen": {
+        "gecontroleerd": 5,
+        "afwijkend": []
+      },
+      "bewerkenMs": 4,
+      "opslaanMs": 3,
+      "formulesNaBewerking": {
+        "gecontroleerd": 5,
+        "afwijkend": []
+      },
+      "uitvoerhash": "0206b47098b324a4addf2ec00f3c39e6ed57aa29597a06ba7f5bba479dd01071",
+      "heropenenMs": 15,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 5,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 142,
+        "toenameMiB": 84
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            true,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            true,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [
+          "xl/calcChain.xml"
+        ],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/styles.xml",
+          "xl/workbook.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "onbekende-functies",
+      "matrix": "extra",
+      "bronhash": "7618806b4b839a457cbb823791970e820b05b6b795f5633738d4c1aff2d852c9",
+      "openenMs": 174,
+      "opslaanNoopMs": 22,
+      "formulesNaOpenen": {
+        "gecontroleerd": 7,
+        "afwijkend": []
+      },
+      "bewerkenMs": 3,
+      "opslaanMs": 4,
+      "formulesNaBewerking": {
+        "gecontroleerd": 7,
+        "afwijkend": []
+      },
+      "uitvoerhash": "d80761313af8391b33c13be3e3a9e797c4530f206b77bdfe516eeea90ae8d16c",
+      "heropenenMs": 20,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 7,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 166,
+        "toenameMiB": 108
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "foutwaarden",
+      "matrix": "extra",
+      "bronhash": "836bfd2020c681a005937a88137763bbdc8f7d90e0399431adf854af1b3f18be",
+      "openenMs": 220,
+      "opslaanNoopMs": 30,
+      "formulesNaOpenen": {
+        "gecontroleerd": 8,
+        "afwijkend": []
+      },
+      "bewerkenMs": 3,
+      "opslaanMs": 7,
+      "formulesNaBewerking": {
+        "gecontroleerd": 8,
+        "afwijkend": []
+      },
+      "uitvoerhash": "4fa6199fe0af180afe99f6d739f140e25c88080c6f2b812612e347da04376107",
+      "heropenenMs": 22,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 8,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 165,
+        "toenameMiB": 107
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "nl-notatie",
+      "matrix": "extra",
+      "bronhash": "c155d3be05de9910ef76b4091d4bfb8b902c7d885a803cfa61ca8b16c5c09356",
+      "openenMs": 117,
+      "opslaanNoopMs": 23,
+      "formulesNaOpenen": {
+        "gecontroleerd": 0,
+        "afwijkend": []
+      },
+      "bewerkenMs": 10,
+      "opslaanMs": 7,
+      "formulesNaBewerking": {
+        "gecontroleerd": 0,
+        "afwijkend": []
+      },
+      "uitvoerhash": "7e31939d190ffce10d8f260676f98ba5cc4a7c86924c7182cf572ff860976918",
+      "heropenenMs": 8,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 0,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 80,
+        "toenameMiB": 22
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/sharedStrings.xml",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/styles.xml",
+          "xl/workbook.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    },
+    {
+      "naam": "groot-werkboek",
+      "matrix": "extra",
+      "bronhash": "0da156e0824a238acced4d911249922d7930ea89e43562e0464c34466a00cf7f",
+      "openenMs": 1291,
+      "opslaanNoopMs": 819,
+      "formulesNaOpenen": {
+        "gecontroleerd": 6001,
+        "afwijkend": []
+      },
+      "bewerkenMs": 146,
+      "opslaanMs": 525,
+      "formulesNaBewerking": {
+        "gecontroleerd": 6001,
+        "afwijkend": []
+      },
+      "uitvoerhash": "126f09055cec61c5b95f2267d9210a437c971b05f6c967c1079fd24b985b9f53",
+      "heropenenMs": 686,
+      "bewerkingNaHeropenen": true,
+      "formulesNaHeropenen": {
+        "gecontroleerd": 6001,
+        "afwijkend": []
+      },
+      "geheugen": {
+        "rssMiB": 204,
+        "toenameMiB": 142
+      },
+      "kenmerkenNoop": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "kenmerkenBewerkt": {
+        "verloren_of_gewijzigd": [
+          {
+            "kenmerk": "onbekende_onderdelen",
+            "voor": [],
+            "na": [
+              {
+                "onderdeel": "xl/metadata.xml",
+                "relatie": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "aanwezig": true,
+                "inhoudstype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"
+              }
+            ]
+          }
+        ],
+        "informatief": {
+          "rekenketen": [
+            false,
+            false
+          ],
+          "calcPr": [
+            {
+              "calcId": "191029"
+            },
+            {}
+          ]
+        }
+      },
+      "pakketBewerkt": {
+        "verwijderd": [],
+        "toegevoegd": [
+          "docProps/app.xml",
+          "docProps/core.xml",
+          "xl/metadata.xml",
+          "xl/theme/theme1.xml"
+        ],
+        "gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/styles.xml",
+          "xl/workbook.xml",
+          "xl/worksheets/sheet1.xml"
+        ],
+        "onverwacht_gewijzigd": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/_rels/workbook.xml.rels",
+          "xl/styles.xml",
+          "xl/workbook.xml"
+        ],
+        "pakketcontrole": "afwijkingen",
+        "inhoudelijke_en_visuele_controle": "niet_uitgevoerd"
+      },
+      "status": "gemeten"
+    }
+  ]
+}

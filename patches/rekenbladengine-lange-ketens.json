@@ -15,9 +15,9 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69",
-  "wasmBytes": 7693941,
-  "stand": "Gemerged via PR #164 (cbb0bf6e); issue #64 gesloten na 2419 native kernproeven (16 bestaande overgeslagen), tien JS/WASM-proeven, 1874 unieke appproeven, bytegelijke herbouw, gerichte native bediening/opslag en zes geslaagde platformchecks op b96bb0ee. Niet opgenomen in de oudere releases 2026-W45.1 en 2026-W45.2.",
+  "wasmSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+  "wasmBytes": 7693796,
+  "stand": "Werkstand voor issue #3: herberekende uitkomsten worden bij expliciet opslaan bewaard, ook zonder inhoudelijke bewerking. De eerdere keten- en regiopatches blijven aanwezig. Nog niet opgenomen in een gepubliceerde uitgave.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -42,6 +42,28 @@
         {
           "pakket": "betteroffice-xlsx",
           "test": "ingebouwde_datums"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-herberekende-opslag.patch",
+      "patchSha256": "112e472bd62f61bf203ca5af4123d72816dce9bb9b41a10e6435cc6f31738995",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "workbook"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "source_cached_results"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "save_reopen"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "chart_save"
         }
       ]
     }
