@@ -63,9 +63,9 @@ bestandselectie, serialisatieafnemer en ontbrekende hostopmaak in.
   aanwezig. De browserreferentie herschrijft ook kop- en voettekst-XML;
   packageverschillen zijn daarom afzonderlijk gerapporteerd.
 - D2: beide tabellen, afbeelding en twee secties met liggende sectie blijven
-  aanwezig. De screenshots tonen het begin van de eerste pagina; de native
-  vervolgbeelden tonen slechts een deel van de tweede pagina. Een volledige
-  visuele vergelijking van de liggende pagina staat nog open.
+  aanwezig. De eerste screenshots tonen slechts delen van de pagina's. De
+  aanvullende volledige beelden hieronder tonen beide pagina's van de
+  opgeslagen no-op- en bewerkingskopieën, in beide editors.
 - D3: opmerkingen, invoeg-/verwijderrevisies, voetnoot, custom XML, onbekende
   pakketdelen en het onbekende element blijven behouden in de gemeten gevallen.
   De nieuwe productieroute bewaart ook de verwijzingsstijl.
@@ -84,6 +84,30 @@ bestandselectie, serialisatieafnemer en ontbrekende hostopmaak in.
 
 De native bron- en resultaatbeelden en de zes referentiebeelden zijn visueel
 bekeken. Ze zijn geen pixelvergelijking of volledige paginavrijgave.
+
+## Aanvullende volledige pagina's
+
+De zes opgeslagen native kopieën en de zes oorspronkelijke browserdownloads
+zijn opnieuw geopend in eigen profielen met grotere vensters. Alle twaalf
+nieuwe beelden zijn visueel bekeken, inclusief de onderzijde van iedere pagina.
+Bestand- en beeldhashes staan bij de beelden; de native programmahash is
+opnieuw met de publieke v2026.45.3-DEB vergeleken. Er is hierbij niet opnieuw
+opgeslagen of aan de bron-/resultaatbestanden gewijzigd.
+
+| Geval | Native no-op / bewerkt | Oorspronkelijke browseradapter no-op / bewerkt | Waarneming |
+| --- | --- | --- | --- |
+| D1 | [No-op](documentmatrix-2026-11-06/volledige-paginas/writer/D1-noop-volledig.png) / [bewerkt](documentmatrix-2026-11-06/volledige-paginas/writer/D1-bewerkt-volledig.png) | [No-op](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/D1-folio-noop-volledig.png) / [bewerkt](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/D1-folio-bewerking-volledig.png) | Beide pagina's, briefpapier en herhaalde koptekst; voetteksten tonen 1 van 2 en 2 van 2. Alleen week 12 → 14. |
+| D2 | [No-op](documentmatrix-2026-11-06/volledige-paginas/writer/D2-noop-volledig.png) / [bewerkt](documentmatrix-2026-11-06/volledige-paginas/writer/D2-bewerkt-volledig.png) | [No-op](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/D2-folio-noop-volledig.png) / [bewerkt](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/D2-folio-bewerking-volledig.png) | Staande eerste pagina, liggende tweede pagina, beide tabellen en afbeelding. Alleen 125 → 130. |
+| D3 | [No-op](documentmatrix-2026-11-06/volledige-paginas/writer/D3-noop-volledig.png) / [bewerkt](documentmatrix-2026-11-06/volledige-paginas/writer/D3-bewerkt-volledig.png) | [No-op](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/D3-folio-noop-volledig.png) / [bewerkt](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/D3-folio-bewerking-volledig.png) | Eén pagina met revisiemarkeringen en voetnoot met scheidingslijn onderaan. Alleen versie A → B. Het aangetoonde XML-stijlverlies in de oude native versie blijft afzonderlijk gerapporteerd. |
+
+De browseradapter toont revisies in de tekst en een opmerkingenknop; Writer
+toont daarnaast het opmerkingen-/revisiepaneel. Markerkleuren en schaal zijn
+editorafhankelijk. Native D1/D3 zijn op 70% vastgelegd, behalve D3-no-op op
+90%; D2 op 80%. De browserbeelden zijn op 100%. Dit zijn volledige
+overzichtsbeelden en geen vergelijking van dezelfde pixelcoördinaten.
+De [native controles](documentmatrix-2026-11-06/volledige-paginas/writer/controle.json)
+en [browsercontroles](documentmatrix-2026-11-06/volledige-paginas/yapp-browser/controle.json)
+leggen de gebruikte opgeslagen bestanden, beelden en afsluiting vast.
 
 ## Controles herhalen
 
@@ -122,6 +146,7 @@ bewust gewijzigde verwijzingskleur.
 
 ![D3 na echte productie-browseropslag en heropenen](documentmatrix-2026-11-06/browser-productie/D3-heropend.png)
 
-Issue #2 blijft open voor de ontbrekende volledige paginavergelijking en de
-overige nog niet bewezen adapter-/opslagcriteria. Deze metingen bewijzen geen
+Issue #2 blijft open voor de overige nog niet bewezen adapter-/opslagcriteria
+en de native controle van de nieuwe correctie in een volgende installer.
+Deze metingen bewijzen geen
 algemeen verliesvrije verwerking van DOCX, ODF of een praktijkcorpus.
