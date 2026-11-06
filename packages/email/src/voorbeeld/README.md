@@ -4,6 +4,13 @@ Uitbreidbaar raamwerk om bijlagen (en later andere bestanden in de
 kantooromgeving) te tonen zonder ze te openen. Los van de mail-UI: alles wat
 het nodig heeft is een `VoorbeeldBron`.
 
+Voor hergebruik van echte DOCX-, XLSX- en PPTX-weergave buiten Office bestaat
+nu het afzonderlijke [pakket `@openaec/voorbeeld`](../../../voorbeeld/README.md).
+De [Y-next-aansluiting](../../../../docs/herbruikbare-kantoorvoorbeelden.md)
+beschrijft de overdracht van bytes, statische assets en rechten. Dat pakket
+heeft een eigen broncontract met `laad(signal)`; deze bestaande mailviewer en
+zijn Office-bestandskaart worden daarmee niet automatisch vervangen.
+
 ## Gebruik
 
 ```tsx
