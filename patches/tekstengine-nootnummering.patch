@@ -63,7 +63,7 @@
 +        let labels = build_note_presentations(&note_refs, &layout.pages, regions);
 +        let notes_changed = herstel_nootverwijzingen(&mut blocks, &labels);
 +        if offsets == previous_offsets && next_widths == widths && bands == previous_bands && !notes_changed {
-@@ -25409,0 +25462,23 @@
+@@ -25409,0 +25462,50 @@
 +    fn nootverwijzingen_gebruiken_de_ingestelde_nummering() {
 +        let engine = EngineSession::new(19);
 +        crate::seed::seed_from_docx(engine.doc(), include_bytes!("../tests/fixtures/footnote-anchor.docx")).unwrap();
@@ -84,6 +84,33 @@
 +            .filter(|r| !r["noteRef"].is_null())
 +            .map(|r| r["text"].as_str().unwrap()).collect();
 +        assert_eq!(labels, ["iii", "iii"]);
++    }
++
++    #[test]
++    fn nootverwijzingen_chicago_worden_voor_meting_herhaald() {
++        for (begin, verwacht) in [(1, "*".to_owned()), (3, "‡".to_owned()),
++            (5, "**".to_owned()), (8, "§§".to_owned()), (9, "***".to_owned()),
++            (256, "§".repeat(64))] {
++        let engine = EngineSession::new(19);
++        crate::seed::seed_from_docx(engine.doc(), include_bytes!("../tests/fixtures/footnote-anchor.docx")).unwrap();
++        let request = serde_json::json!({
++            "bodyStory": "body", "renderEnv": {},
++            "regions": {"sections": [{"sectionId": "main", "properties": {}}],
++                "noteSettings": {"footnote": {"numFmt": "chicago", "numStart": begin},
++                    "endnote": {"numFmt": "chicago", "numStart": begin}}},
++            "notes": {"contents": [{"id": 2, "noteKind": "footnote", "height": 0},
++                {"id": 3, "noteKind": "endnote", "height": 0}]},
++            "measurement": {"fontChains": {}, "defaults": {"fontSize": 11, "fontFamily": "Calibri"},
++                "authoritativeShaping": false}
++        });
++        let output = engine.layout_document_with_regions_json(&request.to_string()).unwrap();
++        let list: serde_json::Value = serde_json::from_str(&engine.build_display_list_json(&output).unwrap()).unwrap();
++        let labels: Vec<&str> = list["pages"].as_array().unwrap().iter()
++            .flat_map(|p| p["primitives"].as_array().unwrap())
++            .filter(|r| !r["noteRef"].is_null())
++            .map(|r| r["text"].as_str().unwrap()).collect();
++        assert_eq!(labels, [verwacht.as_str(), verwacht.as_str()]);
++        }
 +    }
 +
 +    #[test]
@@ -147,6 +174,9 @@
 +                    });
 +                    continue;
 +                }
+@@ -4688 +4697 @@
+-pub const MAX_NOTE_LABEL_CHARS: usize = 64;
++pub use crate::regions::MAX_NOTE_LABEL_CHARS;
 @@ -6275 +6284,6 @@
 -                let visible = slice_utf16(&text.text, start, end);
 +                let noot = text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some();
@@ -689,3 +719,37 @@
 +            // Bij import zijn alleen auteurswaarden opgenomen. Ook een kleine
 +            // expliciet ingestelde pct-waarde blijft een echte voorkeur.
 +            let width_value = width_value.filter(|_| width_type.as_deref() != Some("auto"));
+--- a/crates/docx-layout/src/regions.rs
++++ b/crates/docx-layout/src/regions.rs
+@@ -698,0 +699,5 @@
++// Dezelfde grens als de notenlabels in de tekenlijst: ook geïmporteerde
++// beginwaarden mogen geen onbegrensde tekstherhaling veroorzaken.
++pub const MAX_NOTE_LABEL_CHARS: usize = 64;
++const MAX_CHICAGO_NUMBER: i64 = 4 * MAX_NOTE_LABEL_CHARS as i64;
++
+@@ -701,0 +707 @@
++        "chicago" => (1..=MAX_CHICAGO_NUMBER).contains(&number),
+@@ -719,0 +726,6 @@
++        "chicago" if (1..=MAX_CHICAGO_NUMBER).contains(&number) => {
++            // Vier tekens, daarna dubbele en drievoudige tekens; het hele
++            // label blijft één verwijzing in het document.
++            let index = (number - 1) as usize;
++            ["*", "†", "‡", "§"][index % 4].repeat(index / 4 + 1)
++        }
+@@ -793,0 +806,16 @@
++    #[test]
++    fn chicago_symbolen_en_begrensde_herhaling() {
++        for (number, expected) in (1..).zip([
++            "*", "†", "‡", "§", "**", "††", "‡‡", "§§", "***", "†††", "‡‡‡", "§§§",
++        ]) {
++            assert_eq!(super::format_number(number, "chicago"), expected);
++            assert!(super::number_format_resolves(number, "chicago"));
++        }
++        assert_eq!(super::format_number(256, "chicago"), "§".repeat(64));
++        assert!(super::number_format_resolves(256, "chicago"));
++        for number in [i64::MIN, -1, 0, 257, i64::MAX] {
++            assert_eq!(super::format_number(number, "chicago"), number.to_string());
++            assert!(!super::number_format_resolves(number, "chicago"));
++        }
++    }
++
