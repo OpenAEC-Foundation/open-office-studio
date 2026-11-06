@@ -1,0 +1,103 @@
+{
+  "wasmSha256": "385e2c53ddcbddded2060cb1d749b6c0e9b3b84f87f73290c71e82932271a702",
+  "codes": [
+    "#,##0.00",
+    "[$-413]#,##0.00",
+    "[$€-413] #,##0.00",
+    "[$-nl-NL]#,##0.00",
+    "dd-mm-yyyy",
+    "[$-413]dddd d mmmm yyyy"
+  ],
+  "lezing": {
+    "calculation": {
+      "cycleCells": [],
+      "limitedCells": [],
+      "truncated": false
+    },
+    "ok": true,
+    "ranges": [
+      {
+        "cells": [
+          [
+            {
+              "a1": "A1",
+              "displayText": "1,234.50",
+              "formula": null,
+              "value": {
+                "kind": "number",
+                "value": 1234.5
+              }
+            },
+            {
+              "a1": "B1",
+              "displayText": "1,234.50",
+              "formula": null,
+              "value": {
+                "kind": "number",
+                "value": 1234.5
+              }
+            },
+            {
+              "a1": "C1",
+              "displayText": "€ 1,234.50",
+              "formula": null,
+              "value": {
+                "kind": "number",
+                "value": 1234.5
+              }
+            },
+            {
+              "a1": "D1",
+              "displayText": "1,234.50",
+              "formula": null,
+              "value": {
+                "kind": "number",
+                "value": 1234.5
+              }
+            },
+            {
+              "a1": "E1",
+              "displayText": "01-01-2026",
+              "formula": null,
+              "value": {
+                "kind": "number",
+                "value": 46023
+              }
+            },
+            {
+              "a1": "F1",
+              "displayText": "Thursday 1 January 2026",
+              "formula": null,
+              "value": {
+                "kind": "number",
+                "value": 46023
+              }
+            }
+          ]
+        ],
+        "target": {
+          "range": {
+            "a1": "A1:F1",
+            "kind": "a1"
+          },
+          "sheetId": "sheet:0"
+        }
+      }
+    ],
+    "sheets": [
+      {
+        "editable": true,
+        "name": "Blad 1",
+        "sheetId": "sheet:0",
+        "visibility": "visible"
+      }
+    ],
+    "version": "e7a3362d3f264972bc2194b3f102b7b2-12"
+  },
+  "bron": "Open Office Studio 2026-W45.2 / bestaande vastgezette XLSX-kern",
+  "verwachtVoorNederlandseWerkmap": {
+    "A1": "1.234,50",
+    "F1": "donderdag 1 januari 2026"
+  },
+  "omvang": "Rechtstreeks met de bestaande WASM gelezen; nog geen onafhankelijke visuele rasterproef in deze ronde."
+}
