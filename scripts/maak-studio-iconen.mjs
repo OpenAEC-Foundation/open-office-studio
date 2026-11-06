@@ -24,11 +24,16 @@ for (const keuze of keuzes)
 const lokaal = join(repo, ".local");
 await mkdir(lokaal, { recursive: true });
 for (const studio of studios.filter(s => s.beeldmerk && (!keuzes.length || keuzes.includes(s.sleutel)))) {
-  const bron = join(repo, "public", studio.beeldmerk.bestand);
+  const bron = join(repo, studio.beeldmerk.bronBestand);
   const bytes = await readFile(bron);
   const sha = createHash("sha256").update(bytes).digest("hex");
   if (sha !== studio.beeldmerk.sha256)
     throw new Error(`Bronbestand van ${studio.sleutel} wijkt af van de goedgekeurde checksum`);
+  // Beide bestaande webingangen gebruiken dezelfde ongewijzigde bronbytes.
+  for (const pad of [join(repo, "public", studio.beeldmerk.bestand), join(repo, "public/studio-icons", studio.sleutel + ".png")]) {
+    await mkdir(dirname(pad), { recursive: true });
+    await copyFile(bron, pad);
+  }
   const tijdelijk = await mkdtemp(join(lokaal, `iconen-${studio.sleutel}-`));
   try {
     const voerUit = (extra = []) => {
@@ -50,6 +55,13 @@ for (const studio of studios.filter(s => s.beeldmerk && (!keuzes.length || keuze
       const normaliseer = naam.endsWith(".png") ? helderePngHoeken : naam.endsWith(".ico") ? heldereIcoHoeken : vasteIcnsVolgorde;
       await writeFile(join(doel, naam), normaliseer(bytes));
     }
+    if (studio.sleutel === "office") {
+      // De oude hoofdmap blijft een expliciete compatibiliteitskopie van Office.
+      for (const naam of await readdir(doel))
+        if (/\.(png|ico|icns)$/.test(naam)) await copyFile(join(doel, naam), join(repo, "src-tauri/icons", naam));
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>Rasterbeeldmerk Open Office Studio</title><image width="512" height="512" href="data:image/png;base64,${bytes.toString("base64")}"/></svg>\n`;
+      await writeFile(join(repo, "assets/icon.svg"), svg);
+    }
     // De browseringang krijgt dezelfde identiteit als de bijbehorende installer.
     const favicon = join(repo, "public/studios", studio.sleutel, "favicon.ico");
     await mkdir(dirname(favicon), { recursive: true });
@@ -65,3 +77,20 @@ for (const studio of studios.filter(s => s.beeldmerk && (!keuzes.length || keuze
   }
 }
 await writeFile(manifestPad, JSON.stringify(manifest, null, 2) + "\n");
+// De bestaande bronadministratie van de samengevoegde ronde blijft leesbaar.
+const bronnen = [];
+for (const s of studios.filter(s => s.beeldmerk)) {
+  const namen = Object.keys(manifest.studios[s.sleutel].iconen);
+  const paden = [...namen.map(naam => `src-tauri/icons/${s.sleutel}/${naam}`),
+    `public/${s.beeldmerk.bestand}`, `public/studio-icons/${s.sleutel}.png`, `public/studios/${s.sleutel}/favicon.ico`];
+  if (s.sleutel === "office") paden.push(...namen.map(naam => `src-tauri/icons/${naam}`), "assets/icon.svg");
+  const outputs = [];
+  for (const path of paden) {
+    if (path.endsWith(".png")) {
+      const bytes = await readFile(join(repo, path));
+      outputs.push({ path, size: [bytes.readUInt32BE(16), bytes.readUInt32BE(20)] });
+    } else outputs.push({ path });
+  }
+  bronnen.push({ name: s.naam, source: s.beeldmerk.bronBestand, sha256: s.beeldmerk.sha256, source_url: s.beeldmerk.bron, outputs });
+}
+await writeFile(join(repo, "docs/branding/icons.json"), JSON.stringify(bronnen, null, 2) + "\n");

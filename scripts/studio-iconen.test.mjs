@@ -11,7 +11,7 @@ afterEach(async () => {
 async function kopie() {
   const map = await mkdtemp(join(tmpdir(), "studio-iconen-"));
   mappen.push(map);
-  for (const pad of ["assets/studios.json", "assets/studio-iconen.json", "src-tauri/icons", "public/studios", "src-tauri/tauri.conf.json"])
+  for (const pad of ["assets/studios.json", "assets/studio-iconen.json", "assets/icon.svg", "docs/branding", "src-tauri/icons", "public/studios", "public/studio-icons", "src-tauri/tauri.conf.json"])
     await cp(pad, join(map, pad), { recursive: true });
   return map;
 }

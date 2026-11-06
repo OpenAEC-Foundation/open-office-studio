@@ -1,7 +1,8 @@
 # Goedgekeurde studiobeeldmerken
 
 De zes geselecteerde Store-afbeeldingen van 6 november 2026 staan ongewijzigd
-onder `public/studios`. Bron-URL, goedgekeurde SHA-256 en issue staan per app
+onder `docs/branding`, met bytegelijke webkopieën onder `public/studios`
+en `public/studio-icons`. Bron-URL, goedgekeurde SHA-256 en issue staan per app
 in [de studiocatalogus](../assets/studios.json). Dit zijn **512 × 512
 raster-PNG's**, geen vectorbestanden. Grotere afgeleide iconen bevatten geen
 extra brondetail. De kalenderachtige afbeelding voor Spreadsheet is de
@@ -54,7 +55,9 @@ transparant. De ICNS-bestanden zijn onafhankelijk geopend.
 iconen, afwijkende favicons of een Office-configuratie die naar de vroegere
 algemene iconen wijst, laten de bouw stoppen. Iedere variant krijgt eigen
 icoonpaden; een generieke icoongeneratie in de oude hoofdmap overschrijft die
-sets niet. Vite kiest titel en favicon vóór de eerste browserweergave; de
+sets niet. De vroegere Office-hoofdmap wordt als compatibiliteitskopie
+van dezelfde set bijgehouden. De oude Python-ingang verwijst naar dezelfde
+generator; de variantkeuze van de favicon gebeurt uitsluitend in Vite. Vite kiest titel en favicon vóór de eerste browserweergave; de
 app gebruikt de bijbehorende bron in titelbalk, startscherm, module-ingangen
 en het venster Over.
 

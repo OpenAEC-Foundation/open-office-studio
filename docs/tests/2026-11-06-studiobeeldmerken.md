@@ -39,3 +39,14 @@ werkmapregio/getalnotatie (#164), nootomzetting (#171), PDF-koppelingen
 (#172) en deze eigen app-identiteiten. De brede issues #37 en #51 blijven
 open voor hun resterende criteria. Het parallelle native interfacetraject
 #116 wordt niet meegenomen.
+
+## Samenvoeging met de gelijktijdige bronronde
+
+PR #173 levert dezelfde goedgekeurde masters en versie 2026-W45.3. Die
+commit is opgenomen in deze branch. De oorspronkelijke bronadministratie
+blijft behouden; de Python-ingang en de Node-ingang voeren dezelfde
+gecontroleerde pipeline uit. De oude Office-iconenmap wordt als
+compatibiliteitskopie bijgehouden. De faviconkeuze gebeurt één keer in
+Vite en wordt niet achteraf door de variantbouwer vervangen. De generieke
+Database-favicon blijft behouden. Na deze samenvoeging worden de gezamenlijke
+app-set en productievarianten opnieuw gecontroleerd.

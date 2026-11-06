@@ -10,6 +10,7 @@ export interface Studio {
   module: StudioModule | null;
   beeldmerk?: {
     bestand: string;
+    bronBestand: string;
     sha256: string;
     bron: string;
     issue: number;
