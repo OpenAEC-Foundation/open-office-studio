@@ -1,0 +1,2086 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis_commit": "6a092f093f16823866eb5ae98c871bd3ee5afe89",
+  "app_ongewijzigd": "2026.45.49 / alpha57",
+  "analyse": {
+    "schema": 1,
+    "eerste": {
+      "groepen": 67,
+      "toetsen": 351,
+      "laatste_toets_ms": 5775,
+      "laatste_taak_ms": 17125,
+      "wachtrij_naloop_ms": 11350,
+      "max_diepte_voor_toelating": 48,
+      "max_taakwacht_ms": 11130,
+      "getekende_tekst_ms": 28179,
+      "tekenen_na_laatste_taak_benadering_ms": 11054,
+      "sommen_ms": {
+        "duur_ms": 17084.0,
+        "voor_native_ms": 579.9999999999964,
+        "native_wand_ms": 7951.000000000004,
+        "na_native_ms": 8553.0,
+        "na_selectie_ms": 7430.999999999996
+      },
+      "rust_binnen_ms": 7172,
+      "koppeling_ms": 9634.0,
+      "koppeling_stappen_ms": {
+        "cursor": 72.99999999998181,
+        "bron": 186.00000000002183,
+        "hash": 249.0,
+        "aanvraag": 11.999999999996362,
+        "transport": 7991.999999999993,
+        "binding": 41.0,
+        "mutatie": 444.00000000000364,
+        "selectie": 634.0000000000073
+      },
+      "fontvragen": null,
+      "fontantwoorden": null,
+      "laatste_fontantwoord_ms": null,
+      "lezingen": {},
+      "raf_max_tussen_ms": 618,
+      "taken": [
+        {
+          "id": 1,
+          "toelaten_ms": 23,
+          "begin_ms": 23,
+          "einde_ms": 823,
+          "wacht_ms": 0,
+          "duur_ms": 800,
+          "voor_native_ms": 233,
+          "native_wand_ms": 396,
+          "na_native_ms": 171,
+          "na_selectie_ms": 143.99999999999636
+        },
+        {
+          "id": 2,
+          "toelaten_ms": 372,
+          "begin_ms": 841,
+          "einde_ms": 1123,
+          "wacht_ms": 469,
+          "duur_ms": 282,
+          "voor_native_ms": 5,
+          "native_wand_ms": 137,
+          "na_native_ms": 140,
+          "na_selectie_ms": 120
+        },
+        {
+          "id": 3,
+          "toelaten_ms": 420,
+          "begin_ms": 1123,
+          "einde_ms": 1427,
+          "wacht_ms": 703,
+          "duur_ms": 304,
+          "voor_native_ms": 26,
+          "native_wand_ms": 137,
+          "na_native_ms": 141,
+          "na_selectie_ms": 127
+        },
+        {
+          "id": 4,
+          "toelaten_ms": 473,
+          "begin_ms": 1427,
+          "einde_ms": 1774,
+          "wacht_ms": 954,
+          "duur_ms": 347,
+          "voor_native_ms": 6,
+          "native_wand_ms": 161,
+          "na_native_ms": 180,
+          "na_selectie_ms": 152.99999999999636
+        },
+        {
+          "id": 5,
+          "toelaten_ms": 531.0000000000036,
+          "begin_ms": 1774,
+          "einde_ms": 2083.0000000000036,
+          "wacht_ms": 1242.9999999999964,
+          "duur_ms": 309.00000000000364,
+          "voor_native_ms": 7.000000000003638,
+          "native_wand_ms": 135.99999999999636,
+          "na_native_ms": 166.00000000000364,
+          "na_selectie_ms": 150.00000000000364
+        },
+        {
+          "id": 6,
+          "toelaten_ms": 606,
+          "begin_ms": 2083.0000000000036,
+          "einde_ms": 2408,
+          "wacht_ms": 1477.0000000000036,
+          "duur_ms": 324.99999999999636,
+          "voor_native_ms": 9.0,
+          "native_wand_ms": 130.99999999999636,
+          "na_native_ms": 185,
+          "na_selectie_ms": 163
+        },
+        {
+          "id": 7,
+          "toelaten_ms": 625,
+          "begin_ms": 2408,
+          "einde_ms": 2726,
+          "wacht_ms": 1783,
+          "duur_ms": 318,
+          "voor_native_ms": 7,
+          "native_wand_ms": 129,
+          "na_native_ms": 182,
+          "na_selectie_ms": 159
+        },
+        {
+          "id": 8,
+          "toelaten_ms": 981,
+          "begin_ms": 2726,
+          "einde_ms": 3107,
+          "wacht_ms": 1745,
+          "duur_ms": 381,
+          "voor_native_ms": 7,
+          "native_wand_ms": 209,
+          "na_native_ms": 165,
+          "na_selectie_ms": 145.99999999999636
+        },
+        {
+          "id": 9,
+          "toelaten_ms": 1437,
+          "begin_ms": 3107,
+          "einde_ms": 3475,
+          "wacht_ms": 1670,
+          "duur_ms": 368,
+          "voor_native_ms": 8.000000000003638,
+          "native_wand_ms": 154.99999999999636,
+          "na_native_ms": 205,
+          "na_selectie_ms": 180
+        },
+        {
+          "id": 10,
+          "toelaten_ms": 1472,
+          "begin_ms": 3475,
+          "einde_ms": 3785,
+          "wacht_ms": 2003,
+          "duur_ms": 310,
+          "voor_native_ms": 4,
+          "native_wand_ms": 148.00000000000364,
+          "na_native_ms": 157.99999999999636,
+          "na_selectie_ms": 140
+        },
+        {
+          "id": 11,
+          "toelaten_ms": 1514,
+          "begin_ms": 3785,
+          "einde_ms": 4053,
+          "wacht_ms": 2271,
+          "duur_ms": 268,
+          "voor_native_ms": 4,
+          "native_wand_ms": 132,
+          "na_native_ms": 132,
+          "na_selectie_ms": 117
+        },
+        {
+          "id": 12,
+          "toelaten_ms": 1590,
+          "begin_ms": 4053,
+          "einde_ms": 4302,
+          "wacht_ms": 2463,
+          "duur_ms": 249,
+          "voor_native_ms": 4.000000000003638,
+          "native_wand_ms": 132.99999999999636,
+          "na_native_ms": 112,
+          "na_selectie_ms": 97
+        },
+        {
+          "id": 13,
+          "toelaten_ms": 1813.0000000000036,
+          "begin_ms": 4302,
+          "einde_ms": 4543,
+          "wacht_ms": 2488.9999999999964,
+          "duur_ms": 241,
+          "voor_native_ms": 3,
+          "native_wand_ms": 115,
+          "na_native_ms": 123,
+          "na_selectie_ms": 104.99999999999636
+        },
+        {
+          "id": 14,
+          "toelaten_ms": 1822,
+          "begin_ms": 4543,
+          "einde_ms": 4762,
+          "wacht_ms": 2721,
+          "duur_ms": 219,
+          "voor_native_ms": 3,
+          "native_wand_ms": 109,
+          "na_native_ms": 107,
+          "na_selectie_ms": 95
+        },
+        {
+          "id": 15,
+          "toelaten_ms": 1851,
+          "begin_ms": 4762,
+          "einde_ms": 5020.000000000004,
+          "wacht_ms": 2911,
+          "duur_ms": 258.00000000000364,
+          "voor_native_ms": 4,
+          "native_wand_ms": 119,
+          "na_native_ms": 135.00000000000364,
+          "na_selectie_ms": 120.0
+        },
+        {
+          "id": 16,
+          "toelaten_ms": 1909.0000000000036,
+          "begin_ms": 5020.000000000004,
+          "einde_ms": 5264.000000000004,
+          "wacht_ms": 3111.0,
+          "duur_ms": 244.0,
+          "voor_native_ms": 3.0,
+          "native_wand_ms": 122.99999999999636,
+          "na_native_ms": 118.00000000000364,
+          "na_selectie_ms": 106.00000000000364
+        },
+        {
+          "id": 17,
+          "toelaten_ms": 2130,
+          "begin_ms": 5264.000000000004,
+          "einde_ms": 5502.000000000004,
+          "wacht_ms": 3134.0000000000036,
+          "duur_ms": 238.0,
+          "voor_native_ms": 4.999999999996362,
+          "native_wand_ms": 126.00000000000364,
+          "na_native_ms": 107.0,
+          "na_selectie_ms": 93.00000000000364
+        },
+        {
+          "id": 18,
+          "toelaten_ms": 2146,
+          "begin_ms": 5502.000000000004,
+          "einde_ms": 5736.000000000004,
+          "wacht_ms": 3356.0000000000036,
+          "duur_ms": 234.0,
+          "voor_native_ms": 3.999999999996362,
+          "native_wand_ms": 119.99999999999636,
+          "na_native_ms": 110.00000000000728,
+          "na_selectie_ms": 97.0
+        },
+        {
+          "id": 19,
+          "toelaten_ms": 2222,
+          "begin_ms": 5736.000000000004,
+          "einde_ms": 5968,
+          "wacht_ms": 3514.0000000000036,
+          "duur_ms": 231.99999999999636,
+          "voor_native_ms": 3.0,
+          "native_wand_ms": 102.99999999999636,
+          "na_native_ms": 126,
+          "na_selectie_ms": 111
+        },
+        {
+          "id": 20,
+          "toelaten_ms": 2450,
+          "begin_ms": 5968,
+          "einde_ms": 6187,
+          "wacht_ms": 3518,
+          "duur_ms": 219,
+          "voor_native_ms": 4,
+          "native_wand_ms": 92,
+          "na_native_ms": 123,
+          "na_selectie_ms": 106
+        },
+        {
+          "id": 21,
+          "toelaten_ms": 2473,
+          "begin_ms": 6187,
+          "einde_ms": 6419.000000000007,
+          "wacht_ms": 3714,
+          "duur_ms": 232.00000000000728,
+          "voor_native_ms": 4,
+          "native_wand_ms": 97.00000000000728,
+          "na_native_ms": 131.0,
+          "na_selectie_ms": 113.00000000000728
+        },
+        {
+          "id": 22,
+          "toelaten_ms": 2752.0000000000036,
+          "begin_ms": 6419.000000000007,
+          "einde_ms": 7019,
+          "wacht_ms": 3667.0000000000036,
+          "duur_ms": 599.9999999999927,
+          "voor_native_ms": 4.999999999992724,
+          "native_wand_ms": 477,
+          "na_native_ms": 118,
+          "na_selectie_ms": 105
+        },
+        {
+          "id": 23,
+          "toelaten_ms": 2775.0000000000036,
+          "begin_ms": 7019,
+          "einde_ms": 7293,
+          "wacht_ms": 4243.999999999996,
+          "duur_ms": 274,
+          "voor_native_ms": 4,
+          "native_wand_ms": 132,
+          "na_native_ms": 138,
+          "na_selectie_ms": 119
+        },
+        {
+          "id": 24,
+          "toelaten_ms": 3114,
+          "begin_ms": 7293,
+          "einde_ms": 7581,
+          "wacht_ms": 4179,
+          "duur_ms": 288,
+          "voor_native_ms": 71.00000000000728,
+          "native_wand_ms": 104.99999999999272,
+          "na_native_ms": 112,
+          "na_selectie_ms": 100
+        },
+        {
+          "id": 25,
+          "toelaten_ms": 3125,
+          "begin_ms": 7581,
+          "einde_ms": 7785,
+          "wacht_ms": 4456,
+          "duur_ms": 204,
+          "voor_native_ms": 4,
+          "native_wand_ms": 90.00000000000728,
+          "na_native_ms": 109.99999999999272,
+          "na_selectie_ms": 99
+        },
+        {
+          "id": 26,
+          "toelaten_ms": 3132,
+          "begin_ms": 7785,
+          "einde_ms": 8032,
+          "wacht_ms": 4653,
+          "duur_ms": 247,
+          "voor_native_ms": 3.000000000007276,
+          "native_wand_ms": 94.99999999999272,
+          "na_native_ms": 149,
+          "na_selectie_ms": 135
+        },
+        {
+          "id": 27,
+          "toelaten_ms": 3143,
+          "begin_ms": 8032,
+          "einde_ms": 8260,
+          "wacht_ms": 4889,
+          "duur_ms": 228,
+          "voor_native_ms": 4,
+          "native_wand_ms": 102,
+          "na_native_ms": 122,
+          "na_selectie_ms": 107
+        },
+        {
+          "id": 28,
+          "toelaten_ms": 3160,
+          "begin_ms": 8260,
+          "einde_ms": 8487,
+          "wacht_ms": 5100,
+          "duur_ms": 227,
+          "voor_native_ms": 4,
+          "native_wand_ms": 110,
+          "na_native_ms": 113,
+          "na_selectie_ms": 98
+        },
+        {
+          "id": 29,
+          "toelaten_ms": 3222,
+          "begin_ms": 8487,
+          "einde_ms": 8686,
+          "wacht_ms": 5265,
+          "duur_ms": 199,
+          "voor_native_ms": 3,
+          "native_wand_ms": 90,
+          "na_native_ms": 106,
+          "na_selectie_ms": 94
+        },
+        {
+          "id": 30,
+          "toelaten_ms": 3504,
+          "begin_ms": 8686,
+          "einde_ms": 8889,
+          "wacht_ms": 5182,
+          "duur_ms": 203,
+          "voor_native_ms": 3,
+          "native_wand_ms": 93,
+          "na_native_ms": 107,
+          "na_selectie_ms": 94
+        },
+        {
+          "id": 31,
+          "toelaten_ms": 3534.0000000000036,
+          "begin_ms": 8889,
+          "einde_ms": 9097,
+          "wacht_ms": 5354.999999999996,
+          "duur_ms": 208,
+          "voor_native_ms": 3,
+          "native_wand_ms": 91.00000000000728,
+          "na_native_ms": 113.99999999999272,
+          "na_selectie_ms": 97
+        },
+        {
+          "id": 32,
+          "toelaten_ms": 3806,
+          "begin_ms": 9097,
+          "einde_ms": 9342,
+          "wacht_ms": 5291,
+          "duur_ms": 245,
+          "voor_native_ms": 3,
+          "native_wand_ms": 105,
+          "na_native_ms": 137,
+          "na_selectie_ms": 121
+        },
+        {
+          "id": 33,
+          "toelaten_ms": 3818,
+          "begin_ms": 9342,
+          "einde_ms": 9568,
+          "wacht_ms": 5524,
+          "duur_ms": 226,
+          "voor_native_ms": 3,
+          "native_wand_ms": 93,
+          "na_native_ms": 130,
+          "na_selectie_ms": 112
+        },
+        {
+          "id": 34,
+          "toelaten_ms": 3822,
+          "begin_ms": 9568,
+          "einde_ms": 9790,
+          "wacht_ms": 5746,
+          "duur_ms": 222,
+          "voor_native_ms": 4,
+          "native_wand_ms": 91.00000000000728,
+          "na_native_ms": 126.99999999999272,
+          "na_selectie_ms": 109
+        },
+        {
+          "id": 35,
+          "toelaten_ms": 3860,
+          "begin_ms": 9790,
+          "einde_ms": 10016,
+          "wacht_ms": 5930,
+          "duur_ms": 226,
+          "voor_native_ms": 3,
+          "native_wand_ms": 97,
+          "na_native_ms": 126,
+          "na_selectie_ms": 110
+        },
+        {
+          "id": 36,
+          "toelaten_ms": 3893,
+          "begin_ms": 10016,
+          "einde_ms": 10247,
+          "wacht_ms": 6123,
+          "duur_ms": 231,
+          "voor_native_ms": 5,
+          "native_wand_ms": 100,
+          "na_native_ms": 126,
+          "na_selectie_ms": 113
+        },
+        {
+          "id": 37,
+          "toelaten_ms": 4062,
+          "begin_ms": 10247,
+          "einde_ms": 10461,
+          "wacht_ms": 6185,
+          "duur_ms": 214,
+          "voor_native_ms": 4,
+          "native_wand_ms": 97,
+          "na_native_ms": 113,
+          "na_selectie_ms": 99.99999999999272
+        },
+        {
+          "id": 38,
+          "toelaten_ms": 4075,
+          "begin_ms": 10461,
+          "einde_ms": 10694,
+          "wacht_ms": 6386,
+          "duur_ms": 233,
+          "voor_native_ms": 4,
+          "native_wand_ms": 98,
+          "na_native_ms": 131,
+          "na_selectie_ms": 115
+        },
+        {
+          "id": 39,
+          "toelaten_ms": 4088,
+          "begin_ms": 10694,
+          "einde_ms": 10924,
+          "wacht_ms": 6606,
+          "duur_ms": 230,
+          "voor_native_ms": 4,
+          "native_wand_ms": 97,
+          "na_native_ms": 129,
+          "na_selectie_ms": 105
+        },
+        {
+          "id": 40,
+          "toelaten_ms": 4092.0000000000036,
+          "begin_ms": 10924,
+          "einde_ms": 11154,
+          "wacht_ms": 6831.999999999996,
+          "duur_ms": 230,
+          "voor_native_ms": 3,
+          "native_wand_ms": 107,
+          "na_native_ms": 120,
+          "na_selectie_ms": 103.99999999999272
+        },
+        {
+          "id": 41,
+          "toelaten_ms": 4122,
+          "begin_ms": 11154,
+          "einde_ms": 11367.000000000007,
+          "wacht_ms": 7032,
+          "duur_ms": 213.00000000000728,
+          "voor_native_ms": 2,
+          "native_wand_ms": 102,
+          "na_native_ms": 109.00000000000728,
+          "na_selectie_ms": 96.00000000000728
+        },
+        {
+          "id": 42,
+          "toelaten_ms": 4180,
+          "begin_ms": 11367.000000000007,
+          "einde_ms": 11569,
+          "wacht_ms": 7187.000000000007,
+          "duur_ms": 201.99999999999272,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 88,
+          "na_native_ms": 110,
+          "na_selectie_ms": 95
+        },
+        {
+          "id": 43,
+          "toelaten_ms": 4341,
+          "begin_ms": 11569,
+          "einde_ms": 11792,
+          "wacht_ms": 7228,
+          "duur_ms": 223,
+          "voor_native_ms": 4,
+          "native_wand_ms": 108,
+          "na_native_ms": 111,
+          "na_selectie_ms": 100
+        },
+        {
+          "id": 44,
+          "toelaten_ms": 4354,
+          "begin_ms": 11792,
+          "einde_ms": 12056,
+          "wacht_ms": 7438,
+          "duur_ms": 264,
+          "voor_native_ms": 4,
+          "native_wand_ms": 136,
+          "na_native_ms": 124,
+          "na_selectie_ms": 109
+        },
+        {
+          "id": 45,
+          "toelaten_ms": 4393,
+          "begin_ms": 12056,
+          "einde_ms": 12290,
+          "wacht_ms": 7663,
+          "duur_ms": 234,
+          "voor_native_ms": 3,
+          "native_wand_ms": 100,
+          "na_native_ms": 131,
+          "na_selectie_ms": 111.99999999999272
+        },
+        {
+          "id": 46,
+          "toelaten_ms": 4582,
+          "begin_ms": 12290,
+          "einde_ms": 12512,
+          "wacht_ms": 7708,
+          "duur_ms": 222,
+          "voor_native_ms": 2,
+          "native_wand_ms": 101,
+          "na_native_ms": 119,
+          "na_selectie_ms": 103
+        },
+        {
+          "id": 47,
+          "toelaten_ms": 4617,
+          "begin_ms": 12512,
+          "einde_ms": 12731,
+          "wacht_ms": 7895,
+          "duur_ms": 219,
+          "voor_native_ms": 4,
+          "native_wand_ms": 94,
+          "na_native_ms": 121,
+          "na_selectie_ms": 99
+        },
+        {
+          "id": 48,
+          "toelaten_ms": 4626,
+          "begin_ms": 12731,
+          "einde_ms": 12935,
+          "wacht_ms": 8105,
+          "duur_ms": 204,
+          "voor_native_ms": 4,
+          "native_wand_ms": 95,
+          "na_native_ms": 105,
+          "na_selectie_ms": 93
+        },
+        {
+          "id": 49,
+          "toelaten_ms": 4650.000000000004,
+          "begin_ms": 12935,
+          "einde_ms": 13133,
+          "wacht_ms": 8284.999999999996,
+          "duur_ms": 198,
+          "voor_native_ms": 3,
+          "native_wand_ms": 93,
+          "na_native_ms": 102,
+          "na_selectie_ms": 91
+        },
+        {
+          "id": 50,
+          "toelaten_ms": 4798,
+          "begin_ms": 13133,
+          "einde_ms": 13349,
+          "wacht_ms": 8335,
+          "duur_ms": 216,
+          "voor_native_ms": 4,
+          "native_wand_ms": 97,
+          "na_native_ms": 115,
+          "na_selectie_ms": 102
+        },
+        {
+          "id": 51,
+          "toelaten_ms": 4802,
+          "begin_ms": 13349,
+          "einde_ms": 13561,
+          "wacht_ms": 8547,
+          "duur_ms": 212,
+          "voor_native_ms": 4,
+          "native_wand_ms": 88,
+          "na_native_ms": 120,
+          "na_selectie_ms": 104
+        },
+        {
+          "id": 52,
+          "toelaten_ms": 4841,
+          "begin_ms": 13561,
+          "einde_ms": 13776,
+          "wacht_ms": 8720,
+          "duur_ms": 215,
+          "voor_native_ms": 4,
+          "native_wand_ms": 98.00000000000728,
+          "na_native_ms": 112.99999999999272,
+          "na_selectie_ms": 97.99999999999272
+        },
+        {
+          "id": 53,
+          "toelaten_ms": 5050.000000000004,
+          "begin_ms": 13776,
+          "einde_ms": 13990,
+          "wacht_ms": 8725.999999999996,
+          "duur_ms": 214,
+          "voor_native_ms": 3,
+          "native_wand_ms": 90,
+          "na_native_ms": 121,
+          "na_selectie_ms": 104
+        },
+        {
+          "id": 54,
+          "toelaten_ms": 5057.000000000004,
+          "begin_ms": 13990,
+          "einde_ms": 14207,
+          "wacht_ms": 8932.999999999996,
+          "duur_ms": 217,
+          "voor_native_ms": 3,
+          "native_wand_ms": 90,
+          "na_native_ms": 124,
+          "na_selectie_ms": 110
+        },
+        {
+          "id": 55,
+          "toelaten_ms": 5064,
+          "begin_ms": 14207,
+          "einde_ms": 14446,
+          "wacht_ms": 9143,
+          "duur_ms": 239,
+          "voor_native_ms": 3,
+          "native_wand_ms": 112,
+          "na_native_ms": 124,
+          "na_selectie_ms": 106
+        },
+        {
+          "id": 56,
+          "toelaten_ms": 5088,
+          "begin_ms": 14446,
+          "einde_ms": 14673,
+          "wacht_ms": 9358,
+          "duur_ms": 227,
+          "voor_native_ms": 4,
+          "native_wand_ms": 104,
+          "na_native_ms": 119,
+          "na_selectie_ms": 107
+        },
+        {
+          "id": 57,
+          "toelaten_ms": 5122.999999999996,
+          "begin_ms": 14673,
+          "einde_ms": 14906,
+          "wacht_ms": 9550.000000000004,
+          "duur_ms": 233,
+          "voor_native_ms": 3,
+          "native_wand_ms": 102,
+          "na_native_ms": 128,
+          "na_selectie_ms": 113
+        },
+        {
+          "id": 58,
+          "toelaten_ms": 5280,
+          "begin_ms": 14906,
+          "einde_ms": 15136,
+          "wacht_ms": 9626,
+          "duur_ms": 230,
+          "voor_native_ms": 4,
+          "native_wand_ms": 102,
+          "na_native_ms": 124,
+          "na_selectie_ms": 109
+        },
+        {
+          "id": 59,
+          "toelaten_ms": 5293,
+          "begin_ms": 15136,
+          "einde_ms": 15355.000000000007,
+          "wacht_ms": 9843,
+          "duur_ms": 219.00000000000728,
+          "voor_native_ms": 3,
+          "native_wand_ms": 97.00000000000728,
+          "na_native_ms": 119.0,
+          "na_selectie_ms": 93.00000000000728
+        },
+        {
+          "id": 60,
+          "toelaten_ms": 5302.999999999996,
+          "begin_ms": 15355.000000000007,
+          "einde_ms": 15576,
+          "wacht_ms": 10052.000000000011,
+          "duur_ms": 220.99999999999272,
+          "voor_native_ms": 3.0,
+          "native_wand_ms": 91.99999999999272,
+          "na_native_ms": 126,
+          "na_selectie_ms": 102
+        },
+        {
+          "id": 61,
+          "toelaten_ms": 5307.000000000004,
+          "begin_ms": 15576,
+          "einde_ms": 15776,
+          "wacht_ms": 10268.999999999996,
+          "duur_ms": 200,
+          "voor_native_ms": 3,
+          "native_wand_ms": 89,
+          "na_native_ms": 108,
+          "na_selectie_ms": 96
+        },
+        {
+          "id": 62,
+          "toelaten_ms": 5339,
+          "begin_ms": 15776,
+          "einde_ms": 15986.000000000007,
+          "wacht_ms": 10437,
+          "duur_ms": 210.00000000000728,
+          "voor_native_ms": 2,
+          "native_wand_ms": 87,
+          "na_native_ms": 121.00000000000728,
+          "na_selectie_ms": 99.00000000000728
+        },
+        {
+          "id": 63,
+          "toelaten_ms": 5375,
+          "begin_ms": 15986.000000000007,
+          "einde_ms": 16207,
+          "wacht_ms": 10611.000000000007,
+          "duur_ms": 220.99999999999272,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 90,
+          "na_native_ms": 127,
+          "na_selectie_ms": 104
+        },
+        {
+          "id": 64,
+          "toelaten_ms": 5541.000000000004,
+          "begin_ms": 16207,
+          "einde_ms": 16438,
+          "wacht_ms": 10665.999999999996,
+          "duur_ms": 231,
+          "voor_native_ms": 3,
+          "native_wand_ms": 107,
+          "na_native_ms": 121,
+          "na_selectie_ms": 106
+        },
+        {
+          "id": 65,
+          "toelaten_ms": 5580,
+          "begin_ms": 16438,
+          "einde_ms": 16684,
+          "wacht_ms": 10858,
+          "duur_ms": 246,
+          "voor_native_ms": 3,
+          "native_wand_ms": 107,
+          "na_native_ms": 136,
+          "na_selectie_ms": 109
+        },
+        {
+          "id": 66,
+          "toelaten_ms": 5741.999999999996,
+          "begin_ms": 16684,
+          "einde_ms": 16906,
+          "wacht_ms": 10942.000000000004,
+          "duur_ms": 222,
+          "voor_native_ms": 4,
+          "native_wand_ms": 105,
+          "na_native_ms": 113,
+          "na_selectie_ms": 97
+        },
+        {
+          "id": 67,
+          "toelaten_ms": 5776,
+          "begin_ms": 16906,
+          "einde_ms": 17125,
+          "wacht_ms": 11130,
+          "duur_ms": 219,
+          "voor_native_ms": 3,
+          "native_wand_ms": 99,
+          "na_native_ms": 117,
+          "na_selectie_ms": 95
+        }
+      ],
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "grens": "Geïnstrumenteerde wandtijden; geen CPU-seconden, daadwerkelijke FPS of snelheidsvergelijking. Python-rasterstart en WebView-meetstart zijn aparte klokken; naloop van tekenen is een benadering."
+    },
+    "verdiept": {
+      "groepen": 64,
+      "toetsen": 351,
+      "laatste_toets_ms": 6607.000000000007,
+      "laatste_taak_ms": 20515,
+      "wachtrij_naloop_ms": 13907.999999999993,
+      "max_diepte_voor_toelating": 46,
+      "max_taakwacht_ms": 13551,
+      "getekende_tekst_ms": 24636,
+      "tekenen_na_laatste_taak_benadering_ms": 4121,
+      "sommen_ms": {
+        "duur_ms": 20459.0,
+        "voor_native_ms": 793.9999999999709,
+        "native_wand_ms": 9241.000000000007,
+        "na_native_ms": 10424.000000000022,
+        "na_selectie_ms": 9137.999999999985
+      },
+      "rust_binnen_ms": 8678,
+      "koppeling_ms": 11308.000000000022,
+      "koppeling_stappen_ms": {
+        "cursor": 101.00000000004366,
+        "bron": 237.99999999999272,
+        "hash": 379.99999999995634,
+        "aanvraag": 12,
+        "transport": 9285.0,
+        "binding": 51.999999999992724,
+        "mutatie": 488.9999999999927,
+        "selectie": 747.0000000000509
+      },
+      "fontvragen": 64,
+      "fontantwoorden": 64,
+      "laatste_fontantwoord_ms": 22839,
+      "lezingen": {
+        "storyIds": {
+          "aantal": 3,
+          "totaalMs": 23,
+          "maxMs": 9
+        },
+        "paragraphs": {
+          "aantal": 0,
+          "totaalMs": 0,
+          "maxMs": 0
+        },
+        "paragraphSpans": {
+          "aantal": 1217,
+          "totaalMs": 1851.9999999999563,
+          "maxMs": 46
+        },
+        "storySegments": {
+          "aantal": 1,
+          "totaalMs": 144,
+          "maxMs": 144
+        },
+        "storySegmentUnits": {
+          "aantal": 65,
+          "totaalMs": 52.00000000003638,
+          "maxMs": 2
+        },
+        "selection": {
+          "aantal": 2787,
+          "totaalMs": 8,
+          "maxMs": 1.000000000014552
+        },
+        "version": {
+          "aantal": 641,
+          "totaalMs": 18.999999999978172,
+          "maxMs": 1.999999999992724
+        },
+        "encodeStateVector": {
+          "aantal": 65,
+          "totaalMs": 2.999999999985448,
+          "maxMs": 1
+        },
+        "encodeStateAsUpdate": {
+          "aantal": 64,
+          "totaalMs": 215.00000000001455,
+          "maxMs": 111
+        },
+        "encodeStickyPosition": {
+          "aantal": 260,
+          "totaalMs": 7.000000000007276,
+          "maxMs": 1.000000000007276
+        },
+        "resolveStickyPosition": {
+          "aantal": 256,
+          "totaalMs": 88.00000000003638,
+          "maxMs": 4
+        },
+        "layoutFontRequirementsJson": {
+          "aantal": 0,
+          "totaalMs": 0,
+          "maxMs": 0
+        },
+        "layoutDocumentWithRegionsRetainedJson": {
+          "aantal": 0,
+          "totaalMs": 0,
+          "maxMs": 0
+        }
+      },
+      "raf_max_tussen_ms": 541,
+      "taken": [
+        {
+          "id": 1,
+          "toelaten_ms": 23,
+          "begin_ms": 24,
+          "einde_ms": 1068,
+          "wacht_ms": 1,
+          "duur_ms": 1044,
+          "voor_native_ms": 322,
+          "native_wand_ms": 502,
+          "na_native_ms": 220,
+          "na_selectie_ms": 178
+        },
+        {
+          "id": 2,
+          "toelaten_ms": 585,
+          "begin_ms": 1099,
+          "einde_ms": 1748,
+          "wacht_ms": 514,
+          "duur_ms": 649,
+          "voor_native_ms": 13,
+          "native_wand_ms": 328,
+          "na_native_ms": 308,
+          "na_selectie_ms": 252
+        },
+        {
+          "id": 3,
+          "toelaten_ms": 640,
+          "begin_ms": 1748,
+          "einde_ms": 2106,
+          "wacht_ms": 1108,
+          "duur_ms": 358,
+          "voor_native_ms": 11,
+          "native_wand_ms": 156.00000000000728,
+          "na_native_ms": 190.99999999999272,
+          "na_selectie_ms": 171
+        },
+        {
+          "id": 4,
+          "toelaten_ms": 701,
+          "begin_ms": 2106,
+          "einde_ms": 2439,
+          "wacht_ms": 1405,
+          "duur_ms": 333,
+          "voor_native_ms": 5,
+          "native_wand_ms": 146,
+          "na_native_ms": 182,
+          "na_selectie_ms": 161
+        },
+        {
+          "id": 5,
+          "toelaten_ms": 764,
+          "begin_ms": 2439,
+          "einde_ms": 2771,
+          "wacht_ms": 1675,
+          "duur_ms": 332,
+          "voor_native_ms": 13,
+          "native_wand_ms": 140,
+          "na_native_ms": 179,
+          "na_selectie_ms": 160.99999999999272
+        },
+        {
+          "id": 6,
+          "toelaten_ms": 1410,
+          "begin_ms": 2771,
+          "einde_ms": 3164,
+          "wacht_ms": 1361,
+          "duur_ms": 393,
+          "voor_native_ms": 117,
+          "native_wand_ms": 135,
+          "na_native_ms": 141,
+          "na_selectie_ms": 120.99999999999272
+        },
+        {
+          "id": 7,
+          "toelaten_ms": 1779,
+          "begin_ms": 3164,
+          "einde_ms": 3493,
+          "wacht_ms": 1385,
+          "duur_ms": 329,
+          "voor_native_ms": 7.000000000007276,
+          "native_wand_ms": 144.99999999999272,
+          "na_native_ms": 177,
+          "na_selectie_ms": 153
+        },
+        {
+          "id": 8,
+          "toelaten_ms": 1805.0000000000073,
+          "begin_ms": 3493,
+          "einde_ms": 3836,
+          "wacht_ms": 1687.9999999999927,
+          "duur_ms": 343,
+          "voor_native_ms": 9,
+          "native_wand_ms": 144,
+          "na_native_ms": 190,
+          "na_selectie_ms": 166
+        },
+        {
+          "id": 9,
+          "toelaten_ms": 1825,
+          "begin_ms": 3836,
+          "einde_ms": 4179,
+          "wacht_ms": 2011,
+          "duur_ms": 343,
+          "voor_native_ms": 8,
+          "native_wand_ms": 140,
+          "na_native_ms": 195,
+          "na_selectie_ms": 177
+        },
+        {
+          "id": 10,
+          "toelaten_ms": 1869.0000000000073,
+          "begin_ms": 4179,
+          "einde_ms": 4490,
+          "wacht_ms": 2309.9999999999927,
+          "duur_ms": 311,
+          "voor_native_ms": 8,
+          "native_wand_ms": 141,
+          "na_native_ms": 162,
+          "na_selectie_ms": 143
+        },
+        {
+          "id": 11,
+          "toelaten_ms": 1909,
+          "begin_ms": 4490,
+          "einde_ms": 4814.000000000007,
+          "wacht_ms": 2581,
+          "duur_ms": 324.0000000000073,
+          "voor_native_ms": 6,
+          "native_wand_ms": 155,
+          "na_native_ms": 163.00000000000728,
+          "na_selectie_ms": 147.00000000000728
+        },
+        {
+          "id": 12,
+          "toelaten_ms": 2128,
+          "begin_ms": 4814.000000000007,
+          "einde_ms": 5121,
+          "wacht_ms": 2686.0000000000073,
+          "duur_ms": 306.9999999999927,
+          "voor_native_ms": 8.999999999992724,
+          "native_wand_ms": 150,
+          "na_native_ms": 148,
+          "na_selectie_ms": 132
+        },
+        {
+          "id": 13,
+          "toelaten_ms": 2149,
+          "begin_ms": 5121,
+          "einde_ms": 5394,
+          "wacht_ms": 2972,
+          "duur_ms": 273,
+          "voor_native_ms": 5,
+          "native_wand_ms": 151,
+          "na_native_ms": 117,
+          "na_selectie_ms": 100.99999999999272
+        },
+        {
+          "id": 14,
+          "toelaten_ms": 2201,
+          "begin_ms": 5394,
+          "einde_ms": 5675,
+          "wacht_ms": 3193,
+          "duur_ms": 281,
+          "voor_native_ms": 4,
+          "native_wand_ms": 129,
+          "na_native_ms": 148,
+          "na_selectie_ms": 130
+        },
+        {
+          "id": 15,
+          "toelaten_ms": 2465,
+          "begin_ms": 5675,
+          "einde_ms": 5959,
+          "wacht_ms": 3210,
+          "duur_ms": 284,
+          "voor_native_ms": 4,
+          "native_wand_ms": 132.00000000000728,
+          "na_native_ms": 147.99999999999272,
+          "na_selectie_ms": 131
+        },
+        {
+          "id": 16,
+          "toelaten_ms": 2482.0000000000073,
+          "begin_ms": 5959,
+          "einde_ms": 6272,
+          "wacht_ms": 3476.9999999999927,
+          "duur_ms": 313,
+          "voor_native_ms": 3,
+          "native_wand_ms": 142.00000000000728,
+          "na_native_ms": 167.99999999999272,
+          "na_selectie_ms": 149.99999999999272
+        },
+        {
+          "id": 17,
+          "toelaten_ms": 2544,
+          "begin_ms": 6272,
+          "einde_ms": 6564.000000000007,
+          "wacht_ms": 3728,
+          "duur_ms": 292.0000000000073,
+          "voor_native_ms": 9,
+          "native_wand_ms": 143.00000000000728,
+          "na_native_ms": 140.0,
+          "na_selectie_ms": 123.00000000000728
+        },
+        {
+          "id": 18,
+          "toelaten_ms": 2906,
+          "begin_ms": 6564.000000000007,
+          "einde_ms": 6854.000000000007,
+          "wacht_ms": 3658.0000000000073,
+          "duur_ms": 290.0,
+          "voor_native_ms": 4.999999999992724,
+          "native_wand_ms": 125,
+          "na_native_ms": 160.00000000000728,
+          "na_selectie_ms": 142.00000000000728
+        },
+        {
+          "id": 19,
+          "toelaten_ms": 3001,
+          "begin_ms": 6854.000000000007,
+          "einde_ms": 7144,
+          "wacht_ms": 3853.0000000000073,
+          "duur_ms": 289.9999999999927,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 128,
+          "na_native_ms": 158,
+          "na_selectie_ms": 139
+        },
+        {
+          "id": 20,
+          "toelaten_ms": 3194,
+          "begin_ms": 7144,
+          "einde_ms": 7422,
+          "wacht_ms": 3950,
+          "duur_ms": 278,
+          "voor_native_ms": 4,
+          "native_wand_ms": 114,
+          "na_native_ms": 160,
+          "na_selectie_ms": 142
+        },
+        {
+          "id": 21,
+          "toelaten_ms": 3201,
+          "begin_ms": 7422,
+          "einde_ms": 7721,
+          "wacht_ms": 4221,
+          "duur_ms": 299,
+          "voor_native_ms": 5.000000000007276,
+          "native_wand_ms": 142.99999999999272,
+          "na_native_ms": 151,
+          "na_selectie_ms": 129
+        },
+        {
+          "id": 22,
+          "toelaten_ms": 3212,
+          "begin_ms": 7721,
+          "einde_ms": 7948,
+          "wacht_ms": 4509,
+          "duur_ms": 227,
+          "voor_native_ms": 4,
+          "native_wand_ms": 105,
+          "na_native_ms": 118,
+          "na_selectie_ms": 105
+        },
+        {
+          "id": 23,
+          "toelaten_ms": 3246,
+          "begin_ms": 7948,
+          "einde_ms": 8215,
+          "wacht_ms": 4702,
+          "duur_ms": 267,
+          "voor_native_ms": 7,
+          "native_wand_ms": 105,
+          "na_native_ms": 155,
+          "na_selectie_ms": 136
+        },
+        {
+          "id": 24,
+          "toelaten_ms": 3297,
+          "begin_ms": 8215,
+          "einde_ms": 8498,
+          "wacht_ms": 4918,
+          "duur_ms": 283,
+          "voor_native_ms": 4,
+          "native_wand_ms": 136,
+          "na_native_ms": 143,
+          "na_selectie_ms": 124
+        },
+        {
+          "id": 25,
+          "toelaten_ms": 3541,
+          "begin_ms": 8498,
+          "einde_ms": 8812,
+          "wacht_ms": 4957,
+          "duur_ms": 314,
+          "voor_native_ms": 6,
+          "native_wand_ms": 140,
+          "na_native_ms": 168,
+          "na_selectie_ms": 150
+        },
+        {
+          "id": 26,
+          "toelaten_ms": 3547,
+          "begin_ms": 8812,
+          "einde_ms": 9126,
+          "wacht_ms": 5265,
+          "duur_ms": 314,
+          "voor_native_ms": 4,
+          "native_wand_ms": 117.00000000000728,
+          "na_native_ms": 192.99999999999272,
+          "na_selectie_ms": 166
+        },
+        {
+          "id": 27,
+          "toelaten_ms": 3638,
+          "begin_ms": 9126,
+          "einde_ms": 9431,
+          "wacht_ms": 5488,
+          "duur_ms": 305,
+          "voor_native_ms": 4,
+          "native_wand_ms": 137,
+          "na_native_ms": 164,
+          "na_selectie_ms": 147
+        },
+        {
+          "id": 28,
+          "toelaten_ms": 3861,
+          "begin_ms": 9431,
+          "einde_ms": 9745,
+          "wacht_ms": 5570,
+          "duur_ms": 314,
+          "voor_native_ms": 4,
+          "native_wand_ms": 158,
+          "na_native_ms": 152,
+          "na_selectie_ms": 134.99999999999272
+        },
+        {
+          "id": 29,
+          "toelaten_ms": 3884,
+          "begin_ms": 9745,
+          "einde_ms": 10002,
+          "wacht_ms": 5861,
+          "duur_ms": 257,
+          "voor_native_ms": 4,
+          "native_wand_ms": 113,
+          "na_native_ms": 140,
+          "na_selectie_ms": 123.99999999999272
+        },
+        {
+          "id": 30,
+          "toelaten_ms": 3889,
+          "begin_ms": 10002,
+          "einde_ms": 10241.000000000007,
+          "wacht_ms": 6113,
+          "duur_ms": 239.00000000000728,
+          "voor_native_ms": 4,
+          "native_wand_ms": 111,
+          "na_native_ms": 124.00000000000728,
+          "na_selectie_ms": 110.00000000000728
+        },
+        {
+          "id": 31,
+          "toelaten_ms": 3944,
+          "begin_ms": 10241.000000000007,
+          "einde_ms": 10501,
+          "wacht_ms": 6297.000000000007,
+          "duur_ms": 259.9999999999927,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 100,
+          "na_native_ms": 156,
+          "na_selectie_ms": 140
+        },
+        {
+          "id": 32,
+          "toelaten_ms": 3982.0000000000073,
+          "begin_ms": 10501,
+          "einde_ms": 10917,
+          "wacht_ms": 6518.999999999993,
+          "duur_ms": 416,
+          "voor_native_ms": 5,
+          "native_wand_ms": 227,
+          "na_native_ms": 184,
+          "na_selectie_ms": 161
+        },
+        {
+          "id": 33,
+          "toelaten_ms": 4207,
+          "begin_ms": 10917,
+          "einde_ms": 11248,
+          "wacht_ms": 6710,
+          "duur_ms": 331,
+          "voor_native_ms": 11,
+          "native_wand_ms": 143,
+          "na_native_ms": 177,
+          "na_selectie_ms": 155
+        },
+        {
+          "id": 34,
+          "toelaten_ms": 4238.000000000007,
+          "begin_ms": 11248,
+          "einde_ms": 11568,
+          "wacht_ms": 7009.999999999993,
+          "duur_ms": 320,
+          "voor_native_ms": 16,
+          "native_wand_ms": 148,
+          "na_native_ms": 156,
+          "na_selectie_ms": 136
+        },
+        {
+          "id": 35,
+          "toelaten_ms": 4274,
+          "begin_ms": 11568,
+          "einde_ms": 11870,
+          "wacht_ms": 7294,
+          "duur_ms": 302,
+          "voor_native_ms": 4,
+          "native_wand_ms": 134,
+          "na_native_ms": 164,
+          "na_selectie_ms": 133
+        },
+        {
+          "id": 36,
+          "toelaten_ms": 4511,
+          "begin_ms": 11870,
+          "einde_ms": 12152,
+          "wacht_ms": 7359,
+          "duur_ms": 282,
+          "voor_native_ms": 4,
+          "native_wand_ms": 118,
+          "na_native_ms": 160,
+          "na_selectie_ms": 140
+        },
+        {
+          "id": 37,
+          "toelaten_ms": 4531,
+          "begin_ms": 12153,
+          "einde_ms": 12434,
+          "wacht_ms": 7622,
+          "duur_ms": 281,
+          "voor_native_ms": 4,
+          "native_wand_ms": 127,
+          "na_native_ms": 150,
+          "na_selectie_ms": 131.99999999999272
+        },
+        {
+          "id": 38,
+          "toelaten_ms": 4605,
+          "begin_ms": 12434,
+          "einde_ms": 12705,
+          "wacht_ms": 7829,
+          "duur_ms": 271,
+          "voor_native_ms": 4,
+          "native_wand_ms": 117.00000000000728,
+          "na_native_ms": 149.99999999999272,
+          "na_selectie_ms": 133
+        },
+        {
+          "id": 39,
+          "toelaten_ms": 4844,
+          "begin_ms": 12705,
+          "einde_ms": 13023,
+          "wacht_ms": 7861,
+          "duur_ms": 318,
+          "voor_native_ms": 5,
+          "native_wand_ms": 131,
+          "na_native_ms": 182,
+          "na_selectie_ms": 161
+        },
+        {
+          "id": 40,
+          "toelaten_ms": 4855,
+          "begin_ms": 13023,
+          "einde_ms": 13365,
+          "wacht_ms": 8168,
+          "duur_ms": 342,
+          "voor_native_ms": 5,
+          "native_wand_ms": 153,
+          "na_native_ms": 184,
+          "na_selectie_ms": 163
+        },
+        {
+          "id": 41,
+          "toelaten_ms": 4890,
+          "begin_ms": 13365,
+          "einde_ms": 13628.000000000007,
+          "wacht_ms": 8475,
+          "duur_ms": 263.0000000000073,
+          "voor_native_ms": 4.000000000007276,
+          "native_wand_ms": 99.99999999999272,
+          "na_native_ms": 159.00000000000728,
+          "na_selectie_ms": 143.0
+        },
+        {
+          "id": 42,
+          "toelaten_ms": 4955,
+          "begin_ms": 13628.000000000007,
+          "einde_ms": 14053,
+          "wacht_ms": 8673.000000000007,
+          "duur_ms": 424.9999999999927,
+          "voor_native_ms": 5.999999999992724,
+          "native_wand_ms": 260,
+          "na_native_ms": 159,
+          "na_selectie_ms": 137
+        },
+        {
+          "id": 43,
+          "toelaten_ms": 5154,
+          "begin_ms": 14053,
+          "einde_ms": 14337,
+          "wacht_ms": 8899,
+          "duur_ms": 284,
+          "voor_native_ms": 4,
+          "native_wand_ms": 133,
+          "na_native_ms": 147,
+          "na_selectie_ms": 129
+        },
+        {
+          "id": 44,
+          "toelaten_ms": 5164,
+          "begin_ms": 14337,
+          "einde_ms": 14635,
+          "wacht_ms": 9173,
+          "duur_ms": 298,
+          "voor_native_ms": 4,
+          "native_wand_ms": 136,
+          "na_native_ms": 158,
+          "na_selectie_ms": 140
+        },
+        {
+          "id": 45,
+          "toelaten_ms": 5198,
+          "begin_ms": 14635,
+          "einde_ms": 14938,
+          "wacht_ms": 9437,
+          "duur_ms": 303,
+          "voor_native_ms": 5,
+          "native_wand_ms": 135,
+          "na_native_ms": 163,
+          "na_selectie_ms": 138.99999999999272
+        },
+        {
+          "id": 46,
+          "toelaten_ms": 5255,
+          "begin_ms": 14938,
+          "einde_ms": 15202,
+          "wacht_ms": 9683,
+          "duur_ms": 264,
+          "voor_native_ms": 5,
+          "native_wand_ms": 123,
+          "na_native_ms": 136,
+          "na_selectie_ms": 113
+        },
+        {
+          "id": 47,
+          "toelaten_ms": 5423,
+          "begin_ms": 15202,
+          "einde_ms": 15453,
+          "wacht_ms": 9779,
+          "duur_ms": 251,
+          "voor_native_ms": 7,
+          "native_wand_ms": 113,
+          "na_native_ms": 131,
+          "na_selectie_ms": 114
+        },
+        {
+          "id": 48,
+          "toelaten_ms": 5434,
+          "begin_ms": 15453,
+          "einde_ms": 15735.000000000007,
+          "wacht_ms": 10019,
+          "duur_ms": 282.0000000000073,
+          "voor_native_ms": 3,
+          "native_wand_ms": 131,
+          "na_native_ms": 148.00000000000728,
+          "na_selectie_ms": 129.00000000000728
+        },
+        {
+          "id": 49,
+          "toelaten_ms": 5488.000000000007,
+          "begin_ms": 15735.000000000007,
+          "einde_ms": 16021,
+          "wacht_ms": 10247.0,
+          "duur_ms": 285.9999999999927,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 131,
+          "na_native_ms": 151,
+          "na_selectie_ms": 134
+        },
+        {
+          "id": 50,
+          "toelaten_ms": 5503,
+          "begin_ms": 16021,
+          "einde_ms": 16308.000000000007,
+          "wacht_ms": 10518,
+          "duur_ms": 287.0000000000073,
+          "voor_native_ms": 5,
+          "native_wand_ms": 126,
+          "na_native_ms": 156.00000000000728,
+          "na_selectie_ms": 139.00000000000728
+        },
+        {
+          "id": 51,
+          "toelaten_ms": 5526,
+          "begin_ms": 16308.000000000007,
+          "einde_ms": 16588,
+          "wacht_ms": 10782.000000000007,
+          "duur_ms": 279.9999999999927,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 113,
+          "na_native_ms": 163,
+          "na_selectie_ms": 144
+        },
+        {
+          "id": 52,
+          "toelaten_ms": 5712,
+          "begin_ms": 16588,
+          "einde_ms": 16863.000000000007,
+          "wacht_ms": 10876,
+          "duur_ms": 275.0000000000073,
+          "voor_native_ms": 4,
+          "native_wand_ms": 120.00000000000728,
+          "na_native_ms": 151.0,
+          "na_selectie_ms": 134.0
+        },
+        {
+          "id": 53,
+          "toelaten_ms": 5726,
+          "begin_ms": 16863.000000000007,
+          "einde_ms": 17142,
+          "wacht_ms": 11137.000000000007,
+          "duur_ms": 278.9999999999927,
+          "voor_native_ms": 4.999999999992724,
+          "native_wand_ms": 117.00000000000728,
+          "na_native_ms": 156.99999999999272,
+          "na_selectie_ms": 140
+        },
+        {
+          "id": 54,
+          "toelaten_ms": 5776,
+          "begin_ms": 17142,
+          "einde_ms": 17421,
+          "wacht_ms": 11366,
+          "duur_ms": 279,
+          "voor_native_ms": 4.000000000007276,
+          "native_wand_ms": 125.99999999998545,
+          "na_native_ms": 149.00000000000728,
+          "na_selectie_ms": 131.99999999999272
+        },
+        {
+          "id": 55,
+          "toelaten_ms": 5791,
+          "begin_ms": 17421,
+          "einde_ms": 17697.000000000007,
+          "wacht_ms": 11630,
+          "duur_ms": 276.0000000000073,
+          "voor_native_ms": 4,
+          "native_wand_ms": 119,
+          "na_native_ms": 153.00000000000728,
+          "na_selectie_ms": 135.00000000000728
+        },
+        {
+          "id": 56,
+          "toelaten_ms": 5810,
+          "begin_ms": 17697.000000000007,
+          "einde_ms": 17982.999999999993,
+          "wacht_ms": 11887.000000000007,
+          "duur_ms": 285.99999999998545,
+          "voor_native_ms": 3.999999999992724,
+          "native_wand_ms": 120,
+          "na_native_ms": 161.99999999999272,
+          "na_selectie_ms": 142.99999999998545
+        },
+        {
+          "id": 57,
+          "toelaten_ms": 5997.000000000007,
+          "begin_ms": 17982.999999999993,
+          "einde_ms": 18323,
+          "wacht_ms": 11985.999999999985,
+          "duur_ms": 340.0000000000073,
+          "voor_native_ms": 4.000000000007276,
+          "native_wand_ms": 152,
+          "na_native_ms": 184,
+          "na_selectie_ms": 161
+        },
+        {
+          "id": 58,
+          "toelaten_ms": 6008,
+          "begin_ms": 18323,
+          "einde_ms": 18616,
+          "wacht_ms": 12315,
+          "duur_ms": 293,
+          "voor_native_ms": 6,
+          "native_wand_ms": 127.00000000001455,
+          "na_native_ms": 159.99999999998545,
+          "na_selectie_ms": 141
+        },
+        {
+          "id": 59,
+          "toelaten_ms": 6074,
+          "begin_ms": 18616,
+          "einde_ms": 18931,
+          "wacht_ms": 12542,
+          "duur_ms": 315,
+          "voor_native_ms": 5,
+          "native_wand_ms": 150,
+          "na_native_ms": 160,
+          "na_selectie_ms": 141
+        },
+        {
+          "id": 60,
+          "toelaten_ms": 6314.000000000007,
+          "begin_ms": 18931,
+          "einde_ms": 19209.000000000015,
+          "wacht_ms": 12616.999999999993,
+          "duur_ms": 278.00000000001455,
+          "voor_native_ms": 6,
+          "native_wand_ms": 122,
+          "na_native_ms": 150.00000000001455,
+          "na_selectie_ms": 132.00000000001455
+        },
+        {
+          "id": 61,
+          "toelaten_ms": 6322,
+          "begin_ms": 19209.000000000015,
+          "einde_ms": 19529,
+          "wacht_ms": 12887.000000000015,
+          "duur_ms": 319.99999999998545,
+          "voor_native_ms": 6.0,
+          "native_wand_ms": 143.99999999998545,
+          "na_native_ms": 170,
+          "na_selectie_ms": 150
+        },
+        {
+          "id": 62,
+          "toelaten_ms": 6370,
+          "begin_ms": 19529,
+          "einde_ms": 19834.000000000015,
+          "wacht_ms": 13159,
+          "duur_ms": 305.00000000001455,
+          "voor_native_ms": 5,
+          "native_wand_ms": 134,
+          "na_native_ms": 166.00000000001455,
+          "na_selectie_ms": 141.00000000001455
+        },
+        {
+          "id": 63,
+          "toelaten_ms": 6574,
+          "begin_ms": 19834.000000000015,
+          "einde_ms": 20152,
+          "wacht_ms": 13260.000000000015,
+          "duur_ms": 317.99999999998545,
+          "voor_native_ms": 12.0,
+          "native_wand_ms": 126.99999999998545,
+          "na_native_ms": 179,
+          "na_selectie_ms": 161
+        },
+        {
+          "id": 64,
+          "toelaten_ms": 6601,
+          "begin_ms": 20152,
+          "einde_ms": 20515,
+          "wacht_ms": 13551,
+          "duur_ms": 363,
+          "voor_native_ms": 4,
+          "native_wand_ms": 173,
+          "na_native_ms": 186,
+          "na_selectie_ms": 165.99999999998545
+        }
+      ],
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "grens": "Geïnstrumenteerde wandtijden; geen CPU-seconden, daadwerkelijke FPS of snelheidsvergelijking. Python-rasterstart en WebView-meetstart zijn aparte klokken; naloop van tekenen is een benadering."
+    }
+  },
+  "python_geslaagd": 115,
+  "documentpixels": {
+    "roi": [
+      320,
+      210,
+      1140,
+      950
+    ],
+    "cursorzone": [
+      491,
+      347,
+      496,
+      366
+    ],
+    "afwijkend": 0
+  },
+  "afkeuringen": [
+    "Eerste selector vond het verborgen invoerveld buiten de documentcontainer niet; vóór typen gestopt.",
+    "Syntaxfout in nieuwe JS-teststub; bron en foutlog bewaard.",
+    "Volledige rasterproef tekende binnen 90 seconden geen nieuwe tekst. Geen bruikbare tijdlijn of primaire foutmetadata; oorzaak blijft onbekend. Latere successen herstellen haar niet."
+  ],
+  "grenzen": [
+    "Geïnstrumenteerde wandtijden, geen CPU-seconden of snelheidsvergelijking.",
+    "Andere Cargo-bouw in aparte werkmap waargenomen: ops-wt/office-getalnotatie/.local/getalnotatie/betteroffice-bron. Geen andere processen gestopt.",
+    "Geen nieuwe bewaar-/heropen-/grote-plak-/fontopmaak-/platform-/editieacceptatie.",
+    "Geen productiepatch, download, release of gesloten issue.",
+    "Oude workertraps, lijstbewaarfout en volledige Rust-interface blijven open."
+  ],
+  "volgende_stap": "Bouw een afzonderlijke kandidaat die alleen achterhaalde host-lettertypevragen vóór verzending samenvoegt, met bron-/eigenaar-/versiebewaking. De bestaande worker-berichtvolgorde en oorspronkelijke fontRequirements-API behouden. Eerst uitgestelde vragen, fouten, bronwissels en actuele fonts functioneel toetsen; daarna fysieke invoer/beeld/font-DOCX bewaren/heropenen vergelijken.",
+  "bestanden": [
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/analyse.json",
+      "bestand": "writer-wachtrijmeting/00-analyse.json.gz",
+      "bytes": 45383,
+      "sha256": "ef220c11262989022571d3cfabd6d679596fec195e0aeb617ca0de5ac12eb2f8",
+      "gzip_sha256": "0e09bce52de034be7e12788d3cfb6e238233500b5cef7c8eb13fbc5f95ca92be"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/analyseren.log",
+      "bestand": "writer-wachtrijmeting/01-analyseren.log.gz",
+      "bytes": 2065,
+      "sha256": "19fb2108da73a03019fa35ebda460190cadf62e533c17cc782672014bcbb70e2",
+      "gzip_sha256": "f06f0a696dfa5f7335c0674d8c019ab786c6f751c315c7dd47206318595fb5a1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/fysieke-proef.py",
+      "bestand": "writer-wachtrijmeting/02-fysieke-proef.py.gz",
+      "bytes": 30591,
+      "sha256": "8ebb52896a9a8eefe9f70229537df2e0d53222daff304b87e65f2897d31f3716",
+      "gzip_sha256": "0599c59a301ffe03a11b433be5496af75c277ae5bcc4d472f4fe2e29c106edbc"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/gui/eerste-gelijke-tekst.png",
+      "bestand": "writer-wachtrijmeting/03-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/gui/profiel.json",
+      "bestand": "writer-wachtrijmeting/04-profiel.json.gz",
+      "bytes": 385868,
+      "sha256": "9feb06837d1d5ecc03955f26f84247267d918a58385a9144a0467c99c7320b30",
+      "gzip_sha256": "0fcca0edc97ae5543895c735ea9db262ee276b0dab8b962de06903711a0fd039"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/gui/profiel.png",
+      "bestand": "writer-wachtrijmeting/05-profiel.png.gz",
+      "bytes": 118054,
+      "sha256": "a3ca8becadf06e0744e7dce7fe5f94e3a426861c37109a5297ae3af1dfb5979f",
+      "gzip_sha256": "a7dc264f0c2801eee819e4216916c8f853596ac41b9973fdcfcbdaba1b41ec55"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/gui/programma.log",
+      "bestand": "writer-wachtrijmeting/06-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/gui/tussenmeting.json",
+      "bestand": "writer-wachtrijmeting/07-tussenmeting.json.gz",
+      "bytes": 62997,
+      "sha256": "fad589243f036e47ac706c2d26a8bd01ce1f4262b1f58bb2650e9c162b5c4428",
+      "gzip_sha256": "c05018824c54063a74ea8ac84240ae42866727cd4a6f9585360edeb4b4fabf6d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/manifest.json",
+      "bestand": "writer-wachtrijmeting/08-manifest.json.gz",
+      "bytes": 1450,
+      "sha256": "a896c3a597da65df3094382e20d3e73ad4e15e85b33a68223585dd062e19eb68",
+      "gzip_sha256": "7b9044062ecb4d1c134b8ed606c7d4d1630a74a254dee6bbb21c497a9fb7b25f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/meten.log",
+      "bestand": "writer-wachtrijmeting/09-meten.log.gz",
+      "bytes": 3557,
+      "sha256": "b275858eb6f4c7e08a513e27892b69271dc823f1165ac5d7d9cd3658cff08738",
+      "gzip_sha256": "1f937813f9862a70ee2c0b7cb403b210cd6c5baae97f0f959d3877abe7f9af71"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/python-definitief.log",
+      "bestand": "writer-wachtrijmeting/10-python-definitief.log.gz",
+      "bytes": 850,
+      "sha256": "08a1ece19332ffe160c9714133c2e164cadb8ec6733e94116f80784ed02ec741",
+      "gzip_sha256": "da319b716b9d28f9977bbca25444032fde8d0c0362012ef5c12923311e692c6a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting/python.log",
+      "bestand": "writer-wachtrijmeting/11-python.log.gz",
+      "bytes": 850,
+      "sha256": "527f62e5c847e195e7c1bc73fa8b406a47d9adb1ed1967d1069f78313204abc6",
+      "gzip_sha256": "a73193a8843dc28a40591d3edbaf1b6fb160f036539256043272bfeded06933e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/fysieke-proef.py",
+      "bestand": "writer-wachtrijmeting/12-fysieke-proef.py.gz",
+      "bytes": 28226,
+      "sha256": "eb6c82824819d734aebc4c648c92e83d3859ac3f076daec4c45d2be59efb887d",
+      "gzip_sha256": "602b4acb3392715eef480747f8aefd53eb94a71f37df4546b2346d7e596aecf4"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/gui/profiel.json",
+      "bestand": "writer-wachtrijmeting/13-profiel.json.gz",
+      "bytes": 1971,
+      "sha256": "bd10e67b7e1262c0c5a562202f435c70f3877db46726682e14008308501b7ff1",
+      "gzip_sha256": "feacfff504f3e72c261d2baf1d9007c41f390411a4891269e416f2f3050e0c3d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/gui/programma.log",
+      "bestand": "writer-wachtrijmeting/14-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/manifest.json",
+      "bestand": "writer-wachtrijmeting/15-manifest.json.gz",
+      "bytes": 1450,
+      "sha256": "aeb369a7995111420ee03697d9934e3a8e8a2c93eee445e30a0e5a33178d6f69",
+      "gzip_sha256": "7c34d14b9e03f441834952a001ed4b6ff72217a075c935cc9d230673299ca92c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/meten.log",
+      "bestand": "writer-wachtrijmeting/16-meten.log.gz",
+      "bytes": 8704,
+      "sha256": "2d421d0bddeeb3a250ec74dac4b335cb1c896d80a8ed54bf8efaac35d4e7be68",
+      "gzip_sha256": "2e51740911e404cc05362e7efb3fa3b4911ced6cf69282741172afa0e13ef6af"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/meting.js",
+      "bestand": "writer-wachtrijmeting/17-meting.js.gz",
+      "bytes": 3688,
+      "sha256": "2148c259ab6942246096e7042eabec09950301bb857417cc236ef1981944d39f",
+      "gzip_sha256": "cc0346b391890f7536e8c111bb20592e23ba0857953b3cd470b9897da5fcf0ee"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/meting.test.cjs",
+      "bestand": "writer-wachtrijmeting/18-meting.test.cjs.gz",
+      "bytes": 3144,
+      "sha256": "37adfdab21e1de4a5199d97b2a23e8a5f70a0b880960305d7c463ac508636dfc",
+      "gzip_sha256": "3361773c7b5bbe404228542233026661d8b6a0a4dbd6dfeaa5529dd2a28396ad"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-invoer/test-opzet.log",
+      "bestand": "writer-wachtrijmeting/19-test-opzet.log.gz",
+      "bytes": 1602,
+      "sha256": "d708547caa81e2b25cf32c1d568130827a915852fcf74ae392ef225a6af08cc3",
+      "gzip_sha256": "57504017cc37ae38ac1af81d5949b6d4654c075cc92af464c182b14681a5936c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/fysieke-proef.py",
+      "bestand": "writer-wachtrijmeting/20-fysieke-proef.py.gz",
+      "bytes": 28331,
+      "sha256": "fceace2bb8d9ddd036295d18bd0eff5eab681a1660aa7a5aa0bd9fbc467e7103",
+      "gzip_sha256": "7be733cbd9e9a1c1793fec69bc6788149afdf741d226b02f5e7035a75af3ba27"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/gui/afgekeurde-tekst.png",
+      "bestand": "writer-wachtrijmeting/21-afgekeurde-tekst.png.gz",
+      "bytes": 6134,
+      "sha256": "3a10597a4b07110eee8ee25f4661f7d847204e73af3426f95375df8272f588ca",
+      "gzip_sha256": "3ee30275015cddc441e87457ec25c158a5fcbe299022bba11e6ce489f7e11aa9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/gui/profiel.json",
+      "bestand": "writer-wachtrijmeting/22-profiel.json.gz",
+      "bytes": 1795,
+      "sha256": "23d7c9659ccb34172bf0f03d85f34f738c5b470f50f1db0ff0c0e2b354c8abbd",
+      "gzip_sha256": "ac18558007446e4c8971144762cba05083be4710c5e31d7ac0e99903fc9c2884"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/gui/programma.log",
+      "bestand": "writer-wachtrijmeting/23-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/manifest.json",
+      "bestand": "writer-wachtrijmeting/24-manifest.json.gz",
+      "bytes": 1450,
+      "sha256": "b6c5d763fc5b76e0e108431cbc60e0ce65729d6eab788e898cc78a9d4ef17f09",
+      "gzip_sha256": "289329e2d3497c9a8f35dce227fa4256e3427ccf688f13a07fd8837070ce0756"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/meten.log",
+      "bestand": "writer-wachtrijmeting/25-meten.log.gz",
+      "bytes": 4621,
+      "sha256": "ba27794d51e74952a22be141b2d46aa33c630a5f50bdd3e1527955a069f73bd1",
+      "gzip_sha256": "ec52b7f261e1108a231f9f9741bc78b76724231775fa3dec740dd4e9bf357960"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/meten.py",
+      "bestand": "writer-wachtrijmeting/26-meten.py.gz",
+      "bytes": 2358,
+      "sha256": "f9aa218e9b081da3aa3833fb08b2dbfeb6e2f90e05fcb76cfa222a54435d9d55",
+      "gzip_sha256": "c553916907193d25cfe78e59e7997cd36d46660dff4252d310f44421cf32988e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/meting.js",
+      "bestand": "writer-wachtrijmeting/27-meting.js.gz",
+      "bytes": 3725,
+      "sha256": "5c6361b837eb1a21cd16c61dba32ed737e63ab2edc0bbf5cb6251b635d426421",
+      "gzip_sha256": "4880766a73ee9432dc666c7b2987f5cabb224aa9c17fe7a21032b727de47cb1c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-afgekeurd-raster/python.log",
+      "bestand": "writer-wachtrijmeting/28-python.log.gz",
+      "bytes": 851,
+      "sha256": "92315e0f4cc8e2b785425eac91f18e0541615f872002c81add963d4dc7304599",
+      "gzip_sha256": "40b1651e7535ef557686a5b4748b3c90c8fa5f66d848abeec471fdcfbf648d09"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/fysieke-proef.py",
+      "bestand": "writer-wachtrijmeting/29-fysieke-proef.py.gz",
+      "bytes": 28890,
+      "sha256": "399045005fb2a2bbb8a632610227fcc0773a69b0acd724556ea76ac794348081",
+      "gzip_sha256": "290c5d03ab141fc39f46450610120cd7ab45ccf26f615d66b7be2ed4032b8467"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/gui/eerste-gelijke-tekst.png",
+      "bestand": "writer-wachtrijmeting/30-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/gui/profiel.json",
+      "bestand": "writer-wachtrijmeting/31-profiel.json.gz",
+      "bytes": 330423,
+      "sha256": "e2f2f6e210da038bebd4f73d75db4d5b96cbae18d3987fe7dee5d87e40c2f204",
+      "gzip_sha256": "4d60d0d11256c02a14bf518451d5950fd1c6861c1375583bb9c8cbd907c6fa59"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/gui/profiel.png",
+      "bestand": "writer-wachtrijmeting/32-profiel.png.gz",
+      "bytes": 118057,
+      "sha256": "5d25ca951d075046901f697dddd0e4e1a041c2628d90c99d2e494f708b0fd14e",
+      "gzip_sha256": "24107907c134f0f7244393fceac692f73f1c78074dfd5a7dcc900354903e02bc"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/gui/programma.log",
+      "bestand": "writer-wachtrijmeting/33-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/gui/tussenmeting.json",
+      "bestand": "writer-wachtrijmeting/34-tussenmeting.json.gz",
+      "bytes": 51207,
+      "sha256": "4c29c9527281a821fe3a639dcd0c0407d22012baaf55537117c4600843f757a2",
+      "gzip_sha256": "6f472d1e4294ab901dcb7c9447538649362e374e0ba3edc4ae5a09057105fe80"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/manifest.json",
+      "bestand": "writer-wachtrijmeting/35-manifest.json.gz",
+      "bytes": 1450,
+      "sha256": "ef7822a63273175baf880864f19a2350f898111bd45c18b254213007a9bd8b07",
+      "gzip_sha256": "11cfcf2908328b0f02352b2194f2d8fddf5745c3237a6aad418318ef7ddd99b3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/meten.log",
+      "bestand": "writer-wachtrijmeting/36-meten.log.gz",
+      "bytes": 3557,
+      "sha256": "59c75c7b35b69ae3c9b79aa00cea5600cb32da28d38c476a94334d4f61e10e11",
+      "gzip_sha256": "26900c432bcb0c931067112da7b633e06f7970217d738bfbcca34e011b181df3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/meten.py",
+      "bestand": "writer-wachtrijmeting/37-meten.py.gz",
+      "bytes": 3122,
+      "sha256": "3ba1228e8ff04ca574cc2f5b6c6d7dba40554da18768c66b43c7f08fa343070c",
+      "gzip_sha256": "99984a85a8b10cf7bde57a52138eb3e837ddf66c831f9f019d1104b58e08703c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/meting.js",
+      "bestand": "writer-wachtrijmeting/38-meting.js.gz",
+      "bytes": 3809,
+      "sha256": "42a98e7819a455b9276ff1d6ebbc76e02412898a94da68ac1279af462ec062cf",
+      "gzip_sha256": "f67bda8428f4328ddc97e467c9ac4e1d2a71f9af4354e2bac113ad0ed37641e2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/wachtrijmeting-eerste/meting.test.cjs",
+      "bestand": "writer-wachtrijmeting/39-meting.test.cjs.gz",
+      "bytes": 3151,
+      "sha256": "df9c331eb48e009818da0f5c78f1bc60fb77f37ce742e51434430411108a321c",
+      "gzip_sha256": "b844dd96fc5995345950c03db01620d125bf606f39f2d6256cb06d65b9a9a6cd"
+    },
+    {
+      "bron": "native/onderzoek/writer-wachtrijmeting/README.md",
+      "bestand": "writer-wachtrijmeting/40-README.md.gz",
+      "bytes": 3148,
+      "sha256": "163228144732e8743f5cd8e16d01d3e24d92c70b4454dc15704c10a823019753",
+      "gzip_sha256": "299c794ea1b8c8ae966dbba818d63a94c7b5e6659ecf182cdcdc69f1ece59f2a"
+    },
+    {
+      "bron": "native/onderzoek/writer-wachtrijmeting/analyseren.py",
+      "bestand": "writer-wachtrijmeting/41-analyseren.py.gz",
+      "bytes": 3938,
+      "sha256": "98a0720a830da32de61c24a5004c30c240b1156aa027827e41f3e332e93da187",
+      "gzip_sha256": "8f6550eb6df5765fb6882521d1a8069dcce87090999e9c5ad3e59ee5c8c49476"
+    },
+    {
+      "bron": "native/onderzoek/writer-wachtrijmeting/meten.py",
+      "bestand": "writer-wachtrijmeting/42-meten.py.gz",
+      "bytes": 3122,
+      "sha256": "3ba1228e8ff04ca574cc2f5b6c6d7dba40554da18768c66b43c7f08fa343070c",
+      "gzip_sha256": "99984a85a8b10cf7bde57a52138eb3e837ddf66c831f9f019d1104b58e08703c"
+    },
+    {
+      "bron": "native/onderzoek/writer-wachtrijmeting/meting.js",
+      "bestand": "writer-wachtrijmeting/43-meting.js.gz",
+      "bytes": 5413,
+      "sha256": "1ea125c172d33fe878c3b563e73869d7a270fafe95b0914a9cf089212caf9802",
+      "gzip_sha256": "a12acf32b1bcd759d85b56a553fdc64a8fa7559a2391015aae4b9a79278688a5"
+    },
+    {
+      "bron": "native/onderzoek/writer-wachtrijmeting/meting.test.cjs",
+      "bestand": "writer-wachtrijmeting/44-meting.test.cjs.gz",
+      "bytes": 3912,
+      "sha256": "77c764190f7f391916a748abbaf4695e102fe59b5e66c6ab3974cc6d6a2f2efb",
+      "gzip_sha256": "0dbc1e7f8e9a11f48d396ea932a7425b2b7cb4e824b7002b81a42af988ff033f"
+    },
+    {
+      "bron": "native/onderzoek/writer-wachtrijmeting/vastleggen.py",
+      "bestand": "writer-wachtrijmeting/45-vastleggen.py.gz",
+      "bytes": 4787,
+      "sha256": "3308c31cb9392aef13d6a17c0ad2f6253a018fbe17094d85f57b3eb6fbb73d4a",
+      "gzip_sha256": "fb1cf22de5ff4a8cb39c30be2947d697c78fb2902023c187c71af96a157d993e"
+    }
+  ]
+}
