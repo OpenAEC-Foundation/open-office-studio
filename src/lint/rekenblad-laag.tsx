@@ -34,9 +34,6 @@ export interface Markering {
   kleur: string;
 }
 
-/** Kleuren zoals gangbare rekenbladen verwijzingen tonen. */
-export const VERWIJZINGSKLEUREN = ["#2b6cd8", "#c43d3d", "#7a3fc4", "#1f8a4c", "#c4721f", "#b8379a", "#2a8d96", "#7d6a12"];
-
 export interface RekenbladLaag {
   plugin: XlsxPlugin;
   selectie: () => XlsxPluginSelection;

@@ -43,7 +43,8 @@ import {
   type Categorie,
   type Functie,
 } from "./rekenblad-functies";
-import { VERWIJZINGSKLEUREN, type RekenbladLaag } from "./rekenblad-laag";
+import type { RekenbladLaag } from "./rekenblad-laag";
+import { formuleVerwijzingen } from "./rekenblad-verwijzingskleuren";
 import { FormuleKleuren } from "./rekenblad-formulekleuren";
 import "./rekenblad-gereedschap.css";
 
@@ -550,14 +551,15 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   );
 }
 
-/** Bereiken kiezen vanuit beide formulevelden, met behoud van doelcel en concept. */
+/** Bereiken kiezen vanuit de formulevelden, met behoud van doelcel en concept. */
 function useFormuleBereik(api: XlsxEditorApi | null) {
   useEffect(() => {
     if (!api) return;
     let ruimGebaarOp: (() => void) | undefined;
     const beginVerwijzing = (e: PointerEvent) => {
       const v = document.activeElement;
-      if (!isVeld(v) || !v.matches('[data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid') || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (!isVeld(v) || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (e.target === v) return;
       const host = rekenbladHost();
       if (!(e.target instanceof Node) || !host?.contains(e.target)) return;
       const anker = api.getPositionAtPoint(e.clientX, e.clientY);
@@ -634,7 +636,7 @@ export function Formulebalk({
       </button>
       <EditorToolbar.FormulaBar />
       {api && uitgevouwen && <UitgevouwenFormule api={api} laag={laag} />}
-      {api && <FormuleKleuren />}
+      {api && <FormuleKleuren api={api} />}
       <button
         type="button"
         className="rekenblad-uitvouwen"
@@ -760,13 +762,13 @@ interface Hulp {
  * bij het actieve argument, F4 en gekleurde verwijzingen, in de celinvoer en
  * de formulebalk. Geeft het zwevende hulpvenster terug.
  */
-export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: boolean) {
+export function useFormuleHulp(laag: RekenbladLaag | null | undefined, api: XlsxEditorApi | null) {
   const [hulp, setHulp] = useState<Hulp | null>(null);
   const recent = useRef<Hulp | null>(null);
   recent.current = hulp;
 
   useEffect(() => {
-    if (!actief) return;
+    if (!api) return;
     let frame = 0;
     const inHost = (veld: Element) => !!rekenbladHost()?.contains(veld);
     const werkBij = (veld: Veld) => {
@@ -774,10 +776,11 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
       const cursor = veld.selectionStart ?? veld.value.length;
       const tekst = veld.value;
       const formule = tekst.startsWith("=");
+      const info = api.handle.sheetInfo();
       // Verwijzingen kleuren.
       laag?.zetMarkeringen(
         formule
-          ? verwijzingenIn(tekst).map((r, i) => ({ blad: r.blad, bereik: r.bereik, kleur: VERWIJZINGSKLEUREN[i % VERWIJZINGSKLEUREN.length] }))
+          ? formuleVerwijzingen(tekst, info.sheetNames[info.activeSheet]).markeringen
           : [],
       );
       if (!formule || veld.selectionStart !== veld.selectionEnd) {
@@ -878,7 +881,7 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
       document.removeEventListener("focusout", opVerlaten, true);
       window.removeEventListener("keydown", opToets, true);
     };
-  }, [actief, laag]);
+  }, [api, laag]);
 
   return hulp ? (
     <FormuleHulp

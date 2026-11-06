@@ -2,9 +2,9 @@
 
 Vier fouten zijn hersteld: het lege naamvak na openen, het verdwijnen van
 getypte formuleletters, ontbrekende kleuren in de formuletekst en bereikselectie
-vanuit de ingeklapte balk. De controles hieronder slagen. #58 en #59 blijven
-open: de proef heeft daarnaast een nog onopgeloste kernfout in lange
-optelketens aangetoond. De gepubliceerde v2026.45.1 bevat deze wijzigingen niet.
+vanuit de ingeklapte balk. De controles hieronder slagen. Deze ronde van PR #158 vond daarnaast een
+kernfout in lange optelketens. De opvolgende correctie en aanvullende F2-proeven
+staan in [het kernverslag](2026-11-06-lange-formuleketens.md). De gepubliceerde v2026.45.1 bevat deze wijzigingen niet.
 
 ## Reproductie en correcties
 
@@ -81,7 +81,7 @@ X11-proces zijn afgesloten.
   [lange formule](../screenshots/test-formulebediening-lang-2026-11-06.png) en
   [na heropenen](../screenshots/test-formulebediening-heropend-2026-11-06.png).
 
-## Nog open: lange optelketens
+## Aanvullende kernfout bij deze proef
 
 Met de vastgezette rekenkern 0.5.1 rekent een keten van 100 verwijzingen naar
 A1 correct 1000. Bij 200 of 400 verwijzingen naar dezelfde cel geeft
@@ -91,8 +91,8 @@ zonder het invoerprefix =, weigert dezelfde tekst met
 `formula nesting too deep` vanaf positie 302. De parser begrenst ook de
 AST-diepte op 100; een lange links geneste optelketen bereikt die grens.
 Dit is zowel native als rechtstreeks in de kern gereproduceerd en niet door
-de UI-correctie opgelost. De volledige criteria van #58 en #59 zijn daarmee
-niet afgetekend.
+de UI-correctie van PR #158 opgelost. De volledige criteria waren met deze
+ronde nog niet afgetekend; zie het opvolgende kernverslag hierboven.
 
 Zie [de onafhankelijke kerntegenproef](lange-formule-kern-tegenproef-2026-11-06.jsonl)
 en [de native tegenproef](lange-formule-native-tegenproef-2026-11-06.json).

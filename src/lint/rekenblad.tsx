@@ -471,7 +471,7 @@ export function RekenbladRibbon({
   const fout = useContext(RibbonFout);
   const [paneel, setPaneel] = useState<Paneel>(null);
   const [functiePlek, setFunctiePlek] = useState<Invoegplek | null>(null);
-  const formuleHulp = useFormuleHulp(laag, !!api);
+  const formuleHulp = useFormuleHulp(laag, api);
   const functieInvoegen = () => {
     if (!api) return;
     const plek = invoegplek(api, laag, document.activeElement);

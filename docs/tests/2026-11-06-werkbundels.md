@@ -60,9 +60,16 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
 
 - #58: naamvak, invoervolgorde, formulekleuren en beide bereikkeuzes zijn
   hersteld. De gezamenlijke native bediening, scroll- en opslag-/heropenproef
-  slagen, naast 1.728 tests. #58 en #59 blijven open: een nieuw aangetoonde
-  kernfout maakt lange optelketens tot tekst. Zie
-  [het formuleverslag](2026-11-06-formulebediening.md).
+  slagen, naast 1.728 tests. PR #158 is na zes groene platformcontroles gemerged
+  als `2db5147c`. De opvolgende kerncorrectie bewaart en berekent lange
+  optelketens en herstelt ook F2-kleuren en bereikkeuze. Alle lokale criteria
+  van #58 zijn daarmee opnieuw beproefd; aftekening wacht op de opvolgende
+  platformcontroles en merge. De opvolger slaagt in 1.744 app-proeven en 1.725
+  kernproeven. De nacontrole herstelt ook wisselende kleuren en gestapelde
+  rasterkaders bij herhaalde verwijzingen; negen native kleurproeven en een
+  nieuwe F2-/opslag-/heropenronde slagen. Het bredere #59 blijft open. Zie het
+  [formuleverslag](2026-11-06-formulebediening.md) en
+  [kernverslag](2026-11-06-lange-formuleketens.md).
 
 ## 0. Afgeronde opslagronde — PR #154
 
