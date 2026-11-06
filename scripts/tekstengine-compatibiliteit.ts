@@ -63,16 +63,43 @@ export function herstelNootKern(bron: string, soort: "edit" | "layout" = "edit")
     + bron.replace(ingang, `assetUrl:()=>${sleutel}`);
 }
 
+/** Rasterstroken bepalen geen minimumaantal zichtbare cellen bij splitsen. */
+export function herstelCelSplitsMinimum(bron: string): string {
+  const ingang = 'function Dt(t,e){let o=t>1||e>1;return {minRows:t,minCols:e,initialRows:t,initialCols:o?e:e+1}}';
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de cel-splitsdialoog.");
+  return bron.replace(ingang, ingang.replace("minCols:e", "minCols:1"));
+}
+
+/** Bewaart alleen de werkelijk aanwezige voorkeursbreedte bij documentimport. */
+export function herstelCelBreedteBron(bron: string): string {
+  const ingang = 'i=n?.width?.value??r.gridWidth,l=n?.width?.type??(r.gridWidth!==void 0?"pct":null)';
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de bron van celbreedtes.");
+  return bron.replace(ingang, 'i=n?.width?.value,l=n?.width?.type??null');
+}
+
 /** Meldt een bevestigde versie direct; de dure Document-projectie blijft vertraagd. */
 export function herstelDirecteVersiemelding(bron: string): string {
   const callback = 'vg=useCallback(()=>{!da$1(U.current)&&Et.session&&po(Et.session.version()),Va$1();},[po,Va$1,Et.session]);cn.current=';
   const timer = 'I&&(sn.current!==null&&clearTimeout(sn.current),sn.current=setTimeout(()=>{sn.current=null,Be.current?.();},100))';
-  for (const stuk of [callback, timer]) {
+  const versie = 'po=useCallback(M=>{if(uo.current===M)return;uo.current=M;let de={version:M};';
+  const adoptie = 'Le=>L.current.adoptWorkerSaveUpdates(Le)';
+  for (const stuk of [callback, timer, versie, adoptie]) {
     if (bron.split(stuk).length !== 2)
       throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor directe versiemeldingen.");
   }
-  return bron.replace(callback, callback.replace(';cn.current=', ';vg.oosVersie=()=>{!da$1(U.current)&&Et.session&&po(Et.session.version())};cn.current='))
-    .replace(timer, 'I&&Be.current?.oosVersie?.(),' + timer);
+  // De worker publiceert bij opslaan alinea-identiteiten terug naar dezelfde
+  // sessie. Bevestig die versie voor de latere projectiemelding, zonder een
+  // nieuwe inhoudswijziging te melden. De markering geldt alleen tijdens deze
+  // synchrone adoptie; echte invoer tijdens de asynchrone opslag blijft tellen.
+  const meld = '!da$1(U.current)&&Et.session&&po(Et.session.version(),!!Et.session.oosBewaarUpdate)';
+  return bron
+    .replace(versie, 'po=useCallback((M,oosBewaard=false)=>{if(uo.current===M)return;uo.current=M;if(oosBewaard)return;let de={version:M};')
+    .replace(callback, callback.replace('!da$1(U.current)&&Et.session&&po(Et.session.version())', meld)
+      .replace(';cn.current=', `;vg.oosVersie=()=>{${meld}};cn.current=`))
+    .replace(timer, 'I&&Be.current?.oosVersie?.(),' + timer)
+    .replace(adoptie, 'Le=>{const oosVorige=ge.oosBewaarUpdate;ge.oosBewaarUpdate=true;try{L.current.adoptWorkerSaveUpdates(Le)}finally{ge.oosBewaarUpdate=oosVorige}}');
 }
 
 export function herstelTabelKlik(bron: string): string {
@@ -176,6 +203,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/utils\/index\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelCelSplitsMinimum(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-WCH3MOFU\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelNootKern(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-MGTUODRA\.mjs(?:\?.*)?$/.test(id))
@@ -183,7 +212,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx\/dist\/chunk-6ZKYZDSZ\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelWorkerStart(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-N5NWITJ6\.mjs(?:\?.*)?$/.test(id))
-        return { code: herstelWorkerSnapshot(herstelVerdwenenCelSelectie(bron)), map: null };
+        return { code: herstelWorkerSnapshot(herstelVerdwenenCelSelectie(herstelCelBreedteBron(bron))), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKolommenWeergave(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))

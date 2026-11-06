@@ -1,7 +1,8 @@
 # Nootnummering in de bestaande Writer-editor
 
 Herstel en verificatie voor [#144](https://github.com/OpenAEC-Foundation/open-office-studio/issues/144),
-6 november 2026. De melding blijft open totdat de reparatie is gemerged.
+6 november 2026. PR #155 is na zes geslaagde platformcontroles gemerged als
+`b7d1b990`; de melding is gesloten.
 
 ## Probleem en herstel
 
@@ -22,8 +23,8 @@ Hun imports en exports blijven gelijk aan de oorspronkelijke modules.
 
 Broncommit, volledige patch, gereedschappen, checksums, licenties en het
 bouwscript staan bij de [tekstkern](../../vendor/tekstengine/README.md). De
-bronpatch past zonder fuzz; alle zeven gewijzigde bestanden zijn bytegelijk
-aan de gebruikte proefbron. De bouwcontrole weigert een andere bronpatch,
+bronpatch van PR #155 paste zonder fuzz; alle zeven toen gewijzigde bestanden
+waren bytegelijk aan de gebruikte proefbron. De bouwcontrole weigert een andere bronpatch,
 WASM-checksum of JS/WASM-interface.
 
 ## Controles met de definitieve modules
@@ -36,6 +37,7 @@ WASM-checksum of JS/WASM-interface.
 | Gerichte nummerproef | Tien gevallen, beide tekenroutes en beide trefferroutes, vóór en na opslaan/heropenen |
 | Typecontrole en productiebuild | Geslaagd; precies één edit- en één layout-kern met de vastgelegde checksums |
 | Native Tauri-proefbouw | Geslaagd |
+| PR-platformcontroles | Office en Database op Windows, macOS en Linux: zes geslaagd |
 | Edit-interface | Dezelfde 30 imports en 298 exports |
 | Layout-interface | Dezelfde 12 imports en 33 exports |
 
@@ -81,9 +83,11 @@ blijven `iii`, elk met één documentpositie; status Ready, nul consolefouten.
 Dit staat afzonderlijk onder `definitieveCombinatie` in het controlebestand.
 De gekoppelde schermbeelden zijn van deze definitieve combinatie.
 
-## Resterende vrijgavecontroles
+## Platformcontroles en grenzen
 
-- Platformcontroles van de PR.
+- Alle zes controles op PR-head `99f40936` zijn geslaagd:
+  [Office](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42137514577)
+  en [Database](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42137514582).
 - Deze omgeving levert direct native bewijs voor Linux; een afzonderlijke
   native bedieningsproef op Windows en macOS is hier niet uitgevoerd.
 

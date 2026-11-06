@@ -79,6 +79,8 @@ def main():
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-layout', '--locked', '--lib', 'noot', '--', '--test-threads=1'], cwd=bronmap, check=True)
         for proef in ['nootverwijzingen_gebruiken_de_ingestelde_nummering', 'a_last_page_footnote_retains_constant_snapshot_entries_and_resumes_exactly']:
             subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-edit', '--locked', '--lib', proef], cwd=bronmap, check=True)
+        for groep in ['ops::table::tests', 'seed::tests']:
+            subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-edit', '--locked', '--lib', groep, '--', '--test-threads=2'], cwd=bronmap, check=True)
     omgeving = {**os.environ, 'CARGO_TARGET_DIR': str(bronmap / 'target-wasm')}
     omgeving.setdefault('CARGO_BUILD_JOBS', '2')
     subprocess.run(['cargo', 'build', '-p', 'betteroffice-docx-edit', '--lib', '--features', 'wasm,tiff,metafile,heap-stats', '--target', 'wasm32-unknown-unknown', '--release', '--locked'], cwd=bronmap, env=omgeving, check=True)
