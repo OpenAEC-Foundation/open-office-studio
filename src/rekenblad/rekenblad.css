@@ -30,6 +30,15 @@
 .office .rekenblad-rijkoppen > span {
   cursor: default;
 }
+.office .rekenblad-koptekst {
+  min-width: 0;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  line-height: 1;
+}
 .office .rekenblad-kolomkoppen > span::after,
 .office .rekenblad-rijkoppen > span::after {
   content: "";
@@ -39,15 +48,15 @@
 .office .rekenblad-kolomkoppen > span::after {
   top: 0;
   bottom: 0;
-  inset-inline-end: -3px;
-  width: 7px;
+  inset-inline-end: calc(-1 * var(--koprand, 4px));
+  width: calc(2 * var(--koprand, 4px));
   cursor: col-resize;
 }
 .office .rekenblad-rijkoppen > span::after {
   left: 0;
   right: 0;
-  bottom: -3px;
-  height: 7px;
+  bottom: calc(-1 * var(--koprand, 4px));
+  height: calc(2 * var(--koprand, 4px));
   cursor: row-resize;
 }
 .office .rekenblad-hulplijn {

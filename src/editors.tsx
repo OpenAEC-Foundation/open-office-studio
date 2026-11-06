@@ -398,7 +398,9 @@ export default function OfficeEditor(props: EditorProps) {
               colorMode="light"
               i18n={engineTaal.tekst}
               className="office-tekst"
-              readOnly={props.inactief}
+              // Het tabpaneel blokkeert invoer met inert. Een verborgen editor
+              // moet zijn bewerksessie houden: readOnly kiest een viewer zonder
+              // de synchrone document-API die het eigen lint gebruikt.
               toolbar={
                 <TekstRibbon
                   bestand={props.bestandsmenu}

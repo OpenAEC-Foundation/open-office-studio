@@ -7,7 +7,7 @@
 import { useState, type MouseEvent } from "react";
 import { BookOpen, FileText, Languages, PenLine } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useInstellingen, wijzigInstellingen, type Instellingen } from "../../instellingen";
+import { REKENBLAD_STATISTIEKEN, useInstellingen, wijzigInstellingen, type Instellingen } from "../../instellingen";
 import { Contextmenu } from "../stijlen/StijlGalerij";
 import { useTaalAansluiting, useTekstExtra } from "./winkel";
 import { useMaat } from "../liniaal/meting";
@@ -108,8 +108,8 @@ const ITEMS: (keyof Instellingen["statusbalk"])[] = [
 ];
 
 /** Rechtermuisknopmenu van de statusbalk: items aan- of uitzetten. */
-export function useStatusbalkMenu() {
-  const { statusbalk } = useInstellingen();
+export function useStatusbalkMenu(soort?: string | null) {
+  const { statusbalk, rekenbladStatistiek } = useInstellingen();
   const { t } = useTranslation("writer");
   const [plek, setPlek] = useState<{ x: number; y: number } | null>(null);
   return {
@@ -123,11 +123,15 @@ export function useStatusbalkMenu() {
         y={plek.y}
         label={t("info.statusbar.customize")}
         sluit={() => setPlek(null)}
-        items={ITEMS.map((sleutel) => ({
+        items={[...ITEMS.map((sleutel) => ({
           naam: t(`info.statusbar.items.${sleutel}`),
           aan: statusbalk[sleutel],
           uitvoeren: () => wijzigInstellingen({ statusbalk: { [sleutel]: !statusbalk[sleutel] } }),
-        }))}
+        })), ...(soort === "xlsx" ? (Object.keys(REKENBLAD_STATISTIEKEN) as (keyof typeof REKENBLAD_STATISTIEKEN)[]).map(sleutel => ({
+          naam: t(`statusbar:statistics.${REKENBLAD_STATISTIEKEN[sleutel]}`),
+          aan: rekenbladStatistiek[sleutel],
+          uitvoeren: () => wijzigInstellingen({ rekenbladStatistiek: { [sleutel]: !rekenbladStatistiek[sleutel] } }),
+        })) : [])]}
       />
     ) : null,
   };

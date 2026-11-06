@@ -9,6 +9,9 @@ import { isTaalKeuze, type TaalKeuze } from "./i18n/talen";
 
 export type Thema = "light" | "forge" | "systeem";
 export type DocumentSoort = "docx" | "xlsx" | "pptx";
+export const REKENBLAD_STATISTIEKEN = {
+  gemiddelde: "average", aantal: "count", som: "sum", minimum: "minimum", maximum: "maximum",
+} as const;
 
 export interface Instellingen {
   /** Taal van de interface; "auto" volgt de systeemtaal (terugval Engels). Zie docs/i18n.md. */
@@ -30,6 +33,7 @@ export interface Instellingen {
     /** Tekst: weergaveknoppen (afdrukweergave, leesmodus). */
     weergave: boolean;
   };
+  rekenbladStatistiek: Record<keyof typeof REKENBLAD_STATISTIEKEN, boolean>;
   /** E-mail: externe afbeeldingen volgens het account, of nooit automatisch. */
   emailExterneInhoud: "account" | "nooit";
   /** Spellingcontrole en autocorrectie (#21, src/spelling). */
@@ -60,6 +64,7 @@ export const standaardInstellingen: Instellingen = {
     bijhouden: true,
     weergave: true,
   },
+  rekenbladStatistiek: { gemiddelde: true, aantal: true, som: true, minimum: false, maximum: false },
   emailExterneInhoud: "account",
   spelling: {
     controleren: true,
@@ -90,6 +95,7 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
   const formaat = isObject(r.opslagformaat) ? r.opslagformaat : {};
   const lint = isObject(r.lint) ? r.lint : {};
   const status = isObject(r.statusbalk) ? r.statusbalk : {};
+  const statistiek = isObject(r.rekenbladStatistiek) ? r.rekenbladStatistiek : {};
   const spelling = isObject(r.spelling) ? r.spelling : {};
   const tekst = isObject(r.tekst) ? r.tekst : {};
   const updates = isObject(r.updates) ? r.updates : {};
@@ -114,6 +120,13 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
       taal: waarOnwaar(status.taal, true),
       bijhouden: waarOnwaar(status.bijhouden, true),
       weergave: waarOnwaar(status.weergave, true),
+    },
+    rekenbladStatistiek: {
+      gemiddelde: waarOnwaar(statistiek.gemiddelde, true),
+      aantal: waarOnwaar(statistiek.aantal, true),
+      som: waarOnwaar(statistiek.som, true),
+      minimum: waarOnwaar(statistiek.minimum, false),
+      maximum: waarOnwaar(statistiek.maximum, false),
     },
     emailExterneInhoud: kies(r.emailExterneInhoud, ["account", "nooit"] as const, "account"),
     spelling: {

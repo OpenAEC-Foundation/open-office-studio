@@ -130,7 +130,7 @@ export function InstellingenVenster({ sluit }: { sluit: () => void }) {
   const herstel = () => {
     // Alleen het concept; pas Opslaan bewaart het (zoals in de template).
     const instellingen = standaardInstellingen;
-    setConcept({ ...concept, instellingen, interval: String(STANDAARD_INTERVAL_MINUTEN) });
+    setConcept({ instellingen, auteur: "", interval: String(STANDAARD_INTERVAL_MINUTEN) });
     toonVoorbeeld(instellingen);
     setHerstellen(false);
   };

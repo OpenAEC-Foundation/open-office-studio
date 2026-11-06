@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { MAX_KOLOMMEN, MAX_RIJEN } from "./lint/rekenblad-logica";
@@ -14,6 +14,7 @@ import {
   zetHoogte,
 } from "./rekenblad/structuur";
 import { openVenster } from "./rekenblad/vensters";
+import { kopRand, kopRandBreedte } from "./rekenblad/koprand";
 
 type Spoor = { positie: number; grootte: number; nummer: number };
 type Koppen = {
@@ -29,9 +30,6 @@ type Koppen = {
 type Soort = "kolom" | "rij";
 /** Een rand die de gebruiker sleept: spoor, beginpunt op het scherm en de huidige verschuiving. */
 type Slepen = { soort: Soort; nummer: number; start: number; grootte: number; delta: number };
-
-/** Zoveel px rond een rand pakt de muis de rand in plaats van de kop. */
-const RAND = 4;
 
 function kolomnaam(nummer: number) {
   let naam = "";
@@ -203,8 +201,9 @@ export function RekenbladKoppen({
   function randBij(soort: Soort, e: React.MouseEvent, spoor: Spoor, lijst: Spoor[]) {
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const pos = soort === "kolom" ? e.clientX - r.left : e.clientY - r.top;
-    if (pos >= spoor.grootte - RAND) return spoor;
-    if (pos <= RAND) {
+    const kant = kopRand(spoor.grootte, pos);
+    if (kant === "huidige") return spoor;
+    if (kant === "vorige") {
       const i = lijst.indexOf(spoor);
       return i > 0 ? lijst[i - 1] : null;
     }
@@ -323,7 +322,7 @@ export function RekenbladKoppen({
             data-actief={kolomnaam(kolom.nummer) === actief?.[1]}
             data-spoor={kolom.nummer}
             data-soort="kolom"
-            style={{ left: kolom.positie, width: kolom.grootte }}
+            style={{ left: kolom.positie, width: kolom.grootte, "--koprand": `${kopRandBreedte(kolom.grootte)}px` } as CSSProperties}
             onMouseDown={(e) => omlaag("kolom", kolom, koppen.kolommen, e)}
             onDoubleClick={(e) => dubbel("kolom", kolom, koppen.kolommen, e)}
             onContextMenu={(e) => menu("kolom", kolom, e)}
@@ -331,7 +330,9 @@ export function RekenbladKoppen({
               e.currentTarget.title = titel("kolom", kolom);
             }}
           >
-            {kolomnaam(kolom.nummer)}
+            <span className="rekenblad-koptekst" style={{ visibility: kolom.grootte < 12 ? "hidden" : undefined }}>
+              {kolomnaam(kolom.nummer)}
+            </span>
           </span>
         ))}
       </div>
@@ -349,7 +350,7 @@ export function RekenbladKoppen({
             data-actief={rij.nummer + 1 === Number(actief?.[2])}
             data-spoor={rij.nummer}
             data-soort="rij"
-            style={{ top: rij.positie, height: rij.grootte }}
+            style={{ top: rij.positie, height: rij.grootte, "--koprand": `${kopRandBreedte(rij.grootte)}px` } as CSSProperties}
             onMouseDown={(e) => omlaag("rij", rij, koppen.rijen, e)}
             onDoubleClick={(e) => dubbel("rij", rij, koppen.rijen, e)}
             onContextMenu={(e) => menu("rij", rij, e)}
@@ -357,7 +358,9 @@ export function RekenbladKoppen({
               e.currentTarget.title = titel("rij", rij);
             }}
           >
-            {rij.nummer + 1}
+            <span className="rekenblad-koptekst" style={{ visibility: rij.grootte < 10 ? "hidden" : undefined }}>
+              {rij.nummer + 1}
+            </span>
           </span>
         ))}
       </div>

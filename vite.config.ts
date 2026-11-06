@@ -4,6 +4,7 @@ import { defineConfig, type Plugin } from "vite";
 import { tekstengineCompatibiliteit } from "./scripts/tekstengine-compatibiliteit";
 import { rekenbladengineCompatibiliteit } from "./scripts/rekenbladengine-compatibiliteit";
 import studios from "./assets/studios.json";
+import { databaseWorkerDelen, databaseWorkerIngangBewaken } from "./scripts/worker-ingang.mjs";
 
 /** Het eerste browserbeeld gebruikt al de identiteit van de gebouwde variant. */
 function studioBeeldmerk(): Plugin {
@@ -51,7 +52,11 @@ export default defineConfig({
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
     setupFiles: ["src/i18n/testopzet.ts", "src/tekst/gedeeld/kern-testopzet.ts", "src/rekenblad/kern-testopzet.ts"],
   },
-  worker: { format: "es", plugins: () => [tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit()] },
+  worker: {
+    format: "es",
+    plugins: () => [tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit(), databaseWorkerIngangBewaken()],
+    rollupOptions: { output: { manualChunks: databaseWorkerDelen } },
+  },
   build: {
     rollupOptions: {
       output: {

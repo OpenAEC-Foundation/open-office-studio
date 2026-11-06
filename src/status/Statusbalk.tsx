@@ -26,7 +26,7 @@ export interface StatusbalkProps {
 
 function ModuleInfo({ soort }: { soort: string | null }) {
   const info = useModuleStatus();
-  const { statusbalk } = useInstellingen();
+  const { statusbalk, rekenbladStatistiek } = useInstellingen();
   const { t } = useTranslation("statusbar");
   const { taal } = useOpmaak();
   const g = (n: number) => getal(n, taal);
@@ -93,9 +93,11 @@ function ModuleInfo({ soort }: { soort: string | null }) {
             : undefined
         }
       >
-        {s.gemiddelde !== null && <span>{t("spreadsheet.average", { value: g(s.gemiddelde) })}</span>}
-        <span>{t("spreadsheet.count", { value: g(s.aantal) })}</span>
-        {s.getallen > 0 && <span>{t("spreadsheet.sum", { value: g(s.som) })}</span>}
+        {rekenbladStatistiek.gemiddelde && s.gemiddelde !== null && <span>{t("spreadsheet.average", { value: g(s.gemiddelde) })}</span>}
+        {rekenbladStatistiek.aantal && <span>{t("spreadsheet.count", { value: g(s.aantal) })}</span>}
+        {rekenbladStatistiek.som && s.getallen > 0 && <span>{t("spreadsheet.sum", { value: g(s.som) })}</span>}
+        {rekenbladStatistiek.minimum && s.minimum !== null && <span>{t("spreadsheet.minimum", { value: g(s.minimum) })}</span>}
+        {rekenbladStatistiek.maximum && s.maximum !== null && <span>{t("spreadsheet.maximum", { value: g(s.maximum) })}</span>}
         {filter}
       </span>
     );
@@ -219,7 +221,7 @@ export function Statusbalk({
           ? t("status.unsavedTabs", { count: aantalGewijzigd, tabs: getal(aantalGewijzigd, taal) })
           : t("status.devVersion", { version: versieLabel });
   // Rechtermuisknop: statusbalk-items aan of uit (src/tekst/info).
-  const menu = useStatusbalkMenu();
+  const menu = useStatusbalkMenu(soort);
   return (
     <footer className="office-statusbalk" aria-label={t("label")} onContextMenu={menu.onContextMenu}>
       {menu.element}

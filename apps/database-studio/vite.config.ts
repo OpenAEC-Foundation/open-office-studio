@@ -1,9 +1,14 @@
 import { defineConfig } from "vite";
 import { fileURLToPath } from "node:url";
+import { databaseWorkerDelen, databaseWorkerIngangBewaken } from "../../scripts/worker-ingang.mjs";
 
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
-  worker: { format: "es" },
+  worker: {
+    format: "es",
+    plugins: () => [databaseWorkerIngangBewaken()],
+    rollupOptions: { output: { manualChunks: databaseWorkerDelen } },
+  },
   // Zonder kantoorlettertypen in deze bundel (zie src/export/pdf/lettertypebron.ts).
   define: { "import.meta.env.VITE_DATABASE_APP": JSON.stringify("1") },
   resolve: {
