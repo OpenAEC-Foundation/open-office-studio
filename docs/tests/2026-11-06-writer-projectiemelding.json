@@ -310,10 +310,27 @@
     "docs/tests/writer-projectiemelding-2026-11-06/fysiek-BAAB-4-kandidaat/Prestatieproef.docx": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
     "docs/tests/writer-projectiemelding-2026-11-06/fysiek-BAAB-4-kandidaat/eerste-gelijke-tekst.png": "a088822df0fc881ccccaf27eef4de201a61d58fe84fbea390d3c8b61f48e6431",
     "docs/tests/writer-projectiemelding-2026-11-06/fysiek-BAAB-4-kandidaat.log.gz": "3678fc55d2f646d00e376d1e441a6e778916bc811a49f23ac94f6fa535bef80b",
-    "docs/tests/writer-projectiemelding-2026-11-06/ci-kleur-native-afkeuring.log.gz": "66defb4b648e9c67f2e3adee4baab7d665ffdd4e36307a66a4f8fa672f61811e"
+    "docs/tests/writer-projectiemelding-2026-11-06/ci-kleur-native-afkeuring.log.gz": "66defb4b648e9c67f2e3adee4baab7d665ffdd4e36307a66a4f8fa672f61811e",
+    "docs/tests/writer-projectiemelding-2026-11-06/positie-7594/profiel.json.gz": "49442979f4d4ca83028eb0d464b9679559a005e468982c8aa3309dae5159e927",
+    "docs/tests/writer-projectiemelding-2026-11-06/positie-7594/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/writer-projectiemelding-2026-11-06/positie-7594.log.gz": "de8de5573e527587c03496573ff13ac512f40b4ce6a1d0a9cad3716f780ea873",
+    "docs/tests/writer-projectiemelding-2026-11-06/positie-7594-opdracht.json.gz": "8b2714b834543dd8d2be653dc298cccee6ace083dd39226f5be3966b7d47f2e8",
+    "docs/tests/writer-projectiemelding-2026-11-06/positie-7594/meetproef.py.gz": "eaba019d8f5a7cb857a74ef6ead24aef067b228e057c7d81e21f232934211033"
   },
   "testbronnen_sha256": {
     "scripts/test-writer-lettergrootte-gui.mjs": "2fa006500c80487146577c218d65f28ffe9e293ead76be089fd392144bfb682a",
     "scripts/test-writer-kleur-native.py": "174e3b392c2b5e34caf78e15621f2d6271bc89db29d1329c0821637c1d1b6b2a"
+  },
+  "verdieping_na_push": {
+    "broncommit": "7594c2096995a19b76993fbae5217643541a16d1",
+    "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+    "groepen": 20,
+    "generatieverhogingen": 40,
+    "volledige_positieopbouwen": 40,
+    "verhalen_per_opbouw": 1537,
+    "beide_verhogingen_bij_zelfde_bronversie": true,
+    "bron_en_rasterpoort": "geslaagd,351tekens/3329teksten/1537verhalen exact, geen fouten/overschrijdingen",
+    "grens": "Extra observerwijzigingen/versievragen, stackopbouw en inspectorverkeer.15.378s is geïnstrumenteerd en geen passieve snelheidswinst/FPS.",
+    "vervolg": "Dubbele invalidatie is op de nieuwe native bron bevestigd. Eerst een éénmalige token per synchrone directe-invoer-/lokale-statepublicatie onderzoeken; bind aan actuele eigenaar/sessie, bronversie, generatie en preview-/laadcontext, verval op microtask/fout/verbruik. Behoud state/render/documentmeldingen en remote/Undo/echte bron-/sessiewijziging. Eén in plaats van twee echte opbouwen, bron-/historie-/selectie-/pixelbewijs en gepaarde fysieke respons vereisen vóór SDK-promotie. Nog geen token of SDK-patch gemaakt."
   }
 }
