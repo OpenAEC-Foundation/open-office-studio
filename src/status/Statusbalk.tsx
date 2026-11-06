@@ -1,10 +1,12 @@
 import { HardDrive, Maximize2, Minus, Plus } from "lucide-react";
+import type { KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useInstellingen } from "../instellingen";
 import { stap } from "../documentzoom";
 import { useOpmaak } from "../i18n/opmaak";
 import { useModuleStatus, useZoomBediening } from "./statusinfo";
 import { getal, schuifNaarZoom, zoomNaarSchuif } from "./berekening";
+import { focusbare, houdtPijltjes, volgendeIndex } from "../openaec-lint/focus";
 import { TekstStatusExtra, TekstWeergaveKnoppen, useStatusbalkMenu } from "../tekst/info/StatusbalkItems";
 import { PresentatieWeergaveKnoppen } from "../presentatie/WeergaveKnoppen";
 import "./statusbalk.css";
@@ -107,6 +109,18 @@ function ModuleInfo({ soort }: { soort: string | null }) {
   return null;
 }
 
+/** Knoppen ondersteunen de werkbalkpijlen; de schuif houdt zijn eigen toetsen. */
+function zoomWerkbalkToets(event: KeyboardEvent<HTMLSpanElement>) {
+  const doel = event.target;
+  if (!(doel instanceof HTMLElement) || event.defaultPrevented ||
+      event.altKey || event.ctrlKey || event.metaKey || houdtPijltjes(doel)) return;
+  const lijst = focusbare(event.currentTarget);
+  const volgende = volgendeIndex(event.key, lijst.indexOf(doel), lijst.length);
+  if (volgende === null) return;
+  event.preventDefault();
+  lijst[volgende].focus();
+}
+
 function Zoomschuif({ zoom }: { zoom: number }) {
   const bediening = useZoomBediening();
   const { t } = useTranslation("statusbar");
@@ -114,7 +128,7 @@ function Zoomschuif({ zoom }: { zoom: number }) {
   if (!bediening) return null;
   const procent = opmaak.procent(Math.round(zoom * 100) / 100, { maximumFractionDigits: 0 });
   return (
-    <span className="statusbalk-zoom" role="group" aria-label={t("zoom.label")}>
+    <span className="statusbalk-zoom" role="toolbar" aria-label={t("zoom.label")} onKeyDown={zoomWerkbalkToets}>
       <button
         type="button"
         className="statusbalk-icoon"
@@ -133,6 +147,15 @@ function Zoomschuif({ zoom }: { zoom: number }) {
         aria-label={t("zoom.label")}
         aria-valuetext={procent}
         title={t("zoom.sliderTitle")}
+        onKeyDown={(event) => {
+          if (event.altKey || event.ctrlKey || event.metaKey) return;
+          const richting = ["ArrowRight", "ArrowUp"].includes(event.key) ? 1
+            : ["ArrowLeft", "ArrowDown"].includes(event.key) ? -1 : null;
+          if (richting === null) return;
+          // De muisschuif klikt vast bij 100%; toetsen moeten daar voorbij kunnen.
+          event.preventDefault();
+          bediening.zet(stap(zoom, richting));
+        }}
         onChange={(event) => bediening.zet(schuifNaarZoom(Number(event.target.value)))}
       />
       <button
