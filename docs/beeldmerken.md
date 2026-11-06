@@ -68,3 +68,9 @@ blijven open totdat de nieuwe beelden ook in de werkelijke apps en de
 normaal uitgebrachte installerbestanden zijn gecontroleerd. De bestaande
 downloads 2026-W45.1 en 2026-W45.2 blijven behouden; deze ronde wordt voorbereid
 voor 2026-W45.3.
+
+De Windows-installer en uninstaller hebben afzonderlijke NSIS-instellingen.
+Ook die verwijzen expliciet naar de eigen ICO; alleen `bundle.icon` is niet
+genoeg. De pakketcontrole vergelijkt de echte PE-icoonresources met alle
+verwachte frames. De ondertekende vrijgave controleert dit opnieuw na
+installatie voor installer, programma en de aangemaakte uninstaller.

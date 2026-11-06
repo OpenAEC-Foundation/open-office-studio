@@ -39,9 +39,18 @@ export async function controleerStudioIconen(basis = repo) {
         throw new Error("De SVG-drager bevat niet het goedgekeurde Office-raster");
       const config = await lees("src-tauri/tauri.conf.json");
       if (JSON.stringify(config.bundle.icon) !== JSON.stringify(verwacht)) throw new Error("Office gebruikt niet zijn goedgekeurde platformiconen");
-    } else for (const platform of ["linux", "win32", "darwin"])
-      if (JSON.stringify((await studioConfig(s, platform)).bundle.icon) !== JSON.stringify(verwacht))
+      const windows = await lees("src-tauri/tauri.windows.conf.json");
+      for (const veld of ["installerIcon", "uninstallerIcon"])
+        if (windows.bundle.windows.nsis[veld] !== "icons/office/icon.ico")
+          throw new Error(`Office gebruikt niet zijn goedgekeurde ${veld}`);
+    } else for (const platform of ["linux", "win32", "darwin"]) {
+      const config = await studioConfig(s, platform);
+      if (JSON.stringify(config.bundle.icon) !== JSON.stringify(verwacht))
         throw new Error(`Verkeerde iconen voor ${s} op ${platform}`);
+      for (const veld of ["installerIcon", "uninstallerIcon"])
+        if (config.bundle.windows.nsis[veld] !== `icons/${s}/icon.ico`)
+          throw new Error(`Verkeerde ${veld} voor ${s} op ${platform}`);
+    }
     aantal++;
   }
   if (aantal !== 6) throw new Error(`Zes goedgekeurde studio-identiteiten verwacht, ${aantal} gevonden`);

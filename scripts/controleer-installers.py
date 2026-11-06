@@ -9,6 +9,7 @@ import stat
 import struct
 import subprocess
 import tempfile
+from controleer_windows_iconen import controleer_iconen
 
 
 def eis(voorwaarde, melding):
@@ -106,7 +107,11 @@ def windows(pakket, map, programmanaam="open-office-studio"):
     eis(bootstrapper.stat().st_size > 1_000_000, "De WebView2-bootstrapper is onvolledig.")
     with bootstrapper.open("rb") as bestand:
         eis(bestand.read(2) == b"MZ", "De WebView2-bootstrapper is geen uitvoerbaar bestand.")
-    return ["NSIS-archief leesbaar", "programma en WebView2-loader x64", "WebView2-bootstrapper aanwezig"]
+    controles = ["NSIS-archief leesbaar", "programma en WebView2-loader x64", "WebView2-bootstrapper aanwezig"]
+    if controleer_iconen(programmanaam, pakket, archief):
+        controleer_iconen(programmanaam, programma, archief)
+        controles.append("installer- en programma-iconen bytegelijk aan goedgekeurde bron")
+    return controles
 
 
 def deb(pakket, map, versie, programma="open-office-studio"):

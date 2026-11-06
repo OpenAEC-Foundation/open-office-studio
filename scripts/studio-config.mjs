@@ -75,7 +75,11 @@ export async function studioConfig(sleutel, platform = process.platform) {
         .map(naam => `icons/${studio.sleutel}/${naam}`),
       fileAssociations: koppelingen,
       // De eigen koppelingen van de suite mogen niet door een gerichte installer worden overschreven.
-      windows: { nsis: { installerHooks: null } },
+      windows: { nsis: {
+        installerHooks: null,
+        installerIcon: `icons/${studio.sleutel}/icon.ico`,
+        uninstallerIcon: `icons/${studio.sleutel}/icon.ico`,
+      } },
       linux: {
         deb: {
           desktopTemplate: "linux/studio.desktop.hbs",

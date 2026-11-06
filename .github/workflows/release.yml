@@ -285,6 +285,10 @@ jobs:
             Controleer "$programma.exe (geïnstalleerd)" (Join-Path $map "$programma.exe")
             if (-not (Test-Path (Join-Path $map 'WebView2Loader.dll'))) { throw "WebView2Loader.dll ontbreekt in de installatie van $naam." }
             Controleer "uninstaller $naam" $uninstaller
+            foreach ($pad in @($setup.FullName, (Join-Path $map "$programma.exe"), $uninstaller)) {
+              python scripts/controleer_windows_iconen.py "$pad" --programma "$programma"
+              if ($LASTEXITCODE -ne 0) { throw "Pictogramcontrole faalde voor $pad" }
+            }
             $u = Start-Process -FilePath $uninstaller -ArgumentList '/S' -Wait -PassThru
             if ($u.ExitCode -ne 0) { Write-Host "::warning::Stil verwijderen van $naam gaf $($u.ExitCode)." }
           }

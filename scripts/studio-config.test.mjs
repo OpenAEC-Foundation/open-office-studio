@@ -16,6 +16,8 @@ describe("installatieconfiguratie per studio en platform", () => {
         );
         expect(config.app.windows[0].title).toBe(studio.naam);
         expect(config.bundle.windows.nsis.installerHooks).toBeNull();
+        expect(config.bundle.windows.nsis.installerIcon).toBe(`icons/${studio.sleutel}/icon.ico`);
+        expect(config.bundle.windows.nsis.uninstallerIcon).toBe(`icons/${studio.sleutel}/icon.ico`);
         expect(config.bundle.linux.deb.files).toEqual(
           ["email", "notition"].includes(studio.sleutel)
             ? null
