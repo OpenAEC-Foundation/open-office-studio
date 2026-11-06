@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { PptxEditorApi } from "@betteroffice/pptx-react";
-import { leesSelectie } from "../lint/rekenblad-opdrachten";
+import { leesSelectie, rekenbladHost } from "../lint/rekenblad-opdrachten";
 import { huidigeIndex } from "../lint/presentatie-acties";
 import { zichtbaarElement } from "../lint/editorApi";
 import { publiceerStatus } from "./statusinfo";
@@ -66,8 +66,21 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
     const stopOpdrachten = api.commands.subscribe(plan);
     const stopWijzigingen = api.handle.onUpdate(plan);
     const stopFilters = abonneerFilters(api.handle, plan);
+    // De engine meldt een selectie vóór React het toegankelijke raster bijwerkt.
+    // Vooral na uitzoomen kan dat langer duren dan de wachttijd hierboven.
+    // Lees nogmaals zodra de geselecteerde cellen werkelijk in het raster staan.
+    const waarnemer = new MutationObserver(plan);
+    const host = rekenbladHost();
+    if (host)
+      waarnemer.observe(host, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ["aria-selected"],
+      });
     return () => {
       clearTimeout(wachten);
+      waarnemer.disconnect();
       stopOpdrachten();
       stopWijzigingen();
       stopFilters();
