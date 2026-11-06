@@ -30,7 +30,6 @@ import { plaatsFormuleBereik, verwijzingsplek } from "../rekenblad/formuleVerwij
 import { alleenLezen, benoemdeBereiken, gaNaar, Melding, rekenbladHost } from "./rekenblad-opdrachten";
 import { adres, ontleedVerwijzing, serieleDatum, type Cel } from "./rekenblad-logica";
 import {
-  aanvullingen,
   argumentBij,
   argumentOnderCursor,
   CATEGORIEEN,
@@ -45,6 +44,8 @@ import {
 } from "./rekenblad-functies";
 import type { RekenbladLaag } from "./rekenblad-laag";
 import { formuleVerwijzingen } from "./rekenblad-verwijzingskleuren";
+import { namenLijst } from "../rekenblad/namen";
+import { aangevuldeFormule, formuleAanvullingen, type FormuleVoorstel } from "../rekenblad/naamAanvullingen";
 import { FormuleKleuren } from "./rekenblad-formulekleuren";
 import "./rekenblad-gereedschap.css";
 
@@ -759,7 +760,7 @@ interface Hulp {
   veld: Veld;
   rect: DOMRect;
   begin: number;
-  voorstellen: Functie[];
+  voorstellen: FormuleVoorstel[];
   gekozen: number;
   /** Of de gebruiker met de pijltjes koos (dan accepteert Enter ook). */
   genavigeerd: boolean;
@@ -797,7 +798,11 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, api: Xlsx
         return;
       }
       const woord = woordBijCursor(tekst, cursor);
-      const voorstellen = woord ? aanvullingen(woord.woord) : [];
+      let voorstellen: FormuleVoorstel[] = [];
+      if (woord) {
+        try { voorstellen = formuleAanvullingen(woord.woord, namenLijst(api), info.activeSheet); }
+        catch { voorstellen = formuleAanvullingen(woord.woord, [], info.activeSheet); }
+      }
       const arg = argumentOnderCursor(tekst, cursor);
       const f = arg ? functie(arg.functie) : null;
       if (!voorstellen.length && !f) {
@@ -836,10 +841,10 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, api: Xlsx
         }
       }, 120);
     };
-    const kies = (h: Hulp, f: Functie) => {
+    const kies = (h: Hulp, f: FormuleVoorstel) => {
       const cursor = h.veld.selectionStart ?? h.veld.value.length;
-      const tekst = `${h.veld.value.slice(0, h.begin)}${f.naam}(${h.veld.value.slice(cursor)}`;
-      zetVeld(h.veld, tekst, h.begin + f.naam.length + 1);
+      const nieuw = aangevuldeFormule(h.veld.value, h.begin, cursor, f);
+      zetVeld(h.veld, nieuw.tekst, nieuw.cursor);
     };
     const opToets = (e: KeyboardEvent) => {
       if (!isVeld(e.target) || !inHost(e.target) || e.isComposing) return;
@@ -897,13 +902,14 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, api: Xlsx
       hulp={hulp}
       kies={(f) => {
         const cursor = hulp.veld.selectionStart ?? hulp.veld.value.length;
-        zetVeld(hulp.veld, `${hulp.veld.value.slice(0, hulp.begin)}${f.naam}(${hulp.veld.value.slice(cursor)}`, hulp.begin + f.naam.length + 1);
+        const nieuw = aangevuldeFormule(hulp.veld.value, hulp.begin, cursor, f);
+        zetVeld(hulp.veld, nieuw.tekst, nieuw.cursor);
       }}
     />
   ) : null;
 }
 
-function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: Functie) => void }) {
+function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: FormuleVoorstel) => void }) {
   const { t } = useTranslation("functions");
   const { t: ts } = useTranslation("spreadsheet");
   const id = useId();
@@ -913,7 +919,7 @@ function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: Functie) => void })
       <div className="rekenblad-aanvullen" style={plek} role="listbox" aria-label={ts("formulaBar.suggestions")} id={id}>
         {hulp.voorstellen.map((f, i) => (
           <div
-            key={f.naam}
+            key={`${f.soort}:${f.naam}`}
             role="option"
             aria-selected={i === hulp.gekozen}
             className={i === hulp.gekozen ? "is-gekozen" : ""}
@@ -923,7 +929,7 @@ function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: Functie) => void })
             }}
           >
             <strong>{f.naam}</strong>
-            <span>{t(`fn.${f.naam}`)}</span>
+            <span>{f.soort === "functie" ? t(`fn.${f.naam}`) : f.verwijzing}</span>
           </div>
         ))}
         <p className="rekenblad-zacht">{ts("formulaBar.suggestionsHint")}</p>

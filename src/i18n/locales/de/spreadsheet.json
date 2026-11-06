@@ -383,5 +383,47 @@
     "result": "Ergebnis:",
     "resultUnavailable": "keine Vorschau verfügbar",
     "insert": "Einfügen"
+  },
+  "names": {
+    "title": "Name manager",
+    "name": "Name",
+    "scope": "Scope",
+    "workbook": "Workbook",
+    "refersTo": "Refers to",
+    "hidden": "Hidden",
+    "empty": "No name definitions found.",
+    "new": "New name",
+    "fromSelection": "Names from selection",
+    "reservedHint": "This built-in name is managed by the workbook and cannot be changed here.",
+    "deleteQuestion": "Delete name “{{name}}”?",
+    "deleteHint": "Formulas using this name may return an error afterwards. Undo restores the name.",
+    "deleted": "The name was deleted.",
+    "saved": "The name definitions were updated.",
+    "editHint": "The name stays the same; change its reference, visibility or scope.",
+    "definitionHint": "Enter an absolute sheet reference, constant or formula. For example ='Sheet 1'!$A$1:$A$10, =0.21 or =SUM('Sheet 1'!$A$1:$A$10).",
+    "selection": "Selection: {{range}}",
+    "headersHint": "Selected header rows or columns are excluded from the named data range. Spaces become underscores. Existing or duplicate names are never overwritten.",
+    "headerSides": "Use headers from",
+    "sides": {
+      "boven": "Top row",
+      "onder": "Bottom row",
+      "links": "Left column",
+      "rechts": "Right column"
+    },
+    "preview": "Preview names",
+    "skipped": "Skipped header cells without text: {{cells}}",
+    "errors": {
+      "invalidName": "Use up to 255 characters without spaces or a cell address; start with a letter or underscore.",
+      "emptyDefinition": "Enter a range, constant or formula.",
+      "duplicateName": "Name “{{name}}” already exists in this scope.",
+      "staleName": "The name or workbook changed in the meantime. Refresh the list or create a new preview.",
+      "invalidScope": "The sheets changed in the meantime. Reopen this window.",
+      "reservedName": "Name “{{name}}” is reserved for the workbook.",
+      "emptyHeaders": "The selected headers contain no usable names.",
+      "headerConflict": "Header “{{name}}” produces a duplicate or existing name. Nothing was changed.",
+      "selectionTooLarge": "Select at most 5,000 header cells at a time.",
+      "invalidSelection": "Select headers with at least one adjacent data cell and choose the side containing the headers.",
+      "readFailed": "The name definitions or header cells could not be read."
+    }
   }
 }
