@@ -77,6 +77,7 @@ export function herstelToegankelijkRaster(bron: string): string {
     // voor beide hoeken van de selectie, vóór de browser de sprong begrenst.
     ['let k=J.current;k&&(k.scrollLeft=D.x*Ge.current,k.scrollTop=D.y*Ge.current);',
       'let k=J.current;if(k&&N.current===m&&Pe.current===t&&oosZelfdeRasterSelectie(Ie.current,s)){let ie=Ge.current,ce=Ne.current;ce&&Ke(pa$1(k,pa$1(k,ce,m.cellRect(t,s.anchor.row,s.anchor.col),ie),m.cellRect(t,s.focus.row,s.focus.col),ie)),k.scrollLeft=D.x*ie,k.scrollTop=D.y*ie;}'],
+    ['buildA11yGrid(Qe,te,ee.sheetNames[he]??"",{', 'oosBouwToegankelijkRaster(Qe,te,ee.sheetNames[he]??"",{'],
     ['[Qe,te,ee,he,O]),ut=useCallback', '[Qe,te,ee,he,O]);oosUseRasterFocus(J,oosActieveRasterCel(ur,te,oosRasterId,he));let ut=useCallback'],
     ["let{t:O}=H(),C$1=x$1",
       "let{t:O}=H(),oosRasterId=oosUseId(),C$1=x$1"],
@@ -94,7 +95,7 @@ export function herstelToegankelijkRaster(bron: string): string {
     uit = uit.replace(oud, nieuw);
   }
   return 'import { useId as oosUseId } from "react";\n' +
-    'import { rasterCelId as oosRasterCelId, rasterCelStijl as oosRasterCelStijl, actieveRasterCel as oosActieveRasterCel, useRasterFocus as oosUseRasterFocus, zelfdeRasterSelectie as oosZelfdeRasterSelectie } from "openaec-rekenblad-toegankelijkheid";\n' + uit;
+    'import { bouwToegankelijkRaster as oosBouwToegankelijkRaster, rasterCelId as oosRasterCelId, rasterCelStijl as oosRasterCelStijl, actieveRasterCel as oosActieveRasterCel, useRasterFocus as oosUseRasterFocus, zelfdeRasterSelectie as oosZelfdeRasterSelectie } from "openaec-rekenblad-toegankelijkheid";\n' + uit;
 }
 
 export function rekenbladengineCompatibiliteit(): Plugin {

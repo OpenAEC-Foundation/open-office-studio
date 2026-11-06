@@ -1,5 +1,28 @@
-import { cellRect, type A11yGrid, type GridMeta, type Selection } from "@betteroffice/xlsx";
+import { buildA11yGrid, cellRect, type A11yGrid, type A11yStrings, type DisplayList, type GridMeta, type Selection } from "@betteroffice/xlsx";
 import { useLayoutEffect, useRef, type CSSProperties, type RefObject } from "react";
+
+/** Virtualiseer ook de celspiegel: bij 10% zoom passen tienduizenden cellen in beeld. */
+export function bouwToegankelijkRaster(frame: DisplayList, selectie: Selection | null, blad: string, woorden: A11yStrings): A11yGrid {
+  const grid = frame.grid;
+  if (!grid || (grid.rowOffsets.length - 1) * (grid.colOffsets.length - 1) <= 1000)
+    return buildA11yGrid(frame, selectie, blad, woorden);
+  const begin = (aantal: number, maximum: number, focus: number | undefined, start: number, indices?: number[]) => {
+    const positie = focus === undefined ? 0 : indices ? indices.indexOf(focus) : focus - start;
+    return Math.max(0, Math.min(aantal - maximum, Math.max(0, positie) - Math.floor(maximum / 2)));
+  };
+  const rij = begin(grid.rowOffsets.length - 1, 40, selectie?.focus.row, grid.startRow, grid.rowIndices);
+  const kolom = begin(grid.colOffsets.length - 1, 25, selectie?.focus.col, grid.startCol, grid.colIndices);
+  // Alleen de spiegel krijgt een venster. Tekenen, selectie en geometrie blijven volledig.
+  return buildA11yGrid({ ...frame, grid: {
+    ...grid,
+    startRow: grid.rowIndices?.[rij] ?? grid.startRow + rij,
+    startCol: grid.colIndices?.[kolom] ?? grid.startCol + kolom,
+    rowIndices: grid.rowIndices?.slice(rij, rij + 40),
+    colIndices: grid.colIndices?.slice(kolom, kolom + 25),
+    rowOffsets: grid.rowOffsets.slice(rij, rij + 41),
+    colOffsets: grid.colOffsets.slice(kolom, kolom + 26),
+  } }, selectie, blad, woorden);
+}
 
 /** Een cel-id hoort bij één editor, werkblad en logische celpositie. */
 export function rasterCelId(raster: string, blad: number, rij: number, kolom: number): string {
