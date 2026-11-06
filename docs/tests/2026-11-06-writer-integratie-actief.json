@@ -3,28 +3,11 @@
   "ontwikkelbranch": "codex/native-rust-office",
   "productie": "45.52/alpha57, ongewijzigd",
   "integratiebranch": "codex/native-rust-office-integratie",
-  "werkmap_relatief": "../ops-wt/office-native-integratie-2026-11-06",
+  "werkmap_relatief": "../Open-Office-Studio-integratie-2026-11-06",
   "integratiebasis": "119a1b6952b29cf90755c425836e150354978049",
   "samen_te_voegen_main": "56aa1fec615c736583a2c63c040e5b72ef1c9709",
   "merge_gecommit": false,
-  "nog_onopgelost": [
-    ".github/workflows/desktop.yml",
-    ".github/workflows/release.yml",
-    "pnpm-lock.yaml",
-    "public/templates/nieuw.docx",
-    "scripts/kopieer-licenties.mjs",
-    "src-tauri/Cargo.lock",
-    "src/Ribbon.tsx",
-    "src/editors.tsx",
-    "src/export/index.ts",
-    "src/i18n/engine/es.ts",
-    "src/lint/rekenblad-formulebalk.tsx",
-    "src/lint/tekst.tsx",
-    "src/rekenbladcontrole.test.ts",
-    "src/rekenbladcontrole.ts",
-    "tests/test_matrix.py",
-    "vite.config.ts"
-  ],
+  "nog_onopgelost": [],
   "voorlopig_opgelost": {
     ".gitattributes": "bd61d41c5f37e5242b9aec5deb384fc345895f602a8926a6d890d83a3e50389e",
     "scripts/maak-sjablonen.py": "26efb4a8e2bf832959497cb8b0c543e96107b4ca7e7e1d220b5d0bfe3af55e97",
@@ -37,11 +20,93 @@
     "apps/database-studio/src-tauri/tauri.conf.json": "b515d0cce653be89f0744cd6ef90d90913666ade19d9ed1c3e6c6c51ae6564b2",
     "apps/database-studio/src-tauri/Cargo.toml": "6c30aeb1e296f052bc21a5bde828d8fd5964ab4cedb540260f4a61d68f93e254",
     "apps/database-studio/src-tauri/Cargo.lock": "a18c2a3257e9dd87baa945476eda9bee363408d359d3244dc630db9895b91557",
-    "versie.json": "a8a143d644225ae172bd0e0f805563425303e5ddf44310b1362ef966fc9bc5e7"
+    "versie.json": "a8a143d644225ae172bd0e0f805563425303e5ddf44310b1362ef966fc9bc5e7",
+    ".github/workflows/desktop.yml": "8f485d02fe8eb86e6e9e7e887756f6ef5212a5f47b0b335a39e10c7ec9d58f5f",
+    ".github/workflows/release.yml": "f77dd005c636c56503a2aacef1cc3b8400b5414fed66f634ad0406d41731adc2",
+    "pnpm-lock.yaml": "8159a0c3b0c5117d63c8baca7d3c02b162905b3284d98a3b47499034f7dcd2aa",
+    "public/templates/nieuw.docx": "7517f4a8572c87d9f4aa3ac10bbe40be7d292b8a9687799b0a1b2e111cc3d2a1",
+    "scripts/kopieer-licenties.mjs": "eebeba78118bffc2074bd0ad0455526d3eef5458b270a037b89552eb94046938",
+    "src-tauri/Cargo.lock": "4f2b44fd456454292f2f8823e603928ff4f6e0838ac0807c9021e340be07e5c8",
+    "src/Ribbon.tsx": "3475ba52a51770537cb0de920999c5d46d912c7be447fb258228675732e311f2",
+    "src/editors.tsx": "cce23bc00bdc99263cf1c4ca3e5e72e22e70472158ab87ba49a7837de2d6d0dc",
+    "src/export/index.ts": "b06a3d33e3be2172e297019559f93e41098a834164a28f3163237b99421b385a",
+    "src/i18n/engine/es.ts": "1e41fe548400975c09439da2a412afb6469ee205016a11a13dc1de417130b49c",
+    "src/lint/rekenblad-formulebalk.tsx": "6a22ca5fad0e7d66b05e3c063b33d498e0d6a84cf6b18d1b4cceadd7288ec85b",
+    "src/lint/tekst.tsx": "4e654c91a22a55b27eecb2166c681f3e5bcc31c6e56c5acfbfb7637e60c5e6c3",
+    "src/rekenbladcontrole.test.ts": "918df8a04c9a33d351a0348faebb0044d4eff84d2e7ff988bbb47fb5a815dc40",
+    "src/rekenbladcontrole.ts": "70c3a60217a342fd1e66a15071b64f1b8719cf8b89306dd8dd059c73b44b6696",
+    "tests/test_matrix.py": "bf92410bea5a52fe801cd9d60cb8fc0c893b9d562a64311d866b967b706cd195",
+    "vite.config.ts": "ff305aed907cb5a491a992a02f6e4e5848752e56e838470391593282236a43bb",
+    "src/lint/rekenblad-functies.ts": "3a0bd95440439bdd9f66d5d3a7f9139da52d2571af18716a4b0ba0a2bcb9bc74",
+    "src/i18n/locales/lo/functions.json": "b0372106909ea7454ec2a94d51f121c8aa7fa036a08d9378e8175885efa814d7",
+    "src/i18n/locales/lo/ribbon.json": "bb1ddb8dee4d1f9a90479ecf1b653ff295104ec852ec72f764ad738a851dd2aa"
   },
-  "uitgevoerd": "AGENTS gelezen; Python-syntaxis van fixturegeneratoren, JSON/TOML-syntaxis, gitattributes-uitkomsten gecontroleerd. Beide engine.test-testgroepen behouden. Native Cargo-paden/patches behouden; clipboard-dependency/testfeature en icoonpaden uit main meegenomen.",
-  "nog_te_controleren": "Resoluties zijn geen geteste appintegratie. Nog geen afhankelijkheden in deze werkmap geïnstalleerd, geen geïntegreerde TypeScript/frontend/native/GUI/beeld/platform-/editiecontroles uitgevoerd. Lockfiles en overige codeconflicten nog open.",
-  "hervatten": "Lees AGENTS.md en git-status in de integratiewerkmap; werk als enige schrijver. Behoud onvoltooide merge en gestagede resoluties; niet resetten of afbreken. Los resterende conflicten op met behoud van native invoer/bronbewaking, main-workerbootstrap/-verhaalfilter, rekenbladherberekening, UI en formaten. Regenereren/installeer afhankelijkheden uitsluitend daar; root-SDK, referenties en gebruikerswerk behouden. Daarna alle passende controles op geïntegreerde bron; pas afgeronde geteste integratie naar ontwikkelbranch pushen.",
+  "uitgevoerd": "Alle 28 bestandsconflicten voorlopig opgelost en gestaged. TypeScript-syntaxis van 171 gewijzigde bestanden, JSON/TOML/YAML, Python-syntaxis, ZIP/A4/opsomming/stijlen van het lege Writer-sjabloon en git diff --check gecontroleerd. pnpm lockfile-only met pakketbeleid en frozen/offline installatie slagen; Cargo tree --locked --offline slaagt na beperkte locknormalisatie. Volledige TypeScript-controle slaagt na 12 dubbele objectvelden te verwijderen; geen functies verwijderd. FIXED behoudt het afzonderlijke argument decimals. Python 126/126 geslaagd na ontbrekende io-import en test-PATH te herstellen. Engine-roundtrips en 10 opdrachtproeven slagen. Eerste frontendronde: 2276 geslaagd, 2 gefaald, 10 overgeslagen; twee falende groepen hersteld en gericht 26/26 geslaagd. Webproductiebouw geslaagd. Volledige frontendhertest had tijdgrenzen; alle negen getroffen bestanden bij seriële hertest105/105geslaagd. Geen volledige groene eindronde.",
+  "nog_te_controleren": "Geen volledig groene frontendronde na de laatste correcties; losse succesvolle hertests vervangen die niet. Merge nog niet gecommit. Geen desktopbouw, GUI-/beeld-/prestatie-/platform-/editieacceptatie op geïntegreerde bron; tien of negen bestaande overgeslagen tests tellen niet als dekking. Lao-vertalingen alleen structureel gecontroleerd.",
+  "hervatten": "Hervat uitsluitend in ../Open-Office-Studio-integratie-2026-11-06; met git worktree move buiten de andere Cargo-workspace geplaatst. Behoud merge en index. Eerst volledige frontendronde met beperkte paralleliteit en ongewijzigde assertions/tijdgrenzen; daarna nativebouw met ruimtebewaking/hergebruikte target en echte GUI/visuele/prestatieproeven. Geen integratiecode pushen vóór functioneel bewijs. Circa3.8GiB vrij na eigen cacheopruiming; voor grote nativebouw mogelijk meer nodig. Compilerobjecten zijn vervangbaar, referenties blijven behouden.",
   "performance": "45.54 niet gepromoveerd: nul overtuigende winst en nog dubbele positieopbouw. Werkelijke twee generatieverhogingen (directe invoer en state-/renderpublicatie bij gelijke bronversie) zijn gemeten; een streng begrensde samenvoeging is nog niet geïmplementeerd.",
-  "veiligheid": "Rootcheckout en .claude/gebruikersdocumenten/profielen behouden. Geen official release, gesloten issue of migratieacceptatie. Ongeveer7.4GiB vrij na worktree-aanmaak; hergebruik buildtarget en controleer ruimte vóór bouwen."
+  "veiligheid": "Productie45.52/alpha57, root-SDK, profielen, documenten, referenties en .claude behouden. Native SDK in beide werkmappen SHA25685a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb. Geen volledige native desktopbouw gestart; geen issue gesloten of migratiegebied geaccepteerd.",
+  "webbundel": "Geslaagd: assets inclusief spelling-WASM en 233 productielicenties, daarna Vite-productiebouw in122s. Waarschuwingen over use-client, gemengde JSON-importattributen, statisch/dynamisch importeren en grote chunks blijven zichtbaar in log; geen visuele desktopacceptatie.",
+  "frontend_hertest": "Volledige tweede ronde niet groen:2269geslaagd,10testtijdgrenzen in9bestanden plus één beforeAll-hooktijdgrens,9overgeslagen. Alle9getroffenbestanden daarna achtereenvolgens zonder gewijzigde assertions/tijdgrenzen herhaald:105/105geslaagd in86.13s. Gelijktijdige bundelbouw en tests uit andere werkmap waargenomen bij volledige ronde; oorzaak niet afdoende bewezen. Geen volledige groene ronde na de laatste correcties.",
+  "cacheopruiming": {
+    "bestanden": 2660,
+    "logische_bytes": 2175327882,
+    "beschermde_directe_referenties": 53,
+    "verificatie": "Hashes van53log-/bronregister-/programma-/bewijsbestanden gelijk; alleen compilerobjecten rlib/rmeta/d/o/a uit oudere eigen fontbundeling-target verwijderd. Programma’s, bundles en onderzoeksbronnen niet verwijderd. Vrije ruimte circa3.8GiB."
+  },
+  "lokale_voorlopige_patch_sha256": "e133fab412b9b84cc09832764dc2fa3adf98592aebf5863bec010c89c5b3a1b4",
+  "controlelogs": {
+    "docs/tests/writer-integratie-2026-11-06/assets.log.gz": {
+      "sha256": "87586153019691d495c90cd15a224e17dd7f41bc75bf3682d51fc96d6f468285",
+      "ongecomprimeerd_sha256": "c0212f1daf6fec7758db30e1eee1a08c190b79725c0e303c4630f61be5b8c778"
+    },
+    "docs/tests/writer-integratie-2026-11-06/engines.log.gz": {
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14",
+      "ongecomprimeerd_sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4"
+    },
+    "docs/tests/writer-integratie-2026-11-06/frontend-definitief.log.gz": {
+      "sha256": "2d6e16863b21fa3deb0eb8e312e0abf5806a8780937108995654b92ba7033c09",
+      "ongecomprimeerd_sha256": "77ec263b62419d084bd015ca7fe8b0baf5da93a75f7a26338106905eb3f0fa84"
+    },
+    "docs/tests/writer-integratie-2026-11-06/frontend-eerste-afkeuring.log.gz": {
+      "sha256": "ab0a4720ea97ad5c8d7dff57423e9e492ff6e853a89c2296c98bd637efa10f58",
+      "ongecomprimeerd_sha256": "c0038568780d78571a06263525aa93e28dd47867b925b4d82d9f112634383d9b"
+    },
+    "docs/tests/writer-integratie-2026-11-06/frontend-herstel.log.gz": {
+      "sha256": "af12bf4ceb15a9c101432e9588638aaf1737926bf07a7d8c7ea897b7dee079c6",
+      "ongecomprimeerd_sha256": "8e96ad818885f60b8092a2e2a0843e810ee5a52cd30788b74128dffe78ab4dc7"
+    },
+    "docs/tests/writer-integratie-2026-11-06/frontend.log.gz": {
+      "sha256": "ab0a4720ea97ad5c8d7dff57423e9e492ff6e853a89c2296c98bd637efa10f58",
+      "ongecomprimeerd_sha256": "c0038568780d78571a06263525aa93e28dd47867b925b4d82d9f112634383d9b"
+    },
+    "docs/tests/writer-integratie-2026-11-06/opdrachten.log.gz": {
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16",
+      "ongecomprimeerd_sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31"
+    },
+    "docs/tests/writer-integratie-2026-11-06/python-eerste-afkeuring.log.gz": {
+      "sha256": "00ad2ccc4eaf9b0d6f3d03574f3ef9991921da645882b6fd9f19a0210290b824",
+      "ongecomprimeerd_sha256": "a0fa5851d27cd0b315ba7b66568e244b25d1ffcef2d1ff94b03b240a39badaa3"
+    },
+    "docs/tests/writer-integratie-2026-11-06/python.log.gz": {
+      "sha256": "7789dd70e578089bb0f471d7b2b74495e133b7f60bad981bdfc488fb1440ad6c",
+      "ongecomprimeerd_sha256": "e021491f180f69654122c8b1184df900bd29d252361389bff51ac2db2b2d09c1"
+    },
+    "docs/tests/writer-integratie-2026-11-06/typescript.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "ongecomprimeerd_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-integratie-2026-11-06/vite.log.gz": {
+      "sha256": "88e09ff1048afe3e5f0a196841c50ef870dffc4356a11d917c01b66797837a15",
+      "ongecomprimeerd_sha256": "fe27fc73090bdaf0b8836a17fb809cb8cb50b3a4ab86de80fe9a3662ef3acdee"
+    },
+    "docs/tests/writer-integratie-2026-11-06/cacheopruiming.json.gz": {
+      "sha256": "0d5eeb40e131dffbdbdd4c25209d985e724ca4591c9f3a085575fd568be99cae",
+      "ongecomprimeerd_sha256": "b13e6c92e9d1e7d86aeddca407f74f2ccc0c39eb115524d6541c987e8654af50"
+    },
+    "docs/tests/writer-integratie-2026-11-06/frontend-tijdgrens-herhaling.log.gz": {
+      "sha256": "9c12cf6cbdc808c939a5dac481190e464063c9f603c1b2f75f2e32120cc7585b",
+      "ongecomprimeerd_sha256": "c78e4038c48ecda5edb2f35f55e131d00b113a1be8886a4a10cd71951b32893f"
+    }
+  }
 }
