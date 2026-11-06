@@ -31,7 +31,7 @@ def gebruik_hoofdarchief(map):
         nieuw = herschrijf_bronnen(bron.decode("utf-8")).encode("utf-8")
         if nieuw != bron:
             pad.write_bytes(nieuw)
-            gewijzigd.append(str(pad.relative_to(map)))
+            gewijzigd.append(pad.relative_to(map).as_posix())
     return gewijzigd
 
 
