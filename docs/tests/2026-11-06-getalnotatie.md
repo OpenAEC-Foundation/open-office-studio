@@ -1,7 +1,7 @@
-# Werkmapregio en getalnotatie — lopende herstelronde
+# Werkmapregio en getalnotatie — afgeronde herstelronde
 
-#64 blijft open; [PR #164](https://github.com/OpenAEC-Foundation/open-office-studio/pull/164)
-is een concept. De kern en interface zijn aangesloten in deze branch. De
+#64 is gesloten na merge van [PR #164](https://github.com/OpenAEC-Foundation/open-office-studio/pull/164)
+op 6 november 2026. De kern en interface zijn aangesloten op de hoofdbranch. De
 openbare installers van 2026-W45.1 en 2026-W45.2 zijn ongewijzigd.
 
 ## Afwijking en herstel
@@ -203,13 +203,14 @@ Onderbouwing van impliciete en expliciete nummerformaten:
 [Open XML NumberingFormat](https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.numberingformat)
 en [MS-OI29500 §2.1.712](https://learn.microsoft.com/en-us/openspecs/office_standards/ms-oi29500/17d11129-219b-4e2c-88db-45844d21e528).
 
-## Resterende acceptatie
+## Afgeronde acceptatie
 
 De eerste brede kernronde stopte met signaal 143, zonder afgeronde eindtelling;
 die geldt niet als geslaagd. De [volledige nacontrole](getalnotatie-ingebouwde-datums-kernnacontrole-2026-11-06.json)
 met twee testthreads slaagt in **2.419 proeven**, 81 sets, met zestien bestaande
 gevallen overgeslagen en nul mislukkingen. De lokale acceptatie is daarmee groen.
-De zes platformchecks van de eerdere commit `c368e593` zijn groen; de definitieve
-revisie moet nog alle zes platformchecks doorlopen. De zes issuecriteria
-blijven onafgevinkt tot die gezamenlijke acceptatie is bewezen. PR #164 blijft
-concept en #64 blijft open.
+Alle [zes platformchecks](getalnotatie-platformen-2026-11-06.json) van definitieve
+revisie `b96bb0ee` zijn groen. PR #164 is gemerged als `cbb0bf6e`; de zes
+issuecriteria zijn afgetekend en #64 is gesloten. Dit geeft de bestaande native
+Linux-proeven en de platformbouw vrij; Windows/macOS-GUI-bediening is niet
+afzonderlijk lokaal uitgevoerd. De wijziging zit op main voor de volgende release.

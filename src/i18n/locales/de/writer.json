@@ -1007,7 +1007,15 @@
         "toNoteOnPage": "Zur Notiz (S. {{page}})"
       },
       "jumpFootnote": "Fußnote {{number}}: {{text}}",
-      "jumpEndnote": "Endnote {{number}}: {{text}}"
+      "jumpEndnote": "Endnote {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "Seitenzahl eingefügt",
@@ -1046,7 +1054,8 @@
       "footnoteInserted": "Fußnote eingefügt",
       "endnoteInserted": "Endnote eingefügt",
       "noteFormatChanged": "Notizformat geändert",
-      "marginsChanged": "Seitenränder geändert"
+      "marginsChanged": "Seitenränder geändert",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "Das Dokument ist noch nicht bereit.",
@@ -1078,7 +1087,8 @@
       "endnoteBodyOnly": "Eine Endnote kann nur im Haupttext eingefügt werden, nicht in einer Kopf- oder Fußzeile oder einer anderen Notiz.",
       "footnotePosition": "Fußnoten stehen am Seitenende oder unterhalb des Textes.",
       "endnotePosition": "Endnoten stehen am Ende des Abschnitts oder des Dokuments.",
-      "endnoteRestartPerPage": "Endnoten können nicht auf jeder Seite neu beginnen."
+      "endnoteRestartPerPage": "Endnoten können nicht auf jeder Seite neu beginnen.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {

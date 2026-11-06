@@ -1017,7 +1017,15 @@
         "toNoteOnPage": "Ir a la nota (pág. {{page}})"
       },
       "jumpFootnote": "Nota al pie {{number}}: {{text}}",
-      "jumpEndnote": "Nota al final {{number}}: {{text}}"
+      "jumpEndnote": "Nota al final {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "Número de página insertado",
@@ -1056,7 +1064,8 @@
       "footnoteInserted": "Nota al pie insertada",
       "endnoteInserted": "Nota al final insertada",
       "noteFormatChanged": "Formato de notas cambiado",
-      "marginsChanged": "Márgenes cambiados"
+      "marginsChanged": "Márgenes cambiados",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "El documento aún no está listo.",
@@ -1088,7 +1097,8 @@
       "endnoteBodyOnly": "Una nota al final solo se puede insertar en el texto principal, no en un encabezado, un pie de página u otra nota.",
       "footnotePosition": "Las notas al pie se colocan al final de la página o debajo del texto.",
       "endnotePosition": "Las notas al final se colocan al final de la sección o del documento.",
-      "endnoteRestartPerPage": "Las notas al final no pueden reiniciarse en cada página."
+      "endnoteRestartPerPage": "Las notas al final no pueden reiniciarse en cada página.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {

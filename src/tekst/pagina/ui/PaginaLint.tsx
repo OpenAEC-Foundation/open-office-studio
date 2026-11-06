@@ -8,6 +8,7 @@ import {
   AlignLeft,
   AlignRight,
   ArrowDownToLine,
+  ArrowRightLeft,
   BookOpen,
   Columns2,
   Columns3,
@@ -327,6 +328,7 @@ export function verwijzingenTab(p: PaginaFuncties): RibbonTab {
           <div className="ribbon-stapel">
             <EigenKnop naam={t("page.footnotes.show")} icoon={ArrowDownToLine} uitleg={t("page.footnotes.showHint")} disabled={!p.beschikbaar} onClick={() => void p.notenLijst()} />
             <EigenKnop naam={t("page.footnotes.format")} icoon={Ruler} uitleg={t("page.footnotes.formatHint")} disabled={!p.beschikbaar} onClick={() => void p.nootInstellingen()} />
+            <EigenKnop naam={t("page.footnotes.convert.title")} icoon={ArrowRightLeft} uitleg={t("page.footnotes.convert.hint")} disabled={!p.bewerkbaar} onClick={() => void p.notenLijst()} />
           </div>
         </Groep>
       </>

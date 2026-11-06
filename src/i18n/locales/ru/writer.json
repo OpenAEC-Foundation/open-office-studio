@@ -1027,7 +1027,15 @@
         "toNoteOnPage": "Go to note (p. {{page}})"
       },
       "jumpFootnote": "Footnote {{number}}: {{text}}",
-      "jumpEndnote": "Endnote {{number}}: {{text}}"
+      "jumpEndnote": "Endnote {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "Page number inserted",
@@ -1065,7 +1073,8 @@
       "tocRemoved": "Table of contents removed",
       "footnoteInserted": "Footnote inserted",
       "endnoteInserted": "Endnote inserted",
-      "noteFormatChanged": "Note format changed"
+      "noteFormatChanged": "Note format changed",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "The document is not ready yet.",
@@ -1097,7 +1106,8 @@
       "endnoteBodyOnly": "An endnote can only be inserted in the main text, not in a header, footer or another note.",
       "footnotePosition": "Footnotes are placed at the bottom of the page or below the text.",
       "endnotePosition": "Endnotes are placed at the end of the section or the document.",
-      "endnoteRestartPerPage": "Endnotes cannot restart on each page."
+      "endnoteRestartPerPage": "Endnotes cannot restart on each page.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
