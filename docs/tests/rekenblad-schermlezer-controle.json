@@ -1,0 +1,1021 @@
+{
+  "omgeving": {
+    "Orca": "51.1",
+    "AT-SPI": "2.58.6",
+    "GTK": "3.24.41",
+    "WebKitGTK": "2.52.6",
+    "SpeechDispatcher": "0.12.0-rc2",
+    "eSpeakNG": "1.51",
+    "audio": "ALSA null",
+    "proef": "eigen X11, eigen D-Bus/AT-SPI en gebruikersprofielen"
+  },
+  "schermlezerBronnen": [
+    {
+      "pakket": "at-spi2-core",
+      "versie": "2.58.6",
+      "bron": "https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-2.58.6.tar.xz",
+      "sha256": "5edc84e3227933fbf7a4f9a8330e044b8b43d449b75b9c11e4c5f750e96cbc7c",
+      "bytes": 589008
+    },
+    {
+      "pakket": "orca",
+      "versie": "51.1",
+      "bron": "https://download.gnome.org/sources/orca/51/orca-51.1.tar.xz",
+      "sha256": "22829394474e9fde7fdd46b03a98c9a98eb595106b21fb71afdbe2f82436077b",
+      "bytes": 4286944
+    }
+  ],
+  "fixture": {
+    "pad": "tests/fixtures/schermlezer.xlsx",
+    "sha256": "91d670fde8ae9d7aa19a9607420ea9692917522cc8e894bfa512cdcff36ff2c3",
+    "verwachtingen": {
+      "A1": 7,
+      "B1": 11,
+      "C1": 18,
+      "A2": "Controle cel",
+      "Tweede blad!A1": "Tweede bladtekst"
+    }
+  },
+  "baseline": {
+    "release": "v2026.45.4",
+    "programmaSha256": "fcbdd4ab4b501acdd634e06832b42795259441e4dfeff70b78dd48e01468fe7c",
+    "schermlezerstappen": [
+      {
+        "toets": "F6",
+        "dom": {
+          "actief": {
+            "tag": "BUTTON",
+            "rol": null,
+            "test": null,
+            "aria": "Open Spreadsheet Studio",
+            "klasse": "office-titelbalk-merk",
+            "tabindex": null
+          },
+          "cel": "A1, 7, geselecteerd"
+        },
+        "spraak": [
+          "20:52:19.144104 - SPEECH OUTPUT: 'F6'{'established': 'False',",
+          "20:52:19.386385 - SPEECH OUTPUT: 'banner'{'established': 'False', 'voice-type': 'system'}",
+          "20:52:19.388888 - SPEECH OUTPUT: 'Open Spreadsheet Studio button'{'established': 'False', 'voice-type': 'system'}",
+          "20:52:19.391919 - SPEECH OUTPUT: 'Naar Start'{'established': 'False', 'voice-type': 'default'}",
+          "20:52:19.409481 - SPEECH OUTPUT: 'Bladermodus'{'established': 'False'}"
+        ]
+      },
+      {
+        "toets": "F6",
+        "dom": {
+          "actief": {
+            "tag": "BUTTON",
+            "rol": "tab",
+            "test": null,
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "A1, 7, geselecteerd"
+        },
+        "spraak": [
+          "20:52:20.100403 - SPEECH OUTPUT: 'F6'{'established': 'False',",
+          "20:52:20.256056 - SPEECH OUTPUT: 'Start page tab'{'established': 'False', 'voice-type': 'system'}",
+          "20:52:20.261899 - SPEECH OUTPUT: 'Focus-modus'{'established': 'False'}"
+        ]
+      },
+      {
+        "toets": "F6",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": "tab",
+            "test": null,
+            "aria": null,
+            "klasse": "office-tab is-actief",
+            "tabindex": "0"
+          },
+          "cel": "A1, 7, geselecteerd"
+        },
+        "spraak": [
+          "20:52:21.032649 - SPEECH OUTPUT: 'F6'{'established': 'False',",
+          "20:52:21.169567 - SPEECH OUTPUT: 'schermlezer.xlsx schermlezer.xlsx sluiten page tab'{'established': 'False', 'voice-type': 'system'}",
+          "20:52:21.172875 - SPEECH OUTPUT: 'schermlezer.xlsx"
+        ]
+      },
+      {
+        "toets": "F6",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": null,
+            "test": "xlsx-scroll",
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "A1, 7, geselecteerd"
+        },
+        "spraak": [
+          "20:52:21.988316 - SPEECH OUTPUT: 'F6'{'established': 'False',"
+        ]
+      },
+      {
+        "toets": "Right",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": null,
+            "test": "xlsx-scroll",
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "B1, 11, geselecteerd"
+        },
+        "spraak": []
+      },
+      {
+        "toets": "Right",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": null,
+            "test": "xlsx-scroll",
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "C1, 18, geselecteerd"
+        },
+        "spraak": []
+      },
+      {
+        "toets": "Down",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": null,
+            "test": "xlsx-scroll",
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "C2, leeg, geselecteerd"
+        },
+        "spraak": []
+      },
+      {
+        "toets": "Tab",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": null,
+            "test": "xlsx-scroll",
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "D2, leeg, geselecteerd"
+        },
+        "spraak": [
+          "20:52:25.771155 - SPEECH OUTPUT: 'tab'{'established': 'False',"
+        ]
+      },
+      {
+        "toets": "Escape",
+        "dom": {
+          "actief": {
+            "tag": "DIV",
+            "rol": null,
+            "test": "xlsx-scroll",
+            "aria": null,
+            "klasse": "",
+            "tabindex": "0"
+          },
+          "cel": "D2, leeg, geselecteerd"
+        },
+        "spraak": [
+          "20:52:26.722750 - SPEECH OUTPUT: 'escape'{'established': 'False',"
+        ]
+      }
+    ],
+    "naamvak": {
+      "naEnter": {
+        "actief": null,
+        "rol": null,
+        "cel": false,
+        "naamvak": "C1000",
+        "scroll": {
+          "y": 0,
+          "h": 577
+        },
+        "selectie": false
+      },
+      "naPijl": {
+        "actief": null,
+        "rol": null,
+        "cel": false,
+        "naamvak": "D1000",
+        "scroll": {
+          "y": 19420,
+          "h": 19997
+        },
+        "selectie": true
+      }
+    }
+  },
+  "kandidaat": {
+    "programmaSha256": "e167a698732e254ca8469675b320f68ed1cd022a435bcf5e1e0acfacf9faa267",
+    "bronSha256": {
+      "scripts/rekenbladengine-compatibiliteit.ts": "3cc689b3d6cb78cabfd8f6c129041eb84fbb5fc7dd3219cb397af474ffba8155",
+      "src/rekenblad/toegankelijkheid.ts": "22bd601b593d297ec06bfe68c0ef10c996b783767c4f7a8e3646fcd59c90cc48",
+      "src/rekenblad/rekenblad.css": "ffeaf7946368d5a09e9446af6f693370685e0986f1e5daf9853ee83f3104bfb5"
+    },
+    "geladenBibliotheken": {
+      "app": [
+        {
+          "naam": "libatk-1.0.so.0.25815.1",
+          "sha256": "f9cdf56c93075a08cf146e05f6fbebede28a9a193774e2448a22d55bc5a81327"
+        },
+        {
+          "naam": "libatk-bridge-2.0.so.0.0.0",
+          "sha256": "4c657ab2d53ac432c6c3260fce8aacb40dbc405ae6394ea2670261555480e57f"
+        },
+        {
+          "naam": "libatspi.so.0.0.1",
+          "sha256": "6f738ed92341c1c297d9a66b61fd269b9d3028cc79609be664b1dcd01e21b950"
+        }
+      ],
+      "orca": [
+        {
+          "naam": "libatk-1.0.so.0.25815.1",
+          "sha256": "f9cdf56c93075a08cf146e05f6fbebede28a9a193774e2448a22d55bc5a81327"
+        },
+        {
+          "naam": "libatk-bridge-2.0.so.0.0.0",
+          "sha256": "4c657ab2d53ac432c6c3260fce8aacb40dbc405ae6394ea2670261555480e57f"
+        },
+        {
+          "naam": "libatspi.so.0.0.1",
+          "sha256": "6f738ed92341c1c297d9a66b61fd269b9d3028cc79609be664b1dcd01e21b950"
+        }
+      ]
+    },
+    "celuitspraak": {
+      "geslaagd": true,
+      "bediening": "xdotool op eigen X11-display",
+      "schermlezer": "Orca 51.1",
+      "uitvoer": "Orca-spraaklog; eSpeak NG en PCM via eigen Speech Dispatcher naar ALSA null",
+      "binarySha256": "e167a698732e254ca8469675b320f68ed1cd022a435bcf5e1e0acfacf9faa267",
+      "fixtureSha256": "91d670fde8ae9d7aa19a9607420ea9692917522cc8e894bfa512cdcff36ff2c3",
+      "stappen": [
+        {
+          "toets": "F6",
+          "verwacht": [],
+          "spraak": [
+            "F6"
+          ],
+          "dom": {
+            "actief": null,
+            "rol": null,
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": null,
+            "eigenKind": false,
+            "cel": null,
+            "celnaam": null,
+            "celgeselecteerd": null,
+            "vak": null,
+            "selectievak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "F6",
+          "verwacht": [],
+          "spraak": [
+            "F6"
+          ],
+          "dom": {
+            "actief": null,
+            "rol": "tab",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": null,
+            "eigenKind": false,
+            "cel": null,
+            "celnaam": null,
+            "celgeselecteerd": null,
+            "vak": null,
+            "selectievak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "F6",
+          "verwacht": [],
+          "spraak": [
+            "F6",
+            "schermlezer.xlsx schermlezer.xlsx sluiten page tab"
+          ],
+          "dom": {
+            "actief": null,
+            "rol": "tab",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": null,
+            "eigenKind": false,
+            "cel": null,
+            "celnaam": null,
+            "celgeselecteerd": null,
+            "vak": null,
+            "selectievak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "F6",
+          "verwacht": [],
+          "spraak": [
+            "F6"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r0-k0",
+            "eigenKind": true,
+            "cel": "A1, 7, geselecteerd",
+            "celnaam": "A1, 7, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "Right",
+          "verwacht": [
+            "B1",
+            "11"
+          ],
+          "spraak": [
+            "Kolom B column header B1, 11, geselecteerd",
+            "kolom 3"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r0-k1",
+            "eigenKind": true,
+            "cel": "B1, 11, geselecteerd",
+            "celnaam": "B1, 11, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 102,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 102,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "Right",
+          "verwacht": [
+            "C1",
+            "18"
+          ],
+          "spraak": [
+            "Kolom C column header C1, 18, geselecteerd"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r0-k2",
+            "eigenKind": true,
+            "cel": "C1, 18, geselecteerd",
+            "celnaam": "C1, 18, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 166.015625,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 166.015625,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "Down",
+          "verwacht": [
+            "C2",
+            "leeg"
+          ],
+          "spraak": [
+            "Rij 2 row header C2, leeg, geselecteerd",
+            "rij 3"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r1-k2",
+            "eigenKind": true,
+            "cel": "C2, leeg, geselecteerd",
+            "celnaam": "C2, leeg, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 166.015625,
+              "y": 262.65625,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 166.015625,
+              "y": 262.65625,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "Home",
+          "verwacht": [
+            "A2",
+            "Controle cel"
+          ],
+          "spraak": [
+            "Kolom A column header A2, Controle cel, geselecteerd",
+            "kolom 2"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r1-k0",
+            "eigenKind": true,
+            "cel": "A2, Controle cel, geselecteerd",
+            "celnaam": "A2, Controle cel, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 38,
+              "y": 262.65625,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 38,
+              "y": 262.65625,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "Up",
+          "verwacht": [
+            "A1",
+            "7"
+          ],
+          "spraak": [
+            "Rij 1 row header A1, 7, geselecteerd",
+            "rij 2"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r0-k0",
+            "eigenKind": true,
+            "cel": "A1, 7, geselecteerd",
+            "celnaam": "A1, 7, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 38,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        },
+        {
+          "toets": "shift+Right",
+          "verwacht": [
+            "B1",
+            "11"
+          ],
+          "spraak": [
+            "linker shift",
+            "Kolom B column header B1, 11, geselecteerd",
+            "kolom 3"
+          ],
+          "dom": {
+            "actief": "xlsx-cel",
+            "rol": "gridcell",
+            "rasterrol": "grid",
+            "rasternaam": "Rekenbladraster: Getallen",
+            "doel": "_r_1_-b0-r0-k1",
+            "eigenKind": true,
+            "cel": "B1, 11, geselecteerd",
+            "celnaam": "B1, 11, geselecteerd",
+            "celgeselecteerd": "true",
+            "vak": {
+              "x": 102,
+              "y": 244,
+              "w": 64,
+              "h": 18.65625
+            },
+            "selectievak": {
+              "x": 38,
+              "y": 244,
+              "w": 128.015625,
+              "h": 18.65625
+            },
+            "eersteKindRol": null
+          }
+        }
+      ]
+    },
+    "spraakdienst": {
+      "module": "espeak-ng",
+      "audioUitvoer": "ALSA null",
+      "celtekstenOntvangen": {
+        "B1, 11, geselecteerd": true,
+        "C1, 18, geselecteerd": true,
+        "C2, leeg, geselecteerd": true,
+        "A2, Controle cel, geselecteerd": true,
+        "A1, 7, geselecteerd": true
+      },
+      "pcmBlokken": 1026,
+      "samplesNaarAudio": 3921668,
+      "foutregels": []
+    },
+    "focuspixels": {
+      "kleur": [
+        188,
+        106,
+        21
+      ],
+      "pixels": 7172,
+      "vak": {
+        "x": 38,
+        "y": 244,
+        "breedte": 1400,
+        "hoogte": 577
+      },
+      "zichtbareRasterfocus": true
+    },
+    "focuspixelsNaNaamvak": {
+      "kleur": [
+        188,
+        106,
+        21
+      ],
+      "pixels": 7172,
+      "vak": {
+        "x": 38,
+        "y": 244,
+        "breedte": 1400,
+        "hoogte": 577
+      },
+      "zichtbareRasterfocus": true
+    },
+    "bewerkenFocusViewportBladen": {
+      "geslaagd": true,
+      "stappen": [
+        {
+          "toets": "Escape",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "B1, 11, geselecteerd",
+            "tekst": "B1, 11, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "ctrl+Home",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "A1, 7, geselecteerd",
+            "tekst": "A1, 7, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "F2",
+          "dom": {
+            "tag": "INPUT",
+            "rol": null,
+            "naam": null,
+            "tekst": "",
+            "invoer": "7",
+            "klasse": "",
+            "cel": false,
+            "rand": "0px none rgb(32, 33, 36)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "ctrl+a",
+          "dom": {
+            "tag": "INPUT",
+            "rol": null,
+            "naam": null,
+            "tekst": "",
+            "invoer": "7",
+            "klasse": "",
+            "cel": false,
+            "rand": "0px none rgb(32, 33, 36)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "type 13 en wacht",
+          "dom": {
+            "tag": "INPUT",
+            "rol": null,
+            "naam": null,
+            "tekst": "",
+            "invoer": "13",
+            "klasse": "",
+            "cel": false,
+            "rand": "0px none rgb(32, 33, 36)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "Escape",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "A1, 7, geselecteerd",
+            "tekst": "A1, 7, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "F6",
+          "dom": {
+            "tag": "BUTTON",
+            "rol": null,
+            "naam": "Uitzoomen",
+            "tekst": "",
+            "invoer": "",
+            "klasse": "statusbalk-icoon",
+            "cel": false,
+            "rand": "0px none rgb(32, 33, 36)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "shift+F6",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "A1, 7, geselecteerd",
+            "tekst": "A1, 7, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "Naamvak: C1000 en wacht",
+          "dom": {
+            "tag": "INPUT",
+            "rol": null,
+            "naam": "Naamvak",
+            "tekst": "",
+            "invoer": "C1000",
+            "klasse": "rekenblad-naamvak",
+            "cel": false,
+            "rand": "0px none rgb(32, 33, 36)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "Return",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "C1000, leeg, geselecteerd",
+            "tekst": "C1000, leeg, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 19420
+            }
+          }
+        },
+        {
+          "toets": "Right",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "D1000, leeg, geselecteerd",
+            "tekst": "D1000, leeg, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 19420
+            }
+          }
+        },
+        {
+          "toets": "Down",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "D1001, leeg, geselecteerd",
+            "tekst": "D1001, leeg, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 19440
+            }
+          }
+        },
+        {
+          "toets": "ctrl+Home",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "A1, 7, geselecteerd",
+            "tekst": "A1, 7, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "ctrl+Page_Down",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "A1, Tweede bladtekst, geselecteerd",
+            "tekst": "A1, Tweede bladtekst, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "toets": "ctrl+Page_Up",
+          "dom": {
+            "tag": "SPAN",
+            "rol": "gridcell",
+            "naam": "A1, 7, geselecteerd",
+            "tekst": "A1, 7, geselecteerd",
+            "invoer": null,
+            "klasse": "",
+            "cel": true,
+            "rand": "2px solid rgb(188, 106, 21)",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        }
+      ]
+    },
+    "naamvak": {
+      "naEnter": {
+        "actief": "C1000, leeg, geselecteerd",
+        "rol": "gridcell",
+        "cel": true,
+        "naamvak": "C1000",
+        "scroll": {
+          "y": 19420,
+          "h": 19997
+        },
+        "selectie": true
+      },
+      "naPijl": {
+        "actief": "D1000, leeg, geselecteerd",
+        "rol": "gridcell",
+        "cel": true,
+        "naamvak": "D1000",
+        "scroll": {
+          "y": 19420,
+          "h": 19997
+        },
+        "selectie": true
+      }
+    },
+    "naamvakBereikEnBladen": [
+      {
+        "tekst": "A998:C1000",
+        "dom": {
+          "actief": "A998, leeg, geselecteerd",
+          "rol": "gridcell",
+          "cel": true,
+          "naamvak": "A998",
+          "scroll": {
+            "y": 19420,
+            "h": 19997
+          },
+          "selectie": true
+        },
+        "vak": {
+          "x": 38,
+          "y": 761.328125,
+          "w": 192.03125,
+          "h": 60
+        }
+      },
+      {
+        "tekst": "'Tweede blad'!A1",
+        "dom": {
+          "actief": "A1, Tweede bladtekst, geselecteerd",
+          "rol": "gridcell",
+          "cel": true,
+          "naamvak": "A1",
+          "scroll": {
+            "y": 0,
+            "h": 580
+          },
+          "selectie": true
+        },
+        "vak": {
+          "x": 38,
+          "y": 244,
+          "w": 64,
+          "h": 20
+        }
+      },
+      {
+        "tekst": "Getallen!A1",
+        "dom": {
+          "actief": "A1, 7, geselecteerd",
+          "rol": "gridcell",
+          "cel": true,
+          "naamvak": "A1",
+          "scroll": {
+            "y": 0,
+            "h": 577
+          },
+          "selectie": true
+        },
+        "vak": {
+          "x": 38,
+          "y": 244,
+          "w": 64,
+          "h": 18.65625
+        }
+      }
+    ]
+  },
+  "beperkingen": [
+    "Geen NVDA- of VoiceOver-proef.",
+    "Orca46.1-table-cell-handler negeert celfocus; niet als ondersteund afgetekend.",
+    "WebKitGTK2.52.6 geeft indextekst hier niet door; aanvullende fysieke rij-/kolomnummers tellen koppen mee.",
+    "Een snelle naamvakinvoer onder belasting verloor in een verkennende proef tekens; niet als hersteld afgetekend.",
+    "Nieuwe code zit niet in historische W45.4-installers.",
+    "Legacy React-editor getest; geen worker/viewer- of nativeRustUI-aftekening."
+  ],
+  "volledigeSuite": {
+    "opdracht": "node node_modules/vitest/vitest.mjs run --maxWorkers=2",
+    "bestanden": 169,
+    "geslaagd": 1954,
+    "overgeslagen": 10,
+    "mislukt": 0,
+    "exitcode": 0,
+    "duurSeconden": 139.55
+  },
+  "gerichteTests": {
+    "bestanden": 2,
+    "geslaagd": 14,
+    "mislukt": 0
+  },
+  "types": "tsc --noEmit: exitcode 0",
+  "productiebouw": {
+    "variant": "spreadsheet",
+    "Vite": "exitcode 0, 31.86 seconden",
+    "native": "exitcode 0, 36.96 seconden"
+  },
+  "negatievePixelproef": {
+    "programmaSha256": "70c4af8c6576e4d739dc37b5d29bf46407077356a519864b21be7ea3da103fa6",
+    "aanpak": "outline op container en canvas",
+    "pixels": 0,
+    "exitcodePixelcontrole": 1
+  },
+  "opruiming": {
+    "appAfgesloten": true,
+    "x11Afgesloten": true,
+    "harnasExitcode": 0
+  }
+}
