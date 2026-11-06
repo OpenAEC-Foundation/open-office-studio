@@ -1,6 +1,6 @@
 {
   "datum": "2026-11-06",
-  "status": "Afzonderlijke ongecommitteerde SDK-kandidaat wordt getoetst; geen prestatie-/functionele-/visuele acceptatie of gepushte apppatch.",
+  "status": "Afgekeurd voor promotie; SDK-patch en lock teruggezet op HEAD. Geen snelheidsverbetering geclaimd.",
   "basis": "1a69f57e22dc5d19f27b4fb642b91cd737ec7f98",
   "hypothese": "De directe invoerpublicatie en onmiddellijk volgende lokale statepublicatie kunnen één bestaande positie-invalidatie delen bij identieke actuele eigenaar, sessie, bronversie, generatie en rendercontext. State/render/documentmeldingen blijven altijd doorlopen.",
   "begrenzing": "Eén token en hoogstens één geplande microtask; token vervalt bij verbruik, nieuwe directe publicatie, fout of microtask/unmount. Context moet actuele sessie, gereedheid, worker en geen preview/opening aangeven. Afwijkende herkomst/bron/context/generatie en metadatafouten vallen terug op bestaande invalidatie. Callbackafhankelijkheden bevatten de sessie en een actuele contextref voorkomt goedkeuring door oude closures.",
@@ -20,18 +20,11 @@
     "bronpatch_sha256": "4232dbebc2f1194e52adaaa0b41376375b35965534ebbd03120e51a4e72edf7b"
   },
   "nog_nodig": [
-    "TypeScript, volledige frontend, productieweb-/browser-GUI/actuele lintbron en nativebouw",
-    "Drie echte native scenario’s incl.500pagina’s/spelling/lettertypevarianten en bron-/geschiedenis-/bewaar-/heropen-/verwerpcontroles",
-    "Vóór passieve meting werkelijk één generatie/volledige1537-verhaalopbouw per native groep; geen overschrijdingen en alle3329teksten/351tekens exact",
-    "ABBA en BAAB tegenover de behouden c88-callbackcorrectie, gecontroleerde documentpixels, geen concurrerende compilers/tests; zonder overtuigende winst geen promotie"
+    "Onderzoek waarom de fysieke invoer in de derde ronde niet volledig wordt verwerkt/getekend; vergelijk bronwachtrij en renderafhandeling op de referentie voordat nieuwe invalidatie wordt aangepast.",
+    "Verdere optimalisatie op behouden c88/SDK85a8; volledige suite-/platform-/editie-/Rustacceptatie blijft open."
   ],
   "controllers": {
-    "map": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort",
-    "frontend_exec": 33503,
-    "lintbron_exec": 21239,
-    "nativebouw_exec": 73936,
-    "native_gui_positie_abba_exec": 30663,
-    "gedrag": "Alle controllers zijn eindig; bouw wacht op alle frontendpoorten, native proeven wachten op bouw en fysieke vergelijking wacht op geslaagde unieke positieopbouw. Geen automatische commit/push/installatie/promotie."
+    "status": "Alle lokale controllers geëindigd; geen compiler of eigen proef actief. Geen installatie/publicatie/promotie."
   },
   "bewijs": {
     "docs/tests/writer-publicatiepoort-2026-11-06/poort.cjs.gz": "594eada97bfc1e2206532e65fdec3f46d92ac012baf0bb9b62dd07522b62d931",
@@ -45,6 +38,507 @@
     "docs/tests/writer-publicatiepoort-2026-11-06/na-bouw.py.gz": "8ca4738ce464edd97b8e326509ede41a79732566224f4eb0d1220bdef1c9ff95",
     "docs/tests/writer-publicatiepoort-2026-11-06/lintbron-controle.py.gz": "3bfb286ecb82dfad20c165165d9ca56c8f66565a73a057a19340750b1b2c0c6d",
     "docs/tests/writer-publicatiepoort-2026-11-06/installatie-preview.log.gz": "a03825b0a141056f338b45884504b91a5e156c8fbc602a65e6d6f70dd417ad40",
-    "docs/tests/writer-publicatiepoort-2026-11-06/installatie-lock-preview.log.gz": "dcced3fbb05f4e009bef67ebc2ee18abb643130ea86c66dfde8e7c865e692a86"
-  }
+    "docs/tests/writer-publicatiepoort-2026-11-06/installatie-lock-preview.log.gz": "dcced3fbb05f4e009bef67ebc2ee18abb643130ea86c66dfde8e7c865e692a86",
+    "docs/tests/writer-publicatiepoort-2026-11-06/afgeronde-proeven.tar.gz": "6da7c1d964cb3ba17b81eb5441c4c6b8e065a4a1614aaeab675fd8e95e404bd1"
+  },
+  "afgerond_utc": "2026-11-06T23:01:16.487345+00:00",
+  "kandidaat_elf_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+  "controles": [
+    {
+      "naam": "typescript",
+      "code": 0,
+      "seconden": 62.87366834500426,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/pnpm",
+        "exec",
+        "tsc",
+        "--noEmit"
+      ]
+    },
+    {
+      "naam": "frontend",
+      "code": 0,
+      "seconden": 360.29719962100353,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "--maxWorkers=1",
+        "--no-file-parallelism"
+      ]
+    },
+    {
+      "naam": "webbouw",
+      "code": 0,
+      "seconden": 71.94914803299616,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/pnpm",
+        "run",
+        "build"
+      ]
+    },
+    {
+      "naam": "gui-lettergrootte",
+      "code": 0,
+      "seconden": 19.134383800999785,
+      "opdracht": [
+        "node",
+        "scripts/test-writer-lettergrootte-gui.mjs"
+      ]
+    },
+    {
+      "naam": "gui-kleur",
+      "code": 0,
+      "seconden": 15.11466555500374,
+      "opdracht": [
+        "node",
+        "scripts/test-writer-kleur-gui.mjs"
+      ]
+    },
+    {
+      "naam": "gui-spiegel",
+      "code": 0,
+      "seconden": 7.156350773002487,
+      "opdracht": [
+        "node",
+        "scripts/test-writer-spiegel-gui.mjs"
+      ]
+    },
+    {
+      "naam": "gui-spelling",
+      "code": 0,
+      "seconden": 10.385539135000727,
+      "opdracht": [
+        "node",
+        "scripts/test-writer-spelling-gui.mjs"
+      ]
+    }
+  ],
+  "nativebouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 155.00846456900035,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol"
+    ],
+    "bronpatch_sha256": "4232dbebc2f1194e52adaaa0b41376375b35965534ebbd03120e51a4e72edf7b",
+    "doelplatform": "Linux x86_64",
+    "geen_installer": true,
+    "geen_gui_acceptatie": true,
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+    "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609"
+  },
+  "native_gui": [
+    {
+      "fase": "tekst",
+      "code": 0,
+      "seconden": 27.87164365100034,
+      "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+      "testbron_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-rust-tekst-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/gui-tekst"
+      ]
+    },
+    {
+      "fase": "plakken",
+      "code": 0,
+      "seconden": 27.178454820998013,
+      "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+      "testbron_sha256": "bc8773758889d97b1c7c2475c82112940e774bc00c3fd91a54e861314a25a55f",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-rijk-plakken-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/gui-plakken",
+        "--rondes",
+        "3",
+        "--bewaar-na-ronde",
+        "1",
+        "--maxduur",
+        "180",
+        "--vereis-rust-plakken"
+      ]
+    },
+    {
+      "fase": "lang",
+      "code": 1,
+      "seconden": 97.2225027759996,
+      "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+      "testbron_sha256": "ce80b390f1679c1ff46b70423199775c59b42adbb22f5188549bab287a83b486",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-lang-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/gui-lang",
+        "--herstelstart",
+        "--verwacht-rust-tekst",
+        "--verwacht-incrementele-bron",
+        "--verwacht-worker-layout",
+        "--verwacht-worker-lettertypen",
+        "--spelling-weergave",
+        "--framebasis",
+        "--workerbron",
+        "--lettertypebewijs"
+      ]
+    }
+  ],
+  "native_500_herhaling": [
+    {
+      "fase": "lang-herhaling",
+      "code": 0,
+      "seconden": 117.56458415200177,
+      "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+      "testbron_sha256": "f29db45545f503adf0f046b1465551246f94118f10dab81aea3e608c7a553fd2",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-lang-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/gui-lang-herhaling",
+        "--herstelstart",
+        "--verwacht-rust-tekst",
+        "--verwacht-incrementele-bron",
+        "--verwacht-worker-layout",
+        "--verwacht-worker-lettertypen",
+        "--spelling-weergave",
+        "--framebasis",
+        "--workerbron",
+        "--lettertypebewijs"
+      ]
+    }
+  ],
+  "positiepoort": {
+    "groepen": [
+      {
+        "taak": 1,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 2,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 3,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 4,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 5,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 6,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 7,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 8,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 9,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 10,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 11,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 12,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 13,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 14,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 15,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 16,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 17,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      },
+      {
+        "taak": 18,
+        "generaties": 1,
+        "opbouwen": 1,
+        "verhaalbezoeken": [
+          1537
+        ]
+      }
+    ],
+    "broncontrole": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    }
+  },
+  "fysieke_metingen": [
+    {
+      "ronde": "ABBA",
+      "nummer": 1,
+      "naam": "referentie",
+      "code": 0,
+      "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "geslaagd": true,
+      "getekende_tekst_ms": 15936,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "achtergrond_bij_start": [],
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/positie-integratie56/zonder-observer.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding",
+        "--versie",
+        "2026.45.52",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/fysiek-ABBA-1-referentie"
+      ]
+    },
+    {
+      "ronde": "ABBA",
+      "nummer": 2,
+      "naam": "kandidaat",
+      "code": 0,
+      "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+      "geslaagd": true,
+      "getekende_tekst_ms": 14215,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "achtergrond_bij_start": [],
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/positie-integratie56/zonder-observer.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+        "--versie",
+        "2026.45.52",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/fysiek-ABBA-2-kandidaat"
+      ]
+    },
+    {
+      "ronde": "ABBA",
+      "nummer": 3,
+      "naam": "kandidaat",
+      "code": 1,
+      "programma_sha256": "ea4521ae3bead98d534cdaf9214eb0df4f67f22d3daacbd284827af00b258609",
+      "geslaagd": false,
+      "getekende_tekst_ms": null,
+      "broncontrole": null,
+      "achtergrond_bij_start": [],
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/positie-integratie56/zonder-observer.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/open-office-studio-kandidaat-publicatiepoort",
+        "--versie",
+        "2026.45.52",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/fysiek-ABBA-3-kandidaat"
+      ]
+    }
+  ],
+  "beelden": {
+    "referentie": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-04/incrementele-invoer/doortypen-38-zonder-profiel/profiel.png",
+    "uitsnede": [
+      395,
+      298,
+      1065,
+      366
+    ],
+    "resultaten": [
+      {
+        "bestand": "fysiek-ABBA-1-referentie/profiel.png",
+        "sha256": "02b4fbb45f5822be2b328a1f3ee851d96e80faeb1265fd8a950c4223897190ba",
+        "documentuitsnede_rgb_exact_buiten_cursor": true
+      },
+      {
+        "bestand": "fysiek-ABBA-2-kandidaat/profiel.png",
+        "sha256": "43333c80c80e81137c10f1f6e4ed392cf141902df47a85dc14ac4061daf57c5d",
+        "documentuitsnede_rgb_exact_buiten_cursor": true
+      }
+    ],
+    "grens": "Alleen deze documentuitsnede; geen volledige UI-/suite-/platformacceptatie."
+  },
+  "terugzetting": {
+    "reden": "Fysieke ABBA gestopt bij derde ronde: kandidaat tekent binnen90s niet alle351tekens. Geen promotie of snelheidsclaim. Oorzaak nog onbekend.",
+    "afgekeurde_bron": {
+      "patches/@betteroffice__docx-react@0.5.1.patch": "544d228cc4a3e2852cd98d58ff82f3df174cdca76e652b343e1974237c79a189",
+      "pnpm-lock.yaml": "272b046b551bf53a396f0d1e72d1abdc4573b779206dce9296e6e9d0210e6291"
+    },
+    "sdk_integratie": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "sdk_root": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "patch_en_lock_gelijk_HEAD": true
+  },
+  "testvolgorde": {
+    "reden": "De fontproef selecteert tekst; de statusbalk toont daarna terecht geselecteerde tekens. De ongewijzigde documenttellingcontrole hoort vóór die selectie. Oude gecombineerde proef faalt op zowel c88-referentie als kandidaat; verplaatste controle slaagt op beide. Geen product- of timeoutversoepeling.",
+    "referentie_hersteld": {
+      "code": 0,
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-lang-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort/combinatie-baseline-volgordehersteld",
+        "--herstelstart",
+        "--verwacht-rust-tekst",
+        "--verwacht-incrementele-bron",
+        "--verwacht-worker-layout",
+        "--verwacht-worker-lettertypen",
+        "--spelling-weergave",
+        "--framebasis",
+        "--workerbron",
+        "--lettertypebewijs"
+      ],
+      "proef_sha256": "f29db45545f503adf0f046b1465551246f94118f10dab81aea3e608c7a553fd2"
+    },
+    "python": "127 tests, geen skips, groen in2.809s"
+  },
+  "acceptatiegrens": "ABBA is na derde ronde gestopt: referentie15936ms, kandidaat14215ms, kandidaat daarna geen volledige tekstpixels binnen90s. BAAB en vierde ABBA bewust niet uitgevoerd na afkeuring. Eerste twee documentuitsneden RGB-exact buiten cursor; mislukte ronde toont oude tekstpixels en gedeeltelijk bijgewerkte bron, zonder geregistreerde GUI/engine/consolefout. Geen permanente dataverlies- of causale regressieclaim. Alle negatieve context behouden. Geen algemene FPS-/snelheids-, suite-, platform-, editie-, Rust- of volledige visuele acceptatie."
 }
