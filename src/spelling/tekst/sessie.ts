@@ -156,6 +156,9 @@ export class SpellingSessie {
   private eenmalig = new Map<string, { tekst: string; plekken: { start: number; woord: string }[] }>();
   private talen: Alineatalen | null = null;
   private timer = 0;
+  /** Alleen laden/stoppen beëindigt autocorrecties; gewoon doortypen niet. */
+  private autocorrectieGeneratie = 0;
+  private invoerrust: { sessie: YrsSession; generatie: number; timer: number; klaar: (actueel: boolean) => void; wacht: Promise<boolean> } | null = null;
   private bezig: Promise<void> | null = null;
   private opnieuw = false;
   private laatsteWijziging = 0;
@@ -201,6 +204,7 @@ export class SpellingSessie {
   }
 
   stop() {
+    this.annuleerAutocorrectie();
     this.leesGeneratie++;
     this.gestopt = true;
     this.cursorLezing = null;
@@ -217,6 +221,7 @@ export class SpellingSessie {
   }
 
   bijLaden(ctx: Ctx) {
+    this.annuleerAutocorrectie();
     this.leesGeneratie++;
     this.ctx = ctx;
     this.segmentCache = null;
@@ -730,32 +735,57 @@ export class SpellingSessie {
     this.herteken();
   }
 
+  private annuleerAutocorrectie() {
+    this.autocorrectieGeneratie++;
+    this.invoerrust?.klaar(false);
+  }
+
+  /** Eén gedeelde wacht per bron; de normale invoergroepering blijft intact. */
+  private wachtOpInvoerrust(sessie: YrsSession, generatie: number): Promise<boolean> {
+    if (this.invoerrust?.sessie === sessie && this.invoerrust.generatie === generatie) return this.invoerrust.wacht;
+    this.invoerrust?.klaar(false);
+    let afronden!: (actueel: boolean) => void;
+    const wacht = new Promise<boolean>((resolve) => { afronden = resolve; });
+    const rust = { sessie, generatie, timer: 0, wacht, klaar: (actueel: boolean) => {
+      window.clearTimeout(rust.timer);
+      if (this.invoerrust === rust) this.invoerrust = null;
+      afronden(actueel);
+    } };
+    const peil = () => {
+      try {
+        const ed = this.editor()?.getEditorRef();
+        if (this.gestopt || generatie !== this.autocorrectieGeneratie || ed?.getYrsSession() !== sessie) rust.klaar(false);
+        else if (!ed.hasPendingInput()) rust.klaar(true);
+        else rust.timer = window.setTimeout(peil, 30);
+      } catch {
+        // Een verdwenen/onleesbare bron mag geen uitgestelde correctie krijgen.
+        rust.klaar(false);
+      }
+    };
+    this.invoerrust = rust;
+    rust.timer = window.setTimeout(peil, 30);
+    return wacht;
+  }
+
   /**
-   * Autocorrectie van het zojuist getypte woord (na een spatie of leesteken).
-   *
-   * De engine houdt getypte tekens even vast (hasPendingInput); daarom eerst
-   * `flushPendingInput`, en direct daarna synchroon lezen (YrsSession.
-   * readParagraphs geeft tekst én versie) en één edit-batch met die versie en
-   * een tekstbewaking (`expect`). Het venster waarin doortypen de versie kan
-   * veranderen, is zo zo klein mogelijk; gebeurt het toch ("stale-version"),
-   * dan opnieuw. De tekens die na het scheidingsteken getypt zijn, tellen we
-   * terug om het scheidingsteken terug te vinden. (setSelection + insertText
-   * verving de selectie niet betrouwbaar en is daarom niet gebruikt.)
+   * Wacht op natuurlijke invoerrust: flushPendingInput beëindigt de normale
+   * samenvoeging en zou bij iedere spatie een afzonderlijke native taak maken.
+   * Lees daarna synchroon tekst én versie en behoud de tekstbewaking. Alleen
+   * een afgewezen bronversie verbruikt een herhaling; lang doortypen niet.
    */
   autocorrigeer(teken: string, volgnummer: number, poging = 0): void {
+    const sessie = this.editor()?.getEditorRef()?.getYrsSession();
+    if (sessie) this.corrigeerNaInvoer(teken, volgnummer, poging, sessie, this.autocorrectieGeneratie);
+  }
+
+  private corrigeerNaInvoer(teken: string, volgnummer: number, poging: number, sessie: YrsSession, generatie: number): void {
     const ed = this.editor()?.getEditorRef();
-    const sessie = ed?.getYrsSession();
     const edits = this.ctx?.edits;
-    if (!ed || !sessie || !edits || this.gestopt || poging > 150) return;
+    if (!ed || ed.getYrsSession() !== sessie || !edits || this.gestopt || generatie !== this.autocorrectieGeneratie || poging > 150) return;
     if (ed.hasPendingInput()) {
-      void ed
-        .flushPendingInput()
-        .catch(() => {})
-        .then(() => {
-          // Nog steeds invoer: wie doortypt, krijgt de correctie bij de eerste pauze.
-          if (ed.hasPendingInput()) window.setTimeout(() => this.autocorrigeer(teken, volgnummer, poging + 1), 30);
-          else this.autocorrigeer(teken, volgnummer, poging + 1);
-        });
+      void this.wachtOpInvoerrust(sessie, generatie).then((actueel) => {
+        if (actueel) this.corrigeerNaInvoer(teken, volgnummer, poging, sessie, generatie);
+      });
       return;
     }
     const cursor = this.cursor();
@@ -797,7 +827,7 @@ export class SpellingSessie {
       })
       .then((uit) => {
         const code = !uit.ok ? (uit as { failure?: { code?: string } }).failure?.code : null;
-        if (code === "stale-version") this.autocorrigeer(teken, volgnummer, poging + 1);
+        if (code === "stale-version") this.corrigeerNaInvoer(teken, volgnummer, poging + 1, sessie, generatie);
       })
       .catch(() => {});
   }

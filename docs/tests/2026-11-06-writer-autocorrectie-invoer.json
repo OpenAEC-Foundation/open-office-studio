@@ -1,0 +1,2057 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis_commit": "903cdc8dbb8e05eff604be1dd7d42af432222a34",
+  "app": "2026.45.52 / alpha57",
+  "programma": {
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie",
+    "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+    "versie": "2026.45.52",
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb"
+  },
+  "besluit": "Afgebakende invoerverbetering op ontwikkelbranch; geen volledige Writer-/suite-/afsluit-/platformacceptatie.",
+  "ronden": {
+    "gui-achtergrond": [
+      {
+        "naam": "referentie-a",
+        "getekende_tekst_ms": 47398
+      },
+      {
+        "naam": "invoer-a",
+        "getekende_tekst_ms": 15019
+      },
+      {
+        "naam": "invoer-b",
+        "getekende_tekst_ms": 17272
+      },
+      {
+        "naam": "referentie-b",
+        "getekende_tekst_ms": 23986
+      }
+    ],
+    "gui": [
+      {
+        "naam": "referentie-a",
+        "getekende_tekst_ms": 23450
+      },
+      {
+        "naam": "invoer-a",
+        "getekende_tekst_ms": 6930
+      },
+      {
+        "naam": "invoer-b",
+        "getekende_tekst_ms": 7162
+      },
+      {
+        "naam": "referentie-b",
+        "getekende_tekst_ms": 23299
+      }
+    ],
+    "gui-rustig": [
+      {
+        "naam": "referentie-a",
+        "getekende_tekst_ms": 23340
+      },
+      {
+        "naam": "invoer-a",
+        "getekende_tekst_ms": 6595
+      },
+      {
+        "naam": "invoer-b",
+        "getekende_tekst_ms": 6498
+      },
+      {
+        "naam": "referentie-b",
+        "getekende_tekst_ms": 23191
+      }
+    ]
+  },
+  "rustige_ratio": 0.28138230427027144,
+  "rustige_reference_gemiddeld_ms": 23265.5,
+  "rustige_kandidaat_gemiddeld_ms": 6546.5,
+  "documentpixels": {
+    "roi": [
+      320,
+      210,
+      1140,
+      950
+    ],
+    "cursorzone": [
+      491,
+      347,
+      496,
+      366
+    ],
+    "afwijkend": 0
+  },
+  "frontend_root_geslaagd": 1870,
+  "python_geslaagd": 116,
+  "font_helper_scenarios": 12,
+  "open_afkeuringen": [
+    "Eerste extra correctie-/sluitproef: sluitdialoog niet binnen tien seconden tijdens een vastgehouden tekstantwoord. Oorzaak onbekend; twee instrumentatieherhalingen, batchcorrectieproef en oorspronkelijke selectie-/bewaarproef slagen. Niet als hersteld verklaren.",
+    "Oorspronkelijke automatische-fontberichtverwachting faalt identiek op referentie en kandidaat. Bewaard; nieuwe canonieke proef bevraagt de daadwerkelijk verzonden actuele layoutinput op precies de eigen worker, met alle oorspronkelijke inhouds-/export-/Undo-bewakingen."
+  ],
+  "meetgrenzen": [
+    "Eén pc en 129-paginabron, echte toetsen, alleen volledige nieuwe tekst zichtbaar; geen algemene FPS-/toetslatentieclaim.",
+    "Achtergronddiagnose heeft andere Cargo-tests; telt niet als snelheidsacceptatie. Eerste strikte ronde omvat kort eigen Node/Python-controles; de definitieve rustige herhaling heeft geen eigen nevenproeven en controleert afwezigheid van compilers vóór iedere ronde.",
+    "Kandidaatfrontend vóór assets: 1860 geslaagd, tien bestaande skips; na assets slagen alle achttien spellingproeven. Rootfrontend daarna 1870 zonder skips.",
+    "Geen gebruikersbestanden, installatie, bestaande ELF of referentie vervangen. Geen officiële release/tag.",
+    "Windows/macOS, zeven edities, oude worker-/lijstbewaarproblemen en volledige Rust-interface blijven afzonderlijk open."
+  ],
+  "volgende_stap": "Controleer nieuwe CI/platform-/editieartefacten; onderzoek de bewaarde eenmalige sluitafkeuring met metadata vóór/na de sneltoets. Verlaag daarna de resterende invoer-/selectievertraging verder zonder functionaliteit uit te zetten.",
+  "bestanden": [
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/apps/database-studio/src-tauri/Cargo.lock",
+      "bestand": "writer-autocorrectie-invoer/000-Cargo.lock.gz",
+      "bytes": 122865,
+      "sha256": "a18c2a3257e9dd87baa945476eda9bee363408d359d3244dc630db9895b91557",
+      "gzip_sha256": "aee764438cf4470b34f4c609ccb89a960bde354d7e079b15daee9c36c805b377"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/apps/database-studio/src-tauri/Cargo.toml",
+      "bestand": "writer-autocorrectie-invoer/001-Cargo.toml.gz",
+      "bytes": 423,
+      "sha256": "6c30aeb1e296f052bc21a5bde828d8fd5964ab4cedb540260f4a61d68f93e254",
+      "gzip_sha256": "89b21a61f83aed362dc6be9d67f882348c7816db2d3f2ee874b461ecc45eeac1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/apps/database-studio/src-tauri/tauri.conf.json",
+      "bestand": "writer-autocorrectie-invoer/002-tauri.conf.json.gz",
+      "bytes": 1526,
+      "sha256": "b515d0cce653be89f0744cd6ef90d90913666ade19d9ed1c3e6c6c51ae6564b2",
+      "gzip_sha256": "bb22927039189e1407132644244a34826d449ea47f03cf94470ae002b38e8dec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/package.json",
+      "bestand": "writer-autocorrectie-invoer/003-package.json.gz",
+      "bytes": 2880,
+      "sha256": "34d95620da001371714a4f971d4c9ff86bc0b926f44097afec35ffff01f39d90",
+      "gzip_sha256": "b9860eb96be0cf0b23d53704e685a0f72cd0e479744e253cae403ccb36de4a4b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/scripts/gui/lettertype_bewijs.js",
+      "bestand": "writer-autocorrectie-invoer/004-lettertype_bewijs.js.gz",
+      "bytes": 7671,
+      "sha256": "b54d3ec743025be953bc14f32c8b53b90bed27a7af2e9239388193352756d8c8",
+      "gzip_sha256": "a21f44e1f5aac2bddea259e9ecb050c6a5cfef4158fb062113639c28b78a6eae"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/src/spelling/tekst/invoerrust.test.ts",
+      "bestand": "writer-autocorrectie-invoer/005-invoerrust.test.ts.gz",
+      "bytes": 6539,
+      "sha256": "a27deefc03bb275a88c6657e244b11129da852b84bd89dd6c5be20636271c7bb",
+      "gzip_sha256": "cec7925bc9c0f02a36caa973ad16ad674c26299400d87af10a20f9d8b815b8cf"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/src/spelling/tekst/sessie.ts",
+      "bestand": "writer-autocorrectie-invoer/006-sessie.ts.gz",
+      "bytes": 35443,
+      "sha256": "0656161d7d5f0673d69a3626402ab914e8edd2c9136273d0914df32dc9840b95",
+      "gzip_sha256": "8a11d6b2ceb1b99203b464b3870b5dc0c9ca5f957f6613838f5dc0acc3802857"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/src-tauri/Cargo.lock",
+      "bestand": "writer-autocorrectie-invoer/007-Cargo.lock.gz",
+      "bytes": 162564,
+      "sha256": "8aca526ae626c0ba47cce7995e8208fccb2133909694917cfa13042ac34352f4",
+      "gzip_sha256": "8d3e280de67331b3e86845dd6bf102dc5413abd8149ca63638cd293ad75ee5f7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/src-tauri/Cargo.toml",
+      "bestand": "writer-autocorrectie-invoer/008-Cargo.toml.gz",
+      "bytes": 2564,
+      "sha256": "c88ed08d66f1c6017a8e58d79d12f7fb84487a5672f5939e5f06f42e20b7a358",
+      "gzip_sha256": "ff1e585314f87f3bb2a935f8664db6b67aa8731359d0b066baa4496c8f0a40a9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/src-tauri/tauri.conf.json",
+      "bestand": "writer-autocorrectie-invoer/009-tauri.conf.json.gz",
+      "bytes": 1980,
+      "sha256": "343af7da46ad21bdd635cc267c313a9e06f685afaba0da9fd1b7508fa2be9dff",
+      "gzip_sha256": "3f9fb228d98e0126936a83628894daa7ade097f9d50a8d1bb625e0ed08f179fc"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/tests/fixtures/lettertype-bewijs.mjs",
+      "bestand": "writer-autocorrectie-invoer/010-lettertype-bewijs.mjs.gz",
+      "bytes": 4863,
+      "sha256": "958604ba1e98fdeb3e53a203d00bf18a9b8a8da04381d8696e1499aef3172573",
+      "gzip_sha256": "a06b93dd792ef9391956bb6de120843e081188debfe396affde4961f693ad5d9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/tests/test_lettertype_bewijs.py",
+      "bestand": "writer-autocorrectie-invoer/011-test_lettertype_bewijs.py.gz",
+      "bytes": 3732,
+      "sha256": "6617192589d44d5eaed1bcf9853d77b31155147e3d1ead49f9a4dff4a85b237c",
+      "gzip_sha256": "be772876ea9507d874a2ba80e94e22be6f0950e3b305d5f795925771864325eb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bevroren-bronnen/versie.json",
+      "bestand": "writer-autocorrectie-invoer/012-versie.json.gz",
+      "bytes": 105,
+      "sha256": "a8a143d644225ae172bd0e0f805563425303e5ddf44310b1362ef966fc9bc5e7",
+      "gzip_sha256": "af8fdc5749d50e8b0562bdd62d7e5739beaac43392968fc83a60dc9fbb81ccd6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bouwen.json",
+      "bestand": "writer-autocorrectie-invoer/013-bouwen.json.gz",
+      "bytes": 1330,
+      "sha256": "c108103081656534449f844140e6cfdeb28cefb8f63f3d11012b2282932ba2fa",
+      "gzip_sha256": "0818d909ac6965afdf0626031cca012f729fb1b0b4124e8ed19bfa88f8f5cf69"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/broncontrole.json",
+      "bestand": "writer-autocorrectie-invoer/014-broncontrole.json.gz",
+      "bytes": 98,
+      "sha256": "eceb5985addd3a0ae07dc809ba3e9de153776973fde9ea332cd5731f5bd9eb18",
+      "gzip_sha256": "ffc657e4b5b351ccf04874a717bfcc9bc6b8dab74e3320f564c0bf81bb29ee0b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/bronnen.json",
+      "bestand": "writer-autocorrectie-invoer/015-bronnen.json.gz",
+      "bytes": 1241,
+      "sha256": "ad91cd4b9890068718cce6ecce19fec5522e49a519282852aba5454ddccebeca",
+      "gzip_sha256": "ca6afd8fa11e994c5382d4645ddc0c1445b5e0a58120e34c7ec47d841946bea5"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/Lettertype-caladea.docx",
+      "bestand": "writer-autocorrectie-invoer/016-Lettertype-caladea.docx.gz",
+      "bytes": 44882,
+      "sha256": "6ce527af4da0f77c1aca57137dd296822ad49ade0329254efb2f95919a2031c4",
+      "gzip_sha256": "021f83e894da39e514ab43847e61ab5453c13fa4772a8c10c8f3c3a61f352b56"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/Lettertype-carlito.docx",
+      "bestand": "writer-autocorrectie-invoer/017-Lettertype-carlito.docx.gz",
+      "bytes": 44882,
+      "sha256": "4352d8278c5ebd2a4afccdb7fed6ec1b6d45da503c74180ce18adf5af5a49291",
+      "gzip_sha256": "931231e38cec419eda729928b71e3d30cc1f6e5c86769b5b69b2fea36458cefb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/Lettertype-cursief.docx",
+      "bestand": "writer-autocorrectie-invoer/018-Lettertype-cursief.docx.gz",
+      "bytes": 44856,
+      "sha256": "51eae2fe4d47365fe2fd401702d1eaeac98fe02dd1a199324ce39328437d0933",
+      "gzip_sha256": "0e89abd662fcc41bd9e83ccc9d7ba2c2205964c84f84377b00cb135073be9669"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/Lettertype-vet.docx",
+      "bestand": "writer-autocorrectie-invoer/019-Lettertype-vet.docx.gz",
+      "bytes": 44856,
+      "sha256": "8fb1abfbc0d62c22dde75ce0b616130186b7e049463bc67c12fa439028b0fa77",
+      "gzip_sha256": "3cb2df5cabee4aebf8d42d2f89341a61b1a2ed52d616ea18f37fd87a0f98b0a3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/020-Prestatieproef.docx.gz",
+      "bytes": 44902,
+      "sha256": "d0b2a415f1c48d738cc9062e08be784e018815ce5a385f0566afd4142d33daff",
+      "gzip_sha256": "b8853fe73a986e9b848c6d2040256b7adf21f5953c41509d4a4daf5aeb716c8b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/framebasis-lettertypen.json",
+      "bestand": "writer-autocorrectie-invoer/021-framebasis-lettertypen.json.gz",
+      "bytes": 1185156,
+      "sha256": "1e0bbb70d60a6a7d870716e4548c97b693ded5daffee7d07be80491518f24e29",
+      "gzip_sha256": "df0638d72d7d7af4e94590c695b1012f3419c732886be7e4d3506455da13d40f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/framebasis.json",
+      "bestand": "writer-autocorrectie-invoer/022-framebasis.json.gz",
+      "bytes": 3406489,
+      "sha256": "b8a7ee989e4f3bc2125db088cbe11c06ee5933e376b2bf0bf24b93185769b820",
+      "gzip_sha256": "7316156d1c6a8897aaeaee57d8161723fc9e7141b075a0c220e83d335990b99a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/getypt-pagina-500.png",
+      "bestand": "writer-autocorrectie-invoer/023-getypt-pagina-500.png.gz",
+      "bytes": 116826,
+      "sha256": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+      "gzip_sha256": "01ee86b5ae068d45283f2a615dd706a582258eebe77d59b2f8280f6d5e881672"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/herstel-aanbod-later.png",
+      "bestand": "writer-autocorrectie-invoer/024-herstel-aanbod-later.png.gz",
+      "bytes": 101190,
+      "sha256": "3446bbba30be826d88d4eaff46b3dc547bced719a0ee793828e13bc238538623",
+      "gzip_sha256": "5ede9b29c9e5f46d53b1e1948f6c4e0dc57c3cb30a7064abd55c2a6ba4452e03"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/kopvoetlint.png",
+      "bestand": "writer-autocorrectie-invoer/025-kopvoetlint.png.gz",
+      "bytes": 117386,
+      "sha256": "a6182e7dd87565fe7344a5ba9b7d7fffd3d03f23b8cfe81013e8faf3fc482acc",
+      "gzip_sha256": "23444db6b2d96209212f21d41a19eb15b1c9fd0af2ea181e28667c8355540cac"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/programma.log",
+      "bestand": "writer-autocorrectie-invoer/026-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/027-rapport.json.gz",
+      "bytes": 25595,
+      "sha256": "c5ad85acd514e544bfcd24ed21d41997f232c93c5b96db9b011cac3e4fa9011a",
+      "gzip_sha256": "dffe55d0bf514b384538f3b01a640eaaa3ba9dd2a58912649daed3539fc3d408"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer/startlint.png",
+      "bestand": "writer-autocorrectie-invoer/028-startlint.png.gz",
+      "bytes": 131328,
+      "sha256": "590bcb5f312ee04cbfdaed65e74d02bd7b6729ec4a569d71f19ff145e2a8ad75",
+      "gzip_sha256": "03e22d79af7b35d568cc2f32b2cf21b86101f0f9d6a48ae9913d4f03165ea317"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-invoer.log",
+      "bestand": "writer-autocorrectie-invoer/029-canoniek-invoer.log.gz",
+      "bytes": 3708,
+      "sha256": "9d1ccd3a628cfa719ae0288f65458d3a05ac1093af029055c86d1bb9c3b35985",
+      "gzip_sha256": "8cd609bd54745958a60403fe6f7059497c09ed7bed126eea56f18949f60f8e32"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/Lettertype-caladea.docx",
+      "bestand": "writer-autocorrectie-invoer/030-Lettertype-caladea.docx.gz",
+      "bytes": 44883,
+      "sha256": "bd882b0ddb2d34d87de9ba82c7a143db7c847a8f54f4559a9ae3884285896ad4",
+      "gzip_sha256": "2313acf9fa8f94a0866cfe909c662bb9daeca268d239a1dde64080373da69afc"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/Lettertype-carlito.docx",
+      "bestand": "writer-autocorrectie-invoer/031-Lettertype-carlito.docx.gz",
+      "bytes": 44882,
+      "sha256": "fea5fa48a4f455a68d6861d27436ac22a6395d776716f6f8fcccf729ea1b2def",
+      "gzip_sha256": "ce3762435d06b676abe53d712bd2bdea6494bc85d48de46fa6dda729c7a25817"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/Lettertype-cursief.docx",
+      "bestand": "writer-autocorrectie-invoer/032-Lettertype-cursief.docx.gz",
+      "bytes": 44855,
+      "sha256": "5b6a9ceb801580c6ab587ed3980b29f0a0260e36a60130b357fb5dc6edd69572",
+      "gzip_sha256": "903d9f15c092fda4d755862e070e468a0e8a88aaca46b8725bda7d89e0cc1c84"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/Lettertype-vet.docx",
+      "bestand": "writer-autocorrectie-invoer/033-Lettertype-vet.docx.gz",
+      "bytes": 44856,
+      "sha256": "9aace4fb7fcf9050c6e176ce947c1513d9f8e972267c9b6d0d9ab2baa8b77ecd",
+      "gzip_sha256": "a7132e17f4f7bd54dbc769880379f020c80fe458c0c3806e8970d1a7e34582c7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/034-Prestatieproef.docx.gz",
+      "bytes": 44901,
+      "sha256": "0d0417a8cd8a6014751028257f45825cbc52d8cc1e217f2b8fef2b81e2e61843",
+      "gzip_sha256": "59561a7c87255fd8fa9dec691f72910b6df5ccb21574447568c008a233f55af2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/framebasis-lettertypen.json",
+      "bestand": "writer-autocorrectie-invoer/035-framebasis-lettertypen.json.gz",
+      "bytes": 1185156,
+      "sha256": "a79b1e65dcb4a38072c5f0591f817f9d631f1092ac03024969543cbd656c9d6d",
+      "gzip_sha256": "5fc9f240ba1993722134134fecc61aad3e473fafa6b8c2c96f47a2368130d6ef"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/framebasis.json",
+      "bestand": "writer-autocorrectie-invoer/036-framebasis.json.gz",
+      "bytes": 3406491,
+      "sha256": "53d6800546a74eace8dcdc11b9dd7f03f6867f963ce7f95c569a5192a149b1ed",
+      "gzip_sha256": "fc20d707903d1c8b0bb1eae1d2f7af394fa452fa9d519ebb811f14b6e469e561"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/getypt-pagina-500.png",
+      "bestand": "writer-autocorrectie-invoer/037-getypt-pagina-500.png.gz",
+      "bytes": 116826,
+      "sha256": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+      "gzip_sha256": "01ee86b5ae068d45283f2a615dd706a582258eebe77d59b2f8280f6d5e881672"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/herstel-aanbod-later.png",
+      "bestand": "writer-autocorrectie-invoer/038-herstel-aanbod-later.png.gz",
+      "bytes": 101183,
+      "sha256": "cff8f3a2eec4668e17a56812bab7dc9946b84a90989c895cc2c284fdeffa5573",
+      "gzip_sha256": "45ce9f1a31c27a15d441c27fc15007c7f8468ca6195783a49a24453b33821c05"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/kopvoetlint.png",
+      "bestand": "writer-autocorrectie-invoer/039-kopvoetlint.png.gz",
+      "bytes": 117128,
+      "sha256": "eeeb9f3e4201a970b470217895bbe821c67d8db86331188c811187fbdc8871e6",
+      "gzip_sha256": "af6b9b34fe2cd6ce43007c03449d622e03461298916356cf2ae6ec4bc958457e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/programma.log",
+      "bestand": "writer-autocorrectie-invoer/040-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/041-rapport.json.gz",
+      "bytes": 26028,
+      "sha256": "85ea2309e4e1e25e0abd8bbebb815725082d75e9b3deb598c83052fef4af59af",
+      "gzip_sha256": "909ed3c1aaa93924c2f0aba639c194e33ea7b19201e38ad6061404fffd4c777f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref/startlint.png",
+      "bestand": "writer-autocorrectie-invoer/042-startlint.png.gz",
+      "bytes": 131078,
+      "sha256": "afdb9d8c340f1edf58eb02002308d358fb2222780c32e66f6826e9b16c92401b",
+      "gzip_sha256": "6029d28aee026eb8f4876f7e0ea1ad8e10b7a4280abbb9d2ca7d7cc13e85e95e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek-ref.log",
+      "bestand": "writer-autocorrectie-invoer/043-canoniek-ref.log.gz",
+      "bytes": 3708,
+      "sha256": "8d423d80a9aa61df542fa1485d6b9f9eb66a5542ed5ed0d36f0dde2afa64d702",
+      "gzip_sha256": "03770cbbf677bdb955c692523817a88b19b387d39578e7f86c2005204bae2a0d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/canoniek.json",
+      "bestand": "writer-autocorrectie-invoer/044-canoniek.json.gz",
+      "bytes": 2289,
+      "sha256": "902bd1a3e677be808f76504333ee938ef4dec189c58c2f5306c68181129c4b54",
+      "gzip_sha256": "50f5261469451e7aa63f417a53e959c747781f1df0da335b7a25af9f025f3054"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/Ontwerpnotitie.docx",
+      "bestand": "writer-autocorrectie-invoer/045-Ontwerpnotitie.docx.gz",
+      "bytes": 43616,
+      "sha256": "ad7a143bbcffc3d382f954c10fa24115b2909054cd88d2b61830d6646283a356",
+      "gzip_sha256": "c5bf7448874dd5c4649dd913158ad32c92d0a906e2b32705bbd6b142939ad247"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/afgekeurd.png",
+      "bestand": "writer-autocorrectie-invoer/046-afgekeurd.png.gz",
+      "bytes": 161906,
+      "sha256": "84a94a49501078f2c1886b3cd4f95be44b2143175106a7fc57d6e34172cd718e",
+      "gzip_sha256": "07f80383febdffcf3914f8f9693f679451a5f36e0afd7dcb0e6b725f218b4043"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/autocorrectie-zonder-flush.png",
+      "bestand": "writer-autocorrectie-invoer/047-autocorrectie-zonder-flush.png.gz",
+      "bytes": 159263,
+      "sha256": "38fe5a06ca036989de0589455e7c15f0da671909d41597d0cc433d34411d0bf4",
+      "gzip_sha256": "dfd2f4d7e8ff0f936fbd148eb57692b13413704b7b39e84864b79d30e9d03cba"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/invoer-redo.png",
+      "bestand": "writer-autocorrectie-invoer/048-invoer-redo.png.gz",
+      "bytes": 161615,
+      "sha256": "1d2af8e8c13921ccbdeb04ee12518e01e85936f633f7b229a292342f2b7beb9f",
+      "gzip_sha256": "a61f152a7867828366017dc7df6046998fd8520f0a55d635e44a42d405192eac"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/programma.log",
+      "bestand": "writer-autocorrectie-invoer/049-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/050-rapport.json.gz",
+      "bytes": 10136,
+      "sha256": "592576ec2850cdcc33d2bbd65c795881f12f858e78a4f0ebd6fba7056cc9e002",
+      "gzip_sha256": "a96ec7236679e0c50b942b1a70b70ab45e8e9566f7216d35dec2f7ede03aa20e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie/snel-getypt-bewaard.png",
+      "bestand": "writer-autocorrectie-invoer/051-snel-getypt-bewaard.png.gz",
+      "bytes": 161788,
+      "sha256": "faf75725b7e4cd0f107f76a2a59f2562903a46ddaf7b2a0ca19a5d584e1a50e3",
+      "gzip_sha256": "01a9639c1636ebe6eba04cf3d6711bf09900afccfb6b82a417687c1269a0c2ca"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/Ontwerpnotitie.docx",
+      "bestand": "writer-autocorrectie-invoer/052-Ontwerpnotitie.docx.gz",
+      "bytes": 43629,
+      "sha256": "3317d49b4509199f256da1fa81fdbab570311cca5c18788ee28e70870c6672e9",
+      "gzip_sha256": "e7579218df3fbb1180e1db3ff6f7bea5ec85c446a61949a6c9d29dfe2950c2c3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/autocorrectie-zonder-flush.png",
+      "bestand": "writer-autocorrectie-invoer/053-autocorrectie-zonder-flush.png.gz",
+      "bytes": 162574,
+      "sha256": "462fde4128b8cdfd9514b112cd1572d7fea2ca511a5f53a4c8b475d5d24467fe",
+      "gzip_sha256": "19a8090ec81f28016980ed2167e556ae3c691f66b20b4f1b94396072cc573b1b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/invoer-redo.png",
+      "bestand": "writer-autocorrectie-invoer/054-invoer-redo.png.gz",
+      "bytes": 164893,
+      "sha256": "584521505ef7e5c8ed3edcf517aabe3c2adf9b6b1e9c914cac8c6f5521a6eec9",
+      "gzip_sha256": "072b2e7e18f5ddf82759130bb92b0007b3cfb175b686c1a79c5f75e0ff8f05ae"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/nieuw-na-laat-antwoord.png",
+      "bestand": "writer-autocorrectie-invoer/055-nieuw-na-laat-antwoord.png.gz",
+      "bytes": 76070,
+      "sha256": "6f8d4165786b0a8db0b6592e8d2f221eabef2c95478cd4a59a216e281ece4d55",
+      "gzip_sha256": "e9c77ca7d01f4f6cb62e7c522cb7b302db836f486a421a5e0090f359fbcdc02a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/programma.log",
+      "bestand": "writer-autocorrectie-invoer/056-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/057-rapport.json.gz",
+      "bytes": 21188,
+      "sha256": "99fd3ba6d89bacb703c65bf325d287b66b8e3efd78e6e5c73797fefcfdfff512",
+      "gzip_sha256": "90aa65f2a244c06e38fc9e190ac0c50064b9c57076ed2c0c2ec7c0e1e6b5bd87"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch/snel-getypt-bewaard.png",
+      "bestand": "writer-autocorrectie-invoer/058-snel-getypt-bewaard.png.gz",
+      "bytes": 164268,
+      "sha256": "67e9bc90ba5fa46b8b2e34c2c123e1bad8c590baacce156e051df7fffbc4b302",
+      "gzip_sha256": "4ca10403107035e0e189a55eab87e48f2821110c94cd506d4db094166de25ad5"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch.json",
+      "bestand": "writer-autocorrectie-invoer/059-correctie-batch.json.gz",
+      "bytes": 868,
+      "sha256": "f313fb19cda05fd83fd4fc09e2048d667245f12d174a3f274118dd268598a007",
+      "gzip_sha256": "e053b4c68d4810598ae30a75bec56b9477be929e8795eb26396cab0d26c7ee07"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batch.log",
+      "bestand": "writer-autocorrectie-invoer/060-correctie-batch.log.gz",
+      "bytes": 3532,
+      "sha256": "b4322f0cc25a2351e59ddfce74224c25ee4d168a43a86e42061c98cde0f3fa3d",
+      "gzip_sha256": "f3285e54b017781493be4c8ce2e0511b78e3ed0fc324f4618b0c405f64d4dd44"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-batchproef.py",
+      "bestand": "writer-autocorrectie-invoer/061-correctie-batchproef.py.gz",
+      "bytes": 16858,
+      "sha256": "84ba635dbbb3582b35a3ddbe2a93a69bb4c229b7f1012f178fbce38874d7ce2e",
+      "gzip_sha256": "e2ad67e46ab47547f248c4df52529ca473a8d6091b86ec734b31ee087e800ac1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/Ontwerpnotitie.docx",
+      "bestand": "writer-autocorrectie-invoer/062-Ontwerpnotitie.docx.gz",
+      "bytes": 43614,
+      "sha256": "aabbca4f44e3744bf070df8b886378238aef0b819d0c5e5ec1ff5f3fe48f6f36",
+      "gzip_sha256": "cbaf2a693ef3f15bd3c3a50307820006badbc94951ddaaff53d0b06cc0a63f24"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/autocorrectie-zonder-flush.png",
+      "bestand": "writer-autocorrectie-invoer/063-autocorrectie-zonder-flush.png.gz",
+      "bytes": 160208,
+      "sha256": "6be43724ff94b7d3f83992a2a6f8a8691cd4009942749554c8b84798e3bdc47f",
+      "gzip_sha256": "80b2687ec6cd53a08867c547fe136afa9260c8e88cdcab56545208033c43b95a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/invoer-redo.png",
+      "bestand": "writer-autocorrectie-invoer/064-invoer-redo.png.gz",
+      "bytes": 161615,
+      "sha256": "1d2af8e8c13921ccbdeb04ee12518e01e85936f633f7b229a292342f2b7beb9f",
+      "gzip_sha256": "a61f152a7867828366017dc7df6046998fd8520f0a55d635e44a42d405192eac"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/nieuw-na-laat-antwoord.png",
+      "bestand": "writer-autocorrectie-invoer/065-nieuw-na-laat-antwoord.png.gz",
+      "bytes": 76053,
+      "sha256": "80bdfaf6005a132844b09febfc7b6ec81a4f5bcc869187b3d174a7de64bfa75e",
+      "gzip_sha256": "b7d4318e2610a0cb8b308fcd5d64a6551b2cecea701b4ad33bb79f95e9a732ef"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/programma.log",
+      "bestand": "writer-autocorrectie-invoer/066-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/067-rapport.json.gz",
+      "bytes": 21813,
+      "sha256": "e6381821ca782d21ec01929dc32ea8a03302c28ae65a11677e1464fc48e11cbd",
+      "gzip_sha256": "5039c747dbd9c33ccae2b7a8df760cce51e3fd5290554936822adf81b56ed5f2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref/snel-getypt-bewaard.png",
+      "bestand": "writer-autocorrectie-invoer/068-snel-getypt-bewaard.png.gz",
+      "bytes": 161072,
+      "sha256": "33ddf0229934199c8674f32ed6a48f36b9999ceaabca145a6046ea87c1648cc0",
+      "gzip_sha256": "aab759a3eea3469144d5a391cf2122b434cd4c0bd58f06aee1d2600c558d3b03"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref.json",
+      "bestand": "writer-autocorrectie-invoer/069-correctie-ref.json.gz",
+      "bytes": 856,
+      "sha256": "9ee65202fc54106573a3c9f5b66cfa91ad64df93b70a081c30d3e42ba8482c8c",
+      "gzip_sha256": "b9dcd870d63e1d18252681e3ad8d83974b417a2c7f8ef734c07c30fd728c5076"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-ref.log",
+      "bestand": "writer-autocorrectie-invoer/070-correctie-ref.log.gz",
+      "bytes": 3532,
+      "sha256": "bce9c8b342aee3cb2a6ed28b169dd734ffccc2d436016565b9d7e803c292a5f1",
+      "gzip_sha256": "0c8c505393abd3f89097dec1d081462171b59f38b3b7f4f3d0cc99bca147de6a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie-refproef.py",
+      "bestand": "writer-autocorrectie-invoer/071-correctie-refproef.py.gz",
+      "bytes": 16750,
+      "sha256": "6dd9fe01f5f72fb108154526ba4d3540a4551678ca34e0a729ceff204fd146cb",
+      "gzip_sha256": "24adc1abafacaed3bb02902d8119878c5712c295c2bf5ccbeb7aab7de50ae7ae"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie.json",
+      "bestand": "writer-autocorrectie-invoer/072-correctie.json.gz",
+      "bytes": 856,
+      "sha256": "24399f2c92ca61b8c6d113be5f1d0309c1f3123a7be85540fb1b12d46bc8a2a0",
+      "gzip_sha256": "00c2af31ba7a2f0b38f3d41b03fb738310a0a59aae02b745cae56d91ccd65f50"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctie.log",
+      "bestand": "writer-autocorrectie-invoer/073-correctie.log.gz",
+      "bytes": 4964,
+      "sha256": "1615f2a0c176ec96b6533b98f57170c29ad4862615ea7fed767ec54ae62a659e",
+      "gzip_sha256": "c077cc15f32cca3a0b4c7de7df0d5b403ba6b5349ba4be5d395dcea914cbcfe9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/correctieproef.py",
+      "bestand": "writer-autocorrectie-invoer/074-correctieproef.py.gz",
+      "bytes": 16750,
+      "sha256": "6dd9fe01f5f72fb108154526ba4d3540a4551678ca34e0a729ceff204fd146cb",
+      "gzip_sha256": "24adc1abafacaed3bb02902d8119878c5712c295c2bf5ccbeb7aab7de50ae7ae"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/desktop.log",
+      "bestand": "writer-autocorrectie-invoer/075-desktop.log.gz",
+      "bytes": 66930,
+      "sha256": "687b950e81a4cf510181098a784775876b90104dc4cdfd56628e20e5be8c68f7",
+      "gzip_sha256": "96d80c9336f0bb6ed3ef60fc0c97e1c924634e5874f6486f796fc9e77a14f79f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/engines-root.log",
+      "bestand": "writer-autocorrectie-invoer/076-engines-root.log.gz",
+      "bytes": 153,
+      "sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "gzip_sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/engines.log",
+      "bestand": "writer-autocorrectie-invoer/077-engines.log.gz",
+      "bytes": 153,
+      "sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "gzip_sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/078-Prestatieproef.docx.gz",
+      "bytes": 44902,
+      "sha256": "f270d295f1c4661d60457c2ee5ae4965c27ba4e6a4b42a4549caf5cb9dbc43ed",
+      "gzip_sha256": "d35bd4655080f3f4f7ea45056d683efcce84c35287be8a0eb94aa3d2a6b3057a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/afgekeurd.png",
+      "bestand": "writer-autocorrectie-invoer/079-afgekeurd.png.gz",
+      "bytes": 78583,
+      "sha256": "1aa9275cc7c0a67f09f0fd7415d4e3c0c854e857448f78f253b17c5661d8f918",
+      "gzip_sha256": "fd4bef05cb5f7f17f5ebb957b2ec80b4c6debd96e2ebd35da26133dd502be7b0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/framebasis-lettertypen.json",
+      "bestand": "writer-autocorrectie-invoer/080-framebasis-lettertypen.json.gz",
+      "bytes": 194073,
+      "sha256": "547d8f7371619489625bd8adddc3b2e2c2c1c3b4adb0f2b8028156b2c5d89dd6",
+      "gzip_sha256": "d01e2e862f0068b35fa0b3b81f2974ab7cdbd9f89ba78887fa51587deea1c0b1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/framebasis.json",
+      "bestand": "writer-autocorrectie-invoer/081-framebasis.json.gz",
+      "bytes": 3578744,
+      "sha256": "a91b2b6a92ff136ef015461e3595e6c9784bda7d73f172675cd647cc3dd5ba9a",
+      "gzip_sha256": "1b2a979ff3cdee1afe24d8dad8e7165386d0726c756c1c086d2ab096c42c3dec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/getypt-pagina-500.png",
+      "bestand": "writer-autocorrectie-invoer/082-getypt-pagina-500.png.gz",
+      "bytes": 116826,
+      "sha256": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+      "gzip_sha256": "01ee86b5ae068d45283f2a615dd706a582258eebe77d59b2f8280f6d5e881672"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/herstel-aanbod-later.png",
+      "bestand": "writer-autocorrectie-invoer/083-herstel-aanbod-later.png.gz",
+      "bytes": 101315,
+      "sha256": "6be8bc47f4563f40451e5c9d8ec9ffc7f5f9183e82475e2405809d112d94b5f5",
+      "gzip_sha256": "31efc4f6754d869343e896e1fba7ff4634f45f83ba1de521b7f7139b1b0d9297"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/kopvoetlint.png",
+      "bestand": "writer-autocorrectie-invoer/084-kopvoetlint.png.gz",
+      "bytes": 116673,
+      "sha256": "81ed09159483a9f02a6dcea9811e566bd1d4994ac5a10210bd5a1928c9dd47cc",
+      "gzip_sha256": "fc68a01b595773a96d59633f9806fd3a71f3d8b02cf960302006313b8880e309"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/programma.log",
+      "bestand": "writer-autocorrectie-invoer/085-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/086-rapport.json.gz",
+      "bytes": 23733,
+      "sha256": "233611162d60dee3945107516840a8fbd329211420fc21d3287477cc844cfe47",
+      "gzip_sha256": "67387fb26dcc9245178c38abfe84214030c9530aa29d7d6d4648b8228836beee"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref/startlint.png",
+      "bestand": "writer-autocorrectie-invoer/087-startlint.png.gz",
+      "bytes": 130633,
+      "sha256": "e59578167fb1582430ab951bf912d6e8302b73c138921bcf39d3fabfe9f4b9f0",
+      "gzip_sha256": "2dd6fbd6b13dcdd158bd351cd7303297ca2e2e3bed146e23460a7756e86411e0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref.json",
+      "bestand": "writer-autocorrectie-invoer/088-font-ref.json.gz",
+      "bytes": 939,
+      "sha256": "d627eb9dd730f4f0f3fa41070467533301132a2bb8c00a9266883849628cbf07",
+      "gzip_sha256": "8d506a143ee9ecd0b70d88db5e08fcd622408028169de11aa00c5db257d40a73"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/font-ref.log",
+      "bestand": "writer-autocorrectie-invoer/089-font-ref.log.gz",
+      "bytes": 4977,
+      "sha256": "d5c26f7f05359f2b43c73fd653dbb0f62f35d4480f4712ba098201769452388d",
+      "gzip_sha256": "4bf4d90b255f2c18500a49cd6e6baf65c721cc626e3504f711316ecafafdc81f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/Lettertype-caladea.docx",
+      "bestand": "writer-autocorrectie-invoer/090-Lettertype-caladea.docx.gz",
+      "bytes": 44880,
+      "sha256": "7190d3893183a54c3c41b56725ffaa3524917dd57b42a98ded74a3a2b63af115",
+      "gzip_sha256": "1c557cde5830ab22e181f88c1d4b4dcea98505560d5c9038785029b976232b4c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/Lettertype-carlito.docx",
+      "bestand": "writer-autocorrectie-invoer/091-Lettertype-carlito.docx.gz",
+      "bytes": 44881,
+      "sha256": "24c622b65261c759586ac575e1ed4b2ad53f19b2ebfed8e9f922f10d4974ba01",
+      "gzip_sha256": "cb38cf4957d30d15ee7230c2850862e01aee1395db17b1f8e3be390c3dbf9ee6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/Lettertype-cursief.docx",
+      "bestand": "writer-autocorrectie-invoer/092-Lettertype-cursief.docx.gz",
+      "bytes": 44855,
+      "sha256": "50ccda155e65057fa6f8c1d9b9de61870835056481d4c3a13cdf13048492765c",
+      "gzip_sha256": "1f52a0f2fa714cb2ae4f09210b7c6f729c5d76176ed92db5aa7d67cd6acafbb2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/Lettertype-vet.docx",
+      "bestand": "writer-autocorrectie-invoer/093-Lettertype-vet.docx.gz",
+      "bytes": 44855,
+      "sha256": "ec7c5e732ec6be441886b18f5e2dc44c3bdf071a9ebe8434865d88a977448dbf",
+      "gzip_sha256": "fc097e3b112b0ed450388b948499b13bf72a74dd559761a64a5275481b169aea"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/094-Prestatieproef.docx.gz",
+      "bytes": 44901,
+      "sha256": "73064b04d14d6164c2f75e798e4ce79bf82f48468f5caabd653f5c6f71a7ff3e",
+      "gzip_sha256": "f54e821cfb2168fb21375afda5d1c84f80adaedb95c7116047b48b192a5e364a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/framebasis-lettertypen.json",
+      "bestand": "writer-autocorrectie-invoer/095-framebasis-lettertypen.json.gz",
+      "bytes": 1185156,
+      "sha256": "fddaca0109470f8fe73c9dd4dfcf6eb1c343f389e64896934cc4eea4944b7791",
+      "gzip_sha256": "202da15650708e0ea8e374c33453ab33fba5f80fcd0575bc10cac4c3bd650e7d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/framebasis.json",
+      "bestand": "writer-autocorrectie-invoer/096-framebasis.json.gz",
+      "bytes": 3411246,
+      "sha256": "a4ab3909a14af8b60ca74eabfc6ebd01471e5927d33fc5cf0f858b0cac684d06",
+      "gzip_sha256": "722ce92be818a66261f27e74cdbe863a42729a5dec4f4d5936842bacb372a854"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/getypt-pagina-500.png",
+      "bestand": "writer-autocorrectie-invoer/097-getypt-pagina-500.png.gz",
+      "bytes": 116826,
+      "sha256": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+      "gzip_sha256": "01ee86b5ae068d45283f2a615dd706a582258eebe77d59b2f8280f6d5e881672"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/herstel-aanbod-later.png",
+      "bestand": "writer-autocorrectie-invoer/098-herstel-aanbod-later.png.gz",
+      "bytes": 101187,
+      "sha256": "f624ee4ba52131edfba0d33caa5c263729c8b5fc4f20563112522c1beefe03de",
+      "gzip_sha256": "66241d691ec85f007f89299166833b63931cd979d2c1d209d808b2b4d0d04394"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/kopvoetlint.png",
+      "bestand": "writer-autocorrectie-invoer/099-kopvoetlint.png.gz",
+      "bytes": 116476,
+      "sha256": "c509e42336dff7e19ea4be8978e262bee4b386add8a906ebf80286cccadeeb81",
+      "gzip_sha256": "f79c87f71b35b5581e0788f499c3e7cc7bd6f63fec2ab22fffbef1c608bfccd9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/programma.log",
+      "bestand": "writer-autocorrectie-invoer/100-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/101-rapport.json.gz",
+      "bytes": 25620,
+      "sha256": "7f70ed702e696be78e7de3845054fd241b4af3cbfb672325465d766d57475ceb",
+      "gzip_sha256": "acc82935f1f2ada689ffd049ce61e0a77dbd14b558dc2d6dcd359b63efb78ebb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron/startlint.png",
+      "bestand": "writer-autocorrectie-invoer/102-startlint.png.gz",
+      "bytes": 130433,
+      "sha256": "33a33e6a017bf0824e2a76da77c70def702bb211eee3f7d4b93840dc2846e6b5",
+      "gzip_sha256": "2b5f36dafc9aac504c16c8c32ecafb3b2ee679f5f0352a2ef0ec2f8d3892e449"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron-module.js",
+      "bestand": "writer-autocorrectie-invoer/103-fontbron-module.js.gz",
+      "bytes": 7019,
+      "sha256": "5bd1b612065a48c523a404d4691bcd3a621e35aaaf4e10a70a22f155b26d2030",
+      "gzip_sha256": "c2f7f8e66a605ce62201bf4a75093d6ff4dce683f7a6cc8f587e8f806298110e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron-module.py",
+      "bestand": "writer-autocorrectie-invoer/104-fontbron-module.py.gz",
+      "bytes": 2935,
+      "sha256": "c7380cae05493ef40652d81312aa1efedeceef1d3ae521b33b4544132b5f085a",
+      "gzip_sha256": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron.json",
+      "bestand": "writer-autocorrectie-invoer/105-fontbron.json.gz",
+      "bytes": 1252,
+      "sha256": "88c9310eb4038b29820336139c83e736b0ba4cb1d171bf2faa449cff26a6cc84",
+      "gzip_sha256": "ce9d9cd421c77773ccd670bab671a5f1f2cc7d52d2f90dd516698aa109f2bf14"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron.log",
+      "bestand": "writer-autocorrectie-invoer/106-fontbron.log.gz",
+      "bytes": 3806,
+      "sha256": "bd56f5e153a4380207f134b2a01e7943b0b289547521b4ccb4c59a8afcf5e045",
+      "gzip_sha256": "2edba81dc474ed02f26d510febe623a03f5ab4a5af2a1a500a0db00cc24aeadf"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontbron.py",
+      "bestand": "writer-autocorrectie-invoer/107-fontbron.py.gz",
+      "bytes": 54844,
+      "sha256": "48f57b29a0b5fad51e092ccafb8b7b379fd34515195733d42324e86466c41003",
+      "gzip_sha256": "f1215803a35d8632cb9bcfa4ef5748cea0a4658a8ee4e67ef5c4de355afb7000"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-module-tweede.js",
+      "bestand": "writer-autocorrectie-invoer/108-fontdiagnose-module-tweede.js.gz",
+      "bytes": 6928,
+      "sha256": "e620b2de4753e2549a1ed7ee5db35c93674d1fa64e7d47afc05c6f6a00874223",
+      "gzip_sha256": "d17dc427a209e7142f2b5278236d1c95ff61ecfb075c0dc32c8c6361b98b4fc0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-module-tweede.py",
+      "bestand": "writer-autocorrectie-invoer/109-fontdiagnose-module-tweede.py.gz",
+      "bytes": 2935,
+      "sha256": "c7380cae05493ef40652d81312aa1efedeceef1d3ae521b33b4544132b5f085a",
+      "gzip_sha256": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-module.js",
+      "bestand": "writer-autocorrectie-invoer/110-fontdiagnose-module.js.gz",
+      "bytes": 6928,
+      "sha256": "e620b2de4753e2549a1ed7ee5db35c93674d1fa64e7d47afc05c6f6a00874223",
+      "gzip_sha256": "d17dc427a209e7142f2b5278236d1c95ff61ecfb075c0dc32c8c6361b98b4fc0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-module.py",
+      "bestand": "writer-autocorrectie-invoer/111-fontdiagnose-module.py.gz",
+      "bytes": 2935,
+      "sha256": "c7380cae05493ef40652d81312aa1efedeceef1d3ae521b33b4544132b5f085a",
+      "gzip_sha256": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/112-Prestatieproef.docx.gz",
+      "bytes": 44900,
+      "sha256": "1c5c52ee453865c199704d5dfd238349f384dcbb67ebd4a5e2da29ea6f38c1bf",
+      "gzip_sha256": "d9b85a11623a5b9931cf0d61014b5b06d03d95d1d0e01192967441e14a93bd2a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/afgekeurd.png",
+      "bestand": "writer-autocorrectie-invoer/113-afgekeurd.png.gz",
+      "bytes": 78583,
+      "sha256": "1aa9275cc7c0a67f09f0fd7415d4e3c0c854e857448f78f253b17c5661d8f918",
+      "gzip_sha256": "fd4bef05cb5f7f17f5ebb957b2ec80b4c6debd96e2ebd35da26133dd502be7b0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/framebasis-lettertypen.json",
+      "bestand": "writer-autocorrectie-invoer/114-framebasis-lettertypen.json.gz",
+      "bytes": 194073,
+      "sha256": "dd098f83cea74446db820f6e45d50d758eb778381f7dfb91833c2139b947b38b",
+      "gzip_sha256": "38cfbca7e0b331784a853657d0740c219893357e8789087a246eb516e73cb432"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/framebasis.json",
+      "bestand": "writer-autocorrectie-invoer/115-framebasis.json.gz",
+      "bytes": 3346926,
+      "sha256": "f76e2b54c92442c64504edc7c234379ce191a968336b85d8920264ac3460ee78",
+      "gzip_sha256": "bddf97651cdc2c5c416119495f81be45bdf482622c3eb5fdda85d2d9f335d90b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/getypt-pagina-500.png",
+      "bestand": "writer-autocorrectie-invoer/116-getypt-pagina-500.png.gz",
+      "bytes": 116818,
+      "sha256": "9458e4eb7fdd71094ee0c375d44480d1eccdc7e247ed970a226da6b5ba5c32d6",
+      "gzip_sha256": "16b8a4a5b31317263d8bf5fbed568ff0dbc0188451cdbd609ced01dce57d18ed"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/herstel-aanbod-later.png",
+      "bestand": "writer-autocorrectie-invoer/117-herstel-aanbod-later.png.gz",
+      "bytes": 101144,
+      "sha256": "d660a972805cb78a10c5e604f14c334ce17f96792aebce3c6ff6b785c42ddf3d",
+      "gzip_sha256": "fdfc8804182b288366812d262c0a81e799b6b860d6ac12cd4e590cb048d880b3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/kopvoetlint.png",
+      "bestand": "writer-autocorrectie-invoer/118-kopvoetlint.png.gz",
+      "bytes": 117686,
+      "sha256": "fc862cb5d7eec5cbad281e30cfb5d519aa2fa3ebf425f441e954248bcf4c8135",
+      "gzip_sha256": "130226fbd9fde9b2a2076dbac67a0917f01c64c9fb387f3053c7082947e1de51"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/programma.log",
+      "bestand": "writer-autocorrectie-invoer/119-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/120-rapport.json.gz",
+      "bytes": 26291,
+      "sha256": "a46943716384e10b48a2968640d852f5491d0129fe9f04a4635502e1d4ef5f12",
+      "gzip_sha256": "231549e8119f040f5ecdb58ee4e02f062c19ae156558ef11ef6b627602ca5d3f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede/startlint.png",
+      "bestand": "writer-autocorrectie-invoer/121-startlint.png.gz",
+      "bytes": 131577,
+      "sha256": "5cc232951a57d7cb5686b950db56b6a777a4775713d1aaa0b9a310dd9f6487ce",
+      "gzip_sha256": "358a675ad71ecb136a5914e6bfc6a683919e1f0f72407a1bbaeb4a579bb81a32"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede.json",
+      "bestand": "writer-autocorrectie-invoer/122-fontdiagnose-tweede.json.gz",
+      "bytes": 1164,
+      "sha256": "4bc93bae56ba1abd0e4a3b7153042095905ceb2253a9ba176c3451f0d24bfd87",
+      "gzip_sha256": "609874dc75b66b85d5a34cae422243b51cf7c75c35e5aa4b78bd4635431c4c30"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede.log",
+      "bestand": "writer-autocorrectie-invoer/123-fontdiagnose-tweede.log.gz",
+      "bytes": 5130,
+      "sha256": "235af70299651314f2468f7595acc4b2c0baa789c80029f5764ae2df30af0c7c",
+      "gzip_sha256": "c2bb95b15c2beedbda0d200b545022e92c59f0469d4bf5cd242ce49cdabcd789"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose-tweede.py",
+      "bestand": "writer-autocorrectie-invoer/124-fontdiagnose-tweede.py.gz",
+      "bytes": 54859,
+      "sha256": "20d73044a51439b634c1d68da049981203d9531b4c2db176da5e5e79b7010fa7",
+      "gzip_sha256": "9db6cc830c53dbce96b552fc6c9df6dde793218515a02a1b25f5592e46c9437b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose.json",
+      "bestand": "writer-autocorrectie-invoer/125-fontdiagnose.json.gz",
+      "bytes": 1150,
+      "sha256": "cbdf25000ce813f00e567f027a7394894b5364451942991ecfab7924440a992f",
+      "gzip_sha256": "1f3e1d0b7e03e3575cc307274012883cc6261517f4432f4a52456ae4bd19b966"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose.log",
+      "bestand": "writer-autocorrectie-invoer/126-fontdiagnose.log.gz",
+      "bytes": 1096,
+      "sha256": "21347dcd77e36fe3b346a8104924fa1101261bcf6d246a02da4d88ab43abd1e1",
+      "gzip_sha256": "dca811b39839dda810f48b1c6bedfc48d0b96ab970b2e21c68c9789b6f6dbe45"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fontdiagnose.py",
+      "bestand": "writer-autocorrectie-invoer/127-fontdiagnose.py.gz",
+      "bytes": 54752,
+      "sha256": "4fed6872e60790a759e43b1cfb356e62f03e884004de563e835f68b3f89300bf",
+      "gzip_sha256": "f2ec3dbc5cb96a3fd34c178aa7800e0a32e6695b50ac48ffbc1885e04e4002bc"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/fonthelper-node.log",
+      "bestand": "writer-autocorrectie-invoer/128-fonthelper-node.log.gz",
+      "bytes": 214,
+      "sha256": "7b156f75383d004cc27982254804f71ddcd3a6fdd567a21968cf1560cb23f2d7",
+      "gzip_sha256": "c24ec698825e51c65445bd943041e6bb6366e2153a6a82644af74a7e5523e8ac"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/frontend-root.log",
+      "bestand": "writer-autocorrectie-invoer/129-frontend-root.log.gz",
+      "bytes": 27271,
+      "sha256": "3ff88eb8f7fb941b7ab1a1c6f6d86fd0b36434256859bc4ca27166341aefcbce",
+      "gzip_sha256": "2b00ffc10075fbb95a9d1c7d2e7081bf02408fa9d3178273a147fd6d0ec5a681"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/frontend.log",
+      "bestand": "writer-autocorrectie-invoer/130-frontend.log.gz",
+      "bytes": 21658,
+      "sha256": "01e85a497d28c2f86141c9886672fd735669ca750d6164f97cc546f2e8826208",
+      "gzip_sha256": "6f41656bb46a7dad48012cea32c78a41c2f2520e18bbae0e107322da5d7210b5"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/functioneel.json",
+      "bestand": "writer-autocorrectie-invoer/131-functioneel.json.gz",
+      "bytes": 1703,
+      "sha256": "1f355c826262638df8f273d06eabcadf91f886bc312db2b4ccf4b0eb258ddb27",
+      "gzip_sha256": "4463f2ebd033e74acfa97bdf75825d97b1320f4c926b71856dbee8b801aa0e2c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gebouwd.json",
+      "bestand": "writer-autocorrectie-invoer/132-gebouwd.json.gz",
+      "bytes": 357,
+      "sha256": "b77a0798d24a19268a533706ecfa8936318758ce04715aa3128ef57aa233eff3",
+      "gzip_sha256": "ffe9fd57c265daba3ec2fe5352d45845b3b086c72d37ad84cd5481d21d391f56"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gericht-eerste.log",
+      "bestand": "writer-autocorrectie-invoer/133-gericht-eerste.log.gz",
+      "bytes": 8049,
+      "sha256": "7d5e8fb08d946f01b11f77555468cfa6003927807570e7f557d257c5da6e4f3f",
+      "gzip_sha256": "e59fb07966c6534d296cd3d0a9cde5a45d4d71b496c705cb2d3b795044e6913f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gericht-tweede.log",
+      "bestand": "writer-autocorrectie-invoer/134-gericht-tweede.log.gz",
+      "bytes": 535,
+      "sha256": "7d39e0d0bc131a682d88fa6cf098c132eede84ec5e8f7f633bce3a6698aeaa05",
+      "gzip_sha256": "c8b5a2e80bf9ba1f0a8b56dc14a151d08e571ee98598813fcf7a2d9416b5f325"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-a/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/135-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/136-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-a/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/137-profiel.json.gz",
+      "bytes": 2895,
+      "sha256": "f7cf117737160fe32f8462e98907afd94d5228352a0a6755f99495610596ec60",
+      "gzip_sha256": "b5a0c467e3128ad40d6ce9e37da01515827c82ef6f10b822074f0020da470357"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-a/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/138-profiel.png.gz",
+      "bytes": 118017,
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "gzip_sha256": "565ece24b660b67c7480eff5dacb906233c63915ffccfb04d0566262750f28a2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-a/programma.log",
+      "bestand": "writer-autocorrectie-invoer/139-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-a.log",
+      "bestand": "writer-autocorrectie-invoer/140-invoer-a.log.gz",
+      "bytes": 3600,
+      "sha256": "f55d51d6734ef871b664a245827d3aa10f0474c9a1a3842ab04753576c9d949f",
+      "gzip_sha256": "eea3e15de89554d8994225cf428a639669b0f8a5e84132627427c27319b30f0b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-b/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/141-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/142-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-b/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/143-profiel.json.gz",
+      "bytes": 2895,
+      "sha256": "ef114fc06a690a6e622e370246377e772551e52421d6822a4003c6b6a2cac4e6",
+      "gzip_sha256": "67b07c63534abf91a1a546ffd396fc3d590df82368ae06af74e7bf3bb49397d0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-b/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/144-profiel.png.gz",
+      "bytes": 118050,
+      "sha256": "ad94f7bc818567c42591a99090bd88fb03bade50da4af13d3ad7e7929bd1c85d",
+      "gzip_sha256": "5f26e846117305ca647c80bcc764b5f9f08cb5273a2641eab70faad44da195dd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-b/programma.log",
+      "bestand": "writer-autocorrectie-invoer/145-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/invoer-b.log",
+      "bestand": "writer-autocorrectie-invoer/146-invoer-b.log.gz",
+      "bytes": 3600,
+      "sha256": "371cddc60f846aafd812d7d1897f35a056748acfefd98663aac334323d98f1d5",
+      "gzip_sha256": "1da9862b291badecf57e60ccadc4bbc729737e8ec22bd9752c9dfee9a0b2b23a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/147-rapport.json.gz",
+      "bytes": 5510,
+      "sha256": "0f2b15c69a36b6e481c4153240671b0432a30f16cc0be483a60c1dadcd091e94",
+      "gzip_sha256": "ee80a21c84289ff574a2db9f15a3f7e062e797898d5e0a22a098ee865c1b6533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-a/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/148-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/149-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-a/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/150-profiel.json.gz",
+      "bytes": 2898,
+      "sha256": "59e930136930220f4f8c1255dba3a48bef96148444a35912f7a2cab80849b945",
+      "gzip_sha256": "d70f0ca1a6898aea88cf256c88a23762761640e6372c7efc97a23d5b07caa49e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-a/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/151-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-a/programma.log",
+      "bestand": "writer-autocorrectie-invoer/152-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-a.log",
+      "bestand": "writer-autocorrectie-invoer/153-referentie-a.log.gz",
+      "bytes": 3601,
+      "sha256": "7cca01b552759b578d6361662f6b3a35aa3ddd37e8e6e1ca63028add2b7b4e04",
+      "gzip_sha256": "0e59f5ef4bef8c081c1bdb98703d2006fdd9820d053a1b0bc3caaa929014037e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-b/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/154-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/155-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-b/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/156-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "b0cfa6ae7b556343ff3e1de84ff69e5e927411e1af37858bb073569debdec932",
+      "gzip_sha256": "363d33e14206890f322f27f9bd9cd2c2451f7d938c09c658fbe5a69f7120ffdb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-b/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/157-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-b/programma.log",
+      "bestand": "writer-autocorrectie-invoer/158-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui/referentie-b.log",
+      "bestand": "writer-autocorrectie-invoer/159-referentie-b.log.gz",
+      "bytes": 3601,
+      "sha256": "00d14ceae6cbb24a06f15b79afa9eba4e16559dc0f157a3276b3ad7d954305bd",
+      "gzip_sha256": "1114252969f8a920e50161e08774413bbb906d1f00413fcec7c44fb4871d7dcd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-a/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/160-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/161-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-a/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/162-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "4b5169fc6ea61a07a5172b2bae1e7df7afdb7c14401e793967fd014fec5ee104",
+      "gzip_sha256": "fbceec2d1c501801253540791a632329b1ef87819d8605e441180f4a60e9c6f7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-a/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/163-profiel.png.gz",
+      "bytes": 118055,
+      "sha256": "c86de6c5f47b2af76fb49fd7053823dc8979161bb3368aebe6866e53b4676b0b",
+      "gzip_sha256": "166c2079a05def0c1aab184685bab13aedd17bf90fa5405e982e3a8340b34484"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-a/programma.log",
+      "bestand": "writer-autocorrectie-invoer/164-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-a.log",
+      "bestand": "writer-autocorrectie-invoer/165-invoer-a.log.gz",
+      "bytes": 3601,
+      "sha256": "53e316c10000674f887e208a34eff217e29f6a452645f4ff319d90c648d48fca",
+      "gzip_sha256": "97aefbf3372a4fe1b049a68f8bd6a1f3b7914db701a3f4f665b7a30f01e52f16"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-b/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/166-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/167-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-b/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/168-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "c21ecacf86550e6509668b01667a03add328188782e27f3876dfa919ad47edfe",
+      "gzip_sha256": "693efb250fdc4ea703f035d12fe41ce20dc9273e3fcfd54a524c95538a16024f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-b/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/169-profiel.png.gz",
+      "bytes": 118017,
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "gzip_sha256": "565ece24b660b67c7480eff5dacb906233c63915ffccfb04d0566262750f28a2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-b/programma.log",
+      "bestand": "writer-autocorrectie-invoer/170-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/invoer-b.log",
+      "bestand": "writer-autocorrectie-invoer/171-invoer-b.log.gz",
+      "bytes": 3601,
+      "sha256": "d7353146ba11bcd1827fd179f5a965bbd0839c910ea01908c4f7c50d33b49650",
+      "gzip_sha256": "1af4a4984c56a83abb133bb2627f4cd9616e574a402998a1cd478672794970a2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/172-rapport.json.gz",
+      "bytes": 5635,
+      "sha256": "cf9a250052ac715fbb7bc2124096015c391e37e8304926240b8a7d419367329f",
+      "gzip_sha256": "e25e315a9e84ee82eefcbbd631b03d5c548b1584f386aabeeafb3333dc647a0a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-a/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/173-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/174-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-a/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/175-profiel.json.gz",
+      "bytes": 2883,
+      "sha256": "46eaf3a14211cba55480bb9a4bc72c6eb59ba69aee84e22d710b4d08e8f94e46",
+      "gzip_sha256": "4e817c10f8f6b04b31308f8ee4434545ac934c3beeb6b60b8a789b8295c8e7fb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-a/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/176-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-a/programma.log",
+      "bestand": "writer-autocorrectie-invoer/177-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-a.log",
+      "bestand": "writer-autocorrectie-invoer/178-referentie-a.log.gz",
+      "bytes": 3601,
+      "sha256": "828a653431d831cb32ed542126b2820598f635ec0d983571b8314e240260f316",
+      "gzip_sha256": "c26dcf264507ea64f5023583c7e605a8798132d111564e938f3fbc49c03d5ec4"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-b/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/179-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/180-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-b/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/181-profiel.json.gz",
+      "bytes": 2908,
+      "sha256": "3717a58aaa5588ea28c8afef586924a53fb743bd7217f5c17235f5973849fc4d",
+      "gzip_sha256": "8e2a203e427970fc7e60808cea870d5392c80abb02f3108e49f16f0d85a7edf6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-b/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/182-profiel.png.gz",
+      "bytes": 118055,
+      "sha256": "c86de6c5f47b2af76fb49fd7053823dc8979161bb3368aebe6866e53b4676b0b",
+      "gzip_sha256": "166c2079a05def0c1aab184685bab13aedd17bf90fa5405e982e3a8340b34484"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-b/programma.log",
+      "bestand": "writer-autocorrectie-invoer/183-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-achtergrond/referentie-b.log",
+      "bestand": "writer-autocorrectie-invoer/184-referentie-b.log.gz",
+      "bytes": 3601,
+      "sha256": "0ed4ace33e418caaf1effcf20a464aad4b746957f20b71f14cb2f833cc7e6a56",
+      "gzip_sha256": "e9400439d0741e5c5f96ffbb8384d74022278ca7759d7fcf56a21e9a297b5148"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-a/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/185-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/186-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-a/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/187-profiel.json.gz",
+      "bytes": 2879,
+      "sha256": "af5d58da683f273185572a715827077dda9f0e86e7a1d500cb88fb3962a9bcc5",
+      "gzip_sha256": "f11490aecb396c6c34b864c911fbb8f4af4a1f472cdb0e2cc99b39816d2bd4ad"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-a/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/188-profiel.png.gz",
+      "bytes": 118014,
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "gzip_sha256": "96e97054bcfcd4ae5024433533996e95e66b010af2be623e771aaf861ffbf864"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-a/programma.log",
+      "bestand": "writer-autocorrectie-invoer/189-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-a.log",
+      "bestand": "writer-autocorrectie-invoer/190-invoer-a.log.gz",
+      "bytes": 3600,
+      "sha256": "0a66d3c55c5a4b6cc5e9da7c96f5241abeb3ee2df57cdd93c552661d5e0f1108",
+      "gzip_sha256": "3de9e98f97ec0ebd3689d16f97fea78332ce57779e698de8b1f753158068a5cb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-b/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/191-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/192-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-b/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/193-profiel.json.gz",
+      "bytes": 2879,
+      "sha256": "fbc0102888862ca76e57e3a3cb8737f9f9bf049bb52fed16a8aee776d47cfbfe",
+      "gzip_sha256": "c825a61562bc045853f6af6b89b028e5a06b8dd412d2dfc0adb107197d2bcc98"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-b/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/194-profiel.png.gz",
+      "bytes": 118014,
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "gzip_sha256": "96e97054bcfcd4ae5024433533996e95e66b010af2be623e771aaf861ffbf864"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-b/programma.log",
+      "bestand": "writer-autocorrectie-invoer/195-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/invoer-b.log",
+      "bestand": "writer-autocorrectie-invoer/196-invoer-b.log.gz",
+      "bytes": 3698,
+      "sha256": "be52d9d8fd7ad15103e5122695652bffd52d3399e78928a97e67ea0aed5ebb4a",
+      "gzip_sha256": "0283f01b1441210882e77c917fb2ce4979bf84e81e1befd6a53dd30cb52c3b04"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/197-rapport.json.gz",
+      "bytes": 5538,
+      "sha256": "5b4556eb93500bafb275932ceef8761acc1f35b7955a97073ee5988aae931478",
+      "gzip_sha256": "d028e36af3a4475a25250c2d7d7423a996b9b5e66930accd342a8d63d8ce2954"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-a/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/198-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/199-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-a/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/200-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "cb3351319bcc0736a7418ae5701a8c4bc86a1eadf7345c2b992a233b795b3d41",
+      "gzip_sha256": "4fb6464f86153dc392fe0d3202d4b24970fdf6b704d8fae1935fda338f7848ea"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-a/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/201-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-a/programma.log",
+      "bestand": "writer-autocorrectie-invoer/202-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-a.log",
+      "bestand": "writer-autocorrectie-invoer/203-referentie-a.log.gz",
+      "bytes": 3601,
+      "sha256": "428f129437d2d7798a33c683371e81546285205fa745822a0ba1966ef6d8a587",
+      "gzip_sha256": "311e57b33a428e771298ac447627cbc7860b92536cf7e382ef52f71a19f5c084"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-b/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/204-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-autocorrectie-invoer/205-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-b/profiel.json",
+      "bestand": "writer-autocorrectie-invoer/206-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "b9026253e7bdaffd3b1f5be5fd7789ac603e0897db0225bfd74dd1896cce81ce",
+      "gzip_sha256": "d90092874c2a7bb01415fb88536c590fc016537ad8c70efcc4a84e59851de17f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-b/profiel.png",
+      "bestand": "writer-autocorrectie-invoer/207-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-b/programma.log",
+      "bestand": "writer-autocorrectie-invoer/208-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/gui-rustig/referentie-b.log",
+      "bestand": "writer-autocorrectie-invoer/209-referentie-b.log.gz",
+      "bytes": 3601,
+      "sha256": "1df49c4674654d605e07866487db6c6f2cc3119c6076267ed908692fe344f6ec",
+      "gzip_sha256": "10d2a8cb3be9ac68837963a2e4cae44caa7ca4d284ba048a71d9efdc5894411b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/Prestatieproef.docx",
+      "bestand": "writer-autocorrectie-invoer/210-Prestatieproef.docx.gz",
+      "bytes": 44900,
+      "sha256": "d427eac751c785252584823af1287e8e7e90f851110b4f50524aa4e69afec000",
+      "gzip_sha256": "a3700909061cf0836d3af2bc7caa58f29bf340c69b753307b51f66502cb431c1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/afgekeurd.png",
+      "bestand": "writer-autocorrectie-invoer/211-afgekeurd.png.gz",
+      "bytes": 78583,
+      "sha256": "1aa9275cc7c0a67f09f0fd7415d4e3c0c854e857448f78f253b17c5661d8f918",
+      "gzip_sha256": "fd4bef05cb5f7f17f5ebb957b2ec80b4c6debd96e2ebd35da26133dd502be7b0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/framebasis-lettertypen.json",
+      "bestand": "writer-autocorrectie-invoer/212-framebasis-lettertypen.json.gz",
+      "bytes": 194073,
+      "sha256": "78b35801f9dfc3f9aefdd642b4e9aeab173644331f75e492adcbee182b3b6d13",
+      "gzip_sha256": "aaaeb2b978a2fa74ec0a6c41a44778d84c705e2764b7fb94f026a1a5ec035471"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/framebasis.json",
+      "bestand": "writer-autocorrectie-invoer/213-framebasis.json.gz",
+      "bytes": 3578713,
+      "sha256": "adf05f559b78831124c1cccfed95ca1c5ecc0d7d53cf26e7412a23f8b8afbbb7",
+      "gzip_sha256": "270d55ec9ba48f07f67bf7dc298e967b7bda09b9ab4033cdd55ac69bb87d4835"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/getypt-pagina-500.png",
+      "bestand": "writer-autocorrectie-invoer/214-getypt-pagina-500.png.gz",
+      "bytes": 116832,
+      "sha256": "4622d39fdda655eacfdb9157203f4338679decc972233224e46aa9c9ac7de090",
+      "gzip_sha256": "5cc2d274ddb6c1c9691c411616853b1a4d786a7425d71ec13a21123a40017c3f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/herstel-aanbod-later.png",
+      "bestand": "writer-autocorrectie-invoer/215-herstel-aanbod-later.png.gz",
+      "bytes": 101117,
+      "sha256": "8b68c072c0c4b8512e2e83d02525acdb98307e8296bcf24757929ae203825137",
+      "gzip_sha256": "991d56447f796abcf79151e19c11f5513714f3ec6da7577e2db0398c764e4a65"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/kopvoetlint.png",
+      "bestand": "writer-autocorrectie-invoer/216-kopvoetlint.png.gz",
+      "bytes": 116758,
+      "sha256": "18e61bc35d77ef2cf8abf632dd2c355fcb03f5edc344b9753e3a68f2d6e4db2a",
+      "gzip_sha256": "878563b0a204af04d4d1502796bc866de660de9e991b464f9713675e9349d7f9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/programma.log",
+      "bestand": "writer-autocorrectie-invoer/217-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/218-rapport.json.gz",
+      "bytes": 23753,
+      "sha256": "ceefc18270ae34b82b58433b8a7ae00cc9472205396545ff168f60e6535fdab1",
+      "gzip_sha256": "dc59e75742d2ec75f5ecaaeb639bb00841c9401a6b909a40d587580a58669c16"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font/startlint.png",
+      "bestand": "writer-autocorrectie-invoer/219-startlint.png.gz",
+      "bytes": 130711,
+      "sha256": "3f09763b0dc7cb446f24e8843fbc3dbcf244ddeb7ad22a672f7b00b14f8e4c05",
+      "gzip_sha256": "5d93ce5e4a00c97c84131722f172a941fe9bab26c57f1a651747efcd6b7625b2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lang-font.log",
+      "bestand": "writer-autocorrectie-invoer/220-lang-font.log.gz",
+      "bytes": 4977,
+      "sha256": "5de1d8d96f1faf7ea5725cc6c87c4bf388757334dc8b27bfe929bcd2972bf543",
+      "gzip_sha256": "5e1708a57507963f5ef05adbb516e417e760b88f5f3c6140079728294429cb43"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/lettertype-bewijs-oorspronkelijk.js",
+      "bestand": "writer-autocorrectie-invoer/221-lettertype-bewijs-oorspronkelijk.js.gz",
+      "bytes": 6609,
+      "sha256": "a64459717d04c166aa4e94b9b0f86a190cc70b80a9b6a0b2f2e2ee0c26822b89",
+      "gzip_sha256": "fea1593ad8736aad3b2c1887ed376fbdcc336bc2a665b319822c39fe47542476"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/opdrachten-root.log",
+      "bestand": "writer-autocorrectie-invoer/222-opdrachten-root.log.gz",
+      "bytes": 5191,
+      "sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "gzip_sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/opdrachten.log",
+      "bestand": "writer-autocorrectie-invoer/223-opdrachten.log.gz",
+      "bytes": 5191,
+      "sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "gzip_sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/python-fonthelper.log",
+      "bestand": "writer-autocorrectie-invoer/224-python-fonthelper.log.gz",
+      "bytes": 930,
+      "sha256": "8ebb02b1e10e6f1b98dd076cd4d7f89915a892423ab1a2152a29d2fd78d7a570",
+      "gzip_sha256": "56f46914813d3ffc700c2870007ea2e5f5266e7e415cccd7ddee713d672f249a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/python-root.log",
+      "bestand": "writer-autocorrectie-invoer/225-python-root.log.gz",
+      "bytes": 930,
+      "sha256": "2a9e6066d2ff538e2d2f829d7e3f2b175d57768b12f34727fab7add5005edc89",
+      "gzip_sha256": "c27a21b62a90fba99b642ce57847ae38bfd6483750e36158c80e3dcb08fdb292"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/python.log",
+      "bestand": "writer-autocorrectie-invoer/226-python.log.gz",
+      "bytes": 851,
+      "sha256": "96210ee11c79af89f9c40a576f2c41ca0c3cf04a6b3eb54f09ba539ee341c9e5",
+      "gzip_sha256": "eacc9e1fcdaf6dbbe63da14f48f62a5b67f4a4a9771313e2715e6730843a0b13"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/regressie-oud.log",
+      "bestand": "writer-autocorrectie-invoer/227-regressie-oud.log.gz",
+      "bytes": 12924,
+      "sha256": "27542921b6872b63fa6ec5713fbd6574c36c0643145033bd56092c338783a694",
+      "gzip_sha256": "504edbe1dc49f98b04281902bd14ee4a40819455eddc1425302b440b659800d1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie/Ontwerpnotitie.docx",
+      "bestand": "writer-autocorrectie-invoer/228-Ontwerpnotitie.docx.gz",
+      "bytes": 43602,
+      "sha256": "d1f132cc6d67aec0d2343fc3df71e8547255dfa18cb23af225901c7f3fbc6994",
+      "gzip_sha256": "8b9ac16269d3b9b6121918580fff368433923cd48a5adaad0acdffb021c531f2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie/invoer-redo.png",
+      "bestand": "writer-autocorrectie-invoer/229-invoer-redo.png.gz",
+      "bytes": 160405,
+      "sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "gzip_sha256": "6bb737aa1e6ce4f027ba18fd4f4ba22f0a0b3f0b884fff1e8c0d6d0894fc8c49"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie/nieuw-na-laat-antwoord.png",
+      "bestand": "writer-autocorrectie-invoer/230-nieuw-na-laat-antwoord.png.gz",
+      "bytes": 76065,
+      "sha256": "ce4a78fafc95484628c375482d375cd705be82bf10b519cbc85b97166a889651",
+      "gzip_sha256": "b4e214588a433141c66a656fbd080b242ef720c66bb9921b68ae4b1e0ad43cf8"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie/programma.log",
+      "bestand": "writer-autocorrectie-invoer/231-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/232-rapport.json.gz",
+      "bytes": 21691,
+      "sha256": "b8b9a454f6121bebe317c73e377f18c1e6bd6938be8e7a3a602d166d0fbec50b",
+      "gzip_sha256": "dfb178b021f8e18259e261f9a6ecd31419f1959fe4c79b3c5c786912deefb09f"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie/snel-getypt-bewaard.png",
+      "bestand": "writer-autocorrectie-invoer/233-snel-getypt-bewaard.png.gz",
+      "bytes": 159804,
+      "sha256": "7895f10f3d8721f5cb6fbfeee2aaed523f1677a2839977b4a333927b3fa439be",
+      "gzip_sha256": "f7a6fcb3724cbc484e66a704e1e44c832563f48859d0bc073e36d95f0941edc6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/selectie.log",
+      "bestand": "writer-autocorrectie-invoer/234-selectie.log.gz",
+      "bytes": 3532,
+      "sha256": "50e52eade2c373c0b7ea8cd527b1b3afc67d6a1ef0cb6c9b9165e7b20a9973e2",
+      "gzip_sha256": "ba084dcec824656f9bf8ad76226b502e5659cd2ce3fb972523edf4df589ffe31"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/Ontwerpnotitie.docx",
+      "bestand": "writer-autocorrectie-invoer/235-Ontwerpnotitie.docx.gz",
+      "bytes": 43614,
+      "sha256": "21d19470bd6723f3fef99d3e48fad8d606494436b7f4f0fbc35aa679dd838c10",
+      "gzip_sha256": "6ceef360ccef285f4ed5c546057d4976404f4b4102a53bfcc8c875cc44a7be22"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/autocorrectie-zonder-flush.png",
+      "bestand": "writer-autocorrectie-invoer/236-autocorrectie-zonder-flush.png.gz",
+      "bytes": 161058,
+      "sha256": "bac2f43ec24a9a82f0a3fc9fcd2694fabead1f835c8996459d2bdcbd4284f872",
+      "gzip_sha256": "0d3cb060f1d7e011fbc7ebd7a6807fd981f473760a8217c4d9778212f76514bd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/invoer-redo.png",
+      "bestand": "writer-autocorrectie-invoer/237-invoer-redo.png.gz",
+      "bytes": 161615,
+      "sha256": "1d2af8e8c13921ccbdeb04ee12518e01e85936f633f7b229a292342f2b7beb9f",
+      "gzip_sha256": "a61f152a7867828366017dc7df6046998fd8520f0a55d635e44a42d405192eac"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/nieuw-na-laat-antwoord.png",
+      "bestand": "writer-autocorrectie-invoer/238-nieuw-na-laat-antwoord.png.gz",
+      "bytes": 76070,
+      "sha256": "6f8d4165786b0a8db0b6592e8d2f221eabef2c95478cd4a59a216e281ece4d55",
+      "gzip_sha256": "e9c77ca7d01f4f6cb62e7c522cb7b302db836f486a421a5e0090f359fbcdc02a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/programma.log",
+      "bestand": "writer-autocorrectie-invoer/239-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/240-rapport.json.gz",
+      "bytes": 21813,
+      "sha256": "4b565953a7b578930a377193d3506108b88a8d733883379145ad7c06cfc219f4",
+      "gzip_sha256": "225cf5f72e379c047b4506e991ed980174c8b6b3a3f75cdb79d7638cce217be1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose/snel-getypt-bewaard.png",
+      "bestand": "writer-autocorrectie-invoer/241-snel-getypt-bewaard.png.gz",
+      "bytes": 168588,
+      "sha256": "d1c73bf45434e6d1bb0036feeaddf2df6d6a261968d8282d7904d9b774b16338",
+      "gzip_sha256": "0b7fbd1fe62a4727f900c4b696fa8cb8eafab99dd4e2f6201144ad7c72d0da65"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose.json",
+      "bestand": "writer-autocorrectie-invoer/242-sluitdiagnose.json.gz",
+      "bytes": 770,
+      "sha256": "b81a6fb4f63497c62b62bd837ed6a23d3ffc110771cbf0cdb8d76235394ee356",
+      "gzip_sha256": "00a566eb3380fe68828033aa578b14a92507f86b14273037ad682a908a33afcb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose.log",
+      "bestand": "writer-autocorrectie-invoer/243-sluitdiagnose.log.gz",
+      "bytes": 3532,
+      "sha256": "d40f6cf06a1456210df4650d85a2eb683088fcae5876e5df0838c434aa3009f9",
+      "gzip_sha256": "c6375c0d2caa7bb0961bd992a8e0fa58948229384e8f6f3b0681aea0bda67326"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitdiagnose.py",
+      "bestand": "writer-autocorrectie-invoer/244-sluitdiagnose.py.gz",
+      "bytes": 18114,
+      "sha256": "1d9a0669dcd9bd655342a5c2665471d628791f86264b68db02cb436870f74f11",
+      "gzip_sha256": "8df8a7f5a57599b812a08c7dc46ce1a1f1128403132a40e8179e20161d8fb215"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/Ontwerpnotitie.docx",
+      "bestand": "writer-autocorrectie-invoer/245-Ontwerpnotitie.docx.gz",
+      "bytes": 43615,
+      "sha256": "f7841d4bf87996e2ebedc03b8457bd93b262b3769fa9ee4636983ff20e6d1496",
+      "gzip_sha256": "1929fe1a00a2c1d40ce0d0cc2489d16592347f7e51c31fc6a3ed4826b8023203"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/autocorrectie-zonder-flush.png",
+      "bestand": "writer-autocorrectie-invoer/246-autocorrectie-zonder-flush.png.gz",
+      "bytes": 161058,
+      "sha256": "bac2f43ec24a9a82f0a3fc9fcd2694fabead1f835c8996459d2bdcbd4284f872",
+      "gzip_sha256": "0d3cb060f1d7e011fbc7ebd7a6807fd981f473760a8217c4d9778212f76514bd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/invoer-redo.png",
+      "bestand": "writer-autocorrectie-invoer/247-invoer-redo.png.gz",
+      "bytes": 161615,
+      "sha256": "1d2af8e8c13921ccbdeb04ee12518e01e85936f633f7b229a292342f2b7beb9f",
+      "gzip_sha256": "a61f152a7867828366017dc7df6046998fd8520f0a55d635e44a42d405192eac"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/nieuw-na-laat-antwoord.png",
+      "bestand": "writer-autocorrectie-invoer/248-nieuw-na-laat-antwoord.png.gz",
+      "bytes": 76067,
+      "sha256": "0675c843a8cec91391ec6eeda75ca8e5798d2ac2fa36255a41bce1fe6f5284c3",
+      "gzip_sha256": "61d7103d0cdb1a30d69906301f1d335d35eaa519056ee55327901b5c065bcf2b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/programma.log",
+      "bestand": "writer-autocorrectie-invoer/249-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/rapport.json",
+      "bestand": "writer-autocorrectie-invoer/250-rapport.json.gz",
+      "bytes": 24375,
+      "sha256": "91012b474fdefedb87084b44f2a617ef61a84014de51c47106f643e61f17bebe",
+      "gzip_sha256": "ea3353c3fe447c7178391697df90cd9ea8d4036f2b7ba4f099973bfa16810919"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor/snel-getypt-bewaard.png",
+      "bestand": "writer-autocorrectie-invoer/251-snel-getypt-bewaard.png.gz",
+      "bytes": 168403,
+      "sha256": "8a2e4a7c05ff52fb8e43d4f56255034bf794bec01ba6d72641fbece4711dde7f",
+      "gzip_sha256": "475621fac1c54670b9045e8b2ef08912c9056c82124a0d4b77e0f3be4e3642ec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor.json",
+      "bestand": "writer-autocorrectie-invoer/252-sluitvoor.json.gz",
+      "bytes": 762,
+      "sha256": "87a46e97f6501154364c5eaebd2a451e05447b23cb7b5dabb7fe81c5a19936d7",
+      "gzip_sha256": "6a9ce82fb73a148909f0e813bcc54380ff724a461bf0f0472320f6705fea075a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor.log",
+      "bestand": "writer-autocorrectie-invoer/253-sluitvoor.log.gz",
+      "bytes": 3532,
+      "sha256": "281282e40a7457c21cc0a82a22f131ef6422d9ebafd33fc4b7fb0bc318799b5e",
+      "gzip_sha256": "01ed4e19744c1373a42af2e022f16f6017e3d53327f57b17fd0ba6f5075c6cab"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/sluitvoor.py",
+      "bestand": "writer-autocorrectie-invoer/254-sluitvoor.py.gz",
+      "bytes": 18900,
+      "sha256": "1545c1fe51debbc1715e89dad7d4c8aa2e0feebd840daaea1d85f9c1e56356f6",
+      "gzip_sha256": "6e2756b0dd0ad11a0752b70dca1d5dc7124e91e9f49fd23146f30e00a67ab4ee"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/spelling-na-assets.log",
+      "bestand": "writer-autocorrectie-invoer/255-spelling-na-assets.log.gz",
+      "bytes": 436,
+      "sha256": "7e540b39933624b3c742666b687dde04f58e1394fb3cd0534b111374e1e9f0f2",
+      "gzip_sha256": "681b9074fa6814150f17d3ceac5b6065ba3e1a5e3805adc7d55312e4daa34d63"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/typescript-eerste.log",
+      "bestand": "writer-autocorrectie-invoer/256-typescript-eerste.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/typescript-root.log",
+      "bestand": "writer-autocorrectie-invoer/257-typescript-root.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/typescript.log",
+      "bestand": "writer-autocorrectie-invoer/258-typescript.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/voorbouw.json",
+      "bestand": "writer-autocorrectie-invoer/259-voorbouw.json.gz",
+      "bytes": 117,
+      "sha256": "c4982b3f8ee5a8feae6a3f67f29fc6446499d7dac9e118293cf78e56b368ca70",
+      "gzip_sha256": "103c93a78bbb6da7125647825467f018e96c9b4771c2a82002790fa5b195963e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/weekversie-root.log",
+      "bestand": "writer-autocorrectie-invoer/260-weekversie-root.log.gz",
+      "bytes": 53,
+      "sha256": "8fbbaff994f6ec4d9010f2d63e105d73b195a113d7b26b562d89174b8e7abc09",
+      "gzip_sha256": "b21dca05f5fcb126870df73c21318671c3dac92193f9db6e486ebf30153f540d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/autocorrectie-invoer/weekversie.log",
+      "bestand": "writer-autocorrectie-invoer/261-weekversie.log.gz",
+      "bytes": 53,
+      "sha256": "8fbbaff994f6ec4d9010f2d63e105d73b195a113d7b26b562d89174b8e7abc09",
+      "gzip_sha256": "b21dca05f5fcb126870df73c21318671c3dac92193f9db6e486ebf30153f540d"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/README.md",
+      "bestand": "writer-autocorrectie-invoer/262-README.md.gz",
+      "bytes": 2601,
+      "sha256": "2a602b2ffe685933c0e55c43d1c34562bf15c9b9507c3ad32de1e0def2a8d916",
+      "gzip_sha256": "a1288e63b7d641cf8081fc2964549ca0c0ebc309976a853441151c0f468ce064"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/bouwen.py",
+      "bestand": "writer-autocorrectie-invoer/263-bouwen.py.gz",
+      "bytes": 2395,
+      "sha256": "39afdfd29f5909539d13387714638487393559fdc04d72d12bdce05577f6e91d",
+      "gzip_sha256": "0ad08c9db4555391a322a18e96a79f8520f869dbda0922ce45ed1cfafab6e128"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/broncontrole.py",
+      "bestand": "writer-autocorrectie-invoer/264-broncontrole.py.gz",
+      "bytes": 1175,
+      "sha256": "650263c73e309edad40c28ac49f505fa059382fae119aabc4170b6cac85d865e",
+      "gzip_sha256": "45bed6b4fd6b499537335a5ef097b05e6610ae33fb054d77e152237b0cf9056b"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/canoniek.py",
+      "bestand": "writer-autocorrectie-invoer/265-canoniek.py.gz",
+      "bytes": 1668,
+      "sha256": "692ecfc07e92e94c4a92ea4fb13cc5eaf71b893ee388259abd962a22f6d9b4f4",
+      "gzip_sha256": "18f12c80d1d57a6371e13270074cdf7a76d6436f3382b6befa6a0ab9ce8ca195"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/correctieproef.py",
+      "bestand": "writer-autocorrectie-invoer/266-correctieproef.py.gz",
+      "bytes": 3245,
+      "sha256": "ddec4d73ee81508990ea66a95367af74a5924d06421db33c55c6e646ab46edbf",
+      "gzip_sha256": "2211baff26217ad01f5a93b8bd3a8abc4cc40d472d2b650018d3963163020162"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/fontbron.py",
+      "bestand": "writer-autocorrectie-invoer/267-fontbron.py.gz",
+      "bytes": 3036,
+      "sha256": "52c1b604c186c06b3093f02e6a6531a82fe84d07187a5f41c5cc403250048ede",
+      "gzip_sha256": "7880dcdd495de7780df62d216609d963ff119d1e124400bebba0f5d2354ba28a"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/fontdiagnose.py",
+      "bestand": "writer-autocorrectie-invoer/268-fontdiagnose.py.gz",
+      "bytes": 2817,
+      "sha256": "858b3f2625996f401d0b0af902904dd6799474502d4a68030cdabbccca8f6a98",
+      "gzip_sha256": "e9e8ba9675fb421fa0cec46e56a5172c214b032e0e49ab60461ef8d25478cdc0"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/fontreferentie.py",
+      "bestand": "writer-autocorrectie-invoer/269-fontreferentie.py.gz",
+      "bytes": 1188,
+      "sha256": "1e359362b1d6898f88e0336744e4b32326777c04a359edbdfd4fe6120a069b05",
+      "gzip_sha256": "84bbd111486c40c5eaedd3720786babf87369dffa059c2f64f943033c4d2072f"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/functioneel.py",
+      "bestand": "writer-autocorrectie-invoer/270-functioneel.py.gz",
+      "bytes": 1570,
+      "sha256": "476d306bc591a29587947d7d71e52144f7c72105a4240174a242eb677b83c05f",
+      "gzip_sha256": "882d9ce0e43c7733f3acfa8c6e043d562786739313f6329f5b46a8936c1874ac"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/fysiek.py",
+      "bestand": "writer-autocorrectie-invoer/271-fysiek.py.gz",
+      "bytes": 2581,
+      "sha256": "4ae8c872a177fbc9c5ee7163896575376c6aa8e98bef411019e931613651597a",
+      "gzip_sha256": "42968ea5538d4a4379ec7582f152582ecf23fbe383ed66f7eac4dfe271bcd10b"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/invoerrust.template.ts",
+      "bestand": "writer-autocorrectie-invoer/272-invoerrust.template.ts.gz",
+      "bytes": 6539,
+      "sha256": "a27deefc03bb275a88c6657e244b11129da852b84bd89dd6c5be20636271c7bb",
+      "gzip_sha256": "cec7925bc9c0f02a36caa973ad16ad674c26299400d87af10a20f9d8b815b8cf"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/sessie-kandidaat.ts",
+      "bestand": "writer-autocorrectie-invoer/273-sessie-kandidaat.ts.gz",
+      "bytes": 35443,
+      "sha256": "0656161d7d5f0673d69a3626402ab914e8edd2c9136273d0914df32dc9840b95",
+      "gzip_sha256": "8a11d6b2ceb1b99203b464b3870b5dc0c9ca5f957f6613838f5dc0acc3802857"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/sluitdiagnose.py",
+      "bestand": "writer-autocorrectie-invoer/274-sluitdiagnose.py.gz",
+      "bytes": 2530,
+      "sha256": "b90a0ef7c638768368be6ac97028aa0c31c151ac10a6b2acc87d3c83b0d3c957",
+      "gzip_sha256": "f004f2ee2539856a93a7e1e05d8a915a57ac3093979c5996a397d87acaf2a94f"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/sluitvoor.py",
+      "bestand": "writer-autocorrectie-invoer/275-sluitvoor.py.gz",
+      "bytes": 1974,
+      "sha256": "ada16d070dcd3c278e628e963b0a6968fe84e83c1b544774c6cd9d2348f2db6b",
+      "gzip_sha256": "a7ba1ecd740bb57d094165380f90425edbdbff81a6b64db871d01cd33e9305fd"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/vastleggen.py",
+      "bestand": "writer-autocorrectie-invoer/276-vastleggen.py.gz",
+      "bytes": 7699,
+      "sha256": "106a757c0abe7dd84ffc5c5b33b888df935bbefe7e8b86ceeb49e4ce457d455b",
+      "gzip_sha256": "e644204022bad95d3bc6b58abfd3b1dd85dd6e3b0d7ec182c40cbde8eba3b96b"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/voorbereiden.py",
+      "bestand": "writer-autocorrectie-invoer/277-voorbereiden.py.gz",
+      "bytes": 2528,
+      "sha256": "251a4997dee7b735bdba71b9224968405bd4b5163deea337422890b2be2cb97d",
+      "gzip_sha256": "dfff9d8d941c233009eddeafa1845fc43cd4bbc7f3fba800012f883c434b4a1f"
+    },
+    {
+      "bron": "native/onderzoek/writer-autocorrectie-invoer/voorbouw.py",
+      "bestand": "writer-autocorrectie-invoer/278-voorbouw.py.gz",
+      "bytes": 791,
+      "sha256": "6133c1ef6ca33f552dd46081ef637d3d75ae16963ea67c5c2bfb54931c2b81c9",
+      "gzip_sha256": "e38eca0232383cfc384d9ac8d3f79baccb36e9ea2470f6215d445160e2341c9e"
+    }
+  ]
+}

@@ -60,7 +60,7 @@ class LettertypeBewijs(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(uit['geslaagd'])
         self.assertTrue(all(g['xml_exact'] and g['volledige_tekst_exact'] for g in uit['gevallen']))
 
-    def test_echte_javascript_helper_met_acht_scenarios(self):
+    def test_echte_javascript_helper_met_twaalf_scenarios(self):
         subprocess.run([shutil.which('node') or str(Path.home()/'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node'), str(REPO/'tests/fixtures/lettertype-bewijs.mjs')], check=True, timeout=30)
 
 if __name__ == '__main__': unittest.main()

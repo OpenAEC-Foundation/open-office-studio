@@ -26,7 +26,15 @@
     }
     verzoeken.push({ worker: workers.get(this).nummer, type: b?.type, id: b?.id, fase, variant, bronversie_bij_stap: stapversie, expectedFrameEpoch: b?.expectedFrameEpoch, snapshotRevision: b?.snapshot?.layoutRevision });
     if (verzoeken.length > 32) verzoeken.shift();
-    if (b?.type === 'fontRequirements') laatste = { input: b.layoutInput, versie: s.version() };
+    // Een fontbehoefte kan al in het native voorstel zijn berekend. In dat
+    // geval verstuurt de renderer alleen de layoutbron, geen tweede preflight.
+    // Gebruik uitsluitend de echte input van deze documentworker; de volledige
+    // worker-/hostvergelijking, versiecontrole en DOCX-controle blijven verplicht.
+    if (this === eigenWorker && b?.type === 'fontRequirements' && typeof b.layoutInput === 'string' && b.layoutInput.length)
+      laatste = { input: b.layoutInput, versie: s.version(), herkomst: 'fontRequirements' };
+    if (this === eigenWorker && b?.type === 'sync' && typeof b.snapshot?.layoutInput === 'string' && b.snapshot.layoutInput.length)
+      laatste = { input: b.snapshot.layoutInput, versie: s.version(), herkomst: 'sync.snapshot.layoutInput',
+        frameEpoch: b.expectedFrameEpoch, snapshotRevision: b.snapshot.layoutRevision };
     return oud.call(this, b, ...rest);
   };
   const client = () => {
@@ -38,10 +46,12 @@
       }
     throw Error('Actieve eigen lettertypeworker niet gevonden');
   };
+  const eigenWorker = client().worker;
   const controleerBron = () => {
     if (proefApi()?.getEditorRef()?.getYrsSession() !== s) throw Error('Actieve documentbron vervangen tijdens lettertypeproef');
     if (client().hasFailed()) throw Error('Lettertypeworker is uitgevallen');
     if (fouten.length) throw Error('Primaire fout tijdens lettertypeproef: ' + fouten[0].tekst);
+    if (client().worker !== eigenWorker) throw Error('Lettertypeworker vervangen tijdens lettertypeproef');
   };
   const stap = naam => { fase = naam; controleerBron(); stapversie = s.version(); };
   try {
@@ -61,11 +71,11 @@
       const einde = performance.now() + 30000;
       while (!laatste || laatste.versie !== s.version() || s.version() === voor) {
         controleerBron();
-        if (performance.now() > einde) throw Error('Geen actuele lettertypevraag voor ' + v.naam);
+        if (performance.now() > einde) throw Error('Geen actuele layoutbron voor ' + v.naam);
         await new Promise(r => setTimeout(r, 30));
       }
       stap('vergelijking');
-      const input = laatste.input, versie = s.version();
+      const vraagBron = laatste, input = vraagBron.input, versie = s.version();
       const worker = JSON.parse(await client().fontRequirements(input));
       const host = JSON.parse(s.layoutFontRequirementsJson(input));
       if (versie !== s.version()) throw Error('Bron verandert tijdens lettertypevergelijking');
@@ -81,7 +91,7 @@
       }
       if (versie !== s.version()) throw Error('Bron verandert tijdens bewaren');
       const docx = Array.from(new Uint8Array(bewaard));
-      uit.gevallen.push({ naam: v.naam, familie: v.familie, stijl: v.stijl, behoeften: worker, bronversie: versie, docx, exact: true });
+      uit.gevallen.push({ layoutbron: { herkomst: vraagBron.herkomst, frameEpoch: vraagBron.frameEpoch, snapshotRevision: vraagBron.snapshotRevision }, naam: v.naam, familie: v.familie, stijl: v.stijl, behoeften: worker, bronversie: versie, docx, exact: true });
       stap('undo');
       await api.commands.execute('undo', null); await api.flushPendingInput();
       controleerBron();
