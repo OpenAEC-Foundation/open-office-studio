@@ -1,0 +1,43 @@
+import { createRoot } from "react-dom/client";
+import { useRef, useState } from "react";
+import WordEditor from "./WordEditor";
+import type { OfficeEditorHandle } from "./types";
+import "./office.css";
+import "@stll/folio-react/standalone.css";
+import "./proef.css";
+
+function App() {
+  const [file, setFile] = useState<{ bytes: Uint8Array; name: string; key: number }>();
+  const [staat, zetStaat] = useState({ gereed: 0, wijzigingen: 0, opslagverzoeken: 0, opgeslagen: 0, fout: "" });
+  const api = useRef<OfficeEditorHandle>(null);
+  const volgnummer = useRef(0);
+  const update = (v: Partial<typeof staat>) => zetStaat(s => ({ ...s, ...v }));
+  async function laad(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0]; if (!f) return;
+    api.current = null;
+    zetStaat({ gereed: 0, wijzigingen: 0, opslagverzoeken: 0, opgeslagen: 0, fout: "" });
+    setFile({ bytes: new Uint8Array(await f.arrayBuffer()), name: f.name, key: ++volgnummer.current });
+  }
+  async function opslaan() {
+    try {
+      if (!api.current) throw Error("Adapter is niet gereed");
+      const bytes = await api.current.serialize();
+      const a = document.createElement("a");
+      const url = URL.createObjectURL(new Blob([Uint8Array.from(bytes)], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" }));
+      a.href = url; a.download = file!.name; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      zetStaat(s => ({ ...s, opgeslagen: s.opgeslagen + 1 }));
+    } catch (e) { update({ fout: String(e) }); }
+  }
+  return <>
+    <header><label>Proefbestand <input aria-label="Proefbestand" type="file" accept=".docx" onChange={laad} /></label>
+      <button onClick={opslaan} disabled={!staat.gereed}>Proefkopie opslaan</button>
+      <output data-testid="toestand">{JSON.stringify(staat)}</output></header>
+    <main className="y-office">{file && <WordEditor key={file.key} bytes={file.bytes} name={file.name} locale="nl"
+      onReady={handle => { api.current = handle; zetStaat(s => ({ ...s, gereed: s.gereed + 1 })); }}
+      onChange={() => zetStaat(s => ({ ...s, wijzigingen: s.wijzigingen + 1 }))}
+      onSave={() => { zetStaat(s => ({ ...s, opslagverzoeken: s.opslagverzoeken + 1 })); void opslaan(); }}
+      onError={e => update({ fout: String(e) })} />}</main>
+  </>;
+}
+createRoot(document.getElementById("root")!).render(<App />);

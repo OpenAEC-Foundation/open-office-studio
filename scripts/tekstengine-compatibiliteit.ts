@@ -79,6 +79,28 @@ export function herstelCelBreedteBron(bron: string): string {
   return bron.replace(ingang, 'i=n?.width?.value,l=n?.width?.type??null');
 }
 
+/** Bewaart nootverwijzingen met hun echte tekenstijl en directe opmaak (#2). */
+export function herstelNootverwijzingOpmaak(bron: string): string {
+  const delen = [
+    ['if(d.kind==="embed"&&d.embedKind==="noteRef"){u(),c();let m=Le(d,n,r);m&&i.push(m);continue}', ''],
+    ['case "noteRef":{let t=e.payload.footnoteRefId,o=e.payload.endnoteRefId;return {type:"run",content:[t!==void 0?{type:"footnoteRef",id:Ee(t)}:{type:"endnoteRef",id:Ee(o)}]}}',
+      'case "noteRef":{let t=e.payload.footnoteRefId,o=e.payload.endnoteRefId,opmaak=r(e.attributes);return {type:"run",content:[t!==void 0?{type:"footnoteRef",id:Ee(t)}:{type:"endnoteRef",id:Ee(o)}],...(Object.keys(opmaak).length?{formatting:opmaak}:{})}}'],
+    ['e.kind==="embed"&&e.embedKind==="tab"?i=Dn(e.attributes,o):',
+      'e.kind==="embed"&&e.embedKind==="noteRef"?i=Le(e,t,o):e.kind==="embed"&&e.embedKind==="tab"?i=Dn(e.attributes,o):'],
+    ['else if(n.embedKind==="tab")o={type:"run",content:[{type:"tab"}]};',
+      'else if(n.embedKind==="noteRef")o=Le(n,r,t)??void 0;else if(n.embedKind==="tab")o={type:"run",content:[{type:"tab"}]};'],
+  ] as const;
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de opslag van nootverwijzingen.");
+    uit = uit.replace(oud, nieuw);
+  }
+  // Dezelfde gewone projectie geldt binnen een revisie of koppeling. Een
+  // verwijzing mag daar niet verdwijnen wanneer de engine het XML-deel herbouwt.
+  return uit;
+}
+
 /** Meldt een bevestigde versie direct; de dure Document-projectie blijft vertraagd. */
 export function herstelDirecteVersiemelding(bron: string): string {
   const callback = 'vg=useCallback(()=>{!da$1(U.current)&&Et.session&&po(Et.session.version()),Va$1();},[po,Va$1,Et.session]);cn.current=';
@@ -203,6 +225,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-HAZBP3QT\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelNootverwijzingOpmaak(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/utils\/index\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelCelSplitsMinimum(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-WCH3MOFU\.mjs(?:\?.*)?$/.test(id))

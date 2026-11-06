@@ -254,6 +254,28 @@ def structureel_gelijk(bron, resultaat, bewerking=None):
     return uit
 
 
+def nootverwijzingen_opmaak(pad):
+    """Vergelijk echte verwijzingen met hun runopmaak, ook binnen revisies.
+
+    Alleen aanwezigheid van een noot is onvoldoende: de engine kan het id
+    bewaren en toch de tekenstijl, kleur of directe opmaak laten vallen.
+    De onderdeelnaam, nootsoort, id en volgorde onderscheiden verwijzingen.
+    """
+    pk = Pakket(pad)
+    uit = {}
+    for deel in sorted(pk.delen):
+        if not deel.startswith('word/') or not deel.endswith('.xml'):
+            continue
+        for run in pk.xml(deel).iter(W + 'r'):
+            for ref in run:
+                if ref.tag not in (W + 'footnoteReference', W + 'endnoteReference'):
+                    continue
+                sleutel = f"{deel}:{ref.tag[len(W):]}:{ref.get(W + 'id')}"
+                opmaak = run.find(W + 'rPr')
+                uit.setdefault(sleutel, []).append(_structuur(opmaak) if opmaak is not None else None)
+    return uit
+
+
 def verloren(voor, na):
     """Kenmerken die in de bron aanwezig waren en in het resultaat ontbreken of afnemen."""
     uit = []
@@ -276,8 +298,11 @@ def beoordeel(bron, resultaat, bewerking=None):
     verwacht = [bewerking['onderdeel']] if bewerking else []
     pakket = pakketten.vergelijk(bron, resultaat, verwacht)
     kv, kn = kenmerken(bron), kenmerken(resultaat)
+    nv, nn = nootverwijzingen_opmaak(bron), nootverwijzingen_opmaak(resultaat)
+    nootafwijkingen = sorted(k for k in nv.keys() | nn.keys() if nv.get(k) != nn.get(k))
     return {'bronhash': sha(bron), 'resulthash': sha(resultaat), 'pakket': pakket,
             'kenmerken_bron': kv, 'kenmerken_resultaat': kn, 'kenmerken_verloren': verloren(kv, kn),
+            'nootverwijzingen_opmaak': {'bewaard': not nootafwijkingen, 'afwijkingen': nootafwijkingen},
             'tekst': tekstcontrole(bron, resultaat, bewerking),
             'xml_structureel_gelijk': structureel_gelijk(bron, resultaat, bewerking)}
 
@@ -305,13 +330,13 @@ def rapport(map_):
 
 
 def samenvatting(regels):
-    kop = '| Geval | Route | Actie | Pakket | Verdwenen | Toegevoegd | Onverwacht gewijzigd | Verloren kenmerken | Tekst | Visueel (max. pixelaandeel) |'
+    kop = '| Geval | Route | Actie | Pakket | Verdwenen | Toegevoegd | Onverwacht gewijzigd | Verloren kenmerken | Nootopmaak | Tekst | Visueel (max. pixelaandeel) |'
     print(kop)
     print('|---' * (kop.count('|') - 1) + '|')
     for r in regels:
         b = r.get('beoordeling')
         if not b:
-            print(f"| {r['geval']} | {r['route']} | {r['actie']} | fout: {r.get('fout', '?')} | | | | | | |")
+            print(f"| {r['geval']} | {r['route']} | {r['actie']} | fout: {r.get('fout', '?')} | | | | | | | |")
             continue
         t = b['tekst']
         tekst = 'ok' if t['overige_tekst_ongewijzigd'] and t.get('wijziging_aanwezig', True) and t.get('oude_fragment_verdwenen', True) else 'afwijking'
@@ -323,7 +348,8 @@ def samenvatting(regels):
         else:
             visueel = v.get('fout') or v.get('status', 'niet gemeten')
         print(f"| {r['geval']} | {r['route']} | {r['actie']} | {p['pakketcontrole']} | {len(p['verwijderd'])} | {len(p['toegevoegd'])} | "
-              f"{len(p['onverwacht_gewijzigd'])} | {', '.join(b['kenmerken_verloren']) or '—'} | {tekst} | {visueel} |")
+              f"{len(p['onverwacht_gewijzigd'])} | {', '.join(b['kenmerken_verloren']) or '—'} | "
+              f"{'ok' if b['nootverwijzingen_opmaak']['bewaard'] else 'afwijking'} | {tekst} | {visueel} |")
 
 
 def main(argv):

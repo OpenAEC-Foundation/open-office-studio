@@ -1,5 +1,5 @@
 // Testmatrix D1–D3 en P1–P3: openen → opslaan zonder wijziging, één beperkte
-// bewerking, heropenen. Gebruikt de echte, vastgezette engines uit node_modules.
+// bewerking, heropenen. Gebruikt de vastgezette engines met de productiecorrecties.
 // Fixtures: python3 scripts/maak-matrixfixtures.py (uitvoer .local/matrix/documenten/bron).
 // Beoordeling: python3 scripts/matrix_kenmerken.py rapport (wordt hier aangeroepen).
 // Daarna wordt gecontroleerd dat src/pakketcontrole.ts elk aangetoond verlies
@@ -8,12 +8,11 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
-import { parseDocx, repackDocx } from "@betteroffice/docx/docx";
-import { createYrsSession, saveYrsDocx } from "@betteroffice/docx/yrs";
+import { openProductieTekstkern } from "./tekstkern-productieproef.mjs";
 import * as pptx from "@betteroffice/pptx";
 import { controleerPakket, risicoBeleid } from "../src/pakketcontrole.ts";
 
-const MAP = ".local/matrix/documenten";
+const MAP = process.env.OOS_MATRIX_DOCUMENTEN_UIT ?? ".local/matrix/documenten";
 const versies = {};
 for (const pakket of ["docx", "docx-react", "pptx", "pptx-react"])
   versies[`@betteroffice/${pakket}`] = JSON.parse(
@@ -34,6 +33,12 @@ await pptx.initWasm(
     "node_modules/@betteroffice/pptx/dist/generated/pptx_wasm_bg.wasm",
   ),
 );
+const proef = await openProductieTekstkern(`${MAP}/vite-cache`);
+const { parseDocx, repackDocx } = proef.docx;
+const { createYrsSession, saveYrsDocx } = proef.sdk;
+await writeFile(`${MAP}/engines.json`, JSON.stringify({
+  versies, node: process.version, tekst: { route: proef.route, kernen: proef.kernen, aansluiting: proef.aansluiting },
+}, null, 2) + "\n");
 
 /** Vervang tekst in het publieke documentmodel (route van test-kantoor-engines). */
 function vervangInModel(knoop, oud, nieuw) {
@@ -152,6 +157,7 @@ const routes = {
 };
 
 const resultaten = [];
+try {
 for (const [geval, info] of Object.entries(manifest)) {
   const soort = info.bestand.endsWith(".docx") ? "docx" : "pptx";
   const bron = new Uint8Array(await readFile(`${MAP}/bron/${info.bestand}`));
@@ -180,6 +186,7 @@ for (const [geval, info] of Object.entries(manifest)) {
     }
   }
 }
+} finally { await proef.sluit(); }
 await writeFile(
   `${MAP}/resultaten.json`,
   JSON.stringify(resultaten, null, 2) + "\n",
@@ -187,7 +194,9 @@ await writeFile(
 
 // Tweede route (volledige suite): LibreOffice headless via UNO, indien aanwezig.
 let suite;
-try {
+if (process.env.OOS_MATRIX_ZONDER_CONVERSIE === "1") {
+  suite = "niet gemeten: conversieroute expliciet overgeslagen";
+} else try {
   execFileSync("which", ["soffice"], { stdio: "ignore" });
   suite = "gemeten";
 } catch {
@@ -225,6 +234,7 @@ for (const r of rapport.filter((r) => !r.route.startsWith("libreoffice"))) {
   const ok =
     b &&
     r.heropend &&
+    b.nootverwijzingen_opmaak.bewaard &&
     b.tekst.overige_tekst_ongewijzigd &&
     (r.actie === "noop" ||
       (b.tekst.wijziging_aanwezig && b.tekst.oude_fragment_verdwenen));
@@ -233,6 +243,8 @@ for (const r of rapport.filter((r) => !r.route.startsWith("libreoffice"))) {
     console.error(
       `Rondgang mislukt: ${r.geval} ${r.route} ${r.actie} ${r.fout ?? ""}`,
     );
+    if (b && !b.nootverwijzingen_opmaak.bewaard)
+      console.error(`Nootopmaak gewijzigd: ${b.nootverwijzingen_opmaak.afwijkingen.join(", ")}`);
   }
 }
 
@@ -309,5 +321,5 @@ if (fouten) {
   process.exit(1);
 }
 console.log(
-  "Matrixproef afgerond; rapport in .local/matrix/documenten/rapport.json.",
+  `Matrixproef afgerond; rapport in ${MAP}/rapport.json.`,
 );
