@@ -48,18 +48,41 @@ export function herstelAlgemeneRegio(bron: string): string {
     bron.replace(ingang, 'oosPassendAlgemeen(Ie,n.general,n.width,e,n.decimal??".")');
 }
 
+/** Verberg brontabs zonder de bladindexen of de onderliggende bladen te wijzigen. */
+export function herstelBladtabs(bron: string): string {
+  if (createHash("sha256").update(bron).digest("hex") !== "4084beb8e5db4ba05e8b023c4ddbcb2a3cf7713bfbbe2864356aff1c32c4eaae")
+    throw new Error("De rekenbladeditor is gewijzigd; controleer eerst de zichtbaarheid van bladtabs.");
+  const delen = [
+    ['L&&t.applyUpdate(L.slice()),N.current=t', 'L&&t.applyUpdate(L.slice()),oosBereidBladweergave(t),N.current=t'],
+    ['Ke(t.sheetInfo),at(s=>s+1)', 'Ke(N.current?N.current.sheetInfo():t.sheetInfo),at(s=>s+1)'],
+    ['children:ee.sheetNames.map((t,s)=>{let m=s===ee.activeSheet;return jsx("button",{role:"tab","aria-selected":m',
+      'children:oosZichtbareBladen(N.current,ee).map(({naam:t,index:s})=>{let m=s===ee.activeSheet;return jsx("button",{role:"tab","data-oos-blad":s,"aria-selected":m'],
+  ] as const;
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De rekenbladeditor is gewijzigd; controleer eerst de zichtbaarheid van bladtabs.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { zichtbareBladen as oosZichtbareBladen, bereidBladweergave as oosBereidBladweergave } from "openaec-rekenblad-bladzichtbaarheid";\n' + uit;
+}
+
 export function rekenbladengineCompatibiliteit(): Plugin {
   return {
     name: "rekenbladengine-lange-ketens",
     enforce: "pre",
     buildStart() { controleerRekenbladKern(); },
     resolveId(id) {
+      if (id === "openaec-rekenblad-bladzichtbaarheid")
+        return fileURLToPath(new URL("../src/rekenblad/bladzichtbaarheid.ts", import.meta.url));
       if (id === "openaec-rekenblad-regio")
         return fileURLToPath(new URL("../src/rekenblad/algemeenPassend.ts", import.meta.url));
       if (id === "openaec-rekenblad-kern")
         return fileURLToPath(new URL("../src/rekenblad/kern.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/xlsx-react\/dist\/index\.js(?:\?.*)?$/.test(id))
+        return { code: herstelBladtabs(bron), map: null };
       if (/\/@betteroffice\/xlsx\/dist\/index\.js(?:\?.*)?$/.test(id))
         return { code: herstelAlgemeneRegio(bron), map: null };
       if (/\/@betteroffice\/xlsx\/dist\/chunk-K7TMSGNA\.js(?:\?.*)?$/.test(id))

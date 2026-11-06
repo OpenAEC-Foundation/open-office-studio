@@ -1,8 +1,7 @@
 /**
  * Bladen beheren (#61): kopiëren naar een gekozen positie, lijst met
- * zichtbaarheid. Verplaatsen, verbergen en tabkleur kent de rekenkern
- * (@betteroffice/xlsx 0.3) nog niet als bewerking; die staan in het menu
- * uitgeschakeld met uitleg.
+ * zichtbaarheid. Verbergen en tabkleur hebben nog geen bewerking in de
+ * huidige aansluiting; die staan in het menu uitgeschakeld met uitleg.
  */
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { CellInputEdit } from "@betteroffice/xlsx";
@@ -11,6 +10,7 @@ import { bereikA1, bladnaamFout, ontleedBereik, type Bereik } from "../lint/reke
 import { gaNaarBlad, Melding, voerOpsUit, type RuweOp } from "../lint/rekenblad-opdrachten";
 import { meldWijziging } from "../lint/editorApi";
 import { breedteTekens, hoogtePunten } from "./maten";
+import { leesBladZichtbaarheid } from "./bladzichtbaarheid";
 
 export interface BladInfo {
   index: number;
@@ -20,24 +20,7 @@ export interface BladInfo {
 
 /** Alle bladen met hun zichtbaarheid zoals in het bestand. */
 export function bladenLijst(api: XlsxEditorApi): BladInfo[] {
-  const info = api.handle.sheetInfo();
-  let zichtbaarheid: string[] = [];
-  try {
-    const uitvoer = api.handle.exportStructured({
-      scope: info.sheetNames.map((_, sheet) => ({ sheet, range: "A1" })),
-      includeHiddenSheets: true,
-      includeDefinedNames: false,
-      maxCells: Math.max(1, info.sheetNames.length),
-    });
-    if (uitvoer.ok) zichtbaarheid = uitvoer.content.sheets.map((s) => s.visibility);
-  } catch {
-    // Zonder export: alles zichtbaar tonen.
-  }
-  return info.sheetNames.map((naam, index) => ({
-    index,
-    naam,
-    verborgen: zichtbaarheid[index] === "hidden" || zichtbaarheid[index] === "veryHidden",
-  }));
+  return leesBladZichtbaarheid(api.handle);
 }
 
 /** "Blad1" → "Blad1 (2)", "Blad1 (2)" → "Blad1 (3)"; past binnen 31 tekens. */

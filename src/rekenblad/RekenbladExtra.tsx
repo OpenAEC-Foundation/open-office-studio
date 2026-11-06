@@ -163,6 +163,7 @@ export function RekenbladExtra() {
     const tabIndex = (doel: EventTarget | null) => {
       const tab = doel instanceof Element ? doel.closest<HTMLElement>(`${TABS} [role="tab"]`) : null;
       if (!tab) return -1;
+      if (tab.dataset.oosBlad !== undefined) return Number(tab.dataset.oosBlad);
       return [...host.querySelectorAll(`${TABS} [role="tab"]`)].indexOf(tab);
     };
     const menu = (e: MouseEvent) => {
@@ -316,6 +317,7 @@ export function RekenbladExtra() {
           bladenLijst(api).map((b) => ({
             naam: b.verborgen ? verborgenLabel(b.naam) : b.naam,
             icoon: b.index === actief ? List : undefined,
+            uit: b.verborgen,
             doe: () => uitvoeren((a) => gaNaarBlad(a, b.index)),
           })),
         ];
