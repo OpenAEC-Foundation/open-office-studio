@@ -28,9 +28,9 @@ export default defineConfig({
   test: {
     exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
-    setupFiles: ["src/i18n/testopzet.ts"],
+    setupFiles: ["src/i18n/testopzet.ts", "src/tekst/gedeeld/kern-testopzet.ts"],
   },
-  worker: { format: "es" },
+  worker: { format: "es", plugins: () => [tekstengineCompatibiliteit()] },
   build: {
     rollupOptions: {
       output: {

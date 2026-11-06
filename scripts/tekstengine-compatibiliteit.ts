@@ -1,4 +1,6 @@
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import type { Plugin } from "vite";
 
 // Gerichte aansluiting op de vastgezette hybride invoerroute van 0.5.1.
@@ -15,12 +17,50 @@ const CELSELECTIE = [
   ['Kn=Wn?JSON.stringify([Wn.anchor,Wn.head]):`${T.anchor}:${T.head}`', 'Kn=JSON.stringify([Wn?.anchor??T.anchor,Wn?.head??T.head,re?.cellSelection()??null])'],
 ] as const;
 
+/** Stop bij een andere kern, bronpatch of JS/WASM-interface. */
+export function controleerNootKern(): void {
+  const lees = (pad: string) => readFileSync(new URL(pad, import.meta.url));
+  const som = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
+  const meta = JSON.parse(lees("../patches/tekstengine-nootnummering.json").toString());
+  if (som(lees("../patches/tekstengine-nootnummering.patch")) !== meta.patchSha256)
+    throw new Error("De bronpatch wijkt af van de gecontroleerde versie.");
+  const contract = (bytes: Uint8Array) => {
+    const module = new WebAssembly.Module(Uint8Array.from(bytes));
+    return JSON.stringify({
+      imports: WebAssembly.Module.imports(module).map(r => `${r.module}:${r.name}:${r.kind}`).sort(),
+      exports: WebAssembly.Module.exports(module).map(r => `${r.name}:${r.kind}`).sort(),
+    });
+  };
+  for (const [soort, naam, nieuw, oud] of [
+    ["edit", "docx_edit", meta.wasmSha256, meta.oorspronkelijkWasmSha256],
+    ["layout", "docx_layout", meta.layoutWasmSha256, meta.oorspronkelijkLayoutWasmSha256],
+  ]) {
+    const kern = lees(`../vendor/tekstengine/${naam}_bg.wasm`);
+    const origineel = lees(`../node_modules/@betteroffice/docx/dist/generated/${soort}/${naam}_bg.wasm`);
+    if (som(kern) !== nieuw || som(origineel) !== oud)
+      throw new Error(`De ${soort}-kern of oorspronkelijke engine wijkt af van de gecontroleerde versie.`);
+    if (contract(kern) !== contract(origineel))
+      throw new Error(`De nieuwe ${soort}-kern heeft een andere JS/WASM-interface dan de vastgezette engine.`);
+  }
+}
+
 /** Eén engine-instantie voor invoer én de later geladen opslagmodule (#135). */
 export function herstelWorkerStart(bron: string): string {
   const ingang = 'new Worker(new URL("./docxWorker.mjs",import.meta.url),';
   if (bron.split(ingang).length !== 2)
     throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor de workerstart.");
   return 'import { TekstWorker as Worker } from "openaec-tekst-workerstart";\n' + bron;
+}
+
+/** Laadt de gecontroleerde nootcorrectie met dezelfde JS/WASM-interface van 0.5.1. */
+export function herstelNootKern(bron: string, soort: "edit" | "layout" = "edit"): string {
+  const naam = soort === "edit" ? "docx_edit" : "docx_layout";
+  const sleutel = soort === "edit" ? "tekstKernUrl" : "layoutKernUrl";
+  const ingang = `assetUrl:()=>new URL("./generated/${soort}/${naam}_bg.wasm",import.meta.url)`;
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting van de nootkern.");
+  return `import { ${sleutel} } from "openaec-tekst-nootkern";\n`
+    + bron.replace(ingang, `assetUrl:()=>${sleutel}`);
 }
 
 /** Meldt een bevestigde versie direct; de dure Document-projectie blijft vertraagd. */
@@ -120,7 +160,10 @@ export function tekstengineCompatibiliteit(): Plugin {
   return {
     name: "tekstengine-tabelinvoer",
     enforce: "pre",
+    buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-nootkern")
+        return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
       if (id === "openaec-tekst-workerstart")
         return fileURLToPath(new URL("../src/tekst/gedeeld/workerStart.ts", import.meta.url));
       if (id === "openaec-tekst-workerverhalen")
@@ -133,6 +176,10 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-WCH3MOFU\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelNootKern(bron), map: null };
+      if (/\/@betteroffice\/docx\/dist\/chunk-MGTUODRA\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelNootKern(bron, "layout"), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-6ZKYZDSZ\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelWorkerStart(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-N5NWITJ6\.mjs(?:\?.*)?$/.test(id))
