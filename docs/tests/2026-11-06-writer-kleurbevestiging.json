@@ -1,0 +1,30 @@
+{
+  "datum": "2026-11-06",
+  "basis": "df0db60d52df66ffb48c589332c2df3368ad5376",
+  "wijziging": "Alleen de bestaande Writer-browser-GUI-proef selecteert nu de markeerkleurknop en bevestigingsdialoog op hun toegankelijke naam; documentcontrole, Undo/Redo en heropenen blijven behouden. Vier extra controles verifiëren dat nog niet toegepaste en geannuleerde keuzes geen markering veranderen. Geen product- of SDK-codewijziging.",
+  "oorspronkelijke_afkeuring": {
+    "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42285548734",
+    "job": 128125306540,
+    "stap": "Rekenen, snelle celinvoer en bewaren via de echte GUI",
+    "fout": "geel via kleurveld: verwachte w:shd f6d32d, werkelijk geen shading. De oude selector .ribbon-kleur input:visible selecteert na integratie de tekstkleur, terwijl markeerkleur een knop met bevestigingsdialoog is.",
+    "main_bevestigen": "56aa1fec: src/lint/tekst.tsx OpdrachtKleur bevestigen; src/lint/BevestigdeKleur.tsx past pas na Apply toe.",
+    "linux_native_stappen": "Niet uitgevoerd in deze CI-run omdat de browserstap eerst faalt."
+  },
+  "lokaal": {
+    "markering": "Geslaagd: tien onafhankelijke DOCX-tekst-/shadingcontroles; kleurkeuze, annuleren, Apply, Undo, Redo, tweede keuze en heropenen; pageerror-lijst leeg.",
+    "spiegel": "Geslaagd: tekst, Arabisch/RTL, interne hyperlinkdoelen en tabelvoorbeeldpositie op 100%/150%; pageerror-lijst leeg.",
+    "spelling": "Geslaagd: 500 pagina’s en 6000 fouten, navigatie/zoom en zichtbare golven; pageerror-lijst leeg.",
+    "beperking": "Bestaande productie-webdist en Chromium; geen native GTK-kleurkeuze of volledige app-/platform-/editieacceptatie door deze browserproeven. Het schermbeeld heeft een selectieoverlay; DOCX-shading is onafhankelijk gelezen.",
+    "ruimte": "Een extra browserproef kon door ENOSPC niet starten. Na uitsluitend eigen gegenereerde bouwcache verwijderen slaagt dezelfde ongewijzigde proef; geen gebruikersdocumenten of referenties gewijzigd."
+  },
+  "bewijs": {
+    "docs/tests/writer-kleurbevestiging-2026-11-06/gui-kleur-bevestigen.json.gz": "08a0159e82ff70fd09de860e85ba21174121e67cb32202841c85eafd1f123abd",
+    "docs/tests/writer-kleurbevestiging-2026-11-06/gui-spiegel.json.gz": "fca916a99865afa0f079dd609763cfe1589d556d582a4db0e7d57ec581af5869",
+    "docs/tests/writer-kleurbevestiging-2026-11-06/gui-spelling.json.gz": "ae76585ea278c20dd1b03cc6aab7142f0c6afe2493bbb1ab82f68897ff819eee",
+    "docs/tests/writer-kleurbevestiging-2026-11-06/markeerkleur.png": "8cc65466d5d3ee9a0c0d773d0a367bbf4f2e5c9ed02ad47ec22150f9444bbd18",
+    "docs/tests/writer-kleurbevestiging-2026-11-06/Bewaarde markeerkleur.docx": "11ebb2f8e0379a053c3c7afa684ea47c4e664fe952f9dc7e61b84b1dea0cb387",
+    "docs/tests/writer-kleurbevestiging-2026-11-06/ci-linux-job.log.gz": "2a8dae57e8d0bce549f4024a1d3e043139329a7a63bd6d93bbba82dcbe18c741",
+    "docs/tests/writer-kleurbevestiging-2026-11-06/cacheopruiming-actieve-build.json.gz": "36ff4e09dad4b50045e267d01848fd9991dc7979123dfe73c458602d1dd3a303"
+  },
+  "test_sha256": "e771681ebecdd9acbfeab5b7abb607e301183a87ca804c69b747478130568a07"
+}

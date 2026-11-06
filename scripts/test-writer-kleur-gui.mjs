@@ -85,7 +85,22 @@ try {
     });
   }
   await selecteren();
-  const kleur = page.locator(".ribbon-kleur input:visible").first();
+  const markering = page.getByRole("button", {
+    name: "Text Highlight Color",
+    exact: true,
+  });
+  const dialoog = page.getByRole("dialog", {
+    name: "Text Highlight Color",
+    exact: true,
+  });
+  async function kiezen(rgb) {
+    await markering.click();
+    await dialoog.locator('input[type="color"]').fill(rgb);
+  }
+  async function toepassen() {
+    await dialoog.getByRole("button", { name: "Apply", exact: true }).click();
+    await dialoog.waitFor({ state: "hidden" });
+  }
   async function controle(naam, verwacht) {
     await page.waitForTimeout(500);
     const bytes = Buffer.from(
@@ -107,13 +122,22 @@ try {
     return bytes;
   }
   await controle("begin", null);
-  await kleur.fill("#f6d32d");
+  await kiezen("#e01b24");
+  await controle("kleurkeuze nog niet toegepast", null);
+  await dialoog.getByRole("button", { name: "Cancel", exact: true }).click();
+  await dialoog.waitFor({ state: "hidden" });
+  await controle("geannuleerde kleurkeuze", null);
+  await kiezen("#f6d32d");
+  await controle("gele keuze nog niet toegepast", null);
+  await toepassen();
   await controle("geel via kleurveld", "f6d32d");
   await page.evaluate(() => proefApi().commands.execute("undo", null));
   await controle("ongedaan", null);
   await page.evaluate(() => proefApi().commands.execute("redo", null));
   await controle("opnieuw", "f6d32d");
-  await kleur.fill("#99c1f1");
+  await kiezen("#99c1f1");
+  await controle("andere keuze nog niet toegepast", "f6d32d");
+  await toepassen();
   const bytes = await controle("andere kleur", "99c1f1");
   await writeFile(join(uitvoer, "Bewaarde markeerkleur.docx"), bytes);
   await page.evaluate(() => {
