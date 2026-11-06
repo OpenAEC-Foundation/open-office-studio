@@ -1,0 +1,359 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "appversie": "2026.45.52",
+  "bronrevisie": "cfa1059970ecc85e54601c82ba5fdd4d3eb658c4",
+  "productiecode_gewijzigd": false,
+  "matrix": [
+    {
+      "run": 42212615646,
+      "conclusie": "failure",
+      "taken": [
+        {
+          "naam": "desktop (windows-latest)",
+          "conclusie": "failure",
+          "afgekeurde_stappen": [
+            "Run python -m unittest discover -s tests -v"
+          ]
+        },
+        {
+          "naam": "desktop (macos-latest)",
+          "conclusie": "success",
+          "afgekeurde_stappen": []
+        },
+        {
+          "naam": "desktop (ubuntu-22.04)",
+          "conclusie": "failure",
+          "afgekeurde_stappen": [
+            "Writer bewerken na een herstelkopie"
+          ]
+        }
+      ]
+    },
+    {
+      "run": 42212197862,
+      "conclusie": "failure",
+      "taken": [
+        {
+          "naam": "onderzoeken",
+          "conclusie": "failure",
+          "afgekeurde_stappen": [
+            "Typen en selecteren tijdens spelling na verdubbelen van 128 tabellen"
+          ]
+        }
+      ]
+    },
+    {
+      "run": 42212257745,
+      "conclusie": "failure",
+      "taken": [
+        {
+          "naam": "versie",
+          "conclusie": "success",
+          "afgekeurde_stappen": []
+        },
+        {
+          "naam": "Bouwen – macOS",
+          "conclusie": "success",
+          "afgekeurde_stappen": []
+        },
+        {
+          "naam": "Bouwen – Windows",
+          "conclusie": "failure",
+          "afgekeurde_stappen": [
+            "Run python -m unittest discover -s tests -v"
+          ]
+        },
+        {
+          "naam": "Bouwen – Linux",
+          "conclusie": "success",
+          "afgekeurde_stappen": []
+        },
+        {
+          "naam": "publiceren",
+          "conclusie": "skipped",
+          "afgekeurde_stappen": []
+        }
+      ]
+    },
+    {
+      "run": 42212619538,
+      "conclusie": "success",
+      "taken": [
+        {
+          "naam": "native (ubuntu-22.04)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (windows-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (macos-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Conversie met geïnstalleerde kantoorruntime",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Native beelden en pakketbron tussen platforms",
+          "conclusie": "success"
+        }
+      ]
+    },
+    {
+      "run": 42212624094,
+      "conclusie": "success",
+      "taken": [
+        {
+          "naam": "bouwen (macos-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (ubuntu-22.04)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (windows-latest)",
+          "conclusie": "success"
+        }
+      ]
+    }
+  ],
+  "linux_dev": "2026-11-06-linux-dev-cfa105.json",
+  "afkeuringen": [
+    {
+      "gebied": "Windows desktop en edities",
+      "oorzaak": "Onderzoekstest verwacht letterlijk POSIX-paden terwijl Windows Path backslashes schrijft. Eén test faalt vóór de desktop-/editiebouw.",
+      "aanpassing": "Test toetst nu expliciet PurePosixPath en PureWindowsPath met hun eigen letterlijke argumenten. Onbedoelde bron-/meetargumenten blijven verboden bij regressieuitvoering.",
+      "windows_hertest": "Nog niet uitgevoerd op gewijzigde proefbron."
+    },
+    {
+      "gebied": "Linux desktop: verwerpen",
+      "primaire_consolefout": "Error: recursive use of an object detected which would lead to unsafe aliasing in rust",
+      "vervolgfout": "Geen knop bij nieuw document; de werkelijke opname is een leeg venster.",
+      "exacte_elf_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204",
+      "context_artifact": 13500279191,
+      "context_sha256": "7f7edb83aaeaeb7f5f4b5937ec63ed30faafe7b1edbe4309570d2e12dc47fa39",
+      "status": "Oorzaak open; drie lokale successen met exacte ELF en oorspronkelijke scripts zijn geen herstel."
+    },
+    {
+      "gebied": "Linux geheugen: spellingonderbrekingsproef",
+      "oorzaak": "Eerste echte toets na nul spellinglezingen; proef fase-onjuist, ook al bleven tekst en structuur exact.",
+      "context_artifact": 13502027539,
+      "context_sha256": "9067bc29eb97f2f0b7c82822bd8351f9c258d95cab0464a6ba043fd398b090d2",
+      "aanpassing": "Begrensde expliciete startvoorwaarde in plaats van 150 ms slaap. Nog niet gestarte en al voltooide lezingen worden geweigerd; oorspronkelijke eerste-toets-/onderbrekings-/bron-/structuurasserties blijven gelijk.",
+      "geen_productfix": true
+    }
+  ],
+  "lokale_bewaarherhaling": [
+    {
+      "ronde": "1",
+      "geslaagd": true,
+      "verwerpen_ms": 399,
+      "programma_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204"
+    },
+    {
+      "ronde": "2",
+      "geslaagd": true,
+      "verwerpen_ms": 411,
+      "programma_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204"
+    },
+    {
+      "ronde": "3",
+      "geslaagd": true,
+      "verwerpen_ms": 399,
+      "programma_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204"
+    }
+  ],
+  "lokale_spellingherhaling": [
+    {
+      "rapport": "spelling-faseherhaling/1/rapport.json",
+      "voor_toetsen": {
+        "wacht_ms": 0,
+        "lezingen": 32,
+        "verhalen": 1537
+      },
+      "eerste_toets_na_lezingen": 704,
+      "verhalen": 1537,
+      "uiteindelijk_spelling": {
+        "bron_exact": true,
+        "alinea_aantal": 3329,
+        "celverhalen": 1536
+      },
+      "geslaagd": true
+    },
+    {
+      "rapport": "spelling-faseherhaling/2/rapport.json",
+      "voor_toetsen": {
+        "wacht_ms": 0,
+        "lezingen": 32,
+        "verhalen": 1537
+      },
+      "eerste_toets_na_lezingen": 736,
+      "verhalen": 1537,
+      "uiteindelijk_spelling": {
+        "bron_exact": true,
+        "alinea_aantal": 3329,
+        "celverhalen": 1536
+      },
+      "geslaagd": true
+    },
+    {
+      "rapport": "spelling-canoniek-tweede/rapport.json",
+      "voor_toetsen": {
+        "wacht_ms": 0,
+        "lezingen": 32,
+        "verhalen": 1537
+      },
+      "eerste_toets_na_lezingen": 704,
+      "verhalen": 1537,
+      "uiteindelijk_spelling": {
+        "bron_exact": true,
+        "alinea_aantal": 3329,
+        "celverhalen": 1536
+      },
+      "geslaagd": true
+    }
+  ],
+  "controles": {
+    "python": "117 tests slagen zonder skips; inclusief zes echte JS-startvoorwaarden en archivering van de nieuwe helper.",
+    "startvoorwaarde_negatief": [
+      "hercontrole niet gestart ondanks lezingen",
+      "hercontrole gestart maar geen lezing",
+      "alle verhalen reeds gelezen",
+      "hercontrole wordt in één stap volledig"
+    ],
+    "eerste_canonieke_opzetafkeuring": "xvfb-run ontbrak in PATH; vóór appstart gestopt, oorspronkelijke log behouden. Tweede uitvoering met hulpmiddelenmap slaagt.",
+    "instrumentatie_opzetafkeuring": "Een niet-opgeslagen poging om lokale vernietigingsinstrumentatie te genereren vond het verkeerde except-anker; geen app gestart en geen bron aangepast."
+  },
+  "grenzen": [
+    "Geen nieuwe appbouw: productiecode, SDK, versies en gebruikersinstallatie gelijk.",
+    "Zeven edities gebouwd op Linux/macOS volgens CI; geen volledige functionaliteit/visuele acceptatie en geen onafhankelijke downloadcontrole van die editieartifacten.",
+    "Windows-editiebouw en desktop blijven onbevestigd tot een nieuwe CI-ronde.",
+    "Native Rust en Rust-WebView jobs slagen op drie platforms; dat bewijst geen volledige suite- of interface-migratie.",
+    "Geen officiële release gepubliceerd; publiceertaak overgeslagen.",
+    "Lege-vensterfout, eenmalige eerdere sluitdialoogfout, zwarte rechthoek en oude worker-/bewaarfouten blijven open.",
+    "Geen nieuwe snelheids- of geheugenverbetering geclaimd."
+  ],
+  "volgende_stap": "Hertest Windows-/desktop-/editie-/geheugenronden met gewijzigde proefbron; onderzoek primair de Rust/Wasm-leenfout bij verwerpen. Gebruik exact bewaarde ELF/scripts en leg vernietigingsstack/bronlevensduur binnen de nog open inspector vast; geen fout dempen of selectie-/documentdata wissen.",
+  "bestanden": {
+    "docs/tests/platformen-52/42212197862/afgekeurd.log.gz": "59a41baf408ce209bb61fa9e7d84650334fe36d847cb3c3328c67fa619eb9db8",
+    "docs/tests/platformen-52/42212197862/artefacten.json.gz": "04a6c945232ad72cc42127baa30956adb8b71673b7bcca4223aaa3aa5fbf9032",
+    "docs/tests/platformen-52/42212197862/taken.json.gz": "de4188994fa77112de27625b4ed2d68649cb0e2622e36b39747ebf0fc4cff9d3",
+    "docs/tests/platformen-52/42212257745/afgekeurd.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "docs/tests/platformen-52/42212257745/artefacten.json.gz": "c10efba0ac26a131e01c8dbad007a04fad655f8fa277cfe4f65d0cf901e8e692",
+    "docs/tests/platformen-52/42212257745/taken.json.gz": "8b1a83d62010b6dc4946c16d131c1f63d9431fa52b105d61080abf8e6c4614d1",
+    "docs/tests/platformen-52/42212257745/volledig.log.gz": "c4c03975cc655aa626268c7d814b8c0913f4de53623e953e8e7c5c2a513ab44e",
+    "docs/tests/platformen-52/42212615646/afgekeurd.log.gz": "2f2f2ef95018574193b3f0515977eb3ba116115f548ce35f52f139a329e1bb1a",
+    "docs/tests/platformen-52/42212615646/artefacten.json.gz": "28b3646117bc895d50d5a4b048c1d7f0a60b4b8a86115e0cd3fd3c762a4c085f",
+    "docs/tests/platformen-52/42212615646/taken.json.gz": "2d683ac4078d3a19e2197e2825a93f6f6ca0b95df758dbb91d676b729f38da98",
+    "docs/tests/platformen-52/bewaar-herhaling/1/begin.png.gz": "69f3d6984c8aba1122992370dfd2626d603afb0d669ea80a510073e99470ee78",
+    "docs/tests/platformen-52/bewaar-herhaling/1/na-plakken.png.gz": "7ae27fa2295f6eb230427445f349ad2f2cba23c8948a8b8b9f44bce24993093b",
+    "docs/tests/platformen-52/bewaar-herhaling/1/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52/bewaar-herhaling/1/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52/bewaar-herhaling/1/rapport.json.gz": "70642291870a0165c1a75bc8f6fc32c14c7cd09a53ce627abf96fffc0f5bd5b2",
+    "docs/tests/platformen-52/bewaar-herhaling/1/sluitdialoog.png.gz": "d5d5becaa9aabb0aef1dc6cbfcc1942cc44896c6f27374d4eefb9233d07d3a56",
+    "docs/tests/platformen-52/bewaar-herhaling/1.json.gz": "d53c5ee95a8242161ede5fa3a22299ddd159d43147b927b235db6adc5238dd66",
+    "docs/tests/platformen-52/bewaar-herhaling/1.log.gz": "3ba380fed8a44746a1e8b259a81840d02fa4808467b920634e4b2331d34a4060",
+    "docs/tests/platformen-52/bewaar-herhaling/2/begin.png.gz": "69f3d6984c8aba1122992370dfd2626d603afb0d669ea80a510073e99470ee78",
+    "docs/tests/platformen-52/bewaar-herhaling/2/na-plakken.png.gz": "860c4e9c8364b7673beac075af0659b4532bbd9abbc870920d5fd3757d273ace",
+    "docs/tests/platformen-52/bewaar-herhaling/2/nieuw-na-verwerpen.png.gz": "12a46bd13fe6fbc888f2812df2130b75d9edb8a5a653e98b14df9ea8a02df417",
+    "docs/tests/platformen-52/bewaar-herhaling/2/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52/bewaar-herhaling/2/rapport.json.gz": "05a0576ebe1d20d8f505e0a711cfbf9334bcdc22dfc6661b220ce2a63ed49e2a",
+    "docs/tests/platformen-52/bewaar-herhaling/2/sluitdialoog.png.gz": "d5d5becaa9aabb0aef1dc6cbfcc1942cc44896c6f27374d4eefb9233d07d3a56",
+    "docs/tests/platformen-52/bewaar-herhaling/2.json.gz": "c847654aa5a2d6663094ba6faa5694863ec036e9d7e4761249881737d1d0201e",
+    "docs/tests/platformen-52/bewaar-herhaling/2.log.gz": "b2ceb9d2e8a6ce13659919d461947902fe12c55cfdb7baea7e4795b4b4e3b378",
+    "docs/tests/platformen-52/bewaar-herhaling/3/begin.png.gz": "e302b32dc94873bc493d1d716a65f6bb5d60ea5beff40673393cb20856e3d0ca",
+    "docs/tests/platformen-52/bewaar-herhaling/3/na-plakken.png.gz": "7792ddc7d9f225a558306e1fadf7af7d67205c8559c89c4c642d03338a1d6cad",
+    "docs/tests/platformen-52/bewaar-herhaling/3/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52/bewaar-herhaling/3/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52/bewaar-herhaling/3/rapport.json.gz": "fec013ced6398211bcd0471174b13251e2c72575fa2a599912a4688b33d609e2",
+    "docs/tests/platformen-52/bewaar-herhaling/3/sluitdialoog.png.gz": "d5d5becaa9aabb0aef1dc6cbfcc1942cc44896c6f27374d4eefb9233d07d3a56",
+    "docs/tests/platformen-52/bewaar-herhaling/3.json.gz": "b6b034e0629b37bf4988a1636dd7f20d8feb513dea31dca6f2a3727a6b77b0fc",
+    "docs/tests/platformen-52/bewaar-herhaling/3.log.gz": "a83d67200d826c912d9fd8b9308a80d54034bad6ddf40ba4ebd27c2326f214ea",
+    "docs/tests/platformen-52/desktop/afgekeurd.png.gz": "e5689fd65e126f91f372387d7f183061d37760037bb6cd056ce5edc73e281480",
+    "docs/tests/platformen-52/desktop/begin.png.gz": "61d278ac9bae446774ea368c22e4b1b413c866610b8ef88b6327daa77db212b1",
+    "docs/tests/platformen-52/desktop/na-plakken.png.gz": "8059c920909a329efa9b1eafeaa0208a236ccdc7a40cc72aa412173ec9d6d444",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/SHA256SUMS.gz": "deda4bfe3deb322966a0fba7b7d76c18573d116cf3555a8ed619dfd6160d61ef",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/context.json.gz": "88c6c2dafe890efe1da8e9888a33955bcd8680bd29b950143c338edeb6c13cc2",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/rapport.json.gz": "8552edc655356367158d0d2d1100270ec387cfa5578d77da2ec07e2b6b6feb0c",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/afkeuringsbewaking.py.gz": "537a75c206d203860283929bc054b9c66e84646789dbf42f0c9822a732e4cf07",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/framebasis.js.gz": "3cd1d1dd79d78e403d10fc165ef35fcc0eaa7049e20f9f9e5320a98e8260ac42",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/lettertype_bewijs.js.gz": "a21f44e1f5aac2bddea259e9ecb050c6a5cfef4158fb062113639c28b78a6eae",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/lettertype_bewijs.py.gz": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/requirements.txt.gz": "f3f0d25498479f244ba35cd323db7efe7c67d0f28e74032f4334c7ec54442d39",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/spelling_vervolginvoer.js.gz": "cfb128420224d2a3c437792dece1a17f8eaaf9eb37b6ccb1c679b17c7c252d92",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/spelling_weergave.js.gz": "f3afa42c38da9f5f159a011fcde71f13bda914a10274fef5a53298d59887af04",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/spelling_weergave.py.gz": "e1a7cd7828d5d8c7c417b606904a4bc23139be94523c8b49101a1da82e9e6564",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/webkit_inspector.py.gz": "c280375433d819ab1e0a3a5816ee6331babb3eb0249ccbfb615839747b22241a",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/gui/worker_bron.js.gz": "56e7d0f73eb2601aec2360bc4084948a357d118b350e703927fed099fc95c970",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/test-writer-lang-native.py.gz": "a9cdbbfb6c60cfe1124eee3a2ddb38f78213a895b51660434fe5e75e8eb37c15",
+    "docs/tests/platformen-52/desktop/oorspronkelijk/scripts/test-writer-rijk-plakken-native.py.gz": "b8ae732627acdddb4bdaa35f0402097ff7a2a35c2fd2b94b690ea9e977c002e4",
+    "docs/tests/platformen-52/desktop/programma.log.gz": "6869def1cbc1af52490a0d38cfc52411b51265cc427476197bf1ac5b17e5524d",
+    "docs/tests/platformen-52/desktop/rapport.json.gz": "8552edc655356367158d0d2d1100270ec387cfa5578d77da2ec07e2b6b6feb0c",
+    "docs/tests/platformen-52/desktop/sluitdialoog.png.gz": "600ebf78f6466fb0909047c92f3d4c00ecab53eee192335308a206a4ac282c72",
+    "docs/tests/platformen-52/geheugen/afgekeurd.png.gz": "60c76b7fe0b6743258435e66e70cca1992632ba53feda65b69b6eff84634a8de",
+    "docs/tests/platformen-52/geheugen/begin.png.gz": "a9146940e3b79293907091c856677723d0a6133b9dd18b87bb026dc2842f287e",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/SHA256SUMS.gz": "3ce9e382b79e4a0888fc46a51ff7ff15ec347a881b3d8f6801b39ac502945ce3",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/context.json.gz": "7b6012a63a270b1052ea0db073266782d988badce6ed0fab0a0ae7fa078e953a",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/rapport.json.gz": "d8eb7a414785195e3136e8ec0f1ad727a8e407e1dceeb86d5e2ed076bfb2cf6a",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/afkeuringsbewaking.py.gz": "537a75c206d203860283929bc054b9c66e84646789dbf42f0c9822a732e4cf07",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/framebasis.js.gz": "3cd1d1dd79d78e403d10fc165ef35fcc0eaa7049e20f9f9e5320a98e8260ac42",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/lettertype_bewijs.js.gz": "a21f44e1f5aac2bddea259e9ecb050c6a5cfef4158fb062113639c28b78a6eae",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/lettertype_bewijs.py.gz": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/requirements.txt.gz": "f3f0d25498479f244ba35cd323db7efe7c67d0f28e74032f4334c7ec54442d39",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/spelling_vervolginvoer.js.gz": "cfb128420224d2a3c437792dece1a17f8eaaf9eb37b6ccb1c679b17c7c252d92",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/spelling_weergave.js.gz": "f3afa42c38da9f5f159a011fcde71f13bda914a10274fef5a53298d59887af04",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/spelling_weergave.py.gz": "e1a7cd7828d5d8c7c417b606904a4bc23139be94523c8b49101a1da82e9e6564",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/webkit_inspector.py.gz": "c280375433d819ab1e0a3a5816ee6331babb3eb0249ccbfb615839747b22241a",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/gui/worker_bron.js.gz": "56e7d0f73eb2601aec2360bc4084948a357d118b350e703927fed099fc95c970",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/test-writer-lang-native.py.gz": "a9cdbbfb6c60cfe1124eee3a2ddb38f78213a895b51660434fe5e75e8eb37c15",
+    "docs/tests/platformen-52/geheugen/oorspronkelijk/scripts/test-writer-rijk-plakken-native.py.gz": "b8ae732627acdddb4bdaa35f0402097ff7a2a35c2fd2b94b690ea9e977c002e4",
+    "docs/tests/platformen-52/geheugen/programma.log.gz": "a0e2a2f49e72c06002f37cad14f20c5a786ea9b7ecd9ae71b304ee9cfd2ec0eb",
+    "docs/tests/platformen-52/geheugen/rapport.json.gz": "d8eb7a414785195e3136e8ec0f1ad727a8e407e1dceeb86d5e2ed076bfb2cf6a",
+    "docs/tests/platformen-52/native.json.gz": "94c10f4a7ab7538ccf1662f40b87adc2a26cc34223c0524b1bbfb1e42ff59ba8",
+    "docs/tests/platformen-52/nieuwe-bronnen/scripts/bewaar-writer-foutcontext.py.gz": "43127c56b8cf2074b42c8e3f684cea681d0ed9970ad42ad7b947720221ad34fe",
+    "docs/tests/platformen-52/nieuwe-bronnen/scripts/gui/spelling_startvoorwaarde.js.gz": "1fc35d48fa485000dca3c1882dc70e1756e3bc7bae799d02113b870a101261c6",
+    "docs/tests/platformen-52/nieuwe-bronnen/scripts/test-writer-rijk-plakken-native.py.gz": "ec15f10d8bc87ea1ca1c10f45cd538123f56d0bb3db8ea17fc1ea20a103591ff",
+    "docs/tests/platformen-52/nieuwe-bronnen/tests/fixtures/spelling-startvoorwaarde.mjs.gz": "d89bb71f4fa7cf5061145c7e72131b5f9aabd30edb0a9ba79942809dd78da141",
+    "docs/tests/platformen-52/nieuwe-bronnen/tests/test_spelling_startvoorwaarde.py.gz": "55dce31bca1847bceada1b814c87ec135b10700c7218fb989f4b1d72315654c1",
+    "docs/tests/platformen-52/nieuwe-bronnen/tests/test_writer_encodercache.py.gz": "b88ccf41a4296647fd29da23800cf8fb6c99ad65aaba00ddcb26ea2c5069cc21",
+    "docs/tests/platformen-52/nieuwe-bronnen/tests/test_writer_foutcontext.py.gz": "141f6d0596077b7248f7e7669ef882aa05333afdc7b0fd2ddc306922e97f70ea",
+    "docs/tests/platformen-52/python-definitief-met-archief.log.gz": "0f463f2913a3e38dbe0fb0721b9f235a58684542a106516ee57949a1f48add29",
+    "docs/tests/platformen-52/python-definitief.log.gz": "24319cf39aeafef38e404ba13dfba2f08a863ce253145073b587f07c24be3f5d",
+    "docs/tests/platformen-52/python-herhaling.log.gz": "bedf4e69f44d574f66bf37490e6892f50f85a2ffb1ded493dcc9df883f40b17f",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/begin.png.gz": "7563f38d4ba6a72a402b8773fb2f69c4613edf8db581d30d1ec69e2e796b1775",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/na-plakken.png.gz": "487996b8ce065390693b4a773d57b86f95bc650bc574a10522415cf3f59b723c",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/rapport.json.gz": "ba3e03efe6fbc88b599068a08511bdfc81c09c1dd569d839ca5e79e5ab59a770",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/sluitdialoog.png.gz": "3a19e041e3f66fb07775a30b712ff77ee56f32df25b4f0864b0a05f30c20b570",
+    "docs/tests/platformen-52/spelling-canoniek-tweede/vervolginvoer.png.gz": "2b1fadd90969b1fb97b5b53bb24d0dc30edfd78107cbfbf824820f07e0560079",
+    "docs/tests/platformen-52/spelling-canoniek-tweede.log.gz": "f116962377f5162adfd7d2819aea49c63115299921f8aa47af027621b93c0541",
+    "docs/tests/platformen-52/spelling-canoniek.log.gz": "c946e00f7cc3a4f30669ddc1dd6ddcaf9354eec03475026a9d53340c68d9bf6b",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/begin.png.gz": "7563f38d4ba6a72a402b8773fb2f69c4613edf8db581d30d1ec69e2e796b1775",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/na-plakken.png.gz": "bd75287a88075d96b3e5451982f508eef118f38128ab09daca54221e4267c566",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/nieuw-na-verwerpen.png.gz": "61e83e21dae16f740adfb546080cea175b450d66b1045809d73a1e9479f3d429",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/rapport.json.gz": "6cc664392d966b7266644190f4ee22c3c3087a574006fb317699cf6fe7291929",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/sluitdialoog.png.gz": "c4c4475aa4bff80b28d9f7bad9a4e289e6ebe619cd7b8a5c527fd4941d253e8d",
+    "docs/tests/platformen-52/spelling-faseherhaling/1/vervolginvoer.png.gz": "2b1fadd90969b1fb97b5b53bb24d0dc30edfd78107cbfbf824820f07e0560079",
+    "docs/tests/platformen-52/spelling-faseherhaling/1.json.gz": "5364b2044ac7920b5d81af81a052a88ee44a2b64483dd5c0473121f625c861f9",
+    "docs/tests/platformen-52/spelling-faseherhaling/1.log.gz": "74f2f6c576d811006c865b7b9b0c17e91ab1c0f80145d66a894d33f25e47a1e3",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/begin.png.gz": "b4c7deea3622f034fe7254ba361bb9d1917e1256fd9071b42422d1c013e4849e",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/na-plakken.png.gz": "664cd25f039f4bfc4664167b3a19293dcd8e625bf4da3a334e9a24cc56413695",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/rapport.json.gz": "f690c98e4ced4e1b302228c4920f486425db36ca8e031f44b298a67cb0f6b8f3",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/sluitdialoog.png.gz": "2cb1de4708d8958a56c4e145a89b62faf093d943334baa22e68308022697da48",
+    "docs/tests/platformen-52/spelling-faseherhaling/2/vervolginvoer.png.gz": "2b1fadd90969b1fb97b5b53bb24d0dc30edfd78107cbfbf824820f07e0560079",
+    "docs/tests/platformen-52/spelling-faseherhaling/2.json.gz": "78c3fd8481a27d6f186d292fdc4551d60b455327c08ea52a575fbaa9823a0e5f",
+    "docs/tests/platformen-52/spelling-faseherhaling/2.log.gz": "bd81b8313b15fbb63ab44e7fcbdf13161ab93e27427f8ae7793335daaf737b42",
+    "docs/tests/platformen-52/spelling-fasekandidaat.py.gz": "e366fa7bf2f6ce8e9bab625e59ea4602c32868ba4a63f961ae63074af149cc36",
+    "docs/tests/platformen-52/webview.json.gz": "47a662797028f533e89ce428effdce8e280bb98ee31b21cd7c298eb2db548778",
+    "docs/tests/platformen-52/windows-127873627487.log.gz": "422bd04ff17bedc6fc597801b4f10a64154ad50d5549db82e4f0099f3adca809",
+    "docs/tests/platformen-52/windows-127874704731.log.gz": "7c4a1d855e4b73b919914eb36ebb42fe129d9e678fb61e1d1f2de3b7568e1641"
+  }
+}

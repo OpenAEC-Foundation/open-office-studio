@@ -42,8 +42,13 @@ afzonderlijk op snelheid gemeten. Writer blijft vertraging en open
 stabiliteitsproblemen hebben. De visuele eindcontrole van de CI-opname toont
 een zwarte rechthoek op de lege donkere pagina na verwerpen; oorzaak en
 bestendigheid zijn onbekend. De groene pakketproef is geen visuele of volledige
-suiteacceptatie. De brede platform-, editie-, geheugen- en WebView-ronden lopen
-nog op deze bron. [Implementatie en beperkingen](../tests/writer-autocorrectie-invoer.md).
+suiteacceptatie. Native Rust en WebView slagen op drie platforms; de zeven
+edities bouwen op Linux/macOS. Windows strandt op een testpadverwachting.
+De brede Linux-desktopproef meldt na verwerpen een Rust/Wasm-leenfout en een
+leeg venster; de geheugenproef startte haar toetsen te vroeg. De testopzet is
+aangepast en lokaal gecontroleerd; de oorspronkelijke appfout blijft open.
+[Platformmatrix en afkeuringen](../tests/2026-11-06-platformen-52.json),
+[implementatie en beperkingen](../tests/writer-autocorrectie-invoer.md).
 
 De eerdere 45.49-ronde had een aanvullende lettertypeproef met een workertrap;
 die fout is hiermee niet verklaard of hersteld.

@@ -1,6 +1,6 @@
 """De cacheproef blijft gescheiden van de ongewijzigde referentie-encoder."""
 import importlib.util
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import unittest
 
 REPO=Path(__file__).resolve().parents[1]
@@ -29,8 +29,15 @@ class WriterEncoderCache(unittest.TestCase):
 
 class WriterEncoderCacheUitvoering(unittest.TestCase):
     def test_regressies_krijgen_geen_onbedoeld_naamfilter(self):
-        self.assertEqual(m.proefopdracht(Path('/eigen/proef'),True,Path('/eigen/bron'),['33554432']),['/eigen/proef'])
-        self.assertEqual(m.proefopdracht(Path('/eigen/proef'),False,Path('/eigen/bron'),['33554432']),['/eigen/proef','/eigen/bron','33554432'])
+        # Het uitvoerbare pad volgt het platform; de regressieproef mag op
+        # geen van beide platformen bron- of meetargumenten als naamfilter krijgen.
+        for programma,bron,verwacht in [
+            (PurePosixPath('/eigen/proef'),PurePosixPath('/eigen/bron'),['/eigen/proef','/eigen/bron']),
+            (PureWindowsPath('C:/eigen/proef.exe'),PureWindowsPath('C:/eigen/bron'),['C:\\eigen\\proef.exe','C:\\eigen\\bron']),
+        ]:
+            with self.subTest(platform=type(programma).__name__):
+                self.assertEqual(m.proefopdracht(programma,True,bron,['33554432']),verwacht[:1])
+                self.assertEqual(m.proefopdracht(programma,False,bron,['33554432']),verwacht+['33554432'])
 
     def test_gefilterde_of_ontbrekende_rust_proeven_tellen_niet_als_geslaagd(self):
         namen=['vormen_mutaties_en_sterke_eigendom','nul_kleine_en_volle_grens_blijven_exact','twee_eigenaren_mutaties_en_externe_updates_blijven_exact']

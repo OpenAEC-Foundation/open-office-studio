@@ -216,7 +216,7 @@ async def proef(a):
                 };let eind=performance.now()+90000;while(!_spellingProef()||_spellingProef().bezig){if(performance.now()>eind)throw Error('Geen rustige eigen spellinginstantie');await new Promise(r=>setTimeout(r,50))}
                 if(!_spellingProef().aan)throw Error('Spelling staat uit; vervolgproef niet geldig');api().focus();return true;''', t=100)
                 await p.ev((Path(__file__).resolve().parent / 'gui/spelling_vervolginvoer.js').read_text())
-                await asyncio.sleep(.15)
+                r['spellinglezing_voor_toetsen'] = await p.run((Path(__file__).resolve().parent / 'gui/spelling_startvoorwaarde.js').read_text())
                 begin_invoer = time.monotonic()
                 subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' SNEL'], check=True)
                 key('shift+Left', 'shift+Left', 'shift+Left')
@@ -228,7 +228,7 @@ async def proef(a):
                 invoer_ms = round((time.monotonic()-begin_invoer)*1000)
                 na = await p.ev('proefStand()')
                 gegevens = await p.ev('(()=>{_vervolgOpruimen();return _vervolgProef})()')
-                gegevens.update(invoer_tot_bron_ms=invoer_ms, wacht_voor_invoer_ms=150,
+                gegevens.update(invoer_tot_bron_ms=invoer_ms, wacht_voor_invoer_ms=r['spellinglezing_voor_toetsen']['wacht_ms'],
                                 onderbreekbaar=gegevens['eersteToetsNaLezingen'] is not None and gegevens['eersteToetsNaLezingen'] < gegevens['verhalen'],
                                 bron_exact=na['body'] == stand['body'] + ' S!',
                                 na_body_begin=na['body'][:60], na_body_eind=na['body'][-100:],
