@@ -8,6 +8,13 @@ export interface Studio {
   programma: string;
   identifier: string;
   module: StudioModule | null;
+  beeldmerk?: {
+    bestand: string;
+    bronBestand: string;
+    sha256: string;
+    bron: string;
+    issue: number;
+  };
 }
 export const studios = gegevens as readonly Studio[];
 
