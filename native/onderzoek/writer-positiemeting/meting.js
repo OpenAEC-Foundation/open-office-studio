@@ -1,8 +1,11 @@
 /* Alleen metadata van de eigen test-WebView; geen wijzigingen aan bron of mutatieroute. */
-function plaatsPositiemeting(w,rij,sessie,projectiePrototype) {
+function plaatsPositiemeting(w,rij,sessie,projectiePrototype,projectieRefs=[]) {
   const herstel=[],regels=[],groepen=new Map(),grens=4096,begin=w.performance.now();
   let actief=true,taak=0,volgende=0,fase='buiten',gemist=0,updates=0;
   const tijd=()=>w.performance.now()-begin;
+  const objecten=new WeakMap();let volgendObject=0,stapels=0;
+  const objectId=o=>{if(!o||typeof o!=='object')return null;if(!objecten.has(o))objecten.set(o,++volgendObject);return objecten.get(o)};
+  const cacheMeta=v=>v?{projectie:objectId(v.projection),versie:typeof v.version==='number'?v.version:null,eigenSessie:v.session===sessie,root:typeof v.rootStory==='string'?v.rootStory:null}:null;
   function meld(soort,extra={}){if(!actief)return;if(regels.length<grens)regels.push({soort,taak,fase,t:tijd(),...extra});else gemist++}
   function vervang(o,k,maak){const eigen=Object.getOwnPropertyDescriptor(o,k),oud=o[k];if(typeof oud!=='function')throw Error('Meetmethode ontbreekt: '+k);const nieuw=maak(oud);o[k]=nieuw;if(o[k]!==nieuw)throw Error('Meetmethode niet schrijfbaar: '+k);herstel.push(()=>{if(eigen)Object.defineProperty(o,k,eigen);else delete o[k]})}
   function tel(naam,story,ms,lengte){
@@ -30,13 +33,20 @@ function plaatsPositiemeting(w,rij,sessie,projectiePrototype) {
       if(typeof sessie[naam]!=='function')continue;
       vervang(sessie,naam,oud=>function(...args){const t=w.performance.now();let antwoord;try{return antwoord=oud.apply(this,args)}finally{tel(naam,naam==='storiesChangedSince'?undefined:args[0],w.performance.now()-t,Array.isArray(antwoord)?antwoord.length:0)}});
     }
+    for(const [index,ref] of projectieRefs.entries()){
+      const descriptor=Object.getOwnPropertyDescriptor(ref,'current');
+      if(!descriptor?.configurable||!('value' in descriptor)||!descriptor.writable)throw Error('Projectieref niet observeerbaar');
+      let waarde=ref.current;meld('cachebegin',{index,waarde:cacheMeta(waarde)});
+      Object.defineProperty(ref,'current',{configurable:true,enumerable:descriptor.enumerable,get(){return waarde},set(nieuw){meld('cachetoewijzing',{index,vorig:cacheMeta(waarde),nieuw:cacheMeta(nieuw)});waarde=nieuw}});
+      herstel.push(()=>Object.defineProperty(ref,'current',{...descriptor,value:waarde}));
+    }
     if(projectiePrototype){
       let diepte=0,bezoeken=0;
       vervang(projectiePrototype,'buildStory',oud=>function(...args){
         const buiten=diepte===0,t=w.performance.now();if(buiten)bezoeken=0;diepte++;bezoeken++;
         try{return oud.apply(this,args)}finally{
           diepte--;
-          if(buiten){const ms=w.performance.now()-t;tel('positieprojectie',args[0],ms,bezoeken);meld('projectie',{bezoeken,verhalen:typeof this.stories?.size==='number'?this.stories.size:null})}
+          if(buiten){const ms=w.performance.now()-t;tel('positieprojectie',args[0],ms,bezoeken);meld('projectie',{bezoeken,verhalen:typeof this.stories?.size==='number'?this.stories.size:null,object:objectId(this),stapel:projectieRefs.length&&stapels++<8?String(new Error().stack).slice(0,6000):null})}
         }
       });
     }
@@ -63,4 +73,16 @@ function zoekEigenProjectiePrototype(w,sessie){
       }
   if(gevonden.size!==1)throw Error('Geen unieke eigen positieprojectie: '+gevonden.size);
   return [...gevonden][0];
+}
+
+function zoekEigenProjectieRefs(w,sessie){
+  const gevonden=new Set();
+  for(const el of w.document.querySelectorAll('.office-tabpaneel:not([hidden]) .paged-editor'))
+    for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)
+      for(let h=f.memoizedState,n=0;h&&n<1500;n++,h=h.next){
+        const ref=h.memoizedState,v=ref?.current,p=v?.projection;
+        if(v?.session===sessie&&p&&typeof p.buildStory==='function'&&typeof p.stories?.size==='number')gevonden.add(ref);
+      }
+  if(!gevonden.size||gevonden.size>8)throw Error('Geen begrensde eigen projectierefs: '+gevonden.size);
+  return [...gevonden];
 }

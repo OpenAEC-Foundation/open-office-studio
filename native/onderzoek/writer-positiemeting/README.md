@@ -47,3 +47,17 @@ De extra klok- en methodeaanroepen sluiten een passieve tijdvergelijking uit.
 De `admit`-Promise zelf blijft dezelfde. De fetch-omwikkeling voegt een
 asynchrone reactie toe en behoudt het echte Response-object en diens JSON-
 resultaat; identiteit van de fetch-Promise wordt niet gegarandeerd.
+
+De cacheoptie ontvangt de unieke bestaande refs van de actieve sessie (één tot
+acht, anders afwijzen). Zij observeert `current` met behoud van de laatst
+werkelijk toegewezen waarde en de oorspronkelijke eigenschapsbeschrijver.
+Cacheversie, root, eigen-sessiematch en zwakke objectindex binden constructies aan
+toewijzingen. De eerste acht buitenste constructies krijgen maximaal 6.000
+tekens van hun eigen JavaScript-stack; geen documenttekst. Een volgende
+render kan een nieuwe generatie invullen zonder nieuwe bronupdate. Dit is een
+waarneming, geen bewijs dat ieder generatieverschil overbodig is.
+
+Ook niet-schrijfbare/niet-configureerbare refs en een gedeeltelijke
+plaatsingsfout moeten de eerdere omwikkelingen volledig terugdraaien. Alle
+waargenomen refs worden bij stoppen hersteld met hun laatste waarde; de oude
+projectie wordt dus nooit teruggezet over een inmiddels nieuwere projectie.

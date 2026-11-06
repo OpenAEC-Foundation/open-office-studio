@@ -25,3 +25,19 @@ function proef(){let klok=0,update;const obj={eigen:true},fout=new Error('fout')
  const m=ctx.plaatsPositiemeting(p.w,p.rij,p.sessie,prototype);assert.equal(projectie.buildStory('body'),p.obj);assert.throws(()=>projectie.buildStory('fout'),e=>e===p.fout);const d=m.stop();assert.equal(prototype.buildStory,oud);const g=d.groepen.find(x=>x.naam==='positieprojectie');assert.equal(g.aantal,2);assert.equal(g.elementen,3);assert(d.regels.some(x=>x.soort==='projectie'&&x.bezoeken===2&&x.verhalen===2));
  console.log('Recursieve eigen projectie en foutpaden hersteld.');
 })().catch(e=>{console.error(e);process.exitCode=1});
+// Cacheobservatie mag de laatst toegewezen waarde, schrijfbaarheid en gedeeltelijke fouten niet verliezen.
+(()=>{
+ const p=proef();p.m.stop();const waarde={session:p.sessie,version:1,rootStory:'body',projection:{}};const ref={current:waarde};const descriptor=Object.getOwnPropertyDescriptor(ref,'current');
+ const m=ctx.plaatsPositiemeting(p.w,p.rij,p.sessie,undefined,[ref]);const nieuw={...waarde,version:2,projection:{}};ref.current=nieuw;assert.equal(ref.current,nieuw);const d=m.stop();assert.deepEqual(Object.getOwnPropertyDescriptor(ref,'current'),{...descriptor,value:nieuw});assert(d.regels.some(x=>x.soort==='cachetoewijzing'&&x.vorig.versie===1&&x.nieuw.versie===2&&x.nieuw.eigenSessie&&x.vorig.projectie!==x.nieuw.projectie));
+ const fout=Object.freeze({current:waarde});assert.throws(()=>ctx.plaatsPositiemeting(p.w,p.rij,p.sessie,undefined,[ref,fout]),/niet observeerbaar/);assert.deepEqual(Object.getOwnPropertyDescriptor(ref,'current'),{...descriptor,value:nieuw});assert(!Object.hasOwn(p.rij,'admit'));
+ const projectie={stories:new Map,buildStory(){}};const actieveRef={current:{session:p.sessie,projection:projectie}};const el={__reactFiber$eigen:{memoizedState:{memoizedState:actieveRef,next:null},return:null}};assert.equal(ctx.zoekEigenProjectieRefs({document:{querySelectorAll:()=>[el,el]}},p.sessie).length,1);assert.throws(()=>ctx.zoekEigenProjectieRefs({document:{querySelectorAll:()=>[el]}},{}),/Geen begrensde eigen/);
+ console.log('Cachewaarden, beschrijvers, sessieselectie en gedeeltelijke afwijzing behouden.');
+})();
+// Stapels zijn beperkt tot acht eigen constructies, ook als de projectieref actief is.
+(()=>{
+ const p=proef();p.m.stop();class Projectie{constructor(){this.stories=new Map}buildStory(id){this.stories.set(id,1);return p.obj}}
+ const ref={current:null},m=ctx.plaatsPositiemeting(p.w,p.rij,p.sessie,Projectie.prototype,[ref]);
+ for(let n=0;n<12;n++){const x=new Projectie;assert.equal(x.buildStory('body'),p.obj);ref.current={version:n,session:p.sessie,rootStory:'body',projection:x}}
+ const d=m.stop(),paden=d.regels.filter(x=>x.soort==='projectie'&&x.stapel);assert.equal(paden.length,8);assert(paden.every(x=>x.stapel.length<=6000));assert.equal(d.regels.filter(x=>x.soort==='cachetoewijzing').length,12);assert.equal(ref.current.version,11);
+ console.log('Stapels en objectbinding begrensd; laatste cachewaarde behouden.');
+})();

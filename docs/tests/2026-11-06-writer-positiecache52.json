@@ -1,0 +1,1940 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis": "48a75af8",
+  "appversie": "2026.45.52",
+  "productiecode_gewijzigd": false,
+  "uitkomst": "Twee eigen fysieke proeven met 20/19 native groepen: één cache-ref, 40/38 verschillende volledige positieopbouwen en evenveel cachetoewijzingen. Iedere toewijzing verhoogt de cachegeneratie exact één; per native groep twee. Alle bronupdates blijven local, alle 351 tekens en 1537 verhalen/3329 teksten exact, nul overschrijdingen/fouten.",
+  "analyse": {
+    "schema": 1,
+    "ronden": [
+      {
+        "ronde": "eerste",
+        "native_groepen": 20,
+        "bronupdates": 20,
+        "cache_refs": 1,
+        "cache_toewijzingen": 40,
+        "cache_per_groep": 2,
+        "volledige_projecties": 40,
+        "verhalen_per_projectie": 1537,
+        "stapels": [
+          {
+            "taak": 1,
+            "object": 2,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 1,
+            "object": 3,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          },
+          {
+            "taak": 2,
+            "object": 4,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 2,
+            "object": 5,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          },
+          {
+            "taak": 3,
+            "object": 6,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 3,
+            "object": 7,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          },
+          {
+            "taak": 4,
+            "object": 8,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 4,
+            "object": 9,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ronde": "herhaling",
+        "native_groepen": 19,
+        "bronupdates": 19,
+        "cache_refs": 1,
+        "cache_toewijzingen": 38,
+        "cache_per_groep": 2,
+        "volledige_projecties": 38,
+        "verhalen_per_projectie": 1537,
+        "stapels": [
+          {
+            "taak": 1,
+            "object": 2,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 1,
+            "object": 3,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          },
+          {
+            "taak": 2,
+            "object": 4,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 2,
+            "object": 5,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "lJ",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 34,
+                "kolom": 10745,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "?null;let c=null;try{c=l?r.yrsLocToDisplayPosition(l):null}catch{c=null}const d=l?.story??\"\",f=d===\"body\"||d.startsWith(\"body:\"),p=f?nJ(i,c):-1;let h=tJ(t,i,p);if(!h){const w=U$(t.querySelector(\".docx-editor__scroll-container\")??t);h=rJ(eJ(t,i,w),w)}if(!h)return null;const m=h.pagina,g=oJ(m),y={pagi"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 49,
+                "kolom": 13735,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "ekst();if(!e||!f||!G||!i)return null;try{return lJ(G,f,hL(f))}catch{return null}},[e,f,i,l,c,h,r]),j=b?.stand??x,S=f?.getBoundingClientRect(),k=(G,Ie=2)=>n(Math.round(XE(G)*10**Ie)/10**Ie),C=(G,Ie)=>{const Ke=G.vak?.links??G.kolommen[0].links;return((Ie-G.pagina.rect.left)/G.pagina.schaal-Ke)*or},I="
+              },
+              {
+                "naam": "HN",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 59726,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "edState;if(f!==null&&Xk(f,y[1]))return y[0];if(y=l(),pd){yt(!0);try{l()}finally{yt(!1)}}return g.memoizedState=[y,f],y}function cx(l,f,g){return g===void 0||(Qi&1073741824)!==0&&(Yt&261930)===0?l.memoizedState=f:(l.memoizedState=g,l=QD(),$t.lanes|=l,tl|=l,g)}function UN(l,f,g,y){return Aa(g,f)?g:Zs."
+              },
+              {
+                "naam": "Dne",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 49,
+                "kolom": 13668,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "ll\",Ke),ye.disconnect()}},[f,e]);const x=u.useMemo(()=>{const G=r.tekst();if(!e||!f||!G||!i)return null;try{return lJ(G,f,hL(f))}catch{return null}},[e,f,i,l,c,h,r]),j=b?.stand??x,S=f?.getBoundingClientRect(),k=(G,Ie=2)=>n(Math.round(XE(G)*10**Ie)/10**Ie),C=(G,Ie)=>{const Ke=G.vak?.links??G.kolommen"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "vx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 73818,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "4194816)}}function vx(l,f,g,y,_){return sd(f),g=Qk(l,f,g,y,void 0,_),y=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&y&&Hg(f),f.flags|=1,or(l,f,g,_),f.child)}function mD(l,f,g,y,_,C){return sd(f),f.updateQueue=null,g=vN(f,y,g,_),bN(l),y=ex(),l!==null&&!Yn?(tx(l,f,C),ts(l,f,C)):(Ht&&y&&Hg(f),f.flags|"
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          },
+          {
+            "taak": 3,
+            "object": 6,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 3,
+            "object": 7,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          },
+          {
+            "taak": 4,
+            "object": 8,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77738,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local\",tt,!0):tt?I(bt,ae,ve,ze,\"local\",!0):I(bt,ae,ve,ze),!0):!1},[Fn,I]),bn=u.useCallback(()=>{let ae=C?.current,ve=ae?aa(ae):null;ye.current=ve?{scroller:ve,scrollTop:ve.scrollTop}:null},[C]),En=u.useCal"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 78256,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "{E(ze),Ie.current.mutated=!0;return}L?.(),E(ze),Bt(!0,ae,ve)},[Bt,L,E,bn]),Rn=u.useCallback(ae=>{ae.frameEpoch!==null&&(G.current=ae.frameEpoch),Ht(ae.frameEpoch!==null,ae.caretSynchronized)},[Ht]),le=u.useCallback(()=>{Ie.current||!c||t||o?.current===!1||c.selection()?.head.story===\"body\"&&A?.()},["
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 11,
+                "kolom": 94,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "d,It,sn(),()=>ce(c),rn);if(!ce(c))return;if(Pn){Ht();return}}if(T){let Pn=await T(It);if(!ce(c))return;Pn?Rn(Pn):dn();return}}dn()};if(ze&&o){_e(async()=>{c.addUndoBoundary();try{await tt(ae)}finally{ce(c)&&c.addUndoBoundary()}},\"mutation\");return}if(!(!Ie.current&&!f&&(T||V)&&/^[\\x20-\\x7e]+$/u.test"
+              }
+            ]
+          },
+          {
+            "taak": 4,
+            "object": 9,
+            "kaders": [
+              {
+                "naam": "SZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 5073,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "??{segments:a=>t.storySegments(a)},this.buildStory(n,0,0)}get size(){return this.stories.get(this.rootStory)?.size??0}nodeAt(t){return this.nodes.get(t)??null}allTables(){return this.tables}tableAtPosition(t){let n=null;for(let r of this.tables)t<r.start||t>r.start+r.nodeSize||(!n||r.nodeSize<n.node"
+              },
+              {
+                "naam": "xZ",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 4414,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": ")}}}function xZ(e,t,n){return e.hasStory(t)?new SZ(e,t,n):null}function j2e(e,t,n){let r=\"body\";if(typeof e!=\"number\")switch(e.region){case\"header\":case\"footer\":if(!e.rId)return null;r=Tf(n,e.rId);break;case\"footnote\":case\"endnote\":if(e.noteId===void 0)return null;r=`${e.region===\"footnote\"?\"fn\":\"en"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 144473,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "tStory===ie)return pe.projection;let Ae=z(F),lt=G2(F,ie,Ae);return Ae.scheduleDigests(),lt?(_t.current={version:At.current,session:F,rootStory:ie,projection:lt},lt):null},[z,r.session]);Rn.current=U;let oe=u.useCallback(ie=>{let F=U(bn)?.targetAt(ie);return F?{story:F.story,displayPosition:F.display"
+              },
+              {
+                "naam": "_Z",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 223,
+                "kolom": 9899,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "dy\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Cw(o,n):null)}var F5=new WeakMap;function $f(e,t){let n=F5.get(e);return n?.version!==t&&(n={version:t,spans:new Map,segments:new Map,views:new Map,anchors:new Map},F5.set(e,n)),n}function Nl(e,t,n){if(e.has(t))re"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 8,
+                "kolom": 77538,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "eturn null;let ae=Lt();if(!ae)return null;let ve=y(ae.anchor),ze=y(ae.head);return ve==null||ze==null?null:{anchor:ve,head:ze}},[n,y,Lt]),Bt=u.useCallback((ae,ve=!1,ze=!1,tt=!1,Je=!1)=>{if(Ie.current)return Ie.current.selectionChanged=!0,!1;let bt=Fn();return bt?(Ut(It=>It+1),Je?I(bt,ae,ve,ze,\"local"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152453,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "!$)return null;let ie=ht.current?.displaySelection();if(!ie||Math.abs(ie.anchor-ie.head)!==1)return null;let F=Math.min(ie.anchor,ie.head);return U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{."
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/editors-dj6Nk6Hy.js",
+                "lijn": 12,
+                "kolom": 152594,
+                "source_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+                "fragment": "turn U(\"body\")?.nodeAt(F)?.kind===\"image\"?F:null})(),Cr=He?.current!=null?He:Rt;return s.jsxs(\"div\",{ref:sn,className:`oox-root paged-editor ${Y??\"\"}`,style:{...Y2,...de,display:\"contents\"},tabIndex:0,onFocus:Ye,onBlur:dt,onKeyDown:we,onMouseDown:Le,children:[Xe?s.jsx(vB,{ref:ht,read:Xe,story:bn,que"
+              },
+              {
+                "naam": "Qk",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 50643,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "H=l===null||l.memoizedState===null?QN:eD,pd=!1,C=g(y,_),pd=!1,Xc&&(C=vN(f,g,y,_)),bN(l),C}function bN(l){fe.H=db;var f=yn!==null&&yn.next!==null;if(Qi=0,Zn=yn=$t=null,tb=!1,mp=0,Qc=null,f)throw Error(r(300));l===null||Yn||(l=l.dependencies,l!==null&&Wg(l)&&(Yn=!0))}function vN(l,f,g,y){$t=l;var _=0;"
+              },
+              {
+                "naam": "dD",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 70440,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "!==\"ref\"&&(G[re]=y[re])}else G=y;return sd(f),y=Qk(l,f,g,G,C,_),re=ex(),l!==null&&!Yn?(tx(l,f,_),ts(l,f,_)):(Ht&&re&&Hg(f),f.flags|=1,or(l,f,y,_),f.child)}function cD(l,f,g,y,_){if(l===null){var C=g.type;return typeof C==\"function\"&&!Dk(C)&&C.defaultProps===void 0&&g.compare===null?(f.tag=15,f.type="
+              },
+              {
+                "naam": "iM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 130930,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "(;Gt!==null&&!De();)iM(Gt)}function iM(l){var f=xD(l.alternate,l,rs);l.memoizedProps=l.pendingProps,f===null?Db(l):Gt=f}function sM(l){var f=l,g=f.alternate;switch(f.tag){case 15:case 0:f=mD(g,f,f.pendingProps,f.type,void 0,Yt);break;case 11:f=mD(g,f,f.pendingProps,f.type.render,f.ref,Yt);break;case"
+              },
+              {
+                "naam": "cte",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129958,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "ull,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=null,Cb=$e()+500,uu(l,f)):ou=rn(l,f);e:do try{if(pn!==0&&Gt!==null){f=Gt;var C=Ma;t:switch(pn){case 1:pn=0,Ma=null,fu(l,f,C,1);break;case 2:case 9:if(sN(C)){pn=0,Ma=null,sM(f)"
+              },
+              {
+                "naam": "Zx",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 129785,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "eak;default:Re=pn,pn=0,Ma=null,fu(l,re,pe,Re)}}cte(),G=zn;break}catch(Pe){nM(l,Pe)}while(!0);return f&&l.shellSuspendCounter++,Ji=od=null,ln=y,fe.H=_,fe.A=C,Gt===null&&(kn=null,Yt=0,Fg()),G}function cte(){for(;Gt!==null;)iM(Gt)}function ute(l,f){var g=ln;ln|=2;var y=aM(),_=oM();kn!==l||Yt!==f?(Eb=nu"
+              },
+              {
+                "naam": "eM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 126020,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "0&&(f&l.expiredLanes)===0||rn(l,f),_=y?ute(l,f):Zx(l,f,!0),C=y;do{if(_===0){ou&&!y&&rl(l,f,0,!1);break}else{if(g=l.current.alternate,C&&!dte(g)){_=Zx(l,f,!1),C=!1;continue}if(_===2){if(C=f,l.errorRecoveryDisabledLanes&C)var G=0;else G=l.pendingLanes&-536870913,G=G!==0?G:G&536870912?536870912:0;if(G!"
+              },
+              {
+                "naam": "gM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139326,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l,l):null)}function gM(l,f){if(Mb())return null;eM(l,f,!0)}function kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l=="
+              },
+              {
+                "naam": "Cp",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 137863,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "y.timeoutHandle!==-1),(C&3)===0||rn(y,C)||(g=!0,gM(y,C));y=y.next}while(g);n1=!1}}function wte(){pM()}function pM(){Ob=t1=!1;var l=0;al!==0&&Dte()&&(l=al);for(var f=$e(),g=null,y=pu;y!==null;){var _=y.next,C=hM(y,f);C===0?(y.next=null,g===null?pu=_:g.next=_,_===null&&(hu=g)):(g=y,(l!==0||(C&3)!==0)&"
+              },
+              {
+                "naam": "pM",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 138145,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "l!==0||(C&3)!==0)&&(Ob=!0)),y=_}On!==0&&On!==5||Cp(l),al!==0&&(al=0)}function hM(l,f){for(var g=l.suspendedLanes,y=l.pingedLanes,_=l.expirationTimes,C=l.pendingLanes&-62914561;0<C;){var G=31-mt(C),re=1<<G,pe=_[G];pe===-1?((re&g)===0||(re&y)!==0)&&(_[G]=rr(re,f)):pe<=f&&(l.expiredLanes|=re),C&=~re}if"
+              },
+              {
+                "naam": "",
+                "url": "tauri://localhost/assets/index-CGuxWztq.js",
+                "lijn": 9,
+                "kolom": 139389,
+                "source_sha256": "65c7c3345d1f1199b8d8b8318f5b03a904cc86b4eb21525915ed2a8bde93f327",
+                "fragment": "tion kte(){Ote(function(){(ln&6)!==0?me(ke,wte):pM()})}function r1(){if(al===0){var l=ld;l===0&&(l=ht,ht<<=1,(ht&261888)===0&&(ht=256)),al=l}return al}function bM(l){return l==null||typeof l==\"symbol\"||typeof l==\"boolean\"?null:typeof l==\"function\"?l:Ag(l)}function xte(l,f,g,y,_){if(f===\"submit\"&&g&&"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "grens": "De geobserveerde generaties lopen één op per toewijzing. Readiness zelf is niet gelogd; causaliteit wordt getoetst in een afzonderlijke kandidaat. Stacklocaties koppelen aan exacte eigen runtimebytes, kolommen UTF-16. Geen CPU-/FPS- of snelheidsclaim."
+  },
+  "interpretatie": "Beide constructies komen via dezelfde projectiecallback. Eerste stack via lokale invoer-/selectiesynchronisatie, tweede via React-render bij selectiebeeldcontrole. SDK-bron leest bij render replicaReady en in de projectiecallback replicaReadyRef.current met terugval op replicaReady. Een verschil kan de cachegeneratie opnieuw verhogen; readiness zelf is niet gelogd. De afzonderlijke 45.54-kandidaat trekt deze waarden gelijk, maar is nog niet functioneel/visueel/prestatiegeaccepteerd.",
+  "tests": "Alle 119 Python-tests slagen, inclusief echte JS-observator, behoud van laatste cachewaarde/eigenschapsbeschrijver, gedeeltelijke afwijzing, sessieselectie en maximaal acht stacks van 6000 tekens. Voor kandidaat 45.54 falen vijf van acht gerichte echte SDK-fragmenttests op de oude SDK; frontendbouw en GUI-vergelijking nog niet geaccepteerd.",
+  "grenzen": [
+    "Eigen ELF, Xvfb/DBus/XDG en documentkopieën. Geen wijziging aan gebruikersdocumenten, profielen, geïnstalleerde app, productie-SDK of lokale mutatieroute.",
+    "Stacklocaties gekoppeld aan bytegecontroleerde eigen 45.52-runtimebronnen uit het eerdere geijkte profiel; UTF-16-kolommen. Geen nieuwe CPU-profileringsopname.",
+    "Generatie, root, sessiematch en object-ID zijn metadata; zonder aanvullende proef geen bewijs dat elke generatiestap overbodig is.",
+    "Instrumentatie/inspectie beïnvloeden wandtijd. Geen FPS-, CPU-tijd- of algemene snelheidsclaim. Eén 129-paginabron op Linux.",
+    "Geen nieuwe platform-/editie-/bewaar-/themaacceptatie, gesloten issue, release of migratievlag. 45.53 blijft afgewezen en productie 45.52/alpha57."
+  ],
+  "volgende_stap": "Voltooi geïsoleerde 45.54-bouw; behoud de eerste afhankelijkhedenafkeuring. Alleen na functionele GUI-, 500-pagina-/herstel-/worker-, fysieke ABBA- en beeldpariteitsproeven over promotie besluiten. Controleer daarna de cacheconstructies met dezelfde observator op de echte kandidaat.",
+  "bestanden": [
+    {
+      "bestand": "writer-positiecache52/analyse.json.gz",
+      "sha256": "0ab9b252e5d4ef8b7290e9abb11bfaedb2b1d9f4497c02c6ba06911819266d16",
+      "origineel_sha256": "c74d02d15f2859571d98393eeecbf4119c260cfc1c590547afcacafc72f5fe7c",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/analyseren.py.gz",
+      "sha256": "564c4676d6d20de8cd0bd5f3ed9adf29f1fdd630a15637f053dac8d195d6524b",
+      "origineel_sha256": "ef4ef179249101840a8c6f9b10f6adb1faf190cf92a62c39a57502b33b9a5a10",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/eerste/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/eerste/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/eerste/profiel.json.gz",
+      "sha256": "3ac0ff50efcbf50432f734cdda835a889c9453a095a8ba84cef4abe1cb382b26",
+      "origineel_sha256": "31745a9841811ad79ff72b0f06a9f75004d3994960330bc1dd2e82bdf368ce93",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/eerste/profiel.png",
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/eerste/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/eerste.log.gz",
+      "sha256": "e4b2d2b7df0ed08efc5457c6336297c926d5dbd7a87c4b2bf141eacfd16fa1e2",
+      "origineel_sha256": "9486e2d02448373e510b4d79988e447d4ff3d0c12056cffb5a75639a7dbfb883",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/fysieke-proef.py.gz",
+      "sha256": "87c6a193b6e52bf04202a738b08d72ab32855a8269b4624708351eea7b2dff7a",
+      "origineel_sha256": "8d470ceaa58f5397280ed89c0575f66ca3696865e6cedcfcda1d2f986c3add15",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/herhaling/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/herhaling/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/herhaling/profiel.json.gz",
+      "sha256": "b0e9504e1a8bc31a1a4f4e80da05c586f0f5a072a4da821c6b3b983f467a1424",
+      "origineel_sha256": "c8c2ed291acd70de07b39144d49f301a9a1de0fdadf74cd8e7ec0c76a805b710",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/herhaling/profiel.png",
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/herhaling/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/herhaling.log.gz",
+      "sha256": "d413a60e7948a6671edfe772466c55027118213bac156d506621092bb4137f62",
+      "origineel_sha256": "5eb31fca4a44e4f00eb4e6422cc38086d2594ec9b2de35d7288cbf6a579b5b6d",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/manifest.json.gz",
+      "sha256": "8fcf24421d896feb4a586498d1144324ada91c5bbfffcd1e16a59703d8e75405",
+      "origineel_sha256": "33ffa46f7e8b6274ed1d286b3406ee18f27bc164e53e65e40dd1907b53c6de62",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/meten.log.gz",
+      "sha256": "be0c056e81971f1a26630ba4a91fc541d4fe9b09d82a4434c4b00dcd3689e9ee",
+      "origineel_sha256": "7d8da754f068d6cff56ec974b5a800ee1e98d04b907cd71428ba14e469637dd2",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/meten.py.gz",
+      "sha256": "0de3578a0c5fa34d95e5fae8cafb09bf8311268dd93dd6b976b34987d5d47ba1",
+      "origineel_sha256": "170de6e083bc8b957e8edcd3de98aff152f5f3760ec9740c8cb5423831700554",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/python.log.gz",
+      "sha256": "a8b3c886d014382441a208781355f326680193307c6bfff8c5cc670d7f3d312a",
+      "origineel_sha256": "63b2044c227e783abee69eb8b7b64365ecf6c5d40032b8d51fe7cbf86b3174e8",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/vastleggen.py.gz",
+      "sha256": "1ad16e196c6f83406fb23931c2af2961444d15fe94383a3ac1b1a760660b9c0f",
+      "origineel_sha256": "ebb893bfed2a9ea30fa6893b2f2b1e2eccc16349e6dce27d19a6558263cab724",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/bron/native/onderzoek/writer-positiemeting/meting.js.gz",
+      "sha256": "2a83c7813dd54603a7fea444fc51a6b34fe8a5be5a72f5b7805400d1cfb7489f",
+      "origineel_sha256": "3db2eecc25398773d2aa8a41f9bccbde987b7e28c12ceda7712cbef650a5b133",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/bron/native/onderzoek/writer-positiemeting/meting.test.cjs.gz",
+      "sha256": "5915affad214abbd986861a08036ace07559d93ad419dffe06c2b0fbf8c1ef53",
+      "origineel_sha256": "740de84dec4484e13be04d04f8b1ddae98a45b962256345ef0bdbc084daf8770",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/bron/native/onderzoek/writer-positiemeting/README.md",
+      "sha256": "fa91ec54c9ad83221422ea7f4c6e61db43afd63ab104cda7efc44cc8e31de759",
+      "origineel_sha256": "fa91ec54c9ad83221422ea7f4c6e61db43afd63ab104cda7efc44cc8e31de759",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiecache52/bron/tests/test_writer_positiemeting.py.gz",
+      "sha256": "1690e9a3aa17b3d9ddaa21ab2519c0a78a45d1bbba4c2d4891ed825ab2753480",
+      "origineel_sha256": "0b794cb9b37b47171d57ddc170b193be634a9cfddce952241ca41e94a42acecc",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/kandidaat54-eenheid/replicagereed.test.ts.gz",
+      "sha256": "c9a0f047379dc85dd5c3dc6223f722290bab4ce0f07017a9d6c5962519330c24",
+      "origineel_sha256": "2efd15db95398017d74cf20f82714608a07349d486934946067796662ec18c10",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/kandidaat54-eenheid/regressie-oud.log.gz",
+      "sha256": "c86863b148b0898d4beb1c710215dc6c04731bf12678631cce2366b741de079d",
+      "origineel_sha256": "d44a535082951dfba955f296639184b58801b32b42f17d111b868d168052e3b4",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/kandidaat54-eenheid/frontend.log.gz",
+      "sha256": "e7a7c2067ab821291093a8cc4e57053a0013c55aa5d8e51121acb8f879627fbf",
+      "origineel_sha256": "22248a5cd840f9104171ab1a909244ef50e8681fb15dfd20b9b722a60670ed00",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/kandidaat54-eenheid/frontend-herhaling.log.gz",
+      "sha256": "96f1a89c2337cc9fa6e4516a698aaf3e9ebc84ee90f8a4dfbb913010a0e4c77e",
+      "origineel_sha256": "e155d43e86530246811ee8bda4028e40ec308c457790a2d1d734d2b316f7e075",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/kandidaat54-eenheid/afhankelijkheden-herstel.json.gz",
+      "sha256": "5a4efc72fcd697f193968b4ba79202052c9001523ccde0e5d5a2780100255128",
+      "origineel_sha256": "114ccfbfd7304ce33190310ca64e02338e0746982ff903abf0558d700db567c7",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiecache52/kandidaat54-eenheid/patchcontrole.json.gz",
+      "sha256": "30e35510b60f47031abd50aa85214f1ac78ef38bbcd8c8f46f650e6e324deaea",
+      "origineel_sha256": "c5d2e47f1af3d157f2a2b43cb0371582a4415aeaf7214a20641534e779439362",
+      "gzip": true
+    }
+  ],
+  "kandidaat54_eenheid": {
+    "oud": "Vijf van acht echte SDK-fragmentgevallen falen.",
+    "nieuw": "Volledige frontendronde: 1878 geslaagd, nul skips; eerste ronde faalt in vijf bestanden door ontbrekende clsx-context. Beide ongewijzigde testlogs behouden. Alleen-lezen contextlink van de eigen SDK-kopie hersteld.",
+    "patchcontrole": "Volledige voorgestelde SDK-patch terug/vooruit op afzonderlijke kopie: 39 bestanden bytegelijk.",
+    "status": "Desktopbouw, GUI, fysieke ABBA, beelden, platformen en editieacceptatie nog open. Geen promotie."
+  }
+}
