@@ -3,10 +3,10 @@
 Een push werkt de broncode bij. Ontwikkelbuilds staan bij GitHub Actions;
 daarvoor is geen officiële release of tag nodig.
 
-De gecontroleerde [45.49-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049157317/artifacts/13428016631)
-is gebouwd uit `5f5f84a773a9d1925efe73855b11ae9c22cc4980`.
-De pakketnaam eindigt op `40`: dat is het workflowvolgnummer, niet de appversie.
-De download verloopt op 5 december 2026. Je moet bij GitHub ingelogd zijn.
+De gecontroleerde [45.52-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42212197487/artifacts/13499427842)
+is gebouwd uit `cfa1059970ecc85e54601c82ba5fdd4d3eb658c4`.
+De pakketnaam eindigt op `48`: dat is het workflowvolgnummer, niet de appversie.
+Je moet bij GitHub ingelogd zijn.
 
 1. Download het pakket en pak de ZIP uit.
 2. Pak ook het bestand `.tar.gz` uit.
@@ -26,23 +26,27 @@ geopende dev-versie na het bewaren voordat je de nieuwe start; beide gebruiken
 hetzelfde dev-profiel. Zelf geopende bestanden blijven dezelfde bestanden:
 test met kopieën van je documenten.
 
-De gedownloade ZIP, tar, AppImage, uitvoerrechten en metadata zijn onafhankelijk
-gecontroleerd. De volledige SquashFS is uitgepakt. AppRun en de werkelijke ELF
+De uitgepakte artifactbestanden, tar, AppImage, uitvoerrechten en metadata zijn
+onafhankelijk gecontroleerd; de ZIP-container is niet afzonderlijk gehasht.
+De volledige SquashFS is uitgepakt. AppRun en de werkelijke ELF
 zijn op hash gelijk aan het apart opgehaalde CI-GUI-rapport. Die gerichte proef
 slaagt voor drie plakrondes, bewaren en verder bewerken, verwerpen en een nieuw
 document; de GUI-, console- en enginefoutlijsten zijn leeg. De download is niet
 hier lokaal als GUI gestart; de FUSE-mount is niet getoetst.
-[Exacte downloadcontrole](../tests/2026-11-05-linux-dev-5f5f84a.json).
+[Exacte downloadcontrole](../tests/2026-11-06-linux-dev-cfa105.json).
 
-Dit is een testversie. Writer heeft nog ernstige invoervertraging en open
-stabiliteitsproblemen. De brede desktop-, native Rust-, WebView-, Database-,
-geheugen- en plakbatchronden slagen op deze bron. De zeveneditieronde slaagt
-op Windows/macOS en faalt op Linux in de aanvullende lettertypeproef: een
-retained-layout-trap in de documentwerker, een lege aanvullende font-export en
-een vervolgfout bij ZIP-controle. De gewone bewaar-/heropencontrole slaagde
-daarvoor. De exacte negatieve ELF slaagt lokaal met de oorspronkelijke
-proefcode; de CI-fout is daarmee niet verklaard of hersteld. De groene
-pakketproef is geen volledige suiteacceptatie.
+Dit is een testversie. 45.52 behoudt autocorrectie en voorkomt dat deze iedere
+invoergroep voortijdig afsluit. De fysieke 129-paginaproef op de afzonderlijke
+reguliere Linux-binary toont alle tekst circa 72% eerder; deze devbinary is niet
+afzonderlijk op snelheid gemeten. Writer blijft vertraging en open
+stabiliteitsproblemen hebben. De visuele eindcontrole van de CI-opname toont
+een zwarte rechthoek op de lege donkere pagina na verwerpen; oorzaak en
+bestendigheid zijn onbekend. De groene pakketproef is geen visuele of volledige
+suiteacceptatie. De brede platform-, editie-, geheugen- en WebView-ronden lopen
+nog op deze bron. [Implementatie en beperkingen](../tests/writer-autocorrectie-invoer.md).
+
+De eerdere 45.49-ronde had een aanvullende lettertypeproef met een workertrap;
+die fout is hiermee niet verklaard of hersteld.
 [Afkeuring, beeld en exacte hertest](../tests/2026-11-05-platformen-49-fontwerker.json).
 
 Latere lokale wijzigingen zitten niet automatisch in dit pakket. Voor een
@@ -51,7 +55,8 @@ kies je een geslaagde uitvoering op `codex/native-rust-office` en controleer je
 de gewenste broncommit bij de download. Nieuwe pakketten vragen hun eigen
 controle; een groen rapport van een vorige binary is geen bewijs daarvoor.
 
-De eerdere [45.48-downloadcontrole](../tests/2026-11-05-linux-dev-b6df100.json),
+De eerdere [45.49-downloadcontrole](../tests/2026-11-05-linux-dev-5f5f84a.json),
+[45.48-downloadcontrole](../tests/2026-11-05-linux-dev-b6df100.json),
 [45.47-downloadcontrole](../tests/2026-11-05-linux-dev-9006118.json),
 [45.43-downloadcontrole](../tests/2026-11-05-linux-dev-bafc220.json)
 en [45.39-downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json) blijven
