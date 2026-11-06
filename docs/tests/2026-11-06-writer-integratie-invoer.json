@@ -72,8 +72,16 @@
     "bronpatch_sha256": "e6296ce0663dc1aa83ea06a21da612711d160b70c92b3c8d5e83de738f4d77cc",
     "controles": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/controles.json",
     "bouwcontroller": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/bouw-native.py",
-    "voorwaarden": "Nativebouw start alleen na volledige TypeScript-/frontend-/productiewebbouw- en vier browser-GUI-poorten. Daarna native canonieke tests, fysieke gepaarde respons en actuele lint-/DOCX-/historiecontroles; niet committen/promoveren op alleen build.",
-    "app_versie": "Nog52/alpha57, alleen afzonderlijke ongeïnstalleerde kandidaat. Geen gebruikersbestanden gewijzigd."
+    "voorwaarden": "Nativebouw wacht op zeven standaardfrontendpoorten plus een aanvullende geslaagde lintbron-controle.json. Daarna drie canonieke native proeven en ABBA/BAAB; geen automatische commit/push/promotie. Het GUI-script gebruikt actuele synchrone linttekst en lettergrootte vóór save, naast onafhankelijke DOCX-controles.",
+    "app_versie": "Nog52/alpha57, alleen afzonderlijke ongeïnstalleerde kandidaat. Geen gebruikersbestanden gewijzigd.",
+    "frontend_afgerond": {
+      "typescript": true,
+      "bestanden": 223,
+      "geslaagd": 2288,
+      "overgeslagen": 0,
+      "seconden": 345.42,
+      "nog_open": "Productiebouw, vijf browser-GUI-poorten (incl. actuele lintbron), nativebouw en native/functionele/fysieke acceptatie lopen nog. Geen gepushte appwijziging."
+    }
   },
   "ci": {
     "linux_dev_42285553645": "success op df0db60d; artifact13538506837, digest sha256:39e88e7b35bd3a663e363f0d1e9fb089b10b1015871d8e441e07e6962a08309d. Nog niet onafhankelijk opgehaald/uitgepakt, kandidaat ontbreekt.",
@@ -101,6 +109,14 @@
     "docs/tests/writer-integratie-invoer-2026-11-06/diagnose.png": "144cd981493f50b63c5b37c58ec693e66910bbd1a7b17f8bb481d8c63a5fa283",
     "docs/tests/writer-integratie-invoer-2026-11-06/referentie52-zonder.png": "bc56d5be4bd2fb5967104fe28746ccf13b506f9faea0bab450bd26403c595801",
     "docs/tests/writer-integratie-invoer-2026-11-06/integratie-zonder-melding.png": "d79dd69e2014b4c0f948ebfdc5a50c5257e449abf8f4504e870a9c13bffad10f",
-    "docs/tests/writer-integratie-invoer-2026-11-06/cacheopruiming-desktopcache-build.json.gz": "73ec6332553219890df377148f1dc1b3b22fba30fcd442e759eac4f1cafca168"
+    "docs/tests/writer-integratie-invoer-2026-11-06/cacheopruiming-desktopcache-build.json.gz": "73ec6332553219890df377148f1dc1b3b22fba30fcd442e759eac4f1cafca168",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-frontend.log.gz": "b81a1bd9cb72dcfde00627cfd4da41986f78ae5090f9f0c702f0e3a8310b1e97",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-typescript.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-bron.patch.gz": "66efc748834c3b1489b3e4e4654066eb9c7d7a236071c55fbbcf71f57a8dc55f",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-controle.py.gz": "fe1cf81572fa003510187ec5f01166125fb9cd989559cf0a829b7927e6dd650a",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-bouw-native.py.gz": "106ebbebc87b507eecec7f65da48319efba19255150f02e499b3ce8309d5c4d0",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-na-bouw.py.gz": "1c06555cec1677aa94c86fecd7deb6e5ac4cb0f38d38c3a7d476768452b9132f",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-lettergrootte.mjs.gz": "3c37edfad32d1b0eceac2307706df7fc44dd8b076a70ecf9d782f49b702c0872",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-controle.py.gz": "3bfb286ecb82dfad20c165165d9ca56c8f66565a73a057a19340750b1b2c0c6d"
   }
 }
