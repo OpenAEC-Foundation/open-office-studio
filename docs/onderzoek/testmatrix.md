@@ -34,8 +34,9 @@ De [herhaalde documentmatrix van 6 november](../tests/2026-11-06-documentmatrix.
 gebruikt de actuele productiekern en vergelijkt D1–D3 met de oorspronkelijke
 Y-app-adapter in een echte browser en de gepubliceerde native Writer. Daarbij
 is verloren tekenopmaak van een nootverwijzing gevonden en hersteld. De
-kenmerkcontrole bewaakt die opmaak nu afzonderlijk. Praktijkbestanden en de
-volledige visuele paginavergelijking staan nog open.
+kenmerkcontrole bewaakt die opmaak nu afzonderlijk. Volledige overzichtsbeelden
+van alle opgeslagen D1–D3-kopieën zijn in beide editors bekeken en vastgelegd.
+Praktijkbestanden en de resterende adapter-/opslagcriteria staan nog open.
 
 R1–R3 zijn eveneens eerder uitgevoerd; het oorspronkelijke
 [rekenbladverslag](../tests/2026-10-26-rekenbladen.md) betreft de oudere kern.
