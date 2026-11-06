@@ -1,0 +1,106 @@
+{
+  "datum": "2026-11-06",
+  "status": "Onderzoek: geïntegreerde grote invoerproef afgekeurd; kandidaat nog niet native geaccepteerd of gepusht.",
+  "integratie_commit": "df0db60d52df66ffb48c589332c2df3368ad5376",
+  "geteste_testcorrectie_commit": "1f2e2fa9f98a544650263e6d453e00923c86a0c8",
+  "programma_integratie_sha256": "c8e22ebd5501bcbf03a50682919715daf03b0b237ba7a19674129352caf86fee",
+  "programma_referentie_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+  "metingen": [
+    {
+      "naam": "eerste",
+      "geslaagd": false,
+      "getekende_tekst_ms": null,
+      "fout": "AssertionError('Getypte alinea binnen 90 seconden niet gelijk getekend')",
+      "broncontrole": null,
+      "toetsen_bij_afkeuring": null,
+      "runtimeproef": null
+    },
+    {
+      "naam": "diagnose",
+      "geslaagd": false,
+      "getekende_tekst_ms": null,
+      "fout": "AssertionError('Getypte alinea binnen 90 seconden niet gelijk getekend')",
+      "broncontrole": null,
+      "toetsen_bij_afkeuring": 123,
+      "runtimeproef": null
+    },
+    {
+      "naam": "integratie-zonder",
+      "geslaagd": false,
+      "getekende_tekst_ms": null,
+      "fout": "AssertionError('Getypte alinea binnen 90 seconden niet gelijk getekend')",
+      "broncontrole": null,
+      "toetsen_bij_afkeuring": 119,
+      "runtimeproef": null
+    },
+    {
+      "naam": "referentie52-zonder",
+      "geslaagd": true,
+      "getekende_tekst_ms": 13631,
+      "fout": null,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "toetsen_bij_afkeuring": null,
+      "runtimeproef": null
+    },
+    {
+      "naam": "integratie-zonder-melding",
+      "geslaagd": true,
+      "getekende_tekst_ms": 30670,
+      "fout": null,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "toetsen_bij_afkeuring": null,
+      "runtimeproef": {
+        "typen": 2,
+        "aanroepen": 4
+      }
+    }
+  ],
+  "diagnose": "Ook zonder positieobserver bereikt de geïntegreerde ELF niet binnen de oorspronkelijke negentig seconden de vereiste tekstpixels; slechts119 keyups bij afkeuring en geen GUI-/engine-/consolemelding. Met observer bevat veertig voltooide groepen tachtig volledige1537-verhaalprojecties; dubbele invalidatie bestaat nog, maar deze onvolledige ronde is geen functionele acceptatie. De behouden52referentie voltooit zonder observer met alle3329teksten/1537verhalen exact.",
+  "runtimeproef": "Alleen in een eigen geïsoleerd proces twee bestaande forwardRef-renderers omhuld om onChange undefined door te geven. Twee themawissels forceren de proefrender. De bron-/pixelpoort slaagt daarna in30.670ms met alle3329teksten exact, zonder foutlijsten. Deze renderwrappers worden niet in productcode opgenomen. Door instrumentatie, themawissels, achtergrondlast, enkelvoudige volgorde en ontbrekende brongetrouwe nativekandidaat geen algemene snelheidsratio of oplossing geclaimd.",
+  "hypothese": "main cb53daec voegde een lege onChange toe. De SDK plant daardoor na invoer de volledige documentFromYrs-compatibiliteitsprojectie, hoewel de callback niets verwerkt. Kandidaat verwijdert uitsluitend deze callback; onDocumentChange, opslagbewaking, native invoer, styling en lint blijven behouden. De synchrone lintlezingen moeten op bronactualiteit en volledige bediening opnieuw worden getoetst.",
+  "kandidaat": {
+    "werkmap": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06",
+    "src_editors_sha256": "af657e18fa369b880145adcaf646070311306df84d39f8f4d1f496dcd8a0a654",
+    "bronpatch_sha256": "e6296ce0663dc1aa83ea06a21da612711d160b70c92b3c8d5e83de738f4d77cc",
+    "controles": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/controles.json",
+    "bouwcontroller": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/bouw-native.py",
+    "voorwaarden": "Nativebouw start alleen na volledige TypeScript-/frontend-/productiewebbouw- en vier browser-GUI-poorten. Daarna native canonieke tests, fysieke gepaarde respons en actuele lint-/DOCX-/historiecontroles; niet committen/promoveren op alleen build.",
+    "app_versie": "Nog52/alpha57, alleen afzonderlijke ongeïnstalleerde kandidaat. Geen gebruikersbestanden gewijzigd."
+  },
+  "ci": {
+    "linux_dev_42285553645": "success op df0db60d; artifact13538506837, digest sha256:39e88e7b35bd3a663e363f0d1e9fb089b10b1015871d8e441e07e6962a08309d. Nog niet onafhankelijk opgehaald/uitgepakt, kandidaat ontbreekt.",
+    "desktop_42285548734": "Linux faalt op oude kleurproef; Windows/macOS bij pakketbouw nog actief.",
+    "desktop_42288031570": "Na geteste kleurcorrectie gestart op1f2e2fa9; wacht op vorige matrix, geen uitslag veronderstellen."
+  },
+  "bewijs": {
+    "docs/tests/writer-integratie-invoer-2026-11-06/meten.py.gz": "6692ee6ccef7adb8bec6677731472c0e23aaa87aabe911ba1d70be06ba4db341",
+    "docs/tests/writer-integratie-invoer-2026-11-06/fysieke-proef.py.gz": "de6b775efb3d63d03cfa5611e527e5a6e3278892e04e6c5ec63a7afc2a436960",
+    "docs/tests/writer-integratie-invoer-2026-11-06/manifest.json.gz": "d3eff4906bcb106cee74f9ed8399f0fed801a866e43eaa202af35d5ea7325743",
+    "docs/tests/writer-integratie-invoer-2026-11-06/diagnose-proef.py.gz": "eaba019d8f5a7cb857a74ef6ead24aef067b228e057c7d81e21f232934211033",
+    "docs/tests/writer-integratie-invoer-2026-11-06/diagnose-opdracht.json.gz": "24467618fb3264b4fce27a32b75428788cf831a36c9cd8d4b6ceae37eee15f7f",
+    "docs/tests/writer-integratie-invoer-2026-11-06/diagnose.log.gz": "6e8a9dc10b1604d576d43d6b005ff0563137af98036c9b8a3e52f11656c89535",
+    "docs/tests/writer-integratie-invoer-2026-11-06/zonder-observer.py.gz": "549b92d8995d659a015e61eeb0d3cdb8ffc8909f19db0eb18930647809e8e320",
+    "docs/tests/writer-integratie-invoer-2026-11-06/zonder-manifest.json.gz": "ac351d738292e556d5bfac441fe487e14c2461e205793b26d506eed2408b561c",
+    "docs/tests/writer-integratie-invoer-2026-11-06/geen-melding.js.gz": "25da2d2603f1222604003705e27cb23db35e0a91c66cb9b068dad5d034f25f33",
+    "docs/tests/writer-integratie-invoer-2026-11-06/zonder-melding.py.gz": "65e04f492300d325817ee81b26306ef411de0cdc7f1daa4f112e6a966c8e24ce",
+    "docs/tests/writer-integratie-invoer-2026-11-06/zonder-melding-opdracht.json.gz": "5004552194ff89e9cd429aef2cdd11635a83af45d86e047e6639ab045fe4c7c0",
+    "docs/tests/writer-integratie-invoer-2026-11-06/zonder-melding.log.gz": "89113d1ff13c184123593d8a2e1788aa942277fc0ce5520420dc98bb5594fed5",
+    "docs/tests/writer-integratie-invoer-2026-11-06/eerste.json.gz": "adb5fcd04c33ff642d104354adf56d74bad646c4948d41dcaa5ee41139c2030c",
+    "docs/tests/writer-integratie-invoer-2026-11-06/diagnose.json.gz": "29dfb3c3e63b93a1919884366c08628b31abab430f208c9a6510016c2e0c080f",
+    "docs/tests/writer-integratie-invoer-2026-11-06/integratie-zonder.json.gz": "0fb9bba92dee58ff5069973c0db4c7438349c96d28111921e195f1fb38220b11",
+    "docs/tests/writer-integratie-invoer-2026-11-06/referentie52-zonder.json.gz": "8bfc0ca774dec730bd7472eca1c2ce04389659a17d30f63d58cb8eb23554406a",
+    "docs/tests/writer-integratie-invoer-2026-11-06/integratie-zonder-melding.json.gz": "7c635189c8599313898b5ae46a6cdbb5f990cb423296422ea8532d457be05031",
+    "docs/tests/writer-integratie-invoer-2026-11-06/diagnose.png": "144cd981493f50b63c5b37c58ec693e66910bbd1a7b17f8bb481d8c63a5fa283",
+    "docs/tests/writer-integratie-invoer-2026-11-06/referentie52-zonder.png": "bc56d5be4bd2fb5967104fe28746ccf13b506f9faea0bab450bd26403c595801",
+    "docs/tests/writer-integratie-invoer-2026-11-06/integratie-zonder-melding.png": "d79dd69e2014b4c0f948ebfdc5a50c5257e449abf8f4504e870a9c13bffad10f",
+    "docs/tests/writer-integratie-invoer-2026-11-06/cacheopruiming-desktopcache-build.json.gz": "73ec6332553219890df377148f1dc1b3b22fba30fcd442e759eac4f1cafca168"
+  }
+}
