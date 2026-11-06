@@ -106,6 +106,8 @@ if (!alleenDatabase)
 if (!alleenDatabase) {
   for (const bestand of ["LICENSE", "NOTICE"])
     await copyFile(`vendor/tekstengine/${bestand}`, `${uitvoermap}/tekstengine-${bestand}.txt`);
+  for (const bestand of ["LICENSE", "NOTICE"])
+    await copyFile(`vendor/rekenbladengine/${bestand}`, `${uitvoermap}/rekenbladengine-${bestand}.txt`);
 }
 await writeFile(
   `${uitvoermap}/npm.txt`,

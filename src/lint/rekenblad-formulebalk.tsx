@@ -550,14 +550,15 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   );
 }
 
-/** Bereiken kiezen vanuit beide formulevelden, met behoud van doelcel en concept. */
+/** Bereiken kiezen vanuit de formulevelden, met behoud van doelcel en concept. */
 function useFormuleBereik(api: XlsxEditorApi | null) {
   useEffect(() => {
     if (!api) return;
     let ruimGebaarOp: (() => void) | undefined;
     const beginVerwijzing = (e: PointerEvent) => {
       const v = document.activeElement;
-      if (!isVeld(v) || !v.matches('[data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid') || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (!isVeld(v) || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (e.target === v) return;
       const host = rekenbladHost();
       if (!(e.target instanceof Node) || !host?.contains(e.target)) return;
       const anker = api.getPositionAtPoint(e.clientX, e.clientY);

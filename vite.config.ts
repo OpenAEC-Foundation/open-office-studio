@@ -2,6 +2,7 @@
 import { configDefaults } from "vitest/config";
 import { defineConfig, type Plugin } from "vite";
 import { tekstengineCompatibiliteit } from "./scripts/tekstengine-compatibiliteit";
+import { rekenbladengineCompatibiliteit } from "./scripts/rekenbladengine-compatibiliteit";
 
 // De fontpakketten verwijzen naar hun bestanden via import.meta.url, waardoor
 // Vite ze nogmaals in assets/ zet. De app laadt ze uit public/fonts/.
@@ -23,14 +24,14 @@ export default defineConfig({
   define: {
     "import.meta.env.VITE_STUDIO_VARIANT": JSON.stringify(process.env.VITE_STUDIO_VARIANT || "office"),
   },
-  plugins: [fontsUitPublic(), tekstengineCompatibiliteit()],
+  plugins: [fontsUitPublic(), tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {
     exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
-    setupFiles: ["src/i18n/testopzet.ts", "src/tekst/gedeeld/kern-testopzet.ts"],
+    setupFiles: ["src/i18n/testopzet.ts", "src/tekst/gedeeld/kern-testopzet.ts", "src/rekenblad/kern-testopzet.ts"],
   },
-  worker: { format: "es", plugins: () => [tekstengineCompatibiliteit()] },
+  worker: { format: "es", plugins: () => [tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit()] },
   build: {
     rollupOptions: {
       output: {

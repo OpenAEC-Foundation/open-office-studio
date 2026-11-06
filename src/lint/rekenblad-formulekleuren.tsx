@@ -27,6 +27,7 @@ export function FormuleKleuren() {
   useEffect(() => {
     let frame = 0;
     let samenstellen = false;
+    let geobserveerd: Veld | null = null;
     const werkBij = () => {
       frame = 0;
       const v = document.activeElement;
@@ -35,14 +36,22 @@ export function FormuleKleuren() {
         matchMedia("(forced-colors: active)").matches ||
         !(v instanceof HTMLInputElement || v instanceof HTMLTextAreaElement) ||
         !v.matches(
-          '[data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid',
+          '[data-testid="xlsx-cell-editor"], [data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid',
         ) ||
-        !v.closest(".office-formulebalk") ||
+        !v.closest(".office-rekenblad-host") ||
+        v.clientWidth <= 1 || v.clientHeight <= 1 ||
         !v.value.startsWith("=") ||
         !verwijzingenIn(v.value).length
       ) {
+        if (geobserveerd) observer.unobserve(geobserveerd);
+        geobserveerd = null;
         setBeeld(null);
         return;
+      }
+      if (geobserveerd !== v) {
+        if (geobserveerd) observer.unobserve(geobserveerd);
+        observer.observe(v);
+        geobserveerd = v;
       }
       const r = v.getBoundingClientRect(),
         s = getComputedStyle(v);
