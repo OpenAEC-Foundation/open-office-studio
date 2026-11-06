@@ -8,7 +8,7 @@ uit #90. Alle wijzigingen horen bij de bestaande Tauri/React-app.
 ## Resultaat
 
 - 171 testbestanden: **1.967 geslaagde tests**, tien bestaande overgeslagen
-  corpusgevallen; 187,51 seconden, exitcode 0.
+  corpusgevallen; 146,63 seconden, exitcode 0.
 - Alle 52 Python-controles, de echte kantoorengines en moduleopdrachten slagen.
 - TypeScript, de Office-productiebouw en de native bouw slagen.
 - Ook de zelfstandige Database-bouw en bundelcontrole slagen: 3.086 KiB code
@@ -114,7 +114,12 @@ worker; de SDK-workers zijn niet herschreven.
 Drie regressietests gebruiken werkelijk door Vite gebouwde modules en een
 worker-ingang met een andere URL-identiteit: de oude indeling verliest de
 geopende waarde, de bouwcontrole weigert die indeling, en de productie-instelling
-behoudt de waarde na de luie import. De native eindproef slaagt vervolgens
+behoudt de waarde na de luie import. De modules worden in een afzonderlijk
+Node-proces door de oorspronkelijke ES-modulelader uitgevoerd. De eerste
+Windows-CI ontdekte dat de testlader de twee URL-identiteiten daar
+normaliseerde; de correctie verplaatst alleen deze testuitvoering en behoudt
+alle beweringen, inclusief de negatieve voorproef. De drie tests slagen lokaal.
+De native eindproef slaagt vervolgens
 zonder instrumentatie: nieuwe werkkopie, tabel maken, gewone SQLite openen,
 één tabel en twee juiste rijen lezen. De algemene Office-openroute weigert
 `.sqlite`; de geslaagde proef gebruikt **Open** binnen Database.
