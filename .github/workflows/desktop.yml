@@ -101,7 +101,7 @@ jobs:
         run: pnpm desktop:build --bundles nsis
       - name: macOS-pakket bouwen
         if: runner.os == 'macOS'
-        run: pnpm desktop:build --bundles dmg
+        run: pnpm desktop:build --bundles app,dmg
       - name: Bestandskoppelingen in de gebouwde macOS-app controleren
         if: runner.os == 'macOS'
         run: python scripts/controleer-macos-koppelingen.py --rapport .local/pakketcontrole-macOS.json

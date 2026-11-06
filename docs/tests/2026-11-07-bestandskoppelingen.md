@@ -33,7 +33,9 @@ De oorspronkelijke synthetische bronnen staan bij
 
 Tot deze wijziging controleerden de Python-proeven de configuratie, maar werd
 de werkelijk gebouwde macOS-plist niet uitgelezen. De bouwstraat controleert nu
-na het maken van de DMG ook de `.app`:
+na het maken van de DMG ook de `.app`. Beide bundels worden expliciet gevraagd
+(`app,dmg`), zodat Tauri de app na het maken van uitsluitend een DMG niet
+opruimt vóór de controles:
 
 - Alle 31 extensies moeten met de juiste documentnaam, rol en rang voorkomen.
   Ontbrekende, dubbele en onverwachte extensies worden afgekeurd, evenals een
