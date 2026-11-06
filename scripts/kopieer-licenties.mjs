@@ -103,6 +103,10 @@ if (!alleenDatabase)
     "docs/licenties/Y-app-ERPNext-LICENSE.txt",
     `${uitvoermap}/Y-app-ERPNext-LICENSE.txt`,
   );
+if (!alleenDatabase) {
+  for (const bestand of ["LICENSE", "NOTICE"])
+    await copyFile(`vendor/tekstengine/${bestand}`, `${uitvoermap}/tekstengine-${bestand}.txt`);
+}
 await writeFile(
   `${uitvoermap}/npm.txt`,
   onderdelen.sort().join("\n\n" + "=".repeat(78) + "\n\n"),

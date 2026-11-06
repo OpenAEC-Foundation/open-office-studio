@@ -1,0 +1,308 @@
+--- a/crates/docx-edit/src/engine.rs
++++ b/crates/docx-edit/src/engine.rs
+@@ -1434,0 +1435,44 @@
++// De zichtbare tekst volgt de berekende nootnummering; documentposities
++// en semantische noot-id's blijven gelijk. Dit gebeurt vóór het meten.
++fn herstel_nootverwijzingen(
++    blocks: &mut [LayoutBlock],
++    labels: &docx_layout::footnotes::OrderedMap<i64, docx_layout::footnotes::NotePresentation>,
++) -> bool {
++    fn paragraph(
++        p: &mut docx_layout::types::ParagraphBlock,
++        labels: &docx_layout::footnotes::OrderedMap<i64, docx_layout::footnotes::NotePresentation>,
++    ) -> bool {
++        let mut changed = false;
++        for run in &mut p.runs {
++            let docx_layout::types::Run::Text(run) = run else { continue };
++            let key = run.fmt.footnote_ref_id.map(|id| id as i64).or_else(||
++                run.fmt.endnote_ref_id.map(|id| docx_layout::footnotes::note_reference_map_id(
++                    id as i64, docx_layout::footnotes::NoteKind::Endnote)));
++            if let Some(label) = key.and_then(|id| labels.get(&id))
++                && run.text != label.display_label {
++                run.text.clone_from(&label.display_label);
++                changed = true;
++            }
++        }
++        changed
++    }
++    let mut changed = false;
++    for block in blocks {
++        match block {
++            LayoutBlock::Paragraph(p) => changed |= paragraph(p, labels),
++            LayoutBlock::Table(t) => {
++                for row in &mut t.rows {
++                    for cell in &mut row.cells {
++                        changed |= herstel_nootverwijzingen(&mut cell.blocks, labels);
++                    }
++                }
++            }
++            LayoutBlock::TextBox(t) => {
++                for p in &mut t.content { changed |= paragraph(p, labels); }
++            }
++            _ => {}
++        }
++    }
++    changed
++}
++
+@@ -1457 +1501,3 @@
+-    if shapes.is_empty() && !has_unequal {
++    let note_refs = input.measured.iter().flat_map(|measured|
++        collect_note_refs(std::slice::from_ref(&measured.block))).collect::<Vec<_>>();
++    if shapes.is_empty() && !has_unequal && note_refs.is_empty() {
+@@ -1480 +1526 @@
+-    let max_phases = if has_unequal {
++    let max_phases = if has_unequal || !note_refs.is_empty() {
+@@ -1487,0 +1534,4 @@
++        } else if shapes.is_empty() && !note_refs.is_empty() {
++            // Alleen meten voor de nootlabels: geen extra bewaarde
++            // vormverplaatsing toevoegen aan de echte paginering.
++            (docx_layout::place::layout_document(input)?, Vec::new())
+@@ -1512 +1562,3 @@
+-        if offsets == previous_offsets && next_widths == widths && bands == previous_bands {
++        let labels = build_note_presentations(&note_refs, &layout.pages, regions);
++        let notes_changed = herstel_nootverwijzingen(&mut blocks, &labels);
++        if offsets == previous_offsets && next_widths == widths && bands == previous_bands && !notes_changed {
+@@ -25409,0 +25462,23 @@
++    fn nootverwijzingen_gebruiken_de_ingestelde_nummering() {
++        let engine = EngineSession::new(19);
++        crate::seed::seed_from_docx(engine.doc(), include_bytes!("../tests/fixtures/footnote-anchor.docx")).unwrap();
++        let request = serde_json::json!({
++            "bodyStory": "body", "renderEnv": {},
++            "regions": {"sections": [{"sectionId": "main", "properties": {}}],
++                "noteSettings": {"footnote": {"numFmt": "lowerRoman", "numStart": 3},
++                    "endnote": {"numFmt": "lowerRoman", "numStart": 3}}},
++            "notes": {"contents": [{"id": 2, "noteKind": "footnote", "height": 0},
++                {"id": 3, "noteKind": "endnote", "height": 0}]},
++            "measurement": {"fontChains": {}, "defaults": {"fontSize": 11, "fontFamily": "Calibri"},
++                "authoritativeShaping": false}
++        });
++        let output = engine.layout_document_with_regions_json(&request.to_string()).unwrap();
++        let list: serde_json::Value = serde_json::from_str(&engine.build_display_list_json(&output).unwrap()).unwrap();
++        let labels: Vec<&str> = list["pages"].as_array().unwrap().iter()
++            .flat_map(|p| p["primitives"].as_array().unwrap())
++            .filter(|r| !r["noteRef"].is_null())
++            .map(|r| r["text"].as_str().unwrap()).collect();
++        assert_eq!(labels, ["iii", "iii"]);
++    }
++
++    #[test]
+--- a/crates/docx-layout/src/typed_measure.rs
++++ b/crates/docx-layout/src/typed_measure.rs
+@@ -247,0 +248,2 @@
++            out.footnote_ref_id = text.fmt.footnote_ref_id;
++            out.endnote_ref_id = text.fmt.endnote_ref_id;
+@@ -306,0 +309,2 @@
++        footnote_ref_id: None,
++        endnote_ref_id: None,
+@@ -824,0 +829,39 @@
++    fn nootlabel_blijft_een_atoom_met_volledige_glyphbreedte() {
++        let fixture = fixture();
++        for eindnoot in [false, true] {
++            let mut run = text_run("iii");
++            let Run::Text(ref mut text) = run else {
++                unreachable!()
++            };
++            text.fmt.superscript = Some(true);
++            text.fmt.letter_spacing = Some(0.5);
++            let gewoon = paragraph(vec![run.clone()], None);
++            let breedte = measure_paragraph(&gewoon, 100.0, &fixture.config, None, 0.0)
++                .unwrap()
++                .lines[0]
++                .width;
++            let Run::Text(ref mut text) = run else {
++                unreachable!()
++            };
++            if eindnoot {
++                text.fmt.endnote_ref_id = Some(1.0);
++            } else {
++                text.fmt.footnote_ref_id = Some(1.0);
++            }
++            let blok = paragraph(vec![run], None);
++            for beschikbaar in [100.0, 1.0] {
++                assert_parity("nootatoom", &blok, beschikbaar, &fixture.config, None, 0.0);
++                let gemeten =
++                    measure_paragraph(&blok, beschikbaar, &fixture.config, None, 0.0).unwrap();
++                assert_eq!(gemeten.lines.len(), 1);
++                assert!((gemeten.lines[0].width - breedte).abs() < 0.001);
++                assert_eq!(gemeten.lines[0].tail_char, 1);
++                let clusters = gemeten.lines[0].cluster_advances.as_ref().unwrap();
++                assert_eq!(clusters.len(), 1);
++                assert_eq!(clusters[0].start_char, Some(0));
++                assert_eq!(clusters[0].end_char, Some(1));
++            }
++        }
++    }
++
++    #[test]
+--- a/crates/docx-layout/src/display_list.rs
++++ b/crates/docx-layout/src/display_list.rs
+@@ -4173,0 +4174,9 @@
++                if t.fmt.footnote_ref_id.is_some() || t.fmt.endnote_ref_id.is_some() {
++                    out.push(ResolvedSegment {
++                        run,
++                        text: t.text.clone(),
++                        pm_start: t.pm_start,
++                        pm_end: t.pm_end,
++                    });
++                    continue;
++                }
+@@ -6275 +6284,6 @@
+-                let visible = slice_utf16(&text.text, start, end);
++                let noot = text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some();
++                let visible = if noot {
++                    text.text.clone()
++                } else {
++                    slice_utf16(&text.text, start, end)
++                };
+@@ -6279,2 +6293,10 @@
+-                    pm_start: text.pm_start.map(|pos| pos + start as i64),
+-                    pm_end: text.pm_start.map(|pos| pos + end as i64).or(text.pm_end),
++                    pm_start: if noot {
++                        text.pm_start
++                    } else {
++                        text.pm_start.map(|pos| pos + start as i64)
++                    },
++                    pm_end: if noot {
++                        text.pm_end
++                    } else {
++                        text.pm_start.map(|pos| pos + end as i64).or(text.pm_end)
++                    },
+@@ -6283,2 +6305,2 @@
+-                    source_start: start,
+-                    source_end: end,
++                    source_start: if noot { 0 } else { start },
++                    source_end: if noot { utf16_len(&text.text) } else { end },
+--- a/crates/docx-layout/src/hit.rs
++++ b/crates/docx-layout/src/hit.rs
+@@ -129,0 +130,15 @@
++            if self.attrs.note_ref.is_some() && self.doc_end == self.doc_start + 1 {
++                let rtl = match self.stops_source {
++                    StopsSource::Text { rtl, .. } | StopsSource::Glyphs { rtl, .. } => rtl,
++                };
++                return vec![
++                    CaretStop {
++                        x: self.x,
++                        position: if rtl { self.doc_end } else { self.doc_start },
++                    },
++                    CaretStop {
++                        x: self.x + self.width,
++                        position: if rtl { self.doc_start } else { self.doc_end },
++                    },
++                ];
++            }
+@@ -2791,0 +2807,36 @@
++    fn nootlabel_heeft_alleen_cursorposities_aan_de_buitenranden() {
++        let glyphs = serde_json::json!({
++            "kind": "glyphRun", "fontId": 1, "size": 16, "color": "#000000",
++            "text": "iii", "docStart": 10, "docEnd": 11,
++            "glyphs": [
++                {"id": 1, "x": 100, "y": 200, "cluster": 0, "advance": 10},
++                {"id": 1, "x": 110, "y": 200, "cluster": 1, "advance": 10},
++                {"id": 1, "x": 120, "y": 200, "cluster": 2, "advance": 10}
++            ]
++        });
++        for mut primitive in [run(100.0, 200.0, 30.0, 10), glyphs] {
++            primitive["text"] = "iii".into();
++            primitive["docEnd"] = 11.into();
++            primitive["noteRef"] = serde_json::json!({"id": 1, "kind": "footnote"});
++            for rtl in [false, true] {
++                primitive["rtl"] = rtl.into();
++                let dl = page(serde_json::Value::Null, vec![primitive.clone()]);
++                assert_eq!(
++                    hit_test(&dl, 0, 111.0, 195.0),
++                    Some(if rtl { 11 } else { 10 })
++                );
++                assert_eq!(
++                    hit_test(&dl, 0, 119.0, 195.0),
++                    Some(if rtl { 10 } else { 11 })
++                );
++                assert!(
++                    (caret_rect(&dl, 10).unwrap().x - if rtl { 130.0 } else { 100.0 }).abs() < 0.01
++                );
++                assert!(
++                    (caret_rect(&dl, 11).unwrap().x - if rtl { 100.0 } else { 130.0 }).abs() < 0.01
++                );
++            }
++        }
++    }
++
++    #[test]
+--- a/crates/docx-layout/src/measure_blocks.rs
++++ b/crates/docx-layout/src/measure_blocks.rs
+@@ -2177,0 +2178,5 @@
++        Run::Text(text)
++            if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() =>
++        {
++            1
++        }
+@@ -2271,0 +2277,10 @@
++                if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() {
++                    rows.push(
++                        index,
++                        0,
++                        1,
++                        synthetic_text_width(&text.text, &text.fmt, default_font_size),
++                        font_px,
++                    );
++                    continue;
++                }
+@@ -2323,0 +2339,5 @@
++        Run::Text(text)
++            if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() =>
++        {
++            1
++        }
+--- a/crates/ooxml-text/src/measure/input.rs
++++ b/crates/ooxml-text/src/measure/input.rs
+@@ -299,0 +300,5 @@
++    // Een nootverwijzing blijft één documentpositie, ongeacht het aantal tekens.
++    #[serde(default)]
++    pub footnote_ref_id: Option<f64>,
++    #[serde(default)]
++    pub endnote_ref_id: Option<f64>,
+--- a/crates/ooxml-text/src/measure/prepare.rs
++++ b/crates/ooxml-text/src/measure/prepare.rs
+@@ -231,7 +231,10 @@
+-                utf16_len: run
+-                    .text
+-                    .as_deref()
+-                    .unwrap_or("")
+-                    .chars()
+-                    .map(|c| c.len_utf16() as u32)
+-                    .sum(),
++                utf16_len: if run.footnote_ref_id.is_some() || run.endnote_ref_id.is_some() {
++                    1
++                } else {
++                    run.text
++                        .as_deref()
++                        .unwrap_or("")
++                        .chars()
++                        .map(|c| c.len_utf16() as u32)
++                        .sum()
++                },
+@@ -239,3 +242,21 @@
+-            "text" => prepared.push(PreparedRun::Text(prepare_text_run(
+-                store, input, run, levels,
+-            )?)),
++            "text" => {
++                let mut text = prepare_text_run(store, input, run, levels)?;
++                if run.footnote_ref_id.is_some() || run.endnote_ref_id.is_some() {
++                    // Meet alle glyphs met hun echte opmaak, maar laat de
++                    // regelvuller het volledige label als één atoom behandelen.
++                    let width = super::line_filler::span_width(&text.chars, text.letter_spacing);
++                    if let Some(mut cluster) = text.chars.first().copied() {
++                        cluster.utf16_offset = 0;
++                        cluster.utf16_len = 1;
++                        cluster.advance = width;
++                        cluster.is_space = false;
++                        cluster.is_fit_space = false;
++                        text.chars.clear();
++                        text.chars.push(cluster);
++                    }
++                    text.utf16_len = 1;
++                    text.breaks.clear();
++                    text.letter_spacing = 0.0;
++                }
++                prepared.push(PreparedRun::Text(text));
++            }
