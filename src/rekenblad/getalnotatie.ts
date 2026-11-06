@@ -1,12 +1,7 @@
 /**
  * Getalnotaties (#64): Excel-notatiecodes samenstellen uit de keuzes in het
- * venster Celeigenschappen › Getal, een bestaande code herkennen, en een
- * voorbeeld tonen met de scheidingstekens en maandnamen van de landinstelling.
- *
- * Het voorbeeld is een eigen, beperkte weergave van de notatiecode: secties
- * (positief;negatief;nul;tekst), kleuren, voorwaarden, letterlijke tekst,
- * decimalen, duizendtallen, procent, wetenschappelijk, breuken, datum en tijd.
- * Het raster zelf tekent de rekenkern.
+ * venster Celeigenschappen › Getal en een bestaande code herkennen.
+ * Voorbeelden worden door de werkelijke rekenkern gemaakt (getalvoorbeeld).
  */
 
 export type Categorie =
@@ -55,12 +50,13 @@ export const VALUTA: Valuta[] = [
   { id: "chf", code: "[$CHF-807]" },
   { id: "brl", code: "[$R$-416]" },
   { id: "cny", code: "[$¥-804]" },
+  { id: "lak", code: "[$₭-454]" },
   { id: "geen", code: "" },
 ];
 
 export const DATUMCODES = [
-  "d-m-yyyy",
   "dd-mm-yyyy",
+  "d-m-yyyy",
   "d-mmm-yy",
   "d mmmm yyyy",
   "dddd d mmmm yyyy",

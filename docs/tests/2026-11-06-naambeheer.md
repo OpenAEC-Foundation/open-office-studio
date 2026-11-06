@@ -1,13 +1,14 @@
 # Naambeheer en aanvullen van naamdefinities
 
 De bestaande Tauri-/webeditor heeft nu een naambeheervenster onder Invoegen en
-Gegevens. Dit vult de vijf criteria van #70 lokaal in. De eerdere navigatiefout
+Gegevens. Alle vijf criteria van #70 zijn geverifieerd. De eerdere navigatiefout
 is na zes geslaagde platformcontroles gemerged via PR #162 als `c3e9acc7`;
 zie de [platformcontrole](naamvak-platformen-2026-11-06.json).
 
 De openbare installers van v2026.45.2 bevatten dit nieuwe naambeheer nog niet.
-Het parallelle native interfacetraject #116 valt buiten de wijziging. Aftekening
-en sluiting van #70 volgen pas na de platformcontroles en merge van deze opvolger.
+Het parallelle native interfacetraject #116 valt buiten de wijziging. PR #163
+is na zes geslaagde platformcontroles gemerged; #70 is gesloten. Zie het
+[platformbewijs](naambeheer-platformen-2026-11-06.json).
 
 ## Gedrag en acceptatie
 
@@ -109,3 +110,14 @@ Nieuwe teksten zijn in Nederlands en Engels toegevoegd; andere talen gebruiken
 volgens `docs/i18n.md` voorlopig de Engelse tekst. Er is geen afzonderlijke
 moedertaalreview uitgevoerd. Native bediening is op Linux getest; Windows en
 macOS krijgen hun controles in de PR.
+
+## Platformcontrole en afronding
+
+[PR #163](https://github.com/OpenAEC-Foundation/open-office-studio/pull/163)
+is op 6 november 2026 gemerged als `6d19f37b853a486172e41f83f2030777007c6b0f`.
+Alle zes controles op Windows, macOS en Linux zijn geslaagd voor broncommit
+`10250154e1321a73c31919fa4a88576d9d929ba9`. Issue #70 is daarna gesloten en
+alle vijf oorspronkelijke criteria zijn afgetekend. Het [platformbewijs](naambeheer-platformen-2026-11-06.json)
+bewaart de bron, merge, uitkomsten en uiteindelijke issuebeschrijving.
+De platformbouw vervangt geen afzonderlijke native bedieningstest op Windows
+of macOS; de beschreven bediening is op Linux uitgevoerd.

@@ -6,6 +6,8 @@ import { Paneel, tekstVan } from "../lint/rekenblad-dialogen";
 import { alleenLezen, leesSelectie } from "../lint/rekenblad-opdrachten";
 import {
   bewaarKopnamen,
+  beschermdeNaam,
+  interneRegioNaam,
   bewaarNaam,
   Naamfout,
   namenLijst,
@@ -47,7 +49,7 @@ export function NamenBeheer({
   const bladenBijStart = useRef<string[]>([]);
   const info = api.handle.sheetInfo();
   const alleen = alleenLezen(api);
-  const vast = !!gekozen && /^_xlnm\./i.test(gekozen.naam);
+  const vast = !!gekozen && beschermdeNaam(gekozen);
   const melding = (fout: unknown) =>
     fout instanceof Naamfout
       ? t(`names.errors.${fout.code}`, { name: fout.naam })
@@ -55,7 +57,7 @@ export function NamenBeheer({
   useEffect(() => {
     const vernieuw = () => {
       try {
-        setNamen(namenLijst(api));
+        setNamen(namenLijst(api).filter((n) => !interneRegioNaam(n)));
       } catch (fout) {
         setStatus(
           fout instanceof Naamfout

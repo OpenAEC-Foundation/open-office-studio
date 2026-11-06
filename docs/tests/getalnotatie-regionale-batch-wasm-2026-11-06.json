@@ -1,0 +1,34 @@
+{
+  "wasm": ".local/getalnotatie/wasm-regionale-batch/xlsx_wasm_bg-opt.wasm",
+  "wasmSha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07",
+  "checks": [
+    {
+      "naam": "Gescheiden getalregio met echte pakket-JS en WASM",
+      "geslaagd": true
+    },
+    {
+      "naam": "LCID-datumtaal en valuta behouden regionale cijfers",
+      "geslaagd": true
+    },
+    {
+      "naam": "Nederlandse LCID geeft Nederlandse datumwoorden in een Amerikaans bestand",
+      "geslaagd": true
+    },
+    {
+      "naam": "Invoer, Undo/Redo en bewaring zijn één transactie",
+      "geslaagd": true
+    },
+    {
+      "naam": "TEXT formule berekent opnieuw na regiowissel",
+      "geslaagd": true
+    },
+    {
+      "naam": "Bestaande tekst zonder regio blijft tekst bij ongewijzigd vastleggen",
+      "geslaagd": true
+    },
+    {
+      "naam": "Regionale batchvlag blijft behouden door de echte pakket-JS",
+      "geslaagd": true
+    }
+  ]
+}

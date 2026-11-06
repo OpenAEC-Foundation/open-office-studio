@@ -1,0 +1,49 @@
+{
+  "wasm": "vendor/rekenbladengine/xlsx_wasm_bg.wasm",
+  "wasmSha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07",
+  "checks": [
+    {
+      "naam": "Gescheiden getalregio met echte pakket-JS en WASM",
+      "geslaagd": true
+    },
+    {
+      "naam": "LCID-datumtaal en valuta behouden regionale cijfers",
+      "geslaagd": true
+    },
+    {
+      "naam": "Nederlandse LCID geeft Nederlandse datumwoorden in een Amerikaans bestand",
+      "geslaagd": true
+    },
+    {
+      "naam": "Invoer, Undo/Redo en bewaring zijn één transactie",
+      "geslaagd": true
+    },
+    {
+      "naam": "TEXT formule berekent opnieuw na regiowissel",
+      "geslaagd": true
+    },
+    {
+      "naam": "Bestaande tekst zonder regio blijft tekst bij ongewijzigd vastleggen",
+      "geslaagd": true
+    },
+    {
+      "naam": "Regionale batchvlag blijft behouden door de echte pakket-JS",
+      "geslaagd": true
+    },
+    {
+      "naam": "Ingebouwde datum volgt regio, invoervolgorde en bewaren zonder id-wijziging",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '1/1/26'\n- '01-01-2026'\n"
+    },
+    {
+      "naam": "Geïmporteerde ingebouwde datumtijd behoudt id 22 en volgt regiowissel",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '1/1/26 15:00'\n- '01-01-2026 15:00'\n"
+    },
+    {
+      "naam": "Geïmporteerde lage valuta-id gebruikt de expliciete code",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '$1.235 '\n- '1234,50 €'\n"
+    }
+  ]
+}

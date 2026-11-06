@@ -181,7 +181,7 @@ describe("XLSX", () => {
     expect(terug.bereik).toEqual(filter.bereik);
     // Getallen komen genormaliseerd terug ("1,5" wordt "1.5").
     const kolom1 = terug.kolommen.get(1) as Extract<KolomFilter, { soort: "voorwaarden" }>;
-    expect(kolom1.voorwaarden[0]).toEqual({ operator: "groter", waarde: "1.5" });
+    expect(kolom1.voorwaarden[0]).toEqual({ operator: "groter", waarde: "1.5", getal: 1.5 });
     expect(kolom1.voorwaarden[1]).toEqual({ operator: "bevat", waarde: "x*" });
     expect(terug.kolommen.get(0)).toEqual(filter.kolommen.get(0));
     expect(terug.sortering).toEqual(filter.sortering);

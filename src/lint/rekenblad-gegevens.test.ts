@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import type { WorkbookHandle } from "@betteroffice/xlsx";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import {
@@ -16,6 +16,11 @@ import {
   zetKolomFilter,
 } from "./rekenblad-gegevens";
 import { bladFilter, laadFilters, metFilters, leesAutoFilters } from "./rekenblad-filter";
+
+vi.mock("../rekenblad/proefwerkmap", async (origineel) => ({
+  ...await origineel<typeof import("../rekenblad/proefwerkmap")>(),
+  laadProefsjabloon: async () => readFileSync("public/templates/nieuw.xlsx"),
+}));
 
 let xlsx: typeof import("@betteroffice/xlsx");
 beforeAll(async () => {

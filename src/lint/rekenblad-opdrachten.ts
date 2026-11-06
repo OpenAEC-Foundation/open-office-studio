@@ -4,6 +4,7 @@ import { meldWijziging, zichtbaarElement } from "./editorApi";
 import { filtersNaOps } from "./rekenblad-filter";
 import type {
   CapturedFormat,
+  NumberFormatMutation,
   XlsxCellValue,
   XlsxEditRequest,
   XlsxEditStep,
@@ -60,6 +61,7 @@ export type RuweOp =
       at: number;
       count: number;
     }
+  | { type: "setRangeNumberFormat"; sheet: number; range: { start: Cel; end: Cel }; format: NumberFormatMutation }
   | { type: "addSheet"; index: number; name: string }
   | { type: "removeSheet"; index: number }
   | { type: "renameSheet"; sheet: number; name: string }

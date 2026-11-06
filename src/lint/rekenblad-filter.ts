@@ -55,6 +55,8 @@ export const OPERATOREN: readonly Operator[] = [
 export interface Voorwaarde {
   operator: Operator;
   waarde: string;
+  /** Eenmaal gelezen in de bestandsregio; null betekent expliciete tekst. */
+  getal?: number | null;
 }
 
 export type KolomFilter =
@@ -128,7 +130,7 @@ function vergelijk(cel: FilterCel, v: Voorwaarde): boolean {
     case "bevatNiet":
       return leeg || !jokerPatroon(`*${ontsnapJoker(v.waarde)}*`).test(tekst);
   }
-  const getal = getalUit(v.waarde);
+  const getal = v.getal !== undefined ? v.getal : getalUit(v.waarde);
   const celGetal = cel.waarde.kind === "number" ? cel.waarde.value : null;
   if (v.operator === "gelijk" || v.operator === "nietGelijk") {
     const gelijk =
@@ -382,7 +384,8 @@ function leesVoorwaarde(el: XmlElement): Voorwaarde {
     if (tekst[1] && tekst[3]) return { operator: "bevat", waarde: kern };
     return { operator: tekst[1] ? "eindigtOp" : "begintMet", waarde: kern };
   }
-  return { operator, waarde: val };
+  const getal = /^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(val) ? Number(val) : null;
+  return { operator, waarde: val, ...(getal !== null && Number.isFinite(getal) ? { getal } : {}) };
 }
 
 function schrijfVoorwaarde(v: Voorwaarde) {
@@ -397,7 +400,7 @@ function schrijfVoorwaarde(v: Voorwaarde) {
           : v.operator === "bevatNiet"
             ? ["notEqual", `*${e}*`]
             : [OPERATOR_XML[v.operator] ?? "equal", v.waarde];
-  const getal = getalUit(val);
+  const getal = v.getal !== undefined ? v.getal : getalUit(val);
   return `<customFilter${attrTekst({
     operator: operator === "equal" ? undefined : operator,
     val: getal !== null && v.operator !== "begintMet" && v.operator !== "eindigtOp" && v.operator !== "bevat" && v.operator !== "bevatNiet" ? String(getal) : val,

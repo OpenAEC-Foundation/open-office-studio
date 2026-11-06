@@ -127,7 +127,7 @@ const attribuut = (tag: string, naam: string) =>
  * cellen uitgevouwen (de tekst in de linkerbovencel). Een ruwe getalwaarde
  * (Excel `x:num`, LibreOffice `sdval`) gaat voor de getoonde tekst.
  */
-export function leesHtmlTabel(bron: string): string[][] | null {
+export function leesHtmlTabel(bron: string, leesGetal?: (rij: number, kolom: number, waarde: number) => void): string[][] | null {
   const begin = bron.search(/<table[\s>]/i);
   if (begin < 0) return null;
   const tabel = bron.slice(begin);
@@ -144,6 +144,7 @@ export function leesHtmlTabel(bron: string): string[][] | null {
       const tag = `<t${m[1]}${m[2] ?? ""}>`;
       const inhoud = m[3].replace(/<\/t[dh]>\s*$/i, "");
       const ruw = attribuut(tag, "x:num") ?? attribuut(tag, "sdval");
+      if (ruw !== undefined && ruw !== "" && Number.isFinite(Number(ruw))) leesGetal?.(r, c, Number(ruw));
       const tekst =
         ruw !== undefined && ruw !== "" && Number.isFinite(Number(ruw))
           ? ruw
@@ -236,6 +237,8 @@ export interface BronCel {
   invoer: string;
   formule: boolean;
   waarde: XlsxCellValue;
+  /** Een externe HTML-tabel kan naast de tekst een canonieke getalwaarde leveren. */
+  canoniek?: boolean;
 }
 
 /** Een doelcel zoals hij nu is. */
@@ -326,7 +329,7 @@ export function plakInvoer(
       else if (cel.formule) {
         const v = verschuiving(r, c);
         invoer = v ? `=${verschuifFormule(cel.invoer.replace(/^=/, ""), v.rijen, v.kolommen)}` : cel.invoer;
-      } else invoer = cel.invoer;
+      } else invoer = waardeAlsInvoer(cel.waarde);
 
       if (opties.bewerking === "geen") return invoer;
       // Bewerking: alleen met een getal (of lege cel = 0) als bron.
@@ -343,7 +346,7 @@ export function plakInvoer(
       if (huidig.formule)
         return `=(${huidig.invoer.replace(/^=/, "")})${OPERATOR[opties.bewerking]}${b}`;
       const a = getalVan(huidig.waarde);
-      if (a === null) return huidig.invoer;
+      if (a === null) return waardeAlsInvoer(huidig.waarde);
       const uitkomst = reken(a, b, opties.bewerking);
       return uitkomst === null ? "#DIV/0!" : String(uitkomst);
     }),

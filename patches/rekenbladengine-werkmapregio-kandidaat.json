@@ -1,0 +1,49 @@
+{
+  "stand": "Geïntegreerd in de concept-PR voor #64; nog niet gemerged of uitgegeven.",
+  "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+  "naPatch": "rekenbladengine-lange-ketens.patch",
+  "naPatchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
+  "patch": "rekenbladengine-werkmapregio.patch",
+  "patchSha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9",
+  "regiogegevens": {
+    "generator": "Intl",
+    "node": "24.22.1",
+    "icu": "78.3",
+    "kalender": "gregory",
+    "tijdzone": "UTC"
+  },
+  "gewijzigdeBestanden": 23,
+  "afzonderlijkeWerkmapproeven": 10,
+  "modelproeven": 111,
+  "nieuweWasmGeleverd": true,
+  "rustc": "1.98.1",
+  "wasmBindgen": "0.2.129",
+  "wasmOpt": "132",
+  "wasmOptArgumenten": [
+    "-O3"
+  ],
+  "eersteKandidaat": {
+    "patchSha256": "62fecf9d0266113aad5322bd2e0b86487a86c008183c388b8b65236df6833f61",
+    "wasmSha256": "1df70b43eb29ce0ddf4a58082028f162f1445c1fe530c4acd1bf1267788df336",
+    "wasmBytes": 7692037,
+    "gerichteWasmProeven": 5,
+    "regressie": "Brede native controle vond tekst 1/15 die in een bestand zonder regio als datum kon worden vastgelegd; huidige bron herstelt de oude invoerroute.",
+    "jsWasmContractGelijk": true
+  },
+  "actueleWasm": "Ingebouwde datumcodes: 2419 native kernproeven (16 bestaande overgeslagen, 81 sets), tien JS/WASM-proeven, 1874 unieke appproeven, gelijke herbouw en twee native venster-/bewaarproeven groen. Zes platformchecks op de definitieve revisie vereist vóór merge.",
+  "gerichteNativeNacontrole": 54,
+  "clippy": "groen (--lib, vijf XLSX-pakketten, -D warnings)",
+  "wasmKandidaatSha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69",
+  "wasmKandidaatBytes": 7693941,
+  "wasmGerichteProeven": 10,
+  "jsWasmContractGelijk": true,
+  "rustfmt": "groen (cargo fmt --all --check)",
+  "herbouwBytegelijk": true,
+  "afzonderlijkeBatchproeven": 8,
+  "vorigeVolledigeNativeKernproeven": 2411,
+  "vorigeOvergeslagenNativeKernproeven": 16,
+  "vorigeTestsets": 80,
+  "volledigeNativeKernproeven": 2419,
+  "overgeslagenNativeKernproeven": 16,
+  "testsets": 81
+}

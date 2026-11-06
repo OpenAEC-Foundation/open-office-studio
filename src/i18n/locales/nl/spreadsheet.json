@@ -183,19 +183,32 @@
       "chf": "CHF (frank)",
       "brl": "R$ (real)",
       "cny": "¥ (yuan)",
-      "geen": "Geen"
+      "geen": "Geen",
+      "lak": "₭ Laotiaanse kip"
     },
     "type": "Type",
     "code": "Notatiecode",
     "examples": "Voorbeeldcodes",
     "generalHint": "Standaard toont getallen zoals ze zijn ingevoerd, zonder vaste notatie.",
     "accountingHint": "Boekhoudkundig lijnt valutatekens en decimalen in een kolom uit; nul wordt een streepje.",
-    "fractionHint": "De rekenkern toont breuken in het raster nog als decimaal getal; de notatie blijft in het bestand bewaard en Excel en LibreOffice tonen de breuk.",
+    "fractionHint": "De noemer bepaalt hoe nauwkeurig de breuk wordt weergegeven.",
     "textHint": "Als tekst wordt de invoer getoond zoals u hem typt, ook getallen.",
     "customHint": "Secties: positief;negatief;nul;tekst. 0 en # zijn cijferplaatsen, . de decimale komma, , het duizendtalteken, [Red] een kleur, \"tekst\" letterlijke tekst.",
-    "engineNote": "Het voorbeeld volgt de taal van de interface. Het raster toont getallen nog met de scheidingstekens van de rekenkern.",
+    "engineNote": "Het voorbeeld toont de volledige waarde. De celbreedte kan de zichtbare weergave beperken.",
     "selectCell": "Selecteer eerst een cel.",
-    "emptyCode": "Vul een notatiecode in."
+    "emptyCode": "Vul een notatiecode in.",
+    "workbookLocale": "Landinstelling van dit bestand",
+    "localeHint": "Bepaalt de standaardnotatie van getallen en datums en de invoer. Wordt in dit bestand bewaard.",
+    "errors": {
+      "invalidRegion": "Deze landinstelling wordt niet ondersteund.",
+      "nameConflict": "De bestandsinstelling conflicteert met een bestaande bereiknaam.",
+      "staleDocument": "Het rekenblad is intussen gewijzigd. Open de celeigenschappen opnieuw.",
+      "missingSheet": "Het oorspronkelijke werkblad bestaat niet meer.",
+      "previewLoad": "Het getalvoorbeeld kan niet worden geladen.",
+      "approximate": "De rekenkern kan deze notatie voor deze waarde niet weergeven. Kies of wijzig de notatiecode."
+    },
+    "keepFileLocale": "Bestaande bestandsinstelling behouden",
+    "unknownLocaleHint": "Dit bestand heeft geen ondersteunde landinstelling. De bestaande instelling blijft behouden totdat u een regio kiest."
   },
   "clipboard": {
     "paste": "Plakken",

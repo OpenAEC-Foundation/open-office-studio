@@ -25,7 +25,7 @@ import { EditorToolbar, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { Dialoog } from "../werkruimte/Dialoog";
 import "../werkruimte/werkruimte.css";
 import { RibbonFout } from "../Ribbon";
-import { leesNederlands } from "../rekenbladinvoer";
+import { regionaleInvoer } from "../rekenblad/regionaleInvoer";
 import { plaatsFormuleBereik, verwijzingsplek } from "../rekenblad/formuleVerwijzing";
 import { alleenLezen, benoemdeBereiken, gaNaar, Melding, rekenbladHost } from "./rekenblad-opdrachten";
 import { adres, ontleedVerwijzing, serieleDatum, type Cel } from "./rekenblad-logica";
@@ -691,12 +691,10 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
       try {
         const info = api.handle.sheetInfo();
         const target = { sheetId: info.sheetIds[blad], range: { kind: "rowCol" as const, start: cel, end: cel } };
-        const nl = leesNederlands(tekst);
         const r = await api.applyEdits({
           expectVersion: await api.version(),
           steps: [
-            { op: "setCellInputs", target, inputs: [[nl ? nl.invoer : tekst]] },
-            ...(nl?.notatie ? [{ op: "setNumberFormat" as const, target, format: { type: "custom" as const, pattern: nl.notatie } }] : []),
+            regionaleInvoer(target, [[tekst]]),
           ],
         });
         if (!r.ok) throw new Melding(r.failure.message);

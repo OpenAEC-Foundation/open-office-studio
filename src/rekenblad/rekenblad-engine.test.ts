@@ -238,6 +238,9 @@ describe("klembord (#20)", () => {
     expect(waarde(h, 0, "C20").displayText).toBe("");
   });
   it("plakt een HTML-tabel uit een ander programma met Nederlandse getallen en datums", async () => {
+    // De app legt de bestandsregio bij het openen vast. Dit kale testboek
+    // heeft die app-initialisatie niet doorlopen; geef de regio expliciet mee.
+    h.applyOps([{ type: "setDefinedName", name: "_OpenAEC_NumberLocale", refers_to: '"nl-NL"', scope: null, hidden: true }]);
     const html =
       "<html><body><table><tr><th>Post</th><th>Bedrag</th><th>Datum</th></tr>" +
       "<tr><td>Hout &amp; staal</td><td>1.234,50</td><td>1-2-2026</td></tr>" +
@@ -247,7 +250,7 @@ describe("klembord (#20)", () => {
     expect(waarde(h, 0, "B3").displayText).toBe("Hout & staal");
     expect(waarde(h, 0, "C3").value).toEqual({ kind: "number", value: 1234.5 });
     expect(waarde(h, 0, "D3").value).toEqual({ kind: "number", value: 46054 });
-    expect(waarde(h, 0, "D3").displayText).toBe("1-2-2026");
+    expect(waarde(h, 0, "D3").displayText).toBe("01-02-2026");
     expect(waarde(h, 0, "D4").value).toEqual({ kind: "number", value: 0.15 });
     expect(waarde(h, 0, "C4").displayText).toBe("");
   });

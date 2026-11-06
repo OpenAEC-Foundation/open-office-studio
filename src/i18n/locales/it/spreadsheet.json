@@ -191,19 +191,32 @@
       "chf": "CHF (franco)",
       "brl": "R$ (real)",
       "cny": "¥ (yuan)",
-      "geen": "Nessuno"
+      "geen": "Nessuno",
+      "lak": "₭ Lao kip"
     },
     "type": "Tipo",
     "code": "Codice formato",
     "examples": "Codici di esempio",
     "generalHint": "Generale mostra i numeri come sono stati digitati, senza un formato fisso.",
     "accountingHint": "Contabilità allinea i simboli di valuta e i decimali in una colonna; lo zero diventa un trattino.",
-    "fractionHint": "Il motore di calcolo mostra ancora le frazioni come decimali nella griglia; il formato resta nel file ed Excel e LibreOffice mostrano la frazione.",
+    "fractionHint": "The denominator determines the fraction’s display precision.",
     "textHint": "Come testo, l’immissione viene mostrata esattamente come digitata, numeri compresi.",
     "customHint": "Sezioni: positivo;negativo;zero;testo. 0 e # sono posizioni di cifre, . il separatore decimale, , il separatore delle migliaia, [Red] un colore, \"testo\" testo letterale.",
-    "engineNote": "L’esempio segue la lingua dell’interfaccia. La griglia mostra ancora i numeri con i separatori del motore di calcolo.",
+    "engineNote": "The preview shows the full formatted value. A narrow cell may shorten it or show overflow marks.",
     "selectCell": "Seleziona prima una cella.",
-    "emptyCode": "Inserisci un codice formato."
+    "emptyCode": "Inserisci un codice formato.",
+    "workbookLocale": "Workbook locale",
+    "localeHint": "Controls default number/date display and input. Saved in this file.",
+    "errors": {
+      "invalidRegion": "This locale is not supported.",
+      "nameConflict": "The workbook setting conflicts with an existing defined name.",
+      "staleDocument": "The workbook has changed. Reopen Format Cells.",
+      "missingSheet": "The original worksheet no longer exists.",
+      "previewLoad": "The number-format preview could not be loaded.",
+      "approximate": "The spreadsheet engine cannot display this format for this value. Choose or edit the format code."
+    },
+    "keepFileLocale": "Keep the existing workbook setting",
+    "unknownLocaleHint": "This workbook has no supported locale setting. The existing setting is kept until you choose a locale."
   },
   "clipboard": {
     "paste": "Incolla",
