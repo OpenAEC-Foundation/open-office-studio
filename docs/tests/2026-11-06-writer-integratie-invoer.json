@@ -80,7 +80,26 @@
       "geslaagd": 2288,
       "overgeslagen": 0,
       "seconden": 345.42,
-      "nog_open": "Productiebouw, vijf browser-GUI-poorten (incl. actuele lintbron), nativebouw en native/functionele/fysieke acceptatie lopen nog. Geen gepushte appwijziging."
+      "nog_open": "Alle frontend-/productiewebbouw-/vier browser-GUI-poorten en de aanvullende actuele lintbron slagen. Nativebouw actief; native/functionele/fysieke acceptatie nog open. Geen gepushte appwijziging."
+    },
+    "browser_gui": "Lettergrootte, markeerkleur, tekstspiegel en500-pagina-spelling slagen. Aanvullende elf lettergrootte-/Undo-/Redo-/heropenpoorten controleren telkens vóór save dat getDocument actuele tekst en halvepuntgroottes levert; geslaagd in17.568s. Geen algemene interface-/nativeacceptatie.",
+    "native_actief": {
+      "supervisor_pid": 468629,
+      "bouw_pid": 470066,
+      "status": "bouwen",
+      "bronpatch_sha256": "e6296ce0663dc1aa83ea06a21da612711d160b70c92b3c8d5e83de738f4d77cc",
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol"
+      ],
+      "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target"
     }
   },
   "ci": {
@@ -117,6 +136,15 @@
     "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-bouw-native.py.gz": "106ebbebc87b507eecec7f65da48319efba19255150f02e499b3ce8309d5c4d0",
     "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-na-bouw.py.gz": "1c06555cec1677aa94c86fecd7deb6e5ac4cb0f38d38c3a7d476768452b9132f",
     "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-lettergrootte.mjs.gz": "3c37edfad32d1b0eceac2307706df7fc44dd8b076a70ecf9d782f49b702c0872",
-    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-controle.py.gz": "3bfb286ecb82dfad20c165165d9ca56c8f66565a73a057a19340750b1b2c0c6d"
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-controle.py.gz": "3bfb286ecb82dfad20c165165d9ca56c8f66565a73a057a19340750b1b2c0c6d",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-controles.json.gz": "fc612a61f6c64eb5bdc67fb9d8fb530ce689a116edbf3a17b5be9852cdc5f6e6",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-webbouw.log.gz": "f9c5fe0c75729277c53c3ff07ae2f49b0593f84d3557027252c859b6c6077d0b",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-controle.json.gz": "f3786866016fd18c09e2cef77fe1fd34c22b329dfe7e9ba6eaacb86cd277b996",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-lintbron-controle.log.gz": "881ed3d39dfd83146c67b86e007aef17a989e5a8bf941e00628f2fea06d52cb8",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-gui-actuele-lintbron-rapport.json.gz": "dd22982b4468f39f94c98331b9e73bf60fdfe8ce107240483686ff31b8930f69",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-gui-lettergrootte-rapport.json.gz": "dd22982b4468f39f94c98331b9e73bf60fdfe8ce107240483686ff31b8930f69",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-gui-kleur-rapport.json.gz": "08a0159e82ff70fd09de860e85ba21174121e67cb32202841c85eafd1f123abd",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-gui-spiegel-rapport.json.gz": "fca916a99865afa0f079dd609763cfe1589d556d582a4db0e7d57ec581af5869",
+    "docs/tests/writer-integratie-invoer-2026-11-06/kandidaat-gui-spelling-rapport.json.gz": "408ae11b2e1cb755f7741f8fbf3269208d94aa334ac6955545a4983ce5a4cd25"
   }
 }
