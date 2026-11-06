@@ -1,0 +1,30 @@
+{
+  "bronrevisie": "7594c2096995a19b76993fbae5217643541a16d1",
+  "versie": "2026.45.52",
+  "artifact_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42297066502/artifacts/13544397168",
+  "pakket_zip_sha256": "5849d8d1a56583527b477802d15d1b7070b094fb45d8bceaa214e49fa3b21eac",
+  "gui_zip_sha256": "7bad3e0258d5661af704b98519a92cd77f4a65ffdb93ac7f702d9f563b685d9c",
+  "tar_sha256": "cc8cee3e9cab6cba3f879fac71c9c97ea83e89c1a9094973eb2b69f4faa671d4",
+  "appimage_sha256": "3210daab7abb7670ae2c1bdfcaa4ccc0673380337fa3eb2d5b074228ebbf353e",
+  "elf_sha256": "0c3dd4ef9ec7aabf4d93120aab152d11440414d7342fc352ec15ebc2d3e7d316",
+  "apprun_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+  "volledige_squashfs_extractie": true,
+  "gui_geslaagd": true,
+  "grens": "Bestaande CI-start van uitgepakte AppRun; geen nieuwe lokale AppImage-GUI, FUSE-/distro-/ARM-/volledige suiteacceptatie. Bevat callbackcorrectie7594, niet de ongecommitteerde publicatiepoortkandidaat.",
+  "bewijs": {
+    "docs/tests/linux-dev-7594/controle.json": "47a6b519776f7af6489ce5b9e4bea320107328485a857647cfda388b8c73aeb7",
+    "docs/tests/linux-dev-7594/bouw.json": "9d3449e1bcc9be0da62153cd0bba2832fdda52423114e69cf0e865f87dabdf96",
+    "docs/tests/linux-dev-7594/gui-rapport.json.gz": "6a3f5b446167d79b4234d1a58f64c97a1ae5c5a81efa792b9ac3d6e27351d43d",
+    "docs/tests/linux-dev-7594/programma.log.gz": "3aaa4ee4af2269becb65b72866633566ffdb780549344757221dfcdeb4199dec",
+    "docs/tests/linux-dev-7594/nieuw-na-verwerpen.png": "706ec11344e6b10ed4b9ea3d0b067e6405f7158caecba604533d8647a8c998bc",
+    "docs/tests/linux-dev-7594/na-plakken.png": "f9a6dd0a09bfd8d2a212b05605c0cd8ee8a21b39ce23acefabe6799afa563b6d"
+  },
+  "controles": [
+    "Beide ZIP-digests gelijk aan GitHubartifactmetadata, beide CRC volledig groen",
+    "Tarhash en AppImagehash gelijk aan SHA256SUMS/bouw.json",
+    "Volledige SquashFS-extractie, AppRun/ELF/startscripts uitvoerbaar",
+    "AppRun en werkelijke ELF bytegelijk aan apart opgehaalde geslaagde CI-GUI-proef",
+    "CI-proef:3rijke plakronden, tussenbewaring/vervolginvoer, bron-/DOCX-/structuurcontrole, verwerpen/nieuw document"
+  ],
+  "beperkingen": "Geen lokale nieuwe GUI-start of FUSE-/distro-/ARM-/volledige suiteacceptatie. Alle brede Linux-/font-/grote-invoerproblemen blijven afzonderlijk open. De nieuwe ongecommitteerde publicatiepoort ontbreekt."
+}
