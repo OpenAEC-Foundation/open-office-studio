@@ -1,5 +1,6 @@
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import i18next from "../i18n/config";
+import { leesBladZichtbaarheid, verborgenBladMelding } from "../rekenblad/bladzichtbaarheid";
 import { meldWijziging, zichtbaarElement } from "./editorApi";
 import { filtersNaOps } from "./rekenblad-filter";
 import type {
@@ -291,9 +292,14 @@ export async function gaNaarBlad(api: XlsxEditorApi, index: number) {
     index === info.activeSheet
   )
     return;
-  const tab = rekenbladHost()?.querySelectorAll<HTMLButtonElement>(
+  const blad = leesBladZichtbaarheid(api.handle)[index];
+  if (blad?.verborgen) throw new Melding(verborgenBladMelding(blad.naam));
+  const host = rekenbladHost();
+  const tabs = host?.querySelectorAll<HTMLButtonElement>(
     '[data-testid="xlsx-sheet-tabs"] [role="tab"]',
-  )[index];
+  );
+  const tab = host?.querySelector<HTMLButtonElement>(`[data-testid="xlsx-sheet-tabs"] [data-oos-blad="${index}"]`)
+    ?? (!host?.querySelector('[data-oos-blad]') ? tabs?.[index] : undefined);
   if (tab) tab.click();
   else
     api.selectCells(index, {
@@ -314,11 +320,13 @@ export async function bladInvoegen(api: XlsxEditorApi) {
 
 export async function bladVerwijderen(api: XlsxEditorApi) {
   const info = api.handle.sheetInfo();
-  if (info.sheetNames.length < 2)
+  const zichtbaar = leesBladZichtbaarheid(api.handle).filter(b => !b.verborgen);
+  if (zichtbaar.length < 2)
     throw new Melding(melding("keepOneSheet"));
   const index = info.activeSheet;
-  if (index > 0) await gaNaarBlad(api, index - 1);
+  const doel = zichtbaar.find(b => b.index !== index)!.index;
   await voerOpsUit(api, [{ type: "removeSheet", index }]);
+  await gaNaarBlad(api, doel > index ? doel - 1 : doel);
 }
 
 export async function bladHernoemen(api: XlsxEditorApi, naam: string) {

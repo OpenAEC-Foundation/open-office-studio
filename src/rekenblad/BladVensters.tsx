@@ -15,6 +15,7 @@ export function BladVerwijderen({
 }) {
   const { t } = useTranslation("spreadsheet");
   const info = api.handle.sheetInfo();
+  const houdtZichtbaarBlad = bladenLijst(api).filter(b => !b.verborgen).length > 1;
   const naam = info.sheetNames[info.activeSheet] ?? "";
   const [status, setStatus] = useState("");
   return (
@@ -40,13 +41,13 @@ export function BladVerwijderen({
           <button
             type="submit"
             className="rekenblad-primair"
-            disabled={info.sheetNames.length < 2}
+            disabled={!houdtZichtbaarBlad}
           >
             {t("common:delete")}
           </button>
         </div>
         <p role="status" className="rekenblad-status">
-          {info.sheetNames.length < 2 ? t("sheets.keepOne") : status}
+          {!houdtZichtbaarBlad ? t("sheets.keepOne") : status}
         </p>
       </form>
     </Paneel>
