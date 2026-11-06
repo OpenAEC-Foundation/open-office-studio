@@ -26,7 +26,9 @@
     "database:build": "tsc --noEmit && vite build --config apps/database-studio/vite.config.ts && node scripts/controleer-database-bundel.mjs",
     "database:desktop:dev": "cd apps/database-studio && pnpm exec tauri dev",
     "database:desktop:build": "cd apps/database-studio && pnpm exec tauri build",
-    "studio:build": "node scripts/bouw-studio.mjs"
+    "studio:build": "node scripts/bouw-studio.mjs",
+    "voorbeeld:build": "node scripts/bouw-voorbeeld.mjs",
+    "voorbeeld:test": "node scripts/test-voorbeeld.mjs"
   },
   "dependencies": {
     "@betteroffice/docx": "0.5.1",

@@ -72,42 +72,70 @@ async function lees(map) {
 }
 const project = JSON.parse(await readFile("package.json", "utf8"));
 const alleenDatabase = process.argv.includes("--database");
-const namen = alleenDatabase
+const alleenVoorbeeld = process.argv.includes("--voorbeeld");
+const namen = alleenVoorbeeld
   ? [
       "react",
       "react-dom",
-      "lucide-react",
-      "mdb-reader",
-      "sql.js",
-      "buffer",
-      "process",
-      "@tauri-apps/api",
-      "@fontsource/inter",
-      "@fontsource/space-grotesk",
+      "fflate",
+      "@betteroffice/docx-react",
+      "@betteroffice/xlsx-react",
+      "@betteroffice/pptx-react",
+      "@betteroffice/fonts",
+      "@betteroffice/fonts-cjk",
     ]
-  : Object.keys(project.dependencies);
+  : alleenDatabase
+    ? [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "mdb-reader",
+        "sql.js",
+        "buffer",
+        "process",
+        "@tauri-apps/api",
+        "@fontsource/inter",
+        "@fontsource/space-grotesk",
+      ]
+    : Object.keys(project.dependencies);
 for (const naam of namen) {
   const map = await vind(resolve("."), naam);
   if (!map) throw new Error(`Productieafhankelijkheid ontbreekt: ${naam}`);
   await lees(map);
 }
-const uitvoermap = alleenDatabase
-  ? "apps/database-studio/public/licenses"
-  : "public/licenses";
+const uitvoermap = alleenVoorbeeld
+  ? "packages/voorbeeld/dist/licenses"
+  : alleenDatabase
+    ? "apps/database-studio/public/licenses"
+    : "public/licenses";
 await mkdir(uitvoermap, { recursive: true });
-await copyFile("src/stijl/LICENSE", `${uitvoermap}/OpenAEC-style-LICENSE.txt`);
-await copyFile("src/stijl/bron.json", `${uitvoermap}/OpenAEC-style-bron.json`);
+if (!alleenVoorbeeld) {
+  await copyFile(
+    "src/stijl/LICENSE",
+    `${uitvoermap}/OpenAEC-style-LICENSE.txt`,
+  );
+  await copyFile(
+    "src/stijl/bron.json",
+    `${uitvoermap}/OpenAEC-style-bron.json`,
+  );
+}
 // E-mailbackend (Rust) bevat code uit Y-app-ERPNext onder de MIT-licentie.
-if (!alleenDatabase)
+if (!alleenDatabase && !alleenVoorbeeld)
   await copyFile(
     "docs/licenties/Y-app-ERPNext-LICENSE.txt",
     `${uitvoermap}/Y-app-ERPNext-LICENSE.txt`,
   );
 if (!alleenDatabase) {
   for (const bestand of ["LICENSE", "NOTICE"])
-    await copyFile(`vendor/tekstengine/${bestand}`, `${uitvoermap}/tekstengine-${bestand}.txt`);
+    await copyFile(
+      `vendor/tekstengine/${bestand}`,
+      `${uitvoermap}/tekstengine-${bestand}.txt`,
+    );
   for (const bestand of ["LICENSE", "NOTICE"])
-    await copyFile(`vendor/rekenbladengine/${bestand}`, `${uitvoermap}/rekenbladengine-${bestand}.txt`);
+    await copyFile(
+      `vendor/rekenbladengine/${bestand}`,
+      `${uitvoermap}/rekenbladengine-${bestand}.txt`,
+    );
 }
 await writeFile(
   `${uitvoermap}/npm.txt`,
