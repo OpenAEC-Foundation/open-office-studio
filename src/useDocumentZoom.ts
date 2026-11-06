@@ -52,7 +52,7 @@ export function useDocumentZoom({
   const recent = useRef({ opdracht, koppeling, huidig, fout, vlak, zichtbaar, overslaan });
   recent.current = { opdracht, koppeling, huidig, fout, vlak, zichtbaar, overslaan };
   const doel = useRef<number | null>(null);
-  const anker = useRef<{ x: number; y: number; oud: number } | null>(null);
+  const anker = useRef<{ x: number; y: number; oud: number; begin: boolean } | null>(null);
   const frame = useRef(0);
   const hersteld = useRef(false);
 
@@ -89,6 +89,7 @@ export function useDocumentZoom({
     scroller: HTMLElement | null,
     x?: number,
     y?: number,
+    begin = false,
   ) {
     if (!anker.current && scroller) {
       const rand = scroller.getBoundingClientRect();
@@ -96,8 +97,10 @@ export function useDocumentZoom({
         x: (x ?? rand.left + rand.width / 2) - rand.left,
         y: (y ?? rand.top + rand.height / 2) - rand.top,
         oud: schaal(),
+        begin,
       };
     }
+    if (anker.current) anker.current.begin = begin;
     doel.current = zoom;
     if (frame.current) return;
     // Touchpads leveren tientallen gebeurtenissen per seconde: één opdracht per frame.
@@ -112,7 +115,7 @@ export function useDocumentZoom({
         if (!gelukt || !vast || !scroller) return;
         requestAnimationFrame(() =>
           requestAnimationFrame(() => {
-            scroller.scrollLeft = ankerScroll(
+            scroller.scrollLeft = vast.begin ? 0 : ankerScroll(
               scroller.scrollLeft,
               vast.x,
               vast.oud,
@@ -245,7 +248,7 @@ export function useDocumentZoom({
             const breedte = pasBreedte?.();
             const vlak = recent.current.vlak();
             if (breedte && vlak)
-              zoomNaar(begrens((schaal() * (vlak.clientWidth - 48)) / breedte), vlak);
+              zoomNaar(begrens((schaal() * (vlak.clientWidth - 48)) / breedte), vlak, undefined, undefined, true);
           }
         : undefined,
     });

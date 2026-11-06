@@ -79,6 +79,7 @@ import {
   RibbonFout,
 } from "../Ribbon";
 import { useDocumentZoom, type ZoomKoppeling } from "../useDocumentZoom";
+import { gebruikteBreedte } from "../rekenblad/passend";
 import { C, CK, CL, Geschiedenis, Zoom } from "./gedeeld";
 import { useEditorApi, zichtbaarElement } from "./editorApi";
 import { useSneltoetsen, type Sneltoets } from "./sneltoetsen";
@@ -463,6 +464,12 @@ export function RekenbladRibbon({
       ),
     bereik: ".rekenblad-koppen",
     koppeling: zoomKoppeling,
+    pasBreedte: () => {
+      if (!api) return null;
+      const breedte = gebruikteBreedte(api.handle);
+      const schaal = typeof zoom.state.value === "number" ? zoom.state.value : 1;
+      return breedte === null ? null : breedte * schaal;
+    },
   });
   const apis = useEditorApi();
   const api = apis.rekenblad;
