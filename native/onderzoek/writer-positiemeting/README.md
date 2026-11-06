@@ -61,3 +61,12 @@ Ook niet-schrijfbare/niet-configureerbare refs en een gedeeltelijke
 plaatsingsfout moeten de eerdere omwikkelingen volledig terugdraaien. Alle
 waargenomen refs worden bij stoppen hersteld met hun laatste waarde; de oude
 projectie wordt dus nooit teruggezet over een inmiddels nieuwere projectie.
+
+De generatieoptie vindt precies één numerieke ref aan de hand van het echte
+SDK-hookpatroon: generatieref, sessiestaat en effect met diezelfde sessie als
+derde afhankelijkheid. Geen unieke match betekent afwijzen. Zij bewaart maximaal
+zestien setterstapels van 6.000 tekens en de begrensde opaque bronversie op dat
+moment. Een mislukte extra versie-uitlezing wordt als meetfout gemeld en mag de
+echte tellerwijziging niet verhinderen. De originele beschrijver wordt met de
+laatste tellerwaarde hersteld. Deze extra bronqueries/stackopbouw maken ook deze
+opzet ongeschikt als passieve snelheidsvergelijking.

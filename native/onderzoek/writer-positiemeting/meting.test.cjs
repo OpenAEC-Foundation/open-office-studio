@@ -41,3 +41,10 @@ function proef(){let klok=0,update;const obj={eigen:true},fout=new Error('fout')
  const d=m.stop(),paden=d.regels.filter(x=>x.soort==='projectie'&&x.stapel);assert.equal(paden.length,8);assert(paden.every(x=>x.stapel.length<=6000));assert.equal(d.regels.filter(x=>x.soort==='cachetoewijzing').length,12);assert.equal(ref.current.version,11);
  console.log('Stapels en objectbinding begrensd; laatste cachewaarde behouden.');
 })();
+// De generatiereferentie is gekoppeld aan de sessie en de echte naastliggende hooks.
+(()=>{
+ const p=proef();p.m.stop();p.sessie.version=()=> '13';const ref={current:1};const descriptor=Object.getOwnPropertyDescriptor(ref,'current');const m=ctx.plaatsPositiemeting(p.w,p.rij,p.sessie,undefined,[],ref);
+ ref.current++;p.sessie.version=()=>{throw p.fout};ref.current++;const d=m.stop();assert.deepEqual(Object.getOwnPropertyDescriptor(ref,'current'),{...descriptor,value:3});assert(d.regels.some(x=>x.soort==='generatie'&&x.vorig===1&&x.nieuw===2&&x.bronversie==='13'));assert(d.regels.some(x=>x.soort==='generatie'&&x.leesfout));
+ const hook={memoizedState:ref,next:{memoizedState:p.sessie,next:{memoizedState:{deps:[true,false,p.sessie]}}}};const el={__reactFiber$eigen:{memoizedState:hook,return:null}};assert.equal(ctx.zoekEigenProjectieGeneratie({document:{querySelectorAll:()=>[el]}},p.sessie),ref);assert.throws(()=>ctx.zoekEigenProjectieGeneratie({document:{querySelectorAll:()=>[el]}},{}),/Geen unieke eigen/);
+ console.log('Generatieteller, bronversie, leesfout en sessiegebonden hookpatroon behouden.');
+})();

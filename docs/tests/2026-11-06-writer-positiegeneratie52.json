@@ -1,0 +1,688 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "appversie": "2026.45.52",
+  "productiecode_gewijzigd": false,
+  "analyse": {
+    "schema": 1,
+    "runtimebron_sha256": "47fb4bb6d759fa9c695edea4f3220d303936ab4e1e8e3710ce551b47b2488d43",
+    "ronden": [
+      {
+        "ronde": "eerste",
+        "native_groepen": 19,
+        "twee_generatiestappen_bij_dezelfde_bronversie": [
+          {
+            "taak": 1,
+            "bronversie": "131d6b22c8c8e3b4-3",
+            "generaties": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "taak": 2,
+            "bronversie": "131d6b22c8c8e3b4-4",
+            "generaties": [
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "taak": 3,
+            "bronversie": "131d6b22c8c8e3b4-5",
+            "generaties": [
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "taak": 4,
+            "bronversie": "131d6b22c8c8e3b4-6",
+            "generaties": [
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "taak": 5,
+            "bronversie": "131d6b22c8c8e3b4-7",
+            "generaties": [
+              9,
+              10,
+              11
+            ]
+          },
+          {
+            "taak": 6,
+            "bronversie": "131d6b22c8c8e3b4-8",
+            "generaties": [
+              11,
+              12,
+              13
+            ]
+          },
+          {
+            "taak": 7,
+            "bronversie": "131d6b22c8c8e3b4-9",
+            "generaties": [
+              13,
+              14,
+              15
+            ]
+          },
+          {
+            "taak": 8,
+            "bronversie": "131d6b22c8c8e3b4-10",
+            "generaties": [
+              15,
+              16,
+              17
+            ]
+          },
+          {
+            "taak": 9,
+            "bronversie": "131d6b22c8c8e3b4-11",
+            "generaties": [
+              17,
+              18,
+              19
+            ]
+          },
+          {
+            "taak": 10,
+            "bronversie": "131d6b22c8c8e3b4-12",
+            "generaties": [
+              19,
+              20,
+              21
+            ]
+          },
+          {
+            "taak": 11,
+            "bronversie": "131d6b22c8c8e3b4-13",
+            "generaties": [
+              21,
+              22,
+              23
+            ]
+          },
+          {
+            "taak": 12,
+            "bronversie": "131d6b22c8c8e3b4-14",
+            "generaties": [
+              23,
+              24,
+              25
+            ]
+          },
+          {
+            "taak": 13,
+            "bronversie": "131d6b22c8c8e3b4-15",
+            "generaties": [
+              25,
+              26,
+              27
+            ]
+          },
+          {
+            "taak": 14,
+            "bronversie": "131d6b22c8c8e3b4-16",
+            "generaties": [
+              27,
+              28,
+              29
+            ]
+          },
+          {
+            "taak": 15,
+            "bronversie": "131d6b22c8c8e3b4-17",
+            "generaties": [
+              29,
+              30,
+              31
+            ]
+          },
+          {
+            "taak": 16,
+            "bronversie": "131d6b22c8c8e3b4-18",
+            "generaties": [
+              31,
+              32,
+              33
+            ]
+          },
+          {
+            "taak": 17,
+            "bronversie": "131d6b22c8c8e3b4-19",
+            "generaties": [
+              33,
+              34,
+              35
+            ]
+          },
+          {
+            "taak": 18,
+            "bronversie": "131d6b22c8c8e3b4-20",
+            "generaties": [
+              35,
+              36,
+              37
+            ]
+          },
+          {
+            "taak": 19,
+            "bronversie": "131d6b22c8c8e3b4-21",
+            "generaties": [
+              37,
+              38,
+              39
+            ]
+          }
+        ],
+        "eerste_zestien_aanroepers": [
+          {
+            "taak": 1,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 1,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 2,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 2,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 3,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 3,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 4,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 4,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 5,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 5,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 6,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 6,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 7,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 7,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 8,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 8,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          }
+        ]
+      },
+      {
+        "ronde": "herhaling",
+        "native_groepen": 20,
+        "twee_generatiestappen_bij_dezelfde_bronversie": [
+          {
+            "taak": 1,
+            "bronversie": "8077d4b9445588d6-3",
+            "generaties": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "taak": 2,
+            "bronversie": "8077d4b9445588d6-4",
+            "generaties": [
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "taak": 3,
+            "bronversie": "8077d4b9445588d6-5",
+            "generaties": [
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "taak": 4,
+            "bronversie": "8077d4b9445588d6-6",
+            "generaties": [
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "taak": 5,
+            "bronversie": "8077d4b9445588d6-7",
+            "generaties": [
+              9,
+              10,
+              11
+            ]
+          },
+          {
+            "taak": 6,
+            "bronversie": "8077d4b9445588d6-8",
+            "generaties": [
+              11,
+              12,
+              13
+            ]
+          },
+          {
+            "taak": 7,
+            "bronversie": "8077d4b9445588d6-9",
+            "generaties": [
+              13,
+              14,
+              15
+            ]
+          },
+          {
+            "taak": 8,
+            "bronversie": "8077d4b9445588d6-10",
+            "generaties": [
+              15,
+              16,
+              17
+            ]
+          },
+          {
+            "taak": 9,
+            "bronversie": "8077d4b9445588d6-11",
+            "generaties": [
+              17,
+              18,
+              19
+            ]
+          },
+          {
+            "taak": 10,
+            "bronversie": "8077d4b9445588d6-12",
+            "generaties": [
+              19,
+              20,
+              21
+            ]
+          },
+          {
+            "taak": 11,
+            "bronversie": "8077d4b9445588d6-13",
+            "generaties": [
+              21,
+              22,
+              23
+            ]
+          },
+          {
+            "taak": 12,
+            "bronversie": "8077d4b9445588d6-14",
+            "generaties": [
+              23,
+              24,
+              25
+            ]
+          },
+          {
+            "taak": 13,
+            "bronversie": "8077d4b9445588d6-15",
+            "generaties": [
+              25,
+              26,
+              27
+            ]
+          },
+          {
+            "taak": 14,
+            "bronversie": "8077d4b9445588d6-16",
+            "generaties": [
+              27,
+              28,
+              29
+            ]
+          },
+          {
+            "taak": 15,
+            "bronversie": "8077d4b9445588d6-17",
+            "generaties": [
+              29,
+              30,
+              31
+            ]
+          },
+          {
+            "taak": 16,
+            "bronversie": "8077d4b9445588d6-18",
+            "generaties": [
+              31,
+              32,
+              33
+            ]
+          },
+          {
+            "taak": 17,
+            "bronversie": "8077d4b9445588d6-19",
+            "generaties": [
+              33,
+              34,
+              35
+            ]
+          },
+          {
+            "taak": 18,
+            "bronversie": "8077d4b9445588d6-20",
+            "generaties": [
+              35,
+              36,
+              37
+            ]
+          },
+          {
+            "taak": 19,
+            "bronversie": "8077d4b9445588d6-21",
+            "generaties": [
+              37,
+              38,
+              39
+            ]
+          },
+          {
+            "taak": 20,
+            "bronversie": "8077d4b9445588d6-22",
+            "generaties": [
+              39,
+              40,
+              41
+            ]
+          }
+        ],
+        "eerste_zestien_aanroepers": [
+          {
+            "taak": 1,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 1,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 2,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 2,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 3,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 3,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 4,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 4,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 5,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 5,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 6,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 6,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 7,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 7,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          },
+          {
+            "taak": 8,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134535",
+            "fragment": "seRef(null),zn=u.useCallback(ie=>{r.publishDirectInput(ie),At.current+=1},[r.publishDirectInput]);u.useEffect(()=>()=>{Mn.current!==null&&cancelAnimationFrame(Mn.current),Mn.current=null},[]),u.useEffect(()=>()=>{Hn.current!==null&&clearTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCa"
+          },
+          {
+            "taak": 8,
+            "frame": "@tauri://localhost/assets/editors-dj6Nk6Hy.js:12:134768",
+            "fragment": "learTimeout(Hn.current)},[]);let Pr=u.useCallback((ie,F)=>{At.current+=1,un.incrementStateSeq(),un.requestRender(),$n(ie,F)},[$n,un]),cr=u.useCallback(()=>Pr(\"remote\",!0),[Pr]),br=u.useCallback((ie,F,pe=!1,Ae=!1,lt=\"local\",Ct,ut=!1)=>{let Ue=r.session;Ue&&Kt.current?.(Ue.canUndo(),Ue.canRedo());let yt=l?.presence,wt=Ue?.selection()??null,Jt=wt?JSON.stringify([wt.anchor,wt.head]):null;if(yt&&Ue&&mr.current!==Jt){mr.cu"
+          }
+        ]
+      }
+    ],
+    "uitkomst": "Beide generatieverhogingen vinden plaats bij dezelfde bronversie. Eerste: directe invoer publiceert en verhoogt de generatie. Tweede: state-/renderpublicatie verhoogt opnieuw. Iedere generatie veroorzaakt in deze route een volledige positieopbouw. De eerder onderzochte gereedheidswissel is niet deze gemeten aanroeper.",
+    "grens": "Twee eigen Linux-proeven op 45.52. Geen volledige causaliteits-/coalescentieacceptatie; remote bewerkingen, echte bronwissels, preview, Undo/Redo en andere opdrachten moeten hun invalidatie behouden. Meting wijzigt alleen eigen observatoren en leest extra bronversies; geen CPU-/FPS-/snelheidsclaim.",
+    "vervolg": "Integreer main en ontwerp daarna één begrensde invalidatie voor dezelfde synchrone lokale invoerpublicatie, met microtaskgrens, sessie-/bron-/generatiebewaking, behoud van renderpublicatie en volledige functionele/fysieke GUI-pariteit."
+  },
+  "tests": "119 Python-tests slagen; echte JS-observator bewaart tellerwaarden/beschrijvers, weigert niet-eenduidig hookpatroon, verstoort echte generatieverhoging niet bij een mislukte extra bronversie-uitlezing. Beide fysieke proeven behouden alle bron-, raster-, layout- en foutcontroles.",
+  "grenzen": [
+    "Alleen eigen referentie-ELF, documentkopieën en geïsoleerde vensters; geen gebruikerswerk of SDK gewijzigd.",
+    "De extra versie-uitlezingen en stackbouw zijn instrumentatie; geen passieve snelheidsmeting of volledige invalidatieacceptatie.",
+    "Geen gerepareerd issue, nieuwe download, platform-/editieacceptatie, release of migratievlag."
+  ],
+  "bestanden": [
+    {
+      "bestand": "writer-positiegeneratie52/analyse.json.gz",
+      "sha256": "78ab7e64c63b6ebe0d5aad545a1440ea7b582d153575d264de16103547207e94",
+      "origineel_sha256": "4333cfc0b3e2fa47d3c40f77045751aaf249611c31d9fd3fdcf1af1a2cab3617",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/analyseren.py.gz",
+      "sha256": "eb91e0aa8a6cff28f92fe8efba5133d690b5f1125fe9eaa8804ace819ee775ef",
+      "origineel_sha256": "5cd1bd332520e604f66acb7cb551e70d5f894b6583310847b7e91baeddab4900",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/eerste/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiegeneratie52/eerste/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiegeneratie52/eerste/profiel.json.gz",
+      "sha256": "eedd973433b5a7b913530406cc96748f06c58807dea1f00616da6edfb27dc7b6",
+      "origineel_sha256": "1bfeb57022c8405d0ea08e755029407960bb0ca03d5a4030f0d38adb5f04779a",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/eerste/profiel.png",
+      "sha256": "c87ae19d8d121cb59038e0a9921aa17811622eaeeda606675e6cd1ce425304c3",
+      "origineel_sha256": "c87ae19d8d121cb59038e0a9921aa17811622eaeeda606675e6cd1ce425304c3",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiegeneratie52/eerste/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/eerste.log.gz",
+      "sha256": "4e5b4dc9a07241a8d9893e6e1de1a2739bed0779d30104c4da1ae22fea445992",
+      "origineel_sha256": "07e961440d5b83505c7874474ca72c399d42ab1c7a4b128e96bc81de833d724d",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/fysieke-proef.py.gz",
+      "sha256": "de6b775efb3d63d03cfa5611e527e5a6e3278892e04e6c5ec63a7afc2a436960",
+      "origineel_sha256": "4075ea8729196e5f9a21afdacd889300b8ad761740f749092794d26c5c9971d9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/herhaling/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiegeneratie52/herhaling/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiegeneratie52/herhaling/profiel.json.gz",
+      "sha256": "dbfc1acbc553f14e61539bf1708b346e6520c4efd437c51340371734599d127a",
+      "origineel_sha256": "a59c335c30a5e27ba1e82edf91c417a9d660dbe5a02171816323701e0e06bbb8",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/herhaling/profiel.png",
+      "sha256": "28b38d2d42053b48a6dd7fa4cda142464d2f0e85c0f958ebeecab40d0e1f06a7",
+      "origineel_sha256": "28b38d2d42053b48a6dd7fa4cda142464d2f0e85c0f958ebeecab40d0e1f06a7",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-positiegeneratie52/herhaling/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/herhaling.log.gz",
+      "sha256": "3fefc35e3b656a47c103e1eeedc1cf401481b142fc150b33f6b97524065a119f",
+      "origineel_sha256": "b20b480c6e04cf8f6147a89f9e939fe95e4de6f9178c465d265c3de1796570a9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/manifest.json.gz",
+      "sha256": "b36fdded5854fe56a7a63e54ed72ffb69eee345660602bf09fc6b69d5c0fb07f",
+      "origineel_sha256": "e1d199e68adff910c52af8739253b47066a830f0f7859c6ee0eff13238782ed6",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/meten.log.gz",
+      "sha256": "be0c056e81971f1a26630ba4a91fc541d4fe9b09d82a4434c4b00dcd3689e9ee",
+      "origineel_sha256": "7d8da754f068d6cff56ec974b5a800ee1e98d04b907cd71428ba14e469637dd2",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/meten.py.gz",
+      "sha256": "33bfaf56102091266a965e41029e95ad7d1a05e60d9b19ffb194a7626ed3d79d",
+      "origineel_sha256": "a061b6f6bc394ab45abfc2b0bb5d397462399c7f49180957e56b821dcd664070",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/python.log.gz",
+      "sha256": "bbac7e7d6a0050a769b9d94c5e205064198f6d92a76a0189adc7accb27cd28e5",
+      "origineel_sha256": "0a5a976ac36e9ec44c896d8adf4e74b420b90721ee477d324bd03d218af21692",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/vastleggen.py.gz",
+      "sha256": "cf5e5e4efd7f5be0bcd400ea880ebe46fdf8746154a1806c2b3563fdf88506a8",
+      "origineel_sha256": "cd717cb7f0cc3e14587be6991d7473ed8385c45b7521123b69e478846182e164",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/bron/native/onderzoek/writer-positiemeting/meting.js.gz",
+      "sha256": "3bddc32d7be5e067dd653dfa53ff39c0e97d613f1524b98742429a7c45d55118",
+      "origineel_sha256": "2592d2f30b4d76f64fef4896230792063511618192faf6026fc0c65a1b80a1a1",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/bron/native/onderzoek/writer-positiemeting/meting.test.cjs.gz",
+      "sha256": "182df654ebbe493022fee097cccd0b34ceb5d1269261943f9a8ef8cc6e268576",
+      "origineel_sha256": "b7d7dca235107718f0e51ec51d7e8037db7c28ca5379cbb827498ba2c8d7bddc",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-positiegeneratie52/bron/native/onderzoek/writer-positiemeting/README.md",
+      "sha256": "773568851caa14757ce411d1388fb0643afda1df98c403f98b607d5b5fb7ccd7",
+      "origineel_sha256": "773568851caa14757ce411d1388fb0643afda1df98c403f98b607d5b5fb7ccd7",
+      "gzip": false
+    }
+  ]
+}

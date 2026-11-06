@@ -1,5 +1,5 @@
 /* Alleen metadata van de eigen test-WebView; geen wijzigingen aan bron of mutatieroute. */
-function plaatsPositiemeting(w,rij,sessie,projectiePrototype,projectieRefs=[]) {
+function plaatsPositiemeting(w,rij,sessie,projectiePrototype,projectieRefs=[],generatieRef) {
   const herstel=[],regels=[],groepen=new Map(),grens=4096,begin=w.performance.now();
   let actief=true,taak=0,volgende=0,fase='buiten',gemist=0,updates=0;
   const tijd=()=>w.performance.now()-begin;
@@ -32,6 +32,17 @@ function plaatsPositiemeting(w,rij,sessie,projectiePrototype,projectieRefs=[]) {
     for(const naam of ['paragraphSpans','storySegments','storySegmentUnits','storySegmentUnitDigests','storiesChangedSince']) {
       if(typeof sessie[naam]!=='function')continue;
       vervang(sessie,naam,oud=>function(...args){const t=w.performance.now();let antwoord;try{return antwoord=oud.apply(this,args)}finally{tel(naam,naam==='storiesChangedSince'?undefined:args[0],w.performance.now()-t,Array.isArray(antwoord)?antwoord.length:0)}});
+    }
+    if(generatieRef){
+      const descriptor=Object.getOwnPropertyDescriptor(generatieRef,'current');
+      if(!descriptor?.configurable||!descriptor.writable||!('value' in descriptor)||typeof descriptor.value!=='number')throw Error('Generatieref niet observeerbaar');
+      let waarde=descriptor.value,sporen=0;
+      Object.defineProperty(generatieRef,'current',{configurable:true,enumerable:descriptor.enumerable,get(){return waarde},set(nieuw){
+        const vorig=waarde;waarde=nieuw;let bronversie=null,leesfout=false;
+        try{const v=sessie.version?.();if(typeof v==='string'&&v.length<=128)bronversie=v}catch{leesfout=true}
+        meld('generatie',{vorig,nieuw,bronversie,leesfout,stapel:sporen++<16?String(new Error().stack).slice(0,6000):null});
+      }});
+      herstel.push(()=>Object.defineProperty(generatieRef,'current',{...descriptor,value:waarde}));
     }
     for(const [index,ref] of projectieRefs.entries()){
       const descriptor=Object.getOwnPropertyDescriptor(ref,'current');
@@ -85,4 +96,16 @@ function zoekEigenProjectieRefs(w,sessie){
       }
   if(!gevonden.size||gevonden.size>8)throw Error('Geen begrensde eigen projectierefs: '+gevonden.size);
   return [...gevonden];
+}
+
+function zoekEigenProjectieGeneratie(w,sessie){
+  const gevonden=new Set();
+  for(const el of w.document.querySelectorAll('.office-tabpaneel:not([hidden]) .paged-editor'))
+    for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)
+      for(let h=f.memoizedState,n=0;h&&n<1500;n++,h=h.next){
+        const ref=h.memoizedState,effect=h.next?.next?.memoizedState;
+        if(typeof ref?.current==='number'&&h.next?.memoizedState===sessie&&Array.isArray(effect?.deps)&&effect.deps.length===3&&effect.deps[2]===sessie)gevonden.add(ref);
+      }
+  if(gevonden.size!==1)throw Error('Geen unieke eigen projectiegeneratie: '+gevonden.size);
+  return [...gevonden][0];
 }

@@ -1,0 +1,1124 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis": "48a75af8575f7b4013675f883428e721961224c1",
+  "besluit": "45.54 niet promoten als prestatieverbetering: beoogde dubbele positieopbouw blijft aanwezig en typwandtijd vrijwel gelijk. Geen bewezen reparatie van deze runtimeoorzaak.",
+  "productie": "45.52/alpha57 ongewijzigd",
+  "voorstel": "Uitsluitend rendergereedheid gelijk aan bestaande live gereedheidsref; geen opslagguardwijziging uit verworpen 45.53.",
+  "programma": {
+    "versie": "2026.45.54",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/open-office-studio-45.54-replicagereed",
+    "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+    "sdk_sha256": "e9590b568532b8bdda26057baf1e742493e54cd29bb86c476bd4481667721467",
+    "hergebruikte_target": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target",
+    "geen_gui_acceptatie": true
+  },
+  "bouwen": [
+    {
+      "naam": "assets",
+      "code": 0,
+      "reden": null,
+      "seconden": 40.00372357299784,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/kopieer-assets.mjs"
+      ]
+    },
+    {
+      "naam": "frontend",
+      "code": 0,
+      "reden": null,
+      "seconden": 100.00654052300524,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--maxWorkers=2",
+        "--minWorkers=1"
+      ]
+    },
+    {
+      "naam": "typescript",
+      "code": 0,
+      "reden": null,
+      "seconden": 35.00280037700577,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ]
+    },
+    {
+      "naam": "engines",
+      "code": 0,
+      "reden": null,
+      "seconden": 5.001147907998529,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/test-kantoor-engines.mjs"
+      ]
+    },
+    {
+      "naam": "opdrachten",
+      "code": 0,
+      "reden": null,
+      "seconden": 15.003118863001873,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/test-opdrachten.mjs"
+      ]
+    },
+    {
+      "naam": "weekversie",
+      "code": 0,
+      "reden": null,
+      "seconden": 5.0010252079955535,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/controleer-weekversie.mjs"
+      ]
+    },
+    {
+      "naam": "python",
+      "code": 0,
+      "reden": null,
+      "seconden": 5.001440259999072,
+      "opdracht": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ]
+    },
+    {
+      "naam": "desktop",
+      "code": 0,
+      "reden": null,
+      "seconden": 845.0537152640027,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/@tauri-apps/cli/tauri.js",
+        "build",
+        "--no-bundle"
+      ]
+    }
+  ],
+  "gui": [
+    {
+      "fase": "tekst",
+      "code": 0,
+      "seconden": 25.94105739999941,
+      "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/scripts/test-writer-rust-tekst-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/open-office-studio-45.54-replicagereed",
+        "--versie",
+        "2026.45.54",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-tekst"
+      ]
+    },
+    {
+      "fase": "plakken",
+      "code": 0,
+      "seconden": 24.182428848995187,
+      "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/scripts/test-writer-rijk-plakken-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/open-office-studio-45.54-replicagereed",
+        "--versie",
+        "2026.45.54",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-plakken",
+        "--rondes",
+        "3",
+        "--bewaar-na-ronde",
+        "1",
+        "--maxduur",
+        "180",
+        "--vereis-rust-plakken"
+      ]
+    },
+    {
+      "fase": "lang",
+      "code": 0,
+      "seconden": 110.9314424760014,
+      "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/scripts/test-writer-lang-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/open-office-studio-45.54-replicagereed",
+        "--versie",
+        "2026.45.54",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-lang",
+        "--herstelstart",
+        "--verwacht-rust-tekst",
+        "--verwacht-incrementele-bron",
+        "--verwacht-worker-layout",
+        "--verwacht-worker-lettertypen",
+        "--spelling-weergave",
+        "--framebasis",
+        "--workerbron"
+      ]
+    },
+    {
+      "fase": "referentie-a",
+      "code": 0,
+      "seconden": 29.093441360004363,
+      "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/native/onderzoek/writer-desktopcache/meten.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie",
+        "--versie",
+        "2026.45.52",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-abba/referentie-a"
+      ],
+      "achtergrond_bij_start": []
+    },
+    {
+      "fase": "kandidaat-a",
+      "code": 0,
+      "seconden": 30.210779678993276,
+      "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/native/onderzoek/writer-desktopcache/meten.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/open-office-studio-45.54-replicagereed",
+        "--versie",
+        "2026.45.54",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-abba/kandidaat-a"
+      ],
+      "achtergrond_bij_start": []
+    },
+    {
+      "fase": "kandidaat-b",
+      "code": 0,
+      "seconden": 29.919638327002758,
+      "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/native/onderzoek/writer-desktopcache/meten.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/open-office-studio-45.54-replicagereed",
+        "--versie",
+        "2026.45.54",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-abba/kandidaat-b"
+      ],
+      "achtergrond_bij_start": []
+    },
+    {
+      "fase": "referentie-b",
+      "code": 0,
+      "seconden": 29.649537725999835,
+      "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/native/onderzoek/writer-desktopcache/meten.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie",
+        "--versie",
+        "2026.45.52",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/replicagereed54/gui-abba/referentie-b"
+      ],
+      "achtergrond_bij_start": []
+    },
+    {
+      "fase": "positiecache",
+      "code": 0,
+      "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640",
+      "helper_sha256": "96a86d2a6785c617d7ebb86266be3b77579a9ab9737019d002728023d9717412"
+    }
+  ],
+  "typen": {
+    "punten": [
+      {
+        "naam": "kandidaat-a",
+        "versie": "2026.45.54",
+        "ms": 6893,
+        "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640"
+      },
+      {
+        "naam": "kandidaat-b",
+        "versie": "2026.45.54",
+        "ms": 6854,
+        "programma_sha256": "fcfefb13b51a0fdcb29b7b9b80dd3529bb2a1e9b298ecfd21599de2edb942640"
+      },
+      {
+        "naam": "referentie-a",
+        "versie": "2026.45.52",
+        "ms": 6771,
+        "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039"
+      },
+      {
+        "naam": "referentie-b",
+        "versie": "2026.45.52",
+        "ms": 7054,
+        "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039"
+      }
+    ],
+    "verhouding_nieuw_oud": 0.9943580470162748,
+    "grens": "Eén ABBA op één 129-paginabron; ongeveer 0,6% verschil is geen overtuigende winst. Geen algemene FPS-/CPU-/soepelheidsclaim."
+  },
+  "positiecontrole": [
+    {
+      "ronde": "eerste",
+      "native_groepen": 19,
+      "volledige_projecties": 38,
+      "verhalen_per_projectie": 1537
+    },
+    {
+      "ronde": "herhaling",
+      "native_groepen": 19,
+      "volledige_projecties": 38,
+      "verhalen_per_projectie": 1537
+    }
+  ],
+  "tests": "1878 frontendtests zonder skips, TypeScript, engines, opdrachten, weekversie, 119 Python-tests en Linux no-bundlebouw slagen. Canonieke tekst, rijk plakken/bewaren/verwerpen, 500 pagina/herstel/spelling/worker/framebasis/workerbron slagen. Vijf van acht gerichte SDK-fragmentgevallen falen op oude bron, acht slagen op nieuwe. Dat bewijst niet dat deze hypothetische gereedheidsafwijking de gemeten dubbele opbouw veroorzaakt.",
+  "beeldcontrole": "Vier eindbeelden: documentuitsnede [320,210,1140,950] buiten cursor [491,347,496,366] bytegelijk op pixelniveau. Geen volledige UI-/thema-/dialoogacceptatie.",
+  "afkeuringen": "Eerste frontendopzet mist clsx-context in eigen SDK-kopie: vijf suite-afkeuringen, log behouden. Afhankelijkheidscontext alleen-lezen gekoppeld; alle oorspronkelijke tests behouden. Eerste GUI-wachtopzet vindt geëindigde eerste bouw-PID en start geen GUI; log bewaard. Geen tijdgrens/assertie versoepeld.",
+  "grenzen": [
+    "Eigen profielen/DBus/Xvfb/documentkopieën; oorspronkelijke SDK, installatie, gebruikersdocumenten, .claude en referentie-ELFs behouden.",
+    "Bouwmarker geen_gui_acceptatie beschrijft bouwfase; latere beperkte GUI-successen geven geen volledige acceptatie.",
+    "Geen 45.54-installers, Windows/macOS, zeveneditiecontrole, release, downloadpromotie, gesloten issue of migratievlag.",
+    "main is inmiddels gewijzigd: 92 issues open, PR116 mergeconflicten. 45.54-proef op vaste oude basis bewijst geen geïntegreerde bron.",
+    "Volgende stap: werk echte generatieverhogingen uit de afzonderlijke 45.52-opname af en integreer main met behoud van beide lijnen."
+  ],
+  "bestanden": [
+    {
+      "bestand": "writer-replicagereed54/actief.json.gz",
+      "sha256": "a4c37c692d9cccfc4f0f80ef510cd2ed6b03b6a1941fa09a1c990ab79f3ec7d7",
+      "origineel_sha256": "b93965c346e35b36922888502d23068c2deec3b72de094dffc6db643c16ecbb2",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/afhankelijkheden-herstel.json.gz",
+      "sha256": "5a4efc72fcd697f193968b4ba79202052c9001523ccde0e5d5a2780100255128",
+      "origineel_sha256": "114ccfbfd7304ce33190310ca64e02338e0746982ff903abf0558d700db567c7",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/assets.log.gz",
+      "sha256": "1f634f2278c024eec1d3a6729574a44e4952f53b3094b2c4c3afd5d12bb06e74",
+      "origineel_sha256": "084b714347c539249e5a52e4de3d187c0601b62b43e4a950f656238d471f60df",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/beeldvergelijking.json.gz",
+      "sha256": "1c1b8334bc622313aa27858950542c67d4f0815b3fd8cbfffe8b16ed9ec837d4",
+      "origineel_sha256": "d5982da6b3fcb587dbaa5d200c64dd59710a5e2842ef3ff66cd3a4054a28fab9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/beeldvergelijking.py.gz",
+      "sha256": "9147aedc2c8d15b9242ac750fba2f3ae322a181324f1f45527dac4517ada3bc4",
+      "origineel_sha256": "c01c6ad751603245ad88dab78a20afc69571604c2f3b3d2cf5d4818e8b15a979",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bouwen-herhaling.json.gz",
+      "sha256": "cb51db9a6e110b11e2d21b811d7ed9a9c8f2646ba3ecdf56ab0f52e99d3eddc9",
+      "origineel_sha256": "6e479e5ebd22505bcf959b523dc3063937b7c405ec4e40e4ecac55be1f1b76ea",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bouwen-herhaling.log.gz",
+      "sha256": "8d6c79a34def878753c620409706c04c3c3db7c3b6bd677befdc66b074fc57e5",
+      "origineel_sha256": "f44db2769738789b210f35e8a28a8962805fff0da768aeaf6c73c5596ce17a43",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bouwen-herhaling.py.gz",
+      "sha256": "3053f65f9915f226136f33f530cbccc3cea1bfb29ee15032ca4a66550b8a7e1b",
+      "origineel_sha256": "22e9d3487c12ad7f72e1b5a95c255ad828d5c33696805dce1c4ae068e5ac7e08",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bouwen.json.gz",
+      "sha256": "d934da7ce88520f1dfdc0cc2a87674e5ecf0738af2b6f9eac05ffc6419e10a4e",
+      "origineel_sha256": "e6cdf122454a7ab8bc73767161b4b3d1d70c6053d001c637d4674a39e976f683",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bouwen.log.gz",
+      "sha256": "6b2264d8bb09277116a0a544c1afe5002c87794c385d47256d6bc221e74b16b7",
+      "origineel_sha256": "850c8dff830f64fc90b097b5b452db39c52f97bd89f2638fd438ad9a9b6a8129",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bouwen.py.gz",
+      "sha256": "205e1be7aca17f3205d0a084113498b1f615af06eaab7cbc66737f314296dfcc",
+      "origineel_sha256": "564057abbb7ff1f94c2c9155136880158c6040c2628711d0e0baa3758e5a4f3e",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bronnen.json.gz",
+      "sha256": "74a5b9e801acc2e4bcbb57dfc00145497301143582f20566df8d07138e38c368",
+      "origineel_sha256": "bb7a4ad91c901a8b47113628080043916e2fb051dc449c98c6f93231a183a52b",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/controleer.py.gz",
+      "sha256": "d23676db9b9b599359f711d41033ba4a4fc24bd76efa4b858721728eb3232fe7",
+      "origineel_sha256": "82d5292186ee1bc33d633240d769ade3609f947d889c32c1847a5d8019bc2dce",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/desktop-herhaling.log.gz",
+      "sha256": "62316a1ef3ea7f8545117e2a04d85e1dc1fea1b077e6f9680f5c595506c7b2e1",
+      "origineel_sha256": "b3fe1cafa8e9adeb3c2b50c740f7c018a151ad8eacc93e9b5e959d9e437d8f9e",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/engines-herhaling.log.gz",
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14",
+      "origineel_sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/frontend-herhaling.log.gz",
+      "sha256": "96f1a89c2337cc9fa6e4516a698aaf3e9ebc84ee90f8a4dfbb913010a0e4c77e",
+      "origineel_sha256": "e155d43e86530246811ee8bda4028e40ec308c457790a2d1d734d2b316f7e075",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/frontend.log.gz",
+      "sha256": "e7a7c2067ab821291093a8cc4e57053a0013c55aa5d8e51121acb8f879627fbf",
+      "origineel_sha256": "22248a5cd840f9104171ab1a909244ef50e8681fb15dfd20b9b722a60670ed00",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gebouwd.json.gz",
+      "sha256": "f0c6604c10f62ef9c9df6672dc96eadde92b8614429a0e861c47cf26215595b9",
+      "origineel_sha256": "e82edfe72f9ab273a10902b7d460470cb15787d80302e538205ce7c71d0bc3e6",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-bronnen.json.gz",
+      "sha256": "c2413265083cdd6cf8b7573e6c8d3f4427e49127068e84f3e267ca03b5d10e23",
+      "origineel_sha256": "9e86b742c30c4bceb2a34bb5048a8bc0a115d3e969248a20868ff35bf400e8a5",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang.log.gz",
+      "sha256": "df513d74da21ea5e7cd98e9ea927c7d0cdeb2d6961969a527894756aa36a38d2",
+      "origineel_sha256": "d2150a7220d4958318321743996988278367aff6b479d533fc269c484682cffe",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-na-bouw.log.gz",
+      "sha256": "bddfeee250cf241394240e8e282be04c94a1133c43c4ec7b3c3a5e5c8c6baede",
+      "origineel_sha256": "51c4cd9b1dd9521615ce14b33c92f9cfbaf458a13f8d67be511d7e1b2dfd89ab",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-na-bouw.py.gz",
+      "sha256": "6948322978a34dee10486902ce8c414c8ba7b49196d664c933b3684923099969",
+      "origineel_sha256": "b67ec0b6556231794751084589852dbe4d97c45cfea8fbc4f3e434ade98660a8",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken.log.gz",
+      "sha256": "42fb258d2c5c6b6a0f38f9714a6f4a6a69af3684a06d9cfc312d5d60a0a75ca9",
+      "origineel_sha256": "f759b94f73f8348e0483b09659f63fc72fa72ad14545a7de747abc47dbf4ba57",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst.log.gz",
+      "sha256": "3f486c41e2e99404be8986ed4cec960bc260668e9e6575ab03961fe79f423d1c",
+      "origineel_sha256": "6225b06da133ad50e1e1cde8da9c5834404bd755fd355036a48c19054c6e8fe9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-voortgang.json.gz",
+      "sha256": "df5debbdf8f7ab84d4addad2095b30cd503780e13d309220ea37a16fc129a6ae",
+      "origineel_sha256": "b44db30dcc4c4d5c08809938c2dc9f855b6369ab2434ea51f230f164cc89e772",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-wachtopzet-oud.log.gz",
+      "sha256": "59748b2e941a08f33e594728953ead84a5b5c8dfae5cfce2ba9da427c9474cbc",
+      "origineel_sha256": "36d20ec40688381528b13c48ee65f0dc59151e297e1a259c4894ff2876cb47d9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/hervatten.json.gz",
+      "sha256": "f901ff4358d8024071665b1b41967c4ab7e287317a78db222b171d76ce925388",
+      "origineel_sha256": "090f41e245253bef4e20d88514d144ddbf872bfe69b59c0fbd3274ef768751a9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/integratie-commit.log.gz",
+      "sha256": "8fbcf66b44731908a9ef5996c2bb573e62e7265e7785171e1de8d2425da0a3f3",
+      "origineel_sha256": "d0e3bd2d72e0fe3efdcd6fe7fb04e406319f3e3f1f89deb45d36bd4959cf0d47",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/integratie-verkenning.log.gz",
+      "sha256": "0d319202debaa0ce40e1e0eb32314ea8b9d3d42c0b844cfb45aa2d5e1f25ad99",
+      "origineel_sha256": "dbf31304ab7ceabd3f5b617d0effa778a68da0298bf9f21ea47f7b0fcdcc8673",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/meting-zonder-generatie.js.gz",
+      "sha256": "2a83c7813dd54603a7fea444fc51a6b34fe8a5be5a72f5b7805400d1cfb7489f",
+      "origineel_sha256": "3db2eecc25398773d2aa8a41f9bccbde987b7e28c12ceda7712cbef650a5b133",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/opdrachten-herhaling.log.gz",
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16",
+      "origineel_sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/open-issues.json.gz",
+      "sha256": "b42e959f6e783a7e56f727c1888cd0985355c1cfe0e6985c2c4a9b93fde9d801",
+      "origineel_sha256": "721b2adbe201cd8900717d11dd8480f702af56ad6b78f61b7ca192bee5fdff9b",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/patchcontrole.json.gz",
+      "sha256": "30e35510b60f47031abd50aa85214f1ac78ef38bbcd8c8f46f650e6e324deaea",
+      "origineel_sha256": "c5d2e47f1af3d157f2a2b43cb0371582a4415aeaf7214a20641534e779439362",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/patchcontrole.log.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "origineel_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/patchcontrole.py.gz",
+      "sha256": "ba41f04a5db0ce4bc8cbdf9b2ddb86c54b296d0ef4f401d42c41d56258883102",
+      "origineel_sha256": "5f24b089f71376a7e59214a6ff991a7f7b8fe773699d42d4dc51eb1a8f06ecbc",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/pr116.json.gz",
+      "sha256": "327d519a212ee3dd84c82d4339c130057a1c7cb2061882d85721b90f295b834c",
+      "origineel_sha256": "04fb645219df9be31180a0c91fb51bdf3a47a7566b743b557602de2afd842045",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/python-herhaling.log.gz",
+      "sha256": "59e16ad3f757015a102a7554aad5666f1d8d6fd04a85b9f3c33271aff1dec995",
+      "origineel_sha256": "a41302be24c7c749dbfb32e013d9377914c88d043ed8ca028270a6682440b057",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/regressie-oud.log.gz",
+      "sha256": "c86863b148b0898d4beb1c710215dc6c04731bf12678631cce2366b741de079d",
+      "origineel_sha256": "d44a535082951dfba955f296639184b58801b32b42f17d111b868d168052e3b4",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/replicagereed.test.ts.gz",
+      "sha256": "c9a0f047379dc85dd5c3dc6223f722290bab4ce0f07017a9d6c5962519330c24",
+      "origineel_sha256": "2efd15db95398017d74cf20f82714608a07349d486934946067796662ec18c10",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/typescript-herhaling.log.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "origineel_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/vastleggen.py.gz",
+      "sha256": "f89eded5f7c5cc10b3c2db02d8c96eae28f5aaab18fb2d3e1af58138af2cb3dc",
+      "origineel_sha256": "d5be5eae6cac7f35a0dbe6487878a958fdbecc890f6a3b7f8bf67f0de8cd8cce",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/voorbereiden.log.gz",
+      "sha256": "6e41b80cd4748868dc41e081b03badd0989a5543e1def128d6d8b21c4a9195b6",
+      "origineel_sha256": "e951da2cbbdee66174a484465d5e996dbcf1511460e0c5788b274b2f4c68a919",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/voorbereiden.py.gz",
+      "sha256": "bbf27381a4564485139709e88784f7a9acba04d6477bde1db9650a4ea44d3045",
+      "origineel_sha256": "7466c48a07c1804b2e043fd8a3dade6e4850ef604209c388b96e7b028cfd7eec",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/voorbouw.py.gz",
+      "sha256": "f0c3c40042a3bca21f9e19d43a6186571217be3c89146f7c0fefeb5e5ce68054",
+      "origineel_sha256": "80e309e523aa2342dda5dc49f0d25ff9d998ea70e75642e607305b766a50b008",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/weekversie-herhaling.log.gz",
+      "sha256": "f045fc0dcb9ee354a5da1fc79e4674a89ebcccba7bb9964ef77925ff21f70634",
+      "origineel_sha256": "d3eff03dc614f4a5c4fb49de21ef1c8dd0a39e8b8df9a2bfa4371276413985bd",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/apps/database-studio/src-tauri/Cargo.lock.gz",
+      "sha256": "ac70b4c3a2357e1a3b5a6210edd0e46ce883994a1a4dc6624d257e9c03eb8bb8",
+      "origineel_sha256": "c1eb890576b2725426b7caf877013d66b48c30878f38fa0bd3f4b2f0c3358591",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/apps/database-studio/src-tauri/Cargo.toml.gz",
+      "sha256": "7e0d19432034e746a3340fd612d32690e095d523332ec01e9f2a2cacef505094",
+      "origineel_sha256": "183890c6e8837653f305eb6cb3377ef24359fe7c21fe981508ecb4d570abee34",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/apps/database-studio/src-tauri/tauri.conf.json.gz",
+      "sha256": "332eae59684711d0883597e4e50eb5643f4d16fa65bd5a300089c19640d21a75",
+      "origineel_sha256": "586ac893439a1ead2c25cfd92d2cf4f9e69b8f7673116bf7081f83e0ea0f4c18",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/package.json.gz",
+      "sha256": "10beb0d6b319015bbcf27d591c3b9da35608eae51e0ccb0577c6f6a2026e5661",
+      "origineel_sha256": "80cf37670adfd3520296ff3f985c2ba30e9eb097c72d22fee808196d67dbfce5",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/patches/@betteroffice__docx-react@0.5.1.patch.gz",
+      "sha256": "7823dfb11822ef2086e6387975fdf6cea050e8a63f726257c27b1186a9df1183",
+      "origineel_sha256": "03c721e1f3ca5f2a7a770517af083705c2fd12fdf3e11408e655409a1b9afbe6",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/pnpm-lock.yaml.gz",
+      "sha256": "88d926391c002295d6810f745679dbb26859c22dd8193fd13711be25aa51829e",
+      "origineel_sha256": "1afdb5bcefa5be20d3f75b0289a28337d6c9234b2aef8ec717eb104869ef6e04",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/src-tauri/Cargo.lock.gz",
+      "sha256": "823420f703c80aaba1fe67b3c9c9abd13419c73ec02ed4328c18372a8cc040b0",
+      "origineel_sha256": "f0056172c08a7ffd07306279d007986c1eee109d63501eb50a10a2b139001df8",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/src-tauri/Cargo.toml.gz",
+      "sha256": "5d60ed3b166f93d79d0d8008c3d5bc27eb9dcb6bb8d34cb57bce46157d437070",
+      "origineel_sha256": "89135ca450dfbf76101019544ead7174075f62f461dbc847fd8e93497f23e906",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/src-tauri/tauri.conf.json.gz",
+      "sha256": "0b9259b8d2f75df313d813859628f6e30ea6c90ceecdbdd98e18a928d6587b59",
+      "origineel_sha256": "a97782d559c3cf18bf5c01bb90fab54623965d869612d8beecd7d81b63db75a9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/versie.json.gz",
+      "sha256": "b658be3717bfb5c96c41240811e3b8d66f0b4dfddf0a4cca144a2ff5cdfc1d68",
+      "origineel_sha256": "7df1543cbea52b1328307606961dd3199df001a6336ec1273d047e4a3bdcb43b",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/bron/src/tekst/replicagereed.test.ts.gz",
+      "sha256": "c9a0f047379dc85dd5c3dc6223f722290bab4ce0f07017a9d6c5962519330c24",
+      "origineel_sha256": "2efd15db95398017d74cf20f82714608a07349d486934946067796662ec18c10",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/sdk/index.mjs.gz",
+      "sha256": "2d9f57e60d1d5d961bf719519bc05dbbbcbc6667d75d1f8fdc75484b96930b86",
+      "origineel_sha256": "e9590b568532b8bdda26057baf1e742493e54cd29bb86c476bd4481667721467",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst/Ontwerpnotitie.docx",
+      "sha256": "79591593b6705d0cae0d9b1abeb45712bf77c5d4e57e6fd123a0e68ed3ef8347",
+      "origineel_sha256": "79591593b6705d0cae0d9b1abeb45712bf77c5d4e57e6fd123a0e68ed3ef8347",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst/invoer-redo.png",
+      "sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "origineel_sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst/nieuw-na-laat-antwoord.png",
+      "sha256": "379b58437c5a61a4ba7fc012af4de2efc808d29af97de7dea737ae235ca5ad54",
+      "origineel_sha256": "379b58437c5a61a4ba7fc012af4de2efc808d29af97de7dea737ae235ca5ad54",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst/rapport.json.gz",
+      "sha256": "e8e4355b86afb9d6fc350de9ed6cdc617fc3eaed15804936f67663b9edd0ebca",
+      "origineel_sha256": "939c3f234b697ed6548effdb14df7637df32516a4582909c1135f9cb856c3b8a",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-tekst/snel-getypt-bewaard.png",
+      "sha256": "f0ce311063b3125e5883335dda039762792551a4ba3ef132268a169656a13aee",
+      "origineel_sha256": "f0ce311063b3125e5883335dda039762792551a4ba3ef132268a169656a13aee",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/Ontwerpnotitie.docx",
+      "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "origineel_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/begin.png",
+      "sha256": "2bdebb65e64646810c62c1a6e5550a15f8cfa1d0aa3bc1c37235861f515a63f4",
+      "origineel_sha256": "2bdebb65e64646810c62c1a6e5550a15f8cfa1d0aa3bc1c37235861f515a63f4",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/geplakt.docx",
+      "sha256": "52e1c15f24324dd2706bd95ba2ea6be3c1c055ac0f340bb0803b6b5044b68f30",
+      "origineel_sha256": "52e1c15f24324dd2706bd95ba2ea6be3c1c055ac0f340bb0803b6b5044b68f30",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/na-plakken.png",
+      "sha256": "1dc0f62e674d1cba8fdb6b456172718ca47160350dc4046ae23a22a585b3e3b7",
+      "origineel_sha256": "1dc0f62e674d1cba8fdb6b456172718ca47160350dc4046ae23a22a585b3e3b7",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/nieuw-na-verwerpen.png",
+      "sha256": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+      "origineel_sha256": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/rapport.json.gz",
+      "sha256": "55cb575b531c7a5d8b65bd89787c1383d58e625587cb9a3b5db0ef32432da849",
+      "origineel_sha256": "ad5085f4472173a4fee67b4d372289bf9d0a7b5671a563fa7e6e188d23e0aec9",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/sluitdialoog.png",
+      "sha256": "d98fb30e32d9055f129518c998f8e28a0d409038da6482e550573b82a990d141",
+      "origineel_sha256": "d98fb30e32d9055f129518c998f8e28a0d409038da6482e550573b82a990d141",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-plakken/tussenbewaring.docx",
+      "sha256": "6ff22607e3f22a4bfd9e74f37ccc895bf096d7618c2242f9307220b4d526ea01",
+      "origineel_sha256": "6ff22607e3f22a4bfd9e74f37ccc895bf096d7618c2242f9307220b4d526ea01",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/Prestatieproef.docx",
+      "sha256": "2ecef3975c04c4fbd3119518ccbf2aec8ea662f9e09b9038f222fb5fa01533fa",
+      "origineel_sha256": "2ecef3975c04c4fbd3119518ccbf2aec8ea662f9e09b9038f222fb5fa01533fa",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/framebasis.json.gz",
+      "sha256": "4b079f567a893c20546bbbb094dba3f4658945a79485a4d1418d10d812c877b7",
+      "origineel_sha256": "02dd2ebb6adb22ad93488db55a2b3dce78e5d9282d369cf2461e1cf753bc7243",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/getypt-pagina-500.png",
+      "sha256": "bef0a81790aeb391155a3c3d4632ad2d5be7a99f841f55c3605e10f4e403bbd4",
+      "origineel_sha256": "bef0a81790aeb391155a3c3d4632ad2d5be7a99f841f55c3605e10f4e403bbd4",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/herstel-aanbod-herstellen.png",
+      "sha256": "49016b7f1f05935c3dba03f50f0b837a4ab7b8921110dfb53c8a9b8fd8d8832e",
+      "origineel_sha256": "49016b7f1f05935c3dba03f50f0b837a4ab7b8921110dfb53c8a9b8fd8d8832e",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/herstel-aanbod-later.png",
+      "sha256": "49016b7f1f05935c3dba03f50f0b837a4ab7b8921110dfb53c8a9b8fd8d8832e",
+      "origineel_sha256": "49016b7f1f05935c3dba03f50f0b837a4ab7b8921110dfb53c8a9b8fd8d8832e",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/hersteld.docx",
+      "sha256": "14e0c2ede812724c4766e1c7b15ed70d851a88ed80651aaafec6f6840079039e",
+      "origineel_sha256": "14e0c2ede812724c4766e1c7b15ed70d851a88ed80651aaafec6f6840079039e",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/herstelde-kopie-bewerkt.png",
+      "sha256": "2436810fc109742ed5f350bbe9d1d0df743bdb4dc3936d419ce29f1cdd97d835",
+      "origineel_sha256": "2436810fc109742ed5f350bbe9d1d0df743bdb4dc3936d419ce29f1cdd97d835",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/herstelkopie.docx",
+      "sha256": "8d86b3441afb12d4d6380eb61ca2c53a8f8b458c945a66cc5040ae24b70e2b87",
+      "origineel_sha256": "8d86b3441afb12d4d6380eb61ca2c53a8f8b458c945a66cc5040ae24b70e2b87",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/kopvoetlint.png",
+      "sha256": "1026a3451c2647c8c9d382207fc79ba3eaa9aa91ecfae8551d6e86982dbc7a81",
+      "origineel_sha256": "1026a3451c2647c8c9d382207fc79ba3eaa9aa91ecfae8551d6e86982dbc7a81",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/programma.log.gz",
+      "sha256": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+      "origineel_sha256": "5ff8631147b73276959b73f644863c13e0054f35be1be06ac1df156581ac8029",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/rapport.json.gz",
+      "sha256": "f1794818cbfb292ae2996d1fb9da6371c5b0046cbd0b2d1caea59237893d5aa8",
+      "origineel_sha256": "ff2223a7acbe19a7a4579a5cbb63428584ecb04d1351eccdbf0da28d1552a74d",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-eerste-pagina.png",
+      "sha256": "b466d78063c5fc0f61bdbb610b3105b1e5f4081b611aa9427136d68ce53e5aa5",
+      "origineel_sha256": "b466d78063c5fc0f61bdbb610b3105b1e5f4081b611aa9427136d68ce53e5aa5",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-hersteld-venster.png",
+      "sha256": "c5c6261a0c50c08cdc0df8615d06b6c07e1b507d049d6bfad4bcce1b9becf494",
+      "origineel_sha256": "c5c6261a0c50c08cdc0df8615d06b6c07e1b507d049d6bfad4bcce1b9becf494",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-kleiner-venster.png",
+      "sha256": "33537a12faeaf5be8aa9eed13a7c03998964bb09421198e1fd2d51607087e6d1",
+      "origineel_sha256": "33537a12faeaf5be8aa9eed13a7c03998964bb09421198e1fd2d51607087e6d1",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-laatste-pagina.png",
+      "sha256": "9458e4eb7fdd71094ee0c375d44480d1eccdc7e247ed970a226da6b5ba5c32d6",
+      "origineel_sha256": "9458e4eb7fdd71094ee0c375d44480d1eccdc7e247ed970a226da6b5ba5c32d6",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-terug-in-document.png",
+      "sha256": "802683028335cb1a9469a63b0e5036a3b471fd3bcdf9c86bedd56ddb486c678d",
+      "origineel_sha256": "802683028335cb1a9469a63b0e5036a3b471fd3bcdf9c86bedd56ddb486c678d",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-verborgen.png",
+      "sha256": "4b35d64be01c024be2c2288360e9e2a0863c7a407954775ae7985d3ec7e52a02",
+      "origineel_sha256": "4b35d64be01c024be2c2288360e9e2a0863c7a407954775ae7985d3ec7e52a02",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/spelling-zoom-125.png",
+      "sha256": "f40972bb4d77f911b266f6f5252b62ef704b94a023d087b137c8a6f6925c44bb",
+      "origineel_sha256": "f40972bb4d77f911b266f6f5252b62ef704b94a023d087b137c8a6f6925c44bb",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/startlint.png",
+      "sha256": "b3ddd69e89744e8d22bb4bc5e1f3d23e245833b5de51cc2f85d9789fa36af04d",
+      "origineel_sha256": "b3ddd69e89744e8d22bb4bc5e1f3d23e245833b5de51cc2f85d9789fa36af04d",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-lang/workerbron.json.gz",
+      "sha256": "fc24abf50229e621060d8504ee2c8a6b62306793e5c0afa6475aff467ffd9344",
+      "origineel_sha256": "83ca70257e9a778c02921fc8f53509e9dcf5c22586acaf721c6a3bd3c74874b5",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-a/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-a/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-a/profiel.json.gz",
+      "sha256": "e31b94851215e0b17dd78cae936a69b26c16384e7a1c5c59bf340b7cb705d2db",
+      "origineel_sha256": "9e3066b908a7513fa4eb6b47128bac062d0836c2fe9346f5d2e89c66bcf749b2",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-a/profiel.png",
+      "sha256": "6d8380cff1312a99acc3a468a1adfa3eb9fb5c96290c9d4d56e164d6d13a308e",
+      "origineel_sha256": "6d8380cff1312a99acc3a468a1adfa3eb9fb5c96290c9d4d56e164d6d13a308e",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-a.log.gz",
+      "sha256": "c7b72d5c199296fda7b8c7b8cf525435b8fdea6b9459c23e097fe2b84457470d",
+      "origineel_sha256": "20c94cdaa56977ee0e17db3db3692078d633fc380af103a97f44c08f735d9a49",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-b/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-b/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-b/profiel.json.gz",
+      "sha256": "f2a4df50b90773e315fcf91bd2fff3ba919909dc851ee2ccb8f0005adf151e4e",
+      "origineel_sha256": "cf1c7548214d57c06c61beb2704ce71828ba910a18cf09ab40e5ef5c2eeabbc3",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-b/profiel.png",
+      "sha256": "53dbba49978b152ff1f80b0a49a151ad7ae235e3a62402eb5dad47288eebcd4f",
+      "origineel_sha256": "53dbba49978b152ff1f80b0a49a151ad7ae235e3a62402eb5dad47288eebcd4f",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/kandidaat-b.log.gz",
+      "sha256": "89f83e7935dfde00c6b93da8025253441f7760cd341f5ca6e57d4eb6032a84f9",
+      "origineel_sha256": "a6aeac44b272304c3ddd43eadde2c548eef3a07ae6f559b022731583e86dd1ef",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-a/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-a/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-a/profiel.json.gz",
+      "sha256": "53ce21ca7ba7f39ac2df84f15ef015a9794a4fb1ed6d7596cf8f08d3754f75b2",
+      "origineel_sha256": "d752476e33c5b14dc2189b211813d5f65b543930960eb72a85e4eb696108ad5e",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-a/profiel.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-a.log.gz",
+      "sha256": "636c5a4488c000bb13aa9b598e09f081c0692e41e8d3395b7dd09c557067dc75",
+      "origineel_sha256": "c603b20863ef05a364744b83322d8936e571c853d4eafd69e0188911982673b1",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-b/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-b/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-b/profiel.json.gz",
+      "sha256": "e68fb5f6d30274b9d3e70cc03236c2aa90df81864989fda531b76d67746cbb8a",
+      "origineel_sha256": "d06b81f6589b2647f1c36c33cab6537f0175c32ec31a0d1e608c9f5323c77a71",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-b/profiel.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/gui-abba/referentie-b.log.gz",
+      "sha256": "60032c88f4f2b5dcb22576b02541b101e789175ee7299ff1bd2cba5312a72d24",
+      "origineel_sha256": "aef7e4b7b53f3b26726dd925cfa1aaf273df8425ba365441d777c1ff324b0b70",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/eerste/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/eerste/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/eerste/profiel.json.gz",
+      "sha256": "e027ea29d7b18b4a2d08b6fbe5f5470ba1dd9ae651666c4915a96c7a3777573d",
+      "origineel_sha256": "32663297dc07d15720fc20e7856f814659d64b85fb99619af2f52a16e43c3056",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/eerste/profiel.png",
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/eerste/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/eerste.log.gz",
+      "sha256": "f1d3be4e4737bd65c985ac5e771057b65b9df1ccad587c8a8134546c00cc442b",
+      "origineel_sha256": "23480f7e05f6de895d998f6ffbeebe31c6e72041b94c1d6dc9626b087594ec29",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/fysieke-proef.py.gz",
+      "sha256": "87c6a193b6e52bf04202a738b08d72ab32855a8269b4624708351eea7b2dff7a",
+      "origineel_sha256": "8d470ceaa58f5397280ed89c0575f66ca3696865e6cedcfcda1d2f986c3add15",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/herhaling/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/herhaling/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/herhaling/profiel.json.gz",
+      "sha256": "a3213e61785bbf16868d6ff692c585ce01a22bd72c97ea5ad61152148771cd78",
+      "origineel_sha256": "e9e3072a611f024102650cf27fb681dc77ab56efb53bba665e78ba84a6447bc8",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/herhaling/profiel.png",
+      "sha256": "87949cc33f7091622c86c3a165aa3bc8fb3e64a0b4a457f3750518b46943b146",
+      "origineel_sha256": "87949cc33f7091622c86c3a165aa3bc8fb3e64a0b4a457f3750518b46943b146",
+      "gzip": false
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/herhaling/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/herhaling.log.gz",
+      "sha256": "f214ff44e459af78d3a293aad8b8a3236609d4e95145143236e724d4ddeac0d0",
+      "origineel_sha256": "e4817a5e366dced09c293d11d15e56d5bb2776dd8d3d11ff917075d5c096cbcb",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/manifest.json.gz",
+      "sha256": "055aa23c99be08c4d342d694a4fe4c9f0c8e95eae436b56969146b05803d12fa",
+      "origineel_sha256": "2963484ace24497e54305ca0b02f9b2c3a5385252d327b77ff53d88d09b12003",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/meten.log.gz",
+      "sha256": "be0c056e81971f1a26630ba4a91fc541d4fe9b09d82a4434c4b00dcd3689e9ee",
+      "origineel_sha256": "7d8da754f068d6cff56ec974b5a800ee1e98d04b907cd71428ba14e469637dd2",
+      "gzip": true
+    },
+    {
+      "bestand": "writer-replicagereed54/positiecache/meten.py.gz",
+      "sha256": "a37db6c8e0510f5e71d17a0c12f5bfd25e259d32205d3d101bd32035a4f18949",
+      "origineel_sha256": "96a86d2a6785c617d7ebb86266be3b77579a9ab9737019d002728023d9717412",
+      "gzip": true
+    }
+  ]
+}
