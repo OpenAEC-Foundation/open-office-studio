@@ -1,5 +1,24 @@
 /* Rekenblad: koppen, rechtermuismenu en vensters (src/rekenblad). */
 
+/* Een aparte rand boven het canvas blijft werkelijk zichtbaar. De outline van
+   de scrollcontainer of het canvas wordt door de tekenlaag overschilderd. */
+.office [data-testid="xlsx-scroll"]:focus > div > [role="rowgroup"]::after,
+.office [data-testid="xlsx-scroll"]:has([data-oos-rastercel]:focus) > div > [role="rowgroup"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 2px solid #bc6a15;
+  pointer-events: none;
+  z-index: 1;
+}
+@media (forced-colors: active) {
+  .office [data-testid="xlsx-scroll"]:focus > div > [role="rowgroup"]::after,
+  .office [data-testid="xlsx-scroll"]:has([data-oos-rastercel]:focus) > div > [role="rowgroup"]::after {
+    border-color: Highlight;
+  }
+}
+
 /* Koppen zijn klikbaar: selecteren, rand slepen, dubbelklik, rechtermuisknop. */
 .office .rekenblad-koppen .rekenblad-kolomkoppen,
 .office .rekenblad-koppen .rekenblad-rijkoppen,
