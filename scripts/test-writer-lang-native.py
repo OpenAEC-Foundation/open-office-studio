@@ -275,6 +275,23 @@ async def proef(a):
               window._nativeSessie = proefApi().getEditorRef().getYrsSession();
               window._nativeLees = {};
               window._nativeHerstel = [];
+              // Alleen diagnose op de eigen sessie: geen argumenten of broninhoud.
+              window._leesDiagnose = [];
+              window._workerMoment = () => {
+                try {
+                  const el = document.querySelector('.office-tabpaneel:not([hidden]) .canvas-page'), uit = [];
+                  for (let f = el?.[Object.keys(el).find(k => k.startsWith('__reactFiber$'))]; f; f = f.return)
+                    for (let h = f.memoizedState, n = 0; h && n < 1500; n++, h = h.next) {
+                      const v = h.memoizedState?.current;
+                      if (v?.engine === _nativeSessie && v.client) {
+                        const c = v.client;
+                        uit.push({ client: true, worker: !!c.worker, uitgevallen: c.hasFailed?.(), sleutels: Object.keys(c).slice(0, 30) });
+                      }
+                    }
+                  return uit;
+                } catch (fout) { return [{ diagnosefout: String(fout) }]; }
+              };
+              window._workerVoorInvoer = _workerMoment();
               window._base64Descriptor = Object.getOwnPropertyDescriptor(Uint8Array.prototype, 'toBase64');
               window._nativeBase64 = {beschikbaar: typeof _base64Descriptor?.value === 'function', calls: 0, bytes: 0, ms: 0};
               window._base64Laatste = null;
@@ -305,6 +322,8 @@ async def proef(a):
                 _nativeSessie[naam] = function(...args) {
                   const meting = _nativeLees[naam], begin = performance.now();
                   meting.calls++;
+                  if ((naam === 'layoutDocumentWithRegionsRetainedJson' || naam === 'layoutFontRequirementsJson') && _leesDiagnose.length < 20)
+                    _leesDiagnose.push({ naam, stack: new Error().stack, worker: _workerMoment() });
                   try { return oud.apply(this, args); }
                   finally { meting.ms += performance.now() - begin; }
                 };
@@ -377,7 +396,7 @@ async def proef(a):
                   else delete _nativeSessie[naam];
                 }
                 Worker.prototype.postMessage = _workerPostOud;
-                return {zelfde_sessie: zelfde, worker_berichten: _workerBerichten, ..._nativeLees};
+                return {zelfde_sessie: zelfde, worker_berichten: _workerBerichten, worker_voor_invoer: _workerVoorInvoer, leesdiagnose: _leesDiagnose, ..._nativeLees};
               })()
             """)
             assert rapport['native_leesaanroepen']['zelfde_sessie'], 'Native sessie vervangen tijdens invoermeting'

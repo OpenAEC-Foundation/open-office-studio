@@ -1,0 +1,422 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "bronrevisie": "4516ef72ef086781669ec058bdeb4f7ab4bc2a3c",
+  "appversie": "2026.45.52",
+  "productiecode_gewijzigd": false,
+  "desktop": {
+    "run": 42222568766,
+    "conclusie": "success",
+    "platformen": [
+      {
+        "naam": "desktop (ubuntu-22.04)",
+        "conclusie": "success"
+      },
+      {
+        "naam": "desktop (windows-latest)",
+        "conclusie": "success"
+      },
+      {
+        "naam": "desktop (macos-latest)",
+        "conclusie": "success"
+      }
+    ]
+  },
+  "edities": {
+    "run": 42222572441,
+    "status": "in_progress",
+    "conclusie": "",
+    "taken": [
+      {
+        "naam": "versie",
+        "status": "completed",
+        "conclusie": "success"
+      },
+      {
+        "naam": "Bouwen – macOS",
+        "status": "in_progress",
+        "conclusie": ""
+      },
+      {
+        "naam": "Bouwen – Linux",
+        "status": "in_progress",
+        "conclusie": ""
+      },
+      {
+        "naam": "Bouwen – Windows",
+        "status": "completed",
+        "conclusie": "success"
+      }
+    ]
+  },
+  "geheugen": {
+    "run": 42222544683,
+    "artifact": 13504733624,
+    "conclusie": "failure",
+    "primaire_fout": "AssertionError('Volledige pagina-indeling op de hoofdthread tijdens gewone invoer')",
+    "leesaanroepen": {
+      "zelfde_sessie": true,
+      "worker_berichten": {},
+      "readParagraphs": {
+        "calls": 2,
+        "ms": 11
+      },
+      "paragraphSpans": {
+        "calls": 11,
+        "ms": 40
+      },
+      "layoutDocumentWithRegionsRetainedJson": {
+        "calls": 8,
+        "ms": 164.99999999999636
+      },
+      "layoutFontRequirementsJson": {
+        "calls": 8,
+        "ms": 163.00000000001455
+      },
+      "residentWorkerSnapshot": {
+        "calls": 0,
+        "ms": 0
+      }
+    },
+    "workerbron": {
+      "bestandsnaam": "workerbron.json",
+      "script_sha256": "98b2b64ed7e58c9456a9275f2a8e0e5ddc64b84f134969fafffdfeaef941443e",
+      "grens": "Diagnose met extra bytekopieën; geen ongestoorde snelheidsmeting.",
+      "volledig": true,
+      "bytes": 918345,
+      "berichten": 0,
+      "sha256": "9a88112d4319bc7470d6982682e6dcd388ab0dcf70db862df9bbb086720eb2f7"
+    },
+    "vervolgfout": "Bronupdateproef heeft geen volledige reeks omdat de oorspronkelijke proef eerder is afgebroken; geen replayherstel claimen.",
+    "latere_scenarios": "Spellingonderbreking na 128 tabellen niet uitgevoerd in deze CI-ronde; blijft alleen lokaal getoetst.",
+    "context_sha256": "07636d633c9813e742e4fec180d46aaea411e70b4541096f125dbd23fd42beb5",
+    "elf_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204",
+    "binding": "Tar en interne SHA256SUMS gecontroleerd; ELF 3beec071... gelijk aan de eerdere 45.52-afkeuring."
+  },
+  "layoutdiagnose": {
+    "geslaagd": true,
+    "programma_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204",
+    "native_leesaanroepen": {
+      "zelfde_sessie": true,
+      "worker_berichten": {
+        "applyUpdate": 8,
+        "fontRequirements": 8,
+        "sync": 1
+      },
+      "worker_voor_invoer": [
+        {
+          "client": true,
+          "worker": true,
+          "uitgevallen": false,
+          "sleutels": [
+            "worker",
+            "pending",
+            "watchdog",
+            "nextId",
+            "terminalError",
+            "commandSession",
+            "commandGenerationValue",
+            "commandInitialGenerations",
+            "commandReplacementPending",
+            "ready",
+            "revision",
+            "documentSequence",
+            "remoteVector",
+            "appliedFontsRevision",
+            "bootstrapped",
+            "openedHeapLimit",
+            "bootstraps",
+            "fontRead",
+            "lastSnapshotId",
+            "lastFailedFontsSnapshotId",
+            "keepSurfaces",
+            "bootstrapWaiters",
+            "lastMemory",
+            "answeredFrameEpoch",
+            "retainBuiltPages",
+            "failureListener",
+            "frameListeners",
+            "pipeListeners",
+            "collabListeners",
+            "commandIdentity"
+          ]
+        }
+      ],
+      "leesdiagnose": [],
+      "readParagraphs": {
+        "calls": 1,
+        "ms": 7
+      },
+      "paragraphSpans": {
+        "calls": 9,
+        "ms": 47
+      },
+      "layoutDocumentWithRegionsRetainedJson": {
+        "calls": 0,
+        "ms": 0
+      },
+      "layoutFontRequirementsJson": {
+        "calls": 0,
+        "ms": 0
+      },
+      "residentWorkerSnapshot": {
+        "calls": 1,
+        "ms": 1
+      }
+    },
+    "omvang": "Eigen 500-paginabron, invoer, spellingweergave, frame-/workerbronbewaking, echte herstelkopie/heropenen/herstelkeuzes; oorspronkelijke limieten/asserties behouden.",
+    "grens": "Extra begrensde workerstatus en stacks op de eigen sessie; geen ongestoorde prestatievergelijking. Oorspronkelijke CI-route zonder worker niet gereproduceerd of hersteld."
+  },
+  "vernietigingsdiagnose": [
+    {
+      "ronde": "1",
+      "geslaagd": true,
+      "trace": [
+        {
+          "soort": "begin",
+          "id": 1,
+          "stack": "value@\n@tauri://localhost/assets/editors-dj6Nk6Hy.js:8:35805\n@tauri://localhost/assets/editors-dj6Nk6Hy.js:8:44946\nXs@tauri://localhost/assets/index-CGuxWztq.js:9:97507\nYD@tauri://localhost/assets/index-CGuxWztq.js:9:124518\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123750\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:123882\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:123932\nQx@tauri://localhost/assets/index-CGuxWztq.js:9:135891\nXx@tauri://localhost/assets/index-CGuxWztq.js:9:135399\npte@tauri://localhost/assets/index-CGuxWztq.js:9:132969\ndM@tauri://localhost/assets/index-CGuxWztq.js:9:132419\ntM@tauri://localhost/assets/index-CGuxWztq.js:9:127721\neM@tauri://localhost/assets/index-CGuxWztq.js:9:126968\ngM@tauri://localhost/assets/index-CGuxWztq.js:9:139326\nCp@tauri://localhost/assets/index-CGuxWztq.js:9:137863\npM@tauri://localhost/assets/index-CGuxWztq.js:9:138145\n@tauri://localhost/assets/index-CGuxWztq.js:9:139389"
+        },
+        {
+          "soort": "eind",
+          "id": 1
+        }
+      ]
+    },
+    {
+      "ronde": "2",
+      "geslaagd": true,
+      "trace": [
+        {
+          "soort": "begin",
+          "id": 1,
+          "stack": "value@\n@tauri://localhost/assets/editors-dj6Nk6Hy.js:8:35805\n@tauri://localhost/assets/editors-dj6Nk6Hy.js:8:44946\nXs@tauri://localhost/assets/index-CGuxWztq.js:9:97507\nYD@tauri://localhost/assets/index-CGuxWztq.js:9:124518\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123750\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:123882\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:123932\nQx@tauri://localhost/assets/index-CGuxWztq.js:9:135891\nXx@tauri://localhost/assets/index-CGuxWztq.js:9:135399\npte@tauri://localhost/assets/index-CGuxWztq.js:9:132969\ndM@tauri://localhost/assets/index-CGuxWztq.js:9:132419\ntM@tauri://localhost/assets/index-CGuxWztq.js:9:127721\neM@tauri://localhost/assets/index-CGuxWztq.js:9:126968\ngM@tauri://localhost/assets/index-CGuxWztq.js:9:139326\nCp@tauri://localhost/assets/index-CGuxWztq.js:9:137863\npM@tauri://localhost/assets/index-CGuxWztq.js:9:138145\n@tauri://localhost/assets/index-CGuxWztq.js:9:139389"
+        },
+        {
+          "soort": "eind",
+          "id": 1
+        }
+      ]
+    },
+    {
+      "ronde": "3",
+      "geslaagd": true,
+      "trace": [
+        {
+          "soort": "begin",
+          "id": 1,
+          "stack": "value@\n@tauri://localhost/assets/editors-dj6Nk6Hy.js:8:35805\n@tauri://localhost/assets/editors-dj6Nk6Hy.js:8:44946\nXs@tauri://localhost/assets/index-CGuxWztq.js:9:97507\nYD@tauri://localhost/assets/index-CGuxWztq.js:9:124518\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123750\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:123882\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:124114\n_p@tauri://localhost/assets/index-CGuxWztq.js:9:123812\nZD@tauri://localhost/assets/index-CGuxWztq.js:9:123932\nQx@tauri://localhost/assets/index-CGuxWztq.js:9:135891\nXx@tauri://localhost/assets/index-CGuxWztq.js:9:135399\npte@tauri://localhost/assets/index-CGuxWztq.js:9:132969\ndM@tauri://localhost/assets/index-CGuxWztq.js:9:132419\ntM@tauri://localhost/assets/index-CGuxWztq.js:9:127721\neM@tauri://localhost/assets/index-CGuxWztq.js:9:126968\ngM@tauri://localhost/assets/index-CGuxWztq.js:9:139326\nCp@tauri://localhost/assets/index-CGuxWztq.js:9:137863\npM@tauri://localhost/assets/index-CGuxWztq.js:9:138145\n@tauri://localhost/assets/index-CGuxWztq.js:9:139389"
+        },
+        {
+          "soort": "eind",
+          "id": 1
+        }
+      ]
+    }
+  ],
+  "afgewezen_hypothese": {
+    "proef": "Direct vernietigen vanuit een eigen update-terugroep op de werkelijke Node/Wasm-sessie, tegenover uitstellen via microtaak.",
+    "uitkomsten": [
+      {
+        "uitgesteld": false,
+        "terugroepen": 1,
+        "vernietigd": true,
+        "fouten": []
+      },
+      {
+        "uitgesteld": true,
+        "terugroepen": 1,
+        "vernietigd": true,
+        "fouten": []
+      }
+    ],
+    "besluit": "Beide routes slagen; deze eenvoudige terugroep verklaart de CI-leenfout niet. Geen uitstelpatch of foutonderdrukking overnemen."
+  },
+  "opzetafkeuring": "Eerste inline archiefopzet had een Python-syntaxfout; voor bestandsmutaties gestopt. Deze afzonderlijke archiveringsbron vervangt die opzet.",
+  "grenzen": [
+    "Geen productcode, SDK, versie, gebruikersprofiel of document gewijzigd.",
+    "Groene desktopronde herstelt de eerdere leenfout en het lege venster niet.",
+    "Nieuwe geheugenafkeuring blijft open; geen geheugen-/snelheidsacceptatie.",
+    "Geen issue/migratievlag gesloten; volledige Rust-interface en suite blijven onvoltooid.",
+    "Geen nieuwe devdownload onafhankelijk gecontroleerd; gebruiksgids blijft bij gecontroleerde cfa1059-download."
+  ],
+  "volgende_stap": "Start één nieuwe geheugenronde met deze gecontroleerde meetpunten. Controleer de lopende edities per platform. Onderzoek primair daadwerkelijk falende workerstatus/stacks of oorspronkelijke exception.stack bij de leenfout; verklaar eerdere negatieve ronden niet hersteld door groene herhalingen.",
+  "bestanden": {
+    "docs/tests/platformen-52-vervolg/ci-geheugen/afgekeurd.png.gz": "cb9325601b07a601be1650d1c9944fede497c681c61bc31daa4668cbd547ecec",
+    "docs/tests/platformen-52-vervolg/ci-geheugen/programma.log.gz": "5f43813133c25ca487cb67baeba508d6bfc8144e1db69b220a787d682b0f872f",
+    "docs/tests/platformen-52-vervolg/ci-geheugen/rapport.json.gz": "93bded5899c926a10c7374c3e3196d0a4f9903dcfa17528d809504ffd52ff95e",
+    "docs/tests/platformen-52-vervolg/ci-geheugen/workerbron-herhaling.json.gz": "47813163d535ca544b3c56c3110546463c39f099c01e9f675d661204ffea1bb9",
+    "docs/tests/platformen-52-vervolg/ci-geheugen/workerbron.json.gz": "769ed694ef2bb0ca75dd1c05c9271f95740814299eca20a95d599fb09c124b07",
+    "docs/tests/platformen-52-vervolg/desktop.json.gz": "70b3ec2161e8f45a6833d4ce3e4fe57f974abd97313b869fef2a7e3443946dfb",
+    "docs/tests/platformen-52-vervolg/edities-laatste.json.gz": "dbcccf255c1be8d1baedbd766127b7852873148dcf6b70ce626a926460fb72fd",
+    "docs/tests/platformen-52-vervolg/edities.json.gz": "ef22c08416b69e220882f0d9af5bb1dcad08fc31706bb4f3a778fa3689513218",
+    "docs/tests/platformen-52-vervolg/geheugen-afgekeurd.log.gz": "7772b2e558a668b31e918639a312729d3808ca03711d31a9f968c250f177c074",
+    "docs/tests/platformen-52-vervolg/geheugen-artefacten.json.gz": "553db43ee77f7e1ea407041b8dfd5a223398dfe4b1b2c47bd9801dd56bdfff82",
+    "docs/tests/platformen-52-vervolg/geheugen.json.gz": "49b705a9dc5b5fd5edc4838be875f92d7f8b85ec43ff64ba462563b05bb4ae63",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/framebasis.json.gz": "db78cd01d9bd1f958011bddc91e1b5baab5a37d25150329a0f65ec6b4bc825ff",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/getypt-pagina-500.png.gz": "055cc9593ac4fb526880493ecb4aa71f17a06ad7cbb9399a255d43e593194b93",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/herstel-aanbod-herstellen.png.gz": "96a49f1d3b86219707c3014886e5cebc555e726a51761c2af8d8ec6adb205a91",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/herstel-aanbod-later.png.gz": "96a49f1d3b86219707c3014886e5cebc555e726a51761c2af8d8ec6adb205a91",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/herstelde-kopie-bewerkt.png.gz": "8120e16051cd717829bc1c4919a6802833dbee9b31e84ce6d6bbecbcc9ea7c1c",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/kopvoetlint.png.gz": "e39f546e3964c09dc50ac7d41aeb676faa266111403c9affc7a2662c291dae4e",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/programma.log.gz": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/rapport.json.gz": "32043df134e430e104ef043c2fe0547783df7d548c30d39d39017cf3132f84f7",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-eerste-pagina.png.gz": "3a1ecc32067dd10f419dc19bb6d2601206966ae9175abf9022fdfc0d2ce1f21c",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-hersteld-venster.png.gz": "cbc027ec999f671ae295211861e52a4228eb9041a684a26f5cdfd55904c9c233",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-kleiner-venster.png.gz": "c7ad49dbfee39fc503fd55f3c881c01b5cd36c043789c2f7163741a4f039f54c",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-laatste-pagina.png.gz": "16b8a4a5b31317263d8bf5fbed568ff0dbc0188451cdbd609ced01dce57d18ed",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-terug-in-document.png.gz": "f9f1e32a55ad419d037a339fd1ac7fdcf99ff720caff5fb1e287de53e0d9b60b",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-verborgen.png.gz": "0114c83fab411f0c5fb666e31e411f1b48dea0ee05d452e0f30f6b9af58f6a38",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/spelling-zoom-125.png.gz": "d6fbb8ce3bc0911b9b020c5968aaa3e26e53d2ee9a74cdda864c5397e797e200",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/startlint.png.gz": "082d0df5dc7bb6a7ec424dded21c638b43ef2dae952badc98c8ddb9d12c6bdd3",
+    "docs/tests/platformen-52-vervolg/layout-canoniek/workerbron.json.gz": "30052d846fca801c242276e3bc0f7a19a5b123c4d8d062928840fc5883b9a1fa",
+    "docs/tests/platformen-52-vervolg/layout-canoniek.log.gz": "d4a74456c07bd8dd5f4565328b90321e3d933b1d4ba0283dfe87e20cf8eb60b7",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/framebasis.json.gz": "a20189b5cc76775e2c4b8a59bf61a8153f3b158d63fd264aed3d7aa756d68d1e",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/getypt-pagina-500.png.gz": "055cc9593ac4fb526880493ecb4aa71f17a06ad7cbb9399a255d43e593194b93",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/herstel-aanbod-herstellen.png.gz": "3c6f8b0f1f6f9cedafe5d612a6c6100cd60d79d851c00ddc74dffbcc78809d6e",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/herstel-aanbod-later.png.gz": "3c6f8b0f1f6f9cedafe5d612a6c6100cd60d79d851c00ddc74dffbcc78809d6e",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/herstelde-kopie-bewerkt.png.gz": "64f6323cc5bfc27c6a628fc91c3ff55686a7c9239c72835abfb84868689e0582",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/kopvoetlint.png.gz": "672ddb08cfd85c1b44de4fc99cf81d3efd115c95a17390989d2361af6b2e4a1d",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/programma.log.gz": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/rapport.json.gz": "b93e9e8566e1516725fc4b53abdef55d8384809fcfd7e208d28102daad02d61a",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-eerste-pagina.png.gz": "b7beb19451577db471625e02a9067e1e971c90ea3434da274e532d53bc656ec4",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-hersteld-venster.png.gz": "23576e0819df89ad5cae4e377708fe3a0acb2c211ba1d4797e6e72cda7d46a33",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-kleiner-venster.png.gz": "d0950dd8e015a229708d734b803671962961c9095dd1accbf9d0f50914e495ba",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-laatste-pagina.png.gz": "16b8a4a5b31317263d8bf5fbed568ff0dbc0188451cdbd609ced01dce57d18ed",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-terug-in-document.png.gz": "9c46e2296c123d5efe8c235625c66a7fae976964e74a9357a7f491c9db06b621",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-verborgen.png.gz": "088ced692e2c9f2610c045a2ca7aed5751773af2ea7100f67259cfe6656a976e",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/spelling-zoom-125.png.gz": "7cc56e0daa62f06499385c4c43611599f3e85de5ef912bdea83525b2ccf2db51",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/startlint.png.gz": "a1916b498eb6b83da23995aaefa9398d3c83e9fd721a1f89937bd7269ef46ba5",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose/workerbron.json.gz": "0fb9568f8eb7e700be0f4fa1622e91d420d03de8348178b9fa4bf99ec53110a3",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose.json.gz": "12d92ee8ab945bd9e8f8da191a7d42895feccb15c355e24c5c992ab706c8b207",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose.log.gz": "b90037e08c7109158bc2e9975053df4b6e1034298d341fa1962ef2253c48a9f1",
+    "docs/tests/platformen-52-vervolg/layoutdiagnose.py.gz": "0a195980f5ad8020a84cab933d01a12e8f39b30ef86e2b2887202f8cfebc1f0c",
+    "docs/tests/platformen-52-vervolg/nieuwe-bronnen/scripts/test-writer-lang-native.py.gz": "abd4477d3dffe044440b9973fee0c2b1065938935746daa03d37f48c77af0435",
+    "docs/tests/platformen-52-vervolg/nieuwe-bronnen/tests/fixtures/layout-leesdiagnose.mjs.gz": "c7c5ef8ca73a34bf2428ac7cc376b4c242b5187c7ab3b52d6ecf6832cf18c25e",
+    "docs/tests/platformen-52-vervolg/nieuwe-bronnen/tests/test_layout_leesdiagnose.py.gz": "87acceed7cbe51c6df0b84fdb2d9f5f0e1b3e793c1133b5136cf2e9bc9f01c0a",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/SHA256SUMS.gz": "3419ee431a3f05d504ce6e5e76a3e6e031c3753a73edb14c5212065ec53c5324",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/context.json.gz": "3e5510ec57487dc94c52cd05f24164eadff8da0b1076ed293fdc1daf9596004c",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/rapport.json.gz": "93bded5899c926a10c7374c3e3196d0a4f9903dcfa17528d809504ffd52ff95e",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/afkeuringsbewaking.py.gz": "537a75c206d203860283929bc054b9c66e84646789dbf42f0c9822a732e4cf07",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/framebasis.js.gz": "3cd1d1dd79d78e403d10fc165ef35fcc0eaa7049e20f9f9e5320a98e8260ac42",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/lettertype_bewijs.js.gz": "a21f44e1f5aac2bddea259e9ecb050c6a5cfef4158fb062113639c28b78a6eae",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/lettertype_bewijs.py.gz": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/requirements.txt.gz": "f3f0d25498479f244ba35cd323db7efe7c67d0f28e74032f4334c7ec54442d39",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/spelling_weergave.js.gz": "f3afa42c38da9f5f159a011fcde71f13bda914a10274fef5a53298d59887af04",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/spelling_weergave.py.gz": "e1a7cd7828d5d8c7c417b606904a4bc23139be94523c8b49101a1da82e9e6564",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/webkit_inspector.py.gz": "c280375433d819ab1e0a3a5816ee6331babb3eb0249ccbfb615839747b22241a",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/gui/worker_bron.js.gz": "56e7d0f73eb2601aec2360bc4084948a357d118b350e703927fed099fc95c970",
+    "docs/tests/platformen-52-vervolg/oorspronkelijk/scripts/test-writer-lang-native.py.gz": "a9cdbbfb6c60cfe1124eee3a2ddb38f78213a895b51660434fe5e75e8eb37c15",
+    "docs/tests/platformen-52-vervolg/python.log.gz": "c8c65e323f08874617dc0f35881d7ce147e64fda1dee2c15fc12a3ea7fa0d3bc",
+    "docs/tests/platformen-52-vervolg/vastleggen.py.gz": "aba5b1e9c92495805b2b306c300a2ac4f80cfd7810dfcdb4e2a203b5711162c8",
+    "docs/tests/platformen-52-vervolg/vernietigen-terugroep.json.gz": "b784da3fb6a3c17eca81b4b167b16b708084f15100e799a5959df8982be0d69a",
+    "docs/tests/platformen-52-vervolg/vernietigen-terugroep.mjs.gz": "e1268955203a91f0e2417faf873e2e6eb5b691c14ad974a207a10e3317d49b3c",
+    "docs/tests/platformen-52-vervolg/vernietigingsdiagnose.py.gz": "752179c4ca78461e4e0841c73faecb3a0ca723cdd1ca0c64c0dba95f62e0e27f",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1/begin.png.gz": "ea5db3ce05ae4e5fe74b6324f634df45c18c123d12e0d3bd147b210032419e11",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1/na-plakken.png.gz": "39f504a8917d3f5711e70d7004f672423deee4d7e85213cd2c153f5653b30a1a",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1/rapport.json.gz": "f8e26c5e79f7c84157dc8395d2e07b4198eb25a0e96816f82a924a0e2ecd4131",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1/sluitdialoog.png.gz": "c742cbd2a74191c5075c3256a3781e294e783853fe6a81aba13da772ffff6129",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1.json.gz": "b03fdc0b272364498b9014d60e0d2ae324c53b472c9dea4c796cf7433054ecde",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/1.log.gz": "2b7a9218a90e59d2d907ea14efc324d62384fb088ae52ce38e875e808a2b2141",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2/begin.png.gz": "0a66ed5249a4ef2925cfd02eeb5cb07f100933ba48607cf3f68ee18e736d7287",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2/na-plakken.png.gz": "fa63cc2b0ff893ebc4b3c5069151c1a58f81c88da3995517fdd41e48850ba8be",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2/rapport.json.gz": "09737e8f5d0cf4764144dcfaff5703a8e429f0282d1ba5d2bdbe503b6e8b1bbc",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2/sluitdialoog.png.gz": "d5d5becaa9aabb0aef1dc6cbfcc1942cc44896c6f27374d4eefb9233d07d3a56",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2.json.gz": "672c8c9645e12876cf38d8c4d055976679a568807287a18e461267ea6697959f",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/2.log.gz": "732214e10b7577887c4efc92e5c14c797be78a1910c7c2e4e0989878bda99934",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3/begin.png.gz": "ec82e73ddfb8692e9f74d25bb8669c0eedd57942549f77f779d2ae0693ceca3b",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3/na-plakken.png.gz": "79ed2ef992015676b7727a2b6bbf618048b25cd383d363623d913aa2ea5b91c4",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3/nieuw-na-verwerpen.png.gz": "198326722c523564886c7bdfc7bc995ec275d72ac179d51a6f7a50404068b9fb",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3/rapport.json.gz": "6200abd98e5f560b96b64e6b95e5cf7b5be34675eaa93c872014519e16b2a9c5",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3/sluitdialoog.png.gz": "c742cbd2a74191c5075c3256a3781e294e783853fe6a81aba13da772ffff6129",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3.json.gz": "37677101f2fda5b22ea032b1fe5f734d3f37ab099736e5d605fe3f5f3c24e1ee",
+    "docs/tests/platformen-52-vervolg/vernietigingsherhaling/3.log.gz": "2b2ff1181d68187a30c39fcf05f8c1582ff160caa3fd8ce7e56e382559c33aa3"
+  },
+  "diagnostiek_patch": {
+    "productiecode_gewijzigd": false,
+    "bestand": "scripts/test-writer-lang-native.py",
+    "inhoud": "Workerstatus op eigen bron vóór invoer, en maximaal twintig stacks/statusopnamen uitsluitend bij volledige host-layout-/lettertypeaanroepen. Geen broninhoud of argumenten geregistreerd. Metadatafouten worden vastgelegd zonder de echte methode of primaire fout te vervangen. Bestaande asserties en limieten gelijk.",
+    "python": "118 tests zonder skips slagen; echte JS-meetpunten bewaken verkeerde bron, diagnosefout, primaire motorexceptie, ontvanger/argumentidentiteit, twintig-stackgrens en doorgaan van alle echte aanroepen.",
+    "canonieke_500pagina_proef": {
+      "geslaagd": true,
+      "script_sha256": "ce80b390f1679c1ff46b70423199775c59b42adbb22f5188549bab287a83b486",
+      "programma_sha256": "3beec0715404889c55e267c4104c2ed9036b19d93e82ae2d1821d9e2077d7204",
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "worker_berichten": {
+          "applyUpdate": 9,
+          "fontRequirements": 9,
+          "sync": 2
+        },
+        "worker_voor_invoer": [
+          {
+            "client": true,
+            "worker": true,
+            "uitgevallen": false,
+            "sleutels": [
+              "worker",
+              "pending",
+              "watchdog",
+              "nextId",
+              "terminalError",
+              "commandSession",
+              "commandGenerationValue",
+              "commandInitialGenerations",
+              "commandReplacementPending",
+              "ready",
+              "revision",
+              "documentSequence",
+              "remoteVector",
+              "appliedFontsRevision",
+              "bootstrapped",
+              "openedHeapLimit",
+              "bootstraps",
+              "fontRead",
+              "lastSnapshotId",
+              "lastFailedFontsSnapshotId",
+              "keepSurfaces",
+              "bootstrapWaiters",
+              "lastMemory",
+              "answeredFrameEpoch",
+              "retainBuiltPages",
+              "failureListener",
+              "frameListeners",
+              "pipeListeners",
+              "collabListeners",
+              "commandIdentity"
+            ]
+          }
+        ],
+        "leesdiagnose": [],
+        "readParagraphs": {
+          "calls": 1,
+          "ms": 8
+        },
+        "paragraphSpans": {
+          "calls": 10,
+          "ms": 53.000000000007276
+        },
+        "layoutDocumentWithRegionsRetainedJson": {
+          "calls": 0,
+          "ms": 0
+        },
+        "layoutFontRequirementsJson": {
+          "calls": 0,
+          "ms": 0
+        },
+        "residentWorkerSnapshot": {
+          "calls": 2,
+          "ms": 1
+        }
+      },
+      "omvang": "Invoer/Undo/Redo, selectie/Backspace, paginering/zoom, spellingweergave, bron-/framebewaking, echte herstelkopie, heropenen en herstelkeuzes slagen.",
+      "visueel": "getypt-pagina-500.png bekeken: tekst en invoercursor op donkere pagina leesbaar; geen volledige UI-pariteit.",
+      "grens": "Ook deze ronde reproduceert de oorspronkelijke hostterugval en leenfout niet. Geen productfix of nieuwe snelheidsclaim."
+    }
+  }
+}

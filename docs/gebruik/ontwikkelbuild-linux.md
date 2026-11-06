@@ -43,10 +43,14 @@ stabiliteitsproblemen hebben. De visuele eindcontrole van de CI-opname toont
 een zwarte rechthoek op de lege donkere pagina na verwerpen; oorzaak en
 bestendigheid zijn onbekend. De groene pakketproef is geen visuele of volledige
 suiteacceptatie. Native Rust en WebView slagen op drie platforms; de zeven
-edities bouwen op Linux/macOS. Windows strandt op een testpadverwachting.
+edities bouwen op Linux/macOS. Na herstel van de testpadverwachting slaagt de
+desktophertest op drie platforms en bouwen ook de zeven Windows-edities.
 De brede Linux-desktopproef meldt na verwerpen een Rust/Wasm-leenfout en een
-leeg venster; de geheugenproef startte haar toetsen te vroeg. De testopzet is
-aangepast en lokaal gecontroleerd; de oorspronkelijke appfout blijft open.
+leeg venster; de eerste geheugenproef startte haar toetsen te vroeg. De testopzet
+is aangepast en lokaal gecontroleerd. De nieuwe geheugenronde meldt eerder in
+de proef volledige layout op de hoofdthread, zonder workerberichten. Beide
+appfouten blijven open ondanks geslaagde lokale herhalingen.
+[Hertest en vervolgonderzoek](../tests/2026-11-06-platformen-52-vervolg.json),
 [Platformmatrix en afkeuringen](../tests/2026-11-06-platformen-52.json),
 [implementatie en beperkingen](../tests/writer-autocorrectie-invoer.md).
 
