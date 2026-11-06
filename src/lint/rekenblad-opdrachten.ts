@@ -474,12 +474,23 @@ export function benoemdeBereiken(api: XlsxEditorApi) {
     const uitvoer = api.handle.exportStructured({
       scope: [{ sheet: info.activeSheet, range: "A1" }],
       maxCells: 1,
+      includeHiddenNames: true,
     });
-    return uitvoer.ok
-      ? uitvoer.content.definedNames
-          .filter((naam) => !naam.hidden && ontleedVerwijzing(naam.formula))
-          .map((naam) => ({ naam: naam.name, verwijzing: naam.formula }))
-      : [];
+    if (!uitvoer.ok) return [];
+    const kandidaten = uitvoer.content.definedNames
+      .filter((naam) => naam.localSheet === null || naam.localSheet.index === info.activeSheet)
+      .sort((a, b) => Number(!!b.localSheet) - Number(!!a.localSheet));
+    const gezien = new Set<string>();
+    const namen: { naam: string; verwijzing: string }[] = [];
+    for (const naam of kandidaten) {
+      const sleutel = naam.name.toLowerCase();
+      if (gezien.has(sleutel)) continue;
+      gezien.add(sleutel);
+      // Ook een lokale constante of verborgen naam schermt de werkmapnaam af.
+      if (!naam.hidden && ontleedVerwijzing(naam.formula))
+        namen.push({ naam: naam.name, verwijzing: naam.formula });
+    }
+    return namen;
   } catch {
     return [];
   }

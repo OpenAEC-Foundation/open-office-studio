@@ -478,6 +478,7 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   const veld = useRef<HTMLInputElement>(null);
 
   const cel = s?.cells?.focus;
+  const actiefBlad = s?.sheetIndex ?? api.handle.sheetInfo().activeSheet;
   const bereik = s?.cells
     ? {
         top: Math.min(s.cells.anchor.row, s.cells.focus.row),
@@ -494,12 +495,20 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
       namen.find((n) => {
         const v = ontleedVerwijzing(n.verwijzing);
         if (!v) return false;
-        const bladOk = v.blad === null || v.blad.toLowerCase() === info.sheetNames[info.activeSheet]?.toLowerCase();
+        const bladOk = v.blad === null || v.blad.toLowerCase() === info.sheetNames[actiefBlad]?.toLowerCase();
         return bladOk && JSON.stringify(v.bereik) === JSON.stringify(bereik);
       })?.naam ?? null
     );
-  }, [namen, bereik?.top, bereik?.left, bereik?.bottom, bereik?.right]);
-  useEffect(() => setNamen(benoemdeBereiken(api)), [api]);
+  }, [namen, actiefBlad, bereik?.top, bereik?.left, bereik?.bottom, bereik?.right]);
+  useEffect(() => {
+    const ververs = () => {
+      const nieuw = benoemdeBereiken(api);
+      setNamen((oud) => oud.length === nieuw.length && oud.every((n, i) =>
+        n.naam === nieuw[i].naam && n.verwijzing === nieuw[i].verwijzing) ? oud : nieuw);
+    };
+    ververs();
+    return api.handle.onUpdate(ververs);
+  }, [api, actiefBlad]);
   const toon = tekst ?? naam ?? (cel ? adres(cel) : "");
 
   return (
