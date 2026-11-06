@@ -26,7 +26,7 @@ beforeAll(async () => {
   await losseLayout.preloadLayoutWasm();
 });
 
-function proef(soort: NootSoort, notatie: NootNotatie) {
+function proef(soort: NootSoort, notatie: NootNotatie, beginBij: number) {
   const pakket = new Pakket(readFileSync("public/templates/nieuw.docx"));
   pakket.schrijf("word/document.xml", pakket.lees("word/document.xml").replace(
     /<w:body>[\s\S]*?<\/w:body>/,
@@ -34,18 +34,25 @@ function proef(soort: NootSoort, notatie: NootNotatie) {
   ));
   const ingevoegd = voegNootIn(pakket.inpakken(), "__NOOT__", soort, "Toelichting bij de proef.");
   return zetNootInstellingen(ingevoegd.bytes, soort, {
-    notatie, beginBij: 3, herstart: "continuous",
+    notatie, beginBij, herstart: "continuous",
     positie: soort === "voetnoot" ? "pageBottom" : "docEnd",
   });
 }
 
-describe("gelijke nummers in noot en hoofdtekst (#144)", () => {
+describe("gelijke nummers en symbolen in noot en hoofdtekst (#51, #144)", () => {
   const notaties = [["decimal", "3"], ["lowerRoman", "iii"], ["upperRoman", "III"],
     ["lowerLetter", "c"], ["upperLetter", "C"]] as const;
+  // De interoperabele symboolreeks gebruikt vier tekens en herhaalt ieder
+  // teken na een volledige ronde: NumberingType::SYMBOL_CHICAGO.
+  // https://api.libreoffice.org/docs/idl/ref/NumberingType_8idl_source.html
+  const symbolen = ["*", "†", "‡", "§", "**", "††", "‡‡", "§§", "***"]
+    .map((verwacht, i) => ({ notatie: "chicago" as const, verwacht, beginBij: i + 1 }));
+  symbolen.push({ notatie: "chicago", verwacht: "§".repeat(64), beginBij: 256 });
+  const formaten = [...notaties.map(([notatie, verwacht]) => ({ notatie, verwacht, beginBij: 3 })), ...symbolen];
   const gevallen = (["voetnoot", "eindnoot"] as const).flatMap(soort =>
-    notaties.map(([notatie, verwacht]) => ({ soort, notatie, verwacht })));
-  it.each(gevallen)("bewaart $soort met $notatie vanaf 3, ook na heropenen", async ({ soort, notatie, verwacht }) => {
-    let bytes = proef(soort, notatie);
+    formaten.map(formaat => ({ soort, ...formaat })));
+  it.each(gevallen)("bewaart $soort met $notatie vanaf $beginBij, ook na heropenen", async ({ soort, notatie, verwacht, beginBij }) => {
+    let bytes = proef(soort, notatie, beginBij);
     const kind = soort === "voetnoot" ? "footnote" : "endnote";
     for (let ronde = 0; ronde < 2; ronde++) {
       const s = await createYrsSession();
@@ -55,7 +62,7 @@ describe("gelijke nummers in noot en hoofdtekst (#144)", () => {
         const verzoek = {
           bodyStory: "body", renderEnv: {}, options: { pageGap: 24 },
           regions: { sections: [{ sectionId: "main", properties: {} }],
-            noteSettings: { [kind]: { numFmt: notatie, numStart: 3, numRestart: "continuous" } } },
+            noteSettings: { [kind]: { numFmt: notatie, numStart: beginBij, numRestart: "continuous" } } },
           notes: { contents: [{ id: 1, noteKind: kind, height: 0 }] },
         };
         const fonts = JSON.parse(s.layoutFontRequirementsJson(JSON.stringify(verzoek))) as { key: string }[];
@@ -90,7 +97,7 @@ describe("gelijke nummers in noot en hoofdtekst (#144)", () => {
         bytes = (await saveYrsDocx(s)).bytes;
         const xml = new Pakket(bytes).lees("word/document.xml");
         expect(xml).toContain(`<w:numFmt w:val="${notatie}"`);
-        expect(xml).toContain('<w:numStart w:val="3"');
+        expect(xml).toContain(`<w:numStart w:val="${beginBij}"`);
         expect(xml).toContain(`<w:${kind}Reference w:id="1"`);
       } finally { s.destroy(); }
     }

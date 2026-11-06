@@ -7,6 +7,12 @@ documentpositie en één ondeelbare eenheid bij regelafbreking. Beide modules be
 via de terugvalroute verloopt. De DOCX-inhoud
 behoudt de oorspronkelijke semantische nootverwijzing.
 
+De Chicago-notatie gebruikt `*`, `†`, `‡`, `§` en vervolgens herhaalde tekens.
+De bestaande limiet van 64 tekens per nootlabel geldt ook voor het genereren:
+waarden 1–256 zijn ondersteund. Ongeldige of grotere waarden houden de bestaande
+decimale terugval voor niet-opgeloste nummerformaten; de broninstelling blijft
+behouden. De bewerkings- en layoutkern gebruiken dezelfde formatter en grens.
+
 Bij celsplitsing bewaart de bewerkingskern de bestaande kolomgrenzen in een
 verfijnd raster. Nieuwe zichtbare cellen mogen meerdere rasterstroken beslaan;
 de breedtes van niet-geselecteerde rijen blijven gelijk. De voorkeursbreedte
@@ -61,6 +67,7 @@ pnpm build
 ```
 
 De gerichte proef controleert voet- en eindnoten met vijf notaties vanaf drie,
+de eerste negen symboolwaarden en de grenswaarde 256,
 de overeenkomst tussen hoofdtekst en noot, één documentpositie, semantisch
 noot-ID en behoud na opslaan/heropenen. Een expliciete tegenproef kan met
 `OOS_NOOT_WASM` het oorspronkelijke bestand laden; die moet de gemelde fout

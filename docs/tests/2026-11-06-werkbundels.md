@@ -39,9 +39,10 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
 - #130: de eerdere beperkte structuurproef reproduceerde de breedteverschuiving
   niet. Ook de getekende tweedeling verschuift de onderste grenzen niet. Wel
   gereproduceerd: onjuiste rasterverdeling bij drie of meer nieuwe cellen.
-  De rastercorrectie slaagt in de geometrieproeven en native bediening. De
-  aanvullende bestandsproef reproduceert wel nieuwe procentuele voorkeuren in
-  niet-geselecteerde cellen; de PR blijft concept en #130 blijft open.
+  De rastercorrectie en het behoud van echte bronvoorkeuren slagen in de
+  geometrie-, opslag- en native bedieningsproeven. Ook de daarbij gevonden
+  eerste-opslagstatus is hersteld. PR #156 is na zes groene platformcontroles
+  gemerged als `53e6f308`; #130 en het bredere #48 blijven open.
   Zie [het werkverslag](2026-11-06-celsplitsing.md).
 - #113 is gesloten na controle van de actuele release v2026.45.1 én de door de
   website vast gekoppelde v2026.44.8: elk 60 bestanden, 28 installers en veertien
@@ -50,9 +51,11 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
   [controlebewijs](https://github.com/OpenAEC-Foundation/open-office-studio/issues/113#issuecomment-6674072326)
   staat bij het issue. Automatische updates (#26) blijven afzonderlijk open.
 - #51: vijf nummernotaties vallen onder de bewezen nootcorrectie van #144.
-  De aangeboden Chicago-symboolnotatie geeft in beide nootsoorten nog `3`
-  tegenover de verwachte derde markering `‡`. Dit is ook met de exact gemergde
-  kern gereproduceerd en [bij #51 vastgelegd](https://github.com/OpenAEC-Foundation/open-office-studio/issues/51#issuecomment-6673990113).
+  De Chicago-symboolnotatie gaf in beide nootsoorten `3` tegenover de derde
+  markering `‡`; dat is [bij #51 vastgelegd](https://github.com/OpenAEC-Foundation/open-office-studio/issues/51#issuecomment-6673990113).
+  De nieuwe kandidaat slaagt in 30 kernrondgangen en de native notatie-,
+  noottekst-, Undo/Redo- en opslag-/heropenproeven. Het bredere #51 blijft open.
+  Zie [het symboolverslag](2026-11-06-nootsymbolen.md).
 
 ## 0. Afgeronde opslagronde — PR #154
 
