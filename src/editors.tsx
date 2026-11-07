@@ -20,6 +20,7 @@ import {
   EditorZichtbaar,
   registreerWijziging,
 } from "./lint/editorApi";
+import { bereidStructuurBeveiliging } from "./rekenblad/structuurbeveiliging";
 import { metBeginregio } from "./rekenblad/werkmapregio";
 import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
@@ -296,6 +297,7 @@ export default function OfficeEditor(props: EditorProps) {
   }, []);
   const gereedXlsx = useCallback(
     (api: XlsxEditorApi) => {
+      bereidStructuurBeveiliging(api.handle, herladenRecent.current.bytes);
       setRekenbladApi(api);
       const stopWijziging = registreerWijziging(api.handle, () =>
         recent.current.gewijzigd(),
