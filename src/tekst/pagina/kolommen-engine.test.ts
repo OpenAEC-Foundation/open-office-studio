@@ -36,8 +36,9 @@ describe("leesbare kolommen op een liggende A5-pagina (#143)", () => {
     expect(kolommenVoorWeergave([{ properties: { columns: [{}, {}] } }])[0].properties).toMatchObject({ columnCount: 2, equalWidth: false });
   });
   it.each([
-    [2, "left", false, false], [2, "both", false, false], [2, "both", true, false],
+    [1, "left", false, false], [2, "left", false, false], [2, "both", false, false], [2, "both", true, false],
     [2, "both", true, true], [2, "center", true, true], [3, "right", true, true],
+    [4, "both", true, true],
   ] as const)("tekent %i kolommen met %s binnen de kolomgrenzen (inspringing %s, randen %s)", async (aantal, uitlijning, inspringing, randen) => {
     const s = await createYrsSession();
     try {

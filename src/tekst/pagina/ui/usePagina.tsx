@@ -16,6 +16,7 @@ import { meldWijziging, useEditorApi, useEditorZichtbaar, zichtbaarElement } fro
 import { meldOpdrachtAan } from "../../menu/opdrachten";
 import { useSneltoetsen } from "../../../lint/sneltoetsen";
 import { metPakket, verwijderMarkering } from "../ooxml.ts";
+import { actieveSectie } from "../actieveSectie";
 import {
   FORMATEN,
   MARGES,
@@ -32,7 +33,6 @@ import {
   type Kolommen,
   type MargeVoorkeur,
   type Marges,
-  type SectieDoel,
 } from "../secties.ts";
 import {
   koppelAanVorige,
@@ -306,15 +306,18 @@ export function usePagina() {
     void pakket({ klaar: t(soort === "header" ? "page.done.headerRemoved" : "page.done.footerRemoved"), cursor: "sectie", werk: (b, { sectie }) => verwijderKopVoet(b, sectie, soort) });
   async function afstandVenster() {
     try {
-      const { herlaad } = klaarVoor();
+      const { herlaad, editor } = klaarVoor();
+      const actief = actieveSectie(editor);
+      if (!actief) throw new Error(t("page.errors.cursorLost"));
       const stand = leesKopVoet(await herlaad.bytes());
-      const s = stand.secties[stand.secties.length - 1];
+      const s = stand.secties[actief.index];
+      if (!s) throw new Error(t("page.errors.cursorLost"));
       setVenster(
         <AfstandDialoog
           koptekst={s.koptekst}
           voettekst={s.voettekst}
           sluit={sluit}
-          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), cursor: "sectie", werk: (b, { sectie }) => zetKopVoetAfstand(b, sectie, a) })}
+          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), werk: b => zetKopVoetAfstand(b, actief.index, a) })}
         />,
       );
     } catch (e) {
@@ -324,7 +327,9 @@ export function usePagina() {
   function bewerk(soort: KopVoetSoort) {
     const editor = api();
     if (!editor) return;
-    const sectie = editor.getDocument()?.package?.document?.finalSectionProperties;
+    const actief = actieveSectie(editor);
+    if (!actief) return fout(t("page.errors.cursorLost"));
+    const sectie = actief.eigenschappen;
     const refs = soort === "header" ? sectie?.headerReferences : sectie?.footerReferences;
     const kop = soort === "header";
     const openen = (e: DocxEditorRef) => {
@@ -381,9 +386,12 @@ export function usePagina() {
   async function kolommenVenster() {
     try {
       const { herlaad, editor } = klaarVoor();
+      const actief = actieveSectie(editor);
+      if (!actief) throw new Error(t("page.errors.cursorLost"));
       const bytes = await herlaad.bytes();
       const lijst = leesSecties(bytes);
-      const s = lijst[lijst.length - 1];
+      const s = lijst[actief.index];
+      if (!s) throw new Error(t("page.errors.cursorLost"));
       setVenster(
         <KolommenDialoog
           begin={s.kolommen}
@@ -391,7 +399,7 @@ export function usePagina() {
           secties={sectieStand(editor).aantalSecties}
           sluit={sluit}
           bevestig={(k: Kolommen, doel) =>
-            void pakket({ klaar: t("page.done.columnsSet"), cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, doel === "alle" ? "alle" : (sectie as SectieDoel), { kolommen: k }) })
+            void pakket({ klaar: t("page.done.columnsSet"), werk: b => wijzigSecties(b, doel === "alle" ? "alle" : actief.index, { kolommen: k }) })
           }
         />,
       );
