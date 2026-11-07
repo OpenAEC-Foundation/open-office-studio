@@ -54,7 +54,29 @@ macOS-job op de exacte PR-versie is vereist voordat dit onderdeel wordt
 samengevoegd of issue #25 wordt gesloten. Dit is geautomatiseerde bediening van
 LaunchServices; er wordt geen handmatige Finder-proef geclaimd.
 
-Alle **57 lokale Python-controles slagen**. De vijf nieuwe controles testen ook
+Alle **58 lokale Python-controles slagen**. De zes nieuwe controles testen ook
 de negatieve plistgevallen. De Linux-pakketcontroles behouden hun bestaande
 controle van de werkelijke `.desktop`-bestanden, MIME-lijst en `Exec ... %F` in
 DEB en AppImage. De applicatiecode voor de systeemroute is niet gewijzigd.
+
+## Werkelijke macOS-plist en de RTF-groep
+
+De controle op de gebouwde app ontdekte een afwijking die niet in de
+JSON-configuratie zichtbaar was: de gebruikte Tauri-bundelaar leidt bij RTF
+zelf `LSItemContentTypes = [public.rtf]` af. Die lijst stond bij de hele groep
+van negen tekstextensies. Omdat macOS deze lijst voorrang geeft op
+`CFBundleTypeExtensions`, konden de acht overige tekstformaten verdrongen
+worden. De plist van de ongewijzigde openbare v2026.45.4-DMG bevestigt deze
+registratie; de historische installer is niet vervangen.
+
+Alleen op macOS krijgt RTF nu een eigen documenttype met dezelfde naam, rol en
+rang. De overige acht tekstformaten houden hun extensieregistratie. De controle
+van de werkelijke plist staat `public.rtf` uitsluitend bij deze afzonderlijke
+RTF-registratie toe en blijft andere UTI-overrides weigeren. De negatieve proef
+bevat ook de oorspronkelijke gemengde registratie. De controles op alle 31
+extensies en gelijke platformdekking blijven behouden.
+
+Bronnen: [Tauri: afleiden van inhoudstypen](https://docs.rs/tauri-utils/2.9.2/src/tauri_utils/config.rs.html)
+en [Apple: CFBundleDocumentTypes](https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundledocumenttypes).
+De native macOS-controle moet deze aangepaste registratie nog op de exacte
+PR-versie valideren voordat issue #25 gesloten kan worden.

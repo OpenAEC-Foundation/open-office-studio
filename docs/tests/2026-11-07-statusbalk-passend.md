@@ -85,3 +85,14 @@ de waarde juist behouden. Een veilige indeling is geen geldige negatieve
 voorproef. De oorspronkelijke assertions zijn behouden; geen platform wordt
 overgeslagen. De drie workerproeven en daarna de volledige lokale suite slagen.
 Dit wijzigt de testopzet; de native productieprogramma’s zijn niet herbouwd.
+
+De eerste expliciete façade-instelling was nog niet voldoende op Windows.
+Een afzonderlijke Windows-diagnose draaide vervolgens zowel de drie
+workerproeven als de volledige suite, elk met en zonder canonicalisatie:
+beide volledige suites slaagden (1.974 tests, tien overgeslagen). De gemeten
+modulepaden tonen bij de ongecanonicaliseerde variant korte 8.3-paden voor de
+ingang naast lange paden voor imports. De test maakt het tijdelijke pad nu
+met `realpath` eenduidig vóór de bouw. De originele assertions blijven intact.
+Dit is een gerichte correctie van de proefopzet; de diagnose alleen bewijst
+nog niet dat de eerdere Windows-fout definitief verdwenen is. Daarom moet de
+volledige gewone Windows-job op de nieuwe PR-versie opnieuw slagen.

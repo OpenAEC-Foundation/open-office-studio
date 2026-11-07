@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { build } from "vite";
-import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
+import { mkdtemp, mkdir, writeFile, rm, realpath } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -13,7 +13,9 @@ afterEach(async () => {
 });
 
 async function bundel({ delen = false, bewaken = false } = {}) {
-  const map = await mkdtemp(join(tmpdir(), "office-worker-ingang-"));
+  // Windows kan tmpdir als korte 8.3-naam leveren; Rollup lost imports
+  // naar de lange naam op. Geef ingang en imports dezelfde bestandsidentiteit.
+  const map = await realpath(await mkdtemp(join(tmpdir(), "office-worker-ingang-")));
   mappen.push(map);
   const bron = join(map, "packages/database/src");
   await mkdir(bron, { recursive: true });
@@ -81,7 +83,7 @@ async function leesNaOpenen(map) {
 describe("sessiestaat in de werkelijk gebouwde worker", () => {
   it("reproduceert het verlies van de geopende werkkopie bij een terugimport", async () => {
     const uit = await leesNaOpenen(await bundel());
-    expect(uit.registraties).toBe(2);
+    expect(uit.registraties, JSON.stringify(uit)).toBe(2);
     expect(uit.antwoorden.map((a) => a.werkkopie)).toEqual([42, null]);
   });
   it("weigert die afhankelijkheid in de bouwcontrole", async () => {

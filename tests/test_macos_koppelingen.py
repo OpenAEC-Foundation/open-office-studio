@@ -46,3 +46,13 @@ class MacKoppelingen(unittest.TestCase):
         self.plist['CFBundleDocumentTypes'][0]['LSItemContentTypes'] = ['public.text']
         with self.assertRaisesRegex(ValueError, 'UTI-lijst'):
             module.controleer(self.plist, self.config, 'org.openaec.proef')
+
+    def test_accepteert_afzonderlijk_rtf_met_door_tauri_afgeleide_uti(self):
+        self.config.append({'ext': ['rtf'], 'name': 'Tekstdocument', 'role': 'Editor', 'rank': 'Default'})
+        soort = {**self.plist['CFBundleDocumentTypes'][0], 'CFBundleTypeExtensions': ['rtf'], 'LSItemContentTypes': ['public.rtf']}
+        self.plist['CFBundleDocumentTypes'].append(soort)
+        self.assertEqual(module.controleer(self.plist, self.config, 'org.openaec.proef'), ['docx', 'rtf', 'xlsx'])
+        # De oude gemengde registratie liet docx door public.rtf verdringen.
+        self.plist['CFBundleDocumentTypes'][0]['LSItemContentTypes'] = ['public.rtf']
+        with self.assertRaisesRegex(ValueError, 'UTI-lijst'):
+            module.controleer(self.plist, self.config, 'org.openaec.proef')

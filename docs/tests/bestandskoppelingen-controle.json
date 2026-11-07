@@ -79,14 +79,21 @@
   },
   "macOS": {
     "metadata": "wordt op de werkelijk gebouwde app in CI gecontroleerd",
-    "native": "LaunchServices bij eerste en tweede opening; resultaat wordt in CI gemeten"
+    "native": "LaunchServices bij eerste en tweede opening; resultaat wordt in CI gemeten",
+    "rtfRegistratie": "RTF apart wegens automatisch afgeleide public.rtf; werkelijke app-plist en native opening worden opnieuw in CI gemeten",
+    "historischePlist": {
+      "release": "v2026.45.4",
+      "bestand": "Open.Office.Studio_2026.45.4_aarch64.dmg",
+      "plistSha256": "7bd5a8e9726f40403796a222941bf2cbba3214444604ba0e2250fe48effdb888",
+      "afwijking": "Negen tekstextensies met alleen LSItemContentTypes public.rtf; RTF wordt in deze PR afzonderlijk geregistreerd."
+    }
   },
   "bronnen": {
-    "scripts/controleer-macos-koppelingen.py": "aa9205eebe4e940f2e1e4a2bf1d78b12335407df9e47dfac400ebebb963d4b4a",
+    "scripts/controleer-macos-koppelingen.py": "84398664599cd05d101f10ddcdaabe14b48760cc4c5f08df2add19e1bb33a1e6",
     "scripts/proef-macos-openen.py": "558d192b0861e7932b80fa231ab77d6ffc747ff98cc24f86f0761471052e8e03",
-    "tests/test_macos_koppelingen.py": "e80b5b1d2e203c0b6e0f094f64e748fe7438c34f47d7ccdb05e05471b846d695",
+    "tests/test_macos_koppelingen.py": "f41a248e26393f01032427bb72581831679c5564ae532e048f8f93cfca47adb7",
     ".github/workflows/desktop.yml": "cefbe668af7dd315d7a6c9f7a1e9c810f853e1ca4e8c6a0212dda522b925a2f7",
-    "src-tauri/tauri.macos.conf.json": "50f8d417df03fb3917d14dd32a4ebf3e4599d81f8ceb3ff2133b9f7be1196e70",
+    "src-tauri/tauri.macos.conf.json": "27f408725f68fa5ac6c58615129da2fb200262eec9036f8fd044ad5789f923ef",
     "src-tauri/tauri.linux.conf.json": "9ede13fe7077be424f65e65b0b889b83d9320ae516533ac1c3623a7f7d9aa47b",
     "src-tauri/tauri.windows.conf.json": "1420a5bbbb3515cb4eea8b4129db031ad77361ec49d20366fc1e9c884a293834",
     "src-tauri/src/main.rs": "69b60ff9bf710e80415f1fe2de45cc4f9e8257fe7b7dfe12c2fab8cc2f84fcd2",

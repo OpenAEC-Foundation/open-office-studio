@@ -15,12 +15,16 @@ def controleer(gegevens, koppelingen, identifier):
     }
     gevonden = {}
     for soort in gegevens.get('CFBundleDocumentTypes', []):
-        # Deze app registreert extensies. Een UTI-lijst kan die op macOS negeren.
-        if soort.get('LSItemContentTypes'):
-            raise ValueError('Onverwachte UTI-lijst verdringt de extensiekoppelingen.')
         extensies = soort.get('CFBundleTypeExtensions')
         if not isinstance(extensies, list) or not extensies:
             raise ValueError('Een documenttype mist zijn extensielijst.')
+        # Tauri leidt public.rtf automatisch af. macOS geeft deze lijst voorrang
+        # op extensies: RTF moet daarom een afzonderlijk documenttype zijn.
+        typen = soort.get('LSItemContentTypes', [])
+        if typen and not (extensies == ['rtf'] and typen == ['public.rtf']):
+            raise ValueError('Een UTI-lijst verdringt andere extensiekoppelingen.')
+        if extensies == ['rtf'] and typen != ['public.rtf']:
+            raise ValueError('Het afzonderlijke RTF-documenttype mist public.rtf.')
         for ext in extensies:
             if not isinstance(ext, str) or ext in gevonden:
                 raise ValueError('Ongeldige of dubbele extensie in de app.')

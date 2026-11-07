@@ -88,8 +88,10 @@ class Koppelingen(unittest.TestCase):
                 # CFBundleTypeName, CFBundleTypeRole en LSHandlerRank in de Info.plist.
                 self.assertIn(koppeling['role'], ('Editor', 'Viewer'))
                 self.assertEqual(koppeling.get('rank'), 'Default')
-                # Met LSItemContentTypes negeert macOS de extensielijst; niet gebruiken.
+                # Geen expliciete UTI-lijst: Tauri leidt RTF zelf af; houd die apart.
                 self.assertNotIn('contentTypes', koppeling)
+                if 'rtf' in koppeling['ext']:
+                    self.assertEqual(koppeling['ext'], ['rtf'])
 
     def test_linux_elk_mime_type_een_keer(self):
         lijst = koppelingen_van('linux')
