@@ -80,3 +80,18 @@ Bronnen: [Tauri: afleiden van inhoudstypen](https://docs.rs/tauri-utils/2.9.2/sr
 en [Apple: CFBundleDocumentTypes](https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundledocumenttypes).
 De native macOS-controle moet deze aangepaste registratie nog op de exacte
 PR-versie valideren voordat issue #25 gesloten kan worden.
+
+## Afgeronde macOS-poorten op 7 november 2026
+
+Beide controles slagen in de macOS Office-job op exacte PR-versie
+`56c20a95bb20c41f59fc85879e3031cbcf936e36`. De werkelijke app heeft alle 31
+verwachte registraties; de plist-hash is
+`d8e5f858c89e6912a38f75999ad70d91d1c987329be0eccf8c4ea570e924d80d`.
+LaunchServices verwerkt eerst het rekenblad met spaties en `%` bij starten en
+daarna het tekstdocument in dezelfde draaiende app. De bronnen blijven gelijk,
+er is precies één app-proces en het eigen proces wordt na afloop afgesloten.
+
+De [ongewijzigde rapporten en herkomst](bestandskoppelingen-macos-2026-11-07)
+zijn uit de [workflowrun](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42317423504)
+overgenomen. Dit bevestigt de eerder voorbereide poorten; een handmatige
+Finder-proef wordt hiermee niet geclaimd.
