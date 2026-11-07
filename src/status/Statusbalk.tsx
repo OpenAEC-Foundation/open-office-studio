@@ -78,7 +78,7 @@ function ModuleInfo({ soort }: { soort: string | null }) {
         {t("spreadsheet.filter", { visible: g(f.zichtbaar), total: g(f.totaal) })}
       </span>
     ) : null;
-    if (!s || s.aantal < 2) return filter ? <span className="statusbalk-module">{filter}</span> : null;
+    if (!s || s.aantal === 0) return filter ? <span className="statusbalk-module">{filter}</span> : null;
     return (
       <span
         className="statusbalk-module"

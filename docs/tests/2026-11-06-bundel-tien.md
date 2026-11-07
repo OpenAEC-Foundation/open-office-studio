@@ -115,10 +115,13 @@ Drie regressietests gebruiken werkelijk door Vite gebouwde modules en een
 worker-ingang met een andere URL-identiteit: de oude indeling verliest de
 geopende waarde, de bouwcontrole weigert die indeling, en de productie-instelling
 behoudt de waarde na de luie import. De modules worden in een afzonderlijk
-Node-proces door de oorspronkelijke ES-modulelader uitgevoerd. De eerste
-Windows-CI ontdekte dat de testlader de twee URL-identiteiten daar
-normaliseerde; de correctie verplaatst alleen deze testuitvoering en behoudt
-alle beweringen, inclusief de negatieve voorproef. De drie tests slagen lokaal.
+Node-proces door de oorspronkelijke ES-modulelader uitgevoerd. Een eerste
+Windows-voorproef gaf geen tweede registratie; de proef is daarom naar de
+oorspronkelijke modulelader verplaatst, met behoud van alle beweringen. De
+latere controle in PR #184 vond daarnaast het effect van een extra exportfaçade
+in de testbundel. Daar is de workerinstelling zonder openbare ingangsuitvoer
+expliciet gemaakt; de vergelijking en herhaalde tests staan in het
+[vervolgverslag](2026-11-07-statusbalk-passend.md).
 De native eindproef slaagt vervolgens
 zonder instrumentatie: nieuwe werkkopie, tabel maken, gewone SQLite openen,
 één tabel en twee juiste rijen lezen. De algemene Office-openroute weigert
