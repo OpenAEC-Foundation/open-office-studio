@@ -8,6 +8,7 @@ import { zichtbaarElement } from "../../../lint/editorApi";
 import { isVerwijderd, koppenUitExport, type Kop, type PaginaExport } from "../inhoudsopgave.ts";
 import { nieuweMarkering } from "../ooxml.ts";
 import { paginaTekst } from "../tekst.ts";
+import { actieveSectie } from "../actieveSectie";
 
 /** Zet een unieke markering op de cursor (aan het eind van een selectie). */
 export async function zetMarkering(api: DocxEditorRef) {
@@ -190,7 +191,9 @@ function paginaInBeeld() {
 export function bewerkKopVoet(api: DocxEditorRef, soort: "header" | "footer") {
   const pagina = paginaInBeeld();
   if (!pagina) return false;
-  const sectie = api.getDocument()?.package?.document?.finalSectionProperties;
+  const actief = actieveSectie(api);
+  if (!actief) return false;
+  const sectie = actief.eigenschappen;
   const hoogte = sectie?.pageHeight || 16838;
   const r = pagina.getBoundingClientRect();
   const marge = soort === "header" ? sectie?.marginTop || 1440 : sectie?.marginBottom || 1440;
@@ -229,11 +232,12 @@ export function sluitKopVoet() {
   return false;
 }
 
-/** De sectiestand van de laatste sectie zoals de engine die geladen heeft. */
+/** De sectiestand bij de cursor zoals de engine die geladen heeft. */
 export function sectieStand(api: DocxEditorRef | null) {
   const doc = api?.getDocument();
-  const s = doc?.package?.document?.finalSectionProperties;
-  const aantal = (doc?.package?.document?.sections?.length ?? 0) || 1;
+  const actief = actieveSectie(api);
+  const aantal = actief?.aantal ?? ((doc?.package?.document?.sections?.length ?? 0) || 1);
+  const s = actief?.eigenschappen ?? (aantal === 1 ? doc?.package?.document?.finalSectionProperties : undefined);
   return {
     aantalSecties: aantal,
     titelpagina: !!s?.titlePg,

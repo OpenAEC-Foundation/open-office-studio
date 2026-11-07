@@ -1,0 +1,553 @@
+{
+  "binaireSha256": "d46632f1d68715c288e55527e997bee3746d726eb89a38635d90815fb49543d3",
+  "bronfixtureSha256": "a8237d0affd738eb3e43d989d7bd2332cd217cb3ad93090bc6762666510c969f",
+  "samengesteldeBronSha256": "9ed21a914860101f0b6984d5b75c32d3d514de4adb7e6dee11ff003bffdbed17",
+  "bronnen": {
+    "src/tekst/pagina/kolomkeuze.ts": "e52d70e7026547719076aea6064deaaf46f9cb676840cb11cbdba9e49e91f5fe",
+    "src/tekst/pagina/actieveSectie.ts": "1ee793f46b370529ebcebe5d7c7c2f12a37949a3bd9416b3850b95dec5faa639",
+    "src/tekst/pagina/kolommen-engine.test.ts": "1f3403406e8252d598cae9ad177326a759543846cf3582286bd0dcba2e827b8e",
+    "src/tekst/pagina/kolomkeuze.test.ts": "06b064da92440a7c81856da7c3045527e86c91aa74b3b4ef2306bf26b37c000f",
+    "src/tekst/pagina/ui/Dialogen.tsx": "f4c65c2a166d4f72e76acaef4d5de0e9ba7f51fbcedb10c3b0878f28c78a2689",
+    "src/tekst/pagina/ui/usePagina.tsx": "9fafe957549f7241077155398dc2722743cc02ce54736ab69384d57d11771d26",
+    "src/tekst/pagina/ui/actieve-sectie.test.ts": "ab40f02e5e02c0907c3abd6b5e36f3bb5688aa5f63153fa25ded154d7f61bc55",
+    "src/tekst/pagina/ui/engine.ts": "6d6a62422f7500704b510af065810994f734326db400a463e8cfa8a28b1d5149"
+  },
+  "baseline": {
+    "binaireSha256": "138f15e9d93817ca3e908de17a250c09a96e9b8ba7dd2b278b3a802f5519ee33",
+    "kolommenVensterEersteSectie": {
+      "tekst": "KolommenAantal kolommenTussenruimtecmLijn tussen de kolommenToepassen opDeze sectieHele documentElke kolom wordt 7,87 cm breed.Het document wordt daarna opnieuw geladen. Eerdere wijzigingen kunnen dan niet meer met Ongedaan maken worden teruggedraaid.AnnulerenOK",
+      "velden": [
+        {
+          "type": "text",
+          "waarde": "3",
+          "checked": false
+        },
+        {
+          "type": "text",
+          "waarde": "0,5",
+          "checked": false
+        },
+        {
+          "type": "checkbox",
+          "waarde": "on",
+          "checked": false
+        },
+        {
+          "type": "radio",
+          "waarde": "on",
+          "checked": true
+        },
+        {
+          "type": "radio",
+          "waarde": "on",
+          "checked": false
+        }
+      ],
+      "status": "Pagina 1 van 272 woorden, 528 tekensEngels (Verenigde Staten) · spelling niet beschikbaarWijzigingen bijhouden: uit"
+    }
+  },
+  "metingen": [
+    {
+      "proef": "eerste-sectie-kolommen",
+      "waarden": [
+        "2",
+        "1,25"
+      ],
+      "actief": "Twee"
+    },
+    {
+      "proef": "laatste-sectie-kolommen",
+      "waarden": [
+        "3",
+        "0,5"
+      ],
+      "actief": "Drie"
+    },
+    {
+      "proef": "ongewijzigd-bevestigen-behoudt-beide-afstanden",
+      "secties": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "720",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "2",
+              "space": "708"
+            },
+            "kinderen": []
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    },
+    {
+      "proef": "opgeslagen-kolomwijziging",
+      "secties": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "720",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "4",
+              "sep": "1",
+              "space": "567"
+            },
+            "kinderen": []
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    },
+    {
+      "proef": "vier-kolommen-alleen-eerste-sectie",
+      "secties": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "720",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "4",
+              "sep": "1",
+              "space": "567"
+            },
+            "kinderen": []
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    },
+    {
+      "proef": "kopafstand-alleen-eerste-sectie",
+      "secties": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1134",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "4",
+              "sep": "1",
+              "space": "567"
+            },
+            "kinderen": []
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    },
+    {
+      "proef": "opnieuw-geopend-met-afzonderlijke-secties",
+      "eerste": {
+        "waarden": [
+          "4",
+          "1"
+        ]
+      },
+      "xml": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1134",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "4",
+              "sep": "1",
+              "space": "567"
+            },
+            "kinderen": []
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    },
+    {
+      "proef": "ongelijke-breedtes-behouden-bij-scheidingslijn",
+      "secties": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "720",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "2",
+              "sep": "1",
+              "space": "708",
+              "equalWidth": "0"
+            },
+            "kinderen": [
+              {
+                "w": "2500",
+                "space": "708"
+              },
+              {
+                "w": "5818"
+              }
+            ]
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    },
+    {
+      "proef": "ongelijke-kolommen-opnieuw-geopend",
+      "gelezen": {
+        "waarden": [
+          "2",
+          "1,25"
+        ],
+        "actief": "Twee"
+      },
+      "lijn": true,
+      "breedtes": [
+        128.515625,
+        299.078125
+      ],
+      "xml": [
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "11906",
+              "h": "16838"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "720",
+              "footer": "720"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "2",
+              "sep": "1",
+              "space": "708",
+              "equalWidth": "0"
+            },
+            "kinderen": [
+              {
+                "w": "2500",
+                "space": "708"
+              },
+              {
+                "w": "5818"
+              }
+            ]
+          }
+        },
+        {
+          "pgSz": {
+            "kenmerken": {
+              "w": "16838",
+              "h": "11906",
+              "orient": "landscape"
+            },
+            "kinderen": []
+          },
+          "pgMar": {
+            "kenmerken": {
+              "top": "1440",
+              "right": "1440",
+              "bottom": "1440",
+              "left": "1440",
+              "header": "1440",
+              "footer": "1080"
+            },
+            "kinderen": []
+          },
+          "cols": {
+            "kenmerken": {
+              "num": "3",
+              "space": "284"
+            },
+            "kinderen": []
+          }
+        }
+      ]
+    }
+  ],
+  "bestanden": {
+    "docs/tests/schrijver-secties/Ongelijke-kolommen-met-lijn.docx": "99f6f35e26a63b0916795b11e42a9aa5d0f7c21c7b34a3257dad2d03eaea7ee7",
+    "docs/tests/schrijver-secties/Twee-secties-bron.docx": "a8237d0affd738eb3e43d989d7bd2332cd217cb3ad93090bc6762666510c969f",
+    "docs/tests/schrijver-secties/Vier-kolommen-en-kopafstand.docx": "fbd2f2af69c7a0f6a481123116c4d905437a961b60c041d2dfa54d8b1b71e941",
+    "docs/tests/schrijver-secties/Ongelijke-kolommen-bron.docx": "3d4480707adf97c5849901967af1873b6d334b1bc733aa27a3dd163aade513cb"
+  },
+  "eigenProefAfgesloten": {
+    "appAfgesloten": true,
+    "x11Afgesloten": true
+  },
+  "regressie": {
+    "bestanden": 175,
+    "geslaagd": 1987,
+    "bestaandeCorpusOvergeslagen": 10,
+    "workers": 2,
+    "seconden": 229.99,
+    "exitcode": 0,
+    "pythonGeslaagd": 58,
+    "typescriptExitcode": 0,
+    "engineproefExitcode": 0,
+    "opdrachtenproefExitcode": 0,
+    "productiebouwExitcode": 0,
+    "nativeBouwExitcode": 0
+  }
+}

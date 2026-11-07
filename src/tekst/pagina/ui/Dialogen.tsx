@@ -10,6 +10,7 @@ import { PAGINANUMMER_VORMEN, paginanummerTekst, type PaginanummerOpties, type P
 import { OPVULTEKENS, STANDAARD_INHOUD, type InhoudOpties } from "../inhoudsopgave.ts";
 import { NOOTNOTATIES, type NootHerstart, type NootInstellingen, type NootNotatie, type NootPositie, type NootSoort } from "../noten.ts";
 import { PAGINANOTATIES, cmNaarTwips, twipsNaarCm, type Kolommen, type Paginanotatie } from "../secties.ts";
+import { kolomkeuze } from "../kolomkeuze";
 import type { NootInfo } from "./engine.ts";
 
 /** Decimaalteken voor invoervelden: alleen komma of punt, zodat `leesCm` het terugleest. */
@@ -242,15 +243,20 @@ export function KolommenDialoog({
   const [doel, setDoel] = useState<"alle" | "sectie">("sectie");
   const n = Number(aantal);
   const r = leesCm(ruimte);
-  const ok = Number.isInteger(n) && n >= 1 && n <= 12 && r >= 0 && r <= 10 && cmNaarTwips(r) * (n - 1) < breedte - 720 * n;
-  const kolom = ok ? (breedte - cmNaarTwips(r) * (n - 1)) / n : 0;
+  const keuze = kolomkeuze(begin, n, r, lijn);
+  const ongelijk = keuze.breedtes?.length === n;
+  const ok = Number.isInteger(n) && n >= 1 && n <= 12 && r >= 0 && r <= 10 && (ongelijk || keuze.tussenruimte * (n - 1) < breedte - 720 * n);
+  const kolom = ok ? (breedte - keuze.tussenruimte * (n - 1)) / n : 0;
   const { t } = useTranslation("writer");
   return (
     <Dialoog
       titel={t("page.layout.columnsDialog.title")}
       sluit={sluit}
       className="pagina-dialoog"
-      acties={<Knoppen uit={!ok} sluit={sluit} bevestig={() => bevestig({ aantal: n, tussenruimte: cmNaarTwips(r), lijn: lijn && n > 1 }, doel)} />}
+      acties={<Knoppen uit={!ok} sluit={sluit} bevestig={() => {
+        if (keuze === begin && doel === "sectie") sluit();
+        else bevestig(keuze, doel);
+      }} />}
     >
       <Veld label={t("page.layout.columnsDialog.count")}>
         <input type="text" inputMode="numeric" value={aantal} aria-invalid={!ok} onChange={(e) => setAantal(e.target.value)} data-autofocus />
@@ -278,9 +284,9 @@ export function KolommenDialoog({
         />
       )}
       <div className="pagina-kolomvoorbeeld" aria-hidden="true">
-        {ok && Array.from({ length: n }, (_, i) => <span key={i} style={{ flexBasis: `${(kolom / breedte) * 100}%` }} data-lijn={lijn && i > 0 ? "" : undefined} />)}
+        {ok && Array.from({ length: n }, (_, i) => <span key={i} style={{ flexBasis: `${((ongelijk ? keuze.breedtes![i].breedte : kolom) / breedte) * 100}%` }} data-lijn={lijn && i > 0 ? "" : undefined} />)}
       </div>
-      <p className="werkruimte-uitleg">{ok ? t("page.layout.columnsDialog.columnWidth", { width: cmWeergave(kolom) }) : t("page.layout.columnsDialog.invalid")}</p>
+      <p className="werkruimte-uitleg">{ok ? ongelijk ? t("page.layout.moreColumnsHint") : t("page.layout.columnsDialog.columnWidth", { width: cmWeergave(kolom) }) : t("page.layout.columnsDialog.invalid")}</p>
     </Dialoog>
   );
 }
