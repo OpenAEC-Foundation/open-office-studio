@@ -81,6 +81,7 @@ import {
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaObjecten } from "../presentatie/DiaObjecten";
+import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
@@ -617,6 +618,7 @@ export function PresentatieRibbon({
               </Groep>
               <GrafiekGroep g={grafieken} uit={!acties.bewerkbaar} />
               <Groep naam={t("presentation.groups.text")}>
+                <DiaVoetteksten />
                 <P
                   id="tool"
                   args={{ value: "textBox" }}
