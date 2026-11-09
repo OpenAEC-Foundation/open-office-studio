@@ -14,6 +14,7 @@
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import i18next from "../../i18n/config";
+import { leesAuteur as eigenAuteur } from "../../auteursprofiel";
 
 /** Sessie en weergave van de editor; gooit een begrijpelijke fout zonder document. */
 export function engine(ref: DocxEditorRef | null) {
@@ -76,14 +77,8 @@ export function bewerk<T>(ref: DocxEditorRef | null, doe: (e: Engine) => { resul
   return resultaat;
 }
 
-/** De ingestelde auteursnaam (dezelfde sleutel als het opmerkingenvenster), of "". */
-export function eigenAuteur() {
-  try {
-    return localStorage.getItem("open-tekst-auteur")?.trim() ?? "";
-  } catch {
-    return "";
-  }
-}
+/** De bewaarde auteursnaam uit Instellingen, of "". */
+export { eigenAuteur };
 
 /**
  * Auteur voor bijgehouden wijzigingen. Zonder ingestelde naam een

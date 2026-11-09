@@ -16,7 +16,9 @@ import { useEditorApi, useEditorZichtbaar, zichtbaarElement } from "./editorApi"
 import { publiceerStatus } from "../status/statusinfo";
 import { useSneltoetsen, type Sneltoets } from "./sneltoetsen";
 import { toetsInProfiel } from "./sneltoetsenlijst";
-import { useInstellingen } from "../instellingen";
+import { leesBewaardeInstellingen, useInstellingen } from "../instellingen";
+import { leesAuteur, bewaarAuteur } from "../auteursprofiel";
+import { noteerOpmerkingInitialen } from "../tekst/opmerkingen/initialen";
 import { useProfielToets } from "../tekst/bewerken/profielToets";
 import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
 import { leesAlleAlineas } from "../tekst/gedeeld/engine";
@@ -89,22 +91,6 @@ export function EigenKnop({
       onMouseDown={(event) => event.preventDefault()}
     />
   );
-}
-
-const AUTEUR = "open-tekst-auteur";
-function leesAuteur() {
-  try {
-    return localStorage.getItem(AUTEUR) ?? "";
-  } catch {
-    return "";
-  }
-}
-function bewaarAuteur(naam: string) {
-  try {
-    localStorage.setItem(AUTEUR, naam);
-  } catch {
-    /* alleen gemak */
-  }
 }
 
 function tekstVlak() {
@@ -666,18 +652,22 @@ function OpmerkingInvoegen({
   sluit: () => void;
   fout: (error: unknown) => void;
 }) {
+  const handle = useEditorApi().herlaad;
   const { t } = useTranslation("ribbon");
   const zijbalk = useDocxCommand("commentsSidebar");
   const [tekst, setTekst] = useState("");
   const [auteur, setAuteur] = useState(leesAuteur);
+  const [bezig, setBezig] = useState(false);
   const [selectie] = useState(() => api()?.getSelectionInfo() ?? null);
-  function invoegen() {
+  async function invoegen() {
+    if (bezig) return;
+    setBezig(true);
     try {
       const ref = api();
       if (!ref || !selectie?.paraId)
         throw new Error(t("writer.errors.placeCursorFirst"));
       const naam = auteur.trim() || t("writer.comment.unknownAuthor");
-      bewaarAuteur(auteur.trim());
+      const initialen = leesBewaardeInstellingen().gebruiker.initialen;
       const gekozen = selectie.selectedText;
       const id = ref.addComment({
         paraId: selectie.paraId,
@@ -690,10 +680,17 @@ function OpmerkingInvoegen({
       });
       if (id === null)
         throw new Error(t("writer.errors.commentFailed"));
+      // getComments is een React-projectie: pas na de volgende render bevat
+      // de actuele ref de net ingevoegde opmerking met haar engine-tijdstip.
+      await new Promise<void>(klaar => requestAnimationFrame(() => klaar()));
+      const actueel = api();
+      if (handle && actueel) noteerOpmerkingInitialen(handle, actueel, id, initialen);
+      bewaarAuteur(auteur.trim());
       sluit();
       if (!zijbalk.state.active) void zijbalk.execute();
     } catch (error) {
       fout(error);
+      setBezig(false);
     }
   }
   return (
@@ -704,7 +701,7 @@ function OpmerkingInvoegen({
         <button
           type="button"
           className="office-dialoogdoorgaan"
-          disabled={!tekst.trim()}
+          disabled={bezig || !tekst.trim()}
           onClick={invoegen}
         >
           {t("writer.dialogs.insert")}

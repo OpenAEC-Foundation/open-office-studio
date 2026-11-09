@@ -42,7 +42,7 @@ import { tekstSelectiePlugin } from "./lettertypen/koppeling";
 import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
-import { auteur } from "./tekst/gedeeld/engine";
+import { useAuteur } from "./auteursprofiel";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
 
@@ -81,6 +81,7 @@ export interface EditorProps {
 const behoudSynchroneProjectie = () => {};
 
 export default function OfficeEditor(props: EditorProps) {
+  const auteursnaam = useAuteur();
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
   const { t } = useTranslation("shell");
@@ -407,7 +408,7 @@ export default function OfficeEditor(props: EditorProps) {
               onPluginError={spelling.pluginFout}
               downloadOnSave={false}
               // Naam bij opmerkingen en bijgehouden wijzigingen (Instellingen), niet "User".
-              author={auteur()}
+              author={auteursnaam || i18next.t("writer:general.unknownAuthor")}
               onSave={() => {
                 if (!exporteren.current) props.opslaan();
               }}
