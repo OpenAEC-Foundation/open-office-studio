@@ -1,5 +1,5 @@
-import os,shlex,sys
-name=os.environ["SNAP_NAME"]
+import shlex,sys
+name=sys.argv[2]
 from pathlib import Path
 root=Path(sys.argv[1]);files=list((root/'usr/share/applications').glob('*.desktop'))
 assert len(files)==1, 'Expected one app desktop entry'

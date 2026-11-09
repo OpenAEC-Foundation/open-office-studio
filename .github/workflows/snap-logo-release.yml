@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     env:
-      SNAP_NAME: ${{ matrix.snap }}
+      STUDIO_SNAP_NAME: ${{ matrix.snap }}
       GH_TOKEN: ${{ github.token }}
       RELEASE_TAG: ${{ inputs.version || 'v2026.45.4' }}
     steps:

@@ -8,7 +8,7 @@ assert re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+",tag), 'Expected vX.Y.Z'
 def gh(*args):return subprocess.check_output(['gh',*args],text=True)
 release=json.loads(gh('api',f'repos/{__import__("os").environ["GITHUB_REPOSITORY"]}/releases/tags/{tag}'))
 assert not release['draft'], 'Only published releases may be packaged'
-name=os.environ['SNAP_NAME']
+name=os.environ['STUDIO_SNAP_NAME']
 assert name in ['open-office-studio', 'open-writer-studio', 'open-spreadsheet-studio', 'open-presentation-studio', 'open-email-studio', 'open-notition-studio']
 assets=[a for a in release['assets'] if a['name'].endswith('_amd64.deb') and a['name'].lower().replace('.', '-').replace(' ', '-').startswith(name+'_')]
 assert len(assets)==1, 'Expected exactly one amd64 deb'
