@@ -51,6 +51,7 @@ import { Keuzemenu, type Menuregel } from "./Keuzemenu.tsx";
 import { cmWeergave, voorbeeldPaginanummer } from "./Dialogen.tsx";
 import type { PaginaFuncties } from "./usePagina.tsx";
 import { VeldKnoppen } from "../../veldenDocument/VeldKnoppen";
+import { VerwijzingenGroep } from "../../verwijzingen/VerwijzingenGroep";
 
 type T = TFunction<"writer">;
 const cm = (t: number) => `${cmWeergave(t)} cm`;
@@ -320,6 +321,7 @@ export function verwijzingenTab(p: PaginaFuncties): RibbonTab {
           />
           <EigenKnop naam={t("page.toc.update")} icoon={RefreshCw} groot uitleg={t("page.toc.updateHint")} disabled={!p.beschikbaar} onClick={() => void p.inhoudBijwerken()} />
         </Groep>
+        <VerwijzingenGroep />
         <Groep naam={t("page.footnotes.group")}>
           <EigenKnop naam={t("page.footnotes.insertFootnote")} icoon={Footprints} groot sneltoets="Ctrl+Alt+F" disabled={!p.bewerkbaar} onClick={() => p.noot("voetnoot")} />
           <div className="ribbon-stapel">
