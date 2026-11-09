@@ -324,6 +324,49 @@ export function voldoetValidatie(
   }
 }
 const caches = new WeakMap<WorkbookHandle, Validatieregel[][]>();
+const vooraf = new WeakMap<
+  WorkbookHandle,
+  (ops: unknown[], request: XlsxEditRequest) => void
+>();
+const plannen = new WeakMap<
+  WorkbookHandle,
+  {
+    ops: unknown[];
+    steps: XlsxEditRequest["steps"];
+    basis: string;
+    versie: string;
+    opsTekst: string;
+    stappenTekst: string;
+  }
+>();
+export function controleerValidatieBewerking(
+  h: WorkbookHandle,
+  ops: unknown[],
+  request: XlsxEditRequest,
+) {
+  vooraf.get(h)?.(ops, request);
+}
+function requestCellen(h: WorkbookHandle, request: XlsxEditRequest) {
+  const info = h.sheetInfo();
+  return request.steps.flatMap((s) => {
+    if (!["setCellInputs", "setCellValues", "setFormulas"].includes(s.op))
+      return [];
+    const b =
+      s.target.range.kind === "a1"
+        ? gebied(s.target.range.a1)
+        : {
+            top: s.target.range.start.row,
+            left: s.target.range.start.col,
+            bottom: s.target.range.end.row,
+            right: s.target.range.end.col,
+          };
+    const uit = [];
+    for (let row = b.top; row <= b.bottom; row++)
+      for (let col = b.left; col <= b.right; col++)
+        uit.push({ sheet: info.sheetIds.indexOf(s.target.sheetId), row, col });
+    return uit;
+  });
+}
 export const validaties = (h: WorkbookHandle) => caches.get(h) ?? [];
 export function installeerValidatie(
   h: WorkbookHandle,
@@ -374,6 +417,23 @@ export function installeerValidatie(
     editCells = h.editCells.bind(h),
     applyOps = h.applyOps.bind(h),
     applyEdits = h.applyEdits.bind(h);
+  vooraf.set(h, (ops, request) => {
+    const geldig = h.validateEdits(request);
+    if (!geldig.ok) throw new Error(geldig.failure.message);
+    controleer(requestCellen(h, request), (k) => {
+      if (ops.length) k.applyOps(ops);
+      const uit = k.applyEdits({ ...request, expectVersion: k.version() });
+      if (!uit.ok) throw new Error(uit.failure.message);
+    });
+    plannen.set(h, {
+      ops,
+      steps: request.steps,
+      basis: h.version(),
+      versie: h.version(),
+      opsTekst: JSON.stringify(ops),
+      stappenTekst: JSON.stringify(request.steps),
+    });
+  });
   const run = <T>(fn: () => T) => {
     const was = bezig;
     bezig = true;
@@ -397,6 +457,11 @@ export function installeerValidatie(
     return run(() => editCells(sheet, edits));
   };
   h.applyOps = (ops) => {
+    const plan = plannen.get(h),
+      past =
+        plan?.ops === ops &&
+        plan.basis === h.version() &&
+        plan.opsTekst === JSON.stringify(ops);
     const cellen = ops.flatMap((op: any) =>
       op.type === "setCell"
         ? [{ sheet: op.sheet, row: op.at.row, col: op.at.col }]
@@ -404,6 +469,7 @@ export function installeerValidatie(
     );
     controleer(cellen, (k) => k.applyOps(ops));
     const uit = run(() => applyOps(ops));
+    if (past) plan!.versie = h.version();
     if (
       ops.some((op: any) =>
         /^(insert|delete)(Rows|Cols)$|^(rename|move|remove)Sheet$/.test(
@@ -420,32 +486,16 @@ export function installeerValidatie(
   h.applyEdits = (request: XlsxEditRequest) => {
     if (request.expectVersion !== h.version()) return applyEdits(request);
     if (!h.validateEdits(request).ok) return applyEdits(request);
-    const info = h.sheetInfo();
-    const cellen = request.steps.flatMap((s) => {
-      if (!["setCellInputs", "setCellValues", "setFormulas"].includes(s.op))
-        return [];
-      const b =
-        s.target.range.kind === "a1"
-          ? gebied(s.target.range.a1)
-          : {
-              top: s.target.range.start.row,
-              left: s.target.range.start.col,
-              bottom: s.target.range.end.row,
-              right: s.target.range.end.col,
-            };
-      const uit = [];
-      for (let row = b.top; row <= b.bottom; row++)
-        for (let col = b.left; col <= b.right; col++)
-          uit.push({
-            sheet: info.sheetIds.indexOf(s.target.sheetId),
-            row,
-            col,
-          });
-      return uit;
-    });
-    controleer(cellen, (k) =>
-      k.applyEdits({ ...request, expectVersion: k.version() }),
-    );
+    const plan = plannen.get(h),
+      goedgekeurd =
+        plan?.steps === request.steps &&
+        plan.versie === request.expectVersion &&
+        plan.stappenTekst === JSON.stringify(request.steps);
+    plannen.delete(h);
+    if (!goedgekeurd)
+      controleer(requestCellen(h, request), (k) =>
+        k.applyEdits({ ...request, expectVersion: k.version() }),
+      );
     return run(() => applyEdits(request));
   };
   for (const naam of ["undo", "redo"] as const) {

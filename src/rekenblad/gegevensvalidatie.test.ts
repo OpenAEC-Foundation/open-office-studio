@@ -3,8 +3,12 @@ import { describe, expect, it, vi } from "vitest";
 import { openWorkbook, type XlsxEditRequest } from "@betteroffice/xlsx";
 import { Pakket } from "../grafieken/pakket";
 import { metValidatieAnkers } from "./validatieAnkers";
+import { kopieerSelectie, plak } from "./klembord";
+import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
+import { ontleedBereik } from "../lint/rekenblad-logica";
 import {
   celWaarde,
+  controleerValidatieBewerking,
   installeerValidatie,
   leesValidaties,
   lijstWaarden,
@@ -27,6 +31,101 @@ function boek(extra: Partial<Validatieregel> = {}) {
 }
 
 describe("gegevensvalidatie (#68)", () => {
+  it("hergebruikt een bevestiging alleen voor exact dezelfde stappen en werkmapversie", () => {
+    const bytes = schrijfValidatie(
+        bron,
+        0,
+        null,
+        regel({ foutType: "warning" }),
+      ),
+      h = openWorkbook(metValidatieAnkers(bytes)),
+      confirm = vi.fn(() => true);
+    installeerValidatie(h, bytes, confirm);
+    try {
+      const request: XlsxEditRequest = {
+        expectVersion: h.version(),
+        steps: [
+          {
+            op: "setCellInputs",
+            target: {
+              sheetId: h.sheetInfo().sheetIds[0],
+              range: { kind: "a1", a1: "B2" },
+            },
+            inputs: [["200"]],
+          },
+        ],
+      };
+      controleerValidatieBewerking(h, [], request);
+      expect(confirm).toHaveBeenCalledOnce();
+      expect(h.applyEdits(request).ok).toBe(true);
+      expect(confirm).toHaveBeenCalledOnce();
+      const next: XlsxEditRequest = {
+        ...request,
+        expectVersion: h.version(),
+        steps: [
+          {
+            ...request.steps[0],
+            op: "setCellInputs",
+            inputs: [["300"]],
+          } as any,
+        ],
+      };
+      controleerValidatieBewerking(h, [], next);
+      confirm.mockReturnValue(false);
+      (next.steps[0] as any).inputs = [["400"]];
+      expect(() => h.applyEdits(next)).toThrow();
+      expect(h.cell(0, 1, 1).input).toBe("200");
+    } finally {
+      h.dispose();
+    }
+  });
+  it("weigert een interne plakactie vóór bronopmaak de doelcel wijzigt", async () => {
+    const h = boek();
+    let selectie = "A1";
+    const vorige = (globalThis as any).document;
+    const host = {
+      querySelector: () => ({ value: selectie.split(":")[0] }),
+      querySelectorAll: () => [],
+      closest: () => null,
+    };
+    (globalThis as any).document = { querySelectorAll: () => [host] };
+    const api = {
+      handle: h,
+      version: async () => h.version(),
+      readCells: async (r: any) => h.readCells(r),
+      applyEdits: async (r: any) => h.applyEdits(r),
+      validateEdits: async (r: any) => h.validateEdits(r),
+      commands: {
+        getState: (id: string) =>
+          id === "merge"
+            ? {
+                value: {
+                  rows:
+                    ontleedBereik(selectie)!.bottom -
+                    ontleedBereik(selectie)!.top +
+                    1,
+                  columns: 1,
+                },
+              }
+            : { enabled: true },
+      },
+      selectCells: () => true,
+    } as unknown as XlsxEditorApi;
+    try {
+      h.editCell(0, 0, 0, "200");
+      h.patchRangeStyle(0, "A1", { bold: true });
+      const inhoud = kopieerSelectie(api);
+      selectie = "B2";
+      const voor = h.captureFormat(0, "B2"),
+        v = h.version();
+      await expect(plak(api, { tekst: inhoud.tsv })).rejects.toThrow();
+      expect(h.captureFormat(0, "B2")).toEqual(voor);
+      expect(h.version()).toBe(v);
+    } finally {
+      (globalThis as any).document = vorige;
+      h.dispose();
+    }
+  });
   it("schrijft standaard OOXML en behoudt overige onderdelen na opslaan/heropenen", () => {
     const p = new Pakket(bron);
     p.schrijf("customXml/vendor.xml", "<opaque keep='yes'/>");

@@ -21,10 +21,15 @@ internal names. Extended source validation is preserved and displayed read-only.
 
 ## Verification
 
-- 17 actual-core tests cover all seven rule types, fixed/range/named lists,
+- 19 actual-core tests cover all seven rule types, fixed/range/named lists,
   local name precedence, atomic refusals, warnings/information, blanks, disabled
   alerts, structural shifts, formula strings, rename, Undo/Redo, save/reopen,
   unknown-part preservation, stale/invalid typed requests and idempotent setup.
+- A subsequent integration regression reproduces an internal formatted paste
+  changing the target style before rejecting its invalid value. Combined
+  preflight now rehearses format and value steps before either is committed.
+  Fill and sort use the same preflight. Approval is tied to exact step contents,
+  operation contents and workbook versions; warning alerts are not repeated.
 - `scripts/test-rekenblad-validatie-gui.mjs` exercises the production browser
   build: existing dropdown/input message; invalid keyboard input; circling and
   clearing an invalid source value; editing a rule; creating a number rule;

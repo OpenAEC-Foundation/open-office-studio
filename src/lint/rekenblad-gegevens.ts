@@ -20,6 +20,7 @@ import i18next from "../i18n/config";
 import { intlLocale } from "../i18n/config";
 import { leesWerkmapinstelling } from "../rekenblad/werkmapregio";
 import { laadInvoerlezer } from "../rekenblad/invoerlezer";
+import { controleerValidatieBewerking } from "../rekenblad/gegevensvalidatie";
 import {
   alleenLezen,
   leesSelectie,
@@ -355,6 +356,7 @@ export async function vul(
     ops = o.ops;
   }
   await controleer(api, stappen);
+  if(stappen.length)controleerValidatieBewerking(api.handle,ops,{expectVersion:api.handle.version(),steps:stappen});
   if (ops.length) await voerOpsUit(api, ops);
   await bewerk(api, stappen);
   const bereik: Bereik = {
@@ -557,6 +559,7 @@ export async function sorteerBereik(api: XlsxEditorApi, keuze: SorteerKeuze) {
   const o = await opmaakNaar(api, blad, sheetId, data, gewenst);
   stappen.push(...o.stappen);
   await controleer(api, stappen);
+  controleerValidatieBewerking(api.handle,o.ops,{expectVersion:api.handle.version(),steps:stappen});
   if (o.ops.length) await voerOpsUit(api, o.ops);
   await bewerk(api, stappen);
   // Een filter op dit bereik: sorteerstatus bewaren en opnieuw toepassen.
