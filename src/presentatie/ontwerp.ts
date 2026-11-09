@@ -469,6 +469,66 @@ export function valideerThema(t: Thema): Thema {
   hex(t.achtergrond);
   return t;
 }
+/** Begin de thema-editor met het ontwerp van de huidige dia. Eén pakketlezing. */
+export function leesOntwerpMetThema(
+  bytes: Uint8Array,
+  index: number,
+): { info: OntwerpInfo; thema?: Thema } {
+  const p = new Pakket(bytes),
+    lijst = info(p),
+    dia = lijst.dias[index],
+    layout = lijst.layouts.find((l) => l.pad === dia?.layout);
+  if (!dia || !layout) return { info: lijst };
+  try {
+    const theme =
+      doel(p, dia.pad, THEME) ||
+      doel(p, layout.pad, THEME) ||
+      doel(p, layout.master, THEME);
+    if (!theme) return { info: lijst };
+    const root = leesXml(p.lees(theme)),
+      te = kind(root, "themeElements"),
+      cs = kind(te, "clrScheme"),
+      fs = kind(te, "fontScheme");
+    const leesKleur = (e: XmlElement | null): string => {
+      const rgb = kind(e, "srgbClr"),
+        sys = kind(e, "sysClr"),
+        value = attr(rgb, "val") ?? attr(sys, "lastClr");
+      if (
+        !value ||
+        (rgb && elementen(rgb).length) ||
+        (sys && elementen(sys).length)
+      )
+        throw new OntwerpFout("invalid");
+      return "#" + hex("#" + value);
+    };
+    const kleuren = KLEUREN.map((k) => leesKleur(kind(cs, k)));
+    let achtergrond = kleuren[1];
+    for (const pad of [dia.pad, layout.pad, layout.master]) {
+      const bg = kind(kind(leesXml(p.lees(pad)), "cSld"), "bg");
+      if (!bg) continue;
+      const solid = kind(kind(bg, "bgPr"), "solidFill");
+      if (!solid) return { info: lijst };
+      const scheme = kind(solid, "schemeClr");
+      if (scheme) {
+        const name = attr(scheme, "val"),
+          i = KLEUREN.findIndex((k) => k === name);
+        if (i < 0 || elementen(scheme).length) return { info: lijst };
+        achtergrond = kleuren[i];
+      } else achtergrond = leesKleur(solid);
+      break;
+    }
+    const thema = valideerThema({
+      naam: attr(root, "name") ?? attr(cs, "name") ?? "Theme",
+      kleuren,
+      kop: attr(kind(kind(fs, "majorFont"), "latin"), "typeface") ?? "",
+      tekst: attr(kind(kind(fs, "minorFont"), "latin"), "typeface") ?? "",
+      achtergrond,
+    });
+    return { info: lijst, thema };
+  } catch {
+    return { info: lijst };
+  }
+}
 function themaXml(xml: string, t: Thema) {
   const root = leesXml(xml),
     te = kind(root, "themeElements"),
