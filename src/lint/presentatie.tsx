@@ -85,6 +85,7 @@ import { DiaOntwerp } from "../presentatie/DiaOntwerp";
 import { DiaTabellen } from "../presentatie/DiaTabellen";
 import { DiaHergebruik } from "../presentatie/DiaHergebruik";
 import { DiaAfbeeldingen } from "../presentatie/DiaAfbeeldingen";
+import { DiaGroepen } from "../presentatie/DiaGroepen";
 import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
@@ -536,6 +537,7 @@ export function PresentatieRibbon({
     {grafieken.venster}
     <GrafiekPlakListener />
     <DiaHergebruik bediening={false}/>
+    <DiaGroepen bediening={false}/>
     {weergave.element}
     {acties.voorstellingElement}
     {api && acties.zoeken && (
@@ -749,6 +751,7 @@ export function PresentatieRibbon({
               <Rangschikken />
               <ObjectUitlijnen acties={acties} />
               <Groep naam={t("presentation.groups.object")}><DiaObjecten /></Groep>
+              <Groep naam={t("presentation.groups.object")}><DiaGroepen /></Groep>
               <Groep naam={t("presentation.groups.object")}>
                 <DiaKnop
                   naam={t("presentation.commands.delete")}
