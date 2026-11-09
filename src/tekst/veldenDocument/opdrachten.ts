@@ -41,9 +41,11 @@ export type VeldBijwerker = (ref: DocxEditorRef) => Promise<{ gewijzigd: number;
 const extra = new Set<VeldBijwerker>();
 /** Other field owners can join F9 without replacing the document between updates. */
 export function registreerVeldBijwerker(bijwerker: VeldBijwerker) { extra.add(bijwerker); return () => { extra.delete(bijwerker); }; }
-const bezig = new WeakMap<DocxEditorRef, Promise<{ gewijzigd: number; onopgelost: string[] }>>();
+const bezig = new WeakMap<object, Promise<{ gewijzigd: number; onopgelost: string[] }>>();
 export function werkDocumentVeldenBij(ref: DocxEditorRef) {
-  const lopend = bezig.get(ref); if (lopend) return lopend;
+  // De SDK vernieuwt de React-refwrapper tijdens renders; de sessie blijft gelijk.
+  const sleutel = ref.getEditorRef()?.getYrsSession() ?? ref;
+  const lopend = bezig.get(sleutel); if (lopend) return lopend;
   const werk = (async () => {
     await ref.flushPendingInput();
     await ref.whenLayoutComplete({ timeoutMs: 15000 }).catch(() => 0);
@@ -72,5 +74,5 @@ export function werkDocumentVeldenBij(ref: DocxEditorRef) {
     await ref.flushPendingInput();
     return { gewijzigd: result.gewijzigd, onopgelost: [...new Set(result.onopgelost)] };
   })();
-  bezig.set(ref, werk); void werk.finally(() => bezig.delete(ref)).catch(() => {}); return werk;
+  bezig.set(sleutel, werk); void werk.finally(() => bezig.delete(sleutel)).catch(() => {}); return werk;
 }

@@ -23,3 +23,24 @@ it("converges registered field owners with page-count changes and stable session
     expect(field?.kind==="embed"&&field.payload.displayText).toBe("2");
   }finally{s.destroy();}
 });
+
+
+it("shares a pending field update across replacement refs for the same native session", async () => {
+  const bytes = readFileSync("public/templates/nieuw.docx");
+  const doc = await parseDocx(bytes, { preloadFonts: false }), s = await createYrsSession();
+  let release!: () => void, calls = 0;
+  const pending = new Promise<void>(r => { release = r; });
+  const ed = { getYrsSession: () => s, getLayout: () => ({ pages: [] }) };
+  const make = () => ({ getEditorRef: () => ed, getDocument: () => doc, getTotalPages: () => 1,
+    flushPendingInput: () => pending, whenLayoutComplete: async () => {} } as unknown as DocxEditorRef);
+  const stop = registreerVeldBijwerker(async () => { calls++; return { gewijzigd: 0, onopgelost: [] }; });
+  try {
+    s.openDocx(bytes, true);
+    const button = werkDocumentVeldenBij(make()), save = werkDocumentVeldenBij(make());
+    expect(save).toBe(button);
+    release(); await save;
+    expect(calls).toBe(1);
+    await werkDocumentVeldenBij(make());
+    expect(calls).toBe(2);
+  } finally { release(); stop(); s.destroy(); }
+});

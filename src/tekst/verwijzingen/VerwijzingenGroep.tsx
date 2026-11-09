@@ -8,7 +8,8 @@ import { useEditorApi } from "../../lint/editorApi";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { engine } from "../gedeeld/engine";
 import { bladwijzers, gaNaar, hernoemBladwijzer, nieuweBladwijzer, verwijderBladwijzer } from "./document";
-import { bijschriftIn, kruisverwijzingIn, verwijsDoelen, werkVerwijzingenBij } from "./opdrachten";
+import { bijschriftIn, kruisverwijzingIn, verwijsDoelen } from "./opdrachten";
+import { werkDocumentVeldenBij } from "../veldenDocument/opdrachten";
 
 type Venster = "bookmarks" | "caption" | "reference";
 export function VerwijzingenGroep() {
@@ -26,7 +27,7 @@ export function VerwijzingenGroep() {
       <EigenKnop naam={t("references.update")} icoon={RefreshCw} disabled={!bewerkbaar || bezig} onClick={async () => {
         const ref = api(); if (!ref) return;
         setBezig(true);
-        try { const r = await werkVerwijzingenBij(ref); if (r.onopgelost.length) melding(t("references.unresolved", { names: r.onopgelost.join(", ") })); }
+        try { const r = await werkDocumentVeldenBij(ref); if (r.onopgelost.length) melding(t("references.unresolved", { names: r.onopgelost.join(", ") })); }
         catch (e) { melding(t(e instanceof Error ? e.message : "references.failed")); }
         finally { setBezig(false); }
       }} />
