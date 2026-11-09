@@ -3,11 +3,13 @@ import { Pakket, REL } from "../grafieken/pakket";
 import {
   attr,
   attrTekst,
+  attrNs,
   elementen,
   kind,
   kinderen,
   leesXml,
   namespaceVan,
+  ontsnap,
   rid,
   vervang,
   type XmlElement,
@@ -16,6 +18,54 @@ import {
 const P = "http://schemas.openxmlformats.org/presentationml/2006/main";
 const P14 = "http://schemas.microsoft.com/office/powerpoint/2010/main";
 const MC = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+const R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+export interface Geluidsbestand {
+  bytes: Uint8Array;
+  naam: string;
+}
+export type OvergangGeluid =
+  | { stop: true }
+  | { bytes: Uint8Array; mime: string; naam: string; loop: boolean }
+  | null;
+
+export function geldigOvergangGeluid(bytes: Uint8Array) {
+  const tekst = (i: number, n: number) =>
+    String.fromCharCode(...bytes.subarray(i, i + n));
+  if (
+    bytes.length < 44 ||
+    bytes.length > 10 * 1024 * 1024 ||
+    tekst(0, 4) !== "RIFF" ||
+    tekst(8, 4) !== "WAVE"
+  )
+    return false;
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength),
+    eind = view.getUint32(4, true) + 8;
+  if (eind > bytes.length || eind < 44) return false;
+  let formaat = false,
+    data = false;
+  for (let i = 12; i + 8 <= eind; ) {
+    const n = view.getUint32(i + 4, true),
+      start = i + 8;
+    if (start + n > eind) return false;
+    if (tekst(i, 4) === "fmt ") {
+      if (n < 16) return false;
+      const code = view.getUint16(start, true),
+        kanalen = view.getUint16(start + 2, true),
+        hz = view.getUint32(start + 4, true),
+        bits = view.getUint16(start + 14, true);
+      formaat =
+        ((code === 1 && [8, 16, 24, 32].includes(bits)) ||
+          (code === 3 && [32, 64].includes(bits))) &&
+        [1, 2].includes(kanalen) &&
+        hz >= 8000 &&
+        hz <= 192000 &&
+        view.getUint16(start + 12, true) === (kanalen * bits) / 8;
+    }
+    if (tekst(i, 4) === "data" && n > 0) data = true;
+    i = start + n + (n % 2);
+  }
+  return formaat && data;
+}
 export const EFFECTEN = [
   "none",
   "fade",
@@ -123,6 +173,49 @@ export function leesOvergangen(bytes: Uint8Array): Overgang[] {
   );
 }
 
+/** Alleen interne media; gelinkte bestanden worden nooit automatisch opgehaald. */
+export function leesOvergangGegevens(bytes: Uint8Array): {
+  overgangen: Overgang[];
+  geluiden: OvergangGeluid[];
+} {
+  const pakket = new Pakket(bytes);
+  const types = leesXml(pakket.lees("[Content_Types].xml"));
+  const lijst: Overgang[] = [];
+  const geluiden: OvergangGeluid[] = diaPaden(pakket).map((pad) => {
+    const overgang = overgangen(leesXml(pakket.lees(pad)))[0];
+    lijst.push(lees(overgang));
+    const actie = kind(overgang, "sndAc");
+    if (kind(actie, "endSnd")) return { stop: true };
+    const start = kind(actie, "stSnd"),
+      snd = kind(start, "snd");
+    const id = attrNs(snd, R, "embed");
+    const rel =
+      id && pakket.relaties(pad).find((r) => r.id === id && !r.extern);
+    if (!rel) return null;
+    const media = Pakket.doelPad(pad, rel.target),
+      data = pakket.bytes(media);
+    if (!data) return null;
+    const ext = media.split(".").pop() ?? "";
+    const override = kinderen(types, "Override").find(
+      (e) => attr(e, "PartName") === "/" + media,
+    );
+    const standaard = kinderen(types, "Default").find(
+      (e) => attr(e, "Extension")?.toLowerCase() === ext.toLowerCase(),
+    );
+    const mime = attr(override ?? standaard, "ContentType") ?? "audio/wav";
+    return {
+      bytes: data,
+      mime,
+      naam: attr(snd, "name") ?? media.split("/").pop() ?? "",
+      loop: ["true", "1"].includes(attr(start, "loop") ?? "0"),
+    };
+  });
+  return { overgangen: lijst, geluiden };
+}
+
+export const leesOvergangGeluiden = (bytes: Uint8Array) =>
+  leesOvergangGegevens(bytes).geluiden;
+
 function effectXml(o: Overgang) {
   if (o.effect === "none") return "";
   if (o.effect === "unknown") throw new OvergangFout("unknownEffect");
@@ -144,6 +237,7 @@ function wijzig(
   o: Overgang,
   geluidBehouden: boolean,
   exact: boolean,
+  nieuwGeluid?: string,
 ) {
   const attrs = { ...(el?.attrs ?? {}) };
   for (const k of Object.keys(attrs)) {
@@ -186,12 +280,14 @@ function wijzig(
     o.effect === "unknown" || zelfdeEffect
       ? bestaandEffect.map(fragment).join("")
       : effectXml(o);
-  const geluid = geluidBehouden
-    ? kinderenXml
-        .filter((e) => e.lokaal === "sndAc")
-        .map(fragment)
-        .join("")
-    : "";
+  const geluid =
+    nieuwGeluid ??
+    (geluidBehouden
+      ? kinderenXml
+          .filter((e) => e.lokaal === "sndAc")
+          .map(fragment)
+          .join("")
+      : "");
   const ext = kinderenXml
     .filter((e) => e.lokaal === "extLst")
     .map(fragment)
@@ -204,6 +300,7 @@ export function schrijfOvergangen(
   selectie: readonly number[],
   o: Overgang,
   geluidBehouden = true,
+  nieuwGeluid?: Geluidsbestand,
 ) {
   const pakket = new Pakket(bytes),
     paden = diaPaden(pakket);
@@ -221,11 +318,23 @@ export function schrijfOvergangen(
     (!o.klik && o.na === null)
   )
     throw new OvergangFout("invalidTiming");
+  if (nieuwGeluid && !geldigOvergangGeluid(nieuwGeluid.bytes))
+    throw new OvergangFout("invalidSound");
+  let media: string | undefined;
+  if (nieuwGeluid) {
+    media = pakket.vrijPad("ppt/media/transition#.wav");
+    pakket.schrijf(media, nieuwGeluid.bytes);
+    pakket.voegOverrideToe(media, "audio/wav");
+  }
   for (const i of new Set(selectie)) {
     const pad = paden[i],
       xml = pakket.lees(pad),
       root = leesXml(xml),
       lijst = overgangen(root);
+    const geluid =
+      media && nieuwGeluid
+        ? `<p:sndAc><p:stSnd loop="0"><p:snd xmlns:r="${R}" r:embed="${pakket.voegRelatieToe(pad, `${R}/audio`, media)}" name="${ontsnap(nieuwGeluid.naam)}"/></p:stSnd></p:sndAc>`
+        : undefined;
     if (lijst.length) {
       pakket.schrijf(
         pad,
@@ -234,14 +343,14 @@ export function schrijfOvergangen(
           lijst.map((el) => ({
             start: el.start,
             eind: el.eind,
-            tekst: wijzig(xml, el, o, geluidBehouden, true),
+            tekst: wijzig(xml, el, o, geluidBehouden, true, geluid),
           })),
         ),
       );
     } else {
       // MCE houdt een standaardfallback voor lezers van vóór Office 2010.
-      const exact = wijzig(xml, undefined, o, geluidBehouden, true);
-      const fallback = wijzig(xml, undefined, o, geluidBehouden, false);
+      const exact = wijzig(xml, undefined, o, geluidBehouden, true, geluid);
+      const fallback = wijzig(xml, undefined, o, geluidBehouden, false, geluid);
       const nieuw = `<mc:AlternateContent xmlns:mc="${MC}" xmlns:p14="${P14}"><mc:Choice Requires="p14">${exact}</mc:Choice><mc:Fallback>${fallback}</mc:Fallback></mc:AlternateContent>`;
       const plek =
         kind(root, "timing")?.start ??

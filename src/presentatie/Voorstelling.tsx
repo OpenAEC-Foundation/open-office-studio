@@ -40,8 +40,9 @@ import {
 import { useOpmaak } from "../i18n/opmaak";
 import { tekenDia, verborgenDias } from "./diabeeld";
 import { DiaVlak, pasIn } from "./DiaVlak";
-import { GEEN_OVERGANG, leesOvergangen } from "./overgangen";
+import { GEEN_OVERGANG, leesOvergangGegevens } from "./overgangen";
 import { useOvergangTeken } from "./useOvergangTeken";
+import { useOvergangGeluid } from "./useOvergangGeluid";
 import {
   beginStaat,
   duurTekst,
@@ -164,9 +165,9 @@ export function Voorstelling({
   const aantal = deck.slides.length;
   const verhouding = deck.widthEmu / Math.max(1, deck.heightEmu);
   const verborgen = useMemo(() => verborgenDias(api), [api]);
-  const overgangen = useMemo(() => {
-    try { return leesOvergangen(api.handle.save()); }
-    catch { return []; }
+  const { overgangen, geluiden } = useMemo(() => {
+    try { return leesOvergangGegevens(api.handle.save()); }
+    catch { return { overgangen: [], geluiden: [] }; }
   }, [api]);
   const [staat, setStaat] = useState<VoorstellingStaat>(() =>
     beginStaat(startDia(verzoek.vanafBegin, huidig, aantal, verborgen), aantal),
@@ -177,6 +178,7 @@ export function Voorstelling({
   const [nu, setNu] = useState(() => Date.now());
   const [notitiegrootte, setNotitiegrootte] = useState(leesNotitiegrootte);
   const [opstelling, setOpstelling] = useState<Opstelling>({ soort: "start" });
+  const geluid = useOvergangGeluid(staat.index, geluiden, opstelling.soort !== "start" && !staat.einde);
   const [melding, setMelding] = useState("");
   const laag = useMemo(() => {
     const el = document.createElement("div");
@@ -238,6 +240,7 @@ export function Voorstelling({
     if (opstelling.soort === "browser") vensters.push(opstelling.popup);
     const luister = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
+      if ((e.key === "Enter" || e.key === " ") && e.target instanceof HTMLElement && e.target.closest(".voorstelling-geluidmelding button")) return;
       if (e.key === "F5" && e.altKey) {
         e.preventDefault();
         e.stopPropagation();
@@ -649,7 +652,7 @@ export function Voorstelling({
 
   return (
     <>
-      {createPortal(hier, laag)}
+      {createPortal(<>{hier}{geluid.fout && <div className="voorstelling-geluidmelding" role="status"><span>{t("transitions.soundFailed")}</span><button type="button" onClick={geluid.probeer}>{t("transitions.soundRetry")}</button></div>}</>, laag)}
       {opstelling.soort === "browser" && !opstelling.popup.closed && createPortal(daar, opstelling.popup.document.body)}
     </>
   );

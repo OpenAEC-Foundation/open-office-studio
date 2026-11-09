@@ -3,6 +3,8 @@ import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import {
   GEEN_OVERGANG,
+  geldigOvergangGeluid,
+  leesOvergangGeluiden,
   leesOvergangen,
   schrijfOvergangen,
   type Overgang,
@@ -10,6 +12,26 @@ import {
 
 const bron = () =>
   new Uint8Array(readFileSync("docs/voorbeelden/Ontwerpvisie.pptx"));
+function wav() {
+  const bytes = new Uint8Array(44 + 1600),
+    view = new DataView(bytes.buffer);
+  const tekst = (i: number, s: string) =>
+    bytes.set(new TextEncoder().encode(s), i);
+  tekst(0, "RIFF");
+  view.setUint32(4, bytes.length - 8, true);
+  tekst(8, "WAVE");
+  tekst(12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, 8000, true);
+  view.setUint32(28, 16000, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  tekst(36, "data");
+  view.setUint32(40, 1600, true);
+  return bytes;
+}
 const p = "ppt/slides/slide2.xml";
 const deel = (b: Uint8Array) => strFromU8(unzipSync(b)[p]);
 const opties: Overgang = {
@@ -28,6 +50,69 @@ function fixture(inhoud: string) {
 }
 
 describe("diaovergangen (#83)", () => {
+  it("herkent WAV-inhoud en weigert lege, vervalste en afgekapt verklaarde bestanden", () => {
+    expect(geldigOvergangGeluid(wav())).toBe(true);
+    expect(geldigOvergangGeluid(new Uint8Array())).toBe(false);
+    const fake = wav();
+    fake[12] = 0;
+    expect(geldigOvergangGeluid(fake)).toBe(false);
+    expect(geldigOvergangGeluid(wav().slice(0, 100))).toBe(false);
+    expect(() =>
+      schrijfOvergangen(bron(), [1], opties, true, {
+        naam: "bad.wav",
+        bytes: fake,
+      }),
+    ).toThrow();
+  });
+  it("sluit één geluidsbestand in voor alle gekozen dia's en behoudt de bytes bij opslaan", async () => {
+    const geluid = wav();
+    const bytes = schrijfOvergangen(bron(), [0, 1, 2], opties, true, {
+      naam: 'A & B "test".wav',
+      bytes: geluid,
+    });
+    const delen = unzipSync(bytes);
+    expect(
+      Object.keys(delen).filter((n) => /transition\d+\.wav$/.test(n)),
+    ).toHaveLength(1);
+    for (const g of leesOvergangGeluiden(bytes))
+      expect(g).toMatchObject({
+        bytes: geluid,
+        mime: "audio/wav",
+        naam: 'A & B "test".wav',
+        loop: false,
+      });
+    const pptx = await import("@betteroffice/pptx");
+    await pptx.initWasm(
+      readFileSync(
+        "node_modules/@betteroffice/pptx/dist/generated/pptx_wasm_bg.wasm",
+      ),
+    );
+    const opgeslagen = pptx.openPresentation(bytes).save();
+    expect(leesOvergangGeluiden(opgeslagen)).toEqual(
+      leesOvergangGeluiden(bytes),
+    );
+    expect(
+      leesOvergangGeluiden(schrijfOvergangen(opgeslagen, [1], opties, false)),
+    ).toEqual([
+      leesOvergangGeluiden(bytes)[0],
+      null,
+      leesOvergangGeluiden(bytes)[2],
+    ]);
+  });
+  it("leest een stopcommando en haalt externe geluiden niet op", () => {
+    expect(
+      leesOvergangGeluiden(
+        fixture("<p:transition><p:sndAc><p:endSnd/></p:sndAc></p:transition>"),
+      )[1],
+    ).toEqual({ stop: true });
+    expect(
+      leesOvergangGeluiden(
+        fixture(
+          '<p:transition><p:sndAc><p:stSnd><p:snd r:link="extern"/></p:stSnd></p:sndAc></p:transition>',
+        ),
+      )[1],
+    ).toBeNull();
+  });
   it("leest ontbrekende overgangen zonder de presentatie te wijzigen", () => {
     expect(leesOvergangen(bron())).toEqual(
       Array.from({ length: 3 }, () => GEEN_OVERGANG),

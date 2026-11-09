@@ -17,11 +17,15 @@ import { leesWeergave } from "./weergave";
 import {
   EFFECTEN,
   GEEN_OVERGANG,
-  leesOvergangen,
+  leesOvergangGegevens,
+  geldigOvergangGeluid,
   schrijfOvergangen,
+  type Geluidsbestand,
+  type OvergangGeluid,
   type Overgang,
 } from "./overgangen";
 import { speelOvergang } from "./overgang-beeld";
+import { useGeluidsadres } from "./useOvergangGeluid";
 import "./overgangen.css";
 
 interface Begin {
@@ -29,6 +33,7 @@ interface Begin {
   aantal: number;
   selectie: number[];
   overgang: Overgang;
+  geluid: OvergangGeluid;
 }
 export function DiaOvergangen() {
   const { t } = useTranslation("presentation");
@@ -44,7 +49,9 @@ export function DiaOvergangen() {
     if (!api || !herlaad || !bewerkbaar || laden) return;
     setLaden(true);
     try {
-      const lijst = leesOvergangen(await herlaad.bytes()),
+      const { overgangen: lijst, geluiden } = leesOvergangGegevens(
+          await herlaad.bytes(),
+        ),
         index = huidigeIndex();
       if (!lijst[index]) throw new Error("noSlide");
       setBegin({
@@ -52,6 +59,7 @@ export function DiaOvergangen() {
         aantal: lijst.length,
         selectie: leesWeergave(herlaad).selectie,
         overgang: lijst[index],
+        geluid: geluiden[index],
       });
     } catch {
       meld(t("sorter.packageFailed"));
@@ -72,7 +80,7 @@ export function DiaOvergangen() {
           begin={begin}
           api={api}
           sluit={() => setBegin(null)}
-          opslaan={async (o, selectie, geluid) => {
+          opslaan={async (o, selectie, geluid, bestand) => {
             if (!herlaad || !api.commands.getState("insertSlide").enabled)
               throw new Error("readOnly");
             const bytes = schrijfOvergangen(
@@ -80,6 +88,7 @@ export function DiaOvergangen() {
               selectie,
               o,
               geluid,
+              bestand,
             );
             setBegin(null);
             herlaad.vervang(bytes, { dia: begin.index });
@@ -154,19 +163,67 @@ function OvergangVenster({
   begin: Begin;
   api: PptxEditorApi;
   sluit: () => void;
-  opslaan: (o: Overgang, selectie: number[], geluid: boolean) => Promise<void>;
+  opslaan: (
+    o: Overgang,
+    selectie: number[],
+    geluid: boolean,
+    bestand?: Geluidsbestand,
+  ) => Promise<void>;
 }) {
   const { t } = useTranslation("presentation");
   const [o, setO] = useState(begin.overgang),
     [doel, setDoel] = useState("current");
-  const [geluid, setGeluid] = useState(true),
+  const [geluid, setGeluid] = useState<"keep" | "none" | "file">("keep"),
+    [bestand, setBestand] = useState<Geluidsbestand | undefined>(),
+    [bestandLaden, setBestandLaden] = useState(false),
     [bezig, setBezig] = useState(false),
     [melding, setMelding] = useState("");
+  const bestandskeuze = useRef(0);
+  useEffect(
+    () => () => {
+      bestandskeuze.current++;
+    },
+    [],
+  );
+  const bestaand =
+    begin.geluid && !("stop" in begin.geluid) ? begin.geluid : undefined;
+  const geluidsadres = useGeluidsadres(
+    geluid === "file"
+      ? bestand?.bytes
+      : geluid === "keep"
+        ? bestaand?.bytes
+        : undefined,
+    geluid === "keep" ? bestaand?.mime : undefined,
+  );
+  async function kiesBestand(file: File | undefined) {
+    const keuze = ++bestandskeuze.current;
+    setBestand(undefined);
+    setMelding("");
+    if (!file) { setBestandLaden(false); return; }
+    setBestandLaden(true);
+    try {
+      if (file.size > 10 * 1024 * 1024) throw new Error("tooLarge");
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      if (bestandskeuze.current !== keuze) return;
+      if (!geldigOvergangGeluid(bytes)) throw new Error("invalidSound");
+      setBestand({ naam: file.name, bytes });
+    } catch {
+      if (bestandskeuze.current === keuze)
+        setMelding(t("transitions.invalidSound"));
+    } finally {
+      if (bestandskeuze.current === keuze) setBestandLaden(false);
+    }
+  }
   function wijzig<K extends keyof Overgang>(key: K, waarde: Overgang[K]) {
     setO((v) => ({ ...v, [key]: waarde }));
     setMelding("");
   }
   async function toepassen() {
+    if (bestandLaden) return;
+    if (geluid === "file" && !bestand) {
+      setMelding(t("transitions.invalidSound"));
+      return;
+    }
     if (
       !Number.isInteger(o.duur) ||
       o.duur < 0 ||
@@ -188,7 +245,8 @@ function OvergangVenster({
           : doel === "selected"
             ? begin.selectie
             : [begin.index],
-        geluid,
+        geluid === "keep",
+        geluid === "file" ? bestand : undefined,
       );
     } catch {
       setMelding(t("sorter.packageFailed"));
@@ -218,7 +276,7 @@ function OvergangVenster({
           <button
             type="button"
             className="werkruimte-knop is-primair"
-            disabled={bezig}
+            disabled={bezig || bestandLaden}
             onClick={() => void toepassen()}
           >
             {t(bezig ? "transitions.applying" : "transitions.apply")}
@@ -358,14 +416,37 @@ function OvergangVenster({
             />
           </label>
         )}
-        <label className="werkruimte-vink">
-          <input
-            type="checkbox"
-            checked={geluid}
-            onChange={(e) => setGeluid(e.target.checked)}
-          />
-          {t("transitions.soundKeep")}
+        <label className="overgang-rij">
+          <span>{t("transitions.sound")}</span>
+          <select
+            value={geluid}
+            onChange={(e) => {
+              setGeluid(e.target.value as typeof geluid);
+              setMelding("");
+            }}
+          >
+            <option value="keep">{t("transitions.soundKeep")}</option>
+            <option value="none">{t("transitions.soundNone")}</option>
+            <option value="file">{t("transitions.soundFile")}</option>
+          </select>
         </label>
+        {geluid === "file" && (
+          <label className="overgang-bestand">
+            <span>{t("transitions.soundFile")}</span>
+            <input
+              type="file"
+              accept=".wav,audio/wav,audio/x-wav"
+              onChange={(e) => void kiesBestand(e.target.files?.[0])}
+            />
+          </label>
+        )}
+        {geluidsadres && (
+          <audio
+            controls
+            src={geluidsadres}
+            aria-label={t("transitions.soundPreview")}
+          />
+        )}
         <p className="werkruimte-uitleg">{t("transitions.soundHint")}</p>
         <label className="overgang-rij">
           <span>{t("transitions.target")}</span>
