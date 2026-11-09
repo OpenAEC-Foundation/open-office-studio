@@ -34,6 +34,17 @@ export function kopieNaam(naam: string, namen: string[]) {
   }
 }
 
+/** Verplaatst het actieve blad vóór `positie`; behoudt de identiteit en verwijzingen. */
+export async function bladVerplaatsen(api: XlsxEditorApi, positie: number) {
+  const info = api.handle.sheetInfo();
+  const van = info.activeSheet;
+  const voor = Math.max(0, Math.min(info.sheetNames.length, Math.trunc(positie)));
+  const naar = voor > van ? voor - 1 : voor;
+  if (naar === van) return;
+  await voerOpsUit(api, [{ type: "moveSheet", from: van, to: naar }]);
+  await gaNaarBlad(api, naar);
+}
+
 function gebruikt(api: XlsxEditorApi, blad: number): Bereik | null {
   const uitvoer = api.handle.exportStructured({
     scope: [{ sheet: blad, range: "A1" }],
