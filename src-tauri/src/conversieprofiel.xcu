@@ -12,8 +12,11 @@
   - Koppelingen naar externe bestanden/bronnen worden bij laden niet bijgewerkt.
   - Hyperlinks uit niet-vertrouwde documenten worden geblokkeerd.
   - Geen updatecontrole, geen eerste-startassistent, geen documentherstel.
+  - ODF-uitvoer: strikt versie 1.3. Het Save-item moet vóór Security staan;
+    een later toegevoegd Save-item wordt door LibreOffice 26.8 genegeerd.
 -->
 <oor:items xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<item oor:path="/org.openoffice.Office.Common/Save/ODF"><prop oor:name="DefaultVersion" oor:op="fuse"><value>10</value></prop></item>
 <item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="MacroSecurityLevel" oor:op="fuse"><value>3</value></prop></item>
 <item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="DisableMacrosExecution" oor:op="fuse"><value>true</value></prop></item>
 <item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="BlockUntrustedRefererLinks" oor:op="fuse"><value>true</value></prop></item>
