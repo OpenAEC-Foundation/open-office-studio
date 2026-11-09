@@ -26,6 +26,7 @@ import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-o
 import { kolomLetters, type Bereik } from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
 import "./rekenblad-gereedschap.css";
+import { TekenobjectLaag } from "../rekenblad/TekenobjectLaag";
 
 /** Een verwijzing om in het raster te kleuren. */
 export interface Markering {
@@ -88,6 +89,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
     const sel = selectie?.sheetId === sheetId ? selectie : null;
     return (
       <>
+        {blad >= 0 && <TekenobjectLaag api={api} blad={blad} geometry={geometry} />}
         {markeringen
           .filter((m) => m.blad === null || m.blad.toLowerCase() === info.sheetNames[blad]?.toLowerCase())
           .map((m, i) => {

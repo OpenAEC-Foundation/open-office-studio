@@ -15,6 +15,8 @@ export interface EditorApis {
   grafiekSelectie?: GrafiekSelectie | null;
   /** Rekenblad: eigen laag boven het raster (selectie, filterpijlen, vulgreep). */
   rekenbladLaag?: RekenbladLaag | null;
+  /** Een aangeklikte bestandslink via de gewone document-openroute. */
+  bestandKoppeling?: (adres: string) => Promise<void>;
 }
 
 /** Waar de editor na herladen naartoe gaat. */

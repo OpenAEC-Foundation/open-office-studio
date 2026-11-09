@@ -1126,6 +1126,11 @@ export function OfficeStudio() {
                         inactief={!zichtbaar || editorInactief}
                         zichtbaar={zichtbaar}
                         zoom={koppeling.zoom}
+                        bestandKoppeling={async (adres) => {
+                          if (!tauri) throw new Error("link-browser");
+                          const { invoke } = await import("@tauri-apps/api/core");
+                          await invoke("open_documentkoppeling", { adres, brontoken: tabblad.werkbestand?.token ?? null });
+                        }}
                       />
                     </Suspense>
                   </EditorGrens>,

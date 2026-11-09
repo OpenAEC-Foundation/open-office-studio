@@ -38,6 +38,7 @@ import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
+import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -67,6 +68,7 @@ export interface EditorProps {
   zichtbaar?: boolean;
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
+  bestandKoppeling?: (adres: string) => Promise<void>;
 }
 // De bestaande synchrone lint-API heeft deze compatibiliteitsprojectie nodig.
 // Haar vertraagde melding mag de opslagstatus niet opnieuw wijzigen.
@@ -150,12 +152,16 @@ export default function OfficeEditor(props: EditorProps) {
       herlaad: herladen.api,
       grafiekSelectie: herladen.grafiekSelectie,
       rekenbladLaag,
+      bestandKoppeling: async (adres: string) => {
+        if (!recent.current.bestandKoppeling) throw new Error("link-browser");
+        return recent.current.bestandKoppeling(adres);
+      },
     }),
     [rekenbladApi, presentatieApi, herladen.api, herladen.grafiekSelectie, rekenbladLaag],
   );
   const beginRegio = useRef(intlLocale());
   const rekenbladBytes = useMemo(
-    () => props.soort === "xlsx" ? metBeginregio(herladen.bytes, beginRegio.current) : herladen.bytes,
+    () => props.soort === "xlsx" ? metTekenAnkers(metBeginregio(herladen.bytes, beginRegio.current)) : herladen.bytes,
     [herladen.bytes, props.soort],
   );
   // Spellingcontrole en autocorrectie (#21): golflijnen, menu, F7, statusbalk.
@@ -330,6 +336,7 @@ export default function OfficeEditor(props: EditorProps) {
         return werkboekBytes(api);
       });
       laadFiltersUitBestand(api, herladenRecent.current.bytes);
+      laadTekenobjecten(api.handle, herladenRecent.current.bytes);
       herladenRecent.current.naXlsx(api);
       return () => {
         stopWijziging();
