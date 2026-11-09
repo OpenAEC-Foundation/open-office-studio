@@ -1,0 +1,52 @@
+name: Tekstkern uit vastgezette bron bouwen
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/tekstkern.yml'
+      - 'scripts/bouw-tekstkern.py'
+      - 'patches/tekstengine-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kern:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@1.98.1
+        with:
+          targets: wasm32-unknown-unknown
+          components: rustfmt
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Vastgezette bouwgereedschappen installeren
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/math-tools"
+          cd "$RUNNER_TEMP/math-tools"
+          curl -fsSLO https://github.com/wasm-bindgen/wasm-bindgen/releases/download/0.2.129/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz
+          curl -fsSLO https://github.com/wasm-bindgen/wasm-bindgen/releases/download/0.2.129/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz.sha256sum
+          sha256sum -c wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz.sha256sum
+          tar -xzf wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz
+          curl -fsSLO https://github.com/WebAssembly/binaryen/releases/download/version_132/binaryen-version_132-x86_64-linux.tar.gz
+          echo '195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572  binaryen-version_132-x86_64-linux.tar.gz' | sha256sum -c -
+          tar -xzf binaryen-version_132-x86_64-linux.tar.gz
+          echo "$RUNNER_TEMP/math-tools/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl" >> "$GITHUB_PATH"
+          echo "$RUNNER_TEMP/math-tools/binaryen-version_132/bin" >> "$GITHUB_PATH"
+      - name: Kernproeven draaien en beide WASM-modules bouwen
+        run: python3 scripts/bouw-tekstkern.py --bronmap "$RUNNER_TEMP/math-source" --uitvoer "$RUNNER_TEMP/math-core" --controle
+      - name: Bouwbestanden bewaren
+        uses: actions/upload-artifact@v4
+        with:
+          name: tekstkern
+          path: ${{ runner.temp }}/math-core/
+          if-no-files-found: error

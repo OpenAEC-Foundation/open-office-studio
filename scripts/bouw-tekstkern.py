@@ -76,6 +76,8 @@ def main():
                         bestand.write(blok)
     subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(patch)], cwd=bronmap, check=True)
     if args.controle:
+        subprocess.run(['cargo', 'test', '-p', 'betteroffice-ooxml-text', '--locked', '--lib', 'math_image'], cwd=bronmap, check=True)
+        subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-edit', '--locked', '--lib', 'math_preview'], cwd=bronmap, check=True)
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-layout', '--locked', '--lib', 'chicago', '--', '--test-threads=1'], cwd=bronmap, check=True)
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-layout', '--locked', '--lib', 'noot', '--', '--test-threads=1'], cwd=bronmap, check=True)
         for proef in ['nootverwijzingen_gebruiken_de_ingestelde_nummering', 'nootverwijzingen_chicago_worden_voor_meting_herhaald', 'a_last_page_footnote_retains_constant_snapshot_entries_and_resumes_exactly']:

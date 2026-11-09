@@ -1,6 +1,147 @@
+diff --git a/crates/docx-edit/src/bridge/math_tests.rs b/crates/docx-edit/src/bridge/math_tests.rs
+new file mode 100644
+index 0000000..8c245fe
+--- /dev/null
++++ b/crates/docx-edit/src/bridge/math_tests.rs
+@@ -0,0 +1,23 @@
++use super::*;
++
++#[test]
++fn math_preview_requires_current_source_and_valid_metrics() {
++    let mut values = HashMap::from([
++        ("ommlXml".to_owned(), Any::String("<m:oMath/>".into())),
++        ("renderSource".to_owned(), Any::String("<m:oMath/>".into())),
++        ("renderSvg".to_owned(), Any::String("data:image/svg+xml;base64,PHN2Zy8+".into())),
++        ("renderWidth".to_owned(), Any::Number(80.0)),
++        ("renderHeight".to_owned(), Any::Number(40.0)),
++        ("renderDepth".to_owned(), Any::Number(12.0)),
++    ]);
++    let image = lower_math_values(&values, &RenderEnv::default()).unwrap();
++    assert_eq!(image.width, 80.0);
++    assert_eq!(image.height, 40.0);
++    assert_eq!(image.dist_bottom, Some(12.0));
++    assert_eq!(image.display_mode.as_deref(), Some("math"));
++    values.insert("renderSource".to_owned(), Any::String("old".into()));
++    assert!(lower_math_values(&values, &RenderEnv::default()).is_none());
++    values.insert("renderSource".to_owned(), Any::String("<m:oMath/>".into()));
++    values.insert("renderDepth".to_owned(), Any::Number(41.0));
++    assert!(lower_math_values(&values, &RenderEnv::default()).is_none());
++}
+diff --git a/crates/docx-edit/src/bridge/mod.rs b/crates/docx-edit/src/bridge/mod.rs
+index 2f8a01a..6f96be6 100644
+--- a/crates/docx-edit/src/bridge/mod.rs
++++ b/crates/docx-edit/src/bridge/mod.rs
+@@ -54,7 +54,6 @@ use yrs::{Any, Map, MapRef, OffsetKind, Out, ReadTxn, Text, Transact};
+ 
+ use super::{COMMENTS, DEL, EditError, EditingDoc, INS, decode_anchor, is_pilcrow, story_ref};
+ use crate::list_marker::{ListState, compute_list_marker};
+-use crate::seed::synthesized_cell_width;
+ use crate::sticky_positions::sticky_offset;
+ 
+ pub(crate) mod group_pictures;
+@@ -63,6 +62,8 @@ pub(crate) mod local;
+ pub(crate) mod preview;
+ pub mod reservations;
+ pub use group_pictures::GroupPictureSources;
++#[cfg(test)]
++mod math_tests;
+ mod shapes;
+ 
+ pub use reservations::{Reservation, ReservationKind, ReservationSide, Reservations};
+@@ -1407,8 +1408,11 @@ fn walk_story_chunks<T: ReadTxn>(
+                 let text = shared_map_string(math, txn, "plainText")
+                     .filter(|value| !value.is_empty())
+                     .unwrap_or_else(|| "[equation]".to_owned());
++                let values = ["ommlXml", "renderSource", "renderSvg", "renderWidth", "renderHeight", "renderDepth"]
++                    .into_iter().filter_map(|key| shared_any(math, txn, key).map(|value| (key.to_owned(), value))).collect();
++                let kind = lower_math_values(&values, env).map(RawRunKind::Image).unwrap_or(RawRunKind::Text(text));
+                 paragraph_runs.push(RawRun {
+-                    kind: RawRunKind::Text(text),
++                    kind,
+                     formatting: RunFormatting {
+                         italic: Some(true),
+                         font_family: Some("Cambria Math".to_owned()),
+@@ -2041,7 +2045,6 @@ fn lower_table<T: ReadTxn>(
+     let original = tbl_pr.get("_originalFormatting").and_then(any_map);
+     let table_margins = tbl_pr.get("cellMargins").and_then(any_map);
+     let grid_widths: Vec<Option<f64>> = grid.iter().map(any_number).collect();
+-    let total_grid_width: f64 = grid_widths.iter().flatten().sum();
+     let mut column_row_ends = vec![0usize; grid_widths.len()];
+     let mut rows = Vec::with_capacity(row_values.len());
+     let mut row_pm_start = pm_start + 1;
+@@ -2137,18 +2140,9 @@ fn lower_table<T: ReadTxn>(
+             let colspan = col_span.unwrap_or(1.0) as usize;
+             let width_type = map_string(tc_pr, "widthType");
+             let width_value = map_number(tc_pr, "width");
+-            let authored_width = tc_pr
+-                .get("_originalFormatting")
+-                .and_then(any_map)
+-                .and_then(|value| value.get("width"));
+-            let synthesized_width = original.is_some()
+-                && authored_width.is_none()
+-                && width_type.as_deref() == Some("pct")
+-                && width_value.is_some()
+-                && width_value
+-                    == synthesized_cell_width(&grid_widths, total_grid_width, column, colspan);
+-            let width_value =
+-                width_value.filter(|_| width_type.as_deref() != Some("auto") && !synthesized_width);
++            // Bij import zijn alleen auteurswaarden opgenomen. Ook een kleine
++            // expliciet ingestelde pct-waarde blijft een echte voorkeur.
++            let width_value = width_value.filter(|_| width_type.as_deref() != Some("auto"));
+             let width =
+                 width_value.filter(|value| *value != 0.0).and_then(|value| {
+                     match width_type.as_deref() {
+@@ -2550,6 +2544,31 @@ fn lower_image_values(
+     }
+ }
+ 
++fn lower_math_values(values: &HashMap<String, Any>, env: &RenderEnv) -> Option<ImageRun> {
++    let src = map_string(values, "renderSvg")?;
++    let source = map_string(values, "renderSource")?;
++    if source != map_string(values, "ommlXml")? || !src.starts_with("data:image/svg+xml;base64,") || src.len() > 2_000_000 {
++        return None;
++    }
++    let width = map_number(values, "renderWidth")?;
++    let height = map_number(values, "renderHeight")?;
++    let depth = map_number(values, "renderDepth")?;
++    if ![width, height, depth].iter().all(|n| n.is_finite()) || width <= 0.0 || height <= 0.0 || width > 20000.0 || height > 20000.0 || depth < 0.0 || depth > height {
++        return None;
++    }
++    let image = HashMap::from([
++        ("src".to_owned(), Any::String(src.into())),
++        ("width".to_owned(), Any::Number(width)),
++        ("height".to_owned(), Any::Number(height)),
++        ("distBottom".to_owned(), Any::Number(depth)),
++        ("displayMode".to_owned(), Any::String("math".into())),
++        ("alt".to_owned(), Any::String("Equation".into())),
++    ]);
++    let mut rendered = lower_image_values(&image, &RunFormatting::default(), env);
++    rendered.dist_bottom = Some(depth * rendered.height / height);
++    Some(rendered)
++}
++
+ fn lower_image_run<T: ReadTxn>(
+     image: &MapRef,
+     txn: &T,
+@@ -3105,8 +3124,9 @@ fn lower_inline_sdt_values(
+                     .and_then(|payload| map_string(payload, "plainText"))
+                     .filter(|value| !value.is_empty())
+                     .unwrap_or_else(|| "[equation]".to_owned());
++                let kind = payload.and_then(|values| lower_math_values(values, env)).map(RawRunKind::Image).unwrap_or(RawRunKind::Text(text));
+                 runs.push(RawRun {
+-                    kind: RawRunKind::Text(text),
++                    kind,
+                     formatting: RunFormatting {
+                         italic: Some(true),
+                         font_family: Some("Cambria Math".to_owned()),
+diff --git a/crates/docx-edit/src/engine.rs b/crates/docx-edit/src/engine.rs
+index 98d6a1f..b993d02 100644
 --- a/crates/docx-edit/src/engine.rs
 +++ b/crates/docx-edit/src/engine.rs
-@@ -1434,0 +1435,44 @@
+@@ -1432,6 +1432,50 @@ fn placed_column_measurement_frames(
+     bands
+ }
+ 
 +// De zichtbare tekst volgt de berekende nootnummering; documentposities
 +// en semantische noot-id's blijven gelijk. Dit gebeurt vóór het meten.
 +fn herstel_nootverwijzingen(
@@ -45,25 +186,56 @@
 +    changed
 +}
 +
-@@ -1457 +1501,3 @@
+ fn stabilize_flow_wrapping<F>(
+     input: &mut LayoutInput,
+     regions: &DocumentRegions,
+@@ -1454,7 +1498,9 @@ where
+         .collect::<Vec<_>>();
+     let unequal = unequal_column_blocks(input, regions);
+     let has_unequal = unequal.iter().any(|unequal| *unequal);
 -    if shapes.is_empty() && !has_unequal {
 +    let note_refs = input.measured.iter().flat_map(|measured|
 +        collect_note_refs(std::slice::from_ref(&measured.block))).collect::<Vec<_>>();
 +    if shapes.is_empty() && !has_unequal && note_refs.is_empty() {
-@@ -1480 +1526 @@
+         return Ok(false);
+     }
+     let mut blocks = input
+@@ -1477,7 +1523,7 @@ where
+         Vec::new()
+     };
+     let mut touched = false;
 -    let max_phases = if has_unequal {
 +    let max_phases = if has_unequal || !note_refs.is_empty() {
-@@ -1487,0 +1534,4 @@
+         32 + input.measured.len()
+     } else {
+         shapes.len() + 2
+@@ -1485,6 +1531,10 @@ where
+     for phase in 0..max_phases {
+         let (layout, recorded) = if has_unequal {
+             docx_layout::place::layout_document_with_column_widths(input)?
 +        } else if shapes.is_empty() && !note_refs.is_empty() {
 +            // Alleen meten voor de nootlabels: geen extra bewaarde
 +            // vormverplaatsing toevoegen aan de echte paginering.
 +            (docx_layout::place::layout_document(input)?, Vec::new())
-@@ -1512 +1562,3 @@
+         } else {
+             (place(input, phase)?, Vec::new())
+         };
+@@ -1509,7 +1559,9 @@ where
+                     })
+             })
+             .collect::<BTreeMap<_, _>>();
 -        if offsets == previous_offsets && next_widths == widths && bands == previous_bands {
 +        let labels = build_note_presentations(&note_refs, &layout.pages, regions);
 +        let notes_changed = herstel_nootverwijzingen(&mut blocks, &labels);
 +        if offsets == previous_offsets && next_widths == widths && bands == previous_bands && !notes_changed {
-@@ -25409,0 +25462,50 @@
+             return Ok(touched);
+         }
+         let repeated = visited
+@@ -25406,6 +25458,56 @@ w:tblpY="0" w:leftFromText="150" w:rightFromText="150"/>
+     /// stories. The presentation label every note carries has no position of
+     /// its own, so this is also where inheriting the body anchor would hand a
+     /// click a body position under a note region.
++    #[test]
 +    fn nootverwijzingen_gebruiken_de_ingestelde_nummering() {
 +        let engine = EngineSession::new(19);
 +        crate::seed::seed_from_docx(engine.doc(), include_bytes!("../tests/fixtures/footnote-anchor.docx")).unwrap();
@@ -113,232 +285,17 @@
 +        }
 +    }
 +
-+    #[test]
---- a/crates/docx-layout/src/typed_measure.rs
-+++ b/crates/docx-layout/src/typed_measure.rs
-@@ -247,0 +248,2 @@
-+            out.footnote_ref_id = text.fmt.footnote_ref_id;
-+            out.endnote_ref_id = text.fmt.endnote_ref_id;
-@@ -306,0 +309,2 @@
-+        footnote_ref_id: None,
-+        endnote_ref_id: None,
-@@ -824,0 +829,39 @@
-+    fn nootlabel_blijft_een_atoom_met_volledige_glyphbreedte() {
-+        let fixture = fixture();
-+        for eindnoot in [false, true] {
-+            let mut run = text_run("iii");
-+            let Run::Text(ref mut text) = run else {
-+                unreachable!()
-+            };
-+            text.fmt.superscript = Some(true);
-+            text.fmt.letter_spacing = Some(0.5);
-+            let gewoon = paragraph(vec![run.clone()], None);
-+            let breedte = measure_paragraph(&gewoon, 100.0, &fixture.config, None, 0.0)
-+                .unwrap()
-+                .lines[0]
-+                .width;
-+            let Run::Text(ref mut text) = run else {
-+                unreachable!()
-+            };
-+            if eindnoot {
-+                text.fmt.endnote_ref_id = Some(1.0);
-+            } else {
-+                text.fmt.footnote_ref_id = Some(1.0);
-+            }
-+            let blok = paragraph(vec![run], None);
-+            for beschikbaar in [100.0, 1.0] {
-+                assert_parity("nootatoom", &blok, beschikbaar, &fixture.config, None, 0.0);
-+                let gemeten =
-+                    measure_paragraph(&blok, beschikbaar, &fixture.config, None, 0.0).unwrap();
-+                assert_eq!(gemeten.lines.len(), 1);
-+                assert!((gemeten.lines[0].width - breedte).abs() < 0.001);
-+                assert_eq!(gemeten.lines[0].tail_char, 1);
-+                let clusters = gemeten.lines[0].cluster_advances.as_ref().unwrap();
-+                assert_eq!(clusters.len(), 1);
-+                assert_eq!(clusters[0].start_char, Some(0));
-+                assert_eq!(clusters[0].end_char, Some(1));
-+            }
-+        }
-+    }
-+
-+    #[test]
---- a/crates/docx-layout/src/display_list.rs
-+++ b/crates/docx-layout/src/display_list.rs
-@@ -4173,0 +4174,9 @@
-+                if t.fmt.footnote_ref_id.is_some() || t.fmt.endnote_ref_id.is_some() {
-+                    out.push(ResolvedSegment {
-+                        run,
-+                        text: t.text.clone(),
-+                        pm_start: t.pm_start,
-+                        pm_end: t.pm_end,
-+                    });
-+                    continue;
-+                }
-@@ -4688 +4697 @@
--pub const MAX_NOTE_LABEL_CHARS: usize = 64;
-+pub use crate::regions::MAX_NOTE_LABEL_CHARS;
-@@ -6275 +6284,6 @@
--                let visible = slice_utf16(&text.text, start, end);
-+                let noot = text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some();
-+                let visible = if noot {
-+                    text.text.clone()
-+                } else {
-+                    slice_utf16(&text.text, start, end)
-+                };
-@@ -6279,2 +6293,10 @@
--                    pm_start: text.pm_start.map(|pos| pos + start as i64),
--                    pm_end: text.pm_start.map(|pos| pos + end as i64).or(text.pm_end),
-+                    pm_start: if noot {
-+                        text.pm_start
-+                    } else {
-+                        text.pm_start.map(|pos| pos + start as i64)
-+                    },
-+                    pm_end: if noot {
-+                        text.pm_end
-+                    } else {
-+                        text.pm_start.map(|pos| pos + end as i64).or(text.pm_end)
-+                    },
-@@ -6283,2 +6305,2 @@
--                    source_start: start,
--                    source_end: end,
-+                    source_start: if noot { 0 } else { start },
-+                    source_end: if noot { utf16_len(&text.text) } else { end },
---- a/crates/docx-layout/src/hit.rs
-+++ b/crates/docx-layout/src/hit.rs
-@@ -129,0 +130,15 @@
-+            if self.attrs.note_ref.is_some() && self.doc_end == self.doc_start + 1 {
-+                let rtl = match self.stops_source {
-+                    StopsSource::Text { rtl, .. } | StopsSource::Glyphs { rtl, .. } => rtl,
-+                };
-+                return vec![
-+                    CaretStop {
-+                        x: self.x,
-+                        position: if rtl { self.doc_end } else { self.doc_start },
-+                    },
-+                    CaretStop {
-+                        x: self.x + self.width,
-+                        position: if rtl { self.doc_start } else { self.doc_end },
-+                    },
-+                ];
-+            }
-@@ -2791,0 +2807,36 @@
-+    fn nootlabel_heeft_alleen_cursorposities_aan_de_buitenranden() {
-+        let glyphs = serde_json::json!({
-+            "kind": "glyphRun", "fontId": 1, "size": 16, "color": "#000000",
-+            "text": "iii", "docStart": 10, "docEnd": 11,
-+            "glyphs": [
-+                {"id": 1, "x": 100, "y": 200, "cluster": 0, "advance": 10},
-+                {"id": 1, "x": 110, "y": 200, "cluster": 1, "advance": 10},
-+                {"id": 1, "x": 120, "y": 200, "cluster": 2, "advance": 10}
-+            ]
-+        });
-+        for mut primitive in [run(100.0, 200.0, 30.0, 10), glyphs] {
-+            primitive["text"] = "iii".into();
-+            primitive["docEnd"] = 11.into();
-+            primitive["noteRef"] = serde_json::json!({"id": 1, "kind": "footnote"});
-+            for rtl in [false, true] {
-+                primitive["rtl"] = rtl.into();
-+                let dl = page(serde_json::Value::Null, vec![primitive.clone()]);
-+                assert_eq!(
-+                    hit_test(&dl, 0, 111.0, 195.0),
-+                    Some(if rtl { 11 } else { 10 })
-+                );
-+                assert_eq!(
-+                    hit_test(&dl, 0, 119.0, 195.0),
-+                    Some(if rtl { 10 } else { 11 })
-+                );
-+                assert!(
-+                    (caret_rect(&dl, 10).unwrap().x - if rtl { 130.0 } else { 100.0 }).abs() < 0.01
-+                );
-+                assert!(
-+                    (caret_rect(&dl, 11).unwrap().x - if rtl { 100.0 } else { 130.0 }).abs() < 0.01
-+                );
-+            }
-+        }
-+    }
-+
-+    #[test]
---- a/crates/docx-layout/src/measure_blocks.rs
-+++ b/crates/docx-layout/src/measure_blocks.rs
-@@ -2177,0 +2178,5 @@
-+        Run::Text(text)
-+            if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() =>
-+        {
-+            1
-+        }
-@@ -2271,0 +2277,10 @@
-+                if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() {
-+                    rows.push(
-+                        index,
-+                        0,
-+                        1,
-+                        synthetic_text_width(&text.text, &text.fmt, default_font_size),
-+                        font_px,
-+                    );
-+                    continue;
-+                }
-@@ -2323,0 +2339,5 @@
-+        Run::Text(text)
-+            if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() =>
-+        {
-+            1
-+        }
---- a/crates/ooxml-text/src/measure/input.rs
-+++ b/crates/ooxml-text/src/measure/input.rs
-@@ -299,0 +300,5 @@
-+    // Een nootverwijzing blijft één documentpositie, ongeacht het aantal tekens.
-+    #[serde(default)]
-+    pub footnote_ref_id: Option<f64>,
-+    #[serde(default)]
-+    pub endnote_ref_id: Option<f64>,
---- a/crates/ooxml-text/src/measure/prepare.rs
-+++ b/crates/ooxml-text/src/measure/prepare.rs
-@@ -231,7 +231,10 @@
--                utf16_len: run
--                    .text
--                    .as_deref()
--                    .unwrap_or("")
--                    .chars()
--                    .map(|c| c.len_utf16() as u32)
--                    .sum(),
-+                utf16_len: if run.footnote_ref_id.is_some() || run.endnote_ref_id.is_some() {
-+                    1
-+                } else {
-+                    run.text
-+                        .as_deref()
-+                        .unwrap_or("")
-+                        .chars()
-+                        .map(|c| c.len_utf16() as u32)
-+                        .sum()
-+                },
-@@ -239,3 +242,21 @@
--            "text" => prepared.push(PreparedRun::Text(prepare_text_run(
--                store, input, run, levels,
--            )?)),
-+            "text" => {
-+                let mut text = prepare_text_run(store, input, run, levels)?;
-+                if run.footnote_ref_id.is_some() || run.endnote_ref_id.is_some() {
-+                    // Meet alle glyphs met hun echte opmaak, maar laat de
-+                    // regelvuller het volledige label als één atoom behandelen.
-+                    let width = super::line_filler::span_width(&text.chars, text.letter_spacing);
-+                    if let Some(mut cluster) = text.chars.first().copied() {
-+                        cluster.utf16_offset = 0;
-+                        cluster.utf16_len = 1;
-+                        cluster.advance = width;
-+                        cluster.is_space = false;
-+                        cluster.is_fit_space = false;
-+                        text.chars.clear();
-+                        text.chars.push(cluster);
-+                    }
-+                    text.utf16_len = 1;
-+                    text.breaks.clear();
-+                    text.letter_spacing = 0.0;
-+                }
-+                prepared.push(PreparedRun::Text(text));
-+            }
+     #[test]
+     fn real_notes_resolve_to_their_own_stories() {
+         let engine = EngineSession::new(19);
+diff --git a/crates/docx-edit/src/ops/table.rs b/crates/docx-edit/src/ops/table.rs
+index ce5bbba..f27f071 100644
 --- a/crates/docx-edit/src/ops/table.rs
 +++ b/crates/docx-edit/src/ops/table.rs
-@@ -2523,0 +2524,25 @@
+@@ -2521,6 +2521,31 @@ impl EditingDoc {
+                 }
+             }
+         }
 +        // Bij horizontaal samenvoegen hoort de voorkeur van de hele bovenste
 +        // celrij bij de overblijvende cel. Alleen de eerste voorkeur bewaren
 +        // zou na opnieuw splitsen iedere nieuwe cel te smal beschrijven.
@@ -364,18 +321,37 @@
 +        } else {
 +            None
 +        };
-@@ -2561,0 +2587,3 @@
+         let destination = story_ref(&txn, &target.cell.story).map_err(OpError::from)?;
+         let mut deleted = Vec::new();
+         let source_ids: HashSet<String> = selected
+@@ -2559,6 +2584,9 @@ impl EditingDoc {
+         survivor.column = rect.left;
+         survivor.rowspan = rect.bottom - rect.top;
+         survivor.colspan = rect.right - rect.left;
 +        if let Some(width) = merged_width {
 +            survivor.cell.tc_pr.insert("width".to_owned(), Any::Number(width));
 +        }
-@@ -2604 +2632,3 @@
+         data.rows = reconstruct_rows(data.rows, kept)?;
+         write_table(&mut txn, &table, &data);
+         let mut receipt = receipt(locator, Some(&data), Vec::new(), deleted, Vec::new())?;
+@@ -2601,7 +2629,9 @@ impl EditingDoc {
+         let requested_columns = columns
+             .map(|value| value as usize)
+             .unwrap_or(target.colspan);
 -        if requested_rows < target.rowspan || requested_columns < target.colspan {
 +        // Een zichtbare cel kan meerdere rasterstroken beslaan. Minder
 +        // gewenste kolommen verwijdert geen oude grens uit het verfijnde raster.
 +        if requested_rows < target.rowspan {
-@@ -2615 +2644,0 @@
+             return Err(invalid("split dimensions cannot shrink the covered grid"));
+         }
+         if requested_rows == 0 || requested_columns == 0 {
+@@ -2612,9 +2642,66 @@ impl EditingDoc {
+         }
+ 
+         let delta_rows = requested_rows - target.rowspan;
 -        let delta_columns = requested_columns - target.colspan;
-@@ -2617,0 +2647,58 @@
+         let target_row_end = target.row + target.rowspan;
+         let target_column_end = target.column + target.colspan;
 +        ensure_grid(&mut data, existing_columns);
 +        let total_width: f64 = data.grid.iter().filter_map(|v| any_number(Some(v))).sum();
 +        let mut old_edges = vec![0.0_f64];
@@ -434,18 +410,32 @@
 +                )
 +            })
 +            .collect::<Vec<_>>();
-@@ -2631,3 +2718,3 @@
+         let mut next_anchors =
+             Vec::with_capacity(cell_anchors.len() - 1 + requested_rows * requested_columns);
+         for (index, mut anchor) in cell_anchors.into_iter().enumerate() {
+@@ -2628,15 +2715,12 @@ impl EditingDoc {
+             if anchor.row >= target_row_end {
+                 anchor.row += delta_rows;
+             }
 -            if anchor.column >= target_column_end {
 -                anchor.column += delta_columns;
 -            }
 +            let new_start = column_map[anchor.column];
 +            anchor.colspan = column_map[column_end] - new_start;
 +            anchor.column = new_start;
-@@ -2636,3 +2722,0 @@
--            }
+             if delta_rows > 0 && row_intersects && !column_intersects {
+                 anchor.rowspan += delta_rows;
+             }
 -            if delta_columns > 0 && column_intersects && !row_intersects {
 -                anchor.colspan += delta_columns;
-@@ -2649 +2733,19 @@
+-            }
+             next_anchors.push(anchor);
+         }
+ 
+@@ -2646,14 +2730,31 @@ impl EditingDoc {
+         let mut created = Vec::new();
+         let mut new_para_ids = Vec::new();
+         for row in target.row..target.row + requested_rows {
 -            for column in target.column..target.column + requested_columns {
 +            for &(column, colspan, width) in &split_columns {
 +                let mut cell = reset_cell_spans(target.cell.clone());
@@ -466,17 +456,36 @@
 +                        );
 +                    }
 +                }
-@@ -2651 +2752,0 @@
+                 if row == target.row && column == target.column {
 -                    let cell = reset_cell_spans(target.cell.clone());
-@@ -2656 +2757 @@
+                     next_anchors.push(CellAnchor {
+                         row,
+                         column,
+                         rowspan: 1,
 -                        colspan: 1,
 +                        colspan,
-@@ -2664 +2764,0 @@
+                         cell_index: 0,
+                         cell,
+                     });
+@@ -2661,13 +2762,12 @@ impl EditingDoc {
+                 }
+                 let story_id = fresh_cell_story(&mut used, &base, row, column, self.client_id());
+                 let para_id = create_cell_story(self, &mut txn, &mut ids, &story_id)?;
 -                let mut cell = reset_cell_spans(target.cell.clone());
-@@ -2670 +2770 @@
+                 cell.story = story_id.clone();
+                 next_anchors.push(CellAnchor {
+                     row,
+                     column,
+                     rowspan: 1,
 -                    colspan: 1,
 +                    colspan,
-@@ -2696,11 +2796,3 @@
+                     cell_index: 0,
+                     cell,
+                 });
+@@ -2693,17 +2793,9 @@ impl EditingDoc {
+             })
+             .collect();
+ 
 -        ensure_grid(&mut data, existing_columns);
 -        let split_width: f64 = data.grid[target.column..target_column_end]
 -            .iter()
@@ -491,7 +500,14 @@
 +        let replacement = refined_edges
 +            .windows(2)
 +            .map(|edges| Any::Number(edges[1] - edges[0]))
-@@ -3766,0 +3859,118 @@
+             .collect::<Vec<_>>();
+         data.grid
+             .splice(target.column..target_column_end, replacement);
+@@ -3763,6 +3855,124 @@ mod tests {
+         }
+     }
+ 
++    #[test]
 +    fn samenvoegen_telt_horizontale_voorkeuren_op_en_behoudt_verticale() {
 +        for (kind, preferred) in [("dxa", 2000.0), ("pct", 50.0)] {
 +            for horizontal in [true, false] {
@@ -609,10 +625,17 @@
 +        yrs_doc_to_layout_blocks(&doc, "body", &RenderEnv::default()).unwrap();
 +    }
 +
-+    #[test]
+     #[test]
+     fn split_cell_grid_subdivides_an_ordinary_cell_and_adjusts_neighbors() {
+         let doc = seed_table();
+diff --git a/crates/docx-edit/src/seed.rs b/crates/docx-edit/src/seed.rs
+index 486e623..ec61b4c 100644
 --- a/crates/docx-edit/src/seed.rs
 +++ b/crates/docx-edit/src/seed.rs
-@@ -4436,17 +4435,0 @@
+@@ -4433,27 +4433,9 @@ fn cell_borders(
+     }
+ }
+ 
 -pub(crate) fn synthesized_cell_width(
 -    widths: &[Option<f64>],
 -    total_width: f64,
@@ -630,9 +653,17 @@
 -    })
 -}
 -
-@@ -4456 +4438,0 @@
+ struct CellOptions<'a> {
+     is_header: bool,
+     rowspan: usize,
 -    grid_width: Option<f64>,
-@@ -4477,6 +4459,4 @@
+     first_row: bool,
+     last_row: bool,
+     first_column: bool,
+@@ -4474,12 +4456,10 @@ fn project_cell<'a>(cell: &'a Value, options: CellOptions<'_>) -> ProjectedCell<
+     let formatting = field(Some(cell), "formatting");
+     let background =
+         resolve_color_to_hex(field(field(formatting, "shading"), "fill"), options.theme);
 -    let width = field(field(formatting, "width"), "value")
 -        .cloned()
 -        .or_else(|| options.grid_width.map(|value| json!(value)));
@@ -643,15 +674,45 @@
 +    // blijft ontbreken. Een berekend percentage is geen OOXML-voorkeurswaarde.
 +    let width = field(field(formatting, "width"), "value").cloned();
 +    let width_type = field(field(formatting, "width"), "type").cloned();
-@@ -4754 +4733,0 @@
+     let margins = if let Some(margins) = field(formatting, "margins") {
+         Some(json!({
+             "top": nullish(field(field(Some(margins), "top"), "value")),
+@@ -4751,7 +4731,6 @@ fn project_row<'a>(
+         .iter()
+         .map(Value::as_f64)
+         .collect();
 -    let total_width: f64 = widths.iter().flatten().sum();
-@@ -4781 +4759,0 @@
+     let rows = array(field(Some(table), "rows"));
+     let total_columns = if !widths.is_empty() {
+         widths.len()
+@@ -4778,7 +4757,6 @@ fn project_row<'a>(
+             number(field(field(Some(cell), "formatting"), "gridSpan")).unwrap_or(1.0) as usize;
+         let start_column = column;
+         let span = row_spans.get(&(row_index, start_column.saturating_add(grid_before)));
 -        let grid_width = synthesized_cell_width(&widths, total_width, start_column, colspan);
-@@ -4795 +4772,0 @@
+         column += colspan;
+         if span.is_some_and(|(_, skip)| *skip) {
+             continue;
+@@ -4792,7 +4770,6 @@ fn project_row<'a>(
+                         "firstRow",
+                     )),
+                 rowspan: span.map(|(rowspan, _)| *rowspan).unwrap_or(1),
 -                grid_width,
-@@ -4848 +4824,0 @@
+                 first_row: row_index == 0,
+                 last_row: row_index + 1 == rows.len(),
+                 first_column: start_column == 0,
+@@ -4845,7 +4822,6 @@ fn project_row<'a>(
+                         "firstRow",
+                     )),
+                 rowspan: 1,
 -                grid_width: (total_width > 0.0).then_some(100.0),
-@@ -7599,6 +7575,3 @@
+                 first_row: row_index == 0,
+                 last_row: row_index + 1 == rows.len(),
+                 first_column: true,
+@@ -7596,12 +7572,9 @@ mod tests {
+                 ]}]
+             });
+             let projected = project_table(&table, &StyleResolver::new(None), None, 12);
 -            for (cell, width) in projected.rows[0].cells.iter().zip([25.0, 75.0]) {
 -                assert_eq!(cell.attrs.get("width").and_then(Value::as_f64), Some(width));
 -                assert_eq!(
@@ -661,10 +722,13 @@
 +            for cell in &projected.rows[0].cells {
 +                assert!(cell.attrs.get("width").is_none());
 +                assert!(cell.attrs.get("widthType").is_none());
-@@ -7669,0 +7643,35 @@
-+        }
-+    }
-+
+             }
+             let document = seed_body(&[table]);
+             let env = crate::bridge::RenderEnv::default();
+@@ -7670,6 +7643,41 @@ mod tests {
+         }
+     }
+ 
 +    #[test]
 +    fn expliciete_voorkeur_gelijk_aan_een_oud_rasterpercentage_blijft_geldig() {
 +        let document = seed_body(&[json!({
@@ -697,46 +761,238 @@
 +        let actual = measured_table_column_widths(table);
 +        for (width, expected) in actual.into_iter().zip([297.96, 302.04]) {
 +            assert!((width - expected).abs() < 1e-9);
---- a/crates/docx-edit/src/bridge/mod.rs
-+++ b/crates/docx-edit/src/bridge/mod.rs
-@@ -57 +56,0 @@
--use crate::seed::synthesized_cell_width;
-@@ -2044 +2042,0 @@
--    let total_grid_width: f64 = grid_widths.iter().flatten().sum();
-@@ -2140,12 +2138,3 @@
--            let authored_width = tc_pr
--                .get("_originalFormatting")
--                .and_then(any_map)
--                .and_then(|value| value.get("width"));
--            let synthesized_width = original.is_some()
--                && authored_width.is_none()
--                && width_type.as_deref() == Some("pct")
--                && width_value.is_some()
--                && width_value
--                    == synthesized_cell_width(&grid_widths, total_grid_width, column, colspan);
--            let width_value =
--                width_value.filter(|_| width_type.as_deref() != Some("auto") && !synthesized_width);
-+            // Bij import zijn alleen auteurswaarden opgenomen. Ook een kleine
-+            // expliciet ingestelde pct-waarde blijft een echte voorkeur.
-+            let width_value = width_value.filter(|_| width_type.as_deref() != Some("auto"));
++        }
++    }
++
+     #[test]
+     fn full_width_vertical_merge_keeps_the_base_continuation_story() {
+         let bytes = fixture::Package::new(concat!(
+diff --git a/crates/docx-layout/src/display_list.rs b/crates/docx-layout/src/display_list.rs
+index 048c639..1ec33a1 100644
+--- a/crates/docx-layout/src/display_list.rs
++++ b/crates/docx-layout/src/display_list.rs
+@@ -4171,6 +4171,15 @@ fn resolve_line_segments<'a>(runs: &'a [RunIn], line: &LineIn) -> Vec<ResolvedSe
+         };
+         match run {
+             RunIn::Text(t) => {
++                if t.fmt.footnote_ref_id.is_some() || t.fmt.endnote_ref_id.is_some() {
++                    out.push(ResolvedSegment {
++                        run,
++                        text: t.text.clone(),
++                        pm_start: t.pm_start,
++                        pm_end: t.pm_end,
++                    });
++                    continue;
++                }
+                 let total = utf16_len(&t.text);
+                 let start = if run_index == line.head_run {
+                     line.head_char.min(total)
+@@ -4685,7 +4694,7 @@ fn page_content_geometry(page: &PageIn) -> (DisplayBounds, Vec<DisplayBounds>) {
+ 
+ const NOTE_COLUMN_GAP_PX: f64 = 24.0;
+ /// note reference-label cap (display numbers / custom marks are tiny)
+-pub const MAX_NOTE_LABEL_CHARS: usize = 64;
++pub use crate::regions::MAX_NOTE_LABEL_CHARS;
+ 
+ fn note_partitions<'a>(notes: &'a [NoteItemIn], columns: usize) -> Vec<Vec<&'a NoteItemIn>> {
+     let columns = columns.max(1);
+@@ -6272,16 +6281,29 @@ fn authoritative_line_items<'a>(
+         let run = block.runs.get(run_index)?;
+         match run {
+             RunIn::Text(text) => {
+-                let visible = slice_utf16(&text.text, start, end);
++                let noot = text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some();
++                let visible = if noot {
++                    text.text.clone()
++                } else {
++                    slice_utf16(&text.text, start, end)
++                };
+                 out.push(LinePaintItem::Text(LineTextItem {
+                     text: visible,
+                     fmt: &text.fmt,
+-                    pm_start: text.pm_start.map(|pos| pos + start as i64),
+-                    pm_end: text.pm_start.map(|pos| pos + end as i64).or(text.pm_end),
++                    pm_start: if noot {
++                        text.pm_start
++                    } else {
++                        text.pm_start.map(|pos| pos + start as i64)
++                    },
++                    pm_end: if noot {
++                        text.pm_end
++                    } else {
++                        text.pm_start.map(|pos| pos + end as i64).or(text.pm_end)
++                    },
+                     width: measured_width,
+                     level,
+-                    source_start: start,
+-                    source_end: end,
++                    source_start: if noot { 0 } else { start },
++                    source_end: if noot { utf16_len(&text.text) } else { end },
+                     logical_order: logical_order.or(text.fmt.logical_order),
+                     exact_advance: true,
+                     field: None,
+@@ -6889,7 +6911,9 @@ fn emit_line(
+                     .as_ref()
+                     .and_then(|bounds| bounds.height)
+                     .unwrap_or(imr.height);
+-                let y = if *single_image_line && line.descent <= 0.0 {
++                let y = if imr.display_mode.as_deref() == Some("math") {
++                    baseline - layout_height + imr.dist_bottom.unwrap_or(0.0)
++                } else if *single_image_line && line.descent <= 0.0 {
+                     // Alone on its line: the image is the box's top, any
+                     // added line spacing falls below it.
+                     geom.line_top + (line.ascent - layout_height).max(0.0)
+diff --git a/crates/docx-layout/src/hit.rs b/crates/docx-layout/src/hit.rs
+index e31d53f..353c847 100644
+--- a/crates/docx-layout/src/hit.rs
++++ b/crates/docx-layout/src/hit.rs
+@@ -127,6 +127,21 @@ impl TextHit<'_> {
+         self.caret_stops.get_or_init(|| {
+             #[cfg(test)]
+             CARET_STOPS_BUILD_COUNT.with(|count| count.set(count.get() + 1));
++            if self.attrs.note_ref.is_some() && self.doc_end == self.doc_start + 1 {
++                let rtl = match self.stops_source {
++                    StopsSource::Text { rtl, .. } | StopsSource::Glyphs { rtl, .. } => rtl,
++                };
++                return vec![
++                    CaretStop {
++                        x: self.x,
++                        position: if rtl { self.doc_end } else { self.doc_start },
++                    },
++                    CaretStop {
++                        x: self.x + self.width,
++                        position: if rtl { self.doc_start } else { self.doc_end },
++                    },
++                ];
++            }
+             match self.stops_source {
+                 StopsSource::Text { text, rtl } => {
+                     text_caret_stops(text, self.x, self.width, rtl, self.doc_start, self.doc_end)
+@@ -2788,6 +2803,42 @@ mod tests {
+         assert_eq!(target(&dl, 380.0, 95.0), HoverTarget::None);
+     }
+ 
++    #[test]
++    fn nootlabel_heeft_alleen_cursorposities_aan_de_buitenranden() {
++        let glyphs = serde_json::json!({
++            "kind": "glyphRun", "fontId": 1, "size": 16, "color": "#000000",
++            "text": "iii", "docStart": 10, "docEnd": 11,
++            "glyphs": [
++                {"id": 1, "x": 100, "y": 200, "cluster": 0, "advance": 10},
++                {"id": 1, "x": 110, "y": 200, "cluster": 1, "advance": 10},
++                {"id": 1, "x": 120, "y": 200, "cluster": 2, "advance": 10}
++            ]
++        });
++        for mut primitive in [run(100.0, 200.0, 30.0, 10), glyphs] {
++            primitive["text"] = "iii".into();
++            primitive["docEnd"] = 11.into();
++            primitive["noteRef"] = serde_json::json!({"id": 1, "kind": "footnote"});
++            for rtl in [false, true] {
++                primitive["rtl"] = rtl.into();
++                let dl = page(serde_json::Value::Null, vec![primitive.clone()]);
++                assert_eq!(
++                    hit_test(&dl, 0, 111.0, 195.0),
++                    Some(if rtl { 11 } else { 10 })
++                );
++                assert_eq!(
++                    hit_test(&dl, 0, 119.0, 195.0),
++                    Some(if rtl { 10 } else { 11 })
++                );
++                assert!(
++                    (caret_rect(&dl, 10).unwrap().x - if rtl { 130.0 } else { 100.0 }).abs() < 0.01
++                );
++                assert!(
++                    (caret_rect(&dl, 11).unwrap().x - if rtl { 100.0 } else { 130.0 }).abs() < 0.01
++                );
++            }
++        }
++    }
++
+     #[test]
+     fn hit_and_caret_resolve_combining_and_surrogate_clusters() {
+         let mut primitive = run(100.0, 200.0, 60.0, 10);
+diff --git a/crates/docx-layout/src/measure_blocks.rs b/crates/docx-layout/src/measure_blocks.rs
+index 317a572..baaed9d 100644
+--- a/crates/docx-layout/src/measure_blocks.rs
++++ b/crates/docx-layout/src/measure_blocks.rs
+@@ -2175,6 +2175,11 @@ fn synthetic_paragraph_extent(paragraph: &ParagraphBlock, content_width: f64) ->
+     }
+     let tail_run = paragraph.runs.len().saturating_sub(1).max(head_run);
+     let tail_char = paragraph.runs.get(tail_run).map_or(0, |run| match run {
++        Run::Text(text)
++            if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() =>
++        {
++            1
++        }
+         Run::Text(text) => text.text.encode_utf16().count(),
+         _ => 0,
+     });
+@@ -2269,6 +2274,16 @@ fn wrapped_synthetic_paragraph_extent(
+         match run {
+             Run::Text(text) => {
+                 let font_px = synthetic_font_px(&text.fmt, default_font_size);
++                if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() {
++                    rows.push(
++                        index,
++                        0,
++                        1,
++                        synthetic_text_width(&text.text, &text.fmt, default_font_size),
++                        font_px,
++                    );
++                    continue;
++                }
+                 if text.text.is_empty() || text.text == "\u{200b}" {
+                     rows.font_px = rows.font_px.max(font_px);
+                 }
+@@ -2321,6 +2336,11 @@ fn wrapped_synthetic_paragraph_extent(
+     }
+     let tail_run = paragraph.runs.len().saturating_sub(1).max(rows.head_run);
+     let tail_char = paragraph.runs.get(tail_run).map_or(0, |run| match run {
++        Run::Text(text)
++            if text.fmt.footnote_ref_id.is_some() || text.fmt.endnote_ref_id.is_some() =>
++        {
++            1
++        }
+         Run::Text(text) => text.text.encode_utf16().count(),
+         Run::LineBreak(_) => 0,
+         _ => 1,
+diff --git a/crates/docx-layout/src/regions.rs b/crates/docx-layout/src/regions.rs
+index 4438898..170ae4f 100644
 --- a/crates/docx-layout/src/regions.rs
 +++ b/crates/docx-layout/src/regions.rs
-@@ -698,0 +699,5 @@
+@@ -696,9 +696,15 @@ pub(crate) fn page_field_text(page_label: Option<&str>, page_number: u64) -> Cow
+     }
+ }
+ 
 +// Dezelfde grens als de notenlabels in de tekenlijst: ook geïmporteerde
 +// beginwaarden mogen geen onbegrensde tekstherhaling veroorzaken.
 +pub const MAX_NOTE_LABEL_CHARS: usize = 64;
 +const MAX_CHICAGO_NUMBER: i64 = 4 * MAX_NOTE_LABEL_CHARS as i64;
 +
-@@ -701,0 +707 @@
+ /// Whether [`format_number`] writes `number` in `format` rather than falling back to decimal.
+ pub fn number_format_resolves(number: i64, format: &str) -> bool {
+     match format {
 +        "chicago" => (1..=MAX_CHICAGO_NUMBER).contains(&number),
-@@ -719,0 +726,6 @@
+         "upperRoman" | "lowerRoman" => (1..=3999).contains(&number),
+         "upperLetter" | "lowerLetter" => number > 0,
+         "decimal"
+@@ -717,6 +723,12 @@ pub fn number_format_resolves(number: i64, format: &str) -> bool {
+ 
+ pub(crate) fn format_number(number: i64, format: &str) -> String {
+     match format {
 +        "chicago" if (1..=MAX_CHICAGO_NUMBER).contains(&number) => {
 +            // Vier tekens, daarna dubbele en drievoudige tekens; het hele
 +            // label blijft één verwijzing in het document.
 +            let index = (number - 1) as usize;
 +            ["*", "†", "‡", "§"][index % 4].repeat(index / 4 + 1)
 +        }
-@@ -793,0 +806,16 @@
+         "decimalZero" => format!("{number:02}"),
+         "decimalZero3" => format!("{number:03}"),
+         "decimalZero4" => format!("{number:04}"),
+@@ -791,6 +803,22 @@ fn ordinal(number: i64) -> String {
+ 
+ #[cfg(test)]
+ mod tests {
 +    #[test]
 +    fn chicago_symbolen_en_begrensde_herhaling() {
 +        for (number, expected) in (1..).zip([
@@ -753,3 +1009,250 @@
 +        }
 +    }
 +
+     #[test]
+     fn page_numbering_accepts_integral_native_json_numbers() {
+         for source in [r#"{"start":1.0}"#, r#"{"start":1}"#] {
+diff --git a/crates/docx-layout/src/typed_measure.rs b/crates/docx-layout/src/typed_measure.rs
+index ebec9fc..be312ba 100644
+--- a/crates/docx-layout/src/typed_measure.rs
++++ b/crates/docx-layout/src/typed_measure.rs
+@@ -245,6 +245,8 @@ fn run_in(run: &Run) -> Option<RunIn> {
+         Run::Text(text) => {
+             let mut out = formatted_run("text", &text.fmt);
+             out.text = Some(text.text.clone());
++            out.footnote_ref_id = text.fmt.footnote_ref_id;
++            out.endnote_ref_id = text.fmt.endnote_ref_id;
+             Some(out)
+         }
+         Run::Tab(tab) => Some(formatted_run("tab", &tab.fmt)),
+@@ -304,6 +306,8 @@ fn bare_run(kind: &str) -> RunIn {
+     RunIn {
+         kind: kind.to_owned(),
+         text: None,
++        footnote_ref_id: None,
++        endnote_ref_id: None,
+         bold: false,
+         italic: false,
+         bold_cs: None,
+@@ -821,6 +825,45 @@ mod parity_tests {
+         );
+     }
+ 
++    #[test]
++    fn nootlabel_blijft_een_atoom_met_volledige_glyphbreedte() {
++        let fixture = fixture();
++        for eindnoot in [false, true] {
++            let mut run = text_run("iii");
++            let Run::Text(ref mut text) = run else {
++                unreachable!()
++            };
++            text.fmt.superscript = Some(true);
++            text.fmt.letter_spacing = Some(0.5);
++            let gewoon = paragraph(vec![run.clone()], None);
++            let breedte = measure_paragraph(&gewoon, 100.0, &fixture.config, None, 0.0)
++                .unwrap()
++                .lines[0]
++                .width;
++            let Run::Text(ref mut text) = run else {
++                unreachable!()
++            };
++            if eindnoot {
++                text.fmt.endnote_ref_id = Some(1.0);
++            } else {
++                text.fmt.footnote_ref_id = Some(1.0);
++            }
++            let blok = paragraph(vec![run], None);
++            for beschikbaar in [100.0, 1.0] {
++                assert_parity("nootatoom", &blok, beschikbaar, &fixture.config, None, 0.0);
++                let gemeten =
++                    measure_paragraph(&blok, beschikbaar, &fixture.config, None, 0.0).unwrap();
++                assert_eq!(gemeten.lines.len(), 1);
++                assert!((gemeten.lines[0].width - breedte).abs() < 0.001);
++                assert_eq!(gemeten.lines[0].tail_char, 1);
++                let clusters = gemeten.lines[0].cluster_advances.as_ref().unwrap();
++                assert_eq!(clusters.len(), 1);
++                assert_eq!(clusters[0].start_char, Some(0));
++                assert_eq!(clusters[0].end_char, Some(1));
++            }
++        }
++    }
++
+     #[test]
+     fn field_run_matches_the_json_path() {
+         let fixture = fixture();
+diff --git a/crates/ooxml-text/src/measure/input.rs b/crates/ooxml-text/src/measure/input.rs
+index 77e0bd9..670925c 100644
+--- a/crates/ooxml-text/src/measure/input.rs
++++ b/crates/ooxml-text/src/measure/input.rs
+@@ -297,6 +297,11 @@ pub struct RunIn {
+     pub kind: String,
+     #[serde(default)]
+     pub text: Option<String>,
++    // Een nootverwijzing blijft één documentpositie, ongeacht het aantal tekens.
++    #[serde(default)]
++    pub footnote_ref_id: Option<f64>,
++    #[serde(default)]
++    pub endnote_ref_id: Option<f64>,
+     #[serde(default)]
+     pub bold: bool,
+     #[serde(default)]
+diff --git a/crates/ooxml-text/src/measure/line_filler.rs b/crates/ooxml-text/src/measure/line_filler.rs
+index 3d99d3a..3a348a0 100644
+--- a/crates/ooxml-text/src/measure/line_filler.rs
++++ b/crates/ooxml-text/src/measure/line_filler.rs
+@@ -118,6 +118,8 @@ struct LineState {
+     max_below_baseline: f32,
+     /// Tallest inline-image footprint on the line.
+     max_image_height_px: f32,
++    math_ascent: f32,
++    math_descent: f32,
+     available: f32,
+     /// Float margin from the content left edge.
+     left_offset: f32,
+@@ -263,6 +265,8 @@ pub(super) fn fill(p: FillParams) -> Result<ParagraphExtentOut, MeasureError> {
+             max_descent: 0.0,
+             max_below_baseline: 0.0,
+             max_image_height_px: 0.0,
++            math_ascent: 0.0,
++            math_descent: 0.0,
+             available: first_available,
+             left_offset: first_margins.text_left(),
+             right_offset: first_margins.right,
+@@ -410,7 +414,10 @@ impl Filler<'_> {
+         if self.cur.width > 0.0 && self.cur.width + img.width > self.cur.available + WRAP_SLACK_PX {
+             self.start_new_line(ri, 0)?;
+         }
+-        if img.height > self.cur.max_image_height_px {
++        if img.math {
++            self.cur.math_ascent = self.cur.math_ascent.max((img.height - img.dist_bottom).max(0.0));
++            self.cur.math_descent = self.cur.math_descent.max(img.dist_bottom);
++        } else if img.height > self.cur.max_image_height_px {
+             self.cur.max_image_height_px = img.height;
+         }
+         self.record_atomic(ri, 0, 1, img.width, img.bidi_level);
+@@ -829,6 +836,7 @@ impl Filler<'_> {
+             },
+             None => self.markless_box(size_px),
+         };
++        let content = wm::LineBox { ascent: content.ascent.max(self.cur.math_ascent), descent: content.descent.max(self.cur.math_descent), ..content };
+         let content = self.snap_content_box(content);
+         let ruled = wm::apply_spacing_rule(content, &self.rule);
+         let mut ascent = ruled.ascent;
+@@ -1056,6 +1064,8 @@ impl Filler<'_> {
+             max_descent: 0.0,
+             max_below_baseline: 0.0,
+             max_image_height_px: 0.0,
++            math_ascent: 0.0,
++            math_descent: 0.0,
+             available,
+             left_offset: margins.text_left(),
+             right_offset: margins.right,
+diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measure/mod.rs
+index a547d91..bcf2a8c 100644
+--- a/crates/ooxml-text/src/measure/mod.rs
++++ b/crates/ooxml-text/src/measure/mod.rs
+@@ -730,6 +730,27 @@ mod authoritative_tests {
+         assert!(extent.lines[0].line_height >= 80.0);
+     }
+ 
++    #[test]
++    fn math_image_preserves_ascent_and_descent_in_a_text_line() {
++        let mut store = FontStore::new();
++        store.register(FIXTURE.to_vec()).unwrap();
++        let input: MeasureInput = serde_json::from_value(serde_json::json!({
++            "block": { "kind": "paragraph", "runs": [
++                { "kind": "text", "text": "a=" },
++                { "kind": "image", "width": 80, "height": 60, "distBottom": 22, "displayMode": "math" },
++                { "kind": "text", "text": "+b" }
++            ]},
++            "maxWidth": 500,
++            "fontChains": { "liberation sans|0|0": [0] },
++            "defaults": { "fontSize": 12, "fontFamily": "Liberation Sans" }
++        })).unwrap();
++        let extent = measure_paragraph(&store, &input).unwrap();
++        assert_eq!(extent.lines.len(), 1);
++        assert!(extent.lines[0].ascent >= 38.0);
++        assert!(extent.lines[0].descent >= 22.0);
++        assert!(extent.lines[0].line_height >= 60.0);
++    }
++
+     #[test]
+     fn an_inline_image_wider_than_the_column_keeps_its_declared_box() {
+         let store = FontStore::new();
+diff --git a/crates/ooxml-text/src/measure/prepare.rs b/crates/ooxml-text/src/measure/prepare.rs
+index 85cd897..7669bfc 100644
+--- a/crates/ooxml-text/src/measure/prepare.rs
++++ b/crates/ooxml-text/src/measure/prepare.rs
+@@ -121,6 +121,7 @@ pub(super) struct PreparedImage {
+     pub dist_top: f32,
+     pub dist_bottom: f32,
+     pub bidi_level: u8,
++    pub math: bool,
+ }
+ 
+ #[derive(Debug, Clone)]
+@@ -228,17 +229,38 @@ pub(super) fn prepare_runs(
+         match run.kind.as_str() {
+             "lineBreak" => prepared.push(PreparedRun::LineBreak),
+             "text" if run.hidden => prepared.push(PreparedRun::Hidden {
+-                utf16_len: run
+-                    .text
+-                    .as_deref()
+-                    .unwrap_or("")
+-                    .chars()
+-                    .map(|c| c.len_utf16() as u32)
+-                    .sum(),
++                utf16_len: if run.footnote_ref_id.is_some() || run.endnote_ref_id.is_some() {
++                    1
++                } else {
++                    run.text
++                        .as_deref()
++                        .unwrap_or("")
++                        .chars()
++                        .map(|c| c.len_utf16() as u32)
++                        .sum()
++                },
+             }),
+-            "text" => prepared.push(PreparedRun::Text(prepare_text_run(
+-                store, input, run, levels,
+-            )?)),
++            "text" => {
++                let mut text = prepare_text_run(store, input, run, levels)?;
++                if run.footnote_ref_id.is_some() || run.endnote_ref_id.is_some() {
++                    // Meet alle glyphs met hun echte opmaak, maar laat de
++                    // regelvuller het volledige label als één atoom behandelen.
++                    let width = super::line_filler::span_width(&text.chars, text.letter_spacing);
++                    if let Some(mut cluster) = text.chars.first().copied() {
++                        cluster.utf16_offset = 0;
++                        cluster.utf16_len = 1;
++                        cluster.advance = width;
++                        cluster.is_space = false;
++                        cluster.is_fit_space = false;
++                        text.chars.clear();
++                        text.chars.push(cluster);
++                    }
++                    text.utf16_len = 1;
++                    text.breaks.clear();
++                    text.letter_spacing = 0.0;
++                }
++                prepared.push(PreparedRun::Text(text));
++            }
+             "tab" => prepared.push(PreparedRun::Tab(prepare_tab_run(
+                 store,
+                 input,
+@@ -465,6 +487,7 @@ fn prepare_image_run(run: &RunIn, bidi_level: u8) -> Result<PreparedRun, Measure
+     // Own-line wrap distances default to six pixels.
+     if wrap == Some("topAndBottom") || display == Some("block") {
+         return Ok(PreparedRun::OwnLineImage(PreparedImage {
++            math: false,
+             width: validate_image_dim(
+                 run.rotation_bounds
+                     .as_ref()
+@@ -488,6 +511,7 @@ fn prepare_image_run(run: &RunIn, bidi_level: u8) -> Result<PreparedRun, Measure
+     }
+ 
+     Ok(PreparedRun::InlineImage(PreparedImage {
++        math: display == Some("math"),
+         width: validate_image_dim(
+             run.rotation_bounds
+                 .as_ref()
