@@ -67,6 +67,7 @@ import {
   ArrowLeftRight,
   SlidersHorizontal,
   Files,
+  StickyNote,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -1029,6 +1030,10 @@ export function RekenbladRibbon({
             naam: t("spreadsheet.tabs.tools"),
             inhoud: (
               <>
+                <Groep naam={t("spreadsheet:notes.title")}>
+                  <Actie naam={t("spreadsheet:notes.edit")} icoon={StickyNote} groot disabled={!api}
+                    onMouseDown={e => e.preventDefault()} onClick={() => openRekenbladVenster({ soort: "notitie" })} />
+                </Groep>
                 {zoeken}
                 {navigator}
               </>

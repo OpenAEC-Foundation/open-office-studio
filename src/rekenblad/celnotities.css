@@ -1,0 +1,95 @@
+.celnotitie-anker {
+  position: absolute;
+  z-index: 4;
+  pointer-events: auto;
+}
+.celnotitie-indicator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: 0;
+  background: linear-gradient(45deg, transparent 49%, #c62828 50%);
+  cursor: pointer;
+}
+.celnotitie-indicator:focus-visible {
+  outline: 2px solid #1768b2;
+  outline-offset: 2px;
+}
+.celnotitie-kaart {
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  width: min(240px, 45vw);
+  max-height: 220px;
+  overflow: auto;
+  padding: 9px 11px;
+  background: #fffbe6;
+  color: #242424;
+  border: 1px solid #9a8354;
+  border-radius: 3px;
+  box-shadow: 3px 4px 9px #0003;
+  font:
+    12px/1.45 Inter,
+    system-ui,
+    sans-serif;
+  overflow-wrap: anywhere;
+}
+.celnotitie-kaart p {
+  margin: 4px 0 0;
+  white-space: pre-wrap;
+}
+.celnotitie-kaart.is-links {
+  left: auto;
+  right: 12px;
+}
+.celnotitie-lijst {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 180px;
+  overflow: auto;
+}
+.celnotitie-lijst button {
+  width: 100%;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.celnotitie-lijst button[aria-current="true"] {
+  background: #e4edf7;
+  color: #173d69;
+}
+.celnotitie-zichtbaar {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+.celnotitie-zichtbaar input {
+  width: auto !important;
+}
+.celnotitie-formulier textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 110px;
+  padding: 7px 9px;
+  border: 1px solid #d3d9e0;
+  border-radius: 6px;
+  background: #fff;
+  color: #2c323c;
+  font: inherit;
+  line-height: 1.45;
+  resize: vertical;
+}
+.celnotitie-formulier textarea:focus-visible {
+  outline: 2px solid #bc6a15;
+  outline-offset: 1px;
+}
