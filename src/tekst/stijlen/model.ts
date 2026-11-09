@@ -10,11 +10,14 @@ import type {
   Style,
   StyleDefinitions,
   TextFormatting,
+  TableFormatting,
+  NumberingDefinitions,
   Theme,
 } from "@betteroffice/docx/types/document";
 import i18next from "../../i18n/config";
 import { formatGetal } from "../../i18n/opmaak";
 import type { StijlEigenschappen } from "./stijlenxml";
+import { getalIn, type NummerNotatie } from "../lijst/nummering";
 
 /**
  * Ingebouwde stijlen: de interne (Engelse) naam in styles.xml → i18n-sleutel
@@ -269,7 +272,7 @@ export function alsEigenschappen(o: OpgelosteStijl): StijlEigenschappen {
 export function uitOpmaak(
   tekst: TextFormatting | undefined,
   alinea: ParagraphFormatting | undefined,
-  soort: "paragraph" | "character" = "paragraph",
+  soort: "paragraph" | "character" | "table" | "numbering" = "paragraph",
   thema?: Theme | null,
 ): StijlEigenschappen {
   const e: StijlEigenschappen = {};
@@ -280,13 +283,30 @@ export function uitOpmaak(
     if (tekst.bold !== undefined) e.vet = tekst.bold;
     if (tekst.italic !== undefined) e.cursief = tekst.italic;
     if (tekst.underline) e.onderstreept = tekst.underline.style !== "none";
+    if (tekst.underline) {
+      e.onderstreping = tekst.underline.style;
+      e.onderstrepingKleur = themaKleur(tekst.underline.color, thema);
+    }
     if (tekst.strike !== undefined) e.doorgehaald = tekst.strike;
     if (tekst.allCaps !== undefined) e.hoofdletters = tekst.allCaps;
     if (tekst.smallCaps !== undefined) e.kleineHoofdletters = tekst.smallCaps;
+    if (tekst.doubleStrike !== undefined)
+      e.dubbelDoorgehaald = tekst.doubleStrike;
+    if (tekst.hidden !== undefined) e.verborgen = tekst.hidden;
+    if (tekst.vertAlign) e.verticaal = tekst.vertAlign;
+    if (tekst.spacing !== undefined) e.tekenafstand = tekst.spacing;
+    if (tekst.scale !== undefined) e.schaal = tekst.scale;
+    if (tekst.position !== undefined) e.positie = tekst.position;
+    if (tekst.kerning !== undefined) e.spatiering = tekst.kerning;
     const kleur = themaKleur(tekst.color, thema);
     if (kleur) e.kleur = kleur.toUpperCase();
   }
-  if (alinea && soort === "paragraph") {
+  if (tekst?.language?.latin) e.taal = tekst.language.latin;
+  if (alinea && soort !== "character") {
+    if (alinea.tabs) e.tabs = alinea.tabs as StijlEigenschappen["tabs"];
+    if (alinea.borders) e.randen = Object.fromEntries(Object.entries(alinea.borders).filter(([, b]) => !!b).map(([k, b]) => [k, { style: b!.style ?? "single", size: b!.size, space: b!.space, ...(themaKleur(b!.color, thema) ? { color: { rgb: themaKleur(b!.color, thema)! } } : {}) }]));
+    if (alinea.shading) e.arcering = { pattern: alinea.shading.pattern, ...(themaKleur(alinea.shading.fill, thema) ? { fill: { rgb: themaKleur(alinea.shading.fill, thema)! } } : {}) };
+    if (alinea.numPr?.numId !== undefined) e.lijst = { numId: alinea.numPr.numId, ilvl: alinea.numPr.ilvl ?? 0 };
     const a = alinea.alignment;
     if (a === "left" || a === "center" || a === "right" || a === "both") e.uitlijning = a;
     if (alinea.spaceBefore !== undefined) e.ruimteVoor = alinea.spaceBefore / 20;
@@ -294,10 +314,162 @@ export function uitOpmaak(
     if (alinea.lineSpacing !== undefined && (!alinea.lineSpacingRule || alinea.lineSpacingRule === "auto"))
       e.regelafstand = Math.round((alinea.lineSpacing / 240) * 100) / 100;
     if (alinea.indentLeft !== undefined) e.inspringLinks = Math.round((alinea.indentLeft / 567) * 100) / 100;
+    if (alinea.indentRight !== undefined)
+      e.inspringRechts = Math.round((alinea.indentRight / 567) * 100) / 100;
+    if (
+      alinea.lineSpacing !== undefined &&
+      (alinea.lineSpacingRule === "exact" ||
+        alinea.lineSpacingRule === "atLeast")
+    )
+      e.regelafstandPt = {
+        pt: alinea.lineSpacing / 20,
+        regel: alinea.lineSpacingRule,
+      };
+    if (alinea.keepNext !== undefined) e.bijVolgende = alinea.keepNext;
+    if (alinea.keepLines !== undefined) e.regelsBijElkaar = alinea.keepLines;
+    if (alinea.pageBreakBefore !== undefined)
+      e.paginaEindeVoor = alinea.pageBreakBefore;
+    if (alinea.widowControl !== undefined)
+      e.zwevendeRegels = alinea.widowControl;
+    if (alinea.contextualSpacing !== undefined)
+      e.contextueel = alinea.contextualSpacing;
     if (alinea.indentFirstLine !== undefined)
       e.eersteRegel = Math.round(((alinea.hangingIndent ? -1 : 1) * alinea.indentFirstLine * 100) / 567) / 100;
   }
   return e;
+}
+
+export function tabelEigenschappen(tabel: TableFormatting | undefined, thema?: Theme): StijlEigenschappen {
+  if (!tabel) return {};
+  const randen = tabel.borders ? Object.fromEntries(Object.entries(tabel.borders).filter(([, b]) => !!b).map(([k, b]) => [k, { style: b!.style ?? "single", size: b!.size, space: b!.space, ...(themaKleur(b!.color, thema) ? { color: { rgb: themaKleur(b!.color, thema)! } } : {}) }])) : undefined;
+  const fill = themaKleur(tabel.shading?.fill, thema);
+  return { ...(randen ? { tabelRanden: randen } : {}), ...(tabel.shading ? { tabelArcering: { pattern: tabel.shading.pattern, ...(fill ? { fill: { rgb: fill } } : {}) } } : {}) };
+}
+
+export function lijstVoorbeelden(
+  stijlen: StyleDefinitions | undefined,
+  nummering: NumberingDefinitions | undefined,
+  id: string,
+): string[] {
+  const num = opgelosteOpmaak(stijlen, id).p.numPr;
+  const instance = nummering?.nums.find((n) => n.numId === num?.numId),
+    abstract = nummering?.abstractNums.find(
+      (a) => a.abstractNumId === instance?.abstractNumId,
+    ),
+    ilvl = num?.ilvl ?? 0;
+  const override = instance?.levelOverrides?.find((o) => o.ilvl === ilvl),
+    niveau = override?.lvl ?? abstract?.levels.find((l) => l.ilvl === ilvl);
+  if (!niveau || !num?.numId || niveau.numFmt === "none") return ["Aa", "Bb"];
+  return [0, 1].map((n) => {
+    const prefix =
+      niveau.numFmt === "bullet"
+        ? niveau.lvlText
+        : niveau.lvlText.replace(/%(\d)/g, (_, d) => {
+            const l = Number(d) - 1,
+              lev = abstract?.levels.find((v) => v.ilvl === l),
+              start =
+                l === ilvl
+                  ? (override?.startOverride ?? niveau.start ?? 1) + n
+                  : (lev?.start ?? 1);
+            const format =
+              l === ilvl ? niveau.numFmt : (lev?.numFmt ?? "decimal");
+            return [
+              "decimal",
+              "lowerRoman",
+              "upperRoman",
+              "lowerLetter",
+              "upperLetter",
+            ].includes(format)
+              ? getalIn(format as NummerNotatie, start)
+              : String(start);
+          });
+    return `${prefix} ${n ? "Bb" : "Aa"}`;
+  });
+}
+
+/** Four real cells show first-row/banding/column formatting, not a generic icon. */
+export function tabelVoorbeeld(
+  stijlen: StyleDefinitions | undefined,
+  id: string,
+  thema?: Theme,
+): CSSProperties[] {
+  const keten: Style[] = [],
+    gezien = new Set<string>();
+  let huidig = stijlen?.styles.find((s) => s.styleId === id);
+  while (huidig && !gezien.has(huidig.styleId)) {
+    gezien.add(huidig.styleId);
+    keten.unshift(huidig);
+    huidig = stijlen?.styles.find((s) => s.styleId === huidig!.basedOn);
+  }
+  const basis = losOp(stijlen, id, thema);
+  return Array.from({ length: 4 }, (_, n) => {
+    let tbl: TableFormatting = {},
+      tc: NonNullable<Style["tcPr"]> = {},
+      run: TextFormatting = {};
+    const types = [
+      "wholeTable",
+      n < 2 ? "firstRow" : "band1Horz",
+      n % 2 === 0 ? "firstCol" : "lastCol",
+      n >= 2 ? "lastRow" : "",
+    ];
+    for (const s of keten) {
+      Object.assign(tbl, s.tblPr);
+      Object.assign(tc, s.tcPr);
+      Object.assign(run, s.rPr);
+      for (const type of types)
+        for (const part of s.tblStylePr ?? [])
+          if (part.type === type) {
+            Object.assign(tbl, part.tblPr);
+            Object.assign(tc, part.tcPr);
+            Object.assign(run, part.rPr);
+          }
+    }
+    const border =
+        tc.borders?.top ?? (n < 2 ? tbl.borders?.top : tbl.borders?.insideH),
+      kleur = themaKleur(border?.color, thema) ?? "888888",
+      fill = themaKleur(tc.shading?.fill ?? tbl.shading?.fill, thema);
+    const style = border?.style ?? "single",
+      lijn =
+        style === "nil" || style === "none"
+          ? "none"
+          : style === "double"
+            ? "double"
+            : style.includes("dash")
+              ? "dashed"
+              : style === "dotted"
+                ? "dotted"
+                : "solid";
+    return {
+      border: `${(border?.size ?? 4) / 8}pt ${lijn} #${kleur}`,
+      background: fill ? `#${fill}` : undefined,
+      color: themaKleur(run.color, thema)
+        ? `#${themaKleur(run.color, thema)}`
+        : basis.kleur
+          ? `#${basis.kleur}`
+          : undefined,
+      fontWeight: (run.bold ?? basis.vet) ? 700 : 400,
+      fontStyle: (run.italic ?? basis.cursief) ? "italic" : "normal",
+      padding: "1px 4px",
+    };
+  });
+}
+
+/** Nearest enclosing table, including tables in header/footer and note stories. */
+export function tabelBijAlinea(doc: Document | null | undefined, paraId?: string): TableFormatting | undefined {
+  if (!doc || !paraId) return;
+  let budget = 200000;
+  function vind(k: unknown, tabel?: TableFormatting): { gevonden: boolean; tabel?: TableFormatting } {
+    if (!k || typeof k !== "object" || budget-- <= 0) return { gevonden: false };
+    if (Array.isArray(k)) { for (const x of k) { const r = vind(x, tabel); if (r.gevonden) return r; } return { gevonden: false }; }
+    const n = k as { type?: string; paraId?: string; id?: string; formatting?: TableFormatting; content?: unknown; rows?: unknown; cells?: unknown;
+    };
+    if (n.type === "paragraph" && (n.paraId === paraId || n.id === paraId)) return { gevonden: true, tabel };
+    const nieuw = n.type === "table" ? n.formatting : tabel;
+    for (const inhoud of [n.content, n.rows, n.cells]) { const r = vind(inhoud, nieuw); if (r.gevonden) return r; }
+    return { gevonden: false };
+  }
+  const p = doc.package;
+  return vind([p.document, ...(p.headers?.values() ?? []), ...(p.footers?.values() ?? []), p.footnotes, p.endnotes]).tabel;
 }
 
 /**
@@ -312,11 +484,30 @@ export function ontbrekendeStijl(stijlen: StyleDefinitions | undefined, styleId:
   return i18next.t("writer:styles.missingStyle", { name: naam });
 }
 
-type Knoop = { type?: string; content?: unknown; formatting?: { styleId?: string }; rows?: unknown };
+type Knoop = { type?: string; content?: unknown; formatting?: { styleId?: string; numPr?: { numId?: number } }; rows?: unknown;
+};
 
-/** Hoe vaak elke stijl in de hoofdtekst voorkomt (alinea- en tekenstijlen). */
+/** Hoe vaak elke stijl in de documentverhalen voorkomt (alinea-, teken- en tabelstijlen). */
 export function gebruikteStijlen(document: Document | null | undefined): Map<string, number> {
   const telling = new Map<string, number>();
+  const pakket = document?.package, defs = pakket?.styles;
+  const lijstStijlen = new Map<number, Set<string>>();
+  for (const stijl of defs?.styles ?? []) if (stijl.type === "numbering") {
+    const id = opgelosteOpmaak(defs, stijl.styleId).p.numPr?.numId;
+    if (id !== undefined && id !== 0) {
+      if (!lijstStijlen.has(id)) lijstStijlen.set(id, new Set());
+      lijstStijlen.get(id)!.add(stijl.styleId);
+    }
+  }
+  for (const num of pakket?.numbering?.nums ?? []) {
+    const abstract = pakket?.numbering?.abstractNums.find(
+      (a) => a.abstractNumId === num.abstractNumId);
+    for (const id of [abstract?.styleLink, abstract?.numStyleLink]) if (id && defs?.styles.some((s) => s.styleId === id && s.type === "numbering")) {
+      if (!lijstStijlen.has(num.numId)) lijstStijlen.set(num.numId, new Set());
+      lijstStijlen.get(num.numId)!.add(id);
+    }
+  }
+  const alineaNummers = new Map<string, number | undefined>();
   const tel = (id: string | undefined) => {
     if (id) telling.set(id, (telling.get(id) ?? 0) + 1);
   };
@@ -328,7 +519,13 @@ export function gebruikteStijlen(document: Document | null | undefined): Map<str
       return;
     }
     const k = knoop as Knoop;
-    if (k.type === "paragraph") tel(k.formatting?.styleId ?? "\u0000standaard");
+    if (k.type === "paragraph") {
+      tel(k.formatting?.styleId ?? "\u0000standaard");
+      const stijl = k.formatting?.styleId ?? "";
+      if (!alineaNummers.has(stijl)) alineaNummers.set(stijl, opgelosteOpmaak(defs, stijl).p.numPr?.numId);
+      const num = k.formatting?.numPr?.numId ?? alineaNummers.get(stijl);
+      if (num !== undefined) for (const id of lijstStijlen.get(num) ?? []) tel(id);
+    }
     else if (k.type === "run") tel(k.formatting?.styleId);
     else if (k.type === "table") tel((k.formatting as { styleId?: string } | undefined)?.styleId);
     if (k.content) loop(k.content);
@@ -337,6 +534,10 @@ export function gebruikteStijlen(document: Document | null | undefined): Map<str
     if (cellen) loop(cellen);
   };
   loop(document?.package.document.content);
+  for (const verhalen of [pakket?.headers?.values(), pakket?.footers?.values()])
+    for (const verhaal of verhalen ?? []) loop(verhaal.content);
+  for (const verhalen of [pakket?.footnotes, pakket?.endnotes, pakket?.footnoteSeparators, pakket?.endnoteSeparators])
+    loop(verhalen);
   // Alinea's zonder stijl gebruiken de standaard-alineastijl.
   const zonder = telling.get("\u0000standaard");
   if (zonder) {
@@ -374,7 +575,8 @@ export function beschrijfOpmaak(
     if (tekst.smallCaps) t.push(v("smallCaps"));
     if (tekst.hidden) t.push(v("hidden"));
     if (tekst.color?.rgb || tekst.color?.themeColor)
-      t.push(v("color", { value: tekst.color.rgb ? `#${tekst.color.rgb}` : tekst.color.themeColor ?? "" }));
+      t.push(v("color", { value: tekst.color.rgb ? `#${tekst.color.rgb}` : (tekst.color.themeColor ?? ""),
+        }));
     if (tekst.highlight && tekst.highlight !== "none") t.push(v("highlight", { value: tekst.highlight }));
     if (tekst.spacing) t.push(v("characterSpacing", { value: PT(tekst.spacing) }));
     if (tekst.language?.latin) t.push(v("language", { value: tekst.language.latin }));
@@ -413,9 +615,13 @@ export function vindAlinea(document: Document | null | undefined, paraId: string
   const engine = /^body:p(\d+)$/.exec(paraId);
   if (engine) {
     const alineas = document.package.document.content.filter((b) => b.type === "paragraph");
-    return (alineas[Number(engine[1])] as unknown as { formatting?: ParagraphFormatting; content: unknown[] }) ?? null;
+    return (
+      (alineas[Number(engine[1])] as unknown as { formatting?: ParagraphFormatting; content: unknown[];
+      }) ?? null
+    );
   }
-  let gevonden: { formatting?: ParagraphFormatting; content: unknown[] } | null = null;
+  let gevonden: { formatting?: ParagraphFormatting; content: unknown[];
+  } | null = null;
   let budget = 200000;
   const loop = (knoop: unknown) => {
     if (gevonden || budget-- <= 0 || !knoop || typeof knoop !== "object") return;
@@ -425,7 +631,8 @@ export function vindAlinea(document: Document | null | undefined, paraId: string
     }
     const k = knoop as Knoop & { paraId?: string; cells?: unknown };
     if (k.type === "paragraph" && k.paraId === paraId) {
-      gevonden = k as unknown as { formatting?: ParagraphFormatting; content: unknown[] };
+      gevonden = k as unknown as { formatting?: ParagraphFormatting; content: unknown[];
+      };
       return;
     }
     if (k.content) loop(k.content);
@@ -433,7 +640,8 @@ export function vindAlinea(document: Document | null | undefined, paraId: string
     if (k.cells) loop(k.cells);
   };
   loop(document.package.document.content);
-  return gevonden as { formatting?: ParagraphFormatting; content: unknown[] } | null;
+  return gevonden as { formatting?: ParagraphFormatting; content: unknown[];
+  } | null;
 }
 
 /** De run waarin tekenpositie `positie` (vanaf het begin van de alinea) valt. */
@@ -447,7 +655,8 @@ export function runOpPositie(inhoud: unknown[], positie: number): TextFormatting
       if (k?.type === "run") {
         const formatting = (k.formatting ?? {}) as TextFormatting;
         let lengte = 0;
-        for (const deel of (k.content ?? []) as { type?: string; text?: string }[])
+        for (const deel of (k.content ?? []) as { type?: string; text?: string;
+        }[])
           lengte += deel.type === "text" ? (deel.text ?? "").length : deel.type === "tab" ? 1 : 0;
         if (lengte === 0) continue;
         laatste = formatting;

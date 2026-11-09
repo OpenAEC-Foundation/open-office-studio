@@ -31,6 +31,7 @@ import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag"
 import { werkboekBytes } from "./lint/rekenblad-filter";
 import { laadCelnotities, metCelnotitieAnkers } from "./rekenblad/celnotitieAnkers";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
+import { registreerVeldNaam, werkDocumentVeldenBij } from "./tekst/veldenDocument/opdrachten";
 import type { Serialiseerder } from "./opslag";
 import { koppelEditor } from "./export/editorKoppeling";
 import { lettertypeModule } from "./lettertypen/provider";
@@ -172,6 +173,14 @@ export default function OfficeEditor(props: EditorProps) {
     () => herladenRecent.current.bytes,
   );
   const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, ...spelling.plugins], [spelling.plugins]);
+  useEffect(() => {
+    if (props.soort === "docx" && documentGereed && docx.current) {
+      const ref = docx.current;
+      let actief = true;
+      void ref.flushPendingInput().then(() => { if (actief) registreerVeldNaam(ref, props.naam, herladen.api, herladen.bytes); }).catch(e => { if (actief) recent.current.fout(e); });
+      return () => { actief = false; };
+    }
+  }, [props.soort, props.naam, documentGereed, herladen.sleutel]);
   // Tekst: wijzigingen buiten de engine (zoals Bestand › Info) als gewijzigd melden.
   useEffect(
     () => registreerWijziging(herladen.api, () => recent.current.gewijzigd()),
@@ -246,6 +255,7 @@ export default function OfficeEditor(props: EditorProps) {
         const ref = docx.current;
         if (!ref) throw new Error(i18next.t("shell:errors.documentNotReady"));
         await ref.flushPendingInput();
+        await werkDocumentVeldenBij(ref);
       },
     }));
     // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij

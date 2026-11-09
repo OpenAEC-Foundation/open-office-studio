@@ -204,6 +204,48 @@ export function herstelKolommenWeergave(bron: string): string {
     + bron.replace(oud, 'regions:{sections:oosKolomSecties(p(e$1)),settings:');
 }
 
+/** Bewerk het getekende kop/voet-onderdeel in plaats van alleen first/default (#209). */
+export function herstelKopVoetDoel(bron: string, ingang: "editor" | "opdrachten"): string {
+  const delen = ingang === "editor" ? [
+    ['function oo(e,t){return !e||!t||t.region!==e.kind?false:ac(e)?t.noteId===e.noteId:true}',
+      'function oo(e,t){return !e||!t||t.region!==e.kind?false:ac(e)?t.noteId===e.noteId:!e.rId||e.rId===t.rId}'],
+    ['y(Te,(ve?.pageIndex??0)+1)', 'y(Te,(ve?.pageIndex??0)+1,ve?.hit?.rId)'],
+    ['N=E?E.isFirstPage', 'N=E?.rId?oosKopVoetInhoud(i,E.kind,E.rId):E?E.isFirstPage'],
+    ['if(!Rt)return null;let Ht=E.isFirstPage', 'if(E.rId)return E.rId;if(!Rt)return null;let Ht=E.isFirstPage'],
+  ] : [
+    ['d=useCallback((u,f)=>{let D=i?.titlePg',
+      'd=useCallback((u,f,oosRid)=>{if(oosRid){const oosDoel=oosKopVoetDoel(e,u,f??1,oosRid);oosDoel&&n(oosDoel);return}let D=i?.titlePg'],
+    ['h=(I?.find(x=>x.type===y)??I?.find(x=>x.type==="default")??I?.find(x=>x.type==="first")??I?.[0])?.rId;',
+      'h=u.rId??(I?.find(x=>x.type===y)??I?.find(x=>x.type==="default")??I?.find(x=>x.type==="first")??I?.[0])?.rId;'],
+  ];
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst het doel van kop- en voettekstbewerking.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { kopVoetDoel as oosKopVoetDoel, kopVoetInhoud as oosKopVoetInhoud } from "openaec-tekst-kopvoetdoel";\n' + uit;
+}
+
+/** Nieuwe alinea's met w:next erven geen directe tekenopmaak van de kop (#199). */
+export function herstelVervolgstijl(bron: string): string {
+  const delen = [
+    ['nextParagraphStyleId:P,', 'nextParagraphStyleId:P,oosVervolgOpmaak,'],
+    ['nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,',
+      'nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,oosVervolgOpmaak:T=>vt?.resolveParagraphStyle(T).runFormatting,'],
+    ['me?u.applyParagraphStyle({story:H.story,start:{paraId:se.secondParaId,offset:0},end:{paraId:se.secondParaId,offset:0}},me)',
+      'me?oosPasVervolgstijlToe(u,{story:H.story,start:{paraId:se.secondParaId,offset:0},end:{paraId:se.secondParaId,offset:0}},me,oosVervolgOpmaak?.(me))'],
+    ['[Z,Nt,W,ke,yt,Ee,P,n,i,u,vt])', '[Z,Nt,W,ke,yt,Ee,P,n,i,u,vt,oosVervolgOpmaak])'],
+  ] as const;
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de overgang naar de volgende alineastijl.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { pasVervolgstijlToe as oosPasVervolgstijlToe } from "openaec-tekst-vervolgstijl";\n' + uit;
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
@@ -211,6 +253,10 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-kopvoetdoel")
+        return fileURLToPath(new URL("../src/tekst/pagina/kopvoetDoel.ts", import.meta.url));
+      if (id === "openaec-tekst-vervolgstijl")
+        return fileURLToPath(new URL("../src/tekst/stijlen/vervolg.ts", import.meta.url));
       if (id === "openaec-tekst-nootkern")
         return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
       if (id === "openaec-tekst-workerstart")
@@ -240,9 +286,9 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKolommenWeergave(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
-        return { code: herstelTabelContext(bron), map: null };
+        return { code: herstelKopVoetDoel(herstelTabelContext(bron), "opdrachten"), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))), map: null };
+      return { code: herstelKopVoetDoel(herstelVervolgstijl(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron))))), "editor"), map: null };
     },
   };
 }
