@@ -7,6 +7,9 @@ on:
       - "src-tauri/src/conversieprofiel.xcu"
       - "src-tauri/src/conversie.rs"
       - "src/formaten.json"
+      - "docs/tests/documentmatrix-2026-11-06/bron/*.docx"
+      - "public/templates/nieuw.xlsx"
+      - "public/templates/nieuw.pptx"
   workflow_dispatch:
 permissions:
   contents: read
