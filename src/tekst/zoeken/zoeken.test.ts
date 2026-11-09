@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   context,
   jokertekensNaarRegex,
@@ -51,6 +51,33 @@ describe("zoekopties", () => {
     expect(() => maakPatroon("a*", { regex: true })).toThrow(/lege tekst/);
     expect(() => maakPatroon("[abc", { jokertekens: true })).toThrow(/\[/);
     expect(() => maakPatroon("")).toThrow(ZoekFout);
+  });
+});
+
+describe("lege regex-treffers overslaan", () => {
+  it.each([
+    { tekst: "😀x", zoek: "(?=😀)", verwacht: [] },
+    { tekst: "😀x", zoek: "(?=😀)|x", verwacht: [{ start: 2, eind: 3, tekst: "x" }] },
+    { tekst: "a😀😀x", zoek: "(?=😀)|x", verwacht: [{ start: 5, eind: 6, tekst: "x" }] },
+    { tekst: "ax", zoek: "(?=a)|x", verwacht: [{ start: 1, eind: 2, tekst: "x" }] },
+    { tekst: "\uD83Dx", zoek: "(?=\uD83D)|x", verwacht: [{ start: 1, eind: 2, tekst: "x" }] },
+    { tekst: "x", zoek: "x|(?<=x)", verwacht: [{ start: 0, eind: 1, tekst: "x" }] },
+  ])("beëindigt $zoek in $tekst en bewaart echte treffers", ({ tekst, zoek, verwacht }) => {
+    const patroon = maakPatroon(zoek, { regex: true });
+    const exec = RegExp.prototype.exec;
+    let aanroepen = 0;
+    // Begrens alleen de onderzochte regex: de oorspronkelijke fout mag de
+    // testworker niet eindeloos laten draaien.
+    const bewaker = vi.spyOn(RegExp.prototype, "exec").mockImplementation(function (this: RegExp, invoer: string) {
+      if (this.source === patroon.source && this.flags === patroon.flags && ++aanroepen > 20)
+        throw new Error("Zoeklus maakt geen voortgang");
+      return exec.call(this, invoer);
+    });
+    try {
+      expect(vindAlle(tekst, patroon).map(({ start, eind, tekst }) => ({ start, eind, tekst }))).toEqual(verwacht);
+    } finally {
+      bewaker.mockRestore();
+    }
   });
 });
 

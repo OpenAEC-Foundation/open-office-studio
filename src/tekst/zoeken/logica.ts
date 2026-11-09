@@ -203,7 +203,10 @@ export function vindAlle(tekst: string, patroon: RegExp, max = 10000): Treffer[]
   let m: RegExpExecArray | null;
   while ((m = p.exec(tekst)) && uit.length < max) {
     if (m[0].length === 0) {
-      p.lastIndex++;
+      // Unicode-regexen lezen een surrogatepaar als één teken. Een stap van
+      // één code-eenheid kan exec terug naar dezelfde lege treffer sturen.
+      const punt = tekst.codePointAt(p.lastIndex);
+      p.lastIndex += (p.unicode || p.flags.includes("v")) && punt !== undefined && punt > 0xffff ? 2 : 1;
       continue;
     }
     uit.push({ start: m.index, eind: m.index + m[0].length, tekst: m[0], groepen: m });
