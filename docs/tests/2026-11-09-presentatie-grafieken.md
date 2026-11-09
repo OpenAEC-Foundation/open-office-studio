@@ -25,10 +25,10 @@ Tauri-tekstklembordkoppeling; de browser gebruikt de Clipboard API.
 
 ## Validatie
 
-- 17 nieuwe tests: alle elf gedeelde grafiektypen, bewerkbare ingesloten data,
+- 18 nieuwe tests: alle elf gedeelde grafiektypen, bewerkbare ingesloten data,
   native rendering/opslag, afhankelijkheden met cycli, onbekende XML, bronbehoud,
   actuele bronwaarden, versieconflicten, Windows-regeleinden en ongeldige input.
-- Volledige suite: **2073 geslaagd, 10 bestaande skips, 181 bestanden**,
+- Volledige geïntegreerde suite: **2090 geslaagd, 10 bestaande skips, 182 bestanden**,
   twee workers en 15 seconden per test.
 - TypeScript, Vite-productiebuild en de negen aangeboden grafiekinterfacetalen:
   geslaagd.
@@ -48,6 +48,12 @@ Niet-ondersteunde bronsoorten worden geweigerd. Native installatiepakketten,
 ODP/PPT-conversie en de Tauri-klemborddialoog zijn hier niet opnieuw getest.
 De bestaande #66-werkstroom voor nieuwe grafiekfuncties loopt onafhankelijk;
 dit werk gebruikt de gedeelde component en claimt dat brede issue niet af.
+
+Het afzonderlijke trendlijncommit `7ecbce9f` van de eigenaar van #66 is daarna
+geïntegreerd. Een extra native roundtriptest en dezelfde zeven browserroutes
+controleren trendlijnbehoud bij overnemen en gegevens-/typewijzigingen. Het
+gedeelde voorbeeld toont de trendlijn; het tekenen daarvan in de native
+werkblad-/diacanvasroute blijft buiten deze claim, zoals de eigenaar meldt.
 
 De vier functionele criteria van #82 zijn voor de ondersteunde gedeelde
 grafiektypen afgedekt; sluiting kan volgen na samenvoegen van de PR.

@@ -137,6 +137,9 @@ try {
       await d
         .getByRole("button", { name: "Line with markers", exact: true })
         .click();
+      await d
+        .getByLabel("Trendline for Series A", { exact: true })
+        .selectOption("linear");
       await apply(d, "rekenblad", "Insert");
     },
   );
@@ -209,6 +212,12 @@ try {
           .inputValue(),
         "777",
       );
+      assert.equal(
+        await d
+          .getByLabel("Trendline for Series A", { exact: true })
+          .inputValue(),
+        "linear",
+      );
       await d.getByLabel("Value row 1, series 1", { exact: true }).fill("888");
       await d.getByLabel("Title", { exact: true }).fill("Pasted chart");
       await page.screenshot({ path: resolve(output, "chart-paste.png") });
@@ -237,6 +246,7 @@ try {
       const list = charts(await bytes());
       assert.ok(list[0].xml.includes("barChart"));
       assert.ok(list[0].xml.includes("Edited chart"));
+      assert.ok(list[0].xml.includes("trendline"));
       assert.ok(list[0].xml.includes(">901<"));
       const original = await page.evaluate(async () => {
         const api = window.sourceXlsx;

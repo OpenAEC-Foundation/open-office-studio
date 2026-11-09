@@ -186,6 +186,25 @@ describe("grafieken kopiëren naar Presentatie (#82)", () => {
       lijstGrafieken(plakGrafiekKopie(doel(), tekst, 0).bytes, "pptx"),
     ).toHaveLength(1);
   });
+  it("behoudt gedeelde trendlijnen bij overnemen, gegevenswijziging en engine-opslag", () => {
+    const m = model();
+    m.reeksen[0].trendlijnen = [{ soort: "linear", toonR2: true, vooruit: 2 }];
+    const b = voegGrafiekToeXlsx(ingeslotenWerkboek(m), m, {
+      blad: 0,
+      col: 4,
+      row: 1,
+      kolommen: 8,
+      rijen: 16,
+    });
+    const clip = maakGrafiekKopie(b.bytes, "xlsx", b.chartPad),
+      n = leesGrafiekKopie(clip).model;
+    n.reeksen[0].waarden[0] = 50;
+    const r = plakGrafiekKopie(doel(), clip, 0, n),
+      saved = open(r.bytes).save();
+    expect(
+      leesGrafiek(saved, r.chartPad).model.reeksen[0].trendlijnen?.[0],
+    ).toMatchObject({ soort: "linear", toonR2: true, vooruit: 2 });
+  });
   it("leest actuele bronwaarden in één batch en bewaart stijl", async () => {
     let calls = 0;
     const m = model();
