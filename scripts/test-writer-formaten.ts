@@ -3,12 +3,16 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { execFileSync, spawn } from "node:child_process";
 import {
   copyFileSync,
+  cpSync,
   existsSync,
   mkdirSync,
+  mkdtempSync,
   readFileSync,
+  rmSync,
   writeFileSync,
 } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
+import { tmpdir } from "node:os";
 import { pathToFileURL } from "node:url";
 import { createHash, randomUUID } from "node:crypto";
 import { openTekstkernProef } from "./tekstkern-proef";
@@ -59,7 +63,14 @@ beforeAll(async () => {
 afterAll(() => kern?.sluit());
 
 async function converteer(bytes: Uint8Array, van: string, naar: string) {
-  const map = join(root, `conversie-${++nummer}`);
+  const reportMap = join(root, `conversie-${++nummer}`);
+  // Windows filter registration fails silently under very deep profiles.
+  // Match the native app's short temporary directory, then retain its files.
+  const tempBase = resolve(tmpdir());
+  const temporary = process.platform === "win32";
+  const map = temporary
+    ? mkdtempSync(join(tempBase, "oos-writer-"))
+    : reportMap;
   mkdirSync(join(map, "profiel/user"), { recursive: true });
   mkdirSync(join(map, "uit"));
   copyFileSync(
@@ -142,13 +153,25 @@ async function converteer(bytes: Uint8Array, van: string, naar: string) {
     });
     const target = join(map, "uit", `bron.${naar}`);
     if (!existsSync(target)) throw new Error(`No ${naar} output: ${output}`);
-    return { bytes: new Uint8Array(readFileSync(target)), pad: target };
+    return {
+      bytes: new Uint8Array(readFileSync(target)),
+      pad: join(reportMap, "uit", `bron.${naar}`),
+    };
   } finally {
     writeFileSync(join(map, "converter.log"), output);
     writeFileSync(
       join(map, "timing.json"),
       JSON.stringify({ van, naar, ms: Date.now() - started, timedOut }),
     );
+    if (temporary) {
+      cpSync(map, reportMap, { recursive: true });
+      if (
+        dirname(resolve(map)) !== tempBase ||
+        !basename(map).startsWith("oos-writer-")
+      )
+        throw new Error("Unexpected temporary conversion directory");
+      rmSync(map, { recursive: true });
+    }
   }
 }
 
