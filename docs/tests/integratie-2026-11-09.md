@@ -25,6 +25,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#195](https://github.com/OpenAEC-Foundation/open-office-studio/pull/195) | `6119fe5f848a45c8c2a0402746944250379ee34b` | `55fc4cc01d4e8cc041e983aa17613f7f9221b58d` | UTF-16 text import BOM order |
 | [#214](https://github.com/OpenAEC-Foundation/open-office-studio/pull/214) | `355a635741527b9b94fb15b957be9a5680f1f311` | `d4d2311aaef6260a5edd0e9c82ff6a82b61e54db` | Uppercase autocorrect |
 | [#216](https://github.com/OpenAEC-Foundation/open-office-studio/pull/216) | `9a6f8b5814c57b8304fd79147fe3049ec5f336ec` | `5560c228262a04d0108be26ec82efc216aaa9d96` | Desktop report clipboard |
+| [#224](https://github.com/OpenAEC-Foundation/open-office-studio/pull/224) | `f9dbe7336033e8b069ef5db41856c827fe10bcf8` | `8e9c89dd78734abe660d237541bb43533d48a7a9` | Recent-file calendar dates |
 
 ## Earlier fixes included in bundles
 
@@ -58,6 +59,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr195-targeted | `55fc4cc01d4e8cc041e983aa17613f7f9221b58d` | 16 | 0 | 0 |
 | pr214-targeted | `d4d2311aaef6260a5edd0e9c82ff6a82b61e54db` | 26 | 0 | 3 |
 | pr216-related-unit | `5560c228262a04d0108be26ec82efc216aaa9d96` | 10 | 0 | 0 |
+| pr224-targeted | `8e9c89dd78734abe660d237541bb43533d48a7a9` | 6 | 0 | 0 |
 
 ## Pending deliveries
 
