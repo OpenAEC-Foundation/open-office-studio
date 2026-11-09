@@ -82,6 +82,7 @@ import {
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaObjecten } from "../presentatie/DiaObjecten";
 import { DiaOntwerp } from "../presentatie/DiaOntwerp";
+import { DiaTabellen } from "../presentatie/DiaTabellen";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
 
@@ -618,6 +619,7 @@ export function PresentatieRibbon({
                 </div>
               </Groep>
               <GrafiekGroep g={grafieken} uit={!acties.bewerkbaar} />
+              <Groep naam={t("presentation:tables.title")}><DiaTabellen /></Groep>
               <Groep naam={t("presentation.groups.text")}>
                 <DiaVoetteksten />
                 <P
