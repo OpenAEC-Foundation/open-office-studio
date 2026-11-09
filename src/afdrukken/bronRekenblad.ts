@@ -4,7 +4,7 @@
  * en -kolommen, rasterlijnen, rij- en kolomkoppen en kop- en voetteksten.
  *
  * De cellen tekent de engine zelf via `printDisplayList` en `paintDisplayList`;
- * deze module bepaalt alleen welke cellen op welke pagina komen.
+ * deze module bepaalt de pagina's en voegt de eigen tekenobjecten toe.
  */
 import i18next from "../i18n/config";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
@@ -24,6 +24,9 @@ import {
 import { indeling, maten, paginaVolgorde, type Groep } from "./rekenbladIndeling";
 import { metTekstopname, naarPunten } from "./tekstopname";
 import { LETTER, datumTekst, schrijf, tijdTekst } from "./tekenhulp";
+import { tekenobjecten } from "../rekenblad/tekenAnkers";
+import { objectBereik } from "../rekenblad/objectGeometrie";
+import { tekenObjectenOpCanvas } from "../rekenblad/tekenobjectCanvas";
 
 export type RekenbladOmvang = "blad" | "werkmap" | "selectie";
 
@@ -185,6 +188,7 @@ function bladPaginas(
   metriek: PrintMetrics,
 ): { paginas: Omit<AfdrukPagina, "label">[]; labels: string[] } {
   const handle = ctx.api.handle;
+  const objecten = tekenobjecten(handle, blad);
   const {
     kolomBreedtes,
     rijHoogtes,
@@ -276,6 +280,8 @@ function bladPaginas(
             x: (ox + blok.x * s) * factor,
             y: (oy + blok.y * s) * factor,
           });
+          await tekenObjectenOpCanvas(c, handle, objecten, blok.bereik, breedte, hoogte,
+            (ox + blok.x * s) * factor, (oy + blok.y * s) * factor, factor * s);
         }
       });
       // Doorzichtige delen (gewist door de engine) wit maken.
@@ -449,7 +455,11 @@ function gebiedVan(
     const b = ontleedBereikA1(inst.afdrukbereik);
     if (b) return b;
   }
-  return gebruikt ? ontleedBereikA1(gebruikt) : null;
+  const cellen = gebruikt ? ontleedBereikA1(gebruikt) : null;
+  const objecten = objectBereik(ctx.api.handle, tekenobjecten(ctx.api.handle, blad));
+  if (!cellen) return objecten;
+  if (!objecten) return cellen;
+  return { rij1: Math.min(cellen.rij1, objecten.rij1), kol1: Math.min(cellen.kol1, objecten.kol1), rij2: Math.max(cellen.rij2, objecten.rij2), kol2: Math.max(cellen.kol2, objecten.kol2) };
 }
 
 /** De indeling van één blad, voor het pagina-eindevoorbeeld. */

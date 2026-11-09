@@ -39,6 +39,18 @@ bron = voegTekenobjectToe(bron, 0, {
 });
 const pakket = new Pakket(bron);
 pakket.schrijf("custom/object-probe.bin", new Uint8Array([7, 8, 9]));
+// A real distant cell makes the native grid scrollable; drawings alone do not
+// currently expand the engine's scroll extent.
+pakket.schrijf(
+  "xl/worksheets/sheet1.xml",
+  pakket
+    .lees("xl/worksheets/sheet1.xml")
+    .replace(/<dimension\b[^>]*\/>/, '<dimension ref="A1:A201"/>')
+    .replace(
+      "</sheetData>",
+      '<row r="201"><c r="A201"><v>1</v></c></row></sheetData>',
+    ),
+);
 bron = pakket.inpakken();
 const server = await preview({
   configFile: false,
@@ -126,6 +138,22 @@ try {
       },
       { row, col },
     );
+    await page.waitForFunction(
+      ({ row, col }) => {
+        let letters = "",
+          n = col + 1;
+        while (n) {
+          n--;
+          letters = String.fromCharCode(65 + (n % 26)) + letters;
+          n = Math.floor(n / 26);
+        }
+        return (
+          document.querySelector('[data-testid="xlsx-name-box"]')?.value ===
+          `${letters}${row + 1}`
+        );
+      },
+      { row, col },
+    );
   }
   async function bytes() {
     return new Uint8Array(
@@ -162,6 +190,47 @@ try {
   stap(
     "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
   );
+  await kies(1, 0);
+  await page.keyboard.press("Control+k");
+  await link.getByLabel("Link to", { exact: true }).selectOption("cel");
+  await link.getByLabel("Address", { exact: true }).fill("L20");
+  await link.getByRole("button", { name: "Apply", exact: true }).click();
+  await link.waitFor({ state: "hidden" });
+  await writeFile(`${uit}/internal-link.xlsx`, await bytes());
+  await page.keyboard.press("Control+k");
+  assert.equal(
+    await link.getByLabel("Address", { exact: true }).inputValue(),
+    "L20",
+  );
+  await link.getByRole("button", { name: "Open link", exact: true }).click();
+  await link.waitFor({ state: "hidden" });
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-testid="xlsx-name-box"]')?.value === "L20",
+  );
+  stap("Saved internal hyperlink reopens and navigates to its target cell");
+  await kies(1, 0);
+  await page.keyboard.press("Control+k");
+  await link.getByLabel("Link to", { exact: true }).selectOption("bestand");
+  await link
+    .getByLabel("Address", { exact: true })
+    .fill("../Linked report.xlsx");
+  await link.getByRole("button", { name: "Open link", exact: true }).click();
+  await link
+    .getByRole("alert")
+    .filter({ hasText: "Local file links open in the desktop app" })
+    .waitFor();
+  await link.getByRole("button", { name: "Apply", exact: true }).click();
+  await link.waitFor({ state: "hidden" });
+  assert(
+    new Pakket(await bytes())
+      .lees("xl/worksheets/_rels/sheet1.xml.rels")
+      .includes("../Linked%20report.xlsx"),
+  );
+  stap(
+    "File links retain encoded relative paths and show a clear browser-only open message",
+  );
+  await kies(0, 0);
   const image = page.getByRole("button", {
     name: "Image: Imported logo",
     exact: true,
@@ -205,13 +274,11 @@ try {
   );
   await page.getByRole("tab", { name: "Insert", exact: true }).click();
   await page.getByRole("button", { name: "Image", exact: true }).click();
-  await page
-    .getByLabel("Choose image", { exact: true })
-    .setInputFiles({
-      name: "Inserted.png",
-      mimeType: "image/png",
-      buffer: png,
-    });
+  await page.getByLabel("Choose image", { exact: true }).setInputFiles({
+    name: "Inserted.png",
+    mimeType: "image/png",
+    buffer: png,
+  });
   dialog = page.getByRole("dialog", { name: "Image", exact: true });
   await dialog.getByRole("button", { name: "Apply", exact: true }).click();
   await dialog.waitFor({ state: "hidden" });
@@ -223,6 +290,7 @@ try {
   stap(
     "Image insertion uses real file input and persists its native drawing relationship",
   );
+  await kies(0, 0);
   // Werkelijke wijzergebaren stellen een nieuwe celpositie/afmeting voor.
   const old = await image.boundingBox();
   assert(old);
@@ -281,6 +349,44 @@ try {
   stap(
     "Text box insertion and keyboard removal preserve the other three drawing objects",
   );
+  await kies(0, 0);
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-testid="xlsx-scroll"]')?.scrollTop === 0,
+  );
+  const beforeScroll = await image.boundingBox();
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 40;
+  });
+  await page.waitForFunction((before) => {
+    const el = document.querySelector('[aria-label="Image: Imported logo"]');
+    return el && Math.abs(el.getBoundingClientRect().top - (before - 40)) < 2;
+  }, beforeScroll.y);
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 157;
+  });
+  await page.waitForFunction((before) => {
+    const el = document.querySelector('[aria-label="Image: Imported logo"]');
+    return (
+      el &&
+      getComputedStyle(el).visibility === "visible" &&
+      Math.abs(el.getBoundingClientRect().top - (before - 157)) < 2
+    );
+  }, beforeScroll.y);
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 900;
+  });
+  await page.screenshot({ path: `${uit}/03-scrolled.png` });
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 0;
+  });
+  await page.waitForFunction((before) => {
+    const el = document.querySelector('[aria-label="Image: Imported logo"]');
+    return el && Math.abs(el.getBoundingClientRect().top - before) < 2;
+  }, beforeScroll.y);
+  stap(
+    "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+  );
   const final = await bytes();
   await writeFile(`${uit}/objects-saved.xlsx`, final);
   assert.deepEqual(
@@ -290,6 +396,62 @@ try {
   await page.screenshot({ path: `${uit}/02-edited.png` });
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {
+  await writeFile(
+    `${uit}/error-state.json`,
+    JSON.stringify(
+      await page.evaluate(() => {
+        const scroll = document.querySelector('[data-testid="xlsx-scroll"]');
+        const image = document.querySelector(
+          '[aria-label="Image: Imported logo"]',
+        );
+        let f =
+            image?.[
+              Object.keys(image).find((k) => k.startsWith("__reactFiber$"))
+            ],
+          g;
+        while (f) {
+          if (f.memoizedProps?.geometry) {
+            g = f.memoizedProps.geometry;
+            break;
+          }
+          f = f.return;
+        }
+        const r = scroll?.getBoundingClientRect();
+        const probes =
+          g &&
+          r &&
+          [
+            [70, 45],
+            [70, 100],
+            [300, 300],
+          ].map(([x, y]) => {
+            const p = g.getPositionAtPoint?.(r.left + x, r.top + y);
+            return { p, rect: p && g.getCellRect(p) };
+          });
+        return {
+          scrollTop: scroll?.scrollTop,
+          scrollLeft: scroll?.scrollLeft,
+          scrollHeight: scroll?.scrollHeight,
+          scrollWidth: scroll?.scrollWidth,
+          image: image?.getBoundingClientRect().toJSON(),
+          style: image?.getAttribute("style"),
+          layout: g?.layout,
+          probes,
+          ancestors: Array.from(
+            (function* () {
+              let p = image;
+              while (p) {
+                yield `${p.tagName}.${p.className}[${p.getAttribute("data-testid")}]`;
+                p = p.parentElement;
+              }
+            })(),
+          ),
+        };
+      }),
+      null,
+      2,
+    ),
+  );
   await page.screenshot({ path: `${uit}/error.png` });
   await writeFile(`${uit}/error.html`, await page.content());
   throw e;

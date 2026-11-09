@@ -31,6 +31,17 @@ const plek: ObjectPlek = {
   hoogte: 100,
 };
 describe("tekenobjecten in werkbladen (#75)", () => {
+  it("bewaart niet-ondersteunde geometrie als herkenbaar object bij verplaatsen", () => {
+    const bytes = voegTekenobjectToe(BRON, 0, { naam: "Ster", plek, tekst: "Vijf punten" });
+    const p = new Pakket(bytes), pad = leesTekenobjecten(bytes)[0].tekening;
+    p.schrijf(pad, p.lees(pad).replace('prst="rect"', 'prst="star5"'));
+    const bron = p.inpakken(), object = leesTekenobjecten(bron)[0];
+    expect(object.soort).toBe("onbekend");
+    const verplaatst = wijzigTekenobject(bron, object, { ...plek, row: 8 });
+    expect(new Pakket(verplaatst).lees(pad)).toContain('prst="star5"');
+    expect(leesTekenobjecten(verplaatst)[0].plek.row).toBe(8);
+    expect(leesTekenobjecten(verplaatst)[0].tekst).toBe("Vijf punten");
+  });
   it("maakt een afbeelding en tekstvak, verplaatst/schaalt één object en behoudt andere onderdelen", () => {
     const p = new Pakket(BRON);
     p.schrijf("custom/proef.bin", new Uint8Array([1, 2, 3]));

@@ -9,6 +9,8 @@ on:
       - "vendor/rekenbladengine/**"
       - "src/rekenbladcontrole*"
       - "src/rekenblad/**"
+      - "src/afdrukken/**"
+      - "src/export/pdf/**"
       - "src/grafieken/pakket*"
       - "src/grafieken/zipdelen*"
       - "src/grafieken/xml.ts"
@@ -48,6 +50,8 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Verify 50,000 formulas without blocking the browser and cancelled opens
         run: node scripts/test-rekenbladadapter-worker.mjs
+      - name: Print worksheet images and shapes through the production canvas and PDF path
+        run: node scripts/test-rekenblad-objecten-print.mjs
       - name: Formule-, pakket- en kenmerkrapporten bewaren
         if: always()
         uses: actions/upload-artifact@v4
@@ -56,5 +60,6 @@ jobs:
           path: |
             .local/matrix/rekenbladen/*.json
             .local/prestatie/rekenbladen/*.json
+            .local/proef-rekenblad-objecten-print/*
           include-hidden-files: true
           if-no-files-found: error

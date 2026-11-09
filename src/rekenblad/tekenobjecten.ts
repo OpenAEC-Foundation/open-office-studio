@@ -25,6 +25,7 @@ const A = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const EMU = 9525;
 const IMAGE = `${R}/image`;
+export const BASISVORMEN: readonly string[] = ["rect", "roundRect", "ellipse", "triangle", "diamond", "line"];
 export interface ObjectPlek {
   row: number;
   col: number;
@@ -330,6 +331,7 @@ export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
       const mediaPad = imageRid ? p.doel(t.pad, imageRid) : null,
         media = mediaPad ? p.bytes(mediaPad) : undefined;
       const tx = kind(obj, "txBody");
+      const vorm = attr(kind(pr, "prstGeom"), "prst") ?? (kind(pr, "custGeom") ? "custom" : "rect");
       const crop = kind(kind(obj, "blipFill"), "srcRect"),
         body = kind(tx, "bodyPr");
       uit.push({
@@ -341,7 +343,7 @@ export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
         soort:
           obj.lokaal === "pic"
             ? "afbeelding"
-            : obj.lokaal === "sp"
+            : obj.lokaal === "sp" && BASISVORMEN.includes(vorm)
               ? "vorm"
               : "onbekend",
         plek: {
@@ -351,7 +353,7 @@ export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
         },
         einde: kind(anker, "to") ? punt(kind(anker, "to")) : undefined,
         absoluut: anker.lokaal === "absoluteAnchor",
-        vorm: attr(kind(pr, "prstGeom"), "prst") ?? "rect",
+        vorm,
         tekst: kinderen(tx, "p").map(tekstVan).join("\n"),
         vulling: kleur(pr, "#E9F0E8", thema),
         lijn: kleur(kind(pr, "ln"), "#36363E", thema),
@@ -438,11 +440,7 @@ export function voegTekenobjectToe(
     obj = `<xdr:pic><xdr:nvPicPr>${nv}<xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr><xdr:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic>`;
   } else {
     const vorm = nieuw.vorm ?? "rect";
-    if (
-      !["rect", "roundRect", "ellipse", "triangle", "diamond", "line"].includes(
-        vorm,
-      )
-    )
+    if (!BASISVORMEN.includes(vorm))
       throw fout("invalidSize");
     obj = `<xdr:sp><xdr:nvSpPr>${nv}<xdr:cNvSpPr txBox="${nieuw.tekst ? 1 : 0}"/></xdr:nvSpPr><xdr:spPr><a:prstGeom prst="${vorm}"><a:avLst/></a:prstGeom>${solid(nieuw.vulling ?? "#E9F0E8")}<a:ln>${solid(nieuw.lijn ?? "#36363E")}</a:ln></xdr:spPr><xdr:txBody><a:bodyPr wrap="square"/><a:lstStyle/>${(
       nieuw.tekst ?? ""
