@@ -1722,7 +1722,8 @@
     "select": "Plaats de cursor of selecteer één vergelijking in de hoofdtekst of een tabel. Gebruik de bewerkmodus.",
     "unsupported": "Deze vergelijking bevat nog niet ondersteunde structuren en blijft ongewijzigd.",
     "changed": "Het document is intussen gewijzigd. Open het venster opnieuw.",
-    "viewHint": "Het voorbeeld toont de formule-opmaak. In het document staat voorlopig lineaire tekst; DOCX behoudt de wiskundige structuur."
+    "viewHint": "De formule blijft bewerkbaar in DOCX. Scherm, afdrukken en PDF gebruiken dezelfde formule-indeling.",
+    "renderFailed": "De formule kan niet worden weergegeven. De oorspronkelijke formule blijft behouden."
   },
   "mailMerge": {
     "title": "Samenvoegen",
@@ -1794,5 +1795,25 @@
     "object": "Plaats de cursor naast een afbeelding of vergelijking, of in de tabel voor dit bijschrift.",
     "chapterMissing": "Voeg vóór dit object een genummerde kop op het gekozen niveau toe.",
     "layout": "De pagina-indeling is nog niet gereed. Werk opnieuw bij."
+  },
+  "fields": {
+    "insert": "Veld invoegen…",
+    "update": "Velden bijwerken",
+    "title": "Documentveld invoegen",
+    "kind": "Veld",
+    "pattern": "Datum-/tijdnotatie",
+    "cursor": "Zet de cursor eerst in het document.",
+    "stale": "Het document is gewijzigd. Open het venster opnieuw voordat je invoegt.",
+    "unresolved": "{{count}} veldwaarden konden niet worden bijgewerkt; de vorige resultaten zijn behouden.",
+    "hint": "Het veld blijft bewerkbaar in Word. F9 werkt de resultaten bij; afdrukken en PDF doen dit automatisch. AUTHOR en TITLE gebruiken Bestand › Info.",
+    "names": {
+      "PAGE": "Paginanummer",
+      "NUMPAGES": "Aantal pagina’s",
+      "DATE": "Datum",
+      "TIME": "Tijd",
+      "FILENAME": "Bestandsnaam",
+      "AUTHOR": "Auteur",
+      "TITLE": "Titel"
+    }
   }
 }

@@ -1708,7 +1708,8 @@
     "select": "请在编辑模式下将光标放入正文或表格，或选择一个公式。",
     "unsupported": "此公式包含不支持的结构，已保持不变。",
     "changed": "文档已更改。请重新打开此对话框。",
-    "viewHint": "预览显示公式排版。文档目前显示线性文本；DOCX保留数学结构。"
+    "viewHint": "The equation stays editable in DOCX. The document view, printing and PDF use the same equation layout.",
+    "renderFailed": "The equation cannot be rendered. Its original source remains intact."
   },
   "mailMerge": {
     "title": "邮件合并",
@@ -1780,5 +1781,25 @@
     "object": "Place the cursor next to an image or equation, or in the table to caption.",
     "chapterMissing": "Add a numbered heading at the selected level before this object.",
     "layout": "The page layout is not ready. Try updating again."
+  },
+  "fields": {
+    "insert": "Insert field…",
+    "update": "Update fields",
+    "title": "Insert document field",
+    "kind": "Field",
+    "pattern": "Date/time format",
+    "cursor": "Place the cursor in the document first.",
+    "stale": "The document changed. Reopen this dialog before inserting.",
+    "unresolved": "{{count}} field values could not be updated; their previous results were retained.",
+    "hint": "The field remains editable in Word. F9 updates field results; print and PDF update them automatically. AUTHOR and TITLE use File › Info.",
+    "names": {
+      "PAGE": "Page number",
+      "NUMPAGES": "Number of pages",
+      "DATE": "Date",
+      "TIME": "Time",
+      "FILENAME": "File name",
+      "AUTHOR": "Author",
+      "TITLE": "Title"
+    }
   }
 }

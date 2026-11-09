@@ -1,5 +1,7 @@
 import { useEditorApi, zichtbaarElement } from "./editorApi";
 import { VerwijsNavigatie } from "../tekst/verwijzingen/VerwijsNavigatie";
+import { FormuleWeergave } from "../tekst/vergelijking/FormuleWeergave";
+import { VeldSneltoets } from "../tekst/veldenDocument/VeldKnoppen";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { GrafiekGroep, useIngeslotenGrafieken } from "../grafieken/ui/ingesloten";
 import {
@@ -568,6 +570,8 @@ export function TekstRibbon({
     <TekstOpmaakProvider>
     <StijlenBeheer>
       <VerwijsNavigatie />
+      <FormuleWeergave />
+      <VeldSneltoets />
       <Ribbon
         bestand={bestand}
         beginTab={herlaad ? lintTabPerDocument.get(herlaad) : undefined}

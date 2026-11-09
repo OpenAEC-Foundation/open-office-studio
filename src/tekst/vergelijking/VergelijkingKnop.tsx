@@ -51,10 +51,10 @@ function VergelijkingDialoog({ refApi, doel, sluit }: { refApi: DocxEditorRef; d
         <textarea ref={input} data-autofocus="" value={invoer} maxLength={2048} rows={3} onChange={e => setInvoer(e.target.value)} />
       </label>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "10px 0" }}>
-        {[["a/b", "frac(a,b)"], ["x²", "sup(x,2)"], ["xᵢ", "sub(x,i)"], ["√x", "sqrt(x)"], ["α", "α"], ["β", "β"], ["π", "π"]].map(([label, code]) =>
+        {[["a/b", "frac(a,b)"], ["x²", "sup(x,2)"], ["xᵢ", "sub(x,i)"], ["√x", "sqrt(x)"], ["∛x", "root(3,x)"], ["∑", "sum(i=1,n,i)"], ["∫", "int(0,1,x)"], ["∏", "prod(i=1,n,i)"], ["[₂×₂]", "matrix(a,b;c,d)"], ["α", "α"], ["β", "β"], ["π", "π"]].map(([label, code]) =>
           <button key={label} type="button" className="werkruimte-knop" title={code} onMouseDown={e => e.preventDefault()} onClick={() => voegIn(code)}>{label}</button>)}
       </div>
-      <p><code>frac(a,b) · sup(x,2) · sub(x,i) · sqrt(x)</code></p>
+      <p><code>frac(a,b) · sup(x,2) · sub(x,i) · sqrt(x) · sum(i=1,n,i) · int(0,1,x) · matrix(a,b;c,d)</code></p>
       <p>{t("math.viewHint")}</p>
       <label className="werkruimte-veld"><span><input type="checkbox" checked={display} onChange={e => setDisplay(e.target.checked)} /> {t("math.block")}</span></label>
       <div aria-label={t("font.preview")} style={{ padding: 20, minHeight: 70, fontSize: 24 }} dangerouslySetInnerHTML={{ __html: preview ?? "" }} />

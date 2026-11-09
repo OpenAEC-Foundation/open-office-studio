@@ -83,12 +83,13 @@ export function verwijsDoelen(ref: DocxEditorRef): VerwijsDoel[] {
   }
   return uit;
 }
-function invoegplek(ref: DocxEditorRef) {
+function invoegplek(ref: DocxEditorRef, object = false) {
   const e = engine(ref), sel = e.sessie.selection();
-  if (!sel || JSON.stringify(sel.anchor) !== JSON.stringify(sel.head)) throw new Error("references.selection");
-  return { e, at: sel.anchor };
+  if (!sel || (JSON.stringify(sel.anchor) !== JSON.stringify(sel.head) && !(object && sel.anchor.story === sel.head.story && sel.anchor.paraId === sel.head.paraId && Math.abs(sel.anchor.offset - sel.head.offset) === 1))) throw new Error("references.selection");
+  return { e, at: { ...sel.anchor, offset: object ? Math.min(sel.anchor.offset, sel.head.offset) : sel.anchor.offset } };
 }
 export async function kruisverwijzingIn(ref: DocxEditorRef, id: string, vorm: "text" | "number" | "page") {
+  await ref.flushPendingInput?.();
   const { e, at } = invoegplek(ref), s = e.sessie, v = s.version();
   const doel = verwijsDoelen(ref).find(d => d.id === id);
   if (!doel) throw new Error("references.missing");
@@ -116,8 +117,9 @@ export async function kruisverwijzingIn(ref: DocxEditorRef, id: string, vorm: "t
 }
 /** Native SEQ caption, placed directly above/below the selected object. */
 export async function bijschriftIn(ref: DocxEditorRef, label: string, omschrijving: string, onder: boolean, hoofdstuk = 0) {
+  await ref.flushPendingInput?.();
   if (!/^[\p{L}][\p{L}\p{N}_ ]{0,39}$/u.test(label)) throw new Error("references.labelInvalid");
-  const { e, at } = invoegplek(ref), s = e.sessie, ps = alineas(s);
+  const { e, at } = invoegplek(ref, true), s = e.sessie, ps = alineas(s);
   let p = ps.find(p => sleutel(plek(p)) === sleutel(at));
   let object = p?.delen.find(d => ["image", "math", "table"].includes(d.embedKind ?? "") && (d.offset === at.offset || d.offset + 1 === at.offset));
   if (!object && at.story.includes(":t")) for (const parent of ps) {
@@ -158,7 +160,8 @@ export async function bijschriftIn(ref: DocxEditorRef, label: string, omschrijvi
 }
 
 /** Update only caption and cross-reference fields; generic fields have their own updater. */
-export async function werkVerwijzingenBij(ref: DocxEditorRef): Promise<{ gewijzigd: number; onopgelost: string[] }> {
+export async function werkVerwijzingenBij(ref: DocxEditorRef, ronde = 0): Promise<{ gewijzigd: number; onopgelost: string[] }> {
+  await ref.flushPendingInput?.();
   const e = engine(ref), s = e.sessie, v = s.version(), ps = alineas(s);
   const nummers = await kopNummers(ref, ps), waarden = reeksen(ps, nummers);
   const nodigPagina = ps.some(p => p.delen.some(d => code(d)[0]?.toUpperCase() === "PAGEREF"));
@@ -207,6 +210,11 @@ export async function werkVerwijzingenBij(ref: DocxEditorRef): Promise<{ gewijzi
   if (changes.length) {
     begin(e); try { for (const { p, d, value } of changes) cache(s, p.story, d, value, code(d).includes("\\h") ? code(d)[1] : undefined); }
     finally { klaar(e, changes.map(c => c.p.story)); }
+    if (nodigPagina && ronde < 2) {
+      await ref.whenLayoutComplete?.({ timeoutMs: 8000 });
+      const volgend = await werkVerwijzingenBij(ref, ronde + 1);
+      return { gewijzigd: changes.length + volgend.gewijzigd, onopgelost: volgend.onopgelost };
+    }
   }
   return { gewijzigd: changes.length, onopgelost: [...new Set(onopgelost)] };
 }

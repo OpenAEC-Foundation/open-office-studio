@@ -1,4 +1,4 @@
-# Tekstkern voor nootnummering en celgeometrie
+# Tekstkern voor noten, cellen en formules
 
 De bestaande Tauri-/webeditor gebruikt de JS-interface van `@betteroffice/docx`
 0.5.1 met twee gericht aangepaste WASM-modules: bewerken en losse layout. De nootlabels volgen de berekende
@@ -6,6 +6,12 @@ nootnummering vóór de breedtemeting. Een meerletterig label blijft één
 documentpositie en één ondeelbare eenheid bij regelafbreking. Beide modules begrijpen dezelfde atoomgrenzen, ook wanneer tekenen of klikken
 via de terugvalroute verloopt. De DOCX-inhoud
 behoudt de oorspronkelijke semantische nootverwijzing.
+
+Formules krijgen een zelfstandige SVG met lettervormpaden uit MathJax. De kern
+meet de ruimte boven en onder de formulebasislijn en gebruikt hetzelfde beeld
+bij schermweergave, afdrukken en PDF. Een weergegeven vergelijking staat op een
+eigen, gecentreerde regel. De DOCX bewaart de oorspronkelijke bewerkbare OMML;
+de SVG is afgeleide weergave-informatie en vervangt de formule niet.
 
 De Chicago-notatie gebruikt `*`, `†`, `‡`, `§` en vervolgens herhaalde tekens.
 De bestaande limiet van 64 tekens per nootlabel geldt ook voor het genereren:

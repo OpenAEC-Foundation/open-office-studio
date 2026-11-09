@@ -5,10 +5,13 @@ import { useEditorApi, useEditorZichtbaar } from "../../lint/editorApi";
 import { engine } from "../gedeeld/engine";
 import { alineas, bladwijzers, gaNaar } from "./document";
 import { code } from "./velden";
+import { registreerVeldBijwerker } from "../veldenDocument/opdrachten";
+import { werkVerwijzingenBij } from "./opdrachten";
 
 /** Follow native REF/PAGEREF/NOTEREF hyperlinks without changing their field structure. */
 export function VerwijsNavigatie() {
   const api = useEditorApi().tekst, zichtbaar = useEditorZichtbaar(), fout = useContext(RibbonFout), { t } = useTranslation("writer");
+  useEffect(() => registreerVeldBijwerker(werkVerwijzingenBij), []);
   useEffect(() => {
     if (!zichtbaar) return;
     const klik = (ev: MouseEvent) => {

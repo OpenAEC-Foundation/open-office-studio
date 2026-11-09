@@ -26,7 +26,7 @@ export function VerwijzingenGroep() {
       <EigenKnop naam={t("references.update")} icoon={RefreshCw} disabled={!bewerkbaar || bezig} onClick={async () => {
         const ref = api(); if (!ref) return;
         setBezig(true);
-        try { const r = await werkVerwijzingenBij(ref); melding(r.onopgelost.length ? t("references.unresolved", { names: r.onopgelost.join(", ") }) : t("references.updated", { count: r.gewijzigd })); }
+        try { const r = await werkVerwijzingenBij(ref); if (r.onopgelost.length) melding(t("references.unresolved", { names: r.onopgelost.join(", ") })); }
         catch (e) { melding(t(e instanceof Error ? e.message : "references.failed")); }
         finally { setBezig(false); }
       }} />
