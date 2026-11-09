@@ -350,18 +350,23 @@ export function useTekstOpdrachten({
   }
 
   const kanBewerken = () => bewerkbaar;
+  // Reactievelden staan binnen het editorvlak, maar krijgen hun eigen
+  // native plakgebeurtenis. De desktoproute focust anders de hoofdtekst.
+  const kanDocumentPlakken = () =>
+    invoerbaar && "__TAURI_INTERNALS__" in window &&
+    document.activeElement?.matches(".paged-editor__yrs-input, .paged-editor__input") === true;
   const sneltoetsen: Sneltoets[] = [
     // Op desktop dezelfde plakroute als het lint; de browser behoudt zijn
     // eigen paste-gebeurtenis met de door de webview geleverde gegevens.
     {
       toets: "Ctrl+V",
       uitvoeren: plakkenMetOpmaak,
-      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+      beschikbaar: kanDocumentPlakken,
     },
     {
       toets: "Ctrl+Shift+V",
       uitvoeren: plakken,
-      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+      beschikbaar: kanDocumentPlakken,
     },
     {
       toets: "Ctrl+1",
