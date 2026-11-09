@@ -1,0 +1,110 @@
+{
+  "date": "2026-11-09",
+  "branch": "codex/integratie-2026-11-09",
+  "base": "e741e504e35a7dc195ea31daab6933e9ddb8b423",
+  "included": [
+    {
+      "pr": 238,
+      "head": "e5328c48280ccc94167e83d22ced34d0cbc8fa1b",
+      "merge": "6dc192ca",
+      "scope": "Strict ODF 1.3 conversion profile and validation"
+    },
+    {
+      "pr": 228,
+      "head": "a49b59d758e7b91050d126b8119223734f8938eb",
+      "merge": "b5c77280",
+      "scope": "Writer date metadata and source macro reports"
+    },
+    {
+      "pr": 239,
+      "head": "bd9de4775018559185ccd9dfd74853d77c6c20e9",
+      "merge": "acda88ea",
+      "scope": "Printer-independent conversion and Writer matrix"
+    },
+    {
+      "pr": 244,
+      "head": "bab42fee2dd69dd5429109489c9a4bc0e9ea9515",
+      "merge": "7d0064b0",
+      "scope": "Warning before DOC embedded-object loss"
+    },
+    {
+      "pr": 215,
+      "head": "7965d36cfb06a181067d5bfd38c5ed2f298b8767",
+      "merge": "742f2809",
+      "scope": "Namespace-aware OOXML risk detection"
+    }
+  ],
+  "coveredByBundles": [],
+  "deliveriesPending": [
+    {
+      "pr": 236,
+      "head": "961ac1db2dc2b6c6ef2cdf3c223b018d63a1fc2a",
+      "owner": "d410",
+      "scope": "Spreadsheet validation and protection",
+      "covers": [
+        186,
+        198
+      ]
+    },
+    {
+      "pr": 242,
+      "head": "2dae172dedd81acdf355671d9af0c134582a36fb",
+      "owner": "9d3b",
+      "scope": "Writer headers, styles, notes and ODT preservation",
+      "covers": [
+        230,
+        231,
+        232,
+        217,
+        208,
+        207,
+        219
+      ]
+    },
+    {
+      "pr": 246,
+      "head": "cc0be69f7b9feef9e883f8b48ad792e623961377",
+      "owner": "a1ac",
+      "scope": "Spreadsheet metadata, async adapter, objects and formats",
+      "covers": [
+        203
+      ]
+    },
+    {
+      "pr": 212,
+      "head": "697e777cb4aff1f654e871a192e90f2a24ab773e",
+      "owner": "8ca1"
+    },
+    {
+      "pr": 222,
+      "head": "a5adf4e5881e22a85eee611d0b9c2ef07f1263db",
+      "owner": "8ca1"
+    },
+    {
+      "pr": 225,
+      "head": "8c4d25b5ff7e0ecd1d8151735b6d8959ff061736",
+      "owner": "a1ac"
+    },
+    {
+      "pr": 245,
+      "head": "26d3196595635037d79e27ab1679bfdc62b14d30",
+      "owner": "8ca1"
+    }
+  ],
+  "checks": [
+    {
+      "kind": "batch-1-targeted",
+      "head": "742f2809",
+      "success": true,
+      "passed": 57,
+      "failed": 0,
+      "files": 5
+    }
+  ],
+  "limits": [
+    "Broad issues remain open; integrating a completed fix does not certify every acceptance criterion.",
+    "Native Windows builds are checked in CI because local Application Control blocks Cargo build scripts.",
+    "No live Y-app storage environment is used, as requested by the user.",
+    "Experimental PR116 and uncommitted work are not integration deliveries."
+  ]
+}
