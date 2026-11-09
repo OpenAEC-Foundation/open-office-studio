@@ -7,6 +7,8 @@
 import type { DocxCompareDiagnostic, DocxComparedChange } from "@betteroffice/docx";
 import { strFromU8, unzipSync } from "fflate";
 import i18next from "../../i18n/config";
+import { Pakket, REL } from "../../grafieken/pakket";
+import { elementen, leesXml, namespaceVan, type XmlElement } from "../../grafieken/xml";
 import { voorbeeld } from "./opdrachten.ts";
 
 export interface VergelijkOpties {
@@ -21,12 +23,43 @@ export type Vergelijking =
   | { ok: true; bytes: Uint8Array; wijzigingen: DocxComparedChange[]; meldingen: DocxCompareDiagnostic[]; verschillen: number }
   | { ok: false; meldingen: DocxCompareDiagnostic[] };
 
-/** Of het hoofddocument van een DOCX bijgehouden wijzigingen bevat. */
+const WORD_NAMESPACES = new Set([
+  "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+  "http://purl.oclc.org/ooxml/wordprocessingml/main",
+]);
+const REVISIEMARKERINGEN = new Set([
+  "ins", "del", "moveFrom", "moveTo",
+  "rPrChange", "pPrChange", "tblPrChange", "trPrChange", "tcPrChange",
+  "tblGridChange", "sectPrChange", "tblPrExChange", "numberingChange",
+  "cellIns", "cellDel", "cellMerge", "moveFromRangeStart", "moveToRangeStart",
+  "customXmlInsRangeStart", "customXmlDelRangeStart",
+  "customXmlMoveFromRangeStart", "customXmlMoveToRangeStart",
+]);
+
+function bevatRevisie(el: XmlElement): boolean {
+  return (
+    (REVISIEMARKERINGEN.has(el.lokaal) && WORD_NAMESPACES.has(namespaceVan(el, el.voorvoegsel) ?? "")) ||
+    elementen(el).some(bevatRevisie)
+  );
+}
+
+/** Of het hoofddocument van een DOCX bijgehouden wijzigingen bevat, ongeacht XML-prefix. */
 export function heeftWijzigingen(bytes: Uint8Array) {
   try {
-    const pakket = unzipSync(bytes, { filter: (f) => f.name === "word/document.xml" });
-    const xml = pakket["word/document.xml"];
-    return !!xml && /<w:(ins|del|moveFrom|moveTo)\b/.test(strFromU8(xml));
+    // Alleen de pakketrelaties en het hoofddocument uitpakken, geen afbeeldingen.
+    const relaties = unzipSync(bytes, { filter: (f) => f.name === "_rels/.rels" })["_rels/.rels"];
+    let pad = "word/document.xml";
+    if (relaties) {
+      const relatie = elementen(leesXml(strFromU8(relaties))).find((el) =>
+        el.lokaal === "Relationship" &&
+        namespaceVan(el, el.voorvoegsel) === "http://schemas.openxmlformats.org/package/2006/relationships" &&
+        (el.attrs.Type === REL.officeDocument || el.attrs.Type === "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument") &&
+        el.attrs.TargetMode !== "External",
+      );
+      if (relatie?.attrs.Target) pad = decodeURIComponent(Pakket.doelPad("", relatie.attrs.Target));
+    }
+    const xml = unzipSync(bytes, { filter: (f) => f.name === pad })[pad];
+    return !!xml && bevatRevisie(leesXml(strFromU8(xml)));
   } catch {
     return false;
   }
