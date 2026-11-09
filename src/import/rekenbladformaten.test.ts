@@ -10,7 +10,7 @@ import { Pakket } from "../grafieken/pakket";
 const xlsx = readFileSync("public/templates/nieuw.xlsx");
 describe("rekenbladconversie en standaard bewaren (#32/#35)", () => {
   it.each(["ods", "ots", "fods"])(
-    "opent .%s via de conversieroute en stelt hetzelfde formaat voor bij bewaren",
+    "opent .%s via conversie en maakt van een sjabloon een nieuw XLSX-document",
     async (ext) => {
       const bytes =
         ext === "fods"
@@ -26,8 +26,9 @@ describe("rekenbladconversie en standaard bewaren (#32/#35)", () => {
       expect(r).toMatchObject({
         soort: "xlsx",
         naam: "Bron.xlsx",
-        exportFormaat: ext,
+        exportFormaat: ext === "ots" ? "xlsx" : ext,
       });
+      expect(r?.alsNieuw).toBe(ext === "ots" ? true : undefined);
       expect(converteer).toHaveBeenCalledWith(bytes, ext, "xlsx", "xlsx");
       expect(uitvoerformaat("xlsx", ext)).toMatchObject({ route: "runtime" });
     },
@@ -41,7 +42,8 @@ describe("rekenbladconversie en standaard bewaren (#32/#35)", () => {
         { converteer: async () => xlsx },
       );
       expect(r).toMatchObject({ soort: "xlsx", naam: "Archief.xlsx" });
-      expect(r?.exportFormaat).toBeUndefined();
+      expect(r?.exportFormaat).toBe(ext === "xlt" ? "xlsx" : undefined);
+      expect(r?.alsNieuw).toBe(ext === "xlt" ? true : undefined);
       expect(
         opslagRapport({
           soort: "xlsx",

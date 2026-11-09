@@ -26,7 +26,8 @@ describe("macro's in de conversiebron (#31/#34)", () => {
         onderdeel: "VBA-macro’s",
         gevolg: expect.stringContaining("niet overgenomen"),
       });
-      expect(uit.exportFormaat).toBeUndefined();
+      expect(uit.exportFormaat).toBe(ext === "dot" ? "docx" : undefined);
+      expect(uit.alsNieuw).toBe(ext === "dot" ? true : undefined);
       expect(converteer).toHaveBeenCalledOnce();
       expect(converteer).toHaveBeenCalledWith(bytes, ext, "docx", "docx");
       expect(bytes).toEqual(origineel);
