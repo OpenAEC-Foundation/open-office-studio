@@ -447,7 +447,7 @@ export function standaardTabAfstand(ref: DocxEditorRef) {
 }
 
 /** Meet de liniaal voor de cursor; null zonder document of zichtbare pagina's. */
-export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPluginGeometry | null): LiniaalStand | null {
+export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPluginGeometry | null, standaardTab = standaardTabAfstand(ref)): LiniaalStand | null {
   const weergave = ref.getEditorRef();
   const sessie = weergave?.getYrsSession();
   const indeling = weergave?.getLayout();
@@ -478,7 +478,7 @@ export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPl
     inspringing: null,
     tabs: [],
     directe: [],
-    standaardTab: standaardTabAfstand(ref),
+    standaardTab,
     tabel: null,
     inTekst: false,
   };

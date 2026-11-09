@@ -38,6 +38,14 @@ De som is in beide gevallen 500.500.000 vóór en 500.500.998 na de bewerking. A
 
 Het opdelen geeft invoer en tekenen tussendoor ruimte, maar verhoogt de totale afrondtijd. Dit zijn afzonderlijke verkennende runs, geen algemene FPS-garantie of representatieve hardwarebenchmark. De volledige app heeft nog andere lange taken: in de laatste selectieproef was het maximale frame-interval nog 1,18 s en tijdens scrollen 350 ms. CPU-vertraging simuleert geen gebrek aan RAM. Herhaal op echte zwakke hardware vóór een releaseclaim.
 
+### Vervolg: rastergeometrie voor Spreadsheet-koppen
+
+De rij-/kolomkoppen maakten tijdens scrollen nog een tweede native `displayList` voor hetzelfde venster als de engine. `volgKopRaster` bewaart uitsluitend de geometrie van het laatst getekende raster, met documentversie, actief blad en viewport als sleutel. De native tekenaanroep blijft altijd doorgaan. Na de eerste meting wachten de koppen op die echte tekenaanroep in plaats van zelf alvast een frame te bouwen. Wijzigingen wissen de metadata. Er wordt slechts één raster bewaard, zonder cellen of tekenprimitieven. Bij opruimen wordt de methode alleen hersteld als geen andere laag hem inmiddels heeft omhuld; dit is afgestemd met de voorwaardelijke-opmaakchat.
+
+De laatste browserproef bevatte 11 native `displayList`-aanroepen tijdens de scrollreeks, tegenover 22 vóór deze aanpassing. Er zijn nog steeds nul herlezingen van selectiecellen tijdens scrollen. Vergelijking met onafhankelijke `displayListProfiled`-geometrie bevestigt de kopposities na selecteren, scrollen, zoomen, aanpassen van kolombreedte, verbergen van een rij en Undo/Redo. Alle 110.000 waarden en 10.000 formules blijven na opslaan/heropenen correct. Echte-engine tests controleren ook de begrensde cache, structuurwijzigingen, editorisolatie en wrapperopruiming.
+
+De laatste CPU4-run had nog een maximaal scrollframe van 417 ms en een selectieframe van 1,15 s. De globale tijden varieerden sterk met de computerbelasting. Het gehalveerde aantal rasterlezingen is een concrete besparing; volledige soepelheid is hiermee nog niet aangetoond.
+
 ## Presentation
 
 `DiaTelling` bewaart alleen het aantal dia’s voor de huidige documentversie. Navigatie en DOM-mutaties kunnen dat aantal hergebruiken. Invoegen, verwijderen, Undo/Redo en andere documentwijzigingen laten de teller opnieuw lezen. De statusbalk publiceert gelijke dia-/totaalaantallen niet opnieuw.

@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import basis from "../vite.config";
+import basis from "./app-performance.config";
 export default defineConfig({
   ...basis,
   plugins: [

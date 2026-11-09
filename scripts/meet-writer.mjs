@@ -27,7 +27,13 @@ try {
   });
   page.setDefaultTimeout(120000);
   const errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("pageerror", (e) => {
+    errors.push(e.message);
+    console.error("Browser error:", e.message);
+  });
+  page.on("requestfailed", (r) =>
+    console.error("Request failed:", r.url(), r.failure()?.errorText),
+  );
   await page.addInitScript(
     ({ diagnostic }) => {
       localStorage.setItem(
@@ -83,14 +89,33 @@ try {
       }
       window.__writerWrap = diagnostic ? wrap : (x) => x;
       window.__long = [];
+      window.__keyPaint = [];
+      document.addEventListener(
+        "keydown",
+        (e) => {
+          if (!window.__measuring || Array.from(e.key).length !== 1) return;
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+              window.__keyPaint.push(performance.now() - e.timeStamp);
+            }),
+          );
+        },
+        true,
+      );
       new PerformanceObserver((list) => {
         if (window.__measuring)
-          window.__long.push(...list.getEntries().map((x) => x.duration));
+          window.__long.push(
+            ...list
+              .getEntries()
+              .filter((x) => x.startTime >= window.__phaseStart)
+              .map((x) => x.duration),
+          );
       }).observe({ type: "longtask", buffered: false });
       window.__frames = [];
       let last = 0;
       function frame(t) {
-        if (window.__measuring && last) window.__frames.push(t - last);
+        if (window.__measuring && last >= window.__phaseStart)
+          window.__frames.push(t - last);
         last = t;
         requestAnimationFrame(frame);
       }
@@ -190,6 +215,8 @@ try {
       window.__calls = {};
       window.__long = [];
       window.__frames = [];
+      window.__keyPaint = [];
+      window.__phaseStart = performance.now();
       window.__measuring = true;
     });
     const start = performance.now();
@@ -207,9 +234,11 @@ try {
         calls: window.__calls,
         longTasks: window.__long,
         frames: window.__frames,
+        keyPaint: window.__keyPaint,
       };
     });
     const sorted = [...data.frames].sort((a, b) => a - b),
+      keys = [...data.keyPaint].sort((a, b) => a - b),
       summary = {
         name,
         wallMs,
@@ -217,9 +246,15 @@ try {
         longTaskMs: data.longTasks.reduce((a, b) => a + b, 0),
         maxFrameMs: Math.max(0, ...sorted),
         p95FrameMs: sorted[Math.floor(sorted.length * 0.95)] ?? 0,
+        keyPaintSamples: keys.length,
+        p95KeyPaintMs: keys[Math.floor(keys.length * 0.95)] ?? null,
         calls: data.calls,
       };
     result.phases.push(summary);
+    fs.writeFileSync(
+      `.local/perf-${label}.json`,
+      JSON.stringify(result, null, 2),
+    );
     console.log(JSON.stringify(summary));
   }
   if (diagnostic) {
