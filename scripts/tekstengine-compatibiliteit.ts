@@ -204,6 +204,24 @@ export function herstelKolommenWeergave(bron: string): string {
     + bron.replace(oud, 'regions:{sections:oosKolomSecties(p(e$1)),settings:');
 }
 
+export function herstelSplitsBreedtes(bron: string): string {
+  const oud = "I.splitCell(re.focused,T.rows,T.columns)";
+  if (bron.split(oud).length !== 2)
+    throw new Error(
+      "De tekstengine is gewijzigd; controleer eerst de celsplitsbreedtes.",
+    );
+  return (
+    'import { splitsCelMetBehoud as oosSplitsCel } from "openaec-tekst-splitsbreedte";\n' +
+    bron.replace(oud, "oosSplitsCel(I,re.focused,T.rows,T.columns)")
+  );
+}
+
+export function herstelSplitsUitleg(bron:string):string{
+ const oud='jsx("div",{style:b,children:e("dialogs.splitCell.description")})';
+ if(bron.split(oud).length!==2)throw new Error("De tekstengine is gewijzigd; controleer de splitsuitleg.");
+ return 'import {splitsUitleg as oosSplitsUitleg} from "openaec-tekst-splitsbreedte";\n'+bron.replace(oud,'jsx("div",{style:b,children:e("dialogs.splitCell.description")+" "+oosSplitsUitleg()})');
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
@@ -211,6 +229,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-splitsbreedte")
+        return fileURLToPath(new URL("../src/tekst/tabel/splitsBreedte.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-nootkern")
         return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
       if (id === "openaec-tekst-workerstart")
@@ -225,6 +245,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx-react\/dist\/chunk-RHVJ6TAE\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelSplitsUitleg(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-HAZBP3QT\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelNootverwijzingOpmaak(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/utils\/index\.mjs(?:\?.*)?$/.test(id))
@@ -242,7 +264,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelTabelContext(bron), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))), map: null };
+      return { code: herstelSplitsBreedtes(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron))))), map: null };
     },
   };
 }
