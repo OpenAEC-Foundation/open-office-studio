@@ -31,8 +31,9 @@ if (!isMainThread) {
     try {
       const resultaat = await new Promise((resolve, reject) => {
         const worker = new Worker(new URL(import.meta.url), { workerData: fixture, resourceLimits: { maxOldGenerationSizeMb: 1024 } });
-        timer = setTimeout(() => { void worker.terminate(); reject(new Error("60-second benchmark limit")); }, 60000);
-        limiet = setInterval(() => { if (process.memoryUsage().rss > 1800 * 1048576) { void worker.terminate(); reject(new Error("1800-MiB benchmark process limit")); } }, 100);
+        const maxMs = Number(process.env.OOS_OPEN_MAX_MS ?? 60000), maxMiB = Number(process.env.OOS_OPEN_MAX_MIB ?? 1800);
+        timer = setTimeout(() => { void worker.terminate(); reject(new Error(`${maxMs}-ms benchmark limit`)); }, maxMs);
+        limiet = setInterval(() => { if (process.memoryUsage().rss > maxMiB * 1048576) { void worker.terminate(); reject(new Error(`${maxMiB}-MiB benchmark process limit`)); } }, 100);
         worker.on("message", (m) => { if (m.resultaat) resolve(m.resultaat); else console.log(`${fixture.naam}: ${m.stap}`); });
         worker.on("error", reject);
         worker.on("exit", (code) => { if (code) reject(new Error(`worker exit ${code}`)); });

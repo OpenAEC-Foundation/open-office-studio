@@ -1165,11 +1165,14 @@
     "stappen": [
       "Imported image and text box are visible with decoded image data",
       "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
+      "Saved internal hyperlink reopens and navigates to its target cell",
+      "File links retain encoded relative paths and show a clear browser-only open message",
       "Image anchor and dimensions edited; original pixels and neighboring text box retained",
       "Existing shape text edited with XML escaping and multiline persistence",
       "Image insertion uses real file input and persists its native drawing relationship",
       "Pointer dragging and resize handles update real cell anchors and dimensions",
-      "Text box insertion and keyboard removal preserve the other three drawing objects"
+      "Text box insertion and keyboard removal preserve the other three drawing objects",
+      "Drawing positions follow scrolling and recover after their anchor leaves the viewport"
     ],
     "fouten": []
   },
@@ -1208,9 +1211,9 @@
     }
   ],
   "worker": {
-    "openMs": 4311,
-    "beats": 450,
-    "maxGap": 24,
+    "openMs": 1435,
+    "beats": 240,
+    "maxGap": 12,
     "before": {
       "calculation": {
         "cycleCells": [],
@@ -1250,7 +1253,7 @@
           "visibility": "visible"
         }
       ],
-      "version": "928e1bc5f6a04382bb7ddec0094c322e-0"
+      "version": "504a9e2e197442e69a228f3f832885e4-0"
     },
     "edited": true,
     "after": {
@@ -1292,18 +1295,1189 @@
           "visibility": "visible"
         }
       ],
-      "version": "928e1bc5f6a04382bb7ddec0094c322e-1"
+      "version": "504a9e2e197442e69a228f3f832885e4-1"
     },
-    "savedBytes": 716688
+    "savedBytes": 716688,
+    "verifiedCells": 50000,
+    "savedCachedCells": 50000,
+    "savedSha256": "d7e5de7a6b8f63751dad645ee784182a21d3e07e49e2ded69bf955040faaf1a2",
+    "aborted": true
   },
   "largeNativeOpen": {
     "cells": 3000000,
     "passed": false,
-    "stoppedAtLimitMs": 60000
+    "failedLimitsMs": [
+      60000,
+      120000
+    ],
+    "residentLimitMiB": 1800,
+    "note": "Diagnostic worker terminated; RSS guard is not a complete allocation bound."
   },
   "nativeLinkTests": {
-    "passed": false,
-    "status": "blocked-before-test",
-    "reason": "Windows Application Control 4551 rejected dependency build script; CI required"
+    "passed": true,
+    "head": "cc0be69f7b9feef9e883f8b48ad792e623961377",
+    "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42619565504",
+    "platforms": [
+      "ubuntu-22.04",
+      "windows-latest",
+      "macos-latest"
+    ],
+    "localBlock": "Windows Application Control 4551 rejected a dependency build script before local tests; not bypassed"
+  },
+  "print": {
+    "pages": 1,
+    "blauw": 5940,
+    "oranje": 14568,
+    "text": "Printed shape",
+    "terugval": []
+  },
+  "modernWorkbookProtection": {
+    "sourceSha256": "372ab091dc4ef97b799f33ce780531156d8e68a327fe91e75de5245cbf766a4d",
+    "sourceStructureProtected": true,
+    "convertedStructureProtected": false,
+    "sheetProtected": true,
+    "valuesRetained": true,
+    "exportMs": 10453,
+    "importMs": 8859,
+    "output": "WORKTREE\\.local\\rekenbladformaten\\conversion-446c204f4e0f\\output\\modern-workbook-protection.xlsx",
+    "confirmedLoss": true,
+    "pass": true
+  },
+  "unitSuite": {
+    "passed": 2041,
+    "failed": 0,
+    "skipped": 10
+  },
+  "ci": {
+    "head": "cc0be69f7b9feef9e883f8b48ad792e623961377",
+    "formats": {
+      "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+      "cases": [
+        {
+          "dateSystem": "1900",
+          "format": "ods",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-78f6fb51bc3f/output/Spreadsheet-1900.ods",
+          "intermediateSha256": "6f7cc4fc50502ff2bc942e12e3d870dc8445afa8cb7f4d29c3a52e80c08aba70",
+          "exportMs": 516,
+          "odf13": [
+            {
+              "part": "mimetype",
+              "valid": true
+            },
+            {
+              "part": "content.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "styles.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "meta.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "settings.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "META-INF/manifest.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            }
+          ],
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-daa5752f45fa/output/Spreadsheet-1900.xlsx",
+          "importMs": 510,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1900",
+          "format": "ots",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-1127ea08742c/output/Spreadsheet-1900.ots",
+          "intermediateSha256": "7f7647938e089d5a13814abb8bb470dce1c857a89e7d370af06022410e54ca76",
+          "exportMs": 513,
+          "odf13": [
+            {
+              "part": "mimetype",
+              "valid": true
+            },
+            {
+              "part": "content.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "styles.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "meta.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "settings.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "META-INF/manifest.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            }
+          ],
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-5e34da3462a6/output/Spreadsheet-1900.xlsx",
+          "importMs": 529,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1900",
+          "format": "fods",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-74cec46bf96a/output/Spreadsheet-1900.fods",
+          "intermediateSha256": "909a4deafe953ecc3f02e7c50e43fe3012dc7e179325fc0451811e2277b9ad3b",
+          "exportMs": 485,
+          "flatOdf13": true,
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-2e535859befb/output/Spreadsheet-1900.xlsx",
+          "importMs": 483,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1900",
+          "format": "xls",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-8b4dffbad299/output/Spreadsheet-1900.xls",
+          "intermediateSha256": "b7ed475cfb75fa84850fd37c0828f484951a662f0741b4430f26fe4ee3fa8b4d",
+          "exportMs": 476,
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-792c505afa80/output/Spreadsheet-1900.xlsx",
+          "importMs": 480,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1900",
+          "format": "xlt",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-743978f6395b/output/Spreadsheet-1900.xlt",
+          "intermediateSha256": "b7ed475cfb75fa84850fd37c0828f484951a662f0741b4430f26fe4ee3fa8b4d",
+          "exportMs": 719,
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-585c93a317be/output/Spreadsheet-1900.xlsx",
+          "importMs": 481,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1904",
+          "format": "ods",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-5cd10c688ac8/output/Spreadsheet-1904.ods",
+          "intermediateSha256": "fcf94a540b1a5da6b899f698a07192618b71afc5dbaa3ea8ed728901f98e1091",
+          "exportMs": 516,
+          "odf13": [
+            {
+              "part": "mimetype",
+              "valid": true
+            },
+            {
+              "part": "content.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "styles.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "meta.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "settings.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "META-INF/manifest.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            }
+          ],
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-9ad80b53cbe0/output/Spreadsheet-1904.xlsx",
+          "importMs": 509,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1904",
+          "format": "ots",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-100d1364cd76/output/Spreadsheet-1904.ots",
+          "intermediateSha256": "6f9287539549a3e47d93243cd98ddb8e1d6009623d978458d870a99102e515b4",
+          "exportMs": 519,
+          "odf13": [
+            {
+              "part": "mimetype",
+              "valid": true
+            },
+            {
+              "part": "content.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "styles.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "meta.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "settings.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            },
+            {
+              "part": "META-INF/manifest.xml",
+              "version": "1.3",
+              "valid": true,
+              "errors": []
+            }
+          ],
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-47a8d64fb5ef/output/Spreadsheet-1904.xlsx",
+          "importMs": 539,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1904",
+          "format": "fods",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-9dff8a17367b/output/Spreadsheet-1904.fods",
+          "intermediateSha256": "b828e2e56fe3acb7fbf0116c43436708d8f4b67171afaa27e1eaaa9925dc85d6",
+          "exportMs": 486,
+          "flatOdf13": true,
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-1b4c60304c07/output/Spreadsheet-1904.xlsx",
+          "importMs": 495,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1904",
+          "format": "xls",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-89ccbd0e6d9b/output/Spreadsheet-1904.xls",
+          "intermediateSha256": "584345934944b05d2854ea9020d06ced0c1005e9ec48119a9afe2d4730f11d1f",
+          "exportMs": 475,
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-b9d44f1ff809/output/Spreadsheet-1904.xlsx",
+          "importMs": 483,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "dateSystem": "1904",
+          "format": "xlt",
+          "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-77ab8784f94d/output/Spreadsheet-1904.xlt",
+          "intermediateSha256": "584345934944b05d2854ea9020d06ced0c1005e9ec48119a9afe2d4730f11d1f",
+          "exportMs": 477,
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-ab44ea4c16e9/output/Spreadsheet-1904.xlsx",
+          "importMs": 488,
+          "checks": {
+            "sheets": true,
+            "values": true,
+            "formulas": true,
+            "independentResults": true,
+            "date": true,
+            "merged": true,
+            "namedRange": true,
+            "formatting": true,
+            "charts": true,
+            "chartCachedValues": true,
+            "printArea": true
+          },
+          "pass": true
+        },
+        {
+          "format": "xlsb",
+          "sourceCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+          "sourceBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+          "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-b4db5aebc933/output/shared_formula.xlsx",
+          "ms": 448,
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "checks": {
+            "sharedFormulas": true,
+            "independentResults": true
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    "engine": [
+      {
+        "format": "ods",
+        "dateSystem": "1900",
+        "output": ".local/rekenbladformaten/engine-ods-1900.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "ots",
+        "dateSystem": "1900",
+        "output": ".local/rekenbladformaten/engine-ots-1900.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "fods",
+        "dateSystem": "1900",
+        "output": ".local/rekenbladformaten/engine-fods-1900.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "xls",
+        "dateSystem": "1900",
+        "output": ".local/rekenbladformaten/engine-xls-1900.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "xlt",
+        "dateSystem": "1900",
+        "output": ".local/rekenbladformaten/engine-xlt-1900.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "ods",
+        "dateSystem": "1904",
+        "output": ".local/rekenbladformaten/engine-ods-1904.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "ots",
+        "dateSystem": "1904",
+        "output": ".local/rekenbladformaten/engine-ots-1904.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "fods",
+        "dateSystem": "1904",
+        "output": ".local/rekenbladformaten/engine-fods-1904.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "xls",
+        "dateSystem": "1904",
+        "output": ".local/rekenbladformaten/engine-xls-1904.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "xlt",
+        "dateSystem": "1904",
+        "output": ".local/rekenbladformaten/engine-xlt-1904.xlsx",
+        "pass": true,
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        }
+      },
+      {
+        "format": "xlsb",
+        "dateSystem": null,
+        "output": ".local/rekenbladformaten/engine-xlsb-binary.xlsx",
+        "pass": true,
+        "checks": {
+          "independentResults": true,
+          "edit": true
+        }
+      }
+    ],
+    "roundtrip": [
+      {
+        "format": "ods",
+        "dateSystem": "1900",
+        "exportMs": 522,
+        "odf13": [
+          {
+            "part": "mimetype",
+            "valid": true
+          },
+          {
+            "part": "content.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "styles.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "meta.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "settings.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "META-INF/manifest.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/meta.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/styles.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/content.xml",
+            "valid": true,
+            "errors": []
+          }
+        ],
+        "importMs": 519,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-3e32f3eb4b15/output/engine-ods-1900.ods",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-7946bbcecdde/output/engine-ods-1900.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "ots",
+        "dateSystem": "1900",
+        "exportMs": 519,
+        "odf13": [
+          {
+            "part": "mimetype",
+            "valid": true
+          },
+          {
+            "part": "content.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "styles.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "meta.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "settings.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "META-INF/manifest.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/meta.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/styles.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/content.xml",
+            "valid": true,
+            "errors": []
+          }
+        ],
+        "importMs": 542,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-9937a32ad397/output/engine-ots-1900.ots",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-b4d7eec9fed3/output/engine-ots-1900.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "fods",
+        "dateSystem": "1900",
+        "exportMs": 491,
+        "odf13": [
+          {
+            "part": "flat-document",
+            "valid": true
+          }
+        ],
+        "importMs": 502,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-e8ac015980dd/output/engine-fods-1900.fods",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-693686119646/output/engine-fods-1900.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "xls",
+        "dateSystem": "1900",
+        "exportMs": 485,
+        "odf13": [],
+        "importMs": 490,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-cdc7a1393143/output/engine-xls-1900.xls",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-6f89a51e1e9f/output/engine-xls-1900.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "xlt",
+        "dateSystem": "1900",
+        "exportMs": 482,
+        "odf13": [],
+        "importMs": 489,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-d8efb0992734/output/engine-xlt-1900.xlt",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-a1999e6c4da6/output/engine-xlt-1900.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "ods",
+        "dateSystem": "1904",
+        "exportMs": 525,
+        "odf13": [
+          {
+            "part": "mimetype",
+            "valid": true
+          },
+          {
+            "part": "content.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "styles.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "meta.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "settings.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "META-INF/manifest.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/meta.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/styles.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/content.xml",
+            "valid": true,
+            "errors": []
+          }
+        ],
+        "importMs": 511,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-d9a440738640/output/engine-ods-1904.ods",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-d0f8049b3e11/output/engine-ods-1904.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "ots",
+        "dateSystem": "1904",
+        "exportMs": 529,
+        "odf13": [
+          {
+            "part": "mimetype",
+            "valid": true
+          },
+          {
+            "part": "content.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "styles.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "meta.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "settings.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "META-INF/manifest.xml",
+            "version": "1.3",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/meta.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/styles.xml",
+            "valid": true,
+            "errors": []
+          },
+          {
+            "part": "Object 1/content.xml",
+            "valid": true,
+            "errors": []
+          }
+        ],
+        "importMs": 535,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-4ce27afd4712/output/engine-ots-1904.ots",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-f1ffe3360677/output/engine-ots-1904.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "fods",
+        "dateSystem": "1904",
+        "exportMs": 501,
+        "odf13": [
+          {
+            "part": "flat-document",
+            "valid": true
+          }
+        ],
+        "importMs": 503,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-42eb07626856/output/engine-fods-1904.fods",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-19a0083d7036/output/engine-fods-1904.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "xls",
+        "dateSystem": "1904",
+        "exportMs": 601,
+        "odf13": [],
+        "importMs": 496,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-5b2b6796640f/output/engine-xls-1904.xls",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-9d78d7c786d1/output/engine-xls-1904.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      },
+      {
+        "format": "xlt",
+        "dateSystem": "1904",
+        "exportMs": 486,
+        "odf13": [],
+        "importMs": 494,
+        "intermediate": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-368b911156b1/output/engine-xlt-1904.xlt",
+        "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-46ad5a58cad3/output/engine-xlt-1904.xlsx",
+        "checks": {
+          "sheets": true,
+          "values": true,
+          "formulas": true,
+          "independentResults": true,
+          "date": true,
+          "merged": true,
+          "namedRange": true,
+          "formatting": true,
+          "charts": true,
+          "chartCachedValues": true,
+          "printArea": true
+        },
+        "pass": true
+      }
+    ],
+    "worker": {
+      "openMs": 2887,
+      "beats": 425,
+      "maxGap": 19,
+      "before": {
+        "calculation": {
+          "cycleCells": [],
+          "limitedCells": [],
+          "truncated": false
+        },
+        "ok": true,
+        "ranges": [
+          {
+            "cells": [
+              [
+                {
+                  "a1": "B50000",
+                  "displayText": "50002",
+                  "formula": "$A$1*2+50000",
+                  "value": {
+                    "kind": "number",
+                    "value": 50002
+                  }
+                }
+              ]
+            ],
+            "target": {
+              "range": {
+                "a1": "B50000",
+                "kind": "a1"
+              },
+              "sheetId": "sheet:0"
+            }
+          }
+        ],
+        "sheets": [
+          {
+            "editable": true,
+            "name": "Blad 1",
+            "sheetId": "sheet:0",
+            "visibility": "visible"
+          }
+        ],
+        "version": "0790af0940dc4ee386c4d86485375246-0"
+      },
+      "edited": true,
+      "after": {
+        "calculation": {
+          "cycleCells": [],
+          "limitedCells": [],
+          "truncated": false
+        },
+        "ok": true,
+        "ranges": [
+          {
+            "cells": [
+              [
+                {
+                  "a1": "B50000",
+                  "displayText": "50004",
+                  "formula": "$A$1*2+50000",
+                  "value": {
+                    "kind": "number",
+                    "value": 50004
+                  }
+                }
+              ]
+            ],
+            "target": {
+              "range": {
+                "a1": "B50000",
+                "kind": "a1"
+              },
+              "sheetId": "sheet:0"
+            }
+          }
+        ],
+        "sheets": [
+          {
+            "editable": true,
+            "name": "Blad 1",
+            "sheetId": "sheet:0",
+            "visibility": "visible"
+          }
+        ],
+        "version": "0790af0940dc4ee386c4d86485375246-1"
+      },
+      "savedBytes": 716688,
+      "aborted": true
+    }
   }
 }
