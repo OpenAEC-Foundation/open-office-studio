@@ -27,6 +27,7 @@ import type { Bronkenmerken } from "./bron";
 import { isSjabloon, OOXML_SJABLONEN, sjabloonNaarDocument } from "./sjabloon";
 import { openIfcx } from "../ifcx/dossier";
 import { bronMacros } from "./bronmacros";
+import { presentatieVariant } from "../presentatie/bestandsvariant";
 import {
   VerkeerdWachtwoord,
   herkenVersleuteling,
@@ -66,6 +67,8 @@ export interface Openresultaat {
   rapport: Rapport | null;
   /** Voorstel voor Ctrl+S als dat afwijkt van het eigen formaat. */
   exportFormaat?: string;
+  /** PPS/PPSX: bied na laden de keuze om meteen een voorstelling te starten. */
+  voorstelling?: boolean;
   /** Kenmerken van het origineel (versleuteling, macro’s). */
   bron?: Bronkenmerken;
 }
@@ -164,7 +167,7 @@ async function bereidOnversleuteld(
   const soort = bestandssoort(ext);
   if (!soort) throw new Error(i18next.t("import:errors.unsupportedFormat"));
 
-  if (ext === soort || OOXML_SJABLONEN.has(ext)) {
+  if (ext === soort || (OOXML_SJABLONEN.has(ext) && ext !== "potx")) {
     const controle = controleerPakket(bytes, soort);
     if (controle.datum1904) bronregels = [...bronregels, datum1904()];
     if (!controle.strict)
@@ -246,6 +249,30 @@ async function bereidOnversleuteld(
         bron: { macro: macros },
       };
     }
+  }
+
+  // PPSX/POTX zijn OOXML-varianten, geen conversies: behoud alle diaonderdelen.
+  if (soort === "pptx" && (ext === "ppsx" || ext === "potx")) {
+    const controle = controleerPakket(bytes, soort);
+    const schoon = controle.macros ? await scheidMacros(bytes, soort, ext) : null;
+    const direct = presentatieVariant(schoon?.bytes ?? bytes, "pptx");
+    return {
+      soort,
+      naam: metExtensie(naam, soort),
+      bytes: direct,
+      gewijzigd: true,
+      rapport: openRapport({
+        soort,
+        risicos: controle.risicos,
+        macros: controle.macros,
+        route: "engine",
+        bronformaat: ext,
+        extra: bronregels,
+      }),
+      exportFormaat: ext === "ppsx" ? "ppsx" : undefined,
+      ...(ext === "ppsx" && { voorstelling: true }),
+      ...(schoon && { bron: { macro: schoon.macros } }),
+    };
   }
 
   const runtime =
@@ -395,6 +422,7 @@ async function bereidOnversleuteld(
         Object.hasOwn(bestandstypen[soort].uitvoer, ext) && !OUD_BINAIR.has(ext)
           ? ext
           : undefined,
+      ...(soort === "pptx" && ext === "pps" && { voorstelling: true }),
     };
   }
 }

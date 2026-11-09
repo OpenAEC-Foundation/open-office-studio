@@ -3,6 +3,7 @@ import { DocxEditor, type DocxEditorRef } from "@betteroffice/docx-react";
 import { configureDefaultFonts } from "@betteroffice/docx/layout";
 import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
+import { PresentatieOpenwijze } from "./presentatie/PresentatieOpenwijze";
 import type { PptxFontFace } from "@betteroffice/pptx";
 import "@betteroffice/docx-react/styles.css";
 import { useTranslation } from "react-i18next";
@@ -72,6 +73,8 @@ export interface EditorProps {
   inactief: boolean;
   /** Onwaar als dit document in een verborgen tabblad staat. */
   zichtbaar?: boolean;
+  voorstellingBijOpenen?: boolean;
+  voorstellingKeuzeGedaan?: () => void;
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
   bestandKoppeling?: (adres: string) => Promise<void>;
@@ -513,6 +516,14 @@ export default function OfficeEditor(props: EditorProps) {
               />
             }
           />
+          {presentatieApi && (
+            <PresentatieOpenwijze
+              api={presentatieApi}
+              vraag={!!props.voorstellingBijOpenen}
+              zichtbaar={props.zichtbaar ?? true}
+              klaar={props.voorstellingKeuzeGedaan}
+            />
+          )}
         </EditorZichtbaar.Provider>
         </DocumentLettertypen.Provider>
         </EditorApi.Provider>

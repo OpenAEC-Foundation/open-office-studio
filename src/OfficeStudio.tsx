@@ -133,6 +133,9 @@ function EditorFout({ fout }: { fout: string }) {
 export function OfficeStudio() {
   const { t } = useTranslation(["shell", "common"]);
   const { thema, wisselThema } = useOfficeThema();
+  const [voorstellingBijOpenen, zetVoorstellingBijOpenen] = useState<Set<number>>(
+    () => new Set(),
+  );
   const [bezig, setBezig] = useState(false),
     [opslaanBezig, setOpslaanBezig] = useState(false),
     [databaseGereed, setDatabaseGereed] = useState(false),
@@ -575,6 +578,14 @@ export function OfficeStudio() {
         ? document.activeElement
         : null;
     await tabs.sluit(ids);
+    zetVoorstellingBijOpenen((vorige) => {
+      const nieuw = new Set(
+        [...vorige].filter((id) =>
+          tabs.toestandRef.current.tabbladen.some((t) => t.id === id),
+        ),
+      );
+      return nieuw.size === vorige.size ? vorige : nieuw;
+    });
     for (const id of laatsteFocus.current.keys())
       if (!tabs.toestandRef.current.tabbladen.some((t) => t.id === id))
         laatsteFocus.current.delete(id);
@@ -832,6 +843,8 @@ export function OfficeStudio() {
         );
         if (resultaat.exportFormaat)
           tabs.werkBij(id, { exportFormaat: resultaat.exportFormaat });
+        if (resultaat.voorstelling)
+          zetVoorstellingBijOpenen((vorige) => new Set(vorige).add(id));
       } catch (error) {
         geopend = false;
         meld(t("errors.openFailed", { error: String(error) }), null, "fout");
@@ -1140,6 +1153,15 @@ export function OfficeStudio() {
                         bestandsmenu={toonStart}
                         inactief={!zichtbaar || editorInactief}
                         zichtbaar={zichtbaar}
+                        voorstellingBijOpenen={voorstellingBijOpenen.has(tabblad.id)}
+                        voorstellingKeuzeGedaan={() =>
+                          zetVoorstellingBijOpenen((vorige) => {
+                            if (!vorige.has(tabblad.id)) return vorige;
+                            const nieuw = new Set(vorige);
+                            nieuw.delete(tabblad.id);
+                            return nieuw;
+                          })
+                        }
                         zoom={koppeling.zoom}
                         bestandKoppeling={async (adres) => {
                           if (!tauri) throw new Error("link-browser");
