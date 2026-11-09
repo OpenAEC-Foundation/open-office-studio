@@ -50,6 +50,7 @@ export function werkDocumentVeldenBij(ref: DocxEditorRef) {
     const ed = ref.getEditorRef(), s = ed?.getYrsSession();
     if (!ed || !s) throw new Error(i18next.t("writer:styles.errors.notReady"));
     const nu = new Date(), result = werkVeldCachesBij(s, { ...veldOmgeving(ref), nu });
+    if(result.gewijzigd)ed.syncYrsInputState(true,result.verhalen);
     for (const bijwerker of extra) { const r = await bijwerker(ref); result.gewijzigd += r.gewijzigd; result.onopgelost.push(...r.onopgelost); }
     if (result.gewijzigd) {
       ed.syncYrsInputState(true); meldWijziging(ref);
@@ -58,6 +59,7 @@ export function werkDocumentVeldenBij(ref: DocxEditorRef) {
       for (let ronde = 0; ronde < 2; ronde++) {
         await ref.flushPendingInput(); await ref.whenLayoutComplete({ timeoutMs: 15000 }).catch(() => 0);
         const nog = werkVeldCachesBij(s, { ...veldOmgeving(ref), nu });
+        if(nog.gewijzigd)ed.syncYrsInputState(true,nog.verhalen);
         result.onopgelost.push(...nog.onopgelost);
         for (const bijwerker of extra) {
           const r = await bijwerker(ref);

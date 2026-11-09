@@ -26,7 +26,7 @@ try {
   const open = () => page.getByRole("button", { name: "Samenvoegen", exact: true }).click();
   await open();
   let dialog = page.getByRole("dialog");
-  await dialog.getByLabel("CSV-/TSV-gegevensbron", { exact: true }).setInputFiles({ name: "Adressen.csv", mimeType: "text/csv", buffer: Buffer.from('Naam;Code\n"A & <B>";00123\nTwee;00456') });
+  await dialog.getByLabel("Gegevensbestand", { exact: true }).setInputFiles({ name: "Adressen.csv", mimeType: "text/csv", buffer: Buffer.from('Naam;Code\n"A & <B>";00123\nTwee;00456') });
   await dialog.getByRole("button", { name: "Veld invoegen", exact: true }).click();
   await open(); dialog = page.getByRole("dialog");
   await dialog.getByRole("combobox", { name: "Veld", exact: true }).selectOption("Code");

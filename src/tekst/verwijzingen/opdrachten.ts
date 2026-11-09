@@ -44,8 +44,9 @@ async function kopNummers(ref: DocxEditorRef, ps: Alinea[]) {
 function reeksen(ps: Alinea[], nummers: Map<string, string>) {
   const waarden = new Map<Deel, string>(), tellers = new Map<string, number>(), hoofdstukken = new Map<number, string>();
   for (const p of ps) {
-    const level = Number(p.eigenschappen.outlineLevel);
-    if (Number.isInteger(level) && level >= 0 && level < 9) {
+    if (!p.story.startsWith("body")) continue;
+    const level = p.eigenschappen.outlineLevel;
+    if (typeof level === "number" && Number.isInteger(level) && level >= 0 && level < 9) {
       hoofdstukken.set(level + 1, nummers.get(sleutel(plek(p))) ?? "");
       for (const l of hoofdstukken.keys()) if (l > level + 1) hoofdstukken.delete(l);
     }
@@ -95,9 +96,18 @@ export async function kruisverwijzingIn(ref: DocxEditorRef, id: string, vorm: "t
   if (!doel) throw new Error("references.missing");
   const ps = alineas(s), nummers = await kopNummers(ref, ps);
   if (s.version() !== v) throw new Error("references.changed");
+  if (doel.soort === "note" && vorm === "text") {
+    const marker = ps.find(p => sleutel(plek(p)) === sleutel(doel.start))?.delen.find(d => d.offset === doel.start.offset);
+    const noteId = marker?.payload?.endnoteRefId ?? marker?.payload?.footnoteRefId;
+    const root = `${marker?.payload?.endnoteRefId === undefined ? "fn" : "en"}:${noteId}`;
+    const note = ps.filter(p => p.story === root);
+    if (!note.length) throw new Error("references.missing");
+    doel.start = plek(note[0]); doel.einde = plek(note.at(-1)!, note.at(-1)!.lengte);
+    doel.naam = note.map(p => tekst(p)).join("\n");
+  }
   const bestaande = bladwijzers(s, ps).find(b => JSON.stringify(b.start) === JSON.stringify(doel.start) && JSON.stringify(b.einde) === JSON.stringify(doel.einde));
   const naam = bestaande?.naam ?? uniekeNaam(ps, "Ref");
-  const type = vorm === "page" ? "PAGEREF" : doel.soort === "note" ? "NOTEREF" : "REF";
+  const type = vorm === "page" ? "PAGEREF" : doel.soort === "note" && vorm === "number" ? "NOTEREF" : "REF";
   if (vorm === "number" && doel.soort === "heading" && !nummers.get(sleutel(doel.start))) throw new Error("references.unnumbered");
   const p = ps.find(p => sleutel(plek(p)) === sleutel(doel.start))!;
   const seq = p.delen.filter(d => d.embedKind === "field" && ["SEQ", "STYLEREF"].includes(code(d)[0]?.toUpperCase()));

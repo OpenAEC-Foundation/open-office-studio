@@ -8,10 +8,15 @@ import { code } from "./velden";
 import { registreerVeldBijwerker } from "../veldenDocument/opdrachten";
 import { werkVerwijzingenBij } from "./opdrachten";
 
+let registraties = 0, stopBijwerker: (() => void) | undefined;
+
 /** Follow native REF/PAGEREF/NOTEREF hyperlinks without changing their field structure. */
 export function VerwijsNavigatie() {
   const api = useEditorApi().tekst, zichtbaar = useEditorZichtbaar(), fout = useContext(RibbonFout), { t } = useTranslation("writer");
-  useEffect(() => registreerVeldBijwerker(werkVerwijzingenBij), []);
+  useEffect(() => {
+    if (registraties++ === 0) stopBijwerker = registreerVeldBijwerker(werkVerwijzingenBij);
+    return () => { if (--registraties === 0) { stopBijwerker?.(); stopBijwerker = undefined; } };
+  }, []);
   useEffect(() => {
     if (!zichtbaar) return;
     const klik = (ev: MouseEvent) => {

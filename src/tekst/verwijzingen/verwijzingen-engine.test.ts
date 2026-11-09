@@ -6,6 +6,7 @@ import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import { alineas, bladwijzers, hernoemBladwijzer, nieuweBladwijzer, tekst, verwijderBladwijzer } from "./document";
 import { bijschriftIn, kruisverwijzingIn, verwijsDoelen, werkVerwijzingenBij } from "./opdrachten";
 import { voegNootIn } from "../pagina/noten";
+import { registreerVeldBijwerker, werkDocumentVeldenBij } from "../veldenDocument/opdrachten";
 
 const run = (t: string) => `<w:r><w:t>${t}</w:t></w:r>`;
 const para = (t: string) => `<w:p>${t}</w:p>`;
@@ -21,6 +22,21 @@ const fields = (s: YrsSession) => alineas(s).flatMap(p => p.delen.filter(d => d.
 const xml = async (s: YrsSession) => strFromU8(unzipSync((await saveYrsDocx(s)).bytes)["word/document.xml"]);
 
 describe("native captions, bookmarks and cross-references (#52)", () => {
+  it("updates TITLE and PAGEREF together through F9 after publishing the changed layout", async () => {
+    const s = await createYrsSession();
+    try {
+      s.openDocx(bron(para('<w:fldSimple w:instr=" TITLE ">'+run("Old")+'</w:fldSimple>') + para('<w:bookmarkStart w:id="7" w:name="Destination"/>'+run("Destination")+'<w:bookmarkEnd w:id="7"/>') + para('<w:fldSimple w:instr=" PAGEREF Destination \\h ">'+run("99")+'</w:fldSimple>')), true);
+      let publishedTitle = "Old";
+      const pages = () => [{ number: 1, fragments: [] }, { number: 2, fragments: [{ pmStart: 0, pmEnd: 1000 }] }];
+      const ed = { getYrsSession: () => s, syncYrsInputState() { publishedTitle = String(fields(s).find(f => f.payload?.fieldType === "TITLE")?.payload?.displayText); }, relayout() {}, yrsLocToDisplayPosition: () => 1, getLayout: () => ({ pages: pages() }) };
+      const api = { focus() {}, getEditorRef: () => ed, flushPendingInput: async () => {}, whenLayoutComplete: async () => {}, getDocument: () => ({ package: { properties: { title: "A long updated title" } } }), getTotalPages: () => 2,
+        exportStructuredWithPages: async () => { expect(publishedTitle).toBe("A long updated title"); return { ok: true, content: { layout: { pages: [{ pageIndex: 0, displayedLabel: "1" }, { pageIndex: 1, displayedLabel: "2" }] } } }; }
+      } as unknown as DocxEditorRef;
+      const stop = registreerVeldBijwerker(werkVerwijzingenBij);
+      try { expect((await werkDocumentVeldenBij(api)).onopgelost).toEqual([]); } finally { stop(); }
+      expect(fields(s).find(f => f.payload?.fieldType === "PAGEREF")?.payload?.displayText).toBe("2");
+    } finally { s.destroy(); }
+  });
   it("creates, renames and removes a multi-paragraph bookmark with Undo/Redo and round trip", async () => {
     const s = await createYrsSession(), back = await createYrsSession();
     try {
@@ -105,6 +121,17 @@ describe("native captions, bookmarks and cross-references (#52)", () => {
       s.setSelection(at(s, 1, 4)); await kruisverwijzingIn(api, doelen.find(d => d.soort === "note")!.id, "number");
       expect(fields(s)[0].payload).toMatchObject({ fieldType: "NOTEREF", displayText: "1" });
       expect(await xml(s)).toContain("NOTEREF");
+    } finally { s.destroy(); }
+  });
+  it("can reference the footnote text through a bookmark in the note story", async () => {
+    const s = await createYrsSession();
+    try {
+      s.openDocx(voegNootIn(bron(para(run("FeitMARK")) + para(run("Zie "))), "MARK", "voetnoot", "Brontekst").bytes, true);
+      const api = ref(s), doel = verwijsDoelen(api).find(d => d.soort === "note")!;
+      s.setSelection(at(s, 1, 4)); await kruisverwijzingIn(api, doel.id, "text");
+      expect(fields(s).find(f => f.payload?.fieldType === "REF")?.payload?.displayText).toContain("Brontekst");
+      const bytes = (await saveYrsDocx(s)).bytes, note = strFromU8(unzipSync(bytes)["word/footnotes.xml"]);
+      expect(note).toContain("bookmarkStart");
     } finally { s.destroy(); }
   });
   it.each([true, false])("inserts a table caption below=%s while keeping cells and following text", async onder => {

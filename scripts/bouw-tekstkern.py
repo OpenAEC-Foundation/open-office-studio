@@ -84,7 +84,8 @@ def main():
             subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-edit', '--locked', '--lib', proef], cwd=bronmap, check=True)
         for groep in ['ops::table::tests', 'seed::tests']:
             subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-edit', '--locked', '--lib', groep, '--', '--test-threads=2'], cwd=bronmap, check=True)
-    omgeving = {**os.environ, 'CARGO_TARGET_DIR': str(bronmap / 'target-wasm')}
+    wasm_target = Path(os.environ.get('OOS_WASM_TARGET_DIR', str(bronmap / 'target-wasm'))).resolve()
+    omgeving = {**os.environ, 'CARGO_TARGET_DIR': str(wasm_target)}
     omgeving.setdefault('CARGO_BUILD_JOBS', '2')
     subprocess.run(['cargo', 'build', '-p', 'betteroffice-docx-edit', '--lib', '--features', 'wasm,tiff,metafile,heap-stats', '--target', 'wasm32-unknown-unknown', '--release', '--locked'], cwd=bronmap, env=omgeving, check=True)
     uitvoer = args.uitvoer.resolve()
@@ -93,7 +94,7 @@ def main():
     subprocess.run(['cargo', 'build', '-p', 'betteroffice-docx-layout', '--lib', '--target', 'wasm32-unknown-unknown', '--release', '--locked'], cwd=bronmap, env=omgeving, check=True)
     kernen = {}
     for naam, soort, sleutel in [('docx_edit', 'edit', 'oorspronkelijkWasmSha256'), ('docx_layout', 'layout', 'oorspronkelijkLayoutWasmSha256')]:
-        subprocess.run([args.wasm_bindgen, '--target', 'web', '--out-name', naam, '--out-dir', str(uitvoer), str(bronmap / f'target-wasm/wasm32-unknown-unknown/release/{naam}.wasm')], check=True)
+        subprocess.run([args.wasm_bindgen, '--target', 'web', '--out-name', naam, '--out-dir', str(uitvoer), str(wasm_target / f'wasm32-unknown-unknown/release/{naam}.wasm')], check=True)
         kern = uitvoer / f'{naam}_bg.wasm'
         tijdelijk = uitvoer / f'{naam}_bg-geoptimaliseerd.wasm'
         subprocess.run([args.wasm_opt, '-O3', str(kern), '-o', str(tijdelijk)], check=True)

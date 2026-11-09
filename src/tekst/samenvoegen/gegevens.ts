@@ -25,6 +25,11 @@ export function leesGegevens(bytes: Uint8Array): Gegevens {
   const rijen = ontleedCsv(tekst, scheiding, '"', 1002);
   while (rijen.length && rijen.at(-1)!.every(c => c === "")) rijen.pop();
   if (rijen.length < 2 || rijen.length > 1001) throw new SamenvoegFout("records");
+  return gegevensUitRijen(rijen);
+}
+export function gegevensUitRijen(rijen: string[][]): Gegevens {
+  while (rijen.length && rijen.at(-1)!.every(c => c === "")) rijen.pop();
+  if (rijen.length < 2 || rijen.length > 1001) throw new SamenvoegFout("records");
   const kolommen = rijen[0].map(c => c.trim());
   if (kolommen.length > 100 || kolommen.some(c => !c || /["\\\r\n]/.test(c)) || new Set(kolommen.map(c => c.toLowerCase())).size !== kolommen.length) throw new SamenvoegFout("columns");
   if (rijen.slice(1).some(r => r.length > kolommen.length)) throw new SamenvoegFout("columns");

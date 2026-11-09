@@ -8,13 +8,16 @@ werkt boven en onder een vergelijking en boven en onder een tabel, met behoud
 van het object en de omringende tekst. REF en NOTEREF blijven native velden;
 complexe veldcodes en de opmaak van resultaten blijven behouden.
 
-`src/tekst/verwijzingen/verwijzingen-engine.test.ts`: 11 proeven geslaagd.
+`src/tekst/verwijzingen/verwijzingen-engine.test.ts`: 13 proeven geslaagd.
 `scripts/proef-verwijzingen.mjs .local/dist`: geslaagd tegen de productiebuild.
 De browserproef voegt een bijschrift in, maakt tekst- en paginaverwijzingen,
 volgt een verwijzing met Ctrl+klik en typt op de bestemming, maakt een
 bladwijzer, hernoemt deze en navigeert ernaar. De gedownloade DOCX bevat de
 veldcodes, bladwijzers en het werkelijke paginanummer 2. Geen paginafouten.
 
-Typecontrole en productiebuild geslaagd vóór de uitbreiding van de formulekern.
-De koppeling met de centrale F9-/afdrukbijwerker wordt apart geïntegreerd en
-gecontroleerd voordat #52 als afgerond wordt gemeld.
+De centrale F9-, opslag- en afdrukbijwerker is geïntegreerd. Een gecombineerde
+TITLE-/PAGEREF-proef controleert dat de nieuwe inhoud vóór de verwijzingsronde
+aan de layout wordt gepubliceerd. Voetnoten kunnen als nummer (NOTEREF), tekst
+(REF naar een bladwijzer in het nootverhaal) of pagina worden ingevoegd.
+Bij meerdere geopende documenten blijft de bijwerker geregistreerd tot de
+laatste Writer-editor sluit. Typecontrole en productiebuild zijn geslaagd.

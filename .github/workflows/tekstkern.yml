@@ -12,6 +12,9 @@ jobs:
   kern:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
+    env:
+      CARGO_TARGET_DIR: ${{ runner.temp }}/math-target/native
+      OOS_WASM_TARGET_DIR: ${{ runner.temp }}/math-target/wasm
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,11 +33,9 @@ jobs:
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - uses: actions/cache@v4
         with:
-          path: |
-            ${{ runner.temp }}/math-source/target
-            ${{ runner.temp }}/math-source/target-wasm
-          key: math-core-linux-1.98.1-${{ hashFiles('patches/tekstengine-nootnummering.patch') }}
-          restore-keys: math-core-linux-1.98.1-
+          path: ${{ runner.temp }}/math-target
+          key: math-core-cache-v2-linux-1.98.1-${{ hashFiles('patches/tekstengine-nootnummering.patch') }}
+          restore-keys: math-core-cache-v2-linux-1.98.1-
       - name: Vastgezette bouwgereedschappen installeren
         shell: bash
         run: |

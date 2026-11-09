@@ -66,6 +66,7 @@ import { useTabSneltoetsen } from "./useTabSneltoetsen";
 import { useVensters } from "./useVensters";
 import { useSysteembestanden } from "./systeembestanden";
 import { useHostOpenen } from "./useHostOpenen";
+import { useNieuweWriterDocumenten } from "./tekst/samenvoegen/documentOpenen";
 import { hostBestandBekend, officeHost } from "./host";
 import { Werkruimtehulp } from "./werkruimte/Werkruimtehulp";
 import { bijNieuwDocument } from "./werkruimte/gebeurtenissen";
@@ -906,6 +907,7 @@ export function OfficeStudio() {
   }
   // Gehoste bouw: het document dat de host (SuperCloud-werkplek) aanbiedt.
   useHostOpenen(openBestand, meldActief, () => openOpslaanAls());
+  useNieuweWriterDocumenten((naam, bytes) => openDocument("docx", naam, bytes, { gewijzigd: true }));
 
   useSysteembestanden(openSysteembestand, (token) => {
     if (tabs.activeerWerkbestand(token)) herstelFocus();
