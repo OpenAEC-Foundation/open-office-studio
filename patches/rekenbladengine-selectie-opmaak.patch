@@ -1,5 +1,5 @@
 diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
-index 92d84d5..444d88b 100644
+index 92d84d5..805749e 100644
 --- a/crates/betteroffice-xlsx/src/workbook.rs
 +++ b/crates/betteroffice-xlsx/src/workbook.rs
 @@ -8,6 +8,8 @@ mod edit_tests;
@@ -29,7 +29,7 @@ index 92d84d5..444d88b 100644
          let number_formats = formats
              .iter()
              .map(|(_, format)| number_format_kind(&format.number_format))
-@@ -2737,6 +2746,32 @@ impl Workbook {
+@@ -2737,6 +2746,34 @@ impl Workbook {
          Ok((rows, columns))
      }
  
@@ -46,7 +46,9 @@ index 92d84d5..444d88b 100644
 +        let mut defaults = xlsx_model::workbook::ColumnDefaults::new(sheet_ref);
 +        let first = defaults.effective_style(range.start).unwrap_or(0);
 +        let format = self.model.styles.cell_format(Some(first));
-+        if border_edges(&format.border).iter().any(Option::is_some) {
++        if border_edges(&format.border).iter().any(Option::is_some)
++            || format.font.size_pt.is_some_and(f64::is_nan)
++        {
 +            return Ok(None);
 +        }
 +        for row in range.start.row..=range.end.row {
@@ -64,10 +66,10 @@ index 92d84d5..444d88b 100644
          sheet: SheetId,
 diff --git a/crates/betteroffice-xlsx/src/workbook/selection_format_performance_tests.rs b/crates/betteroffice-xlsx/src/workbook/selection_format_performance_tests.rs
 new file mode 100644
-index 0000000..1846dd6
+index 0000000..4a950fa
 --- /dev/null
 +++ b/crates/betteroffice-xlsx/src/workbook/selection_format_performance_tests.rs
-@@ -0,0 +1,100 @@
+@@ -0,0 +1,110 @@
 +use super::*;
 +use xlsx_model::{Border, BorderEdge, BorderStyle, Cell, CellFormat, Color, Fill};
 +
@@ -93,6 +95,16 @@ index 0000000..1846dd6
 +        workbook.selection_formatting(SheetId(0), range(1, 1)).unwrap()
 +    );
 +    assert_eq!(workbook.model(), &before);
++}
++
++#[test]
++fn non_reflexive_font_sizes_keep_the_original_uniformity_semantics() {
++    let mut model = model();
++    model.styles.fonts.push(xlsx_model::Font { size_pt: Some(f64::NAN), ..Default::default() });
++    model.styles.cell_xfs[0].font = Some(0);
++    let workbook = Workbook::from_model(model).unwrap();
++    assert!(workbook.uniform_borderless_range_format(SheetId(0), range(8, 8)).unwrap().is_none());
++    assert_eq!(workbook.selection_formatting(SheetId(0), range(8, 8)).unwrap().font_size, None);
 +}
 +
 +#[test]
