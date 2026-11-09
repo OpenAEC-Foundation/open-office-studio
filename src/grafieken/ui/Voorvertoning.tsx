@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { formatProcent } from "../../i18n/opmaak";
+import { berekenTrendlijn } from "../trendlijnen";
 import {
   isCirkel,
   kleurVan,
@@ -293,6 +294,17 @@ function teken(model: GrafiekModel) {
     if (model.gegevenslabels && n <= 16)
       punten.forEach((p, i) => p && delen.push(<text key={`ml${ri}-${i}`} x={p[0]} y={p[1] - 6} textAnchor="middle" fontSize="8.5" fill={TEKST}>{label(r.waarden[i])}</text>));
   });
+  reeksen.forEach((r, ri) => (r.trendlijnen ?? []).forEach((trend, ti) => {
+    const punten = r.waarden.flatMap((y, i) => y !== null && Number.isFinite(y) ? [{ x: spreiding ? xs[i] : i + 1, y }] : []);
+    const result = berekenTrendlijn(punten, trend), s = combinatie && ri === reeksen.length - 1 && schaal2 ? schaal2 : schaal;
+    const d = result.punten.map((p, i) => {
+      const x = horizontaal ? vw(p.y, s) : spreiding && xSchaal ? x0 + (p.x - xSchaal.min) / (xSchaal.max - xSchaal.min) * W : x0 + vak * (p.x - .5);
+      const y = horizontaal ? y1 - vak * (p.x - .5) : vw(p.y, s);
+      return `${i ? "L" : "M"}${x.toFixed(2)},${y.toFixed(2)}`;
+    }).join("");
+    delen.push(<svg key={`trend-${ri}-${ti}`} x={x0} y={y0} width={W} height={Hh} viewBox={`${x0} ${y0} ${W} ${Hh}`} overflow="hidden"><path d={d} fill="none" stroke={`#${kleurVan(model, ri)}`} strokeWidth={1.5} strokeDasharray="5 3" /></svg>);
+    if (trend.toonR2 && result.r2 !== undefined) delen.push(<text key={`r2-${ri}-${ti}`} x={x0 + 5} y={y0 + 12 + ri * 12} fontSize="9" fill={`#${kleurVan(model, ri)}`}>R² = {toonGetal(result.r2, 4)}</text>);
+  }));
   // Astitels.
   if (model.asTitelX)
     delen.push(<text key="tx" x={(x0 + x1) / 2} y={onder + 12} textAnchor="middle" fontSize="10" fill={TEKST}>{afkorten(model.asTitelX, 50)}</text>);

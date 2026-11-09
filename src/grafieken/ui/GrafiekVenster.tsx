@@ -10,6 +10,9 @@ import {
   herkenKoppen,
   kiesReeksen,
   SOORTEN,
+  TRENDLIJNEN,
+  type Trendlijn,
+  type Reeks,
   type Bereik,
   type Cel,
   type Gegevensopties,
@@ -65,6 +68,7 @@ const LEGENDA: { waarde: LegendaPositie; sleutel: string }[] = [
 ];
 
 const tekstVan = (e: unknown) => (e instanceof Error ? e.message : String(e));
+const reeksSleutel = (r: Reeks, i: number) => r.waardenRef ?? r.naamRef ?? String(i);
 
 export function GrafiekVenster({
   modus,
@@ -89,6 +93,7 @@ export function GrafiekVenster({
   const id = useId();
   const vak = useRef<HTMLDivElement>(null);
   const [opmaak, setOpmaak] = useState<GrafiekModel>(begin);
+  const [trends, setTrends] = useState(() => new Map(begin.reeksen.map((r, i) => [reeksSleutel(r, i), r.trendlijnen ?? []])));
   const [melding, setMelding] = useState("");
   const [bezig, setBezig] = useState(false);
   // Gegevensblad.
@@ -158,14 +163,15 @@ export function GrafiekVenster({
         data = begin;
       } else return { fout: t("dialog.enterRange") };
       // Kleuren per reeks bewaren als het aantal gelijk blijft.
-      const reeksen = data.reeksen.map((r, i) => ({ ...r, kleur: begin.reeksen.length === data.reeksen.length ? begin.reeksen[i]?.kleur : undefined }));
+      const reeksen = data.reeksen.map((r, i) => ({ ...r, kleur: begin.reeksen.length === data.reeksen.length ? begin.reeksen[i]?.kleur : undefined,
+        trendlijnen: trends.get(reeksSleutel(r, i)) ?? (begin.reeksen.length === data.reeksen.length ? begin.reeksen[i]?.trendlijnen : undefined) }));
       const model = { ...opmaak, categorieen: data.categorieen, categorieenRef: data.categorieenRef, reeksen };
       controleerModel(model);
       return { model };
     } catch (e) {
       return { fout: tekstVan(e) };
     }
-  }, [gegevens.soort, raster, richting, bereikData, opties, overslaan, bereikTekst, begin, opmaak, t, taal]);
+  }, [gegevens.soort, raster, richting, bereikData, opties, overslaan, bereikTekst, begin, opmaak, trends, t, taal]);
 
 
   async function doorgaan() {
@@ -364,6 +370,23 @@ export function GrafiekVenster({
                   <input type="number" min={0} max={6} value={opmaak.decimalen} onChange={(e) => zet("decimalen", Math.max(0, Math.min(6, Number(e.target.value) || 0)))} />
                 </label>
               </div>
+            </fieldset>
+            <fieldset>
+              <legend>{t("trend.title")}</legend>
+              {("model" in resultaat ? resultaat.model.reeksen : begin.reeksen).map((r, i) => {
+                const key = reeksSleutel(r, i), lijst = trends.get(key) ?? r.trendlijnen ?? [], eerste = lijst[0];
+                const zetTrend = (trend: Trendlijn | undefined) => setTrends(oud => new Map(oud).set(key, trend ? [trend, ...lijst.slice(1)] : []));
+                return <div key={key}>
+                  <label className="grafiek-veld-rij"><span>{r.naam}</span><select aria-label={t("trend.forSeries", { name: r.naam })} value={eerste?.soort ?? "none"} onChange={e => zetTrend(e.target.value === "none" ? undefined : { ...eerste, soort: e.target.value as Trendlijn["soort"] })}>
+                    <option value="none">{t("trend.none")}</option>
+                    {eerste?.soort === "unknown" && <option value="unknown" disabled>{t("trend.preserved")}</option>}
+                    {TRENDLIJNEN.map(s => <option key={s} value={s}>{t(`trend.types.${s}`)}</option>)}
+                  </select></label>
+                  {eerste?.soort === "poly" && <label className="grafiek-veld-rij"><span>{t("trend.order")}</span><input type="number" min={2} max={6} value={eerste.graad ?? 2} onChange={e => zetTrend({ ...eerste, graad: Number(e.target.value) })} /></label>}
+                  {eerste?.soort === "movingAvg" && <label className="grafiek-veld-rij"><span>{t("trend.period")}</span><input type="number" min={2} max={255} value={eerste.periode ?? 2} onChange={e => zetTrend({ ...eerste, periode: Number(e.target.value) })} /></label>}
+                  {eerste && <label className="grafiek-veld-rij"><input type="checkbox" checked={eerste.toonR2 ?? false} onChange={e => zetTrend({ ...eerste, toonR2: e.target.checked })} /><span>{t("trend.showR2")}</span></label>}
+                </div>;
+              })}
             </fieldset>
             {gegevens.soort === "bereik" && gegevens.plaatsing && (
               <fieldset>

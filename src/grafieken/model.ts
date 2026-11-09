@@ -45,6 +45,21 @@ export const soortUitleg = (soort: GrafiekSoort) => {
 
 export type LegendaPositie = "rechts" | "onder" | "boven" | "links" | "geen";
 
+export const TRENDLIJNEN = ["linear", "exp", "log", "power", "poly", "movingAvg"] as const;
+export interface Trendlijn {
+  soort: typeof TRENDLIJNEN[number] | "unknown";
+  graad?: number;
+  periode?: number;
+  vooruit?: number;
+  achteruit?: number;
+  intercept?: number;
+  naam?: string;
+  toonVergelijking?: boolean;
+  toonR2?: boolean;
+  /** Bestaande opmaak en uitbreidingen blijven behouden bij bewerken. */
+  bronXml?: string;
+}
+
 export interface Reeks {
   naam: string;
   waarden: (number | null)[];
@@ -53,6 +68,7 @@ export interface Reeks {
   /** Celverwijzingen, bijvoorbeeld `'Blad 1'!$B$1`. */
   naamRef?: string;
   waardenRef?: string;
+  trendlijnen?: Trendlijn[];
 }
 
 export interface GrafiekModel {
@@ -150,6 +166,15 @@ export function controleerModel(model: GrafiekModel) {
   for (const r of model.reeksen)
     if (r.kleur && !/^[0-9A-Fa-f]{6}$/.test(r.kleur))
       throw new GrafiekFout(i18next.t("charts:errors.invalidColor", { color: r.kleur }));
+  for (const r of model.reeksen) for (const t of r.trendlijnen ?? []) {
+    if (["taart", "ring", "kolomGestapeld", "kolom100"].includes(model.soort)) throw new GrafiekFout(i18next.t("charts:trend.unsupportedChart"));
+    if (t.soort === "unknown" && t.bronXml) continue;
+    if (!TRENDLIJNEN.includes(t.soort as typeof TRENDLIJNEN[number]) ||
+      (t.soort === "poly" && (!Number.isInteger(t.graad ?? 2) || (t.graad ?? 2) < 2 || (t.graad ?? 2) > 6)) ||
+      (t.soort === "movingAvg" && (!Number.isInteger(t.periode ?? 2) || (t.periode ?? 2) < 2 || (t.periode ?? 2) > 255)) ||
+      [t.vooruit, t.achteruit].some(n => n !== undefined && (!Number.isFinite(n) || n < 0)) ||
+      (t.intercept !== undefined && !Number.isFinite(t.intercept))) throw new GrafiekFout(i18next.t("charts:trend.invalid"));
+  }
 }
 
 /** Of de interfacetaal een punt als decimaalteken gebruikt (zoals Engels). */
