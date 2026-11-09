@@ -28,7 +28,7 @@ index 0000000..8c245fe
 +    assert!(lower_math_values(&values, &RenderEnv::default()).is_none());
 +}
 diff --git a/crates/docx-edit/src/bridge/mod.rs b/crates/docx-edit/src/bridge/mod.rs
-index 2f8a01a..6f96be6 100644
+index 2f8a01a..463ee43 100644
 --- a/crates/docx-edit/src/bridge/mod.rs
 +++ b/crates/docx-edit/src/bridge/mod.rs
 @@ -54,7 +54,6 @@ use yrs::{Any, Map, MapRef, OffsetKind, Out, ReadTxn, Text, Transact};
@@ -52,7 +52,7 @@ index 2f8a01a..6f96be6 100644
                  let text = shared_map_string(math, txn, "plainText")
                      .filter(|value| !value.is_empty())
                      .unwrap_or_else(|| "[equation]".to_owned());
-+                let values = ["ommlXml", "renderSource", "renderSvg", "renderWidth", "renderHeight", "renderDepth"]
++                let values = ["ommlXml", "display", "plainText", "renderSource", "renderSvg", "renderWidth", "renderHeight", "renderDepth"]
 +                    .into_iter().filter_map(|key| shared_any(math, txn, key).map(|value| (key.to_owned(), value))).collect();
 +                let kind = lower_math_values(&values, env).map(RawRunKind::Image).unwrap_or(RawRunKind::Text(text));
                  paragraph_runs.push(RawRun {
@@ -91,7 +91,7 @@ index 2f8a01a..6f96be6 100644
              let width =
                  width_value.filter(|value| *value != 0.0).and_then(|value| {
                      match width_type.as_deref() {
-@@ -2550,6 +2544,31 @@ fn lower_image_values(
+@@ -2550,6 +2544,34 @@ fn lower_image_values(
      }
  }
  
@@ -107,23 +107,26 @@ index 2f8a01a..6f96be6 100644
 +    if ![width, height, depth].iter().all(|n| n.is_finite()) || width <= 0.0 || height <= 0.0 || width > 20000.0 || height > 20000.0 || depth < 0.0 || depth > height {
 +        return None;
 +    }
-+    let image = HashMap::from([
++    let block = map_string(values, "display").as_deref() == Some("block");
++    let mut image = HashMap::from([
 +        ("src".to_owned(), Any::String(src.into())),
 +        ("width".to_owned(), Any::Number(width)),
 +        ("height".to_owned(), Any::Number(height)),
-+        ("distBottom".to_owned(), Any::Number(depth)),
-+        ("displayMode".to_owned(), Any::String("math".into())),
-+        ("alt".to_owned(), Any::String("Equation".into())),
++        ("distBottom".to_owned(), Any::Number(if block { 0.0 } else { depth })),
++        ("distTop".to_owned(), Any::Number(0.0)),
++        ("displayMode".to_owned(), Any::String(if block { "math-block" } else { "math" }.into())),
++        ("alt".to_owned(), Any::String(map_string(values, "plainText").unwrap_or_else(|| "Equation".to_owned()).into())),
 +    ]);
++    if block { image.insert("wrapType".to_owned(), Any::String("topAndBottom".into())); }
 +    let mut rendered = lower_image_values(&image, &RunFormatting::default(), env);
-+    rendered.dist_bottom = Some(depth * rendered.height / height);
++    if !block { rendered.dist_bottom = Some(depth * rendered.height / height); }
 +    Some(rendered)
 +}
 +
  fn lower_image_run<T: ReadTxn>(
      image: &MapRef,
      txn: &T,
-@@ -3105,8 +3124,9 @@ fn lower_inline_sdt_values(
+@@ -3105,8 +3127,9 @@ fn lower_inline_sdt_values(
                      .and_then(|payload| map_string(payload, "plainText"))
                      .filter(|value| !value.is_empty())
                      .unwrap_or_else(|| "[equation]".to_owned());
@@ -768,10 +771,19 @@ index 486e623..ec61b4c 100644
      fn full_width_vertical_merge_keeps_the_base_continuation_story() {
          let bytes = fixture::Package::new(concat!(
 diff --git a/crates/docx-layout/src/display_list.rs b/crates/docx-layout/src/display_list.rs
-index 048c639..1ec33a1 100644
+index 048c639..d2f84ca 100644
 --- a/crates/docx-layout/src/display_list.rs
 +++ b/crates/docx-layout/src/display_list.rs
-@@ -4171,6 +4171,15 @@ fn resolve_line_segments<'a>(runs: &'a [RunIn], line: &LineIn) -> Vec<ResolvedSe
+@@ -1971,6 +1971,8 @@ struct ImageRunIn {
+     width: f64,
+     #[serde(default)]
+     height: f64,
++    #[serde(default)]
++    dist_bottom: Option<f64>,
+     /// Alternative text from `wp:docPr` `descr`.
+     #[serde(default)]
+     alt: Option<String>,
+@@ -4171,6 +4173,15 @@ fn resolve_line_segments<'a>(runs: &'a [RunIn], line: &LineIn) -> Vec<ResolvedSe
          };
          match run {
              RunIn::Text(t) => {
@@ -787,7 +799,7 @@ index 048c639..1ec33a1 100644
                  let total = utf16_len(&t.text);
                  let start = if run_index == line.head_run {
                      line.head_char.min(total)
-@@ -4685,7 +4694,7 @@ fn page_content_geometry(page: &PageIn) -> (DisplayBounds, Vec<DisplayBounds>) {
+@@ -4685,7 +4696,7 @@ fn page_content_geometry(page: &PageIn) -> (DisplayBounds, Vec<DisplayBounds>) {
  
  const NOTE_COLUMN_GAP_PX: f64 = 24.0;
  /// note reference-label cap (display numbers / custom marks are tiny)
@@ -796,7 +808,7 @@ index 048c639..1ec33a1 100644
  
  fn note_partitions<'a>(notes: &'a [NoteItemIn], columns: usize) -> Vec<Vec<&'a NoteItemIn>> {
      let columns = columns.max(1);
-@@ -6272,16 +6281,29 @@ fn authoritative_line_items<'a>(
+@@ -6272,16 +6283,29 @@ fn authoritative_line_items<'a>(
          let run = block.runs.get(run_index)?;
          match run {
              RunIn::Text(text) => {
@@ -831,7 +843,7 @@ index 048c639..1ec33a1 100644
                      logical_order: logical_order.or(text.fmt.logical_order),
                      exact_advance: true,
                      field: None,
-@@ -6889,7 +6911,9 @@ fn emit_line(
+@@ -6889,7 +6913,9 @@ fn emit_line(
                      .as_ref()
                      .and_then(|bounds| bounds.height)
                      .unwrap_or(imr.height);
@@ -842,6 +854,20 @@ index 048c639..1ec33a1 100644
                      // Alone on its line: the image is the box's top, any
                      // added line spacing falls below it.
                      geom.line_top + (line.ascent - layout_height).max(0.0)
+@@ -6979,10 +7005,11 @@ fn emit_line(
+                 img_attrs.doc_end = *pm_end;
+                 img_attrs.logical_order = *logical_order;
+                 img_attrs.bidi_level = logical_order.map(|_| *level);
+-                stamp_image_run_attrs(&mut img_attrs, imr, pen_x, y);
++                let image_x = if imr.display_mode.as_deref() == Some("math-block") { echo_x + (usable_width - layout_width).max(0.0) / 2.0 } else { pen_x };
++                stamp_image_run_attrs(&mut img_attrs, imr, image_x, y);
+                 prims.push(Primitive::Image(ImagePrimitive {
+                     rel_id: imr.src.clone(),
+-                    x: px(pen_x),
++                    x: px(image_x),
+                     y: px(y),
+                     w: px(layout_width),
+                     h: px(layout_height),
 diff --git a/crates/docx-layout/src/hit.rs b/crates/docx-layout/src/hit.rs
 index e31d53f..353c847 100644
 --- a/crates/docx-layout/src/hit.rs

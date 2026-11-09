@@ -28,6 +28,13 @@ jobs:
           targets: wasm32-unknown-unknown
           components: rustfmt
       - run: pnpm install --frozen-lockfile --ignore-scripts
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/math-source/target
+            ${{ runner.temp }}/math-source/target-wasm
+          key: math-core-linux-1.98.1-${{ hashFiles('patches/tekstengine-nootnummering.patch') }}
+          restore-keys: math-core-linux-1.98.1-
       - name: Vastgezette bouwgereedschappen installeren
         shell: bash
         run: |
