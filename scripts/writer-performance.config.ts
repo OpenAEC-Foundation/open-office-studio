@@ -8,7 +8,17 @@ export default defineConfig({
       name: "writer-performance-bridge",
       enforce: "pre",
       transform(code, id) {
-        if (!id.replaceAll("\\", "/").endsWith("/src/editors.tsx")) return;
+        const path = id.replaceAll("\\", "/");
+        if (path.endsWith("/src/tekst/gedeeld/opslagvoorbereiding.ts")) {
+          const marker = "return voorbereiding;";
+          if (code.split(marker).length !== 2)
+            throw Error("Warmup bridge source changed");
+          return code.replace(
+            marker,
+            "(globalThis as any).__writerWarmup = voorbereiding;\n" + marker,
+          );
+        }
+        if (!path.endsWith("/src/editors.tsx")) return;
         const getter = "tekst: () => docx.current,";
         const bridge = "const beginRegio = useRef(intlLocale());";
         const spelling = "const tekstPlugins =";

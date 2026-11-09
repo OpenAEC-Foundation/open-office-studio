@@ -38,6 +38,7 @@ import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
+import { bereidTekstOpslagVoor } from "./tekst/gedeeld/opslagvoorbereiding";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -242,19 +243,14 @@ export default function OfficeEditor(props: EditorProps) {
         await ref.flushPendingInput();
       },
     }));
-    // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij
-    // opslaan ophaalt, zodat opslaan ook na een nieuwe uitrol blijft werken.
+    // Laad de opslagafhankelijkheden vooraf, ook voor later offline opslaan.
+    // Een groot gebruikersdocument hiervoor serialiseren onderbreekt invoer.
     let proef = 0;
     if (!("__TAURI_INTERNALS__" in window))
       proef = window.setTimeout(() => {
-        if (exporteren.current || !docx.current?.getDocument()) return;
-        exporteren.current = true;
-        void Promise.resolve(docx.current.save())
+        void bereidTekstOpslagVoor()
           .catch(() => {
             // Alleen een voorbereiding; echte fouten verschijnen bij opslaan.
-          })
-          .finally(() => {
-            exporteren.current = false;
           });
       }, 2500);
     return () => {
