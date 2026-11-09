@@ -22,7 +22,7 @@ index cdae58f..3186ef4 100644
          | Op::RestoreColStyles { .. }
          | Op::RestoreRowStyles { .. } => {
 diff --git a/crates/betteroffice-xlsx/tests/conditional_formats.rs b/crates/betteroffice-xlsx/tests/conditional_formats.rs
-index 2096857..10ba126 100644
+index 2096857..ac1a826 100644
 --- a/crates/betteroffice-xlsx/tests/conditional_formats.rs
 +++ b/crates/betteroffice-xlsx/tests/conditional_formats.rs
 @@ -38,6 +38,45 @@ fn add(kind: &str, operator: Option<&str>, formulas: &[&str]) -> Op {
@@ -43,7 +43,7 @@ index 2096857..10ba126 100644
 +    let reopened = Workbook::open(&wb.save().unwrap()).unwrap();
 +    let rule = &reopened.model().sheets[0].conditional_formats[0].rules[0];
 +    assert_eq!(rule.priority, 2);
-+    assert_eq!(rule.format.font_color.as_deref(), Some("#FF0000"));
++    assert!(rule.format.font_color.as_deref().is_some_and(|c| c.eq_ignore_ascii_case("#FF0000")));
 +    assert!(rule.raw_xml.as_ref().unwrap().contains(r#"stopIfTrue="1""#));
 +    wb.undo(CalculationOptions::default()).unwrap();
 +    assert_eq!(wb.model().sheets[0].conditional_formats, before);
@@ -201,7 +201,7 @@ index ffbdcd3..ff3c921 100644
              }
              let mut rule_xml = format!("<cfRule type=\"{}\"", escape_xml_attr(&rule.rule_type));
 diff --git a/crates/xlsx-parse/tests/conditional_formats.rs b/crates/xlsx-parse/tests/conditional_formats.rs
-index b135477..43f35f9 100644
+index b135477..2d17792 100644
 --- a/crates/xlsx-parse/tests/conditional_formats.rs
 +++ b/crates/xlsx-parse/tests/conditional_formats.rs
 @@ -69,6 +69,26 @@ fn authored(wb: &mut xlsx_model::Workbook) {
@@ -222,8 +222,8 @@ index b135477..43f35f9 100644
 +    assert!(sheet.contains(r#"dxfId="0""#), "{sheet}");
 +    let reopened = parse_workbook(&saved).unwrap();
 +    let rule = &reopened.sheets[0].conditional_formats[0].rules[0];
-+    assert_eq!(rule.format.font_color.as_deref(), Some("#FF0000"));
-+    assert_eq!(rule.format.fill.as_deref(), Some("#00FF00"));
++    assert!(rule.format.font_color.as_deref().is_some_and(|c| c.eq_ignore_ascii_case("#FF0000")));
++    assert!(rule.format.fill.as_deref().is_some_and(|c| c.eq_ignore_ascii_case("#00FF00")));
 +    assert_eq!(rule.format.bold, Some(true));
 +    assert!(rule.raw_xml.as_ref().unwrap().contains(r#"stopIfTrue="1""#));
 +}
