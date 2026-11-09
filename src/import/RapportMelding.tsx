@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import i18next from "../i18n/config";
 import versie from "../../versie.json";
 import { rapportTekst, type Rapport } from "./rapport";
+import { schrijfKlembordTekst } from "../klembord";
 import "./import.css";
 
 /** Bewaart het rapport als tekstbestand: native dialoog in de desktopapp, anders een download. */
@@ -56,22 +57,23 @@ export function Rapportdetails({
       <div className="rapport-acties">
         <button
           type="button"
-          onClick={() =>
-            navigator.clipboard
-              .writeText(tekst())
+          onClick={() => {
+            setStatus("");
+            void schrijfKlembordTekst(tekst())
               .then(() => setStatus(t("report.ui.copied")))
-              .catch(() => setStatus(t("report.ui.copyNotAllowed")))
-          }
+              .catch(() => setStatus(t("report.ui.copyNotAllowed")));
+          }}
         >
           <ClipboardCopy size={13} /> {t("report.ui.copy")}
         </button>
         <button
           type="button"
-          onClick={() =>
-            bewaarRapport(tekst(), bestandsnaam).catch((e) =>
+          onClick={() => {
+            setStatus("");
+            void bewaarRapport(tekst(), bestandsnaam).catch((e) =>
               setStatus(t("report.ui.saveFailed", { error: String(e) })),
-            )
-          }
+            );
+          }}
         >
           <Download size={13} /> {t("report.ui.saveAsText")}
         </button>
