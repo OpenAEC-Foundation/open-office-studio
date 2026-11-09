@@ -1,0 +1,44 @@
+.presentatie-afbeeldingen {
+  width: min(760px, calc(100vw - 32px));
+}
+.presentatie-afbeeldingen fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.presentatie-afbeeldingen label {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.presentatie-afbeeldingen select {
+  padding: 6px;
+}
+.presentatie-afbeeldingen input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.afbeelding-velden {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+}
+.afbeelding-velden figure {
+  margin: 0;
+}
+.afbeelding-velden canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--w-rand);
+}
+.afbeelding-velden figcaption {
+  padding-top: 5px;
+}
+@media (max-width: 600px) {
+  .afbeelding-velden {
+    grid-template-columns: 1fr;
+  }
+}

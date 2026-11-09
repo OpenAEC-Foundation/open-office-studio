@@ -84,6 +84,7 @@ import { DiaObjecten } from "../presentatie/DiaObjecten";
 import { DiaOntwerp } from "../presentatie/DiaOntwerp";
 import { DiaTabellen } from "../presentatie/DiaTabellen";
 import { DiaHergebruik } from "../presentatie/DiaHergebruik";
+import { DiaAfbeeldingen } from "../presentatie/DiaAfbeeldingen";
 import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
@@ -698,6 +699,7 @@ export function PresentatieRibbon({
           naam: t("presentation.tabs.shapeFormat"),
           inhoud: (
             <>
+              <Groep naam={t("presentation:pictures.title")}><DiaAfbeeldingen /></Groep>
               <Groep naam={t("presentation.groups.shapeStyle")}>
                 <div className="ribbon-stapel">
                   <OpdrachtKleur
