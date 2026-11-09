@@ -1,0 +1,29 @@
+name: Native selectieopmaak controleren
+on:
+  pull_request:
+    paths:
+      - .github/workflows/selectie-opmaak.yml
+      - scripts/controleer-selectie-opmaak.py
+      - patches/rekenbladengine-*
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Vastgezette Rust-versie installeren
+        run: rustup toolchain install 1.98.1 --profile minimal
+      - name: Bron en patchketen controleren
+        run: python3 scripts/controleer-selectie-opmaak.py
+      - name: Gerichte native prestatiesemantiek
+        working-directory: .local/selectie-opmaak-bron
+        run: cargo +1.98.1 test -p betteroffice-xlsx --locked --no-default-features --lib selection_format_performance_tests
+      - name: Bestaande werkmapregressies
+        working-directory: .local/selectie-opmaak-bron
+        run: cargo +1.98.1 test -p betteroffice-xlsx --locked --no-default-features --test workbook
