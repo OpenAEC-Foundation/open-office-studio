@@ -49,6 +49,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#252](https://github.com/OpenAEC-Foundation/open-office-studio/pull/252) | `248d5a79b9248ecf59f1378490c793493032c23f` | `e2733071c1285792a9cddca99df3960440a260d2` | Presentation SDK and office performance checkpoint |
 | [#251](https://github.com/OpenAEC-Foundation/open-office-studio/pull/251) | `10b9ac1c7634da666498d21de3258dd3573ad397` | `c1b2fbd1fcf5289ca2af72683451552b71925897` | Spreadsheet native formula, chart, dimensions and sheet bundle |
 | [#246](https://github.com/OpenAEC-Foundation/open-office-studio/pull/246) | `41c9ebfc1e05e5b74fbe6078c7ad247046e18786` | `2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651` | Spreadsheet object rendering and modern protection checkpoint |
+| [#236](https://github.com/OpenAEC-Foundation/open-office-studio/pull/236) | `86a5be49691b975f0f13d18c040833d305499647` | `d0589466120e5b71cb194ee1e42404bec6d31431` | Spreadsheet threaded comments and print checkpoint |
 
 ## Earlier fixes included in bundles
 
@@ -113,6 +114,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr252-targeted | `e2733071c1285792a9cddca99df3960440a260d2` | 38 | 0 | 0 |
 | pr251-targeted | `c1b2fbd1fcf5289ca2af72683451552b71925897` | 45 | 0 | 0 |
 | pr246-targeted | `2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651` | 20 | 0 | 0 |
+| pr236-targeted | `d0589466120e5b71cb194ee1e42404bec6d31431` | 12 | 0 | 0 |
 
 ## Pending deliveries
 
