@@ -1706,5 +1706,24 @@
       "column": "Column {{a}}: {{wa}} cm",
       "row": "Row {{n}}: {{value}} cm"
     }
+  },
+  "mailMerge": {
+    "title": "Mail merge",
+    "source": "CSV/TSV data source",
+    "record": "Record {{number}} of {{total}}",
+    "field": "Field",
+    "insertField": "Insert field",
+    "saveCopy": "Save record copy",
+    "saved": "Document copy created.",
+    "noFields": "First add merge fields to the template.",
+    "scope": "CSV/TSV with headers · up to 1000 records. Saving creates a DOCX copy of the selected record.",
+    "errors": {
+      "data": "Choose a valid CSV/TSV file up to 2 MB.",
+      "columns": "Use unique, nonempty headers (up to 100 columns, without quotes or backslashes).",
+      "records": "Use between 1 and 1000 data records.",
+      "missing": "Column “{{name}}” is missing.",
+      "template": "This template has no usable fields or contains unsupported field structures.",
+      "cursor": "Place the cursor in the body or a table, without a text selection, in editing mode."
+    }
   }
 }

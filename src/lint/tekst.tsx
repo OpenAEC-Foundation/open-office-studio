@@ -91,6 +91,7 @@ import { datumTekst, tijdTekst, type Hoofdlettersoort } from "./tekst-logica";
 import { TabelKiezer } from "../tabelvoorbeeld/TabelKiezer";
 import { TabelIndeling, TekstNaarTabelKnop } from "../tekst/tabel/TabelIndeling";
 import { AfbeeldingGroepen } from "../tekst/afbeelding/AfbeeldingGroepen";
+import { SamenvoegenKnop } from "../tekst/samenvoegen/SamenvoegenKnop";
 import { ZoekKnoppen } from "../tekst/zoeken/ZoekPaneel";
 import { WordHost } from "../tekst/WordHost";
 import { Liniaal } from "../tekst/liniaal/Liniaal";
@@ -612,6 +613,7 @@ export function TekstRibbon({
                   <W id="insertLink" naam={t("writer.commands.hyperlink")} icoon={Link} groot />
                 </Groep>
                 <KopVoetInvoegenGroep p={pagina} />
+                <Groep naam={t("writer:mailMerge.title")}><SamenvoegenKnop /></Groep>
                 <Groep naam={t("writer.groups.comments")}>
                   <Opmerking opdrachten={opdrachten} />
                 </Groep>

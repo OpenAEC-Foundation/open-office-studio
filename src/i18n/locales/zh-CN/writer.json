@@ -1692,5 +1692,24 @@
       "column": "第 {{a}} 列：{{wa}} 厘米",
       "row": "第 {{n}} 行：{{value}} 厘米"
     }
+  },
+  "mailMerge": {
+    "title": "邮件合并",
+    "source": "CSV/TSV数据源",
+    "record": "记录 {{number}} / {{total}}",
+    "field": "字段",
+    "insertField": "插入字段",
+    "saveCopy": "保存记录副本",
+    "saved": "已创建文档副本。",
+    "noFields": "请先在模板中添加合并字段。",
+    "scope": "CSV/TSV需包含标题行，最多1000条记录。保存会创建所选记录的DOCX副本。",
+    "errors": {
+      "data": "请选择不超过2 MB的有效CSV/TSV文件。",
+      "columns": "标题须唯一且非空（最多100列，不含引号或反斜杠）。",
+      "records": "请使用1至1000条数据记录。",
+      "missing": "缺少“{{name}}”列。",
+      "template": "此模板没有可用字段或包含不支持的字段结构。",
+      "cursor": "请在编辑模式下将光标放入正文或表格，不选择文本。"
+    }
   }
 }
