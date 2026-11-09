@@ -43,11 +43,17 @@ try {
     window.__measuring = false;
     new PerformanceObserver((l) => {
       if (window.__measuring)
-        window.__long.push(...l.getEntries().map((e) => e.duration));
+        window.__long.push(
+          ...l
+            .getEntries()
+            .filter((e) => e.startTime >= window.__phaseStart)
+            .map((e) => e.duration),
+        );
     }).observe({ type: "longtask", buffered: false });
     let last;
     function tick(t) {
-      if (window.__measuring && last) window.__frames.push(t - last);
+      if (window.__measuring && last >= window.__phaseStart)
+        window.__frames.push(t - last);
       last = t;
       requestAnimationFrame(tick);
     }
@@ -106,11 +112,63 @@ try {
     }
   });
   const result = { label, rate: Number(rate), errors, phases: [] };
+  async function controleerKoppen() {
+    await page.waitForFunction(() => {
+      const api = window.__appApis.rekenblad;
+      const scroll = document.querySelector('[data-testid="xlsx-scroll"]');
+      const zoom = api.commands.getState("zoom").value ?? 1;
+      const grid = api.handle.displayListProfiled({
+        x: scroll.scrollLeft / zoom,
+        y: scroll.scrollTop / zoom,
+        width: scroll.clientWidth / zoom,
+        height: scroll.clientHeight / zoom,
+      }).displayList.grid;
+      if (!grid) return false;
+      return [
+        [
+          "kolom",
+          grid.colOffsets,
+          grid.startCol,
+          grid.colIndices,
+          "left",
+          "width",
+        ],
+        [
+          "rij",
+          grid.rowOffsets,
+          grid.startRow,
+          grid.rowIndices,
+          "top",
+          "height",
+        ],
+      ].every(([soort, offsets, start, indices, positie, maat]) => {
+        const nodes = [
+          ...document.querySelectorAll(
+            `.rekenblad-koppen [data-soort="${soort}"]`,
+          ),
+        ];
+        return (
+          nodes.length === offsets.length - 1 &&
+          nodes.every(
+            (n, i) =>
+              Number(n.dataset.spoor) === (indices?.[i] ?? start + i) &&
+              Math.abs(parseFloat(n.style[positie]) - offsets[i] * zoom) <
+                0.02 &&
+              Math.abs(
+                parseFloat(n.style[maat]) -
+                  (offsets[i + 1] - offsets[i]) * zoom,
+              ) < 0.02,
+          )
+        );
+      });
+    });
+  }
   async function phase(name, fn) {
     await page.evaluate(() => {
       window.__calls = {};
       window.__long = [];
       window.__frames = [];
+      window.__phaseStart = performance.now();
       window.__measuring = true;
     });
     const start = performance.now();
@@ -137,7 +195,12 @@ try {
       status: data.status,
     };
     result.phases.push(r);
+    fs.writeFileSync(
+      `.local/xlsx-${label}.json`,
+      JSON.stringify(result, null, 2),
+    );
     console.log(JSON.stringify(r));
+    await controleerKoppen();
   }
   await cdp.send("Profiler.enable");
   await cdp.send("Profiler.start");
@@ -170,6 +233,20 @@ try {
   });
   const { profile } = await cdp.send("Profiler.stop");
   fs.writeFileSync(`.local/xlsx-${label}.cpuprofile`, JSON.stringify(profile));
+  await page.evaluate(async () => {
+    const api = window.__appApis.rekenblad;
+    await api.commands.execute("zoom", 1.25);
+    api.handle.applyOps([
+      { type: "setColWidth", sheet: 0, col: 0, width: 24 },
+      { type: "setRowHeight", sheet: 0, row: 0, height: 0 },
+    ]);
+  });
+  await controleerKoppen();
+  await page.evaluate(() => window.__appApis.rekenblad.handle.undo());
+  await controleerKoppen();
+  await page.evaluate(() => window.__appApis.rekenblad.handle.redo());
+  await controleerKoppen();
+  result.headersExact = true;
   const saved = await page.evaluate(async () =>
     Array.from(await window.__appApis.rekenblad.save()),
   );

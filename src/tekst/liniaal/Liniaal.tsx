@@ -34,6 +34,7 @@ import { useTekstOpmaak } from "../TekstOpmaak";
 import { zetKolombreedtes, zetRijhoogte } from "../tabel/opdrachten";
 import { geometrieVan, useIndelingTeller, VLAK } from "./geometriePlugin";
 import { meetLiniaal, type LiniaalStand } from "./geometrie";
+import { volgTabAfstand } from "./tabafstand";
 import { registreerVlak } from "./register";
 import { zetMaat } from "./meting";
 import {
@@ -110,6 +111,20 @@ export function Liniaal({ aan }: { aan: boolean }) {
   const zichtbaar = useEditorZichtbaar();
   const tik = useEditorTik();
   const indeling = useIndelingTeller();
+  const ref = api.tekst();
+  const sessie = ref?.getEditorRef()?.getYrsSession();
+  const [tabAfstand, zetTabAfstand] = useState({ sessie, waarde: 720 });
+  useEffect(() => {
+    if (!ref || !sessie) return;
+    try {
+      return volgTabAfstand(ref, (waarde) => zetTabAfstand({ sessie, waarde }));
+    } catch {
+      // De editor kan tijdens het koppelen worden gesloten.
+    }
+    // De publieke ref krijgt bij projecties een nieuwe identiteit. De native
+    // sessie en de inhoudsluisteraars blijven bij gewone invoer dezelfde.
+  }, [api.tekst, sessie]);
+  const standaardTab = tabAfstand.sessie === sessie ? tabAfstand.waarde : 720;
   const anker = useRef<HTMLSpanElement>(null);
   const [vlak, setVlak] = useState<HTMLElement | null>(null);
   const [beeld, herteken] = useReducer((n: number) => n + 1, 0);
@@ -168,12 +183,12 @@ export function Liniaal({ aan }: { aan: boolean }) {
     const ref = api.tekst();
     if (!aan || !vlak || !ref || !zichtbaar) return null;
     try {
-      return meetLiniaal(ref, vlak, geometrieVan(vlak));
+      return meetLiniaal(ref, vlak, geometrieVan(vlak), standaardTab);
     } catch {
       return null;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [aan, vlak, zichtbaar, tik, indeling, beeld, api]);
+  }, [aan, vlak, zichtbaar, tik, indeling, beeld, api, standaardTab]);
 
   // Tijdens het slepen telt de stand van het begin.
   const s = actief?.stand ?? stand;

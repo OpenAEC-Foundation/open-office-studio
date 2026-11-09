@@ -12,6 +12,7 @@
 import type { DocxPluginContext, DocxPluginGeometry } from "@betteroffice/docx-react";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { PluginStaat, SpellingSessie } from "./sessie";
+import { AlineaBereiken } from "./bereiken";
 import "./spelling.css";
 
 interface Props {
@@ -76,6 +77,7 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
   sessie.bijContext(context);
   sessie.geometrie = geometry;
   const laag = useRef<HTMLDivElement>(null);
+  const alineaBereiken = useMemo(() => new AlineaBereiken(), [sessie]);
   const [scroll, setScroll] = useState(0);
   const teller = context.state.teller;
   const layout = geometry.layout;
@@ -111,7 +113,16 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
     const uit: Rechthoek[] = [];
     const ed = sessie.editor()?.getEditorRef();
     if (!ed || bereik === undefined) return uit;
-    for (const { alinea, fout } of sessie.zichtbareFouten()) {
+    const bron = ed.getYrsSession();
+    // Eerst per alinea begrenzen; projecteer de fouten buiten beeld niet.
+    const inBereik = bron ? alineaBereiken.filter(
+      bron, `${bron.version()}:${layout.id}:${layout.version}`, bereik ?? null,
+      (a, eind) => ed.yrsLocToDisplayPosition({
+        story: a.story, paraId: a.paraId,
+        offset: sessie.rauw(a, eind ? a.tekst.length : 0, eind),
+      }),
+    ) : undefined;
+    for (const { alinea, fout } of sessie.zichtbareFouten(inBereik)) {
       // Foutoffsets gelden voor de geaccepteerde tekst; bijgehouden verwijderingen tellen in de sessie mee.
       const a = ed.yrsLocToDisplayPosition({ story: alinea.story, paraId: alinea.paraId, offset: sessie.rauw(alinea, fout.start) });
       const b = ed.yrsLocToDisplayPosition({ story: alinea.story, paraId: alinea.paraId, offset: sessie.rauw(alinea, fout.eind, true) });
@@ -131,7 +142,7 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
     return uit;
     // De teller verandert bij elke controle, de layout-id bij elke nieuwe
     // indeling en het bereik bij scrollen.
-  }, [sessie, geometry, layout.id, layout.version, teller, van, tot, bereik === undefined]);
+  }, [sessie, alineaBereiken, geometry, layout.id, layout.version, teller, van, tot, bereik === undefined]);
 
   void scroll;
   const dikte = Math.max(2, Math.round(3 * layout.zoom));

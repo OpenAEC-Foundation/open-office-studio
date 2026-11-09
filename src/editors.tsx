@@ -49,6 +49,7 @@ import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
+import { noteerDiaAantal } from "./status/diatelling";
 // Meegeleverde en extra lettertypen, aangevuld met die van deze computer (#22).
 // Relatief aan de app, zodat een build onder een submap ze ook vindt (#109).
 configureDefaultFonts({
@@ -379,7 +380,9 @@ export default function OfficeEditor(props: EditorProps) {
   const gereedPptx = useCallback(
     (api: PptxEditorApi) => {
       // EMU naar CSS-pixels bij 96 dpi.
-      setDiaBreedte(api.handle.snapshot().widthEmu / 9525);
+      const snapshot = api.handle.snapshot();
+      noteerDiaAantal(api.handle, snapshot.slides.length);
+      setDiaBreedte(snapshot.widthEmu / 9525);
       setPresentatieApi(api);
       // Directe engine-bewerkingen uit het lint lopen buiten onChange om.
       stopDiaWijzigingen.current?.();
@@ -495,6 +498,7 @@ export default function OfficeEditor(props: EditorProps) {
           <DocumentLettertypen.Provider value={documentLettertypen}>
         <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
           <PptxEditor
+            legacySyncApi
             key={herladen.sleutel}
             file={herladen.bytes}
             initialSlide={herladen.dia}
@@ -502,7 +506,10 @@ export default function OfficeEditor(props: EditorProps) {
             fonts={fontFaces}
             plugins={PRESENTATIE_PLUGINS}
             onReady={gereedPptx}
-            onChange={props.gewijzigd}
+            onChange={(snapshot) => {
+              noteerDiaAantal(presentatieApi?.handle, snapshot.slides.length);
+              props.gewijzigd();
+            }}
             onError={props.fout}
             onSave={props.opslaan}
             i18n={engineTaal.dia}
