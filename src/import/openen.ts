@@ -25,6 +25,7 @@ import { MACRO_ID, macronaam, openRapport, type Rapport } from "./rapport";
 import { MACRO_INVOER, MACROFORMAAT, scheidMacros } from "./macros";
 import type { Bronkenmerken } from "./bron";
 import { openIfcx } from "../ifcx/dossier";
+import { bronMacros } from "./bronmacros";
 import {
   VerkeerdWachtwoord,
   herkenVersleuteling,
@@ -339,6 +340,17 @@ async function bereidOnversleuteld(
     } catch {
       // Geen OOXML-pakket: niets te meten vóór de omzetting.
     }
+    const bronproject = bronMacros(bytes, ext);
+    if (bronproject === "vba") macros = true;
+    if (bronproject === "scripts")
+      bronregels = [
+        ...bronregels,
+        {
+          id: MACRO_ID,
+          onderdeel: i18next.t("import:report.parts.macroFormat"),
+          gevolg: i18next.t("import:report.open.macrosNotCopied"),
+        },
+      ];
     const omgezet = await hulp.converteer(bytes, ext, soort, soort);
     if (controleerPakket(omgezet, soort).datum1904)
       bronregels = [...bronregels, datum1904()];
