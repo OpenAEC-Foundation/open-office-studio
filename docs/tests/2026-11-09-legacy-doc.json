@@ -1,0 +1,302 @@
+{
+  "converter": "LibreOffice 26.8.2.2",
+  "nativeInvocation": "same profile and filters as app; child-only printer flags from PR239",
+  "originalFilesUnchanged": true,
+  "sourceManifest": "2026-11-09-legacy-doc-sources.json",
+  "cases": [
+    {
+      "name": "DiffFirstPageHeadFoot.doc",
+      "sha256": "674285298712213a7e0141182a2efc9d7f3ad6ebf4f5520b8405774ec3e5def0",
+      "pass": true,
+      "checks": [
+        {
+          "edited": false,
+          "savedSha256": "4bb505f3cbb0d4142d22956e6c121b0abd7744868f1490aba522098707f668c9",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true
+        },
+        {
+          "edited": true,
+          "savedSha256": "ee9a584114ebb046b19056d691929bcf4842303e904a73b0fb128db723eae0da",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true,
+          "docSha256": "bd19959f615f52f5683c021a27fb3784ff8747081ce64548f655b09dd027a3e3",
+          "backSha256": "1d8f71b21ffefc075a57a6c44e7c403d30bf8f8349a1a76673fd6df59098f5a8",
+          "docTextPreserved": true,
+          "docFeatures": {
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}ftr": 2,
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}hdr": 2
+          },
+          "docOpaquePartCount": 0
+        }
+      ],
+      "fib": 193,
+      "fibNew": 274,
+      "embeddedStorages": 0,
+      "hasVba": false,
+      "features": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}ftr": 2,
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}hdr": 2
+      },
+      "opaquePartCount": 0
+    },
+    {
+      "name": "HeaderWithMacros.doc",
+      "sha256": "98b991a18dddaebeda8a3efd0951abeb2a4ce4b6065ed6a2f1c7aa13dbb526f8",
+      "pass": true,
+      "checks": [
+        {
+          "edited": false,
+          "savedSha256": "360362d2cbb59ea099d9da225a3c014e36f47b58589f4aa90c217c2c17abed8e",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true
+        },
+        {
+          "edited": true,
+          "savedSha256": "87a18f6f09e0028a60182b4f2f90a3bc6a62ef7237520dce3528ef48fdc67bdf",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true,
+          "docSha256": "3ac1eccf69478921b76f60864caa7c31f7ff4ea86ac68bec54ad98dec365f38e",
+          "backSha256": "c718d774846409d644cab35e6d9a7042e82eb1b4f20124a2e2a3819ebdabb235",
+          "docTextPreserved": true,
+          "docFeatures": {
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}ftr": 1,
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}hdr": 1
+          },
+          "docOpaquePartCount": 0
+        }
+      ],
+      "fib": 193,
+      "fibNew": 274,
+      "embeddedStorages": 0,
+      "hasVba": false,
+      "features": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}ftr": 1,
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}hdr": 1
+      },
+      "opaquePartCount": 0
+    },
+    {
+      "name": "pictures_escher.doc",
+      "sha256": "84a68678fc525e763beabab7e79240e2bbf4cd6b7766eed3364681d38fed2457",
+      "pass": false,
+      "checks": [],
+      "fib": 257,
+      "embeddedStorages": 0,
+      "hasVba": false,
+      "error": "Error: Conversion exceeded the unchanged 45-second limit"
+    },
+    {
+      "name": "simple-table.doc",
+      "sha256": "67d7fe8e0555c16516354498a5935f24eeef90beb5efbf526f93a1d6c734da43",
+      "pass": true,
+      "checks": [
+        {
+          "edited": false,
+          "savedSha256": "7f695d08e9505c291f06c7c52fd8d03776eed027ecf6c6394438aac0c65eea7a",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true
+        },
+        {
+          "edited": true,
+          "savedSha256": "9770055be1542b07d056722e052b132780297591148d38de75a3a54b9c2eed04",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true,
+          "docSha256": "a2fb3c45a2d10dea49998c72c2103be761f05a680b22cb608967a92a12232d93",
+          "backSha256": "050d2cb36fdde7e95d7586cd38936af03cc989c5ebc3e94e7b9e12d22febcf39",
+          "docTextPreserved": true,
+          "docFeatures": {
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}tbl": 1
+          },
+          "docOpaquePartCount": 0
+        }
+      ],
+      "fib": 193,
+      "embeddedStorages": 0,
+      "hasVba": false,
+      "features": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}tbl": 1
+      },
+      "opaquePartCount": 0
+    },
+    {
+      "name": "Word95.doc",
+      "sha256": "a7b9557e917daf29cfee6baaa90226fbfa7900ffa05cc35bdc03aafdefef5789",
+      "pass": true,
+      "checks": [
+        {
+          "edited": false,
+          "savedSha256": "7749037e53cfe6f2374900801f04c9a0914e240c6cd96365fe0957a80a9d7a31",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true
+        },
+        {
+          "edited": true,
+          "savedSha256": "e4582f05c6f5fc0c70dad5ddac05165527803612a96c5c458693d7ac2613d9c4",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true,
+          "docSha256": "5689984647f40324cb551d10dbcd73848dafc344730d2dfcee02b3a89a66396d",
+          "backSha256": "76d65d3591482737d01019b659e3e25eaa309729444a2dcb072c34b0bd7a395d",
+          "docTextPreserved": true,
+          "docFeatures": {},
+          "docOpaquePartCount": 0
+        }
+      ],
+      "fib": 101,
+      "embeddedStorages": 0,
+      "hasVba": false,
+      "features": {},
+      "opaquePartCount": 0
+    },
+    {
+      "name": "word_with_embeded.doc",
+      "sha256": "206acf1f7eb7b7d7d2075e04015d005ae9bb56f025560f2583ad3878257bc4c7",
+      "pass": false,
+      "checks": [
+        {
+          "edited": false,
+          "savedSha256": "57fcda9b2c79dc8e5dfa2187d273c39d3490dafb7db5b9fd07f9b9d82c373063",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true
+        },
+        {
+          "edited": true,
+          "savedSha256": "0824e66f9e1624d4e9f3f9d095a98c1fab4fb0cfde7a7d53d92437cdf1bcfacf",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true,
+          "docSha256": "dd46ecf92809404c91e1d78d66ef00ad306fc08a66329f4c984f1c8f0f820b65",
+          "backSha256": "b974134b5f003158fc99ca8f3d289b0fbc4d5e1328b2bce545eb0edfce9d688a",
+          "docTextPreserved": true,
+          "docFeatures": {
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}drawing": 1
+          },
+          "docOpaquePartCount": 7
+        }
+      ],
+      "fib": 193,
+      "fibNew": 274,
+      "embeddedStorages": 4,
+      "hasVba": false,
+      "features": {},
+      "opaquePartCount": 8,
+      "error": "AssertionError: expected { \u2026(1) } to deeply equal {}"
+    },
+    {
+      "name": "SimpleMacro.doc",
+      "sha256": "39e9608c711d38f298ed20a5bfae12fcdaed6f4be2be4d26db670475216ca393",
+      "pass": true,
+      "checks": [
+        {
+          "edited": false,
+          "savedSha256": "831c1ca19a756694035bc12ecddb4e99f4b9d8f145b84b40143448202063372f",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true
+        },
+        {
+          "edited": true,
+          "savedSha256": "484f5c5f3591ba1168f27fe450afd8d40013bb3a25a52aca9d9a2815e43078ca",
+          "textPreserved": true,
+          "featuresPreserved": true,
+          "opaquePreserved": true,
+          "docSha256": "f5819c097507625841fd11c97a6eb63c1f43628ad93b45d8562aa43b967c9860",
+          "backSha256": "84d1a5dd0e6a510ebb29716944ef86289474bfc35ab286bbff4e551240871e06",
+          "docTextPreserved": true,
+          "docFeatures": {},
+          "docOpaquePartCount": 0
+        }
+      ],
+      "fib": 193,
+      "fibNew": 274,
+      "embeddedStorages": 0,
+      "hasVba": true,
+      "features": {},
+      "opaquePartCount": 0,
+      "macroWarning": true
+    }
+  ],
+  "embeddedCase": {
+    "imported": [
+      {
+        "name": "word/embeddings/oleObject1.xlsx",
+        "bytes": 7557,
+        "sha256": "b2725aa422bc1f82d910c91424fb76e38b5888b91c14f69336f29d8eabd42fd2"
+      },
+      {
+        "name": "word/embeddings/oleObject2.xlsx",
+        "bytes": 7554,
+        "sha256": "b2e578c6e63c4a0ace532d41510965bbcfb73e8e1e453f12a02073848fa63066"
+      },
+      {
+        "name": "word/embeddings/oleObject3.pptx",
+        "bytes": 8387,
+        "sha256": "1bae4c23af550f0b019f6ece680ba9ec022195875bb737997367a23df2114ef1"
+      },
+      {
+        "name": "word/embeddings/oleObject4.docx",
+        "bytes": 5128,
+        "sha256": "2f3c082cb1eadbebc111e9b323715006b9b9bece51c38591d0daca01316a0ffb"
+      }
+    ],
+    "edited": [
+      {
+        "name": "word/embeddings/oleObject1.xlsx",
+        "bytes": 7557,
+        "sha256": "b2725aa422bc1f82d910c91424fb76e38b5888b91c14f69336f29d8eabd42fd2"
+      },
+      {
+        "name": "word/embeddings/oleObject2.xlsx",
+        "bytes": 7554,
+        "sha256": "b2e578c6e63c4a0ace532d41510965bbcfb73e8e1e453f12a02073848fa63066"
+      },
+      {
+        "name": "word/embeddings/oleObject3.pptx",
+        "bytes": 8387,
+        "sha256": "1bae4c23af550f0b019f6ece680ba9ec022195875bb737997367a23df2114ef1"
+      },
+      {
+        "name": "word/embeddings/oleObject4.docx",
+        "bytes": 5128,
+        "sha256": "2f3c082cb1eadbebc111e9b323715006b9b9bece51c38591d0daca01316a0ffb"
+      }
+    ],
+    "returnedFromDOC": [
+      {
+        "name": "word/embeddings/oleObject1.xlsx",
+        "bytes": 7874,
+        "sha256": "ec9721c692271a9855c8f60cde34924c822dd99235a55fc986e513386c05f3ca"
+      },
+      {
+        "name": "word/embeddings/oleObject2.xlsx",
+        "bytes": 7868,
+        "sha256": "50bd1cd85e49be5936dd9928ffbdca387dfe8909295d2755f60b8643dab20a7e"
+      },
+      {
+        "name": "word/embeddings/oleObject3.docx",
+        "bytes": 5450,
+        "sha256": "4a7059efa589753f797a9db3980b813f121f4d30d60cac43db49a9cbb05dbcbd"
+      }
+    ]
+  },
+  "regressions": {
+    "newTests": 4,
+    "baselineFailing": 1,
+    "baselinePassingControls": 3,
+    "fixedPassing": 4
+  },
+  "localSuite": {
+    "passed": 2004,
+    "skipped": 10
+  },
+  "localNativeBuild": "blocked by Windows Application Control error4551; native tests/build pass in PR239 Linux and Windows CI"
+}
