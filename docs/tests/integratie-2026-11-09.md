@@ -23,6 +23,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#194](https://github.com/OpenAEC-Foundation/open-office-studio/pull/194) | `3de2b6487ee1159d7335cbf2334f150adc736103` | `9f161f58b53d03ff08005483d70c449cf12bbe25` | Author profiles and initials |
 | [#200](https://github.com/OpenAEC-Foundation/open-office-studio/pull/200) | `f14e63215b4445f877f189c4a442a17e57b29ac3` | `42f071ae9f40821cdefcf617b596d331493bf65b` | Independent template copies |
 | [#195](https://github.com/OpenAEC-Foundation/open-office-studio/pull/195) | `6119fe5f848a45c8c2a0402746944250379ee34b` | `55fc4cc01d4e8cc041e983aa17613f7f9221b58d` | UTF-16 text import BOM order |
+| [#214](https://github.com/OpenAEC-Foundation/open-office-studio/pull/214) | `355a635741527b9b94fb15b957be9a5680f1f311` | `d4d2311aaef6260a5edd0e9c82ff6a82b61e54db` | Uppercase autocorrect |
 
 ## Earlier fixes included in bundles
 
@@ -54,6 +55,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr194-targeted | `9f161f58b53d03ff08005483d70c449cf12bbe25` | 10 | 0 | 0 |
 | pr200-targeted | `42f071ae9f40821cdefcf617b596d331493bf65b` | 15 | 0 | 0 |
 | pr195-targeted | `55fc4cc01d4e8cc041e983aa17613f7f9221b58d` | 16 | 0 | 0 |
+| pr214-targeted | `d4d2311aaef6260a5edd0e9c82ff6a82b61e54db` | 26 | 0 | 3 |
 
 ## Pending deliveries
 
