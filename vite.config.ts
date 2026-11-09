@@ -3,6 +3,7 @@ import { configDefaults } from "vitest/config";
 import { defineConfig, type Plugin } from "vite";
 import { tekstengineCompatibiliteit } from "./scripts/tekstengine-compatibiliteit";
 import { rekenbladengineCompatibiliteit } from "./scripts/rekenbladengine-compatibiliteit";
+import { presentatieengineCompatibiliteit } from "./scripts/presentatieengine-compatibiliteit";
 import studios from "./assets/studios.json";
 import { databaseWorkerDelen, databaseWorkerIngangBewaken } from "./scripts/worker-ingang.mjs";
 
@@ -45,7 +46,7 @@ export default defineConfig({
   define: {
     "import.meta.env.VITE_STUDIO_VARIANT": JSON.stringify(process.env.VITE_STUDIO_VARIANT || "office"),
   },
-  plugins: [studioBeeldmerk(), fontsUitPublic(), tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit()],
+  plugins: [studioBeeldmerk(), fontsUitPublic(), tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit(), presentatieengineCompatibiliteit()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {
     exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],

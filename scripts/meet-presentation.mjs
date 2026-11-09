@@ -70,7 +70,22 @@ try {
     window.__calls = {};
     window.__long = [];
     window.__frames = [];
+    window.__keyPaint = [];
     window.__measuring = false;
+    window.addEventListener(
+      "keydown",
+      (e) => {
+        if (!window.__measuring) return;
+        const start = e.timeStamp;
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            if (window.__measuring)
+              window.__keyPaint.push(performance.now() - start);
+          }),
+        );
+      },
+      true,
+    );
     new PerformanceObserver((l) => {
       if (window.__measuring)
         window.__long.push(...l.getEntries().map((e) => e.duration));
@@ -97,10 +112,37 @@ try {
   );
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(1800);
+  // De nieuwe engine maakt miniaturen op de achtergrond. Vergelijk daarna
+  // dezelfde, volledig getekende pixelbasis; dit valt buiten de invoermeting.
+  await page.waitForFunction(() => {
+    const canvassen = [
+      ...document.querySelectorAll(".office-presentatie aside > button canvas"),
+    ];
+    return (
+      canvassen.length === 100 &&
+      canvassen.every(
+        (c) =>
+          c.width >= 127 &&
+          c.getContext("2d").getImageData(0, 0, 1, 1).data[3] > 0,
+      )
+    );
+  });
+  const thumbnailsBefore = await page.evaluate(() =>
+    [
+      ...document.querySelectorAll(".office-presentatie aside > button canvas"),
+    ].map((c) => c.toDataURL()),
+  );
   const initial = await page.evaluate(() => {
     const h = window.__appApis.presentatie.handle;
     window.__initialDeck = h.snapshot();
-    for (const name of ["snapshot", "version", "layoutSlide", "story"])
+    for (const name of [
+      "snapshot",
+      "version",
+      "layoutSlide",
+      "story",
+      "readContent",
+      "readCommandContent",
+    ])
       if (typeof h[name] === "function") {
         const original = h[name].bind(h);
         h[name] = (...args) => {
@@ -132,6 +174,7 @@ try {
       window.__calls = {};
       window.__long = [];
       window.__frames = [];
+      window.__keyPaint = [];
       window.__measuring = true;
     });
     const start = performance.now();
@@ -143,10 +186,12 @@ try {
         calls: window.__calls,
         long: window.__long,
         frames: window.__frames,
+        keyPaint: window.__keyPaint,
         status: window.__appStatus(),
       };
     });
     const f = data.frames.sort((a, b) => a - b);
+    const keys = data.keyPaint.sort((a, b) => a - b);
     const r = {
       name,
       wallMs: performance.now() - start,
@@ -155,6 +200,8 @@ try {
       longTaskMs: data.long.reduce((a, b) => a + b, 0),
       maxFrameMs: Math.max(0, ...f),
       p95FrameMs: f[Math.floor(f.length * 0.95)],
+      keyPaintSamples: keys.length,
+      p95KeyPaintMs: keys[Math.floor(keys.length * 0.95)] ?? null,
       status: data.status,
     };
     result.phases.push(r);
@@ -292,6 +339,27 @@ try {
   );
   await page.waitForFunction(() => window.__appStatus()?.dias === 100);
   result.slideCounting = true;
+  await page.evaluate(
+    () =>
+      new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
+  );
+  const thumbnailsAfter = await page.evaluate(() =>
+    [
+      ...document.querySelectorAll(".office-presentatie aside > button canvas"),
+    ].map((c) => c.toDataURL()),
+  );
+  const changedThumbnails = thumbnailsAfter.flatMap((png, i) =>
+    png !== thumbnailsBefore[i] ? [i + 1] : [],
+  );
+  if (
+    thumbnailsBefore.length !== 100 ||
+    thumbnailsAfter.length !== 100 ||
+    JSON.stringify(changedThumbnails) !== "[16]"
+  )
+    throw Error(
+      `Unexpected thumbnail changes: ${JSON.stringify(changedThumbnails)}`,
+    );
+  result.changedThumbnails = changedThumbnails;
   const saved = await page.evaluate(() =>
     Array.from(window.__appApis.presentatie.save()),
   );

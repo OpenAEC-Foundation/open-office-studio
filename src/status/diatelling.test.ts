@@ -5,7 +5,7 @@ import {
   openPresentation,
   type DeckSnapshot,
 } from "@betteroffice/pptx";
-import { DiaTelling } from "./diatelling";
+import { DiaTelling, noteerDiaAantal } from "./diatelling";
 
 beforeAll(async () => {
   await initWasm(
@@ -16,6 +16,22 @@ beforeAll(async () => {
 });
 
 describe("het aantal dia's voor de statusbalk", () => {
+  it("hergebruikt reeds doorgegeven editorinformatie en valt na een onbekende wijziging terug op de engine", () => {
+    let versie = "1";
+    const snapshot = vi.fn(() => ({ slides: [{}, {}, {}] }) as DeckSnapshot);
+    const bron = { version: () => versie, snapshot },
+      telling = new DiaTelling(bron);
+    noteerDiaAantal(bron, 2);
+    expect(telling.lees()).toBe(2);
+    expect(snapshot).not.toHaveBeenCalled();
+    versie = "2";
+    expect(telling.lees()).toBe(3);
+    expect(snapshot).toHaveBeenCalledTimes(1);
+    versie = "3";
+    noteerDiaAantal(bron, 4);
+    expect(telling.lees()).toBe(4);
+    expect(snapshot).toHaveBeenCalledTimes(1);
+  });
   it("leest het deck eenmaal bij navigatie en andere DOM-mutaties zonder documentwijziging", () => {
     const snapshot = vi.fn(() => ({ slides: [{}, {}] }) as DeckSnapshot);
     const telling = new DiaTelling({ version: () => "1", snapshot });
