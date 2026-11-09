@@ -497,6 +497,17 @@ pub fn converteer(bytes: &[u8], bron: &str, doel: &str, module: &str) -> Result<
     converteer_met(bytes, bron, doel, module, &Opties::default(), None)
 }
 
+fn conversie_opdracht(programma: &Path) -> Command {
+    let mut opdracht = Command::new(programma);
+    // Bestandsconversie gebruikt printeronafhankelijke layout, zodat een
+    // onbereikbare systeemprinter het openen of opslaan niet blokkeert.
+    // De instellingen gelden alleen voor dit kindproces.
+    opdracht
+        .env("SAL_DISABLE_DEFAULTPRINTER", "1")
+        .env("SAL_DISABLE_PRINTERLIST", "1");
+    opdracht
+}
+
 pub fn converteer_met(
     bytes: &[u8],
     bron: &str,
@@ -517,7 +528,7 @@ pub fn converteer_met(
     fs::write(&invoer, bytes).map_err(|e| e.to_string())?;
     let profiel_url = maak_profiel(map.path())?;
     let log = fs::File::create(map.path().join("conversie.log")).map_err(|e| e.to_string())?;
-    let mut opdracht = Command::new(programma);
+    let mut opdracht = conversie_opdracht(&programma);
     opdracht.args([
         format!("-env:UserInstallation={profiel_url}"),
         "--headless".into(),
@@ -759,6 +770,27 @@ mod tests {
         opdracht.arg("--ongeldige-conversieproefoptie");
         let fout = voer_uit(&mut opdracht, Duration::from_secs(10)).unwrap_err();
         assert!(fout.contains("procescode"), "{fout}");
+    }
+
+    #[test]
+    fn conversie_vraagt_geen_systeemprinters_op() {
+        const MARKERING: &str = "OFFICE_TEST_CONVERSIE_OMGEVING";
+        const SLEUTELS: [&str; 2] = ["SAL_DISABLE_DEFAULTPRINTER", "SAL_DISABLE_PRINTERLIST"];
+        if std::env::var_os(MARKERING).is_some() {
+            for sleutel in SLEUTELS {
+                assert_eq!(std::env::var(sleutel).as_deref(), Ok("1"));
+            }
+            return;
+        }
+        let voor = SLEUTELS.map(std::env::var_os);
+        let mut opdracht = conversie_opdracht(&std::env::current_exe().unwrap());
+        opdracht
+            .args(["--exact", "conversie::tests::conversie_vraagt_geen_systeemprinters_op"])
+            .env(MARKERING, "1")
+            .stdout(Stdio::null())
+            .stderr(Stdio::null());
+        assert!(voer_uit(&mut opdracht, Duration::from_secs(10)).is_ok());
+        assert_eq!(SLEUTELS.map(std::env::var_os), voor);
     }
 
     #[test]
