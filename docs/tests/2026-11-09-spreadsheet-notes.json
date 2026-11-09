@@ -1,0 +1,150 @@
+{
+  "date": "2026-11-09",
+  "base": "f4a03889eff1306fe503a72d7acb21c754d5ac8d",
+  "issue": 71,
+  "status": "Cell-note implementation tested; parent issue remains open",
+  "delivered": [
+    "Add, edit and delete standard XLSX cell notes through Tools and the cell context menu.",
+    "Cell indicators, hover cards, persistent always-show setting, previous/next navigation and sheet note list.",
+    "Preserve other note authors, rich-text runs, VML controls and unrelated package parts.",
+    "Hidden engine references keep note positions aligned with inserted/deleted rows and columns, Undo/Redo, repeated saving and reopening.",
+    "Read-only/protected sheet controls and refusal to overwrite a threaded discussion.",
+    "Labels in all nine enabled UI languages."
+  ],
+  "reproduction": {
+    "after": "The cell indicator and saved comment/VML references follow B2 to B3; Undo restores B2, Redo restores B3.",
+    "before": "The main-branch engine preserves a B2 note at B2 after inserting a row at index 1, leaving the note attached to the wrong cell."
+  },
+  "validation": {
+    "typescript": "pnpm exec tsc --noEmit: passed",
+    "productionBuild": "pnpm exec vite build --outDir .local/notes-dist --logLevel error: passed",
+    "unitTests": {
+      "skipped": 10,
+      "passed": 1998,
+      "command": "pnpm exec vitest run --maxWorkers=2",
+      "failed": 0
+    },
+    "translations": "9 enabled languages: passed; 23 pre-existing prepared-language directory warnings",
+    "browser": {
+      "stappen": [
+        "Bestaande notities in lege cellen: indicator, celhover en altijd tonen",
+        "Nieuwe notitie met auteur, Unicode en zichtbaarheid staat in de XLSX",
+        "Heropenen, vorige/volgende en bewerken behouden de juiste notitie",
+        "Verwijderen laat de twee oorspronkelijke notities ongemoeid",
+        "Rij invoegen, Undo/Redo en de echte opslagkoppeling behouden de celankers",
+        "Beveiligd blad: notitie leesbaar en wijzigacties uitgeschakeld"
+      ],
+      "fouten": []
+    },
+    "browserCommand": "OFFICE_TEST_DIST=.local/notes-dist node scripts/test-rekenblad-notities-gui.mjs (Playwright Chromium; optional OOS_PLAYWRIGHT_MODULE points to installed Playwright)",
+    "environment": "Production frontend in Chromium on Windows; no new native Tauri installer or Linux/macOS GUI test."
+  },
+  "limitations": [
+    "Saving or deleting a note uses the existing package reload route and clears earlier editor undo history. The note window explicitly discloses this before saving.",
+    "Threaded comment editing/replies/resolution and note print modes remain outside this change. Issue #71 must remain open.",
+    "Clipboard transfer of notes between cells/workbooks is not implemented in this change.",
+    "The standard import warnings about protection writing and substituted fonts may remain visible; the GUI run has no page or console errors."
+  ],
+  "standards": [
+    "https://download.microsoft.com/download/e/1/4/e14fb96f-83b8-4a2a-84db-7fa8acbe061a/Office%20Open%20XML%20Part%203%20-%20Primer.pdf",
+    "https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.vml.spreadsheet.visible"
+  ],
+  "sourceHashes": [
+    {
+      "sha256": "e9ad4e1498ac4dd2b87cd9f33bf39b60ac4b0e6fa60a4e3c133d519c323071f3",
+      "path": "scripts/test-rekenblad-notities-gui.mjs"
+    },
+    {
+      "sha256": "840bedb33d78e0c38791d9cc83e4acf8b6d5a8c71dffb25c0ad2e7bd5c1e427c",
+      "path": "src/rekenblad/CelnotitieUi.tsx"
+    },
+    {
+      "sha256": "9dadf782e076475248362a8e75ad2aa3e82bf0526b71eb81129183f404d47ed3",
+      "path": "src/rekenblad/celnotitieAnkers.test.ts"
+    },
+    {
+      "sha256": "46afbb55e2595fc76176e1798b4074a50aa388cd067a3a8cc4ed3a1696959e14",
+      "path": "src/rekenblad/celnotitieAnkers.ts"
+    },
+    {
+      "sha256": "ea3cf5dcd599b6717629f0fd768b7a54775189782dc03be7639bfeaacfdbab36",
+      "path": "src/rekenblad/celnotities.css"
+    },
+    {
+      "sha256": "105084c39e2e534311722ae41ee8078b880b43cd65383891888425b57a84d6e0",
+      "path": "src/rekenblad/celnotities.test.ts"
+    },
+    {
+      "sha256": "0e50cb790654df5504adc283ea3c6e37ff244090280256202e62c83e7a991cd1",
+      "path": "src/rekenblad/celnotities.ts"
+    },
+    {
+      "sha256": "675cce3579a72bf2530ac8954f3077d81ed24db1dd586c3629e0effb118e2d1a",
+      "path": "src/rekenblad/notitieAnkerNaam.ts"
+    },
+    {
+      "sha256": "316eb3471bf58218dbe8070367afd89d9a8d85e24456cddb98dadb1e7bf6bf71",
+      "path": "src/editors.tsx"
+    },
+    {
+      "sha256": "2af9643a6e57242698397ce75adef4ec58f7463e5187f6e24dbd193717f5afe9",
+      "path": "src/i18n/locales/de/spreadsheet.json"
+    },
+    {
+      "sha256": "a80464146917bcb246c46d14fbc4a469cc62520e59a2f39511e467dbda6bc068",
+      "path": "src/i18n/locales/en/spreadsheet.json"
+    },
+    {
+      "sha256": "4211028baada69d429be837cfdd617752b2307a06633083b6e62b106500d4caa",
+      "path": "src/i18n/locales/es/spreadsheet.json"
+    },
+    {
+      "sha256": "907b8720c8c461d073a49606dee95bf8e4ba4ab3a95ba0a0ebfe85123b474a1f",
+      "path": "src/i18n/locales/fr/spreadsheet.json"
+    },
+    {
+      "sha256": "5cf935c6e61b3e98b5862f9da617c36bcb0cb9580bda3ad0c1d9ccf7cc27ee19",
+      "path": "src/i18n/locales/it/spreadsheet.json"
+    },
+    {
+      "sha256": "6f6d7d3262cac131733086af3d6cc2e4a56b1e4f63520ad6ca82e9745e9b4a87",
+      "path": "src/i18n/locales/lo/spreadsheet.json"
+    },
+    {
+      "sha256": "bb1b8539836739543e6e69d7b6b3868c1799df588aff9a8226a43c86fae0f74d",
+      "path": "src/i18n/locales/nl/spreadsheet.json"
+    },
+    {
+      "sha256": "28cef4ad41de708367d1ec0187a36d1dc86f1f2b1d8bc38bc7d5965f66c4a936",
+      "path": "src/i18n/locales/pt-BR/spreadsheet.json"
+    },
+    {
+      "sha256": "54c42d5c215348ebcc857f0eccac82385cf865546717358025e1179ca33a4c26",
+      "path": "src/i18n/locales/zh-CN/spreadsheet.json"
+    },
+    {
+      "sha256": "fed6ef93baef948398a1f61e86a6b51624566aa1264fd46230465964ca087e46",
+      "path": "src/lint/rekenblad-filter.ts"
+    },
+    {
+      "sha256": "65453892b2c8d588057f6dc2dc800c28bfa6ef499363b645679d573807f3cc1f",
+      "path": "src/lint/rekenblad-laag.tsx"
+    },
+    {
+      "sha256": "be93c19d998de41bfce4029f9832f9b18f02a4b21e8c0997519ef0ac3e19b52a",
+      "path": "src/lint/rekenblad.tsx"
+    },
+    {
+      "sha256": "77a1b7fb6abb92c82a05e71f4b8d1fa6a04ceaa6ce4c1215ae6bd2c4b0b4bf2b",
+      "path": "src/rekenblad/RekenbladExtra.tsx"
+    },
+    {
+      "sha256": "10700521d8ba4ed5be2161a1d0e300ada10f95113e6d4246855139c449b6a9c9",
+      "path": "src/rekenblad/namen.ts"
+    },
+    {
+      "sha256": "062dc9c746e6ab788a4d1289c13472031690e9c99fa635eed8ebbc2fe8ebca9b",
+      "path": "src/rekenblad/vensters.ts"
+    }
+  ]
+}

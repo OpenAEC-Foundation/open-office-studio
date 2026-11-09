@@ -21,7 +21,8 @@ import {
   type Bereik,
   type Cel,
 } from "../lint/rekenblad-logica";
-import { leesSelectie, Melding, voerOpsUit } from "../lint/rekenblad-opdrachten";
+import { leesSelectie, Melding, voerOpsUit, type RuweOp } from "../lint/rekenblad-opdrachten";
+import { controleerValidatieBewerking } from "./gegevensvalidatie";
 import { kolomPx } from "./structuur";
 import {
   leesHtmlTabel,
@@ -344,24 +345,29 @@ export async function plak(
     ? cellen.map((rij) => rij.map((c) => opties.legeOverslaan && c.invoer === "" ? null : c.invoer))
     : plakInvoer(cellen, huidig, opties, verschuiving);
 
-  // 1. Opmaak (uit de app), vóór de inhoud: invoer wordt gelezen met de notatie van de cel.
+  const stappen: XlsxEditStep[] = invoerStappen(sheetId, gebied, nieuw, regionaal, cellen.map((rij) => rij.map((c) => !!c.canoniek)));
+  if (intern?.knippen && opties.wat !== "opmaak" && intern.blad === blad)
+    stappen.push(...leegmaken(sheetId, intern.bereik, gebied));
+  const opmaakOps:RuweOp[]=[];
   if (intern?.opmaak && (opties.wat === "alles" || opties.wat === "opmaak")) {
-    await voerOpsUit(api, [
+    opmaakOps.push(
       {
         type: "applyRangeFormat",
         sheet: blad,
         range: { start: { row: gebied.top, col: gebied.left }, end: { row: gebied.bottom, col: gebied.right } },
         format: opmaakNaar(intern.opmaak, opties.transponeren),
       },
-    ], versie);
+    );
+  }
+  if(stappen.length)controleerValidatieBewerking(h,opmaakOps,{expectVersion:versie,steps:stappen});
+  // Opmaak gaat vóór inhoud, nadat de volledige combinatie zonder mutatie is gecontroleerd.
+  if(opmaakOps.length){
+    await voerOpsUit(api,opmaakOps,versie);
     versie = h.version();
   }
 
   // Inhoud en afgeleide getalnotaties zijn één Undo-stap. Overgeslagen
   // cellen komen niet in de opdracht; hun tekst/formule wordt niet herlezen.
-  const stappen: XlsxEditStep[] = invoerStappen(sheetId, gebied, nieuw, regionaal, cellen.map((rij) => rij.map((c) => !!c.canoniek)));
-  if (intern?.knippen && opties.wat !== "opmaak" && intern.blad === blad)
-    stappen.push(...leegmaken(sheetId, intern.bereik, gebied));
   if (stappen.length) await bewerk(api, stappen, versie);
   if (intern?.knippen) laatste = null;
 

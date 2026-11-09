@@ -8,6 +8,7 @@
  * element bij opslaan opnieuw. Puur, op de stand na.
  */
 import type { XlsxCellValue } from "@betteroffice/xlsx";
+import { bewaarCelnotitieAnkers } from "../rekenblad/celnotitieAnkers";
 import { Pakket } from "../grafieken/pakket";
 import {
   attr,
@@ -642,11 +643,11 @@ export function metFilters(handle: object, bytes: Uint8Array, aantalBladen: numb
 
 /** `api.save()` plus de filterstand: zo bewaren opslaan, Opslaan als en herladen het autoFilter. */
 export function werkboekBytes(api: { save(): Uint8Array; handle: object & { sheetInfo(): { sheetNames: string[] } } }) {
-  const bytes = api.save();
+  let bytes = api.save();
   try {
-    return metFilters(api.handle, bytes, api.handle.sheetInfo().sheetNames.length);
+    bytes = metFilters(api.handle, bytes, api.handle.sheetInfo().sheetNames.length);
   } catch {
     // Liever opslaan zonder bijgewerkt filter dan niet opslaan.
-    return bytes;
   }
+  return bewaarCelnotitieAnkers(api.handle, bytes);
 }

@@ -26,6 +26,7 @@ import {
   Scissors,
   SquarePlus,
   Trash2,
+  StickyNote,
   Ungroup,
 } from "lucide-react";
 import { RibbonFout } from "../Ribbon";
@@ -54,6 +55,9 @@ import { PlakkenSpeciaal } from "./PlakkenSpeciaal";
 import { optimaleBreedte, optimaleHoogte } from "./structuur";
 import { openVenster, useVenster, type Venster } from "./vensters";
 import "./rekenblad.css";
+import { CelnotitieVenster } from "./CelnotitieUi";
+import { ValidatieVenster } from "./ValidatieUi";
+import { BeveiligingVenster } from "./BeveiligingUi";
 
 const TABS = '[data-testid="xlsx-sheet-tabs"]';
 
@@ -283,6 +287,7 @@ export function RekenbladExtra() {
       case "cel":
         return [
           klembordItems,
+          [{ naam: t("notes.edit"), icoon: StickyNote, doe: () => setVenster({ soort: "notitie" }) }],
           [
             { naam: t("menu.insertRowsAbove"), icoon: BetweenHorizontalStart, uit, doe: () => uitvoeren((a) => rijenInvoegen(a, false)) },
             { naam: t("menu.insertColumnsLeft"), icoon: BetweenVerticalStart, uit, doe: () => uitvoeren((a) => kolommenInvoegen(a, false)) },
@@ -393,6 +398,9 @@ export function RekenbladExtra() {
         <MaatVenster api={api} soort={venster.soort} sluiten={sluiten} />
       )}
       {venster?.soort === "getal" && <GetalVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "notitie" && <CelnotitieVenster api={api} cel={venster.cel} blad={venster.blad} sluiten={sluiten} />}
+      {venster?.soort === "validatie" && <ValidatieVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "beveiliging" && <BeveiligingVenster api={api} soort={venster.beveiliging} sluiten={sluiten} />}
       {venster?.soort === "plakkenSpeciaal" && (
         <PlakkenSpeciaal api={api} inhoud={plakInhoud} sluiten={sluiten} />
       )}

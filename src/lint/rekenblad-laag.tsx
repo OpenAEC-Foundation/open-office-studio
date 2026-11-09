@@ -25,6 +25,9 @@ import { doelBereik, vul, vulTotEinde, type VulKeuze, type VulRichting } from ".
 import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-opdrachten";
 import { kolomLetters, type Bereik } from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
+import { CelnotitieLaag } from "../rekenblad/CelnotitieUi";
+import { ValidatieLaag } from "../rekenblad/ValidatieUi";
+import { bewaakBeveiligdeSelectie } from "../rekenblad/bladbeveiliging";
 import "./rekenblad-gereedschap.css";
 
 /** Een verwijzing om in het raster te kleuren. */
@@ -61,6 +64,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
 
   function Laag({ context, geometry }: { context: XlsxPluginContext<null>; geometry: XlsxPluginGeometry }) {
     const api = useEditorApi().rekenblad;
+    useEffect(()=>{if(api)bewaakBeveiligdeSelectie(api,selectie);},[api,selectie]);
     const [, ververs] = useReducer((n: number) => n + 1, 0);
     useEffect(() => {
       luisteraars.add(ververs);
@@ -88,6 +92,8 @@ export function maakRekenbladLaag(): RekenbladLaag {
     const sel = selectie?.sheetId === sheetId ? selectie : null;
     return (
       <>
+        {blad >= 0 && <CelnotitieLaag api={api} blad={blad} geometry={geometry} />}
+        {blad >= 0 && <ValidatieLaag api={api} blad={blad} geometry={geometry} focus={sel?.cells?.focus ?? null} />}
         {markeringen
           .filter((m) => m.blad === null || m.blad.toLowerCase() === info.sheetNames[blad]?.toLowerCase())
           .map((m, i) => {

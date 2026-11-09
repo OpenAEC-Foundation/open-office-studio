@@ -1,0 +1,53 @@
+.validatie-ongeldig {
+  position: absolute;
+  border: 2px solid #d22424;
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 4;
+}
+.validatie-anker {
+  position: absolute;
+  z-index: 12;
+  pointer-events: auto;
+}
+.validatie-pijl {
+  position: absolute;
+  width: 20px;
+  border: 1px solid #999;
+  background: var(--office-panel, #fff);
+  color: inherit;
+  cursor: pointer;
+}
+.validatie-bericht {
+  background: #fff8c6;
+  color: #222;
+  box-shadow: 0 2px 8px #0003;
+  padding: 8px;
+  max-width: 260px;
+  white-space: pre-wrap;
+  pointer-events: none;
+}
+.validatie-anker select {
+  min-width: 160px;
+  max-width: 320px;
+  background: var(--office-panel, #fff);
+  color: inherit;
+}
+.validatie-velden {
+  border: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  max-height: 52vh;
+  overflow: auto;
+}
+.validatie-velden label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.validatie-velden label:has(input[type="checkbox"]) {
+  justify-content: flex-start;
+}
