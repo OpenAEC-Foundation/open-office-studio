@@ -80,6 +80,7 @@ import {
   useIngeslotenGrafieken,
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
+import { DiaObjecten } from "../presentatie/DiaObjecten";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
@@ -734,6 +735,7 @@ export function PresentatieRibbon({
             <>
               <Rangschikken />
               <ObjectUitlijnen acties={acties} />
+              <Groep naam={t("presentation.groups.object")}><DiaObjecten /></Groep>
               <Groep naam={t("presentation.groups.object")}>
                 <DiaKnop
                   naam={t("presentation.commands.delete")}

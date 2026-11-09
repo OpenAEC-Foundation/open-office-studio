@@ -12,7 +12,7 @@ deze branch horen; #83–87 en de formaatissues blijven apart.
 | #77 | Een indeling kiezen voor een nieuwe dia. | Diamodellen/indelingen beheren en bewerken, wijzigingen doorgeven, resetten en bestandsbehoud controleren. |
 | #78 | Bestaande thema's worden door de engine gelezen. | Thema- en achtergrondbediening, aangepaste kleuren/lettertypen en bewaren van een eigen thema. |
 | #79 | Notities, timer, volgende dia, tweede venster, schermkeuze, nummernavigatie, zwart/wit, aanwijzer en inkt. PR201 behoudt native knopbediening. | Rijke notitietekst en de resterende presentatorcriteria gericht toetsen. |
-| #80 | Slepen/vergroten, stapelvolgorde, uitlijnen van één object op de dia. | Meer objecten samen uitlijnen/verdelen, groeperen, exacte geometrie en beeldbewerkingen. |
+| #80 | Slepen/vergroten, stapelvolgorde. Nieuw: meerdere objecten samen uitlijnen/verdelen, gedraaide randen en exacte geometrie. | Groeperen, hulplijnen, beeldbewerkingen en opmaak kopiëren. |
 | #81 | De engine leest bestaande tabellen. | Tabellen invoegen/bewerken/opmaken en een kopieer-/plakroute met pakketbehoud. |
 | #82 | Gedeelde grafiekeditor kan grafieken invoegen/bewerken en bewaart een ingesloten werkmap. | De volledige presentatie-route toetsen en een spreadsheetgrafiek overnemen. Nieuwe trendlijnen/assen worden met de eigenaar van #66 afgestemd. |
 
