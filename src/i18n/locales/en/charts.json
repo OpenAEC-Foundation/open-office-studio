@@ -1,16 +1,49 @@
 {
   "types": {
-    "column": { "name": "Column", "description": "Compare values side by side" },
-    "stackedColumn": { "name": "Stacked column", "description": "Parts and total per category" },
-    "percentColumn": { "name": "100% column", "description": "Shares per category" },
-    "bar": { "name": "Bar", "description": "Horizontal, for long names" },
-    "line": { "name": "Line", "description": "Trend over time" },
-    "lineMarkers": { "name": "Line with markers", "description": "Trend with visible data points" },
-    "area": { "name": "Area", "description": "Trend with emphasis on magnitude" },
-    "pie": { "name": "Pie", "description": "Breakdown of a single series" },
-    "doughnut": { "name": "Doughnut", "description": "Breakdown with an open centre" },
-    "scatter": { "name": "Scatter (XY)", "description": "Relationship between two numbers" },
-    "combo": { "name": "Column + line", "description": "Last series as a line on a secondary axis" }
+    "column": {
+      "name": "Column",
+      "description": "Compare values side by side"
+    },
+    "stackedColumn": {
+      "name": "Stacked column",
+      "description": "Parts and total per category"
+    },
+    "percentColumn": {
+      "name": "100% column",
+      "description": "Shares per category"
+    },
+    "bar": {
+      "name": "Bar",
+      "description": "Horizontal, for long names"
+    },
+    "line": {
+      "name": "Line",
+      "description": "Trend over time"
+    },
+    "lineMarkers": {
+      "name": "Line with markers",
+      "description": "Trend with visible data points"
+    },
+    "area": {
+      "name": "Area",
+      "description": "Trend with emphasis on magnitude"
+    },
+    "pie": {
+      "name": "Pie",
+      "description": "Breakdown of a single series"
+    },
+    "doughnut": {
+      "name": "Doughnut",
+      "description": "Breakdown with an open centre"
+    },
+    "scatter": {
+      "name": "Scatter (XY)",
+      "description": "Relationship between two numbers"
+    },
+    "combo": {
+      "name": "Column + line",
+      "description": "Last series as a line on a secondary axis"
+    }
   },
   "unknownType": "Unknown type",
   "busy": "Working…",
@@ -228,5 +261,15 @@
       "moreValuesThanCategories": "Series ‘{{name}}’ has more values than there are categories.",
       "trendlinesDropped": "Trendlines and error bars are removed when editing."
     }
+  },
+  "transfer": {
+    "copy": "Copy chart",
+    "paste": "Paste chart",
+    "choose": "Choose a chart",
+    "help": "Copy the chart and its data. In Presentation, use Paste chart or Ctrl+V.",
+    "empty": "This document has no charts.",
+    "invalid": "The clipboard does not contain a supported chart copy.",
+    "changed": "The document has changed. Copy or paste the chart again.",
+    "slide": "Slide {{number}}"
   }
 }

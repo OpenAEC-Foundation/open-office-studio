@@ -14,7 +14,7 @@ deze branch horen; #83–87 en de formaatissues blijven apart.
 | #79 | Notities, timer, volgende dia, tweede venster, schermkeuze, nummernavigatie, zwart/wit, aanwijzer en inkt. PR201 behoudt native knopbediening. | Rijke notitietekst en de resterende presentatorcriteria gericht toetsen. |
 | #80 | Slepen/vergroten, stapelvolgorde. Nieuw: meerdere objecten samen uitlijnen/verdelen, gedraaide randen en exacte geometrie. | Groeperen, hulplijnen, beeldbewerkingen en opmaak kopiëren. |
 | #81 | Tabellen invoegen/bewerken, drie stijlen, rijen/kolommen, samenvoegen/splitsen, celopmaak en TSV/HTML-plakken. Renderen en PPTX-behoud getest. | Functionele criteria afgedekt; beoordeling en samenvoegen van de PR. |
-| #82 | Gedeelde grafiekeditor kan grafieken invoegen/bewerken en bewaart een ingesloten werkmap. | De volledige presentatie-route toetsen en een spreadsheetgrafiek overnemen. Nieuwe trendlijnen/assen worden met de eigenaar van #66 afgestemd. |
+| #82 | Gedeelde grafiekeditor, ingesloten gegevensblad en kopiëren vanuit Spreadsheet via knop/Ctrl+V. Alle elf typen, actuele broncellen, bronbehoud, renderen en opslag/heropening getest. | Functionele criteria voor ondersteunde gedeelde typen afgedekt; nieuwe #66-functies blijven afgestemd met hun eigenaar. |
 
 Dit document onderscheidt bestaande/nieuwe deelresultaten van nog open
 acceptatiecriteria. De zeven brede issues zijn niet gesloten.

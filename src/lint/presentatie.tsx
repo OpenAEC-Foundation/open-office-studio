@@ -83,6 +83,7 @@ import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaObjecten } from "../presentatie/DiaObjecten";
 import { DiaOntwerp } from "../presentatie/DiaOntwerp";
 import { DiaTabellen } from "../presentatie/DiaTabellen";
+import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
 
@@ -531,6 +532,7 @@ export function PresentatieRibbon({
   return (
     <>
     {grafieken.venster}
+    <GrafiekPlakListener />
     {weergave.element}
     {acties.voorstellingElement}
     {api && acties.zoeken && (
