@@ -12,6 +12,7 @@ export async function toon(
   return render(
     host,
     <PptxEditor
+      legacySyncApi
       file={bytes}
       fileName={naam}
       fonts={fonts}
