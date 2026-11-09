@@ -1,4 +1,5 @@
 import { useEditorApi, zichtbaarElement } from "./editorApi";
+import { VerwijsNavigatie } from "../tekst/verwijzingen/VerwijsNavigatie";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { GrafiekGroep, useIngeslotenGrafieken } from "../grafieken/ui/ingesloten";
 import {
@@ -566,6 +567,7 @@ export function TekstRibbon({
     <TekstBewerken opdrachten={opdrachten}>
     <TekstOpmaakProvider>
     <StijlenBeheer>
+      <VerwijsNavigatie />
       <Ribbon
         bestand={bestand}
         beginTab={herlaad ? lintTabPerDocument.get(herlaad) : undefined}
