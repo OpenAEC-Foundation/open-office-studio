@@ -5,12 +5,9 @@ import { leesSelectie, rekenbladHost } from "../lint/rekenblad-opdrachten";
 import { huidigeIndex } from "../lint/presentatie-acties";
 import { zichtbaarElement } from "../lint/editorApi";
 import { publiceerStatus } from "./statusinfo";
-import { selectieStatistiek } from "./berekening";
+import { MAX_STATUS_CELLEN, SelectieStatistieken } from "./selectiestatistiek";
 import { filterTelling } from "../lint/rekenblad-gegevens";
 import { abonneerFilters } from "../lint/rekenblad-filter";
-
-/** Grotere selecties tellen we niet: de statusbalk mag nooit haperen. */
-const MAX_CELLEN = 200_000;
 
 /** Som, gemiddelde en aantal van de selectie in het zichtbare rekenblad. */
 export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean) {
@@ -18,6 +15,9 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
   useEffect(() => {
     if (!api || !zichtbaar) return;
     let wachten = 0;
+    let gestopt = false;
+    let meting = 0;
+    const statistieken = new SelectieStatistieken(api.handle);
     const filter = () => {
       try {
         return filterTelling(api, api.handle.sheetInfo().activeSheet);
@@ -25,40 +25,37 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
         return null;
       }
     };
-    const meet = () => {
+    const meet = async () => {
+      const nummer = ++meting;
       try {
         const { sheetId, bereik } = leesSelectie(api);
         const cellen = (bereik.bottom - bereik.top + 1) * (bereik.right - bereik.left + 1);
-        if (cellen < 2 || cellen > MAX_CELLEN) {
+        if (cellen < 2 || cellen > MAX_STATUS_CELLEN) {
+          statistieken.stop();
           publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen, filter: filter() });
           return;
         }
-        const lezing = api.handle.readCells({
-          ranges: [
-            {
-              sheetId,
-              range: {
-                kind: "rowCol",
-                start: { row: bereik.top, col: bereik.left },
-                end: { row: bereik.bottom, col: bereik.right },
-              },
-            },
-          ],
-        });
+        const versie = api.handle.version();
+        const resultaat = statistieken.lees(sheetId, bereik);
+        if (statistieken.bezig)
+          publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen, filter: filter() });
+        const statistiek = await resultaat;
+        if (gestopt || nummer !== meting || versie !== api.handle.version()) return;
         publiceerStatus(eigenaar, {
           soort: "rekenblad",
           cellen,
           filter: filter(),
-          statistiek: lezing.ok
-            ? selectieStatistiek(lezing.ranges[0].cells.map((rij) => rij.map((cel) => cel.value)))
-            : null,
+          statistiek,
         });
       } catch {
+        if (gestopt || nummer !== meting) return;
         // Nog geen selectie (of het blad wordt opnieuw geladen).
         publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen: 0, filter: filter() });
       }
     };
     const plan = () => {
+      // Een oude berekening niet publiceren terwijl een nieuwe selectie op de DOM wacht.
+      meting++;
       clearTimeout(wachten);
       wachten = window.setTimeout(meet, 120);
     };
@@ -79,6 +76,9 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
         attributeFilter: ["aria-selected"],
       });
     return () => {
+      gestopt = true;
+      meting++;
+      statistieken.stop();
       clearTimeout(wachten);
       waarnemer.disconnect();
       stopOpdrachten();
