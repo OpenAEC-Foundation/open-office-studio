@@ -33,7 +33,7 @@ import {
   type Tekenobject,
 } from "./tekenobjecten";
 import type { Herladen } from "../lint/editorApi";
-import { beeldAfmetingen } from "./beeldAfmetingen";
+import { beeldAfmetingen, beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 
 interface ObjectDoel {
   versie: string;
@@ -480,7 +480,10 @@ function ObjectVenster({
         )}
         <p role="note">{t("objects.reloadHistory")}</p>
         {(origineel?.soort === "onbekend" ||
-          (origineel?.soort === "afbeelding" && !origineel.mime)) && (
+          (origineel?.soort === "afbeelding" &&
+            (!origineel.mime ||
+              !origineel.media ||
+              !beeldVoorbeeldToegestaan(origineel.media)))) && (
           <p role="note">{t("objects.previewLimited")}</p>
         )}
         {origineel?.beveiligd && <p role="alert">{t("objects.protected")}</p>}

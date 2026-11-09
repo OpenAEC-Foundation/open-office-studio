@@ -1,3 +1,8 @@
+/** Dezelfde grenzen voor nieuwe én reeds ingebedde afbeeldingen; bytes blijven behouden. */
+export function beeldVoorbeeldToegestaan(b: Uint8Array): boolean {
+  return b.byteLength <= 20 * 1024 * 1024 && beeldAfmetingen(b) !== null;
+}
+
 /** Controleer rasterafmetingen vóór een browserdecoder veel geheugen reserveert. */
 export function beeldAfmetingen(
   b: Uint8Array,

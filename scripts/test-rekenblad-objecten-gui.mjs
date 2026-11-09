@@ -635,6 +635,34 @@ try {
   stap(
     "Frozen-cell images stay fixed while body images follow both scroll axes",
   );
+  const huge = new Uint8Array(png),
+    header = new DataView(huge.buffer);
+  header.setUint32(16, 20000);
+  header.setUint32(20, 20000);
+  const guarded = voegTekenobjectToe(basis, 0, {
+    naam: "Oversized header",
+    afbeelding: huge,
+    plek: { row: 2, col: 2, x: 0, y: 0, breedte: 100, hoogte: 60 },
+  });
+  await page
+    .locator(".office input[type=file]")
+    .first()
+    .setInputFiles({
+      name: "GuardedImage.xlsx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer: Buffer.from(guarded),
+    });
+  const blocked = page.getByRole("button", {
+    name: "Image: Oversized header",
+    exact: true,
+  });
+  await blocked.waitFor();
+  assert.equal(await blocked.locator("img").count(), 0);
+  assert.deepEqual(leesTekenobjecten(await bytes())[0].media, huge);
+  stap(
+    "An embedded oversized image header gets a preserved placeholder before browser decoding",
+  );
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {
   await writeFile(
