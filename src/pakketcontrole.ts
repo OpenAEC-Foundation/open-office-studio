@@ -1,6 +1,5 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "./editors";
-import { attr, kind, leesXml } from "./grafieken/xml";
 
 /** Kenmerken waarvan behoud per route in de testmatrix is gemeten. */
 export type Risico =
@@ -141,17 +140,24 @@ function risicosVan(
   if (soort === "xlsx") {
     const wb = tekst("xl/workbook.xml");
     if (wb.includes("workbookProtection")) {
-      try {
-        const protection = kind(leesXml(wb), "workbookProtection");
+      // Houd deze preflight ook rechtstreeks in Node bruikbaar: de volledige
+      // grafiek-XML-lezer trekt de browser-i18n-configuratie mee.
+      const protection = wb
+        .replace(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>/g, "")
+        .match(/<(?:\w+:)?workbookProtection\b([^>]*?)\/?\s*>/)?.[1];
+      if (protection) {
+        const attr = (naam: string) =>
+          protection.match(
+            new RegExp(`(?:^|\\s)${naam}\\s*=\\s*(["'])(.*?)\\1`),
+          )?.[2];
         const actief = ["1", "true"].includes(
-          (attr(protection, "lockStructure") ?? "").toLowerCase(),
+          (attr("lockStructure") ?? "").toLowerCase(),
         );
-        const algoritme = (attr(protection, "workbookAlgorithmName") ?? "")
-          .replace(/-/g, "").toUpperCase();
-        if (actief && algoritme === "SHA512" && attr(protection, "workbookHashValue"))
+        const algoritme = (attr("workbookAlgorithmName") ?? "")
+          .replace(/-/g, "")
+          .toUpperCase();
+        if (actief && algoritme === "SHA512" && attr("workbookHashValue"))
           risicos.add("werkmapstructuur");
-      } catch {
-        // De gewone openroute behandelt beschadigde werkboek-XML.
       }
     }
     if (heeft(/^xl\/(pivotTables|pivotCache)\//)) risicos.add("draaitabellen");
