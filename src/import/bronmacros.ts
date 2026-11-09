@@ -7,7 +7,7 @@ export function bronMacros(
   ext: string,
 ): "vba" | "scripts" | null {
   try {
-    if ((ext === "doc" || ext === "dot") && isCfb(bytes)) {
+    if (["doc", "dot", "xls", "xlt"].includes(ext) && isCfb(bytes)) {
       return leesCfb(bytes).some((item) =>
         /(?:^|\/)VBA(?:\/|$)/i.test(item.pad),
       )
@@ -15,7 +15,7 @@ export function bronMacros(
         : null;
     }
     if (
-      (ext === "odt" || ext === "ott") &&
+      ["odt", "ott", "ods", "ots"].includes(ext) &&
       bytes[0] === 0x50 &&
       bytes[1] === 0x4b
     ) {
@@ -34,6 +34,15 @@ export function bronMacros(
         },
       });
       return gevonden ? "scripts" : null;
+    }
+    if (ext === "xlsb" && bytes[0] === 0x50 && bytes[1] === 0x4b) {
+      let gevonden = false, aantal = 0;
+      unzipSync(bytes, { filter: (f) => {
+        if (++aantal > 10000) throw new Error("Too many XLSB parts");
+        if (/(?:^|\/)vbaProject\.bin$/i.test(f.name)) gevonden = true;
+        return false;
+      } });
+      return gevonden ? "vba" : null;
     }
   } catch {
     // Beschadigde of niet-herkende containers blijven voor de normale openroute.
