@@ -13,6 +13,8 @@ on:
       - "src/grafieken/zipdelen*"
       - "src/grafieken/xml.ts"
       - "src/lint/rekenblad-filter*"
+      - "packages/rekenbladen/**"
+      - "src/export/index.ts"
       - "package.json"
       - "pnpm-lock.yaml"
   workflow_dispatch:
@@ -42,6 +44,10 @@ jobs:
         run: python scripts/maak-rekenbladprestatie.py
       - name: Tijd en geheugen van grote pakketmetadata begrenzen
         run: node --expose-gc scripts/meet-rekenbladpakket.mjs
+      - name: Chromium for the real spreadsheet worker
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Verify 50,000 formulas without blocking the browser and cancelled opens
+        run: node scripts/test-rekenbladadapter-worker.mjs
       - name: Formule-, pakket- en kenmerkrapporten bewaren
         if: always()
         uses: actions/upload-artifact@v4

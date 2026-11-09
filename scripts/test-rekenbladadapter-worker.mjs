@@ -114,10 +114,6 @@ try {
   assert(result.maxGap < 500);
   assert(result.savedBytes > 0);
   assert.deepEqual(errors, []);
-  await writeFile(
-    ".local/prestatie/rekenbladen/adapter-worker.json",
-    JSON.stringify(result, null, 2),
-  );
   const aborted = await page.evaluate(async () => {
     const { openSpreadsheet } = await import(
       "/packages/rekenbladen/src/index.ts"
@@ -135,6 +131,7 @@ try {
     }
   });
   assert(aborted, "Aborted worker open must not start document processing");
+  await writeFile(".local/prestatie/rekenbladen/adapter-worker.json", JSON.stringify({ ...result, aborted }, null, 2));
   console.log(
     JSON.stringify({
       openMs: result.openMs,
