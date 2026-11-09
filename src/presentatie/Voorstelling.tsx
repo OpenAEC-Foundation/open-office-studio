@@ -40,6 +40,8 @@ import {
 import { useOpmaak } from "../i18n/opmaak";
 import { tekenDia, verborgenDias } from "./diabeeld";
 import { DiaVlak, pasIn } from "./DiaVlak";
+import { GEEN_OVERGANG, leesOvergangen } from "./overgangen";
+import { useOvergangTeken } from "./useOvergangTeken";
 import {
   beginStaat,
   duurTekst,
@@ -162,6 +164,10 @@ export function Voorstelling({
   const aantal = deck.slides.length;
   const verhouding = deck.widthEmu / Math.max(1, deck.heightEmu);
   const verborgen = useMemo(() => verborgenDias(api), [api]);
+  const overgangen = useMemo(() => {
+    try { return leesOvergangen(api.handle.save()); }
+    catch { return []; }
+  }, [api]);
   const [staat, setStaat] = useState<VoorstellingStaat>(() =>
     beginStaat(startDia(verzoek.vanafBegin, huidig, aantal, verborgen), aantal),
   );
@@ -357,12 +363,14 @@ export function Voorstelling({
     if (opstelling.soort !== "tauri") return;
     const v = opstelling.venster;
     const pixels = Math.round(pasIn(v.breedte, v.hoogte, verhouding).breedte);
+    let actief = true;
     void bron(staat.index, pixels).then((canvas) => {
-      if (canvas) v.stuurBeeld(staat.index, canvas);
+      if (actief && canvas) v.stuurBeeld(staat.index, canvas, overgangen[staat.index]);
     });
     // Alvast de volgende dia klaarzetten.
     const volgende = zichtbareDia(staat.index + 1, 1, aantal, verborgen);
     if (volgende !== null) void bron(volgende, pixels);
+    return () => { actief = false; };
   }, [opstelling, staat.index, bron]);
   useEffect(() => {
     if (opstelling.soort !== "tauri") return;
@@ -385,13 +393,21 @@ export function Voorstelling({
           },
     [bron, aantal, verborgen],
   );
-  const tekenHuidig = useMemo(() => tekenVan(staat.index), [tekenVan, staat.index]);
+  const overgang = overgangen[staat.index] ?? GEEN_OVERGANG;
+  const tekenHuidig = useOvergangTeken(staat.index, bron, overgang);
   const volgendeIndex = staat.einde ? null : zichtbareDia(staat.index + 1, 1, aantal, verborgen);
   const tekenVolgende = useMemo(() => tekenVan(volgendeIndex), [tekenVan, volgendeIndex]);
 
   const zetGereedschap = (g: Gereedschap) =>
     setStaat((s) => ({ ...s, gereedschap: s.gereedschap === g ? "aanwijzer" : g }));
   const volgendeStap = () => toets({ key: "ArrowRight" });
+
+  useEffect(() => {
+    if (opstelling.soort === "start" || overgang.na === null || staat.einde || staat.scherm !== "normaal") return;
+    const duur = overgang.effect === "none" || overgang.effect === "unknown" ? 0 : overgang.duur;
+    const id = window.setTimeout(() => toets({ key: "ArrowRight" }), overgang.na + duur);
+    return () => window.clearTimeout(id);
+  }, [opstelling.soort, staat.index, staat.einde, staat.scherm, overgang, toets]);
 
   const toeschouwer = (
     <div className="voorstelling-toeschouwer">
@@ -406,7 +422,7 @@ export function Voorstelling({
         gereedschap={staat.gereedschap}
         onStrepen={zetStrepen}
         onLaser={setLaser}
-        onKlik={volgendeStap}
+        onKlik={overgang.klik || staat.einde || staat.scherm !== "normaal" ? volgendeStap : undefined}
         label={t("show.slideOf", { slide: staat.index + 1, slides: aantal })}
       />
       {opstelling.soort === "enkel" && (

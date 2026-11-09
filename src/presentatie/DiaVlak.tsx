@@ -44,7 +44,7 @@ function useMaat(ref: RefObject<HTMLElement | null>) {
 export interface DiaVlakProps {
   verhouding: number;
   /** Tekent de dia op `canvas` van `breedte` beeldpunten; `sleutel` verandert als het beeld verandert. */
-  teken: ((canvas: HTMLCanvasElement, breedte: number) => Promise<void> | void) | null;
+  teken: ((canvas: HTMLCanvasElement, breedte: number, signal?: AbortSignal) => Promise<void> | void) | null;
   sleutel: string;
   scherm?: Scherm;
   einde?: string | null;
@@ -86,13 +86,15 @@ export function DiaVlak({
   useEffect(() => {
     if (!teken || !canvas.current || pixels < 2) return;
     let actief = true;
-    void Promise.resolve(teken(canvas.current, pixels)).catch(() => {
+    const controller = new AbortController();
+    void Promise.resolve(teken(canvas.current, pixels, controller.signal)).catch(() => {
       if (actief) {
         // Een dia die niet getekend kan worden blijft leeg.
       }
     });
     return () => {
       actief = false;
+      controller.abort();
     };
   }, [teken, sleutel, pixels]);
 

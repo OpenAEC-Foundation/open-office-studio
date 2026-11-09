@@ -79,6 +79,7 @@ import {
   useIngeslotenGrafieken,
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
+import { DiaOvergangen } from "../presentatie/DiaOvergangen";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
@@ -492,6 +493,7 @@ export function PresentatieRibbon({
   diaBreedte?: number;
 }) {
   const { t } = useTranslation("ribbon");
+  const { t: tp } = useTranslation("presentation");
   const zoom = usePptxCommand("zoom"),
     vulling = usePptxCommand("shapeFill"),
     rand = usePptxCommand("shapeStrokeColor");
@@ -801,6 +803,9 @@ export function PresentatieRibbon({
           inhoud: (
             <>
               <Voorstelling acties={acties} />
+              <Groep naam={tp("transitions.title")}>
+                <DiaOvergangen />
+              </Groep>
               <Groep naam={t("presentation.groups.prepare")}>
                 <P
                   id="zoom"

@@ -3,9 +3,11 @@
  * Toont het beeld dat het hoofdvenster stuurt en geeft toetsen en klikken
  * terug (`toeschouwerKanaal.ts`).
  */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DiaVlak } from "./DiaVlak";
+import { GEEN_OVERGANG, type Overgang } from "./overgangen";
+import { useOvergangTeken } from "./useOvergangTeken";
 import {
   NAAR_TOESCHOUWER,
   VAN_TOESCHOUWER,
@@ -19,7 +21,8 @@ type ZonderSessie<T> = T extends unknown ? Omit<T, "sessie"> : never;
 
 export function ToeschouwerVenster({ sessie }: { sessie: string }) {
   const { t } = useTranslation("presentation");
-  const [beeld, setBeeld] = useState<{ index: number; img: HTMLImageElement } | null>(null);
+  const [beeld, setBeeld] = useState<{ index: number; img: HTMLImageElement; overgang?: Overgang } | null>(null);
+  const beeldVolgorde = useRef(0);
   const [staat, setStaat] = useState<ToeschouwerStaat>({ scherm: "normaal", einde: null, strepen: [], laser: null });
 
   const stuur = useCallback(
@@ -41,8 +44,11 @@ export function ToeschouwerVenster({ sessie }: { sessie: string }) {
         const b = e.payload;
         if (b?.sessie !== sessie) return;
         if (b.soort === "beeld") {
+          const volgorde = ++beeldVolgorde.current;
           const img = new Image();
-          img.onload = () => setBeeld({ index: b.index, img });
+          img.onload = () => {
+            if (actief && volgorde === beeldVolgorde.current) setBeeld({ index: b.index, img, overgang: b.overgang });
+          };
           img.src = b.data;
         } else setStaat({ scherm: b.scherm, einde: b.einde, strepen: b.strepen, laser: b.laser });
       });
@@ -67,15 +73,8 @@ export function ToeschouwerVenster({ sessie }: { sessie: string }) {
   }, [sessie, stuur, t]);
 
   const verhouding = beeld ? beeld.img.naturalWidth / Math.max(1, beeld.img.naturalHeight) : 16 / 9;
-  const teken = useCallback(
-    (canvas: HTMLCanvasElement) => {
-      if (!beeld) return;
-      canvas.width = beeld.img.naturalWidth;
-      canvas.height = beeld.img.naturalHeight;
-      canvas.getContext("2d")?.drawImage(beeld.img, 0, 0);
-    },
-    [beeld],
-  );
+  const bron = useCallback(async () => beeld?.img ?? null, [beeld]);
+  const teken = useOvergangTeken(beeld?.index ?? -1, bron, beeld?.overgang ?? GEEN_OVERGANG);
   return (
     <div className="voorstelling voorstelling-los">
       <div className="voorstelling-toeschouwer">
@@ -87,7 +86,7 @@ export function ToeschouwerVenster({ sessie }: { sessie: string }) {
           einde={staat.einde}
           strepen={staat.strepen}
           laser={staat.laser}
-          onKlik={() => stuur({ soort: "toets", toets: { key: "ArrowRight" } })}
+          onKlik={beeld?.overgang?.klik === false && !staat.einde && staat.scherm === "normaal" ? undefined : () => stuur({ soort: "toets", toets: { key: "ArrowRight" } })}
         />
       </div>
     </div>
