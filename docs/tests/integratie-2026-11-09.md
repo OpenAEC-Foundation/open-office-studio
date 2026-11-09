@@ -42,6 +42,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#233](https://github.com/OpenAEC-Foundation/open-office-studio/pull/233) | `405b2e920f89b24495c95f6bcc80aed2a4198883` | `aaea78acbe03fa1517c0779fbb9ef59ece2b32e6` | Presentation editing and design |
 | [#243](https://github.com/OpenAEC-Foundation/open-office-studio/pull/243) | `78a84fd8a2926c6313e0d3d1465e5450f2c24837` | `fdf520aeb2ab6b20fefac42a80a69646386abca9` | Presentation transitions and sound |
 | [#247](https://github.com/OpenAEC-Foundation/open-office-studio/pull/247) | `6dd71f39edc6bfd7c5a3d92ba842665579bcbdef` | `7897a592878b159941280e49feb9b5db144d7655` | Presentation show and template formats |
+| [#249](https://github.com/OpenAEC-Foundation/open-office-studio/pull/249) | `84d851dcbf55e6307be0a4185a67b14cd46b224b` | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | Writer dark sort contrast |
 
 ## Earlier fixes included in bundles
 
@@ -96,6 +97,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr233-targeted | `aaea78acbe03fa1517c0779fbb9ef59ece2b32e6` | 124 | 0 | 0 |
 | pr243-targeted | `fdf520aeb2ab6b20fefac42a80a69646386abca9` | 19 | 0 | 0 |
 | pr247-targeted | `7897a592878b159941280e49feb9b5db144d7655` | 27 | 0 | 0 |
+| pr249-related-unit | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | 29 | 0 | 0 |
 
 ## Pending deliveries
 
