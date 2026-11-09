@@ -48,6 +48,7 @@ import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { useAuteur } from "./auteursprofiel";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
+import { maakMarkeringenPlugin } from "./tekst/pagina/Markeringen";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -185,7 +186,6 @@ export default function OfficeEditor(props: EditorProps) {
     props.soort === "docx" && props.zichtbaar !== false,
     () => herladenRecent.current.bytes,
   );
-  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, ...spelling.plugins], [spelling.plugins]);
   useEffect(() => {
     if (props.soort === "docx" && documentGereed && docx.current) {
       const ref = docx.current;
@@ -194,6 +194,8 @@ export default function OfficeEditor(props: EditorProps) {
       return () => { actief = false; };
     }
   }, [props.soort, props.naam, documentGereed, herladen.sleutel]);
+  const markeringenPlugin = useMemo(() => maakMarkeringenPlugin(() => docx.current), []);
+  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, markeringenPlugin, ...spelling.plugins], [spelling.plugins, markeringenPlugin]);
   // Tekst: wijzigingen buiten de engine (zoals Bestand › Info) als gewijzigd melden.
   useEffect(
     () => registreerWijziging(herladen.api, () => recent.current.gewijzigd()),
