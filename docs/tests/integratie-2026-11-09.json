@@ -6,61 +6,85 @@
     {
       "pr": 238,
       "head": "e5328c48280ccc94167e83d22ced34d0cbc8fa1b",
-      "merge": "6dc192ca",
+      "merge": "6dc192cab0565ab61b7405150b1b9404abe52ab4",
       "scope": "Strict ODF 1.3 conversion profile and validation"
     },
     {
       "pr": 228,
       "head": "a49b59d758e7b91050d126b8119223734f8938eb",
-      "merge": "b5c77280",
+      "merge": "b5c77280a4783ca2c48079eb03b6e466cc850b09",
       "scope": "Writer date metadata and source macro reports"
     },
     {
       "pr": 239,
       "head": "bd9de4775018559185ccd9dfd74853d77c6c20e9",
-      "merge": "acda88ea",
+      "merge": "acda88ea0d3cc2f1fe4288856328cd78cbcc2237",
       "scope": "Printer-independent conversion and Writer matrix"
     },
     {
       "pr": 244,
       "head": "bab42fee2dd69dd5429109489c9a4bc0e9ea9515",
-      "merge": "7d0064b0",
+      "merge": "7d0064b03ff06db439e6adc733a8b3601c534bec",
       "scope": "Warning before DOC embedded-object loss"
     },
     {
       "pr": 215,
       "head": "7965d36cfb06a181067d5bfd38c5ed2f298b8767",
-      "merge": "742f2809",
+      "merge": "742f280983b2f429eeb3ea1bd1eba54561ae2de9",
       "scope": "Namespace-aware OOXML risk detection"
-    }
-  ],
-  "coveredByBundles": [],
-  "deliveriesPending": [
+    },
     {
       "pr": 236,
       "head": "961ac1db2dc2b6c6ef2cdf3c223b018d63a1fc2a",
-      "owner": "d410",
-      "scope": "Spreadsheet validation and protection",
-      "covers": [
-        186,
-        198
-      ]
+      "merge": "a15615abe1cf60b60d73d146456c89097ec04592",
+      "scope": "Spreadsheet validation, cell notes and protection"
     },
     {
       "pr": 242,
-      "head": "2dae172dedd81acdf355671d9af0c134582a36fb",
-      "owner": "9d3b",
-      "scope": "Writer headers, styles, notes and ODT preservation",
-      "covers": [
-        230,
-        231,
-        232,
-        217,
-        208,
-        207,
-        219
-      ]
+      "head": "380f59bb629438755d7145d830ea30a97f3e92ec",
+      "merge": "054d1d7a23eb889782ff17c79cd1e955c2bd7fef",
+      "scope": "Writer headers, styles, notes and ODT preservation"
+    }
+  ],
+  "coveredByBundles": [
+    {
+      "pr": 186,
+      "via": 236
     },
+    {
+      "pr": 198,
+      "via": 236
+    },
+    {
+      "pr": 230,
+      "via": 242
+    },
+    {
+      "pr": 231,
+      "via": 242
+    },
+    {
+      "pr": 232,
+      "via": 242
+    },
+    {
+      "pr": 217,
+      "via": 242
+    },
+    {
+      "pr": 208,
+      "via": 242
+    },
+    {
+      "pr": 207,
+      "via": 242
+    },
+    {
+      "pr": 219,
+      "via": 242
+    }
+  ],
+  "deliveriesPending": [
     {
       "pr": 246,
       "head": "cc0be69f7b9feef9e883f8b48ad792e623961377",
@@ -99,6 +123,24 @@
       "passed": 57,
       "failed": 0,
       "files": 5
+    },
+    {
+      "kind": "pr236-targeted",
+      "head": "a15615abe1cf60b60d73d146456c89097ec04592",
+      "success": true,
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "files": 5
+    },
+    {
+      "kind": "pr242-targeted",
+      "head": "054d1d7a23eb889782ff17c79cd1e955c2bd7fef",
+      "success": true,
+      "passed": 114,
+      "failed": 0,
+      "skipped": 0,
+      "files": 15
     }
   ],
   "limits": [
