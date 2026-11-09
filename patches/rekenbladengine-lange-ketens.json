@@ -69,10 +69,14 @@
     },
     {
       "patch": "rekenbladengine-uitgebreide-voorwaardelijke-opmaak.patch",
-      "patchSha256": "6a020614b1c3bab46c4f4e7d271ae72abfa7092d8f9b1cdc9a824faf7c3b8c8f",
+      "patchSha256": "95cef691bb807a7e548044a541ba366ae32a154e8cd6968bb03c299cbd7b721b",
       "tests": [
         {
           "pakket": "betteroffice-xlsx-parse",
+          "test": "conditional_formats"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
           "test": "conditional_formats"
         }
       ]

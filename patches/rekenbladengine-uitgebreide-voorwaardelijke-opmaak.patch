@@ -1,8 +1,172 @@
+diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
+index cdae58f..3186ef4 100644
+--- a/crates/betteroffice-xlsx/src/workbook.rs
++++ b/crates/betteroffice-xlsx/src/workbook.rs
+@@ -4059,6 +4059,10 @@ fn validate_op(model: &WorkbookModel, op: &Op) -> Result<()> {
+                 ));
+             }
+         }
++        Op::SetConditionalFormats { sheet, formats } => {
++            require_sheet(model, *sheet)?;
++            xlsx_parse::validate_conditional_formats(formats, model.styles.dxfs.len())?;
++        }
+         Op::SetChartAnchor {
+             sheet,
+             frame,
+@@ -4129,7 +4133,6 @@ fn validate_op(model: &WorkbookModel, op: &Op) -> Result<()> {
+         Op::RestoreSheet { .. }
+         | Op::SetDefinedNames { .. }
+         | Op::SetCharts { .. }
+-        | Op::SetConditionalFormats { .. }
+         | Op::RestoreAutoFilter { .. }
+         | Op::RestoreColStyles { .. }
+         | Op::RestoreRowStyles { .. } => {
+diff --git a/crates/betteroffice-xlsx/tests/conditional_formats.rs b/crates/betteroffice-xlsx/tests/conditional_formats.rs
+index 2096857..10ba126 100644
+--- a/crates/betteroffice-xlsx/tests/conditional_formats.rs
++++ b/crates/betteroffice-xlsx/tests/conditional_formats.rs
+@@ -38,6 +38,45 @@ fn add(kind: &str, operator: Option<&str>, formulas: &[&str]) -> Op {
+     }
+ }
+ 
++#[test]
++fn replace_rules_preserves_stop_priority_styles_and_undo_in_one_transaction() {
++    let mut wb = Workbook::open(&bytes(Some(r#"<cellXfs count="1"><xf/></cellXfs>"#))).unwrap();
++    wb.apply_ops(vec![add("expression", None, &["A1>5"])], CalculationOptions::default()).unwrap();
++    let before = wb.model().sheets[0].conditional_formats.clone();
++    let mut formats = before.clone();
++    let rule = &mut formats[0].rules[0];
++    rule.priority = 2;
++    rule.raw_xml = Some(r#"<cfRule xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" type="expression" priority="2" stopIfTrue="1"><formula>A1&gt;5</formula></cfRule>"#.into());
++    wb.apply_ops(vec![Op::SetConditionalFormats { sheet: SheetId(0), formats: formats.clone() }], CalculationOptions::default()).unwrap();
++    assert_eq!(wb.model().sheets[0].conditional_formats, formats);
++    let reopened = Workbook::open(&wb.save().unwrap()).unwrap();
++    let rule = &reopened.model().sheets[0].conditional_formats[0].rules[0];
++    assert_eq!(rule.priority, 2);
++    assert_eq!(rule.format.font_color.as_deref(), Some("#FF0000"));
++    assert!(rule.raw_xml.as_ref().unwrap().contains(r#"stopIfTrue="1""#));
++    wb.undo(CalculationOptions::default()).unwrap();
++    assert_eq!(wb.model().sheets[0].conditional_formats, before);
++    wb.redo(CalculationOptions::default()).unwrap();
++    assert_eq!(wb.model().sheets[0].conditional_formats, formats);
++}
++
++#[test]
++fn invalid_replacements_refuse_before_any_mutation() {
++    let mut wb = Workbook::open(&bytes(Some(r#"<cellXfs count="1"><xf/></cellXfs>"#))).unwrap();
++    wb.apply_ops(vec![add("expression", None, &["A1>5"])], CalculationOptions::default()).unwrap();
++    let before = wb.model().sheets[0].conditional_formats.clone();
++    for raw in ["<worksheet/>", "<cfRule>", "<cfRule/><cfRule/>", "<!DOCTYPE a><cfRule/>", "text<cfRule/>"] {
++        let mut formats = before.clone(); formats[0].rules[0].raw_xml = Some(raw.into());
++        assert!(wb.apply_ops(vec![Op::SetConditionalFormats { sheet: SheetId(0), formats }], CalculationOptions::default()).is_err(), "{raw}");
++        assert_eq!(wb.model().sheets[0].conditional_formats, before);
++    }
++    for a1 in ["", "A0", "XFE1", "A1048577"] {
++        let mut formats = before.clone(); formats[0].sqref = a1.into();
++        assert!(wb.apply_ops(vec![Op::SetConditionalFormats { sheet: SheetId(0), formats }], CalculationOptions::default()).is_err(), "{a1}");
++        assert_eq!(wb.model().sheets[0].conditional_formats, before);
++    }
++}
++
+ #[test]
+ fn add_list_delete_save_reopen_and_undo_redo() {
+     let mut wb = Workbook::open(&bytes(Some(r#"<cellXfs count="1"><xf/></cellXfs>"#))).unwrap();
+diff --git a/crates/xlsx-parse/src/lib.rs b/crates/xlsx-parse/src/lib.rs
+index b3e657f..a18868f 100644
+--- a/crates/xlsx-parse/src/lib.rs
++++ b/crates/xlsx-parse/src/lib.rs
+@@ -45,6 +45,7 @@ pub use save_oracle::with_legacy_save_path;
+ #[cfg(feature = "test-counters")]
+ pub use styles::legacy_style_reads;
+ pub use write::{
++    validate_conditional_formats,
+     SaveEdits, SerializedParts, serialize_workbook, serialize_workbook_with_active_sheet,
+     serialize_workbook_with_package_and_origins_after_edits,
+     serialize_workbook_with_package_and_origins_after_edits_and_active_sheet,
 diff --git a/crates/xlsx-parse/src/write.rs b/crates/xlsx-parse/src/write.rs
-index ffbdcd3..9d75d3c 100644
+index ffbdcd3..ff3c921 100644
 --- a/crates/xlsx-parse/src/write.rs
 +++ b/crates/xlsx-parse/src/write.rs
-@@ -109,7 +109,9 @@ impl CfPlan {
+@@ -99,6 +99,78 @@ struct CfPlan {
+     assigned: HashMap<(usize, usize, usize), u32>,
+ }
+ 
++/// Validate a complete conditional-format replacement before committing it.
++/// Unknown source rule kinds retain their raw XML; every root must still be a
++/// bounded, well-formed cfRule with an in-bounds application range and style.
++pub fn validate_conditional_formats(
++    formats: &[xlsx_model::ConditionalFormatting],
++    differential_styles: usize,
++) -> Result<(), ParseError> {
++    let invalid = |message: &str| ParseError::Malformed(message.into());
++    let mut ids = HashSet::new();
++    let mut bytes = 0usize;
++    for group in formats {
++        if group.sqref.split_whitespace().next().is_none() {
++            return Err(invalid("empty conditional format range"));
++        }
++        for a1 in group.sqref.split_whitespace() {
++            let range = CellRange::parse_a1(a1).map_err(|_| invalid("invalid conditional format range"))?;
++            if range.end.row >= xlsx_model::addr::MAX_ROWS || range.end.col >= xlsx_model::addr::MAX_COLS {
++                return Err(invalid("conditional format range outside grid"));
++            }
++        }
++        for rule in &group.rules {
++            if rule.id.is_empty() || !ids.insert(&rule.id) || ids.len() > 65536 || rule.priority == 0 {
++                return Err(invalid("invalid conditional format identity or priority"));
++            }
++            if rule.dxf_id.is_some_and(|id| id as usize >= differential_styles) {
++                return Err(invalid("conditional format differential style outside table"));
++            }
++            for color in [&rule.format.font_color, &rule.format.fill].into_iter().flatten() {
++                if !color.strip_prefix('#').is_some_and(|hex| hex.len() == 6 && hex.bytes().all(|c| c.is_ascii_hexdigit())) {
++                    return Err(invalid("invalid conditional format color"));
++                }
++            }
++            if let Some(raw) = &rule.raw_xml {
++                bytes = bytes.saturating_add(raw.len());
++                if bytes > 16 * 1024 * 1024 { return Err(invalid("conditional format XML too large")); }
++                let mut reader = Reader::from_str(raw);
++                let mut depth = 0usize;
++                let mut roots = 0usize;
++                let mut root = |e: &BytesStart<'_>, depth: usize| -> Result<(), ParseError> {
++                    if depth == 0 {
++                        roots += 1;
++                        if roots != 1 || e.name().local_name().as_ref() != b"cfRule" {
++                            return Err(invalid("conditional format XML must contain one cfRule"));
++                        }
++                    }
++                    Ok(())
++                };
++                loop {
++                    match reader.read_event().map_err(xml_err)? {
++                        Event::Start(e) => {
++                            root(&e, depth)?;
++                            depth += 1;
++                            if depth > 256 { return Err(invalid("conditional format XML too deep")); }
++                        }
++                        Event::Empty(e) => root(&e, depth)?,
++                        Event::End(_) => { depth = depth.checked_sub(1).ok_or_else(|| invalid("unbalanced conditional format XML"))?; }
++                        Event::DocType(_) | Event::Decl(_) => return Err(invalid("conditional format XML cannot contain a document declaration")),
++                        Event::Text(e) if depth == 0 && e.as_ref().iter().any(|c| !c.is_ascii_whitespace()) => return Err(invalid("text outside conditional format XML")),
++                        Event::Eof => break,
++                        _ => {}
++                    }
++                }
++                drop(root);
++                if roots != 1 || depth != 0 { return Err(invalid("incomplete conditional format XML")); }
++            } else if !matches!(rule.rule_type.as_str(), "cellIs" | "expression") {
++                return Err(invalid("extended conditional format requires its XML"));
++            }
++        }
++    }
++    Ok(())
++}
++
+ impl CfPlan {
+     fn new(wb: &Workbook) -> Self {
+         let mut plan = Self {
+@@ -109,7 +181,9 @@ impl CfPlan {
          for (sheet_index, sheet) in wb.sheets.iter().enumerate() {
              for (group_index, group) in sheet.conditional_formats.iter().enumerate() {
                  for (rule_index, rule) in group.rules.iter().enumerate() {
@@ -13,7 +177,7 @@ index ffbdcd3..9d75d3c 100644
                          let id = start + plan.authored.len() as u32;
                          plan.assigned
                              .insert((sheet_index, group_index, rule_index), id);
-@@ -237,7 +239,21 @@ fn conditional_formatting_bytes(
+@@ -237,7 +311,21 @@ fn conditional_formatting_bytes(
          let mut rules = Vec::new();
          for (rule_index, rule) in group.rules.iter().enumerate() {
              if let Some(raw) = &rule.raw_xml {
