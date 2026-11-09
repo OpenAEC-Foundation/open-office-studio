@@ -42,9 +42,17 @@ describe("afmeting", () => {
     expect(metVerhouding(200, 100, { breedte: 100 })).toEqual({ breedte: 100, hoogte: 50 });
     expect(metVerhouding(200, 100, { hoogte: 300 })).toEqual({ breedte: 600, hoogte: 300 });
   });
-  it("past het oorspronkelijke formaat binnen de tekstbreedte en volgt bij vervangen de nieuwe verhouding", () => {
+  it("past het oorspronkelijke formaat binnen de tekstbreedte", () => {
     expect(passendeMaat({ breedte: 1200, hoogte: 600 }, 600)).toEqual({ breedte: 600, hoogte: 300 });
-    expect(maatBijVervangen(300, { breedte: 100, hoogte: 200 })).toEqual({ breedte: 300, hoogte: 600 });
+  });
+  it("behoudt bij vervangen beide exacte weergavematen, ongeacht de nieuwe beeldverhouding", () => {
+    expect(maatBijVervangen(300.125, 150.0625, { breedte: 100, hoogte: 200 })).toEqual({ breedte: 300.125, hoogte: 150.0625 });
+    expect(maatBijVervangen(150, 300, { breedte: 200, hoogte: 100 })).toEqual({ breedte: 150, hoogte: 300 });
+  });
+  it("vult ontbrekende maten aan met de nieuwe verhouding zonder een geldige maat te wijzigen", () => {
+    expect(maatBijVervangen(300, NaN, { breedte: 100, hoogte: 200 })).toEqual({ breedte: 300, hoogte: 600 });
+    expect(maatBijVervangen(0, 300, { breedte: 200, hoogte: 100 })).toEqual({ breedte: 600, hoogte: 300 });
+    expect(maatBijVervangen(Infinity, 0, { breedte: 200, hoogte: 100 })).toEqual({ breedte: 200, hoogte: 100 });
   });
   it("rekent cm en pixels om", () => {
     expect(pxNaarCm(96)).toBe(2.54);
