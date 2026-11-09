@@ -463,6 +463,7 @@ const SOORTEN: { soort: Doelsoort; sleutel: string; lijst: boolean }[] = [
   { soort: "tabel", sleutel: "table", lijst: true },
   { soort: "afbeelding", sleutel: "picture", lijst: true },
   { soort: "opmerking", sleutel: "comment", lijst: true },
+  { soort: "bladwijzer", sleutel: "bookmark", lijst: true },
 ];
 const sleutelVan = (soort: Doelsoort) => SOORTEN.find((s) => s.soort === soort)!.sleutel;
 
