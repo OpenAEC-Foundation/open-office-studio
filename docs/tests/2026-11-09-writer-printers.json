@@ -1,0 +1,300 @@
+{
+  "converterWindows": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "profileSha256Windows": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+  "paired": [
+    {
+      "variant": "no-printers",
+      "ms": 13812,
+      "pass": true,
+      "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c"
+    },
+    {
+      "variant": "baseline",
+      "ms": 45500,
+      "pass": false,
+      "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c"
+    },
+    {
+      "variant": "no-printers",
+      "ms": 10281,
+      "pass": true,
+      "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c"
+    }
+  ],
+  "openclControl": [
+    {
+      "variant": "off",
+      "ms": 45360,
+      "pass": false,
+      "openclProfile": false,
+      "openclDevices": false
+    },
+    {
+      "variant": "baseline",
+      "ms": 45547,
+      "pass": false,
+      "openclProfile": true,
+      "openclDevices": true
+    },
+    {
+      "variant": "off",
+      "ms": 45328,
+      "pass": false,
+      "openclProfile": false,
+      "openclDevices": false
+    },
+    {
+      "variant": "baseline",
+      "ms": 45453,
+      "pass": false,
+      "openclProfile": true,
+      "openclDevices": true
+    }
+  ],
+  "runs": [
+    {
+      "name": "Windows ODT/DOC",
+      "pass": true,
+      "passed": 6,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "D1: odt -> edit -> odt",
+          "pass": true,
+          "ms": 93236
+        },
+        {
+          "name": "D2: odt -> edit -> odt",
+          "pass": true,
+          "ms": 79149
+        },
+        {
+          "name": "D3: odt -> edit -> odt",
+          "pass": true,
+          "ms": 71239
+        },
+        {
+          "name": "D1: doc -> edit -> doc",
+          "pass": true,
+          "ms": 76579
+        },
+        {
+          "name": "D2: doc -> edit -> doc",
+          "pass": true,
+          "ms": 64551
+        },
+        {
+          "name": "D3: doc -> edit -> doc",
+          "pass": true,
+          "ms": 62912
+        }
+      ]
+    },
+    {
+      "name": "Windows OTT/FODT/DOT short profiles",
+      "pass": true,
+      "passed": 3,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "D3: ott → edit → ott",
+          "pass": true,
+          "ms": 75832
+        },
+        {
+          "name": "D3: fodt → edit → fodt",
+          "pass": true,
+          "ms": 67233
+        },
+        {
+          "name": "D3: dot → edit → dot",
+          "pass": true,
+          "ms": 53468
+        }
+      ]
+    },
+    {
+      "name": "Linux CI 42613174076, b957143e",
+      "pass": true,
+      "passed": 15,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "D1: odt → edit → odt",
+          "pass": true,
+          "ms": 8040
+        },
+        {
+          "name": "D2: odt → edit → odt",
+          "pass": true,
+          "ms": 6292
+        },
+        {
+          "name": "D3: odt → edit → odt",
+          "pass": true,
+          "ms": 6064
+        },
+        {
+          "name": "D1: ott → edit → ott",
+          "pass": true,
+          "ms": 6482
+        },
+        {
+          "name": "D2: ott → edit → ott",
+          "pass": true,
+          "ms": 7276
+        },
+        {
+          "name": "D3: ott → edit → ott",
+          "pass": true,
+          "ms": 6240
+        },
+        {
+          "name": "D1: fodt → edit → fodt",
+          "pass": true,
+          "ms": 5923
+        },
+        {
+          "name": "D2: fodt → edit → fodt",
+          "pass": true,
+          "ms": 6050
+        },
+        {
+          "name": "D3: fodt → edit → fodt",
+          "pass": true,
+          "ms": 5882
+        },
+        {
+          "name": "D1: doc → edit → doc",
+          "pass": true,
+          "ms": 6174
+        },
+        {
+          "name": "D2: doc → edit → doc",
+          "pass": true,
+          "ms": 6227
+        },
+        {
+          "name": "D3: doc → edit → doc",
+          "pass": true,
+          "ms": 6032
+        },
+        {
+          "name": "D1: dot → edit → dot",
+          "pass": true,
+          "ms": 6264
+        },
+        {
+          "name": "D2: dot → edit → dot",
+          "pass": true,
+          "ms": 6335
+        },
+        {
+          "name": "D3: dot → edit → dot",
+          "pass": true,
+          "ms": 5968
+        }
+      ]
+    }
+  ],
+  "odf13": [
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-1/uit/bron.odt",
+      "sha256": "8cf954506e1e345bf6a02e929a173fff114c312157b9e0ce016a3c17a2b5e852",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-11/uit/bron.odt",
+      "sha256": "81a08276c034382575497aec2214ed68d4a2b352aff77e329067ab0e8c8a42ec",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-13/uit/bron.odt",
+      "sha256": "737de714d2030b48d48137ac346909450ca87c2b2b731ae90e3b681acd7d39a2",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-15/uit/bron.odt",
+      "sha256": "3b22f2da7120176e5a3b57c8542fd7d57fef89e95460ca7ccf1dc8245d7031ab",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-17/uit/bron.odt",
+      "sha256": "a09cf09099a848cf13f376df359ead0c72307930aa5a0b45e5b14cd74f690fa3",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-3/uit/bron.odt",
+      "sha256": "3888c1e413ff5ffa259c13254a467d426c546669ab994b9e3efbcf981009ce10",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-5/uit/bron.odt",
+      "sha256": "4a2f81bc8b8ca306b06357e04df25a26dedb5714b410617bbdebdc8866a76681",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-7/uit/bron.odt",
+      "sha256": "f1174ec176c51287fe3bb2db59abac9e762c75f4bbf61b19c4db8cc2d7cb9ed9",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-printer-fixed-446b2c5f/conversie-9/uit/bron.odt",
+      "sha256": "0d3d55c369c3b2f2798a6da1af3333058cdbbf8b9804451a13125ae429aeebbb",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-extra-short-profile/23cf55d3-dcff-49ee-b5b6-f3d3ab8a0300/conversie-1/uit/bron.ott",
+      "sha256": "e22906dec27fa982e24f8c41096f28ac946cfb6b703320bfe5626b33d2dd2c37",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-extra-short-profile/23cf55d3-dcff-49ee-b5b6-f3d3ab8a0300/conversie-3/uit/bron.ott",
+      "sha256": "881db49e7beedbdd6d96102ed9f3f98ebc5c8e80fba5ad8034d405fe67b5efd2",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-extra-short-profile/23cf55d3-dcff-49ee-b5b6-f3d3ab8a0300/conversie-5/uit/bron.ott",
+      "sha256": "55017e5ff2a410de1d09851f8a802b52953c9de14e59a79172daad50a0761e75",
+      "checks": 6,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-extra-short-profile/23cf55d3-dcff-49ee-b5b6-f3d3ab8a0300/conversie-11/uit/bron.fodt",
+      "sha256": "bd3ef1815b6f3b28c5158a1a869955f8c5c77048861952f61704c54a4f3b3280",
+      "checks": 1,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-extra-short-profile/23cf55d3-dcff-49ee-b5b6-f3d3ab8a0300/conversie-7/uit/bron.fodt",
+      "sha256": "2eb7bb7ac9049162c0443e7d8ab7da6ceacc74127cc988eed5a12126bc96c08e",
+      "checks": 1,
+      "pass": true
+    },
+    {
+      "path": ".local/writer-extra-short-profile/23cf55d3-dcff-49ee-b5b6-f3d3ab8a0300/conversie-9/uit/bron.fodt",
+      "sha256": "f1951f660e5919e71fb0da3a948651531097d5860c2e3efee5ee59e1e293c4c1",
+      "checks": 1,
+      "pass": true
+    }
+  ],
+  "chartPdf": {
+    "pass_": true,
+    "ms": 12610,
+    "pages": 1,
+    "textPresent": true,
+    "inputSha256": "e7d73bcc9ce482159af211fc7ed92c077a754f53cff0e639bc3aef750993f798",
+    "outputSha256": "a95aca79b8d3f211a7176c1126ba52a315aab37f005b7809784e1befc4f88e7a"
+  }
+}
