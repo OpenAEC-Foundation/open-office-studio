@@ -1,5 +1,6 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "./editors";
+import { ontcijfer } from "./grafieken/xml";
 
 /** Kenmerken waarvan behoud per route in de testmatrix is gemeten. */
 export type Risico =
@@ -84,6 +85,25 @@ const BEKEND =
 const BEKEND_INHOUDSTYPE =
   /^(application\/vnd\.openxmlformats-|application\/vnd\.ms-|image\/|video\/|audio\/|application\/xml$|text\/xml$|application\/x-font|application\/x-fontdata$|application\/octet-stream$|application\/x-emf$|application\/x-wmf$|application\/pdf$)/;
 
+/**
+ * Lees alleen begintags, zonder een documentboom voor de hoofdtekst te bouwen.
+ * Quotes begrenzen attribuutwaarden; commentaar, CDATA en instructies zijn
+ * geen metadata. De pakketcontrole wijzigt of voert XML nooit uit.
+ */
+function* begintags(xml: string) {
+  const tags =
+    /<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>|<([^\s/!?<>"']+)(?=[\s/>])((?:[^<>"']|"[^"]*"|'[^']*')*)>/g;
+  for (const tag of xml.matchAll(tags)) {
+    if (!tag[1]) continue;
+    const attrs: Record<string, string> = {};
+    for (const [, naam, , waarde] of tag[2].matchAll(
+      /(?:^|\s)([^\s=/<>"']+)\s*=\s*(["'])([\s\S]*?)\2/g,
+    ))
+      attrs[naam] = ontcijfer(waarde);
+    yield { lokaal: tag[1].split(":").at(-1), attrs };
+  }
+}
+
 function risicosVan(
   soort: Soort,
   namen: Set<string>,
@@ -93,13 +113,21 @@ function risicosVan(
   const tekst = (naam: string) => (delen[naam] ? strFromU8(delen[naam]) : "");
   for (const [naam, inhoud] of Object.entries(delen)) {
     if (!naam.endsWith(".rels")) continue;
-    for (const [, type] of strFromU8(inhoud).matchAll(/\bType="([^"]*)"/g))
-      if (!BEKEND.test(type)) risicos.add("onbekende_onderdelen");
+    for (const { lokaal, attrs } of begintags(strFromU8(inhoud)))
+      if (
+        lokaal === "Relationship" &&
+        attrs.Type !== undefined &&
+        !BEKEND.test(attrs.Type)
+      )
+        risicos.add("onbekende_onderdelen");
   }
-  for (const [, type] of tekst("[Content_Types].xml").matchAll(
-    /<Override\b[^>]*\bContentType="([^"]*)"/g,
-  ))
-    if (!BEKEND_INHOUDSTYPE.test(type)) risicos.add("onbekende_onderdelen");
+  for (const { lokaal, attrs } of begintags(tekst("[Content_Types].xml")))
+    if (
+      (lokaal === "Override" || lokaal === "Default") &&
+      attrs.ContentType !== undefined &&
+      !BEKEND_INHOUDSTYPE.test(attrs.ContentType)
+    )
+      risicos.add("onbekende_onderdelen");
   const hoofdtekst =
     soort === "docx"
       ? [tekst("word/document.xml")]
@@ -109,8 +137,14 @@ function risicosVan(
             .map(tekst)
         : [];
   for (const xml of hoofdtekst)
-    for (const [, ns] of xml.matchAll(/\bxmlns:[\w.-]+="([^"]*)"/g))
-      if (!BEKEND.test(ns)) risicos.add("onbekende_extensies");
+    for (const { attrs } of begintags(xml))
+      for (const [naam, ns] of Object.entries(attrs))
+        if (
+          (naam === "xmlns" || naam.startsWith("xmlns:")) &&
+          ns &&
+          !BEKEND.test(ns)
+        )
+          risicos.add("onbekende_extensies");
   const heeft = (patroon: RegExp) => [...namen].some((n) => patroon.test(n));
   if (heeft(/^customXml\//)) risicos.add("custom_xml");
   if (heeft(/^(word|ppt|xl)\/embeddings\//)) risicos.add("ingebedde_objecten");
