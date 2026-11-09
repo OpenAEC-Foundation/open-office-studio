@@ -57,6 +57,7 @@ import {
   GalleryVertical,
   Presentation,
   Search,
+  ListTree,
 } from "lucide-react";
 import {
   Actie,
@@ -84,6 +85,7 @@ import "./presentatie.css";
 const DiaSorteerder = lazy(() =>
   import("../presentatie/DiaSorteerder").then((m) => ({ default: m.DiaSorteerder })),
 );
+const DiaOverzicht = lazy(() => import("../presentatie/DiaOverzicht").then(m => ({ default: m.DiaOverzicht })));
 
 /** Een engine-opdracht met een sneltoets die het lint zelf afhandelt. */
 function PT<K extends PptxCommandId>({
@@ -238,6 +240,8 @@ function Weergaven({
         uit={uit}
         onClick={() => zet(weergave === "sorteerder" ? "normaal" : "sorteerder")}
       />
+      <DiaKnop naam={t("presentation:outline.title")} icoon={ListTree} groot
+        aan={weergave === "overzicht"} uit={uit} onClick={() => zet("overzicht")} />
     </Groep>
   );
 }
@@ -280,6 +284,11 @@ function useWeergave(acties: DiaActies) {
             huidig={huidigeIndex}
             fout={fout}
           />
+        </Suspense>
+      )}
+      {weergave === "overzicht" && sleutel && (
+        <Suspense fallback={null}>
+          <DiaOverzicht api={api} anker={anker} bewerkbaar={acties.bewerkbaar} sluit={() => zet("normaal")} fout={fout} />
         </Suspense>
       )}
     </>
