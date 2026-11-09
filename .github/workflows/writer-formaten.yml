@@ -1,0 +1,53 @@
+name: Writer format round trips
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/writer-formaten.yml"
+      - "scripts/test-writer-formaten.ts"
+      - "scripts/writer-formaatkenmerken.py"
+      - "scripts/writer-formaten.config.ts"
+      - "scripts/tekstkern-proef.ts"
+      - "scripts/tekstengine-compatibiliteit.ts"
+      - "src-tauri/src/conversie*"
+      - "src/import/**"
+      - "src/tekst/info/**"
+      - "src/formaten.json"
+      - "docs/tests/documentmatrix-2026-11-06/bron/**"
+      - "vendor/tekstengine/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  writer:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-writer
+      - run: pnpm install --frozen-lockfile
+      - name: Open, edit, export and reopen D1–D3 in five Writer formats
+        env:
+          OPENAEC_CONVERSIE_PROGRAMMA: /usr/bin/soffice
+          OOS_WRITER_FORMATEN: odt,ott,fodt,doc,dot
+        run: pnpm exec vitest run --config scripts/writer-formaten.config.ts --configLoader runner --reporter=verbose --reporter=json --outputFile=.local/writer-formaten-vitest.json
+      - name: Preserve converter outputs, profiles and independent comparisons
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-formaten
+          path: |
+            .local/writer-formaten
+            .local/writer-formaten-vitest.json
+          include-hidden-files: true
+          if-no-files-found: error
