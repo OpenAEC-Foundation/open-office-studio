@@ -90,8 +90,9 @@ try {
     ),
   );
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/`);
+  // Gebruik de picker van de app; geopende editors hebben ook eigen file-inputs.
   await page
-    .locator(".office input[type=file]")
+    .locator(".office > input[type=file]")
     .first()
     .setInputFiles({
       name: "Source.xlsx",
@@ -184,7 +185,7 @@ try {
     },
   );
   await page
-    .locator(".office input[type=file]")
+    .locator(".office > input[type=file]")
     .first()
     .setInputFiles({
       name: "Charts.pptx",
@@ -330,7 +331,7 @@ try {
       }
       await page.evaluate(() => (window.voorGrafiek = proefApis().presentatie));
       await page
-        .locator(".office input[type=file]")
+        .locator(".office > input[type=file]")
         .first()
         .setInputFiles(path);
       await page.waitForFunction(() => {
