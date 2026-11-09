@@ -93,3 +93,40 @@
   outline: 2px solid #bc6a15;
   outline-offset: 1px;
 }
+.discussie-indicator {
+  background: linear-gradient(45deg, transparent 49%, #7040a0 50%);
+}
+.discussie-indicator.is-opgelost {
+  opacity: 0.5;
+}
+.discussie-kaart {
+  background: #fbf7ff;
+  border-color: #84649f;
+}
+.discussie-kaart article + article {
+  border-top: 1px solid #d5c6df;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+.discussie-kaart time,
+.discussie-berichten time {
+  display: block;
+  color: #64616b;
+  font-size: 11px;
+}
+.discussie-berichten {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 260px;
+  overflow: auto;
+}
+.discussie-berichten li {
+  border-bottom: 1px solid #d5c6df;
+  padding: 8px 0;
+}
+.discussie-berichten p,
+.celnotitie-formulier blockquote p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

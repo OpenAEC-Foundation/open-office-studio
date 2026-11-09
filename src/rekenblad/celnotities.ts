@@ -123,13 +123,26 @@ function leesBlad(p: Pakket, blad: string): Celnotitie[] {
   );
   const root = leesXml(p.lees(comments));
   const auteurs = kinderen(kind(root, "authors"), "author").map(tekstVan);
+  const discussieIds = new Set(
+    modern
+      ? zoekAlle(leesXml(p.lees(modern)), "threadedComment").map((c) =>
+          attr(c, "id"),
+        )
+      : [],
+  );
   const legacy = kind(leesXml(p.lees(blad)), "legacyDrawing");
   const vml = legacy ? p.doel(blad, rid(legacy) ?? "") : null;
   const zichtbaar = new Map(
     vml ? noteVormen(p.lees(vml)).map((s) => [vormCel(s), isZichtbaar(s)]) : [],
   );
   return kinderen(kind(root, "commentList"), "comment")
-    .filter((c) => !discussieCellen.has(attr(c, "ref")?.toUpperCase()))
+    .filter(
+      (c) =>
+        !discussieCellen.has(attr(c, "ref")?.toUpperCase()) &&
+        !discussieIds.has(
+          auteurs[Number(attr(c, "authorId"))]?.replace(/^tc=/, ""),
+        ),
+    )
     .map((c) => ({
       cel: celadres(attr(c, "ref") ?? ""),
       // Fonetische hulptekst (rPh) hoort niet bij de zichtbare notitie.
@@ -262,6 +275,37 @@ export function schrijfCelnotitie(
   cel: string,
   notitie: Omit<Celnotitie, "cel"> | null,
 ): Uint8Array {
+  return schrijfNotitie(bytes, blad, cel, notitie);
+}
+/** Excel requires a legacy placeholder linked by its author to each thread. */
+export function schrijfDiscussiePlaceholder(
+  bytes: Uint8Array,
+  blad: number,
+  cel: string,
+  id: string,
+  tekst: string | null,
+): Uint8Array {
+  return schrijfNotitie(
+    bytes,
+    blad,
+    cel,
+    tekst === null
+      ? null
+      : {
+          auteur: `tc=${id}`,
+          tekst,
+          zichtbaar: false,
+        },
+    id,
+  );
+}
+function schrijfNotitie(
+  bytes: Uint8Array,
+  blad: number,
+  cel: string,
+  notitie: Omit<Celnotitie, "cel"> | null,
+  discussieId?: string,
+): Uint8Array {
   cel = celadres(cel);
   const p = new Pakket(bytes),
     pad = bladen(p)[blad];
@@ -270,6 +314,7 @@ export function schrijfCelnotitie(
     throw new Notitiefout("protectedSheet");
   const modern = onderdeel(p, pad, "threadedComment");
   if (
+    !discussieId &&
     modern &&
     zoekAlle(leesXml(p.lees(modern)), "threadedComment").some(
       (c) => attr(c, "ref")?.toUpperCase() === cel,
@@ -315,14 +360,40 @@ export function schrijfCelnotitie(
   );
   if (bestaande.length > 1) throw new Notitiefout("damagedNotes");
   const bestaand = bestaande[0];
+  if (discussieId) {
+    const threads = modern
+      ? zoekAlle(leesXml(p.lees(modern)), "threadedComment")
+      : [];
+    if (
+      !threads.some(
+        (c) =>
+          attr(c, "id") === discussieId &&
+          attr(c, "ref")?.toUpperCase() === cel &&
+          !attr(c, "parentId"),
+      )
+    )
+      throw new Notitiefout("damagedNotes");
+    if (
+      bestaand &&
+      tekstVan(
+        kinderen(kind(root, "authors"), "author")[
+          Number(attr(bestaand, "authorId"))
+        ],
+      ) !== `tc=${discussieId}`
+    )
+      throw new Notitiefout("threadedComment");
+  }
   if (bestaand) {
     let nieuw = "";
     if (notitie) {
       const tekst = kind(bestaand, "text");
       if (!tekst) throw new Notitiefout("damagedNotes");
-      const huidig = leesBlad(p, pad).find((n) => n.cel === cel)!;
+      const huidig = zoekAlle(tekst, "t")
+        .filter((t) => t.ouder?.lokaal !== "rPh")
+        .map(tekstVan)
+        .join("");
       const tekstXml =
-        notitie.tekst === huidig.tekst
+        notitie.tekst === huidig
           ? xml.slice(tekst.start, tekst.eind)
           : `<${tekst.naam}><${tag(root, "t")} xml:space="preserve">${ontsnap(notitie.tekst)}</${tag(root, "t")}></${tekst.naam}>`;
       const binnen = vervang(

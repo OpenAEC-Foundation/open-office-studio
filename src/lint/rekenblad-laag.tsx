@@ -26,6 +26,7 @@ import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-o
 import { kolomLetters, type Bereik } from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
 import { CelnotitieLaag } from "../rekenblad/CelnotitieUi";
+import { DiscussieLaag } from "../rekenblad/DiscussieUi";
 import { ValidatieLaag } from "../rekenblad/ValidatieUi";
 import { bewaakBeveiligdeSelectie } from "../rekenblad/bladbeveiliging";
 import "./rekenblad-gereedschap.css";
@@ -93,6 +94,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
     return (
       <>
         {blad >= 0 && <CelnotitieLaag api={api} blad={blad} geometry={geometry} />}
+        {blad >= 0 && <DiscussieLaag api={api} blad={blad} geometry={geometry} />}
         {blad >= 0 && <ValidatieLaag api={api} blad={blad} geometry={geometry} focus={sel?.cells?.focus ?? null} />}
         {markeringen
           .filter((m) => m.blad === null || m.blad.toLowerCase() === info.sheetNames[blad]?.toLowerCase())

@@ -36,7 +36,7 @@ internal names. Extended source validation is preserved and displayed read-only.
   clearing an invalid source value; editing a rule; creating a number rule;
   warning cancellation/acceptance; serialization and opening the saved XLSX.
   It saves an XLSX, screenshot and JSON report under `.local/proef-validatie/`.
-- Full suite: 2,023 passed and ten existing skips in 179 files. TypeScript and
+- Full suite after the protection and comments integration: 2,051 passed and ten existing skips in 182 files. TypeScript and
   the spreadsheet translation check pass. Dutch and English
   strings are supplied; other locales currently use the English additions.
 

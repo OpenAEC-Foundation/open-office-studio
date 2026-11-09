@@ -1037,6 +1037,8 @@ export function RekenbladRibbon({
                 <Groep naam={t("spreadsheet:notes.title")}>
                   <Actie naam={t("spreadsheet:notes.edit")} icoon={StickyNote} groot disabled={!api}
                     onMouseDown={e => e.preventDefault()} onClick={() => openRekenbladVenster({ soort: "notitie" })} />
+                  <Actie naam={t("spreadsheet:discussions.open")} icoon={StickyNote} groot disabled={!api}
+                    onMouseDown={e => e.preventDefault()} onClick={() => openRekenbladVenster({ soort: "discussie" })} />
                 </Groep>
                 {zoeken}
                 {navigator}
