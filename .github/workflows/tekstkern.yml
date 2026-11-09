@@ -35,7 +35,7 @@ jobs:
           cd "$RUNNER_TEMP/math-tools"
           curl -fsSLO https://github.com/wasm-bindgen/wasm-bindgen/releases/download/0.2.129/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz
           curl -fsSLO https://github.com/wasm-bindgen/wasm-bindgen/releases/download/0.2.129/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz.sha256sum
-          sha256sum -c wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz.sha256sum
+          sed 's|gh-release/||' wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz.sha256sum | sha256sum -c -
           tar -xzf wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz
           curl -fsSLO https://github.com/WebAssembly/binaryen/releases/download/version_132/binaryen-version_132-x86_64-linux.tar.gz
           echo '195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572  binaryen-version_132-x86_64-linux.tar.gz' | sha256sum -c -

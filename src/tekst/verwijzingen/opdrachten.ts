@@ -174,7 +174,7 @@ export async function werkVerwijzingenBij(ref: DocxEditorRef): Promise<{ gewijzi
   if (s.version() !== v) throw new Error("references.changed");
   const bs = bladwijzers(s, ps, waarden), onopgelost: string[] = [];
   const pages = e.weergave.getLayout()?.pages ?? [];
-  const nootLabels = new Map(pages.flatMap(p => (p.noteAreas ?? []).flatMap(a => (a.notes ?? []).map(n => [`${a.kind ?? n.kind ?? "footnote"}:${n.id}`, n.displayLabel] as const))));
+  const nootLabels = new Map<string, string | undefined>(pages.flatMap(p => (p.noteAreas ?? []).flatMap(a => (a.notes ?? []).map(n => [`${a.kind ?? n.kind ?? "footnote"}:${n.id}`, n.displayLabel] as const))));
   function pagina(at: Plek) {
     const pos = e.weergave.yrsLocToDisplayPosition(at); if (pos === null) return null;
     function bevat(f: unknown): boolean {
