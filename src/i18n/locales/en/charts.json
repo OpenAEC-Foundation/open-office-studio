@@ -1,16 +1,49 @@
 {
   "types": {
-    "column": { "name": "Column", "description": "Compare values side by side" },
-    "stackedColumn": { "name": "Stacked column", "description": "Parts and total per category" },
-    "percentColumn": { "name": "100% column", "description": "Shares per category" },
-    "bar": { "name": "Bar", "description": "Horizontal, for long names" },
-    "line": { "name": "Line", "description": "Trend over time" },
-    "lineMarkers": { "name": "Line with markers", "description": "Trend with visible data points" },
-    "area": { "name": "Area", "description": "Trend with emphasis on magnitude" },
-    "pie": { "name": "Pie", "description": "Breakdown of a single series" },
-    "doughnut": { "name": "Doughnut", "description": "Breakdown with an open centre" },
-    "scatter": { "name": "Scatter (XY)", "description": "Relationship between two numbers" },
-    "combo": { "name": "Column + line", "description": "Last series as a line on a secondary axis" }
+    "column": {
+      "name": "Column",
+      "description": "Compare values side by side"
+    },
+    "stackedColumn": {
+      "name": "Stacked column",
+      "description": "Parts and total per category"
+    },
+    "percentColumn": {
+      "name": "100% column",
+      "description": "Shares per category"
+    },
+    "bar": {
+      "name": "Bar",
+      "description": "Horizontal, for long names"
+    },
+    "line": {
+      "name": "Line",
+      "description": "Trend over time"
+    },
+    "lineMarkers": {
+      "name": "Line with markers",
+      "description": "Trend with visible data points"
+    },
+    "area": {
+      "name": "Area",
+      "description": "Trend with emphasis on magnitude"
+    },
+    "pie": {
+      "name": "Pie",
+      "description": "Breakdown of a single series"
+    },
+    "doughnut": {
+      "name": "Doughnut",
+      "description": "Breakdown with an open centre"
+    },
+    "scatter": {
+      "name": "Scatter (XY)",
+      "description": "Relationship between two numbers"
+    },
+    "combo": {
+      "name": "Column + line",
+      "description": "Last series as a line on a secondary axis"
+    }
   },
   "unknownType": "Unknown type",
   "busy": "Working…",
@@ -226,7 +259,26 @@
       "lastSeriesAsLine": "When editing, only the last series is drawn as a line.",
       "multiLevelCategories": "Multi-level categories become a single level when editing.",
       "moreValuesThanCategories": "Series ‘{{name}}’ has more values than there are categories.",
-      "trendlinesDropped": "Trendlines and error bars are removed when editing."
+      "trendlinesDropped": "Error bars are not retained by this edit."
+    }
+  },
+  "trend": {
+    "title": "Trendlines",
+    "forSeries": "Trendline for {{name}}",
+    "none": "None",
+    "preserved": "Preserve source trendline",
+    "order": "Polynomial order",
+    "period": "Moving average period",
+    "showR2": "Show R²",
+    "invalid": "Check the trendline settings.",
+    "unsupportedChart": "Remove trendlines before choosing a stacked, pie or doughnut chart.",
+    "types": {
+      "linear": "Linear",
+      "exp": "Exponential",
+      "log": "Logarithmic",
+      "power": "Power",
+      "poly": "Polynomial",
+      "movingAvg": "Moving average"
     }
   }
 }
