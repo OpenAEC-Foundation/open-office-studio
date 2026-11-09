@@ -45,6 +45,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#249](https://github.com/OpenAEC-Foundation/open-office-studio/pull/249) | `84d851dcbf55e6307be0a4185a67b14cd46b224b` | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | Writer dark sort contrast |
 | [#250](https://github.com/OpenAEC-Foundation/open-office-studio/pull/250) | `99da68f0598b3a11ed1c6411e4135a3179bbb3f9` | `65971f5bbba139f484aec904c72c4d46fbbc5978` | Presentation animation checkpoint |
 | [#241](https://github.com/OpenAEC-Foundation/open-office-studio/pull/241) | `9666f4788cb39006588291bd01a66fc1da81cd06` | `9b16c29412a2fc338d3e5a5ee0085a66ad1eef44` | Writer captions, equations, references and mail merge |
+| [#233](https://github.com/OpenAEC-Foundation/open-office-studio/pull/233) | `2c0d92187ac36f25672d153b781885747184a985` | `73347b5aceb44379cff66e143c5a791d7a09e747` | Presentation grouping and portable theme checkpoint |
 
 ## Earlier fixes included in bundles
 
@@ -105,6 +106,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr249-related-unit | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | 29 | 0 | 0 |
 | pr250-targeted | `65971f5bbba139f484aec904c72c4d46fbbc5978` | 22 | 0 | 0 |
 | pr241-targeted | `9b16c29412a2fc338d3e5a5ee0085a66ad1eef44` | 58 | 0 | 0 |
+| pr233-targeted | `73347b5aceb44379cff66e143c5a791d7a09e747` | 20 | 0 | 0 |
 
 ## Pending deliveries
 
