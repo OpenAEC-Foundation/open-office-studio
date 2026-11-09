@@ -36,6 +36,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#218](https://github.com/OpenAEC-Foundation/open-office-studio/pull/218) | `9761a17f34b423cfa4986152bb67829348f05347` | `9a8a2969fab8e7f9c5416bbd79063ffc7c41217a` | Existing Writer revision detection |
 | [#245](https://github.com/OpenAEC-Foundation/open-office-studio/pull/245) | `26d3196595635037d79e27ab1679bfdc62b14d30` | `65512f0718f76834964904482e66e233855c7597` | AutoFit split cell boundaries |
 | [#202](https://github.com/OpenAEC-Foundation/open-office-studio/pull/202) | `9f9016b5c883b806efab166e39a732a0fd58b0c9` | `90bc18c448e3337ba2f6f39d9137a342bb463767` | Imported chart source ranges |
+| [#210](https://github.com/OpenAEC-Foundation/open-office-studio/pull/210) | `f1acf304534fb2a34dbf862f5c086c03709f5d0c` | `10f963cdfa8f563dff8862baf2df8baeaeee1c67` | Referenced formula error values |
 
 ## Earlier fixes included in bundles
 
@@ -80,6 +81,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr218-targeted | `9a8a2969fab8e7f9c5416bbd79063ffc7c41217a` | 28 | 0 | 0 |
 | pr245-targeted | `65512f0718f76834964904482e66e233855c7597` | 30 | 0 | 0 |
 | pr202-targeted | `90bc18c448e3337ba2f6f39d9137a342bb463767` | 17 | 0 | 0 |
+| pr210-targeted | `10f963cdfa8f563dff8862baf2df8baeaeee1c67` | 12 | 0 | 0 |
 
 ## Pending deliveries
 
