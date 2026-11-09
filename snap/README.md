@@ -1,0 +1,1 @@
+Six separate Snap packages use the six published amd64 debs. The Database app is outside this rollout. Each package keeps its own name, identifier and approved icon. The workflow verifies the published asset digest and version and attaches packages to the same GitHub release. Store upload remains subject to publisher access and review.

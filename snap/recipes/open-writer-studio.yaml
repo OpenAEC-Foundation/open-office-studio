@@ -1,0 +1,42 @@
+name: open-writer-studio
+base: core22
+version: 0.0.0
+title: Open Writer Studio
+summary: Open Writer Studio for Linux
+description: Open Writer Studio. This Snap packages the published OpenAEC release with its approved app
+  logo.
+grade: stable
+confinement: strict
+icon: src-tauri/icons/writer/icon.png
+architectures:
+- amd64
+apps:
+  open-writer-studio:
+    command: usr/bin/open-writer-studio
+    extensions:
+    - gnome
+    desktop: usr/share/applications/open-writer-studio.desktop
+    plugs:
+    - home
+    - removable-media
+    - network
+    - browser-support
+    slots:
+    - single-instance
+slots:
+  single-instance:
+    interface: dbus
+    bus: session
+    name: org.openaec.writer-studio.SingleInstance
+parts:
+  open-writer-studio:
+    plugin: nil
+    stage-packages:
+    - libappindicator3-1
+    override-build: 'set -eu
+
+      dpkg-deb -x "${CRAFT_PROJECT_DIR}/release.deb" "${CRAFT_PART_INSTALL}"
+
+      python3 "${CRAFT_PROJECT_DIR}/snap/prepare-desktop.py" "${CRAFT_PART_INSTALL}"
+
+      '

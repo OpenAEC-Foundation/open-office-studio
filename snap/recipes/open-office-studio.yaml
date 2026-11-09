@@ -1,0 +1,42 @@
+name: open-office-studio
+base: core22
+version: 0.0.0
+title: Open Office Studio
+summary: Open Office Studio for Linux
+description: Open Office Studio. This Snap packages the published OpenAEC release with its approved app
+  logo.
+grade: stable
+confinement: strict
+icon: src-tauri/icons/icon.png
+architectures:
+- amd64
+apps:
+  open-office-studio:
+    command: usr/bin/open-office-studio
+    extensions:
+    - gnome
+    desktop: usr/share/applications/open-office-studio.desktop
+    plugs:
+    - home
+    - removable-media
+    - network
+    - browser-support
+    slots:
+    - single-instance
+slots:
+  single-instance:
+    interface: dbus
+    bus: session
+    name: org.openaec.office-studio.SingleInstance
+parts:
+  open-office-studio:
+    plugin: nil
+    stage-packages:
+    - libappindicator3-1
+    override-build: 'set -eu
+
+      dpkg-deb -x "${CRAFT_PROJECT_DIR}/release.deb" "${CRAFT_PART_INSTALL}"
+
+      python3 "${CRAFT_PROJECT_DIR}/snap/prepare-desktop.py" "${CRAFT_PART_INSTALL}"
+
+      '

@@ -1,0 +1,42 @@
+name: open-notition-studio
+base: core22
+version: 0.0.0
+title: Open Notition Studio
+summary: Open Notition Studio for Linux
+description: Open Notition Studio. This Snap packages the published OpenAEC release with its approved
+  app logo.
+grade: stable
+confinement: strict
+icon: src-tauri/icons/notition/icon.png
+architectures:
+- amd64
+apps:
+  open-notition-studio:
+    command: usr/bin/open-notition-studio
+    extensions:
+    - gnome
+    desktop: usr/share/applications/open-notition-studio.desktop
+    plugs:
+    - home
+    - removable-media
+    - network
+    - browser-support
+    slots:
+    - single-instance
+slots:
+  single-instance:
+    interface: dbus
+    bus: session
+    name: org.openaec.notition-studio.SingleInstance
+parts:
+  open-notition-studio:
+    plugin: nil
+    stage-packages:
+    - libappindicator3-1
+    override-build: 'set -eu
+
+      dpkg-deb -x "${CRAFT_PROJECT_DIR}/release.deb" "${CRAFT_PART_INSTALL}"
+
+      python3 "${CRAFT_PROJECT_DIR}/snap/prepare-desktop.py" "${CRAFT_PART_INSTALL}"
+
+      '

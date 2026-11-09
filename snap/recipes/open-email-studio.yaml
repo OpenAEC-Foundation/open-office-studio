@@ -1,0 +1,42 @@
+name: open-email-studio
+base: core22
+version: 0.0.0
+title: Open Email Studio
+summary: Open Email Studio for Linux
+description: Open Email Studio. This Snap packages the published OpenAEC release with its approved app
+  logo.
+grade: stable
+confinement: strict
+icon: src-tauri/icons/email/icon.png
+architectures:
+- amd64
+apps:
+  open-email-studio:
+    command: usr/bin/open-email-studio
+    extensions:
+    - gnome
+    desktop: usr/share/applications/open-email-studio.desktop
+    plugs:
+    - home
+    - removable-media
+    - network
+    - browser-support
+    slots:
+    - single-instance
+slots:
+  single-instance:
+    interface: dbus
+    bus: session
+    name: org.openaec.email-studio.SingleInstance
+parts:
+  open-email-studio:
+    plugin: nil
+    stage-packages:
+    - libappindicator3-1
+    override-build: 'set -eu
+
+      dpkg-deb -x "${CRAFT_PROJECT_DIR}/release.deb" "${CRAFT_PART_INSTALL}"
+
+      python3 "${CRAFT_PROJECT_DIR}/snap/prepare-desktop.py" "${CRAFT_PART_INSTALL}"
+
+      '
