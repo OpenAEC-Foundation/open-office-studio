@@ -52,6 +52,7 @@ import { GetalVenster } from "./GetalVenster";
 import { VoorwaardelijkeOpmaakVenster } from "./VoorwaardelijkeOpmaakVenster";
 import { koppelBladSlepen } from "./bladslepen";
 import { GroepenVenster } from "./GroepenVenster";
+import { GroepenBesturing } from "./GroepenBesturing";
 import { BladEigenschappenVenster } from "./BladEigenschappenVenster";
 import { koppelTabKleuren } from "./bladEigenschappen";
 import { kopieer, leesKlembord, plak, type KlembordInhoud } from "./klembord";
@@ -355,6 +356,7 @@ export function RekenbladExtra() {
       {host &&
         createPortal(
           <>
+            <GroepenBesturing host={host} api={api} />
             <textarea
               ref={vang}
               className="rekenblad-plakvang"

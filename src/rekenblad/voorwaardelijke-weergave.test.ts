@@ -7,6 +7,7 @@ import {
 } from "@betteroffice/xlsx";
 import { bereidVoorwaardelijkeWeergave } from "./voorwaardelijke-weergave";
 import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
+import { volgKopRaster } from "./kopraster";
 
 const boeken: WorkbookHandle[] = [];
 afterEach(() => boeken.splice(0).forEach((h) => h.dispose()));
@@ -43,6 +44,21 @@ function regel(
 }
 
 describe("zichtbare voorwaardelijke opmaak (#67)", () => {
+  it("behoudt voorwaardelijke opmaak bij de gedeelde kopraster-cache en diens opruiming", () => {
+    const h = boek();
+    h.editCell(0, 0, 0, "10");
+    regel(h, ["A1>5"]);
+    bereidVoorwaardelijkeWeergave(h);
+    const raster = volgKopRaster(h);
+    expect(tekst(h, "10").color).toBe("#ff0000");
+    expect(raster.beschikbaar(viewport)).toBe(true);
+    h.editCell(0, 0, 0, "1");
+    expect(raster.beschikbaar(viewport)).toBe(false);
+    expect(tekst(h, "1").color).toBe("#000000");
+    raster.stop();
+    h.undo();
+    expect(tekst(h, "10").color).toBe("#ff0000");
+  });
   it("evalueert ROW/COLUMN, lokale namen en helekolomverwijzingen op de oorspronkelijke cel", () => {
     const z = unzipSync(boek().save());
     z["xl/workbook.xml"] = strToU8(

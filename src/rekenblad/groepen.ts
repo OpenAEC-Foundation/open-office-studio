@@ -40,7 +40,9 @@ const niveauVan = (n: ReturnType<typeof kind>) => {
 export function leesGroepen(bytes: Uint8Array, blad: number): OutlineGroep[] {
   const pakket = new Pakket(bytes),
     { pad } = werkbladDeel(pakket, blad),
-    root = leesXml(pakket.lees(pad));
+    xml = pakket.lees(pad);
+  if (!xml.includes("outlineLevel")) return [];
+  const root = leesXml(xml, { slaInhoudOver: ["row"] });
   const uit: OutlineGroep[] = [],
     outline = kind(kind(root, "sheetPr"), "outlinePr");
   for (const as of ["rij", "kolom"] as const) {
@@ -140,7 +142,9 @@ export function wijzigGroep(
   const pakket = new Pakket(bytes),
     { pad } = werkbladDeel(pakket, blad),
     xml = pakket.lees(pad),
-    root = leesXml(xml);
+    root = leesXml(xml, {
+      slaInhoudOver: [as === "rij" ? "row" : "sheetData"],
+    });
   if (bladBeveiligd(root)) throw fout("protected");
   const p = voorvoegsel(root),
     container = kind(root, as === "rij" ? "sheetData" : "cols");
