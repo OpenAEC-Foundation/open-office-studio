@@ -218,8 +218,9 @@ describe("real Writer format round trips", () => {
           report.rapport = opened.rapport;
           report.exportFormaat = opened.exportFormaat;
           expect(opened.exportFormaat).toBe(
-            ext === "doc" || ext === "dot" ? undefined : ext,
+            ext === "doc" ? undefined : ext === "dot" || ext === "ott" ? "docx" : ext,
           );
+          expect(opened.alsNieuw).toBe(ext === "dot" || ext === "ott" ? true : undefined);
           const openedPath = join(root, `${naam}-${ext}-geopend.docx`);
           writeFileSync(openedPath, opened.bytes);
           const isOdf = ["odt", "ott", "fodt"].includes(ext);

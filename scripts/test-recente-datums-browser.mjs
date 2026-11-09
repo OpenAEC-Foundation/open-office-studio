@@ -65,7 +65,7 @@ try {
         "openaec-office-instellingen",
         JSON.stringify({ taal: proef.taal }),
       );
-      localStorage.setItem(
+      sessionStorage.setItem(
         "openaec-office-recent",
         JSON.stringify([
           {
