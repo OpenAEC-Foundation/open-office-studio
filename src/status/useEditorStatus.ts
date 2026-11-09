@@ -8,6 +8,7 @@ import { publiceerStatus } from "./statusinfo";
 import { MAX_STATUS_CELLEN, SelectieStatistieken } from "./selectiestatistiek";
 import { filterTelling } from "../lint/rekenblad-gegevens";
 import { abonneerFilters } from "../lint/rekenblad-filter";
+import { DiaTelling } from "./diatelling";
 
 /** Som, gemiddelde en aantal van de selectie in het zichtbare rekenblad. */
 export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean) {
@@ -95,15 +96,20 @@ export function usePresentatieStatus(api: PptxEditorApi | null, zichtbaar: boole
   useEffect(() => {
     if (!api || !zichtbaar) return;
     let frame = 0;
+    const telling = new DiaTelling(api.handle);
+    let vorigeDia = -1, vorigAantal = -1;
     const meet = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() =>
+      frame = requestAnimationFrame(() => {
+        const dia = huidigeIndex() + 1, dias = telling.lees();
+        if (dia === vorigeDia && dias === vorigAantal) return;
+        vorigeDia = dia;
+        vorigAantal = dias;
         publiceerStatus(eigenaar, {
           soort: "presentatie",
-          dia: huidigeIndex() + 1,
-          dias: api.handle.snapshot().slides.length,
-        }),
-      );
+          dia, dias,
+        });
+      });
     };
     meet();
     const stopWijzigingen = api.handle.onUpdate(meet);
