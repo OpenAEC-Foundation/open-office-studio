@@ -16,6 +16,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#240](https://github.com/OpenAEC-Foundation/open-office-studio/pull/240) | `74d6c7b509af124f78c61773c3e9f168c984aab0` | `460ff3b4635fd181edb0a4fffc983f11ae488053` | Spreadsheet status and Presentation canvas performance |
 | [#246](https://github.com/OpenAEC-Foundation/open-office-studio/pull/246) | `cc0be69f7b9feef9e883f8b48ad792e623961377` | `86604f640bb9003ceaa2093f53822b5a981128ed` | Spreadsheet async adapter, objects, metadata and formats |
 | [#191](https://github.com/OpenAEC-Foundation/open-office-studio/pull/191) | `7536f5d9f3416db7eab91ba458adf115e367c677` | `eb4c062051c70557e0d6f9ab92a4226ed47f7c0b` | Browser recent-file sessions |
+| [#192](https://github.com/OpenAEC-Foundation/open-office-studio/pull/192) | `13e349645733904aaf9af376fed46b845dc84e8b` | `72f6813df492bcd7695ed158049859a8507b5efc` | Browser file drop |
 
 ## Earlier fixes included in bundles
 
@@ -40,6 +41,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr240-targeted | `460ff3b4635fd181edb0a4fffc983f11ae488053` | 16 | 0 | 0 |
 | pr246-targeted | `86604f640bb9003ceaa2093f53822b5a981128ed` | 131 | 0 | 0 |
 | pr191-targeted | `eb4c062051c70557e0d6f9ab92a4226ed47f7c0b` | 8 | 0 | 0 |
+| pr192-targeted | `72f6813df492bcd7695ed158049859a8507b5efc` | 8 | 0 | 0 |
 
 ## Pending deliveries
 
