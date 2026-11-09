@@ -1,0 +1,241 @@
+{
+  "converter": "LibreOffice 26.8.2.2; Windows portable test runtime",
+  "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+  "schemaSha256": {
+    "OpenDocument-v1.3-schema.rng": "40bad03efdbb02825230d357da0aa6ac679934c5bf56c6281752c0c24d58e4e6",
+    "OpenDocument-v1.3-manifest-schema.rng": "8aee71f03484be112af972d622cc9031280c007b0a454ae8815e8e333c9bdd17"
+  },
+  "cases": [
+    {
+      "label": "D1",
+      "input": "docs/tests/documentmatrix-2026-11-06/bron/D1.docx",
+      "inputSha256": "f8d4b7f3a7cd7bc2dc837b7e5fa5a808240aafd3ca198e79bb7e3d5ab7a8c35b",
+      "output": ".local/odf-13/D1-d73bbaa431/output/D1.odt",
+      "profile": ".local/odf-13/D1-d73bbaa431/profile",
+      "ms": 17797,
+      "outputSha256": "ffddd9961badace68dc6ad48eee0fa96e8c4fa7cde4f72351d54fdcb783ebf3d",
+      "checks": [
+        {
+          "part": "mimetype",
+          "valid": true
+        },
+        {
+          "part": "content.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "styles.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "meta.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "settings.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "META-INF/manifest.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        }
+      ],
+      "pass": true
+    },
+    {
+      "label": "D2",
+      "input": "docs/tests/documentmatrix-2026-11-06/bron/D2.docx",
+      "inputSha256": "5c68d65a4caf1ed3767f0cfeaf091c0207e47930adbc3e4fd19931f762e118bd",
+      "output": ".local/odf-13/D2-56c6f2be74/output/D2.odt",
+      "profile": ".local/odf-13/D2-56c6f2be74/profile",
+      "ms": 15610,
+      "outputSha256": "2b1b8d4f09cb4ed3fbd4f4c054e6500fa9eb0032bb664d7583bb07767bdbe586",
+      "checks": [
+        {
+          "part": "mimetype",
+          "valid": true
+        },
+        {
+          "part": "content.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "styles.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "meta.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "settings.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "META-INF/manifest.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        }
+      ],
+      "pass": true
+    },
+    {
+      "label": "D3",
+      "input": "docs/tests/documentmatrix-2026-11-06/bron/D3.docx",
+      "inputSha256": "664f8ccc77f4fa2f2649495daf56381e64302b85ea02d464ce24a181bf8dd073",
+      "output": ".local/odf-13/D3-e793681d03/output/D3.odt",
+      "profile": ".local/odf-13/D3-e793681d03/profile",
+      "ms": 21844,
+      "outputSha256": "d2b1d3afc6eb3b62b4f74ec8edbfdf16b1fcd22494fa859600b015ef426196f5",
+      "checks": [
+        {
+          "part": "mimetype",
+          "valid": true
+        },
+        {
+          "part": "content.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "styles.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "meta.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "settings.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "META-INF/manifest.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        }
+      ],
+      "pass": true
+    },
+    {
+      "label": "Spreadsheet",
+      "input": "public/templates/nieuw.xlsx",
+      "inputSha256": "0f3ba70a70215b2814959b2b70e651a63f4b497c66b7eedbf9fb2ead2f2ee544",
+      "output": ".local/odf-13/Spreadsheet-666f5bd37f/output/nieuw.ods",
+      "profile": ".local/odf-13/Spreadsheet-666f5bd37f/profile",
+      "ms": 24079,
+      "outputSha256": "fe98fb2fc319b75e84e715d909d3ec880a77dfab7d50760ab382faa77c067e46",
+      "checks": [
+        {
+          "part": "mimetype",
+          "valid": true
+        },
+        {
+          "part": "content.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "styles.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "meta.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "settings.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "META-INF/manifest.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        }
+      ],
+      "pass": true
+    },
+    {
+      "label": "Presentation",
+      "input": "public/templates/nieuw.pptx",
+      "inputSha256": "ef220706f4ac866df87eb848f24a1250732fdecefe4bd34b579f83e1836c7ce9",
+      "output": ".local/odf-13/Presentation-452be8b0ba/output/nieuw.odp",
+      "profile": ".local/odf-13/Presentation-452be8b0ba/profile",
+      "ms": 21328,
+      "outputSha256": "11c7e7c0e81f5d06cd32ef4566150c2bbd22f2b7afb99f55580c0c41ae46df2a",
+      "checks": [
+        {
+          "part": "mimetype",
+          "valid": true
+        },
+        {
+          "part": "content.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "styles.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "meta.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "settings.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "part": "META-INF/manifest.xml",
+          "version": "1.3",
+          "valid": true,
+          "errors": []
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
