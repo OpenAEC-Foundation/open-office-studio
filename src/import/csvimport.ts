@@ -365,7 +365,9 @@ export function bereidCsvVoor(
     instellingen.tekstteken,
     maxRijen + instellingen.beginrij,
   ).slice(instellingen.beginrij);
-  const kolommen = Math.max(0, ...rijen.slice(0, 1000).map((r) => r.length));
+  // Geen argument per rij: grote bestanden overschrijden anders de JS-stack.
+  // Controleer alle ingelezen rijen, ook voor de melding over kolomverlies.
+  const kolommen = rijen.reduce((max, rij) => Math.max(max, rij.length), 0);
   return { tekst, codering, scheidingsteken, rijen, kolommen };
 }
 
@@ -416,17 +418,21 @@ export function csvNaarXlsx(
   bladnaam = "Blad1",
 ): CsvResultaat {
   const voorbereid = bereidCsvVoor(bytes, instellingen);
-  let rijen = voorbereid.rijen;
-  // Lege slotregel(s) negeren.
-  while (rijen.length && rijen.at(-1)!.every((v) => v === ""))
-    rijen = rijen.slice(0, -1);
+  let aantalRijen = voorbereid.rijen.length;
+  // Eerst het eind bepalen en daarna één keer kopiëren. Per lege slotregel
+  // de volledige tabel kopiëren maakt grote exports onnodig kwadratisch traag.
+  while (
+    aantalRijen &&
+    voorbereid.rijen[aantalRijen - 1].every((v) => v === "")
+  )
+    aantalRijen--;
   const afgekapt =
-    rijen.length > MAX_RIJEN || voorbereid.kolommen > MAX_KOLOMMEN;
-  rijen = rijen.slice(0, MAX_RIJEN);
+    aantalRijen > MAX_RIJEN || voorbereid.kolommen > MAX_KOLOMMEN;
+  const rijen = voorbereid.rijen.slice(0, Math.min(aantalRijen, MAX_RIJEN));
   const zichtbaar: number[] = [];
   const kolommen = Math.min(
     MAX_KOLOMMEN,
-    Math.max(0, ...rijen.map((r) => r.length)),
+    rijen.reduce((max, rij) => Math.max(max, rij.length), 0),
   );
   for (let k = 0; k < kolommen; k++)
     if ((instellingen.kolomtypen[k] ?? "standaard") !== "overslaan")
@@ -608,5 +614,7 @@ export function scheidingsnaam(teken: string) {
           : teken === "|"
             ? "pipe"
             : "other";
-  return i18next.t(`import:csv.separatorNames.${sleutel}`, { character: teken });
+  return i18next.t(`import:csv.separatorNames.${sleutel}`, {
+    character: teken,
+  });
 }
