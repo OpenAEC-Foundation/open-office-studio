@@ -43,6 +43,7 @@ import {
 } from "./ooxml.ts";
 import { attrNs, namespaceVan } from "../../grafieken/xml.ts";
 import { paginaTekst } from "./tekst.ts";
+import { doelIndexen, type SectieDoel } from "./secties.ts";
 
 export type NootSoort = "voetnoot" | "eindnoot";
 export type NootNotatie = "decimal" | "lowerRoman" | "upperRoman" | "lowerLetter" | "upperLetter" | "chicago";
@@ -226,13 +227,13 @@ export function leesNoten(bytes: Uint8Array): Noot[] {
   });
 }
 
-/** De nootinstellingen zoals ze in de laatste sectie (of de instellingen) staan. */
-export function leesNootInstellingen(bytes: Uint8Array, soort: NootSoort): NootInstellingen {
+/** De nootinstellingen van een sectie, met de documentstandaarden als terugval. */
+export function leesNootInstellingen(bytes: Uint8Array, soort: NootSoort, sectie?: number): NootInstellingen {
   const s = SOORT[soort];
   return metPakket(bytes, (pakket) => {
     const doc = openDocument(pakket);
     const lijst = secties(doc);
-    const uitSectie = kind(lijst[lijst.length - 1]?.el ?? null, s.pr);
+    const uitSectie = kind(lijst[sectie ?? lijst.length - 1]?.el ?? null, s.pr);
     const uitInstellingen = kind(leesInstellingen(pakket, doc.pad), s.pr);
     const waarde = (naam: string) => attr(kind(uitSectie, naam), "val") ?? attr(kind(uitInstellingen, naam), "val");
     return {
@@ -244,38 +245,46 @@ export function leesNootInstellingen(bytes: Uint8Array, soort: NootSoort): NootI
   });
 }
 
-function prKinderen(s: (typeof SOORT)[NootSoort], w: NootInstellingen) {
-  return (
-    `<w:pos w:val="${w.positie}"/>` +
-    `<w:numFmt w:val="${w.notatie}"/>` +
-    `<w:numStart w:val="${Math.max(1, Math.round(w.beginBij))}"/>` +
-    `<w:numRestart w:val="${w.herstart}"/>`
-  );
-}
-
-/** Zet notatie, beginnummer, herstart en positie in de instellingen en in elke sectie. */
-export function zetNootInstellingen(bytes: Uint8Array, soort: NootSoort, w: NootInstellingen): Uint8Array {
+/** Zet notatie, beginnummer, herstart en positie in de gekozen secties. */
+export function zetNootInstellingen(bytes: Uint8Array, soort: NootSoort, w: NootInstellingen, doel: SectieDoel = "alle"): Uint8Array {
   const s = SOORT[soort];
   if (soort === "voetnoot" && (w.positie === "sectEnd" || w.positie === "docEnd")) throw new PaginaFout(paginaTekst("errors.footnotePosition"));
   if (soort === "eindnoot" && (w.positie === "pageBottom" || w.positie === "beneathText")) throw new PaginaFout(paginaTekst("errors.endnotePosition"));
   if (soort === "eindnoot" && w.herstart === "eachPage") throw new PaginaFout(paginaTekst("errors.endnoteRestartPerPage"));
   return metPakket(bytes, (pakket) => {
     const doc = openDocument(pakket);
+    const gekozen = new Set(doelIndexen(doc, doel));
+    if (!gekozen.size) return bytes;
+    const namen = ["pos", "numFmt", "numStart", "numRestart"] as const;
+    const instellingen = kind(leesInstellingen(pakket, doc.pad), s.pr);
+    const geerfd = Object.fromEntries(namen.map(naam => [naam, attr(kind(instellingen, naam), "val")]));
+    const nieuw = { pos: w.positie, numFmt: w.notatie, numStart: String(Math.max(1, Math.round(w.beginBij))), numRestart: w.herstart };
     // De instellingen houden alleen de verwijzingen naar de scheidingslijnen; de
     // nummering staat per sectie (die wint in Word). Nummering in settings.xml
     // laat de headless indeling van de engine weigeren ("stale-layout").
     wijzigInstellingen(pakket, doc.pad, (x) => {
       const bestaand = kindVan(x, s.pr);
       if (!bestaand) return x;
-      const extra = kinderen(bestaand, s.element).map((n) => `<w:${s.element} w:id="${attr(n, "id")}"/>`).join("");
-      return zetKind(x, s.pr, extra ? `<w:${s.pr}>${extra}</w:${s.pr}>` : null, SETTINGS_VOLGORDE);
+      let pr = x.slice(bestaand.start, bestaand.eind);
+      for (const naam of namen) pr = zetKind(pr, naam, null, NOTEPR_VOLGORDE);
+      return zetKind(x, s.pr, pr, SETTINGS_VOLGORDE);
     });
     const hersteld = herstelNootverwijzingen(doc.xml);
     if (hersteld !== doc.xml) pakket.schrijf(doc.pad, hersteld);
     const opnieuw = openDocument(pakket);
-    wijzigSectPrs(opnieuw, secties(opnieuw).map((x) => x.index), (sectPr) => {
-      // Herstart per pagina mag in een sectie niet bij eindnoten; positie staat in de sectie alleen bij voetnoten.
-      return zetKind(sectPr, s.pr, `<w:${s.pr}>${prKinderen(s, w)}</w:${s.pr}>`, SECTPR_VOLGORDE);
+    wijzigSectPrs(opnieuw, secties(opnieuw).map((x) => x.index), (sectPr, sectie) => {
+      const bestaand = kindVan(sectPr, s.pr);
+      let pr = bestaand ? sectPr.slice(bestaand.start, bestaand.eind) : `<w:${s.pr}/>`;
+      let gewijzigd = false;
+      for (const naam of namen) {
+        // Niet-gekozen secties houden hun effectieve waarden wanneer oude
+        // documentstandaarden naar de secties worden verplaatst.
+        const waarde = gekozen.has(sectie.index) ? nieuw[naam] : geerfd[naam];
+        if (waarde === undefined || (!gekozen.has(sectie.index) && kindVan(pr, naam))) continue;
+        pr = zetKind(pr, naam, `<w:${naam} w:val="${ontsnap(waarde)}"/>`, NOTEPR_VOLGORDE);
+        gewijzigd = true;
+      }
+      return gewijzigd ? zetKind(sectPr, s.pr, pr, SECTPR_VOLGORDE) : sectPr;
     });
     return pakket.inpakken();
   });

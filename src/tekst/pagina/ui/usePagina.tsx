@@ -557,13 +557,18 @@ export function usePagina() {
   }
   async function nootInstellingen(soort: NootSoort = "voetnoot") {
     try {
-      const { herlaad } = klaarVoor();
+      const { herlaad, editor } = klaarVoor();
+      const actief = actieveSectie(editor);
+      if (!actief) throw new Error(t("page.errors.cursorLost"));
       const bytes = await herlaad.bytes();
+      const lijst = leesSecties(bytes);
+      if (!lijst[actief.index]) throw new Error(t("page.errors.cursorLost"));
       setVenster(
         <NootInstellingenDialoog
-          begin={{ soort, instellingen: { voetnoot: leesNootInstellingen(bytes, "voetnoot"), eindnoot: leesNootInstellingen(bytes, "eindnoot") } }}
+          begin={{ soort, instellingen: { voetnoot: leesNootInstellingen(bytes, "voetnoot", actief.index), eindnoot: leesNootInstellingen(bytes, "eindnoot", actief.index) } }}
+          secties={lijst.length}
           sluit={sluit}
-          bevestig={(s, w) => void pakket({ klaar: t("page.done.noteFormatChanged"), werk: (b) => zetNootInstellingen(b, s, w) })}
+          bevestig={(s, w, doel) => void pakket({ klaar: t("page.done.noteFormatChanged"), werk: (b) => zetNootInstellingen(b, s, w, doel === "alle" ? "alle" : actief.index) })}
         />,
       );
     } catch (e) {
