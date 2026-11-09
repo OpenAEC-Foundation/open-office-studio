@@ -207,6 +207,19 @@ describe("autocorrectie", () => {
     expect(pas("We dont ", en)).toBe("We don't ");
   });
 
+  it.each([
+    ["DIT IS EIGELIJK ", "DIT IS EIGENLIJK ", "nl"],
+    ["GEINTERESSEERD ", "GEÏNTERESSEERD ", "nl"],
+    ["Ik ga NOGSTEEDS ", "Ik ga NOG STEEDS ", "nl"],
+    ["Dit gaat DMV ", "Dit gaat D.M.V. ", "nl"],
+    ["TEH ", "THE ", "en-GB"],
+    ["WE DONT ", "WE DON'T ", "en-GB"],
+    ["IM ", "I'M ", "en-US"],
+    ["We RECIEVE!", "We RECEIVE!", "en-US"],
+  ] as const)("behoudt volledige hoofdletters bij typefout %s", (tekst, verwacht, taal) => {
+    expect(pas(tekst, { taal })).toBe(verwacht);
+  });
+
   it("laat URL's, getallen, woorden uit de woordenlijst en woorden met apostrof met rust", () => {
     expect(pas("www.voorbeeld.nl/teh ", en)).toBe("www.voorbeeld.nl/teh ");
     expect(pas("info@teh.com ", en)).toBe("info@teh.com ");
