@@ -1167,6 +1167,7 @@
       "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
       "Saved internal hyperlink reopens and navigates to its target cell",
       "File links retain encoded relative paths and show a clear browser-only open message",
+      "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
       "Image anchor and dimensions edited; original pixels and neighboring text box retained",
       "Existing shape text edited with XML escaping and multiline persistence",
       "Image insertion uses real file input and persists its native drawing relationship",
@@ -1246,8 +1247,8 @@
     }
   ],
   "worker": {
-    "openMs": 1435,
-    "beats": 240,
+    "openMs": 2155,
+    "beats": 385,
     "maxGap": 12,
     "before": {
       "calculation": {
@@ -1288,7 +1289,7 @@
           "visibility": "visible"
         }
       ],
-      "version": "504a9e2e197442e69a228f3f832885e4-0"
+      "version": "a896f12ef6fa420688f7160aa80ec98d-0"
     },
     "edited": true,
     "after": {
@@ -1330,12 +1331,18 @@
           "visibility": "visible"
         }
       ],
-      "version": "504a9e2e197442e69a228f3f832885e4-1"
+      "version": "a896f12ef6fa420688f7160aa80ec98d-1"
     },
     "savedBytes": 716688,
     "verifiedCells": 50000,
     "savedCachedCells": 50000,
     "savedSha256": "d7e5de7a6b8f63751dad645ee784182a21d3e07e49e2ded69bf955040faaf1a2",
+    "interrupted": {
+      "started": 1,
+      "terminated": 1,
+      "reason": "AbortError",
+      "ms": 26
+    },
     "aborted": true
   },
   "largeNativeOpen": {
@@ -1379,7 +1386,7 @@
     "pass": true
   },
   "unitSuite": {
-    "passed": 2041,
+    "passed": 2053,
     "failed": 0,
     "skipped": 10
   },
