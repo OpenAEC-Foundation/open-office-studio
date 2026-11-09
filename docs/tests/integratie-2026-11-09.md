@@ -29,6 +29,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#190](https://github.com/OpenAEC-Foundation/open-office-studio/pull/190) | `7bfdd0dbee6678c3f3936349bfa56bd536f953c8` | `92be2e3a07aee7c456fe58971d021770078b7414` | Writer Undo focus |
 | [#197](https://github.com/OpenAEC-Foundation/open-office-studio/pull/197) | `a40a6662b8d357e77ece0c67b8147f1d7b7d8189` | `c0b487d05057d9df2cf486f1cd5fd6112bff4b72` | Invalid Writer regex guard |
 | [#206](https://github.com/OpenAEC-Foundation/open-office-studio/pull/206) | `6d4c96e614f69e9e7982d6ce1dd8a51b3d64d7d9` | `28b0b60efbc7f72e8e292f4076322f219edb1f99` | Empty Unicode regex matches |
+| [#212](https://github.com/OpenAEC-Foundation/open-office-studio/pull/212) | `697e777cb4aff1f654e871a192e90f2a24ab773e` | `13ac7fce1ddea9e02b82d2b29fd9431545baf33b` | Spreadsheet cut source identity |
 
 ## Earlier fixes included in bundles
 
@@ -66,10 +67,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr190-related-unit | `92be2e3a07aee7c456fe58971d021770078b7414` | 21 | 0 | 0 |
 | pr197-targeted | `c0b487d05057d9df2cf486f1cd5fd6112bff4b72` | 21 | 0 | 0 |
 | pr206-targeted | `28b0b60efbc7f72e8e292f4076322f219edb1f99` | 27 | 0 | 0 |
+| pr212-targeted | `13ac7fce1ddea9e02b82d2b29fd9431545baf33b` | 35 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #212, reported head `697e777cb4aff1f654e871a192e90f2a24ab773e`: owner-confirmed delivery; integration pending.
 - PR #222, reported head `a5adf4e5881e22a85eee611d0b9c2ef07f1263db`: owner-confirmed delivery; integration pending.
 - PR #225, reported head `8c4d25b5ff7e0ecd1d8151735b6d8959ff061736`: owner-confirmed delivery; integration pending.
 - PR #245, reported head `26d3196595635037d79e27ab1679bfdc62b14d30`: owner-confirmed delivery; integration pending.
