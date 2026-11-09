@@ -59,8 +59,12 @@ export function werkDocumentVeldenBij(ref: DocxEditorRef) {
         await ref.flushPendingInput(); await ref.whenLayoutComplete({ timeoutMs: 15000 }).catch(() => 0);
         const nog = werkVeldCachesBij(s, { ...veldOmgeving(ref), nu });
         result.onopgelost.push(...nog.onopgelost);
+        for (const bijwerker of extra) {
+          const r = await bijwerker(ref);
+          nog.gewijzigd += r.gewijzigd; result.onopgelost.push(...r.onopgelost);
+        }
         if (!nog.gewijzigd) break;
-        result.gewijzigd += nog.gewijzigd; ed.syncYrsInputState(true, nog.verhalen);
+        result.gewijzigd += nog.gewijzigd; ed.syncYrsInputState(true);
       }
     }
     await ref.flushPendingInput();
