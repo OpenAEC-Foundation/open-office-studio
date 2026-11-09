@@ -81,6 +81,7 @@ import {
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaObjecten } from "../presentatie/DiaObjecten";
+import { DiaOntwerp } from "../presentatie/DiaOntwerp";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
 
@@ -680,6 +681,7 @@ export function PresentatieRibbon({
                 <DiaVerwijderen acties={acties} />
               </Groep>
               <DiaVerplaatsen acties={acties} />
+              <Groep naam={t("presentation.groups.slides")}><DiaOntwerp /></Groep>
               <DiaNavigatie acties={acties} />
             </>
           ),
