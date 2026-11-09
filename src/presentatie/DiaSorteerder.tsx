@@ -395,7 +395,16 @@ export function DiaSorteerder({ api, herlaad, anker, bewerkbaar, huidig, fout }:
   };
 
   const toets = (e: ReactKeyboardEvent) => {
-    if (naamInvoer) return;
+    // Houd toetsen binnen de sorteerder, maar laat knoppen, schuiven en
+    // invoervelden hun eigen toetsen afhandelen. Alleen miniaturen bedienen dia's.
+    e.stopPropagation();
+    if (e.defaultPrevented || naamInvoer) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      sluit();
+      return;
+    }
+    if (!(e.target instanceof Element) || !e.target.closest("[data-dia]")) return;
     const ctrl = e.ctrlKey || e.metaKey;
     if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) {
       e.preventDefault();
@@ -419,9 +428,6 @@ export function DiaSorteerder({ api, herlaad, anker, bewerkbaar, huidig, fout }:
     } else if (e.key === "Enter") {
       e.preventDefault();
       open(focus);
-    } else if (e.key === "Escape") {
-      e.preventDefault();
-      sluit();
     } else if (e.key === "Delete" || e.key === "Backspace") {
       e.preventDefault();
       verwijder();
@@ -440,7 +446,6 @@ export function DiaSorteerder({ api, herlaad, anker, bewerkbaar, huidig, fout }:
       const opnieuw = e.key.toLowerCase() === "y" || e.shiftKey;
       void api?.commands.execute(opnieuw ? "redo" : "undo", null);
     }
-    e.stopPropagation();
   };
 
   // Slepen met de aanwijzer (ook waar HTML-slepen in de webview uit staat).
