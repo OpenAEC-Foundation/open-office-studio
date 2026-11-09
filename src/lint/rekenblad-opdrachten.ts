@@ -69,6 +69,8 @@ export type RuweOp =
   | { type: "setFreezePane"; sheet: number; pane: Pane }
   | { type: "setColWidth"; sheet: number; col: number; width: number | null }
   | { type: "setRowHeight"; sheet: number; row: number; height: number | null }
+  | { type: "setColVisibility"; sheet: number; col: number; hidden: boolean }
+  | { type: "setRowVisibility"; sheet: number; row: number; hidden: boolean }
   | { type: "mergeCells"; sheet: number; range: { start: Cel; end: Cel } }
   | {
       type: "applyRangeFormat";
@@ -252,10 +254,10 @@ export async function rijenZichtbaarheid(
   await voerOpsUit(
     api,
     rijen.map((row) => ({
-      type: "setRowHeight",
+      type: "setRowVisibility",
       sheet: blad,
       row,
-      height: verbergen ? 0 : null,
+      hidden: verbergen,
     })),
   );
 }
@@ -276,10 +278,10 @@ export async function kolommenZichtbaarheid(
   await voerOpsUit(
     api,
     kolommen.map((col) => ({
-      type: "setColWidth",
+      type: "setColVisibility",
       sheet: blad,
       col,
-      width: verbergen ? 0 : null,
+      hidden: verbergen,
     })),
   );
 }
