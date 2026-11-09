@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import i18next from "./i18n/config";
 import { kantoorModule } from "../packages/email/src/kantoor";
 import { bestandssoort } from "./formaten";
+import { luisterNaarNeerzetten } from "./neerzetten";
 import "./levenscyclus.css";
 
 const tauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
@@ -36,14 +37,9 @@ export function neerzetMelding(naam: string): string | null {
   });
 }
 
-/** Bevat het slepen bestanden (en niet bijv. tekst uit de editor)? */
-function heeftBestanden(e: DragEvent) {
-  return !!e.dataTransfer && [...e.dataTransfer.types].includes("Files");
-}
-
 interface Opties {
   /** Browser: de neergezette bestanden, op volgorde. */
-  open: (bestanden: File[]) => void;
+  open: (bestanden: File[]) => void | Promise<void>;
   /** Uit terwijl er een dialoog openstaat. */
   uit: boolean;
 }
@@ -80,46 +76,20 @@ export function useNeerzetten({ open, uit }: Opties) {
         stop?.();
       };
     }
-    let diepte = 0;
-    const binnen = (e: DragEvent) => {
-      if (!heeftBestanden(e) || recent.current.uit) return;
-      diepte++;
-      setZichtbaar(true);
-    };
-    const boven = (e: DragEvent) => {
-      if (!heeftBestanden(e) || recent.current.uit || e.defaultPrevented)
-        return;
-      e.preventDefault();
-      e.dataTransfer!.dropEffect = "copy";
-    };
-    const weg = (e: DragEvent) => {
-      if (!heeftBestanden(e)) return;
-      diepte = Math.max(0, diepte - 1);
-      if (!diepte) setZichtbaar(false);
-    };
-    const los = (e: DragEvent) => {
-      diepte = 0;
-      setZichtbaar(false);
-      // Een eigen neerzetplek (bijv. bijlagen in een e-mail) gaat voor.
-      if (!heeftBestanden(e) || e.defaultPrevented || recent.current.uit)
-        return;
-      e.preventDefault();
-      const bestanden = [...(e.dataTransfer?.files ?? [])];
-      if (bestanden.length) recent.current.open(bestanden);
-    };
-    window.addEventListener("dragenter", binnen);
-    window.addEventListener("dragover", boven);
-    window.addEventListener("dragleave", weg);
-    window.addEventListener("drop", los);
-    return () => {
-      window.removeEventListener("dragenter", binnen);
-      window.removeEventListener("dragover", boven);
-      window.removeEventListener("dragleave", weg);
-      window.removeEventListener("drop", los);
-    };
+    return luisterNaarNeerzetten(
+      window,
+      () => ({
+        ...recent.current,
+        // Ook editor- en instellingenvensters blokkeren openen via de werkruimte.
+        uit:
+          recent.current.uit ||
+          !!document.querySelector('[aria-modal="true"], dialog[open]'),
+      }),
+      setZichtbaar,
+    );
   }, []);
 
-  return zichtbaar ? (
+  return zichtbaar && !uit ? (
     <div className="office-neerzetzone" aria-hidden="true">
       <div>
         <FileDown size={34} strokeWidth={1.5} />

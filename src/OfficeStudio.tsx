@@ -634,7 +634,15 @@ export function OfficeStudio() {
     open: async (bestanden) => {
       for (const bestand of bestanden) {
         while (bezigRef.current) await new Promise((r) => setTimeout(r, 100));
-        await openBestand(bestand);
+        try {
+          await openBestand(bestand);
+        } catch (error) {
+          meld(
+            t("errors.openFileFailed", { name: bestand.name, error: String(error) }),
+            null,
+            "fout",
+          );
+        }
       }
     },
   });
