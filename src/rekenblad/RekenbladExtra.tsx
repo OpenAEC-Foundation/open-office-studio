@@ -56,6 +56,7 @@ import { optimaleBreedte, optimaleHoogte } from "./structuur";
 import { openVenster, useVenster, type Venster } from "./vensters";
 import "./rekenblad.css";
 import { CelnotitieVenster } from "./CelnotitieUi";
+import { ValidatieVenster } from "./ValidatieUi";
 
 const TABS = '[data-testid="xlsx-sheet-tabs"]';
 
@@ -397,6 +398,7 @@ export function RekenbladExtra() {
       )}
       {venster?.soort === "getal" && <GetalVenster api={api} sluiten={sluiten} />}
       {venster?.soort === "notitie" && <CelnotitieVenster api={api} cel={venster.cel} blad={venster.blad} sluiten={sluiten} />}
+      {venster?.soort === "validatie" && <ValidatieVenster api={api} sluiten={sluiten} />}
       {venster?.soort === "plakkenSpeciaal" && (
         <PlakkenSpeciaal api={api} inhoud={plakInhoud} sluiten={sluiten} />
       )}

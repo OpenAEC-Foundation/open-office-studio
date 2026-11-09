@@ -131,6 +131,7 @@ import { kopieer, leesKlembord, plak } from "../rekenblad/klembord";
 import { optimaleBreedte, optimaleHoogte } from "../rekenblad/structuur";
 import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
 import { NamenBeheer } from "../rekenblad/NamenBeheer";
+import { ValidatieGroep } from "../rekenblad/ValidatieLint";
 
 type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
 
@@ -895,6 +896,7 @@ export function RekenbladRibbon({
             naam: t("spreadsheet.tabs.data"),
             inhoud: (
               <>
+                <ValidatieGroep />
                 <Groep naam={t("spreadsheet.groups.sortFilter")}>
                   <div className="ribbon-stapel">
                     <A

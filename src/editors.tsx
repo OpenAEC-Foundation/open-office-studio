@@ -21,6 +21,8 @@ import {
   registreerWijziging,
 } from "./lint/editorApi";
 import { bereidStructuurBeveiliging } from "./rekenblad/structuurbeveiliging";
+import { installeerValidatie } from "./rekenblad/gegevensvalidatie";
+import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
 import { metBeginregio } from "./rekenblad/werkmapregio";
 import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
@@ -158,7 +160,7 @@ export default function OfficeEditor(props: EditorProps) {
   const beginRegio = useRef(intlLocale());
   const rekenbladBytes = useMemo(
     () => props.soort === "xlsx"
-      ? metCelnotitieAnkers(metBeginregio(herladen.bytes, beginRegio.current))
+      ? metCelnotitieAnkers(metValidatieAnkers(metBeginregio(herladen.bytes, beginRegio.current)))
       : herladen.bytes,
     [herladen.bytes, props.soort],
   );
@@ -301,6 +303,7 @@ export default function OfficeEditor(props: EditorProps) {
   const gereedXlsx = useCallback(
     (api: XlsxEditorApi) => {
       bereidStructuurBeveiliging(api.handle, herladenRecent.current.bytes);
+      installeerValidatie(api.handle, herladenRecent.current.bytes);
       try {
         laadCelnotities(api.handle, api.save());
       } catch {

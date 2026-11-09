@@ -1,6 +1,7 @@
 /** Naamdefinities en namen uit selectiekoppen (#70), op de bestaande XLSX-kern. */
 import { isRegioNaam } from "./regiokeuze";
 import { isNotitieAnker } from "./notitieAnkerNaam";
+import { isValidatieAnker } from "./validatieAnkers";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { XlsxDefinedNameOp } from "@betteroffice/xlsx";
 import { voerOpsUit } from "../lint/rekenblad-opdrachten";
@@ -59,7 +60,7 @@ export function namenLijst(api: XlsxEditorApi): Bereiknaam[] {
     includeHiddenSheets: true,
   });
   if (!r.ok) throw new Naamfout("readFailed");
-  return r.content.definedNames.filter(n => !(n.hidden && isNotitieAnker(n.name))).map((n) => ({
+  return r.content.definedNames.filter(n => !(n.hidden && (isNotitieAnker(n.name) || isValidatieAnker(n.name)))).map((n) => ({
     naam: n.name,
     verwijzing: n.formula,
     blad: n.localSheet?.index ?? null,
