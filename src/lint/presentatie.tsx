@@ -80,6 +80,7 @@ import {
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaOvergangen } from "../presentatie/DiaOvergangen";
+import { DiaAnimaties } from "../presentatie/DiaAnimaties";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
@@ -805,6 +806,9 @@ export function PresentatieRibbon({
               <Voorstelling acties={acties} />
               <Groep naam={tp("transitions.title")}>
                 <DiaOvergangen />
+              </Groep>
+              <Groep naam={tp("animations.title")}>
+                <DiaAnimaties />
               </Groep>
               <Groep naam={t("presentation.groups.prepare")}>
                 <P
