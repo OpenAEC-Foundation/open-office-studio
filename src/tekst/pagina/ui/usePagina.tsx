@@ -332,8 +332,9 @@ export function usePagina() {
     const sectie = actief.eigenschappen;
     const refs = soort === "header" ? sectie?.headerReferences : sectie?.footerReferences;
     const kop = soort === "header";
+    const pagina = editor.getCurrentPage();
     const openen = (e: DocxEditorRef) => {
-      if (!bewerkKopVoet(e, soort)) return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
+      if (!bewerkKopVoet(e, soort, pagina)) return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
       setTimeout(() => {
         if (!kopVoetActief()) fout(t(kop ? "page.errors.headerNotOpened" : "page.errors.footerNotOpened"));
       }, 600);
