@@ -44,6 +44,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#247](https://github.com/OpenAEC-Foundation/open-office-studio/pull/247) | `6dd71f39edc6bfd7c5a3d92ba842665579bcbdef` | `7897a592878b159941280e49feb9b5db144d7655` | Presentation show and template formats |
 | [#249](https://github.com/OpenAEC-Foundation/open-office-studio/pull/249) | `84d851dcbf55e6307be0a4185a67b14cd46b224b` | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | Writer dark sort contrast |
 | [#250](https://github.com/OpenAEC-Foundation/open-office-studio/pull/250) | `99da68f0598b3a11ed1c6411e4135a3179bbb3f9` | `65971f5bbba139f484aec904c72c4d46fbbc5978` | Presentation animation checkpoint |
+| [#241](https://github.com/OpenAEC-Foundation/open-office-studio/pull/241) | `9666f4788cb39006588291bd01a66fc1da81cd06` | `9b16c29412a2fc338d3e5a5ee0085a66ad1eef44` | Writer captions, equations, references and mail merge |
 
 ## Earlier fixes included in bundles
 
@@ -61,6 +62,9 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 - PR #211 is included through PR #233; no separate duplicate patch is applied.
 - PR #213 is included through PR #233; no separate duplicate patch is applied.
 - PR #237 is included through PR #233; no separate duplicate patch is applied.
+- PR #229 is included through PR #241; no separate duplicate patch is applied.
+- PR #234 is included through PR #241; no separate duplicate patch is applied.
+- PR #235 is included through PR #241; no separate duplicate patch is applied.
 
 ## Integration checks
 
@@ -100,6 +104,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr247-targeted | `7897a592878b159941280e49feb9b5db144d7655` | 27 | 0 | 0 |
 | pr249-related-unit | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | 29 | 0 | 0 |
 | pr250-targeted | `65971f5bbba139f484aec904c72c4d46fbbc5978` | 22 | 0 | 0 |
+| pr241-targeted | `9b16c29412a2fc338d3e5a5ee0085a66ad1eef44` | 58 | 0 | 0 |
 
 ## Pending deliveries
 
