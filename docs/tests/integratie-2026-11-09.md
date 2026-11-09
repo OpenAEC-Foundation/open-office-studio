@@ -31,6 +31,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#206](https://github.com/OpenAEC-Foundation/open-office-studio/pull/206) | `6d4c96e614f69e9e7982d6ce1dd8a51b3d64d7d9` | `28b0b60efbc7f72e8e292f4076322f219edb1f99` | Empty Unicode regex matches |
 | [#212](https://github.com/OpenAEC-Foundation/open-office-studio/pull/212) | `697e777cb4aff1f654e871a192e90f2a24ab773e` | `13ac7fce1ddea9e02b82d2b29fd9431545baf33b` | Spreadsheet cut source identity |
 | [#222](https://github.com/OpenAEC-Foundation/open-office-studio/pull/222) | `a5adf4e5881e22a85eee611d0b9c2ef07f1263db` | `27c43dd74de8d44c6bccad6a069c6659668b6369` | Complete TOC heading matching |
+| [#225](https://github.com/OpenAEC-Foundation/open-office-studio/pull/225) | `8c4d25b5ff7e0ecd1d8151735b6d8959ff061736` | `0c022aa7bc93748578109bb03ce8f64a22f6c0a2` | Writer sort date validation |
 
 ## Earlier fixes included in bundles
 
@@ -70,10 +71,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr206-targeted | `28b0b60efbc7f72e8e292f4076322f219edb1f99` | 27 | 0 | 0 |
 | pr212-targeted | `13ac7fce1ddea9e02b82d2b29fd9431545baf33b` | 35 | 0 | 0 |
 | pr222-targeted | `27c43dd74de8d44c6bccad6a069c6659668b6369` | 13 | 0 | 0 |
+| pr225-targeted | `0c022aa7bc93748578109bb03ce8f64a22f6c0a2` | 29 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #225, reported head `8c4d25b5ff7e0ecd1d8151735b6d8959ff061736`: owner-confirmed delivery; integration pending.
 - PR #245, reported head `26d3196595635037d79e27ab1679bfdc62b14d30`: owner-confirmed delivery; integration pending.
 
 ## Limits
