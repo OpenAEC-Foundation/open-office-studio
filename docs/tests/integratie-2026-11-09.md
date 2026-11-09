@@ -40,6 +40,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#223](https://github.com/OpenAEC-Foundation/open-office-studio/pull/223) | `ff44a3907b7d51d0c9372753f693c37eb15e28c4` | `8183faa8e59ef8b95a7603748b21bee5ce092d10` | Unhide custom dimensions |
 | [#204](https://github.com/OpenAEC-Foundation/open-office-studio/pull/204) | `e6a5a34571fb58dbbd81e83e984a06ea13679779` | `b1f0e8ee7c200483e6f9ecd98fa51dba0a17ac99` | Visible sheet navigation |
 | [#233](https://github.com/OpenAEC-Foundation/open-office-studio/pull/233) | `405b2e920f89b24495c95f6bcc80aed2a4198883` | `aaea78acbe03fa1517c0779fbb9ef59ece2b32e6` | Presentation editing and design |
+| [#243](https://github.com/OpenAEC-Foundation/open-office-studio/pull/243) | `78a84fd8a2926c6313e0d3d1465e5450f2c24837` | `fdf520aeb2ab6b20fefac42a80a69646386abca9` | Presentation transitions and sound |
 
 ## Earlier fixes included in bundles
 
@@ -92,6 +93,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr223-targeted | `8183faa8e59ef8b95a7603748b21bee5ce092d10` | 6 | 0 | 0 |
 | pr204-related-unit | `b1f0e8ee7c200483e6f9ecd98fa51dba0a17ac99` | 8 | 0 | 0 |
 | pr233-targeted | `aaea78acbe03fa1517c0779fbb9ef59ece2b32e6` | 124 | 0 | 0 |
+| pr243-targeted | `fdf520aeb2ab6b20fefac42a80a69646386abca9` | 19 | 0 | 0 |
 
 ## Pending deliveries
 
