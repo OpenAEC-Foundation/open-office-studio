@@ -46,6 +46,10 @@ const O = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
 const META = "OpenOfficeStudio/Writer.json",
   LIB = "OpenOfficeStudio/WriterStyles.docx";
 const markerPatroon = /^_OOSW_[a-f0-9]{10}_[slt]\d+$/;
+const odfNotatie: Record<string, string> = {
+  decimal: "1", lowerRoman: "i", upperRoman: "I",
+  lowerLetter: "a", upperLetter: "A", chicago: "*",
+};
 interface SectieBewaar {
   marker: string | null;
   voetnoot: NootInstellingen;
@@ -305,14 +309,8 @@ export async function voorWriterConversie(
         const cfg = s[soort];
         if (
           !cfg ||
-          ![
-            "decimal",
-            "lowerRoman",
-            "upperRoman",
-            "lowerLetter",
-            "upperLetter",
-            "chicago",
-          ].includes(cfg.notatie) ||
+          typeof cfg.notatie !== "string" ||
+          !/^[a-zA-Z][a-zA-Z0-9]{0,63}$/.test(cfg.notatie) ||
           !Number.isInteger(cfg.beginBij) ||
           cfg.beginBij < 1 ||
           cfg.beginBij > 32767 ||
@@ -434,6 +432,10 @@ export async function voorWriterConversie(
         ref.lokaal === "footnoteReference" ? "voetnoot" : "eindnoot",
       si = ss.findIndex((s) => !s.alinea || s.alinea.eind > ref.start),
       cfg = bewaar.secties[si][soort];
+    if (["1", "true", "on"].includes(attr(ref, "customMarkFollows") ?? "")) {
+      bewaar.noten.push({ soort, label: null });
+      continue; // Authored symbols do not consume an automatic note number.
+    }
     if (
       !tellers[soort] ||
       (cfg.herstart === "eachSect" && vorige[soort] !== si)
@@ -444,7 +446,8 @@ export async function voorWriterConversie(
     bewaar.noten.push({
       soort,
       label:
-        cfg.herstart === "eachPage" || attr(ref, "customMarkFollows") === "1"
+        cfg.herstart === "eachPage" ||
+        !Object.hasOwn(odfNotatie, cfg.notatie)
           ? null
           : label(tellers[soort], cfg.notatie),
     });
@@ -672,6 +675,9 @@ export async function naWriterConversie(
         const soort =
             attr(el, "note-class") === "endnote" ? "eindnoot" : "voetnoot",
           cfg = b.secties[0][soort];
+        // Preserve the converter's representation for imported formats outside
+        // the six formats offered by our note dialog.
+        if (!Object.hasOwn(odfNotatie, cfg.notatie)) continue;
         const attrs = Object.fromEntries(
           Object.entries(el.attrs).filter(
             ([k]) =>
@@ -686,14 +692,7 @@ export async function naWriterConversie(
         Object.assign(attrs, {
           "xmlns:style": "urn:oasis:names:tc:opendocument:xmlns:style:1.0",
           "xmlns:text": O,
-          "style:num-format": {
-            decimal: "1",
-            lowerRoman: "i",
-            upperRoman: "I",
-            lowerLetter: "a",
-            upperLetter: "A",
-            chicago: "*",
-          }[cfg.notatie],
+          "style:num-format": odfNotatie[cfg.notatie],
           "text:start-value": String(cfg.beginBij - 1),
           "text:start-numbering-at":
             cfg.herstart === "eachPage"

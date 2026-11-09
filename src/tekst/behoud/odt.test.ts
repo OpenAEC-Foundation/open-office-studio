@@ -121,6 +121,24 @@ function odf(pre: WriterConversie) {
 }
 
 describe("Writer ODT preservation (#45/#51)", () => {
+  it("keeps authored custom citations and accepts imported number formats outside the dialog", async () => {
+    for (const value of ["1", "true", "on"]) {
+      const source = new Pakket(fixture());
+      source.schrijf("word/document.xml", source.lees("word/document.xml").replace("Private Alpha", "Private Alpha MORENOTE"));
+      const z = new Pakket(voegNootIn(source.inpakken(), "MORENOTE", "voetnoot", "Another note").bytes);
+      z.schrijf("word/document.xml", z.lees("word/document.xml").replace('<w:footnoteReference ', `<w:footnoteReference w:customMarkFollows="${value}" `));
+      const pre = await voorWriterConversie(z.inpakken(), "docx", "odt");
+      expect(pre.bewaar!.noten.find(n => n.soort === "voetnoot")!.label).toBeNull();
+      expect(pre.bewaar!.noten.filter(n => n.soort === "voetnoot").map(n => n.label)).toEqual([null, "iv"]);
+    }
+    const z = new Pakket(fixture());
+    z.schrijf("word/document.xml", z.lees("word/document.xml").replaceAll('w:val="lowerRoman"', 'w:val="decimalZero"'));
+    const pre = await voorWriterConversie(z.inpakken(), "docx", "odt");
+    const odt = await naWriterConversie(pre, odf(pre));
+    const back = await voorWriterConversie(odt, "odt", "docx");
+    expect(back.bewaar!.secties[0].voetnoot.notatie).toBe("decimalZero");
+    expect(strFromU8(unzipSync(odt)["content.xml"])).not.toContain('q:label="4"');
+  }, 15_000);
   it("stores an inert style library, no body text, note text, unrelated data or macros", async () => {
     const pre = await voorWriterConversie(fixture(), "docx", "odt"),
       lib = new Pakket(pre.bibliotheek!);
