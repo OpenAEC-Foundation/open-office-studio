@@ -27,12 +27,15 @@ const ICONEN = {
  * `inZin`: voor midden in een zin ("herstelkopie van vandaag 14:05").
  */
 export function datumTekst(datum: number, nu = Date.now(), inZin = false) {
-  const dag = 86_400_000;
-  const vandaag = new Date(nu).setHours(0, 0, 0, 0);
+  const dag = new Date(datum).toDateString();
+  const vandaag = new Date(nu);
+  const gisteren = new Date(nu);
+  // Een lokale kalenderdag duurt bij de tijdwisseling 23 of 25 uur.
+  gisteren.setDate(vandaag.getDate() - 1);
   const time = formatTijd(datum);
-  if (datum >= vandaag)
+  if (dag === vandaag.toDateString())
     return i18next.t(inZin ? "backstage:recent.todayInline" : "backstage:recent.today", { time });
-  if (datum >= vandaag - dag)
+  if (dag === gisteren.toDateString())
     return i18next.t(inZin ? "backstage:recent.yesterdayInline" : "backstage:recent.yesterday", {
       time,
     });
