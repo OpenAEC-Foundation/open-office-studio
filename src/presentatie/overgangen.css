@@ -1,0 +1,15 @@
+.presentatie-overgangen { width: min(620px, calc(100vw - 32px)); max-height: min(900px, calc(100dvh - 40px)); }
+.overgang-instellingen { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 12px; }
+.overgang-rij { display: grid; grid-template-columns: minmax(0, 1fr) minmax(100px, 1fr); align-items: center; gap: 12px; }
+.overgang-rij input, .overgang-rij select { min-width: 0; height: 30px; padding: 3px 8px; border: 1px solid var(--w-rand); border-radius: 6px; background: var(--w-bg); color: var(--w-tekst); color-scheme: light dark; }
+.overgang-rij option { background: var(--w-bg); color: var(--w-tekst); }
+.overgang-voorbeeld { display: grid; gap: 8px; justify-items: start; }
+.overgang-voorbeeld canvas { width: 100%; max-height: 180px; object-fit: contain; background: #000; }
+.overgang-voorbeeld button { display: inline-flex; align-items: center; gap: 6px; }
+.overgang-bestand { display: grid; gap: 6px; }
+.overgang-bestand input { max-width: 100%; }
+.presentatie-overgangen audio { width: 100%; }
+.voorstelling-geluidmelding { position: absolute; left: 16px; bottom: 70px; max-width: min(540px, calc(100% - 32px)); display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; background: #202124; color: #fff; font-size: 14px; }
+.voorstelling-geluidmelding button { flex-shrink: 0; padding: 6px 8px; border: 1px solid #9ca3af; border-radius: 6px; background: #35363a; color: #fff; font: inherit; }
+.presentatie-overgangen .werkruimte-knop.is-primair:hover:not(:disabled) { background: var(--w-accent); color: var(--w-accent-tekst); }
+@media (max-width: 480px) { .overgang-rij { grid-template-columns: 1fr; gap: 5px; } }
