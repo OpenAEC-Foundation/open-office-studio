@@ -130,11 +130,14 @@ export function maakPatroon(zoek: string, opties: ZoekOpties = {}): RegExp {
   if (opties.regex) bron = zoek;
   else if (opties.jokertekens) bron = jokertekensNaarRegex(zoek);
   else bron = tekstNaarRegex(zoek);
-  if (opties.heleWoorden && !opties.jokertekens) bron = `(?<![\\p{L}\\p{N}_])(?:${bron})(?![\\p{L}\\p{N}_])`;
   // Jokertekens zijn in Word altijd hoofdlettergevoelig.
   const vlaggen = `gu${opties.regex ? "m" : ""}${opties.hoofdlettergevoelig || opties.jokertekens ? "" : "i"}`;
   try {
-    const patroon = new RegExp(bron, vlaggen);
+    // Valideer de bron vóór het toevoegen van grenzen: hun sluitende ] kan
+    // anders een onvolledige tekenklasse uit de zoekopdracht geldig maken.
+    let patroon = new RegExp(bron, vlaggen);
+    if (opties.heleWoorden && !opties.jokertekens)
+      patroon = new RegExp(`(?<![\\p{L}\\p{N}_])(?:${bron})(?![\\p{L}\\p{N}_])`, vlaggen);
     if (patroon.test("")) throw new ZoekFout(melding("emptyMatch"));
     patroon.lastIndex = 0;
     return patroon;

@@ -46,6 +46,25 @@ describe("zoekopties", () => {
     expect(treffers(tekst, "^\\w+", { regex: true })).toEqual(["De", "Een"]);
     expect(treffers(tekst, "\\bma.\\.$", { regex: true })).toEqual(["mat."]);
   });
+  it.each(["[", "[abc", "a[", "\\", "(", "(?<x>a)(?<x>b)", "a{2,1}"])(
+    "ongeldige regex blijft ongeldig bij hele woorden: %s",
+    (zoek) => {
+      for (const heleWoorden of [false, true])
+        for (const hoofdlettergevoelig of [false, true])
+          expect(() => maakPatroon(zoek, { regex: true, heleWoorden, hoofdlettergevoelig })).toThrow(ZoekFout);
+    },
+  );
+  it("behoudt geldige regexgroepen en hoofdletterkeuze bij hele woorden", () => {
+    const tekst = "kat katten Kat katapult 123 456";
+    expect(treffers(tekst, "(kat|\\d+)", { regex: true, heleWoorden: true })).toEqual(["kat", "Kat", "123", "456"]);
+    expect(treffers(tekst, "(kat|\\d+)", { regex: true, heleWoorden: true, hoofdlettergevoelig: true })).toEqual(["kat", "123", "456"]);
+    const m = maakPatroon("(k)(at)", { regex: true, heleWoorden: true }).exec(tekst)!;
+    expect(m.slice(1)).toEqual(["k", "at"]);
+    expect(vervangTekst("$2$1", m, { regex: true })).toBe("atk");
+  });
+  it("kan een letterlijk haakje zoeken zonder regexmodus", () => {
+    expect(treffers("los [ haakje", "[", { heleWoorden: true })).toEqual(["["]);
+  });
   it("meldt ongeldige of lege zoekopdrachten begrijpelijk", () => {
     expect(() => maakPatroon("(", { regex: true })).toThrow(ZoekFout);
     expect(() => maakPatroon("a*", { regex: true })).toThrow(/lege tekst/);
