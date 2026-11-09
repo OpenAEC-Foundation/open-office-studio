@@ -1,0 +1,572 @@
+diff --git a/crates/betteroffice-xlsx/src/authority.rs b/crates/betteroffice-xlsx/src/authority.rs
+index f7acdd8..7809d58 100644
+--- a/crates/betteroffice-xlsx/src/authority.rs
++++ b/crates/betteroffice-xlsx/src/authority.rs
+@@ -2872,7 +2872,7 @@ pub(crate) fn is_structural_op(op: &Op) -> bool {
+             | Op::SetCharts { .. }
+             | Op::SetDefinedName { .. }
+             | Op::DeleteDefinedName { .. }
+-            | Op::SetDefinedNames { .. }
++            | Op::SetTables { .. } | Op::SetDefinedNames { .. }
+     )
+ }
+ 
+@@ -3939,7 +3939,7 @@ fn targeted_sheet_keys(
+                 tokens.insert(*to, token);
+                 targets.push(None);
+             }
+-            Op::SetDefinedNames { .. }
++            Op::SetTables { .. } | Op::SetDefinedNames { .. }
+             | Op::SetDefinedName { .. }
+             | Op::DeleteDefinedName { .. } => targets.push(None),
+             op => {
+@@ -4018,7 +4018,7 @@ fn op_sheet(op: &Op) -> Option<SheetId> {
+         | Op::MoveSheet { .. }
+         | Op::SetDefinedName { .. }
+         | Op::DeleteDefinedName { .. }
+-        | Op::SetDefinedNames { .. } => None,
++        | Op::SetTables { .. } | Op::SetDefinedNames { .. } => None,
+     }
+ }
+ 
+diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
+index 3186ef4..78456e3 100644
+--- a/crates/betteroffice-xlsx/src/workbook.rs
++++ b/crates/betteroffice-xlsx/src/workbook.rs
+@@ -1758,6 +1758,9 @@ impl Workbook {
+             cell: state,
+         }];
+         ops.extend(format);
++        if xlsx_ops::table_input_may_expand(&self.model,&ops) {
++            return self.apply_ops_marked(ops,options,mark);
++        }
+         let update = self.commit_user(&ops)?;
+         self.graph.as_mut().expect("graph initialized").set_formula(
+             sheet,
+@@ -1822,6 +1825,9 @@ impl Workbook {
+                 ops.push(format);
+             }
+         }
++        if preview.tables != self.model.tables {
++            return self.apply_ops(ops,options);
++        }
+         if ops.is_empty() || models_semantically_equal(&preview, &self.model) {
+             return Ok(MutationResult::default());
+         }
+@@ -3125,7 +3131,7 @@ impl Workbook {
+                 }
+                 Op::SetCharts { .. }
+                 | Op::SetChartAnchor { .. }
+-                | Op::SetDefinedNames { .. }
++                | Op::SetTables { .. } | Op::SetDefinedNames { .. }
+                 | Op::AddConditionalFormat { .. }
+                 | Op::RemoveConditionalFormat { .. }
+                 | Op::SetConditionalFormats { .. }
+@@ -3877,7 +3883,7 @@ fn worksheet_edit_target(op: &Op) -> Option<SheetId> {
+         | Op::MoveSheet { .. }
+         | Op::RenameSheet { .. }
+         | Op::RestoreSheet { .. }
+-        | Op::SetDefinedNames { .. }
++        | Op::SetTables { .. } | Op::SetDefinedNames { .. }
+         | Op::SetDefinedName { .. }
+         | Op::DeleteDefinedName { .. } => None,
+     }
+@@ -4129,6 +4135,12 @@ fn validate_op(model: &WorkbookModel, op: &Op) -> Result<()> {
+         Op::RenameSheet { sheet, .. } => {
+             require_sheet(model, *sheet)?;
+         }
++        Op::SetTables{tables} => {
++            xlsx_ops::validate_tables(model,tables)?;
++            if tables.len()!=model.tables.len() || tables.iter().zip(&model.tables).any(|(new,old)|new.name!=old.name||new.sheet!=old.sheet||new.header_rows!=old.header_rows||new.totals_rows!=old.totals_rows) {
++                return Err(Error::InvalidOperation("table identity/header/totals changes require a package edit".into()));
++            }
++        }
+         Op::SetDefinedName { .. } | Op::DeleteDefinedName { .. } => {}
+         Op::RestoreSheet { .. }
+         | Op::SetDefinedNames { .. }
+@@ -5200,7 +5212,7 @@ impl CalculationScope {
+             | Op::SetRowHeight { .. }
+             | Op::SetRowVisibility { .. }
+             | Op::RestoreRowDimension { .. } => Self::Full,
+-            Op::SetDefinedNames { .. }
++            Op::SetTables { .. } | Op::SetDefinedNames { .. }
+             | Op::SetDefinedName { .. }
+             | Op::DeleteDefinedName { .. }
+             | Op::AddSheet { .. }
+diff --git a/crates/betteroffice-xlsx/src/workbook/staging.rs b/crates/betteroffice-xlsx/src/workbook/staging.rs
+index 22f8f0d..d5a9c68 100644
+--- a/crates/betteroffice-xlsx/src/workbook/staging.rs
++++ b/crates/betteroffice-xlsx/src/workbook/staging.rs
+@@ -41,12 +41,17 @@ impl Workbook {
+     /// `baseline` (this replica's encoded state) or a fresh encoding. Nothing live changes.
+     pub(super) fn prepare_commit(
+         &self,
+-        ops: Vec<Op>,
++        mut ops: Vec<Op>,
+         staged: StagedApply,
+         origin: SyncOrigin,
+         history: CommitHistory,
+         baseline: Option<&[u8]>,
+     ) -> Result<PreparedCommit> {
++        // Growth/remapping happens during cell staging. Persist the geometry
++        // explicitly in authority/replay as part of that same undo transaction.
++        if staged.model.tables != self.model.tables && !ops.iter().any(|op|matches!(op,Op::SetTables{..})) {
++            ops.push(Op::SetTables{tables:staged.model.tables.clone()});
++        }
+         let styles = &staged.model.styles;
+         let mut authority = if !self.is_collaborative() {
+             self.authority
+diff --git a/crates/betteroffice-xlsx/tests/table_growth.rs b/crates/betteroffice-xlsx/tests/table_growth.rs
+new file mode 100644
+index 0000000..1546f20
+--- /dev/null
++++ b/crates/betteroffice-xlsx/tests/table_growth.rs
+@@ -0,0 +1,68 @@
++use betteroffice_xlsx::{CalculationOptions,CellRef,SheetId,Workbook,Op};
++use xlsx_model::{CellValue,CellRange};
++const MAIN:&str="http://schemas.openxmlformats.org/spreadsheetml/2006/main";
++const REL:&str="http://schemas.openxmlformats.org/officeDocument/2006/relationships";
++fn options()->CalculationOptions{CalculationOptions::default()}
++fn source()->Vec<u8>{
++    let parts=vec![
++        ("[Content_Types].xml",format!(r#"<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/tables/table1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/></Types>"#)),
++        ("_rels/.rels",format!(r#"<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="book" Type="{REL}/officeDocument" Target="xl/workbook.xml"/></Relationships>"#)),
++        ("xl/workbook.xml",format!(r#"<workbook xmlns="{MAIN}" xmlns:r="{REL}"><sheets><sheet name="Data" sheetId="1" r:id="sheet"/></sheets></workbook>"#)),
++        ("xl/_rels/workbook.xml.rels",format!(r#"<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="sheet" Type="{REL}/worksheet" Target="worksheets/sheet1.xml"/></Relationships>"#)),
++        ("xl/worksheets/sheet1.xml",format!(r#"<worksheet xmlns="{MAIN}" xmlns:r="{REL}"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Item</t></is></c><c r="B1" t="inlineStr"><is><t>Amount</t></is></c><c r="D1"><f>SUM(Sales[Amount])</f><v>3</v></c></row><row r="2"><c r="A2" t="inlineStr"><is><t>One</t></is></c><c r="B2"><v>1</v></c></row><row r="3"><c r="A3" t="inlineStr"><is><t>Two</t></is></c><c r="B3"><v>2</v></c></row></sheetData><tableParts count="1"><tablePart r:id="table"/></tableParts></worksheet>"#)),
++        ("xl/worksheets/_rels/sheet1.xml.rels",format!(r#"<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="table" Type="{REL}/table" Target="../tables/table1.xml"/></Relationships>"#)),
++        ("xl/tables/table1.xml",format!(r#"<table xmlns="{MAIN}" id="1" name="Sales" displayName="Sales" ref="A1:B3" headerRowCount="1" totalsRowCount="0"><autoFilter ref="A1:B3"/><tableColumns count="2"><tableColumn id="4" name="Item" totalsRowLabel="Keep"/><tableColumn id="9" name="Amount"><extLst><ext uri="column-vendor"/></extLst></tableColumn></tableColumns><tableStyleInfo name="TableStyleMedium2" showRowStripes="1"/><extLst><ext uri="table-vendor"/></extLst></table>"#)),
++        ("customXml/vendor.xml","<keep>table-test</keep>".into()),
++    ];
++    ooxml_opc::rezip_parts(&parts.into_iter().map(|(n,s)|(n.to_owned(),s.into_bytes())).collect::<Vec<_>>()).unwrap()
++}
++fn range(w:&Workbook)->String{w.model().tables[0].range.to_a1()}
++fn sum(w:&Workbook)->f64{match w.model().sheet(SheetId(0)).unwrap().cell(CellRef::new(0,3)).unwrap().value{CellValue::Number{value}=>value,_=>panic!("sum is not numeric")}}
++fn xml(bytes:&[u8],path:&str)->String{
++    let parts=ooxml_opc::unzip_parts(bytes).unwrap();
++    String::from_utf8(parts.into_iter().find(|(name,_)|name==path).unwrap().1).unwrap()
++}
++#[test]
++fn rows_grow_and_structured_sum_recalculates_with_single_undo_redo(){
++    let mut w=Workbook::open(&source()).unwrap();
++    w.edit_cell(SheetId(0),CellRef::new(3,1),"4",options()).unwrap();
++    assert_eq!(range(&w),"A1:B4");assert_eq!(sum(&w),7.0);
++    w.undo(options()).unwrap();assert_eq!(range(&w),"A1:B3");assert_eq!(sum(&w),3.0);
++    w.redo(options()).unwrap();assert_eq!(range(&w),"A1:B4");assert_eq!(sum(&w),7.0);
++    let saved=w.save().unwrap();let reopened=Workbook::open(&saved).unwrap();
++    assert_eq!(range(&reopened),"A1:B4");assert_eq!(sum(&reopened),7.0);
++    let table=xml(&saved,"xl/tables/table1.xml");assert!(table.contains("table-vendor"));assert!(table.contains("column-vendor"));assert!(table.contains("TableStyleMedium2"));
++    assert_eq!(xml(&saved,"customXml/vendor.xml"),"<keep>table-test</keep>");
++}
++#[test]
++fn columns_grow_from_header_input_with_unique_ids_and_preserved_metadata(){
++    let mut w=Workbook::open(&source()).unwrap();
++    w.edit_cell(SheetId(0),CellRef::new(0,2),"Cost",options()).unwrap();
++    assert_eq!(range(&w),"A1:C3");assert_eq!(w.model().tables[0].columns,vec!["Item","Amount","Cost"]);
++    let saved=w.save().unwrap();let table=xml(&saved,"xl/tables/table1.xml");
++    assert!(table.contains("id=\"10\""));assert!(table.contains("column-vendor"));assert!(table.contains("totalsRowLabel=\"Keep\""));
++    let reopened=Workbook::open(&saved).unwrap();assert_eq!(reopened.model().tables[0].columns,w.model().tables[0].columns);
++    w.undo(options()).unwrap();assert_eq!(range(&w),"A1:B3");
++    w.redo(options()).unwrap();assert_eq!(range(&w),"A1:C3");
++}
++#[test]
++fn insert_and_delete_body_rows_move_table_and_keep_structured_formulas(){
++    let mut w=Workbook::open(&source()).unwrap();
++    w.apply_ops(vec![Op::InsertRows{sheet:SheetId(0),at:2,count:1}],options()).unwrap();
++    assert_eq!(range(&w),"A1:B4");assert_eq!(sum(&w),3.0);
++    w.edit_cell(SheetId(0),CellRef::new(2,1),"10",options()).unwrap();assert_eq!(sum(&w),13.0);
++    w.undo(options()).unwrap();w.undo(options()).unwrap();assert_eq!(range(&w),"A1:B3");assert_eq!(sum(&w),3.0);
++    w.apply_ops(vec![Op::DeleteRows{sheet:SheetId(0),at:1,count:1}],options()).unwrap();assert_eq!(range(&w),"A1:B2");assert_eq!(sum(&w),2.0);
++    w.undo(options()).unwrap();assert_eq!(range(&w),"A1:B3");assert_eq!(sum(&w),3.0);
++}
++#[test]
++fn invalid_resize_refuses_a_whole_mixed_batch(){
++    let mut w=Workbook::open(&source()).unwrap();let before=w.save().unwrap();
++    let mut tables=w.model().tables.clone();tables[0].range=CellRange::parse_a1("A1:C3").unwrap();
++    let op=Op::SetCell{sheet:SheetId(0),at:CellRef::new(8,0),cell:xlsx_ops::CellState{value:CellValue::Number{value:99.0},..Default::default()}};
++    assert!(w.apply_ops(vec![op,Op::SetTables{tables}],options()).is_err());assert_eq!(w.save().unwrap(),before);
++}
++#[test]
++fn clearing_adjacent_cell_does_not_expand_a_table(){
++    let mut w=Workbook::open(&source()).unwrap();w.edit_cell(SheetId(0),CellRef::new(3,1),"",options()).unwrap();assert_eq!(range(&w),"A1:B3");
++}
+diff --git a/crates/xlsx-ops/src/apply.rs b/crates/xlsx-ops/src/apply.rs
+index d56122d..f745f38 100644
+--- a/crates/xlsx-ops/src/apply.rs
++++ b/crates/xlsx-ops/src/apply.rs
+@@ -36,6 +36,7 @@ pub enum OpError {
+     ChartFrameShifted { frame: String },
+     NumFmtTableFull,
+     InvalidStyle(String),
++    InvalidTable(String),
+     InvalidConditionalFormat(String),
+     InvalidAutoFilter(String),
+     ConditionalFormatNotFound(String),
+@@ -72,7 +73,7 @@ impl fmt::Display for OpError {
+                 f,
+                 "chart frame {frame} does not hold the chart part and anchor this op was recorded against; its drawing has changed"
+             ),
+-            OpError::InvalidStyle(message) | OpError::InvalidDefinedName(message) => {
++            OpError::InvalidTable(message) | OpError::InvalidStyle(message) | OpError::InvalidDefinedName(message) => {
+                 f.write_str(message)
+             }
+             OpError::InvalidAutoFilter(message) | OpError::InvalidConditionalFormat(message) => {
+@@ -104,16 +105,21 @@ pub fn apply(wb: &mut Workbook, op: &Op) -> Result<InvertedOp, OpError> {
+ pub fn apply_in_place(wb: &mut Workbook, op: &Op) -> Result<InvertedOp, OpError> {
+     crate::conditional_formats::ensure_conditional_formats_allow_edit(wb, op)?;
+     match op {
++        Op::SetTables { tables } => {
++            crate::tables::validate_tables(wb,tables)?;
++            let old=std::mem::replace(&mut wb.tables,tables.clone());
++            Ok(InvertedOp(vec![Op::SetTables{tables:old}]))
++        }
+         Op::SetCell { sheet, at, cell } => {
++            let old = wb.sheet(*sheet).ok_or(OpError::SheetNotFound(*sheet))?.cell(*at).map(CellState::from).unwrap_or_default();
++            let mut inverse=crate::tables::grow_for_cell(wb,*sheet,*at,cell)?;
+             wb.styles.preserve_style_identity();
+             let s = sheet_mut(wb, *sheet)?;
+-            let old = s.cell(*at).map(CellState::from).unwrap_or_default();
+-            s.set_cell(*at, cell.clone().into());
+-            Ok(InvertedOp(vec![Op::SetCell {
+-                sheet: *sheet,
+-                at: *at,
+-                cell: old,
+-            }]))
++            let mut input=cell.clone();
++            if !inverse.is_empty() && input.style.is_none(){input.style=s.cell(*at).and_then(|c|c.style);}
++            s.set_cell(*at, input.into());
++            inverse.insert(0,Op::SetCell { sheet:*sheet,at:*at,cell:old });
++            Ok(InvertedOp(inverse))
+         }
+         Op::SetColWidth { sheet, col, width } => {
+             let s = sheet_mut(wb, *sheet)?;
+@@ -1227,6 +1233,7 @@ fn insert_rows(
+     op: &Op,
+ ) -> Result<InvertedOp, OpError> {
+     wb.sheet(sheet).ok_or(OpError::SheetNotFound(sheet))?;
++    let table_restores = crate::tables::remap_tables(wb, op)?;
+     let restores = remap_formulas(wb, op)?;
+     let defined_name_restore = remap_defined_names(wb, op)?;
+     let chart_restores = remap_charts(wb, op)?;
+@@ -1289,6 +1296,7 @@ fn insert_rows(
+     inv.extend(defined_name_restore);
+     inv.extend(chart_restores);
+     inv.extend(hyperlink_restores);
++    inv.extend(table_restores);
+     Ok(InvertedOp(inv))
+ }
+ 
+@@ -1300,6 +1308,7 @@ fn delete_rows(
+     op: &Op,
+ ) -> Result<InvertedOp, OpError> {
+     wb.sheet(sheet).ok_or(OpError::SheetNotFound(sheet))?;
++    let table_restores = crate::tables::remap_tables(wb, op)?;
+     let restores = remap_formulas(wb, op)?;
+     let defined_name_restore = remap_defined_names(wb, op)?;
+     let chart_restores = remap_charts(wb, op)?;
+@@ -1363,6 +1372,7 @@ fn delete_rows(
+     inv.extend(defined_name_restore);
+     inv.extend(chart_restores);
+     inv.extend(hyperlink_restores);
++    inv.extend(table_restores);
+     Ok(InvertedOp(inv))
+ }
+ 
+@@ -1374,6 +1384,7 @@ fn insert_cols(
+     op: &Op,
+ ) -> Result<InvertedOp, OpError> {
+     wb.sheet(sheet).ok_or(OpError::SheetNotFound(sheet))?;
++    let table_restores = crate::tables::remap_tables(wb, op)?;
+     let restores = remap_formulas(wb, op)?;
+     let defined_name_restore = remap_defined_names(wb, op)?;
+     let chart_restores = remap_charts(wb, op)?;
+@@ -1411,6 +1422,7 @@ fn insert_cols(
+     inv.extend(defined_name_restore);
+     inv.extend(chart_restores);
+     inv.extend(hyperlink_restores);
++    inv.extend(table_restores);
+     Ok(InvertedOp(inv))
+ }
+ 
+@@ -1422,6 +1434,7 @@ fn delete_cols(
+     op: &Op,
+ ) -> Result<InvertedOp, OpError> {
+     wb.sheet(sheet).ok_or(OpError::SheetNotFound(sheet))?;
++    let table_restores = crate::tables::remap_tables(wb, op)?;
+     let restores = remap_formulas(wb, op)?;
+     let defined_name_restore = remap_defined_names(wb, op)?;
+     let chart_restores = remap_charts(wb, op)?;
+@@ -1473,6 +1486,7 @@ fn delete_cols(
+     inv.extend(defined_name_restore);
+     inv.extend(chart_restores);
+     inv.extend(hyperlink_restores);
++    inv.extend(table_restores);
+     Ok(InvertedOp(inv))
+ }
+ 
+diff --git a/crates/xlsx-ops/src/lib.rs b/crates/xlsx-ops/src/lib.rs
+index a396f18..51568cf 100644
+--- a/crates/xlsx-ops/src/lib.rs
++++ b/crates/xlsx-ops/src/lib.rs
+@@ -9,6 +9,8 @@ mod op;
+ mod proposals;
+ mod remap;
+ mod undo;
++mod tables;
++pub use tables::{validate_tables, table_input_may_expand};
+ 
+ pub use apply::{InvertedOp, OpError, apply, apply_in_place, apply_ops, remap_ref};
+ pub use conditional_formats::{
+diff --git a/crates/xlsx-ops/src/op.rs b/crates/xlsx-ops/src/op.rs
+index bb6c3ba..05b62ef 100644
+--- a/crates/xlsx-ops/src/op.rs
++++ b/crates/xlsx-ops/src/op.rs
+@@ -56,6 +56,7 @@ impl From<CellState> for Cell {
+ #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+ #[serde(tag = "type", rename_all = "camelCase")]
+ pub enum Op {
++    SetTables { tables: Vec<xlsx_model::Table> },
+     SetCell {
+         sheet: SheetId,
+         at: CellRef,
+diff --git a/crates/xlsx-ops/src/remap.rs b/crates/xlsx-ops/src/remap.rs
+index 14c02b1..92f48e7 100644
+--- a/crates/xlsx-ops/src/remap.rs
++++ b/crates/xlsx-ops/src/remap.rs
+@@ -95,9 +95,6 @@ pub(crate) fn remap_formulas(wb: &mut Workbook, op: &Op) -> Result<Vec<Op>, OpEr
+                 parsed_order.push_back(src.as_str());
+                 expr
+             };
+-            if contains_table_reference(&expr) {
+-                return Err(OpError::FormulaNotRewritable { sheet: owner, cell });
+-            }
+             let mut changed = false;
+             let new_expr = transform(&expr, op, &matches, &mut changed);
+             if changed {
+diff --git a/crates/xlsx-ops/src/tables.rs b/crates/xlsx-ops/src/tables.rs
+new file mode 100644
+index 0000000..82a616d
+--- /dev/null
++++ b/crates/xlsx-ops/src/tables.rs
+@@ -0,0 +1,125 @@
++//! Undoable table geometry and automatic growth; package presentation remains in OOXML.
++use std::collections::HashSet;
++use xlsx_model::{CellRange, CellRef, CellValue, SheetId, Table, Workbook};
++use xlsx_model::addr::{MAX_COLS,MAX_ROWS};
++use crate::{CellState,Op,OpError};
++
++const MAX_EXPANSION_CELLS:u64=100_000;
++fn invalid(message:&str)->OpError {OpError::InvalidTable(message.into())}
++
++pub fn validate_tables(wb:&Workbook,tables:&[Table])->Result<(),OpError>{
++    if tables.len()>65536{return Err(invalid("too many tables"));}
++    let mut names=HashSet::new();
++    for (i,t) in tables.iter().enumerate(){
++        if wb.sheet(t.sheet).is_none(){return Err(OpError::SheetNotFound(t.sheet));}
++        let r=t.range;
++        if r.start.row>r.end.row||r.start.col>r.end.col||r.end.row>=MAX_ROWS||r.end.col>=MAX_COLS{return Err(invalid("table outside worksheet grid"));}
++        if t.name.is_empty()||t.name.len()>1024||!names.insert(t.name.to_ascii_lowercase()){return Err(invalid("invalid or duplicate table name"));}
++        let rows=r.end.row-r.start.row+1;
++        if t.header_rows>1||t.totals_rows>1||t.header_rows+t.totals_rows>rows||t.columns.len()!=(r.end.col-r.start.col+1) as usize{return Err(invalid("table columns or header/totals bands do not match its range"));}
++        let mut columns=HashSet::new();
++        for name in &t.columns {
++            if name.is_empty()||name.chars().count()>255||!columns.insert(name.to_lowercase()){return Err(invalid("invalid or duplicate table column name"));}
++        }
++        if tables[..i].iter().any(|other|other.sheet==t.sheet&&other.range.overlaps(&t.range)){return Err(invalid("table ranges overlap"));}
++    }
++    Ok(())
++}
++fn has_input(cell:&CellState)->bool {cell.formula.is_some()||!matches!(cell.value,CellValue::Empty)}
++fn adjacent(t:&Table,sheet:SheetId,at:CellRef)->bool {
++    t.sheet==sheet&&((t.totals_rows==0&&at.row==t.range.end.row.saturating_add(1)&&at.col>=t.range.start.col&&at.col<=t.range.end.col)
++        ||(at.col==t.range.end.col.saturating_add(1)&&at.row>=t.range.start.row&&at.row<=t.range.end.row))
++}
++pub fn table_input_may_expand(wb:&Workbook,ops:&[Op])->bool {
++    ops.iter().any(|op|match op{Op::SetCell{sheet,at,cell}=>has_input(cell)&&wb.tables.iter().any(|t|adjacent(t,*sheet,*at)),_=>false})
++}
++fn unique_column(columns:&[String],preferred:Option<String>)->String {
++    if let Some(s)=preferred.filter(|s|!s.is_empty()&&s.chars().count()<=255) {
++        if !columns.iter().any(|v|v.eq_ignore_ascii_case(&s)){return s;}
++    }
++    let mut i=columns.len()+1;
++    loop {let s=format!("Column{i}");if !columns.iter().any(|v|v.eq_ignore_ascii_case(&s)){return s;}i+=1;}
++}
++/// Called only while staging an atomic edit. Returns cell/style and table inverses.
++pub(crate) fn grow_for_cell(wb:&mut Workbook,sheet:SheetId,at:CellRef,cell:&CellState)->Result<Vec<Op>,OpError>{
++    if !has_input(cell){return Ok(Vec::new());}
++    if wb.tables.iter().any(|t|t.sheet==sheet&&at.row>=t.range.start.row&&at.row<=t.range.end.row&&at.col>=t.range.start.col&&at.col<=t.range.end.col){return Ok(Vec::new());}
++    let indices=wb.tables.iter().enumerate().filter_map(|(i,t)|adjacent(t,sheet,at).then_some(i)).collect::<Vec<_>>();
++    if indices.is_empty(){return Ok(Vec::new());}
++    if indices.len()!=1{return Err(invalid("input is adjacent to more than one table"));}
++    let old=wb.tables.clone();let index=indices[0];let mut next=old[index].clone();
++    let column=at.col>next.range.end.col;
++    let count=if column{(next.range.end.row-next.range.start.row+1)as u64}else{(next.range.end.col-next.range.start.col+1)as u64};
++    if count>MAX_EXPANSION_CELLS{return Err(invalid("table expansion exceeds 100000 cells"));}
++    if column {
++        next.range.end.col=at.col;
++        let header=CellRef::new(next.range.start.row,at.col);
++        let preferred=if at.row==header.row{match &cell.value{CellValue::Text{value}=>Some(value.clone()),_=>None}}else{wb.sheet(sheet).and_then(|s|s.cell(header)).and_then(|c|match &c.value{CellValue::Text{value}=>Some(value.clone()),_=>None})};
++        next.columns.push(unique_column(&next.columns,preferred));
++    }else{next.range.end.row=at.row;}
++    let mut tables=old.clone();tables[index]=next.clone();validate_tables(wb,&tables)?;
++    wb.tables=tables;
++    let mut inverse=Vec::new();
++    let cells=if column{(next.range.start.row..=next.range.end.row).map(|row|CellRef::new(row,at.col)).collect::<Vec<_>>()}else{(next.range.start.col..=next.range.end.col).map(|col|CellRef::new(at.row,col)).collect::<Vec<_>>()};
++    let s=wb.sheet_mut(sheet).ok_or(OpError::SheetNotFound(sheet))?;
++    for target in cells {
++        let current=s.cell(target).cloned().unwrap_or_default();
++        let source=if column{CellRef::new(target.row,target.col-1)}else{CellRef::new(target.row.saturating_sub(if target.row>next.range.start.row+2{2}else{1}),target.col)};
++        let style=s.cell(source).and_then(|c|c.style);
++        let mut updated=current.clone();
++        if updated.style.is_none(){updated.style=style;}
++        if column&&next.header_rows>0&&target.row==next.range.start.row&&target!=at&&matches!(updated.value,CellValue::Empty)&&updated.formula.is_none(){updated.value=CellValue::Text{value:next.columns.last().unwrap().clone()};}
++        if updated!=current {
++            inverse.push(Op::SetCell{sheet,at:target,cell:CellState::from(&current)});
++            s.set_cell(target,updated);
++        }
++    }
++    inverse.push(Op::SetTables{tables:old});
++    Ok(inverse)
++}
++
++/// Structural edits move table geometry along with cells. Whole-table deletion
++/// is explicit (convert to range first), avoiding orphaned source relationships.
++pub(crate) fn remap_tables(wb:&mut Workbook,op:&Op)->Result<Vec<Op>,OpError>{
++    let (sheet,at,count,rows,insert)=match *op{
++        Op::InsertRows{sheet,at,count}=>(sheet,at,count,true,true),
++        Op::DeleteRows{sheet,at,count}=>(sheet,at,count,true,false),
++        Op::InsertCols{sheet,at,count}=>(sheet,at,count,false,true),
++        Op::DeleteCols{sheet,at,count}=>(sheet,at,count,false,false),
++        _=>return Ok(Vec::new()),
++    };
++    if count==0{return Ok(Vec::new());}
++    let old=wb.tables.clone();let mut tables=old.clone();
++    for t in tables.iter_mut().filter(|t|t.sheet==sheet){
++        let (start,end)=if rows{(t.range.start.row,t.range.end.row)}else{(t.range.start.col,t.range.end.col)};
++        if at>end{continue;}
++        let (new_start,new_end)=if insert {
++            let a=if at<=start{start.checked_add(count)}else{Some(start)};
++            let b=end.checked_add(count);
++            (a,b)
++        }else{
++            let stop=at.saturating_add(count);
++            if at<=start&&stop>end{return Err(invalid("convert the table to a range before deleting its whole extent"));}
++            if rows&&((t.header_rows>0&&at<=start&&stop>start)||(t.totals_rows>0&&at<=end&&stop>end)){return Err(invalid("disable table headers/totals before deleting that band"));}
++            let a=if start>=stop{start-count}else if start>=at{at}else{start};
++            let b=if end>=stop{end-count}else if end>=at{at.saturating_sub(1)}else{end};
++            (Some(a),Some(b))
++        };
++        let (Some(a),Some(b))=(new_start,new_end)else{return Err(invalid("table shift exceeds worksheet grid"));};
++        if b>=if rows{MAX_ROWS}else{MAX_COLS}{return Err(invalid("table shift exceeds worksheet grid"));}
++        if rows{t.range=CellRange::new(CellRef::new(a,t.range.start.col),CellRef::new(b,t.range.end.col));}
++        else{
++            if insert&&at>start {
++                let index=(at-start)as usize;
++                for n in 0..count as usize{let name=unique_column(&t.columns,None);t.columns.insert(index+n,name);}
++            }else if !insert {
++                let first=at.max(start)-start;let last=at.saturating_add(count).min(end+1)-start;
++                if first<last{t.columns.drain(first as usize..last as usize);}
++            }
++            t.range=CellRange::new(CellRef::new(t.range.start.row,a),CellRef::new(t.range.end.row,b));
++        }
++    }
++    if tables==old{return Ok(Vec::new());}
++    validate_tables(wb,&tables)?;wb.tables=tables;
++    Ok(vec![Op::SetTables{tables:old}])
++}
+diff --git a/crates/xlsx-parse/src/read.rs b/crates/xlsx-parse/src/read.rs
+index cc84d62..9f23a73 100644
+--- a/crates/xlsx-parse/src/read.rs
++++ b/crates/xlsx-parse/src/read.rs
+@@ -487,7 +487,7 @@ fn row_count_attr(
+ 
+ /// Decode the `_xHHHH_` escapes excel writes for characters a name cannot hold
+ /// literally; `_x005F_` is its own escape for a leading underscore.
+-fn unescape_name(source: &str) -> String {
++pub(crate) fn unescape_name(source: &str) -> String {
+     if !source.contains("_x") && !source.contains("_X") {
+         return source.to_string();
+     }
+diff --git a/crates/xlsx-parse/src/write.rs b/crates/xlsx-parse/src/write.rs
+index 486b661..7efb57f 100644
+--- a/crates/xlsx-parse/src/write.rs
++++ b/crates/xlsx-parse/src/write.rs
+@@ -37,6 +37,7 @@ mod app_titles;
+ mod source_coordinates;
+ mod style_derivation;
+ mod views;
++mod table_ranges;
+ 
+ /// A saved workbook's parts: generated entries are owned, entries the source
+ /// package already held are borrowed from it.
+@@ -927,6 +928,7 @@ pub fn serialize_workbook_with_package_and_origins_after_edits_and_active_sheet_
+         (None, None) => {}
+     }
+ 
++    table_ranges::patch(wb,package,&sheets,&mut parts)?;
+     for (path, bytes) in chart_refreshes {
+         let _ = parts.set(path, bytes);
+     }
+diff --git a/crates/xlsx-parse/src/write/table_ranges.rs b/crates/xlsx-parse/src/write/table_ranges.rs
+new file mode 100644
+index 0000000..9765c4a
+--- /dev/null
++++ b/crates/xlsx-parse/src/write/table_ranges.rs
+@@ -0,0 +1,57 @@
++//! Patch only changed existing table geometry; preserve source table/style/column extensions.
++use super::*;
++
++fn value(bytes:&[u8],name:&str)->Result<Option<String>,ParseError>{
++    Ok(attributes_from_fragment(bytes)?.into_iter().find(|a|a.local_name()==name).map(|a|a.value))
++}
++pub(super) fn patch(wb:&Workbook,package:&PreservedPackage,sheets:&[PlannedSheet],parts:&mut PartStore<'_>)->Result<(),ParseError>{
++    if wb.tables==package.original_workbook.tables{return Ok(());}
++    let mut seen=HashSet::new();
++    for (index,sheet) in sheets.iter().enumerate(){
++        let rel_path=relationship_part_path(&sheet.path);
++        let Some(rels)=parts.get(&rel_path)else{continue;};
++        for rel in parse_relationships(rels)?.into_iter().filter(|r|r.has_type("table")){
++            if rel.attribute("TargetMode").is_some_and(|v|v.eq_ignore_ascii_case("external")){continue;}
++            let Some(target)=rel.target()else{continue;};
++            let base=sheet.path.rsplit_once('/').map_or("",|(base,_)|base);
++            let path=resolve_part_path(base,target);
++            let source=parts.get(&path).ok_or_else(||ParseError::Malformed("missing table part".into()))?;
++            let name=value(source,"displayName")?.or(value(source,"name")?).ok_or_else(||ParseError::Malformed("table without name".into()))?;
++            let Some(table)=wb.tables.iter().find(|t|t.sheet==SheetId(index as u32)&&t.name==crate::read::unescape_name(&name))else{continue;};
++            let old=sheet.origin.and_then(|origin|package.original_workbook.tables.iter().find(|t|t.sheet==SheetId(origin as u32)&&t.name==table.name));
++            if old.is_some_and(|old|old.range==table.range&&old.columns==table.columns&&old.header_rows==table.header_rows&&old.totals_rows==table.totals_rows){continue;}
++            if !seen.insert(path.clone()){return Err(ParseError::UnsupportedEdit("shared table part cannot be resized".into()));}
++            let xml=resize(source,table)?;
++            parts.set(path,xml)?;
++        }
++    }
++    Ok(())
++}
++fn resize(source:&[u8],table:&xlsx_model::Table)->Result<Vec<u8>,ParseError>{
++    let root=XmlTemplate::capture(source)?;
++    root.require_unwrapped_child("tableColumns")?;root.require_unwrapped_child("autoFilter")?;
++    let columns=root.child("tableColumns").ok_or_else(||ParseError::Malformed("table without columns".into()))?;
++    let ct=root.capture_child(columns)?;
++    let original=ct.children_named("tableColumn").collect::<Vec<_>>();
++    let mut next_id=0u32;
++    for column in &original{next_id=next_id.max(value(&column.bytes,"id")?.and_then(|s|s.parse().ok()).unwrap_or(0));}
++    let mut output=Vec::with_capacity(table.columns.len());
++    for name in &table.columns{
++        let existing=original.iter().find(|c|value(&c.bytes,"name").ok().flatten().is_some_and(|s|crate::read::unescape_name(&s)==*name));
++        if let Some(column)=existing{output.push(column.bytes.clone());}
++        else{
++            next_id=next_id.checked_add(1).ok_or_else(||ParseError::Malformed("table column ids exhausted".into()))?;
++            let mut w=Writer::new(Vec::new());let mut e=BytesStart::new("tableColumn");
++            let id=next_id.to_string();e.push_attribute(("xmlns",root.root_namespace().unwrap_or(NS_MAIN)));e.push_attribute(("id",id.as_str()));e.push_attribute(("name",name.as_str()));
++            w.write_event(Event::Empty(e)).map_err(xml_err)?;output.push(w.into_inner());
++        }
++    }
++    let columns=ct.render_repeated("tableColumn",&output,&[("count",table.columns.len().to_string())])?;
++    let mut replacements=vec![("tableColumns",Some(columns))];
++    if let Some(filter)=root.child("autoFilter"){
++        let ft=root.capture_child(filter)?;
++        let mut range=table.range;range.end.row=range.end.row.saturating_sub(table.totals_rows);
++        replacements.push(("autoFilter",Some(ft.render_with_attributes(Vec::new(),|_|0,&[("ref",Some(range.to_a1()))])?)));
++    }
++    root.render_with_attributes(replacements,|name|match name{"autoFilter"=>0,"sortState"=>1,"tableColumns"=>2,"tableStyleInfo"=>3,_=>4},&[("ref",Some(table.range.to_a1())),("headerRowCount",Some(table.header_rows.to_string())),("totalsRowCount",Some(table.totals_rows.to_string()))])
++}

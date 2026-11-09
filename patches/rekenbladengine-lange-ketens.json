@@ -90,6 +90,16 @@
           "test": "conditional_formula_queries"
         }
       ]
+    },
+    {
+      "patch": "rekenbladengine-tabellen.patch",
+      "patchSha256": "53fc2f86ebdb6ec0fd34f5bf0877b7a0f3da5efd371afb53bfe74ec008c72bf3",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "table_growth"
+        }
+      ]
     }
   ],
   "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42625934529",
