@@ -458,7 +458,9 @@ try {
       await wacht(300);
     }
     if (soort === "pptx") {
-      assert(inhoud.getekend.includes("Samen ruimte"));
+      // De SDK kan een tekstregel over meerdere fillText-aanroepen verdelen.
+      // Controleer de werkelijk getekende tekst in dezelfde tekenvolgorde.
+      assert(inhoud.getekend.join("").includes("Samen ruimte"));
       await klikFrame("button", "2");
       await wacht(300);
       const tweede = await cdp("Page.captureScreenshot", { format: "png" });
