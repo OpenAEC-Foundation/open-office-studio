@@ -27,6 +27,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#216](https://github.com/OpenAEC-Foundation/open-office-studio/pull/216) | `9a6f8b5814c57b8304fd79147fe3049ec5f336ec` | `5560c228262a04d0108be26ec82efc216aaa9d96` | Desktop report clipboard |
 | [#224](https://github.com/OpenAEC-Foundation/open-office-studio/pull/224) | `f9dbe7336033e8b069ef5db41856c827fe10bcf8` | `8e9c89dd78734abe660d237541bb43533d48a7a9` | Recent-file calendar dates |
 | [#190](https://github.com/OpenAEC-Foundation/open-office-studio/pull/190) | `7bfdd0dbee6678c3f3936349bfa56bd536f953c8` | `92be2e3a07aee7c456fe58971d021770078b7414` | Writer Undo focus |
+| [#197](https://github.com/OpenAEC-Foundation/open-office-studio/pull/197) | `a40a6662b8d357e77ece0c67b8147f1d7b7d8189` | `c0b487d05057d9df2cf486f1cd5fd6112bff4b72` | Invalid Writer regex guard |
 
 ## Earlier fixes included in bundles
 
@@ -62,6 +63,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr216-related-unit | `5560c228262a04d0108be26ec82efc216aaa9d96` | 10 | 0 | 0 |
 | pr224-targeted | `8e9c89dd78734abe660d237541bb43533d48a7a9` | 6 | 0 | 0 |
 | pr190-related-unit | `92be2e3a07aee7c456fe58971d021770078b7414` | 21 | 0 | 0 |
+| pr197-targeted | `c0b487d05057d9df2cf486f1cd5fd6112bff4b72` | 21 | 0 | 0 |
 
 ## Pending deliveries
 
