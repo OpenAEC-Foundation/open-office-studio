@@ -170,6 +170,12 @@
       "head": "9761a17f34b423cfa4986152bb67829348f05347",
       "merge": "9a8a2969fab8e7f9c5416bbd79063ffc7c41217a",
       "scope": "Existing Writer revision detection"
+    },
+    {
+      "pr": 245,
+      "head": "26d3196595635037d79e27ab1679bfdc62b14d30",
+      "merge": "65512f0718f76834964904482e66e233855c7597",
+      "scope": "AutoFit split cell boundaries"
     }
   ],
   "coveredByBundles": [
@@ -214,13 +220,7 @@
       "via": 246
     }
   ],
-  "deliveriesPending": [
-    {
-      "pr": 245,
-      "head": "26d3196595635037d79e27ab1679bfdc62b14d30",
-      "owner": "8ca1"
-    }
-  ],
+  "deliveriesPending": [],
   "checks": [
     {
       "kind": "batch-1-targeted",
@@ -433,6 +433,15 @@
       "head": "9a8a2969fab8e7f9c5416bbd79063ffc7c41217a",
       "success": true,
       "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr245-targeted",
+      "head": "65512f0718f76834964904482e66e233855c7597",
+      "success": true,
+      "passed": 30,
       "failed": 0,
       "skipped": 0,
       "files": 1
