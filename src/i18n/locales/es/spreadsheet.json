@@ -146,11 +146,8 @@
     "unhide": "Mostrar…",
     "tabColor": "Color de pestaña",
     "allSheets": "Todas las hojas",
-
     "navigation": "Navegación de hojas",
-
     "previousSheet": "Hoja anterior",
-
     "nextSheet": "Hoja siguiente",
     "hiddenSheet": "{{name}} (oculta en el archivo)",
     "deleteTitle": "Eliminar hoja",
@@ -410,7 +407,8 @@
     "formula": "Fórmula:",
     "result": "Resultado:",
     "resultUnavailable": "sin vista previa",
-    "insert": "Insertar"
+    "insert": "Insertar",
+    "notationHint": "Use English function names, commas between arguments and a decimal point, for example SUM(1.5,2). Standalone numbers follow the workbook region."
   },
   "names": {
     "title": "Name manager",
@@ -650,5 +648,129 @@
       "failed": "The linked document could not be opened."
     },
     "previewLimited": "This object is preserved. Its full appearance is not supported in this preview."
+  },
+  "conditional": {
+    "title": "Conditional formatting",
+    "manage": "Manage rules…",
+    "range": "Applies to",
+    "type": "Rule type",
+    "formula": "Formula (English function names)",
+    "value": "Value, text or formula",
+    "secondValue": "Second value",
+    "fill": "Fill",
+    "fontColor": "Font colour",
+    "bold": "Bold",
+    "italic": "Italic",
+    "add": "Add rule",
+    "replace": "Update rule",
+    "edit": "Edit",
+    "up": "Higher priority",
+    "down": "Lower priority",
+    "stop": "Stop if true",
+    "priorityHint": "Rules apply from top to bottom. Earlier rules have priority for each formatting property. Changes take effect when you choose OK.",
+    "empty": "No rules on this worksheet.",
+    "invalidRange": "Enter a valid cell range, such as A1:A10.",
+    "invalidFormula": "Enter a valid formula.",
+    "types": {
+      "expression": "Use a formula",
+      "greaterThan": "Greater than",
+      "lessThan": "Less than",
+      "between": "Between",
+      "equal": "Equal to",
+      "containsText": "Text contains",
+      "duplicates": "Duplicate values",
+      "top10": "Top 10 values",
+      "aboveAverage": "Above average",
+      "today": "Date is today",
+      "last7Days": "Date in the last 7 days",
+      "colorScale": "Three-colour scale",
+      "dataBar": "Data bar",
+      "iconSet": "Traffic light icons",
+      "bottom10": "Bottom 10 values",
+      "belowAverage": "Below average",
+      "yesterday": "Yesterday",
+      "tomorrow": "Tomorrow"
+    },
+    "protected": "Conditional formatting cannot be changed on this protected worksheet.",
+    "preserveStyle": "The detailed source formatting is preserved. You can change the formula and range."
+  },
+  "formulaErrors": {
+    "explain": "Explain {{cell}}: {{error}}",
+    "cycle": {
+      "title": "Circular reference",
+      "help": "This formula depends on itself, directly or through other cells or sheets. Break the reference chain to calculate a result."
+    },
+    "limited": {
+      "title": "Calculation limit reached",
+      "help": "The calculation could not finish within its limit. This cell may still show a saved result. Check the formula and its dependencies before using the value."
+    },
+    "division": {
+      "title": "Division by zero",
+      "help": "A division uses zero or an empty cell as its divisor. Check the divisor or handle this case with IF or IFERROR."
+    },
+    "missing": {
+      "title": "Value not available",
+      "help": "The formula has no matching or available value. Check lookup values and ranges; NA() can also create this result deliberately."
+    },
+    "name": {
+      "title": "Unknown name or function",
+      "help": "Check the function spelling, named ranges and quoted text. A function that this engine does not support cannot be calculated."
+    },
+    "intersection": {
+      "title": "Ranges do not intersect",
+      "help": "The formula asks for an intersection of ranges that have no shared cells. Check range references and separators."
+    },
+    "number": {
+      "title": "Invalid numeric result",
+      "help": "A numeric argument is outside the functions domain or its result is outside the supported numeric range."
+    },
+    "reference": {
+      "title": "Invalid cell reference",
+      "help": "The formula refers to a cell or sheet that no longer exists. Repair the reference or undo the deletion."
+    },
+    "value": {
+      "title": "Invalid value or argument",
+      "help": "An argument has an unsuitable value or type, such as text where a number is needed. Check the referenced cells and function arguments."
+    },
+    "spill": {
+      "title": "Array result is blocked",
+      "help": "The array result cannot fill its destination cells. Clear blocking cells and check merged cells and the sheet boundary."
+    },
+    "calculation": {
+      "title": "Calculation error",
+      "help": "The formula could not produce a valid result. Check the expression, array dimensions and function support."
+    }
+  },
+  "outline": {
+    "title": "Outline groups",
+    "axis": "Group",
+    "rows": "Rows",
+    "columns": "Columns",
+    "range": "Range",
+    "group": "Group",
+    "ungroup": "Ungroup",
+    "existing": "Existing groups",
+    "empty": "This sheet has no outline groups.",
+    "level": "Level {{level}}",
+    "expand": "Expand group {{range}}",
+    "collapse": "Collapse group {{range}}",
+    "reloadHint": "Changing an outline group reloads this workbook. The current undo history is cleared; cell contents and formatting are retained.",
+    "invalidRange": "Enter a valid row range (2:10) or column range (B:F). One row operation supports up to 10,000 rows.",
+    "protected": "Outline groups cannot be changed on a protected worksheet.",
+    "readOnly": "This workbook cannot be changed right now.",
+    "overlapping": "The file has overlapping column definitions. Resolve those before editing groups.",
+    "tooDeep": "A spreadsheet supports at most seven nested outline levels.",
+    "summaryRequired": "Keep a summary row or column beside the group to collapse it."
+  },
+  "sheetProperties": {
+    "hideQuestion": "Hide sheet ‘{{name}}’?",
+    "chooseSheet": "Sheet to unhide",
+    "noColor": "No tab colour",
+    "reloadHint": "This change reloads the workbook and clears its current undo history. Worksheet contents and objects are retained.",
+    "keepVisible": "A workbook must keep at least one visible sheet.",
+    "noHidden": "There are no hidden sheets available to unhide.",
+    "veryHidden": "This sheet is marked very hidden in the source file and cannot be unhidden here.",
+    "structureLocked": "The workbook structure is protected. Sheet visibility and tab colours cannot be changed.",
+    "invalidColor": "Choose a valid tab colour."
   }
 }

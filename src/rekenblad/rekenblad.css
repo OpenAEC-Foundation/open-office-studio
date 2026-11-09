@@ -288,3 +288,18 @@
   opacity: 0;
   pointer-events: none;
 }
+
+.rekenblad-cf-regels { padding-left: 24px; max-height: 230px; overflow: auto; }
+.rekenblad-cf-regels li { padding: 8px 0; border-bottom: 1px solid #dce1e6; overflow-wrap: anywhere; }
+.rekenblad-cf-regels .rekenblad-knoppen { flex-wrap: wrap; }
+.rekenblad-cf-stijl { display: flex; align-items: end; flex-wrap: wrap; gap: 16px; }
+.rekenblad-cf-stijl .rekenblad-vinkje { align-self: center; margin-top: 12px; }
+.rekenblad-cf-stijl input[type="color"] { width: 48px; padding: 3px; }
+.rekenblad-cf-toevoegen { justify-content: flex-start; }
+
+.rekenblad-formulefout { position: relative; flex: 0 0 auto; color: #9a5b00; font-size: 12px; }
+.rekenblad-formulefout summary { display: flex; align-items: center; gap: 4px; cursor: pointer; padding: 4px; }
+.rekenblad-formulefout > div { position: absolute; right: 0; top: 100%; width: 300px; z-index: 80; padding: 12px; border: 1px solid #c4a56f; background: #fff8e8; color: #382b18; box-shadow: 0 4px 16px #0002; }
+.rekenblad-formulefout p { margin: 6px 0 0; }
+
+.office-rekenblad-host [data-testid="xlsx-sheet-tabs"] [data-oos-tabkleur] { box-shadow: inset 0 -3px 0 var(--oos-tabkleur); }

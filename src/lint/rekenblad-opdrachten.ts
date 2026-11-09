@@ -50,6 +50,7 @@ type Pane = { rows: number; cols: number; top_left: Cel } | null;
 /** Ruwe structurele engine-opdrachten die `applyOps` aantoonbaar accepteert. */
 export type RuweOp =
   | import("@betteroffice/xlsx").XlsxDefinedNameOp
+  | import("../rekenblad/voorwaardelijke-opmaak").VoorwaardelijkeOp
   | {
       type: "insertRows" | "deleteRows";
       sheet: number;
@@ -65,6 +66,7 @@ export type RuweOp =
   | { type: "setRangeNumberFormat"; sheet: number; range: { start: Cel; end: Cel }; format: NumberFormatMutation }
   | { type: "addSheet"; index: number; name: string }
   | { type: "removeSheet"; index: number }
+  | { type: "moveSheet"; from: number; to: number }
   | { type: "renameSheet"; sheet: number; name: string }
   | { type: "setFreezePane"; sheet: number; pane: Pane }
   | { type: "setColWidth"; sheet: number; col: number; width: number | null }

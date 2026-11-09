@@ -14,9 +14,12 @@ export type Venster =
   | { soort: "breedte" }
   | { soort: "hoogte" }
   | { soort: "getal" }
+  | { soort: "voorwaardelijkeOpmaak" }
+  | { soort: "groepen"; as?: "rij" | "kolom" }
+  | { soort: "bladEigenschappen"; actie: "verbergen" | "zichtbaar" | "kleur" }
   | { soort: "plakkenSpeciaal" }
   | { soort: "bladVerwijderen" }
-  | { soort: "bladVerplaatsen" }
+  | { soort: "bladVerplaatsen"; positie?: number; kopie?: boolean }
   | { soort: "bladHernoemen" }
   | { soort: "menu"; menu: MenuSoort; x: number; y: number };
 

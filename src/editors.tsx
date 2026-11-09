@@ -25,6 +25,8 @@ import { bereidStructuurBeveiliging } from "./rekenblad/structuurbeveiliging";
 import { installeerValidatie } from "./rekenblad/gegevensvalidatie";
 import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
 import { installeerBladBeveiliging, installeerBeveiligdeSelectie } from "./rekenblad/bladbeveiliging";
+import { bereidVoorwaardelijkeWeergave } from "./rekenblad/voorwaardelijke-weergave";
+import { bereidBladEigenschappen } from "./rekenblad/bladEigenschappen";
 import { metBeginregio } from "./rekenblad/werkmapregio";
 import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
@@ -333,6 +335,8 @@ export default function OfficeEditor(props: EditorProps) {
       } catch {
         // Een onleesbare notitie blokkeert het raster niet.
       }
+      bereidBladEigenschappen(api.handle, herladenRecent.current.bytes);
+      bereidVoorwaardelijkeWeergave(api.handle);
       setRekenbladApi(api);
       const stopWijziging = registreerWijziging(api.handle, () =>
         recent.current.gewijzigd(),
