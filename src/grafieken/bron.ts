@@ -1,24 +1,15 @@
 /** Celverwijzingen in grafieken ontleden en terugrekenen naar een gegevensbereik. */
 import type { Bereik, Gegevensbron, GrafiekModel } from "./model.ts";
-
-function kolomNummer(letters: string) {
-  let n = 0;
-  for (const t of letters.toUpperCase()) n = n * 26 + t.charCodeAt(0) - 64;
-  return n - 1;
-}
+import { ontleedBereik } from "../lint/rekenblad-logica";
 
 /** `'Blad 1'!$B$2:$B$4` → blad en bereik (0-gebaseerd); null voor iets anders. */
 export function ontleedVerwijzing(ref: string | undefined): { blad: string; bereik: Bereik } | null {
   if (!ref) return null;
-  const m = /^(?:'((?:[^']|'')+)'|([^!'\s()]+))!\$?([A-Za-z]{1,3})\$?(\d{1,7})(?::\$?([A-Za-z]{1,3})\$?(\d{1,7}))?$/.exec(ref.trim());
+  const m = /^(?:'((?:[^']|'')+)'|([^!'\s()]+))!(\$?[A-Za-z]{1,3}\$?\d{1,7}(?::\$?[A-Za-z]{1,3}\$?\d{1,7})?)$/.exec(ref.trim());
   if (!m) return null;
   const blad = m[1] !== undefined ? m[1].replace(/''/g, "'") : m[2];
-  const c1 = kolomNummer(m[3]), r1 = Number(m[4]) - 1;
-  const c2 = m[5] ? kolomNummer(m[5]) : c1, r2 = m[6] ? Number(m[6]) - 1 : r1;
-  return {
-    blad,
-    bereik: { top: Math.min(r1, r2), left: Math.min(c1, c2), bottom: Math.max(r1, r2), right: Math.max(c1, c2) },
-  };
+  const bereik = ontleedBereik(m[3]);
+  return bereik ? { blad, bereik } : null;
 }
 
 /**
@@ -33,8 +24,12 @@ export function bronUitModel(model: GrafiekModel): Gegevensbron | null {
   const blad = waarden[0]!.blad;
   const namen = model.reeksen.map((r) => ontleedVerwijzing(r.naamRef));
   const cat = ontleedVerwijzing(model.categorieenRef);
+  // Een aanwezige verwijzing die we niet kunnen reconstrueren is geen
+  // ontbrekende verwijzing: anders verdwijnen namen/categorieën uit het bereik.
+  if (model.categorieenRef && !cat) return null;
+  if (model.reeksen.some((r, i) => r.naamRef && !namen[i])) return null;
   const alle = [...waarden, ...namen, cat].filter((x): x is NonNullable<typeof x> => !!x);
-  if (alle.some((x) => x.blad !== blad)) return null;
+  if (alle.some((x) => x.blad.toLowerCase() !== blad.toLowerCase())) return null;
   const eerste = waarden[0]!.bereik;
   const inKolommen =
     eerste.left === eerste.right && (eerste.top !== eerste.bottom || waarden.length === 1 || waarden[1]!.bereik.left !== eerste.left);
@@ -45,13 +40,15 @@ export function bronUitModel(model: GrafiekModel): Gegevensbron | null {
   for (let i = 0; i < waarden.length; i++) {
     const b = waarden[i]!.bereik;
     const n = namen[i]?.bereik;
+    // Een reeksnaam hoort in één kopcel, niet in een meer-cellig bereik.
+    if (n && (n.left !== n.right || n.top !== n.bottom)) return null;
     if (inKolommen) {
       if (b.right !== b.left || b.top !== eerste.top || b.bottom !== eerste.bottom) return null;
-      if (n && (n.left !== b.left || n.top !== b.top - 1 || n.bottom !== n.top)) return null;
+      if (n && (n.left !== b.left || n.top !== b.top - 1)) return null;
       posities.push(b.left);
     } else {
       if (b.bottom !== b.top || b.left !== eerste.left || b.right !== eerste.right) return null;
-      if (n && (n.top !== b.top || n.left !== b.left - 1 || n.right !== n.left)) return null;
+      if (n && (n.top !== b.top || n.left !== b.left - 1)) return null;
       posities.push(b.top);
     }
     if (i > 0 && posities[i] <= posities[i - 1]) return null;
