@@ -44,6 +44,18 @@
       "head": "380f59bb629438755d7145d830ea30a97f3e92ec",
       "merge": "054d1d7a23eb889782ff17c79cd1e955c2bd7fef",
       "scope": "Writer headers, styles, notes and ODT preservation"
+    },
+    {
+      "pr": 240,
+      "head": "74d6c7b509af124f78c61773c3e9f168c984aab0",
+      "merge": "460ff3b4635fd181edb0a4fffc983f11ae488053",
+      "scope": "Spreadsheet status and Presentation canvas performance"
+    },
+    {
+      "pr": 246,
+      "head": "cc0be69f7b9feef9e883f8b48ad792e623961377",
+      "merge": "86604f640bb9003ceaa2093f53822b5a981128ed",
+      "scope": "Spreadsheet async adapter, objects, metadata and formats"
     }
   ],
   "coveredByBundles": [
@@ -82,18 +94,13 @@
     {
       "pr": 219,
       "via": 242
+    },
+    {
+      "pr": 203,
+      "via": 246
     }
   ],
   "deliveriesPending": [
-    {
-      "pr": 246,
-      "head": "cc0be69f7b9feef9e883f8b48ad792e623961377",
-      "owner": "a1ac",
-      "scope": "Spreadsheet metadata, async adapter, objects and formats",
-      "covers": [
-        203
-      ]
-    },
     {
       "pr": 212,
       "head": "697e777cb4aff1f654e871a192e90f2a24ab773e",
@@ -141,6 +148,24 @@
       "failed": 0,
       "skipped": 0,
       "files": 15
+    },
+    {
+      "kind": "pr240-targeted",
+      "head": "460ff3b4635fd181edb0a4fffc983f11ae488053",
+      "success": true,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "files": 3
+    },
+    {
+      "kind": "pr246-targeted",
+      "head": "86604f640bb9003ceaa2093f53822b5a981128ed",
+      "success": true,
+      "passed": 131,
+      "failed": 0,
+      "skipped": 0,
+      "files": 12
     }
   ],
   "limits": [
