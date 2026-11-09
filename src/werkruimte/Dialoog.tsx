@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { focusbare } from "../openaec-lint";
 import { useOfficeThema } from "../stijl/ThemaKnop";
+import { registreerDialoog } from "./dialoogstapel";
 
 /** Volgende focus bij Tab binnen een dialoog: rond, zonder te ontsnappen. */
 export function volgendeInDialoog(aantal: number, huidig: number, terug: boolean) {
@@ -11,9 +12,6 @@ export function volgendeInDialoog(aantal: number, huidig: number, terug: boolean
   if (huidig < 0) return terug ? aantal - 1 : 0;
   return (huidig + (terug ? -1 : 1) + aantal) % aantal;
 }
-
-/** Open vensters, de bovenste laatst (voor Esc zonder focus in een venster). */
-const openVensters: { current: () => void }[] = [];
 
 /**
  * Modaal venster van de werkruimte: focus naar binnen bij openen, Tab blijft
@@ -58,19 +56,9 @@ export function Dialoog({
     doel?.focus();
     // Valt de focus weg (bijvoorbeeld doordat de knop tijdens het werk
     // uitgeschakeld werd), dan sluit Esc nog steeds het bovenste venster.
-    openVensters.push(sluitRef);
-    const esc = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || event.defaultPrevented) return;
-      const actief = document.activeElement;
-      if (actief && actief !== document.body) return;
-      if (openVensters[openVensters.length - 1] !== sluitRef) return;
-      event.preventDefault();
-      sluitRef.current();
-    };
-    window.addEventListener("keydown", esc);
+    const verwijder = registreerDialoog(() => sluitRef.current());
     return () => {
-      window.removeEventListener("keydown", esc);
-      openVensters.splice(openVensters.indexOf(sluitRef), 1);
+      verwijder();
       for (const kind of inert) kind.removeAttribute("inert");
       if (vorige?.isConnected) vorige.focus();
     };
