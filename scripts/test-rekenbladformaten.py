@@ -89,6 +89,24 @@ def odf_checks(path, ext, document_schema, manifest_schema):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    if '--probe-workbook-protection' in sys.argv:
+        exe = os.environ.get('OPENAEC_CONVERSIE_PROGRAMMA') or shutil.which('soffice')
+        if not exe: raise RuntimeError('Set OPENAEC_CONVERSIE_PROGRAMMA')
+        source = ROOT/'src/import/testbestanden/modern-workbook-protection.xlsx'
+        assert odf.sha(source.read_bytes()) == '372ab091dc4ef97b799f33ce780531156d8e68a327fe91e75de5245cbf766a4d'
+        before = load_workbook(source)
+        middle, export_ms = convert(exe, source, 'ods', 'calc8')
+        back, import_ms = convert(exe, middle, 'xlsx', 'Calc MS Excel 2007 XML')
+        after = load_workbook(back); values = load_workbook(back,data_only=True)
+        report = {'sourceSha256':odf.sha(source.read_bytes()),'sourceStructureProtected':bool(before.security.lockStructure),
+                  'convertedStructureProtected':bool(after.security.lockStructure), 'sheetProtected':bool(after.active.protection.sheet),
+                  'valuesRetained':values.active['B3'].value == 20 and values.active['A1'].value == 22,
+                  'exportMs':export_ms,'importMs':import_ms,'output':str(back)}
+        report['confirmedLoss'] = report['sourceStructureProtected'] and not report['convertedStructureProtected']
+        report['pass'] = report['confirmedLoss'] and report['sheetProtected'] and report['valuesRetained']
+        (OUT/'protection-loss-report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+        print(json.dumps(report),flush=True)
+        return 0 if report['pass'] else 1
     if '--validate-engine-roundtrip' in sys.argv:
         cases = json.loads((OUT/'engine-roundtrip-report.json').read_text(encoding='utf-8'))
         document_schema = odf.schema('OpenDocument-v1.3-schema.rng'); manifest_schema = odf.schema('OpenDocument-v1.3-manifest-schema.rng')

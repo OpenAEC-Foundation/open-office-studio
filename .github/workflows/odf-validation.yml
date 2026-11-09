@@ -8,6 +8,9 @@ on:
       - "scripts/test-rekenbladformaten-engine.mjs"
       - "src/import/rekenbladformaten.test.ts"
       - "src/import/bronmacros*"
+      - "src/import/werkmapverlies.test.ts"
+      - "src/import/testbestanden/modern-workbook-protection.xlsx"
+      - "src/pakketcontrole.ts"
       - "src-tauri/src/conversieprofiel.xcu"
       - "src-tauri/src/conversie.rs"
       - "src/formaten.json"
@@ -44,6 +47,7 @@ jobs:
           node scripts/test-rekenbladformaten-engine.mjs
           python scripts/test-rekenbladformaten.py --validate-engine
           python scripts/test-rekenbladformaten.py --roundtrip-engine
+          python scripts/test-rekenbladformaten.py --probe-workbook-protection
       - name: Preserve schemas, isolated profiles, outputs and validation report
         if: always()
         uses: actions/upload-artifact@v4

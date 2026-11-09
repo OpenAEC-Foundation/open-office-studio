@@ -1,5 +1,6 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "./editors";
+import { attr, kind, leesXml } from "./grafieken/xml";
 
 /** Kenmerken waarvan behoud per route in de testmatrix is gemeten. */
 export type Risico =
@@ -21,7 +22,8 @@ export type Risico =
   | "slicers"
   | "externe_koppelingen"
   | "gegevensverbindingen"
-  | "beveiliging";
+  | "beveiliging"
+  | "werkmapstructuur";
 
 /** Route waarlangs de app een bestand wegschrijft. */
 export type Opslagroute = "engine" | "conversie";
@@ -48,7 +50,9 @@ export const MATRIXVERLIES: Record<
     engine: [],
     conversie: ["onbekende_onderdelen", "onbekende_extensies"],
   },
-  xlsx: { engine: [], conversie: [] },
+  // Native-proef #72/#32: actieve SHA512-werkmapstructuurbeveiliging wordt
+  // door de converter niet ingelezen en verdwijnt bij opnieuw bewaren.
+  xlsx: { engine: [], conversie: ["werkmapstructuur"] },
 };
 
 const RISICONAMEN: Record<Risico, string> = {
@@ -71,6 +75,7 @@ const RISICONAMEN: Record<Risico, string> = {
   externe_koppelingen: "koppelingen naar externe werkmappen",
   gegevensverbindingen: "gegevensverbindingen of query's",
   beveiliging: "schrijf-, document- of werkmapbeveiliging",
+  werkmapstructuur: "werkmapstructuurbeveiliging",
 };
 
 /** Leesbare naam van een risico, voor rapporten. */
@@ -134,6 +139,21 @@ function risicosVan(
   )
     risicos.add("beveiliging");
   if (soort === "xlsx") {
+    const wb = tekst("xl/workbook.xml");
+    if (wb.includes("workbookProtection")) {
+      try {
+        const protection = kind(leesXml(wb), "workbookProtection");
+        const actief = ["1", "true"].includes(
+          (attr(protection, "lockStructure") ?? "").toLowerCase(),
+        );
+        const algoritme = (attr(protection, "workbookAlgorithmName") ?? "")
+          .replace(/-/g, "").toUpperCase();
+        if (actief && algoritme === "SHA512" && attr(protection, "workbookHashValue"))
+          risicos.add("werkmapstructuur");
+      } catch {
+        // De gewone openroute behandelt beschadigde werkboek-XML.
+      }
+    }
     if (heeft(/^xl\/(pivotTables|pivotCache)\//)) risicos.add("draaitabellen");
     if (heeft(/^xl\/(slicers|slicerCaches|timelines|timelineCaches)\//))
       risicos.add("slicers");

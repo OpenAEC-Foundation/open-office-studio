@@ -59,6 +59,7 @@ const RISICOSLEUTEL: Record<Risico, string> = {
   externe_koppelingen: "externalLinks",
   gegevensverbindingen: "dataConnections",
   beveiliging: "protection",
+  werkmapstructuur: "workbookStructure",
 };
 
 /** Leesbare naam van een risico in de interfacetaal (kleine letter, voor in een zin). */
@@ -114,6 +115,7 @@ function bijOpenen(risico: Risico, soort: Soort): string | null {
     case "gegevensverbindingen":
       return t("report.open.dataConnections");
     case "beveiliging":
+    case "werkmapstructuur":
       return t("report.open.protection");
     default:
       return null;
