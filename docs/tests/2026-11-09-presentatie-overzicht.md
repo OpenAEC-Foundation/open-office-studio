@@ -34,3 +34,9 @@ De browser gebruikt de volledige Office Studio zonder editorstubs. Spelling
 staat uit. Er is geen nieuwe native Windows-installer gebouwd. Deze wijziging
 vult het overzichtsonderdeel in; kopiëren/hergebruiken van dia's tussen
 presentaties blijft binnen #76 nog open.
+
+TypeScript en Vite-productiebouw slagen. De volledige suite met twee workers
+en een vijftiensecondenlimiet slaagt: 176 bestanden, 1.999 tests geslaagd en
+tien bestaande corpusoverslagen. De gerichte presentatie-/zoek-/opdracht- en
+i18n-controles slagen eveneens; de nieuwe labels staan in alle negen
+aangeboden interfacetalen.
