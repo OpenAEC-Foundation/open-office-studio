@@ -68,6 +68,7 @@ import {
   SpellCheck,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { OpmaakmarkeringenKnop } from "../tekst/pagina/Markeringen";
 import { openSpellingVenster } from "../spelling/tekst/menu";
 import { formatGetal } from "../i18n/opmaak";
 import {
@@ -840,6 +841,7 @@ export function TekstRibbon({
               <>
                 <WeergaveGroep />
                 <Groep naam={t("writer.groups.show")}>
+                  <OpmaakmarkeringenKnop />
                   <Actie
                     icoon={Ruler}
                     naam={t("writer.commands.ruler")}

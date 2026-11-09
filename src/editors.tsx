@@ -38,6 +38,7 @@ import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
+import { maakMarkeringenPlugin } from "./tekst/pagina/Markeringen";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -164,7 +165,8 @@ export default function OfficeEditor(props: EditorProps) {
     props.soort === "docx" && props.zichtbaar !== false,
     () => herladenRecent.current.bytes,
   );
-  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, ...spelling.plugins], [spelling.plugins]);
+  const markeringenPlugin = useMemo(() => maakMarkeringenPlugin(() => docx.current), []);
+  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, markeringenPlugin, ...spelling.plugins], [spelling.plugins, markeringenPlugin]);
   // Tekst: wijzigingen buiten de engine (zoals Bestand › Info) als gewijzigd melden.
   useEffect(
     () => registreerWijziging(herladen.api, () => recent.current.gewijzigd()),
