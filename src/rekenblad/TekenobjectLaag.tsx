@@ -5,6 +5,7 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import type {
   XlsxEditorApi,
@@ -14,6 +15,7 @@ import { alleenLezen } from "../lint/rekenblad-opdrachten";
 import { tekenobjecten } from "./tekenAnkers";
 import type { ObjectPlek, Tekenobject } from "./tekenobjecten";
 import { openObjectVenster } from "./objectBewerking";
+import { objectGeometrie } from "./objectGeometrie";
 import "./tekenobjecten.css";
 
 /** De engine tekent grafieken; deze laag tekent de andere DrawingML-objecten. */
@@ -27,19 +29,61 @@ export function TekenobjectLaag({
   geometry: XlsxPluginGeometry;
 }) {
   const element = useRef<HTMLSpanElement>(null);
+  const objecten = tekenobjecten(api.handle, blad);
+  const aanwezig = objecten.length > 0;
+  const [scroll, zetScroll] = useState<HTMLElement | null>(null);
   const [, verversScroll] = useState(0);
   useEffect(() => {
+    if (!aanwezig) {
+      zetScroll(null);
+      return;
+    }
     const scroll = element.current?.closest<HTMLElement>(
       '[data-testid="xlsx-scroll"]',
     );
+    zetScroll(scroll ?? null);
     const ververs = () => verversScroll((n) => n + 1);
     scroll?.addEventListener("scroll", ververs, { passive: true });
     return () => scroll?.removeEventListener("scroll", ververs);
-  }, []);
+  }, [aanwezig, api.handle]);
+  const omvang = useMemo(() => {
+    let rechts = 0,
+      onder = 0;
+    for (const o of objecten) {
+      const p = objectGeometrie(api.handle, o),
+        hoek = (o.rotatie * Math.PI) / 180;
+      const w =
+        Math.abs(p.breedte * Math.cos(hoek)) +
+        Math.abs(p.hoogte * Math.sin(hoek));
+      const h =
+        Math.abs(p.breedte * Math.sin(hoek)) +
+        Math.abs(p.hoogte * Math.cos(hoek));
+      rechts = Math.max(rechts, p.x + (p.breedte + w) / 2);
+      onder = Math.max(onder, p.y + (p.hoogte + h) / 2);
+    }
+    return { rechts, onder };
+  }, [api.handle, blad, geometry.layout.version]);
   return (
     <>
       <span ref={element} hidden aria-hidden="true" />
-      {tekenobjecten(api.handle, blad).map((o) => (
+      {aanwezig &&
+        scroll &&
+        createPortal(
+          <div
+            aria-hidden="true"
+            data-testid="xlsx-object-extent"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: omvang.rechts * geometry.layout.zoom + 80,
+              height: omvang.onder * geometry.layout.zoom + 32,
+              pointerEvents: "none",
+            }}
+          />,
+          scroll,
+        )}
+      {objecten.map((o) => (
         <ObjectOpRaster
           key={`${o.tekening}:${o.id}`}
           api={api}
@@ -126,7 +170,15 @@ function ObjectOpRaster({
     const ref =
       rect &&
       punten
-        .map(([x, y]) => g.getPositionAtPoint?.(rect.left + x, rect.top + y))
+        .map(([x, y]) => {
+          const p = api.getPositionAtPoint(rect.left + x, rect.top + y);
+          return (
+            g.getPositionAtPoint?.(rect.left + x, rect.top + y) ??
+            (p?.sheet === o.blad
+              ? { sheetId: g.layout.sheetId, row: p.row, col: p.col }
+              : null)
+          );
+        })
         .find((p) => p && g.getCellRect(p));
     const r = ref && g.getCellRect(ref);
     if (ref && r) {

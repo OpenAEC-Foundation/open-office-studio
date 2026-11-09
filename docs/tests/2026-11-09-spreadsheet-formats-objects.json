@@ -1172,9 +1172,44 @@
       "Image insertion uses real file input and persists its native drawing relationship",
       "Pointer dragging and resize handles update real cell anchors and dimensions",
       "Text box insertion and keyboard removal preserve the other three drawing objects",
-      "Drawing positions follow scrolling and recover after their anchor leaves the viewport"
+      "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+      "A drawing-only worksheet scrolls to a distant image without adding cells",
+      "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+      "Frozen-cell images stay fixed while body images follow both scroll axes"
     ],
-    "fouten": []
+    "fouten": [],
+    "zoom": [
+      {
+        "scale": 0.5,
+        "before": {
+          "x": 1064.6875,
+          "y": 883.5,
+          "width": 50,
+          "height": 30
+        },
+        "delta": -20
+      },
+      {
+        "scale": 2,
+        "before": {
+          "x": 1159.75,
+          "y": 794,
+          "width": 200,
+          "height": 120
+        },
+        "delta": -20
+      },
+      {
+        "scale": 1,
+        "before": {
+          "x": 1260.375,
+          "y": 854,
+          "width": 100,
+          "height": 60
+        },
+        "delta": -20
+      }
+    ]
   },
   "metadata": [
     {
@@ -2478,6 +2513,124 @@
       },
       "savedBytes": 716688,
       "aborted": true
+    }
+  },
+  "ciFollowup": {
+    "head": "ac4269f11e813b3ed53d5e129ff0eb98ca59d180",
+    "spreadsheetRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42627989467",
+    "odfRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42627989351",
+    "documentMatrixRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42627989395",
+    "print": {
+      "pages": 1,
+      "blauw": 5940,
+      "oranje": 14599,
+      "text": "Printed shape",
+      "terugval": []
+    },
+    "worker": {
+      "openMs": 1745,
+      "beats": 286,
+      "maxGap": 14,
+      "before": {
+        "calculation": {
+          "cycleCells": [],
+          "limitedCells": [],
+          "truncated": false
+        },
+        "ok": true,
+        "ranges": [
+          {
+            "cells": [
+              [
+                {
+                  "a1": "B50000",
+                  "displayText": "50002",
+                  "formula": "$A$1*2+50000",
+                  "value": {
+                    "kind": "number",
+                    "value": 50002
+                  }
+                }
+              ]
+            ],
+            "target": {
+              "range": {
+                "a1": "B50000",
+                "kind": "a1"
+              },
+              "sheetId": "sheet:0"
+            }
+          }
+        ],
+        "sheets": [
+          {
+            "editable": true,
+            "name": "Blad 1",
+            "sheetId": "sheet:0",
+            "visibility": "visible"
+          }
+        ],
+        "version": "2234319d772147f5858ffe34d5bf215c-0"
+      },
+      "edited": true,
+      "after": {
+        "calculation": {
+          "cycleCells": [],
+          "limitedCells": [],
+          "truncated": false
+        },
+        "ok": true,
+        "ranges": [
+          {
+            "cells": [
+              [
+                {
+                  "a1": "B50000",
+                  "displayText": "50004",
+                  "formula": "$A$1*2+50000",
+                  "value": {
+                    "kind": "number",
+                    "value": 50004
+                  }
+                }
+              ]
+            ],
+            "target": {
+              "range": {
+                "a1": "B50000",
+                "kind": "a1"
+              },
+              "sheetId": "sheet:0"
+            }
+          }
+        ],
+        "sheets": [
+          {
+            "editable": true,
+            "name": "Blad 1",
+            "sheetId": "sheet:0",
+            "visibility": "visible"
+          }
+        ],
+        "version": "2234319d772147f5858ffe34d5bf215c-1"
+      },
+      "savedBytes": 716688,
+      "verifiedCells": 50000,
+      "savedCachedCells": 50000,
+      "savedSha256": "d7e5de7a6b8f63751dad645ee784182a21d3e07e49e2ded69bf955040faaf1a2",
+      "aborted": true
+    },
+    "modernWorkbookProtection": {
+      "sourceSha256": "372ab091dc4ef97b799f33ce780531156d8e68a327fe91e75de5245cbf766a4d",
+      "sourceStructureProtected": true,
+      "convertedStructureProtected": false,
+      "sheetProtected": true,
+      "valuesRetained": true,
+      "exportMs": 551,
+      "importMs": 517,
+      "output": "/home/runner/work/open-office-studio/open-office-studio/.local/rekenbladformaten/conversion-0033da3700d5/output/modern-workbook-protection.xlsx",
+      "confirmedLoss": true,
+      "pass": true
     }
   }
 }

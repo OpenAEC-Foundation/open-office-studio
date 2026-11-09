@@ -148,8 +148,9 @@ try {
           n = Math.floor(n / 26);
         }
         return (
-          document.querySelector('[data-testid="xlsx-name-box"]')?.value ===
-          `${letters}${row + 1}`
+          document.querySelector(
+            '.office-tabpaneel:not([hidden]) [data-testid="xlsx-name-box"]',
+          )?.value === `${letters}${row + 1}`
         );
       },
       { row, col },
@@ -394,16 +395,169 @@ try {
     new Uint8Array([7, 8, 9]),
   );
   await page.screenshot({ path: `${uit}/02-edited.png` });
+  const far = voegTekenobjectToe(basis, 0, {
+    naam: "Far logo",
+    afbeelding: png,
+    plek: { row: 250, col: 32, x: 5, y: 3, breedte: 100, hoogte: 60 },
+  });
+  await page
+    .locator(".office input[type=file]")
+    .first()
+    .setInputFiles({
+      name: "FarObjects.xlsx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer: Buffer.from(far),
+    });
+  await page
+    .locator('.office-tabpaneel:not([hidden]) [aria-label="Image: Far logo"]')
+    .waitFor({ state: "attached" });
+  await page
+    .locator(
+      '.office-tabpaneel:not([hidden]) [data-testid="xlsx-object-extent"]',
+    )
+    .waitFor({ state: "attached" });
+  await kies(250, 32);
+  const farImage = page.getByRole("button", {
+    name: "Image: Far logo",
+    exact: true,
+  });
+  await farImage.waitFor({ state: "visible" });
+  const farBox = await farImage.boundingBox(),
+    gridBox = await page
+      .locator('.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]')
+      .boundingBox();
+  assert(farBox.x >= gridBox.x && farBox.x < gridBox.x + gridBox.width);
+  assert(farBox.y >= gridBox.y && farBox.y < gridBox.y + gridBox.height);
+  assert.equal(
+    await page.evaluate(
+      () => proefApis().rekenblad.handle.cell(0, 250, 32).input,
+    ),
+    "",
+  );
+  await page.screenshot({ path: `${uit}/04-drawing-only-far.png` });
+  stap(
+    "A drawing-only worksheet scrolls to a distant image without adding cells",
+  );
+  for (const scale of [0.5, 2, 1]) {
+    await page.evaluate(async (scale) => {
+      const r = await proefApis().rekenblad.commands.execute("zoom", { scale });
+      if (!r.ok) throw new Error("Zoom command refused");
+    }, scale);
+    await kies(250, 32);
+    await page.waitForFunction((scale) => {
+      const el = document.querySelector(
+        '.office-tabpaneel:not([hidden]) [aria-label="Image: Far logo"]',
+      );
+      return (
+        el &&
+        getComputedStyle(el).visibility === "visible" &&
+        Math.abs(el.getBoundingClientRect().width - 100 * scale) < 1
+      );
+    }, scale);
+    const before = await farImage.boundingBox();
+    const delta = await page
+      .locator('.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]')
+      .evaluate((el) => {
+        const before = el.scrollTop;
+        el.scrollTop -= 20;
+        return el.scrollTop - before;
+      });
+    assert(delta < 0);
+    (rapport.zoom ??= []).push({ scale, before, delta });
+    await page.waitForFunction(
+      ({ before, delta }) => {
+        const el = document.querySelector(
+          '.office-tabpaneel:not([hidden]) [aria-label="Image: Far logo"]',
+        );
+        return (
+          el && Math.abs(el.getBoundingClientRect().top - (before - delta)) < 2
+        );
+      },
+      { before: before.y, delta },
+    );
+  }
+  stap(
+    "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+  );
+  const frozen = new Pakket(
+    voegTekenobjectToe(far, 0, {
+      naam: "Frozen logo",
+      afbeelding: png,
+      plek: { row: 0, col: 0, x: 2, y: 2, breedte: 20, hoogte: 10 },
+    }),
+  );
+  frozen.schrijf(
+    "xl/worksheets/sheet1.xml",
+    frozen
+      .lees("xl/worksheets/sheet1.xml")
+      .replace(
+        /(<sheetView\b[^>]*>)/,
+        '$1<pane xSplit="1" ySplit="1" topLeftCell="B2" state="frozen" activePane="bottomRight"/>',
+      ),
+  );
+  await page
+    .locator(".office input[type=file]")
+    .first()
+    .setInputFiles({
+      name: "FrozenFarObjects.xlsx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer: Buffer.from(frozen.inpakken()),
+    });
+  const fixedImage = page.getByRole("button", {
+    name: "Image: Frozen logo",
+    exact: true,
+  });
+  await fixedImage.waitFor();
+  await kies(250, 32);
+  await farImage.waitFor();
+  const fixedBefore = await fixedImage.boundingBox(),
+    bodyBefore = await farImage.boundingBox();
+  const scrollDelta = await page
+    .locator('.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]')
+    .evaluate((el) => {
+      const x = el.scrollLeft,
+        y = el.scrollTop;
+      el.scrollLeft -= 40;
+      el.scrollTop -= 40;
+      return { x: el.scrollLeft - x, y: el.scrollTop - y };
+    });
+  assert(scrollDelta.x < 0 && scrollDelta.y < 0);
+  await page.waitForFunction(
+    ({ fixedBefore, bodyBefore, scrollDelta }) => {
+      const root = document.querySelector(".office-tabpaneel:not([hidden])");
+      const fixed = root
+        .querySelector('[aria-label="Image: Frozen logo"]')
+        ?.getBoundingClientRect();
+      const body = root
+        .querySelector('[aria-label="Image: Far logo"]')
+        ?.getBoundingClientRect();
+      return (
+        fixed &&
+        body &&
+        Math.abs(fixed.x - fixedBefore.x) < 2 &&
+        Math.abs(fixed.y - fixedBefore.y) < 2 &&
+        Math.abs(body.x - (bodyBefore.x - scrollDelta.x)) < 2 &&
+        Math.abs(body.y - (bodyBefore.y - scrollDelta.y)) < 2
+      );
+    },
+    { fixedBefore, bodyBefore, scrollDelta },
+  );
+  stap(
+    "Frozen-cell images stay fixed while body images follow both scroll axes",
+  );
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {
   await writeFile(
     `${uit}/error-state.json`,
     JSON.stringify(
       await page.evaluate(() => {
-        const scroll = document.querySelector('[data-testid="xlsx-scroll"]');
-        const image = document.querySelector(
-          '[aria-label="Image: Imported logo"]',
-        );
+        const root = document.querySelector(".office-tabpaneel:not([hidden])");
+        const scroll = root?.querySelector('[data-testid="xlsx-scroll"]');
+        const image =
+          root?.querySelector('[aria-label="Image: Far logo"]') ??
+          root?.querySelector('[aria-label="Image: Imported logo"]');
         let f =
             image?.[
               Object.keys(image).find((k) => k.startsWith("__reactFiber$"))
