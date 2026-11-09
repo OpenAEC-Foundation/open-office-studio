@@ -84,7 +84,7 @@ index b3e657f..a18868f 100644
      serialize_workbook_with_package_and_origins_after_edits,
      serialize_workbook_with_package_and_origins_after_edits_and_active_sheet,
 diff --git a/crates/xlsx-parse/src/write.rs b/crates/xlsx-parse/src/write.rs
-index ffbdcd3..ff3c921 100644
+index ffbdcd3..486b661 100644
 --- a/crates/xlsx-parse/src/write.rs
 +++ b/crates/xlsx-parse/src/write.rs
 @@ -99,6 +99,78 @@ struct CfPlan {
@@ -200,8 +200,17 @@ index ffbdcd3..ff3c921 100644
                  continue;
              }
              let mut rule_xml = format!("<cfRule type=\"{}\"", escape_xml_attr(&rule.rule_type));
+@@ -264,7 +352,7 @@ fn conditional_formatting_bytes(
+         }
+         if let Some(wrapper) = wrapper {
+             wrapper.require_unwrapped_child("cfRule")?;
+-            out.extend(wrapper.render_repeated("cfRule", &rules, &[])?);
++            out.extend(wrapper.render_repeated("cfRule", &rules, &[("sqref", group.sqref.clone())])?);
+         } else {
+             out.extend_from_slice(
+                 format!(
 diff --git a/crates/xlsx-parse/tests/conditional_formats.rs b/crates/xlsx-parse/tests/conditional_formats.rs
-index b135477..2d17792 100644
+index b135477..d7224ba 100644
 --- a/crates/xlsx-parse/tests/conditional_formats.rs
 +++ b/crates/xlsx-parse/tests/conditional_formats.rs
 @@ -69,6 +69,26 @@ fn authored(wb: &mut xlsx_model::Workbook) {
@@ -231,3 +240,22 @@ index b135477..2d17792 100644
  #[test]
  fn authored_rule_writes_cfrule_and_appended_dxf() {
      let source = parts(
+@@ -272,3 +292,18 @@ fn authored_italic_differential_formats_round_trip() {
+         );
+     }
+ }
++
++#[test]
++fn changing_existing_application_range_updates_source_wrapper_and_keeps_extensions() {
++    let source = parts(r#"<sheetData/><conditionalFormatting xmlns:v="urn:test" sqref="A1:A3" v:flag="keep"><cfRule type="expression" priority="1"><formula>A1&gt;5</formula></cfRule><extLst><ext uri="keep"><v:data/></ext></extLst></conditionalFormatting>"#, None);
++    let parsed = parse_workbook_with_package(&source).unwrap();
++    let mut workbook = parsed.workbook.clone();
++    workbook.sheets[0].conditional_formats[0].sqref = "B1:B3 D1:D3".to_owned();
++    let saved = save(&parsed, &workbook);
++    let xml = std::str::from_utf8(part(&saved, "xl/worksheets/sheet1.xml")).unwrap();
++    assert!(xml.contains(r#"sqref="B1:B3 D1:D3""#), "{xml}");
++    assert!(xml.contains(r#"v:flag="keep""#), "{xml}");
++    assert!(xml.contains("<v:data/>"), "{xml}");
++    let reopened = parse_workbook(&saved).unwrap();
++    assert_eq!(reopened.sheets[0].conditional_formats[0].sqref, "B1:B3 D1:D3");
++}
