@@ -106,7 +106,7 @@ export function lettertypenInDocument(bytes: Uint8Array): string[] {
   try {
     delen = unzipSync(bytes, {
       filter: (f) =>
-        /^(word\/(document|styles|fontTable|header\d*|footer\d*)\.xml|xl\/styles\.xml|ppt\/(slides\/slide|slideLayouts\/slideLayout|slideMasters\/slideMaster)\d+\.xml|(word|xl|ppt)\/theme\/theme\d+\.xml)$/.test(
+        /^(word\/(document|styles|fontTable|footnotes|endnotes|comments|header\d*|footer\d*)\.xml|xl\/styles\.xml|ppt\/(slides\/slide|slideLayouts\/slideLayout|slideMasters\/slideMaster|notesSlides\/notesSlide|notesMasters\/notesMaster)\d+\.xml|(word|xl|ppt)\/theme\/theme\d+\.xml)$/.test(
           f.name,
         ) && f.originalSize < 32 * 1024 * 1024,
     });
