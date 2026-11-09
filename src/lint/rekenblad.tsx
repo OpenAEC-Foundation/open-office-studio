@@ -132,6 +132,7 @@ import { optimaleBreedte, optimaleHoogte } from "../rekenblad/structuur";
 import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
 import { NamenBeheer } from "../rekenblad/NamenBeheer";
 import { ValidatieGroep } from "../rekenblad/ValidatieLint";
+import { BeveiligingGroep } from "../rekenblad/BeveiligingLint";
 
 type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
 
@@ -1032,6 +1033,7 @@ export function RekenbladRibbon({
             naam: t("spreadsheet.tabs.tools"),
             inhoud: (
               <>
+                <BeveiligingGroep />
                 <Groep naam={t("spreadsheet:notes.title")}>
                   <Actie naam={t("spreadsheet:notes.edit")} icoon={StickyNote} groot disabled={!api}
                     onMouseDown={e => e.preventDefault()} onClick={() => openRekenbladVenster({ soort: "notitie" })} />

@@ -23,6 +23,7 @@ import {
 import { bereidStructuurBeveiliging } from "./rekenblad/structuurbeveiliging";
 import { installeerValidatie } from "./rekenblad/gegevensvalidatie";
 import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
+import { installeerBladBeveiliging, installeerBeveiligdeSelectie } from "./rekenblad/bladbeveiliging";
 import { metBeginregio } from "./rekenblad/werkmapregio";
 import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
@@ -304,6 +305,8 @@ export default function OfficeEditor(props: EditorProps) {
     (api: XlsxEditorApi) => {
       bereidStructuurBeveiliging(api.handle, herladenRecent.current.bytes);
       installeerValidatie(api.handle, herladenRecent.current.bytes);
+      installeerBladBeveiliging(api.handle, herladenRecent.current.bytes);
+      installeerBeveiligdeSelectie(api);
       try {
         laadCelnotities(api.handle, api.save());
       } catch {

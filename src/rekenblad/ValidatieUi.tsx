@@ -13,7 +13,7 @@ import { adres, type Cel } from "../lint/rekenblad-logica";
 import { a1, bevat, gebied } from "./werkboekXml";
 import {
   leesValidaties,
-  lijstWaarden,
+  lijstOpties,
   nieuweValidatie,
   schrijfValidatie,
   validaties,
@@ -22,6 +22,7 @@ import {
   type ValidatieType,
 } from "./gegevensvalidatie";
 import "./validatie.css";
+import i18next from "../i18n/config";
 
 const markeringen = new WeakMap<
   WorkbookHandle,
@@ -43,9 +44,7 @@ export function omcirkelOngeldig(api: XlsxEditorApi, wissen = false) {
       aantal += (b.bottom - b.top + 1) * (b.right - b.left + 1);
     }
   if (aantal > 100000)
-    throw new Error(
-      "De validatiecontrole is begrensd tot 100.000 cellen per blad.",
-    );
+    throw new Error(i18next.t("spreadsheet:validation.scanTooLarge"));
   const h = openWorkbook(api.save());
   try {
     const fout = new Map<string, Cel>();
@@ -100,14 +99,23 @@ export function ValidatieLaag({
   const rect =
     focus &&
     geometry.getCellRect({ sheetId: geometry.layout.sheetId, ...focus });
-  const waarden = useMemo(() => {
-    if (!r || r.type !== "list") return [];
+  const lijst = useMemo(() => {
+    if (!r || r.type !== "list") return { opties: [], fout: "" };
     try {
-      return [...new Set(lijstWaarden(api.handle, blad, r.formule1))];
-    } catch {
-      return [];
+      const gezien = new Set<string>();
+      return {
+        opties: lijstOpties(api.handle, blad, r.formule1).filter((o) => {
+          if (gezien.has(o.tekst)) return false;
+          gezien.add(o.tekst);
+          return true;
+        }),
+        fout: "",
+      };
+    } catch (f) {
+      return { opties: [], fout: tekstVan(f) };
     }
   }, [r, api, blad, geometry.layout.version]);
+  const waarden = lijst.opties;
   return (
     <>
       {(markeringen.get(api.handle)?.blad === blad
@@ -144,7 +152,10 @@ export function ValidatieLaag({
                 }}
                 aria-label={t("validation.dropdown")}
                 aria-expanded={open}
-                onClick={() => setOpen(!open)}
+                onClick={() => {
+                  if (lijst.fout) meld(lijst.fout);
+                  else setOpen(!open);
+                }}
               >
                 ▾
               </button>
@@ -158,7 +169,7 @@ export function ValidatieLaag({
                         blad,
                         focus!.row,
                         focus!.col,
-                        "'" + e.target.value,
+                        waarden.find((o) => o.tekst === e.target.value)!.invoer,
                       );
                       meldWijziging(api.handle);
                       setOpen(false);
@@ -169,8 +180,8 @@ export function ValidatieLaag({
                 >
                   <option disabled>{t("validation.choose")}</option>
                   {waarden.map((v) => (
-                    <option key={v} value={v}>
-                      {v || t("validation.empty")}
+                    <option key={v.tekst} value={v.tekst}>
+                      {v.tekst || t("validation.empty")}
                     </option>
                   ))}
                 </select>
@@ -198,7 +209,7 @@ export function ValidatieVenster({
 }) {
   const { t } = useTranslation("spreadsheet"),
     { herlaad } = useEditorApi();
-  const sel = useRef(leesSelectie(api)).current;
+  const [sel] = useState(() => leesSelectie(api));
   const [regels, setRegels] = useState<Validatieregel[]>([]),
     [index, setIndex] = useState<number | null>(null);
   const [regel, setRegel] = useState(() => nieuweValidatie(a1(sel.bereik)));
@@ -307,6 +318,7 @@ export function ValidatieVenster({
               onChange={(e) => wijzig("type", e.target.value as ValidatieType)}
             >
               {[
+                "none",
                 "whole",
                 "decimal",
                 "list",
@@ -321,7 +333,7 @@ export function ValidatieVenster({
               ))}
             </select>
           </label>
-          {!["list", "custom"].includes(regel.type) && (
+          {!["none", "list", "custom"].includes(regel.type) && (
             <label>
               {t("validation.operator")}
               <select
@@ -346,18 +358,20 @@ export function ValidatieVenster({
               </select>
             </label>
           )}
-          <label>
-            {t(
-              regel.type === "list"
-                ? "validation.source"
-                : "validation.formula1",
-            )}
-            <input
-              value={regel.formule1}
-              onChange={(e) => wijzig("formule1", e.target.value)}
-            />
-          </label>
-          {!["list", "custom"].includes(regel.type) &&
+          {regel.type !== "none" && (
+            <label>
+              {t(
+                regel.type === "list"
+                  ? "validation.source"
+                  : "validation.formula1",
+              )}
+              <input
+                value={regel.formule1}
+                onChange={(e) => wijzig("formule1", e.target.value)}
+              />
+            </label>
+          )}
+          {!["none", "list", "custom"].includes(regel.type) &&
             ["between", "notBetween"].includes(regel.operator) && (
               <label>
                 {t("validation.formula2")}
@@ -376,7 +390,15 @@ export function ValidatieVenster({
                   checked={regel[k]}
                   onChange={(e) => wijzig(k, e.target.checked)}
                 />
-                {t("validation." + k)}
+                {t(
+                  "validation." +
+                    {
+                      leeg: "allowBlank",
+                      keuzelijst: "inCellDropdown",
+                      invoerTonen: "showInputMessage",
+                      foutTonen: "showErrorMessage",
+                    }[k],
+                )}
               </label>
             ),
           )}

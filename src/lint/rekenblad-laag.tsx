@@ -27,6 +27,7 @@ import { kolomLetters, type Bereik } from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
 import { CelnotitieLaag } from "../rekenblad/CelnotitieUi";
 import { ValidatieLaag } from "../rekenblad/ValidatieUi";
+import { bewaakBeveiligdeSelectie } from "../rekenblad/bladbeveiliging";
 import "./rekenblad-gereedschap.css";
 
 /** Een verwijzing om in het raster te kleuren. */
@@ -63,6 +64,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
 
   function Laag({ context, geometry }: { context: XlsxPluginContext<null>; geometry: XlsxPluginGeometry }) {
     const api = useEditorApi().rekenblad;
+    useEffect(()=>{if(api)bewaakBeveiligdeSelectie(api,selectie);},[api,selectie]);
     const [, ververs] = useReducer((n: number) => n + 1, 0);
     useEffect(() => {
       luisteraars.add(ververs);

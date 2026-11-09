@@ -26,6 +26,7 @@ import { bewaarValidatieAnkers, namenAlle } from "./validatieAnkers";
 import i18next from "../i18n/config";
 
 export type ValidatieType =
+  | "none"
   | "whole"
   | "decimal"
   | "list"
@@ -85,7 +86,7 @@ export function leesValidaties(bytes: Uint8Array): Validatieregel[][] {
           ref:
             attr(el, "sqref") ??
             (kind(el, "sqref") ? tekstVan(kind(el, "sqref")!) : ""),
-          type: (attr(el, "type") ?? "whole") as ValidatieType,
+          type: (attr(el, "type") ?? "none") as ValidatieType,
           operator: attr(el, "operator") ?? "between",
           formule1: f("formula1"),
           formule2: f("formula2"),
@@ -118,55 +119,57 @@ export function schrijfValidatie(
 ) {
   const p = new Pakket(bytes),
     pad = werkmap(p).bladen[blad]?.pad;
-  if (!pad) throw new Error("Werkblad ontbreekt.");
+  if (!pad)
+    throw new Error(i18next.t("spreadsheet:validation.errors.missingSheet"));
   const xml = p.lees(pad),
     root = leesXml(xml),
     container = kind(root, "dataValidations"),
     oud = kinderen(container, "dataValidation");
   if (kind(root, "sheetProtection"))
-    throw new Error(
-      "Hef eerst de bladbeveiliging op om validatieregels te wijzigen.",
-    );
+    throw new Error(i18next.t("spreadsheet:validation.errors.sheetProtected"));
   if (regel) {
     regel.ref.split(/\s+/).forEach(gebied);
-    if (!regel.formule1.trim())
-      throw new Error("Geef een waarde, lijst, bereik of formule op.");
+    if (regel.type !== "none" && !regel.formule1.trim())
+      throw new Error(
+        i18next.t("spreadsheet:validation.errors.missingFormula"),
+      );
     if (
-      !["list", "custom"].includes(regel.type) &&
+      !["none", "list", "custom"].includes(regel.type) &&
       ["between", "notBetween"].includes(regel.operator) &&
       !regel.formule2.trim()
     )
-      throw new Error("Geef ook de tweede grens op.");
+      throw new Error(i18next.t("spreadsheet:validation.errors.secondBound"));
     if (
       regel.type === "list" &&
       /^".*"$/s.test(regel.formule1) &&
       regel.formule1.length > 257
     )
       throw new Error(
-        "Een vaste keuzelijst mag maximaal 255 tekens bevatten; gebruik voor meer waarden een celbereik.",
+        i18next.t("spreadsheet:validation.errors.fixedListTooLong"),
       );
     if (regel.invoerTitel.length > 32 || regel.foutTitel.length > 32)
-      throw new Error("Een berichttitel mag maximaal 32 tekens bevatten.");
+      throw new Error(i18next.t("spreadsheet:validation.errors.titleTooLong"));
     if (
       regel.formule1.length > 8192 ||
       regel.formule2.length > 8192 ||
       regel.invoer.length > 255 ||
       regel.fout.length > 255
     )
-      throw new Error("De validatietekst is te lang.");
+      throw new Error(i18next.t("spreadsheet:validation.errors.textTooLong"));
     if (regel.uitgebreid)
       throw new Error(
-        "Deze uitgebreide validatie wordt behouden; maak een gewone regel voor een ander bereik.",
+        i18next.t("spreadsheet:validation.errors.extendedReadonly"),
       );
   }
   const regels = oud.map((el) => xml.slice(el.start, el.eind));
+  const bronAttrs = index === null ? {} : (oud[index]?.attrs ?? {});
   const fragment = regel
-    ? `<dataValidation xmlns="${NS}"${attrTekst({ type: regel.type, operator: regel.operator, sqref: regel.ref, allowBlank: regel.leeg ? "1" : "0", showDropDown: regel.keuzelijst ? "0" : "1", showInputMessage: regel.invoerTonen ? "1" : "0", promptTitle: regel.invoerTitel, prompt: regel.invoer, showErrorMessage: regel.foutTonen ? "1" : "0", errorStyle: regel.foutType, errorTitle: regel.foutTitel, error: regel.fout })}><formula1>${ontsnap(regel.formule1.replace(/^=/, ""))}</formula1>${regel.formule2 ? `<formula2>${ontsnap(regel.formule2.replace(/^=/, ""))}</formula2>` : ""}</dataValidation>`
+    ? `<dataValidation${attrTekst({ ...bronAttrs, xmlns: NS, type: regel.type, operator: regel.operator, sqref: regel.ref, allowBlank: regel.leeg ? "1" : "0", showDropDown: regel.keuzelijst ? "0" : "1", showInputMessage: regel.invoerTonen ? "1" : "0", promptTitle: regel.invoerTitel, prompt: regel.invoer, showErrorMessage: regel.foutTonen ? "1" : "0", errorStyle: regel.foutType, errorTitle: regel.foutTitel, error: regel.fout })}>${regel.type === "none" ? "" : `<formula1>${ontsnap(regel.formule1.replace(/^=/, ""))}</formula1>${regel.formule2 ? `<formula2>${ontsnap(regel.formule2.replace(/^=/, ""))}</formula2>` : ""}`}</dataValidation>`
     : "";
   if (index === null) {
     if (fragment) regels.push(fragment);
   } else if (index < 0 || index >= regels.length)
-    throw new Error("De validatieregel bestaat niet meer.");
+    throw new Error(i18next.t("spreadsheet:validation.errors.missingRule"));
   else if (fragment) regels[index] = fragment;
   else regels.splice(index, 1);
   sectie(
@@ -174,7 +177,7 @@ export function schrijfValidatie(
     pad,
     "dataValidations",
     regels.length
-      ? `<dataValidations xmlns="${NS}"${attrTekst({ ...(container?.attrs ?? {}), count: String(regels.length) })}>${regels.join("")}</dataValidations>`
+      ? `<dataValidations${attrTekst({ ...(container?.attrs ?? {}), xmlns: NS, count: String(regels.length) })}>${regels.join("")}</dataValidations>`
       : "",
   );
   return p.inpakken();
@@ -189,17 +192,37 @@ export function celWaarde(h: WorkbookHandle, blad: number, ref: string) {
   if (!r.ok) throw new Error(r.failure.message);
   return r.ranges[0].cells;
 }
-export function lijstWaarden(
+export function lijstOpties(
   h: WorkbookHandle,
   blad: number,
   formule: string,
-): string[] {
+): { tekst: string; invoer: string }[] {
+  const optie = (v: XlsxCellValue) => ({
+    tekst: tekst(v),
+    invoer:
+      v.kind === "empty"
+        ? ""
+        : v.kind === "number"
+          ? String(v.value)
+          : v.kind === "bool"
+            ? v.value
+              ? "TRUE"
+              : "FALSE"
+            : "'" + v.value,
+  });
   const f = formule.replace(/^=/, "").trim();
   if (f.startsWith('"') && f.endsWith('"'))
     return f
       .slice(1, -1)
       .split(",")
-      .map((s) => s.replace(/""/g, '"'));
+      .map((s) => s.replace(/""/g, '"'))
+      .map((s) =>
+        optie(
+          s !== "" && Number.isFinite(Number(s)) && String(Number(s)) === s
+            ? { kind: "number", value: Number(s) }
+            : { kind: "text", value: s },
+        ),
+      );
   let verwijzing = f;
   const naam = namenAlle(h)
     .filter(
@@ -210,7 +233,8 @@ export function lijstWaarden(
     .sort((a, b) => Number(b.scope !== null) - Number(a.scope !== null))[0];
   if (naam) verwijzing = naam.refersTo;
   const ref = ontleedVerwijzing(verwijzing.replace(/^=/, ""));
-  if (!ref) throw new Error("De lijstverwijzing kan niet worden gelezen.");
+  if (!ref)
+    throw new Error(i18next.t("spreadsheet:validation.errors.listReference"));
   const index = ref.blad
     ? h
         .sheetInfo()
@@ -218,17 +242,25 @@ export function lijstWaarden(
           (n) => n.toLowerCase() === ref.blad!.toLowerCase(),
         )
     : blad;
-  if (index < 0) throw new Error("Het bronblad van de keuzelijst ontbreekt.");
+  if (index < 0)
+    throw new Error(
+      i18next.t("spreadsheet:validation.errors.sourceSheetMissing"),
+    );
   if (
     (ref.bereik.bottom - ref.bereik.top + 1) *
       (ref.bereik.right - ref.bereik.left + 1) >
     10000
   )
-    throw new Error("De keuzelijst bevat meer dan 10.000 cellen.");
+    throw new Error(i18next.t("spreadsheet:validation.errors.listTooLarge"));
   return celWaarde(h, index, verwijzing.replace(/^.*!/, "").replace(/\$/g, ""))
     .flat()
-    .map((c) => tekst(c.value));
+    .map((c) => optie(c.value));
 }
+export const lijstWaarden = (
+  h: WorkbookHandle,
+  blad: number,
+  formule: string,
+) => lijstOpties(h, blad, formule).map((o) => o.tekst);
 function bereken(
   h: WorkbookHandle,
   blad: number,
@@ -256,13 +288,17 @@ function bereken(
     (c) => !h.cell(blad, 1048575, c).input,
   );
   if (colKlad === undefined)
-    throw new Error("Geen vrije cel om de validatieformule te berekenen.");
+    throw new Error(i18next.t("spreadsheet:validation.errors.noScratchCell"));
   h.editCell(blad, 1048575, colKlad, "=" + f);
   const v = celWaarde(h, blad, adres({ row: 1048575, col: colKlad }))[0][0]
     .value;
   h.editCell(blad, 1048575, colKlad, "");
   if (v.kind === "error" || v.kind === "empty")
-    throw new Error("De validatieformule kon niet worden berekend: " + formule);
+    throw new Error(
+      i18next.t("spreadsheet:validation.errors.calculationFailed", {
+        formula: formule,
+      }),
+    );
   return v;
 }
 export function voldoetValidatie(
@@ -272,6 +308,7 @@ export function voldoetValidatie(
   col: number,
   regel: Validatieregel,
 ) {
+  if (regel.type === "none") return true;
   const v = celWaarde(h, blad, adres({ row, col }))[0][0].value;
   if (v.kind === "empty" || (v.kind === "text" && v.value === ""))
     return regel.leeg;
@@ -298,7 +335,9 @@ export function voldoetValidatie(
     if (f.trim() && Number.isFinite(n)) return n;
     const uit = bereken(h, blad, f, row, col, regel);
     if (uit.kind !== "number")
-      throw new Error("De validatiegrens is geen getal.");
+      throw new Error(
+        i18next.t("spreadsheet:validation.errors.boundNotNumber"),
+      );
     return uit.value;
   };
   const a = grens(regel.formule1);
@@ -320,7 +359,9 @@ export function voldoetValidatie(
     case "lessThanOrEqual":
       return x <= a;
     default:
-      throw new Error("Onbekende validatievergelijking.");
+      throw new Error(
+        i18next.t("spreadsheet:validation.errors.unknownOperator"),
+      );
   }
 }
 const caches = new WeakMap<WorkbookHandle, Validatieregel[][]>();
@@ -393,8 +434,11 @@ export function installeerValidatie(
     }
     const toetsen = cellen.flatMap((c) =>
       (regels[c.sheet] ?? [])
-        .filter((r) =>
-          r.ref.split(/\s+/).some((ref) => bevat(gebied(ref), c.row, c.col)),
+        .filter(
+          (r) =>
+            r.foutTonen &&
+            r.type !== "none" &&
+            r.ref.split(/\s+/).some((ref) => bevat(gebied(ref), c.row, c.col)),
         )
         .map((r) => ({ ...c, regel: r })),
     );
@@ -406,7 +450,10 @@ export function installeerValidatie(
         if (!regel.foutTonen || voldoetValidatie(kloon, sheet, row, col, regel))
           continue;
         const fout = `${regel.foutTitel}\n${adres({ row, col })}: ${regel.fout}`;
-        if (regel.foutType === "stop" || !bevestig(fout + "\n\nToch doorgaan?"))
+        if (
+          regel.foutType === "stop" ||
+          !bevestig(fout + "\n\n" + i18next.t("spreadsheet:validation.proceed"))
+        )
           throw new Error(fout);
       }
     } finally {

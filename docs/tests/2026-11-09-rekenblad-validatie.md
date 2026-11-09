@@ -21,7 +21,8 @@ internal names. Extended source validation is preserved and displayed read-only.
 
 ## Verification
 
-- 19 actual-core tests cover all seven rule types, fixed/range/named lists,
+- 21 actual-core tests cover all seven constraint types, input-message-only rules,
+  numeric/text list value types, fixed/range/named lists,
   local name precedence, atomic refusals, warnings/information, blanks, disabled
   alerts, structural shifts, formula strings, rename, Undo/Redo, save/reopen,
   unknown-part preservation, stale/invalid typed requests and idempotent setup.
@@ -50,7 +51,10 @@ function support as the installed calculation engine. The temporary formula
 evaluation needs an unused cell near the bottom right of the cloned sheet;
 calculation errors are refused. This does not modify the user's sheet.
 
-This is browser and actual-WASM verification. An installed native application
-and Microsoft Excel were not exercised for this change. The branch also
+The additional LibreOffice/UNO control independently reads the list and number
+rules, alerts, source values and input message, and re-exports a valid XLSX with
+both rules. See the protection report for the isolated native check and its
+separate workbook-protection conversion limitation. An installed native Open
+Office Studio application and Microsoft Excel were not exercised. The branch also
 contains the existing PR #186 and #198 changes needed by the assigned protection
 and comments work; those issues remain broader than those prerequisite fixes.

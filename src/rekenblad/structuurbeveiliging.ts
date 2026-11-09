@@ -38,12 +38,13 @@ export function bereidStructuurBeveiliging(h: WorkbookHandle, bytes: Uint8Array)
   if (voorbereid.has(h)) return;
   const beveiligd = leesStructuurBeveiliging(bytes);
   if (beveiligd) {
+    const controleer=(ops:unknown[])=>{if (ops.some(op => typeof op === "object" && op !== null && "type" in op && typeof op.type === "string" && structuurOps.has(op.type)))throw new Error(i18next.t("spreadsheet:sheets.structureLocked"));};
     const toepassen = h.applyOps;
     h.applyOps = ops => {
-      if (ops.some(op => typeof op === "object" && op !== null && "type" in op && typeof op.type === "string" && structuurOps.has(op.type)))
-        throw new Error(i18next.t("spreadsheet:sheets.structureLocked"));
+      controleer(ops);
       return toepassen.call(h, ops);
     };
+    const profiel=h.applyOpsProfiled.bind(h);h.applyOpsProfiled=ops=>{controleer(ops);return profiel(ops);};
   }
   voorbereid.set(h, beveiligd);
 }

@@ -4,6 +4,7 @@ import { ListChecks, CircleAlert, CircleOff } from "lucide-react";
 import { Groep, Actie, RibbonFout } from "../Ribbon";
 import { useEditorApi } from "../lint/editorApi";
 import { alleenLezen } from "../lint/rekenblad-opdrachten";
+import { bladBeveiligd } from "./bladbeveiliging";
 import { openRekenbladVenster } from "./RekenbladExtra";
 import { omcirkelOngeldig } from "./ValidatieUi";
 
@@ -17,7 +18,12 @@ export function ValidatieGroep() {
         naam={t("validation.title")}
         icoon={ListChecks}
         groot
-        disabled={!api || alleenLezen(api)}
+        disabled={
+          !api ||
+          alleenLezen(api) ||
+          !!bladBeveiligd(api.handle, api.handle.sheetInfo().activeSheet)
+            ?.actief
+        }
         onClick={() => openRekenbladVenster({ soort: "validatie" })}
       />
       <div className="ribbon-stapel">

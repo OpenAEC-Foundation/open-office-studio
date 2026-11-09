@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { openWorkbook, type XlsxEditRequest } from "@betteroffice/xlsx";
 import { Pakket } from "../grafieken/pakket";
 import { metValidatieAnkers } from "./validatieAnkers";
+import { werkmap } from "./werkboekXml";
 import { kopieerSelectie, plak } from "./klembord";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { ontleedBereik } from "../lint/rekenblad-logica";
@@ -12,6 +13,7 @@ import {
   installeerValidatie,
   leesValidaties,
   lijstWaarden,
+  lijstOpties,
   nieuweValidatie,
   schrijfValidatie,
   voldoetValidatie,
@@ -31,6 +33,57 @@ function boek(extra: Partial<Validatieregel> = {}) {
 }
 
 describe("gegevensvalidatie (#68)", () => {
+  it("behoudt getal- en teksttypen uit een keuzelijst, waaronder voorloopnullen en formuletekst", () => {
+    const h = openWorkbook(bron);
+    try {
+      h.editCells(0, [
+        { row: 0, col: 0, input: "2" },
+        { row: 1, col: 0, input: "'2" },
+        { row: 2, col: 0, input: "'001" },
+        { row: 3, col: 0, input: "'=1+1" },
+      ]);
+      const opties = lijstOpties(h, 0, "A1:A4");
+      opties.forEach((o, i) => h.editCell(0, i, 1, o.invoer));
+      expect(celWaarde(h, 0, "B1:B4").map((r) => r[0].value)).toEqual([
+        { kind: "number", value: 2 },
+        { kind: "text", value: "2" },
+        { kind: "text", value: "001" },
+        { kind: "text", value: "=1+1" },
+      ]);
+    } finally {
+      h.dispose();
+    }
+  });
+  it("behoudt regels die alleen een invoerbericht tonen zonder impliciete getalbeperking", () => {
+    const bytes = schrijfValidatie(
+        bron,
+        0,
+        null,
+        regel({
+          type: "none",
+          formule1: "",
+          formule2: "",
+          leeg: false,
+          invoer: "Een toelichting",
+        }),
+      ),
+      p = new Pakket(bytes);
+    const pad = werkmap(p).bladen[0].pad;
+    p.schrijf(pad, p.lees(pad).replace('type="none"', ""));
+    const source = p.inpakken(),
+      h = openWorkbook(metValidatieAnkers(source));
+    installeerValidatie(h, source);
+    try {
+      h.editCell(0, 1, 1, "willekeurige tekst");
+      h.editCell(0, 1, 1, "");
+      expect(leesValidaties(h.save())[0][0]).toMatchObject({
+        type: "none",
+        invoer: "Een toelichting",
+      });
+    } finally {
+      h.dispose();
+    }
+  });
   it("hergebruikt een bevestiging alleen voor exact dezelfde stappen en werkmapversie", () => {
     const bytes = schrijfValidatie(
         bron,

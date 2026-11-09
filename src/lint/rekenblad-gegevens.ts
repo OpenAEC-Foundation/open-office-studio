@@ -21,6 +21,7 @@ import { intlLocale } from "../i18n/config";
 import { leesWerkmapinstelling } from "../rekenblad/werkmapregio";
 import { laadInvoerlezer } from "../rekenblad/invoerlezer";
 import { controleerValidatieBewerking } from "../rekenblad/gegevensvalidatie";
+import { bladBeveiligd, controleerBladActie, geefFilterBatchVrij, geefSorteerBatchVrij } from "../rekenblad/bladbeveiliging";
 import {
   alleenLezen,
   leesSelectie,
@@ -525,6 +526,7 @@ export async function raadKopregel(api: XlsxEditorApi, blad: number, sheetId: st
 
 export async function sorteerBereik(api: XlsxEditorApi, keuze: SorteerKeuze) {
   schrijfbaar(api);
+  controleerBladActie(api.handle,keuze.blad,"sort");
   const { blad, sheetId, kop } = keuze;
   const data: Bereik = { ...keuze.bereik, top: keuze.bereik.top + (kop ? 1 : 0) };
   if (data.top >= data.bottom) throw new Melding(melding("sortNeedsRows"));
@@ -556,7 +558,10 @@ export async function sorteerBereik(api: XlsxEditorApi, keuze: SorteerKeuze) {
   const gewenst = volgorde.map((bron) =>
     Array.from({ length: breedte(data) }, (_, c) => opmaak.formats[bron * opmaak.columns + c]),
   );
-  const o = await opmaakNaar(api, blad, sheetId, data, gewenst);
+  const o = bladBeveiligd(api.handle,blad)?.actief
+    ? {stappen:[] as XlsxEditStep[],ops:[{type:"applyRangeFormat",sheet:blad,range:{start:{row:data.top,col:data.left},end:{row:data.bottom,col:data.right}},format:{rows:hoogte(data),columns:breedte(data),formats:gewenst.flat()}}] as RuweOp[]}
+    : await opmaakNaar(api, blad, sheetId, data, gewenst);
+  if(bladBeveiligd(api.handle,blad)?.actief)geefSorteerBatchVrij(api.handle,blad,o.ops);
   stappen.push(...o.stappen);
   await controleer(api, stappen);
   controleerValidatieBewerking(api.handle,o.ops,{expectVersion:api.handle.version(),steps:stappen});
@@ -662,6 +667,7 @@ async function filterCellen(api: XlsxEditorApi, sheetId: string, f: BladFilter, 
 /** Past het filter toe: verbergt en toont gegevensrijen (één ongedaan-maakstap) en bewaart de stand. */
 export async function pasFilterToe(api: XlsxEditorApi, blad: number, sheetId: string, filter: BladFilter) {
   schrijfbaar(api);
+  controleerBladActie(api.handle,blad,"autoFilter");
   const f: BladFilter = { ...filter, bereik: await breidUit(api, sheetId, filter.bereik) };
   const top = f.bereik.top + 1;
   const aantal = Math.max(0, f.bereik.bottom - top + 1);
@@ -674,7 +680,7 @@ export async function pasFilterToe(api: XlsxEditorApi, blad: number, sheetId: st
     if (zichtbaar && verborgen.has(rij)) ops.push({ type: "setRowHeight", sheet: blad, row: rij, height: null });
     if (!zichtbaar && !verborgen.has(rij)) ops.push({ type: "setRowHeight", sheet: blad, row: rij, height: 0 });
   });
-  if (ops.length) await voerOpsUit(api, ops);
+  if (ops.length) {geefFilterBatchVrij(api.handle,blad,ops);await voerOpsUit(api, ops);}
   zetBladFilter(api.handle, blad, f);
   return { zichtbaar: zicht.filter(Boolean).length, totaal: aantal };
 }
@@ -725,6 +731,7 @@ export async function filterOpnieuw(api: XlsxEditorApi) {
 export async function filterAanUit(api: XlsxEditorApi) {
   schrijfbaar(api);
   const { blad, sheetId, bereik, focus } = leesSelectie(api);
+  if(bladBeveiligd(api.handle,blad)?.actief)throw new Error(i18next.t("spreadsheet:protection.refused"));
   const huidig = bladFilter(api.handle, blad);
   if (huidig) {
     const data = { ...huidig.bereik, top: Math.min(huidig.bereik.top + 1, huidig.bereik.bottom) };

@@ -488,10 +488,6 @@
     "formula1": "Value or formula",
     "formula2": "Second bound",
     "formulaHint": "Use English function names. Dates: =DATE(2026,1,1). Times: =TIME(9,0,0). Relative references start at the first cell of the range.",
-    "leeg": "Allow blank cells",
-    "keuzelijst": "In-cell dropdown",
-    "invoerTonen": "Show input message",
-    "foutTonen": "Show error alert",
     "promptTitle": "Input message title",
     "prompt": "Input message",
     "alert": "Error alert style",
@@ -508,7 +504,8 @@
       "date": "Date",
       "time": "Time",
       "textLength": "Text length",
-      "custom": "Custom formula"
+      "custom": "Custom formula",
+      "none": "Any value"
     },
     "operators": {
       "between": "Between",
@@ -522,6 +519,70 @@
     },
     "defaultErrorTitle": "Invalid input",
     "defaultError": "This value does not meet the data validation rule.",
-    "reloadHint": "Changing validation rules reloads the workbook. Earlier undo steps will be cleared."
+    "reloadHint": "Changing validation rules reloads the workbook. Earlier undo steps will be cleared.",
+    "errors": {
+      "missingSheet": "The worksheet is missing.",
+      "sheetProtected": "Unprotect the sheet before changing validation rules.",
+      "missingFormula": "Enter a value, list, range or formula.",
+      "secondBound": "Enter the second bound.",
+      "fixedListTooLong": "A fixed list may contain at most 255 characters; use a cell range for more values.",
+      "titleTooLong": "A message title may contain at most 32 characters.",
+      "textTooLong": "The validation text is too long.",
+      "extendedReadonly": "This extended validation is preserved; create a standard rule for another range.",
+      "missingRule": "The validation rule no longer exists.",
+      "listReference": "The list reference cannot be read.",
+      "sourceSheetMissing": "The source sheet of the list is missing.",
+      "listTooLarge": "The list contains more than 10,000 cells.",
+      "noScratchCell": "No unused cell is available to calculate the validation formula.",
+      "boundNotNumber": "The validation bound is not a number.",
+      "unknownOperator": "Unknown validation comparison.",
+      "calculationFailed": "The validation formula could not be calculated: {{formula}}"
+    },
+    "proceed": "Continue anyway?",
+    "scanTooLarge": "Validation checking is limited to 100,000 cells per sheet.",
+    "allowBlank": "Allow blank cells",
+    "inCellDropdown": "In-cell dropdown",
+    "showInputMessage": "Show input message",
+    "showErrorMessage": "Show error alert"
+  },
+  "protection": {
+    "title": "Protection",
+    "refused": "This action is not allowed on the protected sheet. Unprotect the sheet or change its allowed actions.",
+    "enableSheet": "Protect this sheet",
+    "enableBook": "Protect workbook structure",
+    "allowed": "Allowed actions",
+    "currentPassword": "Current password",
+    "newPassword": "New password (optional)",
+    "repeatPassword": "Repeat new password",
+    "mismatch": "The new passwords do not match.",
+    "locked": "Locked",
+    "hidden": "Hide formula",
+    "keep": "Mixed / keep unchanged",
+    "yes": "Yes",
+    "no": "No",
+    "cellHint": "Locked cells and hidden formulas take effect while the sheet is protected.",
+    "unprotectFirst": "Unprotect the sheet before changing cell protection.",
+    "notEncryption": "This prevents accidental changes. The file is not encrypted.",
+    "reloadHint": "Changing sheet or workbook protection reloads the workbook and clears earlier undo steps. Cell protection uses the normal undo history.",
+    "rights": {
+      "selectLockedCells": "Select locked cells",
+      "selectUnlockedCells": "Select unlocked cells",
+      "formatCells": "Format cells",
+      "formatColumns": "Format columns",
+      "formatRows": "Format rows",
+      "insertRows": "Insert rows",
+      "insertColumns": "Insert columns",
+      "sort": "Sort (unlocked cells)",
+      "autoFilter": "Use existing filters"
+    },
+    "errors": {
+      "unsupportedAlgorithm": "This password algorithm or iteration count is unsupported; protection remains in place.",
+      "wrongPassword": "The password is incorrect.",
+      "passwordLength": "The password may contain at most 255 characters.",
+      "missingSheet": "The worksheet is missing."
+    },
+    "sheet": "Protect sheet",
+    "workbook": "Protect workbook",
+    "cells": "Cell protection"
   }
 }

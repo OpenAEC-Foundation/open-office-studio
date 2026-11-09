@@ -42,7 +42,7 @@ const bron = schrijfValidatie(origineel.inpakken(), 0, null, {
 });
 const server = await preview({
   configFile: false,
-  build: { outDir: process.env.OFFICE_TEST_DIST ?? ".local/dist-validation" },
+  build: { outDir: process.env.OFFICE_TEST_DIST ?? ".local/dist-spreadsheet" },
   preview: { host: "127.0.0.1", port: 0, open: false },
 });
 const browser = await chromium.launch(),
@@ -64,6 +64,29 @@ try {
     ),
   );
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/`);
+  const herhaald = schrijfValidatie(
+    schrijfValidatie(bron, 0, null, nieuweValidatie("F1:F2")),
+    0,
+    0,
+    { ...leesValidaties(bron)[0][0], invoerTitel: "Strict XML" },
+  );
+  const streng = new Pakket(herhaald);
+  await page.evaluate(
+    (xmls) => {
+      for (const [naam, xml] of xmls) {
+        const parsed = new DOMParser().parseFromString(xml, "application/xml");
+        if (parsed.querySelector("parsererror"))
+          throw new Error(
+            naam + ": " + parsed.querySelector("parsererror").textContent,
+          );
+      }
+    },
+    streng
+      .namen()
+      .filter((n) => n.endsWith(".xml") || n.endsWith(".rels"))
+      .map((n) => [n, streng.lees(n)]),
+  );
+  stap("Independent XML parser accepts repeated rule creation and editing");
   await page
     .locator(".office input[type=file]")
     .first()
