@@ -40,6 +40,7 @@ import {
 import { editorKoppeling } from "./export/koppeling";
 import { controleerPakket } from "./pakketcontrole";
 import { bereidOpenen } from "./import/openen";
+import { isSjabloon } from "./import/sjabloon";
 import { serialiseerIfcxBron } from "./ifcx/opslag";
 import { useImportvragen } from "./import/Importvensters";
 import { MACROUITVOER } from "./import/bron";
@@ -698,6 +699,7 @@ export function OfficeStudio() {
     naam: string,
     bytes: Uint8Array,
     extra: {
+      alsNieuw?: boolean;
       vingerafdruk?: string;
       werkbestand?: Werkbestand | null;
       gewijzigd?: boolean;
@@ -796,8 +798,8 @@ export function OfficeStudio() {
     await bezigMet(async () => {
       try {
         const vinger = await vingerafdruk(naam, bytes);
-        // Hetzelfde bestand opnieuw openen springt naar het bestaande tabblad.
-        if (tabs.openBestaand(vinger)) return;
+        // Hetzelfde document opnieuw openen activeert zijn tabblad; een sjabloon maakt telkens een kopie.
+        if (!isSjabloon(naam) && tabs.openBestaand(vinger)) return;
         const resultaat = await bereidOpenen(naam, bytes, {
           converteer,
           runtimeBeschikbaar: async () =>
@@ -812,6 +814,7 @@ export function OfficeStudio() {
           resultaat.naam,
           resultaat.bytes,
           {
+            alsNieuw: resultaat.alsNieuw,
             werkbestand,
             vingerafdruk: vinger,
             gewijzigd: resultaat.gewijzigd,
@@ -902,7 +905,11 @@ export function OfficeStudio() {
       openDatabaseBestand(naam, bytes, "bestand");
       return false;
     }
-    return (await importeer(naam, bytes, werkbestand)) && !!werkbestand;
+    return (
+      (await importeer(naam, bytes, werkbestand)) &&
+      !!werkbestand &&
+      !isSjabloon(naam)
+    );
   }
   // Gehoste bouw: het document dat de host (SuperCloud-werkplek) aanbiedt.
   useHostOpenen(openBestand, meldActief, () => openOpslaanAls());
