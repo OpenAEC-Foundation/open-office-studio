@@ -2,13 +2,14 @@ import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { preview, createServer } from "vite";
-import { strFromU8, unzipSync } from "fflate";
+import { strFromU8, unzipSync, zipSync } from "fflate";
 import { writerFixture } from "./writer-proeffixture.mjs";
 const { chromium } = await import(process.env.OOS_PLAYWRIGHT_MODULE ?? "playwright");
 const uit = resolve(process.env.OFFICE_TEST_UIT ?? ".local/proef-writer-volledig");
 await mkdir(uit, { recursive: true });
 const ssr = await createServer({ configFile: false, server: { middlewareMode: true, hmr: false, watch: null }, optimizeDeps: { noDiscovery: true }, appType: "custom" });
 const stijlxml = await ssr.ssrLoadModule("/src/tekst/stijlen/stijlenxml.ts"), pakket = await ssr.ssrLoadModule("/src/tekst/stijlen/pakket.ts"), beheer = await ssr.ssrLoadModule("/src/tekst/stijlen/beheer.ts");
+const noten = await ssr.ssrLoadModule("/src/tekst/pagina/noten.ts"), ooxml = await ssr.ssrLoadModule("/src/tekst/pagina/ooxml.ts"), kopvoet = await ssr.ssrLoadModule("/src/tekst/pagina/kopvoet.ts");
 let bron = writerFixture();
 bron = pakket.bewerkStijlOnderdelen(bron, o => {
   let xml = o.stijlen;
@@ -117,6 +118,61 @@ try {
   const download = await pdf; await download.saveAs(resolve(uit, "Writer.pdf"));
   assert.ok((await readFile(resolve(uit, "Writer.pdf"))).subarray(0, 8).toString().startsWith("%PDF-"));
   stap("The application renders the complete document and notes to its own PDF writer");
+  await print.getByRole("button", { name: "Close", exact: true }).last().click();
+  await page.locator('[data-testid="yrs-input"]').focus(); await page.keyboard.press("Control+End");
+  await page.getByRole("tab", { name: "References", exact: true }).click();
+  await page.getByRole("button", { name: "Note Format", exact: true }).click();
+  d = page.getByRole("dialog", { name: "Footnotes and Endnotes", exact: true });
+  await d.getByLabel("Start at", { exact: true }).fill("9");
+  await herlaadMet(() => d.getByRole("button", { name: "Apply", exact: true }).click());
+  z = await opslaan("Writer-notes-scoped.docx");
+  assert.deepEqual([0,1,2].map(i=>noten.leesNootInstellingen(zipSync(z),"voetnoot",i).beginBij),[3,7,9]);
+  stap("Note Format changes only the selected last section and preserves the two earlier sections");
+  for (const [shortcut, title, label, text, part] of [
+    ["Control+Alt+f","Insert Footnote","Footnote text","SHORTCUT_FOOTNOTE","word/footnotes.xml"],
+    ["Control+Alt+d","Insert Endnote","Endnote text","SHORTCUT_ENDNOTE","word/endnotes.xml"],
+  ]) {
+    await page.locator('[data-testid="yrs-input"]').focus(); await page.keyboard.press("Control+End");
+    await page.keyboard.press(shortcut);
+    d = page.getByRole("dialog", { name:title,exact:true }); await d.getByLabel(label,{exact:true}).fill(text);
+    await herlaadMet(()=>d.getByRole("button",{name:"Insert",exact:true}).click());
+    z=await opslaan(`Writer-${text}.docx`); assert.ok(strFromU8(z[part]).includes(text));
+  }
+  stap("Ctrl+Alt+F and Ctrl+Alt+D insert both numbered note kinds at the live cursor");
+  for (const [key,format,start,index] of [["Control+Home","lowerRoman","3",0],["Control+End","upperLetter","7",2]]) {
+    await page.locator('[data-testid="yrs-input"]').focus(); await page.keyboard.press(key);
+    await page.getByRole("tab",{name:"Header & Footer",exact:true}).click();
+    await page.getByRole("button",{name:"Page Number",exact:true}).click();
+    await page.getByRole("menuitem",{name:/^Format Page Numbers…/}).click();
+    d=page.getByRole("dialog",{name:"Page Numbers",exact:true});
+    await d.getByLabel(/^Number format/).selectOption(format);
+    await d.getByLabel(/^Start at/).fill(start);
+    await d.getByRole("radio",{name:"This section",exact:true}).check();
+    await herlaadMet(()=>d.getByRole("button",{name:"Insert",exact:true}).click());
+    z=await opslaan(`Writer-page-number-${index}.docx`);
+    const doc=ooxml.openDocument(new ooxml.Pakket(zipSync(z))), el=ooxml.kind(ooxml.secties(doc)[index].el,"pgNumType");
+    assert.equal(ooxml.attr(el,"fmt"),format);assert.equal(ooxml.attr(el,"start"),start);
+  }
+  const labels=await page.evaluate(()=>window.proefApi().getEditorRef().getLayout().pages.map(p=>p.pageLabel));
+  assert.deepEqual(labels,["iii","4","G"]);
+  stap("Page-number format and start apply per section, and native layout displays Roman and letter labels");
+  for (const [menu,linked] of [["Unlink header",false],["Link header to previous",true]]) {
+    await page.locator('[data-testid="yrs-input"]').focus(); await page.keyboard.press("Control+End");
+    await page.getByRole("tab",{name:"Header & Footer",exact:true}).click();
+    await page.getByRole("button",{name:"Link to Previous",exact:true}).click();
+    await herlaadMet(()=>page.getByRole("menuitem",{name:menu,exact:true}).click());
+    z=await opslaan(`Writer-header-${linked?"linked":"unlinked"}.docx`);
+    const doc=ooxml.openDocument(new ooxml.Pakket(zipSync(z)));
+    assert.equal(ooxml.kinderen(ooxml.secties(doc)[2].el,"headerReference").length,linked?0:1);
+    assert.equal(kopvoet.effectiefDeel(doc,2,"header","default").pad===kopvoet.effectiefDeel(doc,1,"header","default").pad,linked);
+  }
+  stap("Unlinking and relinking a shared header affects only the selected section");
+  await page.evaluate(() => window.dispatchEvent(new CustomEvent("office:afdrukvoorbeeld", { detail: {} })));
+  await print.waitFor();
+  const numbered = page.waitForEvent("download", { timeout: 60000 });
+  await print.getByRole("button", { name: "Save as PDF", exact: true }).click({ timeout: 60000 });
+  await (await numbered).saveAs(resolve(uit, "Writer-numbered.pdf"));
+  stap("Print/PDF repeats the per-section page labels after note insertion and header relinking");
   assert.deepEqual(rapport.fouten, []);
 } catch (e) { await page.screenshot({ path: resolve(uit, "failure.png") }); throw e; } finally {
   await writeFile(resolve(uit, "rapport.json"), JSON.stringify(rapport, null, 2));

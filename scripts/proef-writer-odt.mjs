@@ -230,39 +230,46 @@ try {
     await writeFile(resolve(uit, `${naam}-source.docx`), bytes);
     const odt = await formaten.converteer(bytes, "docx", "odt", "docx");
     await writeFile(resolve(uit, `${naam}.odt`), odt);
+    for (const externGewijzigd of [false, true]) {
+    const geval = `${naam}-${externGewijzigd ? "edited" : "unchanged"}`;
     const oz = unzipSync(odt);
     oz["content.xml"] = strToU8(
       strFromU8(oz["content.xml"])
         .replace("SectionOne", "Edited SectionOne")
         .replace("footnote_1", "Edited footnote_1"),
     );
-    const edited = zipSync(oz);
+    const edited = externGewijzigd ? zipSync(oz) : odt;
     const restored = await formaten.converteer(edited, "odt", "docx", "docx");
-    await writeFile(resolve(uit, `${naam}-restored.docx`), restored);
+    await writeFile(resolve(uit, `${geval}-restored.docx`), restored);
     const before = properties(bytes),
       after = properties(restored);
     assert.deepEqual(after.sections, before.sections);
     assert.deepEqual(after.styles, before.styles);
     assert.deepEqual(after.tableStyles, before.tableStyles);
     assert.equal(after.noteTexts.length, 6);
-    assert.ok(after.noteTexts.some((t) => t.includes("Edited footnote_1")));
-    assert.ok(after.xml.includes("Edited SectionOne"));
+    assert.ok(after.noteTexts.some((t) => t.includes(externGewijzigd ? "Edited footnote_1" : "footnote_1")));
+    assert.ok(after.xml.includes(externGewijzigd ? "Edited SectionOne" : "SectionOne"));
+    if (!externGewijzigd) {
+      const refs = b => pagina.secties(pagina.openDocument(new pagina.Pakket(b))).map(s => pagina.kinderen(s.el,"headerReference").map(e=>pagina.attr(e,"type")));
+      assert.deepEqual(refs(restored), refs(bytes), "combined metadata retains authored/inherited header references");
+    }
     assert.ok(!after.xml.includes("_OOSW_"));
     assert.ok(!after.xml.includes("customMarkFollows"));
-    const saved = await engineRondgang(restored, naam),
+    const saved = await engineRondgang(restored, geval),
       again = properties(saved);
     assert.deepEqual(again.sections, before.sections);
     assert.deepEqual(again.styles, before.styles);
     rapport.proeven.push({
-      naam,
+      naam: geval,
       sections: after.sections,
       styles: after.styles,
       notes: after.noteTexts.length,
-      externalEditsPreserved: true,
+      externalEditsPreserved: externGewijzigd,
       productionSaveReopen: true,
       productionConversionWrapper: true,
     });
-    console.log("PASS", naam);
+    console.log("PASS", geval);
+    }
   }
 } catch (e) {
   rapport.fouten.push(String(e));

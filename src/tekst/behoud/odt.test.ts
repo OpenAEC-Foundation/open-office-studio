@@ -187,7 +187,7 @@ describe("Writer ODT preservation (#45/#51)", () => {
         (n) => n.numId === style?.pPr?.numPr?.numId,
       ),
     ).toBe(true);
-  });
+  }, 15_000); // Multiple ZIP/parser roundtrips also run on shared Windows CI.
   it("keeps externally edited formatting instead of replaying an older style snapshot", async () => {
     const pre = await voorWriterConversie(fixture(), "docx", "odt"),
       out = await naWriterConversie(pre, odf(pre)),
