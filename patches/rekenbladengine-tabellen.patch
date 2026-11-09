@@ -204,6 +204,53 @@ index 0000000..1546f20
 +fn clearing_adjacent_cell_does_not_expand_a_table(){
 +    let mut w=Workbook::open(&source()).unwrap();w.edit_cell(SheetId(0),CellRef::new(3,1),"",options()).unwrap();assert_eq!(range(&w),"A1:B3");
 +}
+diff --git a/crates/betteroffice-xlsx/tests/workbook.rs b/crates/betteroffice-xlsx/tests/workbook.rs
+index f8b1904..97b4c1e 100644
+--- a/crates/betteroffice-xlsx/tests/workbook.rs
++++ b/crates/betteroffice-xlsx/tests/workbook.rs
+@@ -2299,26 +2299,24 @@ fn structured_references_survive_the_shared_state_projection() {
+     }
+ }
+ 
+-/// A structural edit moves the table's rectangle, which no save rewrites yet,
+-/// so the edit is refused rather than stranding the reference.
++/// A structural edit now moves and saves the table rectangle with its formula.
+ #[test]
+-fn a_row_insert_is_refused_while_a_formula_reads_a_table() {
++fn a_row_insert_preserves_a_formula_reading_a_table() {
+     let mut workbook = Workbook::open(&table_package()).unwrap();
+-    let error = workbook
+-        .apply_ops(
+-            vec![Op::InsertRows {
+-                sheet: SheetId(0),
+-                at: 0,
+-                count: 1,
+-            }],
+-            CalculationOptions::default(),
+-        )
+-        .unwrap_err();
+-    assert!(matches!(error, Error::Operation(_)), "{error:?}");
+-    assert_eq!(
+-        workbook.model().sheets[0].cell(cell("A2")).unwrap().value,
+-        CellValue::Number { value: 2.0 }
+-    );
++    workbook.apply_ops(vec![Op::InsertRows {sheet:SheetId(0),at:0,count:1}],CalculationOptions::default()).unwrap();
++    assert_eq!(workbook.model().tables[0].range.to_a1(),"A2:A4");
++    assert_eq!(workbook.model().sheets[0].cell(cell("A3")).unwrap().value,CellValue::Number {value:2.0});
++    assert_eq!(workbook.model().sheets[0].cell(cell("C6")).unwrap().value,CellValue::Number {value:5.0});
++    let saved=workbook.save().unwrap();
++    let reopened=Workbook::open(&saved).unwrap();
++    assert_eq!(reopened.model().tables[0].range.to_a1(),"A2:A4");
++    assert_eq!(reopened.model().sheets[0].cell(cell("C6")).unwrap().formula.as_deref(),Some("SUM(Sales[Amount])"));
++    assert_eq!(reopened.model().sheets[0].cell(cell("C6")).unwrap().value,CellValue::Number {value:5.0});
++    workbook.undo(CalculationOptions::default()).unwrap();
++    assert_eq!(workbook.model().tables[0].range.to_a1(),"A1:A3");
++    assert_eq!(workbook.model().sheets[0].cell(cell("C5")).unwrap().value,CellValue::Number {value:5.0});
++    workbook.redo(CalculationOptions::default()).unwrap();
++    assert_eq!(workbook.model().tables[0].range.to_a1(),"A2:A4");
+ }
+ 
+ #[test]
 diff --git a/crates/xlsx-ops/src/apply.rs b/crates/xlsx-ops/src/apply.rs
 index d56122d..f745f38 100644
 --- a/crates/xlsx-ops/src/apply.rs
