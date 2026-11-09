@@ -91,6 +91,7 @@ import { datumTekst, tijdTekst, type Hoofdlettersoort } from "./tekst-logica";
 import { TabelKiezer } from "../tabelvoorbeeld/TabelKiezer";
 import { TabelIndeling, TekstNaarTabelKnop } from "../tekst/tabel/TabelIndeling";
 import { AfbeeldingGroepen } from "../tekst/afbeelding/AfbeeldingGroepen";
+import { VergelijkingKnop } from "../tekst/vergelijking/VergelijkingKnop";
 import { ZoekKnoppen } from "../tekst/zoeken/ZoekPaneel";
 import { WordHost } from "../tekst/WordHost";
 import { Liniaal } from "../tekst/liniaal/Liniaal";
@@ -606,6 +607,7 @@ export function TekstRibbon({
                 </Groep>
                 <Groep naam={t("writer.groups.illustrations")}>
                   <W id="insertImage" naam={t("writer.commands.picture")} icoon={Image} groot />
+                  <VergelijkingKnop />
                 </Groep>
                 <GrafiekGroep g={grafieken} uit={!opdrachten.bewerkbaar} />
                 <Groep naam={t("writer.groups.links")}>
