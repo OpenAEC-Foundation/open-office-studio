@@ -57,20 +57,24 @@ export function BladVerwijderen({
 export function BladVerplaatsen({
   api,
   sluiten,
+  beginPositie,
+  beginKopie = false,
 }: {
   api: XlsxEditorApi;
   sluiten: () => void;
+  beginPositie?: number;
+  beginKopie?: boolean;
 }) {
   const { t } = useTranslation("spreadsheet");
   const [bladen] = useState(() => bladenLijst(api));
   const info = api.handle.sheetInfo();
-  const [positie, setPositie] = useState(info.activeSheet + 1);
+  const [positie, setPositie] = useState(beginPositie ?? info.activeSheet + 1);
   const [naam, setNaam] = useState(() =>
     kopieNaam(info.sheetNames[info.activeSheet] ?? "", info.sheetNames),
   );
   const [status, setStatus] = useState("");
   const [bezig, setBezig] = useState(false);
-  const [kopie, setKopie] = useState(false);
+  const [kopie, setKopie] = useState(beginKopie);
   return (
     <Paneel titel={t("sheets.moveCopyTitle")} sluiten={sluiten}>
       <form

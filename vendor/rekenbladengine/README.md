@@ -21,6 +21,14 @@ geschreven, inclusief gedeelde en uitvloeiende formules. Een gelijk model
 behoudt het oorspronkelijke ZIP-archief. Onbekende functies behouden hun
 opgeslagen uitkomst; de app blijft daarvoor waarschuwen.
 
+De aanvullende CF-patches verzorgen volledige, vooraf gevalideerde regelvervanging
+met native undo/redo, opslag van nieuwe uitgebreide regels met een geldige DXF en
+het gewijzigde toepassingsbereik. Een alleen-lezen `formulaQueries`-uitbreiding van
+`readCellsJson` evalueert voorwaarden in de echte blad-/celcontext. Ze gebruikt
+dezelfde begrensde rekenkern, zonder tijdelijke bladen, bronwaarden opnieuw te
+berekenen, gewone stijlen te wijzigen of geschiedenis toe te voegen. Er komen
+geen WASM-exports of snapshotvelden bij.
+
 Herkomst, broncommit, gereedschapsversies en checksums staan in
 [de metadata](../../patches/rekenbladengine-lange-ketens.json). De
 [bronpatch](../../patches/rekenbladengine-lange-ketens.patch) bevat ook de
@@ -43,8 +51,10 @@ python3 scripts/bouw-rekenbladkern.py \
 Met `--bronarchief` kan hetzelfde gecontroleerde bronarchief lokaal worden
 meegegeven. `--wasm-bindgen` en `--wasm-opt` kiezen de uitvoerbare bestanden.
 Het script weigert een afwijkend bronarchief, gereedschap, bronpatch,
-JS/WASM-interface of eindresultaat. De schone herbouw levert bytegelijk de
-vastgelegde module van 7.693.796 bytes op. Een expliciete `CARGO_TARGET_DIR`
+JS/WASM-interface of eindresultaat. De vastgelegde module is 7.712.658 bytes.
+[De kandidaatbouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42625934529)
+en [bouw.json](bouw.json) leggen de gebruikte patches en de werkelijk gemeten
+uitvoerchecksum vast. Een expliciete `CARGO_TARGET_DIR`
 kan een bestaande compilatiecache hergebruiken; de bronmap blijft nieuw.
 
 Zie [lange ketens](../../docs/tests/2026-11-06-lange-formuleketens.md) en

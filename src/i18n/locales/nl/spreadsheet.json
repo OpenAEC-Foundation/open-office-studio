@@ -399,7 +399,8 @@
     "formula": "Formule:",
     "result": "Resultaat:",
     "resultUnavailable": "geen voorbeeld beschikbaar",
-    "insert": "Invoegen"
+    "insert": "Invoegen",
+    "notationHint": "Gebruik Engelse functienamen, komma’s tussen argumenten en een punt voor decimalen, bijvoorbeeld SUM(1.5,2). Losse getallen volgen de bestandsregio."
   },
   "names": {
     "title": "Naambeheer",
@@ -442,5 +443,129 @@
       "invalidSelection": "Selecteer kopcellen met minstens één gegevenscel ernaast en kies de kant met de koppen.",
       "readFailed": "De naamdefinities of kopcellen konden niet worden gelezen."
     }
+  },
+  "conditional": {
+    "title": "Voorwaardelijke opmaak",
+    "manage": "Regels beheren…",
+    "range": "Van toepassing op",
+    "type": "Soort regel",
+    "formula": "Formule (Engelse functienamen)",
+    "value": "Waarde, tekst of formule",
+    "secondValue": "Tweede waarde",
+    "fill": "Vulling",
+    "fontColor": "Tekstkleur",
+    "bold": "Vet",
+    "italic": "Cursief",
+    "add": "Regel toevoegen",
+    "replace": "Regel bijwerken",
+    "edit": "Bewerken",
+    "up": "Hogere prioriteit",
+    "down": "Lagere prioriteit",
+    "stop": "Stoppen als waar",
+    "priorityHint": "Regels werken van boven naar beneden. Eerdere regels hebben per opmaakeigenschap voorrang. De wijzigingen worden toegepast wanneer u OK kiest.",
+    "empty": "Dit werkblad heeft geen regels.",
+    "invalidRange": "Vul een geldig celbereik in, bijvoorbeeld A1:A10.",
+    "invalidFormula": "Vul een geldige formule in.",
+    "types": {
+      "expression": "Een formule gebruiken",
+      "greaterThan": "Groter dan",
+      "lessThan": "Kleiner dan",
+      "between": "Tussen",
+      "equal": "Gelijk aan",
+      "containsText": "Tekst bevat",
+      "duplicates": "Dubbele waarden",
+      "top10": "Hoogste 10 waarden",
+      "aboveAverage": "Boven gemiddelde",
+      "today": "Datum is vandaag",
+      "last7Days": "Datum in de afgelopen 7 dagen",
+      "colorScale": "Driekleurenschaal",
+      "dataBar": "Gegevensbalk",
+      "iconSet": "Verkeerslichtpictogrammen",
+      "bottom10": "Onderste 10 waarden",
+      "belowAverage": "Onder het gemiddelde",
+      "yesterday": "Gisteren",
+      "tomorrow": "Morgen"
+    },
+    "protected": "Voorwaardelijke opmaak kan op dit beveiligde werkblad niet worden gewijzigd.",
+    "preserveStyle": "De uitgebreide bronopmaak blijft behouden. Je kunt de formule en het bereik wijzigen."
+  },
+  "formulaErrors": {
+    "explain": "Uitleg bij {{cell}}: {{error}}",
+    "cycle": {
+      "title": "Kringverwijzing",
+      "help": "Deze formule verwijst naar zichzelf, rechtstreeks of via andere cellen of bladen. Onderbreek die verwijzingsketen om een uitkomst te berekenen."
+    },
+    "limited": {
+      "title": "Rekenlimiet bereikt",
+      "help": "De berekening kon niet binnen de limiet worden afgerond. Deze cel kan nog een opgeslagen uitkomst tonen. Controleer de formule en haar afhankelijkheden voordat u de waarde gebruikt."
+    },
+    "division": {
+      "title": "Delen door nul",
+      "help": "Een deling gebruikt nul of een lege cel als deler. Controleer de deler of vang dit geval op met IF of IFERROR."
+    },
+    "missing": {
+      "title": "Waarde niet beschikbaar",
+      "help": "De formule vindt geen passende of beschikbare waarde. Controleer zoekwaarden en bereiken; NA() kan deze uitkomst ook bewust maken."
+    },
+    "name": {
+      "title": "Onbekende naam of functie",
+      "help": "Controleer de spelling van functies, benoemde bereiken en aanhalingstekens rond tekst. Een functie die de rekenkern niet ondersteunt kan niet worden berekend."
+    },
+    "intersection": {
+      "title": "Bereiken overlappen niet",
+      "help": "De formule vraagt een doorsnede van bereiken die geen cel delen. Controleer de verwijzingen en scheidingstekens."
+    },
+    "number": {
+      "title": "Ongeldige numerieke uitkomst",
+      "help": "Een numeriek argument valt buiten het domein van de functie of de uitkomst valt buiten het ondersteunde getalbereik."
+    },
+    "reference": {
+      "title": "Ongeldige celverwijzing",
+      "help": "De formule verwijst naar een cel of blad dat niet meer bestaat. Herstel de verwijzing of maak het verwijderen ongedaan."
+    },
+    "value": {
+      "title": "Ongeldige waarde of argument",
+      "help": "Een argument heeft een ongeschikte waarde of soort, zoals tekst waar een getal nodig is. Controleer de broncellen en functieargumenten."
+    },
+    "spill": {
+      "title": "Matrixuitkomst wordt geblokkeerd",
+      "help": "De matrixuitkomst kan haar doelcellen niet vullen. Maak blokkerende cellen leeg en controleer samengevoegde cellen en de bladrand."
+    },
+    "calculation": {
+      "title": "Berekeningsfout",
+      "help": "De formule kan geen geldige uitkomst maken. Controleer de uitdrukking, matrixafmetingen en functieondersteuning."
+    }
+  },
+  "outline": {
+    "title": "Overzichtsgroepen",
+    "axis": "Groeperen",
+    "rows": "Rijen",
+    "columns": "Kolommen",
+    "range": "Bereik",
+    "group": "Groeperen",
+    "ungroup": "Groepering opheffen",
+    "existing": "Bestaande groepen",
+    "empty": "Dit blad heeft geen overzichtsgroepen.",
+    "level": "Niveau {{level}}",
+    "expand": "Groep {{range}} uitklappen",
+    "collapse": "Groep {{range}} inklappen",
+    "reloadHint": "Het wijzigen van een overzichtsgroep herlaadt deze werkmap. De huidige undo-geschiedenis wordt gewist; celinhoud en opmaak blijven behouden.",
+    "invalidRange": "Vul een geldig rijbereik (2:10) of kolombereik (B:F) in. Per rijbewerking kunnen maximaal 10.000 rijen worden gewijzigd.",
+    "protected": "Overzichtsgroepen kunnen op een beveiligd werkblad niet worden gewijzigd.",
+    "readOnly": "Deze werkmap kan nu niet worden gewijzigd.",
+    "overlapping": "Het bestand heeft overlappende kolomdefinities. Herstel die voordat u groepen bewerkt.",
+    "tooDeep": "Een rekenblad ondersteunt maximaal zeven geneste overzichtsniveaus.",
+    "summaryRequired": "Houd een samenvattingsrij of -kolom naast de groep vrij om deze in te klappen."
+  },
+  "sheetProperties": {
+    "hideQuestion": "Blad ‘{{name}}’ verbergen?",
+    "chooseSheet": "Blad om zichtbaar te maken",
+    "noColor": "Geen tabkleur",
+    "reloadHint": "Deze wijziging herlaadt de werkmap en wist de huidige undo-geschiedenis. Bladinhoud en objecten blijven behouden.",
+    "keepVisible": "Een werkmap moet minstens één zichtbaar blad houden.",
+    "noHidden": "Er zijn geen verborgen bladen die hier zichtbaar kunnen worden gemaakt.",
+    "veryHidden": "Dit blad is in het bronbestand als zeer verborgen gemarkeerd en kan hier niet zichtbaar worden gemaakt.",
+    "structureLocked": "De werkmapstructuur is beveiligd. Bladzichtbaarheid en tabkleuren kunnen niet worden gewijzigd.",
+    "invalidColor": "Kies een geldige tabkleur."
   }
 }

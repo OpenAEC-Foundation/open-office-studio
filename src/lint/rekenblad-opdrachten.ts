@@ -50,6 +50,7 @@ type Pane = { rows: number; cols: number; top_left: Cel } | null;
 /** Ruwe structurele engine-opdrachten die `applyOps` aantoonbaar accepteert. */
 export type RuweOp =
   | import("@betteroffice/xlsx").XlsxDefinedNameOp
+  | import("../rekenblad/voorwaardelijke-opmaak").VoorwaardelijkeOp
   | {
       type: "insertRows" | "deleteRows";
       sheet: number;

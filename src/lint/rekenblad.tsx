@@ -67,6 +67,7 @@ import {
   ArrowLeftRight,
   SlidersHorizontal,
   Files,
+  Ungroup,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -763,6 +764,9 @@ export function RekenbladRibbon({
                 <RekenbladLettertype />
                 <RekenbladUitlijning />
                 <RekenbladGetal uitgebreid />
+                <Groep naam={t("spreadsheet:conditional.title")}>
+                  <A naam={t("spreadsheet:conditional.manage")} icoon={SlidersHorizontal} uit={uit} doe={() => openRekenbladVenster({ soort: "voorwaardelijkeOpmaak" })} />
+                </Groep>
                 <Groep naam={t("spreadsheet.groups.cellBorders")}>
                   <div className="ribbon-stapel">
                     <CK id="borderPreset" naam={t("spreadsheet.commands.cellBorders")} breed />
@@ -788,6 +792,7 @@ export function RekenbladRibbon({
               <>
                 <Cellen uit={uit} />
                 <Groep naam={t("spreadsheet:structure.group")}>
+                  <A naam={t("spreadsheet:outline.title")} icoon={Ungroup} uit={uit} doe={() => openRekenbladVenster({ soort: "groepen" })} />
                   <div className="ribbon-stapel">
                     <A
                       naam={t("spreadsheet:menu.columnWidth")}

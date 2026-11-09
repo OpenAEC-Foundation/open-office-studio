@@ -49,6 +49,11 @@ import {
 import { bladenLijst, verborgenLabel } from "./bladen";
 import { BladVerplaatsen, BladVerwijderen } from "./BladVensters";
 import { GetalVenster } from "./GetalVenster";
+import { VoorwaardelijkeOpmaakVenster } from "./VoorwaardelijkeOpmaakVenster";
+import { koppelBladSlepen } from "./bladslepen";
+import { GroepenVenster } from "./GroepenVenster";
+import { BladEigenschappenVenster } from "./BladEigenschappenVenster";
+import { koppelTabKleuren } from "./bladEigenschappen";
 import { kopieer, leesKlembord, plak, type KlembordInhoud } from "./klembord";
 import { MaatVenster } from "./MaatVenster";
 import { RekenbladMenu, type MenuItem } from "./Menu";
@@ -97,6 +102,8 @@ export function RekenbladExtra() {
     api?.focus();
   }, [api, setVenster]);
   const sluitMenu = useCallback(() => setVenster(null), [setVenster]);
+  useEffect(() => host && api ? koppelBladSlepen(host, api, positie => setVenster({ soort: "bladVerplaatsen", positie, kopie: true }), fout) : undefined, [host, api, setVenster, fout]);
+  useEffect(() => host && api ? koppelTabKleuren(host, api.handle) : undefined, [host, api]);
 
   const plakkenSpeciaal = useCallback(async () => {
     setPlakInhoud(await leesKlembord());
@@ -279,7 +286,7 @@ export function RekenbladExtra() {
             { naam: t("structure.optimalWidth"), icoon: ArrowLeftRight, uit, doe: () => uitvoeren((a) => optimaleBreedte(a)) },
             { naam: t("menu.hide"), icoon: EyeOff, uit, doe: () => uitvoeren((a) => kolommenZichtbaarheid(a, true)) },
             { naam: t("menu.unhide"), icoon: Eye, uit, doe: () => uitvoeren((a) => kolommenZichtbaarheid(a, false)) },
-            { naam: t("menu.group"), icoon: Ungroup, uit: true, uitleg: engineUitleg, doe: () => {} },
+            { naam: t("menu.group"), icoon: Ungroup, uit, doe: () => setVenster({ soort: "groepen", as: "kolom" }) },
           ],
         ];
       case "rij":
@@ -294,7 +301,7 @@ export function RekenbladExtra() {
             { naam: t("structure.optimalHeight"), icoon: MoveVertical, uit, doe: () => uitvoeren((a) => optimaleHoogte(a)) },
             { naam: t("menu.hide"), icoon: EyeOff, uit, doe: () => uitvoeren((a) => rijenZichtbaarheid(a, true)) },
             { naam: t("menu.unhide"), icoon: Eye, uit, doe: () => uitvoeren((a) => rijenZichtbaarheid(a, false)) },
-            { naam: t("menu.group"), icoon: Ungroup, uit: true, uitleg: engineUitleg, doe: () => {} },
+            { naam: t("menu.group"), icoon: Ungroup, uit, doe: () => setVenster({ soort: "groepen", as: "rij" }) },
           ],
         ];
       case "cel":
@@ -322,9 +329,9 @@ export function RekenbladExtra() {
             { naam: t("sheets.moveCopy"), icoon: Copy, uit, doe: () => setVenster({ soort: "bladVerplaatsen" }) },
           ],
           [
-            { naam: t("sheets.hide"), icoon: EyeOff, uit: true, uitleg: engineUitleg, doe: () => {} },
-            { naam: t("sheets.unhide"), icoon: Eye, uit: true, uitleg: engineUitleg, doe: () => {} },
-            { naam: t("sheets.tabColor"), icoon: Palette, uit: true, uitleg: engineUitleg, doe: () => {} },
+            { naam: t("sheets.hide"), icoon: EyeOff, uit, doe: () => setVenster({ soort: "bladEigenschappen", actie: "verbergen" }) },
+            { naam: t("sheets.unhide"), icoon: Eye, uit, doe: () => setVenster({ soort: "bladEigenschappen", actie: "zichtbaar" }) },
+            { naam: t("sheets.tabColor"), icoon: Palette, uit, doe: () => setVenster({ soort: "bladEigenschappen", actie: "kleur" }) },
           ],
         ];
       }
@@ -437,11 +444,14 @@ export function RekenbladExtra() {
         <MaatVenster api={api} soort={venster.soort} sluiten={sluiten} />
       )}
       {venster?.soort === "getal" && <GetalVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "voorwaardelijkeOpmaak" && <VoorwaardelijkeOpmaakVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "groepen" && <GroepenVenster api={api} sluiten={sluiten} beginAs={venster.as} />}
+      {venster?.soort === "bladEigenschappen" && <BladEigenschappenVenster api={api} actie={venster.actie} sluiten={sluiten} />}
       {venster?.soort === "plakkenSpeciaal" && (
         <PlakkenSpeciaal api={api} inhoud={plakInhoud} sluiten={sluiten} />
       )}
       {venster?.soort === "bladVerwijderen" && <BladVerwijderen api={api} sluiten={sluiten} />}
-      {venster?.soort === "bladVerplaatsen" && <BladVerplaatsen api={api} sluiten={sluiten} />}
+      {venster?.soort === "bladVerplaatsen" && <BladVerplaatsen api={api} sluiten={sluiten} beginPositie={venster.positie} beginKopie={venster.kopie} />}
       {venster?.soort === "bladHernoemen" && <BladHernoemen api={api} sluiten={sluiten} />}
     </>
   );

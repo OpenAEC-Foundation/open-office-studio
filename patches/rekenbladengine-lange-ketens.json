@@ -15,9 +15,9 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
-  "wasmBytes": 7693796,
-  "stand": "Werkstand voor issue #3: herberekende uitkomsten worden bij expliciet opslaan bewaard, ook zonder inhoudelijke bewerking. De eerdere keten- en regiopatches blijven aanwezig. Nog niet opgenomen in een gepubliceerde uitgave.",
+  "wasmSha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e",
+  "wasmBytes": 7712658,
+  "stand": "Werkstand voor #59/#67: de eerdere keten-, regio- en opslagpatches blijven aanwezig. Voorwaardelijke regels kunnen atomair met undo/redo worden vervangen, uitgebreide stijlen en gewijzigde toepassingsbereiken worden bewaard, en voorwaarden worden zonder documentmutatie op de broncel geëvalueerd. Geen wijziging van de JS/WASM-interface of snapshotlayout. Nog niet opgenomen in een gepubliceerde uitgave.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -91,5 +91,7 @@
         }
       ]
     }
-  ]
+  ],
+  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42625934529",
+  "bouwCommit": "34ca6426045ca88f363babd5d168cc46af873e9f"
 }

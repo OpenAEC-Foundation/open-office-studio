@@ -47,6 +47,7 @@ import { formuleVerwijzingen } from "./rekenblad-verwijzingskleuren";
 import { namenLijst } from "../rekenblad/namen";
 import { aangevuldeFormule, formuleAanvullingen, type FormuleVoorstel } from "../rekenblad/naamAanvullingen";
 import { FormuleKleuren } from "./rekenblad-formulekleuren";
+import { FormulefoutMelding } from "../rekenblad/FormulefoutMelding";
 import "./rekenblad-gereedschap.css";
 
 const VELDEN = '[data-testid="xlsx-cell-editor"], [data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid';
@@ -398,6 +399,7 @@ export function FunctieVenster({
           </div>
           <div className="rekenblad-functiedetail">
             <p className="rekenblad-syntaxis">{syntaxis(f)}</p>
+            <p className="rekenblad-zacht">{ts("insertFunction.notationHint")}</p>
             <p>{t(`fn.${f.naam}`)}</p>
             <p className="rekenblad-zacht">{t(`cat.${f.categorie}`)}</p>
             {velden.length > 0 && (
@@ -626,6 +628,7 @@ export function Formulebalk({
 }) {
   const { t } = useTranslation("spreadsheet");
   const [uitgevouwen, setUitgevouwen] = useState(false);
+  const selectie = useSelectie(laag);
   useFormuleBereik(api);
   return (
     <div className={`office-formulebalk${uitgevouwen ? " is-uitgevouwen" : ""}`}>
@@ -642,6 +645,7 @@ export function Formulebalk({
         <i>fx</i>
       </button>
       <EditorToolbar.FormulaBar />
+      {api && selectie?.cells && <FormulefoutMelding api={api} sheetId={selectie.sheetId} row={selectie.cells.focus.row} col={selectie.cells.focus.col} />}
       {api && uitgevouwen && <UitgevouwenFormule api={api} laag={laag} />}
       {api && <FormuleKleuren api={api} />}
       <button
