@@ -1,6 +1,23 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "./editors";
-import { ontcijfer } from "./grafieken/xml";
+// Deze preflight wordt ook rechtstreeks in Node gebruikt. Houd de XML-
+// entiteitsdecoder onafhankelijk van de browserconfiguratie van grafieken.
+function ontcijfer(tekst: string) {
+  if (!tekst.includes("&")) return tekst;
+  return tekst.replace(/&(#x[0-9a-fA-F]+|#\d+|amp|lt|gt|quot|apos);/g, (_, e) => {
+    if (e === "amp") return "&";
+    if (e === "lt") return "<";
+    if (e === "gt") return ">";
+    if (e === "quot") return '"';
+    if (e === "apos") return "'";
+    const code = e[1] === "x" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+    try {
+      return String.fromCodePoint(code);
+    } catch {
+      return "";
+    }
+  });
+}
 
 /** Kenmerken waarvan behoud per route in de testmatrix is gemeten. */
 export type Risico =

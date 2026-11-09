@@ -106,7 +106,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr204-related-unit | `b1f0e8ee7c200483e6f9ecd98fa51dba0a17ac99` | 8 | 0 | 0 |
 | pr233-targeted | `aaea78acbe03fa1517c0779fbb9ef59ece2b32e6` | 124 | 0 | 0 |
 | pr243-targeted | `fdf520aeb2ab6b20fefac42a80a69646386abca9` | 19 | 0 | 0 |
-| pr247-targeted | `7897a592878b159941280e49feb9b5db144d7655` | 27 | 0 | 0 |
+| pr247-targeted | `e8123bb04a80bcf03f578e6b0b7645288d52384a` | 27 | 0 | 0 |
 | pr249-related-unit | `59ad7a46cd2447688f82a390c9fecf3517d172c5` | 29 | 0 | 0 |
 | pr250-targeted | `65971f5bbba139f484aec904c72c4d46fbbc5978` | 22 | 0 | 0 |
 | pr241-targeted | `9b16c29412a2fc338d3e5a5ee0085a66ad1eef44` | 58 | 0 | 0 |
