@@ -21,7 +21,7 @@ for (const pakket of ["docx", "docx-react", "pptx", "pptx-react"])
 const versie = (pakket) => versies[pakket];
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 
-execFileSync("python3", ["scripts/maak-matrixfixtures.py", `${MAP}/bron`], {
+execFileSync(process.env.OOS_PYTHON ?? "python3", ["scripts/maak-matrixfixtures.py", `${MAP}/bron`], {
   stdio: "ignore",
 });
 const manifest = JSON.parse(
@@ -204,11 +204,11 @@ if (process.env.OOS_MATRIX_ZONDER_CONVERSIE === "1") {
 }
 if (suite === "gemeten") {
   try {
-    execFileSync("python3", ["scripts/test-matrix-libreoffice.py", MAP], {
+    execFileSync(process.env.OOS_PYTHON ?? "python3", ["scripts/test-matrix-libreoffice.py", MAP], {
       stdio: "inherit",
       timeout: 600000,
     });
-    execFileSync("python3", ["scripts/matrix_visueel.py", MAP], {
+    execFileSync(process.env.OOS_PYTHON ?? "python3", ["scripts/matrix_visueel.py", MAP], {
       stdio: "inherit",
       timeout: 900000,
     });
@@ -218,7 +218,7 @@ if (suite === "gemeten") {
 }
 
 const tabel = execFileSync(
-  "python3",
+  process.env.OOS_PYTHON ?? "python3",
   ["scripts/matrix_kenmerken.py", "rapport", MAP],
   { encoding: "utf8" },
 );
