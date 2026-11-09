@@ -271,8 +271,14 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
         ? "conversie"
         : null;
   if (opgeslagenRoute) {
+    // In de vaste legacy-corpusproef verdwijnt bij DOC-export een bewerkbaar
+    // PPTX-object (vier objecten worden drie); de voorbeeldafbeelding blijft.
+    // Deze meting geldt voor DOC, niet voor alle runtime-uitvoerformaten.
+    const docObjectverlies =
+      soort === "docx" && formaat.ext === "doc" && opgeslagenRoute === "conversie";
     const verlies = risicos.filter((r) =>
-      matrix[soort][opgeslagenRoute].includes(r),
+      matrix[soort][opgeslagenRoute].includes(r) ||
+      (docObjectverlies && r === "ingebedde_objecten"),
     );
     if (verlies.length)
       regels.push({
