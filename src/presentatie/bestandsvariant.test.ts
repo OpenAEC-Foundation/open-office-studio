@@ -79,7 +79,8 @@ describe("PPSX/POTX zonder conversie (#36)", () => {
         naam: "Voorbeeld.pptx",
         gewijzigd: true,
       });
-      expect(result?.exportFormaat).toBe(ext === "ppsx" ? "ppsx" : undefined);
+      expect(result?.exportFormaat).toBe(ext === "ppsx" ? "ppsx" : "pptx");
+      expect(result?.alsNieuw).toBe(ext === "potx" ? true : undefined);
       expect(result?.voorstelling).toBe(ext === "ppsx" ? true : undefined);
       gelijkBehalveType(source, result!.bytes);
     },
@@ -134,7 +135,8 @@ describe("PPSX/POTX zonder conversie (#36)", () => {
         "pptx",
         "pptx",
       ]);
-      expect(result?.exportFormaat).toBeUndefined();
+      expect(result?.exportFormaat).toBe(ext === "pot" ? "pptx" : undefined);
+      expect(result?.alsNieuw).toBe(ext === "pot" ? true : undefined);
       expect(result?.voorstelling).toBe(ext === "pps" ? true : undefined);
     },
   );
