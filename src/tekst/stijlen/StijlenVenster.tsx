@@ -4,7 +4,7 @@
  * stijl en welke directe opmaak de cursorpositie heeft).
  */
 import { useMemo, useState } from "react";
-import { Eraser, FilePlus2, Pilcrow, Type, Palette } from "lucide-react";
+import { Eraser, FilePlus2, Pilcrow, Type, Palette, Table2, ListOrdered } from "lucide-react";
 import { useDocxCommands } from "@betteroffice/docx-react";
 import { useTranslation } from "react-i18next";
 import { useOpmaak } from "../../i18n/opmaak";
@@ -23,6 +23,7 @@ export function StijlenVenster() {
   const menu = useStijlMenu();
   const [filter, setFilter] = useState<Filter>("gebruikt");
   const [zoek, setZoek] = useState("");
+  const [soort, setSoort] = useState("alle");
   const [voorbeeld, setVoorbeeld] = useState(true);
   const [inspecteren, setInspecteren] = useState(true);
   const alle = staat.stijlen?.styles ?? [];
@@ -32,12 +33,11 @@ export function StijlenVenster() {
       filter === "aanbevolen"
         ? galerijStijlen(alle, staat.gebruikt)
         : alle
-            .filter((s) => s.type === "paragraph" || s.type === "character")
-            .filter((s) => (filter === "gebruikt" ? staat.gebruikt.has(s.styleId) : !s.hidden))
+            .filter((s) => (filter === "gebruikt" ? staat.gebruikt.has(s.styleId) : true))
             .sort((a, b) => stijlNaam(a).localeCompare(stijlNaam(b), locale));
     const z = zoek.trim().toLowerCase();
-    return z ? basis.filter((s) => stijlNaam(s).toLowerCase().includes(z) || s.styleId.toLowerCase().includes(z)) : basis;
-  }, [alle, filter, zoek, staat.gebruikt, locale]);
+    return basis.filter(s => (soort === "alle" || s.type === soort) && (!z || stijlNaam(s).toLowerCase().includes(z) || s.styleId.toLowerCase().includes(z)));
+  }, [alle, filter, zoek, soort, staat.gebruikt, locale]);
 
   // Inspecteren: stijl en directe opmaak op de cursorpositie.
   const ref = staat.api();
@@ -58,6 +58,7 @@ export function StijlenVenster() {
       className="tekst-stijlenvenster"
       acties={
         <>
+          <button type="button" className="werkruimte-knop" disabled={!staat.kanHerladen} onClick={() => staat.open({ soort: "importeer" })}>{t("styles.manage.import")}</button>
           <button
             type="button"
             className="werkruimte-knop"
@@ -102,6 +103,10 @@ export function StijlenVenster() {
           <option value="aanbevolen">{t("styles.pane.filterRecommended")}</option>
           <option value="alle">{t("styles.pane.filterAll")}</option>
         </select>
+        <select aria-label={t("styles.editor.type")} value={soort} onChange={e => setSoort(e.target.value)}>
+          <option value="alle">{t("styles.pane.filterAll")}</option>
+          {["paragraph", "character", "table", "numbering"].map(s => <option key={s} value={s}>{t(`styles.manage.type.${s}`)}</option>)}
+        </select>
         <label className="werkruimte-vink">
           <input type="checkbox" checked={voorbeeld} onChange={(e) => setVoorbeeld(e.target.checked)} /> {t("styles.pane.preview")}
         </label>
@@ -128,9 +133,11 @@ export function StijlenVenster() {
                 <span className="tekst-stijlenlijst-naam" style={voorbeeld ? voorbeeldStijl(losOp(staat.stijlen, s.styleId, staat.thema), 14) : undefined}>
                   {naam}
                 </span>
-                <span className="tekst-stijlenlijst-soort" aria-label={s.type === "character" ? t("styles.characterStyle") : t("styles.paragraphStyle")}>
+                {voorbeeld && s.type === "table" && <span aria-hidden="true" style={{ border: `1px solid #${s.tblPr?.borders?.top?.color?.rgb ?? "888888"}`, background: s.tblPr?.shading?.fill?.rgb ? `#${s.tblPr.shading.fill.rgb}` : undefined, padding: 4 }}>Aa │ Bb</span>}
+                {voorbeeld && s.type === "numbering" && <span aria-hidden="true">1. Aa<br/>2. Bb</span>}
+                <span className="tekst-stijlenlijst-soort" aria-label={t(`styles.manage.type.${s.type}`)}>
                   {aantal ? <small>{getal(aantal)}×</small> : null}
-                  {s.type === "character" ? <Type size={13} aria-hidden="true" /> : <Pilcrow size={13} aria-hidden="true" />}
+                  {s.type === "character" ? <Type size={13} aria-hidden="true" /> : s.type === "table" ? <Table2 size={13} aria-hidden="true"/> : s.type === "numbering" ? <ListOrdered size={13} aria-hidden="true"/> : <Pilcrow size={13} aria-hidden="true" />}
                 </span>
               </button>
             </li>

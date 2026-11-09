@@ -8,6 +8,7 @@ import { GrafiekFout } from "../../grafieken/fouten.ts";
 import type { HerlaadDoel, Herladen } from "../../lint/editorApi";
 import { StijlFout } from "./stijlenxml.ts";
 import { vertaal } from "./vertaling.ts";
+import { maakLijstStijl, type NieuweNummering } from "./beheer";
 
 const REL_STIJLEN = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
 const REL_THEMA = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
@@ -26,6 +27,7 @@ export interface StijlBewerking extends Partial<StijlOnderdelen> {
    * via de engine; het pakket zelf verandert daarvoor niet.
    */
   alineastijl?: string;
+  nieuweNummering?: NieuweNummering;
 }
 
 function hoofddocument(pakket: Pakket) {
@@ -71,7 +73,8 @@ export function bewerkStijlOnderdelen(
     pakket.schrijf(themaPad, nieuw.thema);
     gewijzigd = true;
   }
-  return gewijzigd ? pakket.inpakken() : bytes;
+  const uit = gewijzigd ? pakket.inpakken() : bytes;
+  return nieuw.nieuweNummering ? maakLijstStijl(uit, nieuw.nieuweNummering) : uit;
 }
 
 /** Leest de stijlonderdelen zonder te wijzigen. */

@@ -210,6 +210,10 @@ export function usePagina() {
     let doorgegeven = false;
     try {
       const { herlaad, editor } = klaarVoor();
+      // Pin the section before confirmation moves focus. A shared header or
+      // note marker cannot identify the visible section by package part alone.
+      const gekozenSectie = o.cursor === "sectie" ? actieveSectie(editor)?.index : undefined;
+      if (o.cursor === "sectie" && gekozenSectie === undefined) throw new Error(t("page.errors.cursorLost"));
       if (!(await bevestigd(t("page.reload.confirmTitle")))) {
         editor.focus();
         return;
@@ -217,7 +221,7 @@ export function usePagina() {
       // Vóór de markering: de plek telt vanaf het eind, de markering valt dan weg.
       const plek = await leesPlek(editor);
       let markering: Awaited<ReturnType<typeof zetMarkering>> = null;
-      if (o.cursor) {
+      if (o.cursor === "nodig") {
         markering = bewerkbaar || kopVoetActief() ? await zetMarkering(editor) : null;
         if (!markering && o.cursor === "nodig") throw new Error(t("page.errors.cursorFirst"));
       }
@@ -225,7 +229,7 @@ export function usePagina() {
       let uit: Uint8Array | null;
       try {
         bytes = await herlaad.bytes();
-        let sectie = -1;
+        let sectie = gekozenSectie ?? -1;
         if (markering && o.cursor === "sectie") {
           sectie = sectieVanMarkering(bytes, markering.markering) ?? -1;
           bytes = metPakket(bytes, (p) => {

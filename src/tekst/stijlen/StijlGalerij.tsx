@@ -171,6 +171,7 @@ export function useStijlMenu() {
             : staat.open({ soort: "bijwerken", styleId: stijl.styleId }),
       },
       { naam: t("styles.menu.modify"), icoon: PencilLine, uit: !staat.kanHerladen, uitvoeren: () => staat.open({ soort: "wijzig", styleId: stijl.styleId }) },
+      { naam: t("styles.manage.delete"), uit: !staat.kanHerladen || !!stijl.default, uitvoeren: () => staat.open({ soort: "verwijder", styleId: stijl.styleId }) },
       { naam: t("styles.menu.newFromSelection"), icoon: FilePlus2, uit: !staat.kanHerladen, uitvoeren: () => staat.open({ soort: "nieuw", uitSelectie: true }) },
     ];
   };

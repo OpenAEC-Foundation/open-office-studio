@@ -1,4 +1,5 @@
 import { useEditorApi, zichtbaarElement } from "./editorApi";
+import { VeldKnoppen, VeldSneltoets } from "../tekst/veldenDocument/VeldKnoppen";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { GrafiekGroep, useIngeslotenGrafieken } from "../grafieken/ui/ingesloten";
 import {
@@ -564,6 +565,7 @@ export function TekstRibbon({
     <TekstBewerken opdrachten={opdrachten}>
     <TekstOpmaakProvider>
     <StijlenBeheer>
+      <VeldSneltoets />
       <Ribbon
         bestand={bestand}
         beginTab={herlaad ? lintTabPerDocument.get(herlaad) : undefined}
@@ -640,6 +642,7 @@ export function TekstRibbon({
                       onClick={() => opdrachten.voegIn(tijdTekst(new Date()))}
                     />
                     <DatumTijdKnop />
+                    <VeldKnoppen />
                   </div>
                 </Groep>
               </>

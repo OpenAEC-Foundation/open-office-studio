@@ -50,6 +50,7 @@ import { FORMATEN, MARGES, type Formaat, type MargeVoorkeur } from "../secties.t
 import { Keuzemenu, type Menuregel } from "./Keuzemenu.tsx";
 import { cmWeergave, voorbeeldPaginanummer } from "./Dialogen.tsx";
 import type { PaginaFuncties } from "./usePagina.tsx";
+import { VeldKnoppen } from "../../veldenDocument/VeldKnoppen";
 
 type T = TFunction<"writer">;
 const cm = (t: number) => `${cmWeergave(t)} cm`;
@@ -126,6 +127,7 @@ export function kopVoetTab(p: PaginaFuncties): RibbonTab {
         </Groep>
         <Groep naam={t("page.headerFooter.groupInsert")}>
           <PaginanummerKnop p={p} />
+          <VeldKnoppen />
         </Groep>
         <Groep naam={t("page.headerFooter.groupOptions")}>
           <div className="ribbon-stapel">

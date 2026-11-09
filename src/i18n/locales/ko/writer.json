@@ -1441,16 +1441,78 @@
       "allStyles": "모든 스타일…"
     },
     "manage": {
-      "group": "스타일 관리",
-      "pane": "스타일 창",
-      "newStyle": "새 스타일",
-      "newStyleHint": "선택 영역을 기준으로 새 스타일 만들기",
-      "updateStyle": "스타일 업데이트",
-      "updateHint": "현재 단락의 스타일을 선택 영역과 일치하도록 업데이트",
-      "modifyNamed": "{{name}} 수정…",
-      "modifyStyle": "스타일 수정…",
-      "styleSet": "스타일 집합 및 글꼴…",
-      "styleSetHint": "문서의 테마 글꼴 및 단락 간격"
+      "import": "Import styles…",
+      "importTitle": "Import document styles",
+      "delete": "Delete style…",
+      "deleteTitle": "Delete custom style",
+      "deleteNotice": "Delete “{{name}}” and replace its uses throughout the document. Built-in and default styles are protected.",
+      "replacement": "Replace with",
+      "inherit": "Use base style or inherit",
+      "source": "Document or template",
+      "overwrite": "Replace matching style IDs",
+      "importNotice": "Dependencies and list definitions are imported too. Existing styles get a unique name unless replacement is selected. Source theme colours and fonts are preserved.",
+      "fileTooLarge": "Choose a file smaller than 50 MB.",
+      "type": {
+        "paragraph": "Paragraph style",
+        "character": "Character style",
+        "table": "Table style",
+        "numbering": "List style"
+      },
+      "advanced": "Tabs, borders and language",
+      "language": "Language code",
+      "tabs": "Tab stops",
+      "position": "Position",
+      "leader": "Leader",
+      "removeTab": "Remove tab stop",
+      "addTab": "Add tab stop",
+      "borders": "Borders and shading",
+      "side": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right",
+        "between": "Between paragraphs",
+        "insideH": "Inside horizontal",
+        "insideV": "Inside vertical"
+      },
+      "borderStyle": "Line style",
+      "width": "Width",
+      "shading": "Shading",
+      "line": {
+        "single": "Single",
+        "double": "Double",
+        "dotted": "Dotted",
+        "dashed": "Dashed",
+        "nil": "None"
+      },
+      "tabAlignment": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right",
+        "decimal": "Decimal",
+        "bar": "Bar",
+        "clear": "Clear inherited stop"
+      },
+      "tabLeader": {
+        "none": "None",
+        "dot": "Dots",
+        "hyphen": "Dashes",
+        "underscore": "Underline",
+        "middleDot": "Middle dots",
+        "heavy": "Heavy line"
+      },
+      "listFormat": "List format",
+      "start": "Start at",
+      "numberFormat": {
+        "decimal": "1, 2, 3",
+        "lowerLetter": "a, b, c",
+        "upperLetter": "A, B, C",
+        "lowerRoman": "i, ii, iii",
+        "upperRoman": "I, II, III",
+        "bullet": "• Bullets"
+      },
+      "tableCursor": "Place the cursor in a table first.",
+      "noNumbering": "This list style has no numbering definition."
     },
     "sets": {
       "title": "스타일 집합 및 테마 글꼴",
@@ -1640,6 +1702,26 @@
       "tableNotFound": "문서에서 표를 찾을 수 없습니다.",
       "splitRow": "새 표의 첫 행이 될 행(첫 행 제외)에 커서를 놓으세요.",
       "splitMerged": "여기서는 표를 나눌 수 없습니다. 병합된 셀이 이 행에 걸쳐 있습니다."
+    }
+  },
+  "fields": {
+    "insert": "Insert field…",
+    "update": "Update fields",
+    "title": "Insert document field",
+    "kind": "Field",
+    "pattern": "Date/time format",
+    "cursor": "Place the cursor in the document first.",
+    "stale": "The document changed. Reopen this dialog before inserting.",
+    "unresolved": "{{count}} field values could not be updated; their previous results were retained.",
+    "hint": "The field remains editable in Word. F9 updates field results; print and PDF update them automatically. AUTHOR and TITLE use File › Info.",
+    "names": {
+      "PAGE": "Page number",
+      "NUMPAGES": "Number of pages",
+      "DATE": "Date",
+      "TIME": "Time",
+      "FILENAME": "File name",
+      "AUTHOR": "Author",
+      "TITLE": "Title"
     }
   }
 }

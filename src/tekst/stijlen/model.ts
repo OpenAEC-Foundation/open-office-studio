@@ -10,6 +10,7 @@ import type {
   Style,
   StyleDefinitions,
   TextFormatting,
+  TableFormatting,
   Theme,
 } from "@betteroffice/docx/types/document";
 import i18next from "../../i18n/config";
@@ -269,7 +270,7 @@ export function alsEigenschappen(o: OpgelosteStijl): StijlEigenschappen {
 export function uitOpmaak(
   tekst: TextFormatting | undefined,
   alinea: ParagraphFormatting | undefined,
-  soort: "paragraph" | "character" = "paragraph",
+  soort: "paragraph" | "character" | "table" | "numbering" = "paragraph",
   thema?: Theme | null,
 ): StijlEigenschappen {
   const e: StijlEigenschappen = {};
@@ -286,7 +287,12 @@ export function uitOpmaak(
     const kleur = themaKleur(tekst.color, thema);
     if (kleur) e.kleur = kleur.toUpperCase();
   }
-  if (alinea && soort === "paragraph") {
+  if (tekst?.language?.latin) e.taal = tekst.language.latin;
+  if (alinea && soort !== "character") {
+    if (alinea.tabs) e.tabs = alinea.tabs as StijlEigenschappen["tabs"];
+    if (alinea.borders) e.randen = Object.fromEntries(Object.entries(alinea.borders).filter(([, b]) => !!b).map(([k, b]) => [k, { style: b!.style ?? "single", size: b!.size, space: b!.space, ...(themaKleur(b!.color, thema) ? { color: { rgb: themaKleur(b!.color, thema)! } } : {}) }]));
+    if (alinea.shading) e.arcering = { pattern: alinea.shading.pattern, ...(themaKleur(alinea.shading.fill, thema) ? { fill: { rgb: themaKleur(alinea.shading.fill, thema)! } } : {}) };
+    if (alinea.numPr?.numId !== undefined) e.lijst = { numId: alinea.numPr.numId, ilvl: alinea.numPr.ilvl ?? 0 };
     const a = alinea.alignment;
     if (a === "left" || a === "center" || a === "right" || a === "both") e.uitlijning = a;
     if (alinea.spaceBefore !== undefined) e.ruimteVoor = alinea.spaceBefore / 20;
@@ -298,6 +304,30 @@ export function uitOpmaak(
       e.eersteRegel = Math.round(((alinea.hangingIndent ? -1 : 1) * alinea.indentFirstLine * 100) / 567) / 100;
   }
   return e;
+}
+
+export function tabelEigenschappen(tabel: TableFormatting | undefined, thema?: Theme): StijlEigenschappen {
+  if (!tabel) return {};
+  const randen = tabel.borders ? Object.fromEntries(Object.entries(tabel.borders).filter(([, b]) => !!b).map(([k, b]) => [k, { style: b!.style ?? "single", size: b!.size, space: b!.space, ...(themaKleur(b!.color, thema) ? { color: { rgb: themaKleur(b!.color, thema)! } } : {}) }])) : undefined;
+  const fill = themaKleur(tabel.shading?.fill, thema);
+  return { ...(randen ? { tabelRanden: randen } : {}), ...(tabel.shading ? { tabelArcering: { pattern: tabel.shading.pattern, ...(fill ? { fill: { rgb: fill } } : {}) } } : {}) };
+}
+
+/** Nearest enclosing table, including tables in header/footer and note stories. */
+export function tabelBijAlinea(doc: Document | null | undefined, paraId?: string): TableFormatting | undefined {
+  if (!doc || !paraId) return;
+  let budget = 200000;
+  function vind(k: unknown, tabel?: TableFormatting): { gevonden: boolean; tabel?: TableFormatting } {
+    if (!k || typeof k !== "object" || budget-- <= 0) return { gevonden: false };
+    if (Array.isArray(k)) { for (const x of k) { const r = vind(x, tabel); if (r.gevonden) return r; } return { gevonden: false }; }
+    const n = k as { type?: string; paraId?: string; id?: string; formatting?: TableFormatting; content?: unknown; rows?: unknown; cells?: unknown };
+    if (n.type === "paragraph" && (n.paraId === paraId || n.id === paraId)) return { gevonden: true, tabel };
+    const nieuw = n.type === "table" ? n.formatting : tabel;
+    for (const inhoud of [n.content, n.rows, n.cells]) { const r = vind(inhoud, nieuw); if (r.gevonden) return r; }
+    return { gevonden: false };
+  }
+  const p = doc.package;
+  return vind([p.document, ...p.headers?.values() ?? [], ...p.footers?.values() ?? [], p.footnotes, p.endnotes]).tabel;
 }
 
 /**
@@ -312,11 +342,28 @@ export function ontbrekendeStijl(stijlen: StyleDefinitions | undefined, styleId:
   return i18next.t("writer:styles.missingStyle", { name: naam });
 }
 
-type Knoop = { type?: string; content?: unknown; formatting?: { styleId?: string }; rows?: unknown };
+type Knoop = { type?: string; content?: unknown; formatting?: { styleId?: string; numPr?: { numId?: number } }; rows?: unknown };
 
 /** Hoe vaak elke stijl in de documentverhalen voorkomt (alinea-, teken- en tabelstijlen). */
 export function gebruikteStijlen(document: Document | null | undefined): Map<string, number> {
   const telling = new Map<string, number>();
+  const pakket = document?.package, defs = pakket?.styles;
+  const lijstStijlen = new Map<number, Set<string>>();
+  for (const stijl of defs?.styles ?? []) if (stijl.type === "numbering") {
+    const id = opgelosteOpmaak(defs, stijl.styleId).p.numPr?.numId;
+    if (id !== undefined && id !== 0) {
+      if (!lijstStijlen.has(id)) lijstStijlen.set(id, new Set());
+      lijstStijlen.get(id)!.add(stijl.styleId);
+    }
+  }
+  for (const num of pakket?.numbering?.nums ?? []) {
+    const abstract = pakket?.numbering?.abstractNums.find(a => a.abstractNumId === num.abstractNumId);
+    for (const id of [abstract?.styleLink, abstract?.numStyleLink]) if (id && defs?.styles.some(s => s.styleId === id && s.type === "numbering")) {
+      if (!lijstStijlen.has(num.numId)) lijstStijlen.set(num.numId, new Set());
+      lijstStijlen.get(num.numId)!.add(id);
+    }
+  }
+  const alineaNummers = new Map<string, number | undefined>();
   const tel = (id: string | undefined) => {
     if (id) telling.set(id, (telling.get(id) ?? 0) + 1);
   };
@@ -328,7 +375,13 @@ export function gebruikteStijlen(document: Document | null | undefined): Map<str
       return;
     }
     const k = knoop as Knoop;
-    if (k.type === "paragraph") tel(k.formatting?.styleId ?? "\u0000standaard");
+    if (k.type === "paragraph") {
+      tel(k.formatting?.styleId ?? "\u0000standaard");
+      const stijl = k.formatting?.styleId ?? "";
+      if (!alineaNummers.has(stijl)) alineaNummers.set(stijl, opgelosteOpmaak(defs, stijl).p.numPr?.numId);
+      const num = k.formatting?.numPr?.numId ?? alineaNummers.get(stijl);
+      if (num !== undefined) for (const id of lijstStijlen.get(num) ?? []) tel(id);
+    }
     else if (k.type === "run") tel(k.formatting?.styleId);
     else if (k.type === "table") tel((k.formatting as { styleId?: string } | undefined)?.styleId);
     if (k.content) loop(k.content);
@@ -337,7 +390,6 @@ export function gebruikteStijlen(document: Document | null | undefined): Map<str
     if (cellen) loop(cellen);
   };
   loop(document?.package.document.content);
-  const pakket = document?.package;
   for (const verhalen of [pakket?.headers?.values(), pakket?.footers?.values()])
     for (const verhaal of verhalen ?? []) loop(verhaal.content);
   for (const verhalen of [pakket?.footnotes, pakket?.endnotes, pakket?.footnoteSeparators, pakket?.endnoteSeparators])
