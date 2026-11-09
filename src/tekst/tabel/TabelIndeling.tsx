@@ -429,7 +429,7 @@ function SorteerVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void
     uitvoeren((r) => sorteer(r, gekozen, kopregels));
   }
   return (
-    <Dialoog titel={t("table.sort.title")} sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label={t("table.sort.ok")} />}>
+    <Dialoog titel={t("table.sort.title")} sluit={sluit} className="tw-venster tw-sorteervenster is-breed" acties={<Acties ok={ok} sluit={sluit} label={t("table.sort.ok")} />}>
       {sleutels.map((s, i) => (
         <fieldset key={i}>
           <legend>{i === 0 ? t("table.sort.sortBy") : t("table.sort.thenBy")}</legend>

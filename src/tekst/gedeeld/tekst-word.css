@@ -65,6 +65,26 @@
 .tw-venster.is-breed {
   width: min(100%, 720px);
 }
+.tw-sorteervenster select {
+  min-width: 0;
+  min-height: 30px;
+  padding: 3px 8px;
+  border: 1px solid var(--w-rand);
+  border-radius: 6px;
+  background: var(--w-bg);
+  color: var(--w-tekst);
+  color-scheme: light;
+}
+.tw-sorteervenster select option {
+  background: var(--w-bg);
+  color: var(--w-tekst);
+}
+.werkruimte-dialoogachtergrond[data-thema="forge"] .tw-sorteervenster select {
+  color-scheme: dark;
+}
+.tw-sorteervenster select:disabled {
+  opacity: 0.55;
+}
 .tw-venster .werkruimte-veld input[type="number"],
 .tw-venster .werkruimte-veld textarea {
   min-width: 0;
