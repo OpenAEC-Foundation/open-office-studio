@@ -107,7 +107,9 @@ fn bewaarnaam(request: &tauri::ipc::Request<'_>) -> Result<(String, String), Str
         .and_then(|s| s.to_str())
         .unwrap_or("")
         .to_lowercase();
-    if extensie != "openaec-notities" && !conversie::mag_bewaren(&extensie) {
+    if !matches!(extensie.as_str(), "openaec-notities" | "oos-theme")
+        && !conversie::mag_bewaren(&extensie)
+    {
         return Err(taal::t("errors.file.unsupportedFormat"));
     }
     Ok((bestandsnaam, extensie))

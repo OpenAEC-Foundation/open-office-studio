@@ -8,6 +8,14 @@ import { DiaKnop, huidigeIndex } from "../lint/presentatie-acties";
 import { Dialoog } from "../werkruimte/Dialoog";
 import { diaKeuze } from "./voetteksten";
 import { leesWeergave } from "./weergave";
+import { bewaarBytes } from "../afdrukken/bewaren";
+import {
+  leesThemaBestand,
+  schrijfThemaBestand,
+  themaBestandsnaam,
+  ThemaBestandFout,
+  THEMA_BESTAND_MAX,
+} from "./themaBestand";
 import {
   dupliceerLayout,
   dupliceerMaster,
@@ -165,6 +173,7 @@ function OntwerpVenster({
     [tweede, setTweede] = useState("#356BC4"),
     [hoek, setHoek] = useState(90);
   const afbeeldingVersie = useRef(0);
+  const themaInvoer = useRef<HTMLInputElement>(null);
   const [afbeelding, setAfbeelding] = useState<Uint8Array | null>(null);
   const [custom, setCustom] = useState(eigenThemas);
   const [thema, setThema] = useState<Thema>(() => ({
@@ -225,6 +234,44 @@ function OntwerpVenster({
       setMelding(t("design.saved"));
     } catch (e) {
       setMelding(fout(e));
+    }
+  }
+  const themaFout = (e: unknown) =>
+    t(
+      `design.errors.${e instanceof ThemaBestandFout && e.code === "tooLarge" ? "themeTooLarge" : "themeFile"}`,
+    );
+  async function importeerThema(file: File) {
+    setBezig(true);
+    setMelding("");
+    try {
+      if (file.size > THEMA_BESTAND_MAX) throw new ThemaBestandFout("tooLarge");
+      const nieuw = leesThemaBestand(new Uint8Array(await file.arrayBuffer()));
+      setThema(nieuw);
+      setMelding(t("design.importedTheme"));
+    } catch (e) {
+      setMelding(themaFout(e));
+    } finally {
+      setBezig(false);
+    }
+  }
+  async function exporteerThema() {
+    setBezig(true);
+    setMelding("");
+    try {
+      const pad = await bewaarBytes(
+        schrijfThemaBestand(thema),
+        themaBestandsnaam(thema.naam),
+        "application/json",
+      );
+      if (pad !== null) setMelding(t("design.exportedTheme"));
+    } catch (e) {
+      setMelding(
+        e instanceof ThemaBestandFout
+          ? themaFout(e)
+          : t("design.errors.themeSave"),
+      );
+    } finally {
+      setBezig(false);
     }
   }
   const veld = (
@@ -433,6 +480,30 @@ function OntwerpVenster({
             <button className="werkruimte-knop" onClick={bewaarThema}>
               {t("design.saveTheme")}
             </button>
+            <button
+              className="werkruimte-knop"
+              onClick={() => void exporteerThema()}
+            >
+              {t("design.exportTheme")}
+            </button>
+            <button
+              className="werkruimte-knop"
+              onClick={() => themaInvoer.current?.click()}
+            >
+              {t("design.importTheme")}
+            </button>
+            <input
+              ref={themaInvoer}
+              type="file"
+              accept=".oos-theme,application/json"
+              hidden
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                e.target.value = "";
+                if (f) void importeerThema(f);
+              }}
+            />
+            <p>{t("design.themeFileHelp")}</p>
           </>
         )}
         {modus === "background" && (
