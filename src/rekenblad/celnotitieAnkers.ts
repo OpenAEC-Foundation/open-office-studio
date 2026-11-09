@@ -20,6 +20,30 @@ import {
   type Celnotitie,
 } from "./celnotities";
 import { isNotitieAnker, NOTITIEANKER } from "./notitieAnkerNaam";
+import {
+  leesDiscussies,
+  verplaatsDiscussies,
+  type Discussie,
+} from "./discussies";
+
+function alleAnnotaties(p: Pakket) {
+  const discussies = leesDiscussies(p);
+  return leesCelnotities(p).map((notities, i) => [
+    ...notities.map((notitie) => ({
+      notitie,
+      discussie: undefined as Discussie | undefined,
+    })),
+    ...(discussies[i] ?? []).map((discussie) => ({
+      discussie,
+      notitie: {
+        cel: discussie.cel,
+        tekst: discussie.berichten[0]?.tekst ?? "",
+        auteur: discussie.berichten[0]?.auteur ?? "",
+        zichtbaar: false,
+      },
+    })),
+  ]);
+}
 
 function werkboek(p: Pakket) {
   const hoofd = p
@@ -55,7 +79,7 @@ function doel(formule: string) {
  * inclusief Undo/Redo. Bestaande namen buiten de gereserveerde reeks blijven staan. */
 export function metCelnotitieAnkers(bytes: Uint8Array) {
   const p = new Pakket(bytes),
-    notities = leesCelnotities(p),
+    notities = alleAnnotaties(p),
     wb = werkboek(p);
   const dn = kind(wb.root, "definedNames");
   const namen = kinderen(dn, "definedName");
@@ -76,7 +100,7 @@ export function metCelnotitieAnkers(bytes: Uint8Array) {
   const q = (naam: string) =>
     (wb.root.voorvoegsel ? wb.root.voorvoegsel + ":" : "") + naam;
   const nieuw = notities.flatMap((lijst, blad) =>
-    lijst.map((n) => {
+    lijst.map(({ notitie: n }) => {
       const a = /^([A-Z]+)(\d+)$/.exec(n.cel)!;
       return `<${q("definedName")} name="${ankerNaam(blad, n.cel)}" hidden="1">${ontsnap(`${bladRef(wb.bladen[blad].naam)}!$${a[1]}$${a[2]}`)}</${q("definedName")}>`;
     }),
@@ -118,11 +142,12 @@ interface Anker {
   naam: string | null;
   notitie: Celnotitie;
   deel: string | null;
+  discussie?: Discussie;
 }
 const perWerkboek = new WeakMap<object, Map<string, Anker[]>>();
 export function laadCelnotities(handle: NotitieHandle, bytes: Uint8Array) {
   const p = new Pakket(bytes),
-    lijst = leesCelnotities(p),
+    lijst = alleAnnotaties(p),
     wb = werkboek(p);
   const namen = new Set(
     kinderen(kind(wb.root, "definedNames"), "definedName")
@@ -134,12 +159,19 @@ export function laadCelnotities(handle: NotitieHandle, bytes: Uint8Array) {
     new Map(
       handle.sheetInfo().sheetIds.map((id, i) => [
         id,
-        (lijst[i] ?? []).map((notitie) => ({
+        (lijst[i] ?? []).map(({ notitie, discussie }) => ({
           notitie,
+          discussie,
           deel: wb.bladen[i]?.pad
             ? (p
                 .relaties(wb.bladen[i].pad!)
-                .filter((r) => !r.extern && r.type.endsWith("/comments"))
+                .filter(
+                  (r) =>
+                    !r.extern &&
+                    r.type.endsWith(
+                      discussie ? "/threadedComment" : "/comments",
+                    ),
+                )
                 .map((r) => Pakket.doelPad(wb.bladen[i].pad!, r.target))[0] ??
               null)
             : null,
@@ -153,12 +185,24 @@ export function laadCelnotities(handle: NotitieHandle, bytes: Uint8Array) {
 }
 /** Alleen de posities lezen; notitietekst blijft eenmalig per document gecachet. */
 export function celnotities(handle: NotitieHandle, blad: number): Celnotitie[] {
+  return annotaties(handle, blad)
+    .filter((a) => !a.discussie)
+    .map((a) => a.notitie);
+}
+export function celDiscussies(
+  handle: NotitieHandle,
+  blad: number,
+): Discussie[] {
+  return annotaties(handle, blad).flatMap((a) =>
+    a.discussie ? [{ ...a.discussie, cel: a.notitie.cel }] : [],
+  );
+}
+function annotaties(handle: NotitieHandle, blad: number): Anker[] {
   const info = handle.sheetInfo(),
     cache = perWerkboek.get(handle);
   const lokaal = cache?.get(info.sheetIds[blad]) ?? [];
   const ankers = [...(cache?.values() ?? [])].flat();
-  if (!ankers.some((a) => a.naam) || !handle.exportStructured)
-    return lokaal.map((a) => a.notitie);
+  if (!ankers.some((a) => a.naam) || !handle.exportStructured) return lokaal;
   const r = handle.exportStructured({
     scope: [{ sheet: blad, range: "A1" }],
     maxCells: 1,
@@ -172,12 +216,12 @@ export function celnotities(handle: NotitieHandle, blad: number): Celnotitie[] {
       .map((n) => [n.name, n.formula]),
   );
   return ankers.flatMap((a) => {
-    if (!a.naam) return lokaal.includes(a) ? [a.notitie] : [];
+    if (!a.naam) return lokaal.includes(a) ? [a] : [];
     const formule = namen.get(a.naam);
     if (!formule) return [];
     const d = doel(formule);
     return d && d.blad === info.sheetNames[blad]
-      ? [{ ...a.notitie, cel: d.cel }]
+      ? [{ ...a, notitie: { ...a.notitie, cel: d.cel } }]
       : [];
   });
 }
@@ -208,7 +252,7 @@ export function bewaarCelnotitieAnkers(
           .some(
             (r) =>
               !r.extern &&
-              r.type.endsWith("/comments") &&
+              r.type.endsWith(a.discussie ? "/threadedComment" : "/comments") &&
               Pakket.doelPad(b.pad!, r.target) === a.deel,
           ),
     );
@@ -224,5 +268,8 @@ export function bewaarCelnotitieAnkers(
       wijzigingen.get(i)!.set(a.notitie.cel, cel);
     }
   }
-  return verplaatsCelnotities(bytes, wijzigingen);
+  return verplaatsCelnotities(
+    verplaatsDiscussies(bytes, wijzigingen),
+    wijzigingen,
+  );
 }

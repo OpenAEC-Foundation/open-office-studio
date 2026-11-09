@@ -58,6 +58,7 @@ export interface BladAfdrukInstellingen {
   verticaalCentreren: boolean;
   /** Eerst omlaag en dan over (standaard), of eerst over en dan omlaag. */
   volgorde: "omlaag" | "over";
+  opmerkingen: "none" | "atEnd" | "asDisplayed";
   /** Afdrukbereik als A1-bereik, bijvoorbeeld "A1:H40"; null = gebruikt bereik. */
   afdrukbereik: string | null;
   /** Herhaalrijen als "1:2" en herhaalkolommen als "A:B". */
@@ -93,6 +94,7 @@ export const standaardBladInstellingen = (): BladAfdrukInstellingen => ({
   horizontaalCentreren: false,
   verticaalCentreren: false,
   volgorde: "omlaag",
+  opmerkingen: "none",
   afdrukbereik: null,
   herhaalRijen: null,
   herhaalKolommen: null,
@@ -356,6 +358,8 @@ export function leesAfdrukInstellingen(bytes: Uint8Array): BladAfdrukInstellinge
         inst.passendBreed = getal(attr(ps, "fitToWidth"), 1);
         inst.passendHoog = getal(attr(ps, "fitToHeight"), 1);
         inst.volgorde = attr(ps, "pageOrder") === "overThenDown" ? "over" : "omlaag";
+        const opmerkingen = attr(ps,"cellComments");
+        inst.opmerkingen = opmerkingen === "atEnd" || opmerkingen === "asDisplayed" ? opmerkingen : "none";
       }
       const pr = kind(kind(ws, "sheetPr"), "pageSetUpPr");
       inst.passend = waar(attr(pr, "fitToPage"));
@@ -509,7 +513,7 @@ function schrijfBlad(
   const m = inst.marges;
   blok += `<pageMargins${attrTekst({ left: m.links, right: m.rechts, top: m.boven, bottom: m.onder, header: m.kop, footer: m.voet })}/>`;
   const psAttrs: Record<string, string | number | undefined> = {
-    ...attrsVan(ps, ["paperSize", "scale", "fitToWidth", "fitToHeight", "orientation", "pageOrder"]),
+    ...attrsVan(ps, ["paperSize", "scale", "fitToWidth", "fitToHeight", "orientation", "pageOrder", "cellComments"]),
   };
   const eigen = {
     paperSize: PAPIER[inst.papier].xlsx,
@@ -518,6 +522,7 @@ function schrijfBlad(
     fitToHeight: inst.passend ? inst.passendHoog : undefined,
     pageOrder: inst.volgorde === "over" ? "overThenDown" : undefined,
     orientation: inst.stand === "liggend" ? "landscape" : "portrait",
+    cellComments: inst.opmerkingen ?? "none",
   };
   // Vaste volgorde zoals Office: bekende attributen eerst, daarna de rest (zoals r:id).
   blok += `<pageSetup${attrTekst({ ...eigen, ...psAttrs })}/>`;
