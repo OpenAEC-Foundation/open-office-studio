@@ -97,7 +97,7 @@ export const GEEN_OVERGANG: Overgang = {
 };
 export class OvergangFout extends Error {}
 
-function diaPaden(pakket: Pakket) {
+export function diaPaden(pakket: Pakket) {
   const rel = pakket
     .relaties("")
     .find((r) => r.type === REL.officeDocument && !r.extern);

@@ -88,6 +88,7 @@ import { DiaAfbeeldingen } from "../presentatie/DiaAfbeeldingen";
 import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import { DiaOvergangen } from "../presentatie/DiaOvergangen";
+import { DiaAnimaties } from "../presentatie/DiaAnimaties";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
@@ -829,6 +830,9 @@ export function PresentatieRibbon({
               <Voorstelling acties={acties} />
               <Groep naam={tp("transitions.title")}>
                 <DiaOvergangen />
+              </Groep>
+              <Groep naam={tp("animations.title")}>
+                <DiaAnimaties />
               </Groep>
               <Groep naam={t("presentation.groups.prepare")}>
                 <P

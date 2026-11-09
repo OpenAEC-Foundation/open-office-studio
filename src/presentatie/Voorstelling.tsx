@@ -41,7 +41,8 @@ import { useOpmaak } from "../i18n/opmaak";
 import { tekenDia, verborgenDias } from "./diabeeld";
 import { DiaVlak, pasIn } from "./DiaVlak";
 import { GEEN_OVERGANG, leesOvergangGegevens } from "./overgangen";
-import { useOvergangTeken } from "./useOvergangTeken";
+import { leesAlleAnimaties, type Animatie } from "./animaties";
+import { useAnimatieVoorstelling } from "./useAnimatieVoorstelling";
 import { useOvergangGeluid } from "./useOvergangGeluid";
 import {
   beginStaat,
@@ -62,6 +63,7 @@ import {
 } from "./voorstelling-logica";
 import { openTauriToeschouwer, type TauriToeschouwer } from "./toeschouwerKanaal";
 import "./voorstelling.css";
+import "./animaties.css";
 
 export interface VoorstellingVerzoek {
   vanafBegin: boolean;
@@ -76,6 +78,7 @@ type Opstelling =
   | { soort: "tauri"; venster: TauriToeschouwer };
 
 const GEEN: Streep[] = [];
+const GEEN_ANIMATIES: Animatie[] = [];
 const NOTITIESLEUTEL = "oos.presentator.notitiegrootte";
 function leesNotitiegrootte() {
   try {
@@ -165,9 +168,9 @@ export function Voorstelling({
   const aantal = deck.slides.length;
   const verhouding = deck.widthEmu / Math.max(1, deck.heightEmu);
   const verborgen = useMemo(() => verborgenDias(api), [api]);
-  const { overgangen, geluiden } = useMemo(() => {
-    try { return leesOvergangGegevens(api.handle.save()); }
-    catch { return { overgangen: [], geluiden: [] }; }
+  const { overgangen, geluiden, animaties } = useMemo(() => {
+    try { const bytes = api.handle.save(); return { ...leesOvergangGegevens(bytes), animaties: leesAlleAnimaties(bytes) }; }
+    catch { return { overgangen: [], geluiden: [], animaties: [] }; }
   }, [api]);
   const [staat, setStaat] = useState<VoorstellingStaat>(() =>
     beginStaat(startDia(verzoek.vanafBegin, huidig, aantal, verborgen), aantal),
@@ -189,6 +192,12 @@ export function Voorstelling({
     return el;
   }, []);
   const bron = useDiaBron(api);
+  const overgang = overgangen[staat.index] ?? GEEN_OVERGANG;
+  const animatiemodel = animaties[staat.index];
+  const lijst = animatiemodel && !animatiemodel.alleenLezen ? animatiemodel.lijst : GEEN_ANIMATIES;
+  const animatiespeler = useAnimatieVoorstelling(api,staat.index,lijst,overgang,bron,staat.scherm !== "normaal" || staat.einde,opstelling.soort !== "tauri");
+  const animatiestap = useRef<{ vooruit: () => boolean; terug: () => boolean }>({ vooruit: () => false, terug: () => false });
+  animatiestap.current = { vooruit: animatiespeler.stap, terug: animatiespeler.terug };
   const recent = useRef({ staat, opstelling });
   recent.current = { staat, opstelling };
   const schermvullend = useRef(false);
@@ -224,6 +233,11 @@ export function Voorstelling({
 
   const toets = useCallback(
     (t: Toets) => {
+      const huidig = recent.current.staat;
+      if (!t.ctrl && !t.alt && !huidig.einde && huidig.scherm === "normaal" && !huidig.invoer) {
+        if (["Enter", " ", "ArrowRight", "ArrowDown", "PageDown", "n", "N"].includes(t.key) && animatiestap.current.vooruit()) return true;
+        if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(t.key) && animatiestap.current.terug()) return true;
+      }
       const r = verwerkToets(recent.current.staat, t, verborgen);
       if (!r.gebruikt) return false;
       setStaat(r.staat);
@@ -403,8 +417,7 @@ export function Voorstelling({
           },
     [bron, aantal, verborgen],
   );
-  const overgang = overgangen[staat.index] ?? GEEN_OVERGANG;
-  const tekenHuidig = useOvergangTeken(staat.index, bron, overgang);
+  const tekenHuidig = animatiespeler.teken;
   const volgendeIndex = staat.einde ? null : zichtbareDia(staat.index + 1, 1, aantal, verborgen);
   const tekenVolgende = useMemo(() => tekenVan(volgendeIndex), [tekenVan, volgendeIndex]);
 
@@ -413,11 +426,11 @@ export function Voorstelling({
   const volgendeStap = () => toets({ key: "ArrowRight" });
 
   useEffect(() => {
-    if (opstelling.soort === "start" || overgang.na === null || staat.einde || staat.scherm !== "normaal") return;
-    const duur = overgang.effect === "none" || overgang.effect === "unknown" ? 0 : overgang.duur;
+    if (opstelling.soort === "start" || overgang.na === null || staat.einde || staat.scherm !== "normaal" || !animatiespeler.voltooid) return;
+    const duur = opstelling.soort !== "tauri" && lijst.length && !animatiespeler.fout || overgang.effect === "none" || overgang.effect === "unknown" ? 0 : overgang.duur;
     const id = window.setTimeout(() => toets({ key: "ArrowRight" }), overgang.na + duur);
     return () => window.clearTimeout(id);
-  }, [opstelling.soort, staat.index, staat.einde, staat.scherm, overgang, toets]);
+  }, [opstelling.soort, staat.index, staat.einde, staat.scherm, overgang, toets, animatiespeler.voltooid, animatiespeler.fout, lijst.length]);
 
   const toeschouwer = (
     <div className="voorstelling-toeschouwer">
@@ -432,7 +445,10 @@ export function Voorstelling({
         gereedschap={staat.gereedschap}
         onStrepen={zetStrepen}
         onLaser={setLaser}
-        onKlik={overgang.klik || staat.einde || staat.scherm !== "normaal" ? volgendeStap : undefined}
+        onKlik={() => {
+          if (overgang.klik || staat.einde || staat.scherm !== "normaal") volgendeStap();
+          else animatiespeler.stap();
+        }}
         label={t("show.slideOf", { slide: staat.index + 1, slides: aantal })}
       />
       {opstelling.soort === "enkel" && (
@@ -659,7 +675,7 @@ export function Voorstelling({
 
   return (
     <>
-      {createPortal(<>{hier}{geluid.fout && <div className="voorstelling-geluidmelding" role="status"><span>{t("transitions.soundFailed")}</span><button type="button" onClick={geluid.probeer}>{t("transitions.soundRetry")}</button></div>}</>, laag)}
+      {createPortal(<>{hier}{geluid.fout && <div className="voorstelling-geluidmelding" role="status"><span>{t("transitions.soundFailed")}</span><button type="button" onClick={geluid.probeer}>{t("transitions.soundRetry")}</button></div>}{(animatiemodel?.alleenLezen || animatiespeler.fout || opstelling.soort === "tauri" && lijst.length > 0) && <div className="voorstelling-animatiemelding" role="status">{t(animatiemodel?.alleenLezen ? "animations.unsupported" : animatiespeler.fout ? "animations.renderFailed" : "animations.nativeHint", { count: animatiemodel?.onbekend ?? 0 })}</div>}</>, laag)}
       {opstelling.soort === "browser" && !opstelling.popup.closed && createPortal(daar, opstelling.popup.document.body)}
     </>
   );
