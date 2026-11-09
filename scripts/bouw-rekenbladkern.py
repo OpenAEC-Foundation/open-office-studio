@@ -27,6 +27,7 @@ def main():
     parser.add_argument('--wasm-bindgen', default='wasm-bindgen')
     parser.add_argument('--wasm-opt', default='wasm-opt')
     parser.add_argument('--controle', action='store_true', help='Draai ook de gerichte native kernproeven.')
+    parser.add_argument('--nieuwe-kern', action='store_true', help='Bouw een kandidaat en rapporteer de nieuwe checksum, zonder de vastgezette uitvoerchecksum te eisen. Bron, patches, tools en WASM-interface blijven gecontroleerd.')
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     metadata = json.loads((repo / 'patches/rekenbladengine-lange-ketens.json').read_text())
@@ -100,7 +101,7 @@ def main():
     tijdelijk = uitvoer / 'xlsx_wasm_bg-geoptimaliseerd.wasm'
     subprocess.run([args.wasm_opt, '-O3', str(kern), '-o', str(tijdelijk)], check=True)
     tijdelijk.replace(kern)
-    if sha256(kern) != metadata['wasmSha256']:
+    if not args.nieuwe_kern and sha256(kern) != metadata['wasmSha256']:
         raise SystemExit('De herbouwde rekenbladkern wijkt af van de vastgelegde checksum.')
     origineel = repo / 'node_modules/@betteroffice/xlsx/dist/generated/xlsx_wasm_bg.wasm'
     if sha256(origineel) != metadata['oorspronkelijkWasmSha256']:
