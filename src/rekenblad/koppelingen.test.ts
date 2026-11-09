@@ -34,6 +34,15 @@ function proef(bytes: Uint8Array = readFileSync("public/templates/nieuw.xlsx")) 
   return { h, api, doel };
 }
 describe("hyperlinks in het rekenblad (#75)", () => {
+  it("bewaart een interne verwijzing buiten de eerste cel en leest die opnieuw", async () => {
+    const { h, api, doel } = proef();
+    h.editCell(0, 0, 0, "Bestaande cel");
+    const target = { ...doel(), focus: { row: 1, col: 0 }, bereik: { top: 1, left: 0, bottom: 1, right: 0 } };
+    await bewaarKoppeling(api, target, { soort: "cel", adres: "L20", tekst: "Ga", tip: "" });
+    expect(h.cell(0, 1, 0).input).toBe("Ga");
+    expect(leesKoppeling(api, target)).toMatchObject({ location: "L20" });
+    expect(new Pakket(h.save()).lees("xl/worksheets/sheet1.xml")).toContain('location="L20"');
+  });
   it.each(["https://example.com/a?q=1&b=2", "mailto:test@example.com"])(
     "bewaart %s met tekst/opmaak in één Undo-stap",
     async (adres) => {

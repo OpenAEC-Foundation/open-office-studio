@@ -5,6 +5,7 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import type {
   XlsxEditorApi,
@@ -14,6 +15,7 @@ import { alleenLezen } from "../lint/rekenblad-opdrachten";
 import { tekenobjecten } from "./tekenAnkers";
 import type { ObjectPlek, Tekenobject } from "./tekenobjecten";
 import { openObjectVenster } from "./objectBewerking";
+import { objectGeometrie } from "./objectGeometrie";
 import "./tekenobjecten.css";
 
 /** De engine tekent grafieken; deze laag tekent de andere DrawingML-objecten. */
@@ -26,9 +28,62 @@ export function TekenobjectLaag({
   blad: number;
   geometry: XlsxPluginGeometry;
 }) {
+  const element = useRef<HTMLSpanElement>(null);
+  const objecten = tekenobjecten(api.handle, blad);
+  const aanwezig = objecten.length > 0;
+  const [scroll, zetScroll] = useState<HTMLElement | null>(null);
+  const [, verversScroll] = useState(0);
+  useEffect(() => {
+    if (!aanwezig) {
+      zetScroll(null);
+      return;
+    }
+    const scroll = element.current?.closest<HTMLElement>(
+      '[data-testid="xlsx-scroll"]',
+    );
+    zetScroll(scroll ?? null);
+    const ververs = () => verversScroll((n) => n + 1);
+    scroll?.addEventListener("scroll", ververs, { passive: true });
+    return () => scroll?.removeEventListener("scroll", ververs);
+  }, [aanwezig, api.handle]);
+  const omvang = useMemo(() => {
+    let rechts = 0,
+      onder = 0;
+    for (const o of objecten) {
+      const p = objectGeometrie(api.handle, o),
+        hoek = (o.rotatie * Math.PI) / 180;
+      const w =
+        Math.abs(p.breedte * Math.cos(hoek)) +
+        Math.abs(p.hoogte * Math.sin(hoek));
+      const h =
+        Math.abs(p.breedte * Math.sin(hoek)) +
+        Math.abs(p.hoogte * Math.cos(hoek));
+      rechts = Math.max(rechts, p.x + (p.breedte + w) / 2);
+      onder = Math.max(onder, p.y + (p.hoogte + h) / 2);
+    }
+    return { rechts, onder };
+  }, [api.handle, blad, geometry.layout.version]);
   return (
     <>
-      {tekenobjecten(api.handle, blad).map((o) => (
+      <span ref={element} hidden aria-hidden="true" />
+      {aanwezig &&
+        scroll &&
+        createPortal(
+          <div
+            aria-hidden="true"
+            data-testid="xlsx-object-extent"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: omvang.rechts * geometry.layout.zoom + 80,
+              height: omvang.onder * geometry.layout.zoom + 32,
+              pointerEvents: "none",
+            }}
+          />,
+          scroll,
+        )}
+      {objecten.map((o) => (
         <ObjectOpRaster
           key={`${o.tekening}:${o.id}`}
           api={api}
@@ -51,6 +106,12 @@ function ObjectOpRaster({
 }) {
   const { t } = useTranslation("spreadsheet");
   const element = useRef<HTMLDivElement>(null);
+  const oorsprong = useRef<{
+    x: number;
+    y: number;
+    zoom: number;
+    blad: number;
+  } | null>(null);
   const [preview, setPreview] = useState<{
     dx: number;
     dy: number;
@@ -81,6 +142,9 @@ function ObjectOpRaster({
     col: o.plek.col,
   });
   const volledig = h.cellRect(o.blad, o.plek.row, o.plek.col);
+  const scroll = element.current?.closest<HTMLElement>(
+    '[data-testid="xlsx-scroll"]',
+  );
   // De viewport bevat de ongeschaalde oorsprong. Het verschil met de werkelijk
   // getekende referentiecel neemt rij-/kolomkoppen en bevroren deelvensters mee.
   let basis = direct
@@ -92,16 +156,30 @@ function ObjectOpRaster({
       (direct.width < volledig.w * zoom - 0.1 ||
         direct.height < volledig.h * zoom - 0.1))
   ) {
-    const scroll = element.current?.closest<HTMLElement>(
-      '[data-testid="xlsx-scroll"]',
-    );
     const rect = scroll?.getBoundingClientRect();
+    // Een klein blad kan eindigen vóór het midden van de viewport. Probeer
+    // daarom ook de eerste zichtbare cellen naast de rij-/kolomkoppen.
+    const punten = rect
+      ? [
+          [rect.width / 2, rect.height / 2],
+          [70, 45],
+          [70, rect.height / 2],
+          [rect.width / 2, 45],
+        ]
+      : [];
     const ref =
       rect &&
-      g.getPositionAtPoint?.(
-        rect.left + rect.width / 2,
-        rect.top + rect.height / 2,
-      );
+      punten
+        .map(([x, y]) => {
+          const p = api.getPositionAtPoint(rect.left + x, rect.top + y);
+          return (
+            g.getPositionAtPoint?.(rect.left + x, rect.top + y) ??
+            (p?.sheet === o.blad
+              ? { sheetId: g.layout.sheetId, row: p.row, col: p.col }
+              : null)
+          );
+        })
+        .find((p) => p && g.getCellRect(p));
     const r = ref && g.getCellRect(ref);
     if (ref && r) {
       const p = h.cellPosition(o.blad, ref.row, ref.col),
@@ -111,6 +189,36 @@ function ObjectOpRaster({
         y: o.plek.row < info.frozenRows && basis ? basis.y : r.y - p.y * zoom,
       };
     }
+  }
+  // De legacy-host geeft niet op ieder scrollframe een nieuwe plugin-geometrie.
+  // Bewaar daarom de gemeten rasteroorsprong en volg de echte scrollcontainer.
+  // Dit houdt ook een deels zichtbaar object vast als zijn ankercel al uit beeld is.
+  const info = h.sheetInfo();
+  if (basis) {
+    oorsprong.current = {
+      x:
+        basis.x +
+        (o.plek.col < info.frozenCols ? 0 : g.layout.viewport.x * zoom),
+      y:
+        basis.y +
+        (o.plek.row < info.frozenRows ? 0 : g.layout.viewport.y * zoom),
+      zoom,
+      blad: o.blad,
+    };
+  }
+  if (
+    oorsprong.current?.zoom === zoom &&
+    oorsprong.current.blad === o.blad &&
+    scroll
+  ) {
+    basis = {
+      x:
+        oorsprong.current.x -
+        (o.plek.col < info.frozenCols ? 0 : scroll.scrollLeft),
+      y:
+        oorsprong.current.y -
+        (o.plek.row < info.frozenRows ? 0 : scroll.scrollTop),
+    };
   }
   // Een onzichtbaar anker krijgt toch een DOM-knoop om na scrollen te kunnen meten.
   const x = (basis?.x ?? 0) + (start.x + o.plek.x) * zoom,
@@ -327,6 +435,8 @@ function Afbeelding({ object: o, url }: { object: Tekenobject; url: string }) {
         alt={o.naam}
         src={url}
         draggable={false}
+        loading="lazy"
+        decoding="async"
         style={{
           width: `${100 / w}%`,
           height: `${100 / h}%`,

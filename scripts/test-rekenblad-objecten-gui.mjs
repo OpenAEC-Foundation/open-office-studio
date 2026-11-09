@@ -39,6 +39,18 @@ bron = voegTekenobjectToe(bron, 0, {
 });
 const pakket = new Pakket(bron);
 pakket.schrijf("custom/object-probe.bin", new Uint8Array([7, 8, 9]));
+// A real distant cell makes the native grid scrollable; drawings alone do not
+// currently expand the engine's scroll extent.
+pakket.schrijf(
+  "xl/worksheets/sheet1.xml",
+  pakket
+    .lees("xl/worksheets/sheet1.xml")
+    .replace(/<dimension\b[^>]*\/>/, '<dimension ref="A1:A201"/>')
+    .replace(
+      "</sheetData>",
+      '<row r="201"><c r="A201"><v>1</v></c></row></sheetData>',
+    ),
+);
 bron = pakket.inpakken();
 const server = await preview({
   configFile: false,
@@ -126,6 +138,23 @@ try {
       },
       { row, col },
     );
+    await page.waitForFunction(
+      ({ row, col }) => {
+        let letters = "",
+          n = col + 1;
+        while (n) {
+          n--;
+          letters = String.fromCharCode(65 + (n % 26)) + letters;
+          n = Math.floor(n / 26);
+        }
+        return (
+          document.querySelector(
+            '.office-tabpaneel:not([hidden]) [data-testid="xlsx-name-box"]',
+          )?.value === `${letters}${row + 1}`
+        );
+      },
+      { row, col },
+    );
   }
   async function bytes() {
     return new Uint8Array(
@@ -162,6 +191,47 @@ try {
   stap(
     "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
   );
+  await kies(1, 0);
+  await page.keyboard.press("Control+k");
+  await link.getByLabel("Link to", { exact: true }).selectOption("cel");
+  await link.getByLabel("Address", { exact: true }).fill("L20");
+  await link.getByRole("button", { name: "Apply", exact: true }).click();
+  await link.waitFor({ state: "hidden" });
+  await writeFile(`${uit}/internal-link.xlsx`, await bytes());
+  await page.keyboard.press("Control+k");
+  assert.equal(
+    await link.getByLabel("Address", { exact: true }).inputValue(),
+    "L20",
+  );
+  await link.getByRole("button", { name: "Open link", exact: true }).click();
+  await link.waitFor({ state: "hidden" });
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-testid="xlsx-name-box"]')?.value === "L20",
+  );
+  stap("Saved internal hyperlink reopens and navigates to its target cell");
+  await kies(1, 0);
+  await page.keyboard.press("Control+k");
+  await link.getByLabel("Link to", { exact: true }).selectOption("bestand");
+  await link
+    .getByLabel("Address", { exact: true })
+    .fill("../Linked report.xlsx");
+  await link.getByRole("button", { name: "Open link", exact: true }).click();
+  await link
+    .getByRole("alert")
+    .filter({ hasText: "Local file links open in the desktop app" })
+    .waitFor();
+  await link.getByRole("button", { name: "Apply", exact: true }).click();
+  await link.waitFor({ state: "hidden" });
+  assert(
+    new Pakket(await bytes())
+      .lees("xl/worksheets/_rels/sheet1.xml.rels")
+      .includes("../Linked%20report.xlsx"),
+  );
+  stap(
+    "File links retain encoded relative paths and show a clear browser-only open message",
+  );
+  await kies(0, 0);
   const image = page.getByRole("button", {
     name: "Image: Imported logo",
     exact: true,
@@ -205,13 +275,11 @@ try {
   );
   await page.getByRole("tab", { name: "Insert", exact: true }).click();
   await page.getByRole("button", { name: "Image", exact: true }).click();
-  await page
-    .getByLabel("Choose image", { exact: true })
-    .setInputFiles({
-      name: "Inserted.png",
-      mimeType: "image/png",
-      buffer: png,
-    });
+  await page.getByLabel("Choose image", { exact: true }).setInputFiles({
+    name: "Inserted.png",
+    mimeType: "image/png",
+    buffer: png,
+  });
   dialog = page.getByRole("dialog", { name: "Image", exact: true });
   await dialog.getByRole("button", { name: "Apply", exact: true }).click();
   await dialog.waitFor({ state: "hidden" });
@@ -223,6 +291,7 @@ try {
   stap(
     "Image insertion uses real file input and persists its native drawing relationship",
   );
+  await kies(0, 0);
   // Werkelijke wijzergebaren stellen een nieuwe celpositie/afmeting voor.
   const old = await image.boundingBox();
   assert(old);
@@ -281,6 +350,44 @@ try {
   stap(
     "Text box insertion and keyboard removal preserve the other three drawing objects",
   );
+  await kies(0, 0);
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-testid="xlsx-scroll"]')?.scrollTop === 0,
+  );
+  const beforeScroll = await image.boundingBox();
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 40;
+  });
+  await page.waitForFunction((before) => {
+    const el = document.querySelector('[aria-label="Image: Imported logo"]');
+    return el && Math.abs(el.getBoundingClientRect().top - (before - 40)) < 2;
+  }, beforeScroll.y);
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 157;
+  });
+  await page.waitForFunction((before) => {
+    const el = document.querySelector('[aria-label="Image: Imported logo"]');
+    return (
+      el &&
+      getComputedStyle(el).visibility === "visible" &&
+      Math.abs(el.getBoundingClientRect().top - (before - 157)) < 2
+    );
+  }, beforeScroll.y);
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 900;
+  });
+  await page.screenshot({ path: `${uit}/03-scrolled.png` });
+  await page.locator('[data-testid="xlsx-scroll"]').evaluate((el) => {
+    el.scrollTop = 0;
+  });
+  await page.waitForFunction((before) => {
+    const el = document.querySelector('[aria-label="Image: Imported logo"]');
+    return el && Math.abs(el.getBoundingClientRect().top - before) < 2;
+  }, beforeScroll.y);
+  stap(
+    "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+  );
   const final = await bytes();
   await writeFile(`${uit}/objects-saved.xlsx`, final);
   assert.deepEqual(
@@ -288,8 +395,217 @@ try {
     new Uint8Array([7, 8, 9]),
   );
   await page.screenshot({ path: `${uit}/02-edited.png` });
+  const far = voegTekenobjectToe(basis, 0, {
+    naam: "Far logo",
+    afbeelding: png,
+    plek: { row: 250, col: 32, x: 5, y: 3, breedte: 100, hoogte: 60 },
+  });
+  await page
+    .locator(".office input[type=file]")
+    .first()
+    .setInputFiles({
+      name: "FarObjects.xlsx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer: Buffer.from(far),
+    });
+  await page
+    .locator('.office-tabpaneel:not([hidden]) [aria-label="Image: Far logo"]')
+    .waitFor({ state: "attached" });
+  await page
+    .locator(
+      '.office-tabpaneel:not([hidden]) [data-testid="xlsx-object-extent"]',
+    )
+    .waitFor({ state: "attached" });
+  await kies(250, 32);
+  const farImage = page.getByRole("button", {
+    name: "Image: Far logo",
+    exact: true,
+  });
+  await farImage.waitFor({ state: "visible" });
+  const farBox = await farImage.boundingBox(),
+    gridBox = await page
+      .locator('.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]')
+      .boundingBox();
+  assert(farBox.x >= gridBox.x && farBox.x < gridBox.x + gridBox.width);
+  assert(farBox.y >= gridBox.y && farBox.y < gridBox.y + gridBox.height);
+  assert.equal(
+    await page.evaluate(
+      () => proefApis().rekenblad.handle.cell(0, 250, 32).input,
+    ),
+    "",
+  );
+  await page.screenshot({ path: `${uit}/04-drawing-only-far.png` });
+  stap(
+    "A drawing-only worksheet scrolls to a distant image without adding cells",
+  );
+  for (const scale of [0.5, 2, 1]) {
+    await page.evaluate(async (scale) => {
+      const r = await proefApis().rekenblad.commands.execute("zoom", { scale });
+      if (!r.ok) throw new Error("Zoom command refused");
+    }, scale);
+    await kies(250, 32);
+    await page.waitForFunction((scale) => {
+      const el = document.querySelector(
+        '.office-tabpaneel:not([hidden]) [aria-label="Image: Far logo"]',
+      );
+      return (
+        el &&
+        getComputedStyle(el).visibility === "visible" &&
+        Math.abs(el.getBoundingClientRect().width - 100 * scale) < 1
+      );
+    }, scale);
+    const before = await farImage.boundingBox();
+    const delta = await page
+      .locator('.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]')
+      .evaluate((el) => {
+        const before = el.scrollTop;
+        el.scrollTop -= 20;
+        return el.scrollTop - before;
+      });
+    assert(delta < 0);
+    (rapport.zoom ??= []).push({ scale, before, delta });
+    await page.waitForFunction(
+      ({ before, delta }) => {
+        const el = document.querySelector(
+          '.office-tabpaneel:not([hidden]) [aria-label="Image: Far logo"]',
+        );
+        return (
+          el && Math.abs(el.getBoundingClientRect().top - (before - delta)) < 2
+        );
+      },
+      { before: before.y, delta },
+    );
+  }
+  stap(
+    "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+  );
+  const frozen = new Pakket(
+    voegTekenobjectToe(far, 0, {
+      naam: "Frozen logo",
+      afbeelding: png,
+      plek: { row: 0, col: 0, x: 2, y: 2, breedte: 20, hoogte: 10 },
+    }),
+  );
+  frozen.schrijf(
+    "xl/worksheets/sheet1.xml",
+    frozen
+      .lees("xl/worksheets/sheet1.xml")
+      .replace(
+        /(<sheetView\b[^>]*>)/,
+        '$1<pane xSplit="1" ySplit="1" topLeftCell="B2" state="frozen" activePane="bottomRight"/>',
+      ),
+  );
+  await page
+    .locator(".office input[type=file]")
+    .first()
+    .setInputFiles({
+      name: "FrozenFarObjects.xlsx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer: Buffer.from(frozen.inpakken()),
+    });
+  const fixedImage = page.getByRole("button", {
+    name: "Image: Frozen logo",
+    exact: true,
+  });
+  await fixedImage.waitFor();
+  await kies(250, 32);
+  await farImage.waitFor();
+  const fixedBefore = await fixedImage.boundingBox(),
+    bodyBefore = await farImage.boundingBox();
+  const scrollDelta = await page
+    .locator('.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]')
+    .evaluate((el) => {
+      const x = el.scrollLeft,
+        y = el.scrollTop;
+      el.scrollLeft -= 40;
+      el.scrollTop -= 40;
+      return { x: el.scrollLeft - x, y: el.scrollTop - y };
+    });
+  assert(scrollDelta.x < 0 && scrollDelta.y < 0);
+  await page.waitForFunction(
+    ({ fixedBefore, bodyBefore, scrollDelta }) => {
+      const root = document.querySelector(".office-tabpaneel:not([hidden])");
+      const fixed = root
+        .querySelector('[aria-label="Image: Frozen logo"]')
+        ?.getBoundingClientRect();
+      const body = root
+        .querySelector('[aria-label="Image: Far logo"]')
+        ?.getBoundingClientRect();
+      return (
+        fixed &&
+        body &&
+        Math.abs(fixed.x - fixedBefore.x) < 2 &&
+        Math.abs(fixed.y - fixedBefore.y) < 2 &&
+        Math.abs(body.x - (bodyBefore.x - scrollDelta.x)) < 2 &&
+        Math.abs(body.y - (bodyBefore.y - scrollDelta.y)) < 2
+      );
+    },
+    { fixedBefore, bodyBefore, scrollDelta },
+  );
+  stap(
+    "Frozen-cell images stay fixed while body images follow both scroll axes",
+  );
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {
+  await writeFile(
+    `${uit}/error-state.json`,
+    JSON.stringify(
+      await page.evaluate(() => {
+        const root = document.querySelector(".office-tabpaneel:not([hidden])");
+        const scroll = root?.querySelector('[data-testid="xlsx-scroll"]');
+        const image =
+          root?.querySelector('[aria-label="Image: Far logo"]') ??
+          root?.querySelector('[aria-label="Image: Imported logo"]');
+        let f =
+            image?.[
+              Object.keys(image).find((k) => k.startsWith("__reactFiber$"))
+            ],
+          g;
+        while (f) {
+          if (f.memoizedProps?.geometry) {
+            g = f.memoizedProps.geometry;
+            break;
+          }
+          f = f.return;
+        }
+        const r = scroll?.getBoundingClientRect();
+        const probes =
+          g &&
+          r &&
+          [
+            [70, 45],
+            [70, 100],
+            [300, 300],
+          ].map(([x, y]) => {
+            const p = g.getPositionAtPoint?.(r.left + x, r.top + y);
+            return { p, rect: p && g.getCellRect(p) };
+          });
+        return {
+          scrollTop: scroll?.scrollTop,
+          scrollLeft: scroll?.scrollLeft,
+          scrollHeight: scroll?.scrollHeight,
+          scrollWidth: scroll?.scrollWidth,
+          image: image?.getBoundingClientRect().toJSON(),
+          style: image?.getAttribute("style"),
+          layout: g?.layout,
+          probes,
+          ancestors: Array.from(
+            (function* () {
+              let p = image;
+              while (p) {
+                yield `${p.tagName}.${p.className}[${p.getAttribute("data-testid")}]`;
+                p = p.parentElement;
+              }
+            })(),
+          ),
+        };
+      }),
+      null,
+      2,
+    ),
+  );
   await page.screenshot({ path: `${uit}/error.png` });
   await writeFile(`${uit}/error.html`, await page.content());
   throw e;

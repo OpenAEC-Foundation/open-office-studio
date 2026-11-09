@@ -22,7 +22,8 @@ export type Risico =
   | "slicers"
   | "externe_koppelingen"
   | "gegevensverbindingen"
-  | "beveiliging";
+  | "beveiliging"
+  | "werkmapstructuur";
 
 /** Route waarlangs de app een bestand wegschrijft. */
 export type Opslagroute = "engine" | "conversie";
@@ -49,7 +50,9 @@ export const MATRIXVERLIES: Record<
     engine: [],
     conversie: ["onbekende_onderdelen", "onbekende_extensies"],
   },
-  xlsx: { engine: [], conversie: [] },
+  // Native-proef #72/#32: actieve SHA512-werkmapstructuurbeveiliging wordt
+  // door de converter niet ingelezen en verdwijnt bij opnieuw bewaren.
+  xlsx: { engine: [], conversie: ["werkmapstructuur"] },
 };
 
 const RISICONAMEN: Record<Risico, string> = {
@@ -72,6 +75,7 @@ const RISICONAMEN: Record<Risico, string> = {
   externe_koppelingen: "koppelingen naar externe werkmappen",
   gegevensverbindingen: "gegevensverbindingen of query's",
   beveiliging: "schrijf-, document- of werkmapbeveiliging",
+  werkmapstructuur: "werkmapstructuurbeveiliging",
 };
 
 /** Leesbare naam van een risico, voor rapporten. */
@@ -168,6 +172,28 @@ function risicosVan(
   )
     risicos.add("beveiliging");
   if (soort === "xlsx") {
+    const wb = tekst("xl/workbook.xml");
+    if (wb.includes("workbookProtection")) {
+      // Houd deze preflight ook rechtstreeks in Node bruikbaar: de volledige
+      // grafiek-XML-lezer trekt de browser-i18n-configuratie mee.
+      const protection = wb
+        .replace(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>/g, "")
+        .match(/<(?:\w+:)?workbookProtection\b([^>]*?)\/?\s*>/)?.[1];
+      if (protection) {
+        const attr = (naam: string) =>
+          protection.match(
+            new RegExp(`(?:^|\\s)${naam}\\s*=\\s*(["'])(.*?)\\1`),
+          )?.[2];
+        const actief = ["1", "true"].includes(
+          (attr("lockStructure") ?? "").toLowerCase(),
+        );
+        const algoritme = (attr("workbookAlgorithmName") ?? "")
+          .replace(/-/g, "")
+          .toUpperCase();
+        if (actief && algoritme === "SHA512" && attr("workbookHashValue"))
+          risicos.add("werkmapstructuur");
+      }
+    }
     if (heeft(/^xl\/(pivotTables|pivotCache)\//)) risicos.add("draaitabellen");
     if (heeft(/^xl\/(slicers|slicerCaches|timelines|timelineCaches)\//))
       risicos.add("slicers");
