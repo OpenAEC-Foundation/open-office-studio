@@ -9,6 +9,10 @@ on:
       - "vendor/rekenbladengine/**"
       - "src/rekenbladcontrole*"
       - "src/rekenblad/**"
+      - "src/grafieken/pakket*"
+      - "src/grafieken/zipdelen*"
+      - "src/grafieken/xml.ts"
+      - "src/lint/rekenblad-filter*"
       - "package.json"
       - "pnpm-lock.yaml"
   workflow_dispatch:
@@ -34,11 +38,17 @@ jobs:
         run: node scripts/test-matrix-rekenbladen.mjs
       - name: Vastgezette tweede kern met dezelfde bronbestanden vergelijken
         run: node scripts/test-rekenblad-referentie.mjs
+      - name: Vaste 100k x 30 en 50k-formulereferenties maken
+        run: python scripts/maak-rekenbladprestatie.py
+      - name: Tijd en geheugen van grote pakketmetadata begrenzen
+        run: node --expose-gc scripts/meet-rekenbladpakket.mjs
       - name: Formule-, pakket- en kenmerkrapporten bewaren
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: rekenbladmatrix
-          path: .local/matrix/rekenbladen/*.json
+          path: |
+            .local/matrix/rekenbladen/*.json
+            .local/prestatie/rekenbladen/*.json
           include-hidden-files: true
           if-no-files-found: error

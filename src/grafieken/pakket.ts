@@ -6,6 +6,7 @@ import { strFromU8, strToU8, unzipSync, zipSync, type Zippable } from "fflate";
 import i18next from "../i18n/config";
 import { GrafiekFout, LIMIETEN } from "./fouten.ts";
 import { attr, attrTekst, kinderen, leesXml, ontsnap, vervang } from "./xml.ts";
+import { zipDelen, voegZipDelenSamen } from "./zipdelen";
 
 export const REL = {
   chart: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart",
@@ -31,25 +32,36 @@ export interface Relatie {
 }
 
 export class Pakket {
-  private onderdelen: Map<string, Uint8Array>;
+  private onderdelen: Map<string, Uint8Array | undefined>;
+  private bron: Uint8Array;
   /** Volgorde van de onderdelen in het oorspronkelijke archief. */
   private volgorde: string[];
   private tekst = new Map<string, string>();
+  private gewijzigd = new Set<string>();
 
   constructor(bytes: Uint8Array) {
     if (bytes.byteLength > LIMIETEN.pakketBytes)
       throw new GrafiekFout(i18next.t("charts:errors.package.tooLarge"));
     let totaal = 0;
     let aantal = 0;
-    let bestanden: Record<string, Uint8Array>;
+    const namen: string[] = [];
+    const gezien = new Set<string>();
     try {
-      bestanden = unzipSync(bytes, {
+      unzipSync(bytes, {
         filter: (f) => {
           aantal++;
           totaal += f.originalSize;
           if (aantal > LIMIETEN.onderdelen || totaal > LIMIETEN.uitgepaktBytes)
             throw new GrafiekFout(i18next.t("charts:errors.package.tooManyParts"));
-          return true;
+          if (!f.name.endsWith("/")) {
+            if (f.name.startsWith("/") || f.name.includes("\\") || f.name.includes("\0") || f.name.split("/").includes("..") || gezien.has(f.name))
+              throw new GrafiekFout(i18next.t("charts:errors.package.invalidPartName"));
+            gezien.add(f.name);
+            namen.push(f.name);
+          }
+          // Alleen de centrale index lezen. Celgegevens en media worden pas
+          // uitgepakt wanneer een bewerking ze werkelijk nodig heeft.
+          return false;
         },
       });
     } catch (e) {
@@ -58,11 +70,9 @@ export class Pakket {
     }
     this.onderdelen = new Map();
     this.volgorde = [];
-    for (const [naam, inhoud] of Object.entries(bestanden)) {
-      if (naam.endsWith("/")) continue;
-      if (naam.includes("\\") || naam.split("/").includes(".."))
-        throw new GrafiekFout(i18next.t("charts:errors.package.invalidPartName"));
-      this.onderdelen.set(naam, inhoud);
+    this.bron = bytes.slice();
+    for (const naam of namen) {
+      this.onderdelen.set(naam, undefined);
       this.volgorde.push(naam);
     }
     if (!this.onderdelen.has("[Content_Types].xml"))
@@ -78,17 +88,32 @@ export class Pakket {
   lees(pad: string): string {
     const t = this.tekst.get(pad);
     if (t !== undefined) return t;
-    const b = this.onderdelen.get(pad);
+    const b = this.leesBytes(pad);
     if (!b) throw new GrafiekFout(i18next.t("charts:errors.package.missingPart", { part: pad }));
     let s = strFromU8(b);
     if (s.charCodeAt(0) === 0xfeff) s = s.slice(1);
     return s;
   }
   bytes(pad: string) {
+    // De bestaande API geeft een wijzigbare byte-array. Behandel uitgeleende
+    // bytes daarom als gewijzigd, ook als de aanroeper schrijf() niet gebruikt.
+    this.gewijzigd.add(pad);
+    return this.leesBytes(pad);
+  }
+  private leesBytes(pad: string) {
     if (this.tekst.has(pad)) return strToU8(this.tekst.get(pad)!);
-    return this.onderdelen.get(pad);
+    if (!this.onderdelen.has(pad)) return undefined;
+    let b = this.onderdelen.get(pad);
+    if (b === undefined) {
+      try { b = unzipSync(this.bron, { filter: (f) => f.name === pad })[pad]; }
+      catch { throw new GrafiekFout(i18next.t("charts:errors.package.notZip")); }
+      if (!b) throw new GrafiekFout(i18next.t("charts:errors.package.missingPart", { part: pad }));
+      this.onderdelen.set(pad, b);
+    }
+    return b;
   }
   schrijf(pad: string, inhoud: string | Uint8Array) {
+    this.gewijzigd.add(pad);
     if (typeof inhoud === "string") {
       this.tekst.set(pad, inhoud);
       this.onderdelen.delete(pad);
@@ -239,8 +264,16 @@ export class Pakket {
     const namen = this.namen().sort((a, b) =>
       a === "[Content_Types].xml" ? -1 : b === "[Content_Types].xml" ? 1 : 0,
     );
+    const oud = zipDelen(this.bron);
+    const origineel = oud && new Map(oud.map((d) => [d.naam, d]));
+    if (origineel) {
+      const veranderd: Zippable = {};
+      for (const naam of namen) if (this.gewijzigd.has(naam) || !origineel.has(naam)) veranderd[naam] = [this.leesBytes(naam)!, { level: /\.(png|jpe?g|gif|xlsx|docx|pptx|zip|bin)$/i.test(naam) ? 0 : 6 }];
+      const nieuw = new Map((zipDelen(zipSync(veranderd)) ?? []).map((d) => [d.naam, d]));
+      return voegZipDelenSamen(namen.map((n) => nieuw.get(n) ?? origineel.get(n)!));
+    }
     for (const naam of namen) {
-      const b = this.bytes(naam)!;
+      const b = this.leesBytes(naam)!;
       z[naam] = [b, { level: /\.(png|jpe?g|gif|xlsx|docx|pptx|zip|bin)$/i.test(naam) ? 0 : 6 }];
     }
     return zipSync(z);

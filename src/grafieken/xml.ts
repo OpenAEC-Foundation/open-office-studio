@@ -63,8 +63,8 @@ export function ontcijfer(tekst: string) {
 }
 
 /** Ontleedt een XML-document en geeft het wortelelement terug. */
-export function leesXml(bron: string): XmlElement {
-  if (bron.length > MAX_LENGTE)
+export function leesXml(bron: string, opties?: { slaInhoudOver?: readonly string[] }): XmlElement {
+  if (bron.length > (opties?.slaInhoudOver ? 400 * 1024 * 1024 : MAX_LENGTE))
     throw new GrafiekFout(i18next.t("charts:errors.xml.tooLarge"));
   let i = 0;
   let wortel: XmlElement | null = null;
@@ -170,10 +170,30 @@ export function leesXml(bron: string): XmlElement {
       if (stapel.length > MAX_DIEPTE) fout(i18next.t("charts:errors.xml.tooDeep"));
     }
     i = tagEind;
+    if (!leeg && opties?.slaInhoudOver?.includes(element.lokaal)) {
+      // Alleen expliciete metadata-lezers mogen de celboom overslaan. Behoud
+      // bronposities voor verliesvrije wijzigingen vóór en ná sheetData.
+      let n = i;
+      for (;;) {
+        n = bron.indexOf("<", n); if (n < 0) fout();
+        if (bron.startsWith("<!--", n) || bron.startsWith("<![CDATA[", n) || bron.startsWith("<?", n)) {
+          const eind = bron.startsWith("<!--", n) ? "-->" : bron.startsWith("<?", n) ? "?>" : "]]>";
+          const e = bron.indexOf(eind, n); if (e < 0) fout(); n = e + eind.length; continue;
+        }
+        if (bron.startsWith(`</${element.naam}`, n) && /[\s>]/.test(bron[n + element.naam.length + 2])) {
+          const e = bron.indexOf(">", n); if (e < 0) fout();
+          element.inhoudEind = n; element.eind = e + 1; stapel.pop(); i = e + 1; break;
+        }
+        n++;
+      }
+    }
   }
   if (stapel.length || !wortel) fout();
   return wortel!;
 }
+
+/** Werkbladmetadata zonder miljoenen tijdelijke cel- en tekstknopen. */
+export const leesWerkbladXml = (bron: string) => leesXml(bron, { slaInhoudOver: ["sheetData"] });
 
 export const elementen = (el: XmlElement) =>
   el.kinderen.filter((k): k is XmlElement => k.soort === "element");
