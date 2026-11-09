@@ -25,6 +25,7 @@ import { doelBereik, vul, vulTotEinde, type VulKeuze, type VulRichting } from ".
 import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-opdrachten";
 import { kolomLetters, type Bereik } from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
+import { CelnotitieLaag } from "../rekenblad/CelnotitieUi";
 import "./rekenblad-gereedschap.css";
 
 /** Een verwijzing om in het raster te kleuren. */
@@ -88,6 +89,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
     const sel = selectie?.sheetId === sheetId ? selectie : null;
     return (
       <>
+        {blad >= 0 && <CelnotitieLaag api={api} blad={blad} geometry={geometry} />}
         {markeringen
           .filter((m) => m.blad === null || m.blad.toLowerCase() === info.sheetNames[blad]?.toLowerCase())
           .map((m, i) => {

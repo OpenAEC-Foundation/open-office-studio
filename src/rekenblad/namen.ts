@@ -1,5 +1,6 @@
 /** Naamdefinities en namen uit selectiekoppen (#70), op de bestaande XLSX-kern. */
 import { isRegioNaam } from "./regiokeuze";
+import { isNotitieAnker } from "./notitieAnkerNaam";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { XlsxDefinedNameOp } from "@betteroffice/xlsx";
 import { voerOpsUit } from "../lint/rekenblad-opdrachten";
@@ -58,7 +59,7 @@ export function namenLijst(api: XlsxEditorApi): Bereiknaam[] {
     includeHiddenSheets: true,
   });
   if (!r.ok) throw new Naamfout("readFailed");
-  return r.content.definedNames.map((n) => ({
+  return r.content.definedNames.filter(n => !(n.hidden && isNotitieAnker(n.name))).map((n) => ({
     naam: n.name,
     verwijzing: n.formula,
     blad: n.localSheet?.index ?? null,
@@ -82,7 +83,7 @@ export function zichtbareNamen(namen: Bereiknaam[], blad: number) {
 
 /** Namen zijn geen adressen, R1C1-verwijzingen of booleaanse constanten. */
 export function naamFout(naam: string): NaamfoutCode | null {
-  if (/^_xlnm\./i.test(naam) || isRegioNaam(naam)) return "reservedName";
+  if (/^_xlnm\./i.test(naam) || isRegioNaam(naam) || isNotitieAnker(naam)) return "reservedName";
   if (
     !naam ||
     naam.length > 255 ||

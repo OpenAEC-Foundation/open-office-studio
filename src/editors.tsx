@@ -26,6 +26,7 @@ import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
 import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag";
 import { werkboekBytes } from "./lint/rekenblad-filter";
+import { laadCelnotities, metCelnotitieAnkers } from "./rekenblad/celnotitieAnkers";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
 import type { Serialiseerder } from "./opslag";
 import { koppelEditor } from "./export/editorKoppeling";
@@ -156,7 +157,9 @@ export default function OfficeEditor(props: EditorProps) {
   );
   const beginRegio = useRef(intlLocale());
   const rekenbladBytes = useMemo(
-    () => props.soort === "xlsx" ? metBeginregio(herladen.bytes, beginRegio.current) : herladen.bytes,
+    () => props.soort === "xlsx"
+      ? metCelnotitieAnkers(metBeginregio(herladen.bytes, beginRegio.current))
+      : herladen.bytes,
     [herladen.bytes, props.soort],
   );
   // Spellingcontrole en autocorrectie (#21): golflijnen, menu, F7, statusbalk.
@@ -298,6 +301,11 @@ export default function OfficeEditor(props: EditorProps) {
   const gereedXlsx = useCallback(
     (api: XlsxEditorApi) => {
       bereidStructuurBeveiliging(api.handle, herladenRecent.current.bytes);
+      try {
+        laadCelnotities(api.handle, api.save());
+      } catch {
+        // Een onleesbare notitie blokkeert het raster niet.
+      }
       setRekenbladApi(api);
       const stopWijziging = registreerWijziging(api.handle, () =>
         recent.current.gewijzigd(),

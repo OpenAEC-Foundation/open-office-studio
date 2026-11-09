@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export type MenuSoort = "kolom" | "rij" | "cel" | "blad" | "lijst";
 
 export type Venster =
+  | { soort: "notitie"; cel?: string; blad?: number }
   | { soort: "breedte" }
   | { soort: "hoogte" }
   | { soort: "getal" }
