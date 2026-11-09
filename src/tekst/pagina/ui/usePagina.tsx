@@ -15,13 +15,11 @@ import { engineVertalingDirect } from "../../../i18n/engine";
 import { meldWijziging, useEditorApi, useEditorZichtbaar, zichtbaarElement } from "../../../lint/editorApi";
 import { meldOpdrachtAan } from "../../menu/opdrachten";
 import { useSneltoetsen } from "../../../lint/sneltoetsen";
-import { metPakket, verwijderMarkering } from "../ooxml.ts";
 import { actieveSectie } from "../actieveSectie";
 import {
   FORMATEN,
   MARGES,
   leesSecties,
-  sectieVanMarkering,
   tekstbreedteVan,
   voegKolomeindeIn,
   voegSectieEindeIn,
@@ -70,7 +68,7 @@ const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 interface Pakketopdracht {
   /** Voor meldingen, bijvoorbeeld "Paginanummers ingevoegd" (al vertaald). */
   klaar: string;
-  /** Een markering op de cursor: nodig, of alleen om de huidige sectie te kennen. */
+  /** Insert at the cursor, or use the section pinned before confirmation. */
   cursor?: "nodig" | "sectie";
   werk: (bytes: Uint8Array, plek: { markering: string | null; sectie: number }) => Uint8Array | null;
   /** Na herladen en indelen (bijvoorbeeld paginanummers van de inhoudsopgave nalopen). */
@@ -82,10 +80,10 @@ interface Pakketopdracht {
 /** Het lint wordt bij herladen opnieuw gemount en springt dan naar Start; onthoud het tabblad. */
 const actiefLintTab = () =>
   // Niet via zichtbaarElement: met een open venster is het lint `inert`.
-  [...document.querySelectorAll<HTMLElement>(".office-tekst [role='tab'][aria-selected='true']")].find((t) => !t.closest("[hidden]"))?.textContent ?? null;
+  [...document.querySelectorAll<HTMLElement>(".ribbon-tabknoppen [role='tab'][aria-selected='true']")].find((t) => !t.closest("[hidden]") && t.getClientRects().length > 0)?.textContent ?? null;
 function herstelLintTab(naam: string | null) {
   if (!naam) return;
-  const tabs = [...document.querySelectorAll<HTMLElement>(".office-tekst [role='tab']")].filter((t) => !t.closest("[inert], [hidden]"));
+  const tabs = [...document.querySelectorAll<HTMLElement>(".ribbon-tabknoppen [role='tab']")].filter((t) => !t.closest("[inert], [hidden]") && t.getClientRects().length > 0);
   const tab = tabs.find((t) => t.textContent === naam);
   if (tab && tab.getAttribute("aria-selected") !== "true") tab.click();
 }
@@ -163,12 +161,18 @@ export function usePagina() {
   // Volg of de engine in de bewerkmodus voor kop/voettekst staat.
   useEffect(() => {
     const vlak = zichtbaarElement<HTMLElement>(".office-tekst") ?? document.body;
-    const kijk = () => setKopVoet(kopVoetActief());
+    let wasActief = false;
+    const kijk = () => {
+      const actief = kopVoetActief();
+      setKopVoet(actief);
+      if (actief && !wasActief) herstelLintTab(t("page.headerFooter.tab"));
+      wasActief = actief;
+    };
     kijk();
     const waarnemer = new MutationObserver(kijk);
     waarnemer.observe(vlak, { childList: true, subtree: true });
     return () => waarnemer.disconnect();
-  }, []);
+  }, [t]);
 
   const api = () => apis.tekst();
   const sluit = () => {
@@ -230,13 +234,6 @@ export function usePagina() {
       try {
         bytes = await herlaad.bytes();
         let sectie = gekozenSectie ?? -1;
-        if (markering && o.cursor === "sectie") {
-          sectie = sectieVanMarkering(bytes, markering.markering) ?? -1;
-          bytes = metPakket(bytes, (p) => {
-            verwijderMarkering(p, markering!.markering);
-            return p.inpakken();
-          });
-        }
         if (sectie < 0) sectie = Math.max(0, leesSecties(bytes).length - 1);
         uit = o.werk(bytes, { markering: o.cursor === "nodig" ? markering!.markering : null, sectie });
       } catch (e) {
@@ -321,7 +318,7 @@ export function usePagina() {
           koptekst={s.koptekst}
           voettekst={s.voettekst}
           sluit={sluit}
-          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), werk: b => zetKopVoetAfstand(b, actief.index, a) })}
+          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), werk: (b) => zetKopVoetAfstand(b, actief.index, a) })}
         />,
       );
     } catch (e) {
@@ -404,7 +401,7 @@ export function usePagina() {
           secties={sectieStand(editor).aantalSecties}
           sluit={sluit}
           bevestig={(k: Kolommen, doel) =>
-            void pakket({ klaar: t("page.done.columnsSet"), werk: b => wijzigSecties(b, doel === "alle" ? "alle" : actief.index, { kolommen: k }) })
+            void pakket({ klaar: t("page.done.columnsSet"), werk: (b) => wijzigSecties(b, doel === "alle" ? "alle" : actief.index, { kolommen: k }) })
           }
         />,
       );
@@ -626,10 +623,12 @@ export function usePagina() {
       const noten = await haalNoten(editor);
       if (!noten.length) return toonMelding(t("page.footnotes.list.none"));
       const hier = editor.getSelectionInfo()?.paraId ?? null;
-      const alineas = (await editor.readParagraphs({ view: "accepted" })) as { ok: boolean; paragraphs?: { paraId: string }[] };
+      const alineas = (await editor.readParagraphs({ view: "accepted" })) as { ok: boolean; paragraphs?: { paraId: string }[];
+      };
       const volgorde = new Map((alineas.paragraphs ?? []).map((p, i) => [p.paraId, i]));
       const positie = hier != null ? (volgorde.get(hier) ?? -1) : -1;
-      const index = (n: NootInfo) => (n.paraId != null ? (volgorde.get(n.paraId) ?? -1) : -1);
+      const index = (n: NootInfo) =>
+        n.paraId != null ? (volgorde.get(n.paraId) ?? -1) : -1;
       const doel =
         richting === 1
           ? (noten.find((n) => index(n) > positie) ?? noten[0])

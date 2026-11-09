@@ -143,7 +143,11 @@ function notendeel(pakket: Pakket, docPad: string, s: (typeof SOORT)[NootSoort])
   // Word noemt de scheidingslijnen ook in de instellingen.
   wijzigInstellingen(pakket, docPad, (x) => {
     if (kindVan(x, s.pr)) return x;
-    return zetKind(x, s.pr, `<w:${s.pr}><w:${s.element} w:id="-1"/><w:${s.element} w:id="0"/></w:${s.pr}>`, SETTINGS_VOLGORDE);
+    const notatie =
+      s.standaardNotatie === "lowerRoman"
+        ? '<w:numFmt w:val="lowerRoman"/>'
+        : "";
+    return zetKind(x, s.pr, `<w:${s.pr}>${notatie}<w:${s.element} w:id="-1"/><w:${s.element} w:id="0"/></w:${s.pr}>`, SETTINGS_VOLGORDE);
   });
   return pad;
 }
@@ -235,14 +239,46 @@ export function leesNootInstellingen(bytes: Uint8Array, soort: NootSoort, sectie
     const lijst = secties(doc);
     const uitSectie = kind(lijst[sectie ?? lijst.length - 1]?.el ?? null, s.pr);
     const uitInstellingen = kind(leesInstellingen(pakket, doc.pad), s.pr);
-    const waarde = (naam: string) => attr(kind(uitSectie, naam), "val") ?? attr(kind(uitInstellingen, naam), "val");
+    return nootInstellingenVan(uitSectie, uitInstellingen, soort);
+  });
+}
+
+function nootInstellingenVan(
+  uitSectie: XmlElement | null,
+  uitInstellingen: XmlElement | null,
+  soort: NootSoort,
+): NootInstellingen {
+  const s = SOORT[soort],
+    waarde = (naam: string) => attr(kind(uitSectie, naam), "val") ?? attr(kind(uitInstellingen, naam), "val");
     return {
-      notatie: (waarde("numFmt") as NootNotatie) ?? s.standaardNotatie,
+    // ISO 29500 defaults both note kinds to decimal. New endnotes explicitly
+    // request lowerRoman above, matching the usual word-processor convention.
+    notatie: (waarde("numFmt") as NootNotatie) ?? "decimal",
       beginBij: Number(waarde("numStart")) || 1,
       herstart: (waarde("numRestart") as NootHerstart) ?? "continuous",
       positie: (waarde("pos") as NootPositie) ?? s.standaardPositie,
     };
-  });
+  }
+
+/** Read the package once when exporting many sections. */
+export function leesAlleNootInstellingen(bron: Uint8Array | Pakket) {
+  const lees = (pakket: Pakket) => {
+    const doc = openDocument(pakket),
+      settings = leesInstellingen(pakket, doc.pad);
+    return secties(doc).map((s) => ({
+      voetnoot: nootInstellingenVan(
+        kind(s.el, "footnotePr"),
+        kind(settings, "footnotePr"),
+        "voetnoot",
+      ),
+      eindnoot: nootInstellingenVan(
+        kind(s.el, "endnotePr"),
+        kind(settings, "endnotePr"),
+        "eindnoot",
+      ),
+    }));
+  };
+  return bron instanceof Pakket ? lees(bron) : metPakket(bron, lees);
 }
 
 /** Zet notatie, beginnummer, herstart en positie in de gekozen secties. */
@@ -257,7 +293,7 @@ export function zetNootInstellingen(bytes: Uint8Array, soort: NootSoort, w: Noot
     if (!gekozen.size) return bytes;
     const namen = ["pos", "numFmt", "numStart", "numRestart"] as const;
     const instellingen = kind(leesInstellingen(pakket, doc.pad), s.pr);
-    const geerfd = Object.fromEntries(namen.map(naam => [naam, attr(kind(instellingen, naam), "val")]));
+    const geerfd = Object.fromEntries(namen.map((naam) => [naam, attr(kind(instellingen, naam), "val")]));
     const nieuw = { pos: w.positie, numFmt: w.notatie, numStart: String(Math.max(1, Math.round(w.beginBij))), numRestart: w.herstart };
     // De instellingen houden alleen de verwijzingen naar de scheidingslijnen; de
     // nummering staat per sectie (die wint in Word). Nummering in settings.xml
@@ -304,7 +340,8 @@ export function converteerNoten(bytes: Uint8Array, van: NootSoort, ids?: readonl
   const isW = (n: XmlElement) => namespaceVan(n, n.voorvoegsel) === NS_W;
   const woordnaam = (el: XmlElement, lokaal: string) => `${el.voorvoegsel ? el.voorvoegsel + ":" : ""}${lokaal}`;
   const metId = (el: XmlElement, attrs: Record<string, string>, id: number) => {
-    const sleutels = Object.keys(el.attrs).filter(a => a.includes(":") && a.split(":")[1] === "id" && namespaceVan(el, a.split(":")[0]) === NS_W);
+    const sleutels = Object.keys(el.attrs).filter(
+      (a) => a.includes(":") && a.split(":")[1] === "id" && namespaceVan(el, a.split(":")[0]) === NS_W);
     if (sleutels.length !== 1) throw ongeldig();
     return { ...attrs, [sleutels[0]]: String(id) };
   };
@@ -319,7 +356,7 @@ export function converteerNoten(bytes: Uint8Array, van: NootSoort, ids?: readonl
       if (!gekozen.has(id)) gekozen.set(id, []);
       gekozen.get(id)!.push(ref);
     }
-    if (gevraagd && [...gevraagd].some(id => !gekozen.has(id))) throw ongeldig();
+    if (gevraagd && [...gevraagd].some((id) => !gekozen.has(id))) throw ongeldig();
     if (!gekozen.size) return { bytes, aantal: 0, standaard: false };
     const bronPad = onderdeelVan(pakket, doc.pad, bron.rel);
     if (!bronPad || !pakket.heeft(bronPad)) throw ongeldig();
@@ -334,10 +371,10 @@ export function converteerNoten(bytes: Uint8Array, van: NootSoort, ids?: readonl
       if (attrNs(n, NS_W, "type") && attrNs(n, NS_W, "type") !== "normal") continue;
       noten.set(id, n);
     }
-    if ([...gekozen.keys()].some(id => !noten.has(id))) throw ongeldig();
+    if ([...gekozen.keys()].some((id) => !noten.has(id))) throw ongeldig();
     // Een bestaande nummering per sectie of in settings.xml blijft leidend.
     let standaard = !kind(leesInstellingen(pakket, doc.pad), doel.pr)
-      && !secties(doc).some(s => kind(s.el, doel.pr));
+      && !secties(doc).some((s) => kind(s.el, doel.pr));
     const doelPad = notendeel(pakket, doc.pad, doel);
     const doelXml = pakket.lees(doelPad), doelWortel = leesXml(doelXml);
     controleerW(doelWortel);
@@ -362,9 +399,11 @@ export function converteerNoten(bytes: Uint8Array, van: NootSoort, ids?: readonl
     const extraAttrs = Object.fromEntries(Object.entries(bronWortel.attrs).filter(([naam]) => {
       if (naam === "xmlns" || naam.startsWith("xmlns:")) return true;
       const ns = namespaceVan(bronWortel, naam.split(":")[0]);
-      return ns === "http://schemas.openxmlformats.org/markup-compatibility/2006" || ns === "http://www.w3.org/XML/1998/namespace";
+      return (
+          ns === "http://schemas.openxmlformats.org/markup-compatibility/2006" || ns === "http://www.w3.org/XML/1998/namespace"
+        );
     }));
-    const inhoud = [...gekozen.keys()].map(id => {
+    const inhoud = [...gekozen.keys()].map((id) => {
       const n = noten.get(id)!;
       // Alleen semantische tags en relatieverwijzingen wijzigen. Tekst, tabellen,
       // stijlen, directe opmaak en onbekende uitbreidingen blijven intact.
@@ -379,7 +418,7 @@ export function converteerNoten(bytes: Uint8Array, van: NootSoort, ids?: readonl
             attrs[a] = relatieOverdracht(waarde);
         }
         const binnen = bronXml.slice(el.inhoudStart, el.inhoudEind);
-        const veranderingen = elementen(el).map(k => ({ start: k.start - el.inhoudStart, eind: k.eind - el.inhoudStart, tekst: kopie(k) }));
+        const veranderingen = elementen(el).map((k) => ({ start: k.start - el.inhoudStart, eind: k.eind - el.inhoudStart, tekst: kopie(k) }));
         return `<${naam}${attrTekst(attrs)}${el.leeg ? "/>" : `>${vervang(binnen, veranderingen)}</${naam}>`}`;
       };
       return kopie(n, true);
@@ -387,8 +426,8 @@ export function converteerNoten(bytes: Uint8Array, van: NootSoort, ids?: readonl
     pakket.schrijf(doelPad, doelWortel.leeg
       ? `<${doelWortel.naam}${attrTekst(doelWortel.attrs)}>${inhoud}</${doelWortel.naam}>`
       : vervang(doelXml, [{ start: doelWortel.inhoudEind, eind: doelWortel.inhoudEind, tekst: inhoud }]));
-    pakket.schrijf(bronPad, vervang(bronXml, [...gekozen.keys()].map(id => ({ start: noten.get(id)!.start, eind: noten.get(id)!.eind, tekst: "" }))));
-    pakket.schrijf(doc.pad, vervang(doc.xml, [...gekozen].flatMap(([id, refs]) => refs.map(ref => ({
+    pakket.schrijf(bronPad, vervang(bronXml, [...gekozen.keys()].map((id) => ({ start: noten.get(id)!.start, eind: noten.get(id)!.eind, tekst: "" }))));
+    pakket.schrijf(doc.pad, vervang(doc.xml, [...gekozen].flatMap(([id, refs]) => refs.map((ref) => ({
       start: ref.start, eind: ref.eind,
       tekst: `<${woordnaam(ref, doel.ref)}${attrTekst(metId(ref, ref.attrs, nieuweIds.get(id)!))}${ref.leeg ? "/>" : `>${doc.xml.slice(ref.inhoudStart, ref.inhoudEind)}</${woordnaam(ref, doel.ref)}>`}`,
     })))));
@@ -409,7 +448,8 @@ function maakNootRelatieOverdracht(pakket: Pakket, bron: string, doel: string, o
   const bronPad = Pakket.relsPad(bron);
   const bronXml = pakket.heeft(bronPad) ? pakket.lees(bronPad) : null;
   const wortel = bronXml === null ? null : leesXml(bronXml);
-  const relaties = kinderen(wortel, "Relationship").filter(r => namespaceVan(r, r.voorvoegsel) === nsRel);
+  const relaties = kinderen(wortel, "Relationship").filter(
+    (r) => namespaceVan(r, r.voorvoegsel) === nsRel);
   const gevonden = new Map<string, XmlElement>();
   for (const r of relaties) {
     const id = r.attrs.Id;
@@ -428,15 +468,18 @@ function maakNootRelatieOverdracht(pakket: Pakket, bron: string, doel: string, o
     if (doelPad !== null && !pakket.heeft(doelPad)) throw ongeldig();
     const doelRelPad = Pakket.relsPad(doel);
     const bestaande = pakket.heeft(doelRelPad)
-      ? kinderen(leesXml(pakket.lees(doelRelPad)), "Relationship").filter(r => namespaceVan(r, r.voorvoegsel) === nsRel)
+      ? kinderen(leesXml(pakket.lees(doelRelPad)), "Relationship").filter(
+          (r) => namespaceVan(r, r.voorvoegsel) === nsRel)
       : [];
     const ids = new Set<string>();
     for (const b of bestaande) {
       if (!b.attrs.Id || ids.has(b.attrs.Id)) throw ongeldig();
       ids.add(b.attrs.Id);
     }
-    const simpel = (attrs: Record<string, string>) => Object.keys(attrs).every(a => a === "xmlns" || a.startsWith("xmlns:") || ["Id", "Type", "Target", "TargetMode"].includes(a));
-    const gelijk = simpel(attrs) && bestaande.find(b => simpel(b.attrs)
+    const simpel = (attrs: Record<string, string>) => Object.keys(attrs).every(
+        (a) => a === "xmlns" || a.startsWith("xmlns:") || ["Id", "Type", "Target", "TargetMode"].includes(a));
+    const gelijk = simpel(attrs) && bestaande.find(
+        (b) => simpel(b.attrs)
       && b.attrs.Type === type && (b.attrs.TargetMode === "External") === extern
       && (extern ? b.attrs.Target === target : Pakket.doelPad(doel, b.attrs.Target ?? "") === doelPad));
     if (gelijk) { omzetting.set(id, gelijk.attrs.Id); return gelijk.attrs.Id; }

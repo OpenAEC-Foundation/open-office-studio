@@ -92,6 +92,14 @@ function alleen(voor, na, doel, tekst) {
 }
 try {
   let d = await open();
+  await d.page.getByRole("tab", { name: "Home", exact: true }).click();
+  const marge = await d.page.locator(".canvas-page").first().boundingBox();
+  await d.page.mouse.dblclick(marge.x + marge.width / 2, marge.y + marge.height * 828 / 16838);
+  await d.page.waitForSelector(".hf-inline-editor");
+  await d.page.waitForFunction(() => [...document.querySelectorAll('[role="tab"][aria-selected="true"]')].some(t => t.textContent === "Header & Footer"));
+  assert.equal((await stand(d.page)).selectie.head.story, story("header", "first"));
+  await sluit(d.page);
+  stap("Double-clicking the margin selects its header and automatically opens the Header & Footer ribbon");
   const voor = await stand(d.page);
   await edit(d.page, "header", 1, true);
   await d.page.keyboard.press("x");

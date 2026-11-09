@@ -33,7 +33,6 @@ import { useEditorApi, zichtbaarElement } from "../../lint/editorApi";
 import { useSneltoetsen } from "../../lint/sneltoetsen";
 import {
   directeOpmaak,
-  eigenTekenopmaak,
   gebruikteStijlen,
   runOpPositie,
   uitOpmaak,
@@ -48,7 +47,7 @@ import { pasTabelStijlToe } from "./beheer";
 import { zetMarkering } from "../pagina/ui/engine";
 import { pasAlineasToe } from "../opmaak";
 import { StijlEditor } from "./StijlEditor";
-import { metHeleAlinea } from "./toepassen";
+import { metHeleAlinea, tekenstijlDelta } from "./toepassen";
 import { Herhaalmelding } from "../bewerken/herhaalmelding";
 import { StijlenVenster } from "./StijlenVenster";
 import { StijlSets } from "./StijlSets";
@@ -86,7 +85,8 @@ export interface StijlenStaat {
   /** Stijl bijwerken zodat hij overeenkomt met de selectie. */
   werkBij: (styleId: string) => Promise<void>;
   /** Directe opmaak op de cursorpositie (model), voor ‘nieuwe stijl uit selectie’. */
-  selectieOpmaak: () => { tekst?: TextFormatting; alinea?: ParagraphFormatting; tabel?: TableFormatting };
+  selectieOpmaak: () => { tekst?: TextFormatting; alinea?: ParagraphFormatting; tabel?: TableFormatting;
+  };
   fout: (bericht: unknown) => void;
 }
 
@@ -166,17 +166,7 @@ function tekenstijl(ref: DocxEditorRef, stijlen: StyleDefinitions | undefined, s
   const tot = editor.displayPositionToYrsLoc(Math.max(bereik.from, bereik.to));
   if (!van || !tot || van.story !== tot.story)
     throw new Error(i18next.t("writer:styles.errors.cannotApplyHere"));
-  const e = eigenTekenopmaak(stijlen, styleId, thema);
-  const delta = {
-    other: { runStyle: { styleId } },
-    ...(e.vet !== undefined ? { bold: !!e.vet } : {}),
-    ...(e.cursief !== undefined ? { italic: !!e.cursief } : {}),
-    ...(e.onderstreept !== undefined ? { underline: !!e.onderstreept } : {}),
-    ...(e.doorgehaald !== undefined ? { strike: !!e.doorgehaald } : {}),
-    ...(e.kleur ? { color: { rgb: e.kleur } } : {}),
-    ...(e.grootte ? { fontSize: e.grootte } : {}),
-    ...(e.lettertype ? { fontFamily: { ascii: e.lettertype, hAnsi: e.lettertype } } : {}),
-  };
+  const delta = tekenstijlDelta(stijlen, styleId, thema);
   sessie.formatRange(
     { story: van.story, start: { paraId: van.paraId, offset: van.offset }, end: { paraId: tot.paraId, offset: tot.offset } },
     delta,
@@ -299,7 +289,7 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
         void (async () => {
           const marker = await zetMarkering(ref);
           if (!marker) throw new Error(t("styles.manage.tableCursor"));
-          try { await herlaadPakket(b => pasTabelStijlToe(b, marker.markering, styleId)); }
+          try { await herlaadPakket((b) => pasTabelStijlToe(b, marker.markering, styleId)); }
           catch (e) { marker.ongedaan(); throw e; }
         })().catch(fout);
         return;
@@ -309,8 +299,8 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
         const num = stijl.pPr?.numPr;
         if (!ed || !s || !plek || num?.numId === undefined) throw new Error(t("styles.manage.noNumbering"));
         const selectie = s.selection()!;
-        const ps = s.paragraphs(plek.story), ai = ps.findIndex(p => p.paraId === selectie.anchor.paraId), bi = ps.findIndex(p => p.paraId === plek.paraId);
-        pasAlineasToe(s, plek.story, ps.slice(Math.min(ai, bi), Math.max(ai, bi) + 1).map(p => p.paraId), { numPr: { numId: num.numId, ilvl: num.ilvl ?? 0 } });
+        const ps = s.paragraphs(plek.story), ai = ps.findIndex((p) => p.paraId === selectie.anchor.paraId), bi = ps.findIndex((p) => p.paraId === plek.paraId);
+        pasAlineasToe(s, plek.story, ps.slice(Math.min(ai, bi), Math.max(ai, bi) + 1).map((p) => p.paraId), { numPr: { numId: num.numId, ilvl: num.ilvl ?? 0 } });
         ed.syncYrsInputState(true, [plek.story]);
         return;
       }

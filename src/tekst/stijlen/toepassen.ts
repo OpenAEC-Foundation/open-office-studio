@@ -9,6 +9,59 @@
  * toepassen de hele alinea en zetten daarna de cursor terug.
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import type {
+  StyleDefinitions,
+  Theme,
+} from "@betteroffice/docx/types/document";
+import { eigenTekenopmaak } from "./model";
+import { tekenDelta, type Onderstreping } from "../opmaak";
+
+/** The native style reference plus its live display attributes. The serializer
+ * compares these with the referenced style and saves only genuine overrides. */
+export function tekenstijlDelta(
+  stijlen: StyleDefinitions | undefined,
+  styleId: string,
+  thema?: Theme,
+) {
+  const e = eigenTekenopmaak(stijlen, styleId, thema);
+  const delta = tekenDelta({
+    fontFamily: e.lettertype,
+    fontSize: e.grootte,
+    bold: e.vet,
+    italic: e.cursief,
+    color: e.kleur,
+    underline: e.onderstreping
+      ? { style: e.onderstreping as Onderstreping, color: e.onderstrepingKleur }
+      : e.onderstreept
+        ? { style: "single" }
+        : e.onderstreept === false
+          ? null
+          : undefined,
+    strike: e.dubbelDoorgehaald
+      ? "dubbel"
+      : e.doorgehaald
+        ? "enkel"
+        : e.doorgehaald === false || e.dubbelDoorgehaald === false
+          ? null
+          : undefined,
+    allCaps: e.hoofdletters,
+    smallCaps: e.kleineHoofdletters,
+    hidden: e.verborgen,
+    vertAlign: e.verticaal === "baseline" ? null : e.verticaal,
+    spacing: e.tekenafstand,
+    scale: e.schaal,
+    position: e.positie,
+    kerning: e.spatiering,
+  });
+  return {
+    ...delta,
+    other: {
+      ...delta.other,
+      runStyle: { styleId },
+      ...(e.taal ? { language: { latin: e.taal } } : {}),
+    },
+  };
+}
 
 /** Het bereik [van, tot] in weergaveposities van de alinea om een cursor; null bij een selectie. */
 export function alineaRondCursor(

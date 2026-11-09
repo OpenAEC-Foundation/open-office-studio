@@ -5,6 +5,9 @@ import { parseDocx } from "@betteroffice/docx/docx";
 import { Pakket, WREL } from "../pagina/ooxml";
 import { importeerDocumentStijlen, maakLijstStijl, pasTabelStijlToe, verwijderDocumentStijl } from "./beheer";
 import { leesStijlen, nieuweStijl } from "./stijlenxml";
+import { tekenstijlDelta } from "./toepassen";
+import { bewerkStijlOnderdelen } from "./pakket";
+import { wijzigStijl } from "./stijlenxml";
 
 const W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const origineel = new Uint8Array(readFileSync("public/templates/nieuw.docx"));
@@ -18,7 +21,8 @@ describe("document style management (#45)", () => {
     for (const n of ["word/header1.xml", "word/footnotes.xml", "word/endnotes.xml", "word/numbering.xml"]) p.schrijf(n, `<w:root xmlns:w="${W}" xmlns:x="urn:foreign"><w:pStyle w:val="Custom"/><w:basedOn w:val="Custom"/><w:link w:val="Custom"/><x:pStyle x:val="Custom"/></w:root>`);
     p.schrijf("word/media/keep.bin", new Uint8Array([0, 1, 255]));
     const out = new Pakket(verwijderDocumentStijl(p.inpakken(), "Custom"));
-    expect(leesStijlen(out.lees("word/styles.xml")).some(s => s.styleId === "Custom")).toBe(false);
+    expect(leesStijlen(out.lees("word/styles.xml")).some(
+        (s) => s.styleId === "Custom")).toBe(false);
     expect(out.lees("word/header1.xml")).toContain('<w:pStyle w:val="Normal"/>');
     expect(out.lees("word/footnotes.xml")).not.toContain("<w:link");
     expect(out.lees("word/endnotes.xml")).toContain('<x:pStyle x:val="Custom"/>');
@@ -29,7 +33,7 @@ describe("document style management (#45)", () => {
     const p = metStijl(), b = p.inpakken();
     const result = await importeerDocumentStijlen(b, b, ["Custom"]), out = new Pakket(result.bytes);
     expect(result.ids).toContain("Custom_import1");
-    const defs = leesStijlen(out.lees("word/styles.xml")), custom = defs.find(s => s.styleId === "Custom_import1")!;
+    const defs = leesStijlen(out.lees("word/styles.xml")), custom = defs.find((s) => s.styleId === "Custom_import1")!;
     expect(custom.naam).toBe("Custom (1)"); expect(custom.gebaseerdOp).toBe("Normal_import1");
     expect(custom.eigenschappen).toMatchObject({ vet: true, taal: "nl-NL", tabs: [{ position: 1440, alignment: "right", leader: "dot" }], randen: { bottom: { style: "double", size: 8 } } });
     expect(out.lees("word/document.xml")).toBe(p.lees("word/document.xml"));
@@ -40,22 +44,23 @@ describe("document style management (#45)", () => {
     const p = metStijl();
     const out = new Pakket((await importeerDocumentStijlen(origineel, p.inpakken(), ["Normal"], true)).bytes);
     expect(out.lees("word/styles.xml").match(/w:styleId="Normal"/g)).toHaveLength(1);
-    expect((await parseDocx(out.inpakken(), { preloadFonts: false })).package.styles?.styles.find(s => s.styleId === "Normal")?.default).toBe(true);
+    expect((await parseDocx(out.inpakken(), { preloadFonts: false })).package.styles?.styles.find((s) => s.styleId === "Normal")?.default).toBe(true);
   });
   it("remaps list IDs and picture-bullet relationships, including aliased prefixes", async () => {
     let bytes = maakLijstStijl(metStijl("numbering").inpakken(), { styleId: "Custom", format: "lowerRoman", start: 3 });
-    const p = new Pakket(bytes), doc = "word/document.xml", rel = p.relaties(doc).find(r => r.type.endsWith("/numbering"))!, np = Pakket.doelPad(doc, rel.target);
+    const p = new Pakket(bytes), doc = "word/document.xml", rel = p.relaties(doc).find((r) => r.type.endsWith("/numbering"))!, np = Pakket.doelPad(doc, rel.target);
     const rid = p.voegRelatieToe(np, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", "word/media/bullet.png");
     p.schrijf("word/media/bullet.png", new Uint8Array([137,80,78,71])); p.voegDefaultToe("png", "image/png");
     p.schrijf(np, p.lees(np).replace(/(<w:numbering[^>]*>)/, `$1<w:numPicBullet w:numPicBulletId="0"><v:shape xmlns:v="urn:schemas-microsoft-com:vml"><v:imagedata xmlns:q="http://schemas.openxmlformats.org/officeDocument/2006/relationships" q:id="${rid}"/></v:shape></w:numPicBullet>`));
     bytes = p.inpakken();
     const result = await importeerDocumentStijlen(maakLijstStijl(metStijl("numbering").inpakken(), { styleId: "Custom", format: "decimal", start: 1 }), bytes, ["Custom"]);
-    const out = new Pakket(result.bytes), part = out.relaties(doc).find(r => r.type.endsWith("/numbering"))!, path = Pakket.doelPad(doc, part.target), xml = out.lees(path);
-    expect(out.namen().some(n => /style-import.*bullet\.png$/.test(n))).toBe(true);
+    const out = new Pakket(result.bytes), part = out.relaties(doc).find((r) => r.type.endsWith("/numbering"))!, path = Pakket.doelPad(doc, part.target), xml = out.lees(path);
+    expect(out.namen().some((n) => /style-import.*bullet\.png$/.test(n))).toBe(true);
     expect(xml.indexOf("numPicBullet")).toBeLessThan(xml.indexOf("abstractNum"));
-    const parsed = await parseDocx(result.bytes, { preloadFonts: false }), num = parsed.package.styles?.styles.find(s => s.styleId === "Custom_import1")?.pPr?.numPr?.numId;
+    const parsed = await parseDocx(result.bytes, { preloadFonts: false }), num = parsed.package.styles?.styles.find(
+        (s) => s.styleId === "Custom_import1")?.pPr?.numPr?.numId;
     expect(num).toBeGreaterThan(1);
-    expect(parsed.package.numbering?.nums.some(n => n.numId === num)).toBe(true);
+    expect(parsed.package.numbering?.nums.some((n) => n.numId === num)).toBe(true);
   });
   it("applies a table style only to the cursor's nearest table and removes its marker", () => {
     const p = metStijl("table"); p.schrijf("word/document.xml", `<w:document xmlns:w="${W}"><w:body><w:tbl><w:tr><w:tc><w:p><w:r><w:t>beforeMARKafter</w:t></w:r></w:p></w:tc></w:tr></w:tbl></w:body></w:document>`);
@@ -66,13 +71,43 @@ describe("document style management (#45)", () => {
   it("persists actual character-style references through Yrs undo/redo and DOCX save/reopen", async () => {
     const s = await createYrsSession();
     try {
-      s.openDocx(metStijl("character").inpakken(), true); const paraId = s.paragraphs("body")[0].paraId;
+      const source = metStijl("character").inpakken(),
+        doc = await parseDocx(source, { preloadFonts: false });
+      s.openDocx(source, true); const paraId = s.paragraphs("body")[0].paraId;
       s.insertText({ story: "body", paraId, offset: 0 }, "Styled"); s.addUndoBoundary();
-      s.formatRange({ story: "body", start: { paraId, offset: 0 }, end: { paraId, offset: 6 } }, { other: { runStyle: { styleId: "Custom" } } }); s.addUndoBoundary();
+      s.formatRange({ story: "body", start: { paraId, offset: 0 }, end: { paraId, offset: 6 } },
+        tekenstijlDelta(doc.package.styles, "Custom", doc.package.theme),
+      ); s.addUndoBoundary();
+      expect(
+        s.selectionContext({
+          story: "body",
+          start: { paraId, offset: 0 },
+          end: { paraId, offset: 6 },
+        }).bold,
+      ).toBe(true);
       expect(s.undo()).toBe(true); expect(s.redo()).toBe(true);
       const bytes = (await saveYrsDocx(s)).bytes, p = new Pakket(bytes);
       expect(p.lees("word/document.xml")).toContain('w:rStyle w:val="Custom"');
       expect((await parseDocx(bytes, { preloadFonts: false })).package.document.content[0]).toBeTruthy();
+      const changed = bewerkStijlOnderdelen(bytes, (o) => ({
+        stijlen: wijzigStijl(o.stijlen, "Custom", {
+          eigenschappen: { vet: false },
+        }),
+      }));
+      const again = await createYrsSession();
+      try {
+        again.openDocx(changed, true);
+        const id = again.paragraphs("body")[0].paraId;
+        expect(
+          again.selectionContext({
+            story: "body",
+            start: { paraId: id, offset: 0 },
+            end: { paraId: id, offset: 6 },
+          }).bold,
+        ).toBe(false);
+      } finally {
+        again.destroy();
+      }
     } finally { s.destroy(); }
   });
 });

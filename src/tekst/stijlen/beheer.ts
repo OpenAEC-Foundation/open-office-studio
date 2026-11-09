@@ -5,7 +5,8 @@ import { Pakket, openDocument, onderdeelVan, WREL, nieuwOnderdeel, vindMarkering
 import { attr, attrTekst, elementen, kind, kinderen, leesXml, namespaceVan, vervang, type XmlElement, type Vervanging } from "../../grafieken/xml";
 import { leesStijlen, StijlFout, wijzigStijl } from "./stijlenxml";
 
-export interface NieuweNummering { styleId: string; format: string; start: number }
+export interface NieuweNummering { styleId: string; format: string; start: number;
+}
 /** A private list definition: editing this style cannot alter unrelated lists. */
 export function maakLijstStijl(bytes: Uint8Array, lijst: NieuweNummering): Uint8Array {
   if (!["decimal", "lowerLetter", "upperLetter", "lowerRoman", "upperRoman", "bullet"].includes(lijst.format) || !Number.isInteger(lijst.start) || lijst.start < 1 || lijst.start > 32767) throw new StijlFout("Invalid list format or start");
@@ -13,8 +14,9 @@ export function maakLijstStijl(bytes: Uint8Array, lijst: NieuweNummering): Uint8
   let pad = onderdeelVan(z, doc.pad, R + "numbering");
   if (!pad) pad = nieuwOnderdeel(z, doc.pad, "word/numbering#.xml", NUM_TYPE, R + "numbering", `<w:numbering xmlns:w="${W}"/>`).pad;
   const xml = z.lees(pad), root = leesXml(xml);
-  const aid = 1 + Math.max(0, ...kinderen(root, "abstractNum").map(el => Number(attr(el, "abstractNumId")) || 0));
-  const nid = 1 + Math.max(0, ...kinderen(root, "num").map(el => Number(attr(el, "numId")) || 0));
+  const aid = 1 + Math.max(0, ...kinderen(root, "abstractNum").map(
+        (el) => Number(attr(el, "abstractNumId")) || 0));
+  const nid = 1 + Math.max(0, ...kinderen(root, "num").map((el) => Number(attr(el, "numId")) || 0));
   const levels = Array.from({ length: 9 }, (_, i) => `<w:lvl w:ilvl="${i}"><w:start w:val="${lijst.start}"/><w:numFmt w:val="${lijst.format}"/><w:lvlText w:val="${lijst.format === "bullet" ? "•" : `%${i + 1}.`}"/><w:lvlJc w:val="left"/><w:pPr><w:tabs><w:tab w:val="num" w:pos="${720 * (i + 1)}"/></w:tabs><w:ind w:left="${720 * (i + 1)}" w:hanging="360"/></w:pPr></w:lvl>`).join("");
   const abstract = `<w:abstractNum xmlns:w="${W}" w:abstractNumId="${aid}"><w:multiLevelType w:val="multilevel"/>${levels}</w:abstractNum>`;
   const num = `<w:num xmlns:w="${W}" w:numId="${nid}"><w:abstractNumId w:val="${aid}"/></w:num>`;
@@ -38,7 +40,8 @@ export function pasTabelStijlToe(bytes: Uint8Array, markering: string, id: strin
   let tabel: XmlElement | null = plek.alinea.ouder;
   while (tabel && tabel.lokaal !== "tbl") tabel = tabel.ouder;
   if (!tabel) throw new StijlFout("Place the cursor in a table first");
-  if (!leesStijlen(z.lees(stijlPad(z))).some(s => s.styleId === id && s.soort === "table")) throw new StijlFout("The table style no longer exists");
+  if (!leesStijlen(z.lees(stijlPad(z))).some(
+      (s) => s.styleId === id && s.soort === "table")) throw new StijlFout("The table style no longer exists");
   const p = tabel.voorvoegsel ? tabel.voorvoegsel + ":" : "", pr = kind(tabel, "tblPr"), stijl = kind(pr, "tblStyle");
   const tekst = `<${p}tblStyle ${p}val="${id.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}"/>`;
   z.schrijf(plek.pad, vervang(plek.xml, [stijl ? { start: stijl.start, eind: stijl.eind, tekst }
@@ -60,12 +63,14 @@ function bewerkAttributen(xml: string, doe: (el: XmlElement, attrs: Record<strin
   return vervang(xml, wijz);
 }
 function zetAttr(el: XmlElement, attrs: Record<string, string>, naam: string, waarde: string | null) {
-  const sleutel = Object.keys(attrs).find(k => k.split(":").pop() === naam && !k.startsWith("xmlns")) ?? `${el.voorvoegsel ? el.voorvoegsel + ":" : ""}${naam}`;
+  const sleutel = Object.keys(attrs).find(
+      (k) => k.split(":").pop() === naam && !k.startsWith("xmlns")) ?? `${el.voorvoegsel ? el.voorvoegsel + ":" : ""}${naam}`;
   if (waarde === null) delete attrs[sleutel]; else attrs[sleutel] = waarde;
 }
 function fragment(xml: string, el: XmlElement, root: XmlElement) {
   const attrs = { ...Object.fromEntries(Object.entries(root.attrs).filter(([k]) => k === "xmlns" || k.startsWith("xmlns:"))), ...el.attrs };
-  return openTag(el, attrs) + (el.leeg ? "" : xml.slice(el.inhoudStart, el.eind));
+  return (
+    openTag(el, attrs) + (el.leeg ? "" : xml.slice(el.inhoudStart, el.eind)));
 }
 function voegToe(xml: string, inhoud: string) {
   const root = leesXml(xml);
@@ -77,15 +82,17 @@ function stijlPad(z: Pakket) { const d = openDocument(z); const pad = onderdeelV
 /** Delete only custom, non-default styles, repairing Word references in every XML story. */
 export function verwijderDocumentStijl(bytes: Uint8Array, id: string, vervanging?: string): Uint8Array {
   const z = new Pakket(bytes), pad = stijlPad(z), xml = z.lees(pad), root = leesXml(xml);
-  const stijl = kinderen(root, "style").find(s => attr(s, "styleId") === id);
+  const stijl = kinderen(root, "style").find((s) => attr(s, "styleId") === id);
   if (!stijl) throw new StijlFout("The style no longer exists");
   if (["1", "true", "on"].includes(attr(stijl, "default") ?? "") || !["1", "true", "on"].includes(attr(stijl, "customStyle") ?? ""))
     throw new StijlFout("Only custom, non-default styles can be deleted");
   const soort = attr(stijl, "type") ?? "paragraph", info = leesStijlen(xml);
-  const kandidaat = vervanging ?? attr(kind(stijl, "basedOn"), "val") ?? info.find(s => s.soort === soort && s.styleId !== id && s.styleId === "Normal")?.styleId;
-  if (kandidaat && !info.some(s => s.styleId === kandidaat && s.styleId !== id && s.soort === soort)) throw new StijlFout("Choose a replacement style of the same type");
+  const kandidaat = vervanging ?? attr(kind(stijl, "basedOn"), "val") ?? info.find(
+      (s) => s.soort === soort && s.styleId !== id && s.styleId === "Normal")?.styleId;
+  if (kandidaat && !info.some(
+      (s) => s.styleId === kandidaat && s.styleId !== id && s.soort === soort)) throw new StijlFout("Choose a replacement style of the same type");
   const gezien = new Set<string>();
-  for (let huidig = kandidaat; huidig; huidig = info.find(s => s.styleId === huidig)?.gebaseerdOp) {
+  for (let huidig = kandidaat; huidig; huidig = info.find((s) => s.styleId === huidig)?.gebaseerdOp) {
     if (huidig === id || gezien.has(huidig)) throw new StijlFout("The replacement must not depend on the deleted style");
     gezien.add(huidig);
   }
@@ -121,27 +128,29 @@ function explicietThema(xml: string, thema?: Theme) {
 }
 
 /** Import definitions and their dependencies without changing destination content. */
-export async function importeerDocumentStijlen(bytes: Uint8Array, bronBytes: Uint8Array, gekozen?: readonly string[], overschrijven = false): Promise<{ bytes: Uint8Array; ids: string[]; stijlMap: Record<string, string>; nummerMap: Record<string, string> }> {
+export async function importeerDocumentStijlen(bytes: Uint8Array, bronBytes: Uint8Array, gekozen?: readonly string[], overschrijven = false): Promise<{ bytes: Uint8Array; ids: string[]; stijlMap: Record<string, string>; nummerMap: Record<string, string>;
+}> {
   const doel = new Pakket(bytes), bron = new Pakket(bronBytes), dp = stijlPad(doel), bp = stijlPad(bron);
   const bx = bron.lees(bp), br = leesXml(bx), dx = doel.lees(dp), dr = leesXml(dx);
-  const bestaande = leesStijlen(dx), bronLijst = leesStijlen(bx), select = new Set(gekozen ?? bronLijst.map(s => s.styleId));
+  const bestaande = leesStijlen(dx), bronLijst = leesStijlen(bx), select = new Set(gekozen ?? bronLijst.map((s) => s.styleId));
   if (!select.size) return { bytes, ids: [], stijlMap: {}, nummerMap: {} };
-  if ([...select].some(id => !bronLijst.some(s => s.styleId === id))) throw new StijlFout("The selected style no longer exists");
+  if ([...select].some((id) => !bronLijst.some((s) => s.styleId === id))) throw new StijlFout("The selected style no longer exists");
   const bronDoc = openDocument(bron), doelDoc = openDocument(doel), numBron = onderdeelVan(bron, bronDoc.pad, R + "numbering");
   // A numbering definition can refer back to a numbering/paragraph style.
   if (numBron) for (const el of alle(leesXml(bron.lees(numBron)))) {
     if (verwijzingen.has(el.lokaal) && namespaceVan(el, el.voorvoegsel) === W) {
-      const id = attr(el, "val"); if (id && bronLijst.some(s => s.styleId === id)) select.add(id);
+      const id = attr(el, "val"); if (id && bronLijst.some((s) => s.styleId === id)) select.add(id);
     }
   }
   for (let ronde = 0; ronde < bronLijst.length; ronde++) for (const s of bronLijst) if (select.has(s.styleId)) {
-    const el = kinderen(br, "style").find(x => attr(x, "styleId") === s.styleId)!;
-    for (const k of alle(el)) if (verwijzingen.has(k.lokaal)) { const id = attr(k, "val"); if (id && bronLijst.some(x => x.styleId === id)) select.add(id); }
+    const el = kinderen(br, "style").find(
+          (x) => attr(x, "styleId") === s.styleId)!;
+    for (const k of alle(el)) if (verwijzingen.has(k.lokaal)) { const id = attr(k, "val"); if (id && bronLijst.some((x) => x.styleId === id)) select.add(id); }
   }
-  const namen = new Set(bestaande.map(s => s.naam.toLowerCase())), ids = new Set(bestaande.map(s => s.styleId));
+  const namen = new Set(bestaande.map((s) => s.naam.toLowerCase())), ids = new Set(bestaande.map((s) => s.styleId));
   const map = new Map<string, string>(), namenMap = new Map<string, string>();
-  for (const s of bronLijst.filter(s => select.has(s.styleId))) {
-    const gelijk = bestaande.find(x => x.styleId === s.styleId);
+  for (const s of bronLijst.filter((s) => select.has(s.styleId))) {
+    const gelijk = bestaande.find((x) => x.styleId === s.styleId);
     let id = s.styleId, naam = s.naam, n = 1;
     if (!(overschrijven && gelijk?.soort === s.soort)) {
       while (ids.has(id)) id = `${s.styleId}_import${n++}`;
@@ -156,27 +165,39 @@ export async function importeerDocumentStijlen(bytes: Uint8Array, bronBytes: Uin
     const nx = bron.lees(numBron), nr = leesXml(nx), oud = leesXml(doel.lees(nd));
     for (const [element, attribuut] of [["num", "numId"], ["abstractNum", "abstractNumId"], ["numPicBullet", "numPicBulletId"]]) {
       let max = kinderen(oud, element).reduce((m, e) => Math.max(m, Number(attr(e, attribuut)) || 0), 0);
-      numMaps.set(attribuut, new Map(kinderen(nr, element).map(el => [attr(el, attribuut)!, String(++max)])));
+      numMaps.set(attribuut, new Map(kinderen(nr, element).map((el) => [attr(el, attribuut)!, String(++max)])));
     }
     const ridMap = kopieerRelaties(bron, doel, numBron, nd);
-    const chunks = elementen(nr).map(el => herschrijf(fragment(nx, el, nr), map, numMaps, ridMap));
+    const chunks = elementen(nr).map((el) => herschrijf(fragment(nx, el, nr), map, numMaps, ridMap));
     const samengevoegd = voegToe(doel.lees(nd), chunks.join("")), wortel = leesXml(samengevoegd);
     const volgorde = ["numPicBullet", "abstractNum", "num", "numIdMacAtCleanup"];
-    const inhoud = elementen(wortel).sort((a, b) => volgorde.indexOf(a.lokaal) - volgorde.indexOf(b.lokaal)).map(el => samengevoegd.slice(el.start, el.eind)).join("");
+    const inhoud = elementen(wortel).sort((a, b) => volgorde.indexOf(a.lokaal) - volgorde.indexOf(b.lokaal)).map((el) => samengevoegd.slice(el.start, el.eind)).join("");
     doel.schrijf(nd, vervang(samengevoegd, [{ start: wortel.inhoudStart, eind: wortel.inhoudEind, tekst: inhoud }]));
   }
   const thema = (await parseDocx(bronBytes, { preloadFonts: false })).package.theme;
-  const weg = kinderen(dr, "style").filter(s => [...map.values()].includes(attr(s, "styleId") ?? ""));
-  let uit = vervang(dx, weg.map(s => ({ start: s.start, eind: s.eind, tekst: "" })));
+  const weg = kinderen(dr, "style").filter((s) => [...map.values()].includes(attr(s, "styleId") ?? ""));
+  let uit = vervang(dx, weg.map((s) => ({ start: s.start, eind: s.eind, tekst: "" })));
   for (const s of kinderen(br, "style")) {
     const id = attr(s, "styleId")!; if (!map.has(id)) continue;
+    const oud = kinderen(dr, "style").find(
+      (x) => attr(x, "styleId") === map.get(id),
+    );
     let tekst = explicietThema(herschrijf(fragment(bx, s, br), map, numMaps), thema);
     tekst = bewerkAttributen(tekst, (el, a) => {
-      if (el.lokaal === "style") zetAttr(el, a, "default", null);
+      if (el.lokaal === "style") {
+        zetAttr(el, a, "default", null);
+        zetAttr(
+          el,
+          a,
+          "customStyle",
+          !oud || ["1", "true", "on"].includes(attr(oud, "customStyle") ?? "")
+            ? "1"
+            : null,
+        );
+      }
       if (el.lokaal === "name") zetAttr(el, a, "val", namenMap.get(id)!);
     });
     // Replacing the destination's default style must retain its default flag.
-    const oud = kinderen(dr, "style").find(x => attr(x, "styleId") === map.get(id));
     if (oud && ["1", "true", "on"].includes(attr(oud, "default") ?? "")) tekst = bewerkAttributen(tekst, (el, a) => { if (el.lokaal === "style") zetAttr(el, a, "default", "1"); });
     uit = voegToe(uit, tekst);
   }
@@ -194,8 +215,14 @@ function herschrijf(xml: string, stijlen: Map<string, string>, nummering: Map<st
     if (el.lokaal === "style" && stijlen.has(attr(el, "styleId")!)) zetAttr(el, a, "styleId", stijlen.get(attr(el, "styleId")!)!);
     if (verwijzingen.has(el.lokaal) && stijlen.has(attr(el, "val")!)) zetAttr(el, a, "val", stijlen.get(attr(el, "val")!)!);
     for (const [naam, map] of nummering) {
-      const attribuut = el.lokaal === "num" && naam === "numId" || el.lokaal === "abstractNum" && naam === "abstractNumId" || el.lokaal === "numPicBullet" && naam === "numPicBulletId" ? naam
-        : el.lokaal === naam || naam === "numPicBulletId" && el.lokaal === "lvlPicBulletId" ? "val" : null;
+      const attribuut =
+          (el.lokaal === "num" && naam === "numId") ||
+          (el.lokaal === "abstractNum" && naam === "abstractNumId") ||
+          (el.lokaal === "numPicBullet" && naam === "numPicBulletId")
+            ? naam
+        : el.lokaal === naam ||
+                (naam === "numPicBulletId" && el.lokaal === "lvlPicBulletId")
+              ? "val" : null;
       if (attribuut && map.has(attr(el, attribuut)!)) zetAttr(el, a, attribuut, map.get(attr(el, attribuut)!)!);
     }
   }, true);
@@ -209,17 +236,19 @@ function kopieerRelaties(bron: Pakket, doel: Pakket, van: string, naar: string) 
     const data = bron.bytes(pad); if (!data) throw new StijlFout(`Missing style dependency: ${pad}`);
     const nieuw = doel.vrijPad(`word/style-import#/` + pad); kopieen.set(pad, nieuw); doel.schrijf(nieuw, data);
     const ext = pad.split(".").pop()!;
-    const type = attr(kinderen(types, "Override").find(e => attr(e, "PartName") === "/" + pad) ?? kinderen(types, "Default").find(e => attr(e, "Extension") === ext), "ContentType");
+    const type = attr(kinderen(types, "Override").find(
+        (e) => attr(e, "PartName") === "/" + pad) ?? kinderen(types, "Default").find((e) => attr(e, "Extension") === ext), "ContentType");
     if (type) doel.voegOverrideToe(nieuw, type);
     const relaties = bron.relaties(pad);
-    if (relaties.length) doel.schrijf(Pakket.relsPad(nieuw), `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${relaties.map(r => `<Relationship${attrTekst({ Id: r.id, Type: r.type, Target: r.extern ? r.target : Pakket.relatief(nieuw, kopie(Pakket.doelPad(pad, r.target))), ...(r.extern ? { TargetMode: "External" } : {}) })}/>`).join("")}</Relationships>`);
+    if (relaties.length) doel.schrijf(Pakket.relsPad(nieuw), `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${relaties.map((r) => `<Relationship${attrTekst({ Id: r.id, Type: r.type, Target: r.extern ? r.target : Pakket.relatief(nieuw, kopie(Pakket.doelPad(pad, r.target))), ...(r.extern ? { TargetMode: "External" } : {}) })}/>`).join("")}</Relationships>`);
     return nieuw;
   }
   const map = new Map<string, string>();
   for (const rel of bron.relaties(van)) {
     const id = doel.voegRelatieToe(naar, rel.type, rel.extern ? "placeholder" : kopie(Pakket.doelPad(van, rel.target)));
     if (rel.extern) {
-      const rp = Pakket.relsPad(naar), xml = doel.lees(rp), el = kinderen(leesXml(xml), "Relationship").find(e => attr(e, "Id") === id)!;
+      const rp = Pakket.relsPad(naar), xml = doel.lees(rp), el = kinderen(leesXml(xml), "Relationship").find(
+          (e) => attr(e, "Id") === id)!;
       doel.schrijf(rp, vervang(xml, [{ start: el.start, eind: el.eind, tekst: `<Relationship${attrTekst({ Id: id, Type: rel.type, Target: rel.target, TargetMode: "External" })}/>` }]));
     }
     map.set(rel.id, id);

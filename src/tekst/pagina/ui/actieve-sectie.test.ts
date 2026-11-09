@@ -1,9 +1,11 @@
 import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createYrsSession, type YrsSession } from "@betteroffice/docx/yrs";
+import { createYrsSession,
+  saveYrsDocx, type YrsSession } from "@betteroffice/docx/yrs";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { sectieStand } from "./engine";
 import { actieveSectie } from "../actieveSectie";
+import { voegNootIn } from "../noten";
 
 let s: YrsSession;
 let ref: DocxEditorRef;
@@ -14,7 +16,7 @@ beforeEach(async () => {
   ref = {
     getDocument: () => ({ package: { document: {
       finalSectionProperties: secties.at(-1)!.resolved,
-      sections: secties.map(x => ({ properties: x.resolved, content: [] })),
+      sections: secties.map((x) => ({ properties: x.resolved, content: [] })),
     } } }),
     getEditorRef: () => ({ getYrsSession: () => s,
       getSelectionRange: () => ({ from: 0, to: 0 }),
@@ -67,4 +69,30 @@ describe("pagina-instellingen horen bij de sectie van de cursor (#44, #55)", () 
     expect(actieveSectie(onbekend)).toBeNull();
     expect(s.version()).toBe(versie);
   });
+  it.each(["voetnoot", "eindnoot"] as const)(
+    "herleidt een %s naar de sectie met de verwijzing",
+    async (soort) => {
+      const first = s.paragraphs("body")[0];
+      s.insertText(
+        { story: "body", paraId: first.paraId, offset: 0 },
+        "SCOPE_MARKER",
+      );
+      const note = voegNootIn(
+        (await saveYrsDocx(s)).bytes,
+        "SCOPE_MARKER",
+        soort,
+        "Reference in the first section",
+      );
+      s.destroy();
+      s = await createYrsSession();
+      s.openDocx(note.bytes, true);
+      const story = `${soort === "voetnoot" ? "fn" : "en"}:${note.id}`;
+      s.setSelection({
+        story,
+        paraId: s.paragraphs(story)[0].paraId,
+        offset: 0,
+      });
+      expect(actieveSectie(ref)?.index).toBe(0);
+    },
+  );
 });

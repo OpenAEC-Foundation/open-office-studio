@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { Document, StyleDefinitions } from "@betteroffice/docx/types/document";
-import { eigenTekenopmaak, gebruikteStijlen, losOp, ontbrekendeStijl, runOpPositie, stijlNaam, uitOpmaak, vindAlinea } from "./model";
+import type { Document, StyleDefinitions, NumberingDefinitions } from "@betteroffice/docx/types/document";
+import { eigenTekenopmaak, gebruikteStijlen,
+  lijstVoorbeelden,
+  tabelVoorbeeld, losOp, ontbrekendeStijl, runOpPositie, stijlNaam, uitOpmaak, vindAlinea } from "./model";
 import { galerijStijlen } from "./StijlGalerij";
 
 const stijlen: StyleDefinitions = {
@@ -20,6 +22,88 @@ const thema = {
 };
 
 describe("stijlmodel", () => {
+  it("previews the actual list numbering override and counts its used named style", () => {
+    const defs: StyleDefinitions = {
+      styles: [
+        {
+          styleId: "Roman",
+          name: "Roman",
+          type: "numbering",
+          pPr: { numPr: { numId: 7, ilvl: 0 } },
+        },
+      ],
+    };
+    const numbering: NumberingDefinitions = {
+      nums: [
+        {
+          numId: 7,
+          abstractNumId: 1,
+          levelOverrides: [{ ilvl: 0, startOverride: 4 }],
+        },
+      ],
+      abstractNums: [
+        {
+          abstractNumId: 1,
+          levels: [{ ilvl: 0, start: 1, numFmt: "lowerRoman", lvlText: "%1)" }],
+        },
+      ],
+    };
+    expect(lijstVoorbeelden(defs, numbering, "Roman")).toEqual([
+      "iv) Aa",
+      "v) Bb",
+    ]);
+    const doc = {
+      package: {
+        styles: defs,
+        numbering,
+        document: {
+          content: [
+            {
+              type: "paragraph",
+              formatting: { numPr: { numId: 7 } },
+              content: [],
+            },
+          ],
+        },
+      },
+    } as unknown as Document;
+    expect(gebruikteStijlen(doc).get("Roman")).toBe(1);
+  });
+  it("previews inherited table shading and first-row formatting", () => {
+    const defs: StyleDefinitions = {
+      styles: [
+        {
+          styleId: "Base",
+          name: "Base",
+          type: "table",
+          tblPr: { shading: { fill: { rgb: "EEEEEE" } } },
+        },
+        {
+          styleId: "Table",
+          name: "Table",
+          type: "table",
+          basedOn: "Base",
+          tblStylePr: [
+            {
+              type: "firstRow",
+              tcPr: { shading: { fill: { rgb: "225588" } } },
+              rPr: { bold: true, color: { rgb: "FFFFFF" } },
+            },
+          ],
+        },
+      ],
+    };
+    const preview = tabelVoorbeeld(defs, "Table");
+    expect(preview[0]).toMatchObject({
+      background: "#225588",
+      color: "#FFFFFF",
+      fontWeight: 700,
+    });
+    expect(preview[2]).toMatchObject({
+      background: "#EEEEEE",
+      fontWeight: 400,
+    });
+  });
   it("vertaalt ingebouwde namen", () => {
     expect(stijlNaam({ styleId: "Heading2", name: "heading 2" })).toBe("Kop 2");
     expect(stijlNaam({ styleId: "Normal", name: "Normal" })).toBe("Standaard");
