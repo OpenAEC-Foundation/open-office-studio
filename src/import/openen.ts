@@ -24,6 +24,7 @@ import { controleerPakket } from "../pakketcontrole";
 import { MACRO_ID, macronaam, openRapport, type Rapport } from "./rapport";
 import { MACRO_INVOER, MACROFORMAAT, scheidMacros } from "./macros";
 import type { Bronkenmerken } from "./bron";
+import { isSjabloon, OOXML_SJABLONEN, sjabloonNaarDocument } from "./sjabloon";
 import { openIfcx } from "../ifcx/dossier";
 import { bronMacros } from "./bronmacros";
 import {
@@ -54,6 +55,8 @@ export interface Openhulp {
 }
 
 export interface Openresultaat {
+  /** Sjabloon: nieuwe naam en geen koppeling naar het oorspronkelijke bestand. */
+  alsNieuw?: boolean;
   soort: Soort;
   /** Naam van het tabblad, met de extensie van het formaat in de editor. */
   naam: string;
@@ -77,6 +80,23 @@ function metExtensie(naam: string, ext: string) {
 
 /** Bereidt het openen voor; null betekent dat de gebruiker heeft geannuleerd. */
 export async function bereidOpenen(
+  naam: string,
+  bytes: Uint8Array,
+  hulp: Openhulp,
+): Promise<Openresultaat | null> {
+  const resultaat = await bereidBestandOpenen(naam, bytes, hulp);
+  if (!resultaat || !isSjabloon(naam)) return resultaat;
+  return {
+    ...resultaat,
+    alsNieuw: true,
+    gewijzigd: true,
+    exportFormaat: resultaat.bron?.macro
+      ? MACROFORMAAT[resultaat.soort]
+      : resultaat.soort,
+  };
+}
+
+async function bereidBestandOpenen(
   naam: string,
   bytes: Uint8Array,
   hulp: Openhulp,
@@ -144,14 +164,16 @@ async function bereidOnversleuteld(
   const soort = bestandssoort(ext);
   if (!soort) throw new Error(i18next.t("import:errors.unsupportedFormat"));
 
-  if (ext === soort) {
+  if (ext === soort || OOXML_SJABLONEN.has(ext)) {
     const controle = controleerPakket(bytes, soort);
     if (controle.datum1904) bronregels = [...bronregels, datum1904()];
     if (!controle.strict)
       return {
         soort,
-        naam,
-        bytes,
+        naam: OOXML_SJABLONEN.has(ext) ? metExtensie(naam, soort) : naam,
+        bytes: OOXML_SJABLONEN.has(ext)
+          ? sjabloonNaarDocument(bytes, soort)
+          : bytes,
         gewijzigd: false,
         rapport: openRapport({
           soort,
