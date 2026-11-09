@@ -344,7 +344,33 @@
       "via": 241
     }
   ],
-  "deliveriesPending": [],
+  "deliveriesPending": [
+    {
+      "pr": 233,
+      "head": "c3537b83e7239fc808b3af0d518e109aef2c0f8b",
+      "scope": "Start theme editing from current slide/layout/master settings; previous2c0d already included"
+    },
+    {
+      "pr": 246,
+      "head": "9de53c798334456808a1c7cef815f7872a25ee89",
+      "scope": "HYPERLINK targets, worker cancellation measurement and bounded embedded-image decoding; previous41c9 already included"
+    },
+    {
+      "pr": 254,
+      "head": "5a1c0d50f53ba31a298e9286b9c0ebec31e51782",
+      "scope": "Adaptive office performance; depends on already included252/248d5a79"
+    },
+    {
+      "pr": 256,
+      "head": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
+      "scope": "Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery"
+    },
+    {
+      "pr": 245,
+      "head": "55108670c3d8c2300cdec226823f2683ddfeccdc",
+      "scope": "Documentation correction after included26d31965; resolve full SHA before importing"
+    }
+  ],
   "checks": [
     {
       "kind": "batch-1-targeted",
@@ -713,6 +739,15 @@
       "failed": 0,
       "skipped": 0,
       "files": 1
+    },
+    {
+      "kind": "full-application-after-field-queue",
+      "head": "7b58503511c89e408c08b42e5fa8c148fe7aabf3",
+      "success": true,
+      "passed": 2796,
+      "failed": 0,
+      "skipped": 7,
+      "files": 269
     }
   ],
   "limits": [

@@ -117,9 +117,15 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr246-targeted | `2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651` | 20 | 0 | 0 |
 | pr236-targeted | `d0589466120e5b71cb194ee1e42404bec6d31431` | 12 | 0 | 0 |
 | pr255-targeted | `f356bb64e5227bc39b2e767ac9da123f0be408a0` | 7 | 0 | 0 |
+| full-application-after-field-queue | `7b58503511c89e408c08b42e5fa8c148fe7aabf3` | 2796 | 0 | 7 |
 
 ## Pending deliveries
 
+- PR #233, reported head `c3537b83e7239fc808b3af0d518e109aef2c0f8b`: Start theme editing from current slide/layout/master settings; previous2c0d already included.
+- PR #246, reported head `9de53c798334456808a1c7cef815f7872a25ee89`: HYPERLINK targets, worker cancellation measurement and bounded embedded-image decoding; previous41c9 already included.
+- PR #254, reported head `5a1c0d50f53ba31a298e9286b9c0ebec31e51782`: Adaptive office performance; depends on already included252/248d5a79.
+- PR #256, reported head `51e0ea41e109960d8ea6ca53a149f1b663857ac3`: Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery.
+- PR #245, reported head `55108670c3d8c2300cdec226823f2683ddfeccdc`: Documentation correction after included26d31965; resolve full SHA before importing.
 
 ## Limits
 
