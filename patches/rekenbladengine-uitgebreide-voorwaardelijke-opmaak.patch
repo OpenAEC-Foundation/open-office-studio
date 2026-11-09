@@ -1,0 +1,69 @@
+diff --git a/crates/xlsx-parse/src/write.rs b/crates/xlsx-parse/src/write.rs
+index ffbdcd3..9d75d3c 100644
+--- a/crates/xlsx-parse/src/write.rs
++++ b/crates/xlsx-parse/src/write.rs
+@@ -109,7 +109,9 @@ impl CfPlan {
+         for (sheet_index, sheet) in wb.sheets.iter().enumerate() {
+             for (group_index, group) in sheet.conditional_formats.iter().enumerate() {
+                 for (rule_index, rule) in group.rules.iter().enumerate() {
+-                    if rule.raw_xml.is_none() {
++                    if rule.raw_xml.is_none()
++                        || (rule.dxf_id.is_none() && rule.format != DifferentialFormat::default())
++                    {
+                         let id = start + plan.authored.len() as u32;
+                         plan.assigned
+                             .insert((sheet_index, group_index, rule_index), id);
+@@ -237,7 +239,21 @@ fn conditional_formatting_bytes(
+         let mut rules = Vec::new();
+         for (rule_index, rule) in group.rules.iter().enumerate() {
+             if let Some(raw) = &rule.raw_xml {
+-                rules.push(raw.as_bytes().to_vec());
++                // An authored rule may carry additional OOXML attributes
++                // (e.g. stopIfTrue) without having a source differential style.
++                // Assign its style exactly as for an authored basic rule;
++                // source rules with an existing dxf remain byte-identical.
++                rules.push(if rule.dxf_id.is_none()
++                    && let Some(dxf) = plan.assigned.get(&(sheet_index, group_index, rule_index))
++                {
++                    XmlTemplate::capture(raw.as_bytes())?.render_with_attributes(
++                        Vec::new(),
++                        |_| 0,
++                        &[("dxfId", Some(dxf.to_string()))],
++                    )?
++                } else {
++                    raw.as_bytes().to_vec()
++                });
+                 continue;
+             }
+             let mut rule_xml = format!("<cfRule type=\"{}\"", escape_xml_attr(&rule.rule_type));
+diff --git a/crates/xlsx-parse/tests/conditional_formats.rs b/crates/xlsx-parse/tests/conditional_formats.rs
+index b135477..43f35f9 100644
+--- a/crates/xlsx-parse/tests/conditional_formats.rs
++++ b/crates/xlsx-parse/tests/conditional_formats.rs
+@@ -69,6 +69,26 @@ fn authored(wb: &mut xlsx_model::Workbook) {
+         });
+ }
+ 
++#[test]
++fn authored_extended_rule_keeps_stop_flag_and_gets_a_valid_differential_style() {
++    let source = parts("<sheetData/>", Some(r#"<fonts count="1"><font/></fonts><cellXfs count="1"><xf/></cellXfs>"#));
++    let parsed = parse_workbook_with_package(&source).unwrap();
++    let mut wb = parsed.workbook.clone();
++    authored(&mut wb);
++    let rule = &mut wb.sheets[0].conditional_formats[0].rules[0];
++    rule.raw_xml = Some(r#"<cfRule xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" type="cellIs" operator="greaterThan" priority="9" stopIfTrue="1"><formula>5</formula></cfRule>"#.into());
++    let saved = save(&parsed, &wb);
++    let sheet = String::from_utf8(part(&saved, "xl/worksheets/sheet1.xml").to_vec()).unwrap();
++    assert!(sheet.contains(r#"stopIfTrue="1""#), "{sheet}");
++    assert!(sheet.contains(r#"dxfId="0""#), "{sheet}");
++    let reopened = parse_workbook(&saved).unwrap();
++    let rule = &reopened.sheets[0].conditional_formats[0].rules[0];
++    assert_eq!(rule.format.font_color.as_deref(), Some("#FF0000"));
++    assert_eq!(rule.format.fill.as_deref(), Some("#00FF00"));
++    assert_eq!(rule.format.bold, Some(true));
++    assert!(rule.raw_xml.as_ref().unwrap().contains(r#"stopIfTrue="1""#));
++}
++
+ #[test]
+ fn authored_rule_writes_cfrule_and_appended_dxf() {
+     let source = parts(
