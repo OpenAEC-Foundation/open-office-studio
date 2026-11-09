@@ -44,6 +44,8 @@ import { GEEN_OVERGANG, leesOvergangGegevens } from "./overgangen";
 import { leesAlleAnimaties, type Animatie } from "./animaties";
 import { useAnimatieVoorstelling } from "./useAnimatieVoorstelling";
 import { useOvergangGeluid } from "./useOvergangGeluid";
+import { leesAlleMedia } from "./media";
+import { DiaMediaVoorstelling } from "./DiaMediaVoorstelling";
 import {
   beginStaat,
   duurTekst,
@@ -168,9 +170,9 @@ export function Voorstelling({
   const aantal = deck.slides.length;
   const verhouding = deck.widthEmu / Math.max(1, deck.heightEmu);
   const verborgen = useMemo(() => verborgenDias(api), [api]);
-  const { overgangen, geluiden, animaties } = useMemo(() => {
-    try { const bytes = api.handle.save(); return { ...leesOvergangGegevens(bytes), animaties: leesAlleAnimaties(bytes) }; }
-    catch { return { overgangen: [], geluiden: [], animaties: [] }; }
+  const { overgangen, geluiden, animaties, media } = useMemo(() => {
+    try { const bytes = api.handle.save(); return { ...leesOvergangGegevens(bytes), animaties: leesAlleAnimaties(bytes), media: leesAlleMedia(bytes) }; }
+    catch { return { overgangen: [], geluiden: [], animaties: [], media: [] }; }
   }, [api]);
   const [staat, setStaat] = useState<VoorstellingStaat>(() =>
     beginStaat(startDia(verzoek.vanafBegin, huidig, aantal, verborgen), aantal),
@@ -195,6 +197,8 @@ export function Voorstelling({
   const overgang = overgangen[staat.index] ?? GEEN_OVERGANG;
   const animatiemodel = animaties[staat.index];
   const lijst = animatiemodel && !animatiemodel.alleenLezen ? animatiemodel.lijst : GEEN_ANIMATIES;
+  const huidigeMedia = media[staat.index] ?? [];
+  const mediaOpDia = huidigeMedia.filter(m => m.opDia && m.bytes && m.mime !== "application/octet-stream" && !animatiemodel?.lijst.some(a => a.vorm === m.id));
   const animatiespeler = useAnimatieVoorstelling(api,staat.index,lijst,overgang,bron,staat.scherm !== "normaal" || staat.einde,opstelling.soort !== "tauri");
   const animatiestap = useRef<{ vooruit: () => boolean; terug: () => boolean }>({ vooruit: () => false, terug: () => false });
   animatiestap.current = { vooruit: animatiespeler.stap, terug: animatiespeler.terug };
@@ -254,6 +258,7 @@ export function Voorstelling({
     if (opstelling.soort === "browser") vensters.push(opstelling.popup);
     const luister = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
+      if (e.target instanceof HTMLElement && e.target.closest(".media-speler") && ["Enter", " ", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) return;
       if ((e.key === "Enter" || e.key === " ") && e.target instanceof HTMLElement && e.target.closest(".voorstelling-geluidmelding button")) return;
       if (e.key === "F5" && e.altKey) {
         e.preventDefault();
@@ -430,6 +435,7 @@ export function Voorstelling({
       <DiaVlak
         verhouding={verhouding}
         teken={tekenHuidig}
+        media={<DiaMediaVoorstelling key={staat.index} lijst={mediaOpDia} pauze={staat.scherm !== "normaal" || staat.einde} vertraging={overgang.effect === "none" || overgang.effect === "unknown" ? 0 : overgang.duur} aanwijzer={staat.gereedschap === "aanwijzer"} />}
         sleutel={String(staat.index)}
         scherm={staat.scherm}
         einde={eindeTekst}
@@ -478,6 +484,7 @@ export function Voorstelling({
           </button>
         </div>
       )}
+      {huidigeMedia.length > mediaOpDia.length && <div className="voorstelling-mediamelding" role="status">{t("media.showUnsupported")}</div>}
       {staat.invoer && <div className="voorstelling-invoer" aria-live="polite">{t("show.goToTyped", { number: staat.invoer })}</div>}
     </div>
   );
@@ -569,6 +576,7 @@ export function Voorstelling({
           <DiaVlak
             verhouding={verhouding}
             teken={tekenHuidig}
+            media={opstelling.soort === "tauri" || opstelling.soort === "enkel" && opstelling.presentator ? <DiaMediaVoorstelling key={staat.index} lijst={mediaOpDia} pauze={staat.scherm !== "normaal" || staat.einde} vertraging={0} aanwijzer={staat.gereedschap === "aanwijzer"} /> : undefined}
             sleutel={String(staat.index)}
             scherm={staat.scherm}
             einde={eindeTekst}
@@ -652,6 +660,8 @@ export function Voorstelling({
           </label>
         </form>
         {melding && <span className="presentator-melding">{melding}</span>}
+        {opstelling.soort === "tauri" && huidigeMedia.some(m => m.soort === "video") && <span className="presentator-melding" role="status">{t("media.nativeHint")}</span>}
+        {huidigeMedia.length > mediaOpDia.length && <span className="presentator-melding" role="status">{t("media.showUnsupported")}</span>}
         <span className="presentator-uitleg">{t("show.keysHint")}</span>
       </footer>
     </div>

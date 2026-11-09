@@ -3,7 +3,7 @@
  * zwart/wit scherm erover. Werkt in elk venster: het beeld komt van
  * `teken`, dat op een canvas van dit vak tekent.
  */
-import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject, type ReactNode } from "react";
 import { raaktStreep, type Gereedschap, type Scherm, type Streep } from "./voorstelling-logica";
 
 export interface Rechthoek {
@@ -58,6 +58,7 @@ export interface DiaVlakProps {
   onKlik?: () => void;
   className?: string;
   label?: string;
+  media?: ReactNode;
 }
 
 export function DiaVlak({
@@ -74,6 +75,7 @@ export function DiaVlak({
   onKlik,
   className,
   label,
+  media,
 }: DiaVlakProps) {
   const vak = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -154,6 +156,7 @@ export function DiaVlak({
         onPointerLeave={() => gereedschap === "laser" && onLaser?.(null)}
       >
         <canvas ref={canvas} style={{ width: "100%", height: "100%" }} />
+        {media}
         <svg className="diavlak-inkt" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true">
           {lijnen.map((s, i) => (
             <polyline

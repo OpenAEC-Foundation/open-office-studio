@@ -81,6 +81,7 @@ import {
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaOvergangen } from "../presentatie/DiaOvergangen";
 import { DiaAnimaties } from "../presentatie/DiaAnimaties";
+import { DiaMedia } from "../presentatie/DiaMedia";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
@@ -657,6 +658,9 @@ export function PresentatieRibbon({
                   icoon={RectangleHorizontal}
                   groot
                 />
+              </Groep>
+              <Groep naam={tp("media.title")}>
+                <DiaMedia />
               </Groep>
             </>
           ),
