@@ -25,6 +25,7 @@ import { MACRO_ID, macronaam, openRapport, type Rapport } from "./rapport";
 import { MACRO_INVOER, MACROFORMAAT, scheidMacros } from "./macros";
 import type { Bronkenmerken } from "./bron";
 import { openIfcx } from "../ifcx/dossier";
+import { presentatieVariant } from "../presentatie/bestandsvariant";
 import {
   VerkeerdWachtwoord,
   herkenVersleuteling,
@@ -62,6 +63,8 @@ export interface Openresultaat {
   rapport: Rapport | null;
   /** Voorstel voor Ctrl+S als dat afwijkt van het eigen formaat. */
   exportFormaat?: string;
+  /** PPS/PPSX: bied na laden de keuze om meteen een voorstelling te starten. */
+  voorstelling?: boolean;
   /** Kenmerken van het origineel (versleuteling, macro’s). */
   bron?: Bronkenmerken;
 }
@@ -225,6 +228,30 @@ async function bereidOnversleuteld(
     }
   }
 
+  // PPSX/POTX zijn OOXML-varianten, geen conversies: behoud alle diaonderdelen.
+  if (soort === "pptx" && (ext === "ppsx" || ext === "potx")) {
+    const controle = controleerPakket(bytes, soort);
+    const schoon = controle.macros ? await scheidMacros(bytes, soort, ext) : null;
+    const direct = presentatieVariant(schoon?.bytes ?? bytes, "pptx");
+    return {
+      soort,
+      naam: metExtensie(naam, soort),
+      bytes: direct,
+      gewijzigd: true,
+      rapport: openRapport({
+        soort,
+        risicos: controle.risicos,
+        macros: controle.macros,
+        route: "engine",
+        bronformaat: ext,
+        extra: bronregels,
+      }),
+      exportFormaat: ext === "ppsx" ? "ppsx" : undefined,
+      ...(ext === "ppsx" && { voorstelling: true }),
+      ...(schoon && { bron: { macro: schoon.macros } }),
+    };
+  }
+
   const runtime =
     (await hulp.runtimeBeschikbaar?.().catch(() => false)) ?? false;
   /** Voorstel voor Ctrl+S: het bronformaat als de app dat nu kan maken. */
@@ -361,6 +388,7 @@ async function bereidOnversleuteld(
         Object.hasOwn(bestandstypen[soort].uitvoer, ext) && !OUD_BINAIR.has(ext)
           ? ext
           : undefined,
+      ...(soort === "pptx" && ext === "pps" && { voorstelling: true }),
     };
   }
 }
