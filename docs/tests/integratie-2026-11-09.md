@@ -20,6 +20,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#193](https://github.com/OpenAEC-Foundation/open-office-studio/pull/193) | `4b100e6f1e4eabbcfb16edede23cc4f8522bd50d` | `3fa694a128e03ed3516c9a97bd7d1a84d6deaac1` | Shared dialog Escape ordering |
 | [#187](https://github.com/OpenAEC-Foundation/open-office-studio/pull/187) | `5726556db22e3a8abb87b978033bff43316df724` | `a40506bbb16d1fa3758278ecf6dc074db572cfc0` | Modal keyboard guards |
 | [#221](https://github.com/OpenAEC-Foundation/open-office-studio/pull/221) | `e8f9c0ddb9633da4ea380f682355418d6c663378` | `f3bae07dcbeb45993a09d2789354b36e68b3b1a3` | Settings reverse tab order |
+| [#194](https://github.com/OpenAEC-Foundation/open-office-studio/pull/194) | `3de2b6487ee1159d7335cbf2334f150adc736103` | `9f161f58b53d03ff08005483d70c449cf12bbe25` | Author profiles and initials |
 
 ## Earlier fixes included in bundles
 
@@ -48,6 +49,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr193-targeted | `3fa694a128e03ed3516c9a97bd7d1a84d6deaac1` | 4 | 0 | 0 |
 | pr187-related-unit | `a40506bbb16d1fa3758278ecf6dc074db572cfc0` | 13 | 0 | 0 |
 | pr221-related-unit | `f3bae07dcbeb45993a09d2789354b36e68b3b1a3` | 13 | 0 | 0 |
+| pr194-targeted | `9f161f58b53d03ff08005483d70c449cf12bbe25` | 10 | 0 | 0 |
 
 ## Pending deliveries
 
