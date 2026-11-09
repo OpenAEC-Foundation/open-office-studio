@@ -38,6 +38,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#202](https://github.com/OpenAEC-Foundation/open-office-studio/pull/202) | `9f9016b5c883b806efab166e39a732a0fd58b0c9` | `90bc18c448e3337ba2f6f39d9137a342bb463767` | Imported chart source ranges |
 | [#210](https://github.com/OpenAEC-Foundation/open-office-studio/pull/210) | `f1acf304534fb2a34dbf862f5c086c03709f5d0c` | `10f963cdfa8f563dff8862baf2df8baeaeee1c67` | Referenced formula error values |
 | [#223](https://github.com/OpenAEC-Foundation/open-office-studio/pull/223) | `ff44a3907b7d51d0c9372753f693c37eb15e28c4` | `8183faa8e59ef8b95a7603748b21bee5ce092d10` | Unhide custom dimensions |
+| [#204](https://github.com/OpenAEC-Foundation/open-office-studio/pull/204) | `e6a5a34571fb58dbbd81e83e984a06ea13679779` | `b1f0e8ee7c200483e6f9ecd98fa51dba0a17ac99` | Visible sheet navigation |
 
 ## Earlier fixes included in bundles
 
@@ -84,6 +85,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr202-targeted | `90bc18c448e3337ba2f6f39d9137a342bb463767` | 17 | 0 | 0 |
 | pr210-targeted | `10f963cdfa8f563dff8862baf2df8baeaeee1c67` | 12 | 0 | 0 |
 | pr223-targeted | `8183faa8e59ef8b95a7603748b21bee5ce092d10` | 6 | 0 | 0 |
+| pr204-related-unit | `b1f0e8ee7c200483e6f9ecd98fa51dba0a17ac99` | 8 | 0 | 0 |
 
 ## Pending deliveries
 
