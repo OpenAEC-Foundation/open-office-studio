@@ -7,6 +7,7 @@ import {
 import { bereikA1, ontleedVerwijzing } from "../lint/rekenblad-logica";
 import { meldWijziging } from "../lint/editorApi";
 import i18next from "../i18n/config";
+import { formuleKoppeling } from "./formuleKoppeling";
 
 export type Koppelingsoort = "web" | "bestand" | "cel";
 export interface KoppelingDoel extends Selectie {
@@ -76,7 +77,23 @@ export function leesKoppeling(api: XlsxEditorApi, doel: Selectie) {
     includeHiddenColumns: true,
   });
   if (!r.ok) throw new Melding(r.failure.message);
-  return r.content.sheets[0]?.hyperlinks[0] ?? null;
+  const metadata = r.content.sheets[0]?.hyperlinks[0];
+  if (metadata) return { ...metadata, formule: false };
+  const adres = formuleKoppeling(
+    api.handle,
+    doel.blad,
+    doel.bereik.top,
+    doel.bereik.left,
+  );
+  return adres
+    ? {
+        ...(adres.startsWith("#")
+          ? { location: adres.slice(1), externalTarget: null }
+          : { externalTarget: adres, location: null }),
+        tooltip: null,
+        formule: true,
+      }
+    : null;
 }
 
 export async function openKoppeling(
