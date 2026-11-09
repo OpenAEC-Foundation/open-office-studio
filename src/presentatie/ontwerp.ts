@@ -92,6 +92,21 @@ function info(p: Pakket): OntwerpInfo {
   return { masters, layouts, dias };
 }
 export const leesOntwerp = (bytes: Uint8Array) => info(new Pakket(bytes));
+export { info as leesOntwerpPakket };
+/** Masters en indelingen delen één gereserveerd nummergebied. */
+export function ontwerpIds(p: Pakket) {
+  const doc = document(p);
+  return [
+    ...kinderen(kind(doc.root, "sldMasterIdLst"), "sldMasterId").map(
+      (e) => Number(attr(e, "id")) || 0,
+    ),
+    ...info(p).masters.flatMap((m) =>
+      zoekAlle(leesXml(p.lees(m.pad)), "sldLayoutId").map(
+        (e) => Number(attr(e, "id")) || 0,
+      ),
+    ),
+  ];
+}
 
 function attrs(xml: string, el: XmlElement, updates: Record<string, string>) {
   return vervang(xml, [
@@ -171,11 +186,7 @@ function voegLayoutToe(p: Pakket, master: string, pad: string) {
     root = leesXml(xml);
   const lijst = kind(root, "sldLayoutIdLst");
   // IDs zijn presentatiebreed uniek, inclusief alle diamodellen.
-  const ids = info(p).masters.flatMap((m) =>
-    zoekAlle(leesXml(p.lees(m.pad)), "sldLayoutId").map(
-      (e) => Number(attr(e, "id")) || 0,
-    ),
-  );
+  const ids = ontwerpIds(p);
   const id = Math.max(2147483648, ...ids) + 1;
   if (id > 4294967295) throw new OntwerpFout("invalid");
   const regel = `<p:sldLayoutId xmlns:p="${P}" xmlns:r="${R}" id="${id}" r:id="${r}"/>`;
@@ -517,14 +528,7 @@ function kopieerMaster(p: Pakket, bron: string) {
       veranderRelatie(p, master, r.id, pad);
   }
   // Layout IDs zijn ook tussen meerdere masters uniek.
-  let max = Math.max(
-    2147483648,
-    ...oud.masters.flatMap((m) =>
-      zoekAlle(leesXml(p.lees(m.pad)), "sldLayoutId").map(
-        (e) => Number(attr(e, "id")) || 0,
-      ),
-    ),
-  );
+  let max = Math.max(2147483647, ...ontwerpIds(p));
   let xml = p.lees(master);
   const edits = zoekAlle(leesXml(xml), "sldLayoutId").map((e) => {
     if (++max > 4294967295) throw new OntwerpFout("invalid");
@@ -541,7 +545,7 @@ function kopieerMaster(p: Pakket, bron: string) {
   if (!list) throw new OntwerpFout("invalid");
   const mid =
     Math.max(
-      2147483647,
+      max,
       ...kinderen(list, "sldMasterId").map((e) => Number(attr(e, "id")) || 0),
     ) + 1;
   if (mid > 4294967295) throw new OntwerpFout("invalid");

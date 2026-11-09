@@ -53,6 +53,14 @@ describe("PPTX diamodellen, indelingen en thema's", () => {
     const b = dupliceerMaster(bytes, i.masters[0].pad, "Tweede master"),
       n = leesOntwerp(b);
     expect(n.masters.length).toBe(i.masters.length + 1);
+    const p = new Pakket(b);
+    const allIds = [
+      ...zoekAlle(leesXml(p.lees("ppt/presentation.xml")), "sldMasterId"),
+      ...n.masters.flatMap((m) =>
+        zoekAlle(leesXml(p.lees(m.pad)), "sldLayoutId"),
+      ),
+    ].map((e) => attr(e, "id"));
+    expect(new Set(allIds).size).toBe(allIds.length);
     expect(n.dias).toEqual(i.dias);
     const m = n.masters.find((m) => m.naam === "Tweede master")!;
     expect(n.layouts.filter((l) => l.master === m.pad).length).toBe(

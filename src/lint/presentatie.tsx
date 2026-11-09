@@ -83,6 +83,7 @@ import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { DiaObjecten } from "../presentatie/DiaObjecten";
 import { DiaOntwerp } from "../presentatie/DiaOntwerp";
 import { DiaTabellen } from "../presentatie/DiaTabellen";
+import { DiaHergebruik } from "../presentatie/DiaHergebruik";
 import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import "./presentatie.css";
@@ -533,6 +534,7 @@ export function PresentatieRibbon({
     <>
     {grafieken.venster}
     <GrafiekPlakListener />
+    <DiaHergebruik bediening={false}/>
     {weergave.element}
     {acties.voorstellingElement}
     {api && acties.zoeken && (
@@ -685,6 +687,7 @@ export function PresentatieRibbon({
                 <DiaVerwijderen acties={acties} />
               </Groep>
               <DiaVerplaatsen acties={acties} />
+              <Groep naam={t("presentation.groups.slides")}><DiaHergebruik /></Groep>
               <Groep naam={t("presentation.groups.slides")}><DiaOntwerp /></Groep>
               <DiaNavigatie acties={acties} />
             </>

@@ -8,7 +8,7 @@ deze branch horen; #83–87 en de formaatissues blijven apart.
 
 | Issue | Bestaande functionaliteit | Werk dat nog moet worden afgerond |
 |---|---|---|
-| #76 | Diasorteerder met selectie, herschikken, dupliceren, verbergen en secties. Nieuw: bewerkbaar overzicht met alle diatekst, nieuwe alinea's, Undo/Redo en directe opslag. | Dia's uit een andere presentatie hergebruiken/kopiëren met behoud van vormgeving. |
+| #76 | Diasorteerder en secties; bewerkbaar overzicht; hergebruiken van PPTX-dia's en kopiëren/plakken tussen presentaties met bronmasters, media en interne koppelingen. | Andere diaformaten passend schalen; conflicterende notitiemodellen, ingesloten fonts en globale commentaarauteurs samenvoegen. |
 | #77 | Indelingen toepassen op één/alle/geselecteerde dia's; masters en indelingen kopiëren/hernoemen; ongebruikte indelingen verwijderen; placeholderposities herstellen. Meerdere masters en PPTX-behoud getest. | Grafische master-/placeholdereditor, logo's, volledig opmaakherstel en ODP-behoud. |
 | #78 | Drie thema's met voorbeelden; aanpassen/bewaren van kleuren/lettertypen; gerichte toepassing met geïsoleerde masters; kleur-, verloop- en afbeeldingsachtergronden op dia/layout/master. | Themakleuren in alle kleurkiezers, thema-uitwisseling en organisatiebrede huisstijl. |
 | #79 | Notities, timer, volgende dia, tweede venster, schermkeuze, nummernavigatie, zwart/wit, aanwijzer en inkt. PR201 behoudt native knopbediening. | Rijke notitietekst en de resterende presentatorcriteria gericht toetsen. |
