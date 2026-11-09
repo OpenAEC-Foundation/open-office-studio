@@ -204,6 +204,25 @@ export function herstelKolommenWeergave(bron: string): string {
     + bron.replace(oud, 'regions:{sections:oosKolomSecties(p(e$1)),settings:');
 }
 
+/** Nieuwe alinea's met w:next erven geen directe tekenopmaak van de kop (#199). */
+export function herstelVervolgstijl(bron: string): string {
+  const delen = [
+    ['nextParagraphStyleId:P,', 'nextParagraphStyleId:P,oosVervolgOpmaak,'],
+    ['nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,',
+      'nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,oosVervolgOpmaak:T=>vt?.resolveParagraphStyle(T).runFormatting,'],
+    ['me?u.applyParagraphStyle({story:H.story,start:{paraId:se.secondParaId,offset:0},end:{paraId:se.secondParaId,offset:0}},me)',
+      'me?oosPasVervolgstijlToe(u,{story:H.story,start:{paraId:se.secondParaId,offset:0},end:{paraId:se.secondParaId,offset:0}},me,oosVervolgOpmaak?.(me))'],
+    ['[Z,Nt,W,ke,yt,Ee,P,n,i,u,vt])', '[Z,Nt,W,ke,yt,Ee,P,n,i,u,vt,oosVervolgOpmaak])'],
+  ] as const;
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de overgang naar de volgende alineastijl.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { pasVervolgstijlToe as oosPasVervolgstijlToe } from "openaec-tekst-vervolgstijl";\n' + uit;
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
@@ -211,6 +230,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-vervolgstijl")
+        return fileURLToPath(new URL("../src/tekst/stijlen/vervolg.ts", import.meta.url));
       if (id === "openaec-tekst-nootkern")
         return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
       if (id === "openaec-tekst-workerstart")
@@ -242,7 +263,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelTabelContext(bron), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))), map: null };
+      return { code: herstelVervolgstijl(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron))))), map: null };
     },
   };
 }
