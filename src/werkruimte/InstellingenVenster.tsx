@@ -33,16 +33,6 @@ import { TAALCODES, TAALNAMEN, bepaalTaal, type TaalKeuze } from "../i18n/talen"
 import versie from "../../versie.json";
 import "./InstellingenVenster.css";
 
-/** Dezelfde sleutel als de auteursnaam in Tekst (src/lint/tekst-opdrachten.tsx). */
-const AUTEUR = "open-tekst-auteur";
-function leesAuteur() {
-  try {
-    return localStorage.getItem(AUTEUR) ?? "";
-  } catch {
-    return "";
-  }
-}
-
 export const TABS = ["algemeen", "uiterlijk", "bewerken", "email", "over"] as const;
 type Tab = (typeof TABS)[number];
 
@@ -80,14 +70,12 @@ const SPELLING: (keyof Instellingen["spelling"])[] = [
 /** Concept van alles wat Opslaan bewaart. */
 interface Concept {
   instellingen: Instellingen;
-  auteur: string;
   /** Herstelinterval in minuten, als tekst uit het invoerveld. */
   interval: string;
 }
 
 const leesConcept = (): Concept => ({
   instellingen: leesBewaardeInstellingen(),
-  auteur: leesAuteur(),
   interval: String(herstelInterval() / 60_000),
 });
 
@@ -115,7 +103,6 @@ export function InstellingenVenster({ sluit }: { sluit: () => void }) {
 
   const bewaar = () => {
     try {
-      localStorage.setItem(AUTEUR, concept.auteur);
       const minuten = Number(concept.interval);
       if (concept.interval !== "" && Number.isFinite(minuten))
         localStorage.setItem(INTERVAL_SLEUTEL, String(Math.min(60, Math.max(1, Math.round(minuten)))));
@@ -130,7 +117,7 @@ export function InstellingenVenster({ sluit }: { sluit: () => void }) {
   const herstel = () => {
     // Alleen het concept; pas Opslaan bewaart het (zoals in de template).
     const instellingen = standaardInstellingen;
-    setConcept({ instellingen, auteur: "", interval: String(STANDAARD_INTERVAL_MINUTEN) });
+    setConcept({ instellingen, interval: String(STANDAARD_INTERVAL_MINUTEN) });
     toonVoorbeeld(instellingen);
     setHerstellen(false);
   };
@@ -364,9 +351,18 @@ function Algemeen({
             id={`${id}-auteur`}
             className="instellingen-invoer is-breed"
             type="text"
-            value={concept.auteur}
+            value={instellingen.gebruiker.naam}
             autoComplete="name"
-            onChange={(e) => setConcept({ ...concept, auteur: e.target.value })}
+            onChange={(e) => wijzig({ gebruiker: { naam: e.target.value } })}
+          />
+        </Rij>
+        <Rij label={t("general.authorInitials")} id={`${id}-initialen`}>
+          <input
+            id={`${id}-initialen`}
+            className="instellingen-invoer"
+            type="text"
+            value={instellingen.gebruiker.initialen}
+            onChange={(e) => wijzig({ gebruiker: { initialen: e.target.value } })}
           />
         </Rij>
       </Sectie>
