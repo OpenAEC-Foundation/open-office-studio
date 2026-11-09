@@ -40,7 +40,7 @@ export function bereidStructuurBeveiliging(h: WorkbookHandle, bytes: Uint8Array)
   if (beveiligd) {
     const toepassen = h.applyOps;
     h.applyOps = ops => {
-      if (ops.some(op => structuurOps.has(op.type)))
+      if (ops.some(op => typeof op === "object" && op !== null && "type" in op && typeof op.type === "string" && structuurOps.has(op.type)))
         throw new Error(i18next.t("spreadsheet:sheets.structureLocked"));
       return toepassen.call(h, ops);
     };
