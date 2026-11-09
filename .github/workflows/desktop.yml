@@ -73,6 +73,8 @@ jobs:
         shell: pwsh
         run: ./scripts/voorbereiden-windows.ps1
       - run: pnpm build
+      - name: Native document-link path regressions
+        run: cargo test --manifest-path src-tauri/Cargo.toml --locked documentkoppeling --no-default-features
       - name: Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen
         if: runner.os == 'Linux'
         run: node scripts/corpus-download.mjs docs/tests/smoke-manifest.json

@@ -49,7 +49,8 @@ def schema(name):
 
 def run(exe, args, directory):
     log = directory / "converter.log"
-    options = {"stdin": subprocess.DEVNULL, "stdout": subprocess.PIPE, "stderr": subprocess.STDOUT}
+    options = {"stdin": subprocess.DEVNULL, "stdout": subprocess.PIPE, "stderr": subprocess.STDOUT,
+               "env": {**os.environ, "SAL_DISABLE_DEFAULTPRINTER": "1", "SAL_DISABLE_PRINTERLIST": "1"}}
     if os.name == "nt":
         options["creationflags"] = subprocess.CREATE_NO_WINDOW
     else:

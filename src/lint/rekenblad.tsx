@@ -133,6 +133,7 @@ import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
 import { NamenBeheer } from "../rekenblad/NamenBeheer";
 import { ValidatieGroep } from "../rekenblad/ValidatieLint";
 import { BeveiligingGroep } from "../rekenblad/BeveiligingLint";
+import { useObjectenGroep } from "../rekenblad/ObjectenGroep";
 
 type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
 
@@ -490,6 +491,7 @@ export function RekenbladRibbon({
   };
   const uit = !stand?.schrijfbaar;
   const grafieken = useRekenbladGrafieken();
+  const objecten = useObjectenGroep(uit);
   const sluiten = () => {
     setPaneel(null);
     api?.focus();
@@ -747,6 +749,7 @@ export function RekenbladRibbon({
                 {bladen}
                 {functies}
                 <RekenbladGrafiekGroep g={grafieken} uit={uit} />
+                {objecten.groep}
               </>
             ),
           },
@@ -1078,6 +1081,7 @@ export function RekenbladRibbon({
       )}
       {grafieken.venster}
       <RekenbladExtra />
+      {objecten.venster}
     </RekenbladToolbar>
   );
 }

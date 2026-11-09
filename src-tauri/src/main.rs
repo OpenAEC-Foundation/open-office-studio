@@ -2,6 +2,7 @@
 use std::{io::Write, path::Path};
 mod conversie;
 mod database_export;
+mod documentkoppeling;
 mod email;
 mod herstel;
 mod lettertypen;
@@ -240,6 +241,7 @@ fn main() {
             werkbestanden::bevestig_formaat,
             werkbestanden::vergeet_werkbestand,
             werkbestanden::kies_bestanden,
+            documentkoppeling::open_documentkoppeling,
             recent::recente_bestanden,
             recent::open_recent,
             recent::zet_recent_vast,

@@ -92,7 +92,7 @@ const mb = (n) => Math.round((n / 1024 / 1024) * 10) / 10;
 const ms = (n) => Math.round(n);
 
 function python(script, args, toegestaan = [0], json = true) {
-  const r = spawnSync("python3", [script, ...args], {
+  const r = spawnSync(process.env.OOS_PYTHON ?? "python3", [script, ...args], {
     encoding: "utf8",
     maxBuffer: 256 * 1024 * 1024,
   });

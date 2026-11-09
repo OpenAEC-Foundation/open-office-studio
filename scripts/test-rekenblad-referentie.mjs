@@ -16,7 +16,7 @@ const REFERENTIE = {
 };
 const sha = b => createHash("sha256").update(b).digest("hex");
 function python(script, args, toegestaan = [0]) {
-  const r = spawnSync("python3", [script, ...args], { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
+  const r = spawnSync(process.env.OOS_PYTHON ?? "python3", [script, ...args], { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
   if (!toegestaan.includes(r.status)) throw new Error(`${script}: ${r.stderr.trim()}`);
   return JSON.parse(r.stdout);
 }
@@ -95,7 +95,7 @@ if (process.argv[2] === "--geval") {
   assert.equal(createHash("sha512").update(archief).digest("base64"),REFERENTIE.integriteit,"Afwijkend referentiepakket.");
   await writeFile(archiefPad,archief);
   const werkmap=await mkdtemp(join(MAP,"referentie","uitgepakt-"));
-  const extractie=spawnSync("python3",["-c",`import tarfile,sys,pathlib
+  const extractie=spawnSync(process.env.OOS_PYTHON ?? "python3",["-c",`import tarfile,sys,pathlib
 with tarfile.open(sys.argv[1]) as t:
  leden=t.getmembers()
  assert len(leden)<32 and sum(m.size for m in leden)<8*1024*1024

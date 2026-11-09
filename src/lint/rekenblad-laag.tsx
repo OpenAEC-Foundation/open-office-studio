@@ -29,6 +29,7 @@ import { CelnotitieLaag } from "../rekenblad/CelnotitieUi";
 import { ValidatieLaag } from "../rekenblad/ValidatieUi";
 import { bewaakBeveiligdeSelectie } from "../rekenblad/bladbeveiliging";
 import "./rekenblad-gereedschap.css";
+import { TekenobjectLaag } from "../rekenblad/TekenobjectLaag";
 
 /** Een verwijzing om in het raster te kleuren. */
 export interface Markering {
@@ -92,6 +93,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
     const sel = selectie?.sheetId === sheetId ? selectie : null;
     return (
       <>
+        {blad >= 0 && <TekenobjectLaag api={api} blad={blad} geometry={geometry} />}
         {blad >= 0 && <CelnotitieLaag api={api} blad={blad} geometry={geometry} />}
         {blad >= 0 && <ValidatieLaag api={api} blad={blad} geometry={geometry} focus={sel?.cells?.focus ?? null} />}
         {markeringen
