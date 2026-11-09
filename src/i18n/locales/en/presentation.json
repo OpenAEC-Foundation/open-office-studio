@@ -207,8 +207,16 @@
       "invalid": "Enter valid values and a valid slide range.",
       "inUse": "This layout is still in use.",
       "lastLayout": "A master must keep at least one layout.",
-      "missing": "The document has changed. Open this dialog again."
-    }
+      "missing": "The document has changed. Open this dialog again.",
+      "themeFile": "Choose a valid Open Office Studio theme file.",
+      "themeTooLarge": "Use a theme file up to 64 KB.",
+      "themeSave": "The theme could not be saved. Try again."
+    },
+    "exportTheme": "Export theme",
+    "importTheme": "Import theme",
+    "themeFileHelp": "Exchange colors, font names and background as an Open Office Studio theme (.oos-theme). Import previews the theme; Apply changes the selected slides. Font files are not included.",
+    "importedTheme": "Theme imported. Review it, then apply or save it.",
+    "exportedTheme": "Theme exported."
   },
   "tables": {
     "title": "Tables",
@@ -386,5 +394,20 @@
     "noObjects": "This slide has no objects to animate.",
     "objectFallback": "Object {{number}}",
     "previewFailed": "The animation preview could not be drawn."
+  },
+  "groups": {
+    "group": "Group objects",
+    "ungroup": "Ungroup",
+    "help": "Choose at least two objects. The group takes the highest stack position of the selection.",
+    "ungroupHelp": "Choose the group to ungroup. Its children retain their visible positions.",
+    "name": "Group name",
+    "defaultName": "Group",
+    "apply": "Apply",
+    "unavailable": "unavailable",
+    "errors": {
+      "invalid": "Choose at least two objects and enter a name.",
+      "missing": "The group or document has changed. Open this dialog again.",
+      "unsupported": "This selection contains placeholders, locks, group effects, animation targets or transforms that cannot yet be flattened without changing the result."
+    }
   }
 }

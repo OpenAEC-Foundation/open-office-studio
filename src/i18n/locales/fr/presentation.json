@@ -207,8 +207,16 @@
       "invalid": "Saisissez des valeurs et une plage valides.",
       "inUse": "Cette disposition est encore utilisée.",
       "lastLayout": "Un masque doit conserver au moins une disposition.",
-      "missing": "Le document a changé. Rouvrez la fenêtre."
-    }
+      "missing": "Le document a changé. Rouvrez la fenêtre.",
+      "themeFile": "Choisissez un fichier de thème Open Office Studio valide.",
+      "themeTooLarge": "Utilisez un fichier de thème de 64 Ko maximum.",
+      "themeSave": "Impossible d’enregistrer le thème. Réessayez."
+    },
+    "exportTheme": "Exporter le thème",
+    "importTheme": "Importer un thème",
+    "themeFileHelp": "Échangez couleurs, noms de polices et arrière-plan dans un thème Open Office Studio (.oos-theme). L’import affiche le thème ; Appliquer modifie les diapositives choisies. Les fichiers de polices ne sont pas inclus.",
+    "importedTheme": "Thème importé. Vérifiez-le, puis appliquez-le ou enregistrez-le.",
+    "exportedTheme": "Thème exporté."
   },
   "tables": {
     "title": "Tableaux",
@@ -386,5 +394,20 @@
     "noObjects": "Cette diapositive ne contient aucun objet à animer.",
     "objectFallback": "Objet {{number}}",
     "previewFailed": "Impossible de dessiner l’aperçu de l’animation."
+  },
+  "groups": {
+    "group": "Grouper les objets",
+    "ungroup": "Dissocier",
+    "help": "Choisissez au moins deux objets. Le groupe prend la position la plus haute de la sélection.",
+    "ungroupHelp": "Choisissez le groupe à dissocier. Les objets conservent leurs positions visibles.",
+    "name": "Nom du groupe",
+    "defaultName": "Groupe",
+    "apply": "Appliquer",
+    "unavailable": "indisponible",
+    "errors": {
+      "invalid": "Choisissez au moins deux objets et saisissez un nom.",
+      "missing": "Le groupe ou le document a changé. Rouvrez cette fenêtre.",
+      "unsupported": "La sélection contient des espaces réservés, verrouillages, effets de groupe, cibles d’animation ou transformations qui ne peuvent pas encore être dissociés sans modifier le résultat."
+    }
   }
 }
