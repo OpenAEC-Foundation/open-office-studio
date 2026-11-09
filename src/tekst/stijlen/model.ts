@@ -314,7 +314,7 @@ export function ontbrekendeStijl(stijlen: StyleDefinitions | undefined, styleId:
 
 type Knoop = { type?: string; content?: unknown; formatting?: { styleId?: string }; rows?: unknown };
 
-/** Hoe vaak elke stijl in de hoofdtekst voorkomt (alinea- en tekenstijlen). */
+/** Hoe vaak elke stijl in de documentverhalen voorkomt (alinea-, teken- en tabelstijlen). */
 export function gebruikteStijlen(document: Document | null | undefined): Map<string, number> {
   const telling = new Map<string, number>();
   const tel = (id: string | undefined) => {
@@ -337,6 +337,11 @@ export function gebruikteStijlen(document: Document | null | undefined): Map<str
     if (cellen) loop(cellen);
   };
   loop(document?.package.document.content);
+  const pakket = document?.package;
+  for (const verhalen of [pakket?.headers?.values(), pakket?.footers?.values()])
+    for (const verhaal of verhalen ?? []) loop(verhaal.content);
+  for (const verhalen of [pakket?.footnotes, pakket?.endnotes, pakket?.footnoteSeparators, pakket?.endnoteSeparators])
+    loop(verhalen);
   // Alinea's zonder stijl gebruiken de standaard-alineastijl.
   const zonder = telling.get("\u0000standaard");
   if (zonder) {
