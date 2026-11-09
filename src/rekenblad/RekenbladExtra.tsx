@@ -14,6 +14,8 @@ import {
   BetweenVerticalStart,
   ClipboardPaste,
   ClipboardList,
+  ChevronLeft,
+  ChevronRight,
   Copy,
   Eye,
   EyeOff,
@@ -198,7 +200,8 @@ export function RekenbladExtra() {
     };
   }, [host, api, setVenster]);
 
-  // De knop met alle bladen links van de tabs.
+  // Navigatie blijft naast de scrollbare tabs staan. Alleen horizontaal
+  // schuiven: scrollIntoView zou ook de pagina of het raster verplaatsen.
   useEffect(() => {
     if (!host || !api) return;
     let frame = 0;
@@ -208,18 +211,28 @@ export function RekenbladExtra() {
       if (!tabs) return setTabsPlek(null);
       const a = tabs.getBoundingClientRect();
       const b = host.getBoundingClientRect();
-      setTabsPlek({ left: a.left - b.left + 4, top: a.top - b.top + (a.height - 24) / 2 });
+      setTabsPlek({ left: a.left - b.left - 84, top: a.top - b.top + (a.height - 24) / 2 });
+      const actief = tabs.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]');
+      if (actief) {
+        const r = actief.getBoundingClientRect();
+        if (r.left < a.left) tabs.scrollLeft += r.left - a.left;
+        else if (r.right > a.right) tabs.scrollLeft += Math.min(r.left - a.left, r.right - a.right);
+      }
     };
     const plan = () => {
       if (!frame) frame = requestAnimationFrame(plaats);
     };
     const kijker = new ResizeObserver(plan);
     kijker.observe(host);
+    // De editor kan de nieuwe tab pas na onUpdate renderen.
+    const tabsKijker = new MutationObserver(plan);
+    tabsKijker.observe(host, { childList: true, subtree: true, attributes: true, attributeFilter: ["aria-selected"] });
     const stop = api.handle.onUpdate(plan);
     plan();
     return () => {
       cancelAnimationFrame(frame);
       kijker.disconnect();
+      tabsKijker.disconnect();
       stop();
     };
   }, [host, api]);
@@ -228,6 +241,10 @@ export function RekenbladExtra() {
     return <span ref={anker} hidden />;
 
   const uit = alleenLezen(api);
+  const zichtbareBladen = bladenLijst(api).filter((b) => !b.verborgen);
+  const actiefBlad = zichtbareBladen.findIndex((b) => b.index === api.handle.sheetInfo().activeSheet);
+  const vorigBlad = zichtbareBladen[actiefBlad - 1];
+  const volgendBlad = actiefBlad < 0 ? undefined : zichtbareBladen[actiefBlad + 1];
   const engineUitleg = t("menu.engineMissing");
   const klembordItems: MenuItem[] = [
     { naam: t("menu.cut"), icoon: Scissors, sneltoets: "Ctrl+X", uit, doe: () => uitvoeren((a) => kopieer(a, true)) },
@@ -361,21 +378,48 @@ export function RekenbladExtra() {
               }}
             />
             {tabsPlek && (
-              <button
-                type="button"
-                className="rekenblad-bladenknop"
-                style={tabsPlek}
-                title={t("sheets.allSheets")}
-                aria-label={t("sheets.allSheets")}
-                aria-haspopup="menu"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={(e) => {
-                  const r = e.currentTarget.getBoundingClientRect();
-                  setVenster({ soort: "menu", menu: "lijst", x: r.left, y: r.top - 8 });
-                }}
-              >
-                <List size={15} />
-              </button>
+              <div className="rekenblad-bladnavigatie" style={tabsPlek} role="group" aria-label={t("sheets.navigation")}>
+                <button
+                  type="button"
+                  className="rekenblad-bladenknop"
+                  title={t("sheets.previousSheet")}
+                  aria-label={t("sheets.previousSheet")}
+                  disabled={!vorigBlad}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => uitvoeren((a) => {
+                    if (vorigBlad) return gaNaarBlad(a, vorigBlad.index);
+                  })}
+                >
+                  <ChevronLeft size={15} />
+                </button>
+                <button
+                  type="button"
+                  className="rekenblad-bladenknop"
+                  title={t("sheets.nextSheet")}
+                  aria-label={t("sheets.nextSheet")}
+                  disabled={!volgendBlad}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => uitvoeren((a) => {
+                    if (volgendBlad) return gaNaarBlad(a, volgendBlad.index);
+                  })}
+                >
+                  <ChevronRight size={15} />
+                </button>
+                <button
+                  type="button"
+                  className="rekenblad-bladenknop"
+                  title={t("sheets.allSheets")}
+                  aria-label={t("sheets.allSheets")}
+                  aria-haspopup="menu"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    setVenster({ soort: "menu", menu: "lijst", x: r.left, y: r.top - 8 });
+                  }}
+                >
+                  <List size={15} />
+                </button>
+              </div>
             )}
           </>,
           host,

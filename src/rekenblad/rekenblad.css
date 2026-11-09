@@ -239,14 +239,22 @@
   }
 }
 
-/* Bladtabs: lijst van alle bladen links van de tabs. */
+/* Vaste navigatie naast de zelfstandig scrollbare bladtabs. */
 .office .office-rekenblad-host [data-testid="xlsx-sheet-tabs"] {
-  padding-inline-start: 34px !important;
+  margin-left: 88px;
   position: relative;
 }
-.office .rekenblad-bladenknop {
+.office .office-rekenblad-host [data-testid="xlsx-sheet-tabs"] [role="tab"] {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.office .rekenblad-bladnavigatie {
   position: absolute;
   z-index: 3;
+  display: flex;
+  gap: 2px;
+}
+.office .rekenblad-bladenknop {
   display: grid;
   place-items: center;
   width: 26px;
@@ -257,9 +265,17 @@
   color: #5c6573;
   cursor: pointer;
 }
-.office .rekenblad-bladenknop:hover {
+.office .rekenblad-bladenknop:hover:not(:disabled) {
   border-color: #dce1e6;
   background: #fff;
+}
+.office .rekenblad-bladenknop:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.office .rekenblad-bladenknop:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
 }
 
 /* Vangt de paste-gebeurtenis van Ctrl+V, zodat HTML en tekst leesbaar zijn. */
