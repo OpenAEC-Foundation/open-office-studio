@@ -1,16 +1,49 @@
 {
   "types": {
-    "column": { "name": "Kolom", "description": "Waarden naast elkaar vergelijken" },
-    "stackedColumn": { "name": "Gestapelde kolom", "description": "Delen en totaal per categorie" },
-    "percentColumn": { "name": "100%-kolom", "description": "Aandelen per categorie" },
-    "bar": { "name": "Staaf", "description": "Horizontaal, voor lange namen" },
-    "line": { "name": "Lijn", "description": "Verloop over de tijd" },
-    "lineMarkers": { "name": "Lijn met markeringen", "description": "Verloop met zichtbare meetpunten" },
-    "area": { "name": "Vlak", "description": "Verloop met nadruk op omvang" },
-    "pie": { "name": "Taart", "description": "Verdeling van één reeks" },
-    "doughnut": { "name": "Ring", "description": "Verdeling met een open midden" },
-    "scatter": { "name": "Spreiding (XY)", "description": "Verband tussen twee getallen" },
-    "combo": { "name": "Kolom + lijn", "description": "Laatste reeks als lijn op een tweede as" }
+    "column": {
+      "name": "Kolom",
+      "description": "Waarden naast elkaar vergelijken"
+    },
+    "stackedColumn": {
+      "name": "Gestapelde kolom",
+      "description": "Delen en totaal per categorie"
+    },
+    "percentColumn": {
+      "name": "100%-kolom",
+      "description": "Aandelen per categorie"
+    },
+    "bar": {
+      "name": "Staaf",
+      "description": "Horizontaal, voor lange namen"
+    },
+    "line": {
+      "name": "Lijn",
+      "description": "Verloop over de tijd"
+    },
+    "lineMarkers": {
+      "name": "Lijn met markeringen",
+      "description": "Verloop met zichtbare meetpunten"
+    },
+    "area": {
+      "name": "Vlak",
+      "description": "Verloop met nadruk op omvang"
+    },
+    "pie": {
+      "name": "Taart",
+      "description": "Verdeling van één reeks"
+    },
+    "doughnut": {
+      "name": "Ring",
+      "description": "Verdeling met een open midden"
+    },
+    "scatter": {
+      "name": "Spreiding (XY)",
+      "description": "Verband tussen twee getallen"
+    },
+    "combo": {
+      "name": "Kolom + lijn",
+      "description": "Laatste reeks als lijn op een tweede as"
+    }
   },
   "unknownType": "Onbekende soort",
   "busy": "Bezig…",
@@ -226,7 +259,36 @@
       "lastSeriesAsLine": "Bij bewerken wordt alleen de laatste reeks als lijn getekend.",
       "multiLevelCategories": "Categorieën met meerdere niveaus worden bij bewerken één niveau.",
       "moreValuesThanCategories": "Reeks ‘{{name}}’ heeft meer waarden dan er categorieën zijn.",
-      "trendlinesDropped": "Trendlijnen en foutbalken vervallen bij bewerken."
+      "trendlinesDropped": "Foutbalken worden bij deze bewerking niet behouden."
     }
+  },
+  "trend": {
+    "title": "Trendlijnen",
+    "forSeries": "Trendlijn voor {{name}}",
+    "none": "Geen",
+    "preserved": "Trendlijn uit bestand behouden",
+    "order": "Polynoomgraad",
+    "period": "Periode voortschrijdend gemiddelde",
+    "showR2": "R² weergeven",
+    "invalid": "Controleer de instellingen van de trendlijn.",
+    "unsupportedChart": "Verwijder de trendlijnen voordat u een gestapelde, taart- of ringgrafiek kiest.",
+    "types": {
+      "linear": "Lineair",
+      "exp": "Exponentieel",
+      "log": "Logaritmisch",
+      "power": "Macht",
+      "poly": "Polynoom",
+      "movingAvg": "Voortschrijdend gemiddelde"
+    }
+  },
+  "transfer": {
+    "copy": "Grafiek kopiëren",
+    "paste": "Grafiek plakken",
+    "choose": "Kies een grafiek",
+    "help": "Kopieer de grafiek en de gegevens. Plak in Presentatie met Grafiek plakken of Ctrl+V.",
+    "empty": "Dit document bevat geen grafieken.",
+    "invalid": "Het klembord bevat geen ondersteunde grafiekkopie.",
+    "changed": "Het document is gewijzigd. Kopieer of plak de grafiek opnieuw.",
+    "slide": "Dia {{number}}"
   }
 }

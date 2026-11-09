@@ -26,6 +26,7 @@ import type { GrafiekSelectieBron } from "./xlsxSelectie.ts";
 import type { XlsxDoel } from "./herladen.ts";
 import { GrafiekVenster, type GeladenBereik } from "./GrafiekVenster.tsx";
 import { Bevestig, GrafiekenLijst } from "./Keuzevensters.tsx";
+import { GrafiekOverdracht } from "./GrafiekOverdracht";
 
 const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const leegAbonnement = () => () => {};
@@ -289,6 +290,7 @@ export function RekenbladGrafiekGroep({ g, uit }: { g: RekenbladGrafieken; uit?:
         <Knop naam={t("ribbon.editChart")} icoon={Pencil} uit={uit || !g.beschikbaar} doe={g.bewerken} />
         <Knop naam={t("ribbon.allCharts")} icoon={ListTree} uit={!g.beschikbaar} doe={g.alleGrafieken} />
       </div>
+      <GrafiekOverdracht formaat="xlsx" />
     </Groep>
   );
 }

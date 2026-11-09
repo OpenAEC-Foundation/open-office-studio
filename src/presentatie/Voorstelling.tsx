@@ -231,7 +231,15 @@ export function Voorstelling({
     const vensters: Window[] = [window];
     if (opstelling.soort === "browser") vensters.push(opstelling.popup);
     const luister = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
+      // Een popup heeft een eigen HTMLElement-constructor. Gebruik daarom
+      // de doelnode zelf, zodat ook bediening in het andere venster telt.
+      const doel = e.target as HTMLElement | null;
+      if (doel && typeof doel.closest === "function") {
+        if (doel.closest("input, textarea, select") || doel.isContentEditable) return;
+        // Enter/spatie activeren de gefocuste knop of link via de browser;
+        // de voorstelling mag die toets niet als Volgende onderscheppen.
+        if ((e.key === "Enter" || e.key === " ") && doel.closest("button, a[href], [role='button']")) return;
+      }
       if (e.key === "F5" && e.altKey) {
         e.preventDefault();
         e.stopPropagation();
