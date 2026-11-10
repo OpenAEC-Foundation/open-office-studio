@@ -160,9 +160,14 @@
     "toEnd": "(sposta alla fine)",
     "makeCopy": "Crea una copia",
     "moveUnavailable": "Il motore di calcolo non può ancora spostare i fogli; viene creata una copia.",
-    "copyScope": "La copia riceve il contenuto con formule, formattazione, larghezze di colonna, altezze di riga, celle unite e riquadri bloccati; grafici, immagini e commenti non vengono copiati.",
+    "copyScope": "La copia conserva celle, formattazione, impostazioni del foglio, grafici, immagini, note, commenti e collegamenti. La cartella di lavoro viene ricaricata e la cronologia di annullamento viene cancellata. Le macro e i grafici pivot non possono ancora essere copiati.",
     "copy": "Copia",
-    "structureLocked": "La struttura della cartella di lavoro è protetta. Non è possibile aggiungere, eliminare, spostare o rinominare i fogli."
+    "structureLocked": "La struttura della cartella di lavoro è protetta. Non è possibile aggiungere, eliminare, spostare o rinominare i fogli.",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "Formato celle › Numero",

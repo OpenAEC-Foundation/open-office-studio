@@ -160,9 +160,14 @@
     "toEnd": "(mover para o final)",
     "makeCopy": "Criar uma cópia",
     "moveUnavailable": "O mecanismo de cálculo ainda não move planilhas; é criada uma cópia.",
-    "copyScope": "A cópia recebe o conteúdo com fórmulas, formatação, larguras de coluna, alturas de linha, células mescladas e painéis congelados; gráficos, imagens e comentários não são copiados.",
+    "copyScope": "A cópia mantém células, formatação, configurações da planilha, gráficos, imagens, notas, comentários e links. A pasta de trabalho é recarregada e o histórico de desfazer é apagado. Ainda não é possível copiar macros nem gráficos dinâmicos.",
     "copy": "Copiar",
-    "structureLocked": "A estrutura da pasta de trabalho está protegida. Não é possível adicionar, excluir, mover ou renomear planilhas."
+    "structureLocked": "A estrutura da pasta de trabalho está protegida. Não é possível adicionar, excluir, mover ou renomear planilhas.",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "Formatar células › Número",
