@@ -78,6 +78,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#277](https://github.com/OpenAEC-Foundation/open-office-studio/pull/277) | `74bd7432b79b9fb4ee580f42a592beee0769e140` | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | Spreadsheet conditional-format differential style rendering |
 | [#266](https://github.com/OpenAEC-Foundation/open-office-studio/pull/266) | `617f23bf7dd0d258f337ec54075139ef38b01a5e` | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | Writer story parts, style selection and one-shot document reload navigation |
 | [#278](https://github.com/OpenAEC-Foundation/open-office-studio/pull/278) | `ddb5c063289f557467a8ad971077220d13788fe8` | `8b4eafc98d6973dfbcb5e0639448c0f80a991d5c` | Presentation ODF transition timing, direction and shared audio round trips |
+| [#283](https://github.com/OpenAEC-Foundation/open-office-studio/pull/283) | `211822ced0231c4eb8862087a2d6ba2584c98243` | `708441dbc0dc23b77d98fcb3a774cf0df6fd24e3` | Focused issue reporting and synthetic Writer-theme screenshot evidence; documentation-only review |
 
 ## Earlier fixes included in bundles
 

@@ -10,7 +10,8 @@ waar nuttig aan een bestaand overkoepelend issue of als sub-issues; maak geen
 extra verzamelissue wanneer een passend overzicht al bestaat.
 
 Zoek vóór het aanmaken naar open én gesloten duplicaten en lees hun inhoud.
-Vul een passende bestaande melding aan. Vermeld de relevante omgeving en
+Vul een passende bestaande melding aan. Onderscheid bugs, verbeterwensen en
+onderzoek. Vermeld de relevante omgeving en
 versie, reproductiestappen, werkelijk en verwacht gedrag, toetsbare
 acceptatiecriteria en relevant bewijs. Maak duidelijk welk gedrag door de
 gebruiker is gemeld, op screenshots zichtbaar is of zelfstandig gereproduceerd
