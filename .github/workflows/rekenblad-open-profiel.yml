@@ -6,6 +6,7 @@ on:
       - .github/workflows/rekenblad-open-profiel.yml
       - scripts/*rekenblad*profiel*
       - scripts/profiel-rekenblad-open.rs
+      - scripts/profileer-rekenblad-bron.py
       - scripts/bouw-rekenbladkern.py
       - patches/rekenbladengine-*
   workflow_dispatch:
@@ -27,6 +28,7 @@ jobs:
       - name: Verify and prepare the exact native source and all pinned patches
         run: python scripts/bouw-rekenbladkern.py --bronmap .local/kernbron --uitvoer .local/unused --alleen-bron
       - run: python scripts/maak-rekenblad-openprofiel.py
+      - run: python scripts/profileer-rekenblad-bron.py .local/kernbron
       - name: Compile the bounded phase probe
         run: |
           cp scripts/profiel-rekenblad-open.rs .local/kernbron/crates/betteroffice-xlsx/tests/open_profiel.rs
