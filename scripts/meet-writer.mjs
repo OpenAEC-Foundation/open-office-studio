@@ -62,6 +62,7 @@ try {
         "paragraphSpans",
         "locateParagraph",
         "selectionContext",
+        "selection",
         "onSelectionChange",
         "onContentChange",
       ]);

@@ -85,3 +85,19 @@ Bij dezelfde workload (600 alinea's, 79 pagina's, 2.400 fouten, CPU4, diagnostie
 Het aantal layoutwijzigingen tijdens typen hangt af van batching en systeembelasting. Beide kandidaten vermijden alle 30 extra paginascans bij de vaste cursorreeks. De afgeronde kandidaat behield alle tekst tijdens invoer en normaal SDK-opslaan/heropenen; alle 92 zichtbare golflijnen en alle acht extra viewportcontroles waren gelijk, zonder JavaScript-fouten. Dit controleert geen productie-Ctrl+S in offline modus; de voorbereiding van de documentworker wordt afzonderlijk gerepareerd.
 
 De totale cursorreeksen liepen uiteen van 5,52 tot 11,64 seconden, tegenover 7,21 seconden vooraf. Dat onderbouwt geen algemeen tijdspercentage. De winst betreft aantoonbaar vermeden DOM-metingen; native cursorwerk en lange frames blijven verdere aandacht vragen. TypeScript, de 25 gerichte spellingtests en de volledige suite (2.044 geslaagd, 7 bestaande skips) slaagden; de volledige suite ging vooraf aan de extra verborgen-vlakcontrole.
+
+## Status en lint volgen dezelfde native sessie
+
+`TekstInfo` en `useEditorTik` koppelden bij iedere nieuwe publieke ref opnieuw hun selectie- en inhoudsluisteraars aan. Elke koppeling gaf ook een kunstmatige selectiemelding, met documentlezingen of liniaal-/lintwerk tot gevolg. `volgEditorWijzigingen` vergelijkt nu de onderliggende Yrs-sessie. Een daadwerkelijk andere sessie, ook achter dezelfde publieke ref, vervangt de luisteraars; sluiten en stoppen ruimen ze op. Achtergebleven oude callbacks worden genegeerd.
+
+Alleen de eventkoppeling stabiliseren was onvoldoende: de SDK publiceert niet elke cursorbeweging binnen gelijk opgemaakte tekst. Een browserproef over een taalgrens binnen dezelfde alinea ontdekte daardoor een achterblijvende taalindicator. De bestaande polls van 600/700 ms lezen nu ook de kleine native selectie (anchor/head). Alleen een veranderde positie geeft een extra selectiemelding. Een echte SDK-melding werkt die momentopname meteen bij en veroorzaakt dus geen dubbele pollmelding. De poll projecteert geen document; inhoud en opmaak blijven via de bestaande events worden verwerkt. Er is geen versiecache voor documentmetadata toegevoegd.
+
+In de vaste CPU4-proef waren de registraties van zowel `onSelectionChange` als `onContentChange` achtereenvolgens 16, 8 en 14 tijdens typen/cursor/scrollen. De afgeronde kandidaat registreerde in die fasen geen luisteraars opnieuw. Publieke documentlezingen gingen in deze runs van 9/7/8 naar 7/1/0. De native selectielezingen kostten samen circa 13 ms voor de drie fasen. Door sterk wisselende systeembelasting zijn de totale tijden en toetslatenties geen bewijs voor een algemeen snelheidspercentage.
+
+```powershell
+node scripts/proef-writer-status.mjs .local/writer-viewport
+```
+
+Deze aanvullende CPU4-browserproef gebruikt Nederlandstalige en Engelstalige runs in één alinea en een Franstalige volgende alinea. De indicator moet na cursorverplaatsing alle talen tonen. Na invoer wordt de opgeslagen DOCX in een verse appinstantie heropend; de tekst en taalindicator moeten behouden blijven. De vijf controles slagen. `--second-tab` onderzoekt aanvullend de gedeelde statuswinkel bij twee geopende documenten; dat is geen onderdeel van deze geslaagde heropencontrole.
+
+De zes gerichte aansluitingstests controleren wisselende publieke refs, stille cursorbewegingen, echte meldingen zonder dubbele polling, vervangen, openen zonder native sessie, sluiten en stoppen. TypeScript, 22 gerichte tests en de volledige suite (2.050 geslaagd, 7 bestaande skips) slagen, evenals de normale productiebuild.
