@@ -7,7 +7,7 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { createYrsSession, saveYrsDocx } from "@betteroffice/docx/yrs";
 import i18next from "../../i18n/config";
-import { begin, engine, klaar, type Sessie } from "../gedeeld/engine.ts";
+import { begin, engine, sluitStap, type Sessie } from "../gedeeld/engine.ts";
 import { getoond, inSelectie, type Revisie } from "./logica.ts";
 
 export function revisies(s: Sessie): Revisie[] {
@@ -33,7 +33,7 @@ export interface Reikwijdte {
 }
 
 /** Accepteert of weigert wijzigingen; geeft het aantal afgehandelde revisies. */
-export function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Reikwijdte = {}): number {
+export async function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Reikwijdte = {}): Promise<number> {
   const e = engine(ref);
   const s = e.sessie;
   let doel = getoond(revisies(s), reikwijdte.verborgen ?? new Set());
@@ -56,21 +56,38 @@ export function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Rei
     doel = doel.filter((r) => inSelectie(r, sel.anchor, sel.head, volgorde));
   }
   if (!doel.length) return 0;
-  const verhalen = new Set<string>();
-  const afgehandeld = new Set<string>();
-  begin(e);
+  const versie = s.version();
+  const staat = s.encodeState();
+  const vector = s.encodeStateVector();
+  const proef = await createYrsSession();
   try {
+    // Resolutie kan leidende opmaakmarkeringen achterlaten die een worker
+    // later opruimt. Neem die opruiming meteen in dezelfde lokale Undo-stap
+    // op: bereid de besluiten in een replica voor en publiceer één update.
+    proef.loadState(staat);
+    const verhalen = new Set<string>();
+    const afgehandeld = new Set<string>();
     for (const r of doel) {
       if (afgehandeld.has(r.revisionId)) continue;
-      const ontvangst = wat === "accepteren" ? s.acceptChange({ revisionId: r.revisionId }) : s.rejectChange({ revisionId: r.revisionId });
+      const ontvangst = wat === "accepteren" ? proef.acceptChange({ revisionId: r.revisionId }) : proef.rejectChange({ revisionId: r.revisionId });
       ontvangst.revisionIds.forEach((id) => afgehandeld.add(id));
       afgehandeld.add(r.revisionId);
       verhalen.add(r.story);
     }
+    const update = proef.encodeStateAsUpdate(vector);
+    if (ref?.getEditorRef()?.getYrsSession() !== s || s.version() !== versie)
+      throw new Error(i18next.t("writer:changes.documentChanged"));
+    begin(e);
+    try {
+      s.applyLocalUpdate(update);
+    } finally {
+      sluitStap(e);
+    }
+    e.weergave.syncYrsInputState(true, [...verhalen]);
+    return afgehandeld.size;
   } finally {
-    klaar(e, [...verhalen], false);
+    proef.destroy();
   }
-  return afgehandeld.size;
 }
 
 /**
