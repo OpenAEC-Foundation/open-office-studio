@@ -112,6 +112,19 @@ try {
       },
       { row, col },
     );
+    // selectCells schedules React state; plugin selection follows after commit.
+    // Wait for that observable state before issuing a native keyboard event.
+    await page.waitForFunction(
+      ({ row, col }) => {
+        const s = proefContext()?.rekenbladLaag?.selectie();
+        return (
+          s?.sheetIndex === 0 &&
+          s.cells?.focus.row === row &&
+          s.cells?.focus.col === col
+        );
+      },
+      { row, col },
+    );
   }
   const bytes = async () =>
     new Uint8Array(
@@ -215,7 +228,12 @@ try {
     "waarden",
   );
   assert.deepEqual(await waarde("B5"), { kind: "number", value: 9 });
-  await kies(0, 1);
+  await kies(0, 0);
+  await page.keyboard.press("ArrowRight");
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-testid="xlsx-name-box"]')?.value === "B1",
+  );
   await page.keyboard.press("Alt+ArrowDown");
   d = page.locator(".rekenblad-filtermenu");
   await vervang(() =>
@@ -257,7 +275,11 @@ try {
   step(
     "Header filtering stores standard table criteria and produces strict, valid XML",
   );
+  await page.evaluate(() => (window.voorHeropen = proefApi().handle));
   await open(saved, "Reopened tables.xlsx");
+  await page.waitForFunction(
+    () => proefApi()?.handle && proefApi().handle !== voorHeropen,
+  );
   await page
     .locator(".office-tabpaneel:not([hidden]) .rekenblad-tabelpijl")
     .first()
@@ -268,6 +290,11 @@ try {
     )
     .click();
   d = page.locator(".rekenblad-filtermenu");
+  // The value list and its stored choices are initialized in an effect.
+  await page.waitForFunction(
+    (el) => !el.checked,
+    await d.getByLabel("Second", { exact: true }).elementHandle(),
+  );
   assert.equal(
     await d.getByLabel("Second", { exact: true }).isChecked(),
     false,

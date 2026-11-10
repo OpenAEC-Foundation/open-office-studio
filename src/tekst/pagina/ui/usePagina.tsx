@@ -48,7 +48,7 @@ import {
 } from "../kopvoet.ts";
 import { STANDAARD_INHOUD, leesInhoudsopgave, verwijderInhoudsopgave, voegInhoudsopgaveIn, werkInhoudsopgaveBij, type InhoudOpties } from "../inhoudsopgave.ts";
 import { converteerNoten, leesNootInstellingen, voegNootIn, zetNootInstellingen, type NootSoort } from "../noten.ts";
-import { bewerkKopVoet, haalKoppen, haalNoten, herstelPlek, kopVoetActief, leesPlek, sectieStand, sluitKopVoet, wachtOpIndeling, zetMarkering, type NootInfo } from "./engine.ts";
+import { bewerkKopVoet, haalKoppen, haalNoten, herstelPlek, kopVoetActief, leesPlek, sectieStand, sluitKopVoet, volgKopVoetOpening, wachtOpIndeling, zetMarkering, type NootInfo } from "./engine.ts";
 import { leesMelding, herladenBevestigd, neemBeurt, neemTaak, onthoudBevestiging, planNaHerladen, sluitMelding, toonMelding, volgMelding, type NaHerladen } from "./staat.ts";
 import {
   AfstandDialoog,
@@ -335,10 +335,11 @@ export function usePagina() {
     const kop = soort === "header";
     const pagina = editor.getCurrentPage();
     const openen = (e: DocxEditorRef) => {
-      if (!bewerkKopVoet(e, soort, pagina)) return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
-      setTimeout(() => {
-        if (!kopVoetActief()) fout(t(kop ? "page.errors.headerNotOpened" : "page.errors.footerNotOpened"));
-      }, 600);
+      const stop = volgKopVoetOpening(() => fout(t(kop ? "page.errors.headerNotOpened" : "page.errors.footerNotOpened")));
+      if (!bewerkKopVoet(e, soort, pagina)) {
+        stop();
+        return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
+      }
     };
     // Eerste pagina anders / even en oneven: die pagina's tonen een eigen onderdeel.
     const stand = sectieStand(editor);

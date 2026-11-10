@@ -82,6 +82,8 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#272](https://github.com/OpenAEC-Foundation/open-office-studio/pull/272) | `031a7b0d21c1624b1c810b4ee3690347ee570d08` | `c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77` | Document format coverage, honest legacy limitations and empty-conversion warnings |
 | [#291](https://github.com/OpenAEC-Foundation/open-office-studio/pull/291) | `56fbdccbbcc9df88215a8d92c09a6cea6340afef` | `c7117ba4eeb35880209c1f04a01fd043f45d6510` | Writer scoped paragraph reads for cursor navigation with raw-story semantics |
 | [#290](https://github.com/OpenAEC-Foundation/open-office-studio/pull/290) | `66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c` | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | Writer note continuation preserves body formatting after note reference Enter |
+| [#273](https://github.com/OpenAEC-Foundation/open-office-studio/pull/273) | `c3232dd704f1d3b069b7596f1ed7ca969fea04d6` | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | Test-only table probe synchronization; real keyboard selection and saved filter state |
+| [#307](https://github.com/OpenAEC-Foundation/open-office-studio/pull/307) | `2da5abe361d18824d1fd84f1dee717f152f7e545` | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | Writer remembers successful header/footer opening before quick close or reload |
 
 ## Earlier fixes included in bundles
 
@@ -184,6 +186,8 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr272-targeted | `c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77` | 44 | 0 | 0 |
 | pr291-targeted | `c7117ba4eeb35880209c1f04a01fd043f45d6510` | 19 | 0 | 0 |
 | pr290-targeted | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | 12 | 0 | 0 |
+| pr273-browser-probe-correction | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | 6 | 0 | 0 |
+| pr307-targeted | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | 6 | 0 | 0 |
 
 ## Pending deliveries
 
