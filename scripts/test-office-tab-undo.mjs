@@ -52,6 +52,8 @@ const report = {
   cases: [],
   errors: [],
 };
+const undoKey = process.platform === "darwin" ? "Meta+z" : "Control+z";
+const redoKey = process.platform === "darwin" ? "Meta+Shift+z" : "Control+y";
 const tabs = (page) => page.locator(".office-tabbalk [role=tab]");
 async function upload(page, kind, name) {
   await page
@@ -199,20 +201,20 @@ try {
         () => probe().presentatie.handle.snapshot().slides.length === 2,
       );
       await tabs(page).filter({ hasText: "Writer.docx" }).click();
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       await writerCheck(page, "");
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       await writerCheck(page, changed);
       await tabs(page).filter({ hasText: "Writer.docx" }).click();
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       await writerCheck(page, "");
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       await writerCheck(page, changed);
       await tabs(page).filter({ hasText: "Presentation.pptx" }).click();
       assert.equal(await slides(page), 2);
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.equal(await slides(page), 1);
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       assert.equal(await slides(page), 2);
       await tabs(page).filter({ hasText: "Writer.docx" }).click();
       await writerCheck(page, changed);
@@ -224,9 +226,9 @@ try {
       const changed = await writer(page);
       await upload(page, "pptx", "Other.pptx");
       await page.keyboard.press("Control+Shift+Tab");
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       await writerCheck(page, "");
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       await writerCheck(page, changed);
       await tabs(page).filter({ hasText: "Other.pptx" }).click();
       await tabs(page).filter({ hasText: "Writer.docx" }).click();
@@ -235,7 +237,7 @@ try {
       await page.getByRole("button", { name: "Redo", exact: true }).click();
       await writerCheck(page, changed);
       await page.evaluate(() => probe().tekst().focus());
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       await writerCheck(page, "");
     },
   );
@@ -256,9 +258,9 @@ try {
       assert.match(await sheet(page), /TABPROEF123/);
       await upload(page, "docx", "Other.docx");
       await tabs(page).filter({ hasText: "Sheet.xlsx" }).click();
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.doesNotMatch(await sheet(page), /TABPROEF123/);
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       assert.match(await sheet(page), /TABPROEF123/);
     },
   );
@@ -284,9 +286,9 @@ try {
         before,
       );
       await writerCheck(page, changed);
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       await writerCheck(page, "");
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       await writerCheck(page, changed);
     },
   );
@@ -305,7 +307,7 @@ try {
       await tabs(page).filter({ hasText: "Writer.docx" }).click();
       assert(await search.evaluate((e) => e === document.activeElement));
       assert.equal(await search.inputValue(), "queryX");
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.equal(await search.inputValue(), "");
       await writerCheck(page, changed);
       await search.click();
@@ -336,7 +338,7 @@ try {
       const formula = page.locator('[data-testid="xlsx-formula-input"]');
       await formula.click();
       await formula.pressSequentially("=12");
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       const localUndo = await formula.inputValue();
       assert.equal(
         await sheet(page),
@@ -346,7 +348,7 @@ try {
       await tabs(page).filter({ hasText: "Sheet.xlsx" }).click();
       assert(await formula.evaluate((e) => e === document.activeElement));
       assert.equal(await formula.inputValue(), localUndo);
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.equal(await formula.inputValue(), localUndo);
       assert.equal(await sheet(page), before);
     },
@@ -363,9 +365,9 @@ try {
       );
       await upload(page, "docx", "Other.docx");
       await tabs(page).filter({ hasText: "Presentation.pptx" }).click();
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.equal(await slides(page), 1);
-      await page.keyboard.press("Control+y");
+      await page.keyboard.press(redoKey);
       assert.equal(await slides(page), 2);
       const note = page.getByTestId("rich-notes-editor");
       await note.click();
@@ -373,7 +375,7 @@ try {
       assert.match(await note.textContent(), /NOTES LOCAL/);
       await tabs(page).filter({ hasText: "Presentation.pptx" }).click();
       assert(await note.evaluate((e) => e === document.activeElement));
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.doesNotMatch(await note.textContent(), /NOTES LOCAL/);
       assert.equal(await slides(page), 2);
     },
@@ -390,7 +392,7 @@ try {
       await input.fill("query");
       await input.press("End");
       await input.pressSequentially("X");
-      await page.keyboard.press("Control+z");
+      await page.keyboard.press(undoKey);
       assert.equal(await input.inputValue(), "query");
       assert(await input.evaluate((e) => e === document.activeElement));
       await writerCheck(page, changed);
