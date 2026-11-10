@@ -30,6 +30,10 @@ De [JSON](2026-11-10-writer-language-status.json) bevat bron/tree, fasecijfers, 
 
 macOS stond bij de gesloten intake van 13:15 nog in de runnerwachtrij. #327 is daarom niet vrijgegeven voor die integratieronde en blijft apart voor de volgende week. De laatste vastgelegde platformstatus staat expliciet in de JSON; een wachtende of ontbrekende controle geldt niet als geslaagd. De bestaande Windows-acceptatieomgeving is niet naar deze bron overgeschakeld. `main` is niet gewijzigd.
 
+Omdat de ARM64-job op `macos-latest` na ongeveer een uur nog geen runner had, is een aanvullende [macOS 26 Intel-controle](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42819730884) gestart. Ook die staat bij deze bewijsopname nog in de runnerwachtrij; er wordt dus geen macOS-resultaat als geslaagd geregistreerd. De uitsluitend voor validatie bedoelde branch `codex/writer-language-macos-verify-2026-11-10` bevat workflowcommit `eb092149197f86305130d63cbf5759e410eaa3fe`. De workflow haalt expliciet applicatiecommit `3c2595ca22134bc776132a4790e3e6851d07196a` op en controleert dat met een verplichte shellassertie vóór de tests. Het workflowcommit is niet de geteste applicatiebron en mag niet als productwijziging worden geïntegreerd. Windows/Linux worden niet opnieuw uitgevoerd. Beide macOS-runs mogen later op afstand aflopen, zonder de vaste bronbranch of een integratiebranch te wijzigen.
+
+De bronfix is afzonderlijk opgeleverd, met de ontbrekende macOS- en native taalindicatorcontroles expliciet open. Dit is geen vrijgave voor integratie of `main`; de integratie-eigenaar beoordeelt de toekomstige combinatie.
+
 De achtbestandenpatch past volgens een aparte tijdelijke Git-index op integratiepunt `959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1` nadat #303 (`da16cea1`) is toegepast. De gedeelde index, werkboom en integratiebranch zijn niet gewijzigd. Een latere combinatie vraagt opnieuw acceptatie door de integratie-eigenaar.
 
 ## Productieproef herhalen
