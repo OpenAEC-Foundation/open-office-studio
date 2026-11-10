@@ -76,6 +76,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#273](https://github.com/OpenAEC-Foundation/open-office-studio/pull/273) | `1ec64f2758dcc8767babe174019904a816db4691` | `a21e185ec7de755650f150bbb9ebb91b9ffb4421` | Spreadsheet eight-patch native tables and named cell styles |
 | [#276](https://github.com/OpenAEC-Foundation/open-office-studio/pull/276) | `97cab703dda702215bf6b9b3fa262b82c9097d89` | `122e3d5769f21bd6ae5c585382e1652d2dc34eab` | Writer editable drawings and embedded-picture media fallback |
 | [#277](https://github.com/OpenAEC-Foundation/open-office-studio/pull/277) | `74bd7432b79b9fb4ee580f42a592beee0769e140` | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | Spreadsheet conditional-format differential style rendering |
+| [#266](https://github.com/OpenAEC-Foundation/open-office-studio/pull/266) | `617f23bf7dd0d258f337ec54075139ef38b01a5e` | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | Writer story parts, style selection and one-shot document reload navigation |
 
 ## Earlier fixes included in bundles
 
@@ -173,10 +174,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr276-targeted | `122e3d5769f21bd6ae5c585382e1652d2dc34eab` | 32 | 0 | 0 |
 | pr277-targeted | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | 8 | 0 | 0 |
 | full-application-candidate-phase3-2026-11-10 | `828dcbeb021cb81d2c2704ecf2f2746ef185f698` | 3016 | 0 | 7 |
+| pr266-targeted | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | 22 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #266, reported head `ee8925ed39c78566e71d2386da57bfd72b15900f`: Writer OPC story parts and style selection.
 
 ## Limits
 
