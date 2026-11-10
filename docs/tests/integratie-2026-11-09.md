@@ -135,9 +135,18 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr257-targeted | `5c9b4f13ae00253d1dc586cbbe7d931b370ed857` | 16 | 0 | 0 |
 | pr258-targeted | `4843eb503dd797daa9cc3c8a4f8584033cce67c6` | 21 | 0 | 0 |
 | pr260-targeted | `8a775cbb09b7ba409e16bd83c8b3c480f379f8f7` | 10 | 0 | 0 |
+| full-application-2026-11-10 | `4175e5f19bf052e0a03f4a87ab73e710f6f163a7` | 2858 | 0 | 7 |
 
 ## Pending deliveries
 
+- PR #261, reported head `98b8dffcb57941bc7f062f7ebf3686727a74d2b5`: Presentation object format painter; separate feature batch.
+- PR #262, reported head `49789270eed564fe5856316ca2c88bf50ced4460`: Writer spelling viewport scans; separate performance batch.
+- PR #263, reported head `2eb45a3953835db8b57b4ee2273c821169cad45d`: Native formula hyperlink queries; no vendor change.
+- PR #264, reported head `a7bb546037bff28dc2880b6bdee0b87e27fe39ba`: Complete sheet copy preserving independent related parts.
+- PR #265, reported head `4a58fc6b80a13dfc5d321f89ae37d4f8db83064c`: Presentation diagrams; updated conflict-free checkpoint not yet released.
+- PR #266, reported head `ee8925ed39c78566e71d2386da57bfd72b15900f`: Writer OPC story parts and style selection.
+- PR #267, reported head `0e58e6f363af73f395025d82fd8c73f319a89f37`: Writer status subscriptions; stacked on PR262.
+- PR #269, reported head `346927430297654ccbe995b51dcd6c581bdc4eff`: Shared Spreadsheet render projection for later table and conditional-format layers.
 
 ## Limits
 
