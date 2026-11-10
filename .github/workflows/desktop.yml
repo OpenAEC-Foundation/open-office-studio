@@ -1,8 +1,5 @@
-name: Kantooromgeving controleren en bouwen
+name: Writer 327 macOS Intel broncontrole
 on:
-  push:
-    branches: [main, "feat/**"]
-  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
@@ -11,10 +8,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-latest, macos-latest]
+        os: [macos-26-intel]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: 3c2595ca22134bc776132a4790e3e6851d07196a
+      - name: Exact applicatiebronpunt bewaken
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "3c2595ca22134bc776132a4790e3e6851d07196a"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
