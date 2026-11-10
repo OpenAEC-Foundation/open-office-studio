@@ -17,11 +17,12 @@ Environment: Windows x64, Node v24.22.1, pinned `@betteroffice/docx` 0.5.1, app 
 | Check | Result |
 | --- | --- |
 | Targeted `src/tekst/wijzigingen` suite | 49 tests passed in 4 files, including 14 new native regressions |
+| `node scripts/test-opdrachten.mjs tekst --zonder-libreoffice wijzigingen` | 8 command/save/reopen checks passed |
 | TypeScript `--noEmit` | Passed |
 | Nine active locales | Passed; 23 existing inactive-folder warnings |
 | Production Vite build | Passed, 33.58 seconds; existing chunk-size warnings |
 
-The regressions use two real native replicas and exercise accept/reject, worker synchronization with and without worker save, Undo/Redo, exact restored revision metadata and colored story segments, saved/reopened revisions, and an earlier user edit. Additional cases cover ordinary text, paragraph-property revisions, author/id/selection filters, main text plus table-cell stories, no-op scope, stale/replaced sessions, and failure partway through preparation. The pre-fix replica probe fails with the same lost leading deletion observed in the browser.
+The regressions use two real native replicas and exercise accept/reject, worker synchronization with and without worker save, Undo/Redo, exact restored revision metadata and colored story segments, saved/reopened revisions, and an earlier user edit. Additional cases cover ordinary text, paragraph-property revisions, author/id/selection filters, main text plus table-cell stories, no-op scope, stale/replaced sessions, and failure partway through preparation. The pre-fix replica probe fails with the same lost leading deletion observed in the browser. Initial Windows/Linux CI also exposed three synchronous calls in the older command harness; all now await review completion, and its eight scoped checks pass. That follow-up changes the harness and this report only; the validated application runtime remains unchanged.
 
 ## Actual production browser checks
 
