@@ -15,7 +15,7 @@ Limits: 128 changed regions, 16 Mi UTF-16 code units in either main XML and in c
 ## Environment and independently reproduced controls
 
 - Windows x64, Node v24.22.1, pinned `@betteroffice/docx` 0.5.1.
-- Initial reproduction base `d978918d998bd00485bcafc4cef3072314c1b918`. The final follow-up combines integration `e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a` with review dependency #313 / `46527a0e09497e2aa9d626e290989bc9def26219`.
+- Initial reproduction base `d978918d998bd00485bcafc4cef3072314c1b918`. The final follow-up combines integration `e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a` with review dependency #313 / `33eee967be1f3a136e0106cd77b5d4a0c5112255`.
 - Repository Writer WASM SHA-256: `9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc`.
 - Synthetic, non-confidential DOCX documents generated from the repository blank template.
 
@@ -25,10 +25,10 @@ Before the change, `De kat.` becoming bold, or red becoming blue without a text 
 
 | Check | Result |
 | --- | --- |
-| `vitest run --configLoader runner --maxWorkers 1 --testTimeout 20000 src/tekst/wijzigingen` | 5 files, 67 tests passed, including 18 native formatting tests and 14 review/worker regressions |
+| `vitest run --configLoader runner --maxWorkers 1 --testTimeout 20000 src/tekst/wijzigingen` | 5 files, 73 tests passed, including 18 native formatting tests and 20 review/worker regressions |
 | `tsc --noEmit` | Passed |
 | `node scripts/controleer-i18n.mjs` | Passed for all 9 active locales; existing inactive-locale-folder warnings remain |
-| `vite build --configLoader runner` | Passed, 70 seconds while checks ran concurrently; existing bundle-size warnings remain |
+| `vite build --configLoader runner` | Passed, 17.64 seconds; existing bundle-size warnings remain |
 
 The tests exercise bold, italic, underline, size and color; differently split runs; Unicode and spaces; separate changed regions; aliased run prefixes; author/date escaping; exact accepted/rejected character formatting after save/reopen; source hashes and unrelated-part preservation. They also verify explicit refusal of mixed text changes, changed table content, moves, paragraph formatting, style definitions, other parts, unknown run properties and non-formatting run metadata. The existing text comparison and revision-detection tests remain green. The formatting tests now include a real second native replica, worker save and echoed updates before Undo/Redo, rather than relying only on a single session.
 
@@ -52,6 +52,6 @@ An independent ZIP/XML check of both actual browser downloads confirmed exact te
 
 ## Resolved Undo dependency and integration boundary
 
-The initial browser Undo anomaly was independently reproduced as an existing leading-text review/worker bug, including a plain text-only replacement. It is separately fixed in [#313 / PR #315](https://github.com/OpenAEC-Foundation/open-office-studio/pull/315), whose source commit is included as an explicit dependency. Its temporary-replica review route preserves both revisions across worker synchronization; the final actual browser comparison above confirms Save As → Undo/Redo in both directions. See [the review regression report](2026-11-10-review-undo-worker.md) for scoped callers, failure guards, earlier history and table-story coverage.
+The initial browser Undo anomaly was independently reproduced as an existing leading-text review/worker bug, including a plain text-only replacement. It is separately fixed in [#313 / PR #315](https://github.com/OpenAEC-Foundation/open-office-studio/pull/315), whose source commit is included as an explicit dependency. Its temporary-replica review route preserves both revisions across worker synchronization; the actual browser comparison above confirms Save As → Undo/Redo in both directions. The final review follow-up also preserves exact individual revision boundaries, verified with this comparison output through a pane-item decision, save, Undo/Redo and subsequent bulk acceptance. See [the review regression report](2026-11-10-review-undo-worker.md) for scoped callers, failure guards, earlier history, table stories and the additional boundary proof.
 
 This branch targets the next integration batch and includes the published integration frontend with the same Writer kernels. It does not change the frozen candidate or authorize installation/release. Record Windows/Linux/macOS CI build/package and functional-test outcomes on the exact final source-delivery commit in the PR/issue update. Native application interaction on those platforms is still unverified; a successful package build must not be described as native UI acceptance. The actual supported browser route has been tested as described above. Full combined candidate validation remains with the integration chat.
