@@ -29,7 +29,13 @@ async function bytesVoor(familie: string, vet: boolean, cursief: boolean): Promi
   if (import.meta.env.VITE_DATABASE_APP === "1") return null;
   const fonts = await import("@betteroffice/fonts");
   const { extraFace, isExtraFamilie, laadExtraBytes, lettertypeBasis } = await import("../../lettertypen/catalogus");
-  const { opSysteem, systeemLettertypeBytes } = await import("../../lettertypen/systeem");
+  const { opSysteem, systeemLettertypeBytes, bijWijziging } = await import("../../lettertypen/systeem");
+  // Een eerdere null of vervanger kan verouderen zodra systeemlettertypen beschikbaar komen.
+  // Eenmalig en lui volgen, zodat Database Studio geen kantoorlettertypen importeert.
+  if (!volgtSysteemLettertypen) {
+    volgtSysteemLettertypen = true;
+    bijWijziging(() => cache.clear());
+  }
   const gebundeld = (f: string) =>
     fonts.BUNDLED_FONTS.some((b) => b.family.toLowerCase() === f.toLowerCase()) || isExtraFamilie(f);
   const pogingen: [boolean, boolean][] = [
@@ -61,6 +67,7 @@ async function bytesVoor(familie: string, vet: boolean, cursief: boolean): Promi
 }
 
 const cache = new Map<string, Promise<GeladenLettertype | null>>();
+let volgtSysteemLettertypen = false;
 
 /** Een lettertype voor familie/stijl, of null als het niet als TrueType beschikbaar is. */
 export function laadLettertype(familie: string, vet: boolean, cursief: boolean): Promise<GeladenLettertype | null> {
