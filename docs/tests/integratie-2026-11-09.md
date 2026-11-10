@@ -59,6 +59,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#257](https://github.com/OpenAEC-Foundation/open-office-studio/pull/257) | `3bd94cf7a827602c068462938297ef1d1fa4b33c` | `5c9b4f13ae00253d1dc586cbbe7d931b370ed857` | Spreadsheet header outline controls |
 | [#258](https://github.com/OpenAEC-Foundation/open-office-studio/pull/258) | `b107f8f9c2234556d69ca9535a02b01ea8ee0f57` | `4843eb503dd797daa9cc3c8a4f8584033cce67c6` | Writer reference focus and layout retry |
 | [#260](https://github.com/OpenAEC-Foundation/open-office-studio/pull/260) | `e209adfcb81bf81205337c94526cec4b6876eae6` | `8a775cbb09b7ba409e16bd83c8b3c480f379f8f7` | Writer merged caption sequence order |
+| [#261](https://github.com/OpenAEC-Foundation/open-office-studio/pull/261) | `98b8dffcb57941bc7f062f7ebf3686727a74d2b5` | `514265522edc045a3b27973c5226ea20ff36f917` | Presentation object format painter |
 
 ## Earlier fixes included in bundles
 
@@ -136,10 +137,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr258-targeted | `4843eb503dd797daa9cc3c8a4f8584033cce67c6` | 21 | 0 | 0 |
 | pr260-targeted | `8a775cbb09b7ba409e16bd83c8b3c480f379f8f7` | 10 | 0 | 0 |
 | full-application-2026-11-10 | `4175e5f19bf052e0a03f4a87ab73e710f6f163a7` | 2858 | 0 | 7 |
+| pr261-targeted | `514265522edc045a3b27973c5226ea20ff36f917` | 13 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #261, reported head `98b8dffcb57941bc7f062f7ebf3686727a74d2b5`: Presentation object format painter; separate feature batch.
 - PR #262, reported head `49789270eed564fe5856316ca2c88bf50ced4460`: Writer spelling viewport scans; separate performance batch.
 - PR #263, reported head `2eb45a3953835db8b57b4ee2273c821169cad45d`: Native formula hyperlink queries; no vendor change.
 - PR #264, reported head `a7bb546037bff28dc2880b6bdee0b87e27fe39ba`: Complete sheet copy preserving independent related parts.
