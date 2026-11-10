@@ -21,7 +21,11 @@ export async function proefInterface(
       reason:
         "LaunchServices is checked separately; rendered WKWebView interaction is not covered by the CLI converter probe.",
     };
-  const env = { ...process.env };
+  const env = {
+    ...process.env,
+    SAL_DISABLE_DEFAULTPRINTER: "1",
+    SAL_DISABLE_PRINTERLIST: "1",
+  };
   delete env.OPENAEC_CONVERSIE_PROGRAMMA;
   delete env.OPENAEC_CONVERSIE_PROFIEL;
   const input = join(nativeOutput, "Ontwerpnotitie.odt");

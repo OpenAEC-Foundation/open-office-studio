@@ -46,7 +46,12 @@ if (!packages.length)
 
 function run(program, args, log, extraEnv = {}) {
   const descriptor = openSync(log, "w");
-  const env = { ...process.env, ...extraEnv };
+  const env = {
+    ...process.env,
+    SAL_DISABLE_DEFAULTPRINTER: "1",
+    SAL_DISABLE_PRINTERLIST: "1",
+    ...extraEnv,
+  };
   // These are child-process probe environments, not user settings.
   delete env.OPENAEC_CONVERSIE_PROGRAMMA;
   delete env.OPENAEC_CONVERSIE_PROFIEL;
@@ -86,6 +91,17 @@ for (const packageFile of packages) {
     const payload = JSON.parse(await readFile(reportFile, "utf8"));
     payload.packagePath = packageFile;
     const { fixture, marker } = await maakMacroproef(join(reportRoot, "macro"));
+    run(
+      python,
+      [
+        "scripts/controleer-macroproef.py",
+        payload.program,
+        fixture,
+        marker,
+        join(reportRoot, "macro-positive.json"),
+      ],
+      join(reportRoot, "macro-positive-control.log"),
+    );
     const nativeOutput = join(reportRoot, "native");
     run(
       "cargo",
