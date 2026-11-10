@@ -1,0 +1,3182 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "checkpoint": "1e5afa399117fd84df628955ec82b0e597993c83",
+  "mainChanged": false,
+  "sourceIntakeClosed": true,
+  "closureApproved": [],
+  "note": "31 supplied implementation candidates are conservative source candidates, not closure approval. PR300/280/281 and other future deliveries are not integrated. No checklist boxes automatically changed.",
+  "issues": [
+    {
+      "issue": 2,
+      "title": "Documents: decouple the existing DOCX editor and test file preservation",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/2",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 228,
+          "included": true,
+          "via": null,
+          "heads": ["a49b59d758e7b91050d126b8119223734f8938eb"],
+          "integrationCommits": ["b5c77280a4783ca2c48079eb03b6e466cc850b09"]
+        },
+        {
+          "pr": 244,
+          "included": true,
+          "via": null,
+          "heads": ["bab42fee2dd69dd5429109489c9a4bc0e9ea9515"],
+          "integrationCommits": ["7d0064b03ff06db439e6adc733a8b3601c534bec"]
+        }
+      ],
+      "deliveredScope": "DOCX metadata namespace preservation, source macro reporting and measured DOC embedded-object loss warnings",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-format-preservation.md",
+        "docs/tests/2026-11-09-legacy-doc.md"
+      ],
+      "remainingAcceptance": "Complete the revision/header/footer/unknown-part preservation matrix, explicit refusal cases and packaging/license review. Live Y-app storage remains intentionally untested at the user's request.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 2,
+        "id": 6765932823,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/2#issuecomment-6765932823",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [x] Open the editor locally, edit, save, and reopen.",
+        "- [x] Run cases D1â€“D3 from docs/onderzoek/testmatrix.md; record package and visual differences.",
+        "- [ ] Preserve revisions, headers/footers, and unknown parts, or explicitly refuse the edit.",
+        "- [ ] Include pinned versions, licenses, and notices; preserve the original Y-app behavior."
+      ]
+    },
+    {
+      "issue": 3,
+      "title": "Spreadsheets: XLSX adapter and independent formula verification",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/3",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 246,
+          "included": true,
+          "via": null,
+          "heads": [
+            "cc0be69f7b9feef9e883f8b48ad792e623961377",
+            "41c9ebfc1e05e5b74fbe6078c7ad247046e18786",
+            "9de53c798334456808a1c7cef815f7872a25ee89"
+          ],
+          "integrationCommits": [
+            "86604f640bb9003ceaa2093f53822b5a981128ed",
+            "2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651",
+            "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb"
+          ]
+        },
+        {
+          "pr": 263,
+          "included": true,
+          "via": null,
+          "heads": [
+            "2eb45a3953835db8b57b4ee2273c821169cad45d",
+            "7a90cb16da652f1d560817db533607513c4583ad"
+          ],
+          "integrationCommits": [
+            "d56740da10dc89eaeafe8963ec65f1aafc696103",
+            "f5542db45ffdce029670a68713c70bdc12d987c9"
+          ]
+        }
+      ],
+      "deliveredScope": "Independent formula checks, bounded metadata, worksheet objects and source-cell HYPERLINK queries",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-spreadsheet-formats-objects.md",
+        "docs/tests/2026-11-10-hyperlink-formules.md",
+        "docs/tests/2026-11-10-spreadsheet-groepen.md"
+      ],
+      "remainingAcceptance": "Complete the full chart/hidden-sheet/print/unknown-part matrix, accessibility, Dutch value/date coverage and large-workbook acceptance; these broad criteria are not certified by the focused object/formula cases.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 3,
+        "id": 6765933294,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/3#issuecomment-6765933294",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [x] Run cases R1â€“R3 with independently determined expected formula results.",
+        "- [x] Clearly handle unsupported functions, errors, and stale cached values.",
+        "- [ ] Investigate charts, hidden sheets, print settings, and unknown parts.",
+        "- [ ] Test Dutch numbers and dates, accessibility, and large workbooks."
+      ]
+    },
+    {
+      "issue": 13,
+      "title": "General: recent files on the start screen and in the file menu",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/13",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 191,
+          "included": true,
+          "via": null,
+          "heads": ["7536f5d9f3416db7eab91ba458adf115e367c677"],
+          "integrationCommits": ["eb4c062051c70557e0d6f9ab92a4226ed47f7c0b"]
+        },
+        {
+          "pr": 224,
+          "included": true,
+          "via": null,
+          "heads": ["f9dbe7336033e8b069ef5db41856c827fe10bcf8"],
+          "integrationCommits": ["8e9c89dd78734abe660d237541bb43533d48a7a9"]
+        }
+      ],
+      "deliveredScope": "Browser recent-file session isolation/fallback and calendar-correct date labels",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-recente-browserbestanden.md",
+        "docs/tests/2026-11-09-recente-datums.md"
+      ],
+      "remainingAcceptance": "Reusable browser file handles, the configurable limit/default of 25 and Windows Jump List acceptance remain outside the delivered fixes; do not equate session-only browser names with persistent reopenable files.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 13,
+        "id": 6765933723,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/13#issuecomment-6765933723",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Recent opened/saved files (name, folder, module, date) on the start screen and in the file menu.",
+        "- [ ] Open with one click; clearly report missing files and allow removing them from the list.",
+        "- [ ] Pin files at the top; clear the list.",
+        "- [ ] Persist the list across restarts; configurable limit (default 25).",
+        "- [ ] Windows: include recent files in the taskbar Jump List."
+      ]
+    },
+    {
+      "issue": 17,
+      "title": "General: open files by dragging them onto the window",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/17",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 192,
+          "included": true,
+          "via": null,
+          "heads": ["13e349645733904aaf9af376fed46b845dc84e8b"],
+          "integrationCommits": ["72f6813df492bcd7695ed158049859a8507b5efc"]
+        }
+      ],
+      "deliveredScope": "Browser modal-drop navigation prevention, serialized drop batches and controlled unreadable-file handling",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Verify the complete desktop/browser drag-and-drop matrix, image insertion at the actual drop position and Explorer/Finder behavior on the final platform builds. An earlier external implementation report is not final-candidate native proof.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 17,
+        "id": 6765934151,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/17#issuecomment-6765934151",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Dragging a file from Explorer or Finder onto the window opens it in the appropriate module.",
+        "- [ ] Dropping multiple files opens all of them (see #16).",
+        "- [ ] Dropping an image into an open document inserts it at the drop position.",
+        "- [ ] Show a clear message for unsupported files.",
+        "- [ ] Show a visible drop zone while dragging."
+      ]
+    },
+    {
+      "issue": 19,
+      "title": "General: standard office keyboard shortcuts and a shortcut reference",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/19",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 187,
+          "included": true,
+          "via": null,
+          "heads": ["5726556db22e3a8abb87b978033bff43316df724"],
+          "integrationCommits": ["a40506bbb16d1fa3758278ecf6dc074db572cfc0"]
+        },
+        {
+          "pr": 227,
+          "included": true,
+          "via": null,
+          "heads": ["0a9eabff07bce3410dbf1121eae7d07b48f73737"],
+          "integrationCommits": ["2a94541c7be665e77aacf1f966eff5af4b6456f4"]
+        }
+      ],
+      "deliveredScope": "Modal shortcut isolation and AltGraph events excluded from office command matching",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-sneltoets-dialoog.json",
+        "docs/tests/2026-11-09-altgr-sneltoetsen.md"
+      ],
+      "remainingAcceptance": "Complete the cross-module shortcut inventory, ribbon KeyTips/help and physical Windows/Linux/macOS keyboard checks. Constructed Meta/AltGraph events on Windows are not physical macOS keyboard acceptance.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 19,
+        "id": 6765934526,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/19#issuecomment-6765934526",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Common set in all modules: Ctrl+N, Ctrl+O, Ctrl+S, F12, Ctrl+P, Ctrl+Z/Y, Ctrl+X/C/V, Ctrl+A, Ctrl+F, Ctrl+H, Ctrl+B/I/U, Ctrl+W.",
+        "- [ ] Module-specific shortcuts, such as Ctrl+Enter (page break), F2 (edit cell), Ctrl+Shift+L (filter), F5 and Shift+F5 (slide show).",
+        "- [ ] Alt KeyTips for full keyboard operation of the ribbon.",
+        "- [ ] Dialog listing all shortcuts (F1 or through Help).",
+        "- [ ] No conflicts with the webview or operating system; use Cmd on macOS."
+      ]
+    },
+    {
+      "issue": 20,
+      "title": "General: clipboard with and without formatting, including between applications",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/20",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 212,
+          "included": true,
+          "via": null,
+          "heads": ["697e777cb4aff1f654e871a192e90f2a24ab773e"],
+          "integrationCommits": ["13ac7fce1ddea9e02b82d2b29fd9431545baf33b"]
+        }
+      ],
+      "deliveredScope": "Spreadsheet cuts bound to the correct source workbook/sheet/version with guarded deletion",
+      "sourceEvidence": ["docs/tests/2026-11-09-spreadsheet-cut-source.md"],
+      "remainingAcceptance": "Inactive workbook tabs remain read-only; complete cross-module/external HTML/RTF/image clipboard and Paste Special acceptance. Separate writable workbook APIs retain separate Undo histories.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 20,
+        "id": 6765934924,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/20#issuecomment-6765934924",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Copy/paste within and between modules preserving formatting (Writer, Spreadsheet, Presentation).",
+        "- [ ] Paste HTML, RTF, plain text, and images from other applications and the browser.",
+        "- [ ] Paste as plain text (Ctrl+Shift+V).",
+        "- [ ] Spreadsheet Paste Special: values, formulas, formatting, transpose, and arithmetic operations.",
+        "- [ ] Pasting a cell range into a document or slide produces a table.",
+        "- [ ] Copying to other applications puts usable HTML and plain text on the clipboard."
+      ]
+    },
+    {
+      "issue": 21,
+      "title": "General: Dutch and English spell checking and autocorrect",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/21",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 214,
+          "included": true,
+          "via": null,
+          "heads": ["355a635741527b9b94fb15b957be9a5680f1f311"],
+          "integrationCommits": ["d4d2311aaef6260a5edd0e9c82ff6a82b61e54db"]
+        }
+      ],
+      "deliveredScope": "All-uppercase autocorrect replacements preserve case",
+      "sourceEvidence": ["docs/tests/2026-11-09-autocorrectie-hoofdletters.md"],
+      "remainingAcceptance": "Certify the complete Dutch/English dictionary pipeline, paragraph/document language, personal dictionary, full-document dialog and cross-module spelling. The case-preservation fix does not certify those broader features.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 21,
+        "id": 6765935449,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/21#issuecomment-6765935449",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] As-you-type spell checking with red underlines and context-menu suggestions.",
+        "- [ ] Bundled Dutch and English dictionaries; language configurable per document and paragraph.",
+        "- [ ] Personal dictionary: add word, ignore, and ignore all.",
+        "- [ ] Dialog to check the entire document.",
+        "- [ ] Autocorrect common typos, sentence capitalization, and smart quotes; can be disabled.",
+        "- [ ] Works in text documents, spreadsheet cells, and slide text boxes."
+      ]
+    },
+    {
+      "issue": 22,
+      "title": "General: system fonts and substitution for missing fonts",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/22",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 207,
+          "included": true,
+          "via": 242,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        }
+      ],
+      "deliveredScope": "Fonts used only in document notes/comments and presentation note parts are included in the font inventory",
+      "sourceEvidence": ["docs/tests/2026-11-09-nootlettertypen.md"],
+      "remainingAcceptance": "Complete installed-system-font enumeration/previews, substitution reporting, recent fonts and actual per-platform PDF font embedding. The later cache correction for #311 is outside this candidate.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 22,
+        "id": 6765935904,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/22#issuecomment-6765935904",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] All installed system fonts are selectable, with previews in the dropdown.",
+        "- [ ] Substitute a metrically equivalent font when a document font is missing; report which fonts were replaced.",
+        "- [ ] Preserve the original font declaration in the saved file.",
+        "- [ ] Embed fonts in PDF export.",
+        "- [ ] Recently used fonts appear at the top."
+      ]
+    },
+    {
+      "issue": 23,
+      "title": "General: settings dialog",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/23",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 194,
+          "included": true,
+          "via": null,
+          "heads": ["3de2b6487ee1159d7335cbf2334f150adc736103"],
+          "integrationCommits": ["9f161f58b53d03ff08005483d70c449cf12bbe25"]
+        }
+      ],
+      "deliveredScope": "Synchronized author preferences, migrated names and configured initials on new ribbon-created Writer comments",
+      "sourceEvidence": ["docs/tests/2026-11-09-settings-profile.md"],
+      "remainingAcceptance": "Default directories, measurement units and default spelling language remain outside the profile fix. Configured initials on new sidebar replies are independently confirmed missing and assigned for a later fix; that source is not part of this checkpoint. Native restart acceptance remains separate.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 23,
+        "id": 6765936266,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/23#issuecomment-6765936266",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] User name and initials for comments and tracked changes.",
+        "- [ ] Default save format per module (OOXML or ODF) and default directory.",
+        "- [ ] Auto-recovery interval (#14).",
+        "- [ ] Interface language and default spell-checking language.",
+        "- [ ] Light, dark, or system theme.",
+        "- [ ] Measurement unit (cm, mm, inches, points).",
+        "- [ ] Settings stored locally; reset to defaults."
+      ]
+    },
+    {
+      "issue": 24,
+      "title": "General: accessibility of the ribbon, dialogs, and document area",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/24",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 193,
+          "included": true,
+          "via": null,
+          "heads": ["4b100e6f1e4eabbcfb16edede23cc4f8522bd50d"],
+          "integrationCommits": ["3fa694a128e03ed3516c9a97bd7d1a84d6deaac1"]
+        },
+        {
+          "pr": 213,
+          "included": true,
+          "via": 233,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        },
+        {
+          "pr": 221,
+          "included": true,
+          "via": null,
+          "heads": ["e8f9c0ddb9633da4ea380f682355418d6c663378"],
+          "integrationCommits": ["f3bae07dcbeb45993a09d2789354b36e68b3b1a3"]
+        }
+      ],
+      "deliveredScope": "Shared modal Escape ordering, Settings reverse tab order and readable dark Sort controls",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-dialoog-escape.md",
+        "docs/tests/2026-11-09-sorteerdialoog-thema.md",
+        "docs/tests/2026-11-09-select-tab-order.md"
+      ],
+      "remainingAcceptance": "Complete ribbon/editor keyboard coverage, high-contrast/reduced-motion and actual NVDA/VoiceOver checks. Focused Chromium dialog tests do not establish full accessibility.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 24,
+        "id": 6765936677,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/24#issuecomment-6765936677",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Operate everything without a mouse: ribbon, menus, dialogs, sheet tabs, and slide pane.",
+        "- [ ] Visible focus and logical tab order.",
+        "- [ ] Screen readers: accessible names for buttons, fields, and messages; announce the active cell and slide title.",
+        "- [ ] Sufficient contrast in light/dark themes; respect system high-contrast and reduced-motion settings.",
+        "- [ ] Test with NVDA (Windows) and VoiceOver (macOS)."
+      ]
+    },
+    {
+      "issue": 27,
+      "title": "General: create, manage, and use templates",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/27",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 200,
+          "included": true,
+          "via": null,
+          "heads": ["f14e63215b4445f877f189c4a442a17e57b29ac3"],
+          "integrationCommits": ["42f071ae9f40821cdefcf617b596d331493bf65b"]
+        }
+      ],
+      "deliveredScope": "Templates open as independent unsaved documents with their source write-back token released",
+      "sourceEvidence": ["docs/tests/2026-11-09-sjabloonkopie.md"],
+      "remainingAcceptance": "Template gallery, personal/shared directories, per-module defaults and remaining template export/converter acceptance remain outside this delivery.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 27,
+        "id": 6765937084,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/27#issuecomment-6765937084",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] New document from a template (DOTX, XLTX, POTX, and ODF templates); opens as an untitled document rather than the template itself.",
+        "- [ ] Save the current document as a template.",
+        "- [ ] Template gallery with previews on the start screen; configurable personal template directory.",
+        "- [ ] Organization templates from a shared directory.",
+        "- [ ] Configurable default template per module."
+      ]
+    },
+    {
+      "issue": 29,
+      "title": "General: advanced find and replace in all modules",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/29",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 190,
+          "included": true,
+          "via": null,
+          "heads": ["7bfdd0dbee6678c3f3936349bfa56bd536f953c8"],
+          "integrationCommits": ["92be2e3a07aee7c456fe58971d021770078b7414"]
+        },
+        {
+          "pr": 197,
+          "included": true,
+          "via": null,
+          "heads": ["a40a6662b8d357e77ece0c67b8147f1d7b7d8189"],
+          "integrationCommits": ["c0b487d05057d9df2cf486f1cd5fd6112bff4b72"]
+        },
+        {
+          "pr": 206,
+          "included": true,
+          "via": null,
+          "heads": ["6d4c96e614f69e9e7982d6ce1dd8a51b3d64d7d9"],
+          "integrationCommits": ["28b0b60efbc7f72e8e292f4076322f219edb1f99"]
+        }
+      ],
+      "deliveredScope": "Writer replacement restores document Undo focus, rejects invalid regex and terminates empty Unicode regex matches",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-vervangen-undo.json",
+        "docs/tests/2026-11-09-writer-ongeldige-regex.json",
+        "docs/tests/2026-11-09-writer-unicode-regex.md"
+      ],
+      "remainingAcceptance": "Complete cross-module options and search scope, Writer formatting/special-character search, Spreadsheet workbook/formula search and Presentation notes search. No Presentation whole-word feature is included by this candidate.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 29,
+        "id": 6765937547,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/29#issuecomment-6765937547",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Search bar (Ctrl+F) with result count and next/previous in all modules.",
+        "- [ ] Replace (Ctrl+H): one or all, reporting the number of replacements; Replace All is a single undo step.",
+        "- [ ] Options: case sensitivity, whole words, and regular expressions.",
+        "- [ ] Writer: search by formatting/style and special characters (paragraph breaks, tabs).",
+        "- [ ] Spreadsheet: search values or formulas in the sheet or entire workbook.",
+        "- [ ] Presentation: search all slides and notes."
+      ]
+    },
+    {
+      "issue": 31,
+      "title": "Formats: open and save ODT (OpenDocument Text)",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/31",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 228,
+          "included": true,
+          "via": null,
+          "heads": ["a49b59d758e7b91050d126b8119223734f8938eb"],
+          "integrationCommits": ["b5c77280a4783ca2c48079eb03b6e466cc850b09"]
+        },
+        {
+          "pr": 238,
+          "included": true,
+          "via": null,
+          "heads": ["e5328c48280ccc94167e83d22ced34d0cbc8fa1b"],
+          "integrationCommits": ["6dc192cab0565ab61b7405150b1b9404abe52ab4"]
+        },
+        {
+          "pr": 239,
+          "included": true,
+          "via": null,
+          "heads": ["bd9de4775018559185ccd9dfd74853d77c6c20e9"],
+          "integrationCommits": ["acda88ea0d3cc2f1fe4288856328cd78cbcc2237"]
+        }
+      ],
+      "deliveredScope": "Strict ODF 1.3 conversion profile, metadata/source reporting and child-only printer-independent conversion",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-format-preservation.md",
+        "docs/tests/2026-11-09-strict-odf13.md",
+        "docs/tests/2026-11-09-writer-printers.md"
+      ],
+      "remainingAcceptance": "Complete independent content/visual acceptance of the full ODT/OTT/FODT corpus and installed native save-back behavior. Schema-valid fixture output alone does not prove full preservation.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 31,
+        "id": 6765937968,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/31#issuecomment-6765937968",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open ODT and OTT with text, styles, lists, tables, images, headers/footers, footnotes, and comments.",
+        "- [ ] Save valid ODF 1.3, checked by a validator in CI.",
+        "- [ ] Files opened as ODT are saved as ODT by default (#15).",
+        "- [ ] The ODT â†’ edit â†’ ODT round trip loses no content from the test corpus; report deviations (#40).",
+        "- [ ] Open FODT (flat XML)."
+      ]
+    },
+    {
+      "issue": 32,
+      "title": "Formats: open and save ODS (OpenDocument Spreadsheet)",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/32",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 238,
+          "included": true,
+          "via": null,
+          "heads": ["e5328c48280ccc94167e83d22ced34d0cbc8fa1b"],
+          "integrationCommits": ["6dc192cab0565ab61b7405150b1b9404abe52ab4"]
+        },
+        {
+          "pr": 246,
+          "included": true,
+          "via": null,
+          "heads": [
+            "cc0be69f7b9feef9e883f8b48ad792e623961377",
+            "41c9ebfc1e05e5b74fbe6078c7ad247046e18786",
+            "9de53c798334456808a1c7cef815f7872a25ee89"
+          ],
+          "integrationCommits": [
+            "86604f640bb9003ceaa2093f53822b5a981128ed",
+            "2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651",
+            "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb"
+          ]
+        }
+      ],
+      "deliveredScope": "ODS/OTS/FODS production edit/save-back matrix and strict ODF schema checks",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-strict-odf13.md",
+        "docs/tests/2026-11-09-spreadsheet-formats-objects.md"
+      ],
+      "remainingAcceptance": "Complete imported formula/chart/protection compatibility and final installed-platform acceptance across the supported corpus. Modern SHA512 workbook-structure protection loss through conversion is reported, not repaired.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 32,
+        "id": 6765938383,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/32#issuecomment-6765938383",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open ODS and OTS with multiple sheets, cell formatting, merged cells, named ranges, and charts.",
+        "- [ ] Correctly convert formulas between OpenFormula and internal notation; preserve results across the round trip.",
+        "- [ ] Save valid ODF 1.3, checked by a validator in CI.",
+        "- [ ] Files opened as ODS are saved as ODS by default (#15).",
+        "- [ ] Open FODS (flat XML)."
+      ]
+    },
+    {
+      "issue": 33,
+      "title": "Formats: open and save ODP (OpenDocument Presentation)",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/33",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 238,
+          "included": true,
+          "via": null,
+          "heads": ["e5328c48280ccc94167e83d22ced34d0cbc8fa1b"],
+          "integrationCommits": ["6dc192cab0565ab61b7405150b1b9404abe52ab4"]
+        },
+        {
+          "pr": 243,
+          "included": true,
+          "via": null,
+          "heads": ["78a84fd8a2926c6313e0d3d1465e5450f2c24837"],
+          "integrationCommits": ["fdf520aeb2ab6b20fefac42a80a69646386abca9"]
+        },
+        {
+          "pr": 278,
+          "included": true,
+          "via": null,
+          "heads": ["ddb5c063289f557467a8ad971077220d13788fe8"],
+          "integrationCommits": ["8b4eafc98d6973dfbcb5e0639448c0f80a991d5c"]
+        }
+      ],
+      "deliveredScope": "Strict ODF output and scoped transition timing/direction/uniform click/shared WAV preservation",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-strict-odf13.md",
+        "docs/vervolgissues/33-presentatie-overgangsbehoud.md",
+        "docs/tests/2026-11-10-presentatie-odf-overgangen.md"
+      ],
+      "remainingAcceptance": "General animation/effect preservation, mixed per-slide click policies, FODP audio and full master/layout/content plus physical native slideshow acceptance remain unverified or outside the increment.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 33,
+        "id": 6765938772,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/33#issuecomment-6765938772",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open ODP and OTP with slide masters, layouts, text, shapes, images, tables, and notes.",
+        "- [ ] Preserve transitions and animations even when they are not editable.",
+        "- [ ] Save valid ODF 1.3, checked by a validator in CI.",
+        "- [ ] Files opened as ODP are saved as ODP by default (#15).",
+        "- [ ] Open FODP (flat XML)."
+      ]
+    },
+    {
+      "issue": 34,
+      "title": "Formats: open and save DOC (97â€“2003 binary document format)",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/34",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 228,
+          "included": true,
+          "via": null,
+          "heads": ["a49b59d758e7b91050d126b8119223734f8938eb"],
+          "integrationCommits": ["b5c77280a4783ca2c48079eb03b6e466cc850b09"]
+        },
+        {
+          "pr": 239,
+          "included": true,
+          "via": null,
+          "heads": ["bd9de4775018559185ccd9dfd74853d77c6c20e9"],
+          "integrationCommits": ["acda88ea0d3cc2f1fe4288856328cd78cbcc2237"]
+        },
+        {
+          "pr": 244,
+          "included": true,
+          "via": null,
+          "heads": ["bab42fee2dd69dd5429109489c9a4bc0e9ea9515"],
+          "integrationCommits": ["7d0064b03ff06db439e6adc733a8b3601c534bec"]
+        }
+      ],
+      "deliveredScope": "Safe source macro reports, printer-independent conversion and a warning for measured legacy DOC embedded-object flattening",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-format-preservation.md",
+        "docs/tests/2026-11-09-writer-printers.md",
+        "docs/tests/2026-11-09-legacy-doc.md"
+      ],
+      "remainingAcceptance": "The converter still flattens one editable embedded PPTX object and a corpus image file can hit the unchanged timeout. Complete the broader legacy revision/comment/content/visual matrix; warnings are not format-preservation fixes.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 34,
+        "id": 6765939265,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/34#issuecomment-6765939265",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open DOC and DOT with text, formatting, tables, images, and headers/footers.",
+        "- [ ] Keep tracked changes and comments visible.",
+        "- [ ] Allow saving as DOC with a warning; suggest DOCX by default.",
+        "- [ ] Never execute macros.",
+        "- [ ] Test corpus of legacy files from different versions, including embedded objects."
+      ]
+    },
+    {
+      "issue": 35,
+      "title": "Formats: open and save XLS and XLSB",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/35",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 246,
+          "included": true,
+          "via": null,
+          "heads": [
+            "cc0be69f7b9feef9e883f8b48ad792e623961377",
+            "41c9ebfc1e05e5b74fbe6078c7ad247046e18786",
+            "9de53c798334456808a1c7cef815f7872a25ee89"
+          ],
+          "integrationCommits": [
+            "86604f640bb9003ceaa2093f53822b5a981128ed",
+            "2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651",
+            "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb"
+          ]
+        }
+      ],
+      "deliveredScope": "XLS/XLT/XLSB import/edit/save checks with both date systems and independent formula caches",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-spreadsheet-formats-objects.md"
+      ],
+      "remainingAcceptance": "Complete representative legacy chart/protection/macro-container compatibility and installed-platform acceptance. The tested corpus does not establish arbitrary XLS/XLSB fidelity.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 35,
+        "id": 6765939726,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/35#issuecomment-6765939726",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open XLS and XLT with formulas and cached results, multiple sheets, formatting, and charts.",
+        "- [ ] Correctly handle the 1900 and 1904 date systems.",
+        "- [ ] Open XLSB; saving as XLSB is optional.",
+        "- [ ] Allow saving as XLS with a warning; suggest XLSX by default.",
+        "- [ ] Never execute macros."
+      ]
+    },
+    {
+      "issue": 36,
+      "title": "Formats: open and save PPT and PPS",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/36",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 247,
+          "included": true,
+          "via": null,
+          "heads": ["6dd71f39edc6bfd7c5a3d92ba842665579bcbdef"],
+          "integrationCommits": ["7897a592878b159941280e49feb9b5db144d7655"]
+        }
+      ],
+      "deliveredScope": "Direct PPSX/POTX content-type routes, slide-show choice and bounded PPT/PPS/POT real conversion checks",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-presentatie-bestandsvarianten.md"
+      ],
+      "remainingAcceptance": "Complete the representative legacy corpus and actual native/two-monitor behavior; one measured fixture does not establish all PPT/PPS/POT compatibility.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 36,
+        "id": 6765940169,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/36#issuecomment-6765940169",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open PPT, PPS, and POT with slides, masters, text, shapes, images, and notes.",
+        "- [ ] Optionally open PPS and PPSX directly in slide-show mode.",
+        "- [ ] Allow saving as PPT with a warning; suggest PPTX by default.",
+        "- [ ] Never execute macros."
+      ]
+    },
+    {
+      "issue": 39,
+      "title": "Formats: open RTF, TXT, HTML, and Markdown",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/39",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 195,
+          "included": true,
+          "via": null,
+          "heads": ["6119fe5f848a45c8c2a0402746944250379ee34b"],
+          "integrationCommits": ["55fc4cc01d4e8cc041e983aa17613f7f9221b58d"]
+        }
+      ],
+      "deliveredScope": "TXT and Markdown UTF-16 BOM byte order takes precedence over heuristic detection",
+      "sourceEvidence": [],
+      "remainingAcceptance": "RTF, HTML/image export, Markdown structures and selectable TXT output encoding remain outside this focused decoding fix; verify the complete no-converter requirement separately.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 39,
+        "id": 6765940612,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/39#issuecomment-6765940612",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Open TXT with encoding and line-ending detection; choose encoding when saving.",
+        "- [ ] Open Markdown: headings, lists, links, tables, code, and images.",
+        "- [ ] Open and save RTF.",
+        "- [ ] Open HTML as a document; export HTML with images.",
+        "- [ ] Works without a conversion program."
+      ]
+    },
+    {
+      "issue": 40,
+      "title": "Formats: report incomplete support when opening and saving",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/40",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 215,
+          "included": true,
+          "via": null,
+          "heads": ["7965d36cfb06a181067d5bfd38c5ed2f298b8767"],
+          "integrationCommits": ["742f280983b2f429eeb3ea1bd1eba54561ae2de9"]
+        },
+        {
+          "pr": 216,
+          "included": true,
+          "via": null,
+          "heads": ["9a6f8b5814c57b8304fd79147fe3049ec5f336ec"],
+          "integrationCommits": ["5560c228262a04d0108be26ec82efc216aaa9d96"]
+        }
+      ],
+      "deliveredScope": "OOXML risk detection handles valid XML notations and support reports use the desktop clipboard bridge with controlled errors",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-package-risk-attributes.md",
+        "docs/tests/2026-11-09-rapport-klembord.md"
+      ],
+      "remainingAcceptance": "Complete feature-risk/loss coverage and unknown-part preservation/refusal cases across formats; verify the physical native system clipboard instead of relying solely on the IPC stub.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 40,
+        "id": 6765941007,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/40#issuecomment-6765941007",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] After opening, show a non-blocking notification listing unsupported parts, such as embedded objects, macros, or unknown chart types.",
+        "- [ ] Before saving to another format, summarize what will be lost and offer Cancel or Continue.",
+        "- [ ] Preserve unknown OOXML parts when saving; report when preservation is impossible.",
+        "- [ ] Allow copying or saving the report for a bug report."
+      ]
+    },
+    {
+      "issue": 43,
+      "title": "Formats: less common and legacy formats in the catalog",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/43",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 272,
+          "included": true,
+          "via": null,
+          "heads": ["031a7b0d21c1624b1c810b4ee3690347ee570d08"],
+          "integrationCommits": ["c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Verify catalog/evidence coverage and all explicitly documented refusal/empty-conversion limits against the final platform artifacts; this is not a guarantee of visual/content fidelity for all 84 formats.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] For each extension in `src/formaten.json`, record whether opening has been tested, with a sample file or an explanation of its absence.",
+        "- [ ] Priority: WPD, WPS, WRI, LWP, PAGES, NUMBERS, KEY, HWP, WK1/WK3/WK4, DBF, and SXW/SXC/SXI.",
+        "- [ ] Give unsupported variants a clear message with a suggested alternative.",
+        "- [ ] Update `docs/formaten.md`."
+      ]
+    },
+    {
+      "issue": 44,
+      "title": "Writer: headers, footers, page numbers, and fields",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/44",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 242,
+          "included": true,
+          "via": null,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        },
+        {
+          "pr": 266,
+          "included": true,
+          "via": null,
+          "heads": ["617f23bf7dd0d258f337ec54075139ef38b01a5e"],
+          "integrationCommits": ["3b2415887d38c99b8328b5b813d6e03eec1ac9ad"]
+        },
+        {
+          "pr": 307,
+          "included": true,
+          "via": null,
+          "heads": ["2da5abe361d18824d1fd84f1dee717f152f7e545"],
+          "integrationCommits": ["ee176619c6ba2aceed1d88fe9b82a2b5e07050b0"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-44-45-51.md"],
+      "remainingAcceptance": "Independently accept every linked/unlinked first/odd/even header, section page format/field and ODT/print criterion on the final installed candidate; the rapid-close false error is corrected but does not certify the whole matrix. Independently confirmed current native PDF observation: expanded FILENAME overlaps AUTHOR on3header lines; root cause uninvestigated and repair deferred. This blocks a full PDF-layout acceptance claim.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Open a header/footer by double-clicking the margin, with a dedicated ribbon tab while editing.",
+        "- [ ] Different first page and different odd/even pages.",
+        "- [ ] Link or unlink each section from the previous section.",
+        "- [ ] Insert fields: page number, page count, date/time, filename, author, and title.",
+        "- [ ] Page-number format (1, i, A) and starting number per section.",
+        "- [ ] Update fields (F9), with correct printing and PDF output."
+      ]
+    },
+    {
+      "issue": 45,
+      "title": "Writer: create, modify, and manage styles",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/45",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 242,
+          "included": true,
+          "via": null,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        },
+        {
+          "pr": 266,
+          "included": true,
+          "via": null,
+          "heads": ["617f23bf7dd0d258f337ec54075139ef38b01a5e"],
+          "integrationCommits": ["3b2415887d38c99b8328b5b813d6e03eec1ac9ad"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-44-45-51.md"],
+      "remainingAcceptance": "Complete final native acceptance of all four style kinds, selection/update/import dependencies, advanced properties, rename/delete and DOCX/ODT preservation; the source implementation is an acceptance candidate, not automatic roadmap closure.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Styles pane with all paragraph, character, list, and table styles, including previews.",
+        "- [ ] Create a style from the selection; update a style to match the selection.",
+        "- [ ] Style dialog: font, paragraph, tabs, borders, language, following style, and base style.",
+        "- [ ] Import styles from another document or template.",
+        "- [ ] Show only used styles; rename and delete styles.",
+        "- [ ] Preserve changes when saving DOCX and ODT."
+      ]
+    },
+    {
+      "issue": 48,
+      "title": "Writer: advanced table editing",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/48",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 225,
+          "included": true,
+          "via": null,
+          "heads": ["8c4d25b5ff7e0ecd1d8151735b6d8959ff061736"],
+          "integrationCommits": ["0c022aa7bc93748578109bb03ce8f64a22f6c0a2"]
+        }
+      ],
+      "deliveredScope": "Writer sorting rejects invalid dates and numeric prefixes while preserving stable ordering and Undo/save",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-sort-values.md"],
+      "remainingAcceptance": "Complete the remaining table layout, autofit, split/nesting/formula/property and print criteria. The original visual split report #130 still needs its own reproducible fixture.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 48,
+        "id": 6765941422,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/48#issuecomment-6765941422",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Drag column widths and row heights; distribute columns evenly; autofit.",
+        "- [ ] Repeat header rows on each page; prevent rows from splitting across pages.",
+        "- [ ] Convert text to a table and back.",
+        "- [ ] Sort a table by a column.",
+        "- [ ] Cell margins, vertical alignment, text direction, shading, and per-cell borders.",
+        "- [ ] Split tables, nested tables, and simple cell formulas (such as a sum).",
+        "- [ ] Table properties: width, alignment, and text wrapping around the table."
+      ]
+    },
+    {
+      "issue": 49,
+      "title": "Writer: crop, position, and describe images",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/49",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 220,
+          "included": false,
+          "via": null,
+          "heads": [],
+          "integrationCommits": []
+        }
+      ],
+      "deliveredScope": "PR #220 provides a focused image-replacement geometry/crop preservation fix on its source branch",
+      "sourceEvidence": [],
+      "remainingAcceptance": "PR #220 at 4a21ad18c2b7861cf1d227e05f572a3f337fcdb9 is NOT an ancestor of the frozen checkpoint and is not an included delivery. Preserve it for a later intake/review; remaining image positioning/accessibility/compression criteria also stay open.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 49,
+        "id": 6765941836,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/49#issuecomment-6765941836",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Crop with handles and exact values; restore the original.",
+        "- [ ] Set exact size with locked aspect ratio.",
+        "- [ ] Position relative to page, margin, or paragraph; visible anchors.",
+        "- [ ] Alternative text for accessibility.",
+        "- [ ] Replace an image while retaining its size and position.",
+        "- [ ] Optionally compress images when saving."
+      ]
+    },
+    {
+      "issue": 50,
+      "title": "Writer: insert and update a table of contents",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/50",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 222,
+          "included": true,
+          "via": null,
+          "heads": ["a5adf4e5881e22a85eee611d0b9c2ef07f1263db"],
+          "integrationCommits": ["27c43dd74de8d44c6bccad6a069c6659668b6369"]
+        }
+      ],
+      "deliveredScope": "TOC page-only updates match full normalized heading titles within configured levels",
+      "sourceEvidence": ["docs/tests/2026-11-09-toc-page-matching.md"],
+      "remainingAcceptance": "Complete ODT TOC preservation, figure/table lists, PDF link behavior and the broader formatting/update dialog matrix. The title-matching repair is not full TOC acceptance.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 50,
+        "id": 6765942242,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/50#issuecomment-6765942242",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Table of contents based on heading styles (configurable number of levels), with page numbers and tab leaders.",
+        "- [ ] Clickable links to headings, including in PDF.",
+        "- [ ] Update page numbers only or the entire table.",
+        "- [ ] Several formatting variants; formatting through TOC styles.",
+        "- [ ] Preserve and update existing tables of contents in DOCX and ODT.",
+        "- [ ] Also support lists of figures and tables (with #52)."
+      ]
+    },
+    {
+      "issue": 51,
+      "title": "Writer: footnotes and endnotes",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/51",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 242,
+          "included": true,
+          "via": null,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        },
+        {
+          "pr": 266,
+          "included": true,
+          "via": null,
+          "heads": ["617f23bf7dd0d258f337ec54075139ef38b01a5e"],
+          "integrationCommits": ["3b2415887d38c99b8328b5b813d6e03eec1ac9ad"]
+        },
+        {
+          "pr": 290,
+          "included": true,
+          "via": null,
+          "heads": ["66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c"],
+          "integrationCommits": ["df20016b5a57e69c3dd17204ef650d4aeaf5fcc4"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-44-45-51.md",
+        "docs/tests/2026-11-10-writer-nootvervolg.md"
+      ],
+      "remainingAcceptance": "Complete final native note/section/restart/format/conversion/PDF acceptance; the focused #282 continuation repair does not certify the entire note roadmap.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Insert automatically numbered footnotes/endnotes (Ctrl+Alt+F / Ctrl+Alt+D).",
+        "- [ ] Edit note text at the bottom of the page or end of the document/section.",
+        "- [ ] Number format; restart per page or section.",
+        "- [x] Convert footnotes to endnotes and vice versa.",
+        "- [ ] Separator above notes; correct pagination in print and PDF.",
+        "- [ ] Preserve when opening/saving DOCX and ODT."
+      ]
+    },
+    {
+      "issue": 52,
+      "title": "Writer: captions, cross-references, and bookmarks",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/52",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 241,
+          "included": true,
+          "via": null,
+          "heads": ["9666f4788cb39006588291bd01a66fc1da81cd06"],
+          "integrationCommits": ["9b16c29412a2fc338d3e5a5ee0085a66ad1eef44"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Complete final native caption/chapter/cross-reference/update/round-trip acceptance for every listed target and reference mode.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Insert automatically numbered captions for images, tables, or equations (Figure 1, Table 1), optionally including the chapter number.",
+        "- [ ] Clickable cross-references to headings, captions, bookmarks, or footnotes as text, number, or page number.",
+        "- [ ] Insert, manage, and navigate to bookmarks.",
+        "- [ ] Update all references after moving content.",
+        "- [ ] Preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 53,
+      "title": "Writer: insert and edit mathematical equations",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/53",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 241,
+          "included": true,
+          "via": null,
+          "heads": ["9666f4788cb39006588291bd01a66fc1da81cd06"],
+          "integrationCommits": ["9b16c29412a2fc338d3e5a5ee0085a66ad1eef44"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Complete final native equation input/layout/OMML-MathML/print-PDF acceptance for every listed formula family; focused browser equation checks already pass.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Equation editor with fractions, powers, subscripts, roots, sums, integrals, matrices, and Greek letters.",
+        "- [ ] Input through buttons and linear notation.",
+        "- [ ] Inline and display equations; numbering through captions (#52).",
+        "- [ ] Open, edit, and save OMML (DOCX) and MathML (ODF).",
+        "- [ ] Correct print and PDF rendering."
+      ]
+    },
+    {
+      "issue": 54,
+      "title": "Writer: mail merge with an address list",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/54",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 241,
+          "included": true,
+          "via": null,
+          "heads": ["9666f4788cb39006588291bd01a66fc1da81cd06"],
+          "integrationCommits": ["9b16c29412a2fc338d3e5a5ee0085a66ad1eef44"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Full mailmerge browser/data/output checks pass, but final installed native datasource, print/PDF, label/envelope and DOCX preservation acceptance remains separate.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Choose a data source: spreadsheet (XLSX or ODS), CSV, or a Database Studio table.",
+        "- [ ] Insert merge fields; preview with record navigation.",
+        "- [ ] Filter and sort records.",
+        "- [ ] Merge to a new document, one PDF, a PDF per record, or the printer.",
+        "- [ ] Letters, labels, and envelopes.",
+        "- [ ] Preserve merge fields in DOCX."
+      ]
+    },
+    {
+      "issue": 55,
+      "title": "Writer: text columns and sections with independent page settings",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/55",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 242,
+          "included": true,
+          "via": null,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        },
+        {
+          "pr": 255,
+          "included": true,
+          "via": null,
+          "heads": ["04e59e46464e71df1c2b6eb63f5abdb5864001c1"],
+          "integrationCommits": ["f356bb64e5227bc39b2e767ac9da123f0be408a0"]
+        }
+      ],
+      "deliveredScope": "Formatting marks show localized section boundaries without document/history changes, alongside scoped section/header conversion preservation",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-44-45-51.md",
+        "docs/tests/2026-11-09-writer-sections-formats.md"
+      ],
+      "remainingAcceptance": "Independently accept every remaining section setting, column break and DOCX/ODT preservation criterion on the installed platform builds; the boundary overlay alone does not certify them.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 55,
+        "id": 6765942668,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/55#issuecomment-6765942668",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [x] Text in 1â€“4 columns with spacing and a separator, including for part of the document.",
+        "- [ ] Insert column breaks.",
+        "- [ ] Per section: orientation, margins, paper size, headers/footers, and page numbering.",
+        "- [ ] Show section breaks when formatting marks are enabled.",
+        "- [ ] Preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 56,
+      "title": "Writer: shapes, text boxes, and drawing objects in documents",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/56",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 242,
+          "included": true,
+          "via": null,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        },
+        {
+          "pr": 276,
+          "included": true,
+          "via": null,
+          "heads": ["97cab703dda702215bf6b9b3fa262b82c9097d89"],
+          "integrationCommits": ["122e3d5769f21bd6ae5c585382e1652d2dc34eab"]
+        }
+      ],
+      "deliveredScope": "Editable basic DrawingML shapes/groups/diagrams with preserved source children and embedded raster fallback",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-writer-44-45-51.md",
+        "docs/tests/2026-11-10-writer-shapes.md"
+      ],
+      "remainingAcceptance": "Complex unsupported DrawingML/ODF paint remains read-only/preserved; SVG/EMF/WMF/TIFF depend on the existing native decoder. Complete the broad imported-object/native rendering matrix before roadmap closure.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 56,
+        "id": 6765943085,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/56#issuecomment-6765943085",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Insert shapes (lines, arrows, rectangles, ovals, callouts) and text boxes.",
+        "- [ ] Configure fill, outline, and shadow; text inside shapes.",
+        "- [ ] Positioning, wrapping, grouping, and stacking order.",
+        "- [ ] Correctly render and preserve existing drawing objects (DrawingML and ODF).",
+        "- [ ] Correctly render simple diagrams and organization charts."
+      ]
+    },
+    {
+      "issue": 57,
+      "title": "Writer: compare two versions of a document",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/57",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 218,
+          "included": true,
+          "via": null,
+          "heads": ["9761a17f34b423cfa4986152bb67829348f05347"],
+          "integrationCommits": ["9a8a2969fab8e7f9c5416bbd79063ffc7c41217a"]
+        }
+      ],
+      "deliveredScope": "Comparison detects existing main-document revisions by XML namespace before accepting them in a copy",
+      "sourceEvidence": ["docs/tests/2026-11-09-vergelijk-revisies.md"],
+      "remainingAcceptance": "The comparison engine retains structural limitations; formatting/table/moved-text and multiple-reviewer combination acceptance remains open. PR #306/#297 and its separate Undo dependency are outside this checkpoint.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 57,
+        "id": 6765943466,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/57#issuecomment-6765943466",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Choose the original and revised versions.",
+        "- [ ] Show differences as tracked changes in a new document, including authorship.",
+        "- [ ] Include formatting differences, tables, and moved text.",
+        "- [ ] Accept/reject changes using existing functionality.",
+        "- [ ] Combine documents containing changes from multiple reviewers."
+      ]
+    },
+    {
+      "issue": 59,
+      "title": "Spreadsheet: formula functions, recalculation, and Dutch notation",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/59",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 210,
+          "included": true,
+          "via": null,
+          "heads": ["f1acf304534fb2a34dbf862f5c086c03709f5d0c"],
+          "integrationCommits": ["10f963cdfa8f563dff8862baf2df8baeaeee1c67"]
+        },
+        {
+          "pr": 251,
+          "included": true,
+          "via": null,
+          "heads": ["10b9ac1c7634da666498d21de3258dd3573ad397"],
+          "integrationCommits": ["c1b2fbd1fcf5289ca2af72683451552b71925897"]
+        }
+      ],
+      "deliveredScope": "Formula preview preserves typed error values; documented notation/error/circular-reference and bounded function-query behavior",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-formulevoorbeeld-foutwaarden.md",
+        "docs/onderzoek/spreadsheet-59-67.md"
+      ],
+      "remainingAcceptance": "Iterative calculation, complete independent function coverage and array/dynamic-range acceptance remain open. The documented matrix still has three explicit unknown-function exceptions.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 59,
+        "id": 6765943865,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/59#issuecomment-6765943865",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Document coverage of common functions (math, statistics, logic, text, date/time, lookup/reference, finance), including a list of missing functions.",
+        "- [ ] Correct recalculation after edits, including across sheets; report circular references; optional iterative calculation.",
+        "- [ ] Handle error values (#DEEL/0!, #VERW!, #NAAM?, #N/B, and others) correctly and explain them through an error indicator.",
+        "- [ ] Decide and implement Dutch or English interface function names, semicolon/comma argument separators, and decimal commas; always use standard notation in the file.",
+        "- [ ] Read and calculate array formulas and dynamic ranges.",
+        "- [ ] Independently verify results on the test corpus."
+      ]
+    },
+    {
+      "issue": 60,
+      "title": "Spreadsheet: insert, delete, hide, and freeze rows and columns",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/60",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 223,
+          "included": true,
+          "via": null,
+          "heads": ["ff44a3907b7d51d0c9372753f693c37eb15e28c4"],
+          "integrationCommits": ["8183faa8e59ef8b95a7603748b21bee5ce092d10"]
+        },
+        {
+          "pr": 251,
+          "included": true,
+          "via": null,
+          "heads": ["10b9ac1c7634da666498d21de3258dd3573ad397"],
+          "integrationCommits": ["c1b2fbd1fcf5289ca2af72683451552b71925897"]
+        }
+      ],
+      "deliveredScope": "Unhiding preserves authored dimensions; outline and worksheet structure controls are included",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-zichtbaarheid-maten.md",
+        "docs/onderzoek/spreadsheet-59-67.md"
+      ],
+      "remainingAcceptance": "Cell shifting, split panes and header-adjacent outline rails remain outside the increment; complete formula/name adjustment and native geometry acceptance. Some package edits reload and clear history as announced.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 60,
+        "id": 6765944312,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/60#issuecomment-6765944312",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Insert/delete rows, columns, and cells through the context menu and ribbon, shifting cells as appropriate.",
+        "- [ ] Hide/unhide; grouping with outline controls (+/âˆ’).",
+        "- [ ] Drag row heights/column widths, set exact values, and autofit (double-click the boundary).",
+        "- [ ] Freeze panes (top row, first column, or up to the active cell) and split the window.",
+        "- [ ] Adjust formulas and named ranges when inserting/deleting."
+      ]
+    },
+    {
+      "issue": 61,
+      "title": "Spreadsheet: manage sheets",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/61",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 204,
+          "included": true,
+          "via": null,
+          "heads": ["e6a5a34571fb58dbbd81e83e984a06ea13679779"],
+          "integrationCommits": ["b1f0e8ee7c200483e6f9ecd98fa51dba0a17ac99"]
+        },
+        {
+          "pr": 251,
+          "included": true,
+          "via": null,
+          "heads": ["10b9ac1c7634da666498d21de3258dd3573ad397"],
+          "integrationCommits": ["c1b2fbd1fcf5289ca2af72683451552b71925897"]
+        },
+        {
+          "pr": 264,
+          "included": true,
+          "via": null,
+          "heads": ["90659493b42b22dabf0efce6c45aea181e7dd2cb"],
+          "integrationCommits": ["bbea3155779c799862acc66b792e3cd3cb2e5b37"]
+        }
+      ],
+      "deliveredScope": "Visible-sheet navigation plus source-preserving independent in-workbook worksheet graph copies",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-bladnavigatie.md",
+        "docs/onderzoek/spreadsheet-59-67.md",
+        "docs/tests/2026-11-10-bladkopie.md"
+      ],
+      "remainingAcceptance": "Cross-workbook copying and grouped editing remain open. Macro workbooks, PivotCharts, controls/slicers/timelines and non-worksheet sheet types are refused by the copy increment; package reload resets history.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 61,
+        "id": 6765944753,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/61#issuecomment-6765944753",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Add, delete (with confirmation), and rename sheets (double-click the tab).",
+        "- [ ] Move sheets by dragging and copy with Ctrl+drag, including to another workbook.",
+        "- [ ] Hide/unhide sheets; tab colors.",
+        "- [ ] Select and edit multiple sheets simultaneously.",
+        "- [ ] Navigation with many sheets: arrow buttons and a list of all sheets.",
+        "- [ ] Formula references follow renaming and moving."
+      ]
+    },
+    {
+      "issue": 66,
+      "title": "Spreadsheet: create and edit charts",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/66",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 202,
+          "included": true,
+          "via": null,
+          "heads": ["9f9016b5c883b806efab166e39a732a0fd58b0c9"],
+          "integrationCommits": ["90bc18c448e3337ba2f6f39d9137a342bb463767"]
+        },
+        {
+          "pr": 251,
+          "included": true,
+          "via": null,
+          "heads": ["10b9ac1c7634da666498d21de3258dd3573ad397"],
+          "integrationCommits": ["c1b2fbd1fcf5289ca2af72683451552b71925897"]
+        }
+      ],
+      "deliveredScope": "Imported chart source ranges preserve references; trendline editing/preview and analytical tests are included",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-grafiekbron.md",
+        "docs/onderzoek/spreadsheet-59-67.md"
+      ],
+      "remainingAcceptance": "Trendlines in the actual document renderer, complete secondary-axis/chart-sheet support and the full imported XLSX/ODS chart matrix remain open. The separately claimed #308 native-render work is outside this checkpoint.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 66,
+        "id": 6765945212,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/66#issuecomment-6765945212",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Insert a chart from a selection: column, bar, line, area, pie, doughnut, scatter, and combination.",
+        "- [ ] Edit title, axes, legend, data labels, gridlines, and colors.",
+        "- [ ] Change the data range; automatically update the chart when data changes.",
+        "- [ ] Chart on its own sheet or floating on a worksheet; copy to a text document or presentation.",
+        "- [ ] Correctly render and preserve existing XLSX/ODS charts.",
+        "- [ ] Trendlines and secondary axes."
+      ]
+    },
+    {
+      "issue": 67,
+      "title": "Spreadsheet: conditional formatting",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/67",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 251,
+          "included": true,
+          "via": null,
+          "heads": ["10b9ac1c7634da666498d21de3258dd3573ad397"],
+          "integrationCommits": ["c1b2fbd1fcf5289ca2af72683451552b71925897"]
+        },
+        {
+          "pr": 269,
+          "included": true,
+          "via": null,
+          "heads": ["346927430297654ccbe995b51dcd6c581bdc4eff"],
+          "integrationCommits": ["3731f25ba3000e1f2927171cdd49bafd314dab11"]
+        },
+        {
+          "pr": 271,
+          "included": true,
+          "via": null,
+          "heads": ["84709329742aa901e908a4264f75a1f8c5abacb8"],
+          "integrationCommits": ["607ece964943462d7018d827978ccd98517735e2"]
+        },
+        {
+          "pr": 277,
+          "included": true,
+          "via": null,
+          "heads": ["74bd7432b79b9fb4ee580f42a592beee0769e140"],
+          "integrationCommits": ["0c6bac8ea80323a89e2a4f85d9d188a62a620b2d"]
+        },
+        {
+          "pr": 301,
+          "included": false,
+          "via": null,
+          "heads": [],
+          "integrationCommits": []
+        }
+      ],
+      "deliveredScope": "Conditional rule management, ordered projections and imported DXF font/border/number-format rendering",
+      "sourceEvidence": [
+        "docs/onderzoek/spreadsheet-59-67.md",
+        "docs/tests/2026-11-10-voorwaardelijke-dxf.md"
+      ],
+      "remainingAcceptance": "Formula-valued visual thresholds, complete icon levels/families and related bar fixes in PR #301 are outside this checkpoint. Full x14/ODS/source-style/authoring acceptance remains open.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 67,
+        "id": 6765945673,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/67#issuecomment-6765945673",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Rules: greater than, less than, between, equal to, text contains, date, duplicates, top/bottom values.",
+        "- [ ] Data bars, color scales, and icon sets.",
+        "- [ ] Custom-formula rules.",
+        "- [ ] Rule management: order, range, delete, and stop if true.",
+        "- [ ] Correctly render and preserve existing XLSX/ODS rules."
+      ]
+    },
+    {
+      "issue": 68,
+      "title": "Spreadsheet: data validation and dropdown lists",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/68",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 236,
+          "included": true,
+          "via": null,
+          "heads": [
+            "961ac1db2dc2b6c6ef2cdf3c223b018d63a1fc2a",
+            "86a5be49691b975f0f13d18c040833d305499647"
+          ],
+          "integrationCommits": [
+            "a15615abe1cf60b60d73d146456c89097ec04592",
+            "d0589466120e5b71cb194ee1e42404bec6d31431"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Certify every imported validation type, input/error message mode, list dropdown and invalid-cell marking/save round trip on the final native builds.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Allowed input: whole number, decimal, list, date, time, text length, or custom formula.",
+        "- [ ] In-cell dropdown from a range or fixed values.",
+        "- [ ] Input message and error alert (stop, warning, information).",
+        "- [ ] Circle invalid data.",
+        "- [ ] Preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 71,
+      "title": "Spreadsheet: cell comments and notes",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/71",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 236,
+          "included": true,
+          "via": null,
+          "heads": [
+            "961ac1db2dc2b6c6ef2cdf3c223b018d63a1fc2a",
+            "86a5be49691b975f0f13d18c040833d305499647"
+          ],
+          "integrationCommits": [
+            "a15615abe1cf60b60d73d146456c89097ec04592",
+            "d0589466120e5b71cb194ee1e42404bec6d31431"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Certify note/thread/reply/resolve authorship, navigation, visibility and print modes against the final native builds; source fixture coverage alone is not full platform acceptance.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Add/edit notes, display on hover, always show, and delete.",
+        "- [ ] Threaded comments (replies, resolve) with author and timestamp.",
+        "- [ ] Cell-corner indicator; navigate to next/previous comment.",
+        "- [ ] Printing: none, at end, or as displayed.",
+        "- [ ] Preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 72,
+      "title": "Spreadsheet: sheet and workbook protection",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/72",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 236,
+          "included": true,
+          "via": null,
+          "heads": [
+            "961ac1db2dc2b6c6ef2cdf3c223b018d63a1fc2a",
+            "86a5be49691b975f0f13d18c040833d305499647"
+          ],
+          "integrationCommits": [
+            "a15615abe1cf60b60d73d146456c89097ec04592",
+            "d0589466120e5b71cb194ee1e42404bec6d31431"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Complete final platform acceptance of passwords, locked/unlocked permissions, hidden formulas and existing workbook structure preservation.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Protect sheets, optionally with a password; locked/unlocked cells.",
+        "- [ ] Configure allowed actions (selection, formatting, sorting, filtering, inserting rows).",
+        "- [ ] Hide formulas.",
+        "- [ ] Protect workbook structure (adding, deleting, hiding sheets).",
+        "- [ ] Respect and preserve protection in existing files."
+      ]
+    },
+    {
+      "issue": 73,
+      "title": "Spreadsheet: cell styles and formatting ranges as tables",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/73",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 273,
+          "included": true,
+          "via": null,
+          "heads": [
+            "1ec64f2758dcc8767babe174019904a816db4691",
+            "c3232dd704f1d3b069b7596f1ed7ca969fea04d6"
+          ],
+          "integrationCommits": [
+            "a21e185ec7de755650f150bbb9ebb91b9ffb4421",
+            "794ff133fbcf807d3d6044aa3d66e7dea1be775f"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-rekenblad-stijlen-tabellen.md"],
+      "remainingAcceptance": "Table6 and cell-style4 browser checks pass, including the table/DXF combination; finish final installed-platform row/column growth, structured-reference/filter/save acceptance. Kernel remains exactly eight patches. Independently reproduced built-in table-style font/fill gap #322 is reserved to d410 on a separate next-batch branch; it is not fixed by this candidate.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Apply, create, and modify cell styles (Good, Bad, Neutral, Heading 1, Total, and others).",
+        "- [ ] Format a range as a table with style, header row, totals row, and banded rows.",
+        "- [ ] Tables grow with new rows/columns; structured references in formulas.",
+        "- [ ] Filter buttons in table headers.",
+        "- [ ] Preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 74,
+      "title": "Spreadsheet: edit large workbooks efficiently",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/74",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 203,
+          "included": true,
+          "via": 246,
+          "heads": [
+            "cc0be69f7b9feef9e883f8b48ad792e623961377",
+            "41c9ebfc1e05e5b74fbe6078c7ad247046e18786",
+            "9de53c798334456808a1c7cef815f7872a25ee89"
+          ],
+          "integrationCommits": [
+            "86604f640bb9003ceaa2093f53822b5a981128ed",
+            "2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651",
+            "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb"
+          ]
+        },
+        {
+          "pr": 240,
+          "included": true,
+          "via": null,
+          "heads": ["74d6c7b509af124f78c61773c3e9f168c984aab0"],
+          "integrationCommits": ["460ff3b4635fd181edb0a4fffc983f11ae488053"]
+        },
+        {
+          "pr": 246,
+          "included": true,
+          "via": null,
+          "heads": [
+            "cc0be69f7b9feef9e883f8b48ad792e623961377",
+            "41c9ebfc1e05e5b74fbe6078c7ad247046e18786",
+            "9de53c798334456808a1c7cef815f7872a25ee89"
+          ],
+          "integrationCommits": [
+            "86604f640bb9003ceaa2093f53822b5a981128ed",
+            "2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651",
+            "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb"
+          ]
+        },
+        {
+          "pr": 253,
+          "included": false,
+          "via": null,
+          "heads": [],
+          "integrationCommits": []
+        },
+        {
+          "pr": 263,
+          "included": true,
+          "via": null,
+          "heads": [
+            "2eb45a3953835db8b57b4ee2273c821169cad45d",
+            "7a90cb16da652f1d560817db533607513c4583ad"
+          ],
+          "integrationCommits": [
+            "d56740da10dc89eaeafe8963ec65f1aafc696103",
+            "f5542db45ffdce029670a68713c70bdc12d987c9"
+          ]
+        }
+      ],
+      "deliveredScope": "Bounded/cached selection statistics, lazy metadata/async adapter and large CSV import stability",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-large-csv-import.md",
+        "docs/app-performance.md",
+        "docs/tests/2026-11-09-spreadsheet-formats-objects.md",
+        "docs/tests/2026-11-10-hyperlink-formules.md",
+        "docs/tests/2026-11-10-spreadsheet-groepen.md"
+      ],
+      "remainingAcceptance": "100k-row scrolling, 50k-formula background recalculation/progress, memory bounds and CI thresholds need final acceptance. PR #253 is an unpinned source prototype; ninth/tenth native patches are NOT in the shipped eight-patch kernel.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 74,
+        "id": 6765946110,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/74#issuecomment-6765946110",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] A workbook with 100,000 rows and 30 columns opens within a defined time and scrolls smoothly.",
+        "- [ ] Recalculate 50,000 formulas without freezing the interface (background processing with progress).",
+        "- [ ] Measure and bound memory usage; clearly report files that are too large.",
+        "- [ ] Measurement script in CI using fixed reference files."
+      ]
+    },
+    {
+      "issue": 75,
+      "title": "Spreadsheet: links, images, and shapes in worksheets",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/75",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 246,
+          "included": true,
+          "via": null,
+          "heads": [
+            "cc0be69f7b9feef9e883f8b48ad792e623961377",
+            "41c9ebfc1e05e5b74fbe6078c7ad247046e18786",
+            "9de53c798334456808a1c7cef815f7872a25ee89"
+          ],
+          "integrationCommits": [
+            "86604f640bb9003ceaa2093f53822b5a981128ed",
+            "2e1dcde1c6c0b5ebfbac54e346ac7594ae5f5651",
+            "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb"
+          ]
+        },
+        {
+          "pr": 263,
+          "included": true,
+          "via": null,
+          "heads": [
+            "2eb45a3953835db8b57b4ee2273c821169cad45d",
+            "7a90cb16da652f1d560817db533607513c4583ad"
+          ],
+          "integrationCommits": [
+            "d56740da10dc89eaeafe8963ec65f1aafc696103",
+            "f5542db45ffdce029670a68713c70bdc12d987c9"
+          ]
+        }
+      ],
+      "deliveredScope": "Worksheet hyperlinks, raster images, basic shapes and nested drawing groups with source-preserving transforms",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-spreadsheet-formats-objects.md",
+        "docs/tests/2026-11-10-hyperlink-formules.md",
+        "docs/tests/2026-11-10-spreadsheet-groepen.md"
+      ],
+      "remainingAcceptance": "Complete the full imported-object/format matrix and native file-link/image-decoder behavior. Unsupported/linked drawing structures are not made generally editable by the tested basic/group workflows.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 75,
+        "id": 6765946588,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/75#issuecomment-6765946588",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Insert hyperlinks to websites, files, sheets, or cells; HYPERLINK function.",
+        "- [ ] Insert, move, and resize images anchored to cells.",
+        "- [ ] Shapes and text boxes.",
+        "- [ ] Correctly render and preserve existing objects."
+      ]
+    },
+    {
+      "issue": 76,
+      "title": "Presentation: slide sorter and outline view",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/76",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 211,
+          "included": true,
+          "via": 233,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        },
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        }
+      ],
+      "deliveredScope": "Editable outline, guarded sorter controls and preserved thumbnail keyboard behavior",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-slide-sorter-keyboard.md",
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md"
+      ],
+      "remainingAcceptance": "Complete cross-presentation copy/reuse with formatting plus the complete native sorter/section workflow; focused outline and toolbar tests do not certify every roadmap criterion.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 76,
+        "id": 6765947027,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/76#issuecomment-6765947027",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Slide sorter with a thumbnail grid; drag to reorder; select multiple slides.",
+        "- [ ] Duplicate, hide, and delete slides; copy/paste between presentations while preserving formatting.",
+        "- [ ] Create, rename, and collapse sections in the slide pane.",
+        "- [ ] Outline view: all titles and text as an editable outline.",
+        "- [ ] Reuse slides from another presentation."
+      ]
+    },
+    {
+      "issue": 77,
+      "title": "Presentation: edit slide masters and layouts",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/77",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        }
+      ],
+      "deliveredScope": "Master/layout copy/rename/delete-unused, layout-range apply and placeholder reset",
+      "sourceEvidence": [
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md"
+      ],
+      "remainingAcceptance": "General master placeholder/logo/font editing, propagation and complete PPTX/ODP master preservation still need independent acceptance; the delivered layout tools do not certify the whole master-editing surface.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 77,
+        "id": 6765947454,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/77#issuecomment-6765947454",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Master view: edit slide masters and layouts (placeholders, background, logo, fonts).",
+        "- [ ] Create, rename, and delete layouts.",
+        "- [ ] Master changes propagate to all slides using that layout.",
+        "- [ ] Multiple masters in one presentation.",
+        "- [ ] Reset a slide layout to the master.",
+        "- [ ] Preserve when opening/saving PPTX and ODP."
+      ]
+    },
+    {
+      "issue": 78,
+      "title": "Presentation: apply and customize themes",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/78",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        }
+      ],
+      "deliveredScope": "Previewed editable themes, validated portable presets and selected-slide theme isolation/backgrounds",
+      "sourceEvidence": [
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md"
+      ],
+      "remainingAcceptance": "Theme colors in every picker and shared organization-branding/template integration remain outside the certified scope; complete native/imported theme compatibility acceptance.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 78,
+        "id": 6765947957,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/78#issuecomment-6765947957",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Built-in themes with color schemes, fonts, backgrounds, and previews.",
+        "- [ ] Apply themes to all or selected slides.",
+        "- [ ] Customize color schemes/theme fonts and save a custom theme.",
+        "- [ ] Per-slide background: color, gradient, or image.",
+        "- [ ] Theme colors in all color pickers.",
+        "- [ ] Organization branding themes (#27)."
+      ]
+    },
+    {
+      "issue": 79,
+      "title": "Presentation: notes and presenter view",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/79",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 201,
+          "included": true,
+          "via": 233,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        },
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        },
+        {
+          "pr": 275,
+          "included": true,
+          "via": null,
+          "heads": ["9afc96b57be94cda01a0a1da221bc10dd7e2c85a"],
+          "integrationCommits": ["fee8b45e6280b9fe63e1b97e90c126f1cd3c9cc8"]
+        }
+      ],
+      "deliveredScope": "Rich speaker-note drafts, focused-save preservation and presenter keyboard-control fixes",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-presentatie-toetsen.md",
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md",
+        "docs/tests/2026-11-10-presentatie-rijke-notities.md"
+      ],
+      "remainingAcceptance": "Physical second-display/native presenter acceptance, display swaps and real remote input remain open. Package apply intentionally starts a new native undo history; notes keep their own draft history.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 79,
+        "id": 6765948378,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/79#issuecomment-6765948378",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Notes pane below the slide with formatting.",
+        "- [ ] Presenter view on a second display: current/next slide, notes, elapsed time, and clock.",
+        "- [ ] Swap displays; allow presenter view on one display for practice.",
+        "- [ ] During a presentation: jump to a slide (number + Enter), black/white screen (B/W), pointer, and pen.",
+        "- [ ] Presentation remotes work (PageUp/PageDown and arrow keys)."
+      ]
+    },
+    {
+      "issue": 80,
+      "title": "Presentation: align, distribute, group, and crop objects",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/80",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        },
+        {
+          "pr": 261,
+          "included": true,
+          "via": null,
+          "heads": ["98b8dffcb57941bc7f062f7ebf3686727a74d2b5"],
+          "integrationCommits": ["514265522edc045a3b27973c5226ea20ff36f917"]
+        }
+      ],
+      "deliveredScope": "Multi-object arrangement/grouping, image edits and guarded object/text format copying",
+      "sourceEvidence": [
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md",
+        "docs/tests/2026-11-10-presentatie-opmaak-kopie.md"
+      ],
+      "remainingAcceptance": "Smart/custom guides remain open. Cross-slide/theme and group/table/chart format transfer plus advanced inherited master text properties are outside the format-painter increment.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 80,
+        "id": 6765948867,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/80#issuecomment-6765948867",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Align objects relative to each other or the slide; distribute evenly horizontally/vertically.",
+        "- [ ] Group/ungroup (Ctrl+G / Ctrl+Shift+G).",
+        "- [ ] Smart guides and snapping grid while dragging; custom guides.",
+        "- [ ] Exact position/size through a properties pane.",
+        "- [ ] Crop, replace, and adjust transparency of images.",
+        "- [ ] Copy formatting between objects."
+      ]
+    },
+    {
+      "issue": 81,
+      "title": "Presentation: tables on slides",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/81",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md"
+      ],
+      "remainingAcceptance": "Complete final native table styles/row-column/merge/margin/rich-paste/render/save compatibility acceptance beyond the delivered focused package/browser cases.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Insert a table with chosen row/column counts; table styles.",
+        "- [ ] Add/delete rows and columns; merge/split cells.",
+        "- [ ] Cell fill, borders, alignment, and margins.",
+        "- [ ] Paste a table from a spreadsheet or text document.",
+        "- [ ] Render and preserve existing tables."
+      ]
+    },
+    {
+      "issue": 82,
+      "title": "Presentation: charts on slides",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/82",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 233,
+          "included": true,
+          "via": null,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [
+        "docs/onderzoek/presentatie-76-82.md",
+        "docs/tests/2026-11-09-presentatie-overzicht.md",
+        "docs/tests/2026-11-09-presentatie-objecten.md",
+        "docs/tests/2026-11-09-presentatie-ontwerp.md",
+        "docs/tests/2026-11-09-presentatie-tabellen.md",
+        "docs/tests/2026-11-09-presentatie-grafieken.md",
+        "docs/tests/2026-11-09-presentatie-hergebruik.md",
+        "docs/tests/2026-11-09-presentatie-afbeeldingen.md",
+        "docs/tests/2026-11-09-presentatie-groepen.md",
+        "docs/tests/2026-11-09-presentatie-themabestand.md",
+        "docs/tests/2026-11-09-presentatie-actueel-thema.md"
+      ],
+      "remainingAcceptance": "Complete final native embedded data and all shared chart types/paste/render/save acceptance beyond the delivered chart-transfer cases.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Insert a chart with an embedded editable data table.",
+        "- [ ] Same chart types/formatting as Spreadsheet through a shared chart component (#66).",
+        "- [ ] Paste a chart from a spreadsheet.",
+        "- [ ] Render and preserve existing charts."
+      ]
+    },
+    {
+      "issue": 83,
+      "title": "Presentation: slide transitions",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/83",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 243,
+          "included": true,
+          "via": null,
+          "heads": ["78a84fd8a2926c6313e0d3d1465e5450f2c24837"],
+          "integrationCommits": ["fdf520aeb2ab6b20fefac42a80a69646386abca9"]
+        },
+        {
+          "pr": 250,
+          "included": true,
+          "via": null,
+          "heads": ["99da68f0598b3a11ed1c6411e4135a3179bbb3f9"],
+          "integrationCommits": ["65971f5bbba139f484aec904c72c4d46fbbc5978"]
+        },
+        {
+          "pr": 278,
+          "included": true,
+          "via": null,
+          "heads": ["ddb5c063289f557467a8ad971077220d13788fe8"],
+          "integrationCommits": ["8b4eafc98d6973dfbcb5e0639448c0f80a991d5c"]
+        }
+      ],
+      "deliveredScope": "Five transition effects with preview/playback and scoped ODF transition/audio round-trip repair",
+      "sourceEvidence": [
+        "docs/vervolgissues/33-presentatie-overgangsbehoud.md",
+        "docs/tests/2026-11-09-presentatie-animaties.md",
+        "docs/tests/2026-11-10-presentatie-odf-overgangen.md"
+      ],
+      "remainingAcceptance": "Additional effects, mixed click policies, loop/stop/FODP-audio preservation and physical native/two-display compatibility remain outside certified scope; applying package changes reloads and resets prior undo history.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 83,
+        "id": 6765949365,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/83#issuecomment-6765949365",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Choose transitions (fade, push, wipe, split, zoom, and others) with previews.",
+        "- [ ] Configure duration, direction, sound, and automatic advance after a set time.",
+        "- [ ] Apply to all slides.",
+        "- [ ] Play in slide shows; preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 84,
+      "title": "Presentation: object animations",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/84",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 250,
+          "included": true,
+          "via": null,
+          "heads": ["99da68f0598b3a11ed1c6411e4135a3179bbb3f9"],
+          "integrationCommits": ["65971f5bbba139f484aec904c72c4d46fbbc5978"]
+        }
+      ],
+      "deliveredScope": "Basic entrance/exit/spin/straight-motion and paragraph animations with order/timing, preview and source preservation",
+      "sourceEvidence": ["docs/tests/2026-11-09-presentatie-animaties.md"],
+      "remainingAcceptance": "Additional effects/curved paths/interactive timing and native audience-window animated playback remain open; that separate native window currently shows a static slide with an explicit notice. No general ODP/PPT animation-preservation claim.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 84,
+        "id": 6765949788,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/84#issuecomment-6765949788",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Entrance, emphasis, exit animations, and motion paths.",
+        "- [ ] Animation pane with order, start (on click, with previous, after previous), duration, and delay.",
+        "- [ ] Animate text by paragraph.",
+        "- [ ] Preview in the editor.",
+        "- [ ] Play and preserve existing animations; report unsupported effects."
+      ]
+    },
+    {
+      "issue": 85,
+      "title": "Presentation: video and audio",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/85",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 256,
+          "included": true,
+          "via": null,
+          "heads": ["51e0ea41e109960d8ea6ca53a149f1b663857ac3"],
+          "integrationCommits": ["6d4bdffde4a2a8a8c82818cd78f0f9e285845e51"]
+        }
+      ],
+      "deliveredScope": "Embedded MP4/WebM/MP3/M4A/WAV insertion and browser playback/settings with exact media preservation",
+      "sourceEvidence": ["docs/tests/2026-11-09-presentatie-media.md"],
+      "remainingAcceptance": "Online-video insertion, complex triggers/groups and dynamic video in the native audience window remain open; codecs depend on platform. ODF volume/mute PR #304 is outside this checkpoint and does not repair every trim/playback conversion case.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 85,
+        "id": 6765950282,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/85#issuecomment-6765950282",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Insert video/audio (MP4, WebM, MP3, M4A, WAV).",
+        "- [ ] Slide-show playback: automatic/on click, loop, volume.",
+        "- [ ] Trim start/end times and choose a poster frame.",
+        "- [ ] Play and preserve embedded media from existing presentations.",
+        "- [ ] Link online video with a clear notice that internet access is required."
+      ]
+    },
+    {
+      "issue": 86,
+      "title": "Presentation: correctly render diagrams and support basic editing",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/86",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 265,
+          "included": true,
+          "via": null,
+          "heads": ["47643263a3aa34b0cd9cd2a41adbc4c1b5c8c8e8"],
+          "integrationCommits": ["e38910931eb351994fdd981dd96342277cc4dda8"]
+        }
+      ],
+      "deliveredScope": "Supported SmartArt text/cache editing and simple editable process/cycle/hierarchy groups",
+      "sourceEvidence": ["docs/tests/2026-11-10-presentatie-diagrammen.md"],
+      "remainingAcceptance": "General SmartArt/ODF rendering/layout and complex/linked-cache conversion remain open. Missing caches cannot be converted to shapes; the SDK's existing SmartArt placement limitation is unchanged.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 86,
+        "id": 6765950687,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/86#issuecomment-6765950687",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Correctly render existing PPTX/ODP diagrams.",
+        "- [ ] Edit diagram text.",
+        "- [ ] Insert simple process, cycle, and hierarchy diagrams from text.",
+        "- [ ] Convert to individual shapes for free editing.",
+        "- [ ] Preserve when saving."
+      ]
+    },
+    {
+      "issue": 87,
+      "title": "Presentation: slide numbers, dates, and footers",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/87",
+      "state": "OPEN",
+      "classification": "partial",
+      "sources": [
+        {
+          "pr": 237,
+          "included": true,
+          "via": 233,
+          "heads": [
+            "405b2e920f89b24495c95f6bcc80aed2a4198883",
+            "2c0d92187ac36f25672d153b781885747184a985",
+            "c3537b83e7239fc808b3af0d518e109aef2c0f8b"
+          ],
+          "integrationCommits": [
+            "aaea78acbe03fa1517c0779fbb9ef59ece2b32e6",
+            "73347b5aceb44379cff66e143c5a791d7a09e747",
+            "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab"
+          ]
+        },
+        {
+          "pr": 274,
+          "included": true,
+          "via": null,
+          "heads": ["2e62fc279b7fad6ead32ddc4cf090aa41a86dda0"],
+          "integrationCommits": ["543ebcdb2d428db29985a3ab9d8650e04210414f"]
+        },
+        {
+          "pr": 275,
+          "included": true,
+          "via": null,
+          "heads": ["9afc96b57be94cda01a0a1da221bc10dd7e2c85a"],
+          "integrationCommits": ["fee8b45e6280b9fe63e1b97e90c126f1cd3c9cc8"]
+        }
+      ],
+      "deliveredScope": "Footer/date/number placeholder controls plus post-save slide-number correction after structural edits",
+      "sourceEvidence": [
+        "docs/tests/2026-11-09-presentatie-voetteksten.md",
+        "docs/tests/2026-11-10-presentatie-rijke-notities.md"
+      ],
+      "remainingAcceptance": "Live canvas field evaluation, automatic date refresh and full master integration remain outside the saved-number repair. Complete native and ODP/PPT round-trip acceptance separately.",
+      "closingApproved": false,
+      "progressComment": {
+        "issue": 87,
+        "id": 6765951220,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/87#issuecomment-6765951220",
+        "action": "created"
+      },
+      "criteriaAtAuditStart": [
+        "- [ ] Enable slide number, date (fixed/automatic), and footer for all or selected slides.",
+        "- [ ] Hide on title slides.",
+        "- [ ] Position/format through the slide master (#77).",
+        "- [ ] Preserve when opening and saving."
+      ]
+    },
+    {
+      "issue": 130,
+      "title": "Writer: splitting the top cell appears to shift column widths in other rows",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/130",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 245,
+          "included": true,
+          "via": null,
+          "heads": [
+            "26d3196595635037d79e27ab1679bfdc62b14d30",
+            "55108670c3d8c2300cdec226823f2683ddfeccdc"
+          ],
+          "integrationCommits": [
+            "65512f0718f76834964904482e66e233855c7597",
+            "2462550e9a43755fdfa7c8a62e455fb4339940c7"
+          ]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-autofit-split.md"],
+      "remainingAcceptance": "The exact originally reported two-way visual scenario remains independently unconfirmed without the original reproducible fixture. Related multi-way splitting/width-preservation repairs do not close that observation.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 188,
+      "title": "Writer: Ctrl+Z does not undo Replace All until the search pane is closed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/188",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 190,
+          "included": true,
+          "via": null,
+          "heads": ["7bfdd0dbee6678c3f3936349bfa56bd536f953c8"],
+          "integrationCommits": ["92be2e3a07aee7c456fe58971d021770078b7414"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-vervangen-undo.json"],
+      "remainingAcceptance": "Final-checkpoint platform/native acceptance remains to be certified. Earlier installed Windows4175 and source/browser proof pass; do not relabel that older native result as a1e5 test.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 189,
+      "title": "Writer: whole-word search accepts an invalid regex and returns unrelated matches",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/189",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 197,
+          "included": true,
+          "via": null,
+          "heads": ["a40a6662b8d357e77ece0c67b8147f1d7b7d8189"],
+          "integrationCommits": ["c0b487d05057d9df2cf486f1cd5fd6112bff4b72"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-ongeldige-regex.json"],
+      "remainingAcceptance": "Final-checkpoint platform/native acceptance remains to be certified. Earlier installed Windows4175 and source/browser proof pass; do not relabel that older native result as a1e5 test.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 196,
+      "title": "Writer: pasting into a comment reply replaces or inserts main document text",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/196",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 219,
+          "included": true,
+          "via": 242,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Final-checkpoint platform/native acceptance remains to be certified for both reply-paste selection cases. Earlier installed Windows4175/source tests pass and remain historical evidence.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 199,
+      "title": "Writer: typing after Heading 1 carries heading font and color into Normal text",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/199",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 208,
+          "included": true,
+          "via": 242,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-next-style.md"],
+      "remainingAcceptance": "Final-checkpoint native/platform acceptance of Heading1→Normal first-character formatting remains separate from earlier installed4175/source proof.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 205,
+      "title": "Writer: table Sort selectors and options are barely readable in dark theme",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/205",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 249,
+          "included": true,
+          "via": null,
+          "heads": ["84d851dcbf55e6307be0a4185a67b14cd46b224b"],
+          "integrationCommits": ["59ad7a46cd2447688f82a390c9fecf3517d172c5"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Final-checkpoint native/platform acceptance of dark/light native selects, expanded options, enabled/disabled/focus states remains separate from earlier installed4175/source proof.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 209,
+      "title": "Writer: even-page header editing fails or changes the odd-page header",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/209",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 217,
+          "included": true,
+          "via": 242,
+          "heads": ["380f59bb629438755d7145d830ea30a97f3e92ec"],
+          "integrationCommits": ["054d1d7a23eb889782ff17c79cd1e955c2bd7fef"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-09-writer-even-header.md"],
+      "remainingAcceptance": "The six current custom-story browser cases pass with no errors; final installed even-header isolation/completion acceptance remains separate from older4175 native evidence.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 259,
+      "title": "Writer: mail merge restarts mixed caption fields out of order",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/259",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 260,
+          "included": true,
+          "via": null,
+          "heads": ["e209adfcb81bf81205337c94526cec4b6876eae6"],
+          "integrationCommits": ["8a775cbb09b7ba409e16bd83c8b3c480f379f8f7"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-samenvoeg-bijschriften.md"],
+      "remainingAcceptance": "Mixed simple/complex SEQ source tests and full mailmerge pass; finish final-checkpoint platform/acceptance review, preserving explicit restarts and untouched templates.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 279,
+      "title": "Writer: limit cursor navigation reads to the active paragraph",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/279",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 291,
+          "included": true,
+          "via": null,
+          "heads": ["56fbdccbbcc9df88215a8d92c09a6cea6340afef"],
+          "integrationCommits": ["c7117ba4eeb35880209c1f04a01fd043f45d6510"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Focused raw-story navigation tests and CPU-throttled source/combined semantic checks pass; complete platform/native acceptance without replacing semantic/cursor evidence with timing claims.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": []
+    },
+    {
+      "issue": 280,
+      "title": "Writer: offer a dark document canvas without changing saved colours",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/280",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 300,
+          "included": false,
+          "via": null,
+          "heads": [],
+          "integrationCommits": []
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "PR300 is outside the frozen checkpoint; integration and native acceptance are not performed in this batch.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] A discoverable preference offers a dark document page/canvas with readable text, caret and selection.",
+        "- [ ] Coloured headings and highlighted text remain distinguishable in that view.",
+        "- [ ] A light paper view remains available without editing the document.",
+        "- [ ] Changing the viewing preference does not dirty the document or change its stored formatting, PDF output or printed colours.",
+        "- [ ] The view preference persists after restarting the application; light/dark switching is tested on the native Windows build."
+      ]
+    },
+    {
+      "issue": 281,
+      "title": "Writer: text highlighter glyph loses contrast in the dark ribbon",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/281",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 300,
+          "included": false,
+          "via": null,
+          "heads": [],
+          "integrationCommits": []
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "PR300 is outside the frozen checkpoint; integration and native acceptance are not performed in this batch.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Enabled highlighter glyphs remain recognisable in both light and dark themes, including hover/focus/pressed/picker states.",
+        "- [ ] Glyph and button colours provide sufficient contrast independently of the selected highlight colour.",
+        "- [ ] The chosen colour remains clearly visible in its indicator; explicitly choosing a new colour updates that indicator.",
+        "- [ ] Switching application themes does not change the actual selected text/highlight formatting.",
+        "- [ ] Native Windows reproduction and the tested build/source version are recorded with before/after evidence."
+      ]
+    },
+    {
+      "issue": 282,
+      "title": "Writer: Enter after a note reference leaks superscript into the next paragraph",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/282",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 290,
+          "included": true,
+          "via": null,
+          "heads": ["66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c"],
+          "integrationCommits": ["df20016b5a57e69c3dd17204ef650d4aeaf5fcc4"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-writer-nootvervolg.md"],
+      "remainingAcceptance": "Browser4/4 and exact1e5 native footnote/endnote continuation/Undo/Redo/save/close/reopen pass; independent saved DOCX/PDF confirms normal body baselines and preserved superscript references. Remaining platform review is recorded separately; no automatic issue closure.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Both fresh footnote and endnote cases produce normal continuation text in the Windows candidate and after DOCX close/reopen.",
+        "- [ ] No reference character style leaks onto the new ordinary run; custom marker font/size/color remains on the marker.",
+        "- [ ] Preserve intentionally authored superscript/subscript and other preceding text formatting.",
+        "- [ ] Preserve Undo/Redo, splitting before a reference, and Heading â†’ Normal continuation when the heading ends with a note.",
+        "- [ ] Native kernel and production-browser regressions pass; Windows retest is recorded against one exact integration SHA."
+      ]
+    },
+    {
+      "issue": 284,
+      "title": "Writer: delayed reload navigation overwrites a newer text selection",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/284",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 266,
+          "included": true,
+          "via": null,
+          "heads": ["617f23bf7dd0d258f337ec54075139ef38b01a5e"],
+          "integrationCommits": ["3b2415887d38c99b8328b5b813d6e03eec1ac9ad"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Current browser6/6 and installed1e5 targetstory selection/styles/pagefield/save/reopen pass; independent finalDOCX/PDF confirms bodydocument.xml byteidentical/no markers and preserved story fields/styles. Other platform acceptance remains; separate PDF header overlap is not resolved.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Navigate once when a reload goal is still current; repeated first-paint notifications do not navigate again.",
+        "- [ ] Pointer or keyboard input during pending layout/retries preserves the newer selection.",
+        "- [ ] Document replacement cancels pending retries.",
+        "- [ ] All six production custom-story browser stages pass, including saved footer character-style inspection, with no application errors and unchanged body formatting.",
+        "- [ ] Record the independent native Windows retest on the combined integration candidate."
+      ]
+    },
+    {
+      "issue": 285,
+      "title": "Presentation: saved slide number fields stay stale after slide edits",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/285",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 274,
+          "included": true,
+          "via": null,
+          "heads": ["2e62fc279b7fad6ead32ddc4cf090aa41a86dda0"],
+          "integrationCommits": ["543ebcdb2d428db29985a3ab9d8650e04210414f"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Saved-number correction and notes+number combined downloads pass; final platform/native acceptance remains. Live cached canvas field values are explicitly outside this concrete stored-file bug.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Move, delete and duplicate produce correct saved fields after normal app save and reopen.",
+        "- [ ] Preserve field IDs, formatting, dates, fixed text, notes, masters and compressed media; do not reload the editor or alter undo history for this correction.",
+        "- [ ] Respect non-default firstSlideNum including zero, hidden slides and slides without a number field."
+      ]
+    },
+    {
+      "issue": 286,
+      "title": "Presentation: ODP conversion rounds automatic slide advance to whole seconds",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/286",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 278,
+          "included": true,
+          "via": null,
+          "heads": ["ddb5c063289f557467a8ad971077220d13788fe8"],
+          "integrationCommits": ["8b4eafc98d6973dfbcb5e0639448c0f80a991d5c"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-presentatie-odf-overgangen.md"],
+      "remainingAcceptance": "Dedicated current1e5 native ODF conversion/schema and source tests pass; complete final platform review without expanding scope to FODP audio or other transitions.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Preserve 1800, 1234, 2500 and 3750 ms through the ODP round trip and real engine save/reopen.",
+        "- [ ] Apply the same bounded duration correction to OTP/FODP variants; retain valid ODF 1.3 and inherited page-style semantics.",
+        "- [ ] Do not change effect duration, unrelated animation timing, notes or media."
+      ]
+    },
+    {
+      "issue": 287,
+      "title": "Presentation: ODP conversion reverses horizontal push transitions",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/287",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 278,
+          "included": true,
+          "via": null,
+          "heads": ["ddb5c063289f557467a8ad971077220d13788fe8"],
+          "integrationCommits": ["8b4eafc98d6973dfbcb5e0639448c0f80a991d5c"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-presentatie-odf-overgangen.md"],
+      "remainingAcceptance": "Dedicated current1e5 ODF directional native matrix passes; complete final platform review of this scoped repair, without claiming all presentation effects.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] The right/left variants retain their source direction through the native round trip and engine save/reopen.",
+        "- [ ] Test up/down as controls and preserve all four directions in the ODP/OTP/FODP native matrix.",
+        "- [ ] Keep page-style and direct transition-animation directions consistent; do not rewrite object animation filters or shared master/note styles."
+      ]
+    },
+    {
+      "issue": 288,
+      "title": "Presentation: ODP round trips re-enable disabled mouse-click advance",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/288",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 278,
+          "included": true,
+          "via": null,
+          "heads": ["ddb5c063289f557467a8ad971077220d13788fe8"],
+          "integrationCommits": ["8b4eafc98d6973dfbcb5e0639448c0f80a991d5c"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-presentatie-odf-overgangen.md"],
+      "remainingAcceptance": "Dedicated current1e5 uniform global click-policy matrix passes; mixed policies remain outside the concrete issue scope; final platform review remains.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Store the uniform policy in the standard ODF presentation setting and restore advClick on all returned transition branches.",
+        "- [ ] Verify both enabled and disabled policies, real engine save/reopen and the existing app control.",
+        "- [ ] Do not claim or overwrite a mixed PPTX policy as a global one; keep unrelated transitions and animations intact."
+      ]
+    },
+    {
+      "issue": 289,
+      "title": "Presentation: repeated transition sounds disappear after an ODP round trip",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/289",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 278,
+          "included": true,
+          "via": null,
+          "heads": ["ddb5c063289f557467a8ad971077220d13788fe8"],
+          "integrationCommits": ["8b4eafc98d6973dfbcb5e0639448c0f80a991d5c"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": ["docs/tests/2026-11-10-presentatie-odf-overgangen.md"],
+      "remainingAcceptance": "Source/native ODP/OTP and browser eight-playback proofs cover the shared internal WAV repair; final platform review remains. FODP/external/loop variants are not certified.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [ ] Preserve all four configured sound actions through the ODP and OTP native matrix and real engine save/reopen.",
+        "- [ ] Use the existing internal package sound only when a valid source sound and target part exist; never fetch an external URL.",
+        "- [ ] Verify exact source audio bytes, resolvable internal relationships and actual playback of every returned sound in the browser."
+      ]
+    },
+    {
+      "issue": 302,
+      "title": "Writer: stale header/footer opening check reports failure after a successful edit",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/302",
+      "state": "OPEN",
+      "classification": "implementation-candidate-not-closure-approved",
+      "sources": [
+        {
+          "pr": 307,
+          "included": true,
+          "via": null,
+          "heads": ["2da5abe361d18824d1fd84f1dee717f152f7e545"],
+          "integrationCommits": ["ee176619c6ba2aceed1d88fe9b82a2b5e07050b0"]
+        }
+      ],
+      "deliveredScope": "Source implementation candidate; see pinned PR scope and focused evidence",
+      "sourceEvidence": [],
+      "remainingAcceptance": "Six unit behavior regressions, exact1e5 zero-error browser rapidclose and manual native header/footer immediate-close/reload pass. Native sub-frame permutations are not timing-instrumented; broader platform review remains explicit.",
+      "closingApproved": false,
+      "criteriaAtAuditStart": [
+        "- [x] Successful opening followed by close/reload within 600ms produces no failure notification.",
+        "- [x] A genuinely unopened editor still produces the intended error once.",
+        "- [x] Superseded/unmounted attempts release their observation/timer without a stale error.",
+        "- [x] The six custom-story and four note-continuation production-browser cases pass with zero application/JavaScript errors on the replacement fixed candidate."
+      ]
+    }
+  ],
+  "progressCommentsPublished": [
+    {
+      "issue": 2,
+      "id": 6765932823,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/2#issuecomment-6765932823",
+      "action": "created"
+    },
+    {
+      "issue": 3,
+      "id": 6765933294,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/3#issuecomment-6765933294",
+      "action": "created"
+    },
+    {
+      "issue": 13,
+      "id": 6765933723,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/13#issuecomment-6765933723",
+      "action": "created"
+    },
+    {
+      "issue": 17,
+      "id": 6765934151,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/17#issuecomment-6765934151",
+      "action": "created"
+    },
+    {
+      "issue": 19,
+      "id": 6765934526,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/19#issuecomment-6765934526",
+      "action": "created"
+    },
+    {
+      "issue": 20,
+      "id": 6765934924,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/20#issuecomment-6765934924",
+      "action": "created"
+    },
+    {
+      "issue": 21,
+      "id": 6765935449,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/21#issuecomment-6765935449",
+      "action": "created"
+    },
+    {
+      "issue": 22,
+      "id": 6765935904,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/22#issuecomment-6765935904",
+      "action": "created"
+    },
+    {
+      "issue": 23,
+      "id": 6765936266,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/23#issuecomment-6765936266",
+      "action": "created"
+    },
+    {
+      "issue": 24,
+      "id": 6765936677,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/24#issuecomment-6765936677",
+      "action": "created"
+    },
+    {
+      "issue": 27,
+      "id": 6765937084,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/27#issuecomment-6765937084",
+      "action": "created"
+    },
+    {
+      "issue": 29,
+      "id": 6765937547,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/29#issuecomment-6765937547",
+      "action": "created"
+    },
+    {
+      "issue": 31,
+      "id": 6765937968,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/31#issuecomment-6765937968",
+      "action": "created"
+    },
+    {
+      "issue": 32,
+      "id": 6765938383,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/32#issuecomment-6765938383",
+      "action": "created"
+    },
+    {
+      "issue": 33,
+      "id": 6765938772,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/33#issuecomment-6765938772",
+      "action": "created"
+    },
+    {
+      "issue": 34,
+      "id": 6765939265,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/34#issuecomment-6765939265",
+      "action": "created"
+    },
+    {
+      "issue": 35,
+      "id": 6765939726,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/35#issuecomment-6765939726",
+      "action": "created"
+    },
+    {
+      "issue": 36,
+      "id": 6765940169,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/36#issuecomment-6765940169",
+      "action": "created"
+    },
+    {
+      "issue": 39,
+      "id": 6765940612,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/39#issuecomment-6765940612",
+      "action": "created"
+    },
+    {
+      "issue": 40,
+      "id": 6765941007,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/40#issuecomment-6765941007",
+      "action": "created"
+    },
+    {
+      "issue": 48,
+      "id": 6765941422,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/48#issuecomment-6765941422",
+      "action": "created"
+    },
+    {
+      "issue": 49,
+      "id": 6765941836,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/49#issuecomment-6765941836",
+      "action": "created"
+    },
+    {
+      "issue": 50,
+      "id": 6765942242,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/50#issuecomment-6765942242",
+      "action": "created"
+    },
+    {
+      "issue": 55,
+      "id": 6765942668,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/55#issuecomment-6765942668",
+      "action": "created"
+    },
+    {
+      "issue": 56,
+      "id": 6765943085,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/56#issuecomment-6765943085",
+      "action": "created"
+    },
+    {
+      "issue": 57,
+      "id": 6765943466,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/57#issuecomment-6765943466",
+      "action": "created"
+    },
+    {
+      "issue": 59,
+      "id": 6765943865,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/59#issuecomment-6765943865",
+      "action": "created"
+    },
+    {
+      "issue": 60,
+      "id": 6765944312,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/60#issuecomment-6765944312",
+      "action": "created"
+    },
+    {
+      "issue": 61,
+      "id": 6765944753,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/61#issuecomment-6765944753",
+      "action": "created"
+    },
+    {
+      "issue": 66,
+      "id": 6765945212,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/66#issuecomment-6765945212",
+      "action": "created"
+    },
+    {
+      "issue": 67,
+      "id": 6765945673,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/67#issuecomment-6765945673",
+      "action": "created"
+    },
+    {
+      "issue": 74,
+      "id": 6765946110,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/74#issuecomment-6765946110",
+      "action": "created"
+    },
+    {
+      "issue": 75,
+      "id": 6765946588,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/75#issuecomment-6765946588",
+      "action": "created"
+    },
+    {
+      "issue": 76,
+      "id": 6765947027,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/76#issuecomment-6765947027",
+      "action": "created"
+    },
+    {
+      "issue": 77,
+      "id": 6765947454,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/77#issuecomment-6765947454",
+      "action": "created"
+    },
+    {
+      "issue": 78,
+      "id": 6765947957,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/78#issuecomment-6765947957",
+      "action": "created"
+    },
+    {
+      "issue": 79,
+      "id": 6765948378,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/79#issuecomment-6765948378",
+      "action": "created"
+    },
+    {
+      "issue": 80,
+      "id": 6765948867,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/80#issuecomment-6765948867",
+      "action": "created"
+    },
+    {
+      "issue": 83,
+      "id": 6765949365,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/83#issuecomment-6765949365",
+      "action": "created"
+    },
+    {
+      "issue": 84,
+      "id": 6765949788,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/84#issuecomment-6765949788",
+      "action": "created"
+    },
+    {
+      "issue": 85,
+      "id": 6765950282,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/85#issuecomment-6765950282",
+      "action": "created"
+    },
+    {
+      "issue": 86,
+      "id": 6765950687,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/86#issuecomment-6765950687",
+      "action": "created"
+    },
+    {
+      "issue": 87,
+      "id": 6765951220,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/87#issuecomment-6765951220",
+      "action": "created"
+    }
+  ],
+  "inheritedClosingCommitReview": {
+    "commits": [
+      {
+        "commit": "a40a6662b8d357e77ece0c67b8147f1d7b7d8189",
+        "issue": 189,
+        "approved": false
+      }
+    ],
+    "documentation": "https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue",
+    "warning": "PR body closingIssuesReferences is empty, but an inherited source commit can still close189 when merged into default branch. Do not merge source history directly before explicit closure review; use a reviewed squash message or separately approve189 after required acceptance. No history rewrite/main merge performed."
+  },
+  "issueBodySnapshotNote": "Acceptance checklist text was read once at audit start; later source-owner verified issue updates are not overwritten. This administrative pass changed comments only, never issue bodies/labels/assignees/states."
+}
