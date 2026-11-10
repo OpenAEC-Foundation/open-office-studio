@@ -104,6 +104,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#319](https://github.com/OpenAEC-Foundation/open-office-studio/pull/319) | `0eea9d4fea759b219fecef77f5f55d66d3046be1` | `bf7a4243743d184938af507e1df068adc815a5d4` | Bounded Spreadsheet startup improvements on unchanged first eight patches |
 | [#321](https://github.com/OpenAEC-Foundation/open-office-studio/pull/321) | `834b1d6cf12e97e3dc492547b4f8cd5a2255e39b` | `589e2f5f38355a9af972f8ca61149e8ad6803b9e` | Native linear trendline source and independent geometry regression evidence |
 | [#335](https://github.com/OpenAEC-Foundation/open-office-studio/pull/335) | `d273762184d2f59e996c1da05e16d9f449054f6d` | `fa04615e2ebb88207c5761bae60a7d6774939929` | Validated startup fourteen plus linear-trendline fifteenth patch superset |
+| [#333](https://github.com/OpenAEC-Foundation/open-office-studio/pull/333) | `bdebc61209d7c0313c5047e4ad3b2fd18828b4dc` | `b873778cbd87b8f7b811263977eb29c8b02f24e8` | Render table styling for implicit default cells while preserving inherited overrides |
 
 ## Earlier fixes included in bundles
 
@@ -229,6 +230,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr319-related-unit | `bf7a4243743d184938af507e1df068adc815a5d4` | 46 | 0 | 0 |
 | pr321-related-unit | `589e2f5f38355a9af972f8ca61149e8ad6803b9e` | 53 | 0 | 0 |
 | pr335-related-unit | `1e00c272ad18f95530580e0e8fa4020b598f2bc9` | 48 | 0 | 0 |
+| pr333-targeted | `b873778cbd87b8f7b811263977eb29c8b02f24e8` | 12 | 0 | 0 |
 
 ## Pending deliveries
 
