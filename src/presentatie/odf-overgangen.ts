@@ -24,6 +24,7 @@ const NS = {
   anim: "urn:oasis:names:tc:opendocument:xmlns:animation:1.0",
   smil: "urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0",
   xlink: "http://www.w3.org/1999/xlink",
+  meta: "urn:oasis:names:tc:opendocument:xmlns:meta:1.0",
 };
 const P = "http://schemas.openxmlformats.org/presentationml/2006/main";
 const MC = "http://schemas.openxmlformats.org/markup-compatibility/2006";
@@ -44,15 +45,19 @@ function odf(bytes: Uint8Array, flat: boolean) {
   )
     return null;
   const index = new Map(delen?.map((d) => [d.naam, d]));
-  const lees = (path: string) => {
+  const leesBytes = (path: string) => {
     const d = index.get(path);
     return flat
       ? path === "content.xml"
-        ? strFromU8(bytes)
+        ? bytes
         : null
       : d
-        ? strFromU8(unzipSync(voegZipDelenSamen([d]))[path])
+        ? unzipSync(voegZipDelenSamen([d]))[path]
         : null;
+  };
+  const lees = (path: string) => {
+    const b = leesBytes(path);
+    return b ? strFromU8(b) : null;
   };
   const xml = lees("content.xml");
   if (!xml) return null;
@@ -66,18 +71,31 @@ function odf(bytes: Uint8Array, flat: boolean) {
     root,
     presentation,
     lees,
+    bytes: leesBytes,
     pages: children(presentation, NS.draw, "page"),
     heeft: (path: string) => index.has(path),
-    schrijf: (next: string) => {
-      if (next === xml) return bytes;
+    schrijf: (next: string, andere: Record<string, Uint8Array> = {}) => {
+      if (next === xml && !Object.keys(andere).length) return bytes;
       if (flat) return strToU8(next);
-      const content = zipDelen(zipSync({ "content.xml": strToU8(next) }))![0];
-      return voegZipDelenSamen(
-        delen!.map((d) => (d.naam === "content.xml" ? content : d)),
+      const vervangen = new Map(
+        zipDelen(
+          zipSync({
+            ...andere,
+            ...(next === xml ? {} : { "content.xml": strToU8(next) }),
+          }),
+        )!.map((d) => [d.naam, d]),
       );
+      return voegZipDelenSamen(delen!.map((d) => vervangen.get(d.naam) ?? d));
     },
   };
 }
+
+export {
+  odf as leesOdfConversie,
+  attrs as odfAttribuutWijziging,
+  NS as ODF_NS,
+  intern as internOdfPad,
+};
 type Odf = NonNullable<ReturnType<typeof odf>>;
 
 /** Een begintag vervangen; onbekende kinderen en overige documenttekst bewaren. */

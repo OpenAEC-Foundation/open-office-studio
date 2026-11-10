@@ -4,6 +4,9 @@ on:
     paths:
       - ".github/workflows/presentation-odf.yml"
       - "scripts/test-presentatie-odf.*"
+      - "scripts/test-presentatie-odf-volume.mjs"
+      - "src/presentatie/odf-mediavolume*"
+      - "src/presentatie/testbestanden/synthetic-volume.*"
       - "scripts/test-odf-13.py"
       - "src/presentatie/odf-overgangen*"
       - "src/presentatie/overgangen.ts"
@@ -41,11 +44,17 @@ jobs:
           python -m pip install lxml==6.1.1
       - name: ODP, OTP and FODP native round trips with production corrections
         run: python scripts/test-presentatie-odf.py
+      - name: Embedded media volume through ODP and OTP
+        env:
+          OOS_PRESENTATIE_ODF_VOLUME: "1"
+        run: python scripts/test-presentatie-odf.py
       - name: Preserve schemas, native outputs and independent report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: presentation-odf-transitions
-          path: .local/presentatie-odf
+          path: |
+            .local/presentatie-odf
+            .local/presentatie-odf-volume
           include-hidden-files: true
           if-no-files-found: error

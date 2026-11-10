@@ -132,7 +132,10 @@ export async function converteer(
       (["odp", "otp", "fodp"].includes(van) && naar === "pptx"))
   ) {
     const { naPresentatieConversie } = await import("./presentatie/odf-overgangen");
-    return naPresentatieConversie(bytes, van, naar, omgezet);
+    const { behoudOdfMediavolume } = await import("./presentatie/odf-mediavolume");
+    return behoudOdfMediavolume(
+      bytes, van, naar, naPresentatieConversie(bytes, van, naar, omgezet),
+    );
   }
   if (!writer || !voorbereid || !secties) return omgezet;
   // Restore physical sections before resolving the note/list/table bookmarks;
