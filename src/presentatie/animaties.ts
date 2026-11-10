@@ -13,6 +13,7 @@ import {
   type XmlElement,
 } from "../grafieken/xml";
 import { diaPaden } from "./overgangen";
+import { isEenvoudigeMedia, mediaTakken } from "./media-timing";
 
 const P = "http://schemas.openxmlformats.org/presentationml/2006/main";
 export type AnimatieEffect = "fadeIn" | "fadeOut" | "spin" | "move" | "unknown";
@@ -79,6 +80,7 @@ function lees(timing: XmlElement | null): DiaAnimaties {
   const nodes = [timing, ...zoekAlle(timing, "cTn")];
   let alleenLezen = false;
   const controleer = (el: XmlElement) => {
+    if (isEenvoudigeMedia(el)) return;
     if (namespaceVan(el, el.voorvoegsel) !== P || !TOEGESTAAN.has(el.lokaal))
       alleenLezen = true;
     if (
@@ -245,9 +247,11 @@ function lees(timing: XmlElement | null): DiaAnimaties {
       hoek,
     };
   });
+  const rootChildren = kind(kind(kind(kind(timing,"tnLst"),"par"),"cTn"),"childTnLst");
+  const alleenMedia = !!rootChildren && elementen(rootChildren).length > 0 && elementen(rootChildren).every(isEenvoudigeMedia);
   const onbekend =
     lijst.filter((a) => a.effect === "unknown").length +
-    (alleenLezen || (!lijst.length && elementen(timing).length) ? 1 : 0);
+    (alleenLezen || (!lijst.length && elementen(timing).length && !alleenMedia) ? 1 : 0);
   return { lijst, alleenLezen: alleenLezen || onbekend > 0, onbekend };
 }
 
@@ -293,8 +297,8 @@ export function animatieGroepen(lijst: readonly Animatie[]) {
   });
 }
 
-function timingXml(lijst: readonly Animatie[]) {
-  let id = 2;
+function timingXml(lijst: readonly Animatie[], media = "", basis = 0) {
+  let id = basis + 2;
   const next = () => ++id;
   const groepen = new Map<number, string[]>();
   for (const a of animatieGroepen(lijst)) {
@@ -338,7 +342,8 @@ function timingXml(lijst: readonly Animatie[]) {
         `<p:par><p:cTn id="${next()}" fill="hold"><p:stCondLst><p:cond delay="${groep < 0 ? 0 : "indefinite"}"/></p:stCondLst><p:childTnLst>${rows.join("")}</p:childTnLst></p:cTn></p:par>`,
     )
     .join("");
-  return `<p:timing xmlns:p="${P}"><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="never" nodeType="tmRoot"><p:childTnLst><p:seq concurrent="1" nextAc="seek"><p:cTn id="2" dur="indefinite" nodeType="mainSeq"><p:childTnLst>${inhoud}</p:childTnLst></p:cTn><p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:prevCondLst><p:nextCondLst><p:cond evt="onNext" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq></p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>`;
+  const seq = lijst.length ? `<p:seq concurrent="1" nextAc="seek"><p:cTn id="${basis+2}" dur="indefinite" nodeType="mainSeq"><p:childTnLst>${inhoud}</p:childTnLst></p:cTn><p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:prevCondLst><p:nextCondLst><p:cond evt="onNext" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq>` : "";
+  return `<p:timing xmlns:p="${P}"><p:tnLst><p:par><p:cTn id="${basis+1}" dur="indefinite" restart="never" nodeType="tmRoot"><p:childTnLst>${seq}${media}</p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>`;
 }
 
 export function schrijfAnimaties(
@@ -381,7 +386,9 @@ export function schrijfAnimaties(
     )
   )
     throw new AnimatieFout("invalidAnimation");
-  const xml = lijst.length ? timingXml(lijst) : "";
+  const takken = mediaTakken(d.timing), media = takken.map(n => d.xml.slice(n.start,n.eind)).join("");
+  const basis = Math.max(0,...takken.flatMap(n => zoekAlle(n,"cTn")).map(n => Number(attr(n,"id")) || 0));
+  const xml = lijst.length || media ? timingXml(lijst,media,basis) : "";
   const plek =
     d.timing?.start ?? kind(d.root, "extLst")?.start ?? d.root.inhoudEind;
   pakket.schrijf(
