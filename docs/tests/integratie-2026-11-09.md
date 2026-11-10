@@ -91,6 +91,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#301](https://github.com/OpenAEC-Foundation/open-office-studio/pull/301) | `92b1962a19c18ba2e89e67f292336f14b01e5ab4` | `23a5f37f38065f536156bcb2afc4188a220bebee` | Spreadsheet visual threshold, icon family and merged data-bar corrections |
 | [#304](https://github.com/OpenAEC-Foundation/open-office-studio/pull/304) | `2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a` | `e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb` | Preserve embedded media volume and mute through ODP and OTP |
 | [#316](https://github.com/OpenAEC-Foundation/open-office-studio/pull/316) | `a7669b86f1a5fcd85658d399a1507993cf2bb3b5` | `eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a` | Preserve unambiguous ODP media names and display unnamed media labels |
+| [#315](https://github.com/OpenAEC-Foundation/open-office-studio/pull/315) | `33eee967be1f3a136e0106cd77b5d4a0c5112255` | `3916dd36224d44d76e28853e3178946c5c54b816` | Writer review Undo including bounded individual revisions after worker synchronization |
 
 ## Earlier fixes included in bundles
 
@@ -203,6 +204,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr301-targeted | `23a5f37f38065f536156bcb2afc4188a220bebee` | 45 | 0 | 0 |
 | pr304-targeted | `e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb` | 21 | 0 | 0 |
 | pr316-targeted | `eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a` | 25 | 0 | 0 |
+| pr315-targeted | `3916dd36224d44d76e28853e3178946c5c54b816` | 20 | 0 | 0 |
 
 ## Pending deliveries
 
