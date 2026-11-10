@@ -111,19 +111,15 @@ export function zetPositie(ref: DocxEditorRef | null, instelling: PositieInstell
   });
 }
 
-/** Vervangt het beeld; de breedte blijft, de hoogte volgt het nieuwe beeld. */
+/** Vervangt de bron; de bestaande maat, bijsnijding en plaatsing blijven staan. */
 export function vervangAfbeelding(ref: DocxEditorRef | null, src: string, natuurlijk: { breedte: number; hoogte: number }) {
   return wijzigAfbeelding(ref, ({ attrs }) => {
-    const maat = maatBijVervangen(Number(attrs.width) || natuurlijk.breedte, natuurlijk);
+    const maat = maatBijVervangen(Number(attrs.width), Number(attrs.height), natuurlijk);
     return {
       src,
       rId: null,
-      width: Math.round(maat.breedte * 100) / 100,
-      height: Math.round(maat.hoogte * 100) / 100,
-      cropTop: 0,
-      cropRight: 0,
-      cropBottom: 0,
-      cropLeft: 0,
+      width: maat.breedte,
+      height: maat.hoogte,
     };
   });
 }
