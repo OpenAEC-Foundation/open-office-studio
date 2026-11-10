@@ -1,3 +1,4 @@
+import { registreerRenderProjectie } from "./renderprojectie";
 /** Conditional formats evaluate in the source workbook without changing cells or history. */
 import {
   cellAtPoint,
@@ -258,18 +259,5 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
     commands.splice(insertion, 0, ...extra);
     return tekenVisueleCellen({ ...frame, commands }, beelden);
   }
-  const tekenen = h.displayList.bind(h),
-    profiel = h.displayListProfiled.bind(h),
-    afdruk = h.printDisplayList.bind(h);
-  h.displayList = (viewport) =>
-    projecteer(tekenen(viewport), h.sheetInfo().activeSheet);
-  h.displayListProfiled = (viewport) => {
-    const basis = profiel(viewport);
-    return {
-      ...basis,
-      displayList: projecteer(basis.displayList, h.sheetInfo().activeSheet),
-    };
-  };
-  h.printDisplayList = (sheet, range, metrics, gridlines) =>
-    projecteer(afdruk(sheet, range, metrics, gridlines), sheet);
+  registreerRenderProjectie(h, 10, projecteer);
 }
