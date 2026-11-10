@@ -52,6 +52,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#236](https://github.com/OpenAEC-Foundation/open-office-studio/pull/236) | `86a5be49691b975f0f13d18c040833d305499647` | `d0589466120e5b71cb194ee1e42404bec6d31431` | Spreadsheet threaded comments and print checkpoint |
 | [#255](https://github.com/OpenAEC-Foundation/open-office-studio/pull/255) | `04e59e46464e71df1c2b6eb63f5abdb5864001c1` | `f356bb64e5227bc39b2e767ac9da123f0be408a0` | Writer section and column markers |
 | [#254](https://github.com/OpenAEC-Foundation/open-office-studio/pull/254) | `5a1c0d50f53ba31a298e9286b9c0ebec31e51782` | `6348da9ea2de0c8b224b3cade9984af960409e59` | Adaptive office preparation and status reads |
+| [#233](https://github.com/OpenAEC-Foundation/open-office-studio/pull/233) | `c3537b83e7239fc808b3af0d518e109aef2c0f8b` | `016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab` | Presentation current-theme editing |
 
 ## Earlier fixes included in bundles
 
@@ -121,10 +122,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | full-application-after-field-queue | `7b58503511c89e408c08b42e5fa8c148fe7aabf3` | 2796 | 0 | 7 |
 | pr245-related-unit | `6348da9ea2de0c8b224b3cade9984af960409e59` | 30 | 0 | 0 |
 | pr254-targeted | `fc9980430de3c22341cbd6b51b65e4c27085adba` | 11 | 0 | 0 |
+| pr233-targeted | `016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab` | 19 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #233, reported head `c3537b83e7239fc808b3af0d518e109aef2c0f8b`: Start theme editing from current slide/layout/master settings; previous2c0d already included.
 - PR #246, reported head `9de53c798334456808a1c7cef815f7872a25ee89`: HYPERLINK targets, worker cancellation measurement and bounded embedded-image decoding; previous41c9 already included.
 - PR #256, reported head `51e0ea41e109960d8ea6ca53a149f1b663857ac3`: Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery.
 
