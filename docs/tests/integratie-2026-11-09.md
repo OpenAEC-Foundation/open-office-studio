@@ -89,6 +89,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#314](https://github.com/OpenAEC-Foundation/open-office-studio/pull/314) | `5675a3ccad192bea93f806a5c74dc97cdc2416be` | `105134ad8e34c9aac73e0c5d2844b7144ed0f606` | Invalidate lazy PDF font cache after system-font availability changes |
 | [#320](https://github.com/OpenAEC-Foundation/open-office-studio/pull/320) | `137f378123b7a159c3c780a82a92d30373e5ca2c` | `701392aad13e415398a0e08c3875ef6a3ac4e2a7` | Preserve configured author initials on new Writer replies |
 | [#301](https://github.com/OpenAEC-Foundation/open-office-studio/pull/301) | `92b1962a19c18ba2e89e67f292336f14b01e5ab4` | `23a5f37f38065f536156bcb2afc4188a220bebee` | Spreadsheet visual threshold, icon family and merged data-bar corrections |
+| [#304](https://github.com/OpenAEC-Foundation/open-office-studio/pull/304) | `2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a` | `e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb` | Preserve embedded media volume and mute through ODP and OTP |
 
 ## Earlier fixes included in bundles
 
@@ -199,6 +200,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr314-targeted | `105134ad8e34c9aac73e0c5d2844b7144ed0f606` | 6 | 0 | 0 |
 | pr320-targeted | `701392aad13e415398a0e08c3875ef6a3ac4e2a7` | 5 | 0 | 0 |
 | pr301-targeted | `23a5f37f38065f536156bcb2afc4188a220bebee` | 45 | 0 | 0 |
+| pr304-targeted | `e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb` | 21 | 0 | 0 |
 
 ## Pending deliveries
 
