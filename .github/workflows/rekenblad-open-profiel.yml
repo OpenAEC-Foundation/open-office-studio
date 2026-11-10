@@ -8,11 +8,36 @@ on:
       - scripts/profiel-rekenblad-open.rs
       - scripts/profileer-rekenblad-bron.py
       - scripts/bouw-rekenbladkern.py
+      - scripts/maak-rekenbladprestatie.py
+      - scripts/meet-rekenbladkern.mjs
       - patches/rekenbladengine-*
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  wasm-baseline:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: python3 scripts/maak-rekenbladprestatie.py
+      - name: Bound the full 100k by 30 WASM baseline on the isolated CI host
+        env:
+          OOS_PRESTATIE_GEVAL: 100k-rijen-30-kolommen
+        run: timeout 90s node scripts/meet-rekenbladkern.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rekenblad-open-wasm-baseline
+          path: .local/prestatie/rekenbladen/*.json
+          include-hidden-files: true
   profiel:
     runs-on: ubuntu-22.04
     timeout-minutes: 20

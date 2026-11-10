@@ -17,7 +17,7 @@
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
   "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
   "wasmBytes": 7745388,
-  "stand": "Gecontroleerde kern met acht bronpatches: CF, tabelgroei, selectie-opmaak en SUBTOTAL op zichtbare rijen. Native CI42783728814 groen; JS/WASM-interface ongewijzigd. Frontend voor #73 nog in uitvoering.",
+  "stand": "Kandidaat voor #74: negende patch vermijdt tijdelijke Vec-allocaties voor kleine celarrays. Bestaande vendorpin blijft de geteste acht-patchkern totdat vergelijkende tests slagen.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -118,6 +118,16 @@
         {
           "pakket": "betteroffice-xlsx",
           "test": "subtotal_visibility"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-kleine-celarrays.patch",
+      "patchSha256": "71719ba8f0c53117077ddf5bc87d367b7bad02b023acc567c008f13fe08629f4",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::tests"
         }
       ]
     }
