@@ -194,7 +194,8 @@
       "kinds": {
         "inserted": "已插入",
         "deleted": "已删除",
-        "replaced": "已替换"
+        "replaced": "已替换",
+        "formatted": "Character formatting changed"
       },
       "diagnostics": {
         "invalidOptions": "比较设置无效。",
@@ -209,7 +210,7 @@
         "fieldChange": "域不同；这些不会显示为修订。",
         "objectChange": "图像或对象不同；这些不会显示为修订。",
         "contentControlChange": "内容控件不同。",
-        "formattingChange": "格式不同；格式更改不会显示为修订。",
+        "formattingChange": "These formatting differences cannot be compared safely.",
         "unsupportedContent": "文档包含比较功能不支持的内容。",
         "unsupportedFormatting": "文档包含比较功能不支持的格式。",
         "outOfScopeChange": "正文以外存在差异（页眉、页脚、注释）；这些不进行比较。",
@@ -220,7 +221,8 @@
         "batchRefused": "无法将差异记录为修订。",
         "serializationFailed": "无法保存结果。",
         "roundtripMismatch": "结果与修订的版本不一致。"
-      }
+      },
+      "formattingReplacements": "Supported character formatting differences appear as a replacement of the same text. Accept the changes for the new formatting or reject them for the old formatting."
     }
   },
   "editing": {

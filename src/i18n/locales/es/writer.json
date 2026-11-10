@@ -202,7 +202,8 @@
       "kinds": {
         "inserted": "Insertado",
         "deleted": "Eliminado",
-        "replaced": "Reemplazado"
+        "replaced": "Reemplazado",
+        "formatted": "Character formatting changed"
       },
       "diagnostics": {
         "invalidOptions": "La configuración de la comparación no es válida.",
@@ -217,7 +218,7 @@
         "fieldChange": "Los campos difieren; no se muestran como cambios.",
         "objectChange": "Las imágenes u objetos difieren; no se muestran como cambios.",
         "contentControlChange": "Los controles de contenido difieren.",
-        "formattingChange": "El formato difiere; los cambios de formato no se muestran como cambios.",
+        "formattingChange": "These formatting differences cannot be compared safely.",
         "unsupportedContent": "El documento contiene contenido que la comparación no admite.",
         "unsupportedFormatting": "El documento contiene formato que la comparación no admite.",
         "outOfScopeChange": "Hay diferencias fuera del cuerpo del texto (encabezados, pies de página, notas); no se comparan.",
@@ -228,7 +229,8 @@
         "batchRefused": "No se pudieron registrar las diferencias como cambios.",
         "serializationFailed": "No se pudo guardar el resultado.",
         "roundtripMismatch": "El resultado no coincidía con la versión revisada."
-      }
+      },
+      "formattingReplacements": "Supported character formatting differences appear as a replacement of the same text. Accept the changes for the new formatting or reject them for the old formatting."
     }
   },
   "editing": {
