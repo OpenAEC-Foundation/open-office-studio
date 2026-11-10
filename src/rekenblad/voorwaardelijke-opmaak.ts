@@ -17,12 +17,15 @@ import {
 import { adres, bereikA1, ontleedBereik } from "../lint/rekenblad-logica";
 import { voerOpsUit } from "../lint/rekenblad-opdrachten";
 import i18next from "../i18n/config";
+import { leesDxfStijlen, type DxfStijl } from "./voorwaardelijke-dxf";
 
 export interface VoorwaardelijkeRegel extends ConditionalFormatInfo {
   stopIfTrue: boolean;
   rawXml: string;
   /** Preserve imported DXF facets that this editor cannot author. */
   uitgebreideStijl?: boolean;
+  /** Extra source DXF facets for read-only display; never passed to native authoring. */
+  weergave?: DxfStijl;
 }
 export type VoorwaardelijkeOp = {
   type: "setConditionalFormats";
@@ -113,14 +116,12 @@ export function leesVoorwaardelijkeRegels(
   const stijlRel = pakket
     .relaties(werkboek)
     .find((r) => !r.extern && r.type.endsWith("/styles"));
-  const dxfs = stijlRel
-    ? kinderen(
-        kind(
-          leesXml(pakket.lees(Pakket.doelPad(werkboek, stijlRel.target))),
-          "dxfs",
-        ),
-        "dxf",
-      )
+  const stylesheet = stijlRel
+    ? leesXml(pakket.lees(Pakket.doelPad(werkboek, stijlRel.target)))
+    : null;
+  const dxfs = kinderen(kind(stylesheet, "dxfs"), "dxf");
+  const dxfStijlen = stylesheet
+    ? leesDxfStijlen(pakket, werkboek, stylesheet)
     : [];
   const eenvoudig = (n: XmlElement): boolean => {
     const toegestaan: Record<string, string[]> = {
@@ -159,6 +160,7 @@ export function leesVoorwaardelijkeRegels(
       ...r,
       stopIfTrue: ["1", "true"].includes(attr(knoop, "stopIfTrue") ?? ""),
       rawXml,
+      weergave: r.dxfId === undefined ? undefined : dxfStijlen[r.dxfId],
       uitgebreideStijl:
         r.dxfId !== undefined && !!dxfs[r.dxfId] && !eenvoudig(dxfs[r.dxfId]),
     };

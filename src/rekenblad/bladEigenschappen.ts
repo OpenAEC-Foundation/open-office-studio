@@ -1,3 +1,5 @@
+import { kleurTint } from "./kleurtint";
+export { kleurTint } from "./kleurtint";
 /** Bladzichtbaarheid en tabkleuren als standaard werkmapeigenschappen (#61). */
 import type { WorkbookHandle } from "@betteroffice/xlsx";
 import { Pakket } from "../grafieken/pakket";
@@ -61,53 +63,6 @@ const INDEX =
   "000000 ffffff ff0000 00ff00 0000ff ffff00 ff00ff 00ffff 000000 ffffff ff0000 00ff00 0000ff ffff00 ff00ff 00ffff 800000 008000 000080 808000 800080 008080 c0c0c0 808080 9999ff 993366 ffffcc ccffff 660066 ff8080 0066cc ccccff 000080 ff00ff ffff00 00ffff 800080 800000 008080 0000ff 00ccff ccffff ccffcc ffff99 99ccff ff99cc cc99ff ffcc99 3366ff 33cccc 99cc00 ffcc00 ff9900 ff6600 666699 969696 003366 339966 003300 333300 993300 993366 333399 333333".split(
     " ",
   );
-
-/** SpreadsheetML tint uses HSL luminance, matching the pinned native core. */
-export function kleurTint(hex: string, tint: number): string {
-  const rgb = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255),
-    [r, g, b] = rgb;
-  const max = Math.max(...rgb),
-    min = Math.min(...rgb),
-    d = max - min,
-    l = (max + min) / 2;
-  const s = d ? d / (1 - Math.abs(2 * l - 1)) : 0;
-  let h = !d
-    ? 0
-    : max === r
-      ? ((g - b) / d + 6) % 6
-      : max === g
-        ? (b - r) / d + 2
-        : (r - g) / d + 4;
-  const lum = Math.max(
-    0,
-    Math.min(1, tint < 0 ? l * (1 + tint) : l * (1 - tint) + tint),
-  );
-  const c = (1 - Math.abs(2 * lum - 1)) * s,
-    x = c * (1 - Math.abs((h % 2) - 1)),
-    m = lum - c / 2;
-  const kanalen =
-    h < 1
-      ? [c, x, 0]
-      : h < 2
-        ? [x, c, 0]
-        : h < 3
-          ? [0, c, x]
-          : h < 4
-            ? [0, x, c]
-            : h < 5
-              ? [x, 0, c]
-              : [c, 0, x];
-  return (
-    "#" +
-    kanalen
-      .map((n) =>
-        Math.round((n + m) * 255)
-          .toString(16)
-          .padStart(2, "0"),
-      )
-      .join("")
-  );
-}
 
 function tabKleur(
   p: Pakket,
