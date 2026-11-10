@@ -1,0 +1,51 @@
+name: Preserve presentation ODF transitions
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/presentation-odf.yml"
+      - "scripts/test-presentatie-odf.*"
+      - "scripts/test-odf-13.py"
+      - "src/presentatie/odf-overgangen*"
+      - "src/presentatie/overgangen.ts"
+      - "src/grafieken/pakket.ts"
+      - "src/grafieken/xml.ts"
+      - "src/grafieken/zipdelen.ts"
+      - "src/formaten.ts"
+      - "src-tauri/src/conversieprofiel.xcu"
+      - "docs/voorbeelden/Ontwerpvisie.pptx"
+      - "package.json"
+      - "pnpm-lock.yaml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  presentation:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile
+      - name: Install converter and pinned schema validator
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice-impress
+          python -m pip install lxml==6.1.1
+      - name: ODP, OTP and FODP native round trips with production corrections
+        run: python scripts/test-presentatie-odf.py
+      - name: Preserve schemas, native outputs and independent report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-odf-transitions
+          path: .local/presentatie-odf
+          include-hidden-files: true
+          if-no-files-found: error
