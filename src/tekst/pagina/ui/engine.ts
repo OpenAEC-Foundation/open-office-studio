@@ -9,6 +9,7 @@ import { isVerwijderd, koppenUitExport, type Kop, type PaginaExport } from "../i
 import { nieuweMarkering } from "../ooxml.ts";
 import { paginaTekst } from "../tekst.ts";
 import { actieveSectie } from "../actieveSectie";
+import { bevestigOpening } from "./openbevestiging";
 
 /** Zet een unieke markering op de cursor (aan het eind van een selectie). */
 export async function zetMarkering(api: DocxEditorRef) {
@@ -165,6 +166,20 @@ export function kopVoetActief() {
   // A modal makes the editor inert without leaving header/footer edit mode.
   // Treating that as a close leaves the ribbon disabled when the modal ends.
   return [...document.querySelectorAll(".office-tekst .hf-inline-editor")].some((e) => !e.closest("[hidden]"));
+}
+
+/** Begin vóór de openingsgebeurtenissen, zodat ook snel openen/sluiten telt. */
+export function volgKopVoetOpening(mislukt: () => void): () => void {
+  const vlak = zichtbaarElement<HTMLElement>(".office-tekst");
+  return bevestigOpening({
+    isOpen: () => vlak ? !!vlak.querySelector(".hf-inline-editor") : kopVoetActief(),
+    bestaat: () => !vlak || (vlak.isConnected && !vlak.closest("[hidden]")),
+    volg(kijk) {
+      const waarnemer = new MutationObserver(kijk);
+      waarnemer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden"] });
+      return () => waarnemer.disconnect();
+    },
+  }, mislukt);
 }
 
 /** De zichtbare pagina die het meest in beeld is. */
