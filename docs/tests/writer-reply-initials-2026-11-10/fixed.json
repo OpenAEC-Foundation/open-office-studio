@@ -1,0 +1,50 @@
+{
+  "baseline": false,
+  "cases": [
+    "Top-level control and new sidebar reply persisted through actual download",
+    "Creation-time profile choices, cancelled draft and old identities preserved",
+    "Close/reopen/resave retains reply identity, body and thread metadata"
+  ],
+  "errors": [],
+  "first": [
+    {
+      "id": "1",
+      "author": "Ada Lovelace",
+      "initials": "ZZ",
+      "text": "Control top-level comment."
+    },
+    {
+      "id": "2",
+      "author": "Ada Lovelace",
+      "initials": "ZZ",
+      "text": "First new reply."
+    }
+  ],
+  "second": [
+    {
+      "id": "1",
+      "author": "Existing Reviewer",
+      "initials": "ER",
+      "text": "Control top-level comment."
+    },
+    {
+      "id": "2",
+      "author": "Ada Lovelace",
+      "initials": "OLD",
+      "text": "First new reply."
+    },
+    {
+      "id": "3",
+      "author": "Ada Lovelace",
+      "initials": "QQ",
+      "text": "Created with QQ."
+    },
+    {
+      "id": "4",
+      "author": "Ada Lovelace",
+      "initials": "WW",
+      "text": "Created with WW."
+    }
+  ],
+  "passed": true
+}
