@@ -132,3 +132,46 @@ B1 ging vooraf aan de extra bescherming voor een rijk opgemaakte enkele alinea e
 De afgeronde kandidaat slaagt tevens bij CPU8: 30 unit-lezingen nemen samen circa 33,0 ms en de cursorreeks duurt 5,72 s. De cursorpositie, alle teksten, de opslag/heropening, 92 spellingrechthoeken en acht viewportgevallen blijven exact gelijk. De wisselende totale typ-, cursor- en scrolltijden laten nog lange frames zien; deze beperkte leesoptimalisatie is geen garantie dat de volledige app al soepel draait op zwakke hardware.
 
 Negentien gerichte tests controleren bronbewaking en compositie, de werkelijk gegenereerde leesexpressie, terugval en de tekst uit de echte engine: Unicode/combinerende tekens, revisies met Undo/Redo, kop-/voetteksten, voet-/eindnoten en geneste tabelcellen. Die lezingen wijzigen de documentversie niet. Ook de elf taal-/opslag-/tabwisselcontroles slagen op deze nieuwe runtime. TypeScript, de normale productiebuild en de volledige suite slagen met 2.069 tests en 7 bestaande skips. De productieassets bevatten geen meetbrug of diagnostische globals.
+
+## Begrensde spellinggeometrie bij scrollen (#303)
+
+Een vervolgprofiel op `56fbdccb` liet zien dat opeenvolgende scrollvensters dezelfde woorden opnieuw aan `getRectsForRange` doorgaven. Eén geometrie werd in een proef voor negen overlayberekeningen gebruikt. De nieuwe `BereikRechthoeken` bewaart de ruwe SDK-rechthoeken van zo'n bereik. De omzetting met `toOverlayRect` blijft bij iedere tekening de actuele oorsprong lezen.
+
+De cache geldt uitsluitend voor dezelfde native documentsessie, geometrie, DOM-context en document-/layoutversies. Ook zoom, pagina-aantal, preview-/reserveringsversies en de door `ResizeObserver` of `window.resize` bijgehouden maatversie maken eerder bewaarde antwoorden ongeldig. Een ontbrekende editor/overlay of een verborgen viewportbereik leegt de cache. Onbekende, lege, niet-eindige, onbruikbare of te grote antwoorden worden niet opgeslagen; mislukte lezingen behouden de bestaande afhandeling en kunnen opnieuw worden geprobeerd.
+
+Per overlay blijven maximaal 256 bereiken en samen 512 rechthoeken bewaard. Recente bereiken krijgen voorrang. Er wordt geen geschiedenis van documenten of frames bewaard; bij een ander frame wordt de hele inhoud vervangen. Opgeslagen en teruggegeven kopieën voorkomen dat een afnemer de broncoördinaten in de cache wijzigt. Elf nieuwe tests controleren hergebruik, documentisolatie, versies, bronvervanging, mutaties, terugval en beide grenzen, waaronder 2.000 opeenvolgende bereiken met meerdere rechthoeken.
+
+```powershell
+pnpm exec vite build --configLoader runner --config scripts/writer-performance.config.ts
+node scripts/meet-writer.mjs .local/writer-performance rechthoeken 4 --diagnostic --native-diagnostic --profile-scroll --range-cache-checks
+node scripts/meet-writer.mjs .local/writer-performance rechthoeken-cpu8 8 --diagnostic --native-diagnostic --profile-scroll --range-cache-checks
+```
+
+De meetbuild telt gevraagde bereiken (`spellingRanges`) en werkelijk uitgevoerde SDK-aanroepen (`spellingRects`) apart. De timer omvat de SDK-aanroep; de totale scrolltijd omvat ook cache- en overig appwerk. Geometrie-identiteiten staan uitsluitend als nummers in het meetresultaat. `--profile-scroll` beperkt het CPU-profiel tot de scrollfase. `--range-cache-checks` voert buiten de tijdmeting de acht eerdere viewportcontroles uit, vijftien overlappende/verre scrollposities tot pagina 60 en terug, invoer van één teken met Undo/Redo/herstel en een vergelijking na SDK-opslaan/heropenen. De onafhankelijke oracle leest voor elk bereik opnieuw uit de SDK. De CSSOM-normalisatie en tolerantie van 0,02 pixel blijven gelijk.
+
+Bij heropenen sluit de proef eerst de host-Save-as-modal en kiest hij de overlay in het actieve tabpaneel. Een verborgen tabpaneel behoudt zijn afmetingen; uitsluitend naar een positieve breedte kijken selecteerde in een eerste proef ten onrechte de oude overlay op 75% zoom. Dit was een fout in de extra meetcontrole. De gewone app is hiervoor niet aangepast. De proef meet SDK-opslaan/heropenen en doet geen uitspraak over productie-Ctrl+S offline.
+
+Vooraf is de runtime van `56fbdccb`; A2 gebruikt dezelfde nieuwe meetconfig als de kandidaat, met uitsluitend de oude `Golflijnen`-bron in de meetbuild. De SHA256 van die ongewijzigde bron is `5b9ecfd233e9f0bfbc986737bacde9b0d84912363b2a354a0228580d188d84f2`. Workload en SDK blijven 600 alinea's, 79 pagina's, 2.400 fouten en versie 0.5.1.
+
+| Scrollmeting | Gevraagde bereiken | SDK-aanroepen | Tijd SDK-aanroepen | Totale scrollreeks |
+| --- | ---: | ---: | ---: | ---: |
+| Vooraf A1, CPU4 | 928 | 928 | 961,7 ms | 7,61 s |
+| Vooraf A2, CPU4 | 1.081 | 1.081 | 894,0 ms | 6,07 s |
+| Definitieve runtime B3, CPU4 | 804 | 276 | 522,9 ms | 5,73 s |
+| Definitieve runtime B4, CPU4 | 866 | 400 | 940,8 ms | 8,82 s |
+| Afsluitend B5, CPU4 | 804 | 276 | 548,0 ms | 6,25 s |
+| Afsluitend CPU8 | 1.081 | 553 | 1.210,7 ms | 11,79 s |
+
+A1 telt alleen SDK-aanroepen; de oude route doet er steeds één per gevraagd bereik. De drie CPU4-metingen van de definitieve runtime vermijden binnen dezelfde run 466–528 aanroepen (54–66%); CPU8 vermijdt 528 (49%). Verschillende frame-/geometrieovergangen verklaren de wisselende totale aantallen. Tijdens typen veranderen frames vaak en zijn er weinig cachetreffers. De totale looptijden, waaronder de tragere B4, onderbouwen geen algemeen snelheidspercentage of garantie dat Writer al soepel draait op zwakke hardware.
+
+B3 bewaart alle 600 teksten, de exacte cursorpositie en 92 zichtbare spellingrechthoeken en slaagt voor 28 controles vóór de extra heropenvergelijking. B4 bewaart tekst/cursor/opslag en slaagt voor diezelfde 28 controles; alleen de later toegevoegde heropen-oracle selecteerde het verborgen oude tabblad. De gecorrigeerde afsluitende B5, CPU8 en vooraf A2 slagen alle drie voor alle 29 controles, inclusief heropende golflijnen, en behouden alle teksten bij opslaan/heropenen. Er waren geen JavaScript-fouten.
+
+De browsermetingen zien maximaal 154 bewaarde bereiken/rechthoeken; verbergen via `display:none` brengt beide op nul. De unittests controleren ook verdringing bij de harde grenzen van 256/512. CDP-heapmetingen vóór/na de fasen worden mee opgeslagen. De volledige JavaScript-heap na scrollen loopt in de kandidaatmetingen uiteen van circa 62,8 tot 87,2 MB; die bevat veel meer dan deze cache en hangt af van frames en garbage collection. Dit is geen bewijs voor lager totaal RAM-gebruik. De aantoonbare geheugeneigenschap is de vaste bovengrens zonder framegeschiedenis.
+
+Alle 36 gerichte spellingtests en TypeScript slagen. De gewone browserroute heeft een aparte proef zonder meetbrug:
+
+```powershell
+node scripts/proef-writer-browser.mjs dist writer-browser
+```
+
+Deze opent de echte productiebundel, voert toetsen en scroll-/vensteracties uit, gebruikt de host-`Ctrl+S`/Opslaan-als-download en vergelijkt alle 600 opgeslagen alineateksten. Daarna opent hij die download als tweede document en controleert zichtbare spelling. Platformbewijs wordt op het vaste oplevercommit bij issue #303 vastgelegd: Windows/Linux/macOS-builds en pakketcontroles via de bestaande desktop-CI, de ondersteunde browserroute afzonderlijk. Een geslaagde pakketbuild geldt niet als geslaagde native Writer-bediening; die laatste controle blijft per testhost expliciet te bevestigen.

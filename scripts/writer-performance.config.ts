@@ -11,13 +11,40 @@ export default defineConfig({
         const path = id.replaceAll("\\", "/");
         if (path.endsWith("/src/spelling/tekst/Golflijnen.tsx")) {
           const marker = "const v = vlak.getBoundingClientRect();";
-          if (code.split(marker).length !== 2)
-            throw Error("Spelling viewport counter source changed");
-          return code.replace(
-            marker,
-            "if ((globalThis as any).__measuring) (((globalThis as any).__calls.spellingViewport ??= { count: 0 }).count++);\n" +
-              marker,
-          );
+          const projectie = "const uit: Rechthoek[] = [];";
+          const rects = "geometry.dom.getRectsForRange(a, b)";
+          const bereik = "let delen:";
+          if (
+            [marker, projectie, rects, bereik].some(
+              (m) => code.split(m).length !== 2,
+            )
+          )
+            throw Error("Spelling projection counter source changed");
+          let uit =
+            "const oosSpellingGeometries = new WeakMap<object, number>(); let oosSpellingGeometryId = 0;\nfunction oosMeetSpellingRects<T>(lees: () => T): T { if (!(globalThis as any).__measuring) return lees(); const start = performance.now(); try { return lees(); } finally { const stat = ((globalThis as any).__calls.spellingRects ??= { count: 0, ms: 0 }); stat.count++; stat.ms += performance.now() - start; } }\n" +
+            code
+              .replace(
+                marker,
+                "if ((globalThis as any).__measuring) (((globalThis as any).__calls.spellingViewport ??= { count: 0 }).count++);\n" +
+                  marker,
+              )
+              .replace(
+                projectie,
+                "if ((globalThis as any).__measuring) { let id = oosSpellingGeometries.get(geometry); if (id === undefined) { id = ++oosSpellingGeometryId; oosSpellingGeometries.set(geometry, id); } const stat = ((globalThis as any).__calls.spellingProjection ??= { count: 0, geometries: {}, layouts: {} }); stat.count++; stat.geometries[id] = (stat.geometries[id] ?? 0) + 1; stat.layouts[layout.id] = (stat.layouts[layout.id] ?? 0) + 1; }\n" +
+                  projectie,
+              )
+              .replace(rects, "oosMeetSpellingRects(() => " + rects + ")")
+              .replace(
+                bereik,
+                "if ((globalThis as any).__measuring) (((globalThis as any).__calls.spellingRanges ??= { count: 0 }).count++);\n" +
+                  bereik,
+              );
+          if (code.includes("const rechthoekCache ="))
+            uit = uit.replace(
+              "const layout = geometry.layout;",
+              "const layout = geometry.layout;\n(globalThis as any).__writerRectCacheStats = () => rechthoekCache.omvang;",
+            );
+          return uit;
         }
         if (path.endsWith("/src/tekst/gedeeld/opslagvoorbereiding.ts")) {
           const marker = "return voorbereiding;";
