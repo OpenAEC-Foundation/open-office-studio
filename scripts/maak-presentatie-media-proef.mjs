@@ -1,4 +1,4 @@
-/** Eigen synthetische H.264/AAC-fixture; geen extern beeld, geluid of opname. */
+/** Eigen synthetische MP4-fixture; geen extern beeld, geluid of opname. */
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";

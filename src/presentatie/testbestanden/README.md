@@ -1,6 +1,6 @@
 # Synthetische volumefixture
 
-`synthetic-volume.mp4` is een eigen twee seconden durende H.264/AAC-opname van
+`synthetic-volume.mp4` is een eigen twee seconden durende VP9/Opus-MP4-opname van
 een canvas van 320 × 180 pixels: een bewegend oranje vlak, een testtekst en een
 synthetische sinus van 440 Hz. Er is geen extern beeld, opgenomen persoon,
 muziek of microfoon gebruikt. `synthetic-volume.png` is het bijbehorende
