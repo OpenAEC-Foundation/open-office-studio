@@ -1,0 +1,88 @@
+{
+  "issue": 93,
+  "date": "2026-11-10",
+  "kind": "research",
+  "applicationSource": "1e5afa399117fd84df628955ec82b0e597993c83",
+  "applicationVersion": "2026.45.4",
+  "sourceSnapshots": [
+    {
+      "repository": "OpenAEC-Foundation/OpenCADStudio",
+      "commit": "16e8c97ae07f9f442ab6baa3b8f34f809753b807",
+      "evidence": "README.md, LICENSE, Cargo.toml and src/io/svg_export.rs inspected",
+      "runtimeExecuted": false
+    },
+    {
+      "repository": "OpenAEC-Foundation/open-paint-studio",
+      "commit": "dd6c6e12db8440bd5e9f9ffeed2a9a6141f1b947",
+      "evidence": "README.md, LICENSE, docs/IMAGE-FORMATS.md, shared/document.ts, shared/geometry.ts and shared/svg.ts inspected",
+      "runtimeExecuted": false
+    },
+    {
+      "repository": "OpenAEC-Foundation/ifccad",
+      "commit": "7d19fae9aeced0f7e4fbc0aa4703262d896df7a4",
+      "evidence": "Public README inspected; experimental CAD profile and exchange scope distinguished from Office document requirements",
+      "runtimeExecuted": false
+    }
+  ],
+  "officeEvidence": {
+    "sourceFiles": [
+      "src/formaten.json",
+      "src/presentatie/diagrammen.ts",
+      "src/presentatie/diagram-conversie.ts",
+      "src/presentatie/objecten.ts",
+      "src/presentatie/groepen.ts"
+    ],
+    "registeredDrawingDocumentInputs": [],
+    "registeredDrawingDocumentOutputs": [],
+    "registrationCandidatesChecked": ["odg", "svg", "vsdx"],
+    "testCommand": "node node_modules/vitest/vitest.mjs run --configLoader runner --maxWorkers 1 src/presentatie/diagrammen.test.ts src/presentatie/groepen.test.ts src/presentatie/objecten.test.ts",
+    "testSource": "1e5afa399117fd84df628955ec82b0e597993c83",
+    "testStartedLocal": "2026-11-10T13:33:23+01:00",
+    "tests": [
+      { "file": "src/presentatie/diagrammen.test.ts", "passed": 22 },
+      { "file": "src/presentatie/groepen.test.ts", "passed": 14 },
+      { "file": "src/presentatie/objecten.test.ts", "passed": 13 }
+    ],
+    "totalPassed": 49,
+    "failed": 0,
+    "durationSeconds": 5.58,
+    "host": "Windows x64, Node v24.22.1",
+    "resultScope": "Existing PPTX geometry, groups, diagram generation, native save/reopen and connector ID references; not a new Draw engine or format adapter"
+  },
+  "standards": [
+    "https://docs.oasis-open.org/office/OpenDocument/v1.3/os/part3-schema/OpenDocument-v1.3-os-part3-schema.html",
+    "https://docs.oasis-open.org/office/OpenDocument/v1.3/os/part2-packages/OpenDocument-v1.3-os-part2-packages.html",
+    "https://www.w3.org/TR/2011/REC-SVG11-20110816/",
+    "https://learn.microsoft.com/en-us/office/client-developer/visio/introduction-to-the-visio-file-formatvsdx",
+    "https://learn.microsoft.com/en-us/office/client-developer/visio/about-the-shapesheet-spreadsheet"
+  ],
+  "recommendation": {
+    "currentWorkflow": "Keep simple diagrams in Presentation",
+    "futureOwner": "A page-oriented Office drawing document after core office priorities and an ODG preservation proof",
+    "v1Editable": ["odg", "documented svg subset"],
+    "v1Interchange": ["one-page svg"],
+    "laterReadOnlyInvestigation": ["vsdx"],
+    "implementationAuthorizedByThisReport": false
+  },
+  "platforms": {
+    "windows": {
+      "targetedExistingTests": "passed",
+      "newNativeDrawingUi": "unverified"
+    },
+    "linux": {
+      "newBuildOrPackage": "not repeated: documentation only",
+      "newNativeDrawingUi": "unverified"
+    },
+    "macos": {
+      "newBuildOrPackage": "not repeated: documentation only",
+      "newNativeDrawingUi": "unverified"
+    },
+    "browser": { "newDrawingRoute": "unverified: no new route implemented" }
+  },
+  "newApplicationCode": false,
+  "sdkOrVendorChanges": false,
+  "ciConfigurationChanges": false,
+  "installationPerformed": false,
+  "ownMainChanges": false,
+  "currentCombinedCandidateCertified": false
+}
