@@ -58,3 +58,28 @@ De liniaal leest de instelling nu eenmaal bij het aankoppelen van die sessie en 
 De gecombineerde browsercontrole behoudt opnieuw alle 600 alinea's, het opgeslagen/heropende document en alle 92 zichtbare golflijnen. Het profiel bevat geen herhaalde projecties meer vanuit de tabafstand. Tijdens de vaste cursorreeks waren er nog één publieke documentlezing tegenover zes in de eerdere gedeelde-fontproef. Tijdens typen waren dat acht tegenover 38. Dit zijn verkennende aantallen uit verschillende runs; de totale tijden liepen door gedeelde systeembelasting sterk uiteen en onderbouwen geen algemeen snelheidspercentage.
 
 De meetconfig voor Writer bevat nu ook de Spreadsheet/Presentation-meetbrug, zodat de drie apps na één build achtereenvolgens kunnen worden getest. De proef bewaart tussenresultaten per fase en meet ook de tijd van een teksttoets tot twee animation frames. De laatste Writer-run had daarvoor een 95e percentiel van 138,5 ms. Lange frames blijven bestaan; tijdens die run was de totale typereeks 7,62 s en het maximale frame 1,1 s. Het profiel toont nog werk in de native engine, spellinggeometrie, taalinfo en de eenmalige opslagvoorbereiding. Dit is dus geen bewijs dat ieder document op iedere zwakke computer al soepel loopt.
+
+## Zichtbare pagina's hergebruiken bij selectie
+
+De selectiecontext verandert ook wanneer alleen de cursor beweegt. De overlay las daarbij telkens de DOM-rechthoeken van alle 79 pagina's opnieuw. Het zichtbare paginabereik wordt nu bewaard voor dezelfde sessie, getekende layout, document-/preview-/reservatieversie, zoom en paginatelling. Scrollen, venstergrootte en een `ResizeObserver` op het editorvlak en de paginacontainer maken het bereik opnieuw geldig. De rAF-planning bundelt gelijktijdige meldingen. De geometrie blijft afzonderlijk een afhankelijkheid van de daadwerkelijke spellingrechthoeken.
+
+Een verborgen editorvlak heeft expliciet een leeg bereik. Een onbekend bereik blijft de conservatieve terugval op alle fouten gebruiken. Daarmee projecteert het verbergen van een tabblad geen duizenden onzichtbare golflijnen. Na terugkeren meet de grootteobservatie het zichtbare bereik opnieuw.
+
+```powershell
+pnpm exec vite build --configLoader runner --config scripts/writer-performance.config.ts --outDir .local/writer-viewport
+node scripts/meet-writer.mjs .local/writer-viewport viewport 4 --diagnostic --viewport-checks
+```
+
+De meetconfig telt volledige viewportmetingen uitsluitend in de aparte meetbuild. De normale app bevat die teller niet. De optionele extra controles vergelijken de golflijnen met de oorspronkelijke berekening na scrollen naar het documentbegin, een ander paginabereik, een kleiner editorvlak zonder `window.resize`, herstel van de hoogte, 75% zoom, een kleiner browservenster en verbergen/tonen. De proef vereist dat het kleinere editorvlak werkelijk minder markeringen verwacht.
+
+Bij dezelfde workload (600 alinea's, 79 pagina's, 2.400 fouten, CPU4, diagnostiek aan) waren de aantallen:
+
+| Volledige viewportmetingen | Vooraf | Eerste kandidaat | Afgeronde kandidaat |
+| --- | ---: | ---: | ---: |
+| 23 tekentoetsen | 52 | 3 | 11 |
+| 30 cursorbewegingen | 30 | 0 | 0 |
+| Scrollreeks | 32 | 23 | 22 |
+
+Het aantal layoutwijzigingen tijdens typen hangt af van batching en systeembelasting. Beide kandidaten vermijden alle 30 extra paginascans bij de vaste cursorreeks. De afgeronde kandidaat behield alle tekst tijdens invoer en normaal SDK-opslaan/heropenen; alle 92 zichtbare golflijnen en alle acht extra viewportcontroles waren gelijk, zonder JavaScript-fouten. Dit controleert geen productie-Ctrl+S in offline modus; de voorbereiding van de documentworker wordt afzonderlijk gerepareerd.
+
+De totale cursorreeksen liepen uiteen van 5,52 tot 11,64 seconden, tegenover 7,21 seconden vooraf. Dat onderbouwt geen algemeen tijdspercentage. De winst betreft aantoonbaar vermeden DOM-metingen; native cursorwerk en lange frames blijven verdere aandacht vragen. TypeScript, de 25 gerichte spellingtests en de volledige suite (2.044 geslaagd, 7 bestaande skips) slaagden; de volledige suite ging vooraf aan de extra verborgen-vlakcontrole.
