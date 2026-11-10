@@ -1,0 +1,39 @@
+name: Snapshotverwachting op acht-patchbasis controleren
+on:
+  push:
+    branches: [codex/spreadsheet-large-workbooks-2026-11-10]
+    paths: [.github/workflows/rekenblad-snapshot-basis.yml]
+permissions:
+  contents: read
+jobs:
+  basis:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: rustup toolchain install 1.98.1 --profile minimal
+      - run: rustup override set 1.98.1
+      - name: Prepare the pinned source with only the unchanged first eight patches
+        run: |
+          python scripts/bouw-rekenbladkern.py --bronmap .local/kernbron --uitvoer .local/unused --alleen-bron
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          root=Path.cwd()
+          metadata=json.loads((root/'patches/rekenbladengine-lange-ketens.json').read_text())
+          for entry in reversed(metadata['extraPatches'][7:]):
+              subprocess.run(['patch','-R','-p1','--fuzz=0','--batch','-i',str(root/'patches'/entry['patch'])],cwd=root/'.local/kernbron',check=True)
+          PY
+      - name: Reproduce the same snapshot assertion without any issue 74 changes
+        run: |
+          set -o pipefail
+          cargo test --manifest-path .local/kernbron/Cargo.toml -p betteroffice-xlsx --locked --lib workbook::snapshot_assembly::acceptance_tests::snapshot_structured_reference_insert_rows_refusal_matches_source -- --exact 2>&1 | tee .local/snapshot-basis.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rekenblad-snapshot-basis
+          path: .local/snapshot-basis.log
+          include-hidden-files: true

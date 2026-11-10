@@ -1,0 +1,114 @@
+diff --git a/crates/betteroffice-xlsx/src/authority.rs b/crates/betteroffice-xlsx/src/authority.rs
+index b1c0551..caa1424 100644
+--- a/crates/betteroffice-xlsx/src/authority.rs
++++ b/crates/betteroffice-xlsx/src/authority.rs
+@@ -2980,7 +2980,7 @@ fn seed_in_chunks(
+         for (part, map) in maps.iter().enumerate() {
+             let entries: Box<dyn Iterator<Item = (String, Any)> + '_> = match part {
+                 0 => Box::new(number_entries(&sheet.col_widths)),
+-                1 => Box::new(desired_contents(sheet).into_iter()),
++                1 => Box::new(SeedContents::new(sheet)),
+                 2 => Box::new(number_entries(&sheet.row_heights)),
+                 _ => Box::new(desired_styles(sheet, style_key)?.into_iter()),
+             };
+@@ -4213,6 +4213,69 @@ fn sync_sheet_frame(
+     Ok([col_widths, contents, row_heights, styles])
+ }
+ 
++/// Sort coordinates exactly as the wire keys do, without allocating a key
++/// string. The colon is significant: row 10 sorts before row 1 ("10:" < "1:").
++fn coordinate_order(mut value: u32, row: bool) -> [u8; 11] {
++    let mut reversed = [0_u8; 10];
++    let mut len = 0;
++    loop {
++        reversed[len] = b'0' + (value % 10) as u8;
++        len += 1;
++        value /= 10;
++        if value == 0 { break; }
++    }
++    let mut key = [0_u8; 11];
++    for index in 0..len { key[index] = reversed[len - index - 1]; }
++    if row { key[len] = b':'; }
++    key
++}
++
++/// Seeding needs lexical wire-key order, but not an extra workbook-sized map
++/// holding every key and encoded cell. Keep row IDs and one reusable row of
++/// references; encode each payload only as it enters the bootstrap document.
++struct SeedContents<'a> {
++    sheet: &'a Sheet,
++    rows: std::vec::IntoIter<u32>,
++    columns: Vec<[u8; 11]>,
++    cells: Vec<(CellRef, &'a Cell)>,
++    next: usize,
++}
++
++impl<'a> SeedContents<'a> {
++    fn new(sheet: &'a Sheet) -> Self {
++        let mut rows = Vec::new();
++        let mut max_col = 0;
++        for (at, cell) in sheet.iter_cells() {
++            if cell.formula.is_none() && matches!(&cell.value, CellValue::Empty) { continue; }
++            if rows.last() != Some(&at.row) { rows.push(at.row); }
++            max_col = max_col.max(at.col);
++        }
++        rows.sort_by_cached_key(|&row| coordinate_order(row, true));
++        let columns = if rows.is_empty() { Vec::new() } else {
++            (0..=max_col).map(|col| coordinate_order(col, false)).collect()
++        };
++        Self { sheet, rows: rows.into_iter(), columns, cells: Vec::new(), next: 0 }
++    }
++}
++
++impl Iterator for SeedContents<'_> {
++    type Item = (String, Any);
++    fn next(&mut self) -> Option<Self::Item> {
++        loop {
++            while let Some(&(at, cell)) = self.cells.get(self.next) {
++                self.next += 1;
++                if let Some(value) = content_to_any(cell) { return Some((cell_key(at), value)); }
++            }
++            let row = self.rows.next()?;
++            self.cells.clear();
++            self.cells.extend(self.sheet.iter_cells_in_rect(row..row + 1, 0..MAX_COLS));
++            let columns = &self.columns;
++            self.cells.sort_unstable_by_key(|(at, _)| columns.get(at.col as usize).copied().unwrap_or_else(|| coordinate_order(at.col, false)));
++            self.next = 0;
++        }
++    }
++}
++
+ fn desired_contents(sheet: &Sheet) -> BTreeMap<String, Any> {
+     sheet
+         .iter_cells()
+@@ -10989,6 +11052,30 @@ mod tests {
+         }
+     }
+ 
++    #[test]
++    fn streamed_seed_preserves_wire_order_at_decimal_boundaries() {
++        let mut sheet = Sheet::new("Lexical order");
++        let rows = [0, 1, 2, 9, 10, 11, 99, 100, 101, 999, 1000, MAX_ROWS - 1];
++        let columns = [0, 1, 2, 9, 10, 11, 99, 100, 101, 999, MAX_COLS - 1];
++        for row in rows {
++            for col in columns {
++                sheet.set_cell(CellRef::new(row, col), Cell {
++                    value: CellValue::Number { value: f64::from(row + col) },
++                    formula: (col == 11).then(|| "1+2".into()),
++                    style: None,
++                });
++            }
++        }
++        // Styled-only rows emit no content.
++        sheet.set_cell(CellRef::new(777, MAX_COLS - 1), Cell { style: Some(0), ..Cell::default() });
++        let expected = desired_contents(&sheet).into_iter().collect::<Vec<_>>();
++        assert_eq!(SeedContents::new(&sheet).collect::<Vec<_>>(), expected);
++        let mut model = WorkbookModel::default();
++        model.styles.cell_xfs.push(Xf::default());
++        model.sheets.push(sheet);
++        assert!(open_in_chunks_and_compare(&model, 7) > 1);
++    }
++
+     #[test]
+     fn a_chunked_open_matches_one_bootstrap_update_across_sheets() {
+         let mut model = rich_model();

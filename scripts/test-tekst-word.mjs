@@ -338,15 +338,15 @@ if (doe("wijzigingen")) {
   let ref = nepRef(s);
   controleer(w.revisies(s).length === 3, "drie bijgehouden wijzigingen van twee auteurs");
   // Alleen getoonde auteurs: Bram verbergen.
-  let aantal = w.besluit(ref, "accepteren", { verborgen: new Set(["Bram"]) });
+  let aantal = await w.besluit(ref, "accepteren", { verborgen: new Set(["Bram"]) });
   controleer(aantal === 2 && w.revisies(s).map((r) => r.author).join() === "Bram", "alle getoonde wijzigingen accepteren (Bram verborgen) laat Bram staan");
   s.undo();
   controleer(w.revisies(s).length === 3, "Ctrl+Z zet alle geaccepteerde wijzigingen in één stap terug");
   // In de selectie: alleen de alinea met ‘ingevoegd’ en ‘weg’.
   s.setSelection({ story: "body", paraId: "10000041", offset: 0 }, { story: "body", paraId: "10000041", offset: 30 });
-  aantal = w.besluit(ref, "weigeren", { selectie: true });
+  aantal = await w.besluit(ref, "weigeren", { selectie: true });
   controleer(aantal === 2 && w.revisies(s).length === 1 && s.readParagraphs({ view: "accepted", paraIds: ["10000041"] }).paragraphs[0].text === "Begin midden weg einde.", "wijzigingen in de selectie weigeren");
-  aantal = w.besluit(ref, "accepteren");
+  aantal = await w.besluit(ref, "accepteren");
   let { xml } = await opslaanEnHeropenen(s, "wijzigingen-afgehandeld");
   controleer(aantal === 1 && !/<w:(ins|del) /.test(xml) && xml.includes("van Anna") && xml.includes("weg "), "alles accepteren → geen w:ins/w:del meer in het opgeslagen document");
 

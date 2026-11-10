@@ -45,8 +45,8 @@ export function WijzigingenGroepen() {
   const filter = staat.verborgen.size > 0;
 
   function doe(wat: Besluit, reikwijdte: Parameters<typeof besluit>[2]) {
-    uitvoeren((ref) => {
-      const aantal = besluit(ref, wat, { verborgen: staat.verborgen, ...reikwijdte });
+    uitvoeren(async (ref) => {
+      const aantal = await besluit(ref, wat, { verborgen: staat.verborgen, ...reikwijdte });
       if (!aantal)
         meld(
           i18next.t(
@@ -196,9 +196,9 @@ export function WijzigingenPaneel() {
     const ref = api();
     if (ref && !ref.scrollToChangeId(Number(id))) meld(i18next.t("writer:changes.panel.notFound"));
   }
-  function een(id: string, wat: Besluit) {
+  async function een(id: string, wat: Besluit) {
     try {
-      besluit(api(), wat, { ids: [id] });
+      await besluit(api(), wat, { ids: [id] });
     } catch (e) {
       meld(fout(e));
     }

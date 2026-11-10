@@ -13,6 +13,7 @@ import type { DocxPluginContext, DocxPluginGeometry } from "@betteroffice/docx-r
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { PluginStaat, SpellingSessie } from "./sessie";
 import { AlineaBereiken } from "./bereiken";
+import { BereikRechthoeken } from "./rechthoeken";
 import "./spelling.css";
 
 interface Props {
@@ -84,6 +85,8 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
   sessie.geometrie = geometry;
   const laag = useRef<HTMLDivElement>(null);
   const alineaBereiken = useMemo(() => new AlineaBereiken(), [sessie]);
+  const rechthoekCache = useMemo(() => new BereikRechthoeken(), [sessie]);
+  const maatVersie = useRef(0);
   const [scroll, setScroll] = useState(0);
   const teller = context.state.teller;
   const layout = geometry.layout;
@@ -101,9 +104,10 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
     };
     vlak?.addEventListener("scroll", plan, { passive: true });
     window.addEventListener("scroll", plan, { passive: true });
-    window.addEventListener("resize", plan);
+    const gewijzigdeOmvang = () => { maatVersie.current++; plan(); };
+    window.addEventListener("resize", gewijzigdeOmvang);
     // Een lint/paneel kan het documentvlak wijzigen zonder window.resize.
-    const grootte = new ResizeObserver(plan);
+    const grootte = new ResizeObserver(gewijzigdeOmvang);
     if (vlak) {
       grootte.observe(vlak);
       const paginas = vlak.querySelector(".canvas-pages");
@@ -115,7 +119,7 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
       cancelAnimationFrame(frame);
       vlak?.removeEventListener("scroll", plan);
       window.removeEventListener("scroll", plan);
-      window.removeEventListener("resize", plan);
+      window.removeEventListener("resize", gewijzigdeOmvang);
       grootte.disconnect();
     };
   }, []);
@@ -134,11 +138,22 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
   const rechthoeken = useMemo(() => {
     const uit: Rechthoek[] = [];
     const ed = sessie.editor()?.getEditorRef();
-    if (!ed || bereik === undefined || bereik === false) return uit;
+    if (!ed || bereik === undefined || bereik === false) {
+      rechthoekCache.wis();
+      return uit;
+    }
     const bron = ed.getYrsSession();
+    const versie = bron?.version();
+    // Alleen ruwe bereikrechthoeken delen binnen hetzelfde document/frame.
+    // De omzetting naar de overlay blijft per tekening de actuele oorsprong lezen.
+    if (bron) rechthoekCache.bij(geometry, geometry.dom, JSON.stringify([
+      versie, layout.id, layout.version, layout.zoom, layout.pageCount,
+      layout.previewVersion, layout.reservationsVersion, maatVersie.current,
+    ]), bron);
+    else rechthoekCache.wis();
     // Eerst per alinea begrenzen; projecteer de fouten buiten beeld niet.
     const inBereik = bron ? alineaBereiken.filter(
-      bron, `${bron.version()}:${layout.id}:${layout.version}`, bereik ?? null,
+      bron, `${versie}:${layout.id}:${layout.version}`, bereik ?? null,
       (a, eind) => ed.yrsLocToDisplayPosition({
         story: a.story, paraId: a.paraId,
         offset: sessie.rauw(a, eind ? a.tekst.length : 0, eind),
@@ -150,9 +165,9 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
       const b = ed.yrsLocToDisplayPosition({ story: alinea.story, paraId: alinea.paraId, offset: sessie.rauw(alinea, fout.eind, true) });
       if (a === null || b === null || b <= a) continue;
       if (bereik && (b < van || a > tot)) continue;
-      let delen: { x: number; y: number; width: number; height: number }[] = [];
+      let delen: readonly { x: number; y: number; width: number; height: number }[] = [];
       try {
-        delen = geometry.dom.getRectsForRange(a, b);
+        delen = rechthoekCache.lees(a, b, () => geometry.dom.getRectsForRange(a, b));
       } catch {
         continue;
       }
@@ -164,7 +179,8 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
     return uit;
     // De teller verandert bij elke controle, de layout-id bij elke nieuwe
     // indeling en het bereik bij scrollen.
-  }, [sessie, alineaBereiken, geometry, layout.id, layout.version, teller, van, tot, bereik === undefined, bereik === false]);
+  }, [sessie, alineaBereiken, rechthoekCache, geometry, layout.id, layout.version, layout.zoom, layout.pageCount,
+    layout.previewVersion, layout.reservationsVersion, maatVersie.current, teller, van, tot, bereik === undefined, bereik === false]);
 
   const dikte = Math.max(2, Math.round(3 * layout.zoom));
   return (

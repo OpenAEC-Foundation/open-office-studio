@@ -84,6 +84,27 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#290](https://github.com/OpenAEC-Foundation/open-office-studio/pull/290) | `66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c` | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | Writer note continuation preserves body formatting after note reference Enter |
 | [#273](https://github.com/OpenAEC-Foundation/open-office-studio/pull/273) | `c3232dd704f1d3b069b7596f1ed7ca969fea04d6` | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | Test-only table probe synchronization; real keyboard selection and saved filter state |
 | [#307](https://github.com/OpenAEC-Foundation/open-office-studio/pull/307) | `2da5abe361d18824d1fd84f1dee717f152f7e545` | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | Writer remembers successful header/footer opening before quick close or reload |
+| [#300](https://github.com/OpenAEC-Foundation/open-office-studio/pull/300) | `b8426dc453c16a4a8863d67dd914070453c4a079` | `77da4ffa4eb9fb9f09014bea933db57253a51dc4` | Writer screen display mode and colour-control contrast |
+| [#309](https://github.com/OpenAEC-Foundation/open-office-studio/pull/309) | `589a1d5794dd77e89c161a98cfc24969f5aa4c66` | `f5abaff65ed024e0b79893e24d9e1f9ada064ddd` | Recognize only the known empty bundled bibliography without suppressing other risks |
+| [#314](https://github.com/OpenAEC-Foundation/open-office-studio/pull/314) | `5675a3ccad192bea93f806a5c74dc97cdc2416be` | `105134ad8e34c9aac73e0c5d2844b7144ed0f606` | Invalidate lazy PDF font cache after system-font availability changes |
+| [#320](https://github.com/OpenAEC-Foundation/open-office-studio/pull/320) | `137f378123b7a159c3c780a82a92d30373e5ca2c` | `701392aad13e415398a0e08c3875ef6a3ac4e2a7` | Preserve configured author initials on new Writer replies |
+| [#301](https://github.com/OpenAEC-Foundation/open-office-studio/pull/301) | `92b1962a19c18ba2e89e67f292336f14b01e5ab4` | `23a5f37f38065f536156bcb2afc4188a220bebee` | Spreadsheet visual threshold, icon family and merged data-bar corrections |
+| [#304](https://github.com/OpenAEC-Foundation/open-office-studio/pull/304) | `2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a` | `e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb` | Preserve embedded media volume and mute through ODP and OTP |
+| [#316](https://github.com/OpenAEC-Foundation/open-office-studio/pull/316) | `a7669b86f1a5fcd85658d399a1507993cf2bb3b5` | `eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a` | Preserve unambiguous ODP media names and display unnamed media labels |
+| [#315](https://github.com/OpenAEC-Foundation/open-office-studio/pull/315) | `33eee967be1f3a136e0106cd77b5d4a0c5112255` | `3916dd36224d44d76e28853e3178946c5c54b816` | Writer review Undo including bounded individual revisions after worker synchronization |
+| [#306](https://github.com/OpenAEC-Foundation/open-office-studio/pull/306) | `b2d576121477a18a0bd56eac964fee8c90efe2df` | `9d721bbd20a029d05cff31179d56445791ee874e` | Writer compare direct character formatting with reviewable preserved replacements |
+| [#312](https://github.com/OpenAEC-Foundation/open-office-studio/pull/312) | `ea4ff465cc181e298a674ff915a285f43ccd4ecb` | `0c6dafa13b2728fd0c30d38ef73a3c714eaf6408` | Spreadsheet bounded pivot tables and refresh preserving unsupported layouts |
+| [#329](https://github.com/OpenAEC-Foundation/open-office-studio/pull/329) | `da16cea1519b301ba43af76496eb2c842828c1f0` | `4ac67c1517c8b8c79b035f9900830c15ae913fce` | Writer bounded spelling range geometry reuse during scrolling |
+| [#330](https://github.com/OpenAEC-Foundation/open-office-studio/pull/330) | `8a2ab22556af01be986b61731d55d392fbf08573` | `44b146a104d32b2ba0a11b74d5d3a91c1debb892` | Independent structure and defined-name remapping regressions on existing kernels |
+| [#220](https://github.com/OpenAEC-Foundation/open-office-studio/pull/220) | `4a21ad18c2b7861cf1d227e05f572a3f337fcdb9` | `725d6f52038695aa9979454aa3c770f00462eb4e` | Preserve Writer image replacement exact geometry and crop |
+| [#328](https://github.com/OpenAEC-Foundation/open-office-studio/pull/328) | `27082918a71a677c0ed4e9910096c35d6752a462` | `f20d9a7dd87c410ab5600f20aa2b4e51d928e252` | Restart completed embedded media while preserving ordinary resume and loops |
+| [#331](https://github.com/OpenAEC-Foundation/open-office-studio/pull/331) | `7fd5e6899cb0f89ff17350927ef5b5aad864e75d` | `63e337422709f07bc8d814e589788ce3e74ceecb` | Presentation whole-word search preserves Unicode offsets and one-step replacement Undo |
+| [#332](https://github.com/OpenAEC-Foundation/open-office-studio/pull/332) | `63761df06ad7ea125a3e03c50b21caa88dca9fb3` | `b1ada744e9d223d20fe1b2f3a1792d5a77530779` | Render normative built-in table font and fill facets without custom DXF definitions |
+| [#334](https://github.com/OpenAEC-Foundation/open-office-studio/pull/334) | `65aca81f2c90b0400644818527679bb699ea19a0` | `14d83249841081287991b948989e146c997162dc` | Keep printed metadata field glyph metrics aligned with the actual layout font |
+| [#319](https://github.com/OpenAEC-Foundation/open-office-studio/pull/319) | `0eea9d4fea759b219fecef77f5f55d66d3046be1` | `bf7a4243743d184938af507e1df068adc815a5d4` | Bounded Spreadsheet startup improvements on unchanged first eight patches |
+| [#321](https://github.com/OpenAEC-Foundation/open-office-studio/pull/321) | `834b1d6cf12e97e3dc492547b4f8cd5a2255e39b` | `589e2f5f38355a9af972f8ca61149e8ad6803b9e` | Native linear trendline source and independent geometry regression evidence |
+| [#335](https://github.com/OpenAEC-Foundation/open-office-studio/pull/335) | `d273762184d2f59e996c1da05e16d9f449054f6d` | `fa04615e2ebb88207c5761bae60a7d6774939929` | Validated startup fourteen plus linear-trendline fifteenth patch superset |
+| [#333](https://github.com/OpenAEC-Foundation/open-office-studio/pull/333) | `bdebc61209d7c0313c5047e4ad3b2fd18828b4dc` | `b873778cbd87b8f7b811263977eb29c8b02f24e8` | Render table styling for implicit default cells while preserving inherited overrides |
 
 ## Earlier fixes included in bundles
 
@@ -189,6 +210,27 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr273-browser-probe-correction | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | 6 | 0 | 0 |
 | pr307-targeted | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | 6 | 0 | 0 |
 | full-accepted-2026-11-10 | `1e5afa399117fd84df628955ec82b0e597993c83` | 3147 | 0 | 7 |
+| pr300-targeted | `77da4ffa4eb9fb9f09014bea933db57253a51dc4` | 5 | 0 | 0 |
+| pr309-targeted | `f5abaff65ed024e0b79893e24d9e1f9ada064ddd` | 31 | 0 | 0 |
+| pr314-targeted | `105134ad8e34c9aac73e0c5d2844b7144ed0f606` | 6 | 0 | 0 |
+| pr320-targeted | `701392aad13e415398a0e08c3875ef6a3ac4e2a7` | 5 | 0 | 0 |
+| pr301-targeted | `23a5f37f38065f536156bcb2afc4188a220bebee` | 45 | 0 | 0 |
+| pr304-targeted | `e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb` | 21 | 0 | 0 |
+| pr316-targeted | `eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a` | 25 | 0 | 0 |
+| pr315-targeted | `3916dd36224d44d76e28853e3178946c5c54b816` | 20 | 0 | 0 |
+| pr306-targeted | `9d721bbd20a029d05cff31179d56445791ee874e` | 18 | 0 | 0 |
+| pr312-targeted | `0c6dafa13b2728fd0c30d38ef73a3c714eaf6408` | 18 | 0 | 0 |
+| pr329-targeted | `4ac67c1517c8b8c79b035f9900830c15ae913fce` | 11 | 0 | 0 |
+| pr330-targeted | `44b146a104d32b2ba0a11b74d5d3a91c1debb892` | 38 | 0 | 0 |
+| pr220-targeted | `725d6f52038695aa9979454aa3c770f00462eb4e` | 14 | 0 | 0 |
+| pr328-related-unit | `f20d9a7dd87c410ab5600f20aa2b4e51d928e252` | 25 | 0 | 0 |
+| pr331-targeted | `63e337422709f07bc8d814e589788ce3e74ceecb` | 10 | 0 | 0 |
+| pr332-targeted | `b1ada744e9d223d20fe1b2f3a1792d5a77530779` | 8 | 0 | 0 |
+| pr334-targeted | `14d83249841081287991b948989e146c997162dc` | 5 | 0 | 0 |
+| pr319-related-unit | `bf7a4243743d184938af507e1df068adc815a5d4` | 46 | 0 | 0 |
+| pr321-related-unit | `589e2f5f38355a9af972f8ca61149e8ad6803b9e` | 53 | 0 | 0 |
+| pr335-related-unit | `1e00c272ad18f95530580e0e8fa4020b598f2bc9` | 48 | 0 | 0 |
+| pr333-targeted | `b873778cbd87b8f7b811263977eb29c8b02f24e8` | 12 | 0 | 0 |
 
 ## Pending deliveries
 

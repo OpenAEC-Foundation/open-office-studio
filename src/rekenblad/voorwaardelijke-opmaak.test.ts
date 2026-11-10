@@ -122,7 +122,7 @@ describe("voorwaardelijke regels beheren en bewaren (#67)", () => {
         ).toHaveLength(2);
       else
         expect(
-          frame.commands.filter((c) => c.op === "text" && c.text === "●"),
+          frame.commands.filter((c) => c.op === "path" && ["#d22f27", "#c9a000", "#27913a"].includes(c.fill)),
         ).toHaveLength(3);
     },
   );

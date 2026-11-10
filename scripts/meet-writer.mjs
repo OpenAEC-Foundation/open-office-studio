@@ -13,7 +13,10 @@ const outDir = process.argv[2] ?? ".local/writer-performance",
   diagnostic = process.argv.includes("--diagnostic"),
   checkWarmup = process.argv.includes("--check-warmup"),
   nativeDiagnostic = process.argv.includes("--native-diagnostic"),
-  viewportChecks = process.argv.includes("--viewport-checks");
+  profileScroll = process.argv.includes("--profile-scroll"),
+  rangeCacheChecks = process.argv.includes("--range-cache-checks"),
+  viewportChecks =
+    rangeCacheChecks || process.argv.includes("--viewport-checks");
 if (!/^[a-zA-Z0-9_-]+$/.test(label) || !Number.isFinite(rate) || rate < 1)
   throw new Error("Invalid label or CPU rate");
 fs.mkdirSync(".local", { recursive: true });
@@ -236,6 +239,8 @@ try {
     rate,
     diagnostic,
     nativeDiagnostic,
+    profileScroll,
+    rangeCacheChecks,
     pages: before.pages,
     paragraphs: before.paragraphs.length,
     spelling: await page.evaluate(() => ({
@@ -249,6 +254,9 @@ try {
     errors,
   };
   async function phase(name, fn) {
+    const heapBefore = rangeCacheChecks
+      ? await cdp.send("Runtime.getHeapUsage")
+      : undefined;
     await page.evaluate(() => {
       window.__calls = {};
       window.__long = [];
@@ -287,6 +295,15 @@ try {
         keyPaintSamples: keys.length,
         p95KeyPaintMs: keys[Math.floor(keys.length * 0.95)] ?? null,
         calls: data.calls,
+        ...(rangeCacheChecks
+          ? {
+              heapBefore,
+              heapAfter: await cdp.send("Runtime.getHeapUsage"),
+              rangeCache: await page.evaluate(
+                () => window.__writerRectCacheStats?.() ?? null,
+              ),
+            }
+          : {}),
       };
     result.phases.push(summary);
     fs.writeFileSync(
@@ -297,7 +314,7 @@ try {
   }
   if (diagnostic) {
     await cdp.send("Profiler.enable");
-    await cdp.send("Profiler.start");
+    if (!profileScroll) await cdp.send("Profiler.start");
   }
   await phase("typing", () =>
     page.keyboard.type(" Rustige testinvoer 123", { delay: 50 }),
@@ -331,12 +348,15 @@ try {
   if (!result.caret.equal)
     throw Error(`Caret position differs: ${JSON.stringify(result.caret)}`);
   if (diagnostic) {
-    const { profile } = await cdp.send("Profiler.stop");
-    fs.writeFileSync(
-      `.local/perf-${label}.cpuprofile`,
-      JSON.stringify(profile),
-    );
+    if (!profileScroll) {
+      const { profile } = await cdp.send("Profiler.stop");
+      fs.writeFileSync(
+        `.local/perf-${label}.cpuprofile`,
+        JSON.stringify(profile),
+      );
+    }
   }
+  if (diagnostic && profileScroll) await cdp.send("Profiler.start");
   await phase("scroll", async () => {
     await page.mouse.move(1100, 550);
     for (let i = 0; i < 20; i++) {
@@ -344,6 +364,13 @@ try {
       await page.waitForTimeout(25);
     }
   });
+  if (diagnostic && profileScroll) {
+    const { profile } = await cdp.send("Profiler.stop");
+    fs.writeFileSync(
+      `.local/perf-${label}.cpuprofile`,
+      JSON.stringify(profile),
+    );
+  }
   const after = await page.evaluate(() =>
     window.__writerApis
       .tekst()
@@ -368,7 +395,11 @@ try {
       const s = window.__writerSpelling,
         e = window.__writerApis.tekst().getEditorRef(),
         g = s.geometrie,
-        layer = document.querySelector(".spelling-golflijnen"),
+        layer = [...document.querySelectorAll(".spelling-golflijnen")].find(
+          (laag) =>
+            !laag.closest(".office-tabpaneel[hidden]") &&
+            laag.getBoundingClientRect().width > 0,
+        ),
         viewport = layer.closest(
           ".docx-editor__scroll-container, .docx-editor__viewport",
         );
@@ -456,9 +487,10 @@ try {
       };
     });
   result.overlay = await controleerOverlay();
+  let controleer;
   if (viewportChecks) {
     result.viewportChecks = [];
-    const controleer = async (naam) => {
+    controleer = async (naam) => {
       const start = performance.now();
       await page.waitForTimeout(600);
       let r = await controleerOverlay();
@@ -471,6 +503,21 @@ try {
         ...r,
         settledMs: performance.now() - start,
       });
+      if (rangeCacheChecks) {
+        const omvang = await page.evaluate(
+          () => window.__writerRectCacheStats?.() ?? null,
+        );
+        result.viewportChecks.at(-1).rangeCache = omvang;
+        if (omvang && (omvang.bereiken > 256 || omvang.rechthoeken > 512))
+          throw Error(
+            `Range cache exceeds its bound after ${naam}: ${JSON.stringify(omvang)}`,
+          );
+      }
+      fs.writeFileSync(
+        `.local/perf-${label}.json`,
+        JSON.stringify(result, null, 2),
+      );
+      console.log("Overlay check", naam, r.equal, r.actual);
       if (!r.equal)
         throw Error(
           `Spelling overlay differs after ${naam}: ${JSON.stringify(r)}`,
@@ -480,6 +527,73 @@ try {
     await page.keyboard.press("Control+Home");
     await page.evaluate(() => window.__writerApis.tekst().flushPendingInput());
     await controleer("documentbegin");
+    if (rangeCacheChecks) {
+      // Buiten de tijdmeting: overlappende vensters, ver weg en weer terug.
+      // De oracle leest rechtstreeks uit de SDK en gebruikt de cache niet.
+      for (const n of [
+        0.5, 1, 1.5, 2, 1.5, 1, 0.5, 10, 20, 40, 60, 40, 20, 10, 0,
+      ]) {
+        await page.evaluate((pagina) => {
+          const v = document
+            .querySelector(".spelling-golflijnen")
+            .closest(".docx-editor__scroll-container, .docx-editor__viewport");
+          const eerste = v
+            .querySelector(".canvas-page")
+            .getBoundingClientRect();
+          v.scrollTop = pagina * eerste.height;
+        }, n);
+        await controleer(`cache scroll pagina ${n}`);
+      }
+      await page.keyboard.press("Control+Home");
+      await page.evaluate(() =>
+        window.__writerApis.tekst().flushPendingInput(),
+      );
+      await controleer("voor cachebewerking");
+      await page.keyboard.type("x");
+      await page.evaluate(() =>
+        window.__writerApis.tekst().flushPendingInput(),
+      );
+      const tekst = () =>
+        page.evaluate(() =>
+          window.__writerApis
+            .tekst()
+            .getEditorRef()
+            .getYrsSession()
+            .paragraphs("body")
+            .map((p) => p.text),
+        );
+      const bewerkt = ["x" + after[0], ...after.slice(1)];
+      if (JSON.stringify(await tekst()) !== JSON.stringify(bewerkt))
+        throw Error("Cache edit text differs");
+      await controleer("na cachebewerking");
+      for (const [toets, naam, verwacht] of [
+        ["Control+z", "Undo", after],
+        ["Control+y", "Redo", bewerkt],
+        ["Control+z", "hersteld na Undo", after],
+      ]) {
+        await page.keyboard.press(toets);
+        await page.evaluate(() =>
+          window.__writerApis.tekst().flushPendingInput(),
+        );
+        // De toetsenroute kan de native Undo/Redo asynchroon afronden.
+        await page.waitForFunction(
+          (verwacht) =>
+            JSON.stringify(
+              window.__writerApis
+                .tekst()
+                .getEditorRef()
+                .getYrsSession()
+                .paragraphs("body")
+                .map((p) => p.text),
+            ) === JSON.stringify(verwacht),
+          verwacht,
+          { timeout: 10000 },
+        );
+        if (JSON.stringify(await tekst()) !== JSON.stringify(verwacht))
+          throw Error(`Cache ${naam} text differs`);
+        await controleer(`cache ${naam}`);
+      }
+    }
     await page.evaluate(() => {
       const v = document
         .querySelector(".spelling-golflijnen")
@@ -543,6 +657,14 @@ try {
       actual: 0,
       equal: true,
     });
+    if (rangeCacheChecks) {
+      const omvang = await page.evaluate(
+        () => window.__writerRectCacheStats?.() ?? null,
+      );
+      result.viewportChecks.at(-1).rangeCache = omvang;
+      if (omvang && (omvang.bereiken !== 0 || omvang.rechthoeken !== 0))
+        throw Error("Hidden viewport retains range cache");
+    }
     await page.evaluate((oud) => {
       const v = document
         .querySelector(".spelling-golflijnen")
@@ -564,6 +686,9 @@ try {
   } finally {
     if (checkWarmup) await page.context().setOffline(false);
   }
+  // De raw SDK-save opent ook de hostmodal. Sluit die vóór extra UI-controles.
+  if (rangeCacheChecks)
+    await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await page.evaluate(() => {
     window.__previousSession = window.__writerApis
       .tekst()
@@ -598,6 +723,22 @@ try {
       .map((p) => p.text),
   );
   result.savedExact = JSON.stringify(reopened) === JSON.stringify(after);
+  if (rangeCacheChecks) {
+    await page.waitForFunction(
+      () =>
+        window.__writerSpelling?.geometrie &&
+        [...document.querySelectorAll(".spelling-golflijnen")].some(
+          (x) =>
+            !x.closest(".office-tabpaneel[hidden]") &&
+            x.getBoundingClientRect().width > 0,
+        ),
+    );
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await window.__writerSpelling.controleer();
+    });
+    result.reopenedOverlay = await controleer("heropend document");
+  }
   fs.writeFileSync(
     `.local/perf-${label}.json`,
     JSON.stringify(result, null, 2),

@@ -447,6 +447,18 @@ function Uiterlijk({ instellingen, wijzig }: { instellingen: Instellingen; wijzi
           />
         </div>
       </Sectie>
+      <Sectie titel={t("appearance.documentView")}>
+        <ThemedSelect
+          label={t("appearance.documentView")}
+          waarde={instellingen.tekst.documentWeergave}
+          keuzes={(["thema", "papier", "donker"] as const).map((waarde) => ({
+            waarde, label: t(`appearance.documentViewOptions.${waarde}`),
+          }))}
+          onChange={(documentWeergave) => wijzig({ tekst: { documentWeergave } })}
+          stijl={{ width: 220 }}
+        />
+        <p className="instellingen-uitleg">{t("appearance.documentViewHelp")}</p>
+      </Sectie>
       <Sectie titel={t("appearance.ribbon")}>
         <Vink checked={instellingen.lint.compact} onChange={(compact) => wijzig({ lint: { compact } })}>
           {t("appearance.ribbonCompact")}

@@ -887,5 +887,94 @@
       "unsupportedStyle": "Choose another table style."
     },
     "reloadHint": "Saving table settings or applying a table filter clears earlier undo steps."
+  },
+  "pivots": {
+    "group": "Summarize",
+    "title": "Pivot table",
+    "name": "Pivot name",
+    "source": "Source",
+    "sourceTable": "Source table",
+    "range": "Cell range",
+    "sourceSheet": "Source sheet",
+    "sourceRange": "Source range including headers",
+    "readFields": "Read fields",
+    "target": "Destination",
+    "targetSheet": "Destination sheet",
+    "newSheet": "New sheet",
+    "newSheetName": "New sheet name",
+    "targetCell": "Top-left cell",
+    "fields": "Field layout",
+    "dragHint": "Drag source fields into an area, or select a field and use an Add button.",
+    "field": "Field",
+    "up": "Move up",
+    "down": "Move down",
+    "remove": "Remove",
+    "caption": "Value caption",
+    "aggregate": "Summarize by",
+    "showAs": "Show values as",
+    "sort": "Member order",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "grouping": "Grouping",
+    "interval": "Interval size",
+    "members": "Filter members",
+    "searchMembers": "Search members",
+    "selectAll": "Select all",
+    "selectNone": "Clear selection",
+    "searchHint": "Showing up to 200 members. Search to find more.",
+    "reloadHint": "Creating or refreshing a pivot table clears earlier undo steps. Row and column changes that could move a pivot source or output may be refused to preserve its metadata.",
+    "legacyHint": "This imported pivot is preserved with its cached results. Editing its field layout is not supported.",
+    "readSourceFirst": "Read the fields again after changing the source.",
+    "create": "Create pivot table",
+    "refresh": "Refresh pivot table",
+    "zones": {
+      "rijen": "Rows",
+      "kolommen": "Columns",
+      "waarden": "Values",
+      "filters": "Filters"
+    },
+    "add": {
+      "rijen": "Add to Rows",
+      "kolommen": "Add to Columns",
+      "waarden": "Add to Values",
+      "filters": "Add to Filters"
+    },
+    "functions": {
+      "sum": "Sum",
+      "count": "Count",
+      "average": "Average",
+      "min": "Minimum",
+      "max": "Maximum"
+    },
+    "show": {
+      "normal": "Normal",
+      "grandPercent": "% of grand total",
+      "rowPercent": "% of row total",
+      "columnPercent": "% of column total"
+    },
+    "groupingOptions": {
+      "none": "No grouping",
+      "year": "Years",
+      "quarter": "Quarters",
+      "month": "Months",
+      "interval": "Number intervals"
+    },
+    "errors": {
+      "invalidSource": "Use a rectangular range with unique, nonempty column headers and data rows.",
+      "invalidFields": "Choose valid source fields and unique field instances.",
+      "invalidGroup": "Choose a positive interval or valid date values.",
+      "tooLarge": "The source or resulting pivot exceeds the supported size.",
+      "noValues": "Add at least one value field.",
+      "invalidName": "Enter a valid pivot name.",
+      "duplicateName": "This pivot name is already used.",
+      "invalidTarget": "Choose a valid destination on the same sheet when refreshing.",
+      "occupiedTarget": "The destination contains data. Choose an empty area.",
+      "overlap": "The destination overlaps its source or another table.",
+      "mergedCells": "The destination contains merged cells.",
+      "protectedWorkbook": "The workbook structure is protected.",
+      "protectedSheet": "The destination sheet is protected.",
+      "missingPivot": "This pivot table no longer exists.",
+      "unsupportedPivot": "This pivot layout cannot be edited safely."
+    }
   }
 }

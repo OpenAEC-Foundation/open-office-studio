@@ -78,6 +78,7 @@
     }
   },
   "changes": {
+    "documentChanged": "The document changed while reviewing. Try again.",
     "groups": {
       "all": "All",
       "view": "Markup",
@@ -197,7 +198,8 @@
       "kinds": {
         "inserted": "Inserted",
         "deleted": "Deleted",
-        "replaced": "Replaced"
+        "replaced": "Replaced",
+        "formatted": "Character formatting changed"
       },
       "diagnostics": {
         "invalidOptions": "The comparison settings are invalid.",
@@ -212,7 +214,7 @@
         "fieldChange": "Fields differ; these are not shown as changes.",
         "objectChange": "Images or objects differ; these are not shown as changes.",
         "contentControlChange": "Content controls differ.",
-        "formattingChange": "The formatting differs; formatting changes are not shown as changes.",
+        "formattingChange": "These formatting differences cannot be compared safely.",
         "unsupportedContent": "The document contains content the comparison does not support.",
         "unsupportedFormatting": "The document contains formatting the comparison does not support.",
         "outOfScopeChange": "There are differences outside the body text (headers, footers, notes); these are not compared.",
@@ -223,7 +225,8 @@
         "batchRefused": "The differences could not be recorded as changes.",
         "serializationFailed": "The result could not be saved.",
         "roundtripMismatch": "The result did not match the revised version."
-      }
+      },
+      "formattingReplacements": "Supported character formatting differences appear as a replacement of the same text. Accept the changes for the new formatting or reject them for the old formatting."
     }
   },
   "editing": {

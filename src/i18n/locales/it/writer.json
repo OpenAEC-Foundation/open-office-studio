@@ -78,6 +78,7 @@
     }
   },
   "changes": {
+    "documentChanged": "The document changed while reviewing. Try again.",
     "groups": {
       "all": "Tutto",
       "view": "Revisioni",
@@ -201,7 +202,8 @@
       "kinds": {
         "inserted": "Inserito",
         "deleted": "Eliminato",
-        "replaced": "Sostituito"
+        "replaced": "Sostituito",
+        "formatted": "Character formatting changed"
       },
       "diagnostics": {
         "invalidOptions": "Le impostazioni di confronto non sono valide.",
@@ -216,7 +218,7 @@
         "fieldChange": "I campi differiscono; queste differenze non vengono mostrate come modifiche.",
         "objectChange": "Le immagini o gli oggetti differiscono; queste differenze non vengono mostrate come modifiche.",
         "contentControlChange": "I controlli contenuto differiscono.",
-        "formattingChange": "La formattazione differisce; le modifiche di formattazione non vengono mostrate come modifiche.",
+        "formattingChange": "These formatting differences cannot be compared safely.",
         "unsupportedContent": "Il documento contiene contenuto non supportato dal confronto.",
         "unsupportedFormatting": "Il documento contiene formattazione non supportata dal confronto.",
         "outOfScopeChange": "Ci sono differenze al di fuori del corpo del testo (intestazioni, piè di pagina, note); queste non vengono confrontate.",
@@ -227,7 +229,8 @@
         "batchRefused": "Non è stato possibile registrare le differenze come modifiche.",
         "serializationFailed": "Non è stato possibile salvare il risultato.",
         "roundtripMismatch": "Il risultato non corrispondeva alla versione modificata."
-      }
+      },
+      "formattingReplacements": "Supported character formatting differences appear as a replacement of the same text. Accept the changes for the new formatting or reject them for the old formatting."
     }
   },
   "editing": {

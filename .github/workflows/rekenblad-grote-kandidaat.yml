@@ -1,0 +1,113 @@
+name: Grote werkmap met kandidaatkern meten
+on:
+  push:
+    branches: [codex/spreadsheet-large-workbooks-2026-11-10]
+    paths: [.github/workflows/rekenblad-grote-kandidaat.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  referentie:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/maak-rekenbladprestatie.py
+      - name: Add the same bounded editing reference for every platform
+        run: |
+          python scripts/maak-rekenblad-openprofiel.py
+          python - <<'PY'
+          import hashlib,json,shutil
+          from pathlib import Path
+          out=Path('.local/prestatie/rekenbladen')
+          target=out/'300k-cellen.xlsx'
+          shutil.copyfile('.local/openprofiel/10000.xlsx',target)
+          manifest=json.loads((out/'manifest.json').read_text())
+          manifest.insert(0,dict(naam='300k-cellen',bestand=target.name,rijen=10000,kolommen=30,cellen=300000,formules=0,sha256=hashlib.sha256(target.read_bytes()).hexdigest()))
+          (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rekenblad-open-input
+          path: .local/prestatie/rekenbladen/
+          include-hidden-files: true
+          compression-level: 0
+  grote-werkmap:
+    needs: referentie
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OOS_NATIVE_RUN: "42804064301"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - uses: actions/download-artifact@v4
+        with:
+          name: rekenblad-open-input
+          path: .local/prestatie/rekenbladen
+      - name: Wait for the exact tested native candidate and retrieve its artifact
+        run: |
+          gh run watch "$OOS_NATIVE_RUN" --exit-status --interval 20 >/dev/null
+          gh run download "$OOS_NATIVE_RUN" --name rekenbladkern-kandidaat --dir .local/open-kandidaat
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          metadata=json.loads(Path('patches/rekenbladengine-lange-ketens.json').read_text())
+          build=json.loads(Path('.local/open-kandidaat/bouw.json').read_text())
+          expected=[{'patch':p['patch'],'sha256':p['patchSha256']} for p in [metadata,*metadata['extraPatches']]]
+          assert build['patches']==expected, 'Candidate patch chain differs'
+          assert hashlib.sha256(Path('.local/open-kandidaat/xlsx_wasm_bg.wasm').read_bytes()).hexdigest()==build['wasmSha256']
+          assert metadata['wasmSha256']==build['wasmSha256'], 'Active vendor differs from the tested candidate'
+          PY
+      - name: Open, scroll the core viewport, edit, undo, redo, save and reopen 300k cells
+        env:
+          OOS_PRESTATIE_GEVAL: 300k-cellen
+          OOS_PRESTATIE_BEWERKEN: "1"
+        run: |
+          node scripts/meet-rekenbladkern.mjs
+          cp .local/prestatie/rekenbladen/kern-rapport.json .local/prestatie/rekenbladen/kern-300k.json
+      - name: Recalculate 50k dependent formulas in the isolated core
+        env:
+          OOS_PRESTATIE_GEVAL: 50k-afhankelijke-formules
+        run: |
+          node scripts/meet-rekenbladkern.mjs
+          cp .local/prestatie/rekenbladen/kern-rapport.json .local/prestatie/rekenbladen/kern-50k.json
+      - name: Compare JS heap ceilings with unchanged 60s and 1800MiB process guards
+        env:
+          OOS_PRESTATIE_GEVAL: 100k-rijen-30-kolommen
+          OOS_PRESTATIE_WASM: .local/open-kandidaat/xlsx_wasm_bg.wasm
+        run: |
+          set +e
+          node scripts/meet-rekenbladkern.mjs
+          cp .local/prestatie/rekenbladen/kern-rapport.json .local/prestatie/rekenbladen/kern-js1024.json
+          node --max-old-space-size=4096 scripts/meet-rekenbladkern.mjs
+          result=$?
+          cp .local/prestatie/rekenbladen/kern-rapport.json .local/prestatie/rekenbladen/kern-js4096.json
+          exit "$result"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rekenblad-grote-kandidaat-${{ matrix.os }}
+          path: |
+            .local/prestatie/rekenbladen/*.json
+            .local/open-kandidaat/bouw.json
+          include-hidden-files: true

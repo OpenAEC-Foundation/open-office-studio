@@ -40,9 +40,18 @@ export function noteerOpmerkingInitialen(
 ) {
   const opmerking = ref.getComments().find((c) => c.id === id);
   if (!opmerking) return;
+  noteerNieuweOpmerkingInitialen(handle, opmerking, initialen);
+}
+
+/** Het reply-event bevat de nieuwe identiteit al, vóór de React-projectie. */
+export function noteerNieuweOpmerkingInitialen(
+  handle: object,
+  opmerking: { id: number; author: string; date?: string },
+  initialen: string,
+) {
   let kaart = keuzes.get(handle);
   if (!kaart) keuzes.set(handle, (kaart = new Map()));
-  kaart.set(id, {
+  kaart.set(opmerking.id, {
     auteur: opmerking.author,
     datum: datumSleutel(opmerking.date ?? ""),
     initialen: initialen.trim(),

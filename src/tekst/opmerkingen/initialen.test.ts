@@ -3,6 +3,7 @@ import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import {
   bewaarOpmerkingInitialen,
   noteerOpmerkingInitialen,
+  noteerNieuweOpmerkingInitialen,
 } from "./initialen";
 
 const W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -34,6 +35,49 @@ const ref = () => ({
 });
 
 describe("initialen van nieuwe opmerkingen (#23)", () => {
+  it("bewaart nieuwe reply-identiteiten direct zonder verouderde React-projectie (#318)", () => {
+    const handle = {};
+    const reply = { id: 2, author: "Ada", date };
+    noteerNieuweOpmerkingInitialen(handle, reply, "ZZ");
+    noteerNieuweOpmerkingInitialen(handle, { ...reply, id: 3 }, "QQ");
+    const bytes = bestand(
+      `<w:comments xmlns:w="${W}"><w:comment w:id="0" w:author="Piet" w:initials="P"><w:p/></w:comment><w:comment w:id="1" w:author="Ada" w:initials="OLD" w:date="${date}"><w:p/></w:comment><w:comment w:id="2" w:author="Ada" w:initials="" w:date="${date}"><w:p><w:r><w:t>Antwoord</w:t></w:r></w:p></w:comment><w:comment w:id="3" w:author="Ada" w:initials="" w:date="${date}"/></w:comments>`,
+    );
+    const original = unzipSync(bytes);
+    const saved = bewaarOpmerkingInitialen(handle, bytes);
+    const xml = lees(saved);
+    expect(xml).toContain(
+      'w:id="2" w:author="Ada" w:date="' + date + '" w:initials="ZZ"',
+    );
+    expect(xml).toContain(
+      'w:id="3" w:author="Ada" w:date="' + date + '" w:initials="QQ"',
+    );
+    expect(xml).toContain('w:id="1" w:author="Ada" w:initials="OLD"');
+    expect(xml).toContain('w:id="0" w:author="Piet" w:initials="P"');
+    expect(xml).toContain("<w:t>Antwoord</w:t>");
+    for (const [path, part] of Object.entries(original))
+      if (path !== "word/review/comments.xml")
+        expect(unzipSync(saved)[path]).toEqual(part);
+    expect(bewaarOpmerkingInitialen({}, bytes)).toBe(bytes);
+  });
+
+  it("past reply-initialen niet toe na hergebruik van hetzelfde id voor een andere identiteit", () => {
+    const handle = {};
+    noteerNieuweOpmerkingInitialen(
+      handle,
+      { id: 2, author: "Ada", date },
+      "ZZ",
+    );
+    for (const [author, datum] of [
+      ["Piet", date],
+      ["Ada", "2026-11-10T11:00:00Z"],
+    ]) {
+      const bytes = bestand(
+        `<w:comments xmlns:w="${W}"><w:comment w:id="2" w:author="${author}" w:date="${datum}" w:initials="OLD"/></w:comments>`,
+      );
+      expect(bewaarOpmerkingInitialen(handle, bytes)).toBe(bytes);
+    }
+  });
   it("bewaart de keuze bij invoegen, met XML-escaping, en behoudt andere auteurs en onderdelen", () => {
     const editor = ref();
     noteerOpmerkingInitialen(editor, editor, 1, ' A&"L ');

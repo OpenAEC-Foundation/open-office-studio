@@ -78,6 +78,7 @@
     }
   },
   "changes": {
+    "documentChanged": "The document changed while reviewing. Try again.",
     "groups": {
       "all": "ທັງໝົດ",
       "view": "ເຄື່ອງໝາຍ",
@@ -193,7 +194,8 @@
       "kinds": {
         "inserted": "ແຊກເຂົ້າແລ້ວ",
         "deleted": "ລຶບອອກແລ້ວ",
-        "replaced": "ປ່ຽນແທນແລ້ວ"
+        "replaced": "ປ່ຽນແທນແລ້ວ",
+        "formatted": "Character formatting changed"
       },
       "diagnostics": {
         "invalidOptions": "ການຕັ້ງຄ່າການປຽບທຽບບໍ່ຖືກຕ້ອງ.",
@@ -208,7 +210,7 @@
         "fieldChange": "ຊ່ອງຂໍ້ມູນແຕກຕ່າງກັນ; ສ່ວນນີ້ຈະບໍ່ສະແດງເປັນການກວດແກ້.",
         "objectChange": "ຮູບພາບ ຫຼື ວັດຖຸແຕກຕ່າງກັນ; ສ່ວນນີ້ຈະບໍ່ສະແດງເປັນການກວດແກ້.",
         "contentControlChange": "ສ່ວນຄວບຄຸມເນື້ອຫາແຕກຕ່າງກັນ.",
-        "formattingChange": "ຮູບແບບແຕກຕ່າງກັນ; ການປ່ຽນແປງຮູບແບບຈະບໍ່ສະແດງເປັນການກວດແກ້.",
+        "formattingChange": "These formatting differences cannot be compared safely.",
         "unsupportedContent": "ເອກະສານມີເນື້ອຫາທີ່ລະບົບປຽບທຽບຍັງບໍ່ຮອງຮັບ.",
         "unsupportedFormatting": "ເອກະສານມີຮູບແບບທີ່ລະບົບປຽບທຽບຍັງບໍ່ຮອງຮັບ.",
         "outOfScopeChange": "ມີຄວາມແຕກຕ່າງຢູ່ນອກເນື້ອຫາຫຼັກ (ຫົວໜ້າ, ທ້າຍໜ້າ, ຄຳເຫັນ); ສ່ວນເຫຼົ່ານີ້ຈະບໍ່ຖືກປຽບທຽບ.",
@@ -219,7 +221,8 @@
         "batchRefused": "ບໍ່ສາມາດບັນທຶກຄວາມແຕກຕ່າງເປັນການກວດແກ້ໄດ້.",
         "serializationFailed": "ບໍ່ສາມາດບັນທຶກຜົນລັບໄດ້.",
         "roundtripMismatch": "ຜົນລັບບໍ່ກົງກັບສະບັບທີ່ປັບປຸງ."
-      }
+      },
+      "formattingReplacements": "Supported character formatting differences appear as a replacement of the same text. Accept the changes for the new formatting or reject them for the old formatting."
     }
   },
   "editing": {

@@ -48,6 +48,53 @@ const verhalen = [
 ];
 
 describe("zoeken in Presentatie", () => {
+  it("zoekt optioneel hele woorden met behoud van hoofdletterkeuze en standaard deelmatches", async () => {
+    const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat katten Kat katapult (kat)" }]);
+    expect((await zoekTreffers(api, "kat", false)).treffers).toHaveLength(5);
+    expect((await zoekTreffers(api, "kat", false, true)).treffers.map(t => [t.start, t.tekst])).toEqual([[0, "kat"], [11, "Kat"], [25, "kat"]]);
+    expect((await zoekTreffers(api, "kat", true, true)).treffers.map(t => t.start)).toEqual([0, 25]);
+  });
+
+  it("behoudt Unicode-woordgrenzen en UTF-16-posities naast astrale tekens", async () => {
+    const text = "🧱kat🧱 ékat katé kat́ 𐐀kat kat𐐀 _kat kat_ 2kat kat2 (kat)";
+    const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text }]);
+    expect((await zoekTreffers(api, "kat", false, true)).treffers.map(t => t.start)).toEqual([2, text.lastIndexOf("kat")]);
+    const accented = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "café cafés (café)" }]);
+    expect((await zoekTreffers(accented.api, "café", false, true)).treffers.map(t => t.start)).toEqual([0, 12]);
+  });
+
+  it("toetst grenzen binnen het juiste verhaal, niet naast tekst op een andere dia", async () => {
+    const { api } = nepApi([
+      { slideId: "s1", shapeId: "t", storyId: "a", text: "kat" },
+      { slideId: "s2", shapeId: "t", storyId: "a", text: "katten" },
+    ]);
+    expect((await zoekTreffers(api, "kat", false, true)).treffers.map(t => t.dia)).toEqual([1]);
+    const literal = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "a.b a.bx [" }]);
+    expect((await zoekTreffers(literal.api, "a.b", false, true)).treffers.map(t => t.start)).toEqual([0]);
+    expect((await zoekTreffers(literal.api, "[", false, true)).treffers.map(t => t.start)).toEqual([9]);
+  });
+
+  it("behoudt de hele-woordenoptie bij opnieuw lezen na een versiewijziging", async () => {
+    const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat katten" }]);
+    const read = api.readContent, find = api.findText;
+    let changed = false, reads = 0;
+    api.readContent = async () => { reads++; return { ...await read(), version: changed ? "v2" : "v1" } as Awaited<ReturnType<typeof read>>; };
+    api.findText = async r => { changed = true; return { ...await find(r), version: "v2" } as Awaited<ReturnType<typeof find>>; };
+    const result = await zoekTreffers(api, "kat", false, true);
+    expect(reads).toBe(2);
+    expect(result.versie).toBe("v2");
+    expect(result.treffers.map(t => t.start)).toEqual([0]);
+  });
+
+  it("vervangt uitsluitend volledige woorden in één bestaande editortransactie", async () => {
+    const { api, bewerkingen } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat katten kat" }]);
+    const result = await zoekTreffers(api, "kat", false, true);
+    expect(await vervang(api, result, result.treffers, "hond")).toBe(2);
+    expect(bewerkingen).toEqual([{ expectVersion: "v1", history: "separate", steps: [
+      { op: "replaceText", target: { kind: "range", slideId: "s1", shapeId: "t", storyId: "a", start: 0, end: 3 }, text: "hond" },
+      { op: "replaceText", target: { kind: "range", slideId: "s1", shapeId: "t", storyId: "a", start: 11, end: 14 }, text: "hond" },
+    ] }]);
+  });
   it("vindt alle schrijfwijzen zonder op hoofdletters te letten", () => {
     expect(schrijfwijzen(["Planning en PLANNING", "planning"], "planning").sort()).toEqual([
       "PLANNING",

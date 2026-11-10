@@ -78,6 +78,7 @@
     }
   },
   "changes": {
+    "documentChanged": "Het document is tijdens het beoordelen gewijzigd. Probeer het opnieuw.",
     "groups": {
       "all": "Alles",
       "view": "Weergave",
@@ -197,7 +198,8 @@
       "kinds": {
         "inserted": "Ingevoegd",
         "deleted": "Verwijderd",
-        "replaced": "Vervangen"
+        "replaced": "Vervangen",
+        "formatted": "Tekenopmaak gewijzigd"
       },
       "diagnostics": {
         "invalidOptions": "De instellingen voor de vergelijking zijn ongeldig.",
@@ -212,7 +214,7 @@
         "fieldChange": "Velden verschillen; die worden niet als wijziging getoond.",
         "objectChange": "Afbeeldingen of objecten verschillen; die worden niet als wijziging getoond.",
         "contentControlChange": "Inhoudsbesturingselementen verschillen.",
-        "formattingChange": "De opmaak verschilt; opmaakwijzigingen worden niet als wijziging getoond.",
+        "formattingChange": "Deze opmaakverschillen kunnen niet veilig worden vergeleken.",
         "unsupportedContent": "Het document bevat inhoud die de vergelijking niet ondersteunt.",
         "unsupportedFormatting": "Het document bevat opmaak die de vergelijking niet ondersteunt.",
         "outOfScopeChange": "Er zijn verschillen buiten de hoofdtekst (kop- en voetteksten, noten); die worden niet vergeleken.",
@@ -223,7 +225,8 @@
         "batchRefused": "De verschillen konden niet als wijzigingen worden vastgelegd.",
         "serializationFailed": "Het resultaat kon niet worden opgeslagen.",
         "roundtripMismatch": "Het resultaat kwam niet overeen met de gewijzigde versie."
-      }
+      },
+      "formattingReplacements": "Ondersteunde verschillen in tekenopmaak verschijnen als een vervanging van dezelfde tekst. Accepteer de wijzigingen voor de nieuwe opmaak of weiger ze voor de oude."
     }
   },
   "editing": {

@@ -6,6 +6,7 @@ import { useInstellingen } from "./instellingen";
 import { InLintPlek } from "./lintplek";
 import { BevestigdeKleur } from "./lint/BevestigdeKleur";
 import { markeerKleur } from "./lint/markeerkleur";
+import "./lint/kleuren.css";
 
 export const RibbonFout = createContext<(bericht: string) => void>(() => {});
 /** Engelse redenen uit de engines, vertaald naar de interfacetaal. */

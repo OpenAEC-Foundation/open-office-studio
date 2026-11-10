@@ -156,7 +156,7 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
             const cache = `${blad}:${regel.id}`;
             let cellen = schalen.get(cache);
             if (!cellen) {
-              cellen = visueleRegel(h, blad, regel);
+              cellen = visueleRegel(h, blad, regel, nu);
               schalen.set(cache, cellen);
             }
             const v = cellen.get(adres(cel));

@@ -1,3 +1,7 @@
+# Actueel: tweede integratieronde
+
+De gebruiker heeft een tweede ronde geautoriseerd met harde overdracht15:30, zondermain-merge. Zie [de actuele ronde2](integratie-ronde2-2026-11-10.md). De onderstaande1e5-resultaten blijven historische eerste-rondebewijzen.
+
 # Integratie — 10 november 2026
 
 ## Vast codepunt en bevoegdheden
