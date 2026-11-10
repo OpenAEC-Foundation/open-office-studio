@@ -1,0 +1,45 @@
+name: Rekenblad openen gefaseerd meten
+on:
+  push:
+    branches: [codex/spreadsheet-large-workbooks-2026-11-10]
+    paths:
+      - .github/workflows/rekenblad-open-profiel.yml
+      - scripts/*rekenblad*profiel*
+      - scripts/profiel-rekenblad-open.rs
+      - scripts/bouw-rekenbladkern.py
+      - patches/rekenbladengine-*
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  profiel:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      CARGO_BUILD_JOBS: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: rustup toolchain install 1.98.1 --profile minimal
+      - run: rustup override set 1.98.1
+      - name: Verify and prepare the exact native source and all pinned patches
+        run: python scripts/bouw-rekenbladkern.py --bronmap .local/kernbron --uitvoer .local/unused --alleen-bron
+      - run: python scripts/maak-rekenblad-openprofiel.py
+      - name: Compile the bounded phase probe
+        run: |
+          cp scripts/profiel-rekenblad-open.rs .local/kernbron/crates/betteroffice-xlsx/tests/open_profiel.rs
+          cargo test --manifest-path .local/kernbron/Cargo.toml -p betteroffice-xlsx --locked --release --test open_profiel --no-run
+      - name: Measure phases with a separate 90-second process limit
+        env:
+          OOS_OPEN_PROFILE_DIR: ${{ github.workspace }}/.local/openprofiel
+        run: |
+          set -o pipefail
+          /usr/bin/time -v timeout 90s cargo test --manifest-path .local/kernbron/Cargo.toml -p betteroffice-xlsx --locked --release --test open_profiel -- --nocapture 2>&1 | tee .local/openprofiel/native.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rekenblad-open-profiel
+          path: .local/openprofiel/
+          include-hidden-files: true
