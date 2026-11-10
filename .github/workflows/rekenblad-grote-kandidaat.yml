@@ -1,0 +1,51 @@
+name: Grote werkmap met kandidaatkern meten
+on:
+  push:
+    branches: [codex/spreadsheet-large-workbooks-2026-11-10]
+    paths: [.github/workflows/rekenblad-grote-kandidaat.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  grote-werkmap:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OOS_NATIVE_RUN: "42794087334"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Wait for the exact tested native candidate and retrieve its artifact
+        run: |
+          gh run watch "$OOS_NATIVE_RUN" --exit-status --interval 20 >/dev/null
+          gh run download "$OOS_NATIVE_RUN" --name rekenbladkern-kandidaat --dir .local/open-kandidaat
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          metadata=json.loads(Path('patches/rekenbladengine-lange-ketens.json').read_text())
+          build=json.loads(Path('.local/open-kandidaat/bouw.json').read_text())
+          expected=[{'patch':p['patch'],'sha256':p['patchSha256']} for p in [metadata,*metadata['extraPatches']]]
+          assert build['patches']==expected, 'Candidate patch chain differs'
+          assert hashlib.sha256(Path('.local/open-kandidaat/xlsx_wasm_bg.wasm').read_bytes()).hexdigest()==build['wasmSha256']
+          PY
+      - run: python3 scripts/maak-rekenbladprestatie.py
+      - name: Measure all three million cells with unchanged 60s and 1800MiB guards
+        env:
+          OOS_PRESTATIE_GEVAL: 100k-rijen-30-kolommen
+          OOS_PRESTATIE_WASM: .local/open-kandidaat/xlsx_wasm_bg.wasm
+        run: timeout 90s node scripts/meet-rekenbladkern.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rekenblad-grote-kandidaat
+          path: |
+            .local/prestatie/rekenbladen/*.json
+            .local/open-kandidaat/bouw.json
+          include-hidden-files: true
