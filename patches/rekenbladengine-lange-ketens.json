@@ -15,9 +15,9 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "fe2c14896c586601a72719413958fd15ea4563e14ecaddbc745032bd05211af0",
-  "wasmBytes": 7743000,
-  "stand": "Verified CF/table/selection-format kernel candidate. Seven source patches, unchanged JS/WASM interface. Native CI42779147979 and explicit actual-WASM regressions passed; feature work for issue73 remains in progress.",
+  "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
+  "wasmBytes": 7745388,
+  "stand": "Gecontroleerde kern met acht bronpatches: CF, tabelgroei, selectie-opmaak en SUBTOTAL op zichtbare rijen. Native CI42783728814 groen; JS/WASM-interface ongewijzigd. Frontend voor #73 nog in uitvoering.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -122,6 +122,6 @@
       ]
     }
   ],
-  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42625934529",
-  "bouwCommit": "34ca6426045ca88f363babd5d168cc46af873e9f"
+  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42783728814",
+  "bouwCommit": "abf24c8cb7666280cdeebcd7d47f5ef08c1d3876"
 }
