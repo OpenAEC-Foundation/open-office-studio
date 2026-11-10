@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
 import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import { describe, expect, it, vi } from "vitest";
@@ -89,7 +90,8 @@ describe("sjablonen openen als zelfstandig document (#27)", () => {
       expect(Object.keys(na).sort()).toEqual(Object.keys(voor).sort());
       for (const naam of Object.keys(voor))
         if (naam !== "[Content_Types].xml")
-          expect(na[naam]).toEqual(voor[naam]);
+          // Vergelijk alle bytes zonder honderdduizenden array-items te bezoeken.
+          expect(Buffer.compare(na[naam], voor[naam]), naam).toBe(0);
     },
   );
 

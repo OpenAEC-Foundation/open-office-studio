@@ -22,6 +22,7 @@ import {
   hernoemOntwerp,
   KLEUREN,
   leesOntwerp,
+  leesOntwerpMetThema,
   OntwerpFout,
   pasLayoutToe,
   pasThemaToe,
@@ -43,6 +44,7 @@ interface Begin {
   selectie: number[];
   versie: string;
   modus: Modus;
+  thema?: Thema;
 }
 const OPSLAG = "oos.presentatie.themas.v1";
 function eigenThemas(): Thema[] {
@@ -80,11 +82,16 @@ export function DiaOntwerp() {
     setLaden(true);
     try {
       const bytes = await herlaad.bytes();
+      const index = huidigeIndex(),
+        actueel =
+          modus === "themes"
+            ? leesOntwerpMetThema(bytes, index)
+            : { info: leesOntwerp(bytes) };
       setBegin({
         api,
         modus,
-        info: leesOntwerp(bytes),
-        index: huidigeIndex(),
+        ...actueel,
+        index,
         selectie: leesWeergave(herlaad).selectie,
         versie: api.handle.version(),
       });
@@ -177,8 +184,8 @@ function OntwerpVenster({
   const [afbeelding, setAfbeelding] = useState<Uint8Array | null>(null);
   const [custom, setCustom] = useState(eigenThemas);
   const [thema, setThema] = useState<Thema>(() => ({
-    ...THEMAS[0],
-    kleuren: [...THEMAS[0].kleuren],
+    ...(begin.thema ?? THEMAS[0]),
+    kleuren: [...(begin.thema ?? THEMAS[0]).kleuren],
   }));
   const [bezig, setBezig] = useState(false),
     [melding, setMelding] = useState("");

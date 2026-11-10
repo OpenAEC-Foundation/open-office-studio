@@ -272,6 +272,54 @@
       "head": "04e59e46464e71df1c2b6eb63f5abdb5864001c1",
       "merge": "f356bb64e5227bc39b2e767ac9da123f0be408a0",
       "scope": "Writer section and column markers"
+    },
+    {
+      "pr": 254,
+      "head": "5a1c0d50f53ba31a298e9286b9c0ebec31e51782",
+      "merge": "6348da9ea2de0c8b224b3cade9984af960409e59",
+      "scope": "Adaptive office preparation and status reads"
+    },
+    {
+      "pr": 233,
+      "head": "c3537b83e7239fc808b3af0d518e109aef2c0f8b",
+      "merge": "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab",
+      "scope": "Presentation current-theme editing"
+    },
+    {
+      "pr": 246,
+      "head": "9de53c798334456808a1c7cef815f7872a25ee89",
+      "merge": "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb",
+      "scope": "Spreadsheet formula hyperlinks and bounded image decoding"
+    },
+    {
+      "pr": 256,
+      "head": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
+      "merge": "6d4bdffde4a2a8a8c82818cd78f0f9e285845e51",
+      "scope": "Presentation embedded media"
+    },
+    {
+      "pr": 245,
+      "head": "55108670c3d8c2300cdec226823f2683ddfeccdc",
+      "merge": "2462550e9a43755fdfa7c8a62e455fb4339940c7",
+      "scope": "Writer format verification documentation correction"
+    },
+    {
+      "pr": 257,
+      "head": "3bd94cf7a827602c068462938297ef1d1fa4b33c",
+      "merge": "5c9b4f13ae00253d1dc586cbbe7d931b370ed857",
+      "scope": "Spreadsheet header outline controls"
+    },
+    {
+      "pr": 258,
+      "head": "b107f8f9c2234556d69ca9535a02b01ea8ee0f57",
+      "merge": "4843eb503dd797daa9cc3c8a4f8584033cce67c6",
+      "scope": "Writer reference focus and layout retry"
+    },
+    {
+      "pr": 260,
+      "head": "e209adfcb81bf81205337c94526cec4b6876eae6",
+      "merge": "8a775cbb09b7ba409e16bd83c8b3c480f379f8f7",
+      "scope": "Writer merged caption sequence order"
     }
   ],
   "coveredByBundles": [
@@ -346,29 +394,44 @@
   ],
   "deliveriesPending": [
     {
-      "pr": 233,
-      "head": "c3537b83e7239fc808b3af0d518e109aef2c0f8b",
-      "scope": "Start theme editing from current slide/layout/master settings; previous2c0d already included"
+      "pr": 261,
+      "head": "98b8dffcb57941bc7f062f7ebf3686727a74d2b5",
+      "scope": "Presentation object format painter; separate feature batch"
     },
     {
-      "pr": 246,
-      "head": "9de53c798334456808a1c7cef815f7872a25ee89",
-      "scope": "HYPERLINK targets, worker cancellation measurement and bounded embedded-image decoding; previous41c9 already included"
+      "pr": 262,
+      "head": "49789270eed564fe5856316ca2c88bf50ced4460",
+      "scope": "Writer spelling viewport scans; separate performance batch"
     },
     {
-      "pr": 254,
-      "head": "5a1c0d50f53ba31a298e9286b9c0ebec31e51782",
-      "scope": "Adaptive office performance; depends on already included252/248d5a79"
+      "pr": 263,
+      "head": "2eb45a3953835db8b57b4ee2273c821169cad45d",
+      "scope": "Native formula hyperlink queries; no vendor change"
     },
     {
-      "pr": 256,
-      "head": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
-      "scope": "Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery"
+      "pr": 264,
+      "head": "a7bb546037bff28dc2880b6bdee0b87e27fe39ba",
+      "scope": "Complete sheet copy preserving independent related parts"
     },
     {
-      "pr": 245,
-      "head": "55108670c3d8c2300cdec226823f2683ddfeccdc",
-      "scope": "Documentation correction after included26d31965; resolve full SHA before importing"
+      "pr": 265,
+      "head": "4a58fc6b80a13dfc5d321f89ae37d4f8db83064c",
+      "scope": "Presentation diagrams; updated conflict-free checkpoint not yet released"
+    },
+    {
+      "pr": 266,
+      "head": "ee8925ed39c78566e71d2386da57bfd72b15900f",
+      "scope": "Writer OPC story parts and style selection"
+    },
+    {
+      "pr": 267,
+      "head": "0e58e6f363af73f395025d82fd8c73f319a89f37",
+      "scope": "Writer status subscriptions; stacked on PR262"
+    },
+    {
+      "pr": 269,
+      "head": "346927430297654ccbe995b51dcd6c581bdc4eff",
+      "scope": "Shared Spreadsheet render projection for later table and conditional-format layers"
     }
   ],
   "checks": [
@@ -748,6 +811,96 @@
       "failed": 0,
       "skipped": 7,
       "files": 269
+    },
+    {
+      "kind": "pr245-related-unit",
+      "head": "6348da9ea2de0c8b224b3cade9984af960409e59",
+      "success": true,
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr254-targeted",
+      "head": "fc9980430de3c22341cbd6b51b65e4c27085adba",
+      "success": true,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr233-targeted",
+      "head": "016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab",
+      "success": true,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr246-targeted",
+      "head": "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb",
+      "success": true,
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "files": 3
+    },
+    {
+      "kind": "pr256-targeted",
+      "head": "6d4bdffde4a2a8a8c82818cd78f0f9e285845e51",
+      "success": true,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr245-related-unit",
+      "head": "2462550e9a43755fdfa7c8a62e455fb4339940c7",
+      "success": true,
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr257-targeted",
+      "head": "5c9b4f13ae00253d1dc586cbbe7d931b370ed857",
+      "success": true,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr258-targeted",
+      "head": "4843eb503dd797daa9cc3c8a4f8584033cce67c6",
+      "success": true,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr260-targeted",
+      "head": "8a775cbb09b7ba409e16bd83c8b3c480f379f8f7",
+      "success": true,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "full-application-2026-11-10",
+      "head": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+      "success": true,
+      "passed": 2858,
+      "failed": 0,
+      "skipped": 7,
+      "files": 274
     }
   ],
   "limits": [
@@ -755,5 +908,7 @@
     "Native Windows builds are checked in CI because local Application Control blocks Cargo build scripts.",
     "No live Y-app storage environment is used, as requested by the user.",
     "Experimental PR116 and uncommitted work are not integration deliveries."
-  ]
+  ],
+  "lastUpdated": "2026-11-10",
+  "frozenWindowsCode": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7"
 }

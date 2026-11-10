@@ -16,6 +16,7 @@ import { tekenobjecten } from "./tekenAnkers";
 import type { ObjectPlek, Tekenobject } from "./tekenobjecten";
 import { openObjectVenster } from "./objectBewerking";
 import { objectGeometrie } from "./objectGeometrie";
+import { beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 import "./tekenobjecten.css";
 
 /** De engine tekent grafieken; deze laag tekent de andere DrawingML-objecten. */
@@ -120,7 +121,7 @@ function ObjectOpRaster({
   } | null>(null);
   const url = useMemo(
     () =>
-      o.media && o.mime
+      o.media && o.mime && beeldVoorbeeldToegestaan(o.media)
         ? URL.createObjectURL(
             new Blob([new Uint8Array(o.media)], { type: o.mime }),
           )

@@ -16,7 +16,9 @@ vi.mock("../lint/editorApi", () => ({
 }));
 const boeken: WorkbookHandle[] = [];
 afterEach(() => boeken.splice(0).forEach((h) => h.dispose()));
-function proef(bytes: Uint8Array = readFileSync("public/templates/nieuw.xlsx")) {
+function proef(
+  bytes: Uint8Array = readFileSync("public/templates/nieuw.xlsx"),
+) {
   const h = openWorkbook(bytes);
   boeken.push(h);
   const api = {
@@ -34,14 +36,37 @@ function proef(bytes: Uint8Array = readFileSync("public/templates/nieuw.xlsx")) 
   return { h, api, doel };
 }
 describe("hyperlinks in het rekenblad (#75)", () => {
+  it("leest bij een meervoudige selectie de formule van dezelfde begincel als de weergavetekst", () => {
+    const { h, api, doel } = proef();
+    h.editCell(0, 0, 0, '=HYPERLINK("#L20","Ga")');
+    h.editCell(0, 1, 0, "Andere cel");
+    expect(
+      leesKoppeling(api, {
+        ...doel(),
+        focus: { row: 1, col: 0 },
+        bereik: { top: 0, left: 0, bottom: 1, right: 0 },
+      }),
+    ).toMatchObject({ location: "L20", formule: true });
+  });
   it("bewaart een interne verwijzing buiten de eerste cel en leest die opnieuw", async () => {
     const { h, api, doel } = proef();
     h.editCell(0, 0, 0, "Bestaande cel");
-    const target = { ...doel(), focus: { row: 1, col: 0 }, bereik: { top: 1, left: 0, bottom: 1, right: 0 } };
-    await bewaarKoppeling(api, target, { soort: "cel", adres: "L20", tekst: "Ga", tip: "" });
+    const target = {
+      ...doel(),
+      focus: { row: 1, col: 0 },
+      bereik: { top: 1, left: 0, bottom: 1, right: 0 },
+    };
+    await bewaarKoppeling(api, target, {
+      soort: "cel",
+      adres: "L20",
+      tekst: "Ga",
+      tip: "",
+    });
     expect(h.cell(0, 1, 0).input).toBe("Ga");
     expect(leesKoppeling(api, target)).toMatchObject({ location: "L20" });
-    expect(new Pakket(h.save()).lees("xl/worksheets/sheet1.xml")).toContain('location="L20"');
+    expect(new Pakket(h.save()).lees("xl/worksheets/sheet1.xml")).toContain(
+      'location="L20"',
+    );
   });
   it.each(["https://example.com/a?q=1&b=2", "mailto:test@example.com"])(
     "bewaart %s met tekst/opmaak in één Undo-stap",
@@ -180,9 +205,22 @@ describe("hyperlinks in het rekenblad (#75)", () => {
     ).rejects.toThrow();
     expect(h.version()).toBe(versie);
     const p = new Pakket(readFileSync("public/templates/nieuw.xlsx"));
-    p.schrijf("xl/worksheets/sheet1.xml", p.lees("xl/worksheets/sheet1.xml").replace('</sheetData>', '</sheetData><sheetProtection sheet="1"/>'));
-    const beschermd = proef(p.inpakken()), oud = beschermd.h.version();
-    await expect(bewaarKoppeling(beschermd.api, beschermd.doel(), { soort: "web", adres: "https://example.com", tekst: "x", tip: "" })).rejects.toThrow();
+    p.schrijf(
+      "xl/worksheets/sheet1.xml",
+      p
+        .lees("xl/worksheets/sheet1.xml")
+        .replace("</sheetData>", '</sheetData><sheetProtection sheet="1"/>'),
+    );
+    const beschermd = proef(p.inpakken()),
+      oud = beschermd.h.version();
+    await expect(
+      bewaarKoppeling(beschermd.api, beschermd.doel(), {
+        soort: "web",
+        adres: "https://example.com",
+        tekst: "x",
+        tip: "",
+      }),
+    ).rejects.toThrow();
     expect(beschermd.h.version()).toBe(oud);
     expect(leesKoppeling(beschermd.api, beschermd.doel())).toBeNull();
   });
