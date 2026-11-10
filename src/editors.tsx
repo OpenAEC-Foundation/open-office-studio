@@ -5,6 +5,8 @@ import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
 import { PresentatieOpenwijze } from "./presentatie/PresentatieOpenwijze";
 import { werkDianummersBij } from "./presentatie/dianummers";
+import { metRijkeNotities } from "./presentatie/notitiesSessie";
+import { RijkeNotitiesPaneel } from "./presentatie/RijkeNotitiesPaneel";
 import type { PptxFontFace } from "@betteroffice/pptx";
 import "@betteroffice/docx-react/styles.css";
 import { useTranslation } from "react-i18next";
@@ -105,6 +107,7 @@ export default function OfficeEditor(props: EditorProps) {
   const [navigatie, setNavigatie] = useState(false);
   const [documentGereed, setDocumentGereed] = useState(false);
   const rekenbladHost = useRef<HTMLDivElement>(null);
+  const presentatieNotitieHost = useRef<HTMLDivElement>(null);
   const [rekenbladApi, setRekenbladApi] = useState<XlsxEditorApi | null>(null);
   const [diaBreedte, setDiaBreedte] = useState<number>();
   const [presentatieApi, setPresentatieApi] = useState<PptxEditorApi | null>(
@@ -383,7 +386,12 @@ export default function OfficeEditor(props: EditorProps) {
     [props.registreer],
   );
   const gereedPptx = useCallback(
-    (api: PptxEditorApi) => {
+    (nativeApi: PptxEditorApi) => {
+      const api = metRijkeNotities(
+        nativeApi,
+        herladenRecent.current.bytes,
+        () => recent.current.gewijzigd(),
+      );
       // EMU naar CSS-pixels bij 96 dpi.
       const snapshot = api.handle.snapshot();
       noteerDiaAantal(api.handle, snapshot.slides.length);
@@ -502,6 +510,7 @@ export default function OfficeEditor(props: EditorProps) {
       <EditorApi.Provider value={apis}>
           <DocumentLettertypen.Provider value={documentLettertypen}>
         <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
+          <div className="office-presentatie-notitiehost" ref={presentatieNotitieHost}>
           <PptxEditor
             legacySyncApi
             key={herladen.sleutel}
@@ -528,6 +537,14 @@ export default function OfficeEditor(props: EditorProps) {
               />
             }
           />
+          {presentatieApi && (
+            <RijkeNotitiesPaneel
+              api={presentatieApi}
+              host={presentatieNotitieHost}
+              opslaan={props.opslaan}
+            />
+          )}
+          </div>
           {presentatieApi && (
             <PresentatieOpenwijze
               api={presentatieApi}
