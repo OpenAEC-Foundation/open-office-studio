@@ -12,13 +12,25 @@ def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def bronpatches(metadata, prototype):
+    patches = [metadata, *metadata.get("extraPatches", [])]
+    actief = [item for item in patches if item["patch"] == prototype["patch"]]
+    if len(actief) > 1:
+        raise SystemExit("De selectiepatch staat meermaals in de actieve keten.")
+    if actief:
+        if actief[0]["patchSha256"] != prototype["patchSha256"]:
+            raise SystemExit("De actieve selectiepatch wijkt af van het prototype.")
+        return patches
+    return [*patches, prototype]
+
+
 def main():
     repo = Path(__file__).resolve().parents[1]
     metadata = json.loads((repo / "patches/rekenbladengine-lange-ketens.json").read_text())
     prototype = json.loads((repo / "patches/rekenbladengine-selectie-opmaak.json").read_text())
     if prototype["bronCommit"] != metadata["commit"]:
         raise SystemExit("Het prototype en de productiekern hebben verschillende bronversies.")
-    patches = [metadata, *metadata.get("extraPatches", []), prototype]
+    patches = bronpatches(metadata, prototype)
     for item in patches:
         if sha256(repo / "patches" / item["patch"]) != item["patchSha256"]:
             raise SystemExit("Afwijkende bronpatch: " + item["patch"])
