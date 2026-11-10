@@ -72,6 +72,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#270](https://github.com/OpenAEC-Foundation/open-office-studio/pull/270) | `14cfe8b66d33eccf78c60541dd2d4ff5e27be09e` | `8a06c2db4e8181d5b3e28b162d362a54dd835cde` | Document additional native selection-format benchmark evidence |
 | [#263](https://github.com/OpenAEC-Foundation/open-office-studio/pull/263) | `7a90cb16da652f1d560817db533607513c4583ad` | `f5542db45ffdce029670a68713c70bdc12d987c9` | Spreadsheet nested DrawingML group geometry and source preservation |
 | [#274](https://github.com/OpenAEC-Foundation/open-office-studio/pull/274) | `2e62fc279b7fad6ead32ddc4cf090aa41a86dda0` | `543ebcdb2d428db29985a3ab9d8650e04210414f` | Presentation stored slide-number fields after structural edits |
+| [#275](https://github.com/OpenAEC-Foundation/open-office-studio/pull/275) | `9afc96b57be94cda01a0a1da221bc10dd7e2c85a` | `fee8b45e6280b9fe63e1b97e90c126f1cd3c9cc8` | Presentation rich notes with focused-save and independent drafts |
 
 ## Earlier fixes included in bundles
 
@@ -164,6 +165,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | full-application-candidate-phase1-2026-11-10 | `6bbcf79e0f8892a61420d86848402f144812e5b0` | 2916 | 0 | 7 |
 | pr263-targeted | `f5542db45ffdce029670a68713c70bdc12d987c9` | 13 | 0 | 0 |
 | pr274-targeted | `543ebcdb2d428db29985a3ab9d8650e04210414f` | 11 | 0 | 0 |
+| pr275-targeted | `fee8b45e6280b9fe63e1b97e90c126f1cd3c9cc8` | 20 | 0 | 0 |
 
 ## Pending deliveries
 
