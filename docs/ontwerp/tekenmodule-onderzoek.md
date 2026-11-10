@@ -58,6 +58,19 @@ Aanbevolen opzet: een klein formaatneutraal documentmodel met pagina's, stabiele
 
 Paint vermeldt MIT voor nieuwe code en afzonderlijke voorwaarden voor overgenomen stijlonderdelen; CAD heeft een GPLv3-licentiebestand. Dit onderzoek neemt geen implementatiecode over. Controle van hergebruikte onderdelen en hun licenties hoort bij een latere concrete extractie, niet bij een stilzwijgende afhankelijkheidswijziging in deze onderzoeks-PR.
 
+## Aanvullende hergebruikproef: connectors
+
+Op checkout `cbd02f4e88201bf51843158f37d6908c7b739abe` zijn de applicatiebestanden gelijk aan de genoemde Office-basis. Een aanvullende proef controleert het verschil tussen geldige connectorverwijzingen en werkelijk meebewegende geometrie. De reproduceerbare [CLI-proef](../../scripts/proef-tekenmodule-connectors.mjs) gebruikt de bestaande diagramgenerator en de echte native `applyEdits`/`setShapeRect`, zonder browser of geïnstalleerde app te starten:
+
+- Positieve controle: verplaats de hele vormengroep 200.000 EMU omlaag. Ook de weergegeven connectors verplaatsen; opslaan/heropenen en Undo/Redo bewaren het resultaat.
+- Na groepering opheffen: verplaats alleen `First` 200.000 EMU omlaag. De knoop verplaatst, maar de twee connectorgeometrieën en hun weergave blijven ongewijzigd. Alle vier begin-/eindverwijzingen blijven geldig. Opslaan/heropenen en Undo/Redo reproduceren deze toestand.
+
+Daarna is de bestaande Presentatie-interface uit de productiebouw van dezelfde checkout bediend in Chromium: open de gegenereerde losse vormen, selecteer `First`, sleep die omlaag, gebruik Opslaan als en open de echte PPTX-download opnieuw. De eerste connector blijft op zijn oude hoogte; Undo herstelt de oorspronkelijke vormpositie en Redo herhaalt de verplaatsing. Onafhankelijke XML-controle toont dat vorm-ID 5 van y=1.728.216 naar y=3.525.072 EMU verhuist, terwijl beide connectorgeometrieën en eindverwijzingen exact gelijk blijven. Geen browserconsolefouten. Download-SHA-256: `e6a8ba47c25f55f30d13a6fcef20f0a46f59c28a79bfdbd174bb4768d60d7604`.
+
+Dit is een afgebakende waarneming aan het bestaande, gegenereerde procesdiagram na groepering opheffen; geen conclusie over alle mogelijke connectoren of native desktopbediening. In dit onderzoek is hiervoor geen applicatiefix gemaakt. De consequentie voor hergebruik is concreet: neem dynamische connectorbijwerking mee als eigen beslisproef. Het bewaren van eindobject-ID's bewijst die bijwerking niet.
+
+Herhalen: `node scripts/proef-tekenmodule-connectors.mjs [uitvoermap]`. Standaard schrijft de proef naar de genegeerde `.local/proef-tekenmodule-connectors`; de JSON bevat script-/WASM-hashes, invoer-/uitvoerhashes, geometrie en beide controles. De CLI registreert het waargenomen gedrag; hij legt het ontbreken van bijwerking niet vast als gewenst gedrag in de applicatietests.
+
 ## Eerste versie en beslisproeven
 
 De beoogde kantoorworkflow is een procesplaat, eenvoudig organogram, schema of poster op een papierpagina. De eerste editor heeft pagina toevoegen/verwijderen, papiermaat, tekst, basisvormen, verplaatsen/schalen/draaien, vul-/lijnkleur, stapelvolgorde, groepen, uitlijnen/verdelen, connectoren en Undo/Redo nodig. CAD-maatvoering, DWG/DXF-bewerking, 3D, pixelretouche, willekeurige Visio-formules en een algemene SVG-webeditor blijven buiten deze versie.
@@ -75,11 +88,11 @@ Voer iedere gekozen app-implementatieproef op één vastgelegd codepunt uit in W
 
 Op Windows x64 met Node v24.22.1 zijn op Office-bronpunt `1e5afa399117fd84df628955ec82b0e597993c83` de bestaande `diagrammen.test.ts` (22), `groepen.test.ts` (14) en `objecten.test.ts` (13) uitgevoerd: **49 geslaagd, drie bestanden**, 5,58 seconden. De diagramproeven gebruiken de echte PPTX-engine, controleren onder meer bewaren/heropenen, aanwezige connector-ID's, tekst en onveranderde andere pakketdelen. Dit onderbouwt de huidige PPTX-hergebruikskandidaten; het test geen nieuwe tekenmodule, ODG/SVG/VSDX-import of CAD/Paint-runtime.
 
-| Platform / controle | Resultaat voor dit onderzoek                                                                                         |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| Windows             | Broninspectie en bovenstaande 49 gerichte engine-/geometrietests geslaagd; geen nieuwe native UI-proef               |
-| Linux               | Geen nieuwe run; een documentatieonderzoek verandert geen applicatiebuild of pakket. Native tekenbediening onbewezen |
-| macOS               | Geen nieuwe run; dezelfde beperking. Native tekenbediening onbewezen                                                 |
-| Browser             | Geen nieuwe app-interface toegevoegd of getest; de toekomstige tekenroute is onbewezen                               |
+| Platform / controle | Resultaat voor dit onderzoek                                                                                                                               |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Windows             | Broninspectie, 49 bestaande tests en beide aanvullende native API-proeven geslaagd; productiebouw 21,66 s; geen geïnstalleerde native app bediend          |
+| Linux               | Geen nieuwe run; een documentatieonderzoek verandert geen applicatiebuild of pakket. Native tekenbediening onbewezen                                       |
+| macOS               | Geen nieuwe run; dezelfde beperking. Native tekenbediening onbewezen                                                                                       |
+| Browser             | Bestaande Presentatie: werkelijk slepen, PPTX downloaden/heropenen en Undo/Redo gecontroleerd. Connectorgrens vastgelegd; toekomstige Draw-route onbewezen |
 
-Voor deze uitsluitend documenterende wijziging zijn geen brede applicatiesuites, pakketten of installaties herhaald. De vastgelegde bronpunten en beperkte onderzoeksresultaten staan in [het bewijsbestand](../tests/2026-11-10-tekenmodule-onderzoek.json). De bestaande applicatie wordt niet uitgebreid en de huidige integratiekandidaat wordt niet door dit onderzoek gecertificeerd.
+Voor dit onderzoeks- en bewijswerk zijn geen brede applicatiesuites, native pakketten of installaties herhaald. Alleen de bestaande productiebouw voor de aanvullende browserproef is gemaakt. De vastgelegde bronpunten en beperkte onderzoeksresultaten staan in [het bewijsbestand](../tests/2026-11-10-tekenmodule-onderzoek.json). De bestaande applicatie wordt niet uitgebreid en de huidige integratiekandidaat wordt niet door dit onderzoek gecertificeerd.

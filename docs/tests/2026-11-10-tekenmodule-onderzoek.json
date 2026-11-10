@@ -39,9 +39,18 @@
     "testSource": "1e5afa399117fd84df628955ec82b0e597993c83",
     "testStartedLocal": "2026-11-10T13:33:23+01:00",
     "tests": [
-      { "file": "src/presentatie/diagrammen.test.ts", "passed": 22 },
-      { "file": "src/presentatie/groepen.test.ts", "passed": 14 },
-      { "file": "src/presentatie/objecten.test.ts", "passed": 13 }
+      {
+        "file": "src/presentatie/diagrammen.test.ts",
+        "passed": 22
+      },
+      {
+        "file": "src/presentatie/groepen.test.ts",
+        "passed": 14
+      },
+      {
+        "file": "src/presentatie/objecten.test.ts",
+        "passed": 13
+      }
     ],
     "totalPassed": 49,
     "failed": 0,
@@ -67,7 +76,8 @@
   "platforms": {
     "windows": {
       "targetedExistingTests": "passed",
-      "newNativeDrawingUi": "unverified"
+      "newNativeDrawingUi": "unverified",
+      "nativeApiCapabilityProbe": "two scenarios recorded, invariants passed"
     },
     "linux": {
       "newBuildOrPackage": "not repeated: documentation only",
@@ -77,12 +87,110 @@
       "newBuildOrPackage": "not repeated: documentation only",
       "newNativeDrawingUi": "unverified"
     },
-    "browser": { "newDrawingRoute": "unverified: no new route implemented" }
+    "browser": {
+      "newDrawingRoute": "unverified: no new route implemented",
+      "existingPresentationDragSaveReopen": "verified; connector did not follow individual-node drag"
+    }
   },
   "newApplicationCode": false,
   "sdkOrVendorChanges": false,
   "ciConfigurationChanges": false,
   "installationPerformed": false,
   "ownMainChanges": false,
-  "currentCombinedCandidateCertified": false
+  "currentCombinedCandidateCertified": false,
+  "connectorCapabilityProbe": {
+    "sourceCheckout": "cbd02f4e88201bf51843158f37d6908c7b739abe",
+    "applicationFilesUnchangedFrom": "1e5afa399117fd84df628955ec82b0e597993c83",
+    "script": "scripts/proef-tekenmodule-connectors.mjs",
+    "scriptSha256": "36a349c4a62fb589809ee40cac413e2aae5f51153346470f30bc795deafd1991",
+    "wasmSha256": "3a4be9329de1bca77437137ce6417c7910e35c1c7c0e78571bb81f9fe16e5563",
+    "scenarios": [
+      {
+        "name": "whole-group-control",
+        "deltaYEmu": 200000,
+        "edgesChanged": true,
+        "validReferencesPreserved": true,
+        "saveReopenAndUndoRedo": "passed",
+        "firstNodeBefore": {
+          "sourceId": 5,
+          "x": 487680,
+          "y": 356616,
+          "width": 2665984,
+          "height": 1114425
+        },
+        "firstNodeMoved": {
+          "sourceId": 5,
+          "x": 487680,
+          "y": 356616,
+          "width": 2665984,
+          "height": 1114425
+        },
+        "fixtureSha256": "1fec7bd5077b7a4f9453a6769c538348a49d7212d9d4c8e963ceecd6b919e500",
+        "savedSha256": "8ec4894e59f374fc33b09c34fed5f38cc213caea9f0b311283d1553038f6fa30"
+      },
+      {
+        "name": "ungrouped-node",
+        "deltaYEmu": 200000,
+        "edgesChanged": false,
+        "validReferencesPreserved": true,
+        "saveReopenAndUndoRedo": "passed",
+        "firstNodeBefore": {
+          "sourceId": 5,
+          "x": 1706880,
+          "y": 1728216,
+          "width": 2665984,
+          "height": 1114425
+        },
+        "firstNodeMoved": {
+          "sourceId": 5,
+          "x": 1706880,
+          "y": 1928216,
+          "width": 2665984,
+          "height": 1114425
+        },
+        "fixtureSha256": "f7268a41ee3c9ac808ff3d4995883a695063640ab83820ee31890429a45ce700",
+        "savedSha256": "20814e78a238e2d52b359aae0b9c94d4c774c07d6f37b7c9609c41d732efe4a0"
+      }
+    ],
+    "interpretation": "Whole-group translation moves connector display; the tested ungrouped-node geometry change leaves connector geometry/display unchanged. This is a reuse limit, not a new application fix."
+  },
+  "productionBrowserProbe": {
+    "sourceCheckout": "cbd02f4e88201bf51843158f37d6908c7b739abe",
+    "applicationFilesUnchangedFrom": "1e5afa399117fd84df628955ec82b0e597993c83",
+    "buildSeconds": 21.66,
+    "host": "Windows Chromium production browser",
+    "existingPresentationUi": true,
+    "newDrawUiImplemented": false,
+    "firstNodeBefore": {
+      "id": "5",
+      "name": "First",
+      "offset": {
+        "x": "1706880",
+        "y": "1728216"
+      },
+      "extent": {
+        "cx": "2665984",
+        "cy": "1114425"
+      },
+      "refs": []
+    },
+    "firstNodeAfter": {
+      "id": "5",
+      "name": "First",
+      "offset": {
+        "x": "1706880",
+        "y": "3525072"
+      },
+      "extent": {
+        "cx": "2665984",
+        "cy": "1114425"
+      },
+      "refs": []
+    },
+    "connectorGeometriesAndReferencesUnchanged": true,
+    "downloadSha256": "e6a8ba47c25f55f30d13a6fcef20f0a46f59c28a79bfdbd174bb4768d60d7604",
+    "actualDownloadReopened": true,
+    "undoRedoVisuallyChecked": true,
+    "consoleErrors": []
+  }
 }
