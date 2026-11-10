@@ -278,5 +278,28 @@
     },
     "installerPath": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\artifact-4175e5f1\\nsis\\Open Office Studio_2026.45.4_x64-setup.exe"
   },
-  "ciSnapshotAt": "2026-11-10T08:50:34.512856+00:00"
+  "ciSnapshotAt": "2026-11-10T08:50:34.512856+00:00",
+  "testOnlyFollowup": {
+    "reason": "Repeated Windows DOTX timeouts in generic deep equality of 787589 unchanged style bytes.",
+    "change": "Use native Buffer.compare for full byte equality of every unchanged package part; retain exact part names and content-type assertions.",
+    "beforeIsolatedDotxMs": 1656.86,
+    "afterIsolatedDotxMs": 65.29,
+    "targetedPassed": 15,
+    "timeoutChanged": false,
+    "runtimeChanged": false,
+    "evidence": [
+      {
+        "path": ".local/sjabloon-isolated-timing.json",
+        "sha256": "336ce3d6dd2705636ca818b2a1ba3008416783281fa3bcf32e6ac64b9d9f7aeb"
+      },
+      {
+        "path": ".local/sjabloon-byte-profile.log",
+        "sha256": "2b6b6cbd89e2d98b2c52449b549e466a21d0077da2053a7ed673c1957e654799"
+      },
+      {
+        "path": ".local/sjabloon-native-compare-timing.json",
+        "sha256": "7add0adda43a90194f53be1bfd910d4e1ac515ba0ac7128149d091eb51c0b05f"
+      }
+    ]
+  }
 }

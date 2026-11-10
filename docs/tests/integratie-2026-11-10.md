@@ -4,7 +4,7 @@ De branch `codex/integratie-2026-11-09` en concept-PR [248](https://github.com/O
 
 ## Vast codepunt voor de Windows-testbuild
 
-**`4175e5f19bf052e0a03f4a87ab73e710f6f163a7`** bevat 47 bron-PR's / 53 leveringen en 17 eerdere PR's via de bundels. De broncommits en mergecommits staan in [het register](integratie-2026-11-09.md). De Windows-testbuild blijft op dit codepunt; latere overdrachtswijzigingen veranderen alleen documentatie. `main` is niet gewijzigd en er is geen release gepubliceerd.
+**`4175e5f19bf052e0a03f4a87ab73e710f6f163a7`** bevat 47 bron-PR's / 53 leveringen en 17 eerdere PR's via de bundels. De broncommits en mergecommits staan in [het register](integratie-2026-11-09.md). De Windows-testbuild blijft op dit codepunt; opvolgende commits wijzigen uitsluitend overdrachtsdocumentatie en een testassertie. `main` is niet gewijzigd en er is geen release gepubliceerd.
 
 Vandaag toegevoegd: PR #254 (voorbereiding en adaptieve statistiek), #233/c353 (actueel thema), #246/9de53 (formulekoppelingen en beeldgrenzen), #256 (ingesloten media), #245/551086 (bewijsdocumentatie), #257 (outlineknoppen), #258 (Writer-focus en layout) en #260 (bijschriftvolgorde in mailmerge).
 
@@ -34,6 +34,12 @@ Artifact `13748275606`, `open-office-studio-Windows`, is door de buildchat gecon
 - Geïnstalleerde EXE SHA256: `09c6a1fa33ee668567cd5bb0b0b1edd0ea893466057e032e76163f726ddf9f07`.
 
 De snelkoppeling heet `OpenAEC Office Dev 2026-11-10 - 4175e5f1`. Het verificatierapport bewaart ook het lokale installatiepad en de native testuitkomst.
+
+## Gerichte CI-testcorrectie na het vaste codepunt
+
+Dezelfde DOTX-timeout trad opnieuw op in een bron-PR. Een lokale profielmeting toont dat de generieke `toEqual`-assertie 872 ms en 948 ms besteedt aan twee onveranderde stijldelen van 349.458 en 438.131 bytes. De test gebruikt daarom nu `Buffer.compare` voor exact dezelfde volledige bytegelijkheid van alle onveranderde pakketdelen, met de pakketnaam als foutcontext. De controles op pakketnamen en gewijzigde inhoudstypen blijven bestaan. De tijdslimiet blijft vijf seconden.
+
+Alle 15 sjabloontests slagen. De geïsoleerde DOTX-test daalt lokaal van 1.657 ms naar 65 ms; dit is een testmeting, geen prestatiewinst van de app. De applicatiecode en geïnstalleerde Windows-runtime blijven gelijk aan `4175e5f1`. De volgende CI-run moet bevestigen of de herhaalde time-out hiermee is opgelost.
 
 ## Volgende batch
 
