@@ -69,6 +69,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#270](https://github.com/OpenAEC-Foundation/open-office-studio/pull/270) | `671a7913492efeca61e27d6a4a7b6fba033df9db` | `949e511afad54af8bda20b7e3d3e5f94da87c92f` | Document pinned selection-format kernel comparison |
 | [#271](https://github.com/OpenAEC-Foundation/open-office-studio/pull/271) | `84709329742aa901e908a4264f75a1f8c5abacb8` | `607ece964943462d7018d827978ccd98517735e2` | Shared Spreadsheet differential-format metadata parser |
 | [#267](https://github.com/OpenAEC-Foundation/open-office-studio/pull/267) | `a8cb9aa49cb240170df47b4fe260eba7c401c0c9` | `fe28d86a7b5c6233e8a439a0169a48a95a9352fd` | Correct Writer status probe modal cancellation and tab-switch verification |
+| [#270](https://github.com/OpenAEC-Foundation/open-office-studio/pull/270) | `14cfe8b66d33eccf78c60541dd2d4ff5e27be09e` | `8a06c2db4e8181d5b3e28b162d362a54dd835cde` | Document additional native selection-format benchmark evidence |
 
 ## Earlier fixes included in bundles
 
@@ -157,6 +158,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr271-targeted | `607ece964943462d7018d827978ccd98517735e2` | 4 | 0 | 0 |
 | pr267-related-unit | `3f0413d3660335cbee41289b8d4fc486593abdc5` | 6 | 0 | 0 |
 | pr267-related-unit | `fe28d86a7b5c6233e8a439a0169a48a95a9352fd` | 6 | 0 | 0 |
+| pr270-related-unit | `8a06c2db4e8181d5b3e28b162d362a54dd835cde` | 6 | 0 | 0 |
 
 ## Pending deliveries
 
