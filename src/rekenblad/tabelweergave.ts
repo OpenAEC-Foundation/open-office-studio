@@ -13,6 +13,7 @@ import { tabellen } from "./tabellen";
 import { leesDxfStijlen, type DxfStijl } from "./voorwaardelijke-dxf";
 import { registreerRenderProjectie } from "./renderprojectie";
 import { adres } from "../lint/rekenblad-logica";
+import { leesIngebouwdeTabelstijl } from "./ingebouwdeTabelstijlen";
 
 export function bereidTabelweergave(h: WorkbookHandle, bytes: Uint8Array) {
   const p = new Pakket(bytes),
@@ -45,6 +46,11 @@ export function bereidTabelweergave(h: WorkbookHandle, bytes: Uint8Array) {
       const xml = leesXml(p.lees(Pakket.doelPad(blad.pad, r.target))),
         info = kind(xml, "tableStyleInfo"),
         aan = (s: string) => /^(1|true)$/.test(attr(info, s) ?? "");
+      const naam = attr(info, "name");
+      if (naam && !stijlen.has(naam)) {
+        const ingebouwd = leesIngebouwdeTabelstijl(p, wb.pad, naam);
+        if (ingebouwd) stijlen.set(naam, ingebouwd);
+      }
       opties.set(attr(xml, "name") ?? "", {
         eerste: aan("showFirstColumn"),
         laatste: aan("showLastColumn"),
