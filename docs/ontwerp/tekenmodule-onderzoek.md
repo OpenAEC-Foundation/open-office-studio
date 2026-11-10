@@ -10,13 +10,13 @@ Kies voor een eventuele eerste tekenversie **ODG als bewerkbaar paginadocument e
 
 ## Onderzoeksbasis en bewijssoorten
 
-| Project         | Vastgelegd bronpunt                        | Wat hier is gecontroleerd                                                                      |
-| --------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| Office Studio   | `1e5afa399117fd84df628955ec82b0e597993c83` | Broncode, formaatregistratie en 49 bestaande gerichte tests tegen de aanwezige engine          |
-| Open CAD Studio | `16e8c97ae07f9f442ab6baa3b8f34f809753b807` | README, licentiebestand en SVG-exportcode; geen gebouwde app gestart                           |
-| Paint Studio    | `dd6c6e12db8440bd5e9f9ffeed2a9a6141f1b947` | README, formaatdocumentatie, documentmodel, geometrie en SVG-export; geen gebouwde app gestart |
+| Project         | Vastgelegd bronpunt                        | Wat hier is gecontroleerd                                                                                           |
+| --------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| Office Studio   | `1e5afa399117fd84df628955ec82b0e597993c83` | Broncode, formaatregistratie en 49 bestaande gerichte tests tegen de aanwezige engine                               |
+| Open CAD Studio | `16e8c97ae07f9f442ab6baa3b8f34f809753b807` | README, licentiebestand en SVG-exportcode; geen gebouwde app gestart                                                |
+| Paint Studio    | `dd6c6e12db8440bd5e9f9ffeed2a9a6141f1b947` | Broninspectie en twee SVG-exportcontroles in de eigen productiebouw; alleen browser, geen geïnstalleerde desktopapp |
 
-De producttabellen hieronder onderscheiden projectdocumentatie, geïnspecteerde code en voorstellen. Er is geen nieuwe gebruikersfout gemeld of onafhankelijk in een CAD/Paint-interface gereproduceerd. Dit publiceerbare verslag gebruikt publieke bronnen en doet geen uitspraken over interne projecten. De onderzoeksclaim en afgebakende documentatiescope zijn aan de bestaande integratiechat gemeld. Er zijn geen applicatie-, SDK-, vendor-, build- of CI-bestanden gewijzigd en geen andere issueclaims overgenomen.
+De producttabellen hieronder onderscheiden projectdocumentatie, geïnspecteerde code, eigen proeven en voorstellen. Er is geen nieuwe gebruikersmelding als bewezen aangemerkt. De eigen native API- en browserwaarnemingen staan afzonderlijk hieronder. Dit publiceerbare verslag gebruikt publieke bronnen en doet geen uitspraken over interne projecten. De onderzoeksclaim en afgebakende documentatiescope zijn aan de bestaande integratiechat gemeld. Er zijn geen applicatie-, SDK-, vendor-, build- of CI-bestanden gewijzigd en geen andere issueclaims overgenomen.
 
 ## Overlap met bestaande toepassingen
 
@@ -58,6 +58,18 @@ Aanbevolen opzet: een klein formaatneutraal documentmodel met pagina's, stabiele
 
 Paint vermeldt MIT voor nieuwe code en afzonderlijke voorwaarden voor overgenomen stijlonderdelen; CAD heeft een GPLv3-licentiebestand. Dit onderzoek neemt geen implementatiecode over. Controle van hergebruikte onderdelen en hun licenties hoort bij een latere concrete extractie, niet bij een stilzwijgende afhankelijkheidswijziging in deze onderzoeks-PR.
 
+## Aanvullende Paint-proef: SVG-invoer en eigen vectoren
+
+Paint 2026.45.1 is vanuit de vastgelegde openbare bron `dd6c6e12db8440bd5e9f9ffeed2a9a6141f1b947` in een eigen schone checkout gebouwd. TypeScript slaagt; de browserbouw duurt 4,71 s. Een daadwerkelijk bestandskeuzevenster opent [de synthetische invoer](../tests/fixtures/tekenmodule-93/bron.svg), met een rechthoek en de tekst `Vector93`. **Vectorobjecten behouden** blijft aangevinkt. Daarna is SVG geëxporteerd via de echte interface, gevolgd door een positieve controle: teken zelf een nieuwe rechthoek en exporteer opnieuw.
+
+| Bestand                                                                                  | SVG-rechthoeken | SVG-tekstelementen | Ingesloten PNG's   |
+| ---------------------------------------------------------------------------------------- | --------------- | ------------------ | ------------------ |
+| Bron                                                                                     | 1               | 1                  | 0                  |
+| [Na import en export](../tests/fixtures/tekenmodule-93/paint-import.svg)                 | 0               | 0                  | 1 van 320 × 160 px |
+| [Na een zelf getekende rechthoek](../tests/fixtures/tekenmodule-93/paint-eigen-vorm.svg) | 1               | 0                  | Dezelfde PNG       |
+
+De bronfiguur blijft zichtbaar, maar is na import onderdeel van één bitmap. De positieve controle toont tegelijk dat Paint zijn eigen nieuw getekende rechthoek wél als vector uitvoert. Onafhankelijke XML- en PNG-controle bevestigt dit; geen browserconsolefouten. Dit onderbouwt het specifieke onderscheid uit de formaatdocumentatie, niet een algemene SVG-conformiteitstest of een nieuwe Paint-bug. Geïnstalleerde desktopbediening en ODG/VSDX zijn hiermee niet getest. De bron- en uitvoerhashes staan in het bewijsbestand; de drie kleine SVG-bestanden zijn meegeleverd voor controle.
+
 ## Aanvullende hergebruikproef: connectors
 
 Op checkout `cbd02f4e88201bf51843158f37d6908c7b739abe` zijn de applicatiebestanden gelijk aan de genoemde Office-basis. Een aanvullende proef controleert het verschil tussen geldige connectorverwijzingen en werkelijk meebewegende geometrie. De reproduceerbare [CLI-proef](../../scripts/proef-tekenmodule-connectors.mjs) gebruikt de bestaande diagramgenerator en de echte native `applyEdits`/`setShapeRect`, zonder browser of geïnstalleerde app te starten:
@@ -88,11 +100,11 @@ Voer iedere gekozen app-implementatieproef op één vastgelegd codepunt uit in W
 
 Op Windows x64 met Node v24.22.1 zijn op Office-bronpunt `1e5afa399117fd84df628955ec82b0e597993c83` de bestaande `diagrammen.test.ts` (22), `groepen.test.ts` (14) en `objecten.test.ts` (13) uitgevoerd: **49 geslaagd, drie bestanden**, 5,58 seconden. De diagramproeven gebruiken de echte PPTX-engine, controleren onder meer bewaren/heropenen, aanwezige connector-ID's, tekst en onveranderde andere pakketdelen. Dit onderbouwt de huidige PPTX-hergebruikskandidaten; het test geen nieuwe tekenmodule, ODG/SVG/VSDX-import of CAD/Paint-runtime.
 
-| Platform / controle | Resultaat voor dit onderzoek                                                                                                                               |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | Broninspectie, 49 bestaande tests en beide aanvullende native API-proeven geslaagd; productiebouw 21,66 s; geen geïnstalleerde native app bediend          |
-| Linux               | Geen nieuwe run; een documentatieonderzoek verandert geen applicatiebuild of pakket. Native tekenbediening onbewezen                                       |
-| macOS               | Geen nieuwe run; dezelfde beperking. Native tekenbediening onbewezen                                                                                       |
-| Browser             | Bestaande Presentatie: werkelijk slepen, PPTX downloaden/heropenen en Undo/Redo gecontroleerd. Connectorgrens vastgelegd; toekomstige Draw-route onbewezen |
+| Platform / controle | Resultaat voor dit onderzoek                                                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Windows             | 49 Office-tests en beide API-proeven; Office-browserbouw 21,66 s. Paint-TypeScript en browserbouw 4,71 s geslaagd. Geen geïnstalleerde native app bediend                       |
+| Linux               | Geen nieuwe run; een documentatieonderzoek verandert geen applicatiebuild of pakket. Native tekenbediening onbewezen                                                            |
+| macOS               | Geen nieuwe run; dezelfde beperking. Native tekenbediening onbewezen                                                                                                            |
+| Browser             | Bestaande Presentatie: slepen, PPTX-download/heropenen en Undo/Redo. Paint: SVG-invoer/export en eigen-vectorcontrole op zijn eigen vaste bronpunt. Nieuwe Draw-route onbewezen |
 
-Voor dit onderzoeks- en bewijswerk zijn geen brede applicatiesuites, native pakketten of installaties herhaald. Alleen de bestaande productiebouw voor de aanvullende browserproef is gemaakt. De vastgelegde bronpunten en beperkte onderzoeksresultaten staan in [het bewijsbestand](../tests/2026-11-10-tekenmodule-onderzoek.json). De bestaande applicatie wordt niet uitgebreid en de huidige integratiekandidaat wordt niet door dit onderzoek gecertificeerd.
+Voor dit onderzoeks- en bewijswerk zijn geen brede applicatiesuites, native pakketten of installaties herhaald. Alleen de bestaande browserbouwen voor beide gerichte proeven zijn gemaakt, elk op zijn eigen vastgelegde projectbronpunt. De vastgelegde bronpunten en beperkte onderzoeksresultaten staan in [het bewijsbestand](../tests/2026-11-10-tekenmodule-onderzoek.json). De bestaande applicatie wordt niet uitgebreid en de huidige integratiekandidaat wordt niet door dit onderzoek gecertificeerd.

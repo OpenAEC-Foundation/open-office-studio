@@ -15,7 +15,9 @@
       "repository": "OpenAEC-Foundation/open-paint-studio",
       "commit": "dd6c6e12db8440bd5e9f9ffeed2a9a6141f1b947",
       "evidence": "README.md, LICENSE, docs/IMAGE-FORMATS.md, shared/document.ts, shared/geometry.ts and shared/svg.ts inspected",
-      "runtimeExecuted": false
+      "runtimeExecuted": true,
+      "runtimeScope": "Production browser only: simple SVG import/export and own-vector positive control",
+      "installedNativeAppExecuted": false
     },
     {
       "repository": "OpenAEC-Foundation/ifccad",
@@ -192,5 +194,49 @@
     "actualDownloadReopened": true,
     "undoRedoVisuallyChecked": true,
     "consoleErrors": []
+  },
+  "paintBrowserProbe": {
+    "source": "dd6c6e12db8440bd5e9f9ffeed2a9a6141f1b947",
+    "appVersion": "2026.45.1",
+    "host": "Windows Chromium, actual production build, native file chooser and SVG downloads",
+    "buildSeconds": 4.71,
+    "typecheck": "passed",
+    "retainVectorsCheckbox": "checked throughout",
+    "fixture": {
+      "sha256": "a616e41aa931ba47ee957e45d2ac3c18edeb3d6ac08e5b1f534447beccba256a",
+      "rectangles": 1,
+      "textElements": 1,
+      "embeddedPngs": []
+    },
+    "importThenSvgExport": {
+      "sha256": "36e1b22238e1340392799b6babc3462ffbc2e8f01ddcf4eec4a25b5a556d439f",
+      "rectangles": 0,
+      "textElements": 0,
+      "embeddedPngs": [
+        {
+          "size": [320, 160],
+          "sha256": "5a35cf85de75502dbad6e4f15c0cbdfc48decc39da769b6815f5963ad8b50dc5"
+        }
+      ]
+    },
+    "drawnRectangleThenSvgExport": {
+      "sha256": "6888c491b7cb1f6944853d5cabdafad1b4ac7efb453399779c735bfbfc6ec84e",
+      "rectangles": 1,
+      "textElements": 0,
+      "embeddedPngs": [
+        {
+          "size": [320, 160],
+          "sha256": "5a35cf85de75502dbad6e4f15c0cbdfc48decc39da769b6815f5963ad8b50dc5"
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "newNativeAppInteraction": "unverified",
+    "scope": "One simple synthetic SVG; no general SVG or ODG/VSDX compatibility claim",
+    "fixtureFiles": {
+      "fixture": "docs/tests/fixtures/tekenmodule-93/bron.svg",
+      "importThenSvgExport": "docs/tests/fixtures/tekenmodule-93/paint-import.svg",
+      "drawnRectangleThenSvgExport": "docs/tests/fixtures/tekenmodule-93/paint-eigen-vorm.svg"
+    }
   }
 }
