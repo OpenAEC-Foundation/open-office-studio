@@ -320,6 +320,15 @@ export function herstelVormEffecten(bron:string):string{
  return 'import {tekenVormEffect as oosVormEffect} from "openaec-tekst-vormeffect";\n'+bron.replace(oud,oud.replace('let t=n.effects?.find(', 'let t=oosVormEffect(n.effects?.find(').replace(');', '));'));
 }
 
+/** Veldtekst tekent met de fontbytes waarmee de engine de breedte bepaalde. */
+export function herstelVeldLettertype(bron: string): string {
+  const oud = 'case "text":Kt(e,i?.size?Oi(n,i):n);break;case "glyphRun":jt(e,n,t);break;';
+  if (bron.split(oud).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst het lettertype van veldresultaten.");
+  return 'import { veldMetLettertype as oosVeldLettertype } from "openaec-tekst-veldlettertype";\n'
+    + bron.replace(oud, 'case "text":Kt(e,n.field?await oosVeldLettertype(i?.size?Oi(n,i):n,i):i?.size?Oi(n,i):n);break;case "glyphRun":jt(e,n.field&&!t.glyphCache?await oosVeldLettertype(n,i):n,t);break;');
+}
+
 /** De hybride indelingssessie heeft geen mediacache; het eigen Document wel. */
 export function herstelVormAfbeeldingen(bron: string): string {
   const delen = [
@@ -346,6 +355,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-veldlettertype")
+        return fileURLToPath(new URL("../src/tekst/veldenDocument/lettertype.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-vormafbeelding")
         return fileURLToPath(new URL("../src/tekst/vormen/afbeeldingen.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-nootvervolg")
@@ -378,7 +389,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx\/dist\/yrs\/docxWorker\.mjs(?:\?.*)?$/.test(id))
         return { code: bereidWorkerOpslagVoor(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-EOFVNRML\.mjs(?:\?.*)?$/.test(id))
-        return {code:herstelVormEffecten(bron),map:null};
+        return {code:herstelVeldLettertype(herstelVormEffecten(bron)),map:null};
       if (/\/@betteroffice\/docx\/dist\/chunk-VJFO26DF\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelVormOpslag(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-RHVJ6TAE\.mjs(?:\?.*)?$/.test(id))
