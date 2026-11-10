@@ -99,6 +99,23 @@ primaire fixtures staan lokaal in `.local/diagram-research/`. De nieuwe eigen
 synthetische unitfixture vereist geen download. Native resultaten staan in
 `.local/diagram-roundtrip/report.json` en `.local/diagram-native/report.json`.
 
+## Gecombineerde integratiecontrole
+
+De centrale snapshot `4175e5f19bf052e0a03f4a87ab73e710f6f163a7` is vervolgens
+op de eigen bronbranch opgenomen, zonder de centrale checkout te wijzigen.
+Het enige conflict was de aangrenzende import van `DiaMedia` en `DiaDiagrammen`;
+beide zijn behouden. Het verschil ten opzichte van de centrale snapshot blijft
+uitsluitend de zestien diagram-bestanden. Codecheckpunt:
+`af23b364a4179d22bf69e7999a971486fc23c07a`.
+
+TypeScript, productiebuild, dezelfde diagram-browserreeks en de volledige
+vertaalcontrole (9 talen × 21 namespaces, 7.768 sleutels) slagen op deze combinatie.
+De volledige suite slaagt daarna met **2.877 tests, 10 overgeslagen, 275 bestanden**.
+Een eerste run naast de build had alleen een 5 s-timeout in de vertaalcontrole;
+de ongewijzigde losse herhaling slaagde in 994 ms en de volledige herhaling
+zonder gelijktijdige build is groen. Er zijn geen timeoutgrenzen verhoogd en
+geen bijbehorende productwijzigingen gemaakt.
+
 Primaire bronnen:
 [Microsoft CT_Shape, inclusief txXfrm](https://learn.microsoft.com/en-us/openspecs/office_standards/ms-odrawxml/060cdb7c-1d52-4a9f-9319-bf1849c1f830),
 [diagram layout](https://learn.microsoft.com/en-us/openspecs/office_standards/ms-odrawxml/db259186-40a2-4e1e-89e5-92557363f03f),
