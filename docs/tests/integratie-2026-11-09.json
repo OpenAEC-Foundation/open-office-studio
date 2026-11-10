@@ -482,6 +482,12 @@
       "head": "589a1d5794dd77e89c161a98cfc24969f5aa4c66",
       "merge": "f5abaff65ed024e0b79893e24d9e1f9ada064ddd",
       "scope": "Recognize only the known empty bundled bibliography without suppressing other risks"
+    },
+    {
+      "pr": 314,
+      "head": "5675a3ccad192bea93f806a5c74dc97cdc2416be",
+      "merge": "105134ad8e34c9aac73e0c5d2844b7144ed0f606",
+      "scope": "Invalidate lazy PDF font cache after system-font availability changes"
     }
   ],
   "coveredByBundles": [
@@ -1291,6 +1297,15 @@
       "head": "f5abaff65ed024e0b79893e24d9e1f9ada064ddd",
       "success": true,
       "passed": 31,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr314-targeted",
+      "head": "105134ad8e34c9aac73e0c5d2844b7144ed0f606",
+      "success": true,
+      "passed": 6,
       "failed": 0,
       "skipped": 0,
       "files": 1

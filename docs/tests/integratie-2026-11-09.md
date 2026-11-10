@@ -86,6 +86,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#307](https://github.com/OpenAEC-Foundation/open-office-studio/pull/307) | `2da5abe361d18824d1fd84f1dee717f152f7e545` | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | Writer remembers successful header/footer opening before quick close or reload |
 | [#300](https://github.com/OpenAEC-Foundation/open-office-studio/pull/300) | `b8426dc453c16a4a8863d67dd914070453c4a079` | `77da4ffa4eb9fb9f09014bea933db57253a51dc4` | Writer screen display mode and colour-control contrast |
 | [#309](https://github.com/OpenAEC-Foundation/open-office-studio/pull/309) | `589a1d5794dd77e89c161a98cfc24969f5aa4c66` | `f5abaff65ed024e0b79893e24d9e1f9ada064ddd` | Recognize only the known empty bundled bibliography without suppressing other risks |
+| [#314](https://github.com/OpenAEC-Foundation/open-office-studio/pull/314) | `5675a3ccad192bea93f806a5c74dc97cdc2416be` | `105134ad8e34c9aac73e0c5d2844b7144ed0f606` | Invalidate lazy PDF font cache after system-font availability changes |
 
 ## Earlier fixes included in bundles
 
@@ -193,6 +194,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | full-accepted-2026-11-10 | `1e5afa399117fd84df628955ec82b0e597993c83` | 3147 | 0 | 7 |
 | pr300-targeted | `77da4ffa4eb9fb9f09014bea933db57253a51dc4` | 5 | 0 | 0 |
 | pr309-targeted | `f5abaff65ed024e0b79893e24d9e1f9ada064ddd` | 31 | 0 | 0 |
+| pr314-targeted | `105134ad8e34c9aac73e0c5d2844b7144ed0f606` | 6 | 0 | 0 |
 
 ## Pending deliveries
 
