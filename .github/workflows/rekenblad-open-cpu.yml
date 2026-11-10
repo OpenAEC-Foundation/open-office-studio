@@ -25,8 +25,11 @@ jobs:
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: gh run download 42796095897 --name rekenbladkern-kandidaat --dir .local/open-kandidaat
       - run: python3 scripts/maak-rekenbladprestatie.py
-      - name: Capture at most 20 seconds and stop the private worker
-        run: timeout 40s node scripts/profileer-rekenblad-wasm.mjs
+      - name: Sample the late open phase for ten seconds and stop the private worker
+        env:
+          OOS_PROFILE_DELAY_MS: 35000
+          OOS_PROFILE_MS: 10000
+        run: timeout 60s node scripts/profileer-rekenblad-wasm.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

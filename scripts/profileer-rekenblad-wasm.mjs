@@ -34,6 +34,10 @@ if (!isMainThread) {
     20000,
     Math.max(100, Number(process.env.OOS_PROFILE_MS ?? 20000)),
   );
+  const delay = Math.min(
+    35000,
+    Math.max(0, Number(process.env.OOS_PROFILE_DELAY_MS ?? 0)),
+  );
   const worker = new Worker(new URL(import.meta.url), {
     workerData: { wasm, file },
     resourceLimits: { maxOldGenerationSizeMb: 512 },
@@ -65,12 +69,32 @@ if (!isMainThread) {
     () => fail(new Error("10s profile initialization guard")),
     10000,
   );
-  let timer, stopping;
+  let timer, stopping, delaying, starting;
   try {
     await Promise.race([prepared, errors]);
     clearTimeout(initialization);
-    const handle = await worker.startCpuProfile();
-    worker.postMessage("start");
+    if (delay) {
+      worker.postMessage("start");
+      await Promise.race([
+        completed,
+        errors,
+        new Promise((resolve) => {
+          delaying = setTimeout(resolve, delay);
+        }),
+      ]);
+    }
+    const handle = await Promise.race([
+      worker.startCpuProfile(),
+      errors,
+      new Promise((_, reject) => {
+        starting = setTimeout(
+          () => reject(new Error("5s profile-start guard")),
+          5000,
+        );
+      }),
+    ]);
+    clearTimeout(starting);
+    if (!delay) worker.postMessage("start");
     const result = await Promise.race([
       completed,
       errors,
@@ -108,6 +132,7 @@ if (!isMainThread) {
       diagnostic: true,
       node: process.version,
       durationMs: duration,
+      delayMs: delay,
       peakRssMiB: Math.round(peakRssMiB),
       ...result,
       top,
@@ -118,6 +143,8 @@ if (!isMainThread) {
     clearTimeout(initialization);
     clearTimeout(timer);
     clearTimeout(stopping);
+    clearTimeout(delaying);
+    clearTimeout(starting);
     clearInterval(memory);
     await worker.terminate();
   }
