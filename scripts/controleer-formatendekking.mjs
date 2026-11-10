@@ -149,9 +149,8 @@ if (
     pad = basis + "matrix.md";
   if (process.argv.includes("--write")) writeFileSync(pad, tekst);
   else
-    assert.equal(
-      readFileSync(pad, "utf8"),
-      tekst,
+    assert(
+      readFileSync(pad, "utf8").replaceAll("\r\n", "\n") === tekst,
       "Coverage table is stale; run with --write",
     );
   console.log(
