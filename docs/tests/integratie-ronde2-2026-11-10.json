@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "date": "2026-11-10",
   "round": 2,
-  "asOf": "2026-11-10T13:32:14.171222+00:00",
+  "asOf": "2026-11-10T13:48:54.395450+00:00",
   "branch": "codex/integratie-2026-11-09",
   "candidateBranch": "codex/integratie-kandidaat2-2026-11-10",
   "base": "959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1",
@@ -434,17 +434,18 @@
       "evidence": [
         ".local/round2-hosted-platforms.log",
         ".local/round2-hosted-fields.log"
-      ]
+      ],
+      "additionalEngineReport": "integratie-ronde2-aanvulling-2026-11-10.json"
     },
     "nativeWindows": {
       "status": "passed bounded native acceptance; fullNativeAcceptance false",
       "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
       "operator": "750b",
-      "finishedAtUtc": "2026-11-10T13:26:33.8629614Z",
       "passed": [
         "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
         "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
-        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen"
+        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen",
+        "326 native whole-word search/replace15to5to3, Save/Undo/Redo and full app-restart reopen"
       ],
       "partial": [
         "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
@@ -452,17 +453,19 @@
       "notRun": [
         "318 reply initials",
         "325 media replay after end",
-        "326 Presentation whole-word option",
         "340 known tab focus route not retested",
         "Linux/macOS native and browser not executed by this chat on 4a7"
       ],
       "independentReview": {
         "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
         "reviewSnapshots": 9,
-        "spreadsheetFiles": 2
+        "spreadsheetFiles": 2,
+        "presentationSnapshots": 5
       },
       "report": "integratie-ronde2-native-windows-2026-11-10.json",
-      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored"
+      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
+      "initialAcceptanceFinishedAtUtc": "2026-11-10T13:26:33.8629614Z",
+      "latestAdditionalQARecordedAtUtc": "2026-11-10T13:48:54.395450+00:00"
     },
     "platformCI": {
       "status": "Windows/Linux passed; macOS queued at snapshot",
@@ -847,5 +850,13 @@
     "originalRuns": [42815907857, 42815907163],
     "originalJobs": [129828821191, 129828818539],
     "status": "Unresolved intermittent CI timing; preserve failed evidence, no timeout/guard weakened."
+  },
+  "additionalQA": {
+    "report": "integratie-ronde2-aanvulling-2026-11-10.json",
+    "runtimeUnchanged": true,
+    "extraHostedEngines": ["Firefox153", "PlaywrightWebKit26.5 on Windows"],
+    "actualSpreadsheetUiDownload": ["Chromium151", "Firefox153", "WebKit26.5"],
+    "native326": "passed bounded two-slide fixture;5 outputs independently verified",
+    "deadline": "2026-11-10T15:15:00+01:00"
   }
 }

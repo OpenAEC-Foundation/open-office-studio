@@ -145,17 +145,129 @@
         "documentRemainedClean": true,
         "savedFileSha256": "ee80e610f608524ff264e795890a7913833f39f9f4f30ee72b949be850ea50c5",
         "limits": "No new PDF/print comparison, image/highlight/caret/selection corpus or full issue acceptance claimed"
+      },
+      {
+        "issue": 326,
+        "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "platform": "Windows native installed NSIS devbuild 2026.45.4",
+        "result": "pass bounded two-slide whole-word fixture",
+        "observedStatuses": [
+          "Whole words off: Result 1 of 15, then Result 2 of 15 on partial katten",
+          "Whole words toggled on: prior status cleared; Replace selects Result 1 of 5 without modifying text",
+          "Match case plus whole words: Result 1 of 3",
+          "Match case off: Result 1 of 5",
+          "Previous wraps from Result 1 on slide1 to Result 5 on slide2; Next returns to slide1",
+          "Replace current: Replaced. Result 1 of 4",
+          "Replace all: Replaced 5 times (one undo step)",
+          "Fresh application restart and file reopen: both slides visually match saved output",
+          "Reopened whole-word kat: Search term not found",
+          "Reopened whole words off: Result 1 of 10"
+        ],
+        "packageChecks": [
+          {
+            "result": "pass",
+            "mode": "one",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-one-4a7a3acf.pptx",
+            "sha256": "189b6057983a03cfd875470d5ac7c7169bb35e54af72b09214da02a1c1728c0c",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 hond katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+              "kat Kat"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": ["ppt/slides/slide1.xml"]
+          },
+          {
+            "result": "pass",
+            "mode": "original",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-one-4a7a3acf.pptx",
+            "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+              "kat Kat"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": []
+          },
+          {
+            "result": "pass",
+            "mode": "all",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-all-4a7a3acf.pptx",
+            "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+              "hond hond"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": [
+              "ppt/slides/slide1.xml",
+              "ppt/slides/slide2.xml"
+            ]
+          },
+          {
+            "result": "pass",
+            "mode": "original",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-all-4a7a3acf.pptx",
+            "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+              "kat Kat"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": []
+          },
+          {
+            "result": "pass",
+            "mode": "all",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-redo-all-4a7a3acf.pptx",
+            "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+              "hond hond"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": [
+              "ppt/slides/slide1.xml",
+              "ppt/slides/slide2.xml"
+            ]
+          }
+        ],
+        "nativeFinalReopenedAfterFullAppRestart": true,
+        "nativeBothSlidesVisuallyInspected": true,
+        "sourceUnchanged": true,
+        "saveRoute": "Close Find and replace pane, then quick-access Save",
+        "cleanFinish": "Find pane closed and presentation tab closed with CtrlW, no unsaved prompt; Start page open",
+        "limits": [
+          "Bounded Arial20 two-slide fixture only, no general corpus guarantee",
+          "Native Dutch localization, checkbox keyboard activation, ShiftEnter and version retry not exercised",
+          "No new code/build, no LibreOffice, no Linux/macOS/browser tests in this chat",
+          "CtrlS while Find pane open did not save in one observation; not investigated as a separate issue, final saves used toolbar after pane closure"
+        ],
+        "finishedAtUtc": "2026-11-10T13:43:40.2523631Z"
       }
     ],
     "notRun": [
       "318 reply initials",
       "325 media replay after end",
-      "326 Presentation whole-word option",
       "340 known tab focus route not retested",
       "Linux/macOS native and browser not executed by this chat on 4a7"
     ],
     "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
-    "nativeFinishedAtUtc": "2026-11-10T13:26:33.8629614Z"
+    "nativeFinishedAtUtc": "2026-11-10T13:43:40.2523631Z"
   },
   "independentReviewSnapshots": {
     "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
@@ -371,5 +483,82 @@
     ],
     "limitations": "No native UI automation by ROOT; visual/native reopen confirmation belongs to operator750b."
   },
-  "independentFieldPdfReport": "integratie-ronde2-native-pdf-2026-11-10.json"
+  "independentFieldPdfReport": "integratie-ronde2-native-pdf-2026-11-10.json",
+  "independentPresentationSnapshots": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "ROOT independent read-only verification of native750b snapshots",
+    "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+    "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+    "passed": 5,
+    "failed": 0,
+    "cases": [
+      {
+        "mode": "replace-one",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-one-4a7a3acf.pptx",
+        "sha256": "189b6057983a03cfd875470d5ac7c7169bb35e54af72b09214da02a1c1728c0c",
+        "changedPackageParts": ["ppt/slides/slide1.xml"],
+        "fixtureTexts": [
+          "🧱 hond katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+          "kat Kat"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "undo-one",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-one-4a7a3acf.pptx",
+        "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+        "changedPackageParts": [],
+        "fixtureTexts": [
+          "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+          "kat Kat"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "replace-all",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-all-4a7a3acf.pptx",
+        "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+        "changedPackageParts": [
+          "ppt/slides/slide1.xml",
+          "ppt/slides/slide2.xml"
+        ],
+        "fixtureTexts": [
+          "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+          "hond hond"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "undo-all",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-all-4a7a3acf.pptx",
+        "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+        "changedPackageParts": [],
+        "fixtureTexts": [
+          "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+          "kat Kat"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "redo-all",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-redo-all-4a7a3acf.pptx",
+        "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+        "changedPackageParts": [
+          "ppt/slides/slide1.xml",
+          "ppt/slides/slide2.xml"
+        ],
+        "fixtureTexts": [
+          "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+          "hond hond"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      }
+    ]
+  },
+  "additionalQAReport": "integratie-ronde2-aanvulling-2026-11-10.json"
 }

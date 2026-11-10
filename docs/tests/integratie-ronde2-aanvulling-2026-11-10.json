@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-10T13:48:54.395450+00:00",
+  "deadline": "2026-11-10T15:15:00+01:00",
+  "authorization": "User explicitly requested useful additional work before1515 after first safe handoff.",
+  "runtimeCheckpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "baselineDocumentationCommit": "78f32777cfca825e64c82e2027307597d12e8fdb",
+  "applicationChanged": false,
+  "mainChanged": false,
+  "sourceIntakeReopened": false,
+  "browserHost": "Windows x64, headless Playwright1.62.1",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "151.0.7922.34",
+      "hostPlatform": "win32",
+      "hostArch": "x64",
+      "executable": "C:\\Users\\alper\\AppData\\Local\\ms-playwright\\chromium-1234\\chrome-win64\\chrome.exe",
+      "executableSha256": "409805a16d6416087e6b2f778df1cf8f7bbb267d6b99f6b5bb0a618eace234f2",
+      "navigator": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "platform": "Win32",
+        "language": "nl"
+      },
+      "actualSafariApplication": false
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "hostPlatform": "win32",
+      "hostArch": "x64",
+      "executable": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-extra-browser-runtime\\firefox-1538\\firefox\\firefox.exe",
+      "executableSha256": "9571c9a49d6d4de3e4c3b14e2e4bd6521e5b879f4ab6c95143e2098cb66e6618",
+      "navigator": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0",
+        "platform": "Win32",
+        "language": "en-US"
+      },
+      "actualSafariApplication": false
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "hostPlatform": "win32",
+      "hostArch": "x64",
+      "executable": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-extra-browser-runtime\\webkit-2336\\Playwright.exe",
+      "executableSha256": "02098f76165779067df02881660593d25da6b8e3e11e052f9459f5ae1f94a1fc",
+      "navigator": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15",
+        "platform": "Win32",
+        "language": "en-US"
+      },
+      "actualSafariApplication": false
+    }
+  ],
+  "routes": [
+    {
+      "engine": "chromium",
+      "module": "Spreadsheet",
+      "result": "passed",
+      "realUiSaveAsDownload": true,
+      "reopened": true,
+      "checks": 4,
+      "report": ".local/round2-extra-chromium-spreadsheet-real-download/report.json",
+      "scope": "Additional actual UI Save as/download proof; prior exact4a7 Writer/Presentation routes reused."
+    },
+    {
+      "engine": "firefox",
+      "module": "Writer",
+      "result": "passed",
+      "actualRoute": "/office/",
+      "realUiSaveDownload": true,
+      "offlineEdit": true,
+      "reopened": true,
+      "report": ".local/round2-extra-firefox-hosted/writer/report.json"
+    },
+    {
+      "engine": "firefox",
+      "module": "Spreadsheet",
+      "result": "passed",
+      "actualRoute": "/office/",
+      "realUiSaveAsDownload": true,
+      "reopened": true,
+      "checks": 4,
+      "report": ".local/round2-extra-firefox-spreadsheet-real-download/report.json"
+    },
+    {
+      "engine": "firefox",
+      "module": "Presentation",
+      "result": "passed",
+      "actualRoute": "/office/",
+      "realUiSaveDownload": true,
+      "reopened": true,
+      "checks": 10,
+      "report": ".local/round2-extra-firefox-presentation-adapted/report.json",
+      "pasteScope": "Controlled synthetic clipboard payload; not OS clipboard certification."
+    },
+    {
+      "engine": "webkit",
+      "module": "Writer",
+      "result": "passed",
+      "actualRoute": "/office/",
+      "realUiSaveDownload": true,
+      "offlineEdit": true,
+      "reopened": true,
+      "report": ".local/round2-extra-webkit-hosted/writer/report.json"
+    },
+    {
+      "engine": "webkit",
+      "module": "Spreadsheet",
+      "result": "passed",
+      "actualRoute": "/office/",
+      "realUiSaveAsDownload": true,
+      "reopened": true,
+      "checks": 4,
+      "report": ".local/round2-extra-webkit-spreadsheet-real-download/report.json"
+    },
+    {
+      "engine": "webkit",
+      "module": "Presentation",
+      "result": "passed",
+      "actualRoute": "/office/",
+      "realUiSaveDownload": true,
+      "reopened": true,
+      "checks": 10,
+      "report": ".local/round2-extra-webkit-presentation/report.json",
+      "pasteScope": "Controlled synthetic clipboard payload; not OS clipboard certification."
+    }
+  ],
+  "distVerificationAfterExtraTests": [
+    {
+      "file": ".local/round2-dist-manifest.json",
+      "files": 727,
+      "treeSha256": "0308956997dcd676dc72c2239d3383cfcfc2b92b45cf166372f4b33e25d098d2",
+      "allBytesStillMatch": true,
+      "order": "recorded files[] order"
+    },
+    {
+      "file": ".local/round2-hosted-dist-manifest.json",
+      "files": 727,
+      "treeSha256": "7b07608f17a39c9ff5315e56a180e5217b41b672c3ba70fe9a56215e13825345",
+      "allBytesStillMatch": true,
+      "order": "recorded files[] order"
+    }
+  ],
+  "nativePresentation326": {
+    "operatorReceipt": {
+      "issue": 326,
+      "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "platform": "Windows native installed NSIS devbuild 2026.45.4",
+      "result": "pass bounded two-slide whole-word fixture",
+      "observedStatuses": [
+        "Whole words off: Result 1 of 15, then Result 2 of 15 on partial katten",
+        "Whole words toggled on: prior status cleared; Replace selects Result 1 of 5 without modifying text",
+        "Match case plus whole words: Result 1 of 3",
+        "Match case off: Result 1 of 5",
+        "Previous wraps from Result 1 on slide1 to Result 5 on slide2; Next returns to slide1",
+        "Replace current: Replaced. Result 1 of 4",
+        "Replace all: Replaced 5 times (one undo step)",
+        "Fresh application restart and file reopen: both slides visually match saved output",
+        "Reopened whole-word kat: Search term not found",
+        "Reopened whole words off: Result 1 of 10"
+      ],
+      "packageChecks": [
+        {
+          "result": "pass",
+          "mode": "one",
+          "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-one-4a7a3acf.pptx",
+          "sha256": "189b6057983a03cfd875470d5ac7c7169bb35e54af72b09214da02a1c1728c0c",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+          "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "texts": [
+            "🧱 hond katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+            "kat Kat"
+          ],
+          "nonTextSlideXmlPreserved": true,
+          "packagePartsChanged": ["ppt/slides/slide1.xml"]
+        },
+        {
+          "result": "pass",
+          "mode": "original",
+          "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-one-4a7a3acf.pptx",
+          "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+          "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "texts": [
+            "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+            "kat Kat"
+          ],
+          "nonTextSlideXmlPreserved": true,
+          "packagePartsChanged": []
+        },
+        {
+          "result": "pass",
+          "mode": "all",
+          "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-all-4a7a3acf.pptx",
+          "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+          "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "texts": [
+            "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+            "hond hond"
+          ],
+          "nonTextSlideXmlPreserved": true,
+          "packagePartsChanged": [
+            "ppt/slides/slide1.xml",
+            "ppt/slides/slide2.xml"
+          ]
+        },
+        {
+          "result": "pass",
+          "mode": "original",
+          "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-all-4a7a3acf.pptx",
+          "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+          "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "texts": [
+            "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+            "kat Kat"
+          ],
+          "nonTextSlideXmlPreserved": true,
+          "packagePartsChanged": []
+        },
+        {
+          "result": "pass",
+          "mode": "all",
+          "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-redo-all-4a7a3acf.pptx",
+          "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+          "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "texts": [
+            "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+            "hond hond"
+          ],
+          "nonTextSlideXmlPreserved": true,
+          "packagePartsChanged": [
+            "ppt/slides/slide1.xml",
+            "ppt/slides/slide2.xml"
+          ]
+        }
+      ],
+      "nativeFinalReopenedAfterFullAppRestart": true,
+      "nativeBothSlidesVisuallyInspected": true,
+      "sourceUnchanged": true,
+      "saveRoute": "Close Find and replace pane, then quick-access Save",
+      "cleanFinish": "Find pane closed and presentation tab closed with CtrlW, no unsaved prompt; Start page open",
+      "limits": [
+        "Bounded Arial20 two-slide fixture only, no general corpus guarantee",
+        "Native Dutch localization, checkbox keyboard activation, ShiftEnter and version retry not exercised",
+        "No new code/build, no LibreOffice, no Linux/macOS/browser tests in this chat",
+        "CtrlS while Find pane open did not save in one observation; not investigated as a separate issue, final saves used toolbar after pane closure"
+      ],
+      "finishedAtUtc": "2026-11-10T13:43:40.2523631Z"
+    },
+    "independentPackageReview": {
+      "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "reviewer": "ROOT independent read-only verification of native750b snapshots",
+      "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+      "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+      "passed": 5,
+      "failed": 0,
+      "cases": [
+        {
+          "mode": "replace-one",
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-one-4a7a3acf.pptx",
+          "sha256": "189b6057983a03cfd875470d5ac7c7169bb35e54af72b09214da02a1c1728c0c",
+          "changedPackageParts": ["ppt/slides/slide1.xml"],
+          "fixtureTexts": [
+            "🧱 hond katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+            "kat Kat"
+          ],
+          "allNonTextXmlAndOtherPartsIdentical": true,
+          "result": "pass"
+        },
+        {
+          "mode": "undo-one",
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-one-4a7a3acf.pptx",
+          "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "changedPackageParts": [],
+          "fixtureTexts": [
+            "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+            "kat Kat"
+          ],
+          "allNonTextXmlAndOtherPartsIdentical": true,
+          "result": "pass"
+        },
+        {
+          "mode": "replace-all",
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-all-4a7a3acf.pptx",
+          "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+          "changedPackageParts": [
+            "ppt/slides/slide1.xml",
+            "ppt/slides/slide2.xml"
+          ],
+          "fixtureTexts": [
+            "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+            "hond hond"
+          ],
+          "allNonTextXmlAndOtherPartsIdentical": true,
+          "result": "pass"
+        },
+        {
+          "mode": "undo-all",
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-all-4a7a3acf.pptx",
+          "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+          "changedPackageParts": [],
+          "fixtureTexts": [
+            "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+            "kat Kat"
+          ],
+          "allNonTextXmlAndOtherPartsIdentical": true,
+          "result": "pass"
+        },
+        {
+          "mode": "redo-all",
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-redo-all-4a7a3acf.pptx",
+          "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+          "changedPackageParts": [
+            "ppt/slides/slide1.xml",
+            "ppt/slides/slide2.xml"
+          ],
+          "fixtureTexts": [
+            "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+            "hond hond"
+          ],
+          "allNonTextXmlAndOtherPartsIdentical": true,
+          "result": "pass"
+        }
+      ]
+    }
+  },
+  "testHarnessNotes": [
+    {
+      "scope": "Firefox startup",
+      "observed": "Existing global cached Firefox failed WinError14001, SideBySide could not find mozglue assembly. Separate project-local official Playwright Firefox install starts and passes; original cache and system settings unchanged.",
+      "appBugClaimed": false
+    },
+    {
+      "scope": "Firefox synthetic paste",
+      "observed": "DataTransfer holds text/html before ClipboardEvent construction, but resulting event has empty types/html. Private controlled-payload adapter defines clipboardData on synthetic event; same sanitization/text assertions then pass. Original failed proof retained.",
+      "appBugClaimed": false,
+      "osClipboardTested": false,
+      "evidence": ".local/round2-extra-firefox-presentation-adapted.log"
+    },
+    {
+      "scope": "WebKit test synchronization",
+      "observed": "Original Spreadsheet probe clicked an old ribbon while new workbook tab was activating. Private probe now waits for the requested document tab to be selected before checking styles; all unchanged assertions pass. Original failure retained.",
+      "appBugClaimed": false
+    },
+    {
+      "scope": "Browser download route",
+      "observed": "Additional Spreadsheet checks use actual UI Save as plus browser download before reopening, rather than only reading the production byte-export API. Chromium/Firefox/WebKit all pass.",
+      "appBugClaimed": false
+    }
+  ],
+  "ciSnapshot": {
+    "asOf": "2026-11-10T13:47:53.849738+00:00",
+    "runs": [
+      {
+        "kind": "desktop",
+        "run": 42817352468,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "status": "queued",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468",
+        "jobs": [
+          {
+            "databaseId": 129833698436,
+            "name": "desktop (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833698436"
+          },
+          {
+            "databaseId": 129833699033,
+            "name": "desktop (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699033"
+          },
+          {
+            "databaseId": 129833699052,
+            "name": "desktop (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699052"
+          }
+        ]
+      },
+      {
+        "kind": "database",
+        "run": 42817352223,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "status": "queued",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223",
+        "jobs": [
+          {
+            "databaseId": 129833698581,
+            "name": "database (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833698581"
+          },
+          {
+            "databaseId": 129833699079,
+            "name": "database (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699079"
+          },
+          {
+            "databaseId": 129833699111,
+            "name": "database (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699111"
+          }
+        ]
+      },
+      {
+        "kind": "presentation",
+        "run": 42817352213,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "status": "queued",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213",
+        "jobs": [
+          {
+            "databaseId": 129833698196,
+            "name": "presentation (Linux)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698196"
+          },
+          {
+            "databaseId": 129833698624,
+            "name": "presentation (macOS)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698624"
+          },
+          {
+            "databaseId": 129833698747,
+            "name": "presentation (Windows)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698747"
+          }
+        ]
+      }
+    ]
+  },
+  "remaining": [
+    "Exact4a7 macOS desktop/database/presentation CI still queued",
+    "Actual installed interactive Linux/macOS app acceptance",
+    "Actual Safari/macOS and OS clipboard behavior not certified by Windows Playwright engines",
+    "Native318/325 plus other previously documented font/embedded-font/280 scopes",
+    "326 native Dutch label, keyboard checkbox/ShiftEnter/version retry and other font/platform corpora untested",
+    "CtrlS with Presentation search panel open observed once without saving; save through quickSave after closing panel works. Not independently triaged or registered as a new bug."
+  ],
+  "fullNativeAcceptance": false,
+  "mainMergeAllowed": false,
+  "evidenceArchive": {
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-extra-evidence-4a7a3acf.zip",
+    "sha256": "ead0a66a096fb090d6f86d2a222e7dfe1fff19351761aab2a8e9b7da2acb749c",
+    "bytes": 1886698,
+    "files": 93,
+    "purpose": "Separate durable local proof for additional QA; original archives unchanged."
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "round": 2,
-  "asOf": "2026-11-10T13:32:14.171222+00:00",
+  "asOf": "2026-11-10T13:48:54.395450+00:00",
   "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
   "ciCheckoutCommit": "15d87a0b6f8f9e7a07b86cfd4a16991e04e56023",
   "sourceAndCiTree": "3a49ea4f704f8171a60e11913936cd9d0b1b5b86",
@@ -70,17 +70,18 @@
       "evidence": [
         ".local/round2-hosted-platforms.log",
         ".local/round2-hosted-fields.log"
-      ]
+      ],
+      "additionalEngineReport": "integratie-ronde2-aanvulling-2026-11-10.json"
     },
     "nativeWindows": {
       "status": "passed bounded native acceptance; fullNativeAcceptance false",
       "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
       "operator": "750b",
-      "finishedAtUtc": "2026-11-10T13:26:33.8629614Z",
       "passed": [
         "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
         "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
-        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen"
+        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen",
+        "326 native whole-word search/replace15to5to3, Save/Undo/Redo and full app-restart reopen"
       ],
       "partial": [
         "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
@@ -88,17 +89,19 @@
       "notRun": [
         "318 reply initials",
         "325 media replay after end",
-        "326 Presentation whole-word option",
         "340 known tab focus route not retested",
         "Linux/macOS native and browser not executed by this chat on 4a7"
       ],
       "independentReview": {
         "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
         "reviewSnapshots": 9,
-        "spreadsheetFiles": 2
+        "spreadsheetFiles": 2,
+        "presentationSnapshots": 5
       },
       "report": "integratie-ronde2-native-windows-2026-11-10.json",
-      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored"
+      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
+      "initialAcceptanceFinishedAtUtc": "2026-11-10T13:26:33.8629614Z",
+      "latestAdditionalQARecordedAtUtc": "2026-11-10T13:48:54.395450+00:00"
     },
     "platformCI": {
       "status": "Windows/Linux passed; macOS queued at snapshot",
@@ -167,11 +170,11 @@
       "status": "passed bounded native acceptance; fullNativeAcceptance false",
       "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
       "operator": "750b",
-      "finishedAtUtc": "2026-11-10T13:26:33.8629614Z",
       "passed": [
         "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
         "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
-        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen"
+        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen",
+        "326 native whole-word search/replace15to5to3, Save/Undo/Redo and full app-restart reopen"
       ],
       "partial": [
         "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
@@ -179,17 +182,19 @@
       "notRun": [
         "318 reply initials",
         "325 media replay after end",
-        "326 Presentation whole-word option",
         "340 known tab focus route not retested",
         "Linux/macOS native and browser not executed by this chat on 4a7"
       ],
       "independentReview": {
         "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
         "reviewSnapshots": 9,
-        "spreadsheetFiles": 2
+        "spreadsheetFiles": 2,
+        "presentationSnapshots": 5
       },
       "report": "integratie-ronde2-native-windows-2026-11-10.json",
-      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored"
+      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
+      "initialAcceptanceFinishedAtUtc": "2026-11-10T13:26:33.8629614Z",
+      "latestAdditionalQARecordedAtUtc": "2026-11-10T13:48:54.395450+00:00"
     },
     "fieldPdfReview": "integratie-ronde2-native-pdf-2026-11-10.json",
     "installedExeSha256": "c5607da784846b48053391c64bd5d59fc38d000bdb05389ae155fbdf779162f7",
@@ -251,9 +256,10 @@
     "host": "Windows x64",
     "engine": "Chromium151",
     "normalAndActualHostedRoute": "passed",
-    "additionalEngines": "Firefox/WebKit/Safari not tested",
+    "additionalEngines": "Firefox153 and PlaywrightWebKit26.5: actual hosted Writer/Spreadsheet/Presentation3routes each passed on Windows x64. Actual Safari/macOS, OS clipboard and other installed browser builds not certified.",
     "nativeTauriBridge": "absent on hosted route",
-    "liveYWorkplaceStorage": "excluded by user"
+    "liveYWorkplaceStorage": "excluded by user",
+    "additionalQAReport": "integratie-ronde2-aanvulling-2026-11-10.json"
   },
   "ci": [
     {
@@ -432,7 +438,7 @@
   "remaining": [
     "macOS exact-checkpoint CI build/package and functional results",
     "Actual installed Linux/macOS interactive acceptance",
-    "Additional supported browser engines and live Y storage (latter excluded by user)",
+    "Actual Safari/macOS, OS clipboard and other installed browser builds; live Y storage remains excluded by user",
     "Remaining Windows UI scopes outside bounded operator receipt"
   ],
   "frozenBrowserArchive": {
@@ -455,5 +461,110 @@
     "bytes": 5731948,
     "files": 205,
     "purpose": "Local durable combined proof/native outputs backup; not a release."
+  },
+  "additionalEvidenceArchive": {
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-extra-evidence-4a7a3acf.zip",
+    "sha256": "ead0a66a096fb090d6f86d2a222e7dfe1fff19351761aab2a8e9b7da2acb749c",
+    "bytes": 1886698,
+    "files": 93,
+    "purpose": "Separate durable local proof for additional QA; original archives unchanged."
+  },
+  "additionalCiSnapshot": {
+    "asOf": "2026-11-10T13:47:53.849738+00:00",
+    "runs": [
+      {
+        "kind": "desktop",
+        "run": 42817352468,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "status": "queued",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468",
+        "jobs": [
+          {
+            "databaseId": 129833698436,
+            "name": "desktop (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833698436"
+          },
+          {
+            "databaseId": 129833699033,
+            "name": "desktop (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699033"
+          },
+          {
+            "databaseId": 129833699052,
+            "name": "desktop (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699052"
+          }
+        ]
+      },
+      {
+        "kind": "database",
+        "run": 42817352223,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "status": "queued",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223",
+        "jobs": [
+          {
+            "databaseId": 129833698581,
+            "name": "database (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833698581"
+          },
+          {
+            "databaseId": 129833699079,
+            "name": "database (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699079"
+          },
+          {
+            "databaseId": 129833699111,
+            "name": "database (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699111"
+          }
+        ]
+      },
+      {
+        "kind": "presentation",
+        "run": 42817352213,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "status": "queued",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213",
+        "jobs": [
+          {
+            "databaseId": 129833698196,
+            "name": "presentation (Linux)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698196"
+          },
+          {
+            "databaseId": 129833698624,
+            "name": "presentation (macOS)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698624"
+          },
+          {
+            "databaseId": 129833698747,
+            "name": "presentation (Windows)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698747"
+          }
+        ]
+      }
+    ]
   }
 }
