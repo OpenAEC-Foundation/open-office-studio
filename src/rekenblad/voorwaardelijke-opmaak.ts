@@ -17,7 +17,11 @@ import {
 import { adres, bereikA1, ontleedBereik } from "../lint/rekenblad-logica";
 import { voerOpsUit } from "../lint/rekenblad-opdrachten";
 import i18next from "../i18n/config";
-import { leesDxfStijlen, type DxfStijl } from "./voorwaardelijke-dxf";
+import {
+  leesDxfStijlen,
+  maakStijlKleurLezer,
+  type DxfStijl,
+} from "./voorwaardelijke-dxf";
 
 export interface VoorwaardelijkeRegel extends ConditionalFormatInfo {
   stopIfTrue: boolean;
@@ -26,6 +30,7 @@ export interface VoorwaardelijkeRegel extends ConditionalFormatInfo {
   uitgebreideStijl?: boolean;
   /** Extra source DXF facets for read-only display; never passed to native authoring. */
   weergave?: DxfStijl;
+  visueleKleuren?: string[];
 }
 export type VoorwaardelijkeOp = {
   type: "setConditionalFormats";
@@ -123,6 +128,9 @@ export function leesVoorwaardelijkeRegels(
   const dxfStijlen = stylesheet
     ? leesDxfStijlen(pakket, werkboek, stylesheet)
     : [];
+  const leesKleur = stylesheet
+    ? maakStijlKleurLezer(pakket, werkboek, stylesheet)
+    : undefined;
   const eenvoudig = (n: XmlElement): boolean => {
     const toegestaan: Record<string, string[]> = {
       dxf: ["font", "fill"],
@@ -161,6 +169,11 @@ export function leesVoorwaardelijkeRegels(
       stopIfTrue: ["1", "true"].includes(attr(knoop, "stopIfTrue") ?? ""),
       rawXml,
       weergave: r.dxfId === undefined ? undefined : dxfStijlen[r.dxfId],
+      visueleKleuren: leesKleur
+        ? kinderen(kind(knoop, r.type), "color").map(
+            (c) => leesKleur(c, "#638ec6") ?? "#638ec6",
+          )
+        : undefined,
       uitgebreideStijl:
         r.dxfId !== undefined && !!dxfs[r.dxfId] && !eenvoudig(dxfs[r.dxfId]),
     };
@@ -411,7 +424,7 @@ export function nieuweVisueleRegel(
     soort === "colorScale"
       ? '<colorScale><cfvo type="min"/><cfvo type="percentile" val="50"/><cfvo type="max"/><color rgb="FFF8696B"/><color rgb="FFFFEB84"/><color rgb="FF63BE7B"/></colorScale>'
       : soort === "dataBar"
-        ? `<dataBar showValue="1"><cfvo type="min"/><cfvo type="max"/><color rgb="FF${kleur.replace(/^#/, "").toUpperCase()}"/></dataBar>`
+        ? `<dataBar showValue="1" minLength="0" maxLength="100"><cfvo type="min"/><cfvo type="max"/><color rgb="FF${kleur.replace(/^#/, "").toUpperCase()}"/></dataBar>`
         : '<iconSet iconSet="3TrafficLights1" showValue="1"><cfvo type="percent" val="0"/><cfvo type="percent" val="33"/><cfvo type="percent" val="67"/></iconSet>';
   return {
     ...r,
