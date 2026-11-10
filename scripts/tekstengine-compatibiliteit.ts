@@ -287,10 +287,54 @@ export function herstelSplitsBreedtes(bron: string): string {
   );
 }
 
+export function herstelVormOpslag(bron: string): string {
+  const oud = "let g$1=J(p);";
+  if (bron.split(oud).length !== 2)
+    throw new Error(
+      "De tekstengine is gewijzigd; controleer eerst de vormenopslag.",
+    );
+  return (
+    'import { bewaarVormDetails as oosVormOpslag } from "openaec-tekst-vormopslag";\nimport { g as oosSchrijfVorm } from "./chunk-YITJ4QAO.mjs";\n'.replaceAll(
+      "\\n",
+      "\n",
+    ) +
+    bron.replace(
+      oud,
+      'let g$1=J(oosVormOpslag(p,f,vorm=>JSON.parse(oosSchrijfVorm(JSON.stringify({family:"shape",shape:vorm,determinism:c}))).xml,new Uint8Array(r)));',
+    )
+  );
+}
+
 export function herstelSplitsUitleg(bron:string):string{
  const oud='jsx("div",{style:b,children:e("dialogs.splitCell.description")})';
  if(bron.split(oud).length!==2)throw new Error("De tekstengine is gewijzigd; controleer de splitsuitleg.");
  return 'import {splitsUitleg as oosSplitsUitleg} from "openaec-tekst-splitsbreedte";\n'+bron.replace(oud,'jsx("div",{style:b,children:e("dialogs.splitCell.description")+" "+oosSplitsUitleg()})');
+}
+
+/** Shape-effecten houden hun OOXML-bron, de tekenaar krijgt CSS/pixelwaarden. */
+export function herstelVormEffecten(bron:string):string{
+ const oud='function mi(e,n){let t=n.effects?.find(o=>o.kind==="shadow"||o.kind==="outerShadow"||o.kind==="glow");';
+ if(bron.split(oud).length!==2)throw new Error("De tekstengine is gewijzigd; controleer de vormeffecten.");
+ return 'import {tekenVormEffect as oosVormEffect} from "openaec-tekst-vormeffect";\n'+bron.replace(oud,oud.replace('let t=n.effects?.find(', 'let t=oosVormEffect(n.effects?.find(').replace(');', '));'));
+}
+
+/** De hybride indelingssessie heeft geen mediacache; het eigen Document wel. */
+export function herstelVormAfbeeldingen(bron: string): string {
+  const delen = [
+    ['function nS(e){return useMemo(()=>Um(e),[e])}function Um(e){return createCanvasImageResolver({media:t=>e?.mediaSource?.(t)??null,',
+     'function nS(e,t){return useMemo(()=>Um(e,t),[e,t])}function Um(e,n){return createCanvasImageResolver({media:t=>e?.mediaSource?.(t)??oosBronAfbeelding(n,t),'],
+    ['function Gm(e,t,n,o,r,i=false,s){', 'function Gm(e,t,n,o,r,i=false,s,oosPakket){'],
+    ['Gm(vt,mn,()=>U.current?.relayout(),x?.workerLimitBytes,Jn,fe,ur)', 'Gm(vt,mn,()=>U.current?.relayout(),x?.workerLimitBytes,Jn,fe,ur,t)'],
+    ['$=A??u,he=nS($),tt=useRef', '$=A??u,he=nS($,oosPakket??e.current?.originalBuffer),tt=useRef'],
+    ['tt.current.resolveImage:Um(At)},[v])', 'tt.current.resolveImage:Um(At,oosPakket??e.current?.originalBuffer)},[v,e,oosPakket])'],
+  ];
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer de ingebedde afbeeldingen.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import {bronAfbeelding as oosBronAfbeelding} from "openaec-tekst-vormafbeelding";\n' + uit;
 }
 
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
@@ -300,12 +344,18 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-vormafbeelding")
+        return fileURLToPath(new URL("../src/tekst/vormen/afbeeldingen.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-kopvoetdoel")
         return fileURLToPath(new URL("../src/tekst/pagina/kopvoetDoel.ts", import.meta.url));
       if (id === "openaec-tekst-vervolgstijl")
         return fileURLToPath(new URL("../src/tekst/stijlen/vervolg.ts", import.meta.url));
+      if (id === "openaec-tekst-vormeffect")
+        return fileURLToPath(new URL("../src/tekst/vormen/effecten.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-splitsbreedte")
         return fileURLToPath(new URL("../src/tekst/tabel/splitsBreedte.ts", import.meta.url)).replaceAll("\\", "/");
+      if (id === "openaec-tekst-vormopslag")
+        return fileURLToPath(new URL("../src/tekst/vormen/opslag.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-nootkern")
         return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
       // Eén module-ID houdt fabriek en voorbereider in hetzelfde register, ook op Windows.
@@ -323,6 +373,10 @@ export function tekstengineCompatibiliteit(): Plugin {
     transform(bron, id) {
       if (/\/@betteroffice\/docx\/dist\/yrs\/docxWorker\.mjs(?:\?.*)?$/.test(id))
         return { code: bereidWorkerOpslagVoor(bron), map: null };
+      if (/\/@betteroffice\/docx\/dist\/chunk-EOFVNRML\.mjs(?:\?.*)?$/.test(id))
+        return {code:herstelVormEffecten(bron),map:null};
+      if (/\/@betteroffice\/docx\/dist\/chunk-VJFO26DF\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelVormOpslag(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-RHVJ6TAE\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelSplitsUitleg(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-HAZBP3QT\.mjs(?:\?.*)?$/.test(id))
@@ -342,7 +396,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKopVoetDoel(herstelTabelContext(bron), "opdrachten"), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelKopVoetDoel(herstelVervolgstijl(herstelSplitsBreedtes(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))))), "editor"), map: null };
+      return { code: herstelVormAfbeeldingen(herstelKopVoetDoel(herstelVervolgstijl(herstelSplitsBreedtes(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))))), "editor")), map: null };
     },
   };
 }
