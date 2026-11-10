@@ -6,6 +6,7 @@ import {
   type DrawCmd,
   type WorkbookHandle,
 } from "@betteroffice/xlsx";
+import { tabelopmaakVoorrang } from "./tabelopmaakVoorrang";
 import { Pakket } from "../grafieken/pakket";
 import { attr, kind, kinderen, leesXml } from "../grafieken/xml";
 import { gebied, werkmap, bevat } from "./werkboekXml";
@@ -13,7 +14,6 @@ import { tabellen } from "./tabellen";
 import { leesDxfStijlen, type DxfStijl } from "./voorwaardelijke-dxf";
 import { registreerRenderProjectie } from "./renderprojectie";
 import { adres } from "../lint/rekenblad-logica";
-import { tabelopmaakVoorrang } from "./tabelopmaakVoorrang";
 
 export function bereidTabelweergave(h: WorkbookHandle, bytes: Uint8Array) {
   const p = new Pakket(bytes),
