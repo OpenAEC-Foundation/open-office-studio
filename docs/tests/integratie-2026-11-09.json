@@ -290,6 +290,12 @@
       "head": "9de53c798334456808a1c7cef815f7872a25ee89",
       "merge": "5a62feb9b163cd05ccf73f20439f6cb5232a9cdb",
       "scope": "Spreadsheet formula hyperlinks and bounded image decoding"
+    },
+    {
+      "pr": 256,
+      "head": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
+      "merge": "6d4bdffde4a2a8a8c82818cd78f0f9e285845e51",
+      "scope": "Presentation embedded media"
     }
   ],
   "coveredByBundles": [
@@ -362,13 +368,7 @@
       "via": 241
     }
   ],
-  "deliveriesPending": [
-    {
-      "pr": 256,
-      "head": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
-      "scope": "Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery"
-    }
-  ],
+  "deliveriesPending": [],
   "checks": [
     {
       "kind": "batch-1-targeted",
@@ -782,6 +782,15 @@
       "failed": 0,
       "skipped": 0,
       "files": 3
+    },
+    {
+      "kind": "pr256-targeted",
+      "head": "6d4bdffde4a2a8a8c82818cd78f0f9e285845e51",
+      "success": true,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
     }
   ],
   "limits": [

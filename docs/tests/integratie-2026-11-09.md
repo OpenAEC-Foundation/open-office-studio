@@ -54,6 +54,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#254](https://github.com/OpenAEC-Foundation/open-office-studio/pull/254) | `5a1c0d50f53ba31a298e9286b9c0ebec31e51782` | `6348da9ea2de0c8b224b3cade9984af960409e59` | Adaptive office preparation and status reads |
 | [#233](https://github.com/OpenAEC-Foundation/open-office-studio/pull/233) | `c3537b83e7239fc808b3af0d518e109aef2c0f8b` | `016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab` | Presentation current-theme editing |
 | [#246](https://github.com/OpenAEC-Foundation/open-office-studio/pull/246) | `9de53c798334456808a1c7cef815f7872a25ee89` | `5a62feb9b163cd05ccf73f20439f6cb5232a9cdb` | Spreadsheet formula hyperlinks and bounded image decoding |
+| [#256](https://github.com/OpenAEC-Foundation/open-office-studio/pull/256) | `51e0ea41e109960d8ea6ca53a149f1b663857ac3` | `6d4bdffde4a2a8a8c82818cd78f0f9e285845e51` | Presentation embedded media |
 
 ## Earlier fixes included in bundles
 
@@ -125,10 +126,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr254-targeted | `fc9980430de3c22341cbd6b51b65e4c27085adba` | 11 | 0 | 0 |
 | pr233-targeted | `016a4e3f4d1c2c659f543ddcf7c8d0ed2c25c6ab` | 19 | 0 | 0 |
 | pr246-targeted | `5a62feb9b163cd05ccf73f20439f6cb5232a9cdb` | 23 | 0 | 0 |
+| pr256-targeted | `6d4bdffde4a2a8a8c82818cd78f0f9e285845e51` | 16 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #256, reported head `51e0ea41e109960d8ea6ca53a149f1b663857ac3`: Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery.
 
 ## Limits
 
