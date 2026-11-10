@@ -162,7 +162,9 @@ export async function haalNoten(api: DocxEditorRef): Promise<NootInfo[]> {
 
 /** Staat de editor nu in de bewerkmodus voor kop- of voettekst? */
 export function kopVoetActief() {
-  return !!zichtbaarElement(".office-tekst .hf-inline-editor");
+  // A modal makes the editor inert without leaving header/footer edit mode.
+  // Treating that as a close leaves the ribbon disabled when the modal ends.
+  return [...document.querySelectorAll(".office-tekst .hf-inline-editor")].some((e) => !e.closest("[hidden]"));
 }
 
 /** De zichtbare pagina die het meest in beeld is. */

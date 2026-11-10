@@ -2,7 +2,7 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } f
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
-import { herstelCelBreedteBron, herstelNootverwijzingOpmaak } from "./tekstengine-compatibiliteit";
+import { herstelCelBreedteBron, herstelNootverwijzingOpmaak, herstelVormOpslag } from "./tekstengine-compatibiliteit";
 
 /**
  * De Node-proef laadt dezelfde broncorrectie als Vite, met een eigen kopie van
@@ -19,7 +19,8 @@ export async function openTekstkernProef() {
     const aansluiting = [];
     const som = (tekst: string) => createHash("sha256").update(tekst).digest("hex");
     for (const [naam, herstel] of [["chunk-N5NWITJ6.mjs", herstelCelBreedteBron],
-      ["chunk-HAZBP3QT.mjs", herstelNootverwijzingOpmaak]] as const) {
+      ["chunk-HAZBP3QT.mjs", herstelNootverwijzingOpmaak],
+      ["chunk-VJFO26DF.mjs", (bron: string) => herstelVormOpslag(bron).replace("openaec-tekst-vormopslag", pathToFileURL(resolve("src/tekst/vormen/opslag.ts")).href)]] as const) {
       const pad = join(map, naam), bron = readFileSync(pad, "utf8"), uit = herstel(bron);
       writeFileSync(pad, uit);
       aansluiting.push({ naam, oorspronkelijkSha256: som(bron), sha256: som(uit) });

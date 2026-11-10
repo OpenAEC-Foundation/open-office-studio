@@ -15,6 +15,7 @@ import {
   kind,
   kinderen,
   leesXml,
+  namespaceVan,
   ontsnap,
   tekstVan,
   vervang,
@@ -424,23 +425,34 @@ export interface Markeringsplek {
   erna: string;
 }
 
-const MARKEERBARE_DELEN = /^word\/(document|header\d*|footer\d*|footnotes|endnotes)\.xml$/;
+const MARKERINGSRELATIES = new Map([
+  [WREL.header, "hdr"], [WREL.footer, "ftr"],
+  [WREL.footnotes, "footnotes"], [WREL.endnotes, "endnotes"],
+]);
 
 /** Zoekt de markering in de tekstonderdelen. */
 export function vindMarkering(pakket: Pakket, markering: string): Markeringsplek | null {
-  for (const pad of pakket.namen()) {
-    if (!MARKEERBARE_DELEN.test(pad)) continue;
+  // OPC assigns story parts through relationships, not filenames. Orphan parts
+  // and unrelated custom XML must never become the target of a cursor command.
+  const hoofd = documentPad(pakket), delen = new Map([[hoofd, "document"]]);
+  for (const rel of pakket.relaties(hoofd)) {
+    const element = MARKERINGSRELATIES.get(rel.type);
+    if (!rel.extern && element) delen.set(Pakket.doelPad(hoofd, rel.target), element);
+  }
+  for (const [pad, element] of delen) {
+    if (!pakket.heeft(pad)) continue;
     const xml = pakket.lees(pad);
     if (!xml.includes(markering)) continue;
     const wortel = leesXml(xml);
-    const t = zoekAlle(wortel, "t").find((el) => tekstVan(el).includes(markering));
-    if (!t) throw new PaginaFout(paginaTekst("errors.cursorLost"));
+    if (wortel.lokaal !== element || namespaceVan(wortel, wortel.voorvoegsel) !== NS_W) continue;
+    const t = zoekAlle(wortel, "t").find((el) => namespaceVan(el, el.voorvoegsel) === NS_W && tekstVan(el).includes(markering));
+    if (!t) continue;
     let run: XmlElement | null = t.ouder;
-    while (run && run.lokaal !== "r") run = run.ouder;
+    while (run && (run.lokaal !== "r" || namespaceVan(run, run.voorvoegsel) !== NS_W)) run = run.ouder;
     let alinea: XmlElement | null = run;
-    while (alinea && alinea.lokaal !== "p") alinea = alinea.ouder;
+    while (alinea && (alinea.lokaal !== "p" || namespaceVan(alinea, alinea.voorvoegsel) !== NS_W)) alinea = alinea.ouder;
     if (!run || !alinea) throw new PaginaFout(paginaTekst("errors.cursorLost"));
-    const alineaTekst = zoekAlle(alinea, "t").map(tekstVan).join("");
+    const alineaTekst = zoekAlle(alinea, "t").filter((el) => namespaceVan(el, el.voorvoegsel) === NS_W).map(tekstVan).join("");
     const i = alineaTekst.indexOf(markering);
     return {
       pad,

@@ -32,4 +32,15 @@ De gedeelde renderhaak komt uit `346927430297654ccbe995b51dcd6c581bdc4eff` (PR26
 
 TypeScript, productiebuild en vertaalcontrole zijn onderdeel van de eindcontrole. De bestaande 23 waarschuwingen voor inactieve taalmappen zijn ongewijzigd.
 
+## Gecombineerde integratiestand
+
+`4943d19acddb05c320e1462fe47a95e2536a907a` bevat integratiebaseline `d978918d998bd00485bcafc4cef3072314c1b918`. De vijf samenvoegverschillen zijn op de featurebranch opgelost; de achtpatch-kern is behouden. De grotere afhankelijkhedenset van integratie is met de vastgezette lockfile geïnstalleerd.
+
+- TypeScript en productiebuild: geslaagd.
+- Volledige suite: 279 bestanden, 2.873 geslaagd, 10 bestaande skips en 11 tijdslimieten in zes bestanden tijdens parallelle lokale belasting. Alle zes bestanden daarna afzonderlijk met één worker herhaald: 134/134 geslaagd. Bij deze herhaling is de standaard testlimiet 15 seconden; de expliciete 60 seconden van de wachtwoordproef is ongewijzigd. Er waren geen mislukte inhoudelijke assertions. Daarmee zijn alle 2.884 actieve tests op deze stand geslaagd over de twee runs.
+- Productie-browser: alle zes tabelstappen én alle vier celstijlstappen geslaagd op de gecombineerde build, zonder JavaScript-fouten.
+- De gedeelde renderhaak en CF-migratie zijn samen getest, inclusief scherm, profiel en afdruk.
+
+De tabel/celstijlcode is daarmee gereed voor integratie in PR273. #69 wordt op een afzonderlijke branch uitgewerkt.
+
 OOXML-achtergrond: [Microsoft TableStyle](https://learn.microsoft.com/en-us/office/vba/api/excel.tablestyle).

@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { HerlaadDoel, Herladen } from "../../lint/editorApi";
 import { maakGrafiekSelectie } from "./xlsxSelectie";
+import { maakDocxHerlaadDoel } from "./docxHerlaadDoel";
 
 /**
  * Rekenbladdoel met optioneel een gebied (zoals een nieuwe grafiek) dat na
@@ -60,6 +61,8 @@ export function useHerladen({
     [bytes],
   );
   const doel = actief?.doel;
+  const docxDoel = useMemo(() => maakDocxHerlaadDoel(doel?.paraId), [actief]);
+  useEffect(() => () => docxDoel.stop(), [docxDoel]);
   return {
     bytes: actief?.bytes ?? bytes,
     sleutel: actief?.sleutel ?? 0,
@@ -90,16 +93,7 @@ export function useHerladen({
     },
     /** Na de eerste getekende pagina van een tekstdocument: naar de alinea. */
     naDocx(editor: DocxEditorRef | null) {
-      if (!editor || !doel?.paraId) return;
-      const paraId = doel.paraId;
-      const probeer = (n: number) => {
-        if (editor.scrollToParaId(paraId) || n <= 0) return;
-        setTimeout(() => probeer(n - 1), 250);
-      };
-      void editor
-        .whenLayoutComplete({ timeoutMs: 20000 })
-        .catch(() => 0)
-        .then(() => probeer(8));
+      docxDoel.start(editor);
     },
     /** 1-gebaseerde dia voor `initialSlide`. */
     dia: doel?.dia !== undefined ? doel.dia + 1 : undefined,

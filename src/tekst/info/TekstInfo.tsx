@@ -13,6 +13,7 @@ import { Leesmodus } from "./Leesmodus";
 import { noteerActiviteit } from "./opslaan";
 import { TaalVenster } from "./TaalVenster";
 import { taalNaam, taalOpCursor } from "./taal";
+import { volgEditorWijzigingen } from "../gedeeld/editorvolgen";
 import {
   meldVerdwenen,
   meldZichtbaar,
@@ -29,29 +30,7 @@ export type InfoDialoog = "info" | "inspecteren" | "taal" | null;
 function useEditorVolgen(api: () => DocxEditorRef | null, opWijziging: (soort: "selectie" | "inhoud") => void) {
   const recent = useRef(opWijziging);
   recent.current = opWijziging;
-  useEffect(() => {
-    let gekoppeld: DocxEditorRef | null = null;
-    let opruimen: (() => void)[] = [];
-    const koppel = () => {
-      const ref = api();
-      if (ref === gekoppeld) return;
-      opruimen.forEach((weg) => weg());
-      opruimen = [];
-      gekoppeld = ref;
-      if (!ref) return;
-      opruimen = [
-        ref.onSelectionChange(() => recent.current("selectie")),
-        ref.onContentChange(() => recent.current("inhoud")),
-      ];
-      recent.current("selectie");
-    };
-    koppel();
-    const poging = setInterval(koppel, 600);
-    return () => {
-      clearInterval(poging);
-      opruimen.forEach((weg) => weg());
-    };
-  }, [api]);
+  useEffect(() => volgEditorWijzigingen(api, (soort) => recent.current(soort)), [api]);
 }
 
 export function TekstInfo() {

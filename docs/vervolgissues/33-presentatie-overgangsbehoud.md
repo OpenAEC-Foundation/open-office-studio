@@ -40,3 +40,12 @@ of de precieze instellingen aantoonbaar bewaren/herstellen, met checks op
 richting, milliseconden, klikbeleid en geluidsactie per dia. Dit rapport
 rechtvaardigt geen behoudclaim voor ODP, OTP, FODP, PPT of PPS en sluit geen
 breed formaatissue.
+
+## Gerichte reparatie op 10 november 2026
+
+De standaard ODF-correctie en de herhaalbare native ODP/OTP/FODP-matrix staan
+in het [vervolgrapport met de nieuwe controles](../tests/2026-11-10-presentatie-odf-overgangen.md).
+Daar slagen de geteste exacte tijden, vier schuifrichtingen en het uniforme
+klikbeleid; ODP en OTP behouden ook het gedeelde geluid op vier dia’s. De
+oorspronkelijke meting hierboven blijft de fout vóór die correctie beschrijven.
+De afbakening en resterende grenzen staan in het nieuwe rapport; #33 blijft open.

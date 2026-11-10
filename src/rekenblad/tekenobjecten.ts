@@ -25,7 +25,14 @@ const A = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const EMU = 9525;
 const IMAGE = `${R}/image`;
-export const BASISVORMEN: readonly string[] = ["rect", "roundRect", "ellipse", "triangle", "diamond", "line"];
+export const BASISVORMEN: readonly string[] = [
+  "rect",
+  "roundRect",
+  "ellipse",
+  "triangle",
+  "diamond",
+  "line",
+];
 export interface ObjectPlek {
   row: number;
   col: number;
@@ -51,7 +58,7 @@ export interface Tekenobject {
   tekening: string;
   id: string;
   naam: string;
-  soort: "afbeelding" | "vorm" | "onbekend";
+  soort: "afbeelding" | "vorm" | "groep" | "onbekend";
   plek: ObjectPlek;
   einde?: { row: number; col: number; x: number; y: number };
   absoluut?: boolean;
@@ -69,6 +76,13 @@ export interface Tekenobject {
   tekstOpmaak: ObjectTekst[];
   verticaal: "flex-start" | "center" | "flex-end";
   lijndikte: number;
+  groep?: {
+    x: number;
+    y: number;
+    breedte: number;
+    hoogte: number;
+    kinderen: Tekenobject[];
+  };
 }
 export interface NieuwObject {
   naam: string;
@@ -285,6 +299,147 @@ function tekstOpmaak(tx: XmlElement | null, thema: Thema): ObjectTekst[] {
   });
 }
 
+function eigenNv(obj: XmlElement) {
+  const naam = (
+    {
+      pic: "nvPicPr",
+      sp: "nvSpPr",
+      grpSp: "nvGrpSpPr",
+      cxnSp: "nvCxnSpPr",
+      graphicFrame: "nvGraphicFramePr",
+    } as Record<string, string>
+  )[obj.lokaal];
+  return naam ? kind(kind(obj, naam), "cNvPr") : null;
+}
+function nummer(
+  el: XmlElement | null | undefined,
+  naam: string,
+  standaard = 0,
+) {
+  const n = Number(attr(el, naam) ?? standaard);
+  return Number.isFinite(n) ? n : standaard;
+}
+const GROEPSKINDEREN = [
+  "pic",
+  "sp",
+  "grpSp",
+  "cxnSp",
+  "graphicFrame",
+  "contentPart",
+];
+function leesObject(
+  p: Pakket,
+  obj: XmlElement,
+  blad: number,
+  pad: string,
+  beveiligd: boolean,
+  thema: Thema,
+  budget: { over: number },
+  diepte = 0,
+  ouderVulling = "#E9F0E8",
+): Tekenobject {
+  const isGroep = obj.lokaal === "grpSp";
+  const nv = eigenNv(obj),
+    pr = kind(obj, isGroep ? "grpSpPr" : "spPr");
+  const xfrm = kind(pr, "xfrm") ?? kind(obj, "xfrm"),
+    ext = kind(xfrm, "ext"),
+    off = kind(xfrm, "off");
+  const imageRid =
+    obj.lokaal === "pic"
+      ? attrNs(kind(kind(obj, "blipFill"), "blip"), R, "embed")
+      : undefined;
+  const mediaPad = imageRid ? p.doel(pad, imageRid) : null;
+  const media = mediaPad ? p.bytes(mediaPad) : undefined;
+  const tx = kind(obj, "txBody"),
+    crop = kind(kind(obj, "blipFill"), "srcRect"),
+    body = kind(tx, "bodyPr");
+  const vorm =
+    attr(kind(pr, "prstGeom"), "prst") ??
+    (kind(pr, "custGeom") ? "custom" : "rect");
+  const vulling = kleur(pr, ouderVulling, thema);
+  let groep: Tekenobject["groep"];
+  if (isGroep && diepte < 16) {
+    const chExt = kind(xfrm, "chExt"),
+      chOff = kind(xfrm, "chOff");
+    const breedte = nummer(chExt, "cx") / EMU,
+      hoogte = nummer(chExt, "cy") / EMU;
+    const kids = elementen(obj).filter((e) =>
+      GROEPSKINDEREN.includes(e.lokaal),
+    );
+    if (breedte > 0 && hoogte > 0 && kids.length <= budget.over) {
+      budget.over -= kids.length;
+      groep = {
+        x: nummer(chOff, "x") / EMU,
+        y: nummer(chOff, "y") / EMU,
+        breedte,
+        hoogte,
+        kinderen: kids.map((e) =>
+          leesObject(
+            p,
+            e,
+            blad,
+            pad,
+            beveiligd,
+            thema,
+            budget,
+            diepte + 1,
+            vulling,
+          ),
+        ),
+      };
+    }
+  }
+  return {
+    blad,
+    tekening: pad,
+    id: attr(nv, "id") ?? "",
+    naam: attr(nv, "name") ?? "",
+    beveiligd,
+    soort:
+      obj.lokaal === "pic"
+        ? "afbeelding"
+        : groep
+          ? "groep"
+          : obj.lokaal === "sp" && BASISVORMEN.includes(vorm)
+            ? "vorm"
+            : "onbekend",
+    plek: {
+      row: 0,
+      col: 0,
+      x: nummer(off, "x") / EMU,
+      y: nummer(off, "y") / EMU,
+      breedte: Math.max(1, nummer(ext, "cx", 914400) / EMU),
+      hoogte: Math.max(1, nummer(ext, "cy", 914400) / EMU),
+    },
+    vorm,
+    tekst: kinderen(tx, "p").map(tekstVan).join("\n"),
+    vulling,
+    lijn: kleur(kind(pr, "ln"), "#36363E", thema),
+    rotatie: nummer(xfrm, "rot") / 60000,
+    media,
+    mime: media ? mime(media)?.type : undefined,
+    spiegelX: ["1", "true"].includes(attr(xfrm, "flipH") ?? ""),
+    spiegelY: ["1", "true"].includes(attr(xfrm, "flipV") ?? ""),
+    uitsnede: crop
+      ? {
+          links: nummer(crop, "l") / 100000,
+          rechts: nummer(crop, "r") / 100000,
+          boven: nummer(crop, "t") / 100000,
+          onder: nummer(crop, "b") / 100000,
+        }
+      : undefined,
+    tekstOpmaak: tekstOpmaak(tx, thema),
+    verticaal:
+      attr(body, "anchor") === "ctr"
+        ? "center"
+        : attr(body, "anchor") === "b"
+          ? "flex-end"
+          : "flex-start",
+    lijndikte: nummer(kind(pr, "ln"), "w", 9525) / EMU,
+    groep,
+  };
+}
+
 export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
   const typen = unzipSync(bytes, {
     filter: (f) => f.name === "[Content_Types].xml",
@@ -296,7 +451,8 @@ export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
     return [];
   const p = new Pakket(bytes),
     uit: Tekenobject[] = [],
-    thema = leesThema(p);
+    thema = leesThema(p),
+    budget = { over: 10000 };
   for (const [blad] of bladen(p).entries()) {
     const t = tekening(p, blad);
     if (!t.pad) continue;
@@ -312,10 +468,16 @@ export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
         ["pic", "sp", "grpSp", "cxnSp"].includes(e.lokaal),
       );
       if (!obj) continue; // Grafieken blijven bij de bestaande engine-tekenlaag.
-      const nv = zoekAlle(obj, "cNvPr")[0],
-        pr = kind(obj, "spPr"),
-        xfrm = kind(pr, "xfrm");
-      const ext = kind(anker, "ext") ?? kind(xfrm, "ext"),
+      const gelezen = leesObject(
+        p,
+        obj,
+        blad,
+        t.pad,
+        t.beveiligd,
+        thema,
+        budget,
+      );
+      const ext = kind(anker, "ext"),
         from = kind(anker, "from");
       const pos = kind(anker, "pos"),
         start = from
@@ -326,58 +488,19 @@ export function leesTekenobjecten(bytes: Uint8Array): Tekenobject[] {
               x: Number(attr(pos, "x") ?? 0) / EMU,
               y: Number(attr(pos, "y") ?? 0) / EMU,
             };
-      const blip = obj.lokaal === "pic" ? zoekAlle(obj, "blip")[0] : undefined,
-        imageRid = attrNs(blip, R, "embed");
-      const mediaPad = imageRid ? p.doel(t.pad, imageRid) : null,
-        media = mediaPad ? p.bytes(mediaPad) : undefined;
-      const tx = kind(obj, "txBody");
-      const vorm = attr(kind(pr, "prstGeom"), "prst") ?? (kind(pr, "custGeom") ? "custom" : "rect");
-      const crop = kind(kind(obj, "blipFill"), "srcRect"),
-        body = kind(tx, "bodyPr");
       uit.push({
-        blad,
-        tekening: t.pad,
-        id: attr(nv, "id") ?? "",
-        naam: attr(nv, "name") ?? "",
-        beveiligd: t.beveiligd,
-        soort:
-          obj.lokaal === "pic"
-            ? "afbeelding"
-            : obj.lokaal === "sp" && BASISVORMEN.includes(vorm)
-              ? "vorm"
-              : "onbekend",
+        ...gelezen,
         plek: {
           ...start,
-          breedte: Math.max(1, Number(attr(ext, "cx") ?? 914400) / EMU),
-          hoogte: Math.max(1, Number(attr(ext, "cy") ?? 914400) / EMU),
+          breedte: ext
+            ? Math.max(1, nummer(ext, "cx", 914400) / EMU)
+            : gelezen.plek.breedte,
+          hoogte: ext
+            ? Math.max(1, nummer(ext, "cy", 914400) / EMU)
+            : gelezen.plek.hoogte,
         },
         einde: kind(anker, "to") ? punt(kind(anker, "to")) : undefined,
         absoluut: anker.lokaal === "absoluteAnchor",
-        vorm,
-        tekst: kinderen(tx, "p").map(tekstVan).join("\n"),
-        vulling: kleur(pr, "#E9F0E8", thema),
-        lijn: kleur(kind(pr, "ln"), "#36363E", thema),
-        rotatie: Number(attr(xfrm, "rot") ?? 0) / 60000,
-        media,
-        mime: media ? mime(media)?.type : undefined,
-        spiegelX: ["1", "true"].includes(attr(xfrm, "flipH") ?? ""),
-        spiegelY: ["1", "true"].includes(attr(xfrm, "flipV") ?? ""),
-        uitsnede: crop
-          ? {
-              links: Number(attr(crop, "l") ?? 0) / 100000,
-              rechts: Number(attr(crop, "r") ?? 0) / 100000,
-              boven: Number(attr(crop, "t") ?? 0) / 100000,
-              onder: Number(attr(crop, "b") ?? 0) / 100000,
-            }
-          : undefined,
-        tekstOpmaak: tekstOpmaak(tx, thema),
-        verticaal:
-          attr(body, "anchor") === "ctr"
-            ? "center"
-            : attr(body, "anchor") === "b"
-              ? "flex-end"
-              : "flex-start",
-        lijndikte: Number(attr(kind(pr, "ln"), "w") ?? 9525) / EMU,
       });
     }
   }
@@ -440,8 +563,7 @@ export function voegTekenobjectToe(
     obj = `<xdr:pic><xdr:nvPicPr>${nv}<xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr><xdr:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic>`;
   } else {
     const vorm = nieuw.vorm ?? "rect";
-    if (!BASISVORMEN.includes(vorm))
-      throw fout("invalidSize");
+    if (!BASISVORMEN.includes(vorm)) throw fout("invalidSize");
     obj = `<xdr:sp><xdr:nvSpPr>${nv}<xdr:cNvSpPr txBox="${nieuw.tekst ? 1 : 0}"/></xdr:nvSpPr><xdr:spPr><a:prstGeom prst="${vorm}"><a:avLst/></a:prstGeom>${solid(nieuw.vulling ?? "#E9F0E8")}<a:ln>${solid(nieuw.lijn ?? "#36363E")}</a:ln></xdr:spPr><xdr:txBody><a:bodyPr wrap="square"/><a:lstStyle/>${(
       nieuw.tekst ?? ""
     )
@@ -469,9 +591,12 @@ export function wijzigTekenobject(
   if (!t.pad) throw fout("stale");
   const xml = p.lees(t.pad),
     root = leesXml(xml);
-  const oud = elementen(root).find((e) =>
-    zoekAlle(e, "cNvPr").some((n) => attr(n, "id") === doel.id),
-  );
+  const oud = elementen(root).find((e) => {
+    const obj = elementen(e).find((n) =>
+      ["pic", "sp", "grpSp", "cxnSp"].includes(n.lokaal),
+    );
+    return obj && attr(eigenNv(obj), "id") === doel.id;
+  });
   if (!oud) throw fout("stale");
   const object = elementen(oud).find((e) =>
     ["pic", "sp", "grpSp", "cxnSp"].includes(e.lokaal),
@@ -482,7 +607,7 @@ export function wijzigTekenobject(
   if (plek) {
     const root = leesXml(inhoud),
       edits: { start: number; eind: number; tekst: string }[] = [];
-    const nv = zoekAlle(root, "cNvPr")[0];
+    const nv = eigenNv(root);
     if (wijziging.naam !== undefined && nv)
       edits.push({
         start: nv.start,
@@ -540,7 +665,10 @@ export function wijzigTekenobject(
         eind: ln.eind,
         tekst: `<a:ln>${solid(wijziging.lijn)}</a:ln>`,
       });
-    const ext = kind(kind(pr, "xfrm"), "ext");
+    const ext = kind(
+      kind(kind(root, root.lokaal === "grpSp" ? "grpSpPr" : "spPr"), "xfrm"),
+      "ext",
+    );
     if (ext)
       edits.push({
         start: ext.start,

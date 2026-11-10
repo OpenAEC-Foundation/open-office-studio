@@ -1,0 +1,42 @@
+name: Legacy format coverage
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/formatendekking.yml"
+      - "scripts/*formatendekking*"
+      - "scripts/formaatconversie-proef.mjs"
+      - "src/import/**"
+      - "src/formaten.json"
+      - "src/formatendekking.test.ts"
+      - "src-tauri/src/conversie*"
+      - "docs/tests/formatendekking/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  legacy:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-writer libreoffice-calc libreoffice-impress
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/controleer-formatendekking.mjs
+      - name: Convert immutable legacy fixtures and open, save and reopen in real editors
+        env:
+          OPENAEC_CONVERSIE_PROGRAMMA: /usr/bin/soffice
+        run: pnpm exec vitest run --config scripts/formatendekking.config.ts --configLoader runner --reporter=verbose
+      - name: Preserve conversion and editor results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-format-coverage-linux
+          path: .local/formatendekking
+          include-hidden-files: true
+          if-no-files-found: error

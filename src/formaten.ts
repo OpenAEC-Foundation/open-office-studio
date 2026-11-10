@@ -126,6 +126,14 @@ export async function converteer(
     },
   );
   let omgezet: Uint8Array = new Uint8Array(resultaat);
+  if (
+    soort === "pptx" &&
+    ((van === "pptx" && ["odp", "otp", "fodp"].includes(naar)) ||
+      (["odp", "otp", "fodp"].includes(van) && naar === "pptx"))
+  ) {
+    const { naPresentatieConversie } = await import("./presentatie/odf-overgangen");
+    return naPresentatieConversie(bytes, van, naar, omgezet);
+  }
   if (!writer || !voorbereid || !secties) return omgezet;
   // Restore physical sections before resolving the note/list/table bookmarks;
   // record export hashes only after all ODF content changes are complete.

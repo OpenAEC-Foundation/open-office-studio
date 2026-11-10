@@ -160,9 +160,14 @@
     "toEnd": "(mover al final)",
     "makeCopy": "Crear una copia",
     "moveUnavailable": "El motor de cálculo aún no puede mover hojas; se crea una copia.",
-    "copyScope": "La copia recibe el contenido con fórmulas, formato, anchos de columna, altos de fila, celdas combinadas y paneles inmovilizados; los gráficos, imágenes y comentarios no se copian.",
+    "copyScope": "La copia conserva las celdas, el formato, la configuración de la hoja, los gráficos, las imágenes, las notas, los comentarios y los vínculos. El libro se vuelve a cargar y se borra el historial de deshacer. Aún no se pueden copiar macros ni gráficos dinámicos.",
     "copy": "Copiar",
-    "structureLocked": "La estructura del libro está protegida. No se pueden añadir, eliminar, mover ni cambiar de nombre las hojas."
+    "structureLocked": "La estructura del libro está protegida. No se pueden añadir, eliminar, mover ni cambiar de nombre las hojas.",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "Formato de celdas › Número",
@@ -647,7 +652,9 @@
       "link-file-size": "The linked document must be nonempty and at most 100 MB.",
       "failed": "The linked document could not be opened."
     },
-    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview."
+    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview.",
+    "formulaTargetUnavailable": "No se pudo determinar el destino del enlace de esta fórmula. Revisa la fórmula o usa un hipervínculo explícito.",
+    "groupInfo": "Objeto agrupado. Mueve o cambia el tamaño del grupo completo."
   },
   "conditional": {
     "title": "Conditional formatting",

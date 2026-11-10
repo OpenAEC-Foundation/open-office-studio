@@ -144,9 +144,14 @@
     "toEnd": "(ຍ້າຍໄປທ້າຍສຸດ)",
     "makeCopy": "ສ້າງສຳເນົາ",
     "moveUnavailable": "ລະບົບຕາຕະລາງຍັງບໍ່ສາມາດຍ້າຍແຜ່ນວຽກໄດ້; ຈະສ້າງເປັນສຳເນົາແທນ.",
-    "copyScope": "ສຳເນົາຈະລວມມີເນື້ອຫາ, ສູດ, ຮູບແບບ, ລວງກວ້າງຖັນ, ລວງສູງແຖວ, ການຮວມຫ້ອງ ແລະ ການຕຶງແຜ່ນ; ແຕ່ແຜນພູມ, ຮູບພາບ ແລະ ຄຳເຫັນຈະບໍ່ຖືກສຳເນົານຳ.",
+    "copyScope": "ສຳເນົາຈະຮັກສາຫ້ອງ, ຮູບແບບ, ການຕັ້ງຄ່າແຜ່ນ, ແຜນພູມ, ຮູບພາບ, ບັນທຶກ, ຄຳເຫັນ ແລະ ລິ້ງ. ປຶ້ມວຽກຈະຖືກໂຫຼດໃໝ່ ແລະ ປະຫວັດການຍົກເລີກຈະຖືກລຶບ. ຍັງບໍ່ຮອງຮັບການສຳເນົາມາໂຄຣ ຫຼື ແຜນພູມ Pivot.",
     "copy": "ສຳເນົາ",
-    "structureLocked": "ໂຄງສ້າງປຶ້ມວຽກຖືກປ້ອງກັນ. ບໍ່ສາມາດເພີ່ມ, ລຶບ, ຍ້າຍ ຫຼື ປ່ຽນຊື່ແຜ່ນງານໄດ້."
+    "structureLocked": "ໂຄງສ້າງປຶ້ມວຽກຖືກປ້ອງກັນ. ບໍ່ສາມາດເພີ່ມ, ລຶບ, ຍ້າຍ ຫຼື ປ່ຽນຊື່ແຜ່ນງານໄດ້.",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "ຈັດຮູບແບບຫ້ອງ › ຕົວເລກ",
@@ -631,7 +636,9 @@
       "link-file-size": "The linked document must be nonempty and at most 100 MB.",
       "failed": "The linked document could not be opened."
     },
-    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview."
+    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview.",
+    "formulaTargetUnavailable": "The link target of this formula could not be resolved. Check the formula or use an explicit hyperlink.",
+    "groupInfo": "Grouped object. Move or resize the group as a whole."
   },
   "conditional": {
     "title": "Conditional formatting",

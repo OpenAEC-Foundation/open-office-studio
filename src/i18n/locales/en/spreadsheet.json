@@ -152,9 +152,14 @@
     "toEnd": "(move to end)",
     "makeCopy": "Create a copy",
     "moveUnavailable": "The spreadsheet engine cannot move sheets yet; a copy is made.",
-    "copyScope": "The copy gets the content with formulas, formatting, column widths, row heights, merged cells and frozen panes; charts, images and comments are not copied.",
+    "copyScope": "The copy retains cells, formatting, sheet settings, charts, images, notes, comments and links. The workbook reloads and its undo history is cleared. Macros and PivotCharts cannot be copied yet.",
     "copy": "Copy",
-    "structureLocked": "The workbook structure is protected. Sheets cannot be added, deleted, moved or renamed."
+    "structureLocked": "The workbook structure is protected. Sheets cannot be added, deleted, moved or renamed.",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "Format Cells › Number",
@@ -639,7 +644,9 @@
       "link-file-size": "The linked document must be nonempty and at most 100 MB.",
       "failed": "The linked document could not be opened."
     },
-    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview."
+    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview.",
+    "formulaTargetUnavailable": "The link target of this formula could not be resolved. Check the formula or use an explicit hyperlink.",
+    "groupInfo": "Grouped object. Move or resize the group as a whole."
   },
   "conditional": {
     "title": "Conditional formatting",

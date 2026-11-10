@@ -1,0 +1,1223 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-10",
+  "search": {
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "roots": [
+      "writerperfect/qa/unit/data",
+      "sw/qa",
+      "sc/qa",
+      "sd/qa",
+      "filter/qa/cppunit/data",
+      "hwpfilter/qa",
+      "lotuswordpro/qa",
+      "qadevOOo/qa"
+    ],
+    "note": "Geen voorbeeld betekent niet dat het formaat onmogelijk is. Beschadigde, versleutelde en beveiligingstestbestanden zijn geen positieve gebruikersproef."
+  },
+  "extensions": [
+    {
+      "ext": "123",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-123-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "abw",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-abw-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "csv",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/csvimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "dbf",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-dbf-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Windows26.8.2.2 opent deze fixture; de minimale Ubuntu22.04-runtime7.3.7.2 weigert de bron met \"source file could not be loaded\" en geeft het XLSX/CSV-alternatief."
+    },
+    {
+      "ext": "dif",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-dif-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "doc",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "docm",
+      "modules": [
+        "docx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "docx",
+      "modules": [
+        "docx"
+      ],
+      "route": "native",
+      "status": "real-file",
+      "sources": [],
+      "evidence": [
+        "scripts/test-kantoor-engines.mjs",
+        "public/templates/nieuw.docx"
+      ],
+      "note": "Eigen geldig OOXML-voorbeeld: engine openen, wijzigen, bewaren en heropenen; geen externe Office-corpusdekking."
+    },
+    {
+      "ext": "dot",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "dotm",
+      "modules": [
+        "docx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "dotx",
+      "modules": [
+        "docx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "dps",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen WPS Presentation DPS-voorbeeld aangetroffen in de doorzochte upstreamtestmappen."
+    },
+    {
+      "ext": "dpt",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen WPS Presentation DPT-sjabloon aangetroffen in de doorzochte upstreamtestmappen."
+    },
+    {
+      "ext": "epub",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen onafhankelijk EPUB-importvoorbeeld in deze suite; de bestaande EPUB-exportproef bewijst geen import."
+    },
+    {
+      "ext": "et",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen WPS Spreadsheets ET-voorbeeld aangetroffen; de extensie garandeert geen leesbaar intern formaat."
+    },
+    {
+      "ext": "ett",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen WPS Spreadsheets ETT-sjabloon aangetroffen; een ET-bestand hernoemen bewijst deze variant niet."
+    },
+    {
+      "ext": "fb2",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-fb2-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "fodp",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "fods",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "fodt",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "gnm",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen afzonderlijk Gnumeric-voorbeeld met deze extensie in de suite; .gnumeric is wel beproefd."
+    },
+    {
+      "ext": "gnumeric",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-gnumeric-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "htm",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "html",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "hwp",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-hwp-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Alleen Hangul 97 / HWP 3.0 getest; HWP 5 en HWPX niet bewezen."
+    },
+    {
+      "ext": "ifcx",
+      "modules": [
+        "docx",
+        "xlsx",
+        "pptx"
+      ],
+      "route": "content",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/ifcx/dossier.test.ts",
+        "src/ifcx/opslag.test.ts"
+      ],
+      "note": "Geldig gegenereerd IFCX-dossier; inhoud bepaalt de editor voor alle drie modules."
+    },
+    {
+      "ext": "key",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-key-1",
+        "lo-key-2"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Keynote 1 XML en Keynote 6 IWA; de IWA-fixture levert lege tekst. Moderne varianten zijn niet algemeen bewezen. Lege Impress-uitvoer geeft een expliciete waarschuwing met PPTX-alternatief; voor Keynote6 gecontroleerd."
+    },
+    {
+      "ext": "lwp",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-lwp-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "markdown",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "md",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "numbers",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-numbers-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Alleen Numbers 2 XML getest; Numbers 3+ IWA en wachtwoordvarianten niet bewezen."
+    },
+    {
+      "ext": "odp",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "ods",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "odt",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "otp",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "ots",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "ott",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "pages",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-pages-1",
+        "lo-pages-2"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Pages 4 XML en Pages 5 IWA getest; wachtwoordbeveiligde en toekomstige varianten niet bewezen."
+    },
+    {
+      "ext": "pdf",
+      "modules": [],
+      "route": "export-only",
+      "status": "output-only",
+      "sources": [],
+      "evidence": [
+        "src/formaten.json"
+      ],
+      "note": "Alleen uitvoer in deze catalogus; geen bewerkbare invoerroute in de drie kantooronderdelen."
+    },
+    {
+      "ext": "png",
+      "modules": [],
+      "route": "export-only",
+      "status": "output-only",
+      "sources": [],
+      "evidence": [
+        "src/formaten.json"
+      ],
+      "note": "Alleen uitvoer in deze catalogus; geen bewerkbare invoerroute in de drie kantooronderdelen."
+    },
+    {
+      "ext": "pot",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "potm",
+      "modules": [
+        "pptx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "potx",
+      "modules": [
+        "pptx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "pps",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "ppsx",
+      "modules": [
+        "pptx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "ppt",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "pptm",
+      "modules": [
+        "pptx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "pptx",
+      "modules": [
+        "pptx"
+      ],
+      "route": "native",
+      "status": "real-file",
+      "sources": [],
+      "evidence": [
+        "scripts/test-kantoor-engines.mjs",
+        "public/templates/nieuw.pptx"
+      ],
+      "note": "Eigen geldig OOXML-voorbeeld: engine openen, wijzigen, bewaren en heropenen; geen externe Office-corpusdekking."
+    },
+    {
+      "ext": "psw",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-psw-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "rtf",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "sdd",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen StarOffice binaire presentatie aangetroffen; de SXI-proef gebruikt een ander containerformaat."
+    },
+    {
+      "ext": "sdw",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-sdw-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "slk",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-slk-1",
+        "lo-slk-2"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Volledig SYLK-bestand opent, bewaart en heropent. Een onvolledig parserfragment zonder ID-kop wordt met reden en XLSX/CSV-alternatief geweigerd; dat is geen geslaagde opening."
+    },
+    {
+      "ext": "stc",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen geldig StarOffice Calc-sjabloon in de doorzochte upstreamtestmappen; SXC is geen bewijs voor STC."
+    },
+    {
+      "ext": "sti",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen geldig StarOffice Impress-sjabloon in de doorzochte upstreamtestmappen; SXI is geen bewijs voor STI."
+    },
+    {
+      "ext": "stw",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen geldig StarOffice Writer-sjabloon in de doorzochte upstreamtestmappen; SXW is geen bewijs voor STW."
+    },
+    {
+      "ext": "sxc",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-sxc-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "sxi",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-sxi-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Windows26.8.2.2 opent deze fixture; LibreOffice7.3.7.2 op Linux weigert de PPTX-export met SfxBaseModel::impl_store 0xc10 en geeft het PPTX-alternatief."
+    },
+    {
+      "ext": "sxw",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-sxw-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "sylk",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen afzonderlijk SYLK-voorbeeld met deze extensie in de suite; de SLK-proef controleert niet deze bestandskeuze."
+    },
+    {
+      "ext": "tab",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/csvimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "tsv",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/csvimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "txt",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "uop",
+      "modules": [
+        "pptx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen Unified Office Format-presentatie aangetroffen in de doorzochte upstreamtestmappen."
+    },
+    {
+      "ext": "uos",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen Unified Office Format-rekenblad aangetroffen in de doorzochte upstreamtestmappen."
+    },
+    {
+      "ext": "uot",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen Unified Office Format-tekstvoorbeeld aangetroffen in de doorzochte upstreamtestmappen."
+    },
+    {
+      "ext": "wb1",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wb1-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "wb2",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen regulier Quattro Pro WB2-voorbeeld geselecteerd; alleen een fuzzing-/regressiebestand gevonden. Niet als gebruikersvoorbeeld gebruikt."
+    },
+    {
+      "ext": "wk1",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wk1-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "wk3",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wk3-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "wk4",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wk4-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Alleen Microsoft Works 4.0 voor Mac getest. Geen Lotus 1-2-3 WK4-voorbeeld gevonden; gelijknamige extensies zijn verschillende formaten."
+    },
+    {
+      "ext": "wks",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wks-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "wpd",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wpd-1",
+        "lo-wpd-2"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "wps",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wps-1",
+        "lo-wps-2"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Works 6.0 en 2.00A DOS leveren lege tekst: alleen technische open-/bewaarproef, geen bewijs van tekstbehoud. Lege Writer-uitvoer geeft een expliciete waarschuwing met DOCX/RTF-alternatief; voor beide echte Works-fixtures gecontroleerd."
+    },
+    {
+      "ext": "wq1",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wq1-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "wq2",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen geldig Quattro Pro WQ2-voorbeeld aangetroffen; WQ1/WB1 bewijzen deze variant niet."
+    },
+    {
+      "ext": "wri",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-wri-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    },
+    {
+      "ext": "xhtml",
+      "modules": [
+        "docx"
+      ],
+      "route": "import",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/tekstimport.test.ts",
+        "src/import/formaatfouten.test.ts"
+      ],
+      "note": "Geldige tekstbytes in de regressieproef: eigen import en gecontroleerde inhoud. Geen conversie nodig; beperkingen van de eenvoudige lezer blijven gelden."
+    },
+    {
+      "ext": "xls",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "xlsb",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "no-fixture",
+      "sources": [],
+      "evidence": [],
+      "note": "Geen zelfstandig, gecontroleerd XLSB-gebruikersvoorbeeld in deze suite. De upstreamzoeklijst bevat regressiebestanden, maar die zijn in deze wijziging niet als inhoudelijk referentievoorbeeld gevalideerd."
+    },
+    {
+      "ext": "xlsm",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "xlsx",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "native",
+      "status": "real-file",
+      "sources": [],
+      "evidence": [
+        "scripts/test-kantoor-engines.mjs",
+        "public/templates/nieuw.xlsx"
+      ],
+      "note": "Eigen geldig OOXML-voorbeeld: engine openen, wijzigen, bewaren en heropenen; geen externe Office-corpusdekking."
+    },
+    {
+      "ext": "xlt",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "runtime",
+      "status": "historical",
+      "sources": [],
+      "evidence": [
+        "docs/tests/2026-10-27-opslaan-als.md"
+      ],
+      "note": "Historische proef met eigen voorbeeld: runtime-export en terugzetten naar OOXML, inhoud gecontroleerd. Geen onafhankelijke importfixture voor deze extensie in de nieuwe suite."
+    },
+    {
+      "ext": "xltm",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "xltx",
+      "modules": [
+        "xlsx"
+      ],
+      "route": "native",
+      "status": "unit",
+      "sources": [],
+      "evidence": [
+        "src/import/sjabloon.test.ts",
+        "src/import/macros.test.ts",
+        "src/presentatie/bestandsvariant.test.ts"
+      ],
+      "note": "Gegenereerde OOXML-variant in de regressiesuite; sjabloon-/macrobehoud of presentatievariant gecontroleerd. Geen onafhankelijk voorbeeld uit elke bronapp."
+    },
+    {
+      "ext": "zabw",
+      "modules": [
+        "docx"
+      ],
+      "route": "runtime",
+      "status": "real-file",
+      "sources": [
+        "lo-zabw-1"
+      ],
+      "evidence": [
+        "scripts/test-formatendekking.ts",
+        "docs/tests/formatendekking/resultaat-windows.json"
+      ],
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+    }
+  ]
+}

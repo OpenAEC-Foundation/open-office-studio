@@ -7,7 +7,9 @@ const { chromium } = await import(
 );
 // Match the normal build's bundled font assets without downloading extra fonts.
 await mkdir("public/fonts", { recursive: true });
-await cp("node_modules/@betteroffice/fonts/assets", "public/fonts", { recursive: true });
+await cp("node_modules/@betteroffice/fonts/assets", "public/fonts", {
+  recursive: true,
+});
 const server = await createServer({
   cacheDir: ".local/vite-cache-object-print",
   plugins: [
@@ -136,6 +138,126 @@ try {
       h.dispose();
     }
   }, source);
+  const groups = await page.evaluate(async (source) => {
+    const { openWorkbook } = await import(
+      "/node_modules/@betteroffice/xlsx/dist/index.js"
+    );
+    const { groepFixture } = await import("/src/rekenblad/testdata/groep.ts");
+    const { laadTekenobjecten } = await import("/src/rekenblad/tekenAnkers.ts");
+    const { rekenbladPaginas } = await import(
+      "/src/afdrukken/bronRekenblad.ts"
+    );
+    const { standaardBladInstellingen } = await import(
+      "/src/afdrukken/rekenbladInstellingen.ts"
+    );
+    const { maakPdf } = await import("/src/export/pdf/index.ts");
+    const png = Uint8Array.from(
+      atob(
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGNgcPkPAAGLAURM0jfCAAAAAElFTkSuQmCC",
+      ),
+      (c) => c.charCodeAt(0),
+    );
+    const reports = [];
+    for (const [name, options] of [
+      ["group", {}],
+      ["group-flipped", { flipX: true, rotatie: 30 }],
+    ]) {
+      const bytes = groepFixture(new Uint8Array(source), png, options).bytes,
+        h = openWorkbook(bytes);
+      laadTekenobjecten(h, bytes);
+      try {
+        const doc = await rekenbladPaginas(
+          {
+            api: { handle: h },
+            bytes,
+            titel: name,
+            bestandsnaam: `${name}.xlsx`,
+            selectie: null,
+          },
+          {
+            omvang: "blad",
+            instellingen: [standaardBladInstellingen()],
+            negeerAfdrukbereik: true,
+          },
+        );
+        const { canvas, tekst } = await doc.paginas[0].teken(96);
+        document.body.append(canvas);
+        const data = canvas
+          .getContext("2d")
+          .getImageData(0, 0, canvas.width, canvas.height).data;
+        const blue = { n: 0, x: 0, y: 0 },
+          orange = { n: 0, x: 0, y: 0 };
+        for (let i = 0; i < data.length; i += 4) {
+          const x = (i / 4) % canvas.width,
+            y = Math.floor(i / 4 / canvas.width);
+          const color =
+            data[i] < 20 &&
+            data[i + 1] > 45 &&
+            data[i + 1] < 95 &&
+            data[i + 2] > 230
+              ? blue
+              : data[i] > 240 &&
+                  data[i + 1] > 115 &&
+                  data[i + 1] < 155 &&
+                  data[i + 2] < 20
+                ? orange
+                : null;
+          if (color) {
+            color.n++;
+            color.x += x;
+            color.y += y;
+          }
+        }
+        const terugval = [];
+        const pdf = await maakPdf(doc, {
+          kwaliteit: "klein",
+          vector: true,
+          terugval: (_p, reden) => terugval.push(reden),
+        });
+        reports.push({
+          name,
+          pages: doc.paginas.length,
+          blue: blue.n,
+          orange: orange.n,
+          delta: {
+            x: orange.x / orange.n - blue.x / blue.n,
+            y: orange.y / orange.n - blue.y / blue.n,
+          },
+          text: tekst.map((t) => t.tekst).join(""),
+          terugval,
+          pdf: Array.from(pdf),
+        });
+      } finally {
+        h.dispose();
+      }
+    }
+    return reports;
+  }, source);
+  for (const g of groups) {
+    assert.equal(g.pages, 1);
+    assert(
+      g.blue > 4500 && g.orange > 1800,
+      `Group colors: ${JSON.stringify({ ...g, pdf: undefined })}`,
+    );
+    // Rotated text is deliberately omitted from the fallback text recorder;
+    // the independent PDF-reader check verifies the vector text below.
+    assert.deepEqual(g.terugval, []);
+    const expected =
+      g.name === "group"
+        ? { x: 120, y: 130 }
+        : {
+            x: -120 * Math.cos(Math.PI / 6) - 130 * Math.sin(Math.PI / 6),
+            y: -120 * Math.sin(Math.PI / 6) + 130 * Math.cos(Math.PI / 6),
+          };
+    assert(
+      Math.abs(g.delta.x - expected.x) < 5 &&
+        Math.abs(g.delta.y - expected.y) < 5,
+      `Group transform: ${g.name} ${JSON.stringify(g.delta)}`,
+    );
+    await writeFile(`${out}/${g.name}.pdf`, Buffer.from(g.pdf));
+    delete g.pdf;
+  }
+  measured.groups = groups;
   assert.equal(measured.pages, 1);
   assert(measured.blauw > 4000, `Blue image pixels: ${measured.blauw}`);
   assert(measured.oranje > 10000, `Orange shape pixels: ${measured.oranje}`);

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { createServer, preview } from "vite";
+import { createHash } from "node:crypto";
 const { chromium } = await import(
   process.env.OOS_PLAYWRIGHT_MODULE ?? "playwright"
 );
@@ -21,6 +22,9 @@ const { voegTekenobjectToe, leesTekenobjecten } = await ssr.ssrLoadModule(
   "/src/rekenblad/tekenobjecten.ts",
 );
 const { Pakket } = await ssr.ssrLoadModule("/src/grafieken/pakket.ts");
+const { groepFixture } = await ssr.ssrLoadModule(
+  "/src/rekenblad/testdata/groep.ts",
+);
 const basis = new Uint8Array(await readFile("public/templates/nieuw.xlsx"));
 const png = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4//8/AAX+Av4N70a4AAAAAElFTkSuQmCC",
@@ -73,6 +77,19 @@ const stap = (naam) => {
   console.log(naam);
 };
 try {
+  const override = process.env.OOS_TEST_REKENBLAD_WASM
+    ? await readFile(process.env.OOS_TEST_REKENBLAD_WASM)
+    : null;
+  rapport.wasmSha256 = createHash("sha256")
+    .update(
+      override ?? (await readFile("vendor/rekenbladengine/xlsx_wasm_bg.wasm")),
+    )
+    .digest("hex");
+  if (override) {
+    await page.route(/\/assets\/xlsx_wasm_bg-[^/]+\.wasm(?:\?.*)?$/, (route) =>
+      route.fulfill({ body: override, contentType: "application/wasm" }),
+    );
+  }
   await page.addInitScript(() =>
     localStorage.setItem(
       "openaec-office-instellingen",
@@ -232,8 +249,29 @@ try {
   stap(
     "File links retain encoded relative paths and show a clear browser-only open message",
   );
-  await page.evaluate(async () => {
+  const formuleDoelen = await page.evaluate(async () => {
     const api = proefApis().rekenblad;
+    let queries = false;
+    try {
+      queries = Array.isArray(
+        api.handle.readCells({
+          ranges: [],
+          formulaQueries: [
+            {
+              sheetId: api.handle.sheetInfo().sheetIds[0],
+              origin: { row: 2, col: 0 },
+              target: { row: 2, col: 0 },
+              formula: '"probe"',
+            },
+          ],
+        }).formulaResults,
+      );
+    } catch (error) {
+      if (!/unknown field [`'"]formulaQueries/.test(error.message)) throw error;
+    }
+    const internalFormula = queries
+      ? '=HYPERLINK(IF(ROW()=3,"#L20","#A1"),"Internal formula")'
+      : '=HYPERLINK("#L20","Internal formula")';
     const r = await api.applyEdits({
       expectVersion: await api.version(),
       steps: [
@@ -241,19 +279,32 @@ try {
           op: "setCellInputs",
           target: {
             sheetId: api.handle.sheetInfo().sheetIds[0],
-            range: { kind: "a1", a1: "A3:B6" },
+            range: { kind: "a1", a1: "A3:B7" },
           },
           inputs: [
-            ['=HYPERLINK("#L20","Internal formula")', ""],
+            [internalFormula, ""],
             ['=HYPERLINK(B4,"File formula")', "../Linked formula.xlsx"],
-            ['=HYPERLINK(B5&"/formula","Web formula")', "https://example.com"],
+            [
+              queries
+                ? '=HYPERLINK(LOWER(B5)&"/formula","Web formula")'
+                : '=HYPERLINK(B5&"/formula","Web formula")',
+              queries ? "HTTPS://EXAMPLE.COM" : "https://example.com",
+            ],
             ['=HYPERLINK("javascript:alert(1)","Unsafe")', ""],
+            ['=HYPERLINK(UNSUPPORTED_TARGET(1),"Unavailable target")', ""],
           ],
         },
       ],
     });
     if (!r.ok) throw new Error("Formula fixture edit failed");
+    return { queries, internalFormula };
   });
+  rapport.formulaQueries = formuleDoelen.queries;
+  if (override)
+    assert(
+      formuleDoelen.queries,
+      "Pinned query engine must expose read-only expressions",
+    );
   async function ctrlKlik(row) {
     await kies(row, 0);
     const painted = await page.waitForFunction((row) => {
@@ -314,7 +365,19 @@ try {
   await link.getByRole("button", { name: "Close", exact: true }).click();
   assert.equal(
     await page.evaluate(() => proefApis().rekenblad.handle.cell(0, 2, 0).input),
-    '=HYPERLINK("#L20","Internal formula")',
+    formuleDoelen.internalFormula,
+  );
+  await ctrlKlik(6);
+  await link
+    .getByText(
+      "The link target of this formula could not be resolved. Check the formula or use an explicit hyperlink.",
+      { exact: true },
+    )
+    .waitFor();
+  await link.getByRole("button", { name: "Close", exact: true }).click();
+  assert.equal(
+    await page.evaluate(() => proefApis().rekenblad.handle.cell(0, 6, 0).input),
+    '=HYPERLINK(UNSUPPORTED_TARGET(1),"Unavailable target")',
   );
   stap(
     "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
@@ -662,6 +725,179 @@ try {
   assert.deepEqual(leesTekenobjecten(await bytes())[0].media, huge);
   stap(
     "An embedded oversized image header gets a preserved placeholder before browser decoding",
+  );
+  const groupPng = Uint8Array.from(
+    Buffer.from(
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGNgcPkPAAGLAURM0jfCAAAAAElFTkSuQmCC",
+      "base64",
+    ),
+  );
+  const grouped = groepFixture(basis, groupPng);
+  async function openGroep(bytes, name) {
+    await page
+      .locator(".office input[type=file]")
+      .first()
+      .setInputFiles({
+        name,
+        mimeType:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        buffer: Buffer.from(bytes),
+      });
+    await page
+      .getByRole("button", { name: "Shape: Nested group", exact: true })
+      .waitFor();
+  }
+  await openGroep(grouped.bytes, "GroupedObjects.xlsx");
+  let group = page.getByRole("button", {
+    name: "Shape: Nested group",
+    exact: true,
+  });
+  const picture = group.locator('img[alt="Grouped image"]');
+  await picture.waitFor();
+  await page.waitForFunction(
+    () =>
+      document.querySelector(
+        '.office-tabpaneel:not([hidden]) img[alt="Grouped image"]',
+      )?.naturalWidth > 0,
+  );
+  let gb = await group.boundingBox(),
+    pb = await picture.boundingBox();
+  assert(Math.abs(pb.x - gb.x) < 1 && Math.abs(pb.y - gb.y) < 1);
+  assert(Math.abs(pb.width - 80) < 1 && Math.abs(pb.height - 60) < 1);
+  const rotated = await group.locator('[data-group-child="2"]').boundingBox();
+  assert(
+    rotated.y + rotated.height > gb.y + gb.height + 20,
+    "Rotated descendants must remain visible beyond their group frame",
+  );
+  stap(
+    "Nested groups render images and rotated text shapes in their own coordinate spaces",
+  );
+  await group.dblclick();
+  dialog = page.getByRole("dialog", { name: "Shape", exact: true });
+  await dialog
+    .getByText("Grouped object. Move or resize the group as a whole.", {
+      exact: true,
+    })
+    .waitFor();
+  assert.equal(await dialog.getByLabel("Text", { exact: true }).count(), 0);
+  await dialog.getByLabel("Name", { exact: true }).fill("Moved group");
+  await dialog.getByLabel("Anchor cell", { exact: true }).fill("E7");
+  await dialog.getByLabel("Width (px)", { exact: true }).fill("400");
+  await dialog.getByLabel("Height (px)", { exact: true }).fill("360");
+  await dialog.getByRole("button", { name: "Apply", exact: true }).click();
+  await dialog.waitFor({ state: "hidden" });
+  group = page.getByRole("button", { name: "Shape: Moved group", exact: true });
+  await group.waitFor();
+  const moved = await bytes(),
+    mo = leesTekenobjecten(moved)[0],
+    go = leesTekenobjecten(grouped.bytes)[0];
+  assert.deepEqual(mo.groep, go.groep);
+  assert.deepEqual(mo.plek, {
+    row: 6,
+    col: 4,
+    x: 0,
+    y: 0,
+    breedte: 400,
+    hoogte: 360,
+  });
+  const gx = new Pakket(moved).lees(grouped.pad);
+  assert(
+    gx.includes(grouped.shape) &&
+      gx.includes(grouped.picture) &&
+      gx.includes(grouped.extension),
+  );
+  assert.deepEqual(
+    new Pakket(moved).bytes("custom/group-probe.bin"),
+    new Uint8Array([2, 7, 1, 8]),
+  );
+  await writeFile(`${uit}/group-moved.xlsx`, moved);
+  stap(
+    "Moving/resizing a group preserves descendant XML, image bytes and unknown extensions",
+  );
+  for (const scale of [0.5, 2, 1]) {
+    await page.evaluate(async (scale) => {
+      const r = await proefApis().rekenblad.commands.execute("zoom", { scale });
+      if (!r.ok) throw new Error("Zoom refused");
+    }, scale);
+    await page.waitForFunction((scale) => {
+      const img = document.querySelector(
+        '.office-tabpaneel:not([hidden]) img[alt="Grouped image"]',
+      );
+      return (
+        img && Math.abs(img.getBoundingClientRect().width - 160 * scale) < 1
+      );
+    }, scale);
+  }
+  stap("Nested group scaling remains correct across 50%, 100% and 200% zoom");
+  const mixed = groepFixture(basis, groupPng, { onbekend: true });
+  await openGroep(mixed.bytes, "MixedGroup.xlsx");
+  group = page.getByRole("button", {
+    name: "Shape: Nested group",
+    exact: true,
+  });
+  assert(
+    (await group.locator('[data-group-child="302"]').textContent()).includes(
+      "Unsupported star",
+    ),
+  );
+  assert(new Pakket(await bytes()).lees(mixed.pad).includes('prst="star5"'));
+  stap(
+    "An unsupported child stays a named preserved placeholder within its visible group",
+  );
+  const mirrored = groepFixture(basis, groupPng, {
+    rotatie: 30,
+    flipX: true,
+  });
+  await openGroep(mirrored.bytes, "MirroredGroup.xlsx");
+  group = page.getByRole("button", {
+    name: "Shape: Nested group",
+    exact: true,
+  });
+  await page.waitForFunction(
+    () =>
+      document.querySelector(
+        '.office-tabpaneel:not([hidden]) img[alt="Grouped image"]',
+      )?.naturalWidth > 0,
+  );
+  gb = await group.boundingBox();
+  const point = {
+    x:
+      gb.x +
+      gb.width / 2 +
+      60 * Math.cos(Math.PI / 6) +
+      60 * Math.sin(Math.PI / 6),
+    y:
+      gb.y +
+      gb.height / 2 +
+      60 * Math.sin(Math.PI / 6) -
+      60 * Math.cos(Math.PI / 6),
+  };
+  const screenshot = await page.screenshot({
+    path: `${uit}/05-mirrored-group.png`,
+  });
+  const pixel = await page.evaluate(
+    async ({ bytes, point }) => {
+      const image = await createImageBitmap(
+        new Blob([new Uint8Array(bytes)], { type: "image/png" }),
+      );
+      try {
+        const c = document.createElement("canvas");
+        c.width = c.height = 1;
+        const ctx = c.getContext("2d");
+        ctx.drawImage(image, point.x, point.y, 1, 1, 0, 0, 1, 1);
+        return Array.from(ctx.getImageData(0, 0, 1, 1).data);
+      } finally {
+        image.close();
+      }
+    },
+    { bytes: Array.from(screenshot), point },
+  );
+  assert(
+    pixel[0] < 20 && pixel[1] > 45 && pixel[1] < 95 && pixel[2] > 230,
+    "The blue source image must occupy its independently transformed location",
+  );
+  stap(
+    "A screenshot pixel confirms the combined group reflection and 30-degree rotation",
   );
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {
