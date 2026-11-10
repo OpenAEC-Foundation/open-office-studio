@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { DiaMedium, MediaInstellingen } from "./media";
+import { mediaWeergavenaam } from "./mediaNaam";
 
 export function useMediaUrl(bytes: Uint8Array | null, mime: string) {
   const [url, zet] = useState("");
@@ -26,7 +27,7 @@ export function MediaSpeler({
   gereed,
   frame,
 }: {
-  medium: Pick<DiaMedium, "bytes" | "mime" | "soort" | "naam" | "poster">;
+  medium: Pick<DiaMedium, "id" | "bytes" | "mime" | "soort" | "naam" | "poster">;
   instellingen: MediaInstellingen;
   actief?: boolean;
   stil?: boolean;
@@ -133,7 +134,7 @@ export function MediaSpeler({
     src: url || undefined,
     controls: true,
     preload: "metadata",
-    "aria-label": medium.naam,
+    "aria-label": mediaWeergavenaam(medium, t),
     ref: koppel,
     onLoadedMetadata: () => {
       const el = ref.current!;

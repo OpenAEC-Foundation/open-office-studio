@@ -24,10 +24,14 @@ try {
     { naPresentatieConversie } = await loader.ssrLoadModule(
       "/src/presentatie/odf-overgangen.ts",
     ),
+    { herstelOdfMedianamen } = await loader.ssrLoadModule(
+      "/src/presentatie/odf-medianamen.ts",
+    ),
     { voegMediaToe, leesAlleMedia, STANDAARD_MEDIA } =
       await loader.ssrLoadModule("/src/presentatie/media.ts");
   const levels = [0, 0.35, 0.9, 1],
-    note = "ODF media volume notes preserved 2026";
+    note = "ODF media volume notes preserved 2026",
+    names = { audio: 'Narration & "日本語".wav', video: "Clip <Paris> 🎬.mp4" };
   if (mode === "prepare") {
     await mkdir(out, { recursive: true });
     await initWasm(
@@ -74,11 +78,11 @@ try {
         true,
       );
     for (let i = 0; i < 4; i++) {
-      source = voegMediaToe(source, i, "volume.wav", audio, poster, {
+      source = voegMediaToe(source, i, names.audio, audio, poster, {
         ...STANDAARD_MEDIA,
         volume: levels[i],
       });
-      source = voegMediaToe(source, i, "volume.mp4", video, poster, {
+      source = voegMediaToe(source, i, names.video, video, poster, {
         ...STANDAARD_MEDIA,
         volume: levels[3 - i],
       });
@@ -90,6 +94,7 @@ try {
       JSON.stringify(
         {
           levels,
+          names,
           notes: note,
           hashes: { audio: hash(audio), video: hash(video) },
         },
@@ -118,12 +123,13 @@ try {
       native = await bytes(
         path.join(out, `returned-${ext}/source-${ext}.pptx`),
       );
-    const result = await behoudOdfMediavolume(
+    const withVolume = await behoudOdfMediavolume(
       source,
       ext,
       "pptx",
       naPresentatieConversie(source, ext, "pptx", native),
     );
+    const result = await herstelOdfMedianamen(source, ext, "pptx", withVolume);
     await initWasm(
       await readFile(
         "node_modules/@betteroffice/pptx/dist/generated/pptx_wasm_bg.wasm",
@@ -156,6 +162,10 @@ try {
         assert.equal(n.length, 1);
         const a = m[0];
         assert.equal(a.volume, kind === "audio" ? levels[i] : levels[3 - i]);
+        assert.equal(
+          a.naam,
+          n[0].naam.trim() ? n[0].naam : expected.names[kind],
+        );
         assert.equal(hash(a.bytes), expected.hashes[kind]);
         assert.deepEqual(
           [a.x, a.y, a.breedte, a.hoogte],
@@ -171,7 +181,8 @@ try {
         {
           pass: true,
           media: actual.map((a) =>
-            a.map(({ soort, volume, automatisch, herhalen }) => ({
+            a.map(({ naam, soort, volume, automatisch, herhalen }) => ({
+              naam,
               soort,
               volume,
               automatisch,
@@ -184,7 +195,7 @@ try {
       ) + "\n",
     );
     console.log(
-      `${ext}: eight exact volumes, media bytes, geometry and engine save/reopen passed`,
+      `${ext}: eight media names/volumes, bytes, geometry and engine save/reopen passed`,
     );
   } else throw new Error("Use prepare, export <ext> or import <ext>");
 } finally {

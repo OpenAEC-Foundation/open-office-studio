@@ -1,4 +1,4 @@
-name: Preserve presentation ODF transitions
+name: Preserve presentation ODF data
 on:
   pull_request:
     paths:
@@ -6,6 +6,13 @@ on:
       - "scripts/test-presentatie-odf.*"
       - "scripts/test-presentatie-odf-volume.mjs"
       - "src/presentatie/odf-mediavolume*"
+      - "src/presentatie/odf-medianamen*"
+      - "src/presentatie/mediaNaam*"
+      - "src/presentatie/DiaMedia.tsx"
+      - "src/presentatie/MediaSpeler.tsx"
+      - "src/presentatie/media.ts"
+      - "src/i18n/locales/*/presentation.json"
+      - "scripts/proef-presentatie-medianamen.mjs"
       - "src/presentatie/testbestanden/synthetic-volume.*"
       - "scripts/test-odf-13.py"
       - "src/presentatie/odf-overgangen*"
@@ -23,10 +30,23 @@ permissions:
   contents: read
 jobs:
   presentation:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 15
+    name: presentation (${{ matrix.platform }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            platform: Linux
+          - os: windows-latest
+            platform: Windows
+          - os: macos-latest
+            platform: macOS
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -37,24 +57,54 @@ jobs:
         with:
           version: 11.25.0
       - run: pnpm install --frozen-lockfile
-      - name: Install converter and pinned schema validator
+      - name: Install Linux converter
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libreoffice-impress
-          python -m pip install lxml==6.1.1
+          echo "OPENAEC_CONVERSIE_PROGRAMMA=/usr/bin/soffice" >> "$GITHUB_ENV"
+      - name: Install Windows converter
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install libreoffice-fresh --version=26.2.6 -y --no-progress
+          if ($LASTEXITCODE -notin @(0, 1641, 3010)) { exit $LASTEXITCODE }
+          $program = Join-Path $env:ProgramFiles 'LibreOffice/program/soffice.com'
+          if (-not (Test-Path -LiteralPath $program)) { throw "Converter not installed: $program" }
+          Add-Content -LiteralPath $env:GITHUB_ENV -Value "OPENAEC_CONVERSIE_PROGRAMMA=$program"
+          exit 0
+      - name: Install macOS converter
+        if: runner.os == 'macOS'
+        run: |
+          brew install --cask libreoffice
+          echo "OPENAEC_CONVERSIE_PROGRAMMA=/Applications/LibreOffice.app/Contents/MacOS/soffice" >> "$GITHUB_ENV"
+      - name: Install pinned schema validator
+        run: python -m pip install lxml==6.1.1
+      - name: Targeted media and ODF tests
+        run: pnpm exec vitest run src/presentatie/odf-medianamen.test.ts src/presentatie/mediaNaam.test.ts src/presentatie/odf-mediavolume.test.ts src/presentatie/media.test.ts src/presentatie/odf-overgangen.test.ts --configLoader runner --maxWorkers=1 --reporter=json --outputFile=.local/presentation-targeted-tests.json
+      - name: Type check and production web build
+        run: pnpm build
       - name: ODP, OTP and FODP native round trips with production corrections
         run: python scripts/test-presentatie-odf.py
       - name: Embedded media volume through ODP and OTP
         env:
           OOS_PRESENTATIE_ODF_VOLUME: "1"
         run: python scripts/test-presentatie-odf.py
+      - name: Install Chromium for supported browser route
+        if: runner.os == 'Linux'
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Browser media names, fallback, playback and save/reopen
+        if: runner.os == 'Linux'
+        run: node scripts/proef-presentatie-medianamen.mjs dist
       - name: Preserve schemas, native outputs and independent report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: presentation-odf-transitions
+          name: presentation-odf-${{ matrix.platform }}
           path: |
             .local/presentatie-odf
             .local/presentatie-odf-volume
+            .local/presentation-targeted-tests.json
+            .local/presentatie-medianamen-browser
           include-hidden-files: true
           if-no-files-found: error

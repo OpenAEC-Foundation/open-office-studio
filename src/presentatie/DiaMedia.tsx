@@ -16,6 +16,7 @@ import {
   type MediaInstellingen,
 } from "./media";
 import { MediaSpeler } from "./MediaSpeler";
+import { mediaWeergavenaam } from "./mediaNaam";
 import "./media.css";
 
 async function canvasPng(canvas: HTMLCanvasElement) {
@@ -270,7 +271,7 @@ function MediaVenster({
             {nieuw && <option value="">{t("media.newFile")}</option>}
             {begin.lijst.map((m) => (
               <option key={m.id} value={m.id}>
-                {m.naam}
+                {mediaWeergavenaam(m, t)}
               </option>
             ))}
           </select>
@@ -278,7 +279,7 @@ function MediaVenster({
       )}
       {m ? (
         <>
-          <h3>{m.naam}</h3>
+          <h3>{mediaWeergavenaam(m, t)}</h3>
           {m.bytes ? (
             <MediaSpeler
               key={`${gekozen}:${m.naam}`}
