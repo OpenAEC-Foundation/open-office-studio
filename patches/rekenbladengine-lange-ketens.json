@@ -17,7 +17,7 @@
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
   "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
   "wasmBytes": 7745388,
-  "stand": "Kandidaten voor #74: minder celarray-allocaties, canonieke lokale identiteit, stromende celopbouw en vroege vrijgave van het bronmodel. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
+  "stand": "Kandidaten voor #74: gerichte startup-optimalisaties en gedeelde celopslag bij modelkopieën. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -174,6 +174,24 @@
         {
           "pakket": "betteroffice-xlsx",
           "test": "source_cached_results"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-gedeelde-cellen.patch",
+      "patchSha256": "3d5ab6fc7393843dcf7df4a4d65fdfcd87f8fbbbc2029dd37eea5d2a8b1c193f",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx-model",
+          "lib": "workbook::"
+        },
+        {
+          "pakket": "betteroffice-xlsx-calc",
+          "lib": ""
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": ""
         }
       ]
     }
