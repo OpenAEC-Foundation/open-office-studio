@@ -400,8 +400,25 @@ async function bereidOnversleuteld(
           gevolg: i18next.t("import:report.open.macrosNotCopied"),
         },
       ];
-    const omgezet = await hulp.converteer(bytes, ext, soort, soort);
-    if (controleerPakket(omgezet, soort).datum1904)
+    let omgezet: Uint8Array;
+    let controle: ReturnType<typeof controleerPakket>;
+    try {
+      omgezet = await hulp.converteer(bytes, ext, soort, soort);
+      controle = controleerPakket(omgezet, soort);
+    } catch (oorzaak) {
+      // Een catalogusvermelding is geen garantie voor iedere bestandsvariant.
+      // Bewaar de concrete fout én geef een bruikbare route vanuit de bronapp.
+      const reden = oorzaak instanceof Error ? oorzaak.message : String(oorzaak);
+      throw new Error(
+        i18next.t("import:errors.conversionVariant", {
+          ext: ext.toUpperCase(),
+          reason: reden,
+          alternative: i18next.t(`import:errors.conversionAlternative.${soort}`),
+        }),
+        { cause: oorzaak },
+      );
+    }
+    if (controle.datum1904)
       bronregels = [...bronregels, datum1904()];
     return {
       soort,
