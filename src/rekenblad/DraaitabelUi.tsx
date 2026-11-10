@@ -8,7 +8,7 @@ import { alleenLezen, leesSelectie } from "../lint/rekenblad-opdrachten";
 import { Paneel, tekstVan } from "../lint/rekenblad-dialogen";
 import { ontleedAdres } from "../lint/rekenblad-logica";
 import { openRekenbladVenster } from "./RekenbladExtra";
-import { a1, bevat, gebied } from "./werkboekXml";
+import { a1, bevat } from "./werkboekXml";
 import { leesTabellen } from "./tabellen";
 import {
   draaitabelBereik,

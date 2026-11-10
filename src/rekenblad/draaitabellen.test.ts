@@ -3,7 +3,6 @@ import { expect, it } from "vitest";
 import { openWorkbook, type WorkbookHandle } from "@betteroffice/xlsx";
 import { Pakket } from "../grafieken/pakket";
 import { attr, kind, kinderen, leesXml } from "../grafieken/xml";
-import { werkmap } from "./werkboekXml";
 import { schrijfTabel, nieuweTabelkeuze } from "./tabellen";
 import {
   schrijfDraaitabel,
