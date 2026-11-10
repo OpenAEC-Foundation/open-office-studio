@@ -62,6 +62,8 @@ try {
         "paragraphSpans",
         "locateParagraph",
         "selectionContext",
+        "onSelectionChange",
+        "onContentChange",
       ]);
       function wrap(target) {
         if (!target) return target;
@@ -402,9 +404,18 @@ try {
   if (viewportChecks) {
     result.viewportChecks = [];
     const controleer = async (naam) => {
+      const start = performance.now();
       await page.waitForTimeout(600);
-      const r = await controleerOverlay();
-      result.viewportChecks.push({ naam, ...r });
+      let r = await controleerOverlay();
+      while (!r.equal && performance.now() - start < 10000) {
+        await page.waitForTimeout(200);
+        r = await controleerOverlay();
+      }
+      result.viewportChecks.push({
+        naam,
+        ...r,
+        settledMs: performance.now() - start,
+      });
       if (!r.equal)
         throw Error(
           `Spelling overlay differs after ${naam}: ${JSON.stringify(r)}`,

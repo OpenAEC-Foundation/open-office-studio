@@ -72,6 +72,8 @@ node scripts/meet-writer.mjs .local/writer-viewport viewport 4 --diagnostic --vi
 
 De meetconfig telt volledige viewportmetingen uitsluitend in de aparte meetbuild. De normale app bevat die teller niet. De optionele extra controles vergelijken de golflijnen met de oorspronkelijke berekening na scrollen naar het documentbegin, een ander paginabereik, een kleiner editorvlak zonder `window.resize`, herstel van de hoogte, 75% zoom, een kleiner browservenster en verbergen/tonen. De proef vereist dat het kleinere editorvlak werkelijk minder markeringen verwacht.
 
+Een vaste wachttijd van 600 ms bleek bij een herhaling met extra systeembelasting te kort voor de asynchrone herindeling na tonen. De controle wacht nu maximaal tien seconden op gelijke rechthoeken en registreert de werkelijke stabilisatietijd; een blijvende afwijking blijft een fout. Zonder runtimewijziging slaagde de herhaling: na tonen circa 1,16 s en na vensterverkleining circa 2,75 s. Dit is een gereedheidscontrole buiten de tijdmetingen en geen versoepeling van de pixelvergelijking.
+
 Bij dezelfde workload (600 alinea's, 79 pagina's, 2.400 fouten, CPU4, diagnostiek aan) waren de aantallen:
 
 | Volledige viewportmetingen | Vooraf | Eerste kandidaat | Afgeronde kandidaat |
