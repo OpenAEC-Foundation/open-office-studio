@@ -98,6 +98,8 @@ In de vaste CPU4-proef waren de registraties van zowel `onSelectionChange` als `
 node scripts/proef-writer-status.mjs .local/writer-viewport
 ```
 
-Deze aanvullende CPU4-browserproef gebruikt Nederlandstalige en Engelstalige runs in één alinea en een Franstalige volgende alinea. De indicator moet na cursorverplaatsing alle talen tonen. Na invoer wordt de opgeslagen DOCX in een verse appinstantie heropend; de tekst en taalindicator moeten behouden blijven. De vijf controles slagen. `--second-tab` onderzoekt aanvullend de gedeelde statuswinkel bij twee geopende documenten; dat is geen onderdeel van deze geslaagde heropencontrole.
+Deze aanvullende CPU4-browserproef gebruikt Nederlandstalige en Engelstalige runs in één alinea en een Franstalige volgende alinea. De indicator moet na cursorverplaatsing alle talen tonen. Na invoer wordt de opgeslagen DOCX in een verse appinstantie heropend; de tekst en taalindicator moeten behouden blijven. De vijf controles slagen. `--second-tab` houdt beide documenten open en wisselt daarna driemaal heen en terug, met verschillende cursortalen in beide tabbladen. Alle elf controles slagen op de ongewijzigde status-runtime van `0e58e6f3`, met exacte tekst en zonder JavaScript-fouten.
+
+De raw SDK-save roept ook de host-`onSave` aan, die het venster Save as opent. De proef annuleert dit venster na ontvangst van de bytes voordat hij opnieuw met de documenten werkt. Een eerdere proef liet de modal open en concludeerde daardoor ten onrechte dat de taalstatus bij het tweede document ontbrak. Issue #268 is ingetrokken; er is hiervoor geen appwijziging opgenomen.
 
 De zes gerichte aansluitingstests controleren wisselende publieke refs, stille cursorbewegingen, echte meldingen zonder dubbele polling, vervangen, openen zonder native sessie, sluiten en stoppen. TypeScript, 22 gerichte tests en de volledige suite (2.050 geslaagd, 7 bestaande skips) slagen, evenals de normale productiebuild.
