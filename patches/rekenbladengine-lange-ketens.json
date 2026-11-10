@@ -15,9 +15,9 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e",
-  "wasmBytes": 7712658,
-  "stand": "Werkstand voor #59/#67: de eerdere keten-, regio- en opslagpatches blijven aanwezig. Voorwaardelijke regels kunnen atomair met undo/redo worden vervangen, uitgebreide stijlen en gewijzigde toepassingsbereiken worden bewaard, en voorwaarden worden zonder documentmutatie op de broncel geëvalueerd. Geen wijziging van de JS/WASM-interface of snapshotlayout. Nog niet opgenomen in een gepubliceerde uitgave.",
+  "wasmSha256": "fe2c14896c586601a72719413958fd15ea4563e14ecaddbc745032bd05211af0",
+  "wasmBytes": 7743000,
+  "stand": "Verified CF/table/selection-format kernel candidate. Seven source patches, unchanged JS/WASM interface. Native CI42779147979 and explicit actual-WASM regressions passed; feature work for issue73 remains in progress.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
