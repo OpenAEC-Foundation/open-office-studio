@@ -67,7 +67,15 @@
     "unknownEncryption": "此文件使用未知的加密方式（版本 {{version}}），无法打开。",
     "encryptedGeneric": "此文件已加密。",
     "choosePassword": "请设置密码。",
-    "passwordTooLong": "密码最多 255 个字符。"
+    "passwordTooLong": "密码最多 255 个字符。",
+    "conversionVariant": "无法打开此 {{ext}} 文件。{{reason}} {{alternative}}",
+    "conversionAlternative": {
+      "docx": "请在原应用中将文件导出为 DOCX 或 RTF，然后打开导出的副本。",
+      "xlsx": "请在原应用中将文件导出为 XLSX。也可以使用 CSV，但仅保留一个工作表中的值。",
+      "pptx": "请在原应用中将文件导出为 PPTX，然后打开导出的副本。"
+    },
+    "emptyConversionTitle": "转换结果为空",
+    "emptyConversion": "此 {{ext}} 文件的转换结果中没有可见的文档内容。原文件可能为空，或此变体未能正确读取。{{alternative}}"
   },
   "password": {
     "title": "需要密码",

@@ -9,6 +9,16 @@ export default defineConfig({
       enforce: "pre",
       transform(code, id) {
         const path = id.replaceAll("\\", "/");
+        if (path.endsWith("/src/spelling/tekst/Golflijnen.tsx")) {
+          const marker = "const v = vlak.getBoundingClientRect();";
+          if (code.split(marker).length !== 2)
+            throw Error("Spelling viewport counter source changed");
+          return code.replace(
+            marker,
+            "if ((globalThis as any).__measuring) (((globalThis as any).__calls.spellingViewport ??= { count: 0 }).count++);\n" +
+              marker,
+          );
+        }
         if (path.endsWith("/src/tekst/gedeeld/opslagvoorbereiding.ts")) {
           const marker = "return voorbereiding;";
           if (code.split(marker).length !== 2)

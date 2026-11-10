@@ -58,3 +58,77 @@ De liniaal leest de instelling nu eenmaal bij het aankoppelen van die sessie en 
 De gecombineerde browsercontrole behoudt opnieuw alle 600 alinea's, het opgeslagen/heropende document en alle 92 zichtbare golflijnen. Het profiel bevat geen herhaalde projecties meer vanuit de tabafstand. Tijdens de vaste cursorreeks waren er nog één publieke documentlezing tegenover zes in de eerdere gedeelde-fontproef. Tijdens typen waren dat acht tegenover 38. Dit zijn verkennende aantallen uit verschillende runs; de totale tijden liepen door gedeelde systeembelasting sterk uiteen en onderbouwen geen algemeen snelheidspercentage.
 
 De meetconfig voor Writer bevat nu ook de Spreadsheet/Presentation-meetbrug, zodat de drie apps na één build achtereenvolgens kunnen worden getest. De proef bewaart tussenresultaten per fase en meet ook de tijd van een teksttoets tot twee animation frames. De laatste Writer-run had daarvoor een 95e percentiel van 138,5 ms. Lange frames blijven bestaan; tijdens die run was de totale typereeks 7,62 s en het maximale frame 1,1 s. Het profiel toont nog werk in de native engine, spellinggeometrie, taalinfo en de eenmalige opslagvoorbereiding. Dit is dus geen bewijs dat ieder document op iedere zwakke computer al soepel loopt.
+
+## Zichtbare pagina's hergebruiken bij selectie
+
+De selectiecontext verandert ook wanneer alleen de cursor beweegt. De overlay las daarbij telkens de DOM-rechthoeken van alle 79 pagina's opnieuw. Het zichtbare paginabereik wordt nu bewaard voor dezelfde sessie, getekende layout, document-/preview-/reservatieversie, zoom en paginatelling. Scrollen, venstergrootte en een `ResizeObserver` op het editorvlak en de paginacontainer maken het bereik opnieuw geldig. De rAF-planning bundelt gelijktijdige meldingen. De geometrie blijft afzonderlijk een afhankelijkheid van de daadwerkelijke spellingrechthoeken.
+
+Een verborgen editorvlak heeft expliciet een leeg bereik. Een onbekend bereik blijft de conservatieve terugval op alle fouten gebruiken. Daarmee projecteert het verbergen van een tabblad geen duizenden onzichtbare golflijnen. Na terugkeren meet de grootteobservatie het zichtbare bereik opnieuw.
+
+```powershell
+pnpm exec vite build --configLoader runner --config scripts/writer-performance.config.ts --outDir .local/writer-viewport
+node scripts/meet-writer.mjs .local/writer-viewport viewport 4 --diagnostic --viewport-checks
+```
+
+De meetconfig telt volledige viewportmetingen uitsluitend in de aparte meetbuild. De normale app bevat die teller niet. De optionele extra controles vergelijken de golflijnen met de oorspronkelijke berekening na scrollen naar het documentbegin, een ander paginabereik, een kleiner editorvlak zonder `window.resize`, herstel van de hoogte, 75% zoom, een kleiner browservenster en verbergen/tonen. De proef vereist dat het kleinere editorvlak werkelijk minder markeringen verwacht.
+
+Een vaste wachttijd van 600 ms bleek bij een herhaling met extra systeembelasting te kort voor de asynchrone herindeling na tonen. De controle wacht nu maximaal tien seconden op gelijke rechthoeken en registreert de werkelijke stabilisatietijd; een blijvende afwijking blijft een fout. Zonder runtimewijziging slaagde de herhaling: na tonen circa 1,16 s en na vensterverkleining circa 2,75 s. Dit is een gereedheidscontrole buiten de tijdmetingen en geen versoepeling van de pixelvergelijking.
+
+Bij dezelfde workload (600 alinea's, 79 pagina's, 2.400 fouten, CPU4, diagnostiek aan) waren de aantallen:
+
+| Volledige viewportmetingen | Vooraf | Eerste kandidaat | Afgeronde kandidaat |
+| --- | ---: | ---: | ---: |
+| 23 tekentoetsen | 52 | 3 | 11 |
+| 30 cursorbewegingen | 30 | 0 | 0 |
+| Scrollreeks | 32 | 23 | 22 |
+
+Het aantal layoutwijzigingen tijdens typen hangt af van batching en systeembelasting. Beide kandidaten vermijden alle 30 extra paginascans bij de vaste cursorreeks. De afgeronde kandidaat behield alle tekst tijdens invoer en normaal SDK-opslaan/heropenen; alle 92 zichtbare golflijnen en alle acht extra viewportcontroles waren gelijk, zonder JavaScript-fouten. Dit controleert geen productie-Ctrl+S in offline modus; de voorbereiding van de documentworker wordt afzonderlijk gerepareerd.
+
+De totale cursorreeksen liepen uiteen van 5,52 tot 11,64 seconden, tegenover 7,21 seconden vooraf. Dat onderbouwt geen algemeen tijdspercentage. De winst betreft aantoonbaar vermeden DOM-metingen; native cursorwerk en lange frames blijven verdere aandacht vragen. TypeScript, de 25 gerichte spellingtests en de volledige suite (2.044 geslaagd, 7 bestaande skips) slaagden; de volledige suite ging vooraf aan de extra verborgen-vlakcontrole.
+
+## Status en lint volgen dezelfde native sessie
+
+`TekstInfo` en `useEditorTik` koppelden bij iedere nieuwe publieke ref opnieuw hun selectie- en inhoudsluisteraars aan. Elke koppeling gaf ook een kunstmatige selectiemelding, met documentlezingen of liniaal-/lintwerk tot gevolg. `volgEditorWijzigingen` vergelijkt nu de onderliggende Yrs-sessie. Een daadwerkelijk andere sessie, ook achter dezelfde publieke ref, vervangt de luisteraars; sluiten en stoppen ruimen ze op. Achtergebleven oude callbacks worden genegeerd.
+
+Alleen de eventkoppeling stabiliseren was onvoldoende: de SDK publiceert niet elke cursorbeweging binnen gelijk opgemaakte tekst. Een browserproef over een taalgrens binnen dezelfde alinea ontdekte daardoor een achterblijvende taalindicator. De bestaande polls van 600/700 ms lezen nu ook de kleine native selectie (anchor/head). Alleen een veranderde positie geeft een extra selectiemelding. Een echte SDK-melding werkt die momentopname meteen bij en veroorzaakt dus geen dubbele pollmelding. De poll projecteert geen document; inhoud en opmaak blijven via de bestaande events worden verwerkt. Er is geen versiecache voor documentmetadata toegevoegd.
+
+In de vaste CPU4-proef waren de registraties van zowel `onSelectionChange` als `onContentChange` achtereenvolgens 16, 8 en 14 tijdens typen/cursor/scrollen. De afgeronde kandidaat registreerde in die fasen geen luisteraars opnieuw. Publieke documentlezingen gingen in deze runs van 9/7/8 naar 7/1/0. De native selectielezingen kostten samen circa 13 ms voor de drie fasen. Door sterk wisselende systeembelasting zijn de totale tijden en toetslatenties geen bewijs voor een algemeen snelheidspercentage.
+
+```powershell
+node scripts/proef-writer-status.mjs .local/writer-viewport
+```
+
+Deze aanvullende CPU4-browserproef gebruikt Nederlandstalige en Engelstalige runs in één alinea en een Franstalige volgende alinea. De indicator moet na cursorverplaatsing alle talen tonen. Na invoer wordt de opgeslagen DOCX in een verse appinstantie heropend; de tekst en taalindicator moeten behouden blijven. De vijf controles slagen. `--second-tab` houdt beide documenten open en wisselt daarna driemaal heen en terug, met verschillende cursortalen in beide tabbladen. Alle elf controles slagen op de ongewijzigde status-runtime van `0e58e6f3`, met exacte tekst en zonder JavaScript-fouten.
+
+De raw SDK-save roept ook de host-`onSave` aan, die het venster Save as opent. De proef annuleert dit venster na ontvangst van de bytes voordat hij opnieuw met de documenten werkt. Een eerdere proef liet de modal open en concludeerde daardoor ten onrechte dat de taalstatus bij het tweede document ontbrak. Issue #268 is ingetrokken; er is hiervoor geen appwijziging opgenomen.
+
+De zes gerichte aansluitingstests controleren wisselende publieke refs, stille cursorbewegingen, echte meldingen zonder dubbele polling, vervangen, openen zonder native sessie, sluiten en stoppen. TypeScript, 22 gerichte tests en de volledige suite (2.050 geslaagd, 7 bestaande skips) slagen, evenals de normale productiebuild.
+
+## Cursornavigatie leest de huidige alinea (#279)
+
+Het vervolgprofiel wees circa 3,09 seconden native tijd toe aan `paragraphs()` vanuit `YrsInput.navigate` van SDK 0.5.1. De handler las voor iedere horizontale cursorbeweging alle alineateksten en -eigenschappen van het verhaal. Ook Home/End lazen die tekst, hoewel deze takken uitsluitend de bestaande posities/lengtes gebruiken. Een gerichte teller op de bestaande sessie bevestigde 30 volledige lezingen voor 30 pijltjestoetsen.
+
+Een afzonderlijke, getypeerde adapter gebruikt nu `storySegmentUnits(verhaal, [index])` voor de benodigde ruwe cursoralinea. De afsluitende alineamarkering moet bij het verwachte id horen; anders blijft de oorspronkelijke volledige leesroute beschikbaar. De tekst wordt op dezelfde manier als Rusts `paragraphs()` samengesteld uit de tekstsegmenten. Bijgehouden verwijderingen blijven daardoor aanwezig en embeds blijven op dezelfde manier buiten deze string. Er is geen tekstcache. De invoerwachtrij en bestaande teken-/woordnavigatie verwerken daarna dezelfde tekst.
+
+Home/End en bewegingen vanaf de alineagrens lezen geen tekst. Bij één alinea blijft de oorspronkelijke compacte tekstprojectie in gebruik: een native API-matrix liet bij één alinea met 200 opgemaakte runs meer werk voor de volledige ruwe segmentgegevens zien. Zo krijgt dit geval geen extra formatteringspayload. Documenten met meerdere alinea's gebruiken de beperkte leesroute.
+
+De aparte Vite-plugin controleert de SHA256 van de oorspronkelijke SDK-entry en één unieke navigatiebron, ook na de bestaande adapters. Een gewijzigde SDK stopt de build totdat de aansluiting opnieuw is beoordeeld. De eerdere worker-/tabel-/versieadapters zijn niet aangepast. De nieuwe helper wordt in de gewone build opgenomen; de diagnostiek blijft uitsluitend in de browserproef.
+
+```powershell
+node scripts/meet-writer.mjs .local/writer-viewport navigatie 4 --diagnostic --native-diagnostic --viewport-checks
+```
+
+`--native-diagnostic` telt en meet vier bestaande native leesmethoden op de testsessie. De proef controleert nu ook dat 30 ArrowLeft-toetsen de ingeklapte selectie exact 30 posities naar links verplaatsen in deze ASCII-fixture. De teller omvat de synchrone native aanroep en de bestaande JSON-projectie.
+
+| CPU4, 600 alinea's | Volledige alinealezingen | Lezingen van één unit | Tijd in deze leesmethoden | Totale cursorreeks |
+| --- | ---: | ---: | ---: | ---: |
+| Oud A1 | 30 | 0 | 5.412,5 ms | 11,82 s |
+| Kandidaat B1 | 0 | 30 | 16,3 ms | 2,31 s |
+| Afgerond B2 | 0 | 30 | 28,2 ms | 6,23 s |
+| Oud A2 | 30 | 0 | 5.252,2 ms | 11,62 s |
+
+B1 ging vooraf aan de extra bescherming voor een rijk opgemaakte enkele alinea en de expliciete cursorassertie; de gemeten route in dit document met 600 alinea's is dezelfde. B2 en A2 controleren ook de exacte cursorpositie. Alle vier bewaren de 600 teksten tijdens invoer en SDK-opslaan/heropenen en alle 92 zichtbare spellingrechthoeken. B1/B2/A2 slagen ook voor de acht extra viewportcontroles. Er waren geen JavaScript-fouten.
+
+De afgeronde kandidaat slaagt tevens bij CPU8: 30 unit-lezingen nemen samen circa 33,0 ms en de cursorreeks duurt 5,72 s. De cursorpositie, alle teksten, de opslag/heropening, 92 spellingrechthoeken en acht viewportgevallen blijven exact gelijk. De wisselende totale typ-, cursor- en scrolltijden laten nog lange frames zien; deze beperkte leesoptimalisatie is geen garantie dat de volledige app al soepel draait op zwakke hardware.
+
+Negentien gerichte tests controleren bronbewaking en compositie, de werkelijk gegenereerde leesexpressie, terugval en de tekst uit de echte engine: Unicode/combinerende tekens, revisies met Undo/Redo, kop-/voetteksten, voet-/eindnoten en geneste tabelcellen. Die lezingen wijzigen de documentversie niet. Ook de elf taal-/opslag-/tabwisselcontroles slagen op deze nieuwe runtime. TypeScript, de normale productiebuild en de volledige suite slagen met 2.069 tests en 7 bestaande skips. De productieassets bevatten geen meetbrug of diagnostische globals.

@@ -45,6 +45,9 @@ import { leesAlleAnimaties, type Animatie } from "./animaties";
 import { useAnimatieVoorstelling } from "./useAnimatieVoorstelling";
 import { useOvergangGeluid } from "./useOvergangGeluid";
 import { leesAlleMedia } from "./media";
+import { leesAlleRijkeNotities } from "./notitiesPakket";
+import { RijkeNotitieWeergave } from "./RijkeNotitieBewerker";
+import { notitieTekst } from "./notitiesModel";
 import { DiaMediaVoorstelling } from "./DiaMediaVoorstelling";
 import {
   beginStaat,
@@ -170,9 +173,9 @@ export function Voorstelling({
   const aantal = deck.slides.length;
   const verhouding = deck.widthEmu / Math.max(1, deck.heightEmu);
   const verborgen = useMemo(() => verborgenDias(api), [api]);
-  const { overgangen, geluiden, animaties, media } = useMemo(() => {
-    try { const bytes = api.handle.save(); return { ...leesOvergangGegevens(bytes), animaties: leesAlleAnimaties(bytes), media: leesAlleMedia(bytes) }; }
-    catch { return { overgangen: [], geluiden: [], animaties: [], media: [] }; }
+  const { overgangen, geluiden, animaties, media, rijkeNotities } = useMemo(() => {
+    try { const bytes = api.handle.save(); return { ...leesOvergangGegevens(bytes), animaties: leesAlleAnimaties(bytes), media: leesAlleMedia(bytes), rijkeNotities: leesAlleRijkeNotities(bytes) }; }
+    catch { return { overgangen: [], geluiden: [], animaties: [], media: [], rijkeNotities: [] }; }
   }, [api]);
   const [staat, setStaat] = useState<VoorstellingStaat>(() =>
     beginStaat(startDia(verzoek.vanafBegin, huidig, aantal, verborgen), aantal),
@@ -497,6 +500,7 @@ export function Voorstelling({
   );
 
   const notities = deck.slides[staat.index]?.notes?.trim() ?? "";
+  const rijkeNotitie = rijkeNotities[staat.index];
   const loopt = timer.sinds !== null;
   const presentator = (
     <div className="presentator" data-thema="donker">
@@ -633,7 +637,9 @@ export function Voorstelling({
               </button>
             </div>
             <div className="presentator-notitietekst" style={{ fontSize: notitiegrootte }} tabIndex={0}>
-              {notities || <span className="presentator-leeg">{t("show.noNotes")}</span>}
+              {rijkeNotitie && notitieTekst(rijkeNotitie).trim()
+                ? <RijkeNotitieWeergave doc={rijkeNotitie} />
+                : notities || <span className="presentator-leeg">{t("show.noNotes")}</span>}
             </div>
           </section>
         </aside>

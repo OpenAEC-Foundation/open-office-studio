@@ -107,7 +107,10 @@ describe("bladen (#61)", () => {
     ]);
     const naam = kopieNaam("Blad 1", h.sheetInfo().sheetNames);
     expect(naam).toBe("Blad 1 (2)");
-    await bladKopieren(api, 0, naam);
+    await bladKopieren(api, 0, naam, {
+      bron: 0, versie: h.version(),
+      herlaad: { bytes: async () => h.save(), vervang: bytes => { h = xlsx.openWorkbook(bytes); api = nepEditor(h); } },
+    });
     expect(h.sheetInfo().sheetNames).toEqual(["Blad 1 (2)", "Blad 1"]);
     expect(waarde(h, 0, "A1").displayText).toBe("Titel");
     expect(waarde(h, 0, "B2").formula).toBe("A2*2");
@@ -126,9 +129,12 @@ describe("bladen (#61)", () => {
 
 describe("bladen in een bestaand bestand (#61)", () => {
   it("kopieert Materiaaloverzicht (vaste titels, samenvoegingen, breedten) naar het einde", async () => {
-    const m = xlsx.openWorkbook(readFileSync("docs/voorbeelden/Materiaaloverzicht.xlsx"));
-    const mApi = nepEditor(m);
-    await bladKopieren(mApi, 1, "Kopie");
+    let m = xlsx.openWorkbook(readFileSync("docs/voorbeelden/Materiaaloverzicht.xlsx"));
+    let mApi = nepEditor(m);
+    await bladKopieren(mApi, 1, "Kopie", {
+      bron: 0, versie: m.version(),
+      herlaad: { bytes: async () => m.save(), vervang: bytes => { m = xlsx.openWorkbook(bytes); mApi = nepEditor(m); } },
+    });
     expect(m.sheetInfo().sheetNames).toEqual(["Materialen", "Kopie"]);
     expect(m.mergedRanges(1, "A1:XFD1048576")).toHaveLength(m.mergedRanges(0, "A1:XFD1048576").length);
     for (const c of [0, 1, 7]) expect(kolomPx(mApi, 1, c)).toBeCloseTo(kolomPx(mApi, 0, c), 1);

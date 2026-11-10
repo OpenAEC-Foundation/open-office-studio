@@ -86,10 +86,12 @@ import { DiaTabellen } from "../presentatie/DiaTabellen";
 import { DiaHergebruik } from "../presentatie/DiaHergebruik";
 import { DiaAfbeeldingen } from "../presentatie/DiaAfbeeldingen";
 import { DiaGroepen } from "../presentatie/DiaGroepen";
+import { DiaOpmaakKopie } from "../presentatie/DiaOpmaakKopie";
 import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
 import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
 import { DiaOvergangen } from "../presentatie/DiaOvergangen";
 import { DiaAnimaties } from "../presentatie/DiaAnimaties";
+import { DiaDiagrammen } from "../presentatie/DiaDiagrammen";
 import { DiaMedia } from "../presentatie/DiaMedia";
 import "./presentatie.css";
 
@@ -630,6 +632,7 @@ export function PresentatieRibbon({
                 </div>
               </Groep>
               <GrafiekGroep g={grafieken} uit={!acties.bewerkbaar} />
+              <Groep naam={tp("diagrams.title")}><DiaDiagrammen /></Groep>
               <Groep naam={t("presentation:tables.title")}><DiaTabellen /></Groep>
               <Groep naam={t("presentation.groups.text")}>
                 <DiaVoetteksten />
@@ -759,6 +762,7 @@ export function PresentatieRibbon({
               <ObjectUitlijnen acties={acties} />
               <Groep naam={t("presentation.groups.object")}><DiaObjecten /></Groep>
               <Groep naam={t("presentation.groups.object")}><DiaGroepen /></Groep>
+              <Groep naam={t("presentation.groups.object")}><DiaOpmaakKopie /></Groep>
               <Groep naam={t("presentation.groups.object")}>
                 <DiaKnop
                   naam={t("presentation.commands.delete")}

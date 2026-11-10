@@ -36,13 +36,57 @@ describe("read-only HYPERLINK destinations", () => {
     expect(h.historyState()).toEqual(history);
     expect(h.cell(0, 0, 0).input).toBe(formula);
   });
-  it.each([
-    '=HYPERLINK(LOWER(B1),"Unsupported")',
-    '=HYPERLINK(B1:C1,"Range")',
-    "=SUM(1,2)",
-    "Plain text",
-  ])("does not guess an unsupported target in %s", (formula) => {
-    const h = boek(formula);
-    expect(formuleKoppeling(h, 0, 0, 0)).toBeNull();
+  it.each(['=HYPERLINK(B1:C1,"Range")', "=SUM(1,2)", "Plain text"])(
+    "does not guess an unsupported target in %s",
+    (formula) => {
+      const h = boek(formula);
+      expect(formuleKoppeling(h, 0, 0, 0)).toBeNull();
+    },
+  );
+  it("uses native read-only expressions when the loaded engine supports them", () => {
+    const h = boek('=HYPERLINK(LOWER(B1),"Nested function")');
+    let queries = false;
+    try {
+      const request = {
+        ranges: [],
+        formulaQueries: [
+          {
+            sheetId: h.sheetInfo().sheetIds[0],
+            origin: { row: 0, col: 0 },
+            target: { row: 0, col: 0 },
+            formula: '"probe"',
+          },
+        ],
+      };
+      queries = Array.isArray(
+        (h.readCells(request) as { formulaResults?: unknown[] }).formulaResults,
+      );
+    } catch (error) {
+      expect((error as Error).message).toMatch(
+        /unknown field [`'"]formulaQueries/,
+      );
+    }
+    const before = h.save(),
+      version = h.version(),
+      history = h.historyState();
+    expect(formuleKoppeling(h, 0, 0, 0)).toBe(
+      queries ? "https://example.com" : null,
+    );
+    expect(h.version()).toBe(version);
+    expect(h.historyState()).toEqual(history);
+    expect(h.save()).toEqual(before);
+  });
+  it("does not bypass a native evaluation budget with the literal fallback", () => {
+    const h = boek('=HYPERLINK("https://example.com","Link")');
+    const reader = {
+      cell: h.cell.bind(h),
+      sheetInfo: h.sheetInfo.bind(h),
+      readCells: () => ({
+        ...h.readCells({ ranges: [] }),
+        formulaResults: [{ kind: "text", value: "https://example.com" }],
+        formulaLimited: [0],
+      }),
+    } as Pick<WorkbookHandle, "cell" | "sheetInfo" | "readCells">;
+    expect(formuleKoppeling(reader, 0, 0, 0)).toBeNull();
   });
 });

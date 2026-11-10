@@ -24,8 +24,11 @@ import {
   visueleRegel,
   type VisueleCel,
 } from "./voorwaardelijke-visueel";
+import { RANDEN, type DxfStijl } from "./voorwaardelijke-dxf";
+import { voorwaardelijkeRanden } from "./voorwaardelijke-randen";
+import { registreerRenderProjectie } from "./renderprojectie";
 
-type Stijl = VoorwaardelijkeRegel["format"];
+type Stijl = DxfStijl;
 interface Formulevraag {
   sheetId: string;
   origin: { row: number; col: number };
@@ -43,8 +46,32 @@ interface Taak {
     index: number;
     regel: Stijl;
     stop: boolean;
+    priority: number;
     visueel?: VisueleCel;
   }[];
+}
+/** Respect both native per-formula and aggregate query payload limits. */
+function* vraagGroepen<T>(
+  waarden: T[],
+  maak: (waarde: T) => Formulevraag,
+  max = 4096,
+) {
+  let groep: { waarde: T; vraag: Formulevraag }[] = [],
+    bytes = 0;
+  const encoder = new TextEncoder();
+  for (const waarde of waarden) {
+    const vraag = maak(waarde),
+      lengte = encoder.encode(vraag.formula).length;
+    if (lengte > 8192) continue;
+    if (groep.length && (groep.length >= max || bytes + lengte > 900000)) {
+      yield groep;
+      groep = [];
+      bytes = 0;
+    }
+    groep.push({ waarde, vraag });
+    bytes += lengte;
+  }
+  if (groep.length) yield groep;
 }
 const voorbereid = new WeakSet<WorkbookHandle>();
 export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
@@ -52,6 +79,8 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
   voorbereid.add(h);
   let versie = "";
   const stijlen = new Map<string, Stijl>();
+  const getallen = new Map<string, string>();
+  const numeriek = new Map<string, number>();
   const visueel = new Map<number, Map<string, VisueleCel>>();
   const schalen = new Map<string, Map<string, VisueleCel>>();
   function projecteer(frame: DisplayList, blad: number): DisplayList {
@@ -64,6 +93,8 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
     if (versie !== sleutel) {
       versie = sleutel;
       stijlen.clear();
+      getallen.clear();
+      numeriek.clear();
       visueel.clear();
       schalen.clear();
     }
@@ -135,6 +166,7 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
                 index: -1,
                 regel: v.fill ? { fill: v.fill } : {},
                 stop: false,
+                priority: regel.priority,
                 visueel: v,
               });
             continue;
@@ -145,8 +177,9 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
           const formula = formuleVoorRegel(regel);
           taak.regels.push({
             index: vragen.length,
-            regel: regel.format,
+            regel: regel.weergave ?? regel.format,
             stop: regel.stopIfTrue,
+            priority: regel.priority,
           });
           vragen.push({
             sheetId,
@@ -158,10 +191,13 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
         taken.set(key, taak);
       }
     const resultaten: boolean[] = [];
-    for (let offset = 0; offset < vragen.length; offset += 4096) {
+    for (const groep of vraagGroepen(
+      vragen.map((vraag, index) => ({ vraag, index })),
+      (v) => v.vraag,
+    )) {
       const request = {
         ranges: [],
-        formulaQueries: vragen.slice(offset, offset + 4096),
+        formulaQueries: groep.map((v) => v.vraag),
         nowSerial: nu,
       };
       const r = h.readCells(request) as FormuleUitkomst;
@@ -170,7 +206,7 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
         throw new Error("The conditional formula evaluation kernel is missing");
       const beperkt = new Set(r.formulaLimited);
       r.formulaResults.forEach((v, i) => {
-        resultaten[offset + i] =
+        resultaten[groep[i].waarde.index] =
           !beperkt.has(i) && v.kind === "bool" && v.value === true;
       });
     }
@@ -188,12 +224,22 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
           "fontColor",
           "bold",
           "italic",
+          "underline",
+          "strike",
+          "numFmt",
         ] as const)
           if (
             stijl[eigenschap] === undefined &&
             r.regel[eigenschap] !== undefined
           )
             Object.assign(stijl, { [eigenschap]: r.regel[eigenschap] });
+        for (const kant of RANDEN) {
+          const edge = r.regel.borders?.[kant];
+          if (edge && stijl.borders?.[kant] === undefined) {
+            stijl.borders ??= {};
+            stijl.borders[kant] = { ...edge, priority: r.priority };
+          }
+        }
         if (r.visueel) {
           const a1 = adres(taak),
             bestaand = beelden.get(a1) ?? {};
@@ -203,14 +249,56 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
       }
       stijlen.set(key, stijl);
     }
+    const formatTaken = [...taken].filter(
+      ([key]) => stijlen.get(key)?.numFmt !== undefined,
+    );
+    for (const groep of vraagGroepen(
+      formatTaken,
+      ([key, cel]) => {
+        const code = stijlen.get(key)!.numFmt!.replaceAll('"', '""'),
+          a1 = adres(cel);
+        return {
+          sheetId,
+          origin: { row: cel.row, col: cel.col },
+          target: { row: cel.row, col: cel.col },
+          formula: `IF(OR(ISNUMBER(${a1}),ISTEXT(${a1})),TEXT(${a1},"${code}"),${a1})`,
+        };
+      },
+      256,
+    )) {
+      const request = {
+        ranges: [],
+        formulaQueries: groep.map((v) => v.vraag),
+        nowSerial: nu,
+      };
+      const r = h.readCells(request) as FormuleUitkomst;
+      if (!r.ok) throw new Error(r.failure.message);
+      const waarden = h.readCells({
+        ranges: groep.map(({ waarde: [, cel] }) => ({
+          sheetId,
+          range: { kind: "a1" as const, a1: adres(cel) },
+        })),
+      });
+      if (!waarden.ok) throw new Error(waarden.failure.message);
+      const beperkt = new Set(r.formulaLimited);
+      r.formulaResults?.forEach((v, i) => {
+        if (!beperkt.has(i) && v.kind === "text" && typeof v.value === "string")
+          getallen.set(groep[i].waarde[0], v.value);
+        const value = waarden.ranges[i]?.cells[0]?.[0]?.value;
+        if (value?.kind === "number")
+          numeriek.set(groep[i].waarde[0], value.value);
+      });
+    }
     const extra: DrawCmd[] = [];
+    const randCellen: Parameters<typeof voorwaardelijkeRanden>[1] = [];
     const getekend = new Set<string>();
     for (const row of rijen)
       for (const col of kolommen) {
         const cel = anker(row, col),
           key = `${blad}:${cel.row}:${cel.col}`,
           stijl = stijlen.get(key);
-        if (!stijl?.fill || getekend.has(key)) continue;
+        if (!stijl || (!stijl.fill && !stijl.borders) || getekend.has(key))
+          continue;
         getekend.add(key);
         const merge = merges.find(
           (m) => m.start.row === cel.row && m.start.col === cel.col,
@@ -223,7 +311,12 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
               right: merge.end.col,
             })
           : cellRect(grid, cel.row, cel.col);
-        if (r) extra.push({ op: "fillRect", ...r, color: stijl.fill, clip: r });
+        if (r) {
+          if (stijl.fill)
+            extra.push({ op: "fillRect", ...r, color: stijl.fill, clip: r });
+          if (stijl.borders)
+            randCellen.push({ rect: r, borders: stijl.borders });
+        }
       }
     const commands = frame.commands.map((c) => {
       if (c.op !== "text" || c.chart || c.ghost || !c.clip) return c;
@@ -240,13 +333,36 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
       );
       if (!pos) return c;
       const at = anker(pos.row, pos.col),
-        stijl = stijlen.get(`${blad}:${at.row}:${at.col}`);
+        key = `${blad}:${at.row}:${at.col}`,
+        stijl = stijlen.get(key);
       if (!stijl) return c;
       return {
         ...c,
         ...(stijl.fontColor ? { color: stijl.fontColor } : {}),
         ...(stijl.bold === undefined ? {} : { bold: stijl.bold }),
         ...(stijl.italic === undefined ? {} : { italic: stijl.italic }),
+        ...(stijl.underline === undefined
+          ? {}
+          : { underline: stijl.underline }),
+        ...(stijl.strike === undefined ? {} : { strike: stijl.strike }),
+        ...(getallen.has(key)
+          ? {
+              text: getallen.get(key)!,
+              numberFormat: numeriek.has(key)
+                ? {
+                    ...c.numberFormat,
+                    left: c.numberFormat?.left ?? c.clip.x + 3,
+                    width: c.numberFormat?.width ?? Math.max(0, c.clip.w - 5),
+                    parts: [],
+                    overflow: true,
+                    general:
+                      stijl.numFmt?.trim().toLowerCase() === "general"
+                        ? numeriek.get(key)
+                        : undefined,
+                  }
+                : undefined,
+            }
+          : {}),
       };
     });
     // Replace base cell fills; preserve the original values, borders and geometry.
@@ -256,20 +372,18 @@ export function bereidVoorwaardelijkeWeergave(h: WorkbookHandle): void {
       if (commands[i].op === "fillRect" || commands[i].op === "patternFill")
         insertion = i + 1;
     commands.splice(insertion, 0, ...extra);
-    return tekenVisueleCellen({ ...frame, commands }, beelden);
+    const info = h.sheetInfo();
+    return tekenVisueleCellen(
+      {
+        ...frame,
+        commands: voorwaardelijkeRanden(
+          { ...frame, commands },
+          randCellen,
+          Number(info.frozenRows > 0) + Number(info.frozenCols > 0),
+        ),
+      },
+      beelden,
+    );
   }
-  const tekenen = h.displayList.bind(h),
-    profiel = h.displayListProfiled.bind(h),
-    afdruk = h.printDisplayList.bind(h);
-  h.displayList = (viewport) =>
-    projecteer(tekenen(viewport), h.sheetInfo().activeSheet);
-  h.displayListProfiled = (viewport) => {
-    const basis = profiel(viewport);
-    return {
-      ...basis,
-      displayList: projecteer(basis.displayList, h.sheetInfo().activeSheet),
-    };
-  };
-  h.printDisplayList = (sheet, range, metrics, gridlines) =>
-    projecteer(afdruk(sheet, range, metrics, gridlines), sheet);
+  registreerRenderProjectie(h, 10, projecteer);
 }

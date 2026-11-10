@@ -14,6 +14,7 @@ import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { Actie, RibbonFout } from "../../Ribbon";
 import { useEditorApi } from "../../lint/editorApi";
 import { fout } from "./engine";
+import { volgEditorWijzigingen } from "./editorvolgen";
 import "./tekst-word.css";
 
 /**
@@ -39,26 +40,7 @@ export function useUitvoeren() {
 export function useEditorTik() {
   const api = useEditorApi().tekst;
   const [tik, verhoog] = useReducer((n: number) => n + 1, 0);
-  useEffect(() => {
-    let opruimen: (() => void)[] = [];
-    let gekoppeld: DocxEditorRef | null = null;
-    const koppel = () => {
-      const ref = api();
-      if (ref === gekoppeld) return;
-      opruimen.forEach((weg) => weg());
-      opruimen = [];
-      gekoppeld = ref;
-      if (!ref) return;
-      opruimen = [ref.onSelectionChange(() => verhoog()), ref.onContentChange(() => verhoog())];
-      verhoog();
-    };
-    koppel();
-    const poging = setInterval(koppel, 700);
-    return () => {
-      clearInterval(poging);
-      opruimen.forEach((weg) => weg());
-    };
-  }, [api]);
+  useEffect(() => volgEditorWijzigingen(api, () => verhoog(), 700), [api]);
   return tik;
 }
 

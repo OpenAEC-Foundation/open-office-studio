@@ -67,7 +67,15 @@
     "unknownEncryption": "このファイルは不明な暗号化 (バージョン {{version}}) を使用しているため、開けません。",
     "encryptedGeneric": "このファイルは暗号化されています。",
     "choosePassword": "パスワードを指定してください。",
-    "passwordTooLong": "パスワードは 255 文字以内で指定してください。"
+    "passwordTooLong": "パスワードは 255 文字以内で指定してください。",
+    "conversionVariant": "This {{ext}} file could not be opened. {{reason}} {{alternative}}",
+    "conversionAlternative": {
+      "docx": "Export the file from its original app as DOCX or RTF, then open that copy.",
+      "xlsx": "Export the file from its original app as XLSX. CSV is also possible, but keeps only the values from one sheet.",
+      "pptx": "Export the file from its original app as PPTX, then open that copy."
+    },
+    "emptyConversionTitle": "Empty conversion result",
+    "emptyConversion": "The conversion of this {{ext}} file contains no visible document content. The original may be empty, or this variant may not be read correctly. {{alternative}}"
   },
   "password": {
     "title": "パスワードが必要です",

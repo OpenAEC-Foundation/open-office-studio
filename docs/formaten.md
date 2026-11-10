@@ -1,12 +1,49 @@
-# Bestandsformaten in 0.4.3
+# Bestandsformaten
 
-DOCX, XLSX en PPTX werken rechtstreeks in de editors. De andere invoerextensies hieronder worden in de desktopversie lokaal geconverteerd. Daarvoor moet een kantoorruntime (LibreOffice) geïnstalleerd zijn. De app zoekt die zelf; zie [Kantoorruntime](#kantoorruntime-conversieprogramma). Een catalogusvermelding betekent dat conversie geprobeerd kan worden; niet dat iedere variant getest of verliesvrij is.
+DOCX, XLSX en PPTX werken rechtstreeks in de editors. Eenvoudige tekst- en tabelbestanden hebben een eigen import; OOXML-varianten hebben eigen pakketbehandeling. De overige invoerformaten worden in de desktopversie lokaal geconverteerd. Daarvoor moet een kantoorruntime (LibreOffice) geïnstalleerd zijn. De app zoekt die zelf; zie [Kantoorruntime](#kantoorruntime-conversieprogramma). Een catalogusvermelding betekent dat conversie geprobeerd kan worden; niet dat iedere variant getest of verliesvrij is.
 
-| Module | Rechtstreeks | Via lokale conversie openen |
+| Module | Rechtstreeks | Overige invoer |
 |---|---|---|
-| Tekst | DOCX | DOC, DOT, DOTX, DOCM, DOTM, ODT, OTT, FODT, RTF, TXT, HTM, HTML, XHTML, ABW, ZABW, SXW, STW, WPD, WPS, WRI, HWP, LWP, PAGES, FB2, EPUB, PSW, SDW, UOT |
+| Tekst | DOCX | DOC, DOT, DOTX, DOCM, DOTM, ODT, OTT, FODT, RTF, TXT, HTM, HTML, XHTML, MD, MARKDOWN, ABW, ZABW, SXW, STW, WPD, WPS, WRI, HWP, LWP, PAGES, FB2, EPUB, PSW, SDW, UOT |
 | Rekenblad | XLSX | XLS, XLT, XLTX, XLSM, XLTM, XLSB, ODS, OTS, FODS, CSV, TSV, TAB, DIF, SLK, SYLK, SXC, STC, DBF, GNUMERIC, GNM, NUMBERS, WK1, WK3, WK4, WKS, 123, WB1, WB2, WQ1, WQ2, ET, ETT, UOS |
 | Presentatie | PPTX | PPT, PPS, POT, PPTM, POTM, PPSX, POTX, ODP, OTP, FODP, SXI, STI, DPS, DPT, KEY, SDD, UOP |
+
+Deze tabel groepeert bestandskeuzes; niet elke keuze vereist conversie. TXT,
+Markdown, HTML, RTF, CSV/TSV/TAB gebruiken de eigen import; OOXML-sjablonen,
+macrovormen en PPSX/POTX hebben eigen pakketbehandeling. IFCX staat in alle drie
+modules: de gevalideerde dossierinhoud bepaalt de editor.
+
+## Dekking en oudere varianten (#43)
+
+Voor **alle 84 invoerextensies**, plus de twee uitvoerextensies PDF/PNG, staat
+de teststatus in de [dekkingstabel per extensie](tests/formatendekking/matrix.md).
+Daar staan de exacte bronvoorbeelden, gerichte regressieproeven, gedateerde
+historische proeven en ontbrekende voorbeelden afzonderlijk benoemd. De
+[herhaalbare bestandsproef](tests/formatendekking/README.md) gebruikt vastgepinde
+upstreambestanden, SHA-256-controle, het veilige profiel en de echte editors.
+Een controle voorkomt dat een nieuwe catalogusextensie zonder dekkingstoelichting
+wordt toegevoegd.
+
+Bij een mislukte conversie noemt de app het bronformaat, bewaart zij de concrete
+foutreden en adviseert zij export vanuit de oorspronkelijke app naar DOCX/RTF,
+XLSX of PPTX. CSV is alleen een alternatief voor waarden van één werkblad.
+Ook een ongeldig OOXML-resultaat wordt geweigerd met dit advies. Een ontbrekende
+runtime, corrupt bestand of niet ondersteunde variant wordt niet stil als een
+leeg document geopend. Bij eenvoudige RTF/HTML kan de bestaande eigen lezer
+terugvallen, met een melding over de mislukte runtimeconversie.
+
+De proeven dekken specifieke varianten: HWP 3.0 bewijst geen HWP 5/HWPX;
+Numbers 2 XML bewijst geen moderne Numbers-IWA; de WK4-fixture is Microsoft
+Works voor Mac en **geen Lotus 1-2-3 WK4**. Sommige Works-/Keynote-fixtures
+leveren lege tekst en bewijzen alleen de technische open-/bewaarroute.
+Een geslaagde bestandsproef bewijst geen volledig inhoudelijk of visueel behoud.
+Bij een Writer-/Impress-conversie zonder gedetecteerde zichtbare inhoud staat
+een expliciete waarschuwing in het openrapport, met hetzelfde exportadvies.
+Een echt leeg origineel blijft te openen. Tekstloze afbeeldingen, tabellen,
+formules en vormen worden hierbij niet automatisch als leeg beschouwd.
+De oudere minimale Linux-runtime 7.3.7.2 weigert bovendien de DBF- en SXI-proef
+die op Windows met 26.8.2.2 wel slagen; de matrix legt dat versieverschil vast.
+De runtime wordt nog niet meegeleverd; die distributie valt onder #30.
 
 ## Opslaan als
 

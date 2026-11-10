@@ -47,13 +47,19 @@ export function zichtbaarBereik(
   return van <= tot ? [van, tot] : null;
 }
 
-function bereikInBeeld(sessie: SpellingSessie, laag: HTMLElement | null): [number, number] | null {
+function bereikInBeeld(sessie: SpellingSessie, laag: HTMLElement | null): [number, number] | null | false {
   const ed = sessie.editor()?.getEditorRef();
   const vlak = laag?.closest<HTMLElement>(SCROLLVLAK);
   const indeling = ed?.getLayout();
   if (!vlak || !indeling) return null;
   // Het zichtbare deel: het scrollvlak, begrensd door het venster.
   const v = vlak.getBoundingClientRect();
+  // Een verborgen tabblad heeft geen zichtbaar bereik. `null` betekent
+  // onbekend en zou juist alle fouten laten projecteren.
+  if (
+    v.width <= 0 || v.height <= 0 || v.bottom <= 0 || v.top >= window.innerHeight ||
+    v.right <= 0 || v.left >= window.innerWidth
+  ) return false;
   const venster = { boven: Math.max(v.top, 0), onder: Math.min(v.bottom, window.innerHeight) };
   const elementen = vlak.querySelectorAll<HTMLElement>(".canvas-page");
   if (elementen.length !== indeling.pages.length) return null;
@@ -94,25 +100,41 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
       });
     };
     vlak?.addEventListener("scroll", plan, { passive: true });
+    window.addEventListener("scroll", plan, { passive: true });
     window.addEventListener("resize", plan);
+    // Een lint/paneel kan het documentvlak wijzigen zonder window.resize.
+    const grootte = new ResizeObserver(plan);
+    if (vlak) {
+      grootte.observe(vlak);
+      const paginas = vlak.querySelector(".canvas-pages");
+      if (paginas) grootte.observe(paginas);
+    }
     // De eerste keer was de laag nog niet in de DOM.
     plan();
     return () => {
       cancelAnimationFrame(frame);
       vlak?.removeEventListener("scroll", plan);
+      window.removeEventListener("scroll", plan);
       window.removeEventListener("resize", plan);
+      grootte.disconnect();
     };
   }, []);
 
   // Zonder laag (eerste render) nog niets; null = onbekend, dan alles.
-  const bereik = laag.current ? bereikInBeeld(sessie, laag.current) : undefined;
-  const van = bereik?.[0] ?? -1;
-  const tot = bereik?.[1] ?? -1;
+  // Selectiemeldingen veranderen de pagina's niet. Meet opnieuw bij een
+  // ander getekend frame, zoom, scroll of een werkelijk gewijzigd venster.
+  const bereik = useMemo(
+    () => laag.current ? bereikInBeeld(sessie, laag.current) : undefined,
+    [sessie, layout.id, layout.version, layout.zoom, layout.pageCount,
+      layout.previewVersion, layout.reservationsVersion, scroll],
+  );
+  const van = bereik ? bereik[0] : -1;
+  const tot = bereik ? bereik[1] : -1;
 
   const rechthoeken = useMemo(() => {
     const uit: Rechthoek[] = [];
     const ed = sessie.editor()?.getEditorRef();
-    if (!ed || bereik === undefined) return uit;
+    if (!ed || bereik === undefined || bereik === false) return uit;
     const bron = ed.getYrsSession();
     // Eerst per alinea begrenzen; projecteer de fouten buiten beeld niet.
     const inBereik = bron ? alineaBereiken.filter(
@@ -142,9 +164,8 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
     return uit;
     // De teller verandert bij elke controle, de layout-id bij elke nieuwe
     // indeling en het bereik bij scrollen.
-  }, [sessie, alineaBereiken, geometry, layout.id, layout.version, teller, van, tot, bereik === undefined]);
+  }, [sessie, alineaBereiken, geometry, layout.id, layout.version, teller, van, tot, bereik === undefined, bereik === false]);
 
-  void scroll;
   const dikte = Math.max(2, Math.round(3 * layout.zoom));
   return (
     <div ref={laag} className="spelling-golflijnen" aria-hidden="true" data-fouten={rechthoeken.length}>
