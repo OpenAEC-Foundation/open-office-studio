@@ -1,5 +1,6 @@
 import type { WorkbookHandle } from "@betteroffice/xlsx";
 import type { Tekenobject } from "./tekenobjecten";
+import { objectOmvang } from "./groepGeometrie";
 
 export function objectGeometrie(
   h: Pick<WorkbookHandle, "cellPosition">,
@@ -27,17 +28,11 @@ export function objectBereik(
     maxY = 0;
   for (const o of objecten) {
     const p = objectGeometrie(h, o),
-      hoek = (o.rotatie * Math.PI) / 180;
-    const w =
-        Math.abs(p.breedte * Math.cos(hoek)) +
-        Math.abs(p.hoogte * Math.sin(hoek)),
-      ht =
-        Math.abs(p.breedte * Math.sin(hoek)) +
-        Math.abs(p.hoogte * Math.cos(hoek));
-    minX = Math.min(minX, p.x + p.breedte / 2 - w / 2);
-    minY = Math.min(minY, p.y + p.hoogte / 2 - ht / 2);
-    maxX = Math.max(maxX, p.x + p.breedte / 2 + w / 2);
-    maxY = Math.max(maxY, p.y + p.hoogte / 2 + ht / 2);
+      b = objectOmvang(o, p.breedte, p.hoogte);
+    minX = Math.min(minX, p.x + b.links);
+    minY = Math.min(minY, p.y + b.boven);
+    maxX = Math.max(maxX, p.x + b.rechts);
+    maxY = Math.max(maxY, p.y + b.onder);
   }
   const zoek = (
     waarde: number,

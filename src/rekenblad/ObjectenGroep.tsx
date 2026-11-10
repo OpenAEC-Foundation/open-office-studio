@@ -422,7 +422,7 @@ function ObjectVenster({
             />
           </label>
         ))}
-        {!afbeelding && origineel?.soort !== "onbekend" && (
+        {!afbeelding && (!origineel || origineel.soort === "vorm") && (
           <>
             {!origineel && (
               <label>
@@ -490,6 +490,9 @@ function ObjectVenster({
           </>
         )}
         <p role="note">{t("objects.reloadHistory")}</p>
+        {origineel?.soort === "groep" && (
+          <p role="note">{t("objects.groupInfo")}</p>
+        )}
         {(origineel?.soort === "onbekend" ||
           (origineel?.soort === "afbeelding" &&
             (!origineel.mime ||
