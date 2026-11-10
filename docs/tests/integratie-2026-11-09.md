@@ -61,6 +61,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#260](https://github.com/OpenAEC-Foundation/open-office-studio/pull/260) | `e209adfcb81bf81205337c94526cec4b6876eae6` | `8a775cbb09b7ba409e16bd83c8b3c480f379f8f7` | Writer merged caption sequence order |
 | [#261](https://github.com/OpenAEC-Foundation/open-office-studio/pull/261) | `98b8dffcb57941bc7f062f7ebf3686727a74d2b5` | `514265522edc045a3b27973c5226ea20ff36f917` | Presentation object format painter |
 | [#262](https://github.com/OpenAEC-Foundation/open-office-studio/pull/262) | `49789270eed564fe5856316ca2c88bf50ced4460` | `835601a16e18e9ff672242675f40894e8488f587` | Writer visible spelling page reuse |
+| [#263](https://github.com/OpenAEC-Foundation/open-office-studio/pull/263) | `2eb45a3953835db8b57b4ee2273c821169cad45d` | `d56740da10dc89eaeafe8963ec65f1aafc696103` | Spreadsheet native formula hyperlink queries |
 
 ## Earlier fixes included in bundles
 
@@ -140,10 +141,10 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | full-application-2026-11-10 | `4175e5f19bf052e0a03f4a87ab73e710f6f163a7` | 2858 | 0 | 7 |
 | pr261-targeted | `514265522edc045a3b27973c5226ea20ff36f917` | 13 | 0 | 0 |
 | pr262-related-unit | `835601a16e18e9ff672242675f40894e8488f587` | 22 | 0 | 0 |
+| pr263-targeted | `d56740da10dc89eaeafe8963ec65f1aafc696103` | 12 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #263, reported head `2eb45a3953835db8b57b4ee2273c821169cad45d`: Native formula hyperlink queries; no vendor change.
 - PR #264, reported head `a7bb546037bff28dc2880b6bdee0b87e27fe39ba`: Complete sheet copy preserving independent related parts.
 - PR #265, reported head `4a58fc6b80a13dfc5d321f89ae37d4f8db83064c`: Presentation diagrams; updated conflict-free checkpoint not yet released.
 - PR #266, reported head `ee8925ed39c78566e71d2386da57bfd72b15900f`: Writer OPC story parts and style selection.
