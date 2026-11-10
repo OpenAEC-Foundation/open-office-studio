@@ -72,6 +72,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { OpmaakmarkeringenKnop } from "../tekst/pagina/Markeringen";
+import { VormenGroep } from "../tekst/vormen/Vormen";
 import { openSpellingVenster } from "../spelling/tekst/menu";
 import { formatGetal } from "../i18n/opmaak";
 import {
@@ -617,6 +618,7 @@ export function TekstRibbon({
                   <W id="insertImage" naam={t("writer.commands.picture")} icoon={Image} groot />
                   <VergelijkingKnop />
                 </Groep>
+                <VormenGroep />
                 <GrafiekGroep g={grafieken} uit={!opdrachten.bewerkbaar} />
                 <Groep naam={t("writer.groups.links")}>
                   <W id="insertLink" naam={t("writer.commands.hyperlink")} icoon={Link} groot />
