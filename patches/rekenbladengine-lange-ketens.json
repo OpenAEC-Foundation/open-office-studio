@@ -8,16 +8,14 @@
   "wasmBindgen": "0.2.129",
   "binaryen": "132",
   "binaryenLinuxSha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
-  "wasmOptArgumenten": [
-    "-O3"
-  ],
+  "wasmOptArgumenten": ["-O3"],
   "pakket": "@betteroffice/xlsx",
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
   "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
   "wasmBytes": 7745388,
-  "stand": "Kandidaten voor #74: gerichte startup-optimalisaties en gedeelde celopslag bij modelkopieën. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
+  "stand": "Kandidaten voor #74: gerichte startup-optimalisaties en gedeelde celopslag bij modelkopieÃ«n. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -192,6 +190,16 @@
         {
           "pakket": "betteroffice-xlsx",
           "lib": ""
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-snapshot-tabelverwachting.patch",
+      "patchSha256": "f21e263646ac7d867a82fa56fe6c14e03e85b99df8cf78e4c58f122508361624",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "snapshot_structured_reference_insert_rows_matches_source"
         }
       ]
     }
