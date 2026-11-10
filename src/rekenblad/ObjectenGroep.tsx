@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ImagePlus, Link, Shapes, SquarePen, List } from "lucide-react";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
-import { hyperlinkAtCell } from "@betteroffice/xlsx";
 import { Actie, Groep } from "../Ribbon";
 import { Paneel, tekstVan } from "../lint/rekenblad-dialogen";
 import {
@@ -34,7 +33,7 @@ import {
   type Tekenobject,
 } from "./tekenobjecten";
 import type { Herladen } from "../lint/editorApi";
-import { beeldAfmetingen } from "./beeldAfmetingen";
+import { beeldAfmetingen, beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 
 interface ObjectDoel {
   versie: string;
@@ -66,31 +65,24 @@ export function useObjectenGroep(uit: boolean) {
       const p = api.getPositionAtPoint(e.clientX, e.clientY);
       if (!p) return;
       const bereik = { top: p.row, left: p.col, bottom: p.row, right: p.col };
-      let link = leesKoppeling(api, {
+      const link = leesKoppeling(api, {
         blad: p.sheet,
         sheetId: api.handle.sheetInfo().sheetIds[p.sheet],
         focus: p,
         bereik,
       });
-      let adres: string | null | undefined = link?.externalTarget;
-      if (!adres && api.handle.cell(p.sheet, p.row, p.col).isFormula) {
-        const pos = api.handle.cellPosition(p.sheet, p.row, p.col);
-        adres = hyperlinkAtCell(
-          api.handle.displayList({
-            x: pos.x,
-            y: pos.y,
-            width: 128,
-            height: 64,
-          }),
-          p.row,
-          p.col,
-        )?.externalTarget;
-      }
-      if (!adres || /^(https?:|mailto:)/i.test(adres)) return;
+      const adres = link?.location ?? link?.externalTarget;
+      if (!link || !adres) return;
+      const soort = link.location
+        ? "cel"
+        : /^(https?:|mailto:)/i.test(adres)
+          ? "web"
+          : "bestand";
+      if (!link.formule && soort !== "bestand") return;
       e.preventDefault();
       e.stopPropagation();
-      void openKoppeling(api, "bestand", adres, bestandKoppeling).catch(
-        (error) => setFout(tekstVan(error)),
+      void openKoppeling(api, soort, adres, bestandKoppeling).catch((error) =>
+        setFout(tekstVan(error)),
       );
     };
     host.addEventListener("click", klik, true);
@@ -488,7 +480,10 @@ function ObjectVenster({
         )}
         <p role="note">{t("objects.reloadHistory")}</p>
         {(origineel?.soort === "onbekend" ||
-          (origineel?.soort === "afbeelding" && !origineel.mime)) && (
+          (origineel?.soort === "afbeelding" &&
+            (!origineel.mime ||
+              !origineel.media ||
+              !beeldVoorbeeldToegestaan(origineel.media)))) && (
           <p role="note">{t("objects.previewLimited")}</p>
         )}
         {origineel?.beveiligd && <p role="alert">{t("objects.protected")}</p>}
@@ -653,7 +648,7 @@ function KoppelingVenster({
           >
             {t("objects.openLink")}
           </button>
-          {bestaand && (
+          {bestaand && !bestaand.formule && (
             <button
               type="button"
               disabled={bezig}

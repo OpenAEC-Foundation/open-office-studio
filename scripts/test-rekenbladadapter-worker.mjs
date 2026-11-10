@@ -9,6 +9,13 @@ const { chromium } = await import(
 );
 let savedWorkbook;
 const server = await createServer({
+  configFile: false,
+  cacheDir: ".local/vite-cache-adapter-worker",
+  optimizeDeps: {
+    noDiscovery: true,
+    include: [],
+    exclude: ["@betteroffice/xlsx"],
+  },
   plugins: [
     {
       name: "adapter-probe",
@@ -52,11 +59,16 @@ const server = await createServer({
 });
 await server.listen();
 const browser = await chromium.launch();
+const deadline = setTimeout(() => {
+  void browser.close().catch(() => {});
+}, 60000);
+deadline.unref();
 const page = await browser.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(String(e)));
 page.on("console", (m) => {
-  if (m.type() === "error") console.log(m.text());
+  if (m.type() === "error" || m.text().startsWith("adapter-stage:"))
+    console.log(m.text());
 });
 page.on("requestfailed", (r) =>
   console.log(`request failed: ${r.url()} ${r.failure()?.errorText}`),
@@ -71,12 +83,15 @@ try {
     ),
   );
   const result = await page.evaluate(async (source) => {
+    console.info("adapter-stage: importing");
     const { openSpreadsheet } = await import(
       "/packages/rekenbladen/src/index.ts"
     );
+    console.info("adapter-stage: loading engine");
     const wasm = await (
       await fetch("/vendor/rekenbladengine/xlsx_wasm_bg.wasm")
     ).arrayBuffer();
+    console.info("adapter-stage: opening worker");
     let last = performance.now(),
       maxGap = 0,
       beats = 0;
@@ -92,6 +107,7 @@ try {
       wasm,
       signal: AbortSignal.timeout(30000),
     });
+    console.info("adapter-stage: reading and editing");
     try {
       const opened = performance.now();
       const cells = await book.readCells({
@@ -111,6 +127,7 @@ try {
         ranges: [{ sheetId: "sheet:0", range: { kind: "a1", a1: "B50000" } }],
       });
       let verifiedCells = 0;
+      console.info("adapter-stage: verifying 50000 values");
       for (let start = 1; start <= 50000; start += 500) {
         const r = await book.readCells({
           ranges: [
@@ -132,6 +149,7 @@ try {
         }
       }
       const saved = await book.save();
+      console.info("adapter-stage: inspecting saved bytes");
       const response = await fetch("/__adapter_saved", {
         method: "POST",
         body: saved,
@@ -204,6 +222,62 @@ try {
     }
   });
   assert(aborted, "Aborted worker open must not start document processing");
+  const interrupted = await page.evaluate(async (source) => {
+    const { openSpreadsheet } = await import(
+      "/packages/rekenbladen/src/index.ts"
+    );
+    const wasm = await (
+      await fetch("/vendor/rekenbladengine/xlsx_wasm_bg.wasm")
+    ).arrayBuffer();
+    const controller = new AbortController();
+    let started = 0,
+      terminated = 0,
+      reason = "",
+      timeout;
+    const began = performance.now();
+    const worker = () => {
+      started++;
+      const w = new Worker(
+        "/node_modules/@betteroffice/xlsx/dist/xlsxSessionWorker.mjs",
+        { type: "module" },
+      );
+      const terminate = w.terminate.bind(w);
+      w.terminate = () => {
+        terminated++;
+        terminate();
+      };
+      timeout = setTimeout(() => controller.abort(), 25);
+      return w;
+    };
+    try {
+      const book = await openSpreadsheet(new Uint8Array(source), {
+        mode: "worker",
+        wasm,
+        worker,
+        signal: controller.signal,
+      });
+      await book.dispose();
+    } catch (error) {
+      reason = error.name;
+    } finally {
+      clearTimeout(timeout);
+    }
+    return {
+      started,
+      terminated,
+      reason,
+      ms: Math.round(performance.now() - began),
+    };
+  }, bytes);
+  assert.equal(interrupted.started, 1);
+  assert(
+    interrupted.terminated >= 1,
+    "Cancelling an in-flight open must terminate its worker",
+  );
+  assert.equal(interrupted.reason, "AbortError");
+  assert(interrupted.ms < 5000);
+  result.interrupted = interrupted;
+  assert.deepEqual(errors, []);
   await writeFile(
     ".local/prestatie/rekenbladen/adapter-worker.json",
     JSON.stringify({ ...result, aborted }, null, 2),
@@ -220,6 +294,7 @@ try {
     }),
   );
 } finally {
+  clearTimeout(deadline);
   await browser.close();
   await server.close();
 }

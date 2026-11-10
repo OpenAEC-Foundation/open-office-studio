@@ -2,7 +2,7 @@
 import type { WorkbookHandle } from "@betteroffice/xlsx";
 import type { Tekenobject, ObjectTekst } from "./tekenobjecten";
 import { objectGeometrie } from "./objectGeometrie";
-import { beeldAfmetingen } from "./beeldAfmetingen";
+import { beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 import { opnameVan } from "../export/pdf/opname";
 import i18next from "../i18n/config";
 
@@ -200,7 +200,7 @@ export async function tekenObjectenOpCanvas(
         o.soort === "afbeelding" &&
         o.media &&
         o.mime &&
-        beeldAfmetingen(o.media)
+        beeldVoorbeeldToegestaan(o.media)
       ) {
         let beeld: ImageBitmap;
         try {

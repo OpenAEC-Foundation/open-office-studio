@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { beeldAfmetingen } from "./beeldAfmetingen";
+import { beeldAfmetingen, beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 describe("image import dimensions before decoding", () => {
   it("reads PNG dimensions and rejects oversized dimensions in a small source", () => {
     const b = new Uint8Array(
@@ -9,10 +9,19 @@ describe("image import dimensions before decoding", () => {
       ),
     );
     expect(beeldAfmetingen(b)).toEqual({ breedte: 1, hoogte: 1 });
+    expect(beeldVoorbeeldToegestaan(b)).toBe(true);
     const v = new DataView(b.buffer);
     v.setUint32(16, 20000);
     v.setUint32(20, 20000);
     expect(beeldAfmetingen(b)).toBeNull();
+    expect(beeldVoorbeeldToegestaan(b)).toBe(false);
+  });
+  it("refuses excessive source bytes even when their dimension header is small", () => {
+    const bytes = new Uint8Array(20 * 1024 * 1024 + 1);
+    bytes.set(new TextEncoder().encode("GIF89a"));
+    bytes[6] = bytes[8] = 1;
+    expect(beeldAfmetingen(bytes)).toEqual({ breedte: 1, hoogte: 1 });
+    expect(beeldVoorbeeldToegestaan(bytes)).toBe(false);
   });
   it("reads GIF, JPEG and WebP extended dimensions", () => {
     expect(

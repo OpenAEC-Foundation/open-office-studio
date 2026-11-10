@@ -9,6 +9,7 @@ const { chromium } = await import(
 await mkdir("public/fonts", { recursive: true });
 await cp("node_modules/@betteroffice/fonts/assets", "public/fonts", { recursive: true });
 const server = await createServer({
+  cacheDir: ".local/vite-cache-object-print",
   plugins: [
     {
       name: "object-print-probe",
