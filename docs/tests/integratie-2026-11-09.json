@@ -392,7 +392,48 @@
       "via": 241
     }
   ],
-  "deliveriesPending": [],
+  "deliveriesPending": [
+    {
+      "pr": 261,
+      "head": "98b8dffcb57941bc7f062f7ebf3686727a74d2b5",
+      "scope": "Presentation object format painter; separate feature batch"
+    },
+    {
+      "pr": 262,
+      "head": "49789270eed564fe5856316ca2c88bf50ced4460",
+      "scope": "Writer spelling viewport scans; separate performance batch"
+    },
+    {
+      "pr": 263,
+      "head": "2eb45a3953835db8b57b4ee2273c821169cad45d",
+      "scope": "Native formula hyperlink queries; no vendor change"
+    },
+    {
+      "pr": 264,
+      "head": "a7bb546037bff28dc2880b6bdee0b87e27fe39ba",
+      "scope": "Complete sheet copy preserving independent related parts"
+    },
+    {
+      "pr": 265,
+      "head": "4a58fc6b80a13dfc5d321f89ae37d4f8db83064c",
+      "scope": "Presentation diagrams; updated conflict-free checkpoint not yet released"
+    },
+    {
+      "pr": 266,
+      "head": "ee8925ed39c78566e71d2386da57bfd72b15900f",
+      "scope": "Writer OPC story parts and style selection"
+    },
+    {
+      "pr": 267,
+      "head": "0e58e6f363af73f395025d82fd8c73f319a89f37",
+      "scope": "Writer status subscriptions; stacked on PR262"
+    },
+    {
+      "pr": 269,
+      "head": "346927430297654ccbe995b51dcd6c581bdc4eff",
+      "scope": "Shared Spreadsheet render projection for later table and conditional-format layers"
+    }
+  ],
   "checks": [
     {
       "kind": "batch-1-targeted",
@@ -851,6 +892,15 @@
       "failed": 0,
       "skipped": 0,
       "files": 1
+    },
+    {
+      "kind": "full-application-2026-11-10",
+      "head": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+      "success": true,
+      "passed": 2858,
+      "failed": 0,
+      "skipped": 7,
+      "files": 274
     }
   ],
   "limits": [
@@ -858,5 +908,7 @@
     "Native Windows builds are checked in CI because local Application Control blocks Cargo build scripts.",
     "No live Y-app storage environment is used, as requested by the user.",
     "Experimental PR116 and uncommitted work are not integration deliveries."
-  ]
+  ],
+  "lastUpdated": "2026-11-10",
+  "frozenWindowsCode": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7"
 }

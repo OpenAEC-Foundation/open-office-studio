@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "branch": "codex/integratie-2026-11-09",
+  "codeCheckpoint": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+  "previousCheckpoint": "0d860e9d5487ff3b87dc079f943d31aef8fe5871",
+  "sourcePRs": 47,
+  "deliveries": 53,
+  "additionalPRsInBundles": 17,
+  "applicationSuite": {
+    "success": true,
+    "passed": 2858,
+    "failed": 0,
+    "skipped": 7,
+    "files": 274,
+    "head": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+    "rawReportSha256": "e1181ed0a0290388f30cd32cb838728d588e083a3e446d2e733e715acf031aa7"
+  },
+  "rootCorrection": "ee3b09ec",
+  "ci": [
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489239/job/129715616708",
+      "name": "matrix",
+      "state": "SUCCESS",
+      "workflow": "Documentmatrix op de productiekern controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489048/job/129715611771",
+      "name": "odf",
+      "state": "SUCCESS",
+      "workflow": "Validate strict ODF 1.3 output"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489075/job/129715615682",
+      "name": "writer",
+      "state": "SUCCESS",
+      "workflow": "Writer format round trips"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489428/job/129715617518",
+      "name": "database (ubuntu-22.04)",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489428/job/129715618115",
+      "name": "database (windows-latest)",
+      "state": "FAILURE",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489039/job/129715612250",
+      "name": "desktop (ubuntu-22.04)",
+      "state": "SUCCESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489079/job/129715611981",
+      "name": "matrix",
+      "state": "SUCCESS",
+      "workflow": "Rekenbladmatrix onafhankelijk controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782488958/job/129715611405",
+      "name": "kern",
+      "state": "SUCCESS",
+      "workflow": "Tekstkern uit vastgezette bron bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782488929/job/129715611370",
+      "name": "voorbeeld",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandig kantoorvoorbeeld controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489039/job/129715611853",
+      "name": "desktop (windows-latest)",
+      "state": "SUCCESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489039/job/129715612304",
+      "name": "desktop (macos-latest)",
+      "state": "QUEUED",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489428/job/129715617973",
+      "name": "database (macos-latest)",
+      "state": "QUEUED",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    }
+  ],
+  "ciFollowup": {
+    "job": 129715618115,
+    "workflowRun": 42782489428,
+    "reason": "One DOTX unit test reached the default 5-second timeout in the separate Windows database job. Local full suite and desktop Windows pass.",
+    "rerun": "Requested but GitHub refuses while the containing workflow is running; HTTP403. Follow up after that workflow finishes, or inspect the fresh documentation-only check run."
+  },
+  "evidence": [
+    {
+      "path": ".local/integratie-2026-11-10-repair-build.log",
+      "sha256": "d9135a22ae975cb0e1892082d44ce7d93438cd9b24e571cc6b46dffc6a842428"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-references-cpu4-1.log",
+      "sha256": "f8ac3e92f243972d32f87b832df7dcc7bce1e05e8ccab1b126b94171aa8d3e67"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-references-cpu4-2.log",
+      "sha256": "f8ac3e92f243972d32f87b832df7dcc7bce1e05e8ccab1b126b94171aa8d3e67"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-references-cpu4-3.log",
+      "sha256": "f8ac3e92f243972d32f87b832df7dcc7bce1e05e8ccab1b126b94171aa8d3e67"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-equations-cpu4.log",
+      "sha256": "9c544da9d3f98c47cb7407400cc3ff162db24f2d56e593f93393d0353c63c72b"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-offline-final.log",
+      "sha256": "89c12762186fee81b78ffc0873e51de7a2d9d1f4ce782d0d994632ad96836dc4"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-merge-final.log",
+      "sha256": "d59e4d19f80505d843a489579c39c6fe98e0dc60a26b2ff2630210e77a56c54d"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-transition-final.log",
+      "sha256": "4d4659421df169a80fdbcfd59ec9810131fe3005d2cd31b50c585e30b31f7cd3"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-animation-final.log",
+      "sha256": "642a80f7d7b7e5e1d8ddf53c3952ee8c346057703f80338bbedec3ef7f9bfbd4"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-objects-final.log",
+      "sha256": "c10779a34090542beb38fb776a18a7439d18c00b43e9748d6edf5a02aaaee952"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-outline.log",
+      "sha256": "05d6c7f7b31fe827f3398d8a56c5a6440ffe79d4438ace922d5fed8a4cffc277"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-media.log",
+      "sha256": "6e84a53cbe5d4c438797eea563aa2776e87bbc09db423ea301310997fbfa064e"
+    },
+    {
+      "path": ".local/integratie-2026-11-10-media-extra.log",
+      "sha256": "04fe2bb61485e25e11996351d72b73fe64cef19954b8738b60d84baf3b8bf8a1"
+    }
+  ],
+  "nextBatch": [
+    {
+      "pr": 261,
+      "head": "98b8dffcb57941bc7f062f7ebf3686727a74d2b5",
+      "scope": "Presentation object format painter; separate feature batch",
+      "status": "owner-certified"
+    },
+    {
+      "pr": 262,
+      "head": "49789270eed564fe5856316ca2c88bf50ced4460",
+      "scope": "Writer spelling viewport scans; separate performance batch",
+      "status": "owner-certified after readiness retest"
+    },
+    {
+      "pr": 263,
+      "head": "2eb45a3953835db8b57b4ee2273c821169cad45d",
+      "scope": "Native formula hyperlink queries; no vendor change",
+      "status": "owner-certified"
+    },
+    {
+      "pr": 264,
+      "head": "a7bb546037bff28dc2880b6bdee0b87e27fe39ba",
+      "scope": "Complete sheet copy preserving independent related parts",
+      "status": "owner-certified; inspect source CI and recorded timeout retest"
+    },
+    {
+      "pr": 265,
+      "head": "4a58fc6b80a13dfc5d321f89ae37d4f8db83064c",
+      "scope": "Presentation diagrams; updated conflict-free checkpoint not yet released",
+      "status": "hold for updated tested head"
+    },
+    {
+      "pr": 266,
+      "head": "ee8925ed39c78566e71d2386da57bfd72b15900f",
+      "scope": "Writer OPC story parts and style selection",
+      "status": "owner-certified"
+    },
+    {
+      "pr": 267,
+      "head": "0e58e6f363af73f395025d82fd8c73f319a89f37",
+      "scope": "Writer status subscriptions; stacked on PR262",
+      "status": "owner-certified; next batch"
+    },
+    {
+      "pr": 269,
+      "head": "346927430297654ccbe995b51dcd6c581bdc4eff",
+      "scope": "Shared Spreadsheet render projection for later table and conditional-format layers",
+      "status": "owner-certified targeted checks; dependency for unreleased table work"
+    }
+  ],
+  "excludedWip": [
+    "Native selection/table chain PR253 and Spreadsheet73/69 are not released as a combined production vendor.",
+    "Writer56 remains WIP.",
+    "Further rich notes and UI-status work is not in the frozen Windows build."
+  ],
+  "limits": [
+    "Broad issues remain open; integrating a completed fix does not certify every acceptance criterion.",
+    "Native Windows builds are checked in CI because local Application Control blocks Cargo build scripts.",
+    "No live Y-app storage environment is used, as requested by the user.",
+    "Experimental PR116 and uncommitted work are not integration deliveries."
+  ],
+  "windowsBuild": {
+    "head": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+    "workflowRun": 42782489039,
+    "windowsJob": 129715611853,
+    "codeValidation": "local checks passed; desktop Windows CI passed",
+    "artifactValidation": "GitHub ZIP digest and installer hash checked by build owner; partial native smoke passed; user stopped further UI testing with Escape.",
+    "release": false,
+    "mainMerge": false,
+    "status": "installed-native-smoke-partial-user-stopped",
+    "sourceBranch": "codex/integratie-2026-11-09",
+    "sourceCommit": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+    "workflowUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489039",
+    "pullRequest": 248,
+    "baseCommit": "e741e504e35a7dc195ea31daab6933e9ddb8b423",
+    "pullRequestMergeCommit": "a1a850431c93f9131c9d576b0ca4c7f3c79e00ec",
+    "sourceTree": "7ab0a6558f2f377b2131421aee836e4f60e9ac56",
+    "mergeTree": "7ab0a6558f2f377b2131421aee836e4f60e9ac56",
+    "checkoutTreeMatchesSource": true,
+    "installed": true,
+    "fullNativeAcceptance": false,
+    "intendedInstallDirectory": "C:/Users/alper/AppData/Local/OpenAEC Office Dev/2026-11-10-integration-4175e5f1",
+    "intendedShortcut": "C:/Users/alper/Desktop/OpenAEC Office Dev 2026-11-10 - 4175e5f1.lnk",
+    "applicationSuite": {
+      "sourceCommit": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+      "passed": 2858,
+      "failed": 0,
+      "scope": "Reported by integration owner; native acceptance pending",
+      "skipped": 7
+    },
+    "ownerFinalValidation": {
+      "sourceCommit": "4175e5f19bf052e0a03f4a87ab73e710f6f163a7",
+      "checks": [
+        "2858 application tests, 0 failed, 7 skipped",
+        "Production build and type checks",
+        "Repeated Writer cross-reference CPU4 probes",
+        "Comparison CPU4 probe",
+        "Offline CtrlS/SaveAs/reopen",
+        "Full mail merge"
+      ],
+      "approvedForDevBuild": true
+    },
+    "executable": "C:\\Users\\alper\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\OpenAEC Office Dev\\2026-11-10-integration-4175e5f1\\open-office-studio.exe",
+    "executableSHA256": "09c6a1fa33ee668567cd5bb0b0b1edd0ea893466057e032e76163f726ddf9f07",
+    "shortcut": "C:\\Users\\alper\\Desktop\\OpenAEC Office Dev 2026-11-10 - 4175e5f1.lnk",
+    "installerSHA256": "063146ebc7e7aba13ffafc450a45180e2c4bcdef6957cacb53d4ee484a1a4400",
+    "artifactId": 13748275606,
+    "artifactSHA256": "682edad97bdcbe68a5ccb28f4339d2941b92195bd99bbe7daac8542d2d86f134",
+    "nativeSmoke": {
+      "passed": [
+        "Launch installed Windows executable",
+        "Open blank Writer document",
+        "Enter synthetic text",
+        "Ctrl+Z removes text",
+        "Ctrl+Y restores text",
+        "Ctrl+S through Save as and native Windows picker saves DOCX; success message and clean document title observed"
+      ],
+      "savedDocument": "C:\\Users\\alper\\Desktop\\Documents\\writer-integratie-4175e5f1-2026-11-10.docx",
+      "interruptedAction": "Ctrl+W, before close/reopen verification",
+      "interruption": "Computer Use stopped by user physical Escape",
+      "reopenVerified": false,
+      "fullRegressionVerified": false,
+      "nativeOfflineVerified": false,
+      "noFurtherUIActions": true
+    },
+    "installerPath": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\artifact-4175e5f1\\nsis\\Open Office Studio_2026.45.4_x64-setup.exe"
+  },
+  "ciSnapshotAt": "2026-11-10T08:50:34.512856+00:00"
+}
