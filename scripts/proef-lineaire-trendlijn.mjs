@@ -95,6 +95,72 @@ try {
   p.voegOverrideToe("custom/trend-unknown.bin", "application/octet-stream");
   bytes = p.inpakken();
   fs.writeFileSync(`${out}/source.xlsx`, bytes);
+  if (!baseline) {
+    const { leesXml, kind, kinderen, attr } = await loader.ssrLoadModule(
+      "/src/grafieken/xml.ts",
+    );
+    const cases = [
+      { name: "line", sheet: 0 },
+      { name: "scatter", sheet: 1 },
+      { name: "intercept0", sheet: 0, extra: '<c:intercept val="0"/>' },
+      {
+        name: "forecast",
+        sheet: 0,
+        extra: '<c:forward val="2"/><c:backward val="2"/>',
+      },
+    ];
+    const coordinates = [];
+    for (const c of cases) {
+      const packageCopy = new Pakket(bytes),
+        path = `xl/charts/chart${c.sheet + 1}.xml`;
+      let xml = packageCopy.lees(path);
+      const plot = kind(kind(leesXml(xml), "chart"), "plotArea"),
+        layout = kind(plot, "layout");
+      const manual =
+        '<c:layout><c:manualLayout><c:layoutTarget val="inner"/><c:xMode val="edge"/><c:yMode val="edge"/><c:wMode val="factor"/><c:hMode val="factor"/><c:x val="0.1"/><c:y val="0.1"/><c:w val="0.8"/><c:h val="0.8"/></c:manualLayout></c:layout>';
+      const changes = [
+        layout
+          ? { start: layout.start, end: layout.eind, value: manual }
+          : { start: plot.inhoudStart, end: plot.inhoudStart, value: manual },
+      ];
+      for (const axis of kinderen(plot, "valAx")) {
+        const scaling = kind(axis, "scaling"),
+          max = attr(kind(axis, "axPos"), "val") === "b" ? 50 : 8;
+        changes.push({
+          start: scaling.start,
+          end: scaling.eind,
+          value: `<c:scaling><c:orientation val="minMax"/><c:min val="0"/><c:max val="${max}"/></c:scaling>`,
+        });
+      }
+      for (const change of changes.sort((a, b) => b.start - a.start))
+        xml = xml.slice(0, change.start) + change.value + xml.slice(change.end);
+      if (c.extra)
+        xml = xml.replace("</c:trendline>", c.extra + "</c:trendline>");
+      packageCopy.schrijf(path, xml);
+      const loaded = openWorkbook(packageCopy.inpakken());
+      loaded.setActiveSheet(c.sheet);
+      const version = loaded.version(),
+        history = loaded.historyState(),
+        frame = loaded.displayList({ x: 0, y: 0, width: 1100, height: 600 });
+      const lines = frame.commands.filter(
+        (command) =>
+          command.op === "line" && command.color.toLowerCase() === "#ff00ee",
+      );
+      assert.equal(lines.length, 1);
+      assert.equal(loaded.version(), version);
+      assert.deepEqual(loaded.historyState(), history);
+      coordinates.push({
+        name: c.name,
+        chart: frame.charts[0].rect,
+        line: lines[0],
+      });
+      loaded.dispose();
+    }
+    fs.writeFileSync(
+      `${out}/coordinates.json`,
+      JSON.stringify(coordinates, null, 2),
+    );
+  }
 } finally {
   await loader.close();
 }
@@ -248,13 +314,21 @@ try {
   checks.push(
     "Production canvas paints the line trend, reverses its slope after editing the source and restores it with one Undo.",
   );
-  await page.getByText("Spreiding", { exact: true }).click();
   await page.evaluate(() => {
     window.__trendStrokes = [];
   });
+  await page.getByText("Spreiding", { exact: true }).click();
   await page.locator(".rekenblad-naamvak:visible").fill("B2");
   await page.locator(".rekenblad-naamvak:visible").press("Enter");
   await direction(page, true);
+  await page.locator(".rekenblad-naamvak:visible").fill("A1");
+  await page.locator(".rekenblad-naamvak:visible").press("Enter");
+  await page.evaluate(
+    () =>
+      new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      ),
+  );
   await page.screenshot({ path: `${out}/scatter-chart.png` });
   checks.push(
     "The real worksheet canvas also paints the scatter trend with non-uniform numeric X coordinates.",
