@@ -172,6 +172,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr273-targeted | `a21e185ec7de755650f150bbb9ebb91b9ffb4421` | 23 | 0 | 0 |
 | pr276-targeted | `122e3d5769f21bd6ae5c585382e1652d2dc34eab` | 32 | 0 | 0 |
 | pr277-targeted | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | 8 | 0 | 0 |
+| full-application-candidate-phase3-2026-11-10 | `828dcbeb021cb81d2c2704ecf2f2746ef185f698` | 3016 | 0 | 7 |
 
 ## Pending deliveries
 
