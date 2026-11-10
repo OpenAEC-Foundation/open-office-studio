@@ -148,7 +148,8 @@ try {
     assert.ok(!strFromU8(z["word/document.xml"]).includes(`w:${tag} w:val="${name}"`));
     stap(`${type} style applies to the actual ${kind} story and persists separately from the body`);
   }
-  assert.deepEqual(await page.evaluate(() => window.proefFoutmeldingen), []);
+  rapport.meldingen = await page.evaluate(() => window.proefFoutmeldingen);
+  assert.deepEqual(rapport.meldingen, []);
   await page.screenshot({ path: resolve(uit, "writer-custom-parts.png") });
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {
