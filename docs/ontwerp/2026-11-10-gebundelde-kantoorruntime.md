@@ -47,9 +47,14 @@ wordt als laatste geschreven. Binaire bestanden blijven buiten Git.
   `share/fonts/truetype`, dat LibreOffice zelf procesprivé registreert. Er worden
   geen DLL's van de bouwmachine geleend of fonts globaal geïnstalleerd.
 - Linux: officiële DEB-bestanden uitpakken en de volledige private `/opt`-boom
-  meenemen. DEB en AppImage worden na bouwen opnieuw uitgepakt en werkelijk
-  gebruikt voor conversie. Er is geen apt-installatie van LibreOffice in de
-  kantoorbouwjob meer nodig.
+  meenemen onder `/usr/libexec/<appnaam>/kantoorruntime`; alleen de metadata
+  staat in Tauri's `/usr/lib/<appnaam>`-resources. `linuxdeploy` doorloopt en
+  herschrijft ELF-bestanden recursief onder `usr/lib`. De vendorboom hoort
+  daarom apart te staan, ook om haar eigen onderlinge bibliotheken en rpaths
+  te behouden. Elke zelfstandige app krijgt een eigen pad, zodat twee DEB's
+  geen gedeelde runtimebestanden claimen. DEB en AppImage worden na bouwen
+  opnieuw uitgepakt en werkelijk gebruikt voor conversie. Er is geen
+  apt-installatie van LibreOffice in de kantoorbouwjob meer nodig.
 - macOS: de oorspronkelijke ondertekende `LibreOffice.app` komt in
   `Contents/Helpers`; de metadata staat in `Contents/Resources`. De Tauri-
   `macOS.files`-kopie bewaart de interne symlinks. De helperhandtekening wordt na

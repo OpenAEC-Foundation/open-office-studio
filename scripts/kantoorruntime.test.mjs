@@ -65,4 +65,22 @@ describe("meegeleverde conversieruntime (#30)", () => {
       }
     },
   );
+
+  it("houdt de Linux vendor-ELF-boom buiten linuxdeploy en gescheiden per app", async () => {
+    const conf = JSON.parse(readFileSync("src-tauri/tauri.linux.conf.json", "utf8"));
+    expect(conf.bundle.resources["resources/kantoorruntime/"]).toBeNull();
+    for (const kind of ["deb", "rpm", "appimage"])
+      expect(conf.bundle.linux[kind].files["/usr/libexec/Open Office Studio/kantoorruntime"]).toBe("resources/kantoorruntime");
+    for (const name of ["writer", "spreadsheet", "presentation", "email", "notition"]) {
+      const config = await studioConfig(name, "linux");
+      for (const kind of ["deb", "rpm", "appimage"]) {
+        if (name === "notition") expect(config.bundle.linux[kind].files).toBeNull();
+        else {
+          const files = config.bundle.linux[kind].files;
+          expect(files["/usr/libexec/Open Office Studio/kantoorruntime"]).toBeNull();
+          expect(files[`/usr/libexec/${config.productName}/kantoorruntime`]).toBe("resources/kantoorruntime");
+        }
+      }
+    }
+  });
 });

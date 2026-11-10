@@ -49,6 +49,18 @@ export async function studioConfig(sleutel, platform = process.platform) {
             "linux/ifcx-office-mime.xml",
         }
       : null;
+  const linuxBestanden = (pakket) => {
+    if (platform !== "linux") return mimeBestanden(pakket);
+    if (sleutel === "notition") return null;
+    const mime = pakket === "appimage" ? {} : (mimeBestanden(pakket) ?? {
+      "/usr/share/mime/packages/open-office-studio.xml": null,
+    });
+    return {
+      ...mime,
+      [`/usr/libexec/${hoofdconfig.productName}/kantoorruntime`]: null,
+      [`/usr/libexec/${studio.naam}/kantoorruntime`]: "resources/kantoorruntime",
+    };
+  };
   return {
     productName: studio.naam,
     mainBinaryName: studio.programma,
@@ -91,12 +103,13 @@ export async function studioConfig(sleutel, platform = process.platform) {
       linux: {
         deb: {
           desktopTemplate: "linux/studio.desktop.hbs",
-          files: mimeBestanden("deb"),
+          files: linuxBestanden("deb"),
         },
         rpm: {
           desktopTemplate: "linux/studio.desktop.hbs",
-          files: mimeBestanden("rpm"),
+          files: linuxBestanden("rpm"),
         },
+        ...(platform === "linux" ? { appimage: { files: linuxBestanden("appimage") } } : {}),
       },
       createUpdaterArtifacts: false,
     },

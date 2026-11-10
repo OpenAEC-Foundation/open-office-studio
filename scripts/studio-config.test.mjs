@@ -18,14 +18,22 @@ describe("installatieconfiguratie per studio en platform", () => {
         expect(config.bundle.windows.nsis.installerHooks).toBeNull();
         expect(config.bundle.windows.nsis.installerIcon).toBe(`icons/${studio.sleutel}/icon.ico`);
         expect(config.bundle.windows.nsis.uninstallerIcon).toBe(`icons/${studio.sleutel}/icon.ico`);
-        expect(config.bundle.linux.deb.files).toEqual(
+        const mime =
           ["email", "notition"].includes(studio.sleutel)
             ? null
             : {
                 "/usr/share/mime/packages/open-office-studio.xml": null,
                 [`/usr/share/mime/packages/${studio.programma}.xml`]:
                   "linux/ifcx-office-mime.xml",
-              },
+              };
+        expect(config.bundle.linux.deb.files).toEqual(
+          platform === "linux" && studio.sleutel !== "notition"
+            ? {
+                ...(mime ?? { "/usr/share/mime/packages/open-office-studio.xml": null }),
+                "/usr/libexec/Open Office Studio/kantoorruntime": null,
+                [`/usr/libexec/${studio.naam}/kantoorruntime`]: "resources/kantoorruntime",
+              }
+            : mime,
         );
         expect(config.bundle.createUpdaterArtifacts).toBe(false);
         expect(config.plugins.updater.pubkey).toBe("");

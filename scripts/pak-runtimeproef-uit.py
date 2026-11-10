@@ -39,6 +39,8 @@ def main():
     else:
         raise RuntimeError("Unsupported installer type")
     receipts = list(destination.rglob("kantoorruntime/meta/receipt.json"))
+    if package.suffix in (".deb", ".AppImage"):
+        receipts = [path for path in receipts if path.parents[2].parent.name == "lib"]
     if len(receipts) != 1:
         raise RuntimeError(f"Expected one bundled-runtime receipt, found {len(receipts)}")
     resources = receipts[0].parents[2]
@@ -48,6 +50,9 @@ def main():
         program = runtime / "Contents/MacOS/soffice"
         # The original helper signature must survive copying and packaging.
         subprocess.run(["codesign", "--verify", "--deep", "--strict", str(runtime)], check=True, capture_output=True)
+    elif package.suffix in (".deb", ".AppImage"):
+        runtime = resources.parent.parent / "libexec" / resources.name / "kantoorruntime"
+        program = runtime / receipt["executable"]
     else:
         runtime = resources / "kantoorruntime"
         program = runtime / receipt["executable"]

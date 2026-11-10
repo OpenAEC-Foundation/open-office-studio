@@ -29,7 +29,13 @@ pub fn vind(resources: &Path) -> Option<PathBuf> {
         let licenses = root.join("Contents/Resources");
         (root, Path::new("Contents/MacOS/soffice"), licenses)
     };
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(target_os = "linux")]
+    let (root, executable, licenses) = {
+        if resources.parent()?.file_name()? != "lib" { return None; }
+        let root = resources.parent()?.parent()?.join("libexec").join(resources.file_name()?).join("kantoorruntime");
+        (root.clone(), Path::new("program/soffice"), root)
+    };
+    #[cfg(not(any(target_os = "macos", target_os = "linux")))]
     let (root, executable, licenses) = {
         let root = resources.join("kantoorruntime");
         let executable = if cfg!(windows) { Path::new("program/soffice.com") } else { Path::new("program/soffice") };
@@ -43,7 +49,9 @@ pub fn vind(resources: &Path) -> Option<PathBuf> {
     let canonical_program = fs::canonicalize(&program).ok()?;
     #[cfg(target_os = "macos")]
     let container = fs::canonicalize(resources.parent()?).ok()?;
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(target_os = "linux")]
+    let container = fs::canonicalize(resources.parent()?.parent()?).ok()?;
+    #[cfg(not(any(target_os = "macos", target_os = "linux")))]
     let container = fs::canonicalize(resources).ok()?;
     if !canonical_root.starts_with(container) || !canonical_program.starts_with(&canonical_root) || !program.is_file() { return None; }
     #[cfg(unix)] {
@@ -60,11 +68,13 @@ mod tests {
 
     fn fixture() -> (tempfile::TempDir, PathBuf, PathBuf) {
         let temp = tempfile::tempdir().unwrap();
-        let resources = temp.path().join("Contents/Resources");
+        let resources = if cfg!(target_os = "linux") { temp.path().join("usr/lib/Fixture Office") } else { temp.path().join("Contents/Resources") };
         fs::create_dir_all(resources.join("kantoorruntime/meta")).unwrap();
         #[cfg(target_os = "macos")]
         let (executable, licenses) = (temp.path().join("Contents/Helpers/LibreOffice.app/Contents/MacOS/soffice"), temp.path().join("Contents/Helpers/LibreOffice.app/Contents/Resources"));
-        #[cfg(not(target_os = "macos"))]
+        #[cfg(target_os = "linux")]
+        let (executable, licenses) = (temp.path().join("usr/libexec/Fixture Office/kantoorruntime/program/soffice"), temp.path().join("usr/libexec/Fixture Office/kantoorruntime"));
+        #[cfg(not(any(target_os = "macos", target_os = "linux")))]
         let (executable, licenses) = (resources.join(if cfg!(windows) { "kantoorruntime/program/soffice.com" } else { "kantoorruntime/program/soffice" }), resources.join("kantoorruntime"));
         fs::create_dir_all(executable.parent().unwrap()).unwrap();
         fs::create_dir_all(&licenses).unwrap();
