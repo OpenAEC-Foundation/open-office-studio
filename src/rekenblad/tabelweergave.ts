@@ -13,6 +13,7 @@ import { tabellen } from "./tabellen";
 import { leesDxfStijlen, type DxfStijl } from "./voorwaardelijke-dxf";
 import { registreerRenderProjectie } from "./renderprojectie";
 import { adres } from "../lint/rekenblad-logica";
+import { tabelopmaakVoorrang } from "./tabelopmaakVoorrang";
 
 export function bereidTabelweergave(h: WorkbookHandle, bytes: Uint8Array) {
   const p = new Pakket(bytes),
@@ -23,7 +24,7 @@ export function bereidTabelweergave(h: WorkbookHandle, bytes: Uint8Array) {
   if (!rel) return () => {};
   const root = leesXml(p.lees(Pakket.doelPad(wb.pad, rel.target))),
     dxfs = leesDxfStijlen(p, wb.pad, root);
-  const xfs = kinderen(kind(root, "cellXfs"), "xf");
+  const voorrang = tabelopmaakVoorrang(root);
   const stijlen = new Map(
     kinderen(kind(root, "tableStyles"), "tableStyle").map((s) => [
       attr(s, "name"),
@@ -117,19 +118,11 @@ export function bereidTabelweergave(h: WorkbookHandle, bytes: Uint8Array) {
           if (col === b.left) apply("firstTotalCell");
           if (col === b.right) apply("lastTotalCell");
         }
-        // Explicit cell formats take precedence over the table style.
-        const id = formats.sourceStyles?.[col - left];
-        if (id == null || !xfs[id]) continue;
-        const xf = xfs[id];
-        if (
-          Number(attr(xf, "fillId") ?? 0) > 0 &&
-          attr(xf, "applyFill") !== "0"
-        )
-          delete stijl.fill;
-        if (
-          Number(attr(xf, "fontId") ?? 0) > 0 &&
-          attr(xf, "applyFont") !== "0"
-        ) {
+        // Implicit defaults participate; explicit and inherited facets keep precedence.
+        const eigen = voorrang(formats, col - left);
+        if (!eigen) continue;
+        if (eigen.fill) delete stijl.fill;
+        if (eigen.font) {
           delete stijl.fontColor;
           delete stijl.bold;
           delete stijl.italic;
