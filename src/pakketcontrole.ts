@@ -1,5 +1,9 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "./editors";
+import {
+  alleenLegeAppBibliografie,
+  leesLegeBibliografieDeel,
+} from "./import/legeBibliografie.ts";
 // Deze preflight wordt ook rechtstreeks in Node gebruikt. Houd de XML-
 // entiteitsdecoder onafhankelijk van de browserconfiguratie van grafieken.
 function ontcijfer(tekst: string) {
@@ -167,7 +171,11 @@ function risicosVan(
         )
           risicos.add("onbekende_extensies");
   const heeft = (patroon: RegExp) => [...namen].some((n) => patroon.test(n));
-  if (heeft(/^customXml\//)) risicos.add("custom_xml");
+  if (
+    heeft(/^customXml\//) &&
+    !(soort === "docx" && alleenLegeAppBibliografie(namen, delen))
+  )
+    risicos.add("custom_xml");
   if (heeft(/^(word|ppt|xl)\/embeddings\//)) risicos.add("ingebedde_objecten");
   if (heeft(/^(word|ppt|xl)\/charts\//)) risicos.add("grafieken");
   if (heeft(/^(word|ppt|xl)\/(activeX|ctrlProps)\//))
@@ -272,6 +280,7 @@ export function controleerPakket(bytes: Uint8Array, soort: Soort) {
         (soort === "xlsx" && naam === "xl/workbook.xml") ||
         naam === "[Content_Types].xml" ||
         naam.endsWith(".rels") ||
+        (soort === "docx" && leesLegeBibliografieDeel(naam, bestand.originalSize)) ||
         (soort === "docx" && naam === "word/document.xml") ||
         (soort === "docx" && naam === "word/settings.xml") ||
         (soort === "pptx" && naam === "ppt/presentation.xml") ||
