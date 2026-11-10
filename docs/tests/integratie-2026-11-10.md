@@ -1,6 +1,8 @@
 # Actueel: tweede integratieronde
 
-De gebruiker heeft een tweede ronde geautoriseerd met harde overdracht15:30, zondermain-merge. Zie [de actuele ronde2](integratie-ronde2-2026-11-10.md). De onderstaande1e5-resultaten blijven historische eerste-rondebewijzen.
+De huidige runtime is **4a7a3acf3c8a8747f5de081556e3192f303cb2fc**, gepusht op de centrale integratiebranch en kandidaat2. **21 nieuwe leveringen, totaal99/89bron-PRs; lokaal3408tests groen, Windows/Linux-CI3412groen; normale en echte hostedbrowserroutes groen.** Begrensde native Windows-acceptatie en onafhankelijke bestandscontroles zijn afgerond; macOS-jobs en echte Linux/macOS-bediening blijven open. Geen main-merge of officiële release.
+
+Begin volgende week bij [het actuele ronde-2-rapport](integratie-ronde2-2026-11-10.md), [de platformmatrix](integratie-ronde2-platforms-2026-11-10.json) en [PR248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248). De late leveringen staan apart in het ronde-2-register. Controleer eerst het verschil tussen latere documentatiecommits en het geteste runtimecodepunt; geen nieuwe sourcehead stilzwijgend opnemen. De onderstaande1e5-resultaten zijn uitsluitend historische eerste-rondebewijzen.
 
 # Integratie — 10 november 2026
 

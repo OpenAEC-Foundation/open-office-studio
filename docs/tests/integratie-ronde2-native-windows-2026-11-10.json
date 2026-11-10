@@ -1,0 +1,375 @@
+{
+  "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "build": {
+    "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "sourceTree": "3a49ea4f704f8171a60e11913936cd9d0b1b5b86",
+    "pullRequestMergeCommit": "15d87a0b6f8f9e7a07b86cfd4a16991e04e56023",
+    "mergeTreeMatchesSource": true,
+    "workflowRun": 42817352468,
+    "windowsJob": 129833698436,
+    "windowsJobConclusion": "success",
+    "artifactId": 13765369748,
+    "artifactSha256": "29391cc54e3803824da84090058221accc39f07942497660872fa4a0556f0a71",
+    "packageReportArtifactId": 13766740011,
+    "installerSha256": "68a31bd38604894794fe9e05461f41e9c3b0b689cf8696e5d6ae5f17f00689f1",
+    "installerBytes": 73505743,
+    "nativeKernelSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+    "nativeKernelBytes": 7794993,
+    "nativeKernelPatches": 15,
+    "sourceWasmIndependentlyHashed": true,
+    "ownerApprovedInstall": true,
+    "intendedInstallDirectory": "C:\\Users\\alper\\AppData\\Local\\OpenAEC Office Dev\\2026-11-10-integration-4a7a3acf",
+    "installed": true,
+    "fullNativeAcceptance": false,
+    "installedExecutable": {
+      "path": "C:\\Users\\alper\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\OpenAEC Office Dev\\2026-11-10-integration-4a7a3acf\\open-office-studio.exe",
+      "sha256": "c5607da784846b48053391c64bd5d59fc38d000bdb05389ae155fbdf779162f7",
+      "bytes": 88102400,
+      "version": "2026.45.4"
+    },
+    "nativeReceipt": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\native-acceptance-4a7a3acf.json",
+    "boundedPriorityNativeChecksPassed": true
+  },
+  "operatorReceipt": {
+    "source": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "fullNativeAcceptance": false,
+    "platformLimits": [
+      "Windows native only in this chat; owner browser and platform CI evidence tracked separately"
+    ],
+    "sourceChanges": "none",
+    "installed": true,
+    "tests": [
+      {
+        "route": "Copied prior 1e5 fixture; CtrlS; close; Recent reopen; F12 PDF all pages; native Save",
+        "allPageRendersInspected": true,
+        "limits": "Synthetic same previously failing custom-story fixture; other font/embedded-font cases not certified",
+        "observed": "Full 42-character filename plus author and title readable without overlap on all three pages",
+        "pageCount": 3,
+        "docx": "C:\\Users\\alper\\Desktop\\Documents\\writer-native-stories-4a7a3acf-2026-11-10.docx",
+        "issue": 323,
+        "result": "pass bounded three-page long-filename field case",
+        "docxSha256": "e25bfed30651e885015e0c382b4cc70062e6c7c9c9f308d5275d9c84cfcdd9bf",
+        "pdf": "C:\\Users\\alper\\Desktop\\Documents\\writer-native-stories-4a7a3acf-2026-11-10.pdf",
+        "independentReview": "Integration coordinator independently inspected all three rendered pages, measured positive field gaps, verified hashes and DOCX package preservation; only FILENAME cache and modified/revision metadata changed.",
+        "pdfSha256": "78e942b0c6700410947d94c20422dd8b2e4f3ff9b1ab789f3000326a45d1cd0c"
+      },
+      {
+        "result": "pass bounded native Compare and review Save/Undo/Redo",
+        "nativeRoutes": [
+          "Review Compare revised against original produces one red DEL and one blue INS",
+          "Review Accept All then CtrlS; canvas CtrlZ then CtrlS restores two revisions; CtrlY then CtrlS restores blue/no revisions",
+          "Review Reject All then CtrlS; canvas CtrlZ then CtrlS restores two revisions; CtrlY then CtrlS restores red/no revisions",
+          "Changes pane accept DEL only then CtrlS; canvas CtrlZ then CtrlS restores two bounded revisions; CtrlY then CtrlS retains one blue INS"
+        ],
+        "packageEvidence": "review-{accept,reject,individual}-{before-undo,undo,redo}.docx/.json",
+        "expectedTextPerRevision": "De kat.",
+        "issues": [297, 313],
+        "comparisonAuthor": "Controle297",
+        "limits": "Bounded comparison fixture and three review routes only; author-filter/selection/multiple-revision corpus not claimed; known340 avoided with canvas focus",
+        "nativeFinalOutputsReopenedAfterAppRestart": true
+      },
+      {
+        "scope": "Spreadsheet kernel15 Medium2 explicit s=0 and implicit default",
+        "result": "pass bounded native open/edit/save/close/reopen",
+        "range": "A1:B5",
+        "observed": "Both blue headers with white bold text and alternating blue bands; B2 2 to 6 persists after close/reopen",
+        "nativeReopenConfirmed": true,
+        "packageEvidence": [
+          {
+            "path": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-explicit-4a7a3acf.xlsx",
+            "sha256": "68bb5942cd6673355d02934502a3a191990526308f67d1ec21e8d1514441a242",
+            "values": {
+              "A1": "Item",
+              "B1": "Amount",
+              "A2": "First",
+              "B2": "6",
+              "A3": "Second",
+              "B3": "3",
+              "A4": "Third",
+              "B4": "4",
+              "A5": "Fourth",
+              "B5": "5"
+            },
+            "onlyB2ValueChanged": true,
+            "tableXmlByteIdentical": true,
+            "stylesXmlByteIdentical": true,
+            "tableStyle": {
+              "name": "TableStyleMedium2",
+              "showFirstColumn": "0",
+              "showLastColumn": "0",
+              "showRowStripes": "1",
+              "showColumnStripes": "0"
+            },
+            "sourceSha256": "40b516dc70c91f441721e4083c1939f13c487296da756d56c08834beebf426c0"
+          },
+          {
+            "path": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-implicit-4a7a3acf.xlsx",
+            "sha256": "eb11e78af9a96485ba60bb9bbb0e3d2a58148d80abeafbb0147781655cd0ee53",
+            "values": {
+              "A1": "Item",
+              "B1": "Amount",
+              "A2": "First",
+              "B2": "6",
+              "A3": "Second",
+              "B3": "3",
+              "A4": "Third",
+              "B4": "4",
+              "A5": "Fourth",
+              "B5": "5"
+            },
+            "onlyB2ValueChanged": true,
+            "tableXmlByteIdentical": true,
+            "stylesXmlByteIdentical": true,
+            "tableStyle": {
+              "name": "TableStyleMedium2",
+              "showFirstColumn": "0",
+              "showLastColumn": "0",
+              "showRowStripes": "1",
+              "showColumnStripes": "0"
+            },
+            "sourceSha256": "f4f606b15f30ae4658f61d5976410920df543f0d8420dc79b654d768b4718a55"
+          }
+        ],
+        "independentReview": "Coordinator independently compared both native outputs against original fixtures",
+        "limits": "These two Medium2 fixtures only; protection warning observed but protection behavior not investigated"
+      },
+      {
+        "issue": 280,
+        "result": "pass partial native viewing controls",
+        "routes": [
+          "View Dark page toggled off: white paper with blue text",
+          "Full app exit/restart: white-paper preference persists",
+          "Application light theme and dark theme toggled; white paper remains",
+          "Dark page and original dark theme restored"
+        ],
+        "documentRemainedClean": true,
+        "savedFileSha256": "ee80e610f608524ff264e795890a7913833f39f9f4f30ee72b949be850ea50c5",
+        "limits": "No new PDF/print comparison, image/highlight/caret/selection corpus or full issue acceptance claimed"
+      }
+    ],
+    "notRun": [
+      "318 reply initials",
+      "325 media replay after end",
+      "326 Presentation whole-word option",
+      "340 known tab focus route not retested",
+      "Linux/macOS native and browser not executed by this chat on 4a7"
+    ],
+    "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
+    "nativeFinishedAtUtc": "2026-11-10T13:26:33.8629614Z"
+  },
+  "independentReviewSnapshots": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "integration ROOT, independent read-only XML inspection of native operator outputs",
+    "cases": [
+      {
+        "route": "accept",
+        "phase": "before-undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-accept-before-undo.docx",
+        "sha256": "94782399cf3bb161bd52c682cd40768e628c8f374c76264423e550ff6403578d",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "accept",
+        "phase": "undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-accept-undo.docx",
+        "sha256": "1f42b68596cbe53de4e066938c18a949fea3f9f883d92dd56d98564944ff6393",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "del",
+            "text": "De kat.",
+            "colors": ["FF0000"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "0"
+          },
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "accept",
+        "phase": "redo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-accept-redo.docx",
+        "sha256": "ee80e610f608524ff264e795890a7913833f39f9f4f30ee72b949be850ea50c5",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "reject",
+        "phase": "before-undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-reject-before-undo.docx",
+        "sha256": "69faf7e702134cf3131d06dfb088313aaa32e458f4fb916984a801bdc0f3b013",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "reject",
+        "phase": "undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-reject-undo.docx",
+        "sha256": "f9e435627f9183bff06a369f681e351936a86282820f31fe94fd136f6fb8c5e8",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "del",
+            "text": "De kat.",
+            "colors": ["FF0000"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "0"
+          },
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "reject",
+        "phase": "redo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-reject-redo.docx",
+        "sha256": "04245a4325dcfaa19e1a52ab42174b31313dd085507f4be4fd3ab091708d4788",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "individual",
+        "phase": "before-undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-individual-before-undo.docx",
+        "sha256": "56967fa3350c2c91592145081c851fc7e2552a0a252a9b1bc608186b7486e891",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "individual",
+        "phase": "undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-individual-undo.docx",
+        "sha256": "01b224f04c609d5cb53d93209e34ab768d3bac5d46f2c31956e3ce2aa00f4efb",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "del",
+            "text": "De kat.",
+            "colors": ["FF0000"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "0"
+          },
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "individual",
+        "phase": "redo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-individual-redo.docx",
+        "sha256": "5cd9b8a8dc78b36a14d34d2674f4c44b5bf7205b89408e7c16dd98f0756e4eef",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      }
+    ],
+    "passed": 9,
+    "failed": 0,
+    "limitations": "Native operations executed only by750b. Bounded fixture, known340 avoided through canvas focus; no general revision corpus certification."
+  },
+  "independentSpreadsheetFiles": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "ROOT independent of native operator, read-only ZIP/XML comparison",
+    "cases": [
+      {
+        "kind": "explicit",
+        "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-native-fixtures\\Medium2-explicit-default0.xlsx",
+        "sourceSha256": "40b516dc70c91f441721e4083c1939f13c487296da756d56c08834beebf426c0",
+        "nativeOutput": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-explicit-4a7a3acf.xlsx",
+        "sha256": "68bb5942cd6673355d02934502a3a191990526308f67d1ec21e8d1514441a242",
+        "valueChange": {
+          "cell": "B2",
+          "before": "2",
+          "after": "6"
+        },
+        "allOtherWorksheetXmlCanonicalIdentical": true,
+        "normalization": "B2 numeric t=n equals omitted numeric default; attribute order ignored; all other XML unchanged",
+        "stylesAndTableXmlByteIdentical": true,
+        "tableRef": "A1:B5",
+        "style": {
+          "name": "TableStyleMedium2",
+          "showFirstColumn": "0",
+          "showLastColumn": "0",
+          "showRowStripes": "1",
+          "showColumnStripes": "0"
+        },
+        "result": "pass"
+      },
+      {
+        "kind": "implicit",
+        "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-native-fixtures\\Medium2-implicit-default.xlsx",
+        "sourceSha256": "f4f606b15f30ae4658f61d5976410920df543f0d8420dc79b654d768b4718a55",
+        "nativeOutput": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-implicit-4a7a3acf.xlsx",
+        "sha256": "eb11e78af9a96485ba60bb9bbb0e3d2a58148d80abeafbb0147781655cd0ee53",
+        "valueChange": {
+          "cell": "B2",
+          "before": "2",
+          "after": "6"
+        },
+        "allOtherWorksheetXmlCanonicalIdentical": true,
+        "normalization": "B2 numeric t=n equals omitted numeric default; attribute order ignored; all other XML unchanged",
+        "stylesAndTableXmlByteIdentical": true,
+        "tableRef": "A1:B5",
+        "style": {
+          "name": "TableStyleMedium2",
+          "showFirstColumn": "0",
+          "showLastColumn": "0",
+          "showRowStripes": "1",
+          "showColumnStripes": "0"
+        },
+        "result": "pass"
+      }
+    ],
+    "limitations": "No native UI automation by ROOT; visual/native reopen confirmation belongs to operator750b."
+  },
+  "independentFieldPdfReport": "integratie-ronde2-native-pdf-2026-11-10.json"
+}

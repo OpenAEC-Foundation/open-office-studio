@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "round": 2,
+  "asOf": "2026-11-10T13:32:14.171222+00:00",
+  "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "ciCheckoutCommit": "15d87a0b6f8f9e7a07b86cfd4a16991e04e56023",
+  "sourceAndCiTree": "3a49ea4f704f8171a60e11913936cd9d0b1b5b86",
+  "sameTreeVerified": true,
+  "mainChanged": false,
+  "officialReleasePublished": false,
+  "fullPlatformApproved": false,
+  "local": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "fullSuite": {
+      "status": "passed",
+      "passed": 3408,
+      "failed": 0,
+      "skipped": 7,
+      "files": 317,
+      "evidence": ".local/round2-full-corrected.json",
+      "skipScope": "Four encryption corpus cases absent locally; three inherited Access/VBA cases. CI has encryption corpus and passes3412 with3 inherited skips."
+    },
+    "productionBuild": {
+      "status": "passed",
+      "seconds": 42.01,
+      "evidence": ".local/round2-build-corrected.log"
+    },
+    "hostedBuild": {
+      "status": "passed",
+      "seconds": 30.73,
+      "evidence": ".local/round2-hosted-build.log",
+      "externalResourcesOrAbsolutePaths": false
+    },
+    "i18n": {
+      "status": "passed",
+      "languages": 9,
+      "namespaces": 21,
+      "keys": 8034,
+      "preExistingInactiveDirectoryWarnings": 23,
+      "checkpoint": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "reuseReason": "4a7 changes only kernel byte-count metadata; language/source/engine inputs unchanged."
+    },
+    "commands": {
+      "status": "passed",
+      "cases": 10,
+      "checkpoint": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "evidence": ".local/round2-commands.log"
+    },
+    "engines": {
+      "status": "passed",
+      "checkpoint": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "evidence": ".local/round2-engines.log"
+    },
+    "normalBrowser": {
+      "status": "passed",
+      "rootGroups": 17,
+      "delegatedGroups": 5,
+      "rootEvidence": ".local/round2-browser/summary.json",
+      "delegatedEvidence": "../oos-spreadsheet-frontend15-e0d7/.local/frontend15-browser-receipt.json"
+    },
+    "actualHostedBrowser": {
+      "status": "passed",
+      "route": "/office/",
+      "editDownloadReopen": ["Writer", "Spreadsheet", "Presentation"],
+      "fieldPdfCases": 5,
+      "additionalGroups": ["conditional-formatting4", "trendlines4"],
+      "tauriBridge": false,
+      "kernelMock": false,
+      "liveYStorage": "excluded by user",
+      "evidence": [
+        ".local/round2-hosted-platforms.log",
+        ".local/round2-hosted-fields.log"
+      ]
+    },
+    "nativeWindows": {
+      "status": "passed bounded native acceptance; fullNativeAcceptance false",
+      "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "operator": "750b",
+      "finishedAtUtc": "2026-11-10T13:26:33.8629614Z",
+      "passed": [
+        "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
+        "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
+        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen"
+      ],
+      "partial": [
+        "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
+      ],
+      "notRun": [
+        "318 reply initials",
+        "325 media replay after end",
+        "326 Presentation whole-word option",
+        "340 known tab focus route not retested",
+        "Linux/macOS native and browser not executed by this chat on 4a7"
+      ],
+      "independentReview": {
+        "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
+        "reviewSnapshots": 9,
+        "spreadsheetFiles": 2
+      },
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored"
+    },
+    "platformCI": {
+      "status": "Windows/Linux passed; macOS queued at snapshot",
+      "report": "integratie-ronde2-platforms-2026-11-10.json"
+    }
+  },
+  "normalDist": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "fileCount": 727,
+    "treeSha256": "0308956997dcd676dc72c2239d3383cfcfc2b92b45cf166372f4b33e25d098d2",
+    "treeAlgorithm": "SHA256 of files[] in recorded manifest order, each path TAB fileSHA256 TAB bytes NEWLINE, UTF8. Capture used Windows Path sorting (case-insensitive/component-wise); do not re-sort using Unicode string order.",
+    "nativeWasm": [
+      {
+        "path": "assets/xlsx_wasm_bg-B-8howWL.wasm",
+        "sha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+        "bytes": 7794993
+      }
+    ],
+    "productionWriterDebugBridges": false
+  },
+  "hostedDist": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "fileCount": 727,
+    "treeSha256": "7b07608f17a39c9ff5315e56a180e5217b41b672c3ba70fe9a56215e13825345",
+    "treeAlgorithm": "SHA256 of files[] in recorded manifest order, each path TAB fileSHA256 TAB bytes NEWLINE, UTF8. Capture used Windows Path sorting (case-insensitive/component-wise); do not re-sort using Unicode string order.",
+    "nativeWasm": [
+      {
+        "path": "assets/xlsx_wasm_bg-B-8howWL.wasm",
+        "sha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+        "bytes": 7794993
+      }
+    ],
+    "productionWriterDebugBridges": false
+  },
+  "windows": {
+    "buildPackage": "passed",
+    "functionalSuite": {
+      "passed": 3412,
+      "skipped": 3,
+      "files": 317
+    },
+    "rust": {
+      "passed": 113,
+      "ignored": 5
+    },
+    "installer": {
+      "platform": "windows",
+      "programma": "open-office-studio",
+      "versie": "2026.45.4",
+      "pakketten": [
+        {
+          "naam": "Open Office Studio_2026.45.4_x64-setup.exe",
+          "bytes": 73505743,
+          "sha256": "68a31bd38604894794fe9e05461f41e9c3b0b689cf8696e5d6ae5f17f00689f1",
+          "controles": [
+            "NSIS-archief leesbaar",
+            "programma en WebView2-loader x64",
+            "WebView2-bootstrapper aanwezig",
+            "installer- en programma-iconen bytegelijk aan goedgekeurde bron"
+          ]
+        }
+      ],
+      "installatie_en_native_bediening": "niet_gecontroleerd"
+    },
+    "nativeUi": {
+      "status": "passed bounded native acceptance; fullNativeAcceptance false",
+      "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "operator": "750b",
+      "finishedAtUtc": "2026-11-10T13:26:33.8629614Z",
+      "passed": [
+        "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
+        "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
+        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen"
+      ],
+      "partial": [
+        "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
+      ],
+      "notRun": [
+        "318 reply initials",
+        "325 media replay after end",
+        "326 Presentation whole-word option",
+        "340 known tab focus route not retested",
+        "Linux/macOS native and browser not executed by this chat on 4a7"
+      ],
+      "independentReview": {
+        "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
+        "reviewSnapshots": 9,
+        "spreadsheetFiles": 2
+      },
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored"
+    },
+    "fieldPdfReview": "integratie-ronde2-native-pdf-2026-11-10.json",
+    "installedExeSha256": "c5607da784846b48053391c64bd5d59fc38d000bdb05389ae155fbdf779162f7",
+    "artifact": 13765369748,
+    "artifactZipSha256": "29391cc54e3803824da84090058221accc39f07942497660872fa4a0556f0a71"
+  },
+  "linux": {
+    "buildPackage": "passed",
+    "functionalSuite": {
+      "passed": 3412,
+      "skipped": 3,
+      "files": 317
+    },
+    "rust": {
+      "passed": 113,
+      "ignored": 6
+    },
+    "packages": {
+      "platform": "linux",
+      "programma": "open-office-studio",
+      "versie": "2026.45.4",
+      "pakketten": [
+        {
+          "naam": "Open Office Studio_2026.45.4_amd64.deb",
+          "bytes": 76267630,
+          "sha256": "06a9f606ecd4a8d169f9371a6206ee236a49de7c3168fe38efa0f125827fcef6",
+          "controles": [
+            "DEB-versie en architectuur",
+            "runtime-afhankelijkheden opgegeven",
+            "ELF x64 en bibliotheken gevonden",
+            "snelkoppeling en pictogram aanwezig",
+            "bestandskoppelingen (MimeType, Exec %F, MIME-pakket)"
+          ]
+        },
+        {
+          "naam": "Open Office Studio_2026.45.4_amd64.AppImage",
+          "bytes": 153844216,
+          "sha256": "2b5b7ff71ca8cec3a688888d2aeb104d504273e95e29b50616f84c08e29d0a12",
+          "controles": [
+            "AppImage type 2",
+            "SquashFS volledig uitgepakt",
+            "AppRun uitvoerbaar",
+            "ELF x64 en bibliotheken gevonden",
+            "snelkoppeling en pictogram aanwezig"
+          ]
+        }
+      ],
+      "installatie_en_native_bediening": "niet_gecontroleerd"
+    },
+    "nativeInteractiveGui": "not tested; no Linux desktop testhost",
+    "artifact": 13767771054
+  },
+  "macOS": {
+    "buildPackage": "queued; not passed",
+    "functional": "not executed at snapshot",
+    "nativeInteractiveGui": "not tested"
+  },
+  "browser": {
+    "host": "Windows x64",
+    "engine": "Chromium151",
+    "normalAndActualHostedRoute": "passed",
+    "additionalEngines": "Firefox/WebKit/Safari not tested",
+    "nativeTauriBridge": "absent on hosted route",
+    "liveYWorkplaceStorage": "excluded by user"
+  },
+  "ci": [
+    {
+      "kind": "desktop",
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "status": "queued",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468",
+      "jobs": [
+        {
+          "databaseId": 129833698436,
+          "name": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833698436"
+        },
+        {
+          "databaseId": 129833699033,
+          "name": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699033"
+        },
+        {
+          "databaseId": 129833699052,
+          "name": "desktop (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699052"
+        }
+      ]
+    },
+    {
+      "kind": "database",
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "status": "queued",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223",
+      "jobs": [
+        {
+          "databaseId": 129833698581,
+          "name": "database (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833698581"
+        },
+        {
+          "databaseId": 129833699079,
+          "name": "database (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699079"
+        },
+        {
+          "databaseId": 129833699111,
+          "name": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699111"
+        }
+      ]
+    },
+    {
+      "kind": "presentation",
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "status": "queued",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213",
+      "jobs": [
+        {
+          "databaseId": 129833698196,
+          "name": "presentation (Linux)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698196"
+        },
+        {
+          "databaseId": 129833698624,
+          "name": "presentation (macOS)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698624"
+        },
+        {
+          "databaseId": 129833698747,
+          "name": "presentation (Windows)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698747"
+        }
+      ]
+    }
+  ],
+  "otherCi": [
+    {
+      "conclusion": "success",
+      "databaseId": 42817352271,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Legacy format coverage",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352271"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 42817352468,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Kantooromgeving controleren en bouwen",
+      "status": "queued",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 42817352213,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Preserve presentation ODF data",
+      "status": "queued",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 42817352223,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Zelfstandige databasebrowser controleren en bouwen",
+      "status": "queued",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42817352548,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Documentmatrix op de productiekern controleren",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352548"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42817352402,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Zelfstandig kantoorvoorbeeld controleren",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352402"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42817352467,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Validate strict ODF 1.3 output",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352467"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42817352308,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Rekenbladmatrix onafhankelijk controleren",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352308"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42817352229,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Tekstkern uit vastgezette bron bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352229"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42817352204,
+      "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "name": "Writer format round trips",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352204"
+    }
+  ],
+  "remaining": [
+    "macOS exact-checkpoint CI build/package and functional results",
+    "Actual installed Linux/macOS interactive acceptance",
+    "Additional supported browser engines and live Y storage (latter excluded by user)",
+    "Remaining Windows UI scopes outside bounded operator receipt"
+  ],
+  "frozenBrowserArchive": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-frozen-browser-4a7a3acf.zip",
+    "sha256": "ca5de7ad4941eeb2c0a9092098af01e73cac03d68151465395c2c7a5fde2c868",
+    "bytes": 82952570,
+    "uniqueContents": 699,
+    "uncompressedUniqueBytes": 156443999,
+    "manifests": [
+      ".local/round2-dist-manifest.json",
+      ".local/round2-hosted-dist-manifest.json"
+    ],
+    "purpose": "Durable read-only backup of both exact tested browser distributions; local archive, not a release/install artifact."
+  },
+  "evidenceArchive": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-evidence-4a7a3acf.zip",
+    "sha256": "9b55b1658bce62921ea1a7d53a9475ecdaeaca6bc6ee63ebee8884038ae0f513",
+    "bytes": 5731948,
+    "files": 205,
+    "purpose": "Local durable combined proof/native outputs backup; not a release."
+  }
+}

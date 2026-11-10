@@ -2,18 +2,18 @@
   "schemaVersion": 1,
   "date": "2026-11-10",
   "round": 2,
-  "asOf": "2026-11-10T12:18:10.412567+00:00",
+  "asOf": "2026-11-10T13:32:14.171222+00:00",
   "branch": "codex/integratie-2026-11-09",
   "candidateBranch": "codex/integratie-kandidaat2-2026-11-10",
   "base": "959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1",
   "previousRuntime": "1e5afa399117fd84df628955ec82b0e597993c83",
-  "codeCheckpoint": "772a44a5983a24ab5d97e9d4c025ba69bdbbe494",
+  "codeCheckpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
   "sourceIntakeClosed": true,
   "intakeClosedAt": "2026-11-10T13:15:00+01:00",
   "handoffDeadline": "2026-11-10T15:30:00+01:00",
   "mainMerged": false,
   "releasePublished": false,
-  "installationReleased": false,
+  "installationReleased": true,
   "fullPlatformApproved": false,
   "sourcePRs": 89,
   "deliveries": 99,
@@ -374,32 +374,168 @@
     "importExportAbiIdentical": true
   },
   "combinedValidation": {
-    "fullSuite": "pending",
-    "productionBuild": "pending",
-    "i18n": "pending",
-    "commands": "pending",
-    "normalBrowser": "pending",
-    "actualHostedBrowser": "pending",
-    "platformCI": "pending frozen-report checkpoint",
-    "nativeWindows": "Not released; operator750b retains installed1e5 until one exact certified replacement"
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "fullSuite": {
+      "status": "passed",
+      "passed": 3408,
+      "failed": 0,
+      "skipped": 7,
+      "files": 317,
+      "evidence": ".local/round2-full-corrected.json",
+      "skipScope": "Four encryption corpus cases absent locally; three inherited Access/VBA cases. CI has encryption corpus and passes3412 with3 inherited skips."
+    },
+    "productionBuild": {
+      "status": "passed",
+      "seconds": 42.01,
+      "evidence": ".local/round2-build-corrected.log"
+    },
+    "hostedBuild": {
+      "status": "passed",
+      "seconds": 30.73,
+      "evidence": ".local/round2-hosted-build.log",
+      "externalResourcesOrAbsolutePaths": false
+    },
+    "i18n": {
+      "status": "passed",
+      "languages": 9,
+      "namespaces": 21,
+      "keys": 8034,
+      "preExistingInactiveDirectoryWarnings": 23,
+      "checkpoint": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "reuseReason": "4a7 changes only kernel byte-count metadata; language/source/engine inputs unchanged."
+    },
+    "commands": {
+      "status": "passed",
+      "cases": 10,
+      "checkpoint": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "evidence": ".local/round2-commands.log"
+    },
+    "engines": {
+      "status": "passed",
+      "checkpoint": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "evidence": ".local/round2-engines.log"
+    },
+    "normalBrowser": {
+      "status": "passed",
+      "rootGroups": 17,
+      "delegatedGroups": 5,
+      "rootEvidence": ".local/round2-browser/summary.json",
+      "delegatedEvidence": "../oos-spreadsheet-frontend15-e0d7/.local/frontend15-browser-receipt.json"
+    },
+    "actualHostedBrowser": {
+      "status": "passed",
+      "route": "/office/",
+      "editDownloadReopen": ["Writer", "Spreadsheet", "Presentation"],
+      "fieldPdfCases": 5,
+      "additionalGroups": ["conditional-formatting4", "trendlines4"],
+      "tauriBridge": false,
+      "kernelMock": false,
+      "liveYStorage": "excluded by user",
+      "evidence": [
+        ".local/round2-hosted-platforms.log",
+        ".local/round2-hosted-fields.log"
+      ]
+    },
+    "nativeWindows": {
+      "status": "passed bounded native acceptance; fullNativeAcceptance false",
+      "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "operator": "750b",
+      "finishedAtUtc": "2026-11-10T13:26:33.8629614Z",
+      "passed": [
+        "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
+        "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
+        "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen"
+      ],
+      "partial": [
+        "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
+      ],
+      "notRun": [
+        "318 reply initials",
+        "325 media replay after end",
+        "326 Presentation whole-word option",
+        "340 known tab focus route not retested",
+        "Linux/macOS native and browser not executed by this chat on 4a7"
+      ],
+      "independentReview": {
+        "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
+        "reviewSnapshots": 9,
+        "spreadsheetFiles": 2
+      },
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored"
+    },
+    "platformCI": {
+      "status": "Windows/Linux passed; macOS queued at snapshot",
+      "report": "integratie-ronde2-platforms-2026-11-10.json"
+    }
   },
   "deferred": [
     {
       "issue": 327,
-      "owner": "performance6f",
       "branch": "codex/writer-language-status-performance-2026-11-10",
-      "status": "No exact released head received by13:15; preserve own next-week delivery"
+      "head": "3c2595ca22134bc776132a4790e3e6851d07196a",
+      "evidenceHead": "f0c3fb712a3a06b48f47d171538b714eac07e438",
+      "status": "Outside intake; 33 targeted/browser checks; CPU4 lookup7to1 but phase6.38to8.42s, no general performance claim; macOS/native acceptance open."
     },
     {
       "pr": 317,
       "issue": 30,
-      "owner": "formats8020",
-      "head": "dd683cfa0cb419f1aae87bb78d9a59adfc201608",
-      "status": "Not source-released beforecut; bundledruntime/installer acceptance remains separate"
+      "branch": "codex/formats-30-bundled-runtime",
+      "lastKnownUnreleasedHead": "dd683cfa0cb419f1aae87bb78d9a59adfc201608",
+      "remoteObservedHead": "7e48cf5834a8c7a115f9eb9fcdc0ca8c50c4e0f7",
+      "certified": false,
+      "pausedByUserUntilNextWeek": true,
+      "status": "Owner explicitly did NOT release this concept head. Source CI merge c7118fce9d825ac95fbab46d714c04e8b541a896/run42814410322: Windows NSIS and Linux DEB/AppImage/package/private conversion/macro32legacy cases passed,23config tests/302JSfiles perWinLinux plusRust/Python/browser. Remaining Windows nativeUI WebView2/CDP unreachable; Linux installed ODT opens but SaveAs key control fails; AppImage GUI untested; macOS queued; signing/notarization/release variants uncertified. Printer popup unresolved, existing flags already set. Source clean/pushed, all own converters stopped; no Libre/printer/security changes."
+    },
+    {
+      "pr": 337,
+      "issue": 336,
+      "head": "2359ea6059025999b83f8083b9885dd93b03a4a3",
+      "branch": "codex/presentation-media-manual-pause-85-2026-11-10",
+      "status": "Outside intake. Targeted25 and real slideshow14 cases pass; source Windows full-suite inherited bibliography timeout unresolved, isolated31 pass. Future poster-capture research kept separate."
+    },
+    {
+      "pr": 341,
+      "issue": 339,
+      "head": "b0bd5f8189bcb2ecf0433a4849f9e6f5c9b508fd",
+      "branch": "codex/presentation-search-truncation-2026-11-10",
+      "status": "Outside intake. Targeted17/build/i18n and11 browser cases pass; source CI/native limits stay separate."
+    },
+    {
+      "pr": 342,
+      "issue": 93,
+      "head": "12b99ca3c6b67d6e5c07b97d079bf02e65276c81",
+      "branch": "codex/issue-93-drawing-module-research-2026-11-10",
+      "status": "Research-only, no Draw implementation. Connector-follow limitation observed on older1e5 app code, not current integration claim;49 existing tests plus CLI/browser evidence. Additional Paint empirical SVG-retention comparison at dd6c6e12 recorded, not Office code."
+    },
+    {
+      "pr": 344,
+      "issue": 338,
+      "head": "e19ba34e18fb108f6134dfb2025eabfde7628d41",
+      "branch": "codex/writer-pdf-internal-links-2026-11-10",
+      "status": "Outside intake.55 targeted, default/hosted builds and8 real UI PDFs pass;16 internal annotations independently checked; existing two-page layout pixel-identical. Native3OS open."
+    },
+    {
+      "pr": 343,
+      "issue": 340,
+      "head": "6c785ed0fc1fa6916144cf790ede7019e3deb5ee",
+      "status": "Outside intake, mouse-tab CtrlZ focus.29 targeted and9normal+9hosted browser groups per platform pass at CI cea96800628a00c4c111d710eed1cfd7bc356cea/run42821654397. Windows desktop3411pass/1timeout/3skip and database3408pass/1timeout/6skip: unchanged bibliography timeout, isolated31 pass. Local full3404pass/1i18n timeout/10skip, isolated17 pass. Linux full/build pass, native package building, Mac native queued; actual native UI unverified."
+    },
+    {
+      "pr": 346,
+      "issue": 345,
+      "head": "c195e3171918faf703a9c72bcf0c5c7f71a313d1",
+      "branch": "codex/presentation-poster-capture-race-85-2026-11-10",
+      "dependsOnPR": 337,
+      "status": "Outside intake.8-line DiaMedia delta d721c816.25 targeted/tsc/build and actual capture/save/reopen pass; dedicated Windows/Linux92 tests, native format matrices and4 capture cases pass, run42821713992. Broader Windows bibliography timeout unresolved; macOS/native GUI package acceptance open."
+    },
+    {
+      "owner": "Spreadsheet e0",
+      "status": "Future test-only pivot helper repair saved as .local/pivot-probe-target.patch. Imported pivot bounds determine target; real ODS6cases already pass on unchanged4a7. No production fix needed."
     }
   ],
   "limits": [
-    "No main merge, release or issue closure permission.",
+    "No main merge, official release or issue closure permission. Exact Windows development/native-QA installation is explicitly authorized.",
     "Source tests retain exact original checkpoints; final combination gets a separate exact runtime/platform checkpoint.",
     "Large-workbook74 remains partial: bounded300k/50k cases do not prove the full100krowsx30columns or asyncmain editor/memory guarantee.",
     "Pivot69 remains bounded; unsupported layouts stay read-only and refresh reloads/history limitations remain.",
@@ -417,7 +553,7 @@
     }
   ],
   "approvedPRBodyClosingReferences": [],
-  "nextWeek": "Read this report and current handoff; preserve the source freeze. Only demonstrated acceptance blockers can change this round. Later user-approved work remains on its owner branches; never silently substitute newer source heads.",
+  "nextWeek": "Start at this report and PR248, verify branch/head and open platform CI first. Preserve4a7 runtime evidence; later documentation commits are not a new runtime. Review deferred source heads independently; do not silently add them to this frozen round. No main change without explicit user permission.",
   "supersededDuplicateCI": [
     {
       "run": 42808120958,
@@ -535,5 +671,181 @@
       ],
       "cancelRequested": true
     }
-  ]
+  ],
+  "applicationBeforeMetadataCorrection": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+  "deferredRemoteSnapshot": {
+    "p317": {
+      "number": 317,
+      "state": "OPEN",
+      "isDraft": true,
+      "headRefName": "codex/formats-30-bundled-runtime",
+      "headRefOid": "7e48cf5834a8c7a115f9eb9fcdc0ca8c50c4e0f7",
+      "baseRefName": "codex/integratie-2026-11-09"
+    },
+    "p337": {
+      "number": 337,
+      "state": "OPEN",
+      "isDraft": true,
+      "headRefName": "codex/presentation-media-manual-pause-85-2026-11-10",
+      "headRefOid": "2359ea6059025999b83f8083b9885dd93b03a4a3",
+      "baseRefName": "codex/integratie-2026-11-09"
+    },
+    "p341": {
+      "number": 341,
+      "state": "OPEN",
+      "isDraft": true,
+      "headRefName": "codex/presentation-search-truncation-2026-11-10",
+      "headRefOid": "b0bd5f8189bcb2ecf0433a4849f9e6f5c9b508fd",
+      "baseRefName": "codex/integratie-2026-11-09"
+    },
+    "p342": {
+      "number": 342,
+      "state": "OPEN",
+      "isDraft": true,
+      "headRefName": "codex/issue-93-drawing-module-research-2026-11-10",
+      "headRefOid": "12b99ca3c6b67d6e5c07b97d079bf02e65276c81",
+      "baseRefName": "codex/integratie-2026-11-09"
+    },
+    "p343": {
+      "number": 343,
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "codex/office-tab-undo-340-2026-11-10",
+      "headRefOid": "6c785ed0fc1fa6916144cf790ede7019e3deb5ee",
+      "baseRefName": "codex/integratie-kandidaat2-2026-11-10"
+    },
+    "p344": {
+      "number": 344,
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "codex/writer-pdf-internal-links-2026-11-10",
+      "headRefOid": "e19ba34e18fb108f6134dfb2025eabfde7628d41",
+      "baseRefName": "codex/integratie-2026-11-09"
+    },
+    "p346": {
+      "number": 346,
+      "state": "OPEN",
+      "isDraft": true,
+      "headRefName": "codex/presentation-poster-capture-race-85-2026-11-10",
+      "headRefOid": "c195e3171918faf703a9c72bcf0c5c7f71a313d1",
+      "baseRefName": "codex/integratie-2026-11-09"
+    }
+  },
+  "independentAudits": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "asOf": "2026-11-10T13:31:36.482413+00:00",
+    "audits": [
+      {
+        "reviewer": "Spreadsheet d410",
+        "scope": "read-only ledger/counts/fullSuite/browser/CI/kernel15/dist bytes and digest reproduction",
+        "result": "passed after documenting exact files[] order; all files/digests unchanged",
+        "findingResolved": "Replaced ambiguous sorted-path recipe with recorded manifest order and Windows Path sorting explanation in platform report, both local manifests and capture-helper descriptions."
+      },
+      {
+        "reviewer": "Writer8ca",
+        "scope": "read-only runtime/source ancestry42refs/tree equality/main gate/local evidence paths/native output and installed-exe hashes/late queue/closing189",
+        "result": "passed",
+        "handoffConditions": "Commit/push7reportfiles as docs-only, preserve runtime4a7 and local proof. Both dist archives/evidence archive subsequently recorded."
+      }
+    ]
+  },
+  "supersededFirstFreezeCI": [
+    {
+      "run": 42815907857,
+      "head": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "status": "queued",
+      "jobs": [
+        {
+          "databaseId": 129828820680,
+          "name": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815907857/job/129828820680"
+        },
+        {
+          "databaseId": 129828821060,
+          "name": "desktop (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815907857/job/129828821060"
+        },
+        {
+          "databaseId": 129828821191,
+          "name": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815907857/job/129828821191"
+        }
+      ],
+      "reason": "Superseded first freeze; exact4a7 matrix retained; completed job proof preserved",
+      "cancelRequested": true
+    },
+    {
+      "run": 42815907163,
+      "head": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "status": "queued",
+      "jobs": [
+        {
+          "databaseId": 129828818232,
+          "name": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815907163/job/129828818232"
+        },
+        {
+          "databaseId": 129828818528,
+          "name": "database (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815907163/job/129828818528"
+        },
+        {
+          "databaseId": 129828818539,
+          "name": "database (windows-latest)",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815907163/job/129828818539"
+        }
+      ],
+      "reason": "Superseded first freeze; exact4a7 matrix retained; completed job proof preserved",
+      "cancelRequested": true
+    },
+    {
+      "run": 42815908172,
+      "head": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "status": "completed",
+      "jobs": [
+        {
+          "databaseId": 129828821948,
+          "name": "presentation (Windows)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815908172/job/129828821948"
+        },
+        {
+          "databaseId": 129828822379,
+          "name": "presentation (macOS)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815908172/job/129828822379"
+        },
+        {
+          "databaseId": 129828823139,
+          "name": "presentation (Linux)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42815908172/job/129828823139"
+        }
+      ],
+      "reason": "Superseded first freeze; exact4a7 matrix retained; completed job proof preserved"
+    }
+  ],
+  "ciStabilityFollowup": {
+    "scope": "Future test investigation, no production correction or new issue claimed",
+    "test": "src/import/legeBibliografie.test.ts:245",
+    "observed": "Windows desktop/database68cc failed only the unchanged5000ms no-input-mutation bibliography test at5361/5550ms. The final exact4a7 desktop/database CI passed; the byte-count metadata correction is not claimed to fix this timeout. Similar source-only failures on future337/343/346 remain explicit.",
+    "originalRuns": [42815907857, 42815907163],
+    "originalJobs": [129828821191, 129828818539],
+    "status": "Unresolved intermittent CI timing; preserve failed evidence, no timeout/guard weakened."
+  }
 }
