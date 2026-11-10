@@ -44,7 +44,12 @@ TypeScript slaagt. Er is geen nieuwe volledige suite of tweede productiebuild
 gedraaid: die combinatiecontrole blijft bij de integrator.
 
 De bestaande zesstappenproef bewaart nu ook de al gecontroleerde
-applicatiefoutmeldingen in zijn rapport. Na de centrale herbouw moeten zowel
+applicatiefoutmeldingen in zijn rapport. Ze opent en sluit kop en voet bovendien
+expliciet binnen de controletermijn en laat daarna de oude timer verlopen.
+Op de ongewijzigde oude dist sluiten ze binnen 61,8 en 70,7 ms en verschijnen
+beide onterechte meldingen; alle zes inhoudelijke stappen blijven slagen.
+Zie [het echte negatieve proefrapport](2026-11-10-writer-kopvoet-openmelding-baseline.json).
+Na de centrale herbouw moeten zowel
 deze zes als de vier nootvervolggevallen zonder fouten slagen. De ene native
 Windows-build en appbediening blijven bij buildchat 750b; de integrator beheert
 de kandidaat en legt de definitieve test-/bouw-SHA vast.

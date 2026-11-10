@@ -19,7 +19,7 @@ await ssr.close();
 const server = await preview({ configFile: false, build: { outDir: process.env.OFFICE_TEST_DIST ?? "dist" }, preview: { host: "127.0.0.1", port: 0, open: false } });
 const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1500, height: 1100 }, locale: "en-US" });
-const page = await context.newPage(), rapport = { stappen: [], fouten: [] };
+const page = await context.newPage(), rapport = { stappen: [], fouten: [], snelGesloten: [] };
 page.on("pageerror", e => rapport.fouten.push(String(e)));
 await page.addInitScript(() => { localStorage.setItem("openaec-office-instellingen", JSON.stringify({ taal: "en", spelling: { controleren: false, autocorrectie: false } })); localStorage.setItem("open-tekst-pakketroute-bevestigd", "1"); });
 await page.addInitScript(() => {
@@ -70,10 +70,24 @@ async function stijlen(soort, sneltoets = true) {
   await styles.getByRole("combobox", { name: "Type", exact: true }).selectOption(soort);
   return styles;
 }
+async function sluitSnelEnHeropen(soort) {
+  const begin = performance.now();
+  await page.getByRole("button", { name: "Close Header and Footer", exact: true }).click();
+  await page.waitForSelector(".hf-inline-editor", { state: "detached" });
+  const ms = performance.now() - begin;
+  assert.ok(ms < 600, `Fast ${soort} close took ${ms}ms; the stale 600ms check was not exercised`);
+  rapport.snelGesloten.push({ soort, ms });
+  // Deliberately let the old check expire after a legitimate successful close.
+  await page.waitForTimeout(700);
+  await page.getByRole("button", { name: soort === "header" ? "Edit Header" : "Edit Footer", exact: true }).click();
+  await page.waitForSelector(".hf-inline-editor");
+}
+let voetSluitingGetest = false;
 async function voetcel() {
   await page.getByRole("tab", { name: "Header & Footer", exact: true }).click();
   await page.getByRole("button", { name: "Edit Footer", exact: true }).click();
   await page.waitForSelector(".hf-inline-editor");
+  if (!voetSluitingGetest) { await sluitSnelEnHeropen("footer"); voetSluitingGetest = true; }
   const text = page.getByText("FooterCellProbe", { exact: true }).first().locator(".layout-run-text").first();
   await text.scrollIntoViewIfNeeded(); const box = await text.boundingBox(); assert.ok(box);
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
@@ -93,6 +107,7 @@ try {
   await page.getByRole("tab", { name: "Header & Footer", exact: true }).click();
   await page.getByRole("button", { name: "Edit Header", exact: true }).click();
   await page.waitForSelector(".hf-inline-editor");
+  await sluitSnelEnHeropen("header");
   await page.keyboard.press("End");
   await page.getByRole("button", { name: "Page Number", exact: true }).click();
   await herlaad(() => page.getByRole("menuitem", { name: /^Current Position/ }).click());
