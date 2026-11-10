@@ -77,6 +77,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#276](https://github.com/OpenAEC-Foundation/open-office-studio/pull/276) | `97cab703dda702215bf6b9b3fa262b82c9097d89` | `122e3d5769f21bd6ae5c585382e1652d2dc34eab` | Writer editable drawings and embedded-picture media fallback |
 | [#277](https://github.com/OpenAEC-Foundation/open-office-studio/pull/277) | `74bd7432b79b9fb4ee580f42a592beee0769e140` | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | Spreadsheet conditional-format differential style rendering |
 | [#266](https://github.com/OpenAEC-Foundation/open-office-studio/pull/266) | `617f23bf7dd0d258f337ec54075139ef38b01a5e` | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | Writer story parts, style selection and one-shot document reload navigation |
+| [#278](https://github.com/OpenAEC-Foundation/open-office-studio/pull/278) | `ddb5c063289f557467a8ad971077220d13788fe8` | `8b4eafc98d6973dfbcb5e0639448c0f80a991d5c` | Presentation ODF transition timing, direction and shared audio round trips |
 
 ## Earlier fixes included in bundles
 
@@ -175,6 +176,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr277-targeted | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | 8 | 0 | 0 |
 | full-application-candidate-phase3-2026-11-10 | `828dcbeb021cb81d2c2704ecf2f2746ef185f698` | 3016 | 0 | 7 |
 | pr266-targeted | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | 22 | 0 | 0 |
+| pr278-targeted | `8b4eafc98d6973dfbcb5e0639448c0f80a991d5c` | 30 | 0 | 0 |
 
 ## Pending deliveries
 
