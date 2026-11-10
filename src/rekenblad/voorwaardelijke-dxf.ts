@@ -78,7 +78,7 @@ const ingebouwd: Record<number, string> = {
   49: "@",
 };
 /** Resolve actual workbook theme and custom indexed palette, including HSL tint. */
-function kleuren(p: Pakket, werkmap: string, styles: XmlElement) {
+export function maakStijlKleurLezer(p: Pakket, werkmap: string, styles: XmlElement) {
   const rel = p
     .relaties(werkmap)
     .find((r) => !r.extern && r.type.endsWith("/theme"));
@@ -162,7 +162,7 @@ export function leesDxfStijlen(
           "zh-cn": "yyyy/mm/dd",
         }[locale] ?? "dd/mm/yyyy")
       : undefined;
-  const kleur = kleuren(p, werkmap, styles),
+  const kleur = maakStijlKleurLezer(p, werkmap, styles),
     nummers = new Map(
       kinderen(kind(styles, "numFmts"), "numFmt").map((n) => [
         Number(attr(n, "numFmtId")),
