@@ -44,3 +44,11 @@ TypeScript, productiebuild en vertaalcontrole zijn onderdeel van de eindcontrole
 De tabel/celstijlcode is daarmee gereed voor integratie in PR273. #69 wordt op een afzonderlijke branch uitgewerkt.
 
 OOXML-achtergrond: [Microsoft TableStyle](https://learn.microsoft.com/en-us/office/vba/api/excel.tablestyle).
+
+## Triage toetsenbordproef op integratiekandidaat
+
+De integratieproef opende soms het filter van A1 direct nadat de test-API B1 selecteerde. Een gerichte reproductie op de bestaande kandidaatbuild (checkout `e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a`) toont dat `selectCells` eerst React-toestand inplant: naamvak en pluginselectie zijn in dezelfde JavaScript-handler nog A1. Een direct verstuurde Alt+Pijl-omlaag opent dan terecht het nog weergegeven filter Item. Dit is een synchronisatiefout in de proef; een productfout bij gewone bediening is niet gereproduceerd.
+
+Twaalf afwisselende gewone Pijl-links/Pijl-rechts- en Alt+Pijl-omlaag-bedieningen openden telkens de juiste kolom. De vaste proef wacht nu na API-selectie op de pluginselectie en bedient de kolomwissel met Pijl-rechts. Ook heropenen wacht op de nieuwe documenthandle en op de geïnitialiseerde filterkeuzes. Er zijn geen vaste slaapintervallen toegevoegd en geen productbestanden gewijzigd.
+
+Alle zes browserstappen zijn daarna in drie opeenvolgende runs geslaagd, zonder JavaScript-fouten. Lokaal bewijs: `.local/triage-table-key-v2.log` (gerichte timingreproductie; het oude directe heropeningsassert faalde daar nog) en `.local/gui-tables-ready{,-2,-3}.log` (alle gecorrigeerde eindproeven groen). De kandidaatcheckout en zijn dist zijn uitsluitend gelezen.
