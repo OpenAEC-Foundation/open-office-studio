@@ -101,6 +101,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#331](https://github.com/OpenAEC-Foundation/open-office-studio/pull/331) | `7fd5e6899cb0f89ff17350927ef5b5aad864e75d` | `63e337422709f07bc8d814e589788ce3e74ceecb` | Presentation whole-word search preserves Unicode offsets and one-step replacement Undo |
 | [#332](https://github.com/OpenAEC-Foundation/open-office-studio/pull/332) | `63761df06ad7ea125a3e03c50b21caa88dca9fb3` | `b1ada744e9d223d20fe1b2f3a1792d5a77530779` | Render normative built-in table font and fill facets without custom DXF definitions |
 | [#334](https://github.com/OpenAEC-Foundation/open-office-studio/pull/334) | `65aca81f2c90b0400644818527679bb699ea19a0` | `14d83249841081287991b948989e146c997162dc` | Keep printed metadata field glyph metrics aligned with the actual layout font |
+| [#319](https://github.com/OpenAEC-Foundation/open-office-studio/pull/319) | `0eea9d4fea759b219fecef77f5f55d66d3046be1` | `bf7a4243743d184938af507e1df068adc815a5d4` | Bounded Spreadsheet startup improvements on unchanged first eight patches |
 
 ## Earlier fixes included in bundles
 
@@ -223,6 +224,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr331-targeted | `63e337422709f07bc8d814e589788ce3e74ceecb` | 10 | 0 | 0 |
 | pr332-targeted | `b1ada744e9d223d20fe1b2f3a1792d5a77530779` | 8 | 0 | 0 |
 | pr334-targeted | `14d83249841081287991b948989e146c997162dc` | 5 | 0 | 0 |
+| pr319-related-unit | `bf7a4243743d184938af507e1df068adc815a5d4` | 46 | 0 | 0 |
 
 ## Pending deliveries
 
