@@ -81,6 +81,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#283](https://github.com/OpenAEC-Foundation/open-office-studio/pull/283) | `211822ced0231c4eb8862087a2d6ba2584c98243` | `708441dbc0dc23b77d98fcb3a774cf0df6fd24e3` | Focused issue reporting and synthetic Writer-theme screenshot evidence; documentation-only review |
 | [#272](https://github.com/OpenAEC-Foundation/open-office-studio/pull/272) | `031a7b0d21c1624b1c810b4ee3690347ee570d08` | `c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77` | Document format coverage, honest legacy limitations and empty-conversion warnings |
 | [#291](https://github.com/OpenAEC-Foundation/open-office-studio/pull/291) | `56fbdccbbcc9df88215a8d92c09a6cea6340afef` | `c7117ba4eeb35880209c1f04a01fd043f45d6510` | Writer scoped paragraph reads for cursor navigation with raw-story semantics |
+| [#290](https://github.com/OpenAEC-Foundation/open-office-studio/pull/290) | `66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c` | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | Writer note continuation preserves body formatting after note reference Enter |
 
 ## Earlier fixes included in bundles
 
@@ -182,6 +183,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr278-targeted | `8b4eafc98d6973dfbcb5e0639448c0f80a991d5c` | 30 | 0 | 0 |
 | pr272-targeted | `c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77` | 44 | 0 | 0 |
 | pr291-targeted | `c7117ba4eeb35880209c1f04a01fd043f45d6510` | 19 | 0 | 0 |
+| pr290-targeted | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | 12 | 0 | 0 |
 
 ## Pending deliveries
 
