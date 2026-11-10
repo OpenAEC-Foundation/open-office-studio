@@ -67,6 +67,74 @@ async function echo(hoofd: YrsSession, worker: YrsSession, bewaren: boolean) {
 }
 
 describe("review-Undo na worker-synchronisatie (#313)", () => {
+  it.each(["accepteren", "weigeren"] as const)(
+    "houdt één revisie over twee alinea's begrensd bij %s",
+    async (wat) => {
+      const bytes = doc(
+        `<w:p>${paar(0, "Anna", "een", "twee", true)}</w:p><w:p>${paar(0, "Anna", "drie", "vier", true)}</w:p>`,
+      );
+      const s = await createYrsSession(),
+        worker = await createYrsSession();
+      try {
+        const host = s.openDocx(bytes, true),
+          voor = s.listRevisions(),
+          segmenten = s.storySegments("body");
+        worker.bootstrapPeer(
+          s.encodeState(),
+          s.encodePeerMetadata(),
+          bytes,
+          host,
+        );
+        expect(
+          await besluit(api(s).ref, wat, {
+            ids: [wat === "accepteren" ? "0" : "1"],
+          }),
+        ).toBe(1);
+        await echo(s, worker, true);
+        expect(s.undo()).toBe(true);
+        expect(s.listRevisions()).toEqual(voor);
+        expect(s.storySegments("body")).toEqual(segmenten);
+      } finally {
+        s.destroy();
+        worker.destroy();
+      }
+    },
+  );
+  it.each([
+    ["accepteren", "0"],
+    ["accepteren", "1"],
+    ["weigeren", "0"],
+    ["weigeren", "1"],
+  ] as const)(
+    "behoudt het exacte bereik bij één revisie %s/%s",
+    async (wat, id) => {
+      const bytes = doc(
+        `<w:p>${paar(0, "Anna", "De kat.", "De kat.", true)}</w:p>`,
+      );
+      const s = await createYrsSession(),
+        worker = await createYrsSession();
+      try {
+        const host = s.openDocx(bytes, true),
+          voor = s.listRevisions(),
+          segmenten = s.storySegments("body");
+        worker.bootstrapPeer(
+          s.encodeState(),
+          s.encodePeerMetadata(),
+          bytes,
+          host,
+        );
+        expect(await besluit(api(s).ref, wat, { ids: [id] })).toBe(1);
+        await echo(s, worker, true);
+        expect(s.undo()).toBe(true);
+        expect(s.listRevisions()).toEqual(voor);
+        expect(s.storySegments("body")).toEqual(segmenten);
+        expect(s.redo()).toBe(true);
+      } finally {
+        s.destroy();
+        worker.destroy();
+      }
+    },
+  );
   for (const wat of ["accepteren", "weigeren"] as const) {
     for (const bewaren of [false, true]) {
       it(`${wat}, workeropslag=${bewaren}: bewaart leidende revisies, kleuren en eerdere geschiedenis`, async () => {
