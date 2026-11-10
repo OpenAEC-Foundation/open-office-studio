@@ -56,6 +56,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#246](https://github.com/OpenAEC-Foundation/open-office-studio/pull/246) | `9de53c798334456808a1c7cef815f7872a25ee89` | `5a62feb9b163cd05ccf73f20439f6cb5232a9cdb` | Spreadsheet formula hyperlinks and bounded image decoding |
 | [#256](https://github.com/OpenAEC-Foundation/open-office-studio/pull/256) | `51e0ea41e109960d8ea6ca53a149f1b663857ac3` | `6d4bdffde4a2a8a8c82818cd78f0f9e285845e51` | Presentation embedded media |
 | [#245](https://github.com/OpenAEC-Foundation/open-office-studio/pull/245) | `55108670c3d8c2300cdec226823f2683ddfeccdc` | `2462550e9a43755fdfa7c8a62e455fb4339940c7` | Writer format verification documentation correction |
+| [#257](https://github.com/OpenAEC-Foundation/open-office-studio/pull/257) | `3bd94cf7a827602c068462938297ef1d1fa4b33c` | `5c9b4f13ae00253d1dc586cbbe7d931b370ed857` | Spreadsheet header outline controls |
 
 ## Earlier fixes included in bundles
 
@@ -129,6 +130,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr246-targeted | `5a62feb9b163cd05ccf73f20439f6cb5232a9cdb` | 23 | 0 | 0 |
 | pr256-targeted | `6d4bdffde4a2a8a8c82818cd78f0f9e285845e51` | 16 | 0 | 0 |
 | pr245-related-unit | `2462550e9a43755fdfa7c8a62e455fb4339940c7` | 20 | 0 | 0 |
+| pr257-targeted | `5c9b4f13ae00253d1dc586cbbe7d931b370ed857` | 16 | 0 | 0 |
 
 ## Pending deliveries
 
