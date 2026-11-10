@@ -77,7 +77,7 @@
         "scripts/test-formatendekking.ts",
         "docs/tests/formatendekking/resultaat-windows.json"
       ],
-      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Windows26.8.2.2 opent deze fixture; de minimale Ubuntu22.04-runtime7.3.7.2 weigert de bron met \"source file could not be loaded\" en geeft het XLSX/CSV-alternatief."
     },
     {
       "ext": "dif",
@@ -392,7 +392,7 @@
         "scripts/test-formatendekking.ts",
         "docs/tests/formatendekking/resultaat-windows.json"
       ],
-      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Keynote 1 XML en Keynote 6 IWA; de IWA-fixture levert lege tekst. Moderne varianten zijn niet algemeen bewezen."
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Keynote 1 XML en Keynote 6 IWA; de IWA-fixture levert lege tekst. Moderne varianten zijn niet algemeen bewezen. Lege Impress-uitvoer geeft een expliciete waarschuwing met PPTX-alternatief; voor Keynote6 gecontroleerd."
     },
     {
       "ext": "lwp",
@@ -821,7 +821,7 @@
         "scripts/test-formatendekking.ts",
         "docs/tests/formatendekking/resultaat-windows.json"
       ],
-      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud."
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Windows26.8.2.2 opent deze fixture; LibreOffice7.3.7.2 op Linux weigert de PPTX-export met SfxBaseModel::impl_store 0xc10 en geeft het PPTX-alternatief."
     },
     {
       "ext": "sxw",
@@ -1048,7 +1048,7 @@
         "scripts/test-formatendekking.ts",
         "docs/tests/formatendekking/resultaat-windows.json"
       ],
-      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Works 6.0 en 2.00A DOS leveren lege tekst: alleen technische open-/bewaarproef, geen bewijs van tekstbehoud."
+      "note": "Echt bronbestand: veilig converteren, productie-editor openen, bewaren en heropenen. Geen bewijs van volledig visueel of inhoudelijk behoud. Works 6.0 en 2.00A DOS leveren lege tekst: alleen technische open-/bewaarproef, geen bewijs van tekstbehoud. Lege Writer-uitvoer geeft een expliciete waarschuwing met DOCX/RTF-alternatief; voor beide echte Works-fixtures gecontroleerd."
     },
     {
       "ext": "wq1",

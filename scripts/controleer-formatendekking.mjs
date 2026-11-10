@@ -37,23 +37,43 @@ export function controleerFormatendekking() {
     assert(bron.bytes > 0 && bron.bytes <= 100 * 1024 * 1024);
     assert(bron.variant.trim(), "Fixture variant must be explicit");
     assert(["open", "reject"].includes(bron.expected));
+    for (const variant of bron.expectedOn) {
+      assert(
+        variant.platform && variant.converter && variant.reason.length > 20,
+      );
+      assert(["open", "reject"].includes(variant.expected));
+    }
   }
   const resultaat = json(basis + "resultaat-windows.json");
-  for (const bron of bronnen.sources) {
-    const proeven = resultaat.results.filter((r) => r.id === bron.id);
-    assert.equal(
-      proeven.length,
-      1,
-      `Missing/duplicate actual result for ${bron.id}`,
-    );
-    assert.equal(proeven[0].passed, true, `Unsuccessful file ${bron.id}`);
-    assert.equal(
-      proeven[0].outcome,
-      bron.expected === "reject"
-        ? "rejected-with-alternative"
-        : "opened-saved-reopened",
-    );
-  }
+  const verslagen = [resultaat];
+  if (existsSync(basis + "resultaat-linux.json"))
+    verslagen.push(json(basis + "resultaat-linux.json"));
+  for (const verslag of verslagen)
+    for (const bron of bronnen.sources) {
+      const proeven = verslag.results.filter((r) => r.id === bron.id);
+      assert.equal(
+        proeven.length,
+        1,
+        `Missing/duplicate actual result for ${bron.id}`,
+      );
+      assert.equal(proeven[0].passed, true, `Unsuccessful file ${bron.id}`);
+      assert.equal(
+        proeven[0].outcome,
+        (bron.expectedOn.find(
+          (v) =>
+            v.platform === verslag.platform &&
+            v.converter === verslag.converter,
+        )?.expected ?? bron.expected) === "reject"
+          ? "rejected-with-alternative"
+          : "opened-saved-reopened",
+      );
+      if (bron.expectEmptyWarning)
+        assert.equal(
+          proeven[0].emptyConversionWarning,
+          true,
+          `Missing empty-result warning for ${bron.id}`,
+        );
+    }
   for (const entry of dekking.extensions) {
     assert.deepEqual(
       entry.modules,
@@ -102,7 +122,7 @@ export function dekkingTabel({ dekking }) {
     "",
     "Gegenereerd uit `dekking.json` en `src/formaten.json` met `node scripts/controleer-formatendekking.mjs --write`.",
     "",
-    "Bestandsproef = openen, bewaren en heropenen met de echte editor. Regressieproef = geldige gegenereerde invoer in een gerichte test. Historische proef = ouder, gedateerd testverslag; geen nieuwe onafhankelijke importproef. Geen van deze statussen betekent dat iedere variant verliesvrij is.",
+    "Bestandsproef = echte invoer: openen, bewaren en heropenen met de editor, of een expliciete weigering volgens het bronmanifest. Regressieproef = geldige gegenereerde invoer in een gerichte test. Historische proef = ouder, gedateerd testverslag; geen nieuwe onafhankelijke importproef. Geen van deze statussen betekent dat iedere variant verliesvrij is.",
     "",
     "| Extensie | Module | Openroute | Bewijs | Reikwijdte / ontbrekend voorbeeld |",
     "|---|---|---|---|---|",

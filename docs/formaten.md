@@ -2,7 +2,7 @@
 
 DOCX, XLSX en PPTX werken rechtstreeks in de editors. Eenvoudige tekst- en tabelbestanden hebben een eigen import; OOXML-varianten hebben eigen pakketbehandeling. De overige invoerformaten worden in de desktopversie lokaal geconverteerd. Daarvoor moet een kantoorruntime (LibreOffice) geïnstalleerd zijn. De app zoekt die zelf; zie [Kantoorruntime](#kantoorruntime-conversieprogramma). Een catalogusvermelding betekent dat conversie geprobeerd kan worden; niet dat iedere variant getest of verliesvrij is.
 
-| Module | Rechtstreeks | Via lokale conversie openen |
+| Module | Rechtstreeks | Overige invoer |
 |---|---|---|
 | Tekst | DOCX | DOC, DOT, DOTX, DOCM, DOTM, ODT, OTT, FODT, RTF, TXT, HTM, HTML, XHTML, MD, MARKDOWN, ABW, ZABW, SXW, STW, WPD, WPS, WRI, HWP, LWP, PAGES, FB2, EPUB, PSW, SDW, UOT |
 | Rekenblad | XLSX | XLS, XLT, XLTX, XLSM, XLTM, XLSB, ODS, OTS, FODS, CSV, TSV, TAB, DIF, SLK, SYLK, SXC, STC, DBF, GNUMERIC, GNM, NUMBERS, WK1, WK3, WK4, WKS, 123, WB1, WB2, WQ1, WQ2, ET, ETT, UOS |
@@ -37,6 +37,12 @@ Numbers 2 XML bewijst geen moderne Numbers-IWA; de WK4-fixture is Microsoft
 Works voor Mac en **geen Lotus 1-2-3 WK4**. Sommige Works-/Keynote-fixtures
 leveren lege tekst en bewijzen alleen de technische open-/bewaarroute.
 Een geslaagde bestandsproef bewijst geen volledig inhoudelijk of visueel behoud.
+Bij een Writer-/Impress-conversie zonder gedetecteerde zichtbare inhoud staat
+een expliciete waarschuwing in het openrapport, met hetzelfde exportadvies.
+Een echt leeg origineel blijft te openen. Tekstloze afbeeldingen, tabellen,
+formules en vormen worden hierbij niet automatisch als leeg beschouwd.
+De oudere minimale Linux-runtime 7.3.7.2 weigert bovendien de DBF- en SXI-proef
+die op Windows met 26.8.2.2 wel slagen; de matrix legt dat versieverschil vast.
 De runtime wordt nog niet meegeleverd; die distributie valt onder #30.
 
 ## Opslaan als

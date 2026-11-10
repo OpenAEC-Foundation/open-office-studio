@@ -72,6 +72,11 @@ it.each(
     variant: bron.variant,
     passed: false,
   };
+  const verwacht =
+    bron.expectedOn.find(
+      (v) =>
+        v.platform === process.platform && v.converter === rapport.converter,
+    )?.expected ?? bron.expected;
   (rapport.results as Record<string, unknown>[]).push(r);
   try {
     const pad = join(cache, `${bron.id}.${bron.ext}`);
@@ -111,7 +116,7 @@ it.each(
         },
       });
     } catch (e) {
-      if (bron.expected !== "reject") throw e;
+      if (verwacht !== "reject") throw e;
       expect(e).toBeInstanceOf(Error);
       expect((e as Error).message).toContain(bron.ext.toUpperCase());
       expect((e as Error).message).toContain(soort.toUpperCase());
@@ -122,8 +127,13 @@ it.each(
       r.passed = true;
       return;
     }
-    expect(bron.expected).not.toBe("reject");
+    expect(verwacht).not.toBe("reject");
     expect(resultaat?.soort).toBe(soort);
+    r.emptyConversionWarning =
+      resultaat?.rapport?.regels.some(
+        (regel) => regel.id === "empty-conversion",
+      ) ?? false;
+    if (bron.expectEmptyWarning) expect(r.emptyConversionWarning).toBe(true);
     let saved: Uint8Array;
     if (soort === "docx") {
       const session = await kern.sdk.createYrsSession();

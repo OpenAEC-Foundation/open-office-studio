@@ -1,6 +1,5 @@
 import { readFileSync } from "node:fs";
 import { expect, it } from "vitest";
-// @ts-expect-error The shared CLI is plain JavaScript, also used outside Vitest.
 import {
   controleerFormatendekking,
   dekkingTabel,

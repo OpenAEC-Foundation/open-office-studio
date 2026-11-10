@@ -29,6 +29,11 @@ bronhash blijft ongewijzigd. Van de 32 bestanden doorlopen 31 deze openroute;
 één onvolledig SYLK-regressiefragment zonder bestandskop wordt juist geweigerd
 met een uitleg en alternatief. `expected` en `outcome` onderscheiden beide
 uitkomsten; een geslaagde weigeringstest is geen geslaagde bestandsopening.
+De minimale Ubuntu 22.04-runtime is LibreOffice 7.3.7.2: die weigert ook het
+DBF-bronbestand en de SXI→PPTX-export. `expectedOn` legt uitsluitend deze exact
+gemeten runtime/platformcombinatie vast; de standaardverwachting voor de
+nieuwe runtime blijft openen. De fout en het alternatief worden ook bij die
+weigeringen gecontroleerd. Dit is geen algemene uitsluiting van DBF of SXI.
 Dit is geen native IPC-/installatieproef en geen
 visuele vergelijking of volledige inhoudsvergelijking. Geen enkele geslaagde
 proef bewijst alle bestandsvarianten of verliesvrij terugschrijven.
@@ -75,6 +80,12 @@ succesvolle vastgelegde bestandsproeven en de gegenereerde tabel.
 - Works 6.0/DOS 2.00A en Keynote 6 leveren geen tekst in de geconverteerde
   hoofdinhoud op. Hun succes betekent alleen dat de technische route werkt.
   Ze worden niet gebruikt als bewijs van tekstbehoud.
+  De openroute toont nu een waarschuwing bij Writer-/Impress-uitvoer zonder
+  gedetecteerde zichtbare inhoud, met hetzelfde alternatief vanuit de bronapp.
+  De echte bestandsproef controleert die waarschuwing voor deze drie bronnen.
+  De controle is voorzichtig: afbeeldingen, tabellen, velden, formules en
+  vormen tellen als mogelijke inhoud. Zij scant geen grote spreadsheetceldata
+  opnieuw en vervangt geen visuele of inhoudelijke vergelijking.
 - WK1 en WK3 zijn Lotus. De `.wk4`-fixture is **Microsoft Works 4.0 voor Mac**.
   Een regulier Lotus 1-2-3 WK4-voorbeeld is niet gevonden. Gelijke extensies
   betekenen hier verschillende interne bestandsformaten.

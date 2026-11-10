@@ -27,6 +27,7 @@ import type { Bronkenmerken } from "./bron";
 import { isSjabloon, OOXML_SJABLONEN, sjabloonNaarDocument } from "./sjabloon";
 import { openIfcx } from "../ifcx/dossier";
 import { bronMacros } from "./bronmacros";
+import { conversieZonderInhoud } from "./conversieinhoud";
 import { presentatieVariant } from "../presentatie/bestandsvariant";
 import {
   VerkeerdWachtwoord,
@@ -420,6 +421,18 @@ async function bereidOnversleuteld(
     }
     if (controle.datum1904)
       bronregels = [...bronregels, datum1904()];
+    if (conversieZonderInhoud(omgezet, soort))
+      bronregels = [
+        ...bronregels,
+        {
+          id: "empty-conversion",
+          onderdeel: i18next.t("import:errors.emptyConversionTitle"),
+          gevolg: i18next.t("import:errors.emptyConversion", {
+            ext: ext.toUpperCase(),
+            alternative: i18next.t(`import:errors.conversionAlternative.${soort}`),
+          }),
+        },
+      ];
     return {
       soort,
       naam: metExtensie(naam, soort),

@@ -31,9 +31,10 @@
       "ext": "wps",
       "variant": "Microsoft Works 6.0 (lege tekstproef)",
       "passed": true,
-      "conversionMs": 12628,
-      "savedBytes": 5282,
-      "savedSha256": "468900217757999f8fdeb60450bece0030259d29275ff239ede904519af304f1",
+      "conversionMs": 26177,
+      "emptyConversionWarning": true,
+      "savedBytes": 5283,
+      "savedSha256": "fb428f04299788402ff4d579d82dcc92ee4b84ba879bf7ec9206db26bce25856",
       "outcome": "opened-saved-reopened"
     },
     {
@@ -41,9 +42,10 @@
       "ext": "wps",
       "variant": "Microsoft Works 2.00A DOS (lege tekstproef)",
       "passed": true,
-      "conversionMs": 14125,
-      "savedBytes": 5298,
-      "savedSha256": "72c93a7a6001413ae64c7f1960020300bba8a9be96d88849e339cab3af14ebb0",
+      "conversionMs": 23506,
+      "emptyConversionWarning": true,
+      "savedBytes": 5296,
+      "savedSha256": "27120ec04304347f750d350c64b3eb24b644da247c9832ef0cca48b0313886cc",
       "outcome": "opened-saved-reopened"
     },
     {
@@ -112,10 +114,11 @@
       "ext": "key",
       "variant": "Keynote 6 (IWA; lege tekstproef)",
       "passed": true,
-      "conversionMs": 8123,
+      "conversionMs": 36461,
+      "emptyConversionWarning": true,
       "slides": 1,
       "savedBytes": 6428,
-      "savedSha256": "d15baa3f8eeaf6d9e86eecd9c0bc931abd328c86bccd8b3510f158bfa757b2e3",
+      "savedSha256": "229419e3f27860e25708c6f61a037fc34c0dfe15f348ae68f499e63b0d7b4cf9",
       "outcome": "opened-saved-reopened"
     },
     {
@@ -123,9 +126,10 @@
       "ext": "hwp",
       "variant": "Hangul 97 / HWP 3.0",
       "passed": true,
-      "conversionMs": 11448,
-      "savedBytes": 7014,
-      "savedSha256": "a2f33afa3723a24cf15c4604c606988b443a381904bf448f08a64b82ead67c6d",
+      "conversionMs": 22433,
+      "emptyConversionWarning": false,
+      "savedBytes": 7015,
+      "savedSha256": "594f2d6c3338e0b27460177f79295402b3ee96406f575f663f1f2c4e8c19554e",
       "outcome": "opened-saved-reopened"
     },
     {
@@ -260,6 +264,13 @@
       "outcome": "opened-saved-reopened"
     },
     {
+      "id": "lo-slk-1",
+      "ext": "slk",
+      "variant": "Onvolledig SYLK-numfmt-regressiefragment zonder ID-kop; verwacht weigering",
+      "passed": true,
+      "outcome": "rejected-with-alternative"
+    },
+    {
       "id": "lo-gnumeric-1",
       "ext": "gnumeric",
       "variant": "täßt.gnumeric",
@@ -310,13 +321,6 @@
       "outcome": "opened-saved-reopened"
     },
     {
-      "id": "lo-slk-1",
-      "ext": "slk",
-      "variant": "Onvolledig SYLK-numfmt-regressiefragment zonder ID-kop; verwacht weigering",
-      "passed": true,
-      "outcome": "rejected-with-alternative"
-    },
-    {
       "id": "lo-slk-2",
       "ext": "slk",
       "variant": "SYLK ooo80484-1",
@@ -327,18 +331,89 @@
       "outcome": "opened-saved-reopened"
     }
   ],
+  "lastVerifiedAt": "2026-11-10T09:13:04.075Z",
   "probes": [
     {
       "date": "2026-11-10T08:48:03.136Z",
-      "files": 31,
-      "opened": 30,
-      "rejected": 1,
-      "note": "The first SYLK source proved to be an incomplete parser fragment without an ID header; its refusal was investigated, then explicitly retested as a refusal case."
+      "ids": [
+        "lo-wpd-1",
+        "lo-wpd-2",
+        "lo-wps-1",
+        "lo-wps-2",
+        "lo-wri-1",
+        "lo-lwp-1",
+        "lo-pages-1",
+        "lo-pages-2",
+        "lo-numbers-1",
+        "lo-key-1",
+        "lo-key-2",
+        "lo-hwp-1",
+        "lo-wk1-1",
+        "lo-wk3-1",
+        "lo-wk4-1",
+        "lo-dbf-1",
+        "lo-sxw-1",
+        "lo-sxc-1",
+        "lo-sxi-1",
+        "lo-abw-1",
+        "lo-zabw-1",
+        "lo-fb2-1",
+        "lo-psw-1",
+        "lo-sdw-1",
+        "lo-dif-1",
+        "lo-slk-1",
+        "lo-gnumeric-1",
+        "lo-wks-1",
+        "lo-123-1",
+        "lo-wb1-1",
+        "lo-wq1-1"
+      ],
+      "passed": 30,
+      "failed": [
+        {
+          "id": "lo-slk-1",
+          "error": "Error: Dit SLK-bestand kon niet worden geopend. ENOENT: no such file or directory, stat 'C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-ghWAgk\\uit\\bron.xlsx' Exporteer het bestand vanuit de oorspronkelijke app als XLSX. CSV kan ook, maar bewaart alleen waarden van één blad."
+        }
+      ]
     },
     {
       "date": "2026-11-10T08:55:46.514Z",
-      "files": 2,
-      "note": "The incomplete fragment correctly refuses with alternative; an additional complete SYLK file opens/saves/reopens."
+      "ids": [
+        "lo-slk-1",
+        "lo-slk-2"
+      ],
+      "passed": 2,
+      "failed": []
+    },
+    {
+      "date": "2026-11-10T09:08:07.621Z",
+      "ids": [
+        "lo-wps-1",
+        "lo-wps-2",
+        "lo-key-2",
+        "lo-hwp-1"
+      ],
+      "passed": 2,
+      "failed": [
+        {
+          "id": "lo-wps-1",
+          "error": "Error: Dit WPS-bestand kon niet worden geopend. Conversion exceeded 45 seconds Exporteer het bestand vanuit de oorspronkelijke app als DOCX of RTF en open die kopie."
+        },
+        {
+          "id": "lo-wps-2",
+          "error": "Error: Dit WPS-bestand kon niet worden geopend. Conversion exceeded 45 seconds Exporteer het bestand vanuit de oorspronkelijke app als DOCX of RTF en open die kopie."
+        }
+      ]
+    },
+    {
+      "date": "2026-11-10T09:13:04.075Z",
+      "ids": [
+        "lo-wps-1",
+        "lo-wps-2"
+      ],
+      "passed": 2,
+      "failed": []
     }
-  ]
+  ],
+  "note": "Initial conversion/editor evidence is retained for unchanged formats. Empty-result warnings were subsequently tested on real WPS/Keynote conversions. Two WPS conversions exceeded the unchanged 45-second process-tree limit during concurrent host load; both succeeded under the same limit in a serial repeat. The incomplete SYLK parser fragment was investigated and retested as an explicit rejection case."
 }
