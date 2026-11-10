@@ -259,6 +259,8 @@ export function herstelKopVoetDoel(bron: string, ingang: "editor" | "opdrachten"
 /** Nieuwe alinea's met w:next erven geen directe tekenopmaak van de kop (#199). */
 export function herstelVervolgstijl(bron: string): string {
   const delen = [
+    ['se=u.splitParagraph(H,vt())', 'se=oosSplitsNaNoot(u,H,vt())'],
+    ['H.offset===z.text.length?P?.(ae)', 'H.offset===oosAlineaLengte(u,H)?P?.(ae)'],
     ['nextParagraphStyleId:P,', 'nextParagraphStyleId:P,oosVervolgOpmaak,'],
     ['nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,',
       'nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,oosVervolgOpmaak:T=>vt?.resolveParagraphStyle(T).runFormatting,'],
@@ -272,7 +274,7 @@ export function herstelVervolgstijl(bron: string): string {
       throw new Error("De tekstengine is gewijzigd; controleer eerst de overgang naar de volgende alineastijl.");
     uit = uit.replace(oud, nieuw);
   }
-  return 'import { pasVervolgstijlToe as oosPasVervolgstijlToe } from "openaec-tekst-vervolgstijl";\n' + uit;
+  return 'import { splitsNaNoot as oosSplitsNaNoot, alineaLengte as oosAlineaLengte } from "openaec-tekst-nootvervolg";\nimport { pasVervolgstijlToe as oosPasVervolgstijlToe } from "openaec-tekst-vervolgstijl";\n' + uit;
 }
 
 export function herstelSplitsBreedtes(bron: string): string {
@@ -346,6 +348,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     resolveId(id) {
       if (id === "openaec-tekst-vormafbeelding")
         return fileURLToPath(new URL("../src/tekst/vormen/afbeeldingen.ts", import.meta.url)).replaceAll("\\", "/");
+      if (id === "openaec-tekst-nootvervolg")
+        return fileURLToPath(new URL("../src/tekst/pagina/nootVervolg.ts", import.meta.url));
       if (id === "openaec-tekst-kopvoetdoel")
         return fileURLToPath(new URL("../src/tekst/pagina/kopvoetDoel.ts", import.meta.url));
       if (id === "openaec-tekst-vervolgstijl")
