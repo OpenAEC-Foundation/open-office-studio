@@ -93,6 +93,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#316](https://github.com/OpenAEC-Foundation/open-office-studio/pull/316) | `a7669b86f1a5fcd85658d399a1507993cf2bb3b5` | `eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a` | Preserve unambiguous ODP media names and display unnamed media labels |
 | [#315](https://github.com/OpenAEC-Foundation/open-office-studio/pull/315) | `33eee967be1f3a136e0106cd77b5d4a0c5112255` | `3916dd36224d44d76e28853e3178946c5c54b816` | Writer review Undo including bounded individual revisions after worker synchronization |
 | [#306](https://github.com/OpenAEC-Foundation/open-office-studio/pull/306) | `b2d576121477a18a0bd56eac964fee8c90efe2df` | `9d721bbd20a029d05cff31179d56445791ee874e` | Writer compare direct character formatting with reviewable preserved replacements |
+| [#312](https://github.com/OpenAEC-Foundation/open-office-studio/pull/312) | `ea4ff465cc181e298a674ff915a285f43ccd4ecb` | `0c6dafa13b2728fd0c30d38ef73a3c714eaf6408` | Spreadsheet bounded pivot tables and refresh preserving unsupported layouts |
 
 ## Earlier fixes included in bundles
 
@@ -207,6 +208,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr316-targeted | `eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a` | 25 | 0 | 0 |
 | pr315-targeted | `3916dd36224d44d76e28853e3178946c5c54b816` | 20 | 0 | 0 |
 | pr306-targeted | `9d721bbd20a029d05cff31179d56445791ee874e` | 18 | 0 | 0 |
+| pr312-targeted | `0c6dafa13b2728fd0c30d38ef73a3c714eaf6408` | 18 | 0 | 0 |
 
 ## Pending deliveries
 
