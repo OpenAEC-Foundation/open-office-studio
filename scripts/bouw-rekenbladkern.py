@@ -85,7 +85,8 @@ def main():
             subprocess.run(['cargo', 'test', '-p', pakket, '--locked', '--test', 'lange_ketens'], cwd=bronmap, check=True)
         for onderdeel in metadata.get('extraPatches', []):
             for proef in onderdeel.get('tests', []):
-                subprocess.run(['cargo', 'test', '-p', proef['pakket'], '--locked', '--test', proef['test']], cwd=bronmap, check=True)
+                selectie = ['--lib', proef['lib']] if 'lib' in proef else ['--test', proef['test']]
+                subprocess.run(['cargo', 'test', '-p', proef['pakket'], '--locked', *selectie], cwd=bronmap, check=True)
     uitvoer = args.uitvoer.resolve()
     if uitvoer.exists():
         raise SystemExit('De uitvoermap bestaat al; kies een nieuwe map.')
