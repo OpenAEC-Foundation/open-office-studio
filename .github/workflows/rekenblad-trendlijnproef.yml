@@ -1,0 +1,86 @@
+name: Lineaire trendlijn kandidaat controleren
+on:
+  push:
+    branches: [codex/spreadsheet-trend-66-2026-11-10-e0d7]
+    paths:
+      - .github/workflows/rekenblad-trendlijnproef.yml
+      - patches/rekenbladengine-lineaire-trendlijnen.*
+      - scripts/proef-lineaire-trendlijn-kern.py
+      - scripts/proef-lineaire-trendlijn.mjs
+      - scripts/controleer-lineaire-trendlijn.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    name: native trendlijn (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Vastgezette native compiler installeren
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          rustup override set 1.98.1
+      - name: Dezelfde bron en negen patches controleren
+        run: python scripts/proef-lineaire-trendlijn-kern.py --prepare-only .local/trend-native-source
+      - name: Native grafiek- en werkboekroutes testen
+        working-directory: .local/trend-native-source
+        run: |
+          cargo test -p betteroffice-drawingml --features chart --lib chart:: --locked --jobs 2
+          cargo test -p betteroffice-xlsx --test linear_trendlines --locked --jobs 2
+      - name: Gedeelde pin ongewijzigd controleren
+        run: git diff --exit-code -- patches/rekenbladengine-lange-ketens.json vendor/rekenbladengine
+  trendlijn:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Vastgezette gereedschappen installeren
+        shell: bash
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal --target wasm32-unknown-unknown --component rustfmt --component clippy
+          rustup override set 1.98.1
+          mkdir -p .local/tools
+          cd .local/tools
+          curl -fL --retry 3 -o bindgen.tar.gz https://github.com/wasm-bindgen/wasm-bindgen/releases/download/0.2.129/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz
+          echo '82d12bb940e2d4e72e0d5605387fc1b8ca179044e012b620f0ce4e7440e8320e  bindgen.tar.gz' | sha256sum -c -
+          curl -fL --retry 3 -o binaryen.tar.gz https://github.com/WebAssembly/binaryen/releases/download/version_132/binaryen-version_132-x86_64-linux.tar.gz
+          echo '195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572  binaryen.tar.gz' | sha256sum -c -
+          tar -xzf bindgen.tar.gz
+          tar -xzf binaryen.tar.gz
+          echo "$PWD/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl" >> "$GITHUB_PATH"
+          echo "$PWD/binaryen-version_132/bin" >> "$GITHUB_PATH"
+      - name: Achtpatchbasis plus afgebakende trendlijnpatch testen en bouwen
+        run: python3 scripts/proef-lineaire-trendlijn-kern.py --bronmap .local/trend-build-source --uitvoer .local/trend-kandidaat --controle --nieuwe-kern
+      - name: Gedeelde grafiekroute controleren
+        working-directory: .local/trend-build-source
+        run: |
+          cargo test -p betteroffice-drawingml --features chart --lib chart:: --locked --jobs 2
+          cargo clippy -p betteroffice-drawingml --features chart --lib --tests --locked --jobs 2 -- -D warnings
+          rustfmt --edition 2024 --check crates/ooxml-drawingml/src/chart/model.rs crates/ooxml-drawingml/src/chart/parse.rs crates/ooxml-drawingml/src/chart/geometry.rs crates/ooxml-drawingml/src/chart/mod.rs crates/ooxml-drawingml/src/chart/linear_trend.rs crates/betteroffice-xlsx/tests/linear_trendlines.rs
+      - name: Gedeelde pin ongewijzigd controleren
+        run: git diff --exit-code -- patches/rekenbladengine-lange-ketens.json vendor/rekenbladengine
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rekenbladkern-lineaire-trendlijn-kandidaat
+          path: .local/trend-kandidaat/
+          include-hidden-files: true
+          if-no-files-found: error

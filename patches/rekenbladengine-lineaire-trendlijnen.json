@@ -1,0 +1,48 @@
+{
+  "issue": 308,
+  "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+  "basisWasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
+  "basisPatches": [
+    {
+      "patch": "rekenbladengine-lange-ketens.patch",
+      "sha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b"
+    },
+    {
+      "patch": "rekenbladengine-werkmapregio.patch",
+      "sha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9"
+    },
+    {
+      "patch": "rekenbladengine-herberekende-opslag.patch",
+      "sha256": "112e472bd62f61bf203ca5af4123d72816dce9bb9b41a10e6435cc6f31738995"
+    },
+    {
+      "patch": "rekenbladengine-uitgebreide-voorwaardelijke-opmaak.patch",
+      "sha256": "e12319cb9b36a1eb5b5248880e2759a5083c6c17c96150249915026a70196171"
+    },
+    {
+      "patch": "rekenbladengine-voorwaardelijke-evaluatie.patch",
+      "sha256": "a1e08c04424d97ed87777280193bf75d459a024b97a8a8d171d125df52bcd27e"
+    },
+    {
+      "patch": "rekenbladengine-tabellen.patch",
+      "sha256": "1db379a9f88c347b6bbc4ff768b42963d4220416bb4cd9e108d6cda122a21829"
+    },
+    {
+      "patch": "rekenbladengine-selectie-opmaak.patch",
+      "sha256": "c8334412c2fe239576bf3d838f495976c8f13a90f67247a2a259f36c95549167"
+    },
+    {
+      "patch": "rekenbladengine-tabeltotalen.patch",
+      "sha256": "a704c979f863a360e3c34a67bbdb8b19af8df4506e3d34945195181bcc100dd3"
+    }
+  ],
+  "patch": "rekenbladengine-lineaire-trendlijnen.patch",
+  "patchSha256": "8a56f7cfe48ce1083de83cfd8864503d14411c868263c3a07772451557edbcdb",
+  "tests": [
+    {
+      "pakket": "betteroffice-xlsx",
+      "test": "linear_trendlines"
+    }
+  ],
+  "stand": "Private test candidate only; shared vendor pin and eight-patch metadata remain unchanged."
+}

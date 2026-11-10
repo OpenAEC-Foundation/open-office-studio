@@ -1,0 +1,865 @@
+diff --git a/crates/betteroffice-xlsx/tests/linear_trendlines.rs b/crates/betteroffice-xlsx/tests/linear_trendlines.rs
+new file mode 100644
+index 0000000..5dde575
+--- /dev/null
++++ b/crates/betteroffice-xlsx/tests/linear_trendlines.rs
+@@ -0,0 +1,136 @@
++use betteroffice_xlsx::{
++    CalculationOptions, CellRange, CellRef, DisplayList, DrawCmd, PrintMetrics, SheetId, Viewport,
++    Workbook,
++};
++
++const FIXTURE: &[u8] = include_bytes!("../../../packages/xlsx/test-fixtures/charts.xlsx");
++const CHART: &str = "xl/charts/chart1.xml";
++
++fn at(row: u32, col: u32) -> CellRef {
++    CellRef {
++        row,
++        col,
++        abs_row: false,
++        abs_col: false,
++    }
++}
++
++fn fixture(scatter: bool) -> Vec<u8> {
++    let mut book = Workbook::open(FIXTURE).unwrap();
++    let name = book.model().sheet(SheetId(0)).unwrap().name.clone();
++    for (index, value) in [2, 6, 4].iter().enumerate() {
++        book.edit_cell(
++            SheetId(0),
++            at(index as u32 + 1, 0),
++            &(index + 1).to_string(),
++            CalculationOptions::default(),
++        )
++        .unwrap();
++        book.edit_cell(
++            SheetId(0),
++            at(index as u32 + 1, 1),
++            &value.to_string(),
++            CalculationOptions::default(),
++        )
++        .unwrap();
++    }
++    let mut parts = ooxml_opc::unzip_parts(&book.save().unwrap()).unwrap();
++    let (family, categories, values, axis) = if scatter {
++        ("scatterChart", "xVal", "yVal", "valAx")
++    } else {
++        ("lineChart", "cat", "val", "catAx")
++    };
++    let xml = format!(
++        r#"<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><c:chart><c:plotArea><c:layout><c:manualLayout><c:layoutTarget val="inner"/><c:xMode val="factor"/><c:yMode val="factor"/><c:wMode val="factor"/><c:hMode val="factor"/><c:x val="0.1"/><c:y val="0.1"/><c:w val="0.8"/><c:h val="0.8"/></c:manualLayout></c:layout><c:{family}><c:grouping val="standard"/><c:scatterStyle val="lineMarker"/><c:ser><c:idx val="0"/><c:order val="0"/><c:trendline><c:spPr><a:ln w="19050"><a:solidFill><a:srgbClr val="FF00EE"/></a:solidFill></a:ln></c:spPr><c:trendlineType val="linear"/></c:trendline><c:{categories}><c:numRef><c:f>'{name}'!$A$2:$A$4</c:f><c:numCache><c:ptCount val="3"/><c:pt idx="0"><c:v>1</c:v></c:pt><c:pt idx="1"><c:v>2</c:v></c:pt><c:pt idx="2"><c:v>3</c:v></c:pt></c:numCache></c:numRef></c:{categories}><c:{values}><c:numRef><c:f>'{name}'!$B$2:$B$4</c:f><c:numCache><c:ptCount val="3"/><c:pt idx="0"><c:v>2</c:v></c:pt><c:pt idx="1"><c:v>6</c:v></c:pt><c:pt idx="2"><c:v>4</c:v></c:pt></c:numCache></c:numRef></c:{values}></c:ser><c:axId val="10"/><c:axId val="20"/></c:{family}><c:{axis}><c:axId val="10"/><c:scaling><c:orientation val="minMax"/><c:min val="0"/><c:max val="4"/></c:scaling><c:axPos val="b"/><c:crossAx val="20"/></c:{axis}><c:valAx><c:axId val="20"/><c:scaling><c:orientation val="minMax"/><c:min val="0"/><c:max val="8"/></c:scaling><c:axPos val="l"/><c:crossAx val="10"/><c:crossBetween val="between"/></c:valAx></c:plotArea><c:legend><c:legendPos val="r"/></c:legend></c:chart></c:chartSpace>"#
++    );
++    *parts.iter_mut().find(|(path, _)| path == CHART).unwrap() =
++        (CHART.to_owned(), xml.into_bytes());
++    parts.push((
++        "custom/linear-trend-unknown.bin".to_owned(),
++        vec![0, 255, 7],
++    ));
++    ooxml_opc::rezip_parts(&parts).unwrap()
++}
++
++fn frame(book: &Workbook) -> DisplayList {
++    book.display_list_for(
++        SheetId(0),
++        &Viewport {
++            x: 0.0,
++            y: 0.0,
++            width: 1100.0,
++            height: 800.0,
++        },
++    )
++    .unwrap()
++}
++
++fn trend(frame: &DisplayList) -> Vec<(f32, f32, f32, f32)> {
++    frame
++        .commands
++        .iter()
++        .filter_map(|command| match command {
++            DrawCmd::Line {
++                x1,
++                y1,
++                x2,
++                y2,
++                color,
++                ..
++            } if color.as_ref().eq_ignore_ascii_case("#ff00ee") => Some((*x1, *y1, *x2, *y2)),
++            _ => None,
++        })
++        .collect()
++}
++
++#[test]
++fn real_chart_parse_screen_print_edit_undo_and_save_reopen_agree() {
++    for scatter in [false, true] {
++        let bytes = fixture(scatter);
++        let mut book = Workbook::open(&bytes).unwrap();
++        let version = book.version();
++        let history = book.history_state();
++        let original = trend(&frame(&book));
++        assert_eq!(original.len(), 1);
++        assert!(original[0].1 > original[0].3);
++        assert_eq!(book.version(), version);
++        assert_eq!(book.history_state(), history);
++        let print = book
++            .print_display_list(
++                SheetId(0),
++                CellRange {
++                    start: at(0, 0),
++                    end: at(50, 30),
++                },
++                &PrintMetrics {
++                    dpi: 96.0,
++                    max_digit_width: 7.0,
++                    default_row_height_pt: 15.0,
++                    default_column_width: None,
++                    font_size_pt: 11.0,
++                    font_family: "Calibri".to_owned(),
++                    font_ascent: 10.0,
++                    font_descent: 3.0,
++                },
++                false,
++            )
++            .unwrap();
++        assert_eq!(trend(&print).len(), 1);
++        book.edit_cell(SheetId(0), at(1, 1), "8", CalculationOptions::default())
++            .unwrap();
++        assert_ne!(trend(&frame(&book)), original);
++        book.undo(CalculationOptions::default()).unwrap();
++        assert_eq!(trend(&frame(&book)), original);
++        let saved = book.save().unwrap();
++        let reopened = Workbook::open(&saved).unwrap();
++        assert_eq!(trend(&frame(&reopened)), original);
++        let before = ooxml_opc::unzip_parts(&bytes).unwrap();
++        let after = ooxml_opc::unzip_parts(&saved).unwrap();
++        for path in [CHART, "custom/linear-trend-unknown.bin"] {
++            assert_eq!(
++                before.iter().find(|(name, _)| name == path).unwrap().1,
++                after.iter().find(|(name, _)| name == path).unwrap().1
++            );
++        }
++    }
++}
+diff --git a/crates/ooxml-drawingml/src/chart/geometry.rs b/crates/ooxml-drawingml/src/chart/geometry.rs
+index 9b5afe4..2e57203 100644
+--- a/crates/ooxml-drawingml/src/chart/geometry.rs
++++ b/crates/ooxml-drawingml/src/chart/geometry.rs
+@@ -5,6 +5,7 @@ use std::collections::{HashMap, HashSet};
+ 
+ use crate::GeometryPathCommand;
+ 
++use super::linear_trend::{clip_unit_line, linear_fit};
+ use super::model::ChartSpace;
+ 
+ pub const CHART_AXIS_COLOR: &str = "#666666";
+@@ -452,6 +453,7 @@ pub struct PlotSeries<'a> {
+     pub labels: Option<PlotDataLabels<'a>>,
+     /// This series' own `c:spPr/a:ln`.
+     pub line: Option<PlotLine<'a>>,
++    pub trendlines: &'a [super::model::ChartTrendline],
+ }
+ 
+ #[derive(Clone, Copy, Debug, Default, PartialEq)]
+@@ -778,6 +780,7 @@ fn plot_series_from_model<'a>(
+             color: line.color.as_deref(),
+             width_emu: line.width_emu,
+         }),
++        trendlines: &series.trendlines,
+     }
+ }
+ 
+@@ -1183,11 +1186,13 @@ pub fn plot_chart_into<S: PlotSink + ?Sized>(chart: &PlotChart<'_>, rect: PlotRe
+         }
+     };
+ 
++    let mut trend_points_remaining = MAX_PLOT_DATA_SCAN;
+     for family in families {
+         if ops.exhausted() {
+             break;
+         }
+         emit_family(ops, family, plot, region_x, region_y, region_w, region_h);
++        emit_linear_trendlines(ops, family, plot, &mut trend_points_remaining);
+     }
+ 
+     if let Some(band) = legend {
+@@ -4118,6 +4123,332 @@ fn line_x(family: PlotFamily<'_>, plot: PlotArea, index: usize, count: usize) ->
+     }
+ }
+ 
++fn emit_linear_trendlines<S: PlotSink + ?Sized>(
++    ops: &mut Emitter<'_, S>,
++    family: PlotFamily<'_>,
++    plot: PlotArea,
++    remaining: &mut usize,
++) {
++    if !matches!(family.chart_type, "line" | "scatter") || family.stacking() != Stacking::None {
++        return;
++    }
++    let scatter = family.chart_type == "scatter";
++    let y_scale = value_scale(family);
++    let x_scale = scatter.then(|| scatter_x_scale(family, plot));
++    if y_scale.log_base.is_some() || x_scale.is_some_and(|scale| scale.log_base.is_some()) {
++        return;
++    }
++    let count = category_count(family.series);
++    for (series_index, series) in family.series.iter().enumerate() {
++        if ops.exhausted() {
++            return;
++        }
++        if series.series.trendlines.is_empty() {
++            continue;
++        }
++        let length = series.length();
++        if length > *remaining {
++            continue;
++        }
++        *remaining -= length;
++        let points: Vec<(f64, f64)> = (0..length)
++            .filter_map(|i| {
++                if scatter {
++                    series.xy_value(i)
++                } else {
++                    Some((i as f64 + 1.0, series.data_value(i)?))
++                }
++            })
++            .collect();
++        for trend in series.series.trendlines.iter().take(8) {
++            if ops.exhausted() {
++                return;
++            }
++            if trend.kind != "linear" || trend.line.as_ref().is_some_and(|line| line.none) {
++                continue;
++            }
++            let Some(fit) = linear_fit(&points, trend.intercept) else {
++                continue;
++            };
++            let backward = trend.backward.unwrap_or(0.0);
++            let forward = trend.forward.unwrap_or(0.0);
++            if !backward.is_finite() || !forward.is_finite() || backward < 0.0 || forward < 0.0 {
++                continue;
++            }
++            let (lo, hi) = (fit.min - backward, fit.max + forward);
++            let (Some(y_lo), Some(y_hi)) = (fit.at(lo), fit.at(hi)) else {
++                continue;
++            };
++            let project = |x: f64, y: f64| {
++                let x = if let Some(scale) = x_scale {
++                    let fraction = scale.fraction(x);
++                    if scale.reversed {
++                        1.0 - fraction
++                    } else {
++                        fraction
++                    }
++                } else {
++                    let position = if family.category_axis.is_some_and(|axis| axis.reversed) {
++                        count as f64 - x
++                    } else {
++                        x - 1.0
++                    };
++                    if family.axis.and_then(|axis| axis.cross_between) == Some("midCat") {
++                        position / count.saturating_sub(1).max(1) as f64
++                    } else {
++                        (position + 0.5) / count.max(1) as f64
++                    }
++                };
++                let fraction = y_scale.fraction(y);
++                (
++                    x,
++                    if y_scale.reversed {
++                        fraction
++                    } else {
++                        1.0 - fraction
++                    },
++                )
++            };
++            let Some((a, b)) = clip_unit_line(project(lo, y_lo), project(hi, y_hi)) else {
++                continue;
++            };
++            let a = (plot.x + a.0 * plot.w, plot.y + a.1 * plot.h);
++            let b = (plot.x + b.0 * plot.w, plot.y + b.1 * plot.h);
++            let color = trend
++                .line
++                .as_ref()
++                .and_then(|line| line.color.as_deref())
++                .map(hex)
++                .unwrap_or_else(|| series_color(Some(series.series), series_index));
++            let width = line_width(
++                trend.line.as_ref().and_then(|line| line.width_emu),
++                DEFAULT_SERIES_LINE_PX,
++            );
++            let dashed = trend.dash.as_deref().filter(|dash| *dash != "solid");
++            if let Some(dash) = dashed {
++                let length = (b.0 - a.0).hypot(b.1 - a.1);
++                let mark = if matches!(dash, "dot" | "sysDot") {
++                    width
++                } else {
++                    width * 4.0
++                };
++                let period = (mark + width * 2.0).max(length / 2048.0);
++                let count = (length / period).ceil().min(2048.0) as usize;
++                for i in 0..count {
++                    if ops.exhausted() {
++                        break;
++                    }
++                    let lo = i as f64 * period / length;
++                    let hi = ((i as f64 * period + mark) / length).min(1.0);
++                    push_line(
++                        ops,
++                        a.0 + (b.0 - a.0) * lo,
++                        a.1 + (b.1 - a.1) * lo,
++                        a.0 + (b.0 - a.0) * hi,
++                        a.1 + (b.1 - a.1) * hi,
++                        &color,
++                        width,
++                    );
++                }
++            } else {
++                push_line(ops, a.0, a.1, b.0, b.1, &color, width);
++            }
++        }
++    }
++}
++
++#[cfg(test)]
++mod linear_trend_tests {
++    use super::super::model::{ChartLine, ChartSeries, ChartTrendline};
++    use super::*;
++
++    fn trend() -> ChartTrendline {
++        ChartTrendline {
++            kind: "linear".to_owned(),
++            line: Some(ChartLine {
++                color: Some("#ff00ee".to_owned()),
++                width_emu: Some(19050.0),
++                ..ChartLine::default()
++            }),
++            ..ChartTrendline::default()
++        }
++    }
++
++    fn render(values: &[f64], spec: ChartTrendline) -> Vec<PlotOp> {
++        let space = ChartSpace {
++            chart_type: "line".to_owned(),
++            series: vec![ChartSeries {
++                values: values.to_vec(),
++                trendlines: vec![spec],
++                ..ChartSeries::default()
++            }],
++            ..ChartSpace::default()
++        };
++        let mut chart = PlotChart::from(&space);
++        chart.legend = Some(PlotLegend {
++            visible: Some(false),
++            ..PlotLegend::default()
++        });
++        chart.value_axis = Some(PlotAxisRange {
++            min: Some(0.0),
++            max: Some(8.0),
++        });
++        chart.plot_layout = Some(PlotRect {
++            x: 0.1,
++            y: 0.1,
++            w: 0.8,
++            h: 0.8,
++        });
++        plot_chart(
++            &chart,
++            PlotRect {
++                x: 0.0,
++                y: 0.0,
++                w: 400.0,
++                h: 300.0,
++            },
++        )
++        .into_iter()
++        .filter(|op| matches!(op, PlotOp::Line { color, .. } if color == "#ff00ee"))
++        .collect()
++    }
++
++    #[test]
++    fn native_model_adapter_paints_the_independent_best_fit() {
++        let lines = render(&[2.0, 6.0, 4.0], trend());
++        assert_eq!(lines.len(), 1);
++        let PlotOp::Line {
++            x1,
++            y1,
++            x2,
++            y2,
++            width,
++            ..
++        } = lines[0]
++        else {
++            panic!("line expected")
++        };
++        assert!((x1 - (40.0 + 320.0 / 6.0)).abs() < 1e-8);
++        assert!((x2 - (40.0 + 320.0 * 5.0 / 6.0)).abs() < 1e-8);
++        assert!((y1 - 180.0).abs() < 1e-8);
++        assert!((y2 - 120.0).abs() < 1e-8);
++        assert_eq!(width, 2.0);
++    }
++
++    #[test]
++    fn blanks_retain_category_positions_and_forecasts_clip_to_the_plot() {
++        let gap = render(&[2.0, f64::NAN, 6.0], trend());
++        let PlotOp::Line { y1, y2, .. } = gap[0] else {
++            panic!("line expected")
++        };
++        assert!((y1 - 210.0).abs() < 1e-8);
++        assert!((y2 - 90.0).abs() < 1e-8);
++        let mut extended = trend();
++        extended.forward = Some(100.0);
++        extended.backward = Some(100.0);
++        let lines = render(&[2.0, 6.0, 4.0], extended);
++        assert_eq!(lines.len(), 1);
++        if let PlotOp::Line { x1, y1, x2, y2, .. } = lines[0] {
++            for (x, y) in [(x1, y1), (x2, y2)] {
++                assert!((40.0..=360.0).contains(&x) && (30.0..=270.0).contains(&y));
++            }
++        }
++    }
++
++    #[test]
++    fn hidden_invalid_and_dashed_strokes_do_not_fabricate_geometry() {
++        let mut hidden = trend();
++        hidden.line.as_mut().unwrap().none = true;
++        assert!(render(&[2.0, 6.0, 4.0], hidden).is_empty());
++        assert!(render(&[f64::NAN, 6.0, f64::NAN], trend()).is_empty());
++        let mut unknown = trend();
++        unknown.kind = "future".to_owned();
++        assert!(render(&[2.0, 6.0, 4.0], unknown).is_empty());
++        let mut dashed = trend();
++        dashed.dash = Some("dash".to_owned());
++        let segments = render(&[2.0, 6.0, 4.0], dashed);
++        assert!(segments.len() > 2 && segments.len() < 2048);
++        for op in segments {
++            if let PlotOp::Line { x1, y1, x2, y2, .. } = op {
++                assert!([x1, y1, x2, y2].iter().all(|n| n.is_finite()));
++            }
++        }
++    }
++
++    #[test]
++    fn scatter_trends_use_numeric_x_values_and_the_selected_axes() {
++        let trends = [trend()];
++        let chart = PlotChart {
++            chart_type: "scatter",
++            plot_groups: vec![PlotGroup {
++                chart_type: Some("scatter"),
++                axis_ids: vec!["x", "y"],
++                series: vec![PlotSeries {
++                    values: &[2.0, 6.0, 4.0],
++                    x_values: &[10.0, 20.0, 40.0],
++                    trendlines: &trends,
++                    ..PlotSeries::default()
++                }],
++                ..PlotGroup::default()
++            }],
++            axes: vec![
++                PlotAxis {
++                    id: Some("x"),
++                    kind: PlotAxisKind::Value,
++                    range: PlotAxisRange {
++                        min: Some(0.0),
++                        max: Some(50.0),
++                    },
++                    ..PlotAxis::default()
++                },
++                PlotAxis {
++                    id: Some("y"),
++                    kind: PlotAxisKind::Value,
++                    range: PlotAxisRange {
++                        min: Some(0.0),
++                        max: Some(8.0),
++                    },
++                    ..PlotAxis::default()
++                },
++            ],
++            plot_layout: Some(PlotRect {
++                x: 0.1,
++                y: 0.1,
++                w: 0.8,
++                h: 0.8,
++            }),
++            ..PlotChart::default()
++        };
++        let lines = plot_chart(
++            &chart,
++            PlotRect {
++                x: 0.0,
++                y: 0.0,
++                w: 400.0,
++                h: 300.0,
++            },
++        );
++        let (x1, y1, x2, y2) = lines
++            .iter()
++            .find_map(|op| match op {
++                PlotOp::Line {
++                    x1,
++                    y1,
++                    x2,
++                    y2,
++                    color,
++                    ..
++                } if color == "#ff00ee" => Some((*x1, *y1, *x2, *y2)),
++                _ => None,
++            })
++            .unwrap();
++        assert!((x1 - 104.0).abs() < 1e-8);
++        assert!((x2 - 296.0).abs() < 1e-8);
++        assert!((y1 - (30.0 + 240.0 * (1.0 - (24.0 / 7.0) / 8.0))).abs() < 1e-8);
++        assert!((y2 - (30.0 + 240.0 * (1.0 - (33.0 / 7.0) / 8.0))).abs() < 1e-8);
++    }
++}
++
+ fn emit_category_labels<S: PlotSink + ?Sized>(
+     ops: &mut Emitter<'_, S>,
+     family: PlotFamily<'_>,
+diff --git a/crates/ooxml-drawingml/src/chart/linear_trend.rs b/crates/ooxml-drawingml/src/chart/linear_trend.rs
+new file mode 100644
+index 0000000..f58dad6
+--- /dev/null
++++ b/crates/ooxml-drawingml/src/chart/linear_trend.rs
+@@ -0,0 +1,164 @@
++#[derive(Debug)]
++pub(super) struct LinearFit {
++    pub min: f64,
++    pub max: f64,
++    center: f64,
++    unit: f64,
++    mean_x: f64,
++    mean_y: f64,
++    slope: f64,
++    scale: f64,
++}
++
++impl LinearFit {
++    pub fn at(&self, x: f64) -> Option<f64> {
++        let y =
++            (self.mean_y + self.slope * ((x - self.center) / self.unit - self.mean_x)) * self.scale;
++        y.is_finite().then_some(y)
++    }
++}
++
++pub(super) fn linear_fit(points: &[(f64, f64)], intercept: Option<f64>) -> Option<LinearFit> {
++    if points.len() < 2 || points.iter().any(|(x, y)| !x.is_finite() || !y.is_finite()) {
++        return None;
++    }
++    let min = points.iter().map(|p| p.0).fold(f64::INFINITY, f64::min);
++    let max = points.iter().map(|p| p.0).fold(f64::NEG_INFINITY, f64::max);
++    if max <= min || intercept.is_some_and(|n| !n.is_finite()) {
++        return None;
++    }
++    let center = if intercept.is_some() {
++        0.0
++    } else {
++        min / 2.0 + max / 2.0
++    };
++    let unit = if intercept.is_some() {
++        min.abs().max(max.abs())
++    } else {
++        max / 2.0 - min / 2.0
++    };
++    if !unit.is_finite() || unit <= 0.0 {
++        return None;
++    }
++    let scale = points
++        .iter()
++        .map(|p| p.1.abs())
++        .fold(intercept.unwrap_or(0.0).abs(), f64::max)
++        .max(f64::MIN_POSITIVE);
++    let count = points.len() as f64;
++    let (mean_x, mean_y) = match intercept {
++        Some(value) => (0.0, value / scale),
++        None => (
++            points.iter().map(|p| (p.0 - center) / unit / count).sum(),
++            points.iter().map(|p| p.1 / scale / count).sum(),
++        ),
++    };
++    let (mut covariance, mut variance) = (0.0, 0.0);
++    for &(x, y) in points {
++        let dx = (x - center) / unit - mean_x;
++        covariance += dx * (y / scale - mean_y);
++        variance += dx * dx;
++    }
++    if variance <= 0.0 || !variance.is_finite() {
++        return None;
++    }
++    let slope = covariance / variance;
++    slope.is_finite().then_some(LinearFit {
++        min,
++        max,
++        center,
++        unit,
++        mean_x,
++        mean_y,
++        slope,
++        scale,
++    })
++}
++
++pub(super) fn clip_unit_line(a: (f64, f64), b: (f64, f64)) -> Option<((f64, f64), (f64, f64))> {
++    let delta = (b.0 - a.0, b.1 - a.1);
++    if [a.0, a.1, b.0, b.1, delta.0, delta.1]
++        .iter()
++        .any(|n| !n.is_finite())
++    {
++        return None;
++    }
++    let (mut lo, mut hi): (f64, f64) = (0.0, 1.0);
++    for (p, q) in [
++        (-delta.0, a.0),
++        (delta.0, 1.0 - a.0),
++        (-delta.1, a.1),
++        (delta.1, 1.0 - a.1),
++    ] {
++        if p == 0.0 {
++            if q < 0.0 {
++                return None;
++            }
++        } else if p < 0.0 {
++            lo = lo.max(q / p);
++        } else {
++            hi = hi.min(q / p);
++        }
++        if lo > hi {
++            return None;
++        }
++    }
++    let at = |t: f64| {
++        (
++            (a.0 + delta.0 * t).clamp(0.0, 1.0),
++            (a.1 + delta.1 * t).clamp(0.0, 1.0),
++        )
++    };
++    Some((at(lo), at(hi)))
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn least_squares_uses_original_x_coordinates() {
++        let fit = linear_fit(&[(1.0, 2.0), (2.0, 6.0), (3.0, 4.0)], None).unwrap();
++        assert!((fit.at(1.0).unwrap() - 3.0).abs() < 1e-12);
++        assert!((fit.at(3.0).unwrap() - 5.0).abs() < 1e-12);
++        let gaps = linear_fit(&[(1.0, 3.0), (3.0, 7.0)], None).unwrap();
++        assert!((gaps.at(2.0).unwrap() - 5.0).abs() < 1e-12);
++        let scatter = linear_fit(&[(10.0, 21.0), (30.0, 61.0), (50.0, 101.0)], None).unwrap();
++        assert!((scatter.at(20.0).unwrap() - 41.0).abs() < 1e-10);
++    }
++
++    #[test]
++    fn fixed_intercepts_are_constrained_fits() {
++        let fit = linear_fit(&[(1.0, 2.0), (2.0, 6.0), (3.0, 4.0)], Some(0.0)).unwrap();
++        assert_eq!(fit.at(0.0), Some(0.0));
++        assert!((fit.at(1.0).unwrap() - 13.0 / 7.0).abs() < 1e-12);
++        let offset = linear_fit(&[(1.0, 2.0), (2.0, 6.0), (3.0, 4.0)], Some(2.0)).unwrap();
++        assert!((offset.at(0.0).unwrap() - 2.0).abs() < 1e-12);
++        assert!((offset.at(3.0).unwrap() - 5.0).abs() < 1e-12);
++    }
++
++    #[test]
++    fn large_translated_and_zero_data_stay_finite() {
++        let fit = linear_fit(&[(1e12, 2.0), (1e12 + 1.0, 5.0), (1e12 + 2.0, 8.0)], None).unwrap();
++        assert!((fit.at(1e12 + 1.5).unwrap() - 6.5).abs() < 1e-10);
++        let zero = linear_fit(&[(1.0, 0.0), (2.0, 0.0)], None).unwrap();
++        assert_eq!(zero.at(1.5), Some(0.0));
++        assert!(linear_fit(&[(1.0, 2.0)], None).is_none());
++        assert!(linear_fit(&[(1.0, 2.0), (1.0, 4.0)], None).is_none());
++        assert!(linear_fit(&[(1.0, f64::NAN), (2.0, 4.0)], None).is_none());
++    }
++
++    #[test]
++    fn clipping_intersects_instead_of_flattening_a_forecast() {
++        assert_eq!(
++            clip_unit_line((-1.0, -1.0), (2.0, 2.0)),
++            Some(((0.0, 0.0), (1.0, 1.0)))
++        );
++        assert_eq!(
++            clip_unit_line((0.0, -1.0), (1.0, 1.0)),
++            Some(((0.5, 0.0), (1.0, 1.0)))
++        );
++        assert_eq!(clip_unit_line((0.0, 2.0), (1.0, 2.0)), None);
++        assert_eq!(clip_unit_line((f64::INFINITY, 0.0), (1.0, 1.0)), None);
++    }
++}
+diff --git a/crates/ooxml-drawingml/src/chart/mod.rs b/crates/ooxml-drawingml/src/chart/mod.rs
+index 30fdcde..a7d9eee 100644
+--- a/crates/ooxml-drawingml/src/chart/mod.rs
++++ b/crates/ooxml-drawingml/src/chart/mod.rs
+@@ -5,6 +5,7 @@
+ //! translate the [`PlotOp`] list into their own primitives.
+ 
+ mod geometry;
++mod linear_trend;
+ mod model;
+ mod parse;
+ 
+diff --git a/crates/ooxml-drawingml/src/chart/model.rs b/crates/ooxml-drawingml/src/chart/model.rs
+index 9544184..89f043d 100644
+--- a/crates/ooxml-drawingml/src/chart/model.rs
++++ b/crates/ooxml-drawingml/src/chart/model.rs
+@@ -233,6 +233,24 @@ pub struct ChartSeries {
+     /// `c:ser/c:spPr/a:ln`: the stroke of this series' own line.
+     #[serde(default, skip_serializing_if = "Option::is_none")]
+     pub line: Option<ChartLine>,
++    #[serde(default, skip_serializing_if = "Vec::is_empty")]
++    pub trendlines: Vec<ChartTrendline>,
++}
++
++#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
++#[serde(rename_all = "camelCase")]
++pub struct ChartTrendline {
++    pub kind: String,
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub intercept: Option<f64>,
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub forward: Option<f64>,
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub backward: Option<f64>,
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub line: Option<ChartLine>,
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub dash: Option<String>,
+ }
+ 
+ #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+diff --git a/crates/ooxml-drawingml/src/chart/parse.rs b/crates/ooxml-drawingml/src/chart/parse.rs
+index 9735f07..3efc387 100644
+--- a/crates/ooxml-drawingml/src/chart/parse.rs
++++ b/crates/ooxml-drawingml/src/chart/parse.rs
+@@ -5,7 +5,7 @@ use std::collections::HashSet;
+ use super::model::{
+     ChartAxes, ChartAxis, ChartDataLabels, ChartFill, ChartLabelRun, ChartLegend, ChartLine,
+     ChartManualLayout, ChartMarker, ChartPlotGroup, ChartPoint, ChartPointLabel, ChartSeries,
+-    ChartSpace, ChartTextProperties,
++    ChartSpace, ChartTextProperties, ChartTrendline,
+ };
+ 
+ pub const DEFAULT_SERIES_COLORS: [&str; 8] = [
+@@ -140,6 +140,7 @@ pub fn parse_chart_space<E: ChartXml>(chart_space: &E) -> Option<ChartSpace> {
+             bubble_sizes: None,
+             data_labels: None,
+             line: None,
++            trendlines: Vec::new(),
+         })
+         .collect::<Vec<_>>();
+     let axis_list = plot_area
+@@ -625,6 +626,11 @@ fn parse_series<E: ChartXml>(
+                     .filter(|values| !values.is_empty()),
+                 data_labels: parse_data_labels(child(series, "dLbls"), budget),
+                 line: parse_line(child(series, "spPr")),
++                trendlines: if matches!(chart.local_name(), "lineChart" | "scatterChart") {
++                    parse_trendlines(series)
++                } else {
++                    Vec::new()
++                },
+             }
+         })
+         .collect::<Vec<_>>();
+@@ -632,6 +638,38 @@ fn parse_series<E: ChartXml>(
+     series
+ }
+ 
++fn parse_trendlines<E: ChartXml>(series: &E) -> Vec<ChartTrendline> {
++    children(series, "trendline")
++        .take(8)
++        .filter_map(|trend| {
++            if val_attr(child(trend, "trendlineType")) != Some("linear") {
++                return None;
++            }
++            let number = |name: &str| match child(trend, name) {
++                Some(element) => parse_number(val_attr(Some(element))).map(Some),
++                None => Some(None),
++            };
++            let forward = number("forward")?;
++            let backward = number("backward")?;
++            if forward.is_some_and(|n| n < 0.0) || backward.is_some_and(|n| n < 0.0) {
++                return None;
++            }
++            let properties = child(trend, "spPr");
++            Some(ChartTrendline {
++                kind: "linear".to_owned(),
++                intercept: number("intercept")?,
++                forward,
++                backward,
++                line: parse_line(properties),
++                dash: properties
++                    .and_then(|p| child(p, "ln"))
++                    .and_then(|line| val_attr(child(line, "prstDash")))
++                    .map(str::to_owned),
++            })
++        })
++        .collect()
++}
++
+ fn flag<E: ChartXml>(parent: &E, local: &str) -> Option<bool> {
+     match val_attr(child(parent, local))? {
+         "1" | "true" => Some(true),
+@@ -1058,6 +1096,64 @@ mod tests {
+         }
+     }
+ 
++    #[test]
++    fn linear_trendlines_keep_their_constraints_and_stroke() {
++        let trend = Node::el(
++            "c:trendline",
++            vec![
++                Node::val("c:trendlineType", "linear"),
++                Node::val("c:intercept", "0"),
++                Node::val("c:forward", "2.5"),
++                Node::val("c:backward", "1"),
++                Node::el(
++                    "c:spPr",
++                    vec![
++                        Node::el(
++                            "a:ln",
++                            vec![
++                                Node::el("a:solidFill", vec![Node::val("a:srgbClr", "FF00EE")]),
++                                Node::val("a:prstDash", "dash"),
++                            ],
++                        )
++                        .attr("w", "19050"),
++                    ],
++                ),
++            ],
++        );
++        let parsed = parse_trendlines(&Node::el("c:ser", vec![trend.clone()]));
++        assert_eq!(parsed.len(), 1);
++        assert_eq!(parsed[0].intercept, Some(0.0));
++        assert_eq!(parsed[0].forward, Some(2.5));
++        assert_eq!(parsed[0].backward, Some(1.0));
++        assert_eq!(parsed[0].dash.as_deref(), Some("dash"));
++        assert_eq!(
++            parsed[0].line.as_ref().unwrap().color.as_deref(),
++            Some("#FF00EE")
++        );
++        assert_eq!(parsed[0].line.as_ref().unwrap().width_emu, Some(19050.0));
++        assert_eq!(parse_trendlines(&Node::el("ser", vec![trend; 20])).len(), 8);
++    }
++
++    #[test]
++    fn invalid_or_unsupported_trendlines_do_not_turn_into_linear_fits() {
++        for children in [
++            vec![Node::val("trendlineType", "future")],
++            vec![
++                Node::val("trendlineType", "linear"),
++                Node::val("intercept", "NaN"),
++            ],
++            vec![
++                Node::val("trendlineType", "linear"),
++                Node::val("forward", "-1"),
++            ],
++        ] {
++            assert!(
++                parse_trendlines(&Node::el("ser", vec![Node::el("trendline", children)]))
++                    .is_empty()
++            );
++        }
++    }
++
+     /// The same chart, with every element name qualified by `ns`.
+     fn fixture(ns: &str) -> Node {
+         let el = |name: &str, children: Vec<Node>| Node::el(&format!("{ns}{name}"), children);
