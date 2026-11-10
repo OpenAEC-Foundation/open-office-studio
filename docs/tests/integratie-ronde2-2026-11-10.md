@@ -64,6 +64,14 @@ Native slaagt de begrensde RX-variant: nieuw antwoord met testnaam `QA Native Re
 
 De fysieke Escape-stop werd eerst gerespecteerd. De gebruiker heeft daarna in de native chat expliciet hervatting en profielherstel opgedragen, en in de integratiechat alleen herstel bevestigd. Dezelfde operator heeft via Settings de oorspronkelijke lege naam en initialen hersteld, beide opnieuw gecontroleerd en het opgeslagen document schoon gesloten. De eerdere herstelbehoefte is **opgelost**; geen omweg via configuratiebestanden of andere operator. Het oorspronkelijke onderbroken bewijs blijft in het aparte318-archief bewaard. `fullNativeAcceptance` blijft false en macOS-CI staat nog queued.
 
+## Voorbereiding volgende integratieronde vóór15:25
+
+De [mergevoorcontrole](integratie-volgende-ronde-2026-11-10.json) vergelijkt zeven vastgelegde late leveringen met de laatste overdrachtsbasis `75968e5d`. Alle zeven zijn afzonderlijk én in een virtuele combinatie Git-technisch conflictvrij; whitespacecontrole slaagt. Alleen lokale Git-objecten zijn berekend: geen checkout/index/branch of applicatiecode gewijzigd, geen nieuwe gecombineerde tests/build uitgevoerd en niets uit de wachtrij geïntegreerd.
+
+Volgorde: #327, PR337→346,341,343,344,342. De enige gedeelde bronpaden betreffen de bekende337→346-afhankelijkheid; die afstamming is bewezen. PR317 blijft op gebruikersverzoek geparkeerd. #327 heeft een open performance-afweging en342 is onderzoek, geen productfix; conflictvrij is geen automatische opnamevrijgave.
+
+De actuele bron-CI is apart opgeslagen. PR344 heeft in Windows naast de bibliografietime-out drie tekenopmaaktest-time-outs (3416geslaagd/4mislukt/3skips); oorzaak niet als opgelost of als338-regressie aangemerkt. Ook de overige beschreven bron-CI/native/platformgaten blijven gelden. macOS van de huidige4a7-runtime staat nog queued. Bij hervatting eerst bronacceptatie beoordelen, daarna pas een nieuwe kandidaat samenvoegen en de volledige combinatie op één exact codepunt testen. `main` blijft onaangeraakt.
+
 ## Scope en grenzen
 
 Writer: schermthema/contrast, bibliografiewaarschuwing, PDF-fontcache, reply-initialen, spellinggeometrie, review-Undo/tekenopmaakvergelijking, beeldvervanging en PDF-veldlettertypen. Spreadsheet: CF, begrensde pivots, ingebouwde/impliciete tabelstijlen, structuurregressies en startup/trendlijnkern. Presentation: ODF-volume/medianamen/replay en helewoordenzoekoptie. Afhankelijkheden315→306 en304→316→328 eenmaal toegepast; teruggetrokken reviewheads uitgesloten.

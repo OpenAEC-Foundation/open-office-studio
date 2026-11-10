@@ -1,5 +1,7 @@
 # Actueel: tweede integratieronde
 
+De latere leveringen hebben nu ook een [voorcontrole voor de volgende ronde](integratie-volgende-ronde-2026-11-10.json): zeven conflictvrije virtuele merges, geen nieuwe code-integratie of functionele aftekening.
+
 **Laatste native318-status:** begrensde RX-save/sluit/heropen/resave geslaagd; het oorspronkelijke lege profiel is hersteld en het testdocument schoon gesloten. Zes browser- en drie native DOCX-uitvoeren onafhankelijk gecontroleerd. Zie het [318-rapport](integratie-ronde2-antwoordinitialen-2026-11-10.json).
 
 De huidige runtime is **4a7a3acf3c8a8747f5de081556e3192f303cb2fc**, gepusht op de centrale integratiebranch en kandidaat2. **21 nieuwe leveringen, totaal99/89bron-PRs; lokaal3408tests groen, Windows/Linux-CI3412groen; normale en echte hostedbrowserroutes groen.** Begrensde native Windows-acceptatie en onafhankelijke bestandscontroles zijn afgerond; macOS-jobs en echte Linux/macOS-bediening blijven open. Geen main-merge of officiële release. Aanvullend zijn Firefox/WebKit-hostedroutes en native #326 gecontroleerd; zie [de aanvulling](integratie-ronde2-aanvulling-2026-11-10.json).
