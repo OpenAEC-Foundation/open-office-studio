@@ -317,10 +317,11 @@ describe("complete worksheet copy (#61)", () => {
       p
         .lees("xl/workbook.xml")
         .replace(
-          "</sheets>",
-          `</sheets><definedNames><definedName name="_xlnm.Print_Area" localSheetId="0">'Blad 1'!$A$1:$C$9</definedName><definedName name="Local" localSheetId="1">Other!$A$1</definedName><definedName name="Global">'Blad 1'!$A$1</definedName></definedNames>`,
+        /<definedNames\s*\/>/,
+        `<definedNames><definedName name="_xlnm.Print_Area" localSheetId="0">'Blad 1'!$A$1:$C$9</definedName><definedName name="Local" localSheetId="1">Other!$A$1</definedName><definedName name="Global">'Blad 1'!$A$1</definedName></definedNames>`,
         ),
     );
+    expect(kinderen(leesXml(p.lees("xl/workbook.xml")), "definedNames")).toHaveLength(1);
     p.schrijf(
       "xl/calcChain.xml",
       `<calcChain xmlns="${NS}"><c r="A1" i="1"/></calcChain>`,
