@@ -15,12 +15,6 @@ export async function proefInterface(
 ) {
   if (process.env.GITHUB_ACTIONS !== "true")
     throw new Error("Native UI probes run only on our isolated CI hosts");
-  if (process.platform === "darwin")
-    return {
-      status: "remaining-manual-control",
-      reason:
-        "LaunchServices is checked separately; rendered WKWebView interaction is not covered by the CLI converter probe.",
-    };
   const env = {
     ...process.env,
     SAL_DISABLE_DEFAULTPRINTER: "1",
@@ -28,6 +22,24 @@ export async function proefInterface(
   };
   delete env.OPENAEC_CONVERSIE_PROGRAMMA;
   delete env.OPENAEC_CONVERSIE_PROFIEL;
+  if (process.platform === "darwin") {
+    const report = join(reportRoot, "native-interface.json");
+    execFileSync(
+      process.env.OOS_RUNTIME_PYTHON || "python3",
+      [
+        "scripts/proef-runtime-macos-interface.py",
+        payload.resources,
+        join(nativeOutput, "Ontwerpnotitie.odt"),
+        report,
+      ],
+      {
+        env,
+        stdio: "inherit",
+        timeout: 240_000,
+      },
+    );
+    return JSON.parse(await readFile(report, "utf8"));
+  }
   const input = join(nativeOutput, "Ontwerpnotitie.odt");
   const before = await readFile(input);
   const sourceLabels = [];

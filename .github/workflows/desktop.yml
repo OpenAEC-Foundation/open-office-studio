@@ -107,7 +107,7 @@ jobs:
           node scripts/corpus-bestand.mjs "${{ runner.temp }}/formaatcontrole/Strict-omgezet.xlsx" xlsx
       - name: Linux-pakket bouwen
         if: runner.os == 'Linux'
-        run: pnpm desktop:build --bundles deb,appimage
+        run: pnpm desktop:build --verbose --bundles deb,appimage
       - name: Windows-pakket bouwen
         if: runner.os == 'Windows'
         run: pnpm desktop:build --bundles nsis

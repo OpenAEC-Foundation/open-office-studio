@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import { strToU8, zipSync } from "fflate";
+import { fileURLToPath } from "node:url";
 
 /** A self-contained, harmless on-load macro: only writes this probe's own marker. */
 export async function maakMacroproef(map) {
@@ -35,3 +36,13 @@ export async function maakMacroproef(map) {
   );
   return { fixture, marker };
 }
+
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+)
+  console.log(
+    JSON.stringify(
+      await maakMacroproef(process.argv[2] || ".local/runtime-macro"),
+    ),
+  );

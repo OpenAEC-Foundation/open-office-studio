@@ -157,9 +157,13 @@ Beide proeven openen een ODT in Writer, vragen de echte native runtime-status
 op en controleren dat Opslaan als de meegeleverde bron toont. De oorspronkelijke
 ODT moet ongewijzigd blijven. Dit gebruikt geen gemockte IPC of productie-testbrug.
 De AppImage krijgt dezelfde inhoudsproeven; native bediening wordt bij de DEB
-gecontroleerd. macOS behoudt de afzonderlijke LaunchServices-proef. Visueel
-openen/bewerken/opslaan in WKWebView blijft daar een expliciete handmatige
-restcontrole; een geslaagde runtimeconversie of build geldt niet als bewijs daarvan.
+gecontroleerd. macOS behoudt de afzonderlijke LaunchServices-proef en probeert
+op de CI-host via System Events de eigen app met ODT te openen en de echte
+meegeleverde bron in Opslaan als te lezen. Ontbreekt toestemming voor
+Accessibility, dan wordt de native interfacecontrole expliciet als geblokkeerd
+gerapporteerd; de proef verleent of omzeilt die toestemming niet. Die bediening
+blijft dan een handmatige restcontrole. Een geslaagde runtimeconversie of build
+geldt niet als bewijs daarvan.
 
 De verplichte browserproef bewerkt, bewaart en heropent een DOCX daadwerkelijk
 offline. Een tweede browserproef controleert de desktopbeperking voor WPD,

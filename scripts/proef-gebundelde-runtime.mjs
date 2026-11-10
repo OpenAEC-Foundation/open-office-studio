@@ -177,7 +177,10 @@ for (const packageFile of packages) {
       JSON.stringify(nativeInterface, null, 2) + "\n",
     );
     results.push({
-      status: "passed",
+      status:
+        nativeInterface.status === "blocked"
+          ? "remaining-native-interface-control"
+          : "passed",
       package: payload.package,
       packageBytes: payload.packageBytes,
       packageSha256: payload.packageSha256,
