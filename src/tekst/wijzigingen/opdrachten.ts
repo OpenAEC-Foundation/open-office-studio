@@ -32,6 +32,35 @@ export interface Reikwijdte {
   ids?: readonly string[];
 }
 
+/** Houdt ook bij een losse beslissing de sluitmarkering van de eerste revisie
+ * in de Undo-stap. De betekenis van de bestaande markeringen blijft gelijk. */
+function begrensStartMarkeringen(s: Sessie, doel: readonly Revisie[], wat: Besluit) {
+  const kandidaten = new Map<string, Set<string>>();
+  for (const r of doel) {
+    if (r.kind !== (wat === "accepteren" ? "deletion" : "insertion") || r.range.start.offset !== 0) continue;
+    if (!kandidaten.has(r.story)) kandidaten.set(r.story, new Set());
+    kandidaten.get(r.story)!.add(r.range.start.paraId);
+  }
+  for (const [story, ids] of kandidaten) {
+    const segmenten = s.storySegments(story);
+    const eerste = segmenten.find(segment => segment.kind === "pilcrow");
+    if (eerste?.kind !== "pilcrow" || !ids.has(eerste.paraId)) continue;
+    let index = 0;
+    const ops: Parameters<Sessie["applyRawOps"]>[1][number][] = [];
+    for (const segment of segmenten) {
+      if (segment.kind === "pilcrow") break;
+      const len = segment.kind === "text" ? segment.text.length : 1;
+      ops.push({ op: "format", index, len, attrs: {
+        ins: segment.attributes.ins ?? null, del: segment.attributes.del ?? null,
+      } });
+      index += len;
+    }
+    if (index) s.applyRawOps(story, [
+      { op: "format", index: 0, len: index, attrs: { ins: null, del: null } }, ...ops,
+    ]);
+  }
+}
+
 /** Accepteert of weigert wijzigingen; geeft het aantal afgehandelde revisies. */
 export async function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Reikwijdte = {}): Promise<number> {
   const e = engine(ref);
@@ -65,6 +94,7 @@ export async function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdt
     // later opruimt. Neem die opruiming meteen in dezelfde lokale Undo-stap
     // op: bereid de besluiten in een replica voor en publiceer één update.
     proef.loadState(staat);
+    begrensStartMarkeringen(proef, doel, wat);
     const verhalen = new Set<string>();
     const afgehandeld = new Set<string>();
     for (const r of doel) {
