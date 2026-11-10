@@ -6,10 +6,38 @@ on:
       - .github/workflows/rekenblad-trendlijnproef.yml
       - patches/rekenbladengine-lineaire-trendlijnen.*
       - scripts/proef-lineaire-trendlijn-kern.py
+      - scripts/proef-lineaire-trendlijn.mjs
+      - scripts/controleer-lineaire-trendlijn.py
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  native:
+    name: native trendlijn (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Vastgezette native compiler installeren
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          rustup override set 1.98.1
+      - name: Dezelfde bron en negen patches controleren
+        run: python scripts/proef-lineaire-trendlijn-kern.py --prepare-only .local/trend-native-source
+      - name: Native grafiek- en werkboekroutes testen
+        working-directory: .local/trend-native-source
+        run: |
+          cargo test -p betteroffice-drawingml --features chart --lib chart:: --locked --jobs 2
+          cargo test -p betteroffice-xlsx --test linear_trendlines --locked --jobs 2
+      - name: Gedeelde pin ongewijzigd controleren
+        run: git diff --exit-code -- patches/rekenbladengine-lange-ketens.json vendor/rekenbladengine
   trendlijn:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
