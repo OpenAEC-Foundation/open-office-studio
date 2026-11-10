@@ -56,10 +56,14 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
       - run: pnpm install --frozen-lockfile
       - name: Install Linux converter
         if: runner.os == 'Linux'
         run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
           sudo apt-get update
           sudo apt-get install -y libreoffice-impress
           echo "OPENAEC_CONVERSIE_PROGRAMMA=/usr/bin/soffice" >> "$GITHUB_ENV"
