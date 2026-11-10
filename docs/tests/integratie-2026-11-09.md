@@ -96,6 +96,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#312](https://github.com/OpenAEC-Foundation/open-office-studio/pull/312) | `ea4ff465cc181e298a674ff915a285f43ccd4ecb` | `0c6dafa13b2728fd0c30d38ef73a3c714eaf6408` | Spreadsheet bounded pivot tables and refresh preserving unsupported layouts |
 | [#329](https://github.com/OpenAEC-Foundation/open-office-studio/pull/329) | `da16cea1519b301ba43af76496eb2c842828c1f0` | `4ac67c1517c8b8c79b035f9900830c15ae913fce` | Writer bounded spelling range geometry reuse during scrolling |
 | [#330](https://github.com/OpenAEC-Foundation/open-office-studio/pull/330) | `8a2ab22556af01be986b61731d55d392fbf08573` | `44b146a104d32b2ba0a11b74d5d3a91c1debb892` | Independent structure and defined-name remapping regressions on existing kernels |
+| [#220](https://github.com/OpenAEC-Foundation/open-office-studio/pull/220) | `4a21ad18c2b7861cf1d227e05f572a3f337fcdb9` | `725d6f52038695aa9979454aa3c770f00462eb4e` | Preserve Writer image replacement exact geometry and crop |
 
 ## Earlier fixes included in bundles
 
@@ -213,6 +214,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr312-targeted | `0c6dafa13b2728fd0c30d38ef73a3c714eaf6408` | 18 | 0 | 0 |
 | pr329-targeted | `4ac67c1517c8b8c79b035f9900830c15ae913fce` | 11 | 0 | 0 |
 | pr330-targeted | `44b146a104d32b2ba0a11b74d5d3a91c1debb892` | 38 | 0 | 0 |
+| pr220-targeted | `725d6f52038695aa9979454aa3c770f00462eb4e` | 14 | 0 | 0 |
 
 ## Pending deliveries
 
