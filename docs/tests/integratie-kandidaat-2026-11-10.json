@@ -3,10 +3,10 @@
   "date": "2026-11-10",
   "branch": "codex/integratie-2026-11-09",
   "candidateBranch": "codex/integratie-kandidaat-2026-11-10",
-  "codeCheckpoint": "fe0aeb605032b980b6caa074d7d279ab0b698518",
+  "codeCheckpoint": "14db5c1ccdf357ba75ae827c9050d5bb9393c565",
   "sourceIntakeClosed": true,
-  "sourcePRs": 67,
-  "deliveries": 76,
+  "sourcePRs": 68,
+  "deliveries": 78,
   "additionalPRsInBundles": 17,
   "installationReleased": false,
   "mainMerged": false,
@@ -35,14 +35,23 @@
       "skipped": 7,
       "files": 290,
       "sha256": "e324b3afa57b08827e2182fb3725b3bb2098dd81bec18f0aa2d9b9a4a6d304fb"
+    },
+    {
+      "kind": "first-final",
+      "head": "e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a",
+      "passed": 3141,
+      "failed": 0,
+      "skipped": 7,
+      "files": 300,
+      "sha256": "5a50499950c152f03492d94baa5eecef43559d85f9217762074aa4c34f93d184"
     }
   ],
   "finalValidation": {
-    "fullSuite": "pending",
-    "productionBuild": "pending",
+    "fullSuite": "pending after targeted acceptance correction",
+    "productionBuild": "pending after targeted acceptance correction",
     "i18n": "pending",
-    "browser": "pending",
-    "nativeWindows": "pending"
+    "browser": "Most production groups pass one9; repeat corrected Writer6+4 against new dist",
+    "nativeWindows": "pending one updated exact checkpoint"
   },
   "resolvedSources": [
     {
@@ -79,6 +88,78 @@
       "scope": "AGENTS focused issue reporting plus two synthetic native-test screenshots",
       "imagesVisuallyReviewed": true,
       "productionCodeChanged": false
+    }
+  ],
+  "previousCodeCheckpoint": "fe0aeb605032b980b6caa074d7d279ab0b698518",
+  "previousCiCheckpoint": "e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a",
+  "acceptanceCorrection": {
+    "issue": 302,
+    "pr": 307,
+    "head": "2da5abe361d18824d1fd84f1dee717f152f7e545",
+    "scope": "Successful header/footer opening stays confirmed after rapid close/reload; genuine failure remains visible",
+    "targetedPassed": 6,
+    "productionBrowser": "pending new build",
+    "baseline": "Olde9:6 content steps pass;2 false errors after closes at61.8ms/70.7ms"
+  },
+  "testOnlyCorrection": {
+    "pr": 273,
+    "head": "c3232dd704f1d3b069b7596f1ed7ca969fea04d6",
+    "scope": "Await committed testAPI selection; actual keyboard selection works",
+    "rootBrowserPassed": 6,
+    "ownerBrowserRuns": 3,
+    "productionCodeChanged": false
+  },
+  "readyAfterFreeze": [
+    {
+      "pr": 300,
+      "head": "b8426dc453c16a4a8863d67dd914070453c4a079",
+      "issues": [
+        280,
+        281
+      ],
+      "scope": "Writer screen theme and highlighter contrast",
+      "status": "next round; native acceptance pending"
+    },
+    {
+      "pr": 301,
+      "head": "92b1962a19c18ba2e89e67f292336f14b01e5ab4",
+      "issues": [
+        292,
+        293,
+        294,
+        295,
+        296,
+        299
+      ],
+      "scope": "Spreadsheet CF visual cases",
+      "status": "next round; source CI pending"
+    },
+    {
+      "pr": 304,
+      "head": "2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a",
+      "issues": [
+        298
+      ],
+      "scope": "ODP/OTP embedded media volume/mute",
+      "status": "next round"
+    },
+    {
+      "pr": 306,
+      "head": "e1d71ad76d9a394298997a8f1b97340389ee8b8c",
+      "issues": [
+        297
+      ],
+      "scope": "Direct character-format comparison",
+      "status": "hold for separate browser Undo investigation"
+    },
+    {
+      "pr": 309,
+      "head": "589a1d5794dd77e89c161a98cfc24969f5aa4c66",
+      "issues": [
+        305
+      ],
+      "scope": "Known empty bibliography customXML warning",
+      "status": "next round"
     }
   ]
 }

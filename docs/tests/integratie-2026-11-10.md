@@ -2,9 +2,17 @@
 
 ## Vast codepunt voor de volgende Windows-testbuild
 
-**`fe0aeb605032b980b6caa074d7d279ab0b698518`** bevat **67 bron-PR's / 76 leveringen**, met daarnaast 17 eerdere PR's binnen de bundels. Bronintake voor deze kandidaat is gesloten. De exacte bronheads, mergecommits en gerichte tests staan in [het register](integratie-2026-11-09.md). De voorbereiding gebeurde op `codex/integratie-kandidaat-2026-11-10`; de gezamenlijke branch blijft `codex/integratie-2026-11-09`, met concept-PR [248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248).
+**`14db5c1ccdf357ba75ae827c9050d5bb9393c565`** bevat **68 bron-PR's / 78 leveringen**, met daarnaast 17 eerdere PR's binnen de bundels. Bronintake voor deze kandidaat is gesloten. De exacte bronheads, mergecommits en gerichte tests staan in [het register](integratie-2026-11-09.md). De voorbereiding gebeurde op `codex/integratie-kandidaat-2026-11-10`; de gezamenlijke branch blijft `codex/integratie-2026-11-09`, met concept-PR [248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248).
 
 Deze versie is **nog niet vrijgegeven voor installatie**. De laatste gecombineerde volledige suite, productiebuild en browsercontroles worden op dit vaste codepunt uitgevoerd. Latere rapportwijzigingen mogen de applicatiecode niet veranderen. `main` en officiële releases blijven ongemoeid.
+
+## Laatste acceptatiecorrectie
+
+De eerste volledige eindcontrole op `e9eabc3c` slaagt met **3.141 tests, 0 fouten, 7 skips in 300 bestanden**, productiebuild en negen talen / 7.949 sleutels. De hoofdgroepen voor Presentatie, Spreadsheet en Writer-opslag/heropening slagen, inclusief rijke notities met dianummers in dezelfde download, echte tabellen met DXF, bewerkbare vormen en exacte afbeeldingsbytes, driemaal verwijzingen onder CPU-vertraging 4, vergelijkingen en volledige mailmerge.
+
+De tabeltoetsbevinding was een te vroege API-selectie in de proef, geen gereproduceerde gebruikersfout. De test-only opvolging `c3232dd7` wacht op de zichtbare pluginselectie en gebruikt echte pijltoetsbediening; alle zes stappen slagen in de centrale controle en drie eigenaar-runs.
+
+De zes custom-story-stappen slagen inhoudelijk, maar maken een afzonderlijke bestaande timerfout zichtbaar: na werkelijk openen en snel sluiten/herladen verschijnt ten onrechte een foutmelding. Dat is concreet vastgelegd als #302 en gericht gecorrigeerd via PR #307 / `2da5abe3`, zonder andere nieuwe functies toe te voegen. De zes nieuwe gedragsregressies slagen; een echte mislukking blijft een melding geven. Daarom wordt de volledige eindcontrole op het hierboven aangepaste codepunt herhaald. De oude e9-dist blijft alleen als negatieve controle bewaard. De Windows-chat ontvangt pas na de nieuwe controles één vervangend, exact installatiecheckpunt.
 
 ## Opgenomen wijzigingen
 
