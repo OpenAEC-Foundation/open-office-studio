@@ -24,12 +24,13 @@ export function PresentatieZoeken({
   bewerkbaar: boolean;
   sluiten: () => void;
 }) {
-  const { t } = useTranslation("ribbon");
+  const { t } = useTranslation(["ribbon", "writer"]);
   const titel = useId();
   const paneel = useRef<HTMLElement>(null);
   const [zoek, setZoek] = useState("");
   const [door, setDoor] = useState("");
   const [hoofdletters, setHoofdletters] = useState(false);
+  const [heleWoorden, setHeleWoorden] = useState(false);
   const [status, setStatus] = useState("");
   const huidig = useRef<Treffer | null>(null);
   const bezig = useRef(false);
@@ -57,7 +58,7 @@ export function PresentatieZoeken({
 
   /** Selecteert de volgende (of vorige) treffer; geeft de statustekst. */
   const ga = async (terug: boolean) => {
-    const { treffers } = await zoekTreffers(api, zoek, hoofdletters);
+    const { treffers } = await zoekTreffers(api, zoek, hoofdletters, heleWoorden);
     const i = volgendeIndex(treffers, huidig.current, terug, huidigeIndex() + 1);
     if (i < 0) {
       huidig.current = null;
@@ -86,7 +87,7 @@ export function PresentatieZoeken({
   };
 
   const vervangHuidige = async () => {
-    const uitkomst = await zoekTreffers(api, zoek, hoofdletters);
+    const uitkomst = await zoekTreffers(api, zoek, hoofdletters, heleWoorden);
     const doel = huidig.current;
     const treffer = doel
       ? uitkomst.treffers.find(
@@ -103,7 +104,7 @@ export function PresentatieZoeken({
   };
 
   const allesVervangen = async () => {
-    const uitkomst = await zoekTreffers(api, zoek, hoofdletters);
+    const uitkomst = await zoekTreffers(api, zoek, hoofdletters, heleWoorden);
     const aantal = await vervang(api, uitkomst, uitkomst.treffers, door);
     huidig.current = null;
     return aantal
@@ -171,6 +172,18 @@ export function PresentatieZoeken({
             }}
           />
           {t("presentation.find.matchCase")}
+        </label>
+        <label className="rekenblad-vinkje">
+          <input
+            type="checkbox"
+            checked={heleWoorden}
+            onChange={(e) => {
+              setHeleWoorden(e.target.checked);
+              huidig.current = null;
+              setStatus("");
+            }}
+          />
+          {t("writer:find.pane.wholeWords")}
         </label>
         <div className="rekenblad-knoppen">
           <button type="button" disabled={!zoek} onClick={() => void doe(() => ga(true))}>
