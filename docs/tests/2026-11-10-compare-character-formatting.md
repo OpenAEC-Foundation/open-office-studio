@@ -15,7 +15,7 @@ Limits: 128 changed regions, 16 Mi UTF-16 code units in either main XML and in c
 ## Environment and independently reproduced controls
 
 - Windows x64, Node v24.22.1, pinned `@betteroffice/docx` 0.5.1.
-- Source base `d978918d998bd00485bcafc4cef3072314c1b918`.
+- Initial reproduction base `d978918d998bd00485bcafc4cef3072314c1b918`. The final follow-up combines integration `e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a` with review dependency #313 / `46527a0e09497e2aa9d626e290989bc9def26219`.
 - Repository Writer WASM SHA-256: `9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc`.
 - Synthetic, non-confidential DOCX documents generated from the repository blank template.
 
@@ -25,21 +25,21 @@ Before the change, `De kat.` becoming bold, or red becoming blue without a text 
 
 | Check | Result |
 | --- | --- |
-| `vitest run --configLoader runner --maxWorkers 1 --testTimeout 20000 src/tekst/wijzigingen` | 4 files, 53 tests passed, including 18 new native formatting tests |
+| `vitest run --configLoader runner --maxWorkers 1 --testTimeout 20000 src/tekst/wijzigingen` | 5 files, 67 tests passed, including 18 native formatting tests and 14 review/worker regressions |
 | `tsc --noEmit` | Passed |
 | `node scripts/controleer-i18n.mjs` | Passed for all 9 active locales; existing inactive-locale-folder warnings remain |
-| `vite build --configLoader runner` | Passed, 32.03 seconds; existing bundle-size warnings remain |
+| `vite build --configLoader runner` | Passed, 70 seconds while checks ran concurrently; existing bundle-size warnings remain |
 
-The tests exercise bold, italic, underline, size and color; differently split runs; Unicode and spaces; separate changed regions; aliased run prefixes; author/date escaping; exact accepted/rejected character formatting after save/reopen; source hashes and unrelated-part preservation. They also verify explicit refusal of mixed text changes, changed table content, moves, paragraph formatting, style definitions, other parts, unknown run properties and non-formatting run metadata. The existing text comparison and revision-detection tests remain green. Direct native session Undo/Redo through the existing bulk-review facade restores both revisions in the targeted tests.
+The tests exercise bold, italic, underline, size and color; differently split runs; Unicode and spaces; separate changed regions; aliased run prefixes; author/date escaping; exact accepted/rejected character formatting after save/reopen; source hashes and unrelated-part preservation. They also verify explicit refusal of mixed text changes, changed table content, moves, paragraph formatting, style definitions, other parts, unknown run properties and non-formatting run metadata. The existing text comparison and revision-detection tests remain green. The formatting tests now include a real second native replica, worker save and echoed updates before Undo/Redo, rather than relying only on a single session.
 
 ## Production browser check, 10 November 2026
 
-Served the built `dist` on an isolated local port and operated the actual interface in the in-app browser. Opened the blue revised document, selected Review → Compare and the red original, and entered author `Review team 297`. The dialog displayed the new explanation; the result opened in a separate document tab with one deletion and one insertion, both with that author and a date.
+Served the final combined `dist` on an isolated local port and operated the actual interface in the in-app browser. Opened the blue revised document, selected Review → Compare and the red original, and entered author `Controle 297`. The dialog displayed the new explanation; the result opened in a separate document tab with one deletion and one insertion, both with that author and a date.
 
 Two independent comparison results were reviewed:
 
-1. Accept All Changes produced the single blue text `De kat.` and no remaining revisions. Saved as `compare297-accepted.docx`, reopened through the UI, and visually confirmed blue text and the `#0000ff` color control.
-2. Reject All Changes produced the single red text `De kat.` and no remaining revisions. Saved as `compare297-rejected.docx`, reopened through the UI, and visually confirmed red text and the `#ff0000` color control.
+1. Accept All Changes produced the single blue text `De kat.` and no remaining revisions. Saved as `compare297-fixed-accepted.docx`; Undo restored both revisions, the original red formatting and author/date, and Redo returned to blue with no revisions. Reopened the download through the UI and visually confirmed blue text and the `#0000ff` color control.
+2. Reject All Changes produced the single red text `De kat.` and no remaining revisions. Saved as `compare297-fixed-rejected.docx`; Undo restored both revisions and Redo returned to red with no revisions. Reopened the download through the UI and visually confirmed red text and the `#ff0000` color control.
 
 An independent ZIP/XML check of both actual browser downloads confirmed exact text, the expected direct color and zero `w:ins`/`w:del` elements. SHA-256 evidence:
 
@@ -47,11 +47,11 @@ An independent ZIP/XML check of both actual browser downloads confirmed exact te
 | --- | --- |
 | Original fixture | `3434052f16f08dc155868cfc543870bd62b4925c1ff6956a10eacc8b678b9463` |
 | Revised fixture | `737022c8ea2ca5e7c68ac6b7887b42dd97385a91dab6b134398cce54f00122fe` |
-| Accepted browser download | `7ee65111f2c42260038f2aeb430075e55f1b3db3f2d0512ca4e72e5d76f7eeb9` |
-| Rejected browser download | `14df67a77b9c3fba96cf45a82e61838cd9df1c8ad1b3851a65a5849e9cc8c100` |
+| Accepted browser download | `8db73364551f9365a6f74a9b611ec703693f0aa06e9fc072abe3c49820afdfca` |
+| Rejected browser download | `adcb292d492b4beca8062947172bc34e40d55b5effac50c3e4e82f390ab4ec7f` |
 
-## Remaining observation and integration boundary
+## Resolved Undo dependency and integration boundary
 
-An additional browser Undo check after accepting both changes showed only one insertion in the reviewing pane, whereas the direct native-session test restores both revisions. Redo returned to the accepted blue result. The cause and whether this also affects existing text-only comparison are unestablished; do not describe browser Undo as verified. Record this for focused follow-up against the integration candidate rather than expanding #297 into a shared editor/kernel change.
+The initial browser Undo anomaly was independently reproduced as an existing leading-text review/worker bug, including a plain text-only replacement. It is separately fixed in [#313 / PR #315](https://github.com/OpenAEC-Foundation/open-office-studio/pull/315), whose source commit is included as an explicit dependency. Its temporary-replica review route preserves both revisions across worker synchronization; the final actual browser comparison above confirms Save As → Undo/Redo in both directions. See [the review regression report](2026-11-10-review-undo-worker.md) for scoped callers, failure guards, earlier history and table-story coverage.
 
-This branch targets the next integration batch. It does not change the frozen Windows candidate or authorize installation/release. Combined testing with the integration chat's newer kernel and the browser Undo observation remain integration review items. This report establishes production browser behavior on the stated source base, not native installer acceptance.
+This branch targets the next integration batch and includes the published integration frontend with the same Writer kernels. It does not change the frozen candidate or authorize installation/release. Record Windows/Linux/macOS CI build/package and functional-test outcomes on the exact final source-delivery commit in the PR/issue update. Native application interaction on those platforms is still unverified; a successful package build must not be described as native UI acceptance. The actual supported browser route has been tested as described above. Full combined candidate validation remains with the integration chat.

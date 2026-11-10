@@ -249,33 +249,38 @@ describe("directe tekenopmaak vergelijken (#297, onderdeel van #57)", () => {
     ).toBeNull();
   });
   it.each(["accepteren", "weigeren"] as const)(
-    "houdt %s ongedaan en opnieuw uitvoerbaar via de bestaande reviewroute",
+    "houdt %s na workeropslag ongedaan en opnieuw uitvoerbaar via de reviewroute",
     async (wat) => {
       const a = doc(p(r("tekst"))),
         b = doc(p(r("tekst", "<w:b/>")));
       const uit = await vergelijk(a, b, opties);
       expect(uit.ok).toBe(true);
       if (!uit.ok) return;
-      const s = await createYrsSession();
+      const s = await createYrsSession(), worker = await createYrsSession();
       try {
-        s.openDocx(uit.bytes, true);
+        const host = s.openDocx(uit.bytes, true);
+        worker.bootstrapPeer(s.encodeState(), s.encodePeerMetadata(), uit.bytes, host);
         const api = {
           getEditorRef: () => ({
             getYrsSession: () => s,
             syncYrsInputState: () => {},
           }),
         } as unknown as Parameters<typeof besluit>[0];
-        expect(besluit(api, wat)).toBe(2);
+        expect(await besluit(api, wat)).toBe(2);
         expect(s.listRevisions()).toHaveLength(0);
         expect(tekens((await saveYrsDocx(s)).bytes)).toEqual(
           tekens(wat === "accepteren" ? b : a),
         );
+        worker.applyUpdate(s.encodeStateAsUpdate(worker.encodeStateVector()));
+        await saveYrsDocx(worker);
+        s.applyUpdate(worker.encodeStateAsUpdate(s.encodeStateVector()));
         expect(s.undo()).toBe(true);
         expect(s.listRevisions()).toHaveLength(2);
         expect(s.redo()).toBe(true);
         expect(s.listRevisions()).toHaveLength(0);
       } finally {
         s.destroy();
+        worker.destroy();
       }
     },
   );
