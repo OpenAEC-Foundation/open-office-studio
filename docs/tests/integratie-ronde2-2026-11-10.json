@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "date": "2026-11-10",
   "round": 2,
-  "asOf": "2026-11-10T13:48:54.395450+00:00",
+  "asOf": "2026-11-10T14:07:09.696825+00:00",
   "branch": "codex/integratie-2026-11-09",
   "candidateBranch": "codex/integratie-kandidaat2-2026-11-10",
   "base": "959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1",
@@ -445,27 +445,46 @@
         "323 long-filename custom-story DOCX save/close/reopen and native three-page PDF",
         "297/313 native Compare, individual DEL accept and bulk accept/reject Save/Undo/Redo with final app-restart reopen",
         "322/324 explicit and implicit Medium2 native visual/edit/save/close/reopen",
-        "326 native whole-word search/replace15to5to3, Save/Undo/Redo and full app-restart reopen"
+        "326 native whole-word search/replace15to5to3, Save/Undo/Redo and full app-restart reopen",
+        "318 bounded nativeRX reply: creation/save/document close/reopen/resave and identity retained after restoring original profile"
       ],
       "partial": [
         "280 native dark-page/theme preference only; no complete print/PDF/image matrix"
       ],
       "notRun": [
-        "318 reply initials",
         "325 media replay after end",
         "340 known tab focus route not retested",
-        "Linux/macOS native and browser not executed by this chat on 4a7"
+        "Linux/macOS native and browser not executed by this chat on 4a7",
+        "318 optionalsecondRY/cancel/IDreuse/othercorpora/fullapprestart"
       ],
       "independentReview": {
         "pdf": "all3 renders visually inspected, text/geometry and package comparison passed",
         "reviewSnapshots": 9,
         "spreadsheetFiles": 2,
-        "presentationSnapshots": 5
+        "presentationSnapshots": 5,
+        "replyInitialsNativeSnapshots": 3
       },
       "report": "integratie-ronde2-native-windows-2026-11-10.json",
-      "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
       "initialAcceptanceFinishedAtUtc": "2026-11-10T13:26:33.8629614Z",
-      "latestAdditionalQARecordedAtUtc": "2026-11-10T13:48:54.395450+00:00"
+      "latestAdditionalQARecordedAtUtc": "2026-11-10T14:07:09.696825+00:00",
+      "initialCleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
+      "latestSessionCleanup": {
+        "status": "completed after explicit user instruction in native chat; no cleanup remains",
+        "authorization": {
+          "thread": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+          "instruction": "ga verder met de test en herstel daarna de oorspronkelijke naam en initialen"
+        },
+        "profileRestored": true,
+        "documentClosed": true,
+        "originalValues": {
+          "Name for comments": "",
+          "Initials": ""
+        },
+        "verification": "Operator reopened Settings and confirmed both fields empty; saved document closed without prompt, Start open",
+        "finishedAtUtc": "2026-11-10T14:04:24.0576569Z"
+      },
+      "latestSessionInterruptedByPhysicalEscape": true,
+      "latestSessionResumedAfterExplicitUserAuthorization": true
     },
     "platformCI": {
       "status": "Windows/Linux passed; macOS queued at snapshot",
@@ -858,5 +877,27 @@
     "actualSpreadsheetUiDownload": ["Chromium151", "Firefox153", "WebKit26.5"],
     "native326": "passed bounded two-slide fixture;5 outputs independently verified",
     "deadline": "2026-11-10T15:15:00+01:00"
+  },
+  "replyInitialsAdditionalQA": {
+    "report": "integratie-ronde2-antwoordinitialen-2026-11-10.json",
+    "browserFirefoxCases": 3,
+    "browserWindowsWebKitCases": 3,
+    "native": "passed boundedRX creation/save/close/reopen/resave, plus preserved identity after profile restoration",
+    "nativeSnapshotsIndependentlyVerified": 3,
+    "cleanup": {
+      "status": "completed after explicit user instruction in native chat; no cleanup remains",
+      "authorization": {
+        "thread": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+        "instruction": "ga verder met de test en herstel daarna de oorspronkelijke naam en initialen"
+      },
+      "profileRestored": true,
+      "documentClosed": true,
+      "originalValues": {
+        "Name for comments": "",
+        "Initials": ""
+      },
+      "verification": "Operator reopened Settings and confirmed both fields empty; saved document closed without prompt, Start open",
+      "finishedAtUtc": "2026-11-10T14:04:24.0576569Z"
+    }
   }
 }

@@ -1,5 +1,7 @@
 # Actueel: tweede integratieronde
 
+**Laatste native318-status:** begrensde RX-save/sluit/heropen/resave geslaagd; het oorspronkelijke lege profiel is hersteld en het testdocument schoon gesloten. Zes browser- en drie native DOCX-uitvoeren onafhankelijk gecontroleerd. Zie het [318-rapport](integratie-ronde2-antwoordinitialen-2026-11-10.json).
+
 De huidige runtime is **4a7a3acf3c8a8747f5de081556e3192f303cb2fc**, gepusht op de centrale integratiebranch en kandidaat2. **21 nieuwe leveringen, totaal99/89bron-PRs; lokaal3408tests groen, Windows/Linux-CI3412groen; normale en echte hostedbrowserroutes groen.** Begrensde native Windows-acceptatie en onafhankelijke bestandscontroles zijn afgerond; macOS-jobs en echte Linux/macOS-bediening blijven open. Geen main-merge of officiële release. Aanvullend zijn Firefox/WebKit-hostedroutes en native #326 gecontroleerd; zie [de aanvulling](integratie-ronde2-aanvulling-2026-11-10.json).
 
 Begin volgende week bij [het actuele ronde-2-rapport](integratie-ronde2-2026-11-10.md), [de platformmatrix](integratie-ronde2-platforms-2026-11-10.json) en [PR248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248). De late leveringen staan apart in het ronde-2-register. Controleer eerst het verschil tussen latere documentatiecommits en het geteste runtimecodepunt; geen nieuwe sourcehead stilzwijgend opnemen. De onderstaande1e5-resultaten zijn uitsluitend historische eerste-rondebewijzen.

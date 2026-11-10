@@ -1,0 +1,603 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-10T14:07:09.696825+00:00",
+  "runtimeCheckpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "baselineDocumentationCommit": "f4a59bfeff58d9fa2e1b1358de0e5b2bf3d905b3",
+  "scope": "Additional user-requested318 QA before1515; no code/main/intake changes",
+  "browser": [
+    {
+      "engine": "firefox",
+      "host": "Windows x64",
+      "route": "/office/",
+      "nativeBridge": false,
+      "passed": 3,
+      "cases": [
+        "Top-level control and new sidebar reply persisted through actual download",
+        "Creation-time profile choices, cancelled draft and old identities preserved",
+        "Close/reopen/resave retains reply identity, body and thread metadata"
+      ],
+      "report": ".local\\round2-initials-firefox-hosted\\report.json"
+    },
+    {
+      "engine": "webkit",
+      "host": "Windows x64",
+      "route": "/office/",
+      "nativeBridge": false,
+      "passed": 3,
+      "cases": [
+        "Top-level control and new sidebar reply persisted through actual download",
+        "Creation-time profile choices, cancelled draft and old identities preserved",
+        "Close/reopen/resave retains reply identity, body and thread metadata"
+      ],
+      "report": ".local\\round2-initials-webkit-hosted\\report.json"
+    }
+  ],
+  "independentBrowserDownloads": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "ROOT independent read-only XML of6 actual browser downloads",
+    "passed": 6,
+    "cases": [
+      {
+        "engine": "firefox",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-firefox-hosted\\first-save.docx",
+        "sha256": "e9228f33ed4f4984be7ae978018a3172301a643ec45d5f619aaae0c0ba786237",
+        "comments": [
+          {
+            "id": "1",
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "Control top-level comment."
+          },
+          {
+            "id": "2",
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "First new reply."
+          }
+        ],
+        "bodyPreserved": true,
+        "result": "pass"
+      },
+      {
+        "engine": "firefox",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-firefox-hosted\\second-save.docx",
+        "sha256": "14a4c5341b31fe0f894eead4af01b76b3656f1bdb05573269a8fe47af90ca1e2",
+        "comments": [
+          {
+            "id": "1",
+            "author": "Existing Reviewer",
+            "initials": "ER",
+            "text": "Control top-level comment."
+          },
+          {
+            "id": "2",
+            "author": "Ada Lovelace",
+            "initials": "OLD",
+            "text": "First new reply."
+          },
+          {
+            "id": "3",
+            "author": "Ada Lovelace",
+            "initials": "QQ",
+            "text": "Created with QQ."
+          },
+          {
+            "id": "4",
+            "author": "Ada Lovelace",
+            "initials": "WW",
+            "text": "Created with WW."
+          }
+        ],
+        "bodyPreserved": true,
+        "result": "pass"
+      },
+      {
+        "engine": "firefox",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-firefox-hosted\\reopened-resaved.docx",
+        "sha256": "993eb0c42f8ddaa4df49b45ce996f2e5a26d8e385a9f28f53b6a5ae49e48806f",
+        "comments": [
+          {
+            "id": "1",
+            "author": "Existing Reviewer",
+            "initials": "ER",
+            "text": "Control top-level comment."
+          },
+          {
+            "id": "2",
+            "author": "Ada Lovelace",
+            "initials": "OLD",
+            "text": "First new reply."
+          },
+          {
+            "id": "3",
+            "author": "Ada Lovelace",
+            "initials": "QQ",
+            "text": "Created with QQ."
+          },
+          {
+            "id": "4",
+            "author": "Ada Lovelace",
+            "initials": "WW",
+            "text": "Created with WW."
+          }
+        ],
+        "bodyPreserved": true,
+        "result": "pass"
+      },
+      {
+        "engine": "webkit",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-webkit-hosted\\first-save.docx",
+        "sha256": "b08db314f65bbdc43181b94e6e17d3b2ae80d9144a7f395f7a901939d945f0f6",
+        "comments": [
+          {
+            "id": "1",
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "Control top-level comment."
+          },
+          {
+            "id": "2",
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "First new reply."
+          }
+        ],
+        "bodyPreserved": true,
+        "result": "pass"
+      },
+      {
+        "engine": "webkit",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-webkit-hosted\\second-save.docx",
+        "sha256": "2de29e3ee60ea2b9bae28b4f6513259dd73d4171716a8cc41e77a17e8c5dba2d",
+        "comments": [
+          {
+            "id": "1",
+            "author": "Existing Reviewer",
+            "initials": "ER",
+            "text": "Control top-level comment."
+          },
+          {
+            "id": "2",
+            "author": "Ada Lovelace",
+            "initials": "OLD",
+            "text": "First new reply."
+          },
+          {
+            "id": "3",
+            "author": "Ada Lovelace",
+            "initials": "QQ",
+            "text": "Created with QQ."
+          },
+          {
+            "id": "4",
+            "author": "Ada Lovelace",
+            "initials": "WW",
+            "text": "Created with WW."
+          }
+        ],
+        "bodyPreserved": true,
+        "result": "pass"
+      },
+      {
+        "engine": "webkit",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-webkit-hosted\\reopened-resaved.docx",
+        "sha256": "868787f6185f36652c1ebb8c2ca900dd3322f53c1b59d833e79857a4e7a0d9af",
+        "comments": [
+          {
+            "id": "1",
+            "author": "Existing Reviewer",
+            "initials": "ER",
+            "text": "Control top-level comment."
+          },
+          {
+            "id": "2",
+            "author": "Ada Lovelace",
+            "initials": "OLD",
+            "text": "First new reply."
+          },
+          {
+            "id": "3",
+            "author": "Ada Lovelace",
+            "initials": "QQ",
+            "text": "Created with QQ."
+          },
+          {
+            "id": "4",
+            "author": "Ada Lovelace",
+            "initials": "WW",
+            "text": "Created with WW."
+          }
+        ],
+        "bodyPreserved": true,
+        "result": "pass"
+      }
+    ]
+  },
+  "native": {
+    "result": "pass bounded native RX reply, save/close/reopen/resave and preserved identity after original profile restoration; optional secondRY/cancel corpus not run",
+    "operatorReceipt": {
+      "issue": 318,
+      "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "platform": "Windows native 2026.45.4 installed 4a7",
+      "result": "pass bounded native new reply RX, save-close-reopen-resave and identity preserved after restoring original profile",
+      "evidence": {
+        "result": "pass",
+        "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+        "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+        "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+        "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-first-save-4a7a3acf.docx",
+        "sha256": "6dc47c7652bf1b8d4cf33fec4b96dae3b6e3ef3429de697f2a3f2ba6925dd8e8",
+        "existingCommentCount": 2,
+        "newReplies": [
+          {
+            "id": "3",
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        ],
+        "bodyXmlPreservedExceptNewCommentAnchors": true,
+        "existingCommentXmlIdentical": true,
+        "changedPackageParts": [
+          "docProps/core.xml",
+          "word/document.xml",
+          "word/comments.xml",
+          "word/commentsExtended.xml",
+          "word/commentsIds.xml",
+          "word/commentsExtensible.xml"
+        ]
+      },
+      "initialsConfigured": "RX",
+      "testAuthor": "QA Native Reply",
+      "originalProfileRecordedPrivately": true,
+      "profileRestored": true,
+      "nativeReopened": true,
+      "secondReplyTested": false,
+      "stopReason": "Earlier physical Escape interruption resolved by explicit user instruction to resume testing and restore original profile",
+      "cleanupRequired": "none: original name and initials restored, Settings reopened and both confirmed empty; document closed clean without prompt",
+      "fullNativeAcceptance": false,
+      "finishedAtUtc": "2026-11-10T14:04:24.0576569Z",
+      "packageChecks": [
+        {
+          "result": "pass",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+          "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+          "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-first-save-4a7a3acf.docx",
+          "sha256": "6dc47c7652bf1b8d4cf33fec4b96dae3b6e3ef3429de697f2a3f2ba6925dd8e8",
+          "existingCommentCount": 2,
+          "newReplies": [
+            {
+              "id": "3",
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "bodyXmlPreservedExceptNewCommentAnchors": true,
+          "existingCommentXmlIdentical": true,
+          "changedPackageParts": [
+            "docProps/core.xml",
+            "word/document.xml",
+            "word/comments.xml",
+            "word/commentsExtended.xml",
+            "word/commentsIds.xml",
+            "word/commentsExtensible.xml"
+          ]
+        },
+        {
+          "result": "pass",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+          "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+          "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-reopened-resave-4a7a3acf.docx",
+          "sha256": "aafae3b8517af2affac7a168dc599c4b2f9cf25aa76b151b98e38bf62604644e",
+          "existingCommentCount": 2,
+          "newReplies": [
+            {
+              "id": "3",
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "bodyXmlPreservedExceptNewCommentAnchors": true,
+          "existingCommentXmlIdentical": true,
+          "changedPackageParts": [
+            "docProps/core.xml",
+            "word/document.xml",
+            "word/comments.xml",
+            "word/commentsExtended.xml",
+            "word/commentsIds.xml",
+            "word/commentsExtensible.xml"
+          ]
+        },
+        {
+          "result": "pass",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+          "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+          "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-restored-profile-resave-4a7a3acf.docx",
+          "sha256": "e87f4ba472b16ed473f28789306b3dffe9b428b8322201798d02934f4bb62056",
+          "existingCommentCount": 2,
+          "newReplies": [
+            {
+              "id": "3",
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "bodyXmlPreservedExceptNewCommentAnchors": true,
+          "existingCommentXmlIdentical": true,
+          "changedPackageParts": [
+            "docProps/core.xml",
+            "word/document.xml",
+            "word/comments.xml",
+            "word/commentsExtended.xml",
+            "word/commentsIds.xml",
+            "word/commentsExtensible.xml"
+          ]
+        }
+      ],
+      "limits": [
+        "One explicit RX reply only; optional second RY reply not performed before cutoff",
+        "Cancellation, reused IDs and different document corpus not exercised",
+        "No full application restart, native document close/reopen completed",
+        "Independent extended-thread XML review delegated to integration coordinator"
+      ]
+    },
+    "independentFirstSave": {
+      "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "reviewer": "ROOT independent read-only native DOCX review",
+      "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+      "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+      "cases": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-first-save-4a7a3acf.docx",
+          "sha256": "6dc47c7652bf1b8d4cf33fec4b96dae3b6e3ef3429de697f2a3f2ba6925dd8e8",
+          "existingCommentsPreserved": true,
+          "bodyAndStylesPreserved": true,
+          "added": [
+            {
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "comments": {
+            "1": {
+              "author": "Ada Lovelace",
+              "initials": "ZZ",
+              "text": "Control top-level comment.",
+              "date": "2026-11-10T12:37:49Z"
+            },
+            "2": {
+              "author": "Ada Lovelace",
+              "initials": "ZZ",
+              "text": "First new reply.",
+              "date": "2026-11-10T12:37:49Z"
+            },
+            "3": {
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          },
+          "commentsExtendedXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w15:commentsEx xmlns:wpc=\"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas\" xmlns:cx=\"http://schemas.microsoft.com/office/drawing/2014/chartex\" xmlns:cx1=\"http://schemas.microsoft.com/office/drawing/2015/9/8/chartex\" xmlns:cx2=\"http://schemas.microsoft.com/office/drawing/2015/10/21/chartex\" xmlns:cx3=\"http://schemas.microsoft.com/office/drawing/2016/5/9/chartex\" xmlns:cx4=\"http://schemas.microsoft.com/office/drawing/2016/5/10/chartex\" xmlns:cx5=\"http://schemas.microsoft.com/office/drawing/2016/5/11/chartex\" xmlns:cx6=\"http://schemas.microsoft.com/office/drawing/2016/5/12/chartex\" xmlns:cx7=\"http://schemas.microsoft.com/office/drawing/2016/5/13/chartex\" xmlns:cx8=\"http://schemas.microsoft.com/office/drawing/2016/5/14/chartex\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:aink=\"http://schemas.microsoft.com/office/drawing/2016/ink\" xmlns:am3d=\"http://schemas.microsoft.com/office/drawing/2017/model3d\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:oel=\"http://schemas.microsoft.com/office/2019/extlst\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16du=\"http://schemas.microsoft.com/office/word/2023/wordml/word16du\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16sdtfl=\"http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:wpi=\"http://schemas.microsoft.com/office/word/2010/wordprocessingInk\" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14\"><w15:commentEx w15:paraId=\"27BA826F\" w15:done=\"0\" /><w15:commentEx w15:paraId=\"6E9E7736\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /><w15:commentEx w15:paraId=\"35826C0F\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /></w15:commentsEx>",
+          "result": "pass",
+          "newReplyThreadParentPreserved": true,
+          "parentParaId": "27BA826F",
+          "newReplyParaId": "35826C0F"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-reopened-resave-4a7a3acf.docx",
+          "sha256": "aafae3b8517af2affac7a168dc599c4b2f9cf25aa76b151b98e38bf62604644e",
+          "existingCommentsPreserved": true,
+          "bodyAndStylesPreserved": true,
+          "added": [
+            {
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "comments": {
+            "1": {
+              "author": "Ada Lovelace",
+              "initials": "ZZ",
+              "text": "Control top-level comment.",
+              "date": "2026-11-10T12:37:49Z"
+            },
+            "2": {
+              "author": "Ada Lovelace",
+              "initials": "ZZ",
+              "text": "First new reply.",
+              "date": "2026-11-10T12:37:49Z"
+            },
+            "3": {
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          },
+          "commentsExtendedXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w15:commentsEx xmlns:wpc=\"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas\" xmlns:cx=\"http://schemas.microsoft.com/office/drawing/2014/chartex\" xmlns:cx1=\"http://schemas.microsoft.com/office/drawing/2015/9/8/chartex\" xmlns:cx2=\"http://schemas.microsoft.com/office/drawing/2015/10/21/chartex\" xmlns:cx3=\"http://schemas.microsoft.com/office/drawing/2016/5/9/chartex\" xmlns:cx4=\"http://schemas.microsoft.com/office/drawing/2016/5/10/chartex\" xmlns:cx5=\"http://schemas.microsoft.com/office/drawing/2016/5/11/chartex\" xmlns:cx6=\"http://schemas.microsoft.com/office/drawing/2016/5/12/chartex\" xmlns:cx7=\"http://schemas.microsoft.com/office/drawing/2016/5/13/chartex\" xmlns:cx8=\"http://schemas.microsoft.com/office/drawing/2016/5/14/chartex\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:aink=\"http://schemas.microsoft.com/office/drawing/2016/ink\" xmlns:am3d=\"http://schemas.microsoft.com/office/drawing/2017/model3d\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:oel=\"http://schemas.microsoft.com/office/2019/extlst\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16du=\"http://schemas.microsoft.com/office/word/2023/wordml/word16du\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16sdtfl=\"http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:wpi=\"http://schemas.microsoft.com/office/word/2010/wordprocessingInk\" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14\"><w15:commentEx w15:paraId=\"27BA826F\" w15:done=\"0\" /><w15:commentEx w15:paraId=\"6E9E7736\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /><w15:commentEx w15:paraId=\"35826C0F\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /></w15:commentsEx>",
+          "result": "pass",
+          "newReplyThreadParentPreserved": true,
+          "parentParaId": "27BA826F",
+          "newReplyParaId": "35826C0F"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-restored-profile-resave-4a7a3acf.docx",
+          "sha256": "e87f4ba472b16ed473f28789306b3dffe9b428b8322201798d02934f4bb62056",
+          "existingCommentsPreserved": true,
+          "bodyAndStylesPreserved": true,
+          "added": [
+            {
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "comments": {
+            "1": {
+              "author": "Ada Lovelace",
+              "initials": "ZZ",
+              "text": "Control top-level comment.",
+              "date": "2026-11-10T12:37:49Z"
+            },
+            "2": {
+              "author": "Ada Lovelace",
+              "initials": "ZZ",
+              "text": "First new reply.",
+              "date": "2026-11-10T12:37:49Z"
+            },
+            "3": {
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          },
+          "commentsExtendedXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w15:commentsEx xmlns:wpc=\"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas\" xmlns:cx=\"http://schemas.microsoft.com/office/drawing/2014/chartex\" xmlns:cx1=\"http://schemas.microsoft.com/office/drawing/2015/9/8/chartex\" xmlns:cx2=\"http://schemas.microsoft.com/office/drawing/2015/10/21/chartex\" xmlns:cx3=\"http://schemas.microsoft.com/office/drawing/2016/5/9/chartex\" xmlns:cx4=\"http://schemas.microsoft.com/office/drawing/2016/5/10/chartex\" xmlns:cx5=\"http://schemas.microsoft.com/office/drawing/2016/5/11/chartex\" xmlns:cx6=\"http://schemas.microsoft.com/office/drawing/2016/5/12/chartex\" xmlns:cx7=\"http://schemas.microsoft.com/office/drawing/2016/5/13/chartex\" xmlns:cx8=\"http://schemas.microsoft.com/office/drawing/2016/5/14/chartex\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:aink=\"http://schemas.microsoft.com/office/drawing/2016/ink\" xmlns:am3d=\"http://schemas.microsoft.com/office/drawing/2017/model3d\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:oel=\"http://schemas.microsoft.com/office/2019/extlst\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16du=\"http://schemas.microsoft.com/office/word/2023/wordml/word16du\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16sdtfl=\"http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:wpi=\"http://schemas.microsoft.com/office/word/2010/wordprocessingInk\" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14\"><w15:commentEx w15:paraId=\"27BA826F\" w15:done=\"0\" /><w15:commentEx w15:paraId=\"6E9E7736\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /><w15:commentEx w15:paraId=\"35826C0F\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /></w15:commentsEx>",
+          "result": "pass",
+          "newReplyThreadParentPreserved": true,
+          "parentParaId": "27BA826F",
+          "newReplyParaId": "35826C0F"
+        }
+      ],
+      "passed": 3
+    }
+  },
+  "cleanup": {
+    "status": "completed after explicit user instruction in native chat; no cleanup remains",
+    "authorization": {
+      "thread": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+      "instruction": "ga verder met de test en herstel daarna de oorspronkelijke naam en initialen"
+    },
+    "profileRestored": true,
+    "documentClosed": true,
+    "originalValues": {
+      "Name for comments": "",
+      "Initials": ""
+    },
+    "verification": "Operator reopened Settings and confirmed both fields empty; saved document closed without prompt, Start open",
+    "finishedAtUtc": "2026-11-10T14:04:24.0576569Z"
+  },
+  "limits": [
+    "One bounded native RX case; optional secondRY/cancel/IDreuse/other corpus/full application restart not run",
+    "Firefox/WebKit headless engines run on Windows, not actual Safari/macOS",
+    "Earlier physical Escape stop respected; resumed only after explicit user instruction in native chat. Original profile restored and saved document cleanly closed; no filesystem workaround or alternate native operator",
+    "All previous platform/CI/main restrictions stay in force"
+  ],
+  "fullNativeAcceptance": false,
+  "mainMergeAllowed": false,
+  "ciSnapshot": {
+    "asOf": "2026-11-10T14:06:24.584043+00:00",
+    "runs": [
+      {
+        "kind": "desktop",
+        "run": 42817352468,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468",
+        "jobs": [
+          {
+            "databaseId": 129833698436,
+            "name": "desktop (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833698436"
+          },
+          {
+            "databaseId": 129833699033,
+            "name": "desktop (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699033"
+          },
+          {
+            "databaseId": 129833699052,
+            "name": "desktop (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699052"
+          }
+        ]
+      },
+      {
+        "kind": "database",
+        "run": 42817352223,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223",
+        "jobs": [
+          {
+            "databaseId": 129833698581,
+            "name": "database (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833698581"
+          },
+          {
+            "databaseId": 129833699079,
+            "name": "database (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699079"
+          },
+          {
+            "databaseId": 129833699111,
+            "name": "database (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699111"
+          }
+        ]
+      },
+      {
+        "kind": "presentation",
+        "run": 42817352213,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213",
+        "jobs": [
+          {
+            "databaseId": 129833698196,
+            "name": "presentation (Linux)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698196"
+          },
+          {
+            "databaseId": 129833698624,
+            "name": "presentation (macOS)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698624"
+          },
+          {
+            "databaseId": 129833698747,
+            "name": "presentation (Windows)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698747"
+          }
+        ]
+      }
+    ]
+  },
+  "evidenceArchive": {
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-initials-evidence-4a7a3acf.zip",
+    "sha256": "b4fa451c164fe0b3540593fa5a674a09035ae641e9074042e477188c34bdc04a",
+    "bytes": 451577,
+    "files": 32,
+    "purpose": "Separate final318 proof; earlier archives remain immutable."
+  }
+}
