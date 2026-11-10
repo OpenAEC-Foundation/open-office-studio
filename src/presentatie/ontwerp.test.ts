@@ -12,6 +12,7 @@ import {
   dupliceerMaster,
   hernoemOntwerp,
   leesOntwerp,
+  leesOntwerpMetThema,
   OntwerpFout,
   pasLayoutToe,
   pasThemaToe,
@@ -47,6 +48,84 @@ function relatiesGeldig(bytes: Uint8Array) {
       ).toBe(true);
 }
 describe("PPTX diamodellen, indelingen en thema's", () => {
+  it("leest het toegepaste aangepaste thema na native opslaan terug als beginwaarden", () => {
+    const t = {
+      ...THEMAS[1],
+      naam: "Mijn eigen thema 🧱",
+      kop: "Arial",
+      tekst: "Liberation Sans",
+      kleuren: THEMAS[1].kleuren.map((c, i) => (i === 4 ? "#12AB34" : c)),
+      achtergrond: "#EFE4DC",
+    };
+    const b = pasThemaToe(bron(), [0], t),
+      saved = open(b).save();
+    expect(leesOntwerpMetThema(saved, 0).thema).toEqual(t);
+    expect(leesOntwerpMetThema(saved, 0).info).toEqual(leesOntwerp(saved));
+  });
+  it("houdt verschillende dia-ontwerpen apart en kan een bestaand ontwerp verder aanpassen", () => {
+    let b = pasThemaToe(bron(), [0], THEMAS[1]);
+    b = pasThemaToe(b, [1], THEMAS[2]);
+    expect(leesOntwerpMetThema(b, 0).thema).toEqual(THEMAS[1]);
+    expect(leesOntwerpMetThema(b, 1).thema).toEqual(THEMAS[2]);
+    const t = leesOntwerpMetThema(b, 0).thema!;
+    t.naam = "Further edited";
+    t.kleuren[5] = "#ABCDEF";
+    const saved = open(pasThemaToe(b, [0], t)).save();
+    expect(leesOntwerpMetThema(saved, 0).thema).toEqual(t);
+    expect(leesOntwerpMetThema(saved, 1).thema).toEqual(THEMAS[2]);
+  });
+  it("gebruikt de eerste aanwezige effen achtergrond in de dia/layout/masterketen", () => {
+    let b = pasThemaToe(bron(), [0], THEMAS[1]);
+    const i = leesOntwerp(b),
+      layout = i.layouts.find((l) => l.pad === i.dias[0].layout)!;
+    b = schrijfAchtergrond(b, [i.dias[0].pad], { soort: "erven" });
+    b = schrijfAchtergrond(b, [layout.pad], {
+      soort: "kleur",
+      kleur: "#ABCDEF",
+    });
+    expect(leesOntwerpMetThema(b, 0).thema?.achtergrond).toBe("#ABCDEF");
+    b = schrijfAchtergrond(b, [i.dias[0].pad], {
+      soort: "kleur",
+      kleur: "#123456",
+    });
+    expect(leesOntwerpMetThema(b, 0).thema?.achtergrond).toBe("#123456");
+  });
+  it("leest de vastgelegde fallbackkleur van een systeemkleur zonder het bronpakket te wijzigen", () => {
+    const b = pasThemaToe(bron(), [0], THEMAS[1]),
+      p = new Pakket(b),
+      pad = p.namen().find((n) => /^ppt\/theme\/oosTheme/.test(n))!;
+    p.schrijf(
+      pad,
+      p
+        .lees(pad)
+        .replace(
+          '<a:srgbClr val="133244"/>',
+          '<a:sysClr val="windowText" lastClr="112233"/>',
+        ),
+    );
+    const input = p.inpakken(),
+      copy = input.slice(),
+      result = leesOntwerpMetThema(input, 0);
+    expect(result.thema?.kleuren[0]).toBe("#112233");
+    expect(input).toEqual(copy);
+    result.thema!.kleuren[0] = "#FFFFFF";
+    expect(leesOntwerpMetThema(input, 0).thema?.kleuren[0]).toBe("#112233");
+  });
+  it("biedt presets als fallback bij complexe achtergronden of een ongeldige dia", () => {
+    const b = pasThemaToe(bron(), [0], THEMAS[1]),
+      i = leesOntwerp(b),
+      gradient = schrijfAchtergrond(b, [i.dias[0].pad], {
+        soort: "verloop",
+        kleur: "#FFFFFF",
+        tweede: "#000000",
+        hoek: 90,
+      });
+    expect(leesOntwerpMetThema(gradient, 0).thema).toBeUndefined();
+    expect(leesOntwerpMetThema(b, 99).thema).toBeUndefined();
+    expect(leesOntwerpMetThema(gradient, 0).info).toEqual(
+      leesOntwerp(gradient),
+    );
+  });
   it("maakt een onafhankelijk tweede diamodel met alle indelingen en unieke IDs", () => {
     const bytes = bron(),
       i = leesOntwerp(bytes);
