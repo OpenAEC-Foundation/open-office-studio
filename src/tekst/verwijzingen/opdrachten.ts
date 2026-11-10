@@ -170,7 +170,7 @@ export async function bijschriftIn(ref: DocxEditorRef, label: string, omschrijvi
 }
 
 /** Update only caption and cross-reference fields; generic fields have their own updater. */
-export async function werkVerwijzingenBij(ref: DocxEditorRef, ronde = 0): Promise<{ gewijzigd: number; onopgelost: string[] }> {
+export async function werkVerwijzingenBij(ref: DocxEditorRef, ronde = 0, herhaling = 0): Promise<{ gewijzigd: number; onopgelost: string[] }> {
   await ref.flushPendingInput?.();
   const e = engine(ref), s = e.sessie, v = s.version(), ps = alineas(s);
   const nummers = await kopNummers(ref, ps), waarden = reeksen(ps, nummers);
@@ -181,10 +181,17 @@ export async function werkVerwijzingenBij(ref: DocxEditorRef, ronde = 0): Promis
   if (nodigPagina) {
     await ref.whenLayoutComplete({ timeoutMs: 8000 });
     const r = await ref.exportStructuredWithPages({ revisionView: "accepted", stories: ["body"], maxBlocks: 200000 });
-    if (!r.ok) throw new Error("references.layout");
+    if (!r.ok) {
+      if (r.failure.code === "stale-document" && herhaling < 2 && ref.getEditorRef()?.getYrsSession() === s)
+        return werkVerwijzingenBij(ref, ronde, herhaling + 1);
+      throw new Error("references.layout");
+    }
     for (const p of r.content.layout.pages) labels.set(p.pageIndex, p.displayedLabel);
   }
-  if (s.version() !== v) throw new Error("references.changed");
+  if (s.version() !== v) {
+    if (herhaling < 2 && ref.getEditorRef()?.getYrsSession() === s) return werkVerwijzingenBij(ref, ronde, herhaling + 1);
+    throw new Error("references.changed");
+  }
   const bs = bladwijzers(s, ps, waarden), onopgelost: string[] = [];
   const pages = e.weergave.getLayout()?.pages ?? [];
   const nootLabels = new Map<string, string | undefined>(pages.flatMap(p => (p.noteAreas ?? []).flatMap(a => (a.notes ?? []).map(n => [`${a.kind ?? n.kind ?? "footnote"}:${n.id}`, n.displayLabel] as const))));

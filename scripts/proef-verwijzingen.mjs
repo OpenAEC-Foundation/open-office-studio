@@ -19,6 +19,10 @@ const browser = await chromium.launch({ headless: true });
 let page;
 try {
   page = await browser.newPage({ locale: "nl-NL", viewport: { width: 1440, height: 1000 } }); const errors = [];
+  if (process.env.OOS_BROWSER_CPU_RATE) {
+    const rate = Number(process.env.OOS_BROWSER_CPU_RATE); assert.ok(Number.isFinite(rate) && rate >= 1);
+    await (await page.context().newCDPSession(page)).send("Emulation.setCPUThrottlingRate", { rate });
+  }
   page.on("pageerror", e => errors.push(e.message));
   await page.addInitScript(() => localStorage.setItem("openaec-office-instellingen", JSON.stringify({ taal: "nl", spelling: { controleren: false } })));
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
