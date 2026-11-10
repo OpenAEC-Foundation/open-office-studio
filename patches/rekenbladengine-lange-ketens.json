@@ -17,7 +17,7 @@
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
   "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
   "wasmBytes": 7745388,
-  "stand": "Kandidaten voor #74: kleine celarrays zonder tijdelijke Vec en alleen canonieke identiteit bij standalone openen. Samenwerkende werkmappen behouden alle oude protocolvingerafdrukken. Vendor blijft de geteste acht-patchkern totdat vergelijkende tests slagen.",
+  "stand": "Kandidaten voor #74: minder celarray-allocaties, canonieke lokale identiteit en stromende celopbouw met gelijke wire-volgorde. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -127,7 +127,7 @@
       "tests": [
         {
           "pakket": "betteroffice-xlsx",
-          "lib": "authority::tests"
+          "lib": "authority::tests::small_arrays_preserve_wire_bytes_and_checked_decoding"
         }
       ]
     },
@@ -150,6 +150,16 @@
         {
           "pakket": "betteroffice-xlsx",
           "test": "workbook"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-stromende-celopbouw.patch",
+      "patchSha256": "143b50d72ab1a52853e07e0b80fbb0bc0aa12089fc4f16016cb70db94b954832",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::tests::streamed_seed_preserves_wire_order_at_decimal_boundaries"
         }
       ]
     }
