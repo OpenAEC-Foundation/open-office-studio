@@ -47,6 +47,7 @@ import { formuleVerwijzingen } from "./rekenblad-verwijzingskleuren";
 import { namenLijst } from "../rekenblad/namen";
 import { aangevuldeFormule, formuleAanvullingen, type FormuleVoorstel } from "../rekenblad/naamAanvullingen";
 import { FormuleKleuren } from "./rekenblad-formulekleuren";
+import { FormulefoutMelding } from "../rekenblad/FormulefoutMelding";
 import "./rekenblad-gereedschap.css";
 
 const VELDEN = '[data-testid="xlsx-cell-editor"], [data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid';
@@ -132,24 +133,21 @@ export async function voorbeeldResultaat(api: XlsxEditorApi, formule: string, bl
         ],
       });
       if (!lezing.ok) continue;
-      const invoer: { row: number; col: number; input: string }[] = [];
-      lezing.ranges[0].cells.forEach((rij, i) =>
-        rij.forEach((c, j) => {
-          const w = c.value;
-          const input =
-            w.kind === "number"
-              ? String(w.value)
-              : w.kind === "text"
-                ? `'${w.value}`
-                : w.kind === "bool"
-                  ? (w.value ? "TRUE" : "FALSE")
-                  : w.kind === "error" && w.value === "#N/A"
-                    ? "=NA()"
-                    : "";
-          if (input) invoer.push({ row: r.bereik.top + i, col: r.bereik.left + j, input });
-        }),
-      );
-      if (invoer.length) klad.editCells(index, invoer);
+      // Kopieer waarden zonder ze opnieuw als invoertekst te interpreteren.
+      // Ook foutwaarden moeten mee: een lege cel geeft een ander resultaat.
+      const kopie = klad.applyEdits({
+        expectVersion: klad.version(),
+        history: "none",
+        steps: [{
+          op: "setCellValues",
+          target: {
+            sheetId: klad.sheetInfo().sheetIds[index],
+            range: { kind: "rowCol", start: { row: r.bereik.top, col: r.bereik.left }, end: { row: r.bereik.bottom, col: r.bereik.right } },
+          },
+          values: lezing.ranges[0].cells.map(rij => rij.map(c => c.value)),
+        }],
+      });
+      if (!kopie.ok) return null;
     }
     const sheetId = klad.sheetInfo().sheetIds[0];
     const doel = { sheetId, range: { kind: "rowCol" as const, start: cel, end: cel } };
@@ -401,6 +399,7 @@ export function FunctieVenster({
           </div>
           <div className="rekenblad-functiedetail">
             <p className="rekenblad-syntaxis">{syntaxis(f)}</p>
+            <p className="rekenblad-zacht">{ts("insertFunction.notationHint")}</p>
             <p>{t(`fn.${f.naam}`)}</p>
             <p className="rekenblad-zacht">{t(`cat.${f.categorie}`)}</p>
             {velden.length > 0 && (
@@ -629,6 +628,7 @@ export function Formulebalk({
 }) {
   const { t } = useTranslation("spreadsheet");
   const [uitgevouwen, setUitgevouwen] = useState(false);
+  const selectie = useSelectie(laag);
   useFormuleBereik(api);
   return (
     <div className={`office-formulebalk${uitgevouwen ? " is-uitgevouwen" : ""}`}>
@@ -645,6 +645,7 @@ export function Formulebalk({
         <i>fx</i>
       </button>
       <EditorToolbar.FormulaBar />
+      {api && selectie?.cells && <FormulefoutMelding api={api} sheetId={selectie.sheetId} row={selectie.cells.focus.row} col={selectie.cells.focus.col} />}
       {api && uitgevouwen && <UitgevouwenFormule api={api} laag={laag} />}
       {api && <FormuleKleuren api={api} />}
       <button

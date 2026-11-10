@@ -240,7 +240,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
   const volgende = () => ga(huidig + 1);
   const vorige = () => ga(huidig < 0 ? resultaten.length - 1 : huidig - 1);
 
-  async function vervangEen() {
+  async function vervangEen(naarDocument = false) {
     if (!index || !resultaten.length) return;
     if (huidig < 0) return volgende();
     try {
@@ -257,6 +257,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
       setHuidig(n);
       markeer(uit.resultaten, uit.index, n);
       if (n >= 0) gaNaar(ref, uit.index, uit.resultaten[n]);
+      if (naarDocument) ref.focus();
     } catch (error) {
       setMelding(fout(error));
     }
@@ -268,6 +269,9 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
       await zoekNu(false);
       naVervangen.current = true;
       setMelding(t("find.pane.replacedAll", { count: uit.aantal, number: formatGetal(uit.aantal), undo: "Ctrl+Z" }));
+      // De nu uitgeschakelde knop verliest focus naar body. Daar ontvangt
+      // de editor Ctrl+Z niet; het paneel kan open blijven met documentfocus.
+      api()?.focus();
     } catch (error) {
       setMelding(fout(error));
     }
@@ -368,7 +372,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
       )}
       {vervangen && (
         <div className="tw-zoek-knoppen">
-          <button type="button" disabled={!bewerkbaar || !resultaten.length} onClick={() => void vervangEen()}>
+          <button type="button" disabled={!bewerkbaar || !resultaten.length} onClick={() => void vervangEen(true)}>
             {t("find.pane.replace")}
           </button>
           <button type="button" disabled={!bewerkbaar || !resultaten.length} onClick={() => void vervangAlles()}>
@@ -463,6 +467,7 @@ const SOORTEN: { soort: Doelsoort; sleutel: string; lijst: boolean }[] = [
   { soort: "tabel", sleutel: "table", lijst: true },
   { soort: "afbeelding", sleutel: "picture", lijst: true },
   { soort: "opmerking", sleutel: "comment", lijst: true },
+  { soort: "bladwijzer", sleutel: "bookmark", lijst: true },
 ];
 const sleutelVan = (soort: Doelsoort) => SOORTEN.find((s) => s.soort === soort)!.sleutel;
 

@@ -25,8 +25,9 @@ import {
   type KindWijziging,
 } from "./ooxml.ts";
 import { vertaal } from "./vertaling.ts";
+import type { Tabstop, Randen, Arcering } from "../opmaak";
 
-export type StijlSoort = "paragraph" | "character";
+export type StijlSoort = "paragraph" | "character" | "table" | "numbering";
 export type Uitlijning = "left" | "center" | "right" | "both";
 
 /**
@@ -82,6 +83,12 @@ export interface StijlEigenschappen {
   regelafstandPt?: { pt: number; regel: "exact" | "atLeast" } | null;
   zwevendeRegels?: boolean | null;
   contextueel?: boolean | null;
+  tabs?: Tabstop[] | null;
+  randen?: Randen | null;
+  arcering?: Arcering | null;
+  lijst?: { numId: number; ilvl: number } | null;
+  tabelRanden?: Randen | null;
+  tabelArcering?: Arcering | null;
 }
 
 export interface StijlInfo {
@@ -138,6 +145,15 @@ const rond = (n: number, decimalen = 2) => Math.round(n * 10 ** decimalen) / 10 
 export function leesEigenschappen(rPr: XmlElement | null, pPr: XmlElement | null): StijlEigenschappen {
   const e: StijlEigenschappen = {};
   if (rPr) {
+    const u = kind(rPr, "u");
+    if (u) { e.onderstreping = attr(u, "val") ?? "single"; e.onderstrepingKleur = attr(u, "color"); }
+    if (kind(rPr, "dstrike")) e.dubbelDoorgehaald = aan(kind(rPr, "dstrike"));
+    if (kind(rPr, "vanish")) e.verborgen = aan(kind(rPr, "vanish"));
+    for (const [naam, sleutel] of [["spacing", "tekenafstand"], ["w", "schaal"], ["position", "positie"], ["kern", "spatiering"]] as const) {
+      const n = getal(attr(kind(rPr, naam), "val")); if (n !== undefined) e[sleutel] = n;
+    }
+    const verticaal = attr(kind(rPr, "vertAlign"), "val");
+    if (verticaal === "baseline" || verticaal === "superscript" || verticaal === "subscript") e.verticaal = verticaal;
     const fonts = kind(rPr, "rFonts");
     const lt = attr(fonts, "ascii") ?? attr(fonts, "hAnsi");
     if (lt) e.lettertype = lt;
@@ -155,6 +171,15 @@ export function leesEigenschappen(rPr: XmlElement | null, pPr: XmlElement | null
     if (taal) e.taal = taal;
   }
   if (pPr) {
+    if (kind(pPr, "tabs")) e.tabs = kinderen(kind(pPr, "tabs")!, "tab").map(t => ({ position: Number(attr(t, "pos") ?? 0), alignment: (attr(t, "val") ?? "left") as Tabstop["alignment"], leader: attr(t, "leader") as Tabstop["leader"] }));
+    if (kind(pPr, "pBdr")) e.randen = leesRanden(kind(pPr, "pBdr")!);
+    if (kind(pPr, "shd")) e.arcering = leesArcering(kind(pPr, "shd")!);
+    const num = kind(pPr, "numPr");
+    if (num && kind(num, "numId")) e.lijst = { numId: Number(attr(kind(num, "numId"), "val")), ilvl: Number(attr(kind(num, "ilvl"), "val") ?? 0) };
+    if (kind(pPr, "widowControl")) e.zwevendeRegels = aan(kind(pPr, "widowControl"));
+    if (kind(pPr, "contextualSpacing")) e.contextueel = aan(kind(pPr, "contextualSpacing"));
+    const sp = kind(pPr, "spacing"), afstandsRegel = attr(sp, "lineRule");
+    if ((afstandsRegel === "exact" || afstandsRegel === "atLeast") && attr(sp, "line")) e.regelafstandPt = { pt: Number(attr(sp, "line")) / 20, regel: afstandsRegel };
     const jc = attr(kind(pPr, "jc"), "val");
     if (jc === "left" || jc === "start") e.uitlijning = "left";
     else if (jc === "right" || jc === "end") e.uitlijning = "right";
@@ -185,6 +210,17 @@ export function leesEigenschappen(rPr: XmlElement | null, pPr: XmlElement | null
   return e;
 }
 
+function leesRanden(el: XmlElement): Randen {
+  return Object.fromEntries(el.kinderen.filter((k): k is XmlElement => k.soort === "element").map(k => [k.lokaal, {
+    style: attr(k, "val") ?? "single", size: getal(attr(k, "sz")), space: getal(attr(k, "space")),
+    ...(attr(k, "color") && attr(k, "color") !== "auto" ? { color: { rgb: attr(k, "color")! } } : {}),
+  }]));
+}
+function leesArcering(el: XmlElement): Arcering {
+  const fill = attr(el, "fill"), color = attr(el, "color");
+  return { pattern: attr(el, "val"), ...(fill && fill !== "auto" ? { fill: { rgb: fill } } : {}), ...(color && color !== "auto" ? { color: { rgb: color } } : {}) };
+}
+
 /** Alle stijlen uit styles.xml, in bronvolgorde. */
 export function leesStijlen(xml: string): StijlInfo[] {
   const wortel = leesXml(xml);
@@ -197,7 +233,11 @@ export function leesStijlen(xml: string): StijlInfo[] {
     verborgen: !!kind(s, "hidden") || !!kind(s, "semiHidden"),
     snelleStijl: !!kind(s, "qFormat"),
     eigen: attr(s, "customStyle") === "1" || attr(s, "customStyle") === "true",
-    eigenschappen: leesEigenschappen(kind(s, "rPr"), kind(s, "pPr")),
+    eigenschappen: {
+      ...leesEigenschappen(kind(s, "rPr"), kind(s, "pPr")),
+      ...(kind(kind(s, "tblPr"), "tblBorders") ? { tabelRanden: leesRanden(kind(kind(s, "tblPr"), "tblBorders")!) } : {}),
+      ...(kind(kind(s, "tblPr"), "shd") ? { tabelArcering: leesArcering(kind(kind(s, "tblPr"), "shd")!) } : {}),
+    },
   }));
 }
 
@@ -278,6 +318,12 @@ function rPrWijzigingen(xml: string, p: string, rPr: XmlElement | null, e: Stijl
 
 function pPrWijzigingen(xml: string, p: string, pPr: XmlElement | null, e: StijlEigenschappen): KindWijziging {
   const w: KindWijziging = new Map();
+  if (e.tabs !== undefined) w.set("tabs", e.tabs?.length
+    ? `<${p}tabs>${e.tabs.map(t => `<${p}tab ${p}val="${t.alignment}" ${p}pos="${Math.round(t.position)}"${t.leader ? ` ${p}leader="${ontsnap(t.leader)}"` : ""}/>`).join("")}</${p}tabs>` : null);
+  if (e.randen !== undefined) w.set("pBdr", randenXml(p, "pBdr", e.randen));
+  if (e.arcering !== undefined) w.set("shd", arceringXml(p, e.arcering));
+  if (e.lijst !== undefined) w.set("numPr", e.lijst
+    ? `<${p}numPr><${p}ilvl ${p}val="${Math.max(0, Math.min(8, Math.round(e.lijst.ilvl)))}"/><${p}numId ${p}val="${Math.max(0, Math.round(e.lijst.numId))}"/></${p}numPr>` : null);
   if (e.uitlijning !== undefined)
     w.set("jc", e.uitlijning === null ? null : `<${p}jc ${p}val="${e.uitlijning}"/>`);
   const twip = (n: number | null | undefined, factor: number) =>
@@ -339,7 +385,7 @@ const RUN_VELDEN = [
 const ALINEA_VELDEN = [
   "uitlijning", "ruimteVoor", "ruimteNa", "regelafstand", "regelafstandPt", "inspringLinks",
   "inspringRechts", "eersteRegel", "bijVolgende", "regelsBijElkaar", "paginaEindeVoor",
-  "overzichtsniveau", "zwevendeRegels", "contextueel",
+  "overzichtsniveau", "zwevendeRegels", "contextueel", "tabs", "randen", "arcering", "lijst",
 ] as const;
 const heeftRun = (e: StijlEigenschappen) => RUN_VELDEN.some((k) => e[k] !== undefined);
 const heeftAlinea = (e: StijlEigenschappen) => ALINEA_VELDEN.some((k) => e[k] !== undefined);
@@ -363,7 +409,32 @@ function eigenschappenTekst(
     const pw = pPrWijzigingen(xml, p, pPr, e);
     w.set("pPr", herbouwOfNieuw(xml, p, "pPr", pPr, pw, PPR_VOLGORDE));
   }
+  if (e.tabelRanden !== undefined || e.tabelArcering !== undefined) {
+    const tw: KindWijziging = new Map();
+    if (e.tabelRanden !== undefined) tw.set("tblBorders", randenXml(p, "tblBorders", e.tabelRanden));
+    if (e.tabelArcering !== undefined) tw.set("shd", arceringXml(p, e.tabelArcering));
+    w.set("tblPr", herbouwOfNieuw(xml, p, "tblPr", kind(ouder, "tblPr"), tw,
+      ["tblStyle", "tblpPr", "tblOverlap", "bidiVisual", "tblStyleRowBandSize", "tblStyleColBandSize", "tblW", "jc", "tblCellSpacing", "tblInd", "tblBorders", "shd", "tblLayout", "tblCellMar", "tblLook"]));
+  }
   return w;
+}
+
+function randenXml(p: string, naam: string, randen: Randen | null) {
+  if (!randen) return null;
+  const inhoud = Object.entries(randen).map(([zijde, rand]) => {
+    if (!rand || !["top", "left", "bottom", "right", "between", "insideH", "insideV"].includes(zijde)) return "";
+    if (!/^[A-Za-z]+$/.test(rand.style)) throw new StijlFout("Invalid border style");
+    const kleur = rand.color && "rgb" in rand.color ? rand.color.rgb : undefined;
+    return `<${p}${zijde} ${p}val="${rand.style}" ${p}sz="${Math.max(0, Math.round(rand.size ?? 4))}" ${p}space="${Math.max(0, Math.round(rand.space ?? 0))}"${kleur && /^[0-9a-f]{6}$/i.test(kleur) ? ` ${p}color="${kleur.toUpperCase()}"` : ""}/>`;
+  }).join("");
+  return inhoud ? `<${p}${naam}>${inhoud}</${p}${naam}>` : null;
+}
+
+function arceringXml(p: string, a: Arcering | null) {
+  if (!a) return null;
+  const kleur = (c: string | undefined) => c && /^[0-9a-f]{6}$/i.test(c) ? c.toUpperCase() : "auto";
+  const patroon = a.pattern && /^[A-Za-z0-9]+$/.test(a.pattern) ? a.pattern : "clear";
+  return `<${p}shd ${p}val="${patroon}" ${p}fill="${kleur(a.fill?.rgb)}" ${p}color="${kleur(a.color?.rgb)}"/>`;
 }
 
 /** Herbouwt een eigenschappenelement; een leeg resultaat verdwijnt. */

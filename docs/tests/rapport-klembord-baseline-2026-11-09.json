@@ -1,0 +1,60 @@
+[
+  {
+    "naam": "browser-toegestaan",
+    "geslaagd": true,
+    "status": "Rapport gekopieerd.",
+    "juisteRoute": true,
+    "inhoud": true,
+    "bewaren": true,
+    "fouten": []
+  },
+  {
+    "naam": "browser-geweigerd",
+    "geslaagd": false,
+    "status": "Kopiëren is niet toegestaan; gebruik Bewaren.",
+    "juisteRoute": true,
+    "inhoud": true,
+    "bewaren": false,
+    "fouten": []
+  },
+  {
+    "naam": "browser-api-ontbreekt",
+    "geslaagd": false,
+    "status": "",
+    "juisteRoute": true,
+    "inhoud": true,
+    "bewaren": true,
+    "fouten": [
+      "Cannot read properties of undefined (reading 'writeText')"
+    ]
+  },
+  {
+    "naam": "desktop-zonder-browser-api",
+    "geslaagd": false,
+    "status": "",
+    "juisteRoute": false,
+    "inhoud": false,
+    "bewaren": true,
+    "fouten": [
+      "Cannot read properties of undefined (reading 'writeText')"
+    ]
+  },
+  {
+    "naam": "desktop-browser-weigert",
+    "geslaagd": false,
+    "status": "Kopiëren is niet toegestaan; gebruik Bewaren.",
+    "juisteRoute": false,
+    "inhoud": false,
+    "bewaren": true,
+    "fouten": []
+  },
+  {
+    "naam": "desktop-native-weigert",
+    "geslaagd": false,
+    "status": "Rapport gekopieerd.",
+    "juisteRoute": false,
+    "inhoud": true,
+    "bewaren": true,
+    "fouten": []
+  }
+]

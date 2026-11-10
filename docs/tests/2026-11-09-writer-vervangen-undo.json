@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-09",
+  "issue": 29,
+  "baseCommit": "f4a03889",
+  "problem": "After Replace All, the newly disabled button loses focus to body. Ctrl+Z then does not reach the document while the find pane remains open. Clicking Replace also left focus outside the document.",
+  "repair": "Restore document focus after Replace All and after clicking Replace. Replacing with Enter in the replacement input retains field focus and native text undo.",
+  "environment": {
+    "os": "Windows x64",
+    "node": "v24.22.1",
+    "browser": "Headless Playwright Chromium 1.62.1, production frontend",
+    "nativeWebView2Retested": false
+  },
+  "baseline": {
+    "total": 6,
+    "passed": 2,
+    "failed": 4,
+    "failedCases": [
+      "Alles vervangen: Ctrl+Z, Ctrl+Y, Ctrl+Shift+Z, bewaren en heropenen",
+      "Vervang-knop: Ctrl+Z draait één vervanging terug",
+      "Laatste treffer: uitgeschakelde Vervang-knop laat Undo werken",
+      "Vervangen over alineagrens: sessieroute blijft één Undo-stap"
+    ],
+    "javascriptErrors": []
+  },
+  "repaired": {
+    "total": 6,
+    "passed": 6,
+    "cases": [
+      "Alles vervangen: Ctrl+Z, Ctrl+Y, Ctrl+Shift+Z, bewaren en heropenen",
+      "Vervang-knop: Ctrl+Z draait één vervanging terug",
+      "Laatste treffer: uitgeschakelde Vervang-knop laat Undo werken",
+      "Enter in vervangveld: focus en lokale Undo blijven in het invoerveld",
+      "Zoekveld: lokale Ctrl+Z draait geen documentvervanging terug",
+      "Vervangen over alineagrens: sessieroute blijft één Undo-stap"
+    ],
+    "javascriptErrors": []
+  },
+  "assertions": [
+    "Bulk replace restores all four matches with one Ctrl+Z, including table-cell text",
+    "Ctrl+Y and Ctrl+Shift+Z redo the bulk replacement",
+    "Saved DOCX and a new editor session retain replacement text",
+    "Undo preserves bold and italic markup",
+    "Single replacement and the final match can be undone without closing the pane",
+    "Enter in the replacement field keeps field focus and local Ctrl+Z",
+    "Editing the search field and undoing it does not undo document replacements",
+    "Replacement across a paragraph boundary remains one undo step"
+  ],
+  "validation": {
+    "typescript": "pnpm exec tsc --noEmit: passed",
+    "build": "pnpm exec vite build --outDir .local/issue-29-fixed: passed",
+    "diffCheck": "git diff --check: passed",
+    "unitTests": {
+      "command": "pnpm exec vitest run --maxWorkers=2",
+      "files": 175,
+      "passed": 1987,
+      "skipped": 10
+    }
+  },
+  "reproduction": {
+    "dependencies": "pnpm install --frozen-lockfile; provide Playwright separately and set OOS_PLAYWRIGHT_MODULE to its index.mjs if it is not in this checkout",
+    "fonts": "Copy node_modules/@betteroffice/fonts/assets to public/fonts before the build",
+    "build": "pnpm exec vite build --outDir .local/issue-29-fixed",
+    "probe": "Set OOS_TEST_DIST=.local/issue-29-fixed and OOS_TEST_UIT=.local/proef-issue-29-fixed; node scripts/test-writer-vervangen-undo.mjs",
+    "baseline": "Run the same probe against unmodified f4a03889: four failures and two passes",
+    "inspection": "The probe uses the editor storage adapter to serialize. Calling the editor save() directly opens Save As and would invalidate keyboard-focus observations."
+  },
+  "hashes": {
+    "format": "SHA-256 of UTF-8 text normalized to LF (committed blob contents)",
+    "source": "7e548dc595d6a22aa9b42150a60d6c0f82f2036f19d621afe302b8f97f339532",
+    "probe": "b5976a7301fb0ae91d5e14846b5f1f0c9b5933e3b5dea38b8122540725f6c9e8"
+  }
+}

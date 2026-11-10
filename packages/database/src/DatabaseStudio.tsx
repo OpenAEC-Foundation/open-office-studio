@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { registreerDatabaseBron } from "../../../src/gegevensbronnen/database";
 import {
   BoxSelect,
   Braces,
@@ -180,6 +181,7 @@ function Werkruimte({
   const queryUitvoeren = useRef<(() => void) | null>(null);
   const bronBestand = useRef<File | null>(null);
   const werkkopie = sessie?.werkkopie ?? null;
+  useEffect(() => werkkopie ? registreerDatabaseBron(sessie!.naam, werkkopie) : undefined, [werkkopie, sessie?.naam]);
   useEffect(() => {
     meldGewijzigd?.(!!werkkopie && gewijzigd);
   }, [meldGewijzigd, werkkopie, gewijzigd]);

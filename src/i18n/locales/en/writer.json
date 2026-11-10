@@ -446,6 +446,12 @@
           "number": "Comment number",
           "list": "Comments",
           "none": "No comments in this document."
+        },
+        "bookmark": {
+          "name": "Bookmark",
+          "number": "Bookmark number",
+          "list": "Bookmarks",
+          "none": "No user bookmarks in the body or tables."
         }
       },
       "labels": {
@@ -459,7 +465,8 @@
         "picture": "Picture {{n}}",
         "pictureAlt": "Picture {{n}}: {{alt}}",
         "comment": "{{author}}: {{text}}"
-      }
+      },
+      "bookmarkGone": "This bookmark no longer exists."
     }
   },
   "font": {
@@ -1453,16 +1460,78 @@
       "allStyles": "All Styles…"
     },
     "manage": {
-      "group": "Manage Styles",
-      "pane": "Styles Pane",
-      "newStyle": "New Style",
-      "newStyleHint": "New style based on the selection",
-      "updateStyle": "Update Style",
-      "updateHint": "Update the style of the current paragraph to match the selection",
-      "modifyNamed": "Modify {{name}}…",
-      "modifyStyle": "Modify Style…",
-      "styleSet": "Style Set and Fonts…",
-      "styleSetHint": "Theme fonts and paragraph spacing of the document"
+      "import": "Import styles…",
+      "importTitle": "Import document styles",
+      "delete": "Delete style…",
+      "deleteTitle": "Delete custom style",
+      "deleteNotice": "Delete “{{name}}” and replace its uses throughout the document. Built-in and default styles are protected.",
+      "replacement": "Replace with",
+      "inherit": "Use base style or inherit",
+      "source": "Document or template",
+      "overwrite": "Replace matching style IDs",
+      "importNotice": "Dependencies and list definitions are imported too. Existing styles get a unique name unless replacement is selected. Source theme colours and fonts are preserved.",
+      "fileTooLarge": "Choose a file smaller than 50 MB.",
+      "type": {
+        "paragraph": "Paragraph style",
+        "character": "Character style",
+        "table": "Table style",
+        "numbering": "List style"
+      },
+      "advanced": "Tabs, borders and language",
+      "language": "Language code",
+      "tabs": "Tab stops",
+      "position": "Position",
+      "leader": "Leader",
+      "removeTab": "Remove tab stop",
+      "addTab": "Add tab stop",
+      "borders": "Borders and shading",
+      "side": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right",
+        "between": "Between paragraphs",
+        "insideH": "Inside horizontal",
+        "insideV": "Inside vertical"
+      },
+      "borderStyle": "Line style",
+      "width": "Width",
+      "shading": "Shading",
+      "line": {
+        "single": "Single",
+        "double": "Double",
+        "dotted": "Dotted",
+        "dashed": "Dashed",
+        "nil": "None"
+      },
+      "tabAlignment": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right",
+        "decimal": "Decimal",
+        "bar": "Bar",
+        "clear": "Clear inherited stop"
+      },
+      "tabLeader": {
+        "none": "None",
+        "dot": "Dots",
+        "hyphen": "Dashes",
+        "underscore": "Underline",
+        "middleDot": "Middle dots",
+        "heavy": "Heavy line"
+      },
+      "listFormat": "List format",
+      "start": "Start at",
+      "numberFormat": {
+        "decimal": "1, 2, 3",
+        "lowerLetter": "a, b, c",
+        "upperLetter": "A, B, C",
+        "lowerRoman": "i, ii, iii",
+        "upperRoman": "I, II, III",
+        "bullet": "• Bullets"
+      },
+      "tableCursor": "Place the cursor in a table first.",
+      "noNumbering": "This list style has no numbering definition."
     },
     "sets": {
       "title": "Style Set and Theme Fonts",
@@ -1706,5 +1775,182 @@
       "column": "Column {{a}}: {{wa}} cm",
       "row": "Row {{n}}: {{value}} cm"
     }
+  },
+  "fields": {
+    "insert": "Insert field…",
+    "update": "Update fields",
+    "title": "Insert document field",
+    "kind": "Field",
+    "pattern": "Date/time format",
+    "cursor": "Place the cursor in the document first.",
+    "stale": "The document changed. Reopen this dialog before inserting.",
+    "unresolved": "{{count}} field values could not be updated; their previous results were retained.",
+    "hint": "The field remains editable in Word. F9 updates field results; print and PDF update them automatically. AUTHOR and TITLE use File › Info.",
+    "names": {
+      "PAGE": "Page number",
+      "NUMPAGES": "Number of pages",
+      "DATE": "Date",
+      "TIME": "Time",
+      "FILENAME": "File name",
+      "AUTHOR": "Author",
+      "TITLE": "Title"
+    }
+  },
+  "structure": {
+    "waitForLayout": "Wait for the table layout to finish, then try splitting again.",
+    "invalidSplit": "Choose valid numbers of rows and columns.",
+    "splitSizing": "Splitting preserves the current column widths. You can apply AutoFit again afterwards.",
+    "marks": "Formatting marks",
+    "marksTip": "Show paragraph and section boundaries while editing",
+    "section": "Section break",
+    "nextPage": "next page",
+    "continuous": "continuous",
+    "evenPage": "even page",
+    "oddPage": "odd page",
+    "nextColumn": "next column"
+  },
+  "math": {
+    "title": "Equation",
+    "expression": "Expression",
+    "block": "Display equation",
+    "invalid": "Check the expression and parentheses (maximum 2048 characters).",
+    "select": "Place the cursor or select one equation in the body or a table. Use editing mode.",
+    "unsupported": "This equation contains unsupported structures and has been left unchanged.",
+    "changed": "The document has changed. Open this dialog again.",
+    "viewHint": "The equation stays editable in DOCX. The document view, printing and PDF use the same equation layout.",
+    "renderFailed": "The equation cannot be rendered. Its original source remains intact."
+  },
+  "mailMerge": {
+    "title": "Mail merge",
+    "source": "Data source file",
+    "record": "Record {{number}} of {{total}}",
+    "field": "Field",
+    "insertField": "Insert field",
+    "saveCopy": "Save record copy",
+    "saved": "Document copy created.",
+    "noFields": "First add merge fields to the template.",
+    "scope": "Choose a file with column names on its first row, or an open Database Studio table. Up to 1,000 records and 100 columns.",
+    "errors": {
+      "data": "Choose a valid XLSX/ODS file up to 10 MB, a CSV/TSV file up to 2 MB, or a table with usable columns.",
+      "columns": "Use unique, nonempty headers (up to 100 columns, without quotes or backslashes).",
+      "records": "Use between 1 and 1000 data records.",
+      "missing": "Column “{{name}}” is missing.",
+      "template": "This template has no usable fields or contains unsupported field structures.",
+      "cursor": "Place the cursor in the body or a table, without a text selection, in editing mode.",
+      "render": "The document could not be rendered. Try again.",
+      "outputSize": "The output exceeds 200 MB. Select fewer records."
+    },
+    "sourceType": "Source type",
+    "fileSource": "File (XLSX, ODS, CSV or TSV)",
+    "databaseSource": "Database Studio table",
+    "database": "Database",
+    "table": "Table",
+    "noDatabase": "Open a database in Database Studio to use one of its tables.",
+    "useTable": "Use this table",
+    "sheet": "Worksheet",
+    "filterSort": "Filter and sort",
+    "filterColumn": "Filter column",
+    "allRecords": "All records",
+    "condition": "Condition",
+    "filterValue": "Value",
+    "sortColumn": "Sort by",
+    "sourceOrder": "Original order",
+    "descending": "Descending",
+    "includeRecord": "Include this record",
+    "layout": "Document layout",
+    "documentType": "Document type",
+    "types": {
+      "letters": "Letters",
+      "labels": "Labels",
+      "envelopes": "Envelopes"
+    },
+    "labelHint": "A4: 21 labels, 63.5 × 38.1 mm. The template content repeats in each label; adjust the dimensions for your label stock.",
+    "labelSize": {
+      "kolommen": "Columns",
+      "rijen": "Rows",
+      "breedte": "Label width (mm)",
+      "hoogte": "Label height (mm)",
+      "links": "Left margin (mm)",
+      "boven": "Top margin (mm)",
+      "tussen": "Horizontal gap (mm)"
+    },
+    "envelopeHint": "DL envelopes: 220 × 110 mm. The template is the recipient address block, positioned 100 mm from the left and 40 mm from the top.",
+    "preview": "Preview document",
+    "hidePreview": "Hide document preview",
+    "rendering": "Preparing document preview…",
+    "output": "Finish merging",
+    "range": "Records to output",
+    "selectedRecords": "Selected records: {{count}}",
+    "currentRecord": "Current record",
+    "outputType": "Merge to",
+    "outputs": {
+      "document": "New document",
+      "docx": "DOCX file",
+      "pdf": "One PDF",
+      "pdfPerRecord": "PDF per record (ZIP)",
+      "printer": "Printer"
+    },
+    "finish": "Create merge",
+    "progress": "Prepared {{done}} of {{total}} records",
+    "cancelled": "Merge cancelled.",
+    "conditions": {
+      "contains": "Contains",
+      "equals": "Equals",
+      "notEquals": "Does not equal",
+      "empty": "Is empty",
+      "notEmpty": "Is not empty"
+    }
+  },
+  "references": {
+    "group": "Captions and references",
+    "caption": "Insert caption",
+    "reference": "Cross-reference",
+    "bookmarks": "Bookmarks",
+    "update": "Update references",
+    "updated": "Updated {{count}} references.",
+    "unresolved": "Unresolved references: {{names}}",
+    "failed": "Unable to update references.",
+    "name": "Name",
+    "nameHint": "Start with a letter; use letters, digits and underscores (maximum 40 characters).",
+    "hidden": "Show hidden bookmarks",
+    "go": "Go to",
+    "rename": "Rename",
+    "add": "Add",
+    "insert": "Insert",
+    "label": "Label",
+    "figure": "Figure",
+    "table": "Table",
+    "equation": "Equation",
+    "description": "Description",
+    "position": "Position",
+    "below": "Below the object",
+    "above": "Above the object",
+    "chapter": "Include chapter number",
+    "noChapter": "No chapter number",
+    "headingLevel": "Heading {{level}}",
+    "objectHint": "Place the cursor immediately before or after an image or equation, or in a table cell.",
+    "target": "Reference to",
+    "show": "Insert reference to",
+    "targets": {
+      "heading": "Headings",
+      "caption": "Captions",
+      "bookmark": "Bookmarks",
+      "note": "Footnotes and endnotes"
+    },
+    "forms": {
+      "text": "Text",
+      "number": "Number",
+      "page": "Page number"
+    },
+    "busy": "Updating…",
+    "invalidName": "Use a unique bookmark name starting with a letter, with at most 40 letters, digits or underscores.",
+    "selection": "Place the cursor at the insertion point, or select text for a bookmark.",
+    "missing": "The reference target no longer exists.",
+    "changed": "The document changed. Try again.",
+    "unnumbered": "This target has no number. Choose text or page number.",
+    "labelInvalid": "Start the caption label with a letter; use at most 40 letters, digits, spaces or underscores.",
+    "object": "Place the cursor next to an image or equation, or in the table to caption.",
+    "chapterMissing": "Add a numbered heading at the selected level before this object.",
+    "layout": "The page layout is not ready. Try updating again."
   }
 }

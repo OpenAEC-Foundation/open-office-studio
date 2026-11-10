@@ -188,21 +188,31 @@ function paginaInBeeld() {
  * Opent de bewerkmodus voor kop- of voettekst zoals een dubbelklik in de
  * paginamarge dat doet (de engine heeft er geen opdracht voor).
  */
-export function bewerkKopVoet(api: DocxEditorRef, soort: "header" | "footer") {
-  const pagina = paginaInBeeld();
+export function bewerkKopVoet(api: DocxEditorRef, soort: "header" | "footer", paginanummer = api.getCurrentPage()) {
+  const vlak = zichtbaarElement<HTMLElement>(".office-tekst .docx-editor__scroll-container");
+  const paginas = vlak?.querySelectorAll<HTMLElement>(".canvas-page");
+  const pagina = paginas?.[paginanummer - 1] ?? paginaInBeeld();
   if (!pagina) return false;
   const actief = actieveSectie(api);
   if (!actief) return false;
   const sectie = actief.eigenschappen;
   const hoogte = sectie?.pageHeight || 16838;
-  const r = pagina.getBoundingClientRect();
   const marge = soort === "header" ? sectie?.marginTop || 1440 : sectie?.marginBottom || 1440;
   const afstand = soort === "header" ? sectie?.headerDistance || 708 : sectie?.footerDistance || 708;
   // Midden tussen de rand-afstand en de marge: daar staat de kop/voettekst.
   const fractie = (Math.min(marge, afstand + 240) + afstand) / 2 / hoogte;
+  // De marge kan buiten beeld staan terwijl de cursorpagina wel zichtbaar is.
+  // elementFromPoint zou dan het lint of een andere pagina aanklikken.
+  if (vlak) {
+    const p = pagina.getBoundingClientRect(), v = vlak.getBoundingClientRect();
+    const y = soort === "header" ? p.top + p.height * fractie : p.bottom - p.height * fractie;
+    if (y < v.top + 8 || y > v.bottom - 8) vlak.scrollTop += y - (v.top + v.height / 2);
+  }
+  const r = pagina.getBoundingClientRect();
   const x = r.left + r.width / 2;
   const y = soort === "header" ? r.top + r.height * fractie : r.bottom - r.height * fractie;
-  const doel = document.elementFromPoint(x, y) ?? pagina;
+  const doel = document.elementFromPoint(x, y);
+  if (!doel || !pagina.contains(doel)) return false;
   const opties = { bubbles: true, cancelable: true, composed: true, clientX: x, clientY: y, button: 0, buttons: 1, view: window };
   for (const detail of [1, 2]) {
     doel.dispatchEvent(new PointerEvent("pointerdown", { ...opties, detail, pointerId: 1, pointerType: "mouse", isPrimary: true }));

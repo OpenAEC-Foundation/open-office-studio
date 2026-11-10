@@ -40,6 +40,12 @@ import {
 import { useOpmaak } from "../i18n/opmaak";
 import { tekenDia, verborgenDias } from "./diabeeld";
 import { DiaVlak, pasIn } from "./DiaVlak";
+import { GEEN_OVERGANG, leesOvergangGegevens } from "./overgangen";
+import { leesAlleAnimaties, type Animatie } from "./animaties";
+import { useAnimatieVoorstelling } from "./useAnimatieVoorstelling";
+import { useOvergangGeluid } from "./useOvergangGeluid";
+import { leesAlleMedia } from "./media";
+import { DiaMediaVoorstelling } from "./DiaMediaVoorstelling";
 import {
   beginStaat,
   duurTekst,
@@ -59,6 +65,7 @@ import {
 } from "./voorstelling-logica";
 import { openTauriToeschouwer, type TauriToeschouwer } from "./toeschouwerKanaal";
 import "./voorstelling.css";
+import "./animaties.css";
 
 export interface VoorstellingVerzoek {
   vanafBegin: boolean;
@@ -73,6 +80,7 @@ type Opstelling =
   | { soort: "tauri"; venster: TauriToeschouwer };
 
 const GEEN: Streep[] = [];
+const GEEN_ANIMATIES: Animatie[] = [];
 const NOTITIESLEUTEL = "oos.presentator.notitiegrootte";
 function leesNotitiegrootte() {
   try {
@@ -162,6 +170,10 @@ export function Voorstelling({
   const aantal = deck.slides.length;
   const verhouding = deck.widthEmu / Math.max(1, deck.heightEmu);
   const verborgen = useMemo(() => verborgenDias(api), [api]);
+  const { overgangen, geluiden, animaties, media } = useMemo(() => {
+    try { const bytes = api.handle.save(); return { ...leesOvergangGegevens(bytes), animaties: leesAlleAnimaties(bytes), media: leesAlleMedia(bytes) }; }
+    catch { return { overgangen: [], geluiden: [], animaties: [], media: [] }; }
+  }, [api]);
   const [staat, setStaat] = useState<VoorstellingStaat>(() =>
     beginStaat(startDia(verzoek.vanafBegin, huidig, aantal, verborgen), aantal),
   );
@@ -171,6 +183,7 @@ export function Voorstelling({
   const [nu, setNu] = useState(() => Date.now());
   const [notitiegrootte, setNotitiegrootte] = useState(leesNotitiegrootte);
   const [opstelling, setOpstelling] = useState<Opstelling>({ soort: "start" });
+  const geluid = useOvergangGeluid(staat.index, geluiden, opstelling.soort !== "start" && !staat.einde);
   const [melding, setMelding] = useState("");
   const laag = useMemo(() => {
     const el = document.createElement("div");
@@ -181,6 +194,14 @@ export function Voorstelling({
     return el;
   }, []);
   const bron = useDiaBron(api);
+  const overgang = overgangen[staat.index] ?? GEEN_OVERGANG;
+  const animatiemodel = animaties[staat.index];
+  const lijst = animatiemodel && !animatiemodel.alleenLezen ? animatiemodel.lijst : GEEN_ANIMATIES;
+  const huidigeMedia = media[staat.index] ?? [];
+  const mediaOpDia = huidigeMedia.filter(m => m.opDia && m.bytes && m.mime !== "application/octet-stream" && !animatiemodel?.lijst.some(a => a.vorm === m.id));
+  const animatiespeler = useAnimatieVoorstelling(api,staat.index,lijst,overgang,bron,staat.scherm !== "normaal" || staat.einde,opstelling.soort !== "tauri");
+  const animatiestap = useRef<{ vooruit: () => boolean; terug: () => boolean }>({ vooruit: () => false, terug: () => false });
+  animatiestap.current = { vooruit: animatiespeler.stap, terug: animatiespeler.terug };
   const recent = useRef({ staat, opstelling });
   recent.current = { staat, opstelling };
   const schermvullend = useRef(false);
@@ -216,6 +237,11 @@ export function Voorstelling({
 
   const toets = useCallback(
     (t: Toets) => {
+      const huidig = recent.current.staat;
+      if (!t.ctrl && !t.alt && !huidig.einde && huidig.scherm === "normaal" && !huidig.invoer) {
+        if (["Enter", " ", "ArrowRight", "ArrowDown", "PageDown", "n", "N"].includes(t.key) && animatiestap.current.vooruit()) return true;
+        if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(t.key) && animatiestap.current.terug()) return true;
+      }
       const r = verwerkToets(recent.current.staat, t, verborgen);
       if (!r.gebruikt) return false;
       setStaat(r.staat);
@@ -231,7 +257,16 @@ export function Voorstelling({
     const vensters: Window[] = [window];
     if (opstelling.soort === "browser") vensters.push(opstelling.popup);
     const luister = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
+      // Een popup heeft een eigen HTMLElement-constructor. Gebruik daarom
+      // de doelnode zelf, zodat ook bediening in het andere venster telt.
+      const doel = e.target as HTMLElement | null;
+      if (doel && typeof doel.closest === "function") {
+        if (doel.closest("input, textarea, select") || doel.isContentEditable) return;
+        if (doel.closest(".media-speler") && ["Enter", " ", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) return;
+        // Enter/spatie activeren de gefocuste knop of link via de browser;
+        // de voorstelling mag die toets niet als Volgende onderscheppen.
+        if ((e.key === "Enter" || e.key === " ") && doel.closest("button, a[href], [role='button']")) return;
+      }
       if (e.key === "F5" && e.altKey) {
         e.preventDefault();
         e.stopPropagation();
@@ -357,12 +392,14 @@ export function Voorstelling({
     if (opstelling.soort !== "tauri") return;
     const v = opstelling.venster;
     const pixels = Math.round(pasIn(v.breedte, v.hoogte, verhouding).breedte);
+    let actief = true;
     void bron(staat.index, pixels).then((canvas) => {
-      if (canvas) v.stuurBeeld(staat.index, canvas);
+      if (actief && canvas) v.stuurBeeld(staat.index, canvas, overgangen[staat.index]);
     });
     // Alvast de volgende dia klaarzetten.
     const volgende = zichtbareDia(staat.index + 1, 1, aantal, verborgen);
     if (volgende !== null) void bron(volgende, pixels);
+    return () => { actief = false; };
   }, [opstelling, staat.index, bron]);
   useEffect(() => {
     if (opstelling.soort !== "tauri") return;
@@ -385,7 +422,7 @@ export function Voorstelling({
           },
     [bron, aantal, verborgen],
   );
-  const tekenHuidig = useMemo(() => tekenVan(staat.index), [tekenVan, staat.index]);
+  const tekenHuidig = animatiespeler.teken;
   const volgendeIndex = staat.einde ? null : zichtbareDia(staat.index + 1, 1, aantal, verborgen);
   const tekenVolgende = useMemo(() => tekenVan(volgendeIndex), [tekenVan, volgendeIndex]);
 
@@ -393,11 +430,19 @@ export function Voorstelling({
     setStaat((s) => ({ ...s, gereedschap: s.gereedschap === g ? "aanwijzer" : g }));
   const volgendeStap = () => toets({ key: "ArrowRight" });
 
+  useEffect(() => {
+    if (opstelling.soort === "start" || overgang.na === null || staat.einde || staat.scherm !== "normaal" || !animatiespeler.voltooid) return;
+    const duur = opstelling.soort !== "tauri" && lijst.length && !animatiespeler.fout || overgang.effect === "none" || overgang.effect === "unknown" ? 0 : overgang.duur;
+    const id = window.setTimeout(() => toets({ key: "ArrowRight" }), overgang.na + duur);
+    return () => window.clearTimeout(id);
+  }, [opstelling.soort, staat.index, staat.einde, staat.scherm, overgang, toets, animatiespeler.voltooid, animatiespeler.fout, lijst.length]);
+
   const toeschouwer = (
     <div className="voorstelling-toeschouwer">
       <DiaVlak
         verhouding={verhouding}
         teken={tekenHuidig}
+        media={<DiaMediaVoorstelling key={staat.index} lijst={mediaOpDia} pauze={staat.scherm !== "normaal" || staat.einde} vertraging={overgang.effect === "none" || overgang.effect === "unknown" ? 0 : overgang.duur} aanwijzer={staat.gereedschap === "aanwijzer"} />}
         sleutel={String(staat.index)}
         scherm={staat.scherm}
         einde={eindeTekst}
@@ -406,7 +451,10 @@ export function Voorstelling({
         gereedschap={staat.gereedschap}
         onStrepen={zetStrepen}
         onLaser={setLaser}
-        onKlik={volgendeStap}
+        onKlik={() => {
+          if (overgang.klik || staat.einde || staat.scherm !== "normaal") volgendeStap();
+          else animatiespeler.stap();
+        }}
         label={t("show.slideOf", { slide: staat.index + 1, slides: aantal })}
       />
       {opstelling.soort === "enkel" && (
@@ -443,6 +491,7 @@ export function Voorstelling({
           </button>
         </div>
       )}
+      {huidigeMedia.length > mediaOpDia.length && <div className="voorstelling-mediamelding" role="status">{t("media.showUnsupported")}</div>}
       {staat.invoer && <div className="voorstelling-invoer" aria-live="polite">{t("show.goToTyped", { number: staat.invoer })}</div>}
     </div>
   );
@@ -534,6 +583,7 @@ export function Voorstelling({
           <DiaVlak
             verhouding={verhouding}
             teken={tekenHuidig}
+            media={opstelling.soort === "tauri" || opstelling.soort === "enkel" && opstelling.presentator ? <DiaMediaVoorstelling key={staat.index} lijst={mediaOpDia} pauze={staat.scherm !== "normaal" || staat.einde} vertraging={0} aanwijzer={staat.gereedschap === "aanwijzer"} /> : undefined}
             sleutel={String(staat.index)}
             scherm={staat.scherm}
             einde={eindeTekst}
@@ -617,6 +667,8 @@ export function Voorstelling({
           </label>
         </form>
         {melding && <span className="presentator-melding">{melding}</span>}
+        {opstelling.soort === "tauri" && huidigeMedia.some(m => m.soort === "video") && <span className="presentator-melding" role="status">{t("media.nativeHint")}</span>}
+        {huidigeMedia.length > mediaOpDia.length && <span className="presentator-melding" role="status">{t("media.showUnsupported")}</span>}
         <span className="presentator-uitleg">{t("show.keysHint")}</span>
       </footer>
     </div>
@@ -633,7 +685,7 @@ export function Voorstelling({
 
   return (
     <>
-      {createPortal(hier, laag)}
+      {createPortal(<>{hier}{geluid.fout && <div className="voorstelling-geluidmelding" role="status"><span>{t("transitions.soundFailed")}</span><button type="button" onClick={geluid.probeer}>{t("transitions.soundRetry")}</button></div>}{(animatiemodel?.alleenLezen || animatiespeler.fout || opstelling.soort === "tauri" && lijst.length > 0) && <div className="voorstelling-animatiemelding" role="status">{t(animatiemodel?.alleenLezen ? "animations.unsupported" : animatiespeler.fout ? "animations.renderFailed" : "animations.nativeHint", { count: animatiemodel?.onbekend ?? 0 })}</div>}</>, laag)}
       {opstelling.soort === "browser" && !opstelling.popup.closed && createPortal(daar, opstelling.popup.document.body)}
     </>
   );

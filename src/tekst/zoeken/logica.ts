@@ -130,11 +130,14 @@ export function maakPatroon(zoek: string, opties: ZoekOpties = {}): RegExp {
   if (opties.regex) bron = zoek;
   else if (opties.jokertekens) bron = jokertekensNaarRegex(zoek);
   else bron = tekstNaarRegex(zoek);
-  if (opties.heleWoorden && !opties.jokertekens) bron = `(?<![\\p{L}\\p{N}_])(?:${bron})(?![\\p{L}\\p{N}_])`;
   // Jokertekens zijn in Word altijd hoofdlettergevoelig.
   const vlaggen = `gu${opties.regex ? "m" : ""}${opties.hoofdlettergevoelig || opties.jokertekens ? "" : "i"}`;
   try {
-    const patroon = new RegExp(bron, vlaggen);
+    // Valideer de bron vóór het toevoegen van grenzen: hun sluitende ] kan
+    // anders een onvolledige tekenklasse uit de zoekopdracht geldig maken.
+    let patroon = new RegExp(bron, vlaggen);
+    if (opties.heleWoorden && !opties.jokertekens)
+      patroon = new RegExp(`(?<![\\p{L}\\p{N}_])(?:${bron})(?![\\p{L}\\p{N}_])`, vlaggen);
     if (patroon.test("")) throw new ZoekFout(melding("emptyMatch"));
     patroon.lastIndex = 0;
     return patroon;
@@ -203,7 +206,10 @@ export function vindAlle(tekst: string, patroon: RegExp, max = 10000): Treffer[]
   let m: RegExpExecArray | null;
   while ((m = p.exec(tekst)) && uit.length < max) {
     if (m[0].length === 0) {
-      p.lastIndex++;
+      // Unicode-regexen lezen een surrogatepaar als één teken. Een stap van
+      // één code-eenheid kan exec terug naar dezelfde lege treffer sturen.
+      const punt = tekst.codePointAt(p.lastIndex);
+      p.lastIndex += (p.unicode || p.flags.includes("v")) && punt !== undefined && punt > 0xffff ? 2 : 1;
       continue;
     }
     uit.push({ start: m.index, eind: m.index + m[0].length, tekst: m[0], groepen: m });

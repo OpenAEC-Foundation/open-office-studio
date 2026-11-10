@@ -62,7 +62,9 @@ const schaalFilter = (filter: string, f: number) =>
 export async function codeerBeeld(v: BeeldVerzoek, dpi: number, jpeg: number | null): Promise<PdfBeeldStroom> {
   const [sx, sy, sw, sh] = v.uit;
   const nodig = Math.max(16, Math.ceil((v.maxPunten * dpi) / 72));
-  const f = Math.min(1, nodig / Math.max(1, Math.abs(sw), Math.abs(sh)));
+  const svg = typeof HTMLImageElement !== "undefined" && v.bron instanceof HTMLImageElement && /^data:image\/svg\+xml(?:[;,])/i.test(v.bron.currentSrc || v.bron.src);
+  // SVG has no pixel ceiling: rasterize its paths at the chosen print quality.
+  const f = Math.min(svg ? 8 : 1, nodig / Math.max(1, Math.abs(sw), Math.abs(sh)));
   const w = Math.max(1, Math.round(Math.abs(sw) * f));
   const h = Math.max(1, Math.round(Math.abs(sh) * f));
   const r = Math.round(v.rand * f);

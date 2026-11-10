@@ -9,7 +9,8 @@ import { useCallback, useEffect, useState } from "react";
  *   id via de route van de systeembestanden (dus ook met een pad-token voor
  *   Ctrl+S).
  * - **Browser:** de browser geeft geen paden. We onthouden alleen namen en
- *   datums in localStorage; klikken opent de bestandskiezer.
+ *   datums binnen de tabsessie; klikken opent de bestandskiezer. Zonder
+ *   browseropslag blijft de lijst in het geheugen bruikbaar.
  */
 export interface RecentBestand {
   id: string;
@@ -57,26 +58,40 @@ export function voegToe(
   return nieuw.filter((i) => i.vast || ++los <= ruimte);
 }
 
-function leesBrowser(): Opgeslagen[] {
+let browserLijst: Opgeslagen[] | undefined;
+
+/** Momentopname binnen deze tabsessie; nooit de permanente namenlijst overnemen. */
+export function leesBrowser(): Opgeslagen[] {
+  if (browserLijst) return browserLijst;
+  // Oude versies bewaarden namen permanent, zonder herbruikbare bestandstoegang.
   try {
-    const lijst = JSON.parse(localStorage.getItem(SLEUTEL) ?? "[]");
-    return Array.isArray(lijst)
+    localStorage.removeItem(SLEUTEL);
+  } catch {
+    // Opslag kan door de browser zijn geblokkeerd.
+  }
+  try {
+    const lijst = JSON.parse(sessionStorage.getItem(SLEUTEL) ?? "[]");
+    browserLijst = Array.isArray(lijst)
       ? lijst.filter(
           (i): i is Opgeslagen =>
-            typeof i?.naam === "string" && typeof i?.datum === "number",
+            typeof i?.naam === "string" && i.naam.length > 0 &&
+            typeof i?.datum === "number" && Number.isFinite(i.datum) &&
+            Math.abs(i.datum) <= 8.64e15,
         )
       : [];
   } catch {
-    return [];
+    browserLijst = [];
   }
+  return browserLijst;
 }
 
 const luisteraars = new Set<() => void>();
 function schrijfBrowser(lijst: Opgeslagen[]) {
+  browserLijst = lijst;
   try {
-    localStorage.setItem(SLEUTEL, JSON.stringify(lijst));
+    sessionStorage.setItem(SLEUTEL, JSON.stringify(lijst));
   } catch {
-    // Zonder opslag blijft de lijst leeg; dat is geen fout.
+    // Zonder opslag blijft de lijst bruikbaar tot deze pagina wordt gesloten.
   }
   luisteraars.forEach((f) => f());
 }
@@ -120,11 +135,8 @@ export function useRecent() {
     ververs();
     if (!desktop) {
       luisteraars.add(ververs);
-      const opslag = (e: StorageEvent) => e.key === SLEUTEL && ververs();
-      window.addEventListener("storage", opslag);
       return () => {
         luisteraars.delete(ververs);
-        window.removeEventListener("storage", opslag);
       };
     }
     let stop: (() => void) | undefined;

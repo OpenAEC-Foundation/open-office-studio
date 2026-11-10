@@ -4,12 +4,15 @@
  * stijl en welke directe opmaak de cursorpositie heeft).
  */
 import { useMemo, useState } from "react";
-import { Eraser, FilePlus2, Pilcrow, Type, Palette } from "lucide-react";
+import { Eraser, FilePlus2, Pilcrow, Type, Palette, Table2, ListOrdered } from "lucide-react";
 import { useDocxCommands } from "@betteroffice/docx-react";
 import { useTranslation } from "react-i18next";
 import { useOpmaak } from "../../i18n/opmaak";
 import { Dialoog } from "../../werkruimte/Dialoog";
-import { beschrijfOpmaak, directeOpmaak, losOp, runOpPositie, stijlNaam, vindAlinea, voorbeeldStijl } from "./model";
+import { beschrijfOpmaak, directeOpmaak, losOp, runOpPositie, stijlNaam, vindAlinea, voorbeeldStijl,
+  tabelVoorbeeld,
+  lijstVoorbeelden,
+} from "./model";
 import { galerijStijlen, useStijlMenu } from "./StijlGalerij";
 import { useStijlen } from "./StijlenBeheer";
 
@@ -23,6 +26,7 @@ export function StijlenVenster() {
   const menu = useStijlMenu();
   const [filter, setFilter] = useState<Filter>("gebruikt");
   const [zoek, setZoek] = useState("");
+  const [soort, setSoort] = useState("alle");
   const [voorbeeld, setVoorbeeld] = useState(true);
   const [inspecteren, setInspecteren] = useState(true);
   const alle = staat.stijlen?.styles ?? [];
@@ -32,12 +36,14 @@ export function StijlenVenster() {
       filter === "aanbevolen"
         ? galerijStijlen(alle, staat.gebruikt)
         : alle
-            .filter((s) => s.type === "paragraph" || s.type === "character")
-            .filter((s) => (filter === "gebruikt" ? staat.gebruikt.has(s.styleId) : !s.hidden))
+            .filter((s) =>
+              filter === "gebruikt" ? staat.gebruikt.has(s.styleId) : true,
+            )
             .sort((a, b) => stijlNaam(a).localeCompare(stijlNaam(b), locale));
     const z = zoek.trim().toLowerCase();
-    return z ? basis.filter((s) => stijlNaam(s).toLowerCase().includes(z) || s.styleId.toLowerCase().includes(z)) : basis;
-  }, [alle, filter, zoek, staat.gebruikt, locale]);
+    return basis.filter(
+      (s) => (soort === "alle" || s.type === soort) && (!z || stijlNaam(s).toLowerCase().includes(z) || s.styleId.toLowerCase().includes(z)));
+  }, [alle, filter, zoek, soort, staat.gebruikt, locale]);
 
   // Inspecteren: stijl en directe opmaak op de cursorpositie.
   const ref = staat.api();
@@ -58,13 +64,15 @@ export function StijlenVenster() {
       className="tekst-stijlenvenster"
       acties={
         <>
+          <button type="button" className="werkruimte-knop" disabled={!staat.kanHerladen} onClick={() => staat.open({ soort: "importeer" })}>{t("styles.manage.import")}</button>
           <button
             type="button"
             className="werkruimte-knop"
             disabled={!staat.kanHerladen}
             onClick={() => staat.open({ soort: "nieuw", uitSelectie: true })}
           >
-            <FilePlus2 size={14} aria-hidden="true" /> {t("styles.pane.newStyle")}
+            <FilePlus2 size={14} aria-hidden="true" /> {" "}
+            {t("styles.pane.newStyle")}
           </button>
           <button type="button" className="werkruimte-knop" disabled={!staat.kanHerladen} onClick={() => staat.open({ soort: "sets" })}>
             <Palette size={14} aria-hidden="true" /> {t("styles.pane.styleSet")}
@@ -80,7 +88,8 @@ export function StijlenVenster() {
               })
             }
           >
-            <Eraser size={14} aria-hidden="true" /> {t("styles.pane.clearFormatting")}
+            <Eraser size={14} aria-hidden="true" />{" "}
+            {t("styles.pane.clearFormatting")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" onClick={staat.sluit}>
             {t("common:close")}
@@ -102,8 +111,15 @@ export function StijlenVenster() {
           <option value="aanbevolen">{t("styles.pane.filterRecommended")}</option>
           <option value="alle">{t("styles.pane.filterAll")}</option>
         </select>
+        <select aria-label={t("styles.editor.type")} value={soort} onChange={(e) => setSoort(e.target.value)}>
+          <option value="alle">{t("styles.pane.filterAll")}</option>
+          {["paragraph", "character", "table", "numbering"].map((s) => (
+            <option key={s} value={s}>{t(`styles.manage.type.${s}`)}</option>
+          ))}
+        </select>
         <label className="werkruimte-vink">
-          <input type="checkbox" checked={voorbeeld} onChange={(e) => setVoorbeeld(e.target.checked)} /> {t("styles.pane.preview")}
+          <input type="checkbox" checked={voorbeeld} onChange={(e) => setVoorbeeld(e.target.checked)} />{" "}
+          {t("styles.pane.preview")}
         </label>
       </div>
       <ul className="tekst-stijlenlijst" role="listbox" aria-label={t("styles.pane.title")}>
@@ -128,15 +144,53 @@ export function StijlenVenster() {
                 <span className="tekst-stijlenlijst-naam" style={voorbeeld ? voorbeeldStijl(losOp(staat.stijlen, s.styleId, staat.thema), 14) : undefined}>
                   {naam}
                 </span>
-                <span className="tekst-stijlenlijst-soort" aria-label={s.type === "character" ? t("styles.characterStyle") : t("styles.paragraphStyle")}>
+                {voorbeeld && s.type === "table" && (
+                  <span aria-hidden="true" style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(2, 1fr)",
+                      fontSize: 10,
+                    }}>
+                    {tabelVoorbeeld(staat.stijlen, s.styleId, staat.thema).map(
+                      (css, i) => (
+                        <span key={i} style={css}>
+                          {["Aa", "Bb", "Cc", "Dd"][i]}
+                        </span>
+                      ),
+                    )}
+                  </span>
+                )}
+                {voorbeeld && s.type === "numbering" && (
+                  <span aria-hidden="true">
+                    {lijstVoorbeelden(
+                      staat.stijlen,
+                      staat.document?.package.numbering,
+                      s.styleId,
+                    ).map((text, i) => (
+                      <span key={i} style={{ display: "block" }}>
+                        {text}
+                      </span>
+                    ))}
+                  </span>
+                )}
+                <span className="tekst-stijlenlijst-soort" aria-label={t(`styles.manage.type.${s.type}`)}>
                   {aantal ? <small>{getal(aantal)}×</small> : null}
-                  {s.type === "character" ? <Type size={13} aria-hidden="true" /> : <Pilcrow size={13} aria-hidden="true" />}
+                  {s.type === "character" ? (
+                    <Type size={13} aria-hidden="true" />
+                  ) : s.type === "table" ? (
+                    <Table2 size={13} aria-hidden="true"/>
+                  ) : s.type === "numbering" ? (
+                    <ListOrdered size={13} aria-hidden="true"/>
+                  ) : (
+                    <Pilcrow size={13} aria-hidden="true" />
+                  )}
                 </span>
               </button>
             </li>
           );
         })}
-        {!lijst.length && <li className="werkruimte-uitleg">{t("styles.pane.noneFound")}</li>}
+        {!lijst.length && (
+          <li className="werkruimte-uitleg">{t("styles.pane.noneFound")}</li>
+        )}
       </ul>
       <details className="tekst-inspecteren" open={inspecteren} onToggle={(e) => setInspecteren(e.currentTarget.open)}>
         <summary>{t("styles.inspect.title")}</summary>
@@ -147,7 +201,7 @@ export function StijlenVenster() {
             <dt>{t("styles.inspect.paragraphStyle")}</dt>
             <dd>{alineastijl ? stijlNaam(alineastijl) : standaard ? stijlNaam(standaard) : "—"}</dd>
             <dt>{t("styles.inspect.characterStyleLabel")}</dt>
-            <dd>{tekenstijl ? stijlNaam(tekenstijl) : run?.styleId ?? "—"}</dd>
+            <dd>{tekenstijl ? stijlNaam(tekenstijl) : (run?.styleId ?? "—")}</dd>
             <dt>{t("styles.inspect.directParagraph")}</dt>
             <dd>{beschrijving.alinea.length ? beschrijving.alinea.join(" · ") : t("styles.inspect.none")}</dd>
             <dt>{t("styles.inspect.directCharacter")}</dt>

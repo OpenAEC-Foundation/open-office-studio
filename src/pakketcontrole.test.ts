@@ -138,6 +138,94 @@ describe("Pakketcontrole vóór openen", () => {
     });
     expect(controleerPakket(bytes, "docx").risicos).toEqual([]);
   });
+
+  it.each([
+    ["Type='urn:openaec:onbekend'"],
+    ['Type \n= \t "urn:openaec:onbekend"'],
+  ])("herkent een onbekende relatie met XML-attribuutnotatie %s", (type) => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8("<document/>"),
+      "word/_rels/document.xml.rels": strToU8(
+        `<Relationships><Relationship Id="r1" ${type} Target="onbekend.xml"/></Relationships>`,
+      ),
+    });
+    expect(controleerPakket(bytes, "docx").risicos).toEqual([
+      "onbekende_onderdelen",
+    ]);
+  });
+
+  it.each(["Override", "Default"])(
+    "herkent onbekende inhoudstypen in een geprefixte %s",
+    (element) => {
+      const doel =
+        element === "Default"
+          ? 'Extension="openaec"'
+          : 'PartName="/word/onbekend.xml"';
+      const bytes = zipSync({
+        "word/document.xml": strToU8("<document/>"),
+        "[Content_Types].xml": strToU8(
+          `<ct:Types xmlns:ct="http://schemas.openxmlformats.org/package/2006/content-types"><ct:${element} ${doel} ContentType = 'application/vnd.openaec.test+xml'/></ct:Types>`,
+        ),
+      });
+      expect(controleerPakket(bytes, "docx").risicos).toEqual([
+        "onbekende_onderdelen",
+      ]);
+    },
+  );
+
+  it.each([
+    "xmlns:ext = 'urn:openaec:onbekend'",
+    'xmlns = "urn:openaec:onbekend"',
+  ])("herkent een onbekende naamruimte met %s", (ns) => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8(
+        `<w:document ${W} ${ns}><w:body/></w:document>`,
+      ),
+    });
+    expect(controleerPakket(bytes, "docx").risicos).toEqual([
+      "onbekende_extensies",
+    ]);
+  });
+
+  it("negeert XML-voorbeelden in commentaar en CDATA", () => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8(
+        `<w:document ${W}><!-- <x xmlns:x="urn:voorbeeld"/> --><w:body><w:p><w:r><w:t><![CDATA[<x xmlns:x="urn:voorbeeld"/>]]></w:t></w:r></w:p></w:body></w:document>`,
+      ),
+      "word/_rels/document.xml.rels": strToU8(
+        '<Relationships><!-- <Relationship Type="urn:voorbeeld"/> --></Relationships>',
+      ),
+      "[Content_Types].xml": strToU8(
+        '<Types><!-- <Override ContentType="application/voorbeeld"/> --></Types>',
+      ),
+    });
+    expect(controleerPakket(bytes, "docx").risicos).toEqual([]);
+  });
+
+  it("beoordeelt de gedecodeerde attribuutwaarde en alleen de echte metadata", () => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8(
+        `<w:document xmlns:w="http&#x3a;//schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body/></w:document>`,
+      ),
+      "word/_rels/document.xml.rels": strToU8(
+        `<Relationships><Relationship Id="r1" Type = 'http&#58;//schemas.openxmlformats.org/officeDocument/2006/relationships/styles' Target='styles.xml'/></Relationships>`,
+      ),
+      "[Content_Types].xml": strToU8(
+        '<Types><Override PartName="/word/document.xml" ContentType="application&#47;xml"/></Types>',
+      ),
+    });
+    expect(controleerPakket(bytes, "docx").risicos).toEqual([]);
+  });
+
+  it("leest geen Type-attributen uit andere attribuutwaarden of instructies", () => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8(`<w:document ${W}><w:body/></w:document>`),
+      "word/_rels/document.xml.rels": strToU8(
+        `<?voorbeeld Type="urn:voorbeeld"?><Relationships><Relationship Id="r1" Type="${REL}styles" Target='Type="urn:voorbeeld"'/></Relationships>`,
+      ),
+    });
+    expect(controleerPakket(bytes, "docx").risicos).toEqual([]);
+  });
   it("blokkeert opslaan via de engine niet voor kenmerken die de matrix behouden zag", () => {
     const risicos = controleerPakket(docxD3(), "docx").risicos;
     expect(MATRIXVERLIES.docx.engine).toEqual([]);

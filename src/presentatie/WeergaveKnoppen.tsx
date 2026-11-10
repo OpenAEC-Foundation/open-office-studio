@@ -1,5 +1,5 @@
 /** Weergaveknoppen van Presentatie in de statusbalk: normaal, diasorteerder, voorstelling (#76, #79). */
-import { GalleryVertical, LayoutGrid, MonitorPlay } from "lucide-react";
+import { GalleryVertical, LayoutGrid, ListTree, MonitorPlay } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useInstellingen } from "../instellingen";
 import { useWeergaveBediening } from "./weergave";
@@ -30,6 +30,16 @@ export function PresentatieWeergaveKnoppen() {
         onClick={() => bediening.zet(bediening.weergave === "sorteerder" ? "normaal" : "sorteerder")}
       >
         <LayoutGrid size={13} />
+      </button>
+      <button
+        type="button"
+        className="statusbalk-icoon"
+        aria-label={t("presentation:outline.title")}
+        aria-pressed={bediening.weergave === "overzicht"}
+        title={t("presentation:outline.title")}
+        onClick={() => bediening.zet("overzicht")}
+      >
+        <ListTree size={13} />
       </button>
       <button
         type="button"

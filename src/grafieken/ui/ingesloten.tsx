@@ -25,6 +25,7 @@ import { GrafiekVenster } from "./GrafiekVenster.tsx";
 import { herstelPlek, leesPlek } from "../../tekst/pagina/ui/engine.ts";
 import { planNaHerladen } from "../../tekst/pagina/ui/staat.ts";
 import { Bevestig, GrafiekenLijst } from "./Keuzevensters.tsx";
+import { GrafiekOverdracht } from "./GrafiekOverdracht";
 
 const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const leegAbonnement = () => () => {};
@@ -218,6 +219,7 @@ export function useIngeslotenGrafieken(formaat: "docx" | "pptx") {
   }
 
   return {
+    formaat,
     venster,
     invoegen,
     bewerken,
@@ -242,6 +244,7 @@ export function GrafiekGroep({ g, uit }: { g: IngeslotenGrafieken; uit?: boolean
         <Knop naam={t("ribbon.editChart")} icoon={Pencil} uit={uit || !g.beschikbaar} doe={g.bewerken} />
         <Knop naam={t("ribbon.allCharts")} icoon={ListTree} uit={!g.beschikbaar} doe={g.alleGrafieken} />
       </div>
+      {g.formaat === "pptx" && <GrafiekOverdracht formaat="pptx" />}
     </Groep>
   );
 }

@@ -91,8 +91,9 @@ const LETTER = /\p{L}/u;
 const isHoofd = (c: string) => LETTER.test(c) && c === c.toLocaleUpperCase() && c !== c.toLocaleLowerCase();
 const isKlein = (c: string) => LETTER.test(c) && c === c.toLocaleLowerCase() && c !== c.toLocaleUpperCase();
 
-/** Volgt de hoofdletter van het getypte woord ("Teh" → "The"). */
+/** Volgt hoofdletters van het getypte woord ("Teh" → "The", "TEH" → "THE"). */
 function zelfdeHoofdletter(getypt: string, vervanging: string) {
+  if (getypt === getypt.toLocaleUpperCase()) return vervanging.toLocaleUpperCase();
   return isHoofd(getypt[0]) && !isHoofd(vervanging[0])
     ? vervanging[0].toLocaleUpperCase() + vervanging.slice(1)
     : vervanging;

@@ -446,6 +446,12 @@
           "number": "Opmerkingsnummer",
           "list": "Opmerkingen",
           "none": "Geen opmerkingen in dit document."
+        },
+        "bookmark": {
+          "name": "Bladwijzer",
+          "number": "Bladwijzernummer",
+          "list": "Bladwijzers",
+          "none": "Geen gebruikersbladwijzers in de hoofdtekst of tabellen."
         }
       },
       "labels": {
@@ -459,7 +465,8 @@
         "picture": "Afbeelding {{n}}",
         "pictureAlt": "Afbeelding {{n}}: {{alt}}",
         "comment": "{{author}}: {{text}}"
-      }
+      },
+      "bookmarkGone": "Deze bladwijzer bestaat niet meer."
     }
   },
   "font": {
@@ -1453,16 +1460,78 @@
       "allStyles": "Alle stijlen…"
     },
     "manage": {
-      "group": "Stijlbeheer",
-      "pane": "Stijlenvenster",
-      "newStyle": "Nieuwe stijl",
-      "newStyleHint": "Nieuwe stijl op basis van de selectie",
-      "updateStyle": "Stijl bijwerken",
-      "updateHint": "De stijl van de huidige alinea bijwerken zodat deze overeenkomt met de selectie",
-      "modifyNamed": "{{name}} wijzigen…",
-      "modifyStyle": "Stijl wijzigen…",
-      "styleSet": "Stijlset en lettertypen…",
-      "styleSetHint": "Thema-lettertypen en alinea-afstand van het document"
+      "import": "Stijlen importeren…",
+      "importTitle": "Documentstijlen importeren",
+      "delete": "Stijl verwijderen…",
+      "deleteTitle": "Eigen stijl verwijderen",
+      "deleteNotice": "Verwijder ‘{{name}}’ en vervang het gebruik in het hele document. Ingebouwde en standaardstijlen zijn beschermd.",
+      "replacement": "Vervangen door",
+      "inherit": "Basisstijl gebruiken of overerven",
+      "source": "Document of sjabloon",
+      "overwrite": "Overeenkomende stijl-ids vervangen",
+      "importNotice": "Afhankelijkheden en lijstdefinities worden meegenomen. Bestaande stijlen krijgen een unieke naam, tenzij vervangen is gekozen. Themakleuren en lettertypen van de bron blijven behouden.",
+      "fileTooLarge": "Kies een bestand kleiner dan 50 MB.",
+      "type": {
+        "paragraph": "Alineastijl",
+        "character": "Tekenstijl",
+        "table": "Tabelstijl",
+        "numbering": "Lijststijl"
+      },
+      "advanced": "Tabs, randen en taal",
+      "language": "Taalcode",
+      "tabs": "Tabstops",
+      "position": "Positie",
+      "leader": "Opvulteken",
+      "removeTab": "Tabstop verwijderen",
+      "addTab": "Tabstop toevoegen",
+      "borders": "Randen en arcering",
+      "side": {
+        "top": "Boven",
+        "bottom": "Onder",
+        "left": "Links",
+        "right": "Rechts",
+        "between": "Tussen alinea’s",
+        "insideH": "Binnen horizontaal",
+        "insideV": "Binnen verticaal"
+      },
+      "borderStyle": "Lijnstijl",
+      "width": "Dikte",
+      "shading": "Arcering",
+      "line": {
+        "single": "Enkel",
+        "double": "Dubbel",
+        "dotted": "Gestippeld",
+        "dashed": "Gestreept",
+        "nil": "Geen"
+      },
+      "tabAlignment": {
+        "left": "Links",
+        "center": "Gecentreerd",
+        "right": "Rechts",
+        "decimal": "Decimaal",
+        "bar": "Lijn",
+        "clear": "Overgeërfde tabstop wissen"
+      },
+      "tabLeader": {
+        "none": "Geen",
+        "dot": "Punten",
+        "hyphen": "Streepjes",
+        "underscore": "Onderstrepen",
+        "middleDot": "Middenpunten",
+        "heavy": "Dikke lijn"
+      },
+      "listFormat": "Lijstnotatie",
+      "start": "Beginnen bij",
+      "numberFormat": {
+        "decimal": "1, 2, 3",
+        "lowerLetter": "a, b, c",
+        "upperLetter": "A, B, C",
+        "lowerRoman": "i, ii, iii",
+        "upperRoman": "I, II, III",
+        "bullet": "• Bullets"
+      },
+      "tableCursor": "Zet de cursor eerst in een tabel.",
+      "noNumbering": "Deze lijststijl heeft geen nummerdefinitie."
     },
     "sets": {
       "title": "Stijlset en thema-lettertypen",
@@ -1706,5 +1775,182 @@
       "column": "Kolom {{a}}: {{wa}} cm",
       "row": "Rij {{n}}: {{value}} cm"
     }
+  },
+  "fields": {
+    "insert": "Veld invoegen…",
+    "update": "Velden bijwerken",
+    "title": "Documentveld invoegen",
+    "kind": "Veld",
+    "pattern": "Datum-/tijdnotatie",
+    "cursor": "Zet de cursor eerst in het document.",
+    "stale": "Het document is gewijzigd. Open het venster opnieuw voordat je invoegt.",
+    "unresolved": "{{count}} veldwaarden konden niet worden bijgewerkt; de vorige resultaten zijn behouden.",
+    "hint": "Het veld blijft bewerkbaar in Word. F9 werkt de resultaten bij; afdrukken en PDF doen dit automatisch. AUTHOR en TITLE gebruiken Bestand › Info.",
+    "names": {
+      "PAGE": "Paginanummer",
+      "NUMPAGES": "Aantal pagina’s",
+      "DATE": "Datum",
+      "TIME": "Tijd",
+      "FILENAME": "Bestandsnaam",
+      "AUTHOR": "Auteur",
+      "TITLE": "Titel"
+    }
+  },
+  "structure": {
+    "waitForLayout": "Wacht tot de tabelindeling gereed is en probeer de cel opnieuw te splitsen.",
+    "invalidSplit": "Kies geldige aantallen rijen en kolommen.",
+    "splitSizing": "Splitsen behoudt de huidige kolombreedtes. Je kunt AutoAanpassen daarna opnieuw toepassen.",
+    "marks": "Opmaakmarkeringen",
+    "marksTip": "Toon alinea- en sectiegrenzen tijdens het bewerken",
+    "section": "Sectie-einde",
+    "nextPage": "volgende pagina",
+    "continuous": "doorlopend",
+    "evenPage": "even pagina",
+    "oddPage": "oneven pagina",
+    "nextColumn": "volgende kolom"
+  },
+  "math": {
+    "title": "Vergelijking",
+    "expression": "Formule",
+    "block": "Weergegeven vergelijking",
+    "invalid": "Controleer de formule en de haakjes (maximaal 2048 tekens).",
+    "select": "Plaats de cursor of selecteer één vergelijking in de hoofdtekst of een tabel. Gebruik de bewerkmodus.",
+    "unsupported": "Deze vergelijking bevat nog niet ondersteunde structuren en blijft ongewijzigd.",
+    "changed": "Het document is intussen gewijzigd. Open het venster opnieuw.",
+    "viewHint": "De formule blijft bewerkbaar in DOCX. Scherm, afdrukken en PDF gebruiken dezelfde formule-indeling.",
+    "renderFailed": "De formule kan niet worden weergegeven. De oorspronkelijke formule blijft behouden."
+  },
+  "mailMerge": {
+    "title": "Samenvoegen",
+    "source": "Gegevensbestand",
+    "record": "Record {{number}} van {{total}}",
+    "field": "Veld",
+    "insertField": "Veld invoegen",
+    "saveCopy": "Recordkopie opslaan",
+    "saved": "Documentkopie gemaakt.",
+    "noFields": "Voeg eerst samenvoegvelden aan de sjabloon toe.",
+    "scope": "Kies een bestand met kolomnamen op de eerste rij, of een geopende tabel in Database Studio. Maximaal 1000 records en 100 kolommen.",
+    "errors": {
+      "data": "Kies een geldig XLSX-/ODS-bestand tot 10 MB, een CSV-/TSV-bestand tot 2 MB of een tabel met bruikbare kolommen.",
+      "columns": "Gebruik unieke, niet-lege kolomnamen (maximaal 100 kolommen, zonder aanhalingstekens of backslashes).",
+      "records": "Gebruik 1 tot en met 1000 gegevensrecords.",
+      "missing": "De kolom ‘{{name}}’ ontbreekt.",
+      "template": "Deze sjabloon bevat geen bruikbare velden of nog niet ondersteunde veldstructuren.",
+      "cursor": "Plaats de cursor in de hoofdtekst of een tabel, zonder tekstselectie, in de bewerkmodus.",
+      "render": "Het documentvoorbeeld kon niet worden gemaakt. Probeer opnieuw.",
+      "outputSize": "De uitvoer is groter dan 200 MB. Selecteer minder records."
+    },
+    "sourceType": "Soort bron",
+    "fileSource": "Bestand (XLSX, ODS, CSV of TSV)",
+    "databaseSource": "Tabel in Database Studio",
+    "database": "Database",
+    "table": "Tabel",
+    "noDatabase": "Open een database in Database Studio om een tabel als bron te gebruiken.",
+    "useTable": "Deze tabel gebruiken",
+    "sheet": "Werkblad",
+    "filterSort": "Filteren en sorteren",
+    "filterColumn": "Filterkolom",
+    "allRecords": "Alle records",
+    "condition": "Voorwaarde",
+    "filterValue": "Waarde",
+    "sortColumn": "Sorteren op",
+    "sourceOrder": "Oorspronkelijke volgorde",
+    "descending": "Aflopend",
+    "includeRecord": "Dit record meenemen",
+    "layout": "Documentindeling",
+    "documentType": "Documentsoort",
+    "types": {
+      "letters": "Brieven",
+      "labels": "Etiketten",
+      "envelopes": "Enveloppen"
+    },
+    "labelHint": "A4: 21 etiketten van 63,5 × 38,1 mm. De sjablooninhoud wordt in elk etiket herhaald; pas de maten aan voor jouw etiketvel.",
+    "labelSize": {
+      "kolommen": "Kolommen",
+      "rijen": "Rijen",
+      "breedte": "Etiketbreedte (mm)",
+      "hoogte": "Etikethoogte (mm)",
+      "links": "Linkermarge (mm)",
+      "boven": "Bovenmarge (mm)",
+      "tussen": "Horizontale tussenruimte (mm)"
+    },
+    "envelopeHint": "DL-enveloppen: 220 × 110 mm. De sjabloon vormt het adresblok van de ontvanger, op 100 mm van links en 40 mm van boven.",
+    "preview": "Documentvoorbeeld",
+    "hidePreview": "Documentvoorbeeld verbergen",
+    "rendering": "Documentvoorbeeld voorbereiden…",
+    "output": "Samenvoeging afronden",
+    "range": "Records voor uitvoer",
+    "selectedRecords": "Geselecteerde records: {{count}}",
+    "currentRecord": "Huidig record",
+    "outputType": "Samenvoegen naar",
+    "outputs": {
+      "document": "Nieuw document",
+      "docx": "DOCX-bestand",
+      "pdf": "Eén PDF",
+      "pdfPerRecord": "PDF per record (ZIP)",
+      "printer": "Printer"
+    },
+    "finish": "Samenvoeging maken",
+    "progress": "{{done}} van {{total}} records voorbereid",
+    "cancelled": "Samenvoegen geannuleerd.",
+    "conditions": {
+      "contains": "Bevat",
+      "equals": "Is gelijk aan",
+      "notEquals": "Is niet gelijk aan",
+      "empty": "Is leeg",
+      "notEmpty": "Is niet leeg"
+    }
+  },
+  "references": {
+    "group": "Bijschriften en verwijzingen",
+    "caption": "Bijschrift invoegen",
+    "reference": "Kruisverwijzing",
+    "bookmarks": "Bladwijzers",
+    "update": "Verwijzingen bijwerken",
+    "updated": "{{count}} verwijzingen bijgewerkt.",
+    "unresolved": "Niet gevonden: {{names}}",
+    "failed": "Verwijzingen bijwerken is niet gelukt.",
+    "name": "Naam",
+    "nameHint": "Begin met een letter; gebruik letters, cijfers en underscores (maximaal 40 tekens).",
+    "hidden": "Verborgen bladwijzers tonen",
+    "go": "Ga naar",
+    "rename": "Naam wijzigen",
+    "add": "Toevoegen",
+    "insert": "Invoegen",
+    "label": "Label",
+    "figure": "Figuur",
+    "table": "Tabel",
+    "equation": "Vergelijking",
+    "description": "Omschrijving",
+    "position": "Positie",
+    "below": "Onder het object",
+    "above": "Boven het object",
+    "chapter": "Hoofdstuknummer opnemen",
+    "noChapter": "Geen hoofdstuknummer",
+    "headingLevel": "Kop {{level}}",
+    "objectHint": "Plaats de cursor direct voor of na een afbeelding of vergelijking, of in een tabelcel.",
+    "target": "Verwijzen naar",
+    "show": "Verwijzing weergeven als",
+    "targets": {
+      "heading": "Koppen",
+      "caption": "Bijschriften",
+      "bookmark": "Bladwijzers",
+      "note": "Voetnoten en eindnoten"
+    },
+    "forms": {
+      "text": "Tekst",
+      "number": "Nummer",
+      "page": "Paginanummer"
+    },
+    "busy": "Bezig met bijwerken…",
+    "invalidName": "Gebruik een unieke naam die begint met een letter, met maximaal 40 letters, cijfers of underscores.",
+    "selection": "Plaats de cursor op de invoegplek, of selecteer tekst voor een bladwijzer.",
+    "missing": "Het doel van de verwijzing bestaat niet meer.",
+    "changed": "Het document is gewijzigd. Probeer opnieuw.",
+    "unnumbered": "Dit doel heeft geen nummer. Kies tekst of paginanummer.",
+    "labelInvalid": "Begin het label met een letter; gebruik maximaal 40 letters, cijfers, spaties of underscores.",
+    "object": "Plaats de cursor naast een afbeelding of vergelijking, of in de tabel voor dit bijschrift.",
+    "chapterMissing": "Voeg vóór dit object een genummerde kop op het gekozen niveau toe.",
+    "layout": "De pagina-indeling is nog niet gereed. Werk opnieuw bij."
   }
 }

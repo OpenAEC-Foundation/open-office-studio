@@ -5,7 +5,7 @@
  */
 import { useSyncExternalStore } from "react";
 
-export type DiaWeergave = "normaal" | "sorteerder";
+export type DiaWeergave = "normaal" | "sorteerder" | "overzicht";
 
 interface Staat {
   weergave: DiaWeergave;

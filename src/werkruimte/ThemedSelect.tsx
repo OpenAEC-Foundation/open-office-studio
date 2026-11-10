@@ -5,6 +5,7 @@
  * (taalkeuze) en met iets vóór het label (kleurstalen bij het thema).
  */
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 import "./ThemedSelect.css";
 
 export interface Keuze<T extends string = string> {
@@ -115,7 +116,10 @@ export function ThemedSelect<T extends string>({
       e.preventDefault();
       kies(zichtbaar[actief]);
     } else if (e.key === "Tab") {
-      setOpen(false);
+      // Sluit het tijdelijke focuspunt vóór de dialoog zijn Tab-volgorde
+      // berekent. Vooruit en achteruit vertrekken zo van dezelfde keuzeknop.
+      flushSync(() => setOpen(false));
+      knop.current?.focus();
     } else if (!zoekbaar && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
       const letter = e.key.toLocaleLowerCase();
       const i = zichtbaar.findIndex((k, n) => n > actief && k.label.toLocaleLowerCase().startsWith(letter));

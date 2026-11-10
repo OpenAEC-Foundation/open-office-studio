@@ -1,6 +1,6 @@
 /**
  * Ga naar (Ctrl+G, #29): pagina, sectie, regel, kop, tabel, afbeelding en
- * opmerking. Pagina's, secties en regels komen uit de indeling van de editor
+ * opmerking en bladwijzer. Pagina's, secties en regels komen uit de indeling van de editor
  * (`getLayout`), koppen uit `headings()`, tabellen en afbeeldingen uit de
  * verhalen van de sessie, opmerkingen uit `getComments()`.
  */
@@ -9,7 +9,7 @@ import i18next from "../../i18n/config";
 import { engine, type Sessie } from "../gedeeld/engine.ts";
 import { verhaalVolgorde } from "./zoeken.ts";
 
-export type Doelsoort = "pagina" | "sectie" | "regel" | "kop" | "tabel" | "afbeelding" | "opmerking";
+export type Doelsoort = "pagina" | "sectie" | "regel" | "kop" | "tabel" | "afbeelding" | "opmerking" | "bladwijzer";
 
 export interface Doel {
   /** Volgnummer (1-gebaseerd) zoals de gebruiker het ziet. */
@@ -227,6 +227,41 @@ export function opmerkingDoelen(ref: DocxEditorRef): Doel[] {
     });
 }
 
+/** De sessie houdt deze exacte bladwijzeroffsets bij tijdens typen en Undo. */
+function bladwijzerPlekken(sessie: Sessie) {
+  const plekken = new Map<string, { story: string; paraId: string; offset: number }>();
+  for (const story of verhaalVolgorde(sessie)) {
+    for (const deel of sessie.storySegments(story)) {
+      if (deel.kind !== "pilcrow") continue;
+      const markeringen = deel.properties.bookmarks;
+      if (!Array.isArray(markeringen)) continue;
+      for (const markering of markeringen) {
+        if (!markering || typeof markering !== "object") continue;
+        const { kind, name, offset = 0 } = markering as { kind?: unknown; name?: unknown; offset?: unknown };
+        // Word gebruikt _Toc... en _GoBack voor interne navigatie.
+        if (kind !== "start" || typeof name !== "string" || !name || name.startsWith("_")) continue;
+        if (typeof offset !== "number" || !Number.isInteger(offset) || offset < 0 || plekken.has(name)) continue;
+        plekken.set(name, { story, paraId: deel.paraId, offset });
+      }
+    }
+  }
+  return plekken;
+}
+
+export function bladwijzerDoelen(ref: DocxEditorRef): Doel[] {
+  return [...bladwijzerPlekken(engine(ref).sessie).keys()].map((naam, i) => ({
+    nr: i + 1,
+    label: naam,
+    ga: r => {
+      // Resolven bij de klik: het document kan sinds het openen van de lijst
+      // gewijzigd zijn. De engineprojectie bookmarkPosition verliest offsets.
+      const plek = bladwijzerPlekken(engine(r).sessie).get(naam);
+      if (!plek) throw new Error(i18next.t("writer:find.goTo.bookmarkGone"));
+      naarPlek(r, plek);
+    },
+  }));
+}
+
 export async function doelen(ref: DocxEditorRef, soort: Doelsoort): Promise<Doel[]> {
   switch (soort) {
     case "pagina":
@@ -243,6 +278,8 @@ export async function doelen(ref: DocxEditorRef, soort: Doelsoort): Promise<Doel
       return afbeeldingDoelen(ref);
     case "opmerking":
       return opmerkingDoelen(ref);
+    case "bladwijzer":
+      return bladwijzerDoelen(ref);
   }
 }
 

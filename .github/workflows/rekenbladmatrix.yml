@@ -9,6 +9,14 @@ on:
       - "vendor/rekenbladengine/**"
       - "src/rekenbladcontrole*"
       - "src/rekenblad/**"
+      - "src/afdrukken/**"
+      - "src/export/pdf/**"
+      - "src/grafieken/pakket*"
+      - "src/grafieken/zipdelen*"
+      - "src/grafieken/xml.ts"
+      - "src/lint/rekenblad-filter*"
+      - "packages/rekenbladen/**"
+      - "src/export/index.ts"
       - "package.json"
       - "pnpm-lock.yaml"
   workflow_dispatch:
@@ -34,11 +42,29 @@ jobs:
         run: node scripts/test-matrix-rekenbladen.mjs
       - name: Vastgezette tweede kern met dezelfde bronbestanden vergelijken
         run: node scripts/test-rekenblad-referentie.mjs
+      - name: Vaste 100k x 30 en 50k-formulereferenties maken
+        run: python scripts/maak-rekenbladprestatie.py
+      - name: Tijd en geheugen van grote pakketmetadata begrenzen
+        run: node --expose-gc scripts/meet-rekenbladpakket.mjs
+      - name: Chromium for the real spreadsheet worker
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Verify 50,000 formulas without blocking the browser and cancelled opens
+        run: node scripts/test-rekenbladadapter-worker.mjs
+      - name: Print worksheet images and shapes through the production canvas and PDF path
+        run: node scripts/test-rekenblad-objecten-print.mjs
+      - name: Verify drawing and hyperlink editing in the production browser build
+        run: |
+          pnpm exec vite build --outDir .local/dist --logLevel error
+          node scripts/test-rekenblad-objecten-gui.mjs
       - name: Formule-, pakket- en kenmerkrapporten bewaren
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: rekenbladmatrix
-          path: .local/matrix/rekenbladen/*.json
+          path: |
+            .local/matrix/rekenbladen/*.json
+            .local/prestatie/rekenbladen/*.json
+            .local/proef-rekenblad-objecten-print/*
+            .local/proef-rekenblad-objecten/*
           include-hidden-files: true
           if-no-files-found: error

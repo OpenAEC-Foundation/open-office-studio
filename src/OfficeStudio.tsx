@@ -40,6 +40,7 @@ import {
 import { editorKoppeling } from "./export/koppeling";
 import { controleerPakket } from "./pakketcontrole";
 import { bereidOpenen } from "./import/openen";
+import { isSjabloon } from "./import/sjabloon";
 import { serialiseerIfcxBron } from "./ifcx/opslag";
 import { useImportvragen } from "./import/Importvensters";
 import { MACROUITVOER } from "./import/bron";
@@ -66,6 +67,7 @@ import { useTabSneltoetsen } from "./useTabSneltoetsen";
 import { useVensters } from "./useVensters";
 import { useSysteembestanden } from "./systeembestanden";
 import { useHostOpenen } from "./useHostOpenen";
+import { useNieuweWriterDocumenten } from "./tekst/samenvoegen/documentOpenen";
 import { hostBestandBekend, officeHost } from "./host";
 import { Werkruimtehulp } from "./werkruimte/Werkruimtehulp";
 import { bijNieuwDocument } from "./werkruimte/gebeurtenissen";
@@ -132,6 +134,9 @@ function EditorFout({ fout }: { fout: string }) {
 export function OfficeStudio() {
   const { t } = useTranslation(["shell", "common"]);
   const { thema, wisselThema } = useOfficeThema();
+  const [voorstellingBijOpenen, zetVoorstellingBijOpenen] = useState<Set<number>>(
+    () => new Set(),
+  );
   const [bezig, setBezig] = useState(false),
     [opslaanBezig, setOpslaanBezig] = useState(false),
     [databaseGereed, setDatabaseGereed] = useState(false),
@@ -574,6 +579,14 @@ export function OfficeStudio() {
         ? document.activeElement
         : null;
     await tabs.sluit(ids);
+    zetVoorstellingBijOpenen((vorige) => {
+      const nieuw = new Set(
+        [...vorige].filter((id) =>
+          tabs.toestandRef.current.tabbladen.some((t) => t.id === id),
+        ),
+      );
+      return nieuw.size === vorige.size ? vorige : nieuw;
+    });
     for (const id of laatsteFocus.current.keys())
       if (!tabs.toestandRef.current.tabbladen.some((t) => t.id === id))
         laatsteFocus.current.delete(id);
@@ -634,7 +647,15 @@ export function OfficeStudio() {
     open: async (bestanden) => {
       for (const bestand of bestanden) {
         while (bezigRef.current) await new Promise((r) => setTimeout(r, 100));
-        await openBestand(bestand);
+        try {
+          await openBestand(bestand);
+        } catch (error) {
+          meld(
+            t("errors.openFileFailed", { name: bestand.name, error: String(error) }),
+            null,
+            "fout",
+          );
+        }
       }
     },
   });
@@ -698,6 +719,7 @@ export function OfficeStudio() {
     naam: string,
     bytes: Uint8Array,
     extra: {
+      alsNieuw?: boolean;
       vingerafdruk?: string;
       werkbestand?: Werkbestand | null;
       gewijzigd?: boolean;
@@ -796,8 +818,8 @@ export function OfficeStudio() {
     await bezigMet(async () => {
       try {
         const vinger = await vingerafdruk(naam, bytes);
-        // Hetzelfde bestand opnieuw openen springt naar het bestaande tabblad.
-        if (tabs.openBestaand(vinger)) return;
+        // Hetzelfde document opnieuw openen activeert zijn tabblad; een sjabloon maakt telkens een kopie.
+        if (!isSjabloon(naam) && tabs.openBestaand(vinger)) return;
         const resultaat = await bereidOpenen(naam, bytes, {
           converteer,
           runtimeBeschikbaar: async () =>
@@ -812,6 +834,7 @@ export function OfficeStudio() {
           resultaat.naam,
           resultaat.bytes,
           {
+            alsNieuw: resultaat.alsNieuw,
             werkbestand,
             vingerafdruk: vinger,
             gewijzigd: resultaat.gewijzigd,
@@ -821,6 +844,8 @@ export function OfficeStudio() {
         );
         if (resultaat.exportFormaat)
           tabs.werkBij(id, { exportFormaat: resultaat.exportFormaat });
+        if (resultaat.voorstelling)
+          zetVoorstellingBijOpenen((vorige) => new Set(vorige).add(id));
       } catch (error) {
         geopend = false;
         meld(t("errors.openFailed", { error: String(error) }), null, "fout");
@@ -902,10 +927,15 @@ export function OfficeStudio() {
       openDatabaseBestand(naam, bytes, "bestand");
       return false;
     }
-    return (await importeer(naam, bytes, werkbestand)) && !!werkbestand;
+    return (
+      (await importeer(naam, bytes, werkbestand)) &&
+      !!werkbestand &&
+      !isSjabloon(naam)
+    );
   }
   // Gehoste bouw: het document dat de host (SuperCloud-werkplek) aanbiedt.
   useHostOpenen(openBestand, meldActief, () => openOpslaanAls());
+  useNieuweWriterDocumenten((naam, bytes) => openDocument("docx", naam, bytes, { gewijzigd: true }));
 
   useSysteembestanden(openSysteembestand, (token) => {
     if (tabs.activeerWerkbestand(token)) herstelFocus();
@@ -1125,7 +1155,21 @@ export function OfficeStudio() {
                         bestandsmenu={toonStart}
                         inactief={!zichtbaar || editorInactief}
                         zichtbaar={zichtbaar}
+                        voorstellingBijOpenen={voorstellingBijOpenen.has(tabblad.id)}
+                        voorstellingKeuzeGedaan={() =>
+                          zetVoorstellingBijOpenen((vorige) => {
+                            if (!vorige.has(tabblad.id)) return vorige;
+                            const nieuw = new Set(vorige);
+                            nieuw.delete(tabblad.id);
+                            return nieuw;
+                          })
+                        }
                         zoom={koppeling.zoom}
+                        bestandKoppeling={async (adres) => {
+                          if (!tauri) throw new Error("link-browser");
+                          const { invoke } = await import("@tauri-apps/api/core");
+                          await invoke("open_documentkoppeling", { adres, brontoken: tabblad.werkbestand?.token ?? null });
+                        }}
                       />
                     </Suspense>
                   </EditorGrens>,

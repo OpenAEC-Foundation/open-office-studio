@@ -1,0 +1,18 @@
+.presentatie-animaties { width: min(1000px, calc(100vw - 32px)); max-height: min(920px, calc(100dvh - 40px)); }
+.animatie-indeling { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(240px, 1fr); gap: 20px; }
+.animatie-veld { display: grid; grid-template-columns: minmax(0, 1fr) minmax(100px, 1fr); gap: 10px; align-items: center; margin-bottom: 10px; }
+.animatie-veld input, .animatie-veld select { min-width: 0; width: 100%; height: 30px; padding: 3px 8px; border: 1px solid var(--w-rand); border-radius: 6px; background: var(--w-bg); color: var(--w-tekst); }
+.animatie-veld option { background: var(--w-bg); color: var(--w-tekst); }
+.animatie-acties { display: flex; flex-wrap: wrap; gap: 5px; }
+.animatie-acties button, .animatie-voorbeeld button { display: inline-flex; align-items: center; gap: 5px; }
+.animatie-instellingen { border: 0; padding: 10px 0 0; margin: 0; min-width: 0; }
+.animatie-lijst { list-style: none; padding: 0; margin: 10px 0; max-height: 230px; overflow: auto; }
+.animatie-lijst button { display: grid; text-align: start; width: 100%; gap: 4px; padding: 8px; margin-bottom: 3px; border: 1px solid var(--w-rand); border-radius: 5px; background: var(--w-bg); color: var(--w-tekst); font: inherit; }
+.animatie-lijst button[aria-pressed="true"] { border-color: var(--w-accent); background: var(--w-bg-zacht); }
+.animatie-lijst span, .animatie-lijst small { overflow-wrap: anywhere; }
+.animatie-lijst small { color: var(--w-tekst-zacht); }
+.animatie-voorbeeld { min-width: 0; }
+.animatie-voorbeeld canvas { display: block; width: 100%; background: #000; margin-bottom: 10px; }
+.presentatie-animaties .werkruimte-knop.is-primair:hover:not(:disabled) { background: var(--w-accent); color: var(--w-accent-tekst); }
+.voorstelling-animatiemelding { position: absolute; top: 16px; left: 16px; max-width: min(680px, calc(100% - 32px)); padding: 10px 14px; border-radius: 8px; background: #202124; color: #fff; font-size: 14px; }
+@media (max-width: 700px) { .animatie-indeling { grid-template-columns: 1fr; } }

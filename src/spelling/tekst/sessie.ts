@@ -15,6 +15,7 @@ import { standaardTaal, type Taal, type TaalId } from "../talen";
 import { genegeerd, persoonlijk } from "../woordenlijst";
 import { alineatalenUitDocx, wijsTalenToe, type Alineatalen } from "./taal";
 import { autocorrectie } from "../autocorrectie";
+import { AlineaOffsets } from "./offsets";
 
 export interface PluginStaat {
   /** Telt op bij elke nieuwe controle, zodat de overlay opnieuw tekent. */
@@ -192,6 +193,7 @@ export class SpellingSessie {
   stop() {
     this.gestopt = true;
     window.clearTimeout(this.timer);
+    this.offsets.wis();
   }
 
   get aan() {
@@ -210,6 +212,7 @@ export class SpellingSessie {
     this.vuil.clear();
     this.talen = null;
     this.aantal = null;
+    this.offsets.wis();
     this.plan(0);
   }
 
@@ -448,10 +451,10 @@ export class SpellingSessie {
   }
 
   /** Alinea's die de overlay mag tekenen (niet vuil). */
-  zichtbareFouten(): { alinea: Alinea; fout: Fout }[] {
+  zichtbareFouten(inBereik?: (alinea: Alinea) => boolean): { alinea: Alinea; fout: Fout }[] {
     const uit: { alinea: Alinea; fout: Fout }[] = [];
     for (const a of this.alineas) {
-      if (this.vuil.has(a.paraId)) continue;
+      if (this.vuil.has(a.paraId) || !a.fouten.length || (inBereik && !inBereik(a))) continue;
       for (const f of a.fouten)
         if (!persoonlijk.bevat(f.tekst) && !genegeerd.bevat(f.tekst) && !this.eenmaalGenegeerd(a, f)) uit.push({ alinea: a, fout: f });
     }
@@ -481,8 +484,7 @@ export class SpellingSessie {
     return na ?? lijst.find(({ alinea, fout }) => !(overslaan && alinea.paraId === overslaan.paraId && fout.start === overslaan.start)) ?? null;
   }
 
-  /** Segmenten per alinea met bijgehouden verwijderingen, per sessieversie. */
-  private segmentCache: { versie: string; per: Map<string, Segment[]> } | null = null;
+  private readonly offsets = new AlineaOffsets();
 
   /**
    * De sessie-offset (Yrs) van een offset in de geaccepteerde tekst van een
@@ -501,24 +503,7 @@ export class SpellingSessie {
     const sessie = this.editor()?.getEditorRef()?.getYrsSession();
     if (!sessie) return null;
     try {
-      const span = sessie.locateParagraph(story, paraId);
-      if (span.end - span.start === lengte) return null;
-      const versie = String(sessie.version());
-      if (this.segmentCache?.versie !== versie) this.segmentCache = { versie, per: new Map() };
-      const sleutel = `${story}\u0000${paraId}`;
-      let delen = this.segmentCache.per.get(sleutel);
-      if (!delen) {
-        // Eén keer per versie en verhaal: alle alinea's van het verhaal opdelen.
-        let huidig: Segment[] = [];
-        for (const d of sessie.storySegments(story) as Segment[]) {
-          if (d.kind === "pilcrow") {
-            this.segmentCache.per.set(`${story}\u0000${(d as { paraId?: string }).paraId}`, huidig);
-            huidig = [];
-          } else huidig.push(d);
-        }
-        delen = this.segmentCache.per.get(sleutel) ?? [];
-      }
-      return delen;
+      return this.offsets.segmenten(sessie, story, paraId, lengte);
     } catch {
       return null;
     }

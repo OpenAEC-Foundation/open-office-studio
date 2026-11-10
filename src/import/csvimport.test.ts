@@ -2,6 +2,7 @@ import { strFromU8, unzipSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import {
   STANDAARD_INSTELLINGEN,
+  bereidCsvVoor,
   csvNaarXlsx,
   herkenInstellingen,
   leesDatum,
@@ -114,6 +115,45 @@ describe("CSV naar XLSX", () => {
     "0123;1.234,50;31-12-2026;=1+1;x",
     "0456;-7;01-01-2027;@SUM(A1);y",
   ].join("\r\n");
+
+  it("importeert 150.000 rijen en verwijdert veel lege slotregels zonder stackfout", () => {
+    const aantal = 150_000;
+    const resultaat = csvNaarXlsx(
+      enc("0123\n".repeat(aantal) + "\n".repeat(10_000)),
+      { ...STANDAARD_INSTELLINGEN, scheidingsteken: ";" },
+    );
+    expect(resultaat).toMatchObject({
+      rijen: aantal,
+      kolommen: 1,
+      afgekapt: false,
+    });
+    const pakket = unzipSync(resultaat.xlsx);
+    const blad = strFromU8(pakket["xl/worksheets/sheet1.xml"]);
+    expect(blad).toContain(`<c r="A${aantal}" t="s"><v>0</v></c>`);
+    expect(blad).not.toContain(`<row r="${aantal + 1}">`);
+    expect(strFromU8(pakket["xl/sharedStrings.xml"])).toContain(
+      '<t xml:space="preserve">0123</t>',
+    );
+  });
+
+  it("meldt kolomverlies ook wanneer de brede rij pas na rij 1000 staat", () => {
+    const bytes = enc("code\n".repeat(1000) + "x;".repeat(16_384) + "VERLOREN");
+    expect(bereidCsvVoor(bytes, STANDAARD_INSTELLINGEN).kolommen).toBe(16_385);
+    const resultaat = csvNaarXlsx(bytes, {
+      ...STANDAARD_INSTELLINGEN,
+      scheidingsteken: ";",
+    });
+    expect(resultaat).toMatchObject({
+      rijen: 1001,
+      kolommen: 16_384,
+      afgekapt: true,
+    });
+    const pakket = unzipSync(resultaat.xlsx);
+    const blad = strFromU8(pakket["xl/worksheets/sheet1.xml"]);
+    expect(blad).toContain('r="XFD1001"');
+    expect(blad).not.toContain('r="XFE1001"');
+    expect(strFromU8(pakket["xl/sharedStrings.xml"])).not.toContain("VERLOREN");
+  });
 
   it("maakt een geldig werkblad met typen, kopregel en neutralisatie", () => {
     const resultaat = csvNaarXlsx(enc(csv), {

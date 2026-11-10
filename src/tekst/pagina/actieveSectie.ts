@@ -22,6 +22,18 @@ function leesStand(s: YrsSession) {
 /** Herleid ook een geneste tabelcel naar haar dragende alinea in de hoofdtekst. */
 function hoofdAlinea(s: YrsSession, plek: YrsLoc) {
   let { story, paraId } = plek;
+  const noot = /^(fn|en):(.+)$/.exec(story);
+  if (noot) {
+    const sleutel = noot[1] === "fn" ? "footnoteRefId" : "endnoteRefId";
+    for (const verhaal of s.storyIds().filter(id => id === "body" || id.startsWith("body:"))) {
+      let gevonden = false;
+      for (const deel of s.storySegments(verhaal)) {
+        if (deel.kind === "embed" && deel.embedKind === "noteRef" && String(deel.payload[sleutel]) === noot[2]) gevonden = true;
+        if (gevonden && deel.kind === "pilcrow") return hoofdAlinea(s, { story: verhaal, paraId: deel.paraId, offset: 0 });
+      }
+    }
+    return null;
+  }
   while (story !== "body") {
     const cel = actueleCel(s, story);
     if (!cel || cel.story === story) return null;
@@ -62,7 +74,7 @@ export function actieveSectie(api: DocxEditorRef | null) {
           ? Infinity : s.locateParagraph("body", x.closingParagraphId).end);
         index = stand.grenzen.findIndex(eind => begin <= eind);
       }
-      else if (/^(?:header|footer):/.test(plek.story)) {
+      else if (/^(?:header|footer|hf):/.test(plek.story)) {
         const paginas = (editor.getLayout()?.pages ?? []) as unknown as { sectionIndex?: number }[];
         index = paginas[api.getCurrentPage() - 1]?.sectionIndex ?? -1;
       }

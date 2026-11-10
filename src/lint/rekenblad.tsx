@@ -68,6 +68,7 @@ import {
   SlidersHorizontal,
   Files,
   StickyNote,
+  Ungroup,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -135,6 +136,7 @@ import { ValidatieGroep } from "../rekenblad/ValidatieLint";
 import { BeveiligingGroep } from "../rekenblad/BeveiligingLint";
 import { CelstijlGroep } from "../rekenblad/CelstijlUi";
 import { TabelGroep } from "../rekenblad/TabelUi";
+import { useObjectenGroep } from "../rekenblad/ObjectenGroep";
 
 type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
 
@@ -492,6 +494,7 @@ export function RekenbladRibbon({
   };
   const uit = !stand?.schrijfbaar;
   const grafieken = useRekenbladGrafieken();
+  const objecten = useObjectenGroep(uit);
   const sluiten = () => {
     setPaneel(null);
     api?.focus();
@@ -749,6 +752,7 @@ export function RekenbladRibbon({
                 {bladen}
                 {functies}
                 <RekenbladGrafiekGroep g={grafieken} uit={uit} />
+                {objecten.groep}
               </>
             ),
           },
@@ -770,6 +774,9 @@ export function RekenbladRibbon({
                 <RekenbladLettertype />
                 <RekenbladUitlijning />
                 <RekenbladGetal uitgebreid />
+                <Groep naam={t("spreadsheet:conditional.title")}>
+                  <A naam={t("spreadsheet:conditional.manage")} icoon={SlidersHorizontal} uit={uit} doe={() => openRekenbladVenster({ soort: "voorwaardelijkeOpmaak" })} />
+                </Groep>
                 <Groep naam={t("spreadsheet.groups.cellBorders")}>
                   <div className="ribbon-stapel">
                     <CK id="borderPreset" naam={t("spreadsheet.commands.cellBorders")} breed />
@@ -795,6 +802,7 @@ export function RekenbladRibbon({
               <>
                 <Cellen uit={uit} />
                 <Groep naam={t("spreadsheet:structure.group")}>
+                  <A naam={t("spreadsheet:outline.title")} icoon={Ungroup} uit={uit} doe={() => openRekenbladVenster({ soort: "groepen" })} />
                   <div className="ribbon-stapel">
                     <A
                       naam={t("spreadsheet:menu.columnWidth")}
@@ -1084,6 +1092,7 @@ export function RekenbladRibbon({
       )}
       {grafieken.venster}
       <RekenbladExtra />
+      {objecten.venster}
     </RekenbladToolbar>
   );
 }

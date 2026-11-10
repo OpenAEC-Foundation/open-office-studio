@@ -3,6 +3,7 @@ import { DocxEditor, type DocxEditorRef } from "@betteroffice/docx-react";
 import { configureDefaultFonts } from "@betteroffice/docx/layout";
 import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
+import { PresentatieOpenwijze } from "./presentatie/PresentatieOpenwijze";
 import type { PptxFontFace } from "@betteroffice/pptx";
 import "@betteroffice/docx-react/styles.css";
 import { useTranslation } from "react-i18next";
@@ -26,6 +27,9 @@ import { laadTabellen } from "./rekenblad/tabellen";
 import { bereidTabelweergave } from "./rekenblad/tabelweergave";
 import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
 import { installeerBladBeveiliging, installeerBeveiligdeSelectie } from "./rekenblad/bladbeveiliging";
+import { bereidVoorwaardelijkeWeergave } from "./rekenblad/voorwaardelijke-weergave";
+import { bereidBladEigenschappen } from "./rekenblad/bladEigenschappen";
+import { bereidGroepen } from "./rekenblad/groepsbediening";
 import { metBeginregio } from "./rekenblad/werkmapregio";
 import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
@@ -33,6 +37,7 @@ import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag"
 import { werkboekBytes } from "./lint/rekenblad-filter";
 import { laadCelnotities, metCelnotitieAnkers } from "./rekenblad/celnotitieAnkers";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
+import { registreerVeldNaam, werkDocumentVeldenBij } from "./tekst/veldenDocument/opdrachten";
 import type { Serialiseerder } from "./opslag";
 import { koppelEditor } from "./export/editorKoppeling";
 import { lettertypeModule } from "./lettertypen/provider";
@@ -43,11 +48,15 @@ import { tekstSelectiePlugin } from "./lettertypen/koppeling";
 import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
-import { auteur } from "./tekst/gedeeld/engine";
+import { useAuteur } from "./auteursprofiel";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
+import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
+import { maakMarkeringenPlugin } from "./tekst/pagina/Markeringen";
+import { bereidTekstOpslagVoor } from "./tekst/gedeeld/opslagvoorbereiding";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
+import { noteerDiaAantal } from "./status/diatelling";
 // Meegeleverde en extra lettertypen, aangevuld met die van deze computer (#22).
 // Relatief aan de app, zodat een build onder een submap ze ook vindt (#109).
 configureDefaultFonts({
@@ -72,14 +81,18 @@ export interface EditorProps {
   inactief: boolean;
   /** Onwaar als dit document in een verborgen tabblad staat. */
   zichtbaar?: boolean;
+  voorstellingBijOpenen?: boolean;
+  voorstellingKeuzeGedaan?: () => void;
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
+  bestandKoppeling?: (adres: string) => Promise<void>;
 }
 // De bestaande synchrone lint-API heeft deze compatibiliteitsprojectie nodig.
 // Haar vertraagde melding mag de opslagstatus niet opnieuw wijzigen.
 const behoudSynchroneProjectie = () => {};
 
 export default function OfficeEditor(props: EditorProps) {
+  const auteursnaam = useAuteur();
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
   const { t } = useTranslation("shell");
@@ -157,13 +170,17 @@ export default function OfficeEditor(props: EditorProps) {
       herlaad: herladen.api,
       grafiekSelectie: herladen.grafiekSelectie,
       rekenbladLaag,
+      bestandKoppeling: async (adres: string) => {
+        if (!recent.current.bestandKoppeling) throw new Error("link-browser");
+        return recent.current.bestandKoppeling(adres);
+      },
     }),
     [rekenbladApi, presentatieApi, herladen.api, herladen.grafiekSelectie, rekenbladLaag],
   );
   const beginRegio = useRef(intlLocale());
   const rekenbladBytes = useMemo(
     () => props.soort === "xlsx"
-      ? metCelnotitieAnkers(metValidatieAnkers(metBeginregio(herladen.bytes, beginRegio.current)))
+      ? metTekenAnkers(metCelnotitieAnkers(metValidatieAnkers(metBeginregio(herladen.bytes, beginRegio.current))))
       : herladen.bytes,
     [herladen.bytes, props.soort],
   );
@@ -173,7 +190,16 @@ export default function OfficeEditor(props: EditorProps) {
     props.soort === "docx" && props.zichtbaar !== false,
     () => herladenRecent.current.bytes,
   );
-  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, ...spelling.plugins], [spelling.plugins]);
+  useEffect(() => {
+    if (props.soort === "docx" && documentGereed && docx.current) {
+      const ref = docx.current;
+      let actief = true;
+      void ref.flushPendingInput().then(() => { if (actief) registreerVeldNaam(ref, props.naam, herladen.api, herladen.bytes); }).catch(e => { if (actief) recent.current.fout(e); });
+      return () => { actief = false; };
+    }
+  }, [props.soort, props.naam, documentGereed, herladen.sleutel]);
+  const markeringenPlugin = useMemo(() => maakMarkeringenPlugin(() => docx.current), []);
+  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, markeringenPlugin, ...spelling.plugins], [spelling.plugins, markeringenPlugin]);
   // Tekst: wijzigingen buiten de engine (zoals Bestand › Info) als gewijzigd melden.
   useEffect(
     () => registreerWijziging(herladen.api, () => recent.current.gewijzigd()),
@@ -248,21 +274,17 @@ export default function OfficeEditor(props: EditorProps) {
         const ref = docx.current;
         if (!ref) throw new Error(i18next.t("shell:errors.documentNotReady"));
         await ref.flushPendingInput();
+        await werkDocumentVeldenBij(ref);
       },
     }));
-    // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij
-    // opslaan ophaalt, zodat opslaan ook na een nieuwe uitrol blijft werken.
+    // Laad de opslagafhankelijkheden vooraf, ook voor later offline opslaan.
+    // Een groot gebruikersdocument hiervoor serialiseren onderbreekt invoer.
     let proef = 0;
     if (!("__TAURI_INTERNALS__" in window))
       proef = window.setTimeout(() => {
-        if (exporteren.current || !docx.current?.getDocument()) return;
-        exporteren.current = true;
-        void Promise.resolve(docx.current.save())
+        void bereidTekstOpslagVoor()
           .catch(() => {
             // Alleen een voorbereiding; echte fouten verschijnen bij opslaan.
-          })
-          .finally(() => {
-            exporteren.current = false;
           });
       }, 2500);
     return () => {
@@ -320,6 +342,9 @@ export default function OfficeEditor(props: EditorProps) {
       } catch {
         // Een onleesbare notitie blokkeert het raster niet.
       }
+      bereidBladEigenschappen(api.handle, herladenRecent.current.bytes);
+      bereidVoorwaardelijkeWeergave(api.handle);
+      bereidGroepen(api.handle, herladenRecent.current.bytes);
       setRekenbladApi(api);
       const stopWijziging = registreerWijziging(api.handle, () =>
         recent.current.gewijzigd(),
@@ -354,6 +379,7 @@ export default function OfficeEditor(props: EditorProps) {
         return werkboekBytes(api);
       });
       laadFiltersUitBestand(api, herladenRecent.current.bytes);
+      laadTekenobjecten(api.handle, herladenRecent.current.bytes);
       herladenRecent.current.naXlsx(api);
       return () => {
         stopWijziging();
@@ -366,7 +392,9 @@ export default function OfficeEditor(props: EditorProps) {
   const gereedPptx = useCallback(
     (api: PptxEditorApi) => {
       // EMU naar CSS-pixels bij 96 dpi.
-      setDiaBreedte(api.handle.snapshot().widthEmu / 9525);
+      const snapshot = api.handle.snapshot();
+      noteerDiaAantal(api.handle, snapshot.slides.length);
+      setDiaBreedte(snapshot.widthEmu / 9525);
       setPresentatieApi(api);
       // Directe engine-bewerkingen uit het lint lopen buiten onChange om.
       stopDiaWijzigingen.current?.();
@@ -398,7 +426,7 @@ export default function OfficeEditor(props: EditorProps) {
               onPluginError={spelling.pluginFout}
               downloadOnSave={false}
               // Naam bij opmerkingen en bijgehouden wijzigingen (Instellingen), niet "User".
-              author={auteur()}
+              author={auteursnaam || i18next.t("writer:general.unknownAuthor")}
               onSave={() => {
                 if (!exporteren.current) props.opslaan();
               }}
@@ -482,6 +510,7 @@ export default function OfficeEditor(props: EditorProps) {
           <DocumentLettertypen.Provider value={documentLettertypen}>
         <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
           <PptxEditor
+            legacySyncApi
             key={herladen.sleutel}
             file={herladen.bytes}
             initialSlide={herladen.dia}
@@ -489,7 +518,10 @@ export default function OfficeEditor(props: EditorProps) {
             fonts={fontFaces}
             plugins={PRESENTATIE_PLUGINS}
             onReady={gereedPptx}
-            onChange={props.gewijzigd}
+            onChange={(snapshot) => {
+              noteerDiaAantal(presentatieApi?.handle, snapshot.slides.length);
+              props.gewijzigd();
+            }}
             onError={props.fout}
             onSave={props.opslaan}
             i18n={engineTaal.dia}
@@ -503,6 +535,14 @@ export default function OfficeEditor(props: EditorProps) {
               />
             }
           />
+          {presentatieApi && (
+            <PresentatieOpenwijze
+              api={presentatieApi}
+              vraag={!!props.voorstellingBijOpenen}
+              zichtbaar={props.zichtbaar ?? true}
+              klaar={props.voorstellingKeuzeGedaan}
+            />
+          )}
         </EditorZichtbaar.Provider>
         </DocumentLettertypen.Provider>
         </EditorApi.Provider>

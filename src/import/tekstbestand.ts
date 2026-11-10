@@ -44,10 +44,16 @@ export function regeleindeVan(tekst: string): Regeleinde {
 
 /** Decodeert tekstbytes met herkenning van BOM, UTF-8, UTF-16 en Windows-1252. */
 export function leesTekst(bytes: Uint8Array): GelezenTekst {
-  const zonderBom = utf16ZonderBom(bytes);
+  // Een expliciete BOM is leidend, ook als de tekst nulbytes bevat op de
+  // tegenovergestelde posities van de Latijnse tekst waarop de gok berust.
+  const heeftBom =
+    (bytes[0] === 0xff && bytes[1] === 0xfe) ||
+    (bytes[0] === 0xfe && bytes[1] === 0xff) ||
+    (bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf);
+  const zonderBom = heeftBom ? null : utf16ZonderBom(bytes);
   let tekst: string;
   let codering: Codering;
-  if (zonderBom && !(bytes[0] === 0xef && bytes[1] === 0xbb)) {
+  if (zonderBom) {
     codering = zonderBom;
     tekst = new TextDecoder(zonderBom).decode(
       bytes.subarray(0, bytes.length & ~1),

@@ -1,5 +1,23 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "./editors";
+// Deze preflight wordt ook rechtstreeks in Node gebruikt. Houd de XML-
+// entiteitsdecoder onafhankelijk van de browserconfiguratie van grafieken.
+function ontcijfer(tekst: string) {
+  if (!tekst.includes("&")) return tekst;
+  return tekst.replace(/&(#x[0-9a-fA-F]+|#\d+|amp|lt|gt|quot|apos);/g, (_, e) => {
+    if (e === "amp") return "&";
+    if (e === "lt") return "<";
+    if (e === "gt") return ">";
+    if (e === "quot") return '"';
+    if (e === "apos") return "'";
+    const code = e[1] === "x" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+    try {
+      return String.fromCodePoint(code);
+    } catch {
+      return "";
+    }
+  });
+}
 
 /** Kenmerken waarvan behoud per route in de testmatrix is gemeten. */
 export type Risico =
@@ -21,7 +39,8 @@ export type Risico =
   | "slicers"
   | "externe_koppelingen"
   | "gegevensverbindingen"
-  | "beveiliging";
+  | "beveiliging"
+  | "werkmapstructuur";
 
 /** Route waarlangs de app een bestand wegschrijft. */
 export type Opslagroute = "engine" | "conversie";
@@ -48,7 +67,9 @@ export const MATRIXVERLIES: Record<
     engine: [],
     conversie: ["onbekende_onderdelen", "onbekende_extensies"],
   },
-  xlsx: { engine: [], conversie: [] },
+  // Native-proef #72/#32: actieve SHA512-werkmapstructuurbeveiliging wordt
+  // door de converter niet ingelezen en verdwijnt bij opnieuw bewaren.
+  xlsx: { engine: [], conversie: ["werkmapstructuur"] },
 };
 
 const RISICONAMEN: Record<Risico, string> = {
@@ -71,6 +92,7 @@ const RISICONAMEN: Record<Risico, string> = {
   externe_koppelingen: "koppelingen naar externe werkmappen",
   gegevensverbindingen: "gegevensverbindingen of query's",
   beveiliging: "schrijf-, document- of werkmapbeveiliging",
+  werkmapstructuur: "werkmapstructuurbeveiliging",
 };
 
 /** Leesbare naam van een risico, voor rapporten. */
@@ -84,6 +106,25 @@ const BEKEND =
 const BEKEND_INHOUDSTYPE =
   /^(application\/vnd\.openxmlformats-|application\/vnd\.ms-|image\/|video\/|audio\/|application\/xml$|text\/xml$|application\/x-font|application\/x-fontdata$|application\/octet-stream$|application\/x-emf$|application\/x-wmf$|application\/pdf$)/;
 
+/**
+ * Lees alleen begintags, zonder een documentboom voor de hoofdtekst te bouwen.
+ * Quotes begrenzen attribuutwaarden; commentaar, CDATA en instructies zijn
+ * geen metadata. De pakketcontrole wijzigt of voert XML nooit uit.
+ */
+function* begintags(xml: string) {
+  const tags =
+    /<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>|<([^\s/!?<>"']+)(?=[\s/>])((?:[^<>"']|"[^"]*"|'[^']*')*)>/g;
+  for (const tag of xml.matchAll(tags)) {
+    if (!tag[1]) continue;
+    const attrs: Record<string, string> = {};
+    for (const [, naam, , waarde] of tag[2].matchAll(
+      /(?:^|\s)([^\s=/<>"']+)\s*=\s*(["'])([\s\S]*?)\2/g,
+    ))
+      attrs[naam] = ontcijfer(waarde);
+    yield { lokaal: tag[1].split(":").at(-1), attrs };
+  }
+}
+
 function risicosVan(
   soort: Soort,
   namen: Set<string>,
@@ -93,13 +134,21 @@ function risicosVan(
   const tekst = (naam: string) => (delen[naam] ? strFromU8(delen[naam]) : "");
   for (const [naam, inhoud] of Object.entries(delen)) {
     if (!naam.endsWith(".rels")) continue;
-    for (const [, type] of strFromU8(inhoud).matchAll(/\bType="([^"]*)"/g))
-      if (!BEKEND.test(type)) risicos.add("onbekende_onderdelen");
+    for (const { lokaal, attrs } of begintags(strFromU8(inhoud)))
+      if (
+        lokaal === "Relationship" &&
+        attrs.Type !== undefined &&
+        !BEKEND.test(attrs.Type)
+      )
+        risicos.add("onbekende_onderdelen");
   }
-  for (const [, type] of tekst("[Content_Types].xml").matchAll(
-    /<Override\b[^>]*\bContentType="([^"]*)"/g,
-  ))
-    if (!BEKEND_INHOUDSTYPE.test(type)) risicos.add("onbekende_onderdelen");
+  for (const { lokaal, attrs } of begintags(tekst("[Content_Types].xml")))
+    if (
+      (lokaal === "Override" || lokaal === "Default") &&
+      attrs.ContentType !== undefined &&
+      !BEKEND_INHOUDSTYPE.test(attrs.ContentType)
+    )
+      risicos.add("onbekende_onderdelen");
   const hoofdtekst =
     soort === "docx"
       ? [tekst("word/document.xml")]
@@ -109,8 +158,14 @@ function risicosVan(
             .map(tekst)
         : [];
   for (const xml of hoofdtekst)
-    for (const [, ns] of xml.matchAll(/\bxmlns:[\w.-]+="([^"]*)"/g))
-      if (!BEKEND.test(ns)) risicos.add("onbekende_extensies");
+    for (const { attrs } of begintags(xml))
+      for (const [naam, ns] of Object.entries(attrs))
+        if (
+          (naam === "xmlns" || naam.startsWith("xmlns:")) &&
+          ns &&
+          !BEKEND.test(ns)
+        )
+          risicos.add("onbekende_extensies");
   const heeft = (patroon: RegExp) => [...namen].some((n) => patroon.test(n));
   if (heeft(/^customXml\//)) risicos.add("custom_xml");
   if (heeft(/^(word|ppt|xl)\/embeddings\//)) risicos.add("ingebedde_objecten");
@@ -134,6 +189,28 @@ function risicosVan(
   )
     risicos.add("beveiliging");
   if (soort === "xlsx") {
+    const wb = tekst("xl/workbook.xml");
+    if (wb.includes("workbookProtection")) {
+      // Houd deze preflight ook rechtstreeks in Node bruikbaar: de volledige
+      // grafiek-XML-lezer trekt de browser-i18n-configuratie mee.
+      const protection = wb
+        .replace(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>/g, "")
+        .match(/<(?:\w+:)?workbookProtection\b([^>]*?)\/?\s*>/)?.[1];
+      if (protection) {
+        const attr = (naam: string) =>
+          protection.match(
+            new RegExp(`(?:^|\\s)${naam}\\s*=\\s*(["'])(.*?)\\1`),
+          )?.[2];
+        const actief = ["1", "true"].includes(
+          (attr("lockStructure") ?? "").toLowerCase(),
+        );
+        const algoritme = (attr("workbookAlgorithmName") ?? "")
+          .replace(/-/g, "")
+          .toUpperCase();
+        if (actief && algoritme === "SHA512" && attr("workbookHashValue"))
+          risicos.add("werkmapstructuur");
+      }
+    }
     if (heeft(/^xl\/(pivotTables|pivotCache)\//)) risicos.add("draaitabellen");
     if (heeft(/^xl\/(slicers|slicerCaches|timelines|timelineCaches)\//))
       risicos.add("slicers");

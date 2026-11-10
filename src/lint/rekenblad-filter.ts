@@ -10,6 +10,7 @@
 import type { XlsxCellValue } from "@betteroffice/xlsx";
 import { bewaarCelnotitieAnkers } from "../rekenblad/celnotitieAnkers";
 import { Pakket } from "../grafieken/pakket";
+import { bewaarTekenAnkers } from "../rekenblad/tekenAnkers";
 import {
   attr,
   attrTekst,
@@ -18,6 +19,7 @@ import {
   kind,
   kinderen,
   leesXml,
+  leesWerkbladXml,
   ontcijfer,
   ontsnap,
   rid,
@@ -517,7 +519,7 @@ export function leesAutoFilters(bytes: Uint8Array): Map<number, BladFilter> {
     if (!blad.pad || !pakket.heeft(blad.pad)) continue;
     const xml = pakket.lees(blad.pad);
     if (!xml.includes("autoFilter")) continue;
-    const ws = leesXml(xml);
+    const ws = leesWerkbladXml(xml);
     const af = kind(ws, "autoFilter");
     const bereik = ontleedBereik(attr(af, "ref") ?? "") ?? null;
     if (!af || !bereik) continue;
@@ -559,7 +561,7 @@ const absoluut = (b: Bereik) =>
   `$${kolomLetters(b.left)}$${b.top + 1}:$${kolomLetters(b.right)}$${b.bottom + 1}`;
 
 function schrijfBlad(xml: string, filter: BladFilter | null) {
-  const ws = leesXml(xml);
+  const ws = leesWerkbladXml(xml);
   const v: Vervanging[] = [];
   const oud = kind(ws, "autoFilter");
   const nieuw = filter ? autoFilterXml(filter) : "";
@@ -643,11 +645,12 @@ export function metFilters(handle: object, bytes: Uint8Array, aantalBladen: numb
 
 /** `api.save()` plus de filterstand: zo bewaren opslaan, Opslaan als en herladen het autoFilter. */
 export function werkboekBytes(api: { save(): Uint8Array; handle: object & { sheetInfo(): { sheetNames: string[] } } }) {
-  let bytes = api.save();
+  const bytes = api.save();
+  let gefilterd = bytes;
   try {
-    bytes = metFilters(api.handle, bytes, api.handle.sheetInfo().sheetNames.length);
+    gefilterd = metFilters(api.handle, bytes, api.handle.sheetInfo().sheetNames.length);
   } catch {
     // Liever opslaan zonder bijgewerkt filter dan niet opslaan.
   }
-  return bewaarCelnotitieAnkers(api.handle, bytes);
+  return bewaarTekenAnkers(api.handle, bewaarCelnotitieAnkers(api.handle, gefilterd));
 }

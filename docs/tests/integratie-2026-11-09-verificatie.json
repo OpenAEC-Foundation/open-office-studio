@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-09T14:38:50.888976+00:00",
+  "branch": "codex/integratie-2026-11-09",
+  "codeCheckpoint": "54406adbf6480a2b2d62ca119a7a025266cdd18c",
+  "applicationSuite": {
+    "head": "7b58503511c89e408c08b42e5fa8c148fe7aabf3",
+    "success": true,
+    "passed": 2796,
+    "failed": 0,
+    "skipped": 7,
+    "files": 269,
+    "reportSha256": "63cca004f9b30908e8a2f663d6873b7936bd7b568740c98c202579cb9fee1c1c"
+  },
+  "browserGroups": [
+    {
+      "group": "presentation",
+      "head": "27102570bbb672aeddc0c9bcb5f1fbffa9e2652c",
+      "started": "2026-11-09T14:30:11.222Z",
+      "checks": [
+        {
+          "script": "scripts/test-presentatie-groepen.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 6495,
+          "log": ".local/verification/presentation-test-presentatie-groepen.log"
+        },
+        {
+          "script": "scripts/test-presentatie-themabestand.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 6931,
+          "log": ".local/verification/presentation-test-presentatie-themabestand.log"
+        },
+        {
+          "script": "scripts/test-presentatie-afbeeldingen.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 8892,
+          "log": ".local/verification/presentation-test-presentatie-afbeeldingen.log"
+        },
+        {
+          "script": "scripts/test-presentatie-tabellen.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 6669,
+          "log": ".local/verification/presentation-test-presentatie-tabellen.log"
+        },
+        {
+          "script": "scripts/test-presentatie-grafieken.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 5584,
+          "log": ".local/verification/presentation-test-presentatie-grafieken.log"
+        },
+        {
+          "script": "scripts/test-presentatie-hergebruik.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 6993,
+          "log": ".local/verification/presentation-test-presentatie-hergebruik.log"
+        },
+        {
+          "script": "scripts/test-presentatie-objecten.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 3248,
+          "log": ".local/verification/presentation-test-presentatie-objecten.log"
+        },
+        {
+          "script": "scripts/test-presentatie-ontwerp.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 7228,
+          "log": ".local/verification/presentation-test-presentatie-ontwerp.log"
+        },
+        {
+          "script": "scripts/test-presentatie-overzicht.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 3923,
+          "log": ".local/verification/presentation-test-presentatie-overzicht.log"
+        },
+        {
+          "script": ".local/presentation-transition-browser.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 26600,
+          "log": ".local/verification/presentation-presentation-transition-browser.log"
+        },
+        {
+          "script": ".local/presentation-animation-browser.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 21141,
+          "log": ".local/verification/presentation-presentation-animation-browser.log"
+        }
+      ],
+      "finished": "2026-11-09T14:31:54.937Z",
+      "success": true
+    },
+    {
+      "group": "sheet",
+      "head": "27102570bbb672aeddc0c9bcb5f1fbffa9e2652c",
+      "started": "2026-11-09T14:30:31.650Z",
+      "checks": [
+        {
+          "script": "scripts/proef-rekenblad-groepen-en-fouten.mjs",
+          "args": [
+            "dist"
+          ],
+          "code": 0,
+          "ms": 3855,
+          "log": ".local/verification/sheet-proef-rekenblad-groepen-en-fouten.log"
+        },
+        {
+          "script": "scripts/proef-voorwaardelijke-opmaak.mjs",
+          "args": [
+            "dist"
+          ],
+          "code": 0,
+          "ms": 4048,
+          "log": ".local/verification/sheet-proef-voorwaardelijke-opmaak.log"
+        },
+        {
+          "script": "scripts/test-rekenblad-opmerkingen-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 6617,
+          "log": ".local/verification/sheet-test-rekenblad-opmerkingen-gui.log"
+        },
+        {
+          "script": "scripts/test-rekenblad-validatie-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 5263,
+          "log": ".local/verification/sheet-test-rekenblad-validatie-gui.log"
+        },
+        {
+          "script": "scripts/test-rekenblad-beveiliging-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 8335,
+          "log": ".local/verification/sheet-test-rekenblad-beveiliging-gui.log"
+        },
+        {
+          "script": "scripts/test-rekenblad-notities-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 5478,
+          "log": ".local/verification/sheet-test-rekenblad-notities-gui.log"
+        },
+        {
+          "script": "scripts/test-rekenblad-objecten-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 5642,
+          "log": ".local/verification/sheet-test-rekenblad-objecten-gui.log"
+        },
+        {
+          "script": "scripts/test-rekenblad-objecten-print.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 5365,
+          "log": ".local/verification/sheet-test-rekenblad-objecten-print.log"
+        },
+        {
+          "script": "scripts/test-rekenbladadapter-worker.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 11494,
+          "log": ".local/verification/sheet-test-rekenbladadapter-worker.log"
+        }
+      ],
+      "finished": "2026-11-09T14:31:27.757Z",
+      "success": true
+    },
+    {
+      "group": "core",
+      "head": "27102570bbb672aeddc0c9bcb5f1fbffa9e2652c",
+      "started": "2026-11-09T14:31:13.392Z",
+      "checks": [
+        {
+          "script": "scripts/test-sneltoets-dialoog.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 29671,
+          "log": ".local/verification/core-test-sneltoets-dialoog.log"
+        },
+        {
+          "script": "scripts/test-keuzelijst-tab.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 8312,
+          "log": ".local/verification/core-test-keuzelijst-tab.log"
+        },
+        {
+          "script": "scripts/test-sjabloon-browser.mjs",
+          "args": [
+            "http://127.0.0.1:56608/"
+          ],
+          "code": 0,
+          "ms": 7344,
+          "log": ".local/verification/core-test-sjabloon-browser.log"
+        },
+        {
+          "script": "scripts/test-auteursprofiel.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 11289,
+          "log": ".local/verification/core-test-auteursprofiel.log"
+        },
+        {
+          "script": "scripts/test-recent-browser.mjs",
+          "args": [
+            "http://127.0.0.1:56608/"
+          ],
+          "code": 0,
+          "ms": 1725,
+          "log": ".local/verification/core-test-recent-browser.log"
+        },
+        {
+          "script": "scripts/test-recente-datums-browser.mjs",
+          "args": [
+            "http://127.0.0.1:56608/"
+          ],
+          "code": 1,
+          "ms": 30577,
+          "log": ".local/verification/core-test-recente-datums-browser.log"
+        }
+      ],
+      "finished": "2026-11-09T14:32:42.316Z",
+      "success": false
+    },
+    {
+      "group": "writer",
+      "head": "27102570bbb672aeddc0c9bcb5f1fbffa9e2652c",
+      "started": "2026-11-09T14:33:00.460Z",
+      "checks": [
+        {
+          "script": "scripts/proef-verwijzingen.mjs",
+          "args": [
+            "dist"
+          ],
+          "code": 1,
+          "ms": 4083,
+          "log": ".local/verification/writer-proef-verwijzingen.log"
+        }
+      ],
+      "finished": "2026-11-09T14:33:04.544Z",
+      "success": false
+    },
+    {
+      "group": "writer-remaining",
+      "head": "54406adbf6480a2b2d62ca119a7a025266cdd18c",
+      "started": "2026-11-09T14:35:18.523Z",
+      "checks": [
+        {
+          "script": "scripts/test-tekst-kopvoetdoel-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 21281,
+          "log": ".local/verification/writer-remaining-test-tekst-kopvoetdoel-gui.log"
+        },
+        {
+          "script": "scripts/test-tekst-vervolgstijl-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 14091,
+          "log": ".local/verification/writer-remaining-test-tekst-vervolgstijl-gui.log"
+        },
+        {
+          "script": "scripts/proef-writer-44-45-51.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 52216,
+          "log": ".local/verification/writer-remaining-proef-writer-44-45-51.log"
+        },
+        {
+          "script": "scripts/test-writer-vervangen-undo.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 17396,
+          "log": ".local/verification/writer-remaining-test-writer-vervangen-undo.log"
+        },
+        {
+          "script": "scripts/test-writer-ongeldige-regex.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 15306,
+          "log": ".local/verification/writer-remaining-test-writer-ongeldige-regex.log"
+        },
+        {
+          "script": "scripts/test-writer-unicode-regex.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 4468,
+          "log": ".local/verification/writer-remaining-test-writer-unicode-regex.log"
+        },
+        {
+          "script": "scripts/test-tekst-sorteerwaarden-gui.mjs",
+          "args": [],
+          "code": 0,
+          "ms": 3620,
+          "log": ".local/verification/writer-remaining-test-tekst-sorteerwaarden-gui.log"
+        },
+        {
+          "script": "scripts/proef-tabel-sorteren-thema.mjs",
+          "args": [
+            "dist"
+          ],
+          "code": 0,
+          "ms": 4772,
+          "log": ".local/verification/writer-remaining-proef-tabel-sorteren-thema.log"
+        }
+      ],
+      "finished": "2026-11-09T14:37:31.693Z",
+      "success": true
+    }
+  ],
+  "otherPassedChecks": [
+    "Production build including asset/font/dictionary/spelling preparation and TypeScript at7b585035",
+    "Nine active languages /21 namespaces /7700 source keys;23 pre-existing unused-language-directory warnings",
+    "58 Python checks:57 passed,1 platform skip",
+    "Native engine save/reopen checks and command checks",
+    "Standalone DOCX/PPTX document matrix and independent Spreadsheet formula/package matrix",
+    "Real Writer application ODT wrapper:4 cases,6 conversions,45-second per-conversion timeout;2 resulting ODT files pass all12 strict ODF1.3 package/schema checks",
+    "Worksheet drawing print/PDF canvas and vector path;50000 worker values and saved caches; cancellation",
+    "Writer imported equations:4 actual native-rendered images and application PDF pipeline",
+    "Writer CSV merge and full XLSX/ODS/Database Studio merge including DOCX,PDF,ZIP,labels,envelopes,print contract",
+    "Spreadsheet sheet operations:8 production-browser cases",
+    "Session-based recent dates:6 timezone/date cases;report copy/download browser/native-stub cases:6"
+  ],
+  "ciSnapshot": [
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988433/job/129224157747",
+      "name": "desktop (ubuntu-22.04)",
+      "state": "IN_PROGRESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988456/job/129224157725",
+      "name": "kern",
+      "state": "IN_PROGRESS",
+      "workflow": "Tekstkern uit vastgezette bron bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988442/job/129224158400",
+      "name": "database (ubuntu-22.04)",
+      "state": "IN_PROGRESS",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988397/job/129224158127",
+      "name": "matrix",
+      "state": "SUCCESS",
+      "workflow": "Documentmatrix op de productiekern controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988469/job/129224157359",
+      "name": "matrix",
+      "state": "SUCCESS",
+      "workflow": "Rekenbladmatrix onafhankelijk controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988576/job/129224158692",
+      "name": "odf",
+      "state": "SUCCESS",
+      "workflow": "Validate strict ODF 1.3 output"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988395/job/129224156728",
+      "name": "writer",
+      "state": "SUCCESS",
+      "workflow": "Writer format round trips"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988599/job/129224158538",
+      "name": "voorbeeld",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandig kantoorvoorbeeld controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988433/job/129224157701",
+      "name": "desktop (windows-latest)",
+      "state": "IN_PROGRESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988442/job/129224159022",
+      "name": "database (windows-latest)",
+      "state": "IN_PROGRESS",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988433/job/129224157266",
+      "name": "desktop (macos-latest)",
+      "state": "QUEUED",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42635988442/job/129224158744",
+      "name": "database (macos-latest)",
+      "state": "QUEUED",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    }
+  ],
+  "openChecks": [
+    "Writer cross-reference browser probe remains intermittent: one run saves correctly but Ctrl+click heading-navigation assertion fails; do not claim this complete. Logs .local/verification/writer-proef-verwijzingen.log; saved document .local/verwijzingen-uit.docx; screenshot .local/verwijs-fout.png. Session queue fix7b585035 has a dedicated regression and full suite passes.",
+    "Equation editor browser startup timed out once under concurrent load; standalone diagnostic then passed. Repeat the original probe after explicit editor/layout readiness before accepting stability.",
+    "Native/platform and Writer-format CI reruns must be inspected tomorrow; macOS runners were queued at recording.",
+    "Broad legacy format limitations in source reports remain; live Y-app storage testing was declined by user."
+  ],
+  "nextBatch": [
+    {
+      "pr": 233,
+      "head": "c3537b83e7239fc808b3af0d518e109aef2c0f8b",
+      "scope": "Start theme editing from current slide/layout/master settings; previous2c0d already included"
+    },
+    {
+      "pr": 246,
+      "head": "9de53c798334456808a1c7cef815f7872a25ee89",
+      "scope": "HYPERLINK targets, worker cancellation measurement and bounded embedded-image decoding; previous41c9 already included"
+    },
+    {
+      "pr": 254,
+      "head": "5a1c0d50f53ba31a298e9286b9c0ebec31e51782",
+      "scope": "Adaptive office performance; depends on already included252/248d5a79"
+    },
+    {
+      "pr": 256,
+      "head": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
+      "scope": "Presentation media; depends on included243/250. Alternative private integration commit11211386 is not an additional feature delivery"
+    },
+    {
+      "pr": 245,
+      "head": "55108670c3d8c2300cdec226823f2683ddfeccdc",
+      "scope": "Documentation-only correction after included26d31965"
+    },
+    {
+      "branch": "codex/spreadsheet-outline-2026-11-09-e0d7",
+      "head": "3bd94cf7a827602c068462938297ef1d1fa4b33c",
+      "scope": "Outline follow-up; skip duplicated Spreadsheet performance reuse if already present"
+    }
+  ],
+  "excludedWip": [
+    "PR253 native selection-formatting source patch: not activated and missing combined vendor chain",
+    "Spreadsheet tables73/69 source candidates and local cell styles; not owner-certified deliveries",
+    "Writer56 local WIP; do not merge the entire source clone",
+    "Presentation86 research; no released source checkpoint"
+  ],
+  "resolvedHarnessFailures": [
+    "Cross-editor chart probe now selects the app-owned file input and passes all7 cases.",
+    "Recent-date probe now seeds the integrated sessionStorage; all6 cases pass. Core group retained its earlier failure entry rather than rewriting history.",
+    "Spreadsheet worker fixture was generated by the documented workflow step;50000 values/caches and cancellation pass.",
+    "Sheet move probe rerun with OFFICE_TEST_DIST=dist passes all8 cases.",
+    "Standalone preview test now checks ordered fillText fragments; CI passes. No preview runtime change remains.",
+    "DOT/OTT expected export format updated to new DOCX-document semantics; inspect the latest Writer-format CI result."
+  ],
+  "shutdown": {
+    "localChecksFinished": true,
+    "noAutomaticResume": true,
+    "userDeadline": "2026-11-09 15:40 Europe/Amsterdam",
+    "resumeOnlyWhenUserReturns": true
+  }
+}

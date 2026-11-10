@@ -463,15 +463,18 @@ export function NootInstellingenDialoog({
   begin,
   bevestig,
   sluit,
+  secties = 1,
 }: {
   begin: { soort: NootSoort; instellingen: Record<NootSoort, NootInstellingen> };
-  bevestig: (soort: NootSoort, w: NootInstellingen) => void;
+  bevestig: (soort: NootSoort, w: NootInstellingen, doel: "sectie" | "alle") => void;
   sluit: () => void;
+  secties?: number;
 }) {
   const [soort, setSoort] = useState<NootSoort>(begin.soort);
   const [alle, setAlle] = useState(begin.instellingen);
   const w = alle[soort];
   const [start, setStart] = useState(String(w.beginBij));
+  const [doel, setDoel] = useState<"sectie" | "alle">("sectie");
   const zet = (x: Partial<NootInstellingen>) => setAlle({ ...alle, [soort]: { ...w, ...x } });
   const startOk = /^\d{1,4}$/.test(start) && Number(start) >= 1;
   const { t } = useTranslation("writer");
@@ -480,7 +483,7 @@ export function NootInstellingenDialoog({
       titel={t("page.footnotes.settingsDialog.title")}
       sluit={sluit}
       className="pagina-dialoog"
-      acties={<Knoppen knop={t("page.footnotes.settingsDialog.apply")} uit={!startOk} sluit={sluit} bevestig={() => bevestig(soort, { ...w, beginBij: Number(start) })} />}
+      acties={<Knoppen knop={t("page.footnotes.settingsDialog.apply")} uit={!startOk} sluit={sluit} bevestig={() => bevestig(soort, { ...w, beginBij: Number(start) }, doel)} />}
     >
       <Keuzes
         label={t("page.footnotes.settingsDialog.kind")}
@@ -529,7 +532,18 @@ export function NootInstellingenDialoog({
           {soort === "voetnoot" && <option value="eachPage">{t("page.footnotes.settingsDialog.eachPage")}</option>}
         </select>
       </Veld>
-      <p className="werkruimte-uitleg">{t("page.footnotes.settingsDialog.appliesToDocument")}</p>
+      {secties > 1 ? (
+        <Keuzes
+          label={t("page.pageNumber.dialog.applyTo")}
+          naam="noot-doel"
+          waarde={doel}
+          kies={setDoel}
+          opties={[
+            { waarde: "sectie", naam: t("page.pageNumber.dialog.thisSection") },
+            { waarde: "alle", naam: t("page.pageNumber.dialog.wholeDocument") },
+          ]}
+        />
+      ) : <p className="werkruimte-uitleg">{t("page.footnotes.settingsDialog.appliesToDocument")}</p>}
     </Dialoog>
   );
 }

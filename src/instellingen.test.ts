@@ -2,6 +2,16 @@ import { describe, expect, it } from "vitest";
 import { normaliseerInstellingen, pasToe, standaardInstellingen } from "./instellingen";
 
 describe("instellingen", () => {
+  it("migreert de oude auteursnaam zonder een bewust gewist profiel terug te zetten", () => {
+    expect(normaliseerInstellingen({}, "Oude auteur").gebruiker).toEqual({ naam: "Oude auteur", initialen: "" });
+    expect(normaliseerInstellingen({ gebruiker: { naam: "", initialen: "" } }, "Oude auteur").gebruiker)
+      .toEqual({ naam: "", initialen: "" });
+    expect(normaliseerInstellingen({ gebruiker: { naam: 42, initialen: [] } }).gebruiker)
+      .toEqual({ naam: "", initialen: "" });
+    // Het concept normaliseert bij iedere toetsaanslag: een spatie moet blijven staan.
+    expect(pasToe(standaardInstellingen, { gebruiker: { naam: "Anne " } }).gebruiker.naam).toBe("Anne ");
+  });
+
   it("valt terug op standaarden bij onbekende of beschadigde gegevens", () => {
     expect(normaliseerInstellingen(null)).toEqual(standaardInstellingen);
     expect(normaliseerInstellingen("tekst")).toEqual(standaardInstellingen);

@@ -481,15 +481,44 @@ export function koppelAanVorige(bytes: Uint8Array, sectie: number, soort: KopVoe
   });
 }
 
-/** Verwijdert kop- of voetteksten uit de gekozen secties (verwijzingen weg; losse onderdelen ook). */
+/** Verwijdert kop- of voetteksten zonder de overerving van andere secties te veranderen. */
 export function verwijderKopVoet(bytes: Uint8Array, doel: SectieDoel, soort: KopVoetSoort): Uint8Array {
   return metPakket(bytes, (pakket) => {
     const doc = openDocument(pakket);
     const indexen = doelIndexen(doc, doel);
+    if (!indexen.length) return bytes;
+    const gekozen = new Set(indexen);
     const lijst = secties(doc);
+    const rp = rPrefix(doc) || "r";
     const weg = new Set<string>();
     for (const i of indexen) for (const r of refsVan(lijst[i]?.el ?? null, soort)) weg.add(ridVan(r));
-    const nieuw = wijzigSectPrs(doc, indexen, (s) => KOPVOET_TYPES.reduce((x, t) => zetVerwijzing(x, soort, t, null), s));
+    const grenzen = new Map<number, { type: KopVoetType; rid: string }[]>();
+    for (let i = 1; i < lijst.length; i++) {
+      if (gekozen.has(i) === gekozen.has(i - 1)) continue;
+      const refs: { type: KopVoetType; rid: string }[] = [];
+      for (const type of KOPVOET_TYPES) {
+        if (gekozen.has(i)) {
+          // Geen verwijzing betekent ‘erven’, niet ‘leeg’. Blokkeer de
+          // voorgaande inhoud met een eigen leeg onderdeel per variant.
+          if (effectiefDeel(doc, i - 1, soort, type))
+            refs.push({ type, rid: maakDeel(pakket, doc.pad, soort).rid });
+        } else {
+          // De eerste niet-gekozen sectie houdt haar oorspronkelijke inhoud,
+          // ook wanneer die uit een nu leeggemaakte sectie werd geërfd.
+          const bestaand = effectiefDeel(doc, i, soort, type);
+          if (bestaand && !bestaand.eigen) refs.push({ type, rid: bestaand.rid });
+        }
+      }
+      if (refs.length) grenzen.set(i, refs);
+    }
+    const nieuw = wijzigSectPrs(doc, [...new Set([...indexen, ...grenzen.keys()])], (s, sectie) => {
+      let x = gekozen.has(sectie.index)
+        ? KOPVOET_TYPES.reduce((deel, type) => zetVerwijzing(deel, soort, type, null), s)
+        : s;
+      for (const ref of grenzen.get(sectie.index) ?? [])
+        x = zetVerwijzing(x, soort, ref.type, ref.rid, rp);
+      return x;
+    });
     // Onderdelen waar niemand meer naar verwijst, opruimen.
     const nogGebruikt = new Set(secties(nieuw).flatMap((s) => [...refsVan(s.el, "header"), ...refsVan(s.el, "footer")].map(ridVan)));
     for (const rid of weg) {

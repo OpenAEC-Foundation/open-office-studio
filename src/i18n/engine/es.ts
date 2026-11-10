@@ -32,7 +32,7 @@ export const tekstEs: TekstVertaling = {
   },
   toolbar: {
     imageWrap: {
-      current: "Actual"
+      current: "Actual",
     },
     ariaLabel: "Barra de herramientas de formato",
     file: "Archivo",
@@ -213,7 +213,7 @@ export const tekstEs: TekstVertaling = {
       left: "Izquierda (px)",
       top: "Arriba (px)",
       width: "Ancho (px)",
-      height: "Alto (px)"
+      height: "Alto (px)",
     },
     findReplace: {
       titleFind: "Buscar",
@@ -691,10 +691,13 @@ export const tekstEs: TekstVertaling = {
     menuBarAriaLabel: "Barra de menús",
   },
   errors: {
-    stillOpening: "El documento todavía se está abriendo. Podrá escribir cuando esté listo.",
-    failedToLoadDescription: "El archivo puede estar dañado o utilizar funciones que este editor todavía no admite.",
+    stillOpening:
+      "El documento todavía se está abriendo. Podrá escribir cuando esté listo.",
+    failedToLoadDescription:
+      "El archivo puede estar dañado o utilizar funciones que este editor todavía no admite.",
     editorUnavailable: "No se pudo cargar el editor",
-    editorUnavailableDescription: "Compruebe la conexión y vuelva a cargar la página.",
+    editorUnavailableDescription:
+      "Compruebe la conexión y vuelva a cargar la página.",
     reloadPage: "Volver a cargar la página",
     loadingDocument: "Cargando documento...",
     noDocumentLoaded: "No hay ningún documento cargado",
@@ -853,7 +856,8 @@ export const tekstEs: TekstVertaling = {
     nextText: "Texto siguiente",
     addComment: "Añadir comentario",
     noteProperties: "Propiedades de nota",
-    recoverableTextNotice: "No se pudo aplicar este texto. Cópielo para conservar el borrador y después descártelo.",
+    recoverableTextNotice:
+      "No se pudo aplicar este texto. Cópielo para conservar el borrador y después descártelo.",
     documentTextUnavailable: "El texto del documento no está disponible.",
     documentTextChanged: "El texto del documento ha cambiado. Vuelva a leerlo.",
     toggleCommentsSidebar: "Mostrar u ocultar la barra lateral de comentarios",
@@ -1191,8 +1195,7 @@ export const rekenbladEs: RekenbladVertaling = {
     stoppedErrorDescription:
       "La sesión ya no puede aceptar cambios. Recarga la página para volver a abrir el libro.",
     loadError: "No se pudo cargar el libro",
-    loadErrorDescription:
-      "No se pudo iniciar el motor de hojas de cálculo.",
+    loadErrorDescription: "No se pudo iniciar el motor de hojas de cálculo.",
     reloadPage: "Recargar página",
     showDetails: "Mostrar detalles",
     openPrompt: "Abrir un archivo XLSX",
@@ -1232,6 +1235,15 @@ export const rekenbladEs: RekenbladVertaling = {
 
 export const diaEs: DiaVertaling = {
   _lang: "es",
+  worker: {
+    previousRecovery: "Descargar la recuperación de la presentación anterior",
+    preparing: "Preparando el editor. Podrás editar en breve.",
+    failed: "No se puede editar. Descarga la presentación recuperada.",
+    disabled: "Esta función no está disponible en este modo de edición.",
+    recovery: "Descargar la presentación recuperada",
+    image: "Preparando la imagen",
+  },
+  presence: { label: "Colaboradores" },
   toolbar: {
     label: "Barra de herramientas de formato de presentación",
     save: "Guardar",
@@ -1332,10 +1344,33 @@ export const diaEs: DiaVertaling = {
     opening: "Abriendo presentación…",
     noSlides: "No hay diapositivas",
     openPrompt: "Abrir un archivo PPTX",
+    textInput: "Texto de la diapositiva",
+    selectionAnnouncement: "Texto seleccionado",
+    openError: "No se pudo abrir esta presentación",
+    openErrorDescription:
+      "El archivo puede estar dañado o usar una función que este editor todavía no admite.",
+    stoppedError: "El editor ha encontrado un problema",
+    stoppedErrorDescription:
+      "No se puede editar. Descarga la presentación recuperada para conservar los cambios.",
+    loadError: "No se pudo cargar el editor",
+    loadErrorDescription: "Comprueba la conexión y vuelve a cargar la página.",
+    reloadPage: "Volver a cargar la página",
+    showDetails: "Mostrar detalles",
   },
   objects: {
     defaultTextBoxName: "Cuadro de texto",
     defaultPictureName: "Imagen",
+    insertPicture: "Insertar imagen",
+    resize: {
+      nw: "Cambiar el tamaño desde arriba a la izquierda",
+      n: "Cambiar el tamaño desde arriba",
+      ne: "Cambiar el tamaño desde arriba a la derecha",
+      e: "Cambiar el tamaño desde la derecha",
+      se: "Cambiar el tamaño desde abajo a la derecha",
+      s: "Cambiar el tamaño desde abajo",
+      sw: "Cambiar el tamaño desde abajo a la izquierda",
+      w: "Cambiar el tamaño desde la izquierda",
+    },
   },
   presentation: {
     label: "Presentación con diapositivas",

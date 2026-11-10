@@ -44,6 +44,35 @@ export function controleerNootKern(): void {
   }
 }
 
+/** Laad de opslagcode en kleine parserkernen in dezelfde documentworker. */
+export function bereidWorkerOpslagVoor(bron: string): string {
+  if (createHash("sha256").update(bron).digest("hex") !== "6f59a5a727a6d8b9f6a6e767ef125657fefb3605a47ac171de95ef37cb132f1b")
+    throw new Error("De tekstworker is gewijzigd; controleer de voorbereiding van offline opslag.");
+  const voorbeeld = readFileSync(new URL("../public/templates/nieuw.docx", import.meta.url));
+  if (voorbeeld.length > 64 * 1024 || voorbeeld[0] !== 0x50 || voorbeeld[1] !== 0x4b)
+    throw new Error("Het ingebouwde opslagvoorbeeld is geen klein DOCX-pakket.");
+  // De aparte poort kruist het SDK-protocol niet. Alleen de bewerkende app
+  // vraagt deze voorbereiding aan; een alleen-lezen viewer doet dat niet.
+  const preload = `
+if (typeof WorkerGlobalScope !== "undefined" && globalThis instanceof WorkerGlobalScope)
+  globalThis.addEventListener("message", event => {
+    if (event.data?.openaec !== "prepare-save-v1") return;
+    event.stopImmediatePropagation();
+    const port = event.ports[0];
+    if (!port) return;
+    void Promise.all([
+      import("../chunk-YTGFUEEE.mjs"),
+      import("../docx/index.mjs").then(({ parseDocx }) => parseDocx(
+        Uint8Array.from(atob(${JSON.stringify(voorbeeld.toString("base64"))}), c => c.charCodeAt(0)),
+        { preloadFonts: false }
+      ))
+    ]).then(() => port.postMessage({ ok: true }), fout => port.postMessage({ ok: false, fout: String(fout) }))
+      .finally(() => port.close());
+  }, { capture: true });
+`;
+  return preload + bron;
+}
+
 /** Eén engine-instantie voor invoer én de later geladen opslagmodule (#135). */
 export function herstelWorkerStart(bron: string): string {
   const ingang = 'new Worker(new URL("./docxWorker.mjs",import.meta.url),';
@@ -204,6 +233,66 @@ export function herstelKolommenWeergave(bron: string): string {
     + bron.replace(oud, 'regions:{sections:oosKolomSecties(p(e$1)),settings:');
 }
 
+/** Bewerk het getekende kop/voet-onderdeel in plaats van alleen first/default (#209). */
+export function herstelKopVoetDoel(bron: string, ingang: "editor" | "opdrachten"): string {
+  const delen = ingang === "editor" ? [
+    ['function oo(e,t){return !e||!t||t.region!==e.kind?false:ac(e)?t.noteId===e.noteId:true}',
+      'function oo(e,t){return !e||!t||t.region!==e.kind?false:ac(e)?t.noteId===e.noteId:!e.rId||e.rId===t.rId}'],
+    ['y(Te,(ve?.pageIndex??0)+1)', 'y(Te,(ve?.pageIndex??0)+1,ve?.hit?.rId)'],
+    ['N=E?E.isFirstPage', 'N=E?.rId?oosKopVoetInhoud(i,E.kind,E.rId):E?E.isFirstPage'],
+    ['if(!Rt)return null;let Ht=E.isFirstPage', 'if(E.rId)return E.rId;if(!Rt)return null;let Ht=E.isFirstPage'],
+  ] : [
+    ['d=useCallback((u,f)=>{let D=i?.titlePg',
+      'd=useCallback((u,f,oosRid)=>{if(oosRid){const oosDoel=oosKopVoetDoel(e,u,f??1,oosRid);oosDoel&&n(oosDoel);return}let D=i?.titlePg'],
+    ['h=(I?.find(x=>x.type===y)??I?.find(x=>x.type==="default")??I?.find(x=>x.type==="first")??I?.[0])?.rId;',
+      'h=u.rId??(I?.find(x=>x.type===y)??I?.find(x=>x.type==="default")??I?.find(x=>x.type==="first")??I?.[0])?.rId;'],
+  ];
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst het doel van kop- en voettekstbewerking.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { kopVoetDoel as oosKopVoetDoel, kopVoetInhoud as oosKopVoetInhoud } from "openaec-tekst-kopvoetdoel";\n' + uit;
+}
+
+/** Nieuwe alinea's met w:next erven geen directe tekenopmaak van de kop (#199). */
+export function herstelVervolgstijl(bron: string): string {
+  const delen = [
+    ['nextParagraphStyleId:P,', 'nextParagraphStyleId:P,oosVervolgOpmaak,'],
+    ['nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,',
+      'nextParagraphStyleId:T=>vt?.getNextStyleId(T)??null,oosVervolgOpmaak:T=>vt?.resolveParagraphStyle(T).runFormatting,'],
+    ['me?u.applyParagraphStyle({story:H.story,start:{paraId:se.secondParaId,offset:0},end:{paraId:se.secondParaId,offset:0}},me)',
+      'me?oosPasVervolgstijlToe(u,{story:H.story,start:{paraId:se.secondParaId,offset:0},end:{paraId:se.secondParaId,offset:0}},me,oosVervolgOpmaak?.(me))'],
+    ['[Z,Nt,W,ke,yt,Ee,P,n,i,u,vt])', '[Z,Nt,W,ke,yt,Ee,P,n,i,u,vt,oosVervolgOpmaak])'],
+  ] as const;
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de overgang naar de volgende alineastijl.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { pasVervolgstijlToe as oosPasVervolgstijlToe } from "openaec-tekst-vervolgstijl";\n' + uit;
+}
+
+export function herstelSplitsBreedtes(bron: string): string {
+  const oud = "I.splitCell(re.focused,T.rows,T.columns)";
+  if (bron.split(oud).length !== 2)
+    throw new Error(
+      "De tekstengine is gewijzigd; controleer eerst de celsplitsbreedtes.",
+    );
+  return (
+    'import { splitsCelMetBehoud as oosSplitsCel } from "openaec-tekst-splitsbreedte";\n' +
+    bron.replace(oud, "oosSplitsCel(I,re.focused,T.rows,T.columns)")
+  );
+}
+
+export function herstelSplitsUitleg(bron:string):string{
+ const oud='jsx("div",{style:b,children:e("dialogs.splitCell.description")})';
+ if(bron.split(oud).length!==2)throw new Error("De tekstengine is gewijzigd; controleer de splitsuitleg.");
+ return 'import {splitsUitleg as oosSplitsUitleg} from "openaec-tekst-splitsbreedte";\n'+bron.replace(oud,'jsx("div",{style:b,children:e("dialogs.splitCell.description")+" "+oosSplitsUitleg()})');
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
@@ -211,10 +300,17 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-kopvoetdoel")
+        return fileURLToPath(new URL("../src/tekst/pagina/kopvoetDoel.ts", import.meta.url));
+      if (id === "openaec-tekst-vervolgstijl")
+        return fileURLToPath(new URL("../src/tekst/stijlen/vervolg.ts", import.meta.url));
+      if (id === "openaec-tekst-splitsbreedte")
+        return fileURLToPath(new URL("../src/tekst/tabel/splitsBreedte.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-nootkern")
         return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
+      // Eén module-ID houdt fabriek en voorbereider in hetzelfde register, ook op Windows.
       if (id === "openaec-tekst-workerstart")
-        return fileURLToPath(new URL("../src/tekst/gedeeld/workerStart.ts", import.meta.url));
+        return fileURLToPath(new URL("../src/tekst/gedeeld/workerStart.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-workerverhalen")
         return fileURLToPath(new URL("../src/tekst/gedeeld/workerVerhalen.ts", import.meta.url));
       if (id === "openaec-tekst-kolommen")
@@ -225,6 +321,10 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/yrs\/docxWorker\.mjs(?:\?.*)?$/.test(id))
+        return { code: bereidWorkerOpslagVoor(bron), map: null };
+      if (/\/@betteroffice\/docx-react\/dist\/chunk-RHVJ6TAE\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelSplitsUitleg(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-HAZBP3QT\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelNootverwijzingOpmaak(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/utils\/index\.mjs(?:\?.*)?$/.test(id))
@@ -240,9 +340,9 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKolommenWeergave(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
-        return { code: herstelTabelContext(bron), map: null };
+        return { code: herstelKopVoetDoel(herstelTabelContext(bron), "opdrachten"), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))), map: null };
+      return { code: herstelKopVoetDoel(herstelVervolgstijl(herstelSplitsBreedtes(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))))), "editor"), map: null };
     },
   };
 }

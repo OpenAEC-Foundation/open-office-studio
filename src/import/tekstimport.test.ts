@@ -22,6 +22,29 @@ const pngDataUrl =
   "data:image/png;base64," + Buffer.from(png).toString("base64");
 
 describe("Tekst (TXT)", () => {
+  it.each(["utf-16le", "utf-16be"] as const)(
+    "geeft de BOM voorrang op de nulbyteheuristiek bij %s",
+    async (codering) => {
+      // U+4E00 bevat een nulbyte in de andere positie dan Latijnse tekst.
+      const tekst = "一".repeat(64);
+      const le = codering === "utf-16le";
+      const bytes = new Uint8Array([
+        ...(le ? [0xff, 0xfe] : [0xfe, 0xff]),
+        ...Array.from(tekst).flatMap(() => (le ? [0x00, 0x4e] : [0x4e, 0x00])),
+      ]);
+      expect(leesTekst(bytes)).toMatchObject({ tekst, codering });
+      for (const ext of ["txt", "md"]) {
+        const geopend = (await bereidOpenen(`Proef.${ext}`, bytes, {
+          converteer: geenRuntime,
+        }))!;
+        expect(docXml(geopend.bytes)).toContain(tekst);
+        expect(geopend.rapport!.regels[0].gevolg).toContain(
+          le ? "UTF-16 LE" : "UTF-16 BE",
+        );
+      }
+    },
+  );
+
   it("herkent Windows-1252, UTF-8 met BOM en UTF-16 en de regeleinden", () => {
     const cp1252 = leesTekst(
       new Uint8Array([0x63, 0x61, 0x66, 0xe9, 0x0d, 0x0a, 0x80]),
@@ -43,6 +66,9 @@ describe("Tekst (TXT)", () => {
       codering: "utf-16le",
       regeleinde: "CR",
     });
+    expect(
+      leesTekst(new Uint8Array([0, 0x68, 0, 0xeb, 0, 0x0d, 0, 0x6c])),
+    ).toMatchObject({ tekst: "hë\rl", codering: "utf-16be", regeleinde: "CR" });
   });
   it("maakt van elke regel een alinea en bewaart tabs", () => {
     const { bytes, regels } = zetTekstOm(

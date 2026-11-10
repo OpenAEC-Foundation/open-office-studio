@@ -15,6 +15,7 @@ import {
 } from "./rekenblad/structuur";
 import { openVenster } from "./rekenblad/vensters";
 import { kopRand, kopRandBreedte } from "./rekenblad/koprand";
+import { volgKopRaster } from "./rekenblad/kopraster";
 
 type Spoor = { positie: number; grootte: number; nummer: number };
 type Koppen = {
@@ -103,18 +104,25 @@ export function RekenbladKoppen({
       '[data-testid="xlsx-scroll"]',
     );
     if (!werkruimte || !scroll || !api) return;
+    const raster = volgKopRaster(api.handle, () => plannen());
+    let heeftGemeten = false;
     let frame = 0;
     let gestopt = false;
     function ververs() {
       frame = 0;
       if (gestopt || !scroll || !werkruimte || !api) return;
       const zoom = api.commands.getState("zoom").value ?? 1;
-      const grid = api.handle.displayList({
+      const venster = {
         x: scroll.scrollLeft / zoom,
         y: scroll.scrollTop / zoom,
         width: scroll.clientWidth / zoom,
         height: scroll.clientHeight / zoom,
-      }).grid;
+      };
+      // Na openen mag één eerste lezing. Daarna volgen de koppen het echt
+      // getekende venster in plaats van het raster vóór de engine te bouwen.
+      if (heeftGemeten && !raster.beschikbaar(venster)) return;
+      const grid = raster.lees(venster);
+      heeftGemeten = true;
       if (!grid) {
         setKoppen(null);
         return;
@@ -161,6 +169,7 @@ export function RekenbladKoppen({
       scroll.removeEventListener("scroll", plannen);
       stopOpdrachten();
       stopWijzigingen();
+      raster.stop();
     };
   }, [api, host]);
 

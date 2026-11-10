@@ -5,6 +5,7 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { YrsAuthor, YrsLoc, YrsParagraph, YrsSession, YrsStoryRange } from "@betteroffice/docx/yrs";
 import i18next from "../i18n/config";
+import { leesAuteur } from "../auteursprofiel";
 
 export interface TekstSelectie {
   ref: DocxEditorRef;
@@ -19,15 +20,6 @@ export interface TekstSelectie {
   alle: YrsParagraph[];
   van: number;
   tot: number;
-}
-
-const AUTEUR = "open-tekst-auteur";
-function leesAuteur() {
-  try {
-    return localStorage.getItem(AUTEUR) ?? "";
-  } catch {
-    return "";
-  }
 }
 
 /** De auteur voor een bijgehouden wijziging, of niets als bijhouden uit staat. */

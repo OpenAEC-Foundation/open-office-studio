@@ -73,6 +73,14 @@ jobs:
         shell: pwsh
         run: ./scripts/voorbereiden-windows.ps1
       - run: pnpm build
+      - name: Chromium voor offline Writer-opslag
+        if: runner.os == 'Linux'
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Writer werkelijk offline bewerken, opslaan en heropenen
+        if: runner.os == 'Linux'
+        run: node scripts/proef-writer-offline.mjs dist
+      - name: Native document-link path regressions
+        run: cargo test --manifest-path src-tauri/Cargo.toml --locked documentkoppeling --no-default-features
       - name: Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen
         if: runner.os == 'Linux'
         run: node scripts/corpus-download.mjs docs/tests/smoke-manifest.json

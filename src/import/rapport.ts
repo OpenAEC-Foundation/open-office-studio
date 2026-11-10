@@ -59,6 +59,7 @@ const RISICOSLEUTEL: Record<Risico, string> = {
   externe_koppelingen: "externalLinks",
   gegevensverbindingen: "dataConnections",
   beveiliging: "protection",
+  werkmapstructuur: "workbookStructure",
 };
 
 /** Leesbare naam van een risico in de interfacetaal (kleine letter, voor in een zin). */
@@ -114,6 +115,7 @@ function bijOpenen(risico: Risico, soort: Soort): string | null {
     case "gegevensverbindingen":
       return t("report.open.dataConnections");
     case "beveiliging":
+    case "werkmapstructuur":
       return t("report.open.protection");
     default:
       return null;
@@ -271,8 +273,14 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
         ? "conversie"
         : null;
   if (opgeslagenRoute) {
+    // In de vaste legacy-corpusproef verdwijnt bij DOC-export een bewerkbaar
+    // PPTX-object (vier objecten worden drie); de voorbeeldafbeelding blijft.
+    // Deze meting geldt voor DOC, niet voor alle runtime-uitvoerformaten.
+    const docObjectverlies =
+      soort === "docx" && formaat.ext === "doc" && opgeslagenRoute === "conversie";
     const verlies = risicos.filter((r) =>
-      matrix[soort][opgeslagenRoute].includes(r),
+      matrix[soort][opgeslagenRoute].includes(r) ||
+      (docObjectverlies && r === "ingebedde_objecten"),
     );
     if (verlies.length)
       regels.push({
