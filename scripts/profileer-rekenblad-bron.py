@@ -13,6 +13,9 @@ source = source.replace(needle, '''            std::env::var("OOS_OPEN_PROFILE_C
     }
 
     fn from_source_with_seed_chunk(''')
+source = source.replace('            legacy_style_readings, SEED_CHUNK,', '''            legacy_style_readings, std::env::var("OOS_OPEN_PROFILE_CHUNK").ok()
+                .and_then(|v| v.parse::<usize>().ok()).filter(|&v| v > 0)
+                .unwrap_or(SEED_CHUNK),''')
 start = source.index('    fn from_source_with_seed_chunk(')
 end = source.index('    pub(crate) fn client_id(', start)
 body = source[start:end]

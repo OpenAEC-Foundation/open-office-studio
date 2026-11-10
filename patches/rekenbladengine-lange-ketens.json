@@ -17,7 +17,7 @@
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
   "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
   "wasmBytes": 7745388,
-  "stand": "Kandidaten voor #74: minder celarray-allocaties, canonieke lokale identiteit en stromende celopbouw met gelijke wire-volgorde. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
+  "stand": "Kandidaten voor #74: minder celarray-allocaties, canonieke lokale identiteit, stromende celopbouw en vroege vrijgave van het bronmodel. Vendor blijft de geteste acht-patchkern totdat de grote proef en regressies slagen.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -160,6 +160,20 @@
         {
           "pakket": "betteroffice-xlsx",
           "lib": "authority::tests::streamed_seed_preserves_wire_order_at_decimal_boundaries"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-vroege-modelvrijgave.patch",
+      "patchSha256": "473f67216ff6e99352a6f60543be8cb48863c8d1916cace6e539eb0196c716f0",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::tests::owning_the_source_keeps_the_same_projection_and_bootstrap_bytes"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "source_cached_results"
         }
       ]
     }
