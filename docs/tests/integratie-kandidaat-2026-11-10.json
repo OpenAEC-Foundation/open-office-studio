@@ -8,7 +8,7 @@
   "sourcePRs": 68,
   "deliveries": 78,
   "additionalPRsInBundles": 17,
-  "installationReleased": false,
+  "installationReleased": true,
   "mainMerged": false,
   "releasePublished": false,
   "nativeKernel": {
@@ -44,14 +44,24 @@
       "skipped": 7,
       "files": 300,
       "sha256": "5a50499950c152f03492d94baa5eecef43559d85f9217762074aa4c34f93d184"
+    },
+    {
+      "kind": "accepted-full",
+      "head": "1e5afa399117fd84df628955ec82b0e597993c83",
+      "passed": 3147,
+      "failed": 0,
+      "skipped": 7,
+      "files": 301,
+      "sha256": "470a988192a61830291e62bc7099ac1d859d7b73532c52f7f27b8b2c0337677e"
     }
   ],
   "finalValidation": {
-    "fullSuite": "pending after targeted acceptance correction",
-    "productionBuild": "pending after targeted acceptance correction",
-    "i18n": "pending",
-    "browser": "Most production groups pass one9; repeat corrected Writer6+4 against new dist",
-    "nativeWindows": "pending one updated exact checkpoint"
+    "fullSuite": "PASS3147/0/7 in301files",
+    "productionBuild": "PASS TypeScript + production assets/build27.35s; immutable544file dist",
+    "i18n": "PASS9x21/7949keys;23 existing warnings",
+    "browser": "PASS exact1e5 Writer6custom+4note with zero errors; real standalone hosted /office/ all3modules pass without Tauri IPC",
+    "nativeWindows": "PARTIAL PASS282 with independently inspected savedDOCX/PDF;284/302/custom-story persistence in progress",
+    "platformReport": "integratie-platforms-2026-11-10.json"
   },
   "resolvedSources": [
     {
@@ -59,7 +69,7 @@
       "pr": 290,
       "head": "66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c",
       "scope": "note reference style continuation",
-      "nativeAcceptance": "pending"
+      "nativeAcceptance": "PASS exact1e5 Windows footnote/endnote input/Undo/Redo/save/close/reopen; independentDOCX/PDF checks"
     },
     {
       "issue": 284,
@@ -98,7 +108,7 @@
     "head": "2da5abe361d18824d1fd84f1dee717f152f7e545",
     "scope": "Successful header/footer opening stays confirmed after rapid close/reload; genuine failure remains visible",
     "targetedPassed": 6,
-    "productionBrowser": "pending new build",
+    "productionBrowser": "PASS:6customcases plus rapidheader/footerclose with no false errors; genuine-failure6behavior tests pass",
     "baseline": "Olde9:6 content steps pass;2 false errors after closes at61.8ms/70.7ms"
   },
   "testOnlyCorrection": {
@@ -111,55 +121,124 @@
   },
   "readyAfterFreeze": [
     {
+      "pr": 220,
+      "head": "4a21ad18c2b7861cf1d227e05f572a3f337fcdb9",
+      "issues": [49],
+      "scope": "Writer replacement image exact geometry/crop",
+      "status": "available source outside checkpoint; owner8ca directed to verify/release for next batch"
+    },
+    {
       "pr": 300,
       "head": "b8426dc453c16a4a8863d67dd914070453c4a079",
-      "issues": [
-        280,
-        281
-      ],
+      "issues": [280, 281],
       "scope": "Writer screen theme and highlighter contrast",
       "status": "next round; native acceptance pending"
     },
     {
       "pr": 301,
       "head": "92b1962a19c18ba2e89e67f292336f14b01e5ab4",
-      "issues": [
-        292,
-        293,
-        294,
-        295,
-        296,
-        299
-      ],
+      "issues": [292, 293, 294, 295, 296, 299],
       "scope": "Spreadsheet CF visual cases",
       "status": "next round; source CI pending"
     },
     {
       "pr": 304,
       "head": "2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a",
-      "issues": [
-        298
-      ],
+      "issues": [298],
       "scope": "ODP/OTP embedded media volume/mute",
       "status": "next round"
     },
     {
       "pr": 306,
-      "head": "e1d71ad76d9a394298997a8f1b97340389ee8b8c",
-      "issues": [
-        297
-      ],
-      "scope": "Direct character-format comparison",
-      "status": "hold for separate browser Undo investigation"
+      "head": "a9ba379336d0234499536c85cce79f757b9f153c",
+      "issues": [297],
+      "scope": "Direct character-format comparison plus313dependency",
+      "status": "next round; includes315, do NOT apply315 twice; source tests/browser pass; platformCI running"
     },
     {
       "pr": 309,
       "head": "589a1d5794dd77e89c161a98cfc24969f5aa4c66",
-      "issues": [
-        305
-      ],
+      "issues": [305],
       "scope": "Known empty bibliography customXML warning",
       "status": "next round"
+    },
+    {
+      "pr": 312,
+      "head": "ea4ff465cc181e298a674ff915a285f43ccd4ecb",
+      "issues": [69],
+      "scope": "Bounded pivots/refresh",
+      "status": "next round; source Windows/Linux CI/browser/converter pass;macOS queued; native pivot GUI not certified"
+    },
+    {
+      "pr": 314,
+      "head": "5675a3ccad192bea93f806a5c74dc97cdc2416be",
+      "issues": [311],
+      "scope": "PDFfont availability cache invalidation after existing notification",
+      "status": "next round; source tests/browserPDF pass; native permission dialog not tested"
+    },
+    {
+      "pr": 315,
+      "head": "baabdd9acde54e5e76dc7dd90b1e647a9bd692fb",
+      "issues": [313],
+      "scope": "Review Undo transaction/worker echo plus three awaited command harness calls",
+      "status": "next round; source tests/browser pass; platformCI running"
+    },
+    {
+      "issue": 303,
+      "head": "da16cea1519b301ba43af76496eb2c842828c1f0",
+      "branch": "codex/writer-spelling-range-cache-2026-11-10",
+      "scope": "Writer bounded spelling-range geometry cache",
+      "status": "next round;36targeted and CPU4/8 semantic/browser save-reopen pass; sourceWindows/Linux/macOSCI42802562261 passes; nativeWriter typing/scrolling still untested; apply ONLY this new commit"
+    },
+    {
+      "pr": 317,
+      "head": "dd683cfa0cb419f1aae87bb78d9a59adfc201608",
+      "issues": [30],
+      "scope": "Bundled conversion runtime investigation",
+      "status": "DRAFT; not released or included; ownerpausedlocalconversionduringnativeacceptance"
+    }
+  ],
+  "platformCheckpoint": "1e5afa399117fd84df628955ec82b0e597993c83",
+  "installationScope": "Development/native acceptance only; no main merge or release approval",
+  "acceptanceAdministration": {
+    "register": "integratie-issues-2026-11-10.json",
+    "issues": 75,
+    "partialIssueProgressComments": 43,
+    "commentsStatus": "COMPLETE43 published; exact comment URLs in issue register",
+    "approvedClosingReferences": [],
+    "reason": "Native/platform acceptance is incomplete; supplied31implementationcandidates are not closure approval",
+    "metadataPreserved": true
+  },
+  "remainingClaims": [
+    {
+      "issue": 303,
+      "owner": "performance6f",
+      "scope": "spelling geometry cache"
+    },
+    {
+      "issue": 74,
+      "owner": "a1ac",
+      "scope": "future ninth/tenth kernel patches NOT pinned"
+    },
+    {
+      "issue": 308,
+      "owner": "CF/e0",
+      "scope": "linear trendline native renderer"
+    },
+    {
+      "issue": 30,
+      "owner": "formats8020",
+      "scope": "bundled converter/runtime"
+    },
+    {
+      "issue": 23,
+      "owner": "a1bc",
+      "scope": "confirmed new reply custom-initial gap; future source only"
+    },
+    {
+      "issue": 73,
+      "owner": "d410",
+      "scope": "research built-in TableStyleMedium2 rendering with no customDXF; no new issue/source yet"
     }
   ]
 }

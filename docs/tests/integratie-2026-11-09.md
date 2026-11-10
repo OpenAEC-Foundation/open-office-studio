@@ -188,6 +188,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr290-targeted | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | 12 | 0 | 0 |
 | pr273-browser-probe-correction | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | 6 | 0 | 0 |
 | pr307-targeted | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | 6 | 0 | 0 |
+| full-accepted-2026-11-10 | `1e5afa399117fd84df628955ec82b0e597993c83` | 3147 | 0 | 7 |
 
 ## Pending deliveries
 
