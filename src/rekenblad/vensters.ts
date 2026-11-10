@@ -10,6 +10,8 @@ export type MenuSoort = "kolom" | "rij" | "cel" | "blad" | "lijst";
 export type Venster =
   | { soort: "beveiliging"; beveiliging:"blad"|"werkmap"|"cellen" }
   | { soort: "validatie" }
+  | { soort: "celstijl" }
+  | { soort: "tabel" }
   | { soort: "notitie"; cel?: string; blad?: number }
   | { soort: "discussie"; cel?: string; blad?: number }
   | { soort: "breedte" }

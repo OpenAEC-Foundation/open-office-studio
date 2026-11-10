@@ -436,6 +436,13 @@ function nieuweStijl(
   delete attrs.xfId;
   delete attrs.quotePrefix;
   delete attrs.pivotButton;
+  for (const facet of ["Font", "Fill", "Border", "NumberFormat", "Alignment"]) {
+    attrs[`apply${facet}`] = builtinId === undefined ? "1" : "0";
+  }
+  if (builtinId !== undefined) {
+    attrs.applyFont = "1";
+    attrs.applyFill = patch.fillColor !== undefined ? "1" : "0";
+  }
   raw = tagXml(xf, raw.slice(xf.inhoudStart, xf.inhoudEind), attrs);
   const id = voegToe(p, pad, "cellStyleXfs", "xf", raw);
   voegToe(
@@ -502,13 +509,29 @@ export function maakCelStijl(
   if (!ws) throw new Stijlfout("damagedStyles");
   const loc = ontleedAdres(cel);
   if (!loc) throw new Stijlfout("damagedStyles");
-  const sheet = leesXml(p.lees(ws.pad)),
-    row = kinderen(kind(sheet, "sheetData"), "row").find(
-      (r) => Number(attr(r, "r")) === loc.row + 1,
-    ),
-    c = kinderen(row, "c").find(
-      (c) => attr(c, "r")?.toUpperCase() === cel.toUpperCase(),
-    );
+  const sheet = leesXml(p.lees(ws.pad));
+  let vorigeRij = -1,
+    row: XmlElement | undefined;
+  for (const r of kinderen(kind(sheet, "sheetData"), "row")) {
+    const index = attr(r, "r") ? Number(attr(r, "r")) - 1 : vorigeRij + 1;
+    vorigeRij = index;
+    if (index === loc.row) {
+      row = r;
+      break;
+    }
+  }
+  let vorigeKolom = -1,
+    c: XmlElement | undefined;
+  for (const kandidaat of kinderen(row, "c")) {
+    const ref = attr(kandidaat, "r"),
+      kolom = ref ? ontleedAdres(ref)?.col : vorigeKolom + 1;
+    if (kolom === undefined) throw new Stijlfout("damagedStyles");
+    vorigeKolom = kolom;
+    if (kolom === loc.col) {
+      c = kandidaat;
+      break;
+    }
+  }
   const cols = kinderen(kind(sheet, "cols"), "col").find(
     (c) =>
       Number(attr(c, "min")) <= loc.col + 1 &&
@@ -552,17 +575,17 @@ export function pasCelStijlToe(
       const protXml = prot
         ? xs.xml.slice(prot.start, prot.eind)
         : `<protection xmlns="${NS}" locked="1" hidden="0"/>`;
-      let inhoud = raw.slice(base.inhoudStart, base.inhoudEind);
-      const ownProt = kind(base, "protection");
-      if (ownProt)
-        inhoud = vervang(inhoud, [
-          {
-            start: ownProt.start - base.inhoudStart,
-            eind: ownProt.eind - base.inhoudStart,
-            tekst: "",
-          },
-        ]);
-      const fragment = tagXml(base, inhoud + protXml, {
+      let celXf = onderdeel(raw, "protection", protXml);
+      if (attr(base, "applyAlignment") === "0") {
+        const alignment = kind(old, "alignment") ?? kind(parent, "alignment");
+        celXf = onderdeel(
+          celXf,
+          "alignment",
+          alignment ? xs.xml.slice(alignment.start, alignment.eind) : "",
+        );
+      }
+      const el = leesXml(celXf);
+      const attrs: Record<string, string> = {
         ...old.attrs,
         ...base.attrs,
         xfId: String(id),
@@ -574,7 +597,22 @@ export function pasCelStijlToe(
         applyProtection: "1",
         quotePrefix: old.attrs.quotePrefix ?? "0",
         pivotButton: old.attrs.pivotButton ?? "0",
-      });
+      };
+      for (const [property, facet] of [
+        ["fontId", "Font"],
+        ["fillId", "Fill"],
+        ["borderId", "Border"],
+        ["numFmtId", "NumberFormat"],
+      ] as const) {
+        if (attr(base, `apply${facet}`) === "0")
+          attrs[property] =
+            attr(old, property) ?? attr(parent, property) ?? "0";
+      }
+      const fragment = tagXml(
+        el,
+        celXf.slice(el.inhoudStart, el.inhoudEind),
+        attrs,
+      );
       const next = voegToe(p, pad, "cellXfs", "xf", fragment);
       cache.set(oud, next);
       void row;

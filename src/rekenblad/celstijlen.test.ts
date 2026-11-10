@@ -20,6 +20,53 @@ const stylePad = (p: Pakket) => {
   );
 };
 describe("named cell styles (#73)", () => {
+  it("creates from a source cell with implicit row and cell references", () => {
+    const h = openWorkbook(bron);
+    let bytes: Uint8Array;
+    try {
+      h.editCell(0, 0, 0, "anchor");
+      h.editCell(0, 1, 0, "left");
+      h.patchRangeStyle(0, "B2", { fontSize: 23, bold: true });
+      bytes = h.save();
+    } finally {
+      h.dispose();
+    }
+    const p = new Pakket(bytes),
+      pad = werkmap(p).bladen[0].pad;
+    p.schrijf(
+      pad,
+      p
+        .lees(pad)
+        .replace(/<row r="2"/, "<row")
+        .replace(/<c r="B2"/, "<c"),
+    );
+    bytes = maakCelStijl(p.inpakken(), "Implicit source", 0, "B2");
+    expect(
+      leesCelStijlen(bytes).find((s) => s.naam === "Implicit source")!.opmaak,
+    ).toMatchObject({ fontSize: 23, bold: true });
+  });
+  it("keeps number formats and alignment when the chosen built-in omits those facets", () => {
+    const h = openWorkbook(bron);
+    let bytes: Uint8Array;
+    try {
+      h.setNumberFormat(0, "B2", { type: "custom", pattern: "$0.00" });
+      h.patchRangeStyle(0, "B2", { horizontalAlignment: "right" });
+      bytes = h.save();
+    } finally {
+      h.dispose();
+    }
+    bytes = pasCelStijlToe(bytes, "Good", 0, "B2:C2");
+    const reopened = openWorkbook(bytes);
+    try {
+      expect(reopened.selectionFormatting(0, "B2")).toMatchObject({
+        numberFormatPattern: "$0.00",
+        horizontalAlignment: "right",
+        fillColor: "#c6efce",
+      });
+    } finally {
+      reopened.dispose();
+    }
+  });
   it("offers named built-ins and persists the proper IDs when applied", () => {
     expect(leesCelStijlen(bron).map((s) => s.naam)).toEqual(
       expect.arrayContaining(["Good", "Bad", "Neutral", "Heading 1", "Total"]),

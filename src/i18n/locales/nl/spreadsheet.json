@@ -603,5 +603,91 @@
     "previous": "Vorige opmerking",
     "next": "Volgende opmerking",
     "reloadHint": "Opslaan of verwijderen van een discussie laadt de werkmap opnieuw. Eerdere stappen in Ongedaan maken worden gewist."
+  },
+  "styles": {
+    "group": "Stijlen",
+    "title": "Celstijlen",
+    "range": "Celbereik",
+    "choose": "Kies een stijl",
+    "preview": "Stijlvoorbeeld",
+    "new": "Nieuwe stijl van actieve cel",
+    "modify": "Stijl wijzigen",
+    "fromCell": "Maak een stijl van {{cell}}",
+    "editing": "{{name}} wijzigen",
+    "name": "Stijlnaam",
+    "format": "Opmaak",
+    "fontName": "Lettertype",
+    "fontSize": "Lettergrootte",
+    "bold": "Vet",
+    "italic": "Cursief",
+    "textColor": "Tekstkleur",
+    "useFill": "Achtergrondkleur gebruiken",
+    "fillColor": "Achtergrondkleur",
+    "numberFormat": "Getalnotatiecode",
+    "existingFormat": "Bestaande getalnotatie behouden",
+    "reloadHint": "Bij het toepassen of opslaan van een celstijl worden eerdere ongedaan-maakstappen gewist.",
+    "apply": "Stijl toepassen",
+    "builtins": {
+      "0": "Standaard",
+      "16": "Kop 1",
+      "25": "Totaal",
+      "26": "Goed",
+      "27": "Ongeldig",
+      "28": "Neutraal"
+    },
+    "errors": {
+      "invalidName": "Vul een unieke stijlnaam van maximaal 255 tekens in.",
+      "duplicateName": "Er bestaat al een stijl met deze naam.",
+      "missingStyle": "Deze stijl is niet meer beschikbaar.",
+      "damagedStyles": "De werkmap bevat inconsistente stijldefinities. De oorspronkelijke gegevens zijn behouden.",
+      "selectionTooLarge": "Selecteer maximaal 100.000 cellen.",
+      "invalidFormat": "Vul een geldig lettertype, kleur, lettergrootte (1–409) en getalnotatiecode in.",
+      "protectedSheet": "De bladbeveiliging staat deze opmaakwijzigingen niet toe.",
+      "noSelection": "Selecteer een cel voordat je celstijlen opent.",
+      "invalidRange": "Vul een geldig celbereik op dit werkblad in."
+    }
+  },
+  "tables": {
+    "group": "Tabellen",
+    "title": "Opmaken als tabel",
+    "name": "Tabelnaam",
+    "range": "Kop- en gegevensbereik (zonder totalen)",
+    "style": "Tabelstijl",
+    "existingStyle": "Huidige stijl behouden: {{style}}",
+    "styles": {
+      "blue": "Blauw",
+      "green": "Groen",
+      "orange": "Oranje",
+      "none": "Geen tabelstijl"
+    },
+    "kop": "Kopregel",
+    "totaal": "Totaalregel",
+    "banden": "Afwisselende rijkleuren",
+    "filters": "Filterknoppen in de kopregel",
+    "totals": "Totalen per kolom",
+    "functions": {
+      "none": "Geen berekening",
+      "sum": "Som",
+      "count": "Aantal",
+      "average": "Gemiddelde",
+      "min": "Minimum",
+      "max": "Maximum"
+    },
+    "growHint": "Typ direct naast of onder een tabel om deze uit te breiden. Voeg bij een totaalregel een rij boven de totalen in voor nieuwe gegevens.",
+    "errors": {
+      "invalidName": "Voer een geldige tabelnaam in.",
+      "duplicateName": "Deze naam bestaat al.",
+      "invalidRange": "Selecteer een geldig bereik met gegevens.",
+      "overlap": "Het bereik overlapt een andere tabel of filter.",
+      "mergedCells": "Hef de samengevoegde cellen eerst op.",
+      "protectedSheet": "Bladbeveiliging verhindert deze bewerking.",
+      "occupiedTotal": "De nieuwe totaalregel bevat gegevens. Kies een ander bereik of verplaats die cellen eerst.",
+      "missingTable": "De tabel bestaat niet meer.",
+      "damagedTable": "De tabelgegevens konden niet veilig worden gelezen.",
+      "tooLarge": "Gebruik een bereik van maximaal 100.000 cellen.",
+      "renameTable": "Bestaande tabellen hernoemen wordt niet ondersteund.",
+      "unsupportedStyle": "Kies een andere tabelstijl."
+    },
+    "reloadHint": "Bij het opslaan van tabelinstellingen of toepassen van een tabelfilter worden eerdere ongedaan-maakstappen gewist."
   }
 }
