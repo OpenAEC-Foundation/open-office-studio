@@ -17,6 +17,7 @@ import {
   type FilterCel,
   type KolomFilter,
   type Operator,
+  type BladFilter,
 } from "./rekenblad-filter";
 import { kolomKeuzes, sorteerBereik, zetKolomFilter } from "./rekenblad-gegevens";
 import { kolomLetters } from "./rekenblad-logica";
@@ -32,6 +33,7 @@ export function FilterMenu({
   kolom,
   anker,
   sluit,
+  tabel,
 }: {
   api: XlsxEditorApi;
   blad: number;
@@ -39,12 +41,19 @@ export function FilterMenu({
   kolom: number;
   anker: DOMRect;
   sluit: () => void;
+  tabel?: {
+    filter: BladFilter;
+    cellen: () => Promise<{ cellen: FilterCel[] }>;
+    toepassen: (filter: KolomFilter | null) => Promise<unknown>;
+    sorteren: (aflopend: boolean) => Promise<unknown>;
+    hint: string;
+  };
 }) {
   const { t } = useTranslation("spreadsheet");
   const fout = useContext(RibbonFout);
   const id = useId();
   const menu = useRef<HTMLDivElement>(null);
-  const filter = bladFilter(api.handle, blad);
+  const filter = tabel?.filter ?? bladFilter(api.handle, blad);
   const rel = filter ? kolom - filter.bereik.left : 0;
   const huidig = filter?.kolommen.get(rel) ?? null;
   const naam = filter
@@ -54,7 +63,7 @@ export function FilterMenu({
   const [cellen, setCellen] = useState<FilterCel[] | null>(null);
   useEffect(() => {
     let actief = true;
-    void kolomKeuzes(api, blad, sheetId, rel)
+    void (tabel ? tabel.cellen() : kolomKeuzes(api, blad, sheetId, rel))
       .then((r) => actief && setCellen(r.cellen))
       .catch(() => actief && setCellen([]));
     return () => {
@@ -134,11 +143,12 @@ export function FilterMenu({
         const actief = voorwaarden.filter((v) => v.waarde.trim() !== "");
         kf = actief.length ? { soort: "voorwaarden", en, voorwaarden: actief } : null;
       } else if (soort === "top") kf = { ...top, aantal: Math.max(1, top.aantal) };
-      await zetKolomFilter(api, blad, sheetId, rel, kf);
+      await (tabel ? tabel.toepassen(kf) : zetKolomFilter(api, blad, sheetId, rel, kf));
     });
 
   const sorteer = (aflopend: boolean) =>
     doe(async () => {
+      if (tabel) return tabel.sorteren(aflopend);
       if (!filter) return;
       await sorteerBereik(api, {
         blad,
@@ -183,11 +193,12 @@ export function FilterMenu({
         type="button"
         className="rekenblad-menuregel"
         disabled={!huidig}
-        onClick={() => void doe(() => zetKolomFilter(api, blad, sheetId, rel, null))}
+        onClick={() => void doe(() => tabel ? tabel.toepassen(null) : zetKolomFilter(api, blad, sheetId, rel, null))}
       >
         <FilterX size={15} />
         {t("data.filter.clear", { column: naam })}
       </button>
+      {tabel && <p className="rekenblad-hint">{tabel.hint}</p>}
       <div className="rekenblad-segment" role="radiogroup" aria-label={t("data.filter.kind")}>
         {(["waarden", "voorwaarden", ...(getallen ? ["top"] : [])] as Soort[]).map((s) => (
           <button

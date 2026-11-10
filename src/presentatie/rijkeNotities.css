@@ -1,0 +1,179 @@
+.office-presentatie-notitiehost {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.office-presentatie-notitiehost > .office-presentatie {
+  flex: 1;
+  /* Override the SDK's inline minimum so notes fit below a small canvas. */
+  min-height: 0 !important;
+  height: auto !important;
+}
+.office-presentatie-notitiehost
+  .office-presentatie
+  div:has(> [data-testid="pptx-notes-textarea"]) {
+  display: none !important;
+}
+.office-presentatie-notitiehost:has(
+    .office-presentatie[data-notities="verborgen"]
+  )
+  > .rijke-notities,
+.office-presentatie-notitiehost:has(.sorteerder, .dia-overzicht)
+  > .rijke-notities {
+  display: none;
+}
+.rijke-notities {
+  --w-bg: var(--oa-shell-surface, #fff);
+  --w-bg-zacht: var(--oa-shell-bg-lighter, #eee);
+  --w-tekst: var(--oa-shell-text, #222);
+  --w-rand: var(--oa-shell-border, #aaa);
+  flex: 0 0 auto;
+  height: 235px;
+  min-height: 165px;
+  max-height: 55vh;
+  overflow: auto;
+  resize: vertical;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--w-rand, #62626b);
+  background: var(--w-bg);
+  color: var(--w-tekst, #eee);
+  font:
+    12px/1.4 Inter,
+    sans-serif;
+}
+.rijke-notities button,
+.rijke-notities select,
+.rijke-notities input {
+  font: inherit;
+  color: inherit;
+  background-color: var(--w-bg);
+}
+.rijke-notities :focus-visible {
+  outline: 2px solid var(--oa-shell-accent, #a95606);
+  outline-offset: 2px;
+}
+.rijke-notities > header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.rijke-notitie-acties,
+.rijke-notitie-werkbalk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+.rijke-notitie-werkbalk {
+  margin-bottom: 6px;
+}
+.rijke-notitie-werkbalk label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+.rijke-notitie-werkbalk select {
+  max-width: 120px;
+  padding: 3px;
+}
+.rijke-notitie-werkbalk input[type="color"] {
+  width: 30px;
+  height: 26px;
+  padding: 1px;
+}
+.notitie-opmaakknop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.notitie-opmaakknop[aria-pressed="true"] {
+  background: #a66a00;
+  border-color: #ffae00;
+  color: white;
+}
+.rijke-notitie-editor,
+.rijke-notitie-weergave {
+  background: #fff;
+  color: #111;
+  font:
+    12pt/1.35 Arial,
+    sans-serif;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.rijke-notitie-editor {
+  min-height: 85px;
+  max-height: 40vh;
+  overflow: auto;
+  padding: 8px 10px;
+  border: 1px solid #a6a6ad;
+  border-radius: 4px;
+  outline-offset: 1px;
+}
+.rijke-notitie-editor:focus {
+  outline: 2px solid #ffae00;
+}
+.rijke-notitie-editor p,
+.rijke-notitie-weergave p {
+  margin: 0 0 0.3em;
+  min-height: 1.35em;
+}
+.rijke-notitie-editor [data-field="true"] {
+  background: #edf0f5;
+  border-bottom: 1px dotted #687080;
+}
+.rijke-notitie-editor p[data-list="bullet"],
+.rijke-notitie-editor p[data-list="number"] {
+  position: relative;
+  margin-left: 1.5em;
+}
+.rijke-notitie-editor p:not([data-list="number"]) {
+  counter-reset: notes-number;
+}
+.rijke-notitie-editor p[data-list="bullet"]::before {
+  content: "•";
+  position: absolute;
+  left: -1.1em;
+}
+.rijke-notitie-editor {
+  counter-reset: notes-number;
+}
+.rijke-notitie-editor p[data-list="number"] {
+  counter-increment: notes-number;
+}
+.rijke-notitie-editor p[data-list="number"]::before {
+  content: counter(notes-number) ".";
+  position: absolute;
+  left: -1.4em;
+}
+.rijke-notitie-weergave {
+  font: inherit;
+  padding: 8px 10px;
+  border-radius: 5px;
+}
+.rijke-notities > small {
+  display: block;
+  margin-top: 5px;
+  color: inherit;
+  opacity: 0.8;
+}
+@media (max-width: 650px) {
+  .rijke-notities {
+    height: 260px;
+    padding: 6px;
+  }
+  .rijke-notitie-acties .werkruimte-knop {
+    padding: 4px;
+  }
+  .rijke-notitie-werkbalk {
+    gap: 3px;
+  }
+}

@@ -1,48 +1,39 @@
 # Integratie — 10 november 2026
 
-De branch `codex/integratie-2026-11-09` en concept-PR [248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248) zijn hervat vanaf het schone overdrachtspunt `0d860e9d`. Alle twaalf controles van dat eerdere punt zijn inmiddels groen.
+## Vast codepunt voor de volgende Windows-testbuild
 
-## Vast codepunt voor de Windows-testbuild
+**`fe0aeb605032b980b6caa074d7d279ab0b698518`** bevat **67 bron-PR's / 76 leveringen**, met daarnaast 17 eerdere PR's binnen de bundels. Bronintake voor deze kandidaat is gesloten. De exacte bronheads, mergecommits en gerichte tests staan in [het register](integratie-2026-11-09.md). De voorbereiding gebeurde op `codex/integratie-kandidaat-2026-11-10`; de gezamenlijke branch blijft `codex/integratie-2026-11-09`, met concept-PR [248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248).
 
-**`4175e5f19bf052e0a03f4a87ab73e710f6f163a7`** bevat 47 bron-PR's / 53 leveringen en 17 eerdere PR's via de bundels. De broncommits en mergecommits staan in [het register](integratie-2026-11-09.md). De Windows-testbuild blijft op dit codepunt; opvolgende commits wijzigen uitsluitend overdrachtsdocumentatie en een testassertie. `main` is niet gewijzigd en er is geen release gepubliceerd.
+Deze versie is **nog niet vrijgegeven voor installatie**. De laatste gecombineerde volledige suite, productiebuild en browsercontroles worden op dit vaste codepunt uitgevoerd. Latere rapportwijzigingen mogen de applicatiecode niet veranderen. `main` en officiële releases blijven ongemoeid.
 
-Vandaag toegevoegd: PR #254 (voorbereiding en adaptieve statistiek), #233/c353 (actueel thema), #246/9de53 (formulekoppelingen en beeldgrenzen), #256 (ingesloten media), #245/551086 (bewijsdocumentatie), #257 (outlineknoppen), #258 (Writer-focus en layout) en #260 (bijschriftvolgorde in mailmerge).
+## Opgenomen wijzigingen
 
-Daarnaast repareert `ee3b09ec` offline opslaan. De documentworker laadt zijn eigen opslagcode en OPC/parserkernen op een klein ingebouwd leeg document, via een afzonderlijke voorbereidingspoort. Het gebruikersdocument wordt hiervoor niet opgeslagen of geflusht. De zelfstandige alleen-lezen viewer blijft lui laden. Een canoniek modulepad voorkomt twee workerregisters in Windows-bundels. Zie [de regressie en broncontrole](2026-11-10-writer-offline-opslag.md).
+De ochtendfix voor offline Writer-opslag bereidt opslagcode en OPC/parser in dezelfde documentworker voor, met behoud van lui laden in de alleen-lezen viewer. De uiteindelijke kandidaat combineert daarnaast Writer-vormen en ingesloten afbeeldingen, efficiëntere spelling/status/cursornavigatie, gerichte story-/stijlcorrecties, Spreadsheet-koppelingen, werkbladkopieën, outlinebediening, DrawingML-groepen, tabellen en DXF-opmaak, Presentatie-media/diagrammen/opmaak kopiëren/rijke notities/dianummers, ODF-overgangsbehoud en gedocumenteerde legacy-formatgrenzen.
 
-## Gecombineerde verificatie
+De Spreadsheet-kern is exact de achtpatch-versie `52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa` (7.745.388 bytes); de binary en alle acht patchhashes zijn onafhankelijk gecontroleerd. Nieuwe negende/tiende patches voor grotere werkboeken zijn niet meegenomen.
 
-- Volledige suite op het vaste codepunt: **2.858 geslaagd, 0 mislukt, 7 overgeslagen, 274 bestanden**.
-- Productiebuild inclusief assets, TypeScript en negen interfacetalen / 21 namespaces slagen; 7.731 sleutels zijn consistent. Bestaande waarschuwingen over ongebruikte taalmappen en grote chunks blijven zichtbaar.
-- De oorspronkelijke Writer-verwijzingsproef slaagt drie keer achtereen met CPU-vertraging 4, inclusief Ctrl+klik, bladwijzers, veldcaches en echte DOCX-opslag. Ook vergelijking invoegen, bewerken en opslaan slaagt onder dezelfde vertraging.
-- De productieproef voor offline bewerken → Ctrl+S / Opslaan als → download → heropenen slaagt zonder een meetbrug in de app. Ook de Linux-desktop-CI slaagt voor deze proef.
-- De volledige mailmergeproef met XLSX, ODS, Database Studio en DOCX, PDF, ZIP, etiketten, enveloppen en print slaagt.
-- Negen outline-bedieningsgevallen, media met MP4/WebM/MP3/M4A/WAV en exact mediabehoud, overgangen/geluid, objectanimaties en vijftien Spreadsheet-object-, koppeling- en beeldgrensgevallen slagen in de gecombineerde productiebuild.
+De werkelijk gevonden Writer-fouten hebben eigen meldingen: [#282](https://github.com/OpenAEC-Foundation/open-office-studio/issues/282), onbedoelde referentiestijl/superscript na Enter achter een noot, is opgenomen via PR #290 / `66018850`; [#284](https://github.com/OpenAEC-Foundation/open-office-studio/issues/284), uitgestelde herlaadnavigatie die een nieuwe selectie overschrijft, via PR #266 / `617f23bf`. De eigenaar heeft beide laatste bronheads expliciet vrijgegeven na volledige tests en echte browser-opslag/heropening. Acceptatie in de nieuwe gecombineerde native Windows-app volgt nog.
 
-Exacte bronrevisies, de CI-snapshot en hashes van de lokale bewijsbestanden staan in [het verificatierapport](integratie-2026-11-10-verificatie.json). De overdracht van 9 november blijft historische documentatie; de daarin genoemde Writer-blokkade is nu gerepareerd en herhaald getest.
+## Verificatie tot de bronfreeze
 
-## CI en Windows-overdracht
+- Eerste gecombineerde suite: 2.916 geslaagd, 0 mislukt, 7 overgeslagen in 280 bestanden (`6bbcf79e`). Productiebuild en de browsergroepen voor opmaak kopiëren, volledige werkbladkopieën en diagrammen slagen.
+- Uitgebreide combinatie met achtpatch-kern, tabellen/DXF, vormen en rijke notities: **3.016 geslaagd, 0 mislukt, 7 overgeslagen in 290 bestanden** (`828dcbeb`). De standaard testlimiet bleef vijf seconden; de lokale volledige run gebruikte één worker wegens hostbelasting.
+- Latere vrijgegeven bronnen zijn afzonderlijk gericht getest: #266 22 tests, #278 30, #272 44, #291 19 en #290 12. Het register bewaart ook alle eerdere gerichte resultaten.
+- Alle Windows/Linux-controles op het voorafgaande centrale punt `d978918d` zijn groen. Dat resultaat geldt niet automatisch voor deze nieuwe code; de huidige CI wordt apart gecontroleerd.
+- Nieuwe issue-afspraken staan in `AGENTS.md`. De screenshots van PR #283 tonen alleen het synthetische native-testdocument; er is geen implementatie van #280/#281 geclaimd.
 
-Desktop Windows en Linux, beide onafhankelijke matrices, de tekstkern, Writer-formaten, ODF en het zelfstandige voorbeeld slagen op het vaste codepunt. De aparte database-Windowsjob had één DOTX-testtimeout op de standaardlimiet van vijf seconden; de lokale suite en desktop Windows slagen voor die route. GitHub weigert een jobherhaling zolang dezelfde workflow nog loopt. De macOS-jobs staan in de wachtrij. Controleer daarom de herhaling of de nieuwe controles van de documentatiecommit; niet alle huidige CI-jobs zijn groen.
+De finale uitslagen worden vastgelegd in [het kandidatenrapport](integratie-kandidaat-2026-11-10.json). De [ochtendverificatie](integratie-2026-11-10-verificatie.json) en de overdracht van 9 november blijven historische momentopnamen.
 
-De buildchat heeft Windows-build `4175e5f1` uit [run 42782489039](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42782489039) apart geïnstalleerd. Starten, typen, ongedaan maken/opnieuw en DOCX opslaan slagen. De gebruiker stopte Computer Use met Escape; native heropenen, native offline en de uitgebreide handmatige regressie zijn daardoor niet afgerond. Dit staat los van de geslaagde geautomatiseerde bron- en browsercontroles. `fullNativeAcceptance` blijft `false`.
+## Opslagcombinaties en browserverdeling
 
-Artifact `13748275606`, `open-office-studio-Windows`, is door de buildchat gecontroleerd:
+De eindcontrole omvat echte offline Ctrl+S/Opslaan als/heropening, verwijzingen en vergelijkingen, de Writer-vormen, Spreadsheet-tabellen/celstijlen/DXF/objecten/kopieën en Presentatie-opmaak/diagrammen/notities. Extra combinatieproeven bewaren rijke notities en gecorrigeerde dianummers in dezelfde echte download, en bewaren een echte tabel met overlappende DXF-regels zonder de oorspronkelijke getallen te veranderen.
 
-- ZIP SHA256: `682edad97bdcbe68a5ccb28f4339d2941b92195bd99bbe7daac8542d2d86f134`.
-- Installer `Open Office Studio_2026.45.4_x64-setup.exe` SHA256: `063146ebc7e7aba13ffafc450a45180e2c4bcdef6957cacb53d4ee484a1a4400`.
-- Geïnstalleerde EXE SHA256: `09c6a1fa33ee668567cd5bb0b0b1edd0ea893466057e032e76163f726ddf9f07`.
+Writer-chat `9d3b` controleert de zes custom-storygevallen en vier nootvervolggevallen tegen dezelfde verse productie-dist; de centrale chat voert die groep niet dubbel uit. Alleen buildchat `0fc9` downloadt/installeert en bedient de native Windows-kandidaat na expliciete vrijgave van één exact SHA. Deze bronfreeze is nog geen installatievrijgave.
 
-De snelkoppeling heet `OpenAEC Office Dev 2026-11-10 - 4175e5f1`. Het verificatierapport bewaart ook het lokale installatiepad en de native testuitkomst.
+## Native ochtendcontrole en resterende grenzen
 
-## Gerichte CI-testcorrectie na het vaste codepunt
+De eerder geïnstalleerde `4175e5f1` passeerde de uitgevoerde regressiestappen voor #188/#189/#196/#199/#205/#209, opslaan/sluiten/heropenen, kopteksten, noten, paginanummers en onafhankelijk bekeken DOCX/PDF. Daarin werd #282 daadwerkelijk gevonden; daarom bleef `fullNativeAcceptance=false`. De nieuwe build moet #282 en #284 opnieuw toetsen. De melding over lege bibliografische custom XML is als niet-blokkerende overmelding geclassificeerd.
 
-Dezelfde DOTX-timeout trad opnieuw op in een bron-PR. Een lokale profielmeting toont dat de generieke `toEqual`-assertie 872 ms en 948 ms besteedt aan twee onveranderde stijldelen van 349.458 en 438.131 bytes. De test gebruikt daarom nu `Buffer.compare` voor exact dezelfde volledige bytegelijkheid van alle onveranderde pakketdelen, met de pakketnaam als foutcontext. De controles op pakketnamen en gewijzigde inhoudstypen blijven bestaan. De tijdslimiet blijft vijf seconden.
+MacOS-jobs kunnen op runnercapaciteit wachten; rapporteer die platformstatus afzonderlijk. Live Y-app-opslag is op verzoek van de gebruiker niet getest. De legacy-/ODF-beperkingen uit de bronrapporten blijven gelden. Brede roadmapissues worden niet automatisch gesloten. De vermeende statusbug #268 is ingetrokken: de oude proef liet Save as open; de gecorrigeerde elf taal-/tabcontroles slagen zonder daarvoor appcode te wijzigen.
 
-Alle 15 sjabloontests slagen. De geïsoleerde DOTX-test daalt lokaal van 1.657 ms naar 65 ms; dit is een testmeting, geen prestatiewinst van de app. De applicatiecode en geïnstalleerde Windows-runtime blijven gelijk aan `4175e5f1`. De volgende CI-run moet bevestigen of de herhaalde time-out hiermee is opgelost.
-
-## Volgende batch
-
-Nieuwe functies uit PR's #261–#267 en #269 blijven buiten deze vaste testbuild. Status en exacte heads staan in `nextBatch` van het verificatierapport. PR #265 vereist eerst een bijgewerkte, geteste bronhead. PR #267 is gestapeld op #262; #269 is een gedeelde renderafhankelijkheid voor later tabelwerk. De eigenaar onderzoekt de al bestaande Writer-statusfout #268 afzonderlijk.
-
-Gebruik deze branch en pas reeds opgenomen bundels niet opnieuw toe. Controleer eerst de actuele CI en de beperkte native testuitkomst van het vaste codepunt. Begin een volgende batch met de afzonderlijk vrijgegeven heads uit de wachtrij. Native Spreadsheet #73/#69/#253 en Writer #56 blijven WIP. De eerdere conversiebeperkingen en de keuze voor lokale tests zonder echte Y-app-opslagomgeving blijven gelden. Brede issues worden niet automatisch gesloten.
+Nieuwe Writer-theme-/compare-, Spreadsheet-grootte-/CF- en formatvervolgen blijven in afzonderlijke branches voor een volgende ronde. Alleen aangetoonde acceptatieblockers kunnen deze gesloten kandidaat nog veranderen. Gebruik de exacte heads uit het register en pas reeds opgenomen bundels niet opnieuw toe.

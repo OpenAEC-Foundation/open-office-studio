@@ -1,4 +1,5 @@
 import {
+  memo,
   useEffect,
   useMemo,
   useRef,
@@ -17,6 +18,7 @@ import type { ObjectPlek, Tekenobject } from "./tekenobjecten";
 import { openObjectVenster } from "./objectBewerking";
 import { objectGeometrie } from "./objectGeometrie";
 import { beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
+import { groepOnderdelen, objectOmvang } from "./groepGeometrie";
 import "./tekenobjecten.css";
 
 /** De engine tekent grafieken; deze laag tekent de andere DrawingML-objecten. */
@@ -52,15 +54,9 @@ export function TekenobjectLaag({
       onder = 0;
     for (const o of objecten) {
       const p = objectGeometrie(api.handle, o),
-        hoek = (o.rotatie * Math.PI) / 180;
-      const w =
-        Math.abs(p.breedte * Math.cos(hoek)) +
-        Math.abs(p.hoogte * Math.sin(hoek));
-      const h =
-        Math.abs(p.breedte * Math.sin(hoek)) +
-        Math.abs(p.hoogte * Math.cos(hoek));
-      rechts = Math.max(rechts, p.x + (p.breedte + w) / 2);
-      onder = Math.max(onder, p.y + (p.hoogte + h) / 2);
+        b = objectOmvang(o, p.breedte, p.hoogte);
+      rechts = Math.max(rechts, p.x + b.rechts);
+      onder = Math.max(onder, p.y + b.onder);
     }
     return { rechts, onder };
   }, [api.handle, blad, geometry.layout.version]);
@@ -119,20 +115,9 @@ function ObjectOpRaster({
     w: number;
     h: number;
   } | null>(null);
-  const url = useMemo(
-    () =>
-      o.media && o.mime && beeldVoorbeeldToegestaan(o.media)
-        ? URL.createObjectURL(
-            new Blob([new Uint8Array(o.media)], { type: o.mime }),
-          )
-        : null,
+  const geldigBeeld = useMemo(
+    () => !!o.media && !!o.mime && beeldVoorbeeldToegestaan(o.media),
     [o.media, o.mime],
-  );
-  useEffect(
-    () => () => {
-      if (url) URL.revokeObjectURL(url);
-    },
-    [url],
   );
   const zoom = g.layout.zoom,
     h = api.handle,
@@ -303,7 +288,7 @@ function ObjectOpRaster({
   return (
     <div
       ref={element}
-      className={`rekenblad-tekenobject${o.soort === "onbekend" || (o.soort === "afbeelding" && !url) ? " is-onbekend" : ""}`}
+      className={`rekenblad-tekenobject${o.soort === "onbekend" || (o.soort === "afbeelding" && !geldigBeeld) ? " is-onbekend" : ""}`}
       data-object-id={o.id}
       role="button"
       tabIndex={0}
@@ -336,17 +321,12 @@ function ObjectOpRaster({
         }
       }}
     >
-      {url ? (
-        <Afbeelding object={o} url={url} />
-      ) : o.soort === "vorm" ? (
-        <Vorm object={o} zoom={zoom} />
-      ) : (
-        <span>
-          {o.naam}
-          <br />
-          {t("objects.previewLimited")}
-        </span>
-      )}
+      <ObjectInhoud
+        object={o}
+        zoom={zoom}
+        breedte={preview?.w ?? breedte}
+        hoogte={preview?.h ?? hoogte}
+      />
       {!uit && (
         <button
           className="rekenblad-objectgreep"
@@ -358,17 +338,136 @@ function ObjectOpRaster({
     </div>
   );
 }
-function Vorm({ object: o, zoom }: { object: Tekenobject; zoom: number }) {
+function ObjectInhoud({
+  object: o,
+  zoom,
+  breedte,
+  hoogte,
+}: {
+  object: Tekenobject;
+  zoom: number;
+  breedte: number;
+  hoogte: number;
+}) {
+  if (o.soort === "afbeelding") return <ObjectBeeld object={o} />;
+  if (o.soort === "groep" && o.groep)
+    return (
+      <GroepInhoud
+        groep={o.groep}
+        breedte={breedte * zoom}
+        hoogte={hoogte * zoom}
+        flipX={o.spiegelX}
+        flipY={o.spiegelY}
+        naam={o.naam}
+      />
+    );
+  if (o.soort === "vorm")
+    return <Vorm object={o} zoom={zoom} breedte={breedte} hoogte={hoogte} />;
+  return <Onbekend naam={o.naam} />;
+}
+function Onbekend({ naam }: { naam: string }) {
+  const { t } = useTranslation("spreadsheet");
+  return (
+    <span>
+      {naam}
+      <br />
+      {t("objects.previewLimited")}
+    </span>
+  );
+}
+function ObjectBeeld({ object: o }: { object: Tekenobject }) {
+  const url = useMemo(
+    () =>
+      o.media && o.mime && beeldVoorbeeldToegestaan(o.media)
+        ? URL.createObjectURL(
+            new Blob([new Uint8Array(o.media)], { type: o.mime }),
+          )
+        : null,
+    [o.media, o.mime],
+  );
+  useEffect(
+    () => () => {
+      if (url) URL.revokeObjectURL(url);
+    },
+    [url],
+  );
+  return url ? <Afbeelding object={o} url={url} /> : <Onbekend naam={o.naam} />;
+}
+// Scrolling moves only the outer frame; group descendants retain their DOM and URLs.
+const GroepInhoud = memo(function GroepInhoud({
+  groep,
+  breedte,
+  hoogte,
+  flipX,
+  flipY,
+  naam,
+}: {
+  groep: NonNullable<Tekenobject["groep"]>;
+  breedte: number;
+  hoogte: number;
+  flipX: boolean;
+  flipY: boolean;
+  naam: string;
+}) {
+  const onderdelen = groepOnderdelen(groep, breedte, hoogte, flipX, flipY);
+  if (!onderdelen) return <Onbekend naam={naam} />;
+  return (
+    <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          transformOrigin: "0 0",
+        }}
+      >
+        {onderdelen.map(({ object: o, matrix }, i) => (
+          <div
+            key={`${o.id}:${i}`}
+            className={`rekenblad-tekenobject${o.soort === "onbekend" ? " is-onbekend" : ""}`}
+            data-group-child={o.id}
+            style={{
+              left: 0,
+              top: 0,
+              width: o.plek.breedte,
+              height: o.plek.hoogte,
+              transformOrigin: "0 0",
+              transform: `matrix(${matrix.join(",")})`,
+              pointerEvents: "none",
+            }}
+          >
+            <ObjectInhoud
+              object={o}
+              zoom={1}
+              breedte={o.plek.breedte}
+              hoogte={o.plek.hoogte}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+});
+function Vorm({
+  object: o,
+  zoom,
+  breedte: w,
+  hoogte: h,
+}: {
+  object: Tekenobject;
+  zoom: number;
+  breedte: number;
+  hoogte: number;
+}) {
   const pr = {
     fill: o.vulling,
     stroke: o.lijn,
     strokeWidth: o.lijndikte,
-    vectorEffect: "non-scaling-stroke",
   };
   return (
     <>
       <svg
-        viewBox="0 0 100 100"
+        viewBox={`0 0 ${w} ${h}`}
         preserveAspectRatio="none"
         aria-hidden="true"
         style={{
@@ -376,20 +475,29 @@ function Vorm({ object: o, zoom }: { object: Tekenobject; zoom: number }) {
         }}
       >
         {o.vorm === "ellipse" ? (
-          <ellipse cx="50" cy="50" rx="49" ry="49" {...pr} />
+          <ellipse
+            cx={w / 2}
+            cy={h / 2}
+            rx={Math.max(0.1, w / 2 - 1)}
+            ry={Math.max(0.1, h / 2 - 1)}
+            {...pr}
+          />
         ) : o.vorm === "triangle" ? (
-          <polygon points="50,1 99,99 1,99" {...pr} />
+          <polygon points={`${w / 2},1 ${w - 1},${h - 1} 1,${h - 1}`} {...pr} />
         ) : o.vorm === "diamond" ? (
-          <polygon points="50,1 99,50 50,99 1,50" {...pr} />
+          <polygon
+            points={`${w / 2},1 ${w - 1},${h / 2} ${w / 2},${h - 1} 1,${h / 2}`}
+            {...pr}
+          />
         ) : o.vorm === "line" ? (
-          <line x1="0" y1="0" x2="100" y2="100" {...pr} />
+          <line x1="0" y1="0" x2={w} y2={h} {...pr} />
         ) : (
           <rect
             x="1"
             y="1"
-            width="98"
-            height="98"
-            rx={o.vorm === "roundRect" ? 12 : 0}
+            width={Math.max(0, w - 2)}
+            height={Math.max(0, h - 2)}
+            rx={o.vorm === "roundRect" ? Math.min(w, h) * 0.12 : 0}
             {...pr}
           />
         )}

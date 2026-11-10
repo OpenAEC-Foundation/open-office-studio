@@ -4,6 +4,9 @@ import { configureDefaultFonts } from "@betteroffice/docx/layout";
 import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
 import { PresentatieOpenwijze } from "./presentatie/PresentatieOpenwijze";
+import { werkDianummersBij } from "./presentatie/dianummers";
+import { metRijkeNotities } from "./presentatie/notitiesSessie";
+import { RijkeNotitiesPaneel } from "./presentatie/RijkeNotitiesPaneel";
 import type { PptxFontFace } from "@betteroffice/pptx";
 import "@betteroffice/docx-react/styles.css";
 import { useTranslation } from "react-i18next";
@@ -23,6 +26,8 @@ import {
 } from "./lint/editorApi";
 import { bereidStructuurBeveiliging } from "./rekenblad/structuurbeveiliging";
 import { installeerValidatie } from "./rekenblad/gegevensvalidatie";
+import { laadTabellen } from "./rekenblad/tabellen";
+import { bereidTabelweergave } from "./rekenblad/tabelweergave";
 import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
 import { installeerBladBeveiliging, installeerBeveiligdeSelectie } from "./rekenblad/bladbeveiliging";
 import { bereidVoorwaardelijkeWeergave } from "./rekenblad/voorwaardelijke-weergave";
@@ -104,6 +109,7 @@ export default function OfficeEditor(props: EditorProps) {
   const [navigatie, setNavigatie] = useState(false);
   const [documentGereed, setDocumentGereed] = useState(false);
   const rekenbladHost = useRef<HTMLDivElement>(null);
+  const presentatieNotitieHost = useRef<HTMLDivElement>(null);
   const [rekenbladApi, setRekenbladApi] = useState<XlsxEditorApi | null>(null);
   const [diaBreedte, setDiaBreedte] = useState<number>();
   const [presentatieApi, setPresentatieApi] = useState<PptxEditorApi | null>(
@@ -139,7 +145,7 @@ export default function OfficeEditor(props: EditorProps) {
         if (!presentatieApi)
           throw new Error(i18next.t("shell:errors.presentationNotReady"));
         await presentatieApi.flushPendingInput();
-        return presentatieApi.save();
+        return werkDianummersBij(await presentatieApi.save());
       }
       if (!docx.current?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
@@ -330,6 +336,12 @@ export default function OfficeEditor(props: EditorProps) {
       installeerBladBeveiliging(api.handle, herladenRecent.current.bytes);
       installeerBeveiligdeSelectie(api);
       try {
+        laadTabellen(api.handle, herladenRecent.current.bytes);
+        bereidTabelweergave(api.handle, herladenRecent.current.bytes);
+      } catch {
+        // Source XML remains in the package if table metadata cannot be read.
+      }
+      try {
         laadCelnotities(api.handle, api.save());
       } catch {
         // Een onleesbare notitie blokkeert het raster niet.
@@ -382,7 +394,12 @@ export default function OfficeEditor(props: EditorProps) {
     [props.registreer],
   );
   const gereedPptx = useCallback(
-    (api: PptxEditorApi) => {
+    (nativeApi: PptxEditorApi) => {
+      const api = metRijkeNotities(
+        nativeApi,
+        herladenRecent.current.bytes,
+        () => recent.current.gewijzigd(),
+      );
       // EMU naar CSS-pixels bij 96 dpi.
       const snapshot = api.handle.snapshot();
       noteerDiaAantal(api.handle, snapshot.slides.length);
@@ -395,7 +412,7 @@ export default function OfficeEditor(props: EditorProps) {
       });
       props.registreer(async () => {
         await api.flushPendingInput();
-        return api.save();
+        return werkDianummersBij(await api.save());
       });
     },
     [props.registreer],
@@ -501,6 +518,7 @@ export default function OfficeEditor(props: EditorProps) {
       <EditorApi.Provider value={apis}>
           <DocumentLettertypen.Provider value={documentLettertypen}>
         <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
+          <div className="office-presentatie-notitiehost" ref={presentatieNotitieHost}>
           <PptxEditor
             legacySyncApi
             key={herladen.sleutel}
@@ -527,6 +545,14 @@ export default function OfficeEditor(props: EditorProps) {
               />
             }
           />
+          {presentatieApi && (
+            <RijkeNotitiesPaneel
+              api={presentatieApi}
+              host={presentatieNotitieHost}
+              opslaan={props.opslaan}
+            />
+          )}
+          </div>
           {presentatieApi && (
             <PresentatieOpenwijze
               api={presentatieApi}

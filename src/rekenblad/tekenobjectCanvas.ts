@@ -5,6 +5,7 @@ import { objectGeometrie } from "./objectGeometrie";
 import { beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 import { opnameVan } from "../export/pdf/opname";
 import i18next from "../i18n/config";
+import { groepOnderdelen, objectOmvang } from "./groepGeometrie";
 
 function vorm(
   c: CanvasRenderingContext2D,
@@ -60,6 +61,10 @@ function placeholder(
   breedte: number,
   hoogte: number,
 ) {
+  c.save();
+  c.beginPath();
+  c.rect(0, 0, breedte, hoogte);
+  c.clip();
   c.fillStyle = "#eef0f3";
   c.fillRect(0, 0, breedte, hoogte);
   c.strokeStyle = "#697181";
@@ -73,6 +78,7 @@ function placeholder(
     32,
     Math.max(1, breedte - 12),
   );
+  c.restore();
 }
 function tekst(
   c: CanvasRenderingContext2D,
@@ -129,7 +135,8 @@ function tekst(
         : 8;
   c.save();
   c.beginPath();
-  c.rect(8, 8, breed, Math.max(0, h - 16));
+  // DOM overflow clips to the shape frame, including its padding area.
+  c.rect(0, 0, w, h);
   c.clip();
   c.textBaseline = "alphabetic";
   for (const r of regels) {
@@ -158,6 +165,90 @@ function tekst(
   }
   c.restore();
 }
+async function tekenInhoud(
+  c: CanvasRenderingContext2D,
+  o: Tekenobject,
+  w: number,
+  h: number,
+) {
+  if (o.soort === "groep" && o.groep) {
+    const onderdelen = groepOnderdelen(o.groep, w, h, o.spiegelX, o.spiegelY);
+    if (!onderdelen) {
+      placeholder(c, o, w, h);
+      return;
+    }
+    c.save();
+    try {
+      for (const { object: kind, matrix } of onderdelen) {
+        const p = kind.plek;
+        c.save();
+        try {
+          c.transform(...matrix);
+          await tekenInhoud(c, kind, p.breedte, p.hoogte);
+        } finally {
+          c.restore();
+        }
+      }
+    } finally {
+      c.restore();
+    }
+  } else if (
+    o.soort === "afbeelding" &&
+    o.media &&
+    o.mime &&
+    beeldVoorbeeldToegestaan(o.media)
+  ) {
+    let beeld: ImageBitmap;
+    try {
+      beeld = await createImageBitmap(
+        new Blob([new Uint8Array(o.media)], { type: o.mime }),
+      );
+    } catch {
+      placeholder(c, o, w, h);
+      return;
+    }
+    c.save();
+    try {
+      c.beginPath();
+      c.rect(0, 0, w, h);
+      c.clip();
+      if (o.spiegelX) {
+        c.translate(w, 0);
+        c.scale(-1, 1);
+      }
+      if (o.spiegelY) {
+        c.translate(0, h);
+        c.scale(1, -1);
+      }
+      const crop = o.uitsnede ?? { links: 0, rechts: 0, boven: 0, onder: 0 };
+      const cw = Math.max(0.001, 1 - crop.links - crop.rechts),
+        ch = Math.max(0.001, 1 - crop.boven - crop.onder);
+      c.drawImage(
+        beeld,
+        (-crop.links * w) / cw,
+        (-crop.boven * h) / ch,
+        w / cw,
+        h / ch,
+      );
+    } finally {
+      c.restore();
+      if (!opnameVan(c.canvas)) beeld.close();
+    }
+  } else if (o.soort === "vorm") {
+    c.save();
+    if (o.spiegelX) {
+      c.translate(w, 0);
+      c.scale(-1, 1);
+    }
+    if (o.spiegelY) {
+      c.translate(0, h);
+      c.scale(1, -1);
+    }
+    vorm(c, o, w, h);
+    c.restore();
+    tekst(c, o, w, h);
+  } else placeholder(c, o, w, h);
+}
 export async function tekenObjectenOpCanvas(
   c: CanvasRenderingContext2D,
   h: Pick<WorkbookHandle, "cellPosition">,
@@ -179,12 +270,12 @@ export async function tekenObjectenOpCanvas(
     const p = objectGeometrie(h, o),
       px = p.x - oorsprong.x,
       py = p.y - oorsprong.y;
-    const marge = (p.breedte + p.hoogte) / 2;
+    const b = objectOmvang(o, p.breedte, p.hoogte);
     if (
-      px + p.breedte + marge < 0 ||
-      py + p.hoogte + marge < 0 ||
-      px - marge > breedte ||
-      py - marge > hoogte
+      px + b.rechts < 0 ||
+      py + b.onder < 0 ||
+      px + b.links > breedte ||
+      py + b.boven > hoogte
     )
       continue;
     c.save();
@@ -196,69 +287,7 @@ export async function tekenObjectenOpCanvas(
       c.translate(px + p.breedte / 2, py + p.hoogte / 2);
       c.rotate((o.rotatie * Math.PI) / 180);
       c.translate(-p.breedte / 2, -p.hoogte / 2);
-      if (
-        o.soort === "afbeelding" &&
-        o.media &&
-        o.mime &&
-        beeldVoorbeeldToegestaan(o.media)
-      ) {
-        let beeld: ImageBitmap;
-        try {
-          beeld = await createImageBitmap(
-            new Blob([new Uint8Array(o.media)], { type: o.mime }),
-          );
-        } catch {
-          placeholder(c, o, p.breedte, p.hoogte);
-          continue;
-        }
-        try {
-          c.save();
-          c.beginPath();
-          c.rect(0, 0, p.breedte, p.hoogte);
-          c.clip();
-          if (o.spiegelX) {
-            c.translate(p.breedte, 0);
-            c.scale(-1, 1);
-          }
-          if (o.spiegelY) {
-            c.translate(0, p.hoogte);
-            c.scale(1, -1);
-          }
-          const crop = o.uitsnede ?? {
-              links: 0,
-              rechts: 0,
-              boven: 0,
-              onder: 0,
-            },
-            w = Math.max(0.001, 1 - crop.links - crop.rechts),
-            ht = Math.max(0.001, 1 - crop.boven - crop.onder);
-          c.drawImage(
-            beeld,
-            (-crop.links * p.breedte) / w,
-            (-crop.boven * p.hoogte) / ht,
-            p.breedte / w,
-            p.hoogte / ht,
-          );
-          c.restore();
-        } finally {
-          if (!opnameVan(c.canvas)) beeld.close();
-        }
-      } else if (o.soort === "vorm") {
-        c.save();
-        if (o.spiegelX) {
-          c.translate(p.breedte, 0);
-          c.scale(-1, 1);
-        }
-        if (o.spiegelY) {
-          c.translate(0, p.hoogte);
-          c.scale(1, -1);
-        }
-        vorm(c, o, p.breedte, p.hoogte);
-        c.restore();
-        tekst(c, o, p.breedte, p.hoogte);
-      } else {
-        placeholder(c, o, p.breedte, p.hoogte);
-      }
+      await tekenInhoud(c, o, p.breedte, p.hoogte);
     } finally {
       c.restore();
     }

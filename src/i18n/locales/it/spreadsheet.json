@@ -160,9 +160,14 @@
     "toEnd": "(sposta alla fine)",
     "makeCopy": "Crea una copia",
     "moveUnavailable": "Il motore di calcolo non può ancora spostare i fogli; viene creata una copia.",
-    "copyScope": "La copia riceve il contenuto con formule, formattazione, larghezze di colonna, altezze di riga, celle unite e riquadri bloccati; grafici, immagini e commenti non vengono copiati.",
+    "copyScope": "La copia conserva celle, formattazione, impostazioni del foglio, grafici, immagini, note, commenti e collegamenti. La cartella di lavoro viene ricaricata e la cronologia di annullamento viene cancellata. Le macro e i grafici pivot non possono ancora essere copiati.",
     "copy": "Copia",
-    "structureLocked": "La struttura della cartella di lavoro è protetta. Non è possibile aggiungere, eliminare, spostare o rinominare i fogli."
+    "structureLocked": "La struttura della cartella di lavoro è protetta. Non è possibile aggiungere, eliminare, spostare o rinominare i fogli.",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "Formato celle › Numero",
@@ -647,7 +652,9 @@
       "link-file-size": "The linked document must be nonempty and at most 100 MB.",
       "failed": "The linked document could not be opened."
     },
-    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview."
+    "previewLimited": "This object is preserved. Its full appearance is not supported in this preview.",
+    "formulaTargetUnavailable": "Impossibile determinare la destinazione del collegamento di questa formula. Controlla la formula o usa un collegamento ipertestuale esplicito.",
+    "groupInfo": "Oggetto raggruppato. Sposta o ridimensiona l’intero gruppo."
   },
   "conditional": {
     "title": "Conditional formatting",
@@ -802,5 +809,91 @@
     "previous": "Previous comment",
     "next": "Next comment",
     "reloadHint": "Saving or deleting a discussion reloads the workbook. Earlier undo steps will be cleared."
+  },
+  "styles": {
+    "group": "Styles",
+    "title": "Cell styles",
+    "range": "Cell range",
+    "choose": "Choose a style",
+    "preview": "Style preview",
+    "new": "New style from active cell",
+    "modify": "Modify style",
+    "fromCell": "Create a style from {{cell}}",
+    "editing": "Modify {{name}}",
+    "name": "Style name",
+    "format": "Formatting",
+    "fontName": "Font",
+    "fontSize": "Font size",
+    "bold": "Bold",
+    "italic": "Italic",
+    "textColor": "Text colour",
+    "useFill": "Use background colour",
+    "fillColor": "Background colour",
+    "numberFormat": "Number format code",
+    "existingFormat": "Keep the existing number format",
+    "reloadHint": "Applying or saving a cell style clears earlier undo steps.",
+    "apply": "Apply style",
+    "builtins": {
+      "0": "Normal",
+      "16": "Heading 1",
+      "25": "Total",
+      "26": "Good",
+      "27": "Bad",
+      "28": "Neutral"
+    },
+    "errors": {
+      "invalidName": "Enter a unique style name of at most 255 characters.",
+      "duplicateName": "A style with this name already exists.",
+      "missingStyle": "This style is no longer available.",
+      "damagedStyles": "The workbook contains inconsistent style definitions. Its original data has been kept.",
+      "selectionTooLarge": "Select at most 100,000 cells.",
+      "invalidFormat": "Enter a valid font, colour, font size (1–409) and number format code.",
+      "protectedSheet": "Sheet protection does not allow changing these cell formats.",
+      "noSelection": "Select a cell before opening cell styles.",
+      "invalidRange": "Enter a valid cell range on this worksheet."
+    }
+  },
+  "tables": {
+    "group": "Tables",
+    "title": "Format as table",
+    "name": "Table name",
+    "range": "Header and data range (without totals)",
+    "style": "Table style",
+    "existingStyle": "Keep current style: {{style}}",
+    "styles": {
+      "blue": "Blue",
+      "green": "Green",
+      "orange": "Orange",
+      "none": "No table style"
+    },
+    "kop": "Header row",
+    "totaal": "Totals row",
+    "banden": "Banded rows",
+    "filters": "Filter buttons in headers",
+    "totals": "Totals by column",
+    "functions": {
+      "none": "No calculation",
+      "sum": "Sum",
+      "count": "Count",
+      "average": "Average",
+      "min": "Minimum",
+      "max": "Maximum"
+    },
+    "growHint": "Type directly beside or below a table to expand it. With a totals row, insert a row above the totals to add data.",
+    "errors": {
+      "invalidName": "Enter a valid table name.",
+      "duplicateName": "This name already exists.",
+      "invalidRange": "Select a valid range containing data.",
+      "overlap": "The range overlaps another table or filter.",
+      "mergedCells": "Unmerge the cells before creating a table.",
+      "protectedSheet": "Sheet protection prevents this operation.",
+      "occupiedTotal": "The new totals row contains data. Choose another range or move those cells first.",
+      "missingTable": "The table no longer exists.",
+      "damagedTable": "The table metadata could not be read safely.",
+      "tooLarge": "Use a range of at most 100,000 cells.",
+      "renameTable": "Renaming existing tables is not supported.",
+      "unsupportedStyle": "Choose another table style."
+    },
+    "reloadHint": "Saving table settings or applying a table filter clears earlier undo steps."
   }
 }

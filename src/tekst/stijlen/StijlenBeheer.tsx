@@ -26,7 +26,6 @@ import type {
   Theme,
   TableFormatting,
 } from "@betteroffice/docx/types/document";
-import i18next from "../../i18n/config";
 import { useTranslation } from "react-i18next";
 import { RibbonFout } from "../../Ribbon";
 import { useEditorApi, zichtbaarElement } from "../../lint/editorApi";
@@ -47,7 +46,7 @@ import { pasTabelStijlToe } from "./beheer";
 import { zetMarkering } from "../pagina/ui/engine";
 import { pasAlineasToe } from "../opmaak";
 import { StijlEditor } from "./StijlEditor";
-import { metHeleAlinea, tekenstijlDelta } from "./toepassen";
+import { metHeleAlinea, pasTekenstijlToe as tekenstijl } from "./toepassen";
 import { Herhaalmelding } from "../bewerken/herhaalmelding";
 import { StijlenVenster } from "./StijlenVenster";
 import { StijlSets } from "./StijlSets";
@@ -119,29 +118,6 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
   return { document, selectie, versie };
 }
 
-/**
- * Een tekenstijl op de selectie. De bewerkingslaag van de engine (0.4.3)
- * schrijft geen `w:rStyle`; daarom zetten we de opmaak van de stijl (met
- * zijn basisstijlen) als directe opmaak, met ongedaan maken.
- */
-function tekenstijl(ref: DocxEditorRef, stijlen: StyleDefinitions | undefined, styleId: string, thema?: Theme) {
-  const editor = ref.getEditorRef();
-  const sessie = editor?.getYrsSession();
-  const bereik = editor?.getSelectionRange();
-  if (!editor || !sessie || !bereik || bereik.from === bereik.to)
-    throw new Error(i18next.t("writer:styles.errors.selectTextFirst"));
-  const van = editor.displayPositionToYrsLoc(Math.min(bereik.from, bereik.to));
-  const tot = editor.displayPositionToYrsLoc(Math.max(bereik.from, bereik.to));
-  if (!van || !tot || van.story !== tot.story)
-    throw new Error(i18next.t("writer:styles.errors.cannotApplyHere"));
-  const delta = tekenstijlDelta(stijlen, styleId, thema);
-  sessie.formatRange(
-    { story: van.story, start: { paraId: van.paraId, offset: van.offset }, end: { paraId: tot.paraId, offset: tot.offset } },
-    delta,
-  );
-  editor.syncYrsInputState(true, [van.story]);
-}
-
 /** Wacht tot de editor na herladen een nieuwe engine-handle heeft. */
 async function nieuweEditor(api: () => DocxEditorRef | null, oud: DocxEditorRef | null) {
   for (let n = 0; n < 100; n++) {
@@ -161,7 +137,9 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
   const herhaalbaar = useContext(Herhaalmelding);
   const opdrachten = useDocxCommands();
   const stijlOpdracht = useDocxCommand("paragraphStyle");
-  const bewerkbaar = useDocxCommand("insertPageBreak").state.enabled;
+  // Page breaks are forbidden in header/footer and note stories, while their
+  // text and styles remain editable. Use an inline formatting capability.
+  const bewerkbaar = useDocxCommand("bold").state.enabled;
   const { document, selectie } = useDocumentStaat(api);
   const [venster, setVenster] = useState<StijlVenster | null>(null);
   const recent = useRef({ selectie, document });

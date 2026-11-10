@@ -72,7 +72,18 @@ export function useObjectenGroep(uit: boolean) {
         bereik,
       });
       const adres = link?.location ?? link?.externalTarget;
-      if (!link || !adres) return;
+      if (!link || !adres) {
+        const cel = api.handle.cell(p.sheet, p.row, p.col);
+        if (
+          cel.isFormula &&
+          /^=\s*(?:_xlfn\.)?HYPERLINK\s*\(/i.test(cel.input)
+        ) {
+          e.preventDefault();
+          e.stopPropagation();
+          setFout(t("objects.formulaTargetUnavailable"));
+        }
+        return;
+      }
       const soort = link.location
         ? "cel"
         : /^(https?:|mailto:)/i.test(adres)
@@ -87,7 +98,7 @@ export function useObjectenGroep(uit: boolean) {
     };
     host.addEventListener("click", klik, true);
     return () => host.removeEventListener("click", klik, true);
-  }, [api, bestandKoppeling, zichtbaar]);
+  }, [api, bestandKoppeling, zichtbaar, t]);
   useEffect(() => {
     setDoel(null);
     setObjectDoel(null);
@@ -411,7 +422,7 @@ function ObjectVenster({
             />
           </label>
         ))}
-        {!afbeelding && origineel?.soort !== "onbekend" && (
+        {!afbeelding && (!origineel || origineel.soort === "vorm") && (
           <>
             {!origineel && (
               <label>
@@ -479,6 +490,9 @@ function ObjectVenster({
           </>
         )}
         <p role="note">{t("objects.reloadHistory")}</p>
+        {origineel?.soort === "groep" && (
+          <p role="note">{t("objects.groupInfo")}</p>
+        )}
         {(origineel?.soort === "onbekend" ||
           (origineel?.soort === "afbeelding" &&
             (!origineel.mime ||

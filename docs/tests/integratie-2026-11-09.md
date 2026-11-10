@@ -59,6 +59,29 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#257](https://github.com/OpenAEC-Foundation/open-office-studio/pull/257) | `3bd94cf7a827602c068462938297ef1d1fa4b33c` | `5c9b4f13ae00253d1dc586cbbe7d931b370ed857` | Spreadsheet header outline controls |
 | [#258](https://github.com/OpenAEC-Foundation/open-office-studio/pull/258) | `b107f8f9c2234556d69ca9535a02b01ea8ee0f57` | `4843eb503dd797daa9cc3c8a4f8584033cce67c6` | Writer reference focus and layout retry |
 | [#260](https://github.com/OpenAEC-Foundation/open-office-studio/pull/260) | `e209adfcb81bf81205337c94526cec4b6876eae6` | `8a775cbb09b7ba409e16bd83c8b3c480f379f8f7` | Writer merged caption sequence order |
+| [#261](https://github.com/OpenAEC-Foundation/open-office-studio/pull/261) | `98b8dffcb57941bc7f062f7ebf3686727a74d2b5` | `514265522edc045a3b27973c5226ea20ff36f917` | Presentation object format painter |
+| [#262](https://github.com/OpenAEC-Foundation/open-office-studio/pull/262) | `49789270eed564fe5856316ca2c88bf50ced4460` | `835601a16e18e9ff672242675f40894e8488f587` | Writer visible spelling page reuse |
+| [#263](https://github.com/OpenAEC-Foundation/open-office-studio/pull/263) | `2eb45a3953835db8b57b4ee2273c821169cad45d` | `d56740da10dc89eaeafe8963ec65f1aafc696103` | Spreadsheet native formula hyperlink queries |
+| [#264](https://github.com/OpenAEC-Foundation/open-office-studio/pull/264) | `90659493b42b22dabf0efce6c45aea181e7dd2cb` | `bbea3155779c799862acc66b792e3cd3cb2e5b37` | Spreadsheet independent sheet relationship graph copy |
+| [#265](https://github.com/OpenAEC-Foundation/open-office-studio/pull/265) | `47643263a3aa34b0cd9cd2a41adbc4c1b5c8c8e8` | `e38910931eb351994fdd981dd96342277cc4dda8` | Presentation preserved diagrams |
+| [#267](https://github.com/OpenAEC-Foundation/open-office-studio/pull/267) | `0e58e6f363af73f395025d82fd8c73f319a89f37` | `8dc984d61fdff3bd8334d02c9652cb20dbdfbd1d` | Writer native session status subscriptions |
+| [#269](https://github.com/OpenAEC-Foundation/open-office-studio/pull/269) | `346927430297654ccbe995b51dcd6c581bdc4eff` | `3731f25ba3000e1f2927171cdd49bafd314dab11` | Spreadsheet shared render projection registration |
+| [#270](https://github.com/OpenAEC-Foundation/open-office-studio/pull/270) | `671a7913492efeca61e27d6a4a7b6fba033df9db` | `949e511afad54af8bda20b7e3d3e5f94da87c92f` | Document pinned selection-format kernel comparison |
+| [#271](https://github.com/OpenAEC-Foundation/open-office-studio/pull/271) | `84709329742aa901e908a4264f75a1f8c5abacb8` | `607ece964943462d7018d827978ccd98517735e2` | Shared Spreadsheet differential-format metadata parser |
+| [#267](https://github.com/OpenAEC-Foundation/open-office-studio/pull/267) | `a8cb9aa49cb240170df47b4fe260eba7c401c0c9` | `fe28d86a7b5c6233e8a439a0169a48a95a9352fd` | Correct Writer status probe modal cancellation and tab-switch verification |
+| [#270](https://github.com/OpenAEC-Foundation/open-office-studio/pull/270) | `14cfe8b66d33eccf78c60541dd2d4ff5e27be09e` | `8a06c2db4e8181d5b3e28b162d362a54dd835cde` | Document additional native selection-format benchmark evidence |
+| [#263](https://github.com/OpenAEC-Foundation/open-office-studio/pull/263) | `7a90cb16da652f1d560817db533607513c4583ad` | `f5542db45ffdce029670a68713c70bdc12d987c9` | Spreadsheet nested DrawingML group geometry and source preservation |
+| [#274](https://github.com/OpenAEC-Foundation/open-office-studio/pull/274) | `2e62fc279b7fad6ead32ddc4cf090aa41a86dda0` | `543ebcdb2d428db29985a3ab9d8650e04210414f` | Presentation stored slide-number fields after structural edits |
+| [#275](https://github.com/OpenAEC-Foundation/open-office-studio/pull/275) | `9afc96b57be94cda01a0a1da221bc10dd7e2c85a` | `fee8b45e6280b9fe63e1b97e90c126f1cd3c9cc8` | Presentation rich notes with focused-save and independent drafts |
+| [#273](https://github.com/OpenAEC-Foundation/open-office-studio/pull/273) | `1ec64f2758dcc8767babe174019904a816db4691` | `a21e185ec7de755650f150bbb9ebb91b9ffb4421` | Spreadsheet eight-patch native tables and named cell styles |
+| [#276](https://github.com/OpenAEC-Foundation/open-office-studio/pull/276) | `97cab703dda702215bf6b9b3fa262b82c9097d89` | `122e3d5769f21bd6ae5c585382e1652d2dc34eab` | Writer editable drawings and embedded-picture media fallback |
+| [#277](https://github.com/OpenAEC-Foundation/open-office-studio/pull/277) | `74bd7432b79b9fb4ee580f42a592beee0769e140` | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | Spreadsheet conditional-format differential style rendering |
+| [#266](https://github.com/OpenAEC-Foundation/open-office-studio/pull/266) | `617f23bf7dd0d258f337ec54075139ef38b01a5e` | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | Writer story parts, style selection and one-shot document reload navigation |
+| [#278](https://github.com/OpenAEC-Foundation/open-office-studio/pull/278) | `ddb5c063289f557467a8ad971077220d13788fe8` | `8b4eafc98d6973dfbcb5e0639448c0f80a991d5c` | Presentation ODF transition timing, direction and shared audio round trips |
+| [#283](https://github.com/OpenAEC-Foundation/open-office-studio/pull/283) | `211822ced0231c4eb8862087a2d6ba2584c98243` | `708441dbc0dc23b77d98fcb3a774cf0df6fd24e3` | Focused issue reporting and synthetic Writer-theme screenshot evidence; documentation-only review |
+| [#272](https://github.com/OpenAEC-Foundation/open-office-studio/pull/272) | `031a7b0d21c1624b1c810b4ee3690347ee570d08` | `c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77` | Document format coverage, honest legacy limitations and empty-conversion warnings |
+| [#291](https://github.com/OpenAEC-Foundation/open-office-studio/pull/291) | `56fbdccbbcc9df88215a8d92c09a6cea6340afef` | `c7117ba4eeb35880209c1f04a01fd043f45d6510` | Writer scoped paragraph reads for cursor navigation with raw-story semantics |
+| [#290](https://github.com/OpenAEC-Foundation/open-office-studio/pull/290) | `66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c` | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | Writer note continuation preserves body formatting after note reference Enter |
 
 ## Earlier fixes included in bundles
 
@@ -136,17 +159,34 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr258-targeted | `4843eb503dd797daa9cc3c8a4f8584033cce67c6` | 21 | 0 | 0 |
 | pr260-targeted | `8a775cbb09b7ba409e16bd83c8b3c480f379f8f7` | 10 | 0 | 0 |
 | full-application-2026-11-10 | `4175e5f19bf052e0a03f4a87ab73e710f6f163a7` | 2858 | 0 | 7 |
+| pr261-targeted | `514265522edc045a3b27973c5226ea20ff36f917` | 13 | 0 | 0 |
+| pr262-related-unit | `835601a16e18e9ff672242675f40894e8488f587` | 22 | 0 | 0 |
+| pr263-targeted | `d56740da10dc89eaeafe8963ec65f1aafc696103` | 12 | 0 | 0 |
+| pr264-targeted | `bbea3155779c799862acc66b792e3cd3cb2e5b37` | 21 | 0 | 0 |
+| pr265-targeted | `e38910931eb351994fdd981dd96342277cc4dda8` | 22 | 0 | 0 |
+| pr267-targeted | `8dc984d61fdff3bd8334d02c9652cb20dbdfbd1d` | 6 | 0 | 0 |
+| pr269-targeted | `3731f25ba3000e1f2927171cdd49bafd314dab11` | 2 | 0 | 0 |
+| pr270-related-unit | `949e511afad54af8bda20b7e3d3e5f94da87c92f` | 6 | 0 | 0 |
+| pr271-targeted | `607ece964943462d7018d827978ccd98517735e2` | 4 | 0 | 0 |
+| pr267-related-unit | `3f0413d3660335cbee41289b8d4fc486593abdc5` | 6 | 0 | 0 |
+| pr267-related-unit | `fe28d86a7b5c6233e8a439a0169a48a95a9352fd` | 6 | 0 | 0 |
+| pr270-related-unit | `8a06c2db4e8181d5b3e28b162d362a54dd835cde` | 6 | 0 | 0 |
+| full-application-candidate-phase1-2026-11-10 | `6bbcf79e0f8892a61420d86848402f144812e5b0` | 2916 | 0 | 7 |
+| pr263-targeted | `f5542db45ffdce029670a68713c70bdc12d987c9` | 13 | 0 | 0 |
+| pr274-targeted | `543ebcdb2d428db29985a3ab9d8650e04210414f` | 11 | 0 | 0 |
+| pr275-targeted | `fee8b45e6280b9fe63e1b97e90c126f1cd3c9cc8` | 20 | 0 | 0 |
+| pr273-targeted | `a21e185ec7de755650f150bbb9ebb91b9ffb4421` | 23 | 0 | 0 |
+| pr276-targeted | `122e3d5769f21bd6ae5c585382e1652d2dc34eab` | 32 | 0 | 0 |
+| pr277-targeted | `0c6bac8ea80323a89e2a4f85d9d188a62a620b2d` | 8 | 0 | 0 |
+| full-application-candidate-phase3-2026-11-10 | `828dcbeb021cb81d2c2704ecf2f2746ef185f698` | 3016 | 0 | 7 |
+| pr266-targeted | `3b2415887d38c99b8328b5b813d6e03eec1ac9ad` | 22 | 0 | 0 |
+| pr278-targeted | `8b4eafc98d6973dfbcb5e0639448c0f80a991d5c` | 30 | 0 | 0 |
+| pr272-targeted | `c0304cfd0b4bdf344c5d6a6d6c5e70afdd71ad77` | 44 | 0 | 0 |
+| pr291-targeted | `c7117ba4eeb35880209c1f04a01fd043f45d6510` | 19 | 0 | 0 |
+| pr290-targeted | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | 12 | 0 | 0 |
 
 ## Pending deliveries
 
-- PR #261, reported head `98b8dffcb57941bc7f062f7ebf3686727a74d2b5`: Presentation object format painter; separate feature batch.
-- PR #262, reported head `49789270eed564fe5856316ca2c88bf50ced4460`: Writer spelling viewport scans; separate performance batch.
-- PR #263, reported head `2eb45a3953835db8b57b4ee2273c821169cad45d`: Native formula hyperlink queries; no vendor change.
-- PR #264, reported head `a7bb546037bff28dc2880b6bdee0b87e27fe39ba`: Complete sheet copy preserving independent related parts.
-- PR #265, reported head `4a58fc6b80a13dfc5d321f89ae37d4f8db83064c`: Presentation diagrams; updated conflict-free checkpoint not yet released.
-- PR #266, reported head `ee8925ed39c78566e71d2386da57bfd72b15900f`: Writer OPC story parts and style selection.
-- PR #267, reported head `0e58e6f363af73f395025d82fd8c73f319a89f37`: Writer status subscriptions; stacked on PR262.
-- PR #269, reported head `346927430297654ccbe995b51dcd6c581bdc4eff`: Shared Spreadsheet render projection for later table and conditional-format layers.
 
 ## Limits
 

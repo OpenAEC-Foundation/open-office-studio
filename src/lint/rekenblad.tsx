@@ -134,6 +134,8 @@ import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
 import { NamenBeheer } from "../rekenblad/NamenBeheer";
 import { ValidatieGroep } from "../rekenblad/ValidatieLint";
 import { BeveiligingGroep } from "../rekenblad/BeveiligingLint";
+import { CelstijlGroep } from "../rekenblad/CelstijlUi";
+import { TabelGroep } from "../rekenblad/TabelUi";
 import { useObjectenGroep } from "../rekenblad/ObjectenGroep";
 
 type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
@@ -759,6 +761,8 @@ export function RekenbladRibbon({
             naam: t("spreadsheet.tabs.format"),
             inhoud: (
               <>
+                <CelstijlGroep />
+                <TabelGroep />
                 <Groep naam={t("spreadsheet.groups.format")}>
                   <C
                     id="paintFormat"
