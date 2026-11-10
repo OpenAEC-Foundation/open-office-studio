@@ -12,6 +12,7 @@ export type Venster =
   | { soort: "validatie" }
   | { soort: "celstijl" }
   | { soort: "tabel" }
+  | { soort: "draaitabel" }
   | { soort: "notitie"; cel?: string; blad?: number }
   | { soort: "discussie"; cel?: string; blad?: number }
   | { soort: "breedte" }

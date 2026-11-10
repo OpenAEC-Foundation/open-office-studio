@@ -9,6 +9,7 @@ export interface DraaiVeld {
   kolom: number;
   groep?: DraaiGroep;
   aflopend?: boolean;
+  gekozen?: string[] | null;
 }
 export interface DraaiWaarde {
   id: string;
@@ -32,6 +33,7 @@ export interface DraaiBron {
   rijen: XlsxCellValue[][];
   tekst?: string[][];
   datum1904: boolean;
+  datumKolommen?: number[];
 }
 export interface DraaiLid {
   sleutel: string;
@@ -55,7 +57,17 @@ export class Draaifout extends Error {
       | "invalidFields"
       | "invalidGroup"
       | "tooLarge"
-      | "noValues",
+      | "noValues"
+      | "invalidName"
+      | "duplicateName"
+      | "invalidTarget"
+      | "occupiedTarget"
+      | "overlap"
+      | "mergedCells"
+      | "protectedWorkbook"
+      | "protectedSheet"
+      | "missingPivot"
+      | "unsupportedPivot",
   ) {
     super(code);
   }
@@ -156,6 +168,41 @@ function uitkomst(a: Acc, f: DraaiFunctie): XlsxCellValue {
 const key = (tuple: DraaiLid[]) => JSON.stringify(tuple.map((m) => m.sleutel));
 const GRAND = "__grand__";
 
+/** Distinct members without allocating a row/column cross product. */
+export function draaiVeldleden(bron: DraaiBron, veld: DraaiVeld): DraaiLid[] {
+  if (veld.kolom < 0 || veld.kolom >= bron.koppen.length)
+    throw new Draaifout("invalidFields");
+  let begin = 0;
+  if (veld.groep?.soort === "getal") {
+    const { stap } = veld.groep;
+    if (
+      !Number.isFinite(stap) ||
+      stap <= 0 ||
+      (veld.groep.begin !== undefined && !Number.isFinite(veld.groep.begin))
+    )
+      throw new Draaifout("invalidGroup");
+    let min = Infinity;
+    for (const r of bron.rijen)
+      if (r[veld.kolom].kind === "number")
+        min = Math.min(min, (r[veld.kolom] as { value: number }).value);
+    begin =
+      veld.groep.begin ??
+      (Number.isFinite(min) ? Math.floor(min / stap) * stap : 0);
+  }
+  const leden = new Map<string, DraaiLid>();
+  bron.rijen.forEach((r, i) => {
+    const m = groepeer(r[veld.kolom], veld.groep, begin, bron.datum1904);
+    if (!veld.groep && bron.tekst?.[i]?.[veld.kolom] !== undefined)
+      m.tekst = bron.tekst[i][veld.kolom];
+    leden.set(m.sleutel, m);
+  });
+  return [...leden.values()].sort((a, b) =>
+    a.waarde.kind === "number" && b.waarde.kind === "number"
+      ? a.waarde.value - b.waarde.value
+      : a.tekst.localeCompare(b.tekst, "en", { numeric: true }),
+  );
+}
+
 /** Typed aggregation used both for visible cells and the standard pivot cache/definition. */
 export function berekenDraaitabel(
   bron: DraaiBron,
@@ -174,9 +221,26 @@ export function berekenDraaitabel(
     throw new Draaifout("tooLarge");
   if (!cfg.waarden.length) throw new Draaifout("noValues");
   const velden = [...cfg.rijen, ...cfg.kolommen, ...cfg.filters],
-    ids = new Set(velden.map((v) => v.id));
+    alleVelden = [...velden, ...cfg.waarden],
+    ids = new Set(alleVelden.map((v) => v.id));
   if (
-    ids.size !== velden.length ||
+    ids.size !== alleVelden.length ||
+    new Set(velden.map((v) => JSON.stringify([v.kolom, v.groep ?? null])))
+      .size !== velden.length ||
+    new Set(cfg.waarden.map((v) => v.naam.trim().toLowerCase())).size !==
+      cfg.waarden.length ||
+    cfg.waarden.some(
+      (v) =>
+        !v.naam.trim() ||
+        !["normal", "grandPercent", "rowPercent", "columnPercent"].includes(
+          v.weergave,
+        ),
+    ) ||
+    velden.some(
+      (v) =>
+        v.groep?.soort === "datum" &&
+        !["year", "quarter", "month"].includes(v.groep.eenheid),
+    ) ||
     cfg.waarden.some(
       (v) => !["sum", "count", "average", "min", "max"].includes(v.functie),
     )
@@ -226,10 +290,9 @@ export function berekenDraaitabel(
       return { row, members };
     })
     .filter((r) =>
-      cfg.filters.every(
+      velden.every(
         (v) =>
-          v.gekozen === null ||
-          v.gekozen.includes(r.members.get(v.id)!.sleutel),
+          v.gekozen == null || v.gekozen.includes(r.members.get(v.id)!.sleutel),
       ),
     );
   const tuples = (fields: DraaiVeld[]) => {

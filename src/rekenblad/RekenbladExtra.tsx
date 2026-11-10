@@ -66,6 +66,7 @@ import "./rekenblad.css";
 import { CelnotitieVenster } from "./CelnotitieUi";
 import { CelstijlVenster } from "./CelstijlUi";
 import { TabelVenster } from "./TabelUi";
+import { DraaitabelVenster } from "./DraaitabelUi";
 import { DiscussieVenster } from "./DiscussieUi";
 import { ValidatieVenster } from "./ValidatieUi";
 import { BeveiligingVenster } from "./BeveiligingUi";
@@ -456,6 +457,7 @@ export function RekenbladExtra() {
       {venster?.soort === "getal" && <GetalVenster api={api} sluiten={sluiten} />}
       {venster?.soort === "notitie" && <CelnotitieVenster api={api} cel={venster.cel} blad={venster.blad} sluiten={sluiten} />}
       {venster?.soort === "celstijl" && <CelstijlVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "draaitabel" && <DraaitabelVenster api={api} sluiten={sluiten} />}
       {venster?.soort === "tabel" && <TabelVenster api={api} sluiten={sluiten} />}
       {venster?.soort === "discussie" && <DiscussieVenster api={api} cel={venster.cel} blad={venster.blad} sluiten={sluiten} />}
       {venster?.soort === "validatie" && <ValidatieVenster api={api} sluiten={sluiten} />}

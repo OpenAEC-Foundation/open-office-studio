@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 import type { XlsxCellValue } from "@betteroffice/xlsx";
 import {
   berekenDraaitabel,
+  draaiVeldleden,
   draaiSleutel,
   type DraaiBron,
   type DraaiIndeling,
@@ -33,6 +34,24 @@ const cfg = (): DraaiIndeling => ({
   ],
   filters: [],
 });
+it("filters row and column members and enumerates members without a cross product", () => {
+  const c = cfg();
+  c.rijen[0].gekozen = [draaiSleutel(s("South"))];
+  c.kolommen[0].gekozen = [draaiSleutel(s("B"))];
+  expect(berekenDraaitabel(bron(), c).totaal).toEqual([n(50)]);
+  expect(draaiVeldleden(bron(), c.rijen[0]).map((m) => m.tekst)).toEqual([
+    "North",
+    "South",
+  ]);
+});
+it("rejects ambiguous duplicate axis fields and value captions before producing OOXML", () => {
+  const c = cfg();
+  c.filters = [{ ...c.rijen[0], id: "again", gekozen: null }];
+  expect(() => berekenDraaitabel(bron(), c)).toThrow("invalidFields");
+  c.filters = [];
+  c.waarden.push({ ...c.waarden[0], id: "average", functie: "average" });
+  expect(() => berekenDraaitabel(bron(), c)).toThrow("invalidFields");
+});
 it("aggregates typed row/column groups and calculates grand totals from source records", () => {
   const r = berekenDraaitabel(bron(), cfg());
   expect(r.rijen.map((t) => t[0].tekst)).toEqual(["North", "South"]);
@@ -50,6 +69,7 @@ it("supports count, average, min and max without averaging already aggregated gr
   c.waarden = ["count", "average", "min", "max"].map((f) => ({
     ...c.waarden[0],
     id: f,
+    naam: f,
     functie: f as "count" | "average" | "min" | "max",
   }));
   const r = berekenDraaitabel(bron(), c);
@@ -70,6 +90,7 @@ it("calculates row, column and grand percentages with the selected aggregation",
 it("filters source members with typed keys and sorts axes independently", () => {
   const c = cfg();
   c.rijen[0].aflopend = true;
+  c.kolommen = [];
   c.filters = [{ id: "filter", kolom: 1, gekozen: [draaiSleutel(s("A"))] }];
   const r = berekenDraaitabel(bron(), c);
   expect(r.records).toBe(3);
