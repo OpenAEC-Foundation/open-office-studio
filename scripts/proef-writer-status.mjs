@@ -90,9 +90,18 @@ try {
         await page.evaluate(() => ({
           taal: document.querySelector(".statusbalk-taal")?.textContent,
           selectie: window.__writerApis.tekst().getSelectionInfo(),
-          statusbalk: document.querySelector(".statusbalk")?.textContent,
+          statusbalk: document.querySelector(".office-statusbalk")?.textContent,
+          moduleStatus: window.__appStatus?.(),
+          panelen: [...document.querySelectorAll(".office-tabpaneel")].map(
+            (p) => ({
+              id: p.id,
+              verborgen: p.hidden,
+              inert: p.inert,
+            }),
+          ),
         })),
       );
+      await page.screenshot({ path: ".local/writer-status-failure.png" });
       throw e;
     }
     controles.push({
@@ -126,6 +135,9 @@ try {
   const bytes = await page.evaluate(async () =>
     Array.from(new Uint8Array(await window.__writerApis.tekst().save())),
   );
+  // De raw SDK-save roept ook de host-onSave aan en opent Save as.
+  // Sluit die modal voordat deze proef weer met het document werkt.
+  await page.getByRole("button", { name: "Cancel", exact: true }).click();
   // Een nieuwe appinstantie controleert de opgeslagen bron onafhankelijk.
   // --second-tab onderzoekt daarnaast de bestaande gedeelde statuswinkel.
   if (!process.argv.includes("--second-tab")) await page.reload();
@@ -133,6 +145,27 @@ try {
   await page.keyboard.press("Control+Home");
   await taal("opnieuw geopend document", "Dutch");
   assert.deepEqual(await leesTekst(), verwacht);
+  if (process.argv.includes("--second-tab")) {
+    const kies = async (naam) => {
+      await page
+        .locator('.office-tab[data-soort="docx"]')
+        .filter({ hasText: naam })
+        .click();
+      await page
+        .locator(".canvas-page canvas:visible")
+        .first()
+        .click({ position: { x: 200, y: 100 } });
+      await page.keyboard.press("Control+Home");
+    };
+    for (let i = 0; i < 3; i++) {
+      await kies("status.docx");
+      for (let j = 0; j < 12; j++) await page.keyboard.press("ArrowRight");
+      await taal(`eerste tab ${i + 1}`, "English");
+      await kies("status-heropend.docx");
+      await page.keyboard.press("Control+ArrowDown");
+      await taal(`tweede tab ${i + 1}`, "French");
+    }
+  }
   assert.deepEqual(fouten, []);
   fs.mkdirSync(".local", { recursive: true });
   fs.writeFileSync(
