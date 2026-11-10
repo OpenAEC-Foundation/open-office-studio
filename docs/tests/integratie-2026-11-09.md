@@ -67,6 +67,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#267](https://github.com/OpenAEC-Foundation/open-office-studio/pull/267) | `0e58e6f363af73f395025d82fd8c73f319a89f37` | `8dc984d61fdff3bd8334d02c9652cb20dbdfbd1d` | Writer native session status subscriptions |
 | [#269](https://github.com/OpenAEC-Foundation/open-office-studio/pull/269) | `346927430297654ccbe995b51dcd6c581bdc4eff` | `3731f25ba3000e1f2927171cdd49bafd314dab11` | Spreadsheet shared render projection registration |
 | [#270](https://github.com/OpenAEC-Foundation/open-office-studio/pull/270) | `671a7913492efeca61e27d6a4a7b6fba033df9db` | `949e511afad54af8bda20b7e3d3e5f94da87c92f` | Document pinned selection-format kernel comparison |
+| [#271](https://github.com/OpenAEC-Foundation/open-office-studio/pull/271) | `84709329742aa901e908a4264f75a1f8c5abacb8` | `607ece964943462d7018d827978ccd98517735e2` | Shared Spreadsheet differential-format metadata parser |
 
 ## Earlier fixes included in bundles
 
@@ -152,6 +153,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr267-targeted | `8dc984d61fdff3bd8334d02c9652cb20dbdfbd1d` | 6 | 0 | 0 |
 | pr269-targeted | `3731f25ba3000e1f2927171cdd49bafd314dab11` | 2 | 0 | 0 |
 | pr270-related-unit | `949e511afad54af8bda20b7e3d3e5f94da87c92f` | 6 | 0 | 0 |
+| pr271-targeted | `607ece964943462d7018d827978ccd98517735e2` | 4 | 0 | 0 |
 
 ## Pending deliveries
 
