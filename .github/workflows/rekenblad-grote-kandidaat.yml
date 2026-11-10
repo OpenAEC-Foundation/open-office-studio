@@ -36,11 +36,17 @@ jobs:
           assert hashlib.sha256(Path('.local/open-kandidaat/xlsx_wasm_bg.wasm').read_bytes()).hexdigest()==build['wasmSha256']
           PY
       - run: python3 scripts/maak-rekenbladprestatie.py
-      - name: Measure all three million cells with unchanged 60s and 1800MiB guards
+      - name: Compare JS heap ceilings with unchanged 60s and 1800MiB process guards
         env:
           OOS_PRESTATIE_GEVAL: 100k-rijen-30-kolommen
           OOS_PRESTATIE_WASM: .local/open-kandidaat/xlsx_wasm_bg.wasm
-        run: timeout 90s node scripts/meet-rekenbladkern.mjs
+        run: |
+          set +e
+          timeout 90s node scripts/meet-rekenbladkern.mjs
+          set -e
+          cp .local/prestatie/rekenbladen/kern-rapport.json .local/prestatie/rekenbladen/kern-js1024.json
+          timeout 90s node --max-old-space-size=4096 scripts/meet-rekenbladkern.mjs
+          cp .local/prestatie/rekenbladen/kern-rapport.json .local/prestatie/rekenbladen/kern-js4096.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
