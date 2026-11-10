@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "branch": "codex/integratie-2026-11-09",
+  "candidateBranch": "codex/integratie-kandidaat-2026-11-10",
+  "codeCheckpoint": "fe0aeb605032b980b6caa074d7d279ab0b698518",
+  "sourceIntakeClosed": true,
+  "sourcePRs": 67,
+  "deliveries": 76,
+  "additionalPRsInBundles": 17,
+  "installationReleased": false,
+  "mainMerged": false,
+  "releasePublished": false,
+  "nativeKernel": {
+    "sha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
+    "bytes": 7745388,
+    "patchCount": 8,
+    "patchHashesVerified": true
+  },
+  "checks": [
+    {
+      "kind": "phase1",
+      "head": "6bbcf79e",
+      "passed": 2916,
+      "failed": 0,
+      "skipped": 7,
+      "files": 280,
+      "sha256": "cc67c2b70e963f6398223129c64cefe26888e4e3a4f237f96599fe97d9fff6e3"
+    },
+    {
+      "kind": "phase3",
+      "head": "828dcbeb",
+      "passed": 3016,
+      "failed": 0,
+      "skipped": 7,
+      "files": 290,
+      "sha256": "e324b3afa57b08827e2182fb3725b3bb2098dd81bec18f0aa2d9b9a4a6d304fb"
+    }
+  ],
+  "finalValidation": {
+    "fullSuite": "pending",
+    "productionBuild": "pending",
+    "i18n": "pending",
+    "browser": "pending",
+    "nativeWindows": "pending"
+  },
+  "resolvedSources": [
+    {
+      "issue": 282,
+      "pr": 290,
+      "head": "66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c",
+      "scope": "note reference style continuation",
+      "nativeAcceptance": "pending"
+    },
+    {
+      "issue": 284,
+      "pr": 266,
+      "head": "617f23bf7dd0d258f337ec54075139ef38b01a5e",
+      "scope": "one-shot cancelable DOCX reload navigation",
+      "nativeAcceptance": "pending"
+    }
+  ],
+  "limits": [
+    "Broad issues remain open; integrating a completed fix does not certify every acceptance criterion.",
+    "Native Windows builds are checked in CI because local Application Control blocks Cargo build scripts.",
+    "No live Y-app storage environment is used, as requested by the user.",
+    "Experimental PR116 and uncommitted work are not integration deliveries."
+  ],
+  "nextWork": [
+    "Writer280/281 theme/highlighter UI; separate branch",
+    "Writer297 compare character formatting, linked57; separate branch",
+    "Spreadsheet74 ninth/tenth native patch is NOT pinned; eight-patch kernel remains fixed",
+    "Spreadsheet69 and292–296 CF follow-ups are outside this checkpoint",
+    "Further format30/media85 work is outside this checkpoint"
+  ],
+  "manualReviews": [
+    {
+      "pr": 283,
+      "scope": "AGENTS focused issue reporting plus two synthetic native-test screenshots",
+      "imagesVisuallyReviewed": true,
+      "productionCodeChanged": false
+    }
+  ]
+}
