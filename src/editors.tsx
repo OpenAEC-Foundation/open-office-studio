@@ -4,6 +4,7 @@ import { configureDefaultFonts } from "@betteroffice/docx/layout";
 import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
 import { PresentatieOpenwijze } from "./presentatie/PresentatieOpenwijze";
+import { werkDianummersBij } from "./presentatie/dianummers";
 import type { PptxFontFace } from "@betteroffice/pptx";
 import "@betteroffice/docx-react/styles.css";
 import { useTranslation } from "react-i18next";
@@ -139,7 +140,7 @@ export default function OfficeEditor(props: EditorProps) {
         if (!presentatieApi)
           throw new Error(i18next.t("shell:errors.presentationNotReady"));
         await presentatieApi.flushPendingInput();
-        return presentatieApi.save();
+        return werkDianummersBij(await presentatieApi.save());
       }
       if (!docx.current?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
@@ -395,7 +396,7 @@ export default function OfficeEditor(props: EditorProps) {
       });
       props.registreer(async () => {
         await api.flushPendingInput();
-        return api.save();
+        return werkDianummersBij(await api.save());
       });
     },
     [props.registreer],
