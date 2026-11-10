@@ -110,6 +110,16 @@
           "lib": "selection_format_performance_tests"
         }
       ]
+    },
+    {
+      "patch": "rekenbladengine-tabeltotalen.patch",
+      "patchSha256": "a704c979f863a360e3c34a67bbdb8b19af8df4506e3d34945195181bcc100dd3",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "subtotal_visibility"
+        }
+      ]
     }
   ],
   "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42625934529",
