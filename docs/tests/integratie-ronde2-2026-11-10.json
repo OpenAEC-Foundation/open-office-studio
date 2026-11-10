@@ -1,0 +1,539 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "round": 2,
+  "asOf": "2026-11-10T12:18:10.412567+00:00",
+  "branch": "codex/integratie-2026-11-09",
+  "candidateBranch": "codex/integratie-kandidaat2-2026-11-10",
+  "base": "959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1",
+  "previousRuntime": "1e5afa399117fd84df628955ec82b0e597993c83",
+  "codeCheckpoint": "772a44a5983a24ab5d97e9d4c025ba69bdbbe494",
+  "sourceIntakeClosed": true,
+  "intakeClosedAt": "2026-11-10T13:15:00+01:00",
+  "handoffDeadline": "2026-11-10T15:30:00+01:00",
+  "mainMerged": false,
+  "releasePublished": false,
+  "installationReleased": false,
+  "fullPlatformApproved": false,
+  "sourcePRs": 89,
+  "deliveries": 99,
+  "roundDeliveries": 21,
+  "additionalCoveredPRs": 17,
+  "included": [
+    {
+      "pr": 300,
+      "head": "b8426dc453c16a4a8863d67dd914070453c4a079",
+      "merge": "77da4ffa4eb9fb9f09014bea933db57253a51dc4",
+      "scope": "Writer screen display mode and colour-control contrast",
+      "issues": [280, 281]
+    },
+    {
+      "pr": 309,
+      "head": "589a1d5794dd77e89c161a98cfc24969f5aa4c66",
+      "merge": "f5abaff65ed024e0b79893e24d9e1f9ada064ddd",
+      "scope": "Recognize only the known empty bundled bibliography without suppressing other risks",
+      "issues": [305]
+    },
+    {
+      "pr": 314,
+      "head": "5675a3ccad192bea93f806a5c74dc97cdc2416be",
+      "merge": "105134ad8e34c9aac73e0c5d2844b7144ed0f606",
+      "scope": "Invalidate lazy PDF font cache after system-font availability changes",
+      "issues": [311]
+    },
+    {
+      "pr": 320,
+      "head": "137f378123b7a159c3c780a82a92d30373e5ca2c",
+      "merge": "701392aad13e415398a0e08c3875ef6a3ac4e2a7",
+      "scope": "Preserve configured author initials on new Writer replies",
+      "issues": [318]
+    },
+    {
+      "pr": 301,
+      "head": "92b1962a19c18ba2e89e67f292336f14b01e5ab4",
+      "merge": "23a5f37f38065f536156bcb2afc4188a220bebee",
+      "scope": "Spreadsheet visual threshold, icon family and merged data-bar corrections",
+      "issues": [292, 293, 294, 295, 296, 299]
+    },
+    {
+      "pr": 304,
+      "head": "2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a",
+      "merge": "e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb",
+      "scope": "Preserve embedded media volume and mute through ODP and OTP",
+      "issues": [298]
+    },
+    {
+      "pr": 316,
+      "head": "a7669b86f1a5fcd85658d399a1507993cf2bb3b5",
+      "merge": "eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a",
+      "scope": "Preserve unambiguous ODP media names and display unnamed media labels",
+      "issues": [310]
+    },
+    {
+      "pr": 315,
+      "head": "33eee967be1f3a136e0106cd77b5d4a0c5112255",
+      "merge": "3916dd36224d44d76e28853e3178946c5c54b816",
+      "scope": "Writer review Undo including bounded individual revisions after worker synchronization",
+      "issues": [313]
+    },
+    {
+      "pr": 306,
+      "head": "b2d576121477a18a0bd56eac964fee8c90efe2df",
+      "merge": "9d721bbd20a029d05cff31179d56445791ee874e",
+      "scope": "Writer compare direct character formatting with reviewable preserved replacements",
+      "issues": [297]
+    },
+    {
+      "pr": 312,
+      "head": "ea4ff465cc181e298a674ff915a285f43ccd4ecb",
+      "merge": "0c6dafa13b2728fd0c30d38ef73a3c714eaf6408",
+      "scope": "Spreadsheet bounded pivot tables and refresh preserving unsupported layouts",
+      "issues": [69]
+    },
+    {
+      "pr": 329,
+      "head": "da16cea1519b301ba43af76496eb2c842828c1f0",
+      "merge": "4ac67c1517c8b8c79b035f9900830c15ae913fce",
+      "scope": "Writer bounded spelling range geometry reuse during scrolling",
+      "issues": [303]
+    },
+    {
+      "pr": 330,
+      "head": "8a2ab22556af01be986b61731d55d392fbf08573",
+      "merge": "44b146a104d32b2ba0a11b74d5d3a91c1debb892",
+      "scope": "Independent structure and defined-name remapping regressions on existing kernels",
+      "issues": [60]
+    },
+    {
+      "pr": 220,
+      "head": "4a21ad18c2b7861cf1d227e05f572a3f337fcdb9",
+      "merge": "725d6f52038695aa9979454aa3c770f00462eb4e",
+      "scope": "Preserve Writer image replacement exact geometry and crop",
+      "issues": [49]
+    },
+    {
+      "pr": 328,
+      "head": "27082918a71a677c0ed4e9910096c35d6752a462",
+      "merge": "f20d9a7dd87c410ab5600f20aa2b4e51d928e252",
+      "scope": "Restart completed embedded media while preserving ordinary resume and loops",
+      "issues": [325]
+    },
+    {
+      "pr": 331,
+      "head": "7fd5e6899cb0f89ff17350927ef5b5aad864e75d",
+      "merge": "63e337422709f07bc8d814e589788ce3e74ceecb",
+      "scope": "Presentation whole-word search preserves Unicode offsets and one-step replacement Undo",
+      "issues": [326]
+    },
+    {
+      "pr": 332,
+      "head": "63761df06ad7ea125a3e03c50b21caa88dca9fb3",
+      "merge": "b1ada744e9d223d20fe1b2f3a1792d5a77530779",
+      "scope": "Render normative built-in table font and fill facets without custom DXF definitions",
+      "issues": [322]
+    },
+    {
+      "pr": 334,
+      "head": "65aca81f2c90b0400644818527679bb699ea19a0",
+      "merge": "14d83249841081287991b948989e146c997162dc",
+      "scope": "Keep printed metadata field glyph metrics aligned with the actual layout font",
+      "issues": [323]
+    },
+    {
+      "pr": 319,
+      "head": "0eea9d4fea759b219fecef77f5f55d66d3046be1",
+      "merge": "bf7a4243743d184938af507e1df068adc815a5d4",
+      "scope": "Bounded Spreadsheet startup improvements on unchanged first eight patches",
+      "issues": [74]
+    },
+    {
+      "pr": 321,
+      "head": "834b1d6cf12e97e3dc492547b4f8cd5a2255e39b",
+      "merge": "589e2f5f38355a9af972f8ca61149e8ad6803b9e",
+      "scope": "Native linear trendline source and independent geometry regression evidence",
+      "issues": [308]
+    },
+    {
+      "pr": 335,
+      "head": "d273762184d2f59e996c1da05e16d9f449054f6d",
+      "merge": "fa04615e2ebb88207c5761bae60a7d6774939929",
+      "scope": "Validated startup fourteen plus linear-trendline fifteenth patch superset",
+      "issues": [74, 308]
+    },
+    {
+      "pr": 333,
+      "head": "bdebc61209d7c0313c5047e4ad3b2fd18828b4dc",
+      "merge": "b873778cbd87b8f7b811263977eb29c8b02f24e8",
+      "scope": "Render table styling for implicit default cells while preserving inherited overrides",
+      "issues": [324]
+    }
+  ],
+  "targetedChecks": [
+    {
+      "kind": "pr300-targeted",
+      "head": "77da4ffa4eb9fb9f09014bea933db57253a51dc4",
+      "success": true,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr309-targeted",
+      "head": "f5abaff65ed024e0b79893e24d9e1f9ada064ddd",
+      "success": true,
+      "passed": 31,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr314-targeted",
+      "head": "105134ad8e34c9aac73e0c5d2844b7144ed0f606",
+      "success": true,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr320-targeted",
+      "head": "701392aad13e415398a0e08c3875ef6a3ac4e2a7",
+      "success": true,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr301-targeted",
+      "head": "23a5f37f38065f536156bcb2afc4188a220bebee",
+      "success": true,
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr304-targeted",
+      "head": "e9a7f22b895d9c0b66db1f78e1c3ef87ce461bdb",
+      "success": true,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr316-targeted",
+      "head": "eb2d1c9f72e5f8ef6c972644ce77f9413a3b8a9a",
+      "success": true,
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr315-targeted",
+      "head": "3916dd36224d44d76e28853e3178946c5c54b816",
+      "success": true,
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr306-targeted",
+      "head": "9d721bbd20a029d05cff31179d56445791ee874e",
+      "success": true,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr312-targeted",
+      "head": "0c6dafa13b2728fd0c30d38ef73a3c714eaf6408",
+      "success": true,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr329-targeted",
+      "head": "4ac67c1517c8b8c79b035f9900830c15ae913fce",
+      "success": true,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr330-targeted",
+      "head": "44b146a104d32b2ba0a11b74d5d3a91c1debb892",
+      "success": true,
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr220-targeted",
+      "head": "725d6f52038695aa9979454aa3c770f00462eb4e",
+      "success": true,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr328-related-unit",
+      "head": "f20d9a7dd87c410ab5600f20aa2b4e51d928e252",
+      "success": true,
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr331-targeted",
+      "head": "63e337422709f07bc8d814e589788ce3e74ceecb",
+      "success": true,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr332-targeted",
+      "head": "b1ada744e9d223d20fe1b2f3a1792d5a77530779",
+      "success": true,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr334-targeted",
+      "head": "14d83249841081287991b948989e146c997162dc",
+      "success": true,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    },
+    {
+      "kind": "pr319-related-unit",
+      "head": "bf7a4243743d184938af507e1df068adc815a5d4",
+      "success": true,
+      "passed": 46,
+      "failed": 0,
+      "skipped": 0,
+      "files": 3
+    },
+    {
+      "kind": "pr321-related-unit",
+      "head": "589e2f5f38355a9af972f8ca61149e8ad6803b9e",
+      "success": true,
+      "passed": 53,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2
+    },
+    {
+      "kind": "pr335-related-unit",
+      "head": "1e00c272ad18f95530580e0e8fa4020b598f2bc9",
+      "success": true,
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0,
+      "files": 3
+    },
+    {
+      "kind": "pr333-targeted",
+      "head": "b873778cbd87b8f7b811263977eb29c8b02f24e8",
+      "success": true,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1
+    }
+  ],
+  "targetedPassed": 464,
+  "nativeKernel": {
+    "source": "d273762184d2f59e996c1da05e16d9f449054f6d",
+    "sourcePR": 335,
+    "dependsOn": [319, 321],
+    "sourceRun": 42810493600,
+    "artifact": 13762099675,
+    "sha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+    "bytes": 7794993,
+    "patches": 15,
+    "first14Identical": true,
+    "allPatchHashesVerified": true,
+    "importExportAbiIdentical": true
+  },
+  "combinedValidation": {
+    "fullSuite": "pending",
+    "productionBuild": "pending",
+    "i18n": "pending",
+    "commands": "pending",
+    "normalBrowser": "pending",
+    "actualHostedBrowser": "pending",
+    "platformCI": "pending frozen-report checkpoint",
+    "nativeWindows": "Not released; operator750b retains installed1e5 until one exact certified replacement"
+  },
+  "deferred": [
+    {
+      "issue": 327,
+      "owner": "performance6f",
+      "branch": "codex/writer-language-status-performance-2026-11-10",
+      "status": "No exact released head received by13:15; preserve own next-week delivery"
+    },
+    {
+      "pr": 317,
+      "issue": 30,
+      "owner": "formats8020",
+      "head": "dd683cfa0cb419f1aae87bb78d9a59adfc201608",
+      "status": "Not source-released beforecut; bundledruntime/installer acceptance remains separate"
+    }
+  ],
+  "limits": [
+    "No main merge, release or issue closure permission.",
+    "Source tests retain exact original checkpoints; final combination gets a separate exact runtime/platform checkpoint.",
+    "Large-workbook74 remains partial: bounded300k/50k cases do not prove the full100krowsx30columns or asyncmain editor/memory guarantee.",
+    "Pivot69 remains bounded; unsupported layouts stay read-only and refresh reloads/history limitations remain.",
+    "macOS and actual native Linux UI/additional browser-engine coverage must be explicit, not inferred from builds.",
+    "Live Y/Workplace storage remains excluded at the user request.",
+    "Kernel15 source proof: Linux1804native/15 inherited ignores+225chart tests/contracts; Windows225+1; macOS/nativeUI unverified until actual results.",
+    "PDFfont availability314 uses controlled browser permission/source scenarios; a real native OS permission dialog is not thereby certified.",
+    "Fresh embedded-font document acceptance for323 remains separate from the field-only guard/embedded-alias preservation tests."
+  ],
+  "inheritedClosingCommitReview": [
+    {
+      "commit": "a40a6662b8d357e77ece0c67b8147f1d7b7d8189",
+      "issue": 189,
+      "closureApproved": false
+    }
+  ],
+  "approvedPRBodyClosingReferences": [],
+  "nextWeek": "Read this report and current handoff; preserve the source freeze. Only demonstrated acceptance blockers can change this round. Later user-approved work remains on its owner branches; never silently substitute newer source heads.",
+  "supersededDuplicateCI": [
+    {
+      "run": 42808120958,
+      "head": "959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1",
+      "reason": "Superseded docs-only duplicate of tested1e5 runtime; preserve completed job/artifact evidence; round2 gets new exact runtime matrix",
+      "jobs": [
+        {
+          "databaseId": 129802417742,
+          "name": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42808120958/job/129802417742"
+        },
+        {
+          "databaseId": 129802417947,
+          "name": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42808120958/job/129802417947"
+        },
+        {
+          "databaseId": 129802418153,
+          "name": "desktop (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42808120958/job/129802418153"
+        }
+      ],
+      "cancelRequested": true
+    },
+    {
+      "run": 42808121061,
+      "head": "959f04830e1ccc58b70d0cd7d1d4ac1d86d37aa1",
+      "reason": "Superseded docs-only duplicate of tested1e5 runtime; preserve completed job/artifact evidence; round2 gets new exact runtime matrix",
+      "jobs": [
+        {
+          "databaseId": 129802417903,
+          "name": "database (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42808121061/job/129802417903"
+        },
+        {
+          "databaseId": 129802418033,
+          "name": "database (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42808121061/job/129802418033"
+        },
+        {
+          "databaseId": 129802418201,
+          "name": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42808121061/job/129802418201"
+        }
+      ],
+      "cancelRequested": true
+    },
+    {
+      "run": 42806814691,
+      "head": "10611570ca714b32609fb00b1e59eb0f67392daf",
+      "reason": "Superseded docs-only duplicate of tested1e5 runtime; preserve completed job/artifact evidence; round2 gets new exact runtime matrix",
+      "jobs": [
+        {
+          "databaseId": 129797934082,
+          "name": "desktop (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42806814691/job/129797934082"
+        },
+        {
+          "databaseId": 129797934409,
+          "name": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42806814691/job/129797934409"
+        },
+        {
+          "databaseId": 129797934410,
+          "name": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42806814691/job/129797934410"
+        }
+      ],
+      "cancelRequested": true
+    },
+    {
+      "run": 42806814656,
+      "head": "10611570ca714b32609fb00b1e59eb0f67392daf",
+      "reason": "Superseded docs-only duplicate of tested1e5 runtime; preserve completed job/artifact evidence; round2 gets new exact runtime matrix",
+      "jobs": [
+        {
+          "databaseId": 129797933531,
+          "name": "database (macos-latest)",
+          "status": "queued",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42806814656/job/129797933531"
+        },
+        {
+          "databaseId": 129797933993,
+          "name": "database (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42806814656/job/129797933993"
+        },
+        {
+          "databaseId": 129797934026,
+          "name": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42806814656/job/129797934026"
+        }
+      ],
+      "cancelRequested": true
+    }
+  ]
+}
