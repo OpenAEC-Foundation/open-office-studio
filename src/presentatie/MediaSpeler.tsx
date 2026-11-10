@@ -43,6 +43,7 @@ export function MediaSpeler({
   const poster = useMediaUrl(medium.poster ?? null, "image/png");
   const hervatten = useRef(false),
     geladen = useRef(false);
+  const eindstop = useRef<{ tijd: number; eind: number } | null>(null);
   const settings = useRef(instellingen);
   settings.current = instellingen;
   const frameCallback = useRef(frame);
@@ -66,6 +67,7 @@ export function MediaSpeler({
     zetFout(false);
     zetGeblokkeerd(false);
     geladen.current = false;
+    eindstop.current = null;
   }, [url]);
   useEffect(() => {
     const el = ref.current;
@@ -127,6 +129,7 @@ export function MediaSpeler({
       } else {
         el.pause();
         el.currentTime = Math.max(s.begin, eind - 0.03);
+        eindstop.current = { tijd: el.currentTime, eind };
       }
     }
   }
@@ -155,7 +158,20 @@ export function MediaSpeler({
     onPlay: () => {
       zetSpeelt(true);
       if (!actief) ref.current?.pause();
-      else grens();
+      else {
+        const el = ref.current!,
+          stop = eindstop.current;
+        // Alleen onze eigen eindstop herstarten. Gewoon pauzeren, terugspoelen
+        // of het einde verlengen moet de gekozen afspeelpositie behouden.
+        if (
+          stop &&
+          Math.abs(el.currentTime - stop.tijd) < 0.001 &&
+          Math.abs(el.duration - settings.current.eindeAf - stop.eind) < 0.001
+        )
+          el.currentTime = settings.current.begin;
+        eindstop.current = null;
+        grens();
+      }
     },
     onPause: () => zetSpeelt(false),
     onEnded: () => {

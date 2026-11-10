@@ -13,6 +13,7 @@ on:
       - "src/presentatie/media.ts"
       - "src/i18n/locales/*/presentation.json"
       - "scripts/proef-presentatie-medianamen.mjs"
+      - "scripts/proef-presentatie-media-herstart.mjs"
       - "src/presentatie/testbestanden/synthetic-volume.*"
       - "scripts/test-odf-13.py"
       - "src/presentatie/odf-overgangen*"
@@ -97,9 +98,14 @@ jobs:
       - name: Install Chromium for supported browser route
         if: runner.os == 'Linux'
         run: pnpm exec playwright install --with-deps chromium
+      - name: Install Chromium for Windows and macOS playback controls
+        if: runner.os != 'Linux'
+        run: pnpm exec playwright install chromium
       - name: Browser media names, fallback, playback and save/reopen
         if: runner.os == 'Linux'
         run: node scripts/proef-presentatie-medianamen.mjs dist
+      - name: Browser media replay, pause, seek, changed end and loop
+        run: node scripts/proef-presentatie-media-herstart.mjs dist
       - name: Preserve schemas, native outputs and independent report
         if: always()
         uses: actions/upload-artifact@v4
@@ -110,5 +116,6 @@ jobs:
             .local/presentatie-odf-volume
             .local/presentation-targeted-tests.json
             .local/presentatie-medianamen-browser
+            .local/presentatie-media-herstart
           include-hidden-files: true
           if-no-files-found: error
