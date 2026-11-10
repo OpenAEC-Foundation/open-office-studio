@@ -12,7 +12,8 @@ import zipfile
 from lxml import etree as E
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = (ROOT / os.environ.get("OOS_PRESENTATIE_ODF_UIT", ".local/presentatie-odf")).resolve()
+VOLUME = os.environ.get("OOS_PRESENTATIE_ODF_VOLUME") == "1"
+OUT = (ROOT / os.environ.get("OOS_PRESENTATIE_ODF_UIT", ".local/presentatie-odf-volume" if VOLUME else ".local/presentatie-odf")).resolve()
 spec = importlib.util.spec_from_file_location("odf_runner", ROOT / "scripts/test-odf-13.py")
 runner = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(runner)
@@ -22,7 +23,8 @@ R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
 
 
 def node(*args):
-    subprocess.run(["node", "scripts/test-presentatie-odf.mjs", *args], cwd=ROOT, check=True,
+    script = "scripts/test-presentatie-odf-volume.mjs" if VOLUME else "scripts/test-presentatie-odf.mjs"
+    subprocess.run(["node", script, *args], cwd=ROOT, check=True,
                    env={**os.environ, "OOS_PRESENTATIE_ODF_UIT": str(OUT)}, timeout=60,
                    **({"creationflags": subprocess.CREATE_NO_WINDOW} if os.name == "nt" else {}))
 
@@ -44,6 +46,8 @@ def convert(exe, source, ext, filter_name, directory):
 
 
 def independent(ext, expected):
+    if VOLUME:
+        return independent_volume(ext, expected)
     with zipfile.ZipFile(OUT / ("engine-" + ext + ".pptx")) as z:
         pres = E.fromstring(z.read("ppt/presentation.xml"))
         rels = {e.get("Id"): e.get("Target") for e in E.fromstring(z.read("ppt/_rels/presentation.xml.rels"))}
@@ -75,6 +79,47 @@ def independent(ext, expected):
             "soundActions": len(sound_hashes), "pass": True}
 
 
+def independent_volume(ext, expected):
+    p14 = "{http://schemas.microsoft.com/office/powerpoint/2010/main}"
+    with zipfile.ZipFile(OUT / ("engine-" + ext + ".pptx")) as z:
+        pres = E.fromstring(z.read("ppt/presentation.xml"))
+        rels = {e.get("Id"): e.get("Target") for e in E.fromstring(z.read("ppt/_rels/presentation.xml.rels"))}
+        slides = pres.find(P + "sldIdLst")
+        assert len(slides) == 4
+        count = 0
+        for i, slide in enumerate(slides):
+            path = os.path.normpath("ppt/" + rels[slide.get(R + "id")]).replace("\\", "/")
+            root = E.fromstring(z.read(path))
+            rp = path.rsplit("/", 1)[0] + "/_rels/" + path.rsplit("/", 1)[1] + ".rels"
+            local = {r.get("Id"): r for r in E.fromstring(z.read(rp))}
+            found = set()
+            for pic in root.findall(".//" + P + "pic"):
+                media = pic.find(".//" + p14 + "media")
+                if media is None:
+                    continue
+                rel = local[media.get(R + "embed") or media.get(R + "link")]
+                assert rel.get("TargetMode") != "External"
+                target = os.path.normpath(path.rsplit("/", 1)[0] + "/" + rel.get("Target")).replace("\\", "/")
+                digest = hashlib.sha256(z.read(target)).hexdigest()
+                kind = next(k for k, value in expected["hashes"].items() if value == digest)
+                assert kind not in found
+                found.add(kind)
+                value = expected["levels"][i if kind == "audio" else 3-i]
+                shape_id = pic.find(P + "nvPicPr/" + P + "cNvPr").get("id")
+                nodes = [m for m in root.findall(".//" + P + "cMediaNode")
+                         if m.find(P + "tgtEl/" + P + "spTgt").get("spid") == shape_id]
+                if not nodes:
+                    assert value == 1
+                for m in nodes:
+                    assert int(m.get("vol", "100000")) == round(value * 100000)
+                    assert m.get("mute", "0") not in ("true", "1")
+                count += 1
+            assert found == {"audio", "video"}
+        notes = ["".join(E.fromstring(z.read(n)).itertext()) for n in z.namelist() if n.startswith("ppt/notesSlides/") and n.endswith(".xml")]
+        assert any(expected["notes"] in text for text in notes)
+    return {"slides": 4, "exactVolumes": count, "mediaBytesPreserved": True, "notesPreserved": True, "pass": True}
+
+
 def main():
     exe = os.environ.get("OPENAEC_CONVERSIE_PROGRAMMA") or shutil.which("soffice") or shutil.which("libreoffice")
     if not exe:
@@ -87,6 +132,8 @@ def main():
     report = {"cases": [], "pass": False}
     try:
         for ext, filter_name in [("odp", "impress8"), ("otp", "impress8_template"), ("fodp", "OpenDocument Presentation Flat XML")]:
+            if VOLUME and ext == "fodp":
+                continue
             case = {"format": ext, "pass": False}
             report["cases"].append(case)
             try:
