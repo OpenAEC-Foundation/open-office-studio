@@ -8,7 +8,9 @@
   "wasmBindgen": "0.2.129",
   "binaryen": "132",
   "binaryenLinuxSha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
-  "wasmOptArgumenten": ["-O3"],
+  "wasmOptArgumenten": [
+    "-O3"
+  ],
   "pakket": "@betteroffice/xlsx",
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
@@ -200,6 +202,16 @@
         {
           "pakket": "betteroffice-xlsx",
           "lib": "snapshot_structured_reference_insert_rows_matches_source"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-lineaire-trendlijnen.patch",
+      "patchSha256": "8a56f7cfe48ce1083de83cfd8864503d14411c868263c3a07772451557edbcdb",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "linear_trendlines"
         }
       ]
     }
