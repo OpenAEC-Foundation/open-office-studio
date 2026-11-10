@@ -17,6 +17,10 @@ const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage({ locale: "nl-NL", viewport: { width: 1300, height: 950 } });
   const errors = []; page.on("pageerror", e => errors.push(e.message));
+  if (process.env.OOS_BROWSER_CPU_RATE) {
+    const rate = Number(process.env.OOS_BROWSER_CPU_RATE); assert.ok(Number.isFinite(rate) && rate >= 1);
+    await (await page.context().newCDPSession(page)).send("Emulation.setCPUThrottlingRate", { rate });
+  }
   await page.addInitScript(() => localStorage.setItem("openaec-office-instellingen", JSON.stringify({ taal: "nl", spelling: { controleren: false } })));
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
   await page.locator('input[type="file"]').first().setInputFiles({ name: "Formuleproef.docx", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", buffer: fs.readFileSync("public/templates/nieuw.docx") });

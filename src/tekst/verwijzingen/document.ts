@@ -132,3 +132,19 @@ export function gaNaar(ref: DocxEditorRef, plek: Plek, einde?: Plek) {
   }
   ref.focus();
 }
+
+/** A closing dialog must not restore an old range over newer input/navigation. */
+export function herstelNaDialoog(ref: DocxEditorRef) {
+  const s = ref.getEditorRef()?.getYrsSession(); if (!s) return;
+  const selectie = s.selection(), versie = s.version(), bereik = JSON.stringify(selectie);
+  const doc = typeof document === "undefined" ? null : document;
+  let gewijzigd = false;
+  const invoer = () => { gewijzigd = true; };
+  const gebeurtenissen = ["keydown", "beforeinput", "pointerdown"];
+  for (const type of gebeurtenissen) doc?.addEventListener(type, invoer, true);
+  requestAnimationFrame(() => {
+    for (const type of gebeurtenissen) doc?.removeEventListener(type, invoer, true);
+    if (gewijzigd || ref.getEditorRef()?.getYrsSession() !== s || s.version() !== versie || JSON.stringify(s.selection()) !== bereik) return;
+    if (selectie) gaNaar(ref, selectie.anchor, selectie.head); else ref.focus();
+  });
+}

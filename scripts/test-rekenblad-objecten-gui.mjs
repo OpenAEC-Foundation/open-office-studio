@@ -11,6 +11,7 @@ const uit = resolve(
 );
 await mkdir(uit, { recursive: true });
 const ssr = await createServer({
+  cacheDir: ".local/vite-cache-object-ssr",
   configFile: false,
   server: { middlewareMode: true, hmr: false, watch: null },
   optimizeDeps: { noDiscovery: true },
@@ -230,6 +231,93 @@ try {
   );
   stap(
     "File links retain encoded relative paths and show a clear browser-only open message",
+  );
+  await page.evaluate(async () => {
+    const api = proefApis().rekenblad;
+    const r = await api.applyEdits({
+      expectVersion: await api.version(),
+      steps: [
+        {
+          op: "setCellInputs",
+          target: {
+            sheetId: api.handle.sheetInfo().sheetIds[0],
+            range: { kind: "a1", a1: "A3:B6" },
+          },
+          inputs: [
+            ['=HYPERLINK("#L20","Internal formula")', ""],
+            ['=HYPERLINK(B4,"File formula")', "../Linked formula.xlsx"],
+            ['=HYPERLINK(B5&"/formula","Web formula")', "https://example.com"],
+            ['=HYPERLINK("javascript:alert(1)","Unsafe")', ""],
+          ],
+        },
+      ],
+    });
+    if (!r.ok) throw new Error("Formula fixture edit failed");
+  });
+  async function ctrlKlik(row) {
+    await kies(row, 0);
+    const painted = await page.waitForFunction((row) => {
+      const r = document
+        .querySelector(
+          '.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]',
+        )
+        .getBoundingClientRect();
+      for (let y = 2; y < 180; y += 2)
+        for (const x of [50, 60, 70, 80]) {
+          const p = proefApis().rekenblad.getPositionAtPoint(
+            r.left + x,
+            r.top + y,
+          );
+          if (p?.row === row && p.col === 0)
+            return { x: r.left + x, y: r.top + y };
+        }
+      return false;
+    }, row);
+    const point = await painted.jsonValue();
+    await painted.dispose();
+    await page.keyboard.down("Control");
+    try {
+      await page.mouse.click(point.x, point.y);
+    } finally {
+      await page.keyboard.up("Control");
+    }
+  }
+  await ctrlKlik(2);
+  await page.waitForFunction(
+    () =>
+      document.querySelector(
+        '.office-tabpaneel:not([hidden]) [data-testid="xlsx-name-box"]',
+      )?.value === "L20",
+  );
+  await ctrlKlik(3);
+  await link
+    .getByText(
+      "Local file links open in the desktop app. Use File > Open in the browser.",
+      { exact: true },
+    )
+    .waitFor();
+  await link.getByRole("button", { name: "Close", exact: true }).click();
+  await page
+    .context()
+    .route("https://example.com/**", (route) =>
+      route.fulfill({ body: "Hyperlink test target" }),
+    );
+  const popupWait = page.waitForEvent("popup");
+  await ctrlKlik(4);
+  const popup = await popupWait;
+  await popup.waitForURL("https://example.com/formula");
+  await popup.close();
+  await ctrlKlik(5);
+  await link
+    .getByText("Enter a valid link or cell reference.", { exact: true })
+    .waitFor();
+  await link.getByRole("button", { name: "Close", exact: true }).click();
+  assert.equal(
+    await page.evaluate(() => proefApis().rekenblad.handle.cell(0, 2, 0).input),
+    '=HYPERLINK("#L20","Internal formula")',
+  );
+  stap(
+    "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
   );
   await kies(0, 0);
   const image = page.getByRole("button", {
@@ -546,6 +634,34 @@ try {
   );
   stap(
     "Frozen-cell images stay fixed while body images follow both scroll axes",
+  );
+  const huge = new Uint8Array(png),
+    header = new DataView(huge.buffer);
+  header.setUint32(16, 20000);
+  header.setUint32(20, 20000);
+  const guarded = voegTekenobjectToe(basis, 0, {
+    naam: "Oversized header",
+    afbeelding: huge,
+    plek: { row: 2, col: 2, x: 0, y: 0, breedte: 100, hoogte: 60 },
+  });
+  await page
+    .locator(".office input[type=file]")
+    .first()
+    .setInputFiles({
+      name: "GuardedImage.xlsx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer: Buffer.from(guarded),
+    });
+  const blocked = page.getByRole("button", {
+    name: "Image: Oversized header",
+    exact: true,
+  });
+  await blocked.waitFor();
+  assert.equal(await blocked.locator("img").count(), 0);
+  assert.deepEqual(leesTekenobjecten(await bytes())[0].media, huge);
+  stap(
+    "An embedded oversized image header gets a preserved placeholder before browser decoding",
   );
   assert.deepEqual(rapport.fouten, []);
 } catch (e) {

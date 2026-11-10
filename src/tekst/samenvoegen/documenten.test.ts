@@ -6,6 +6,8 @@ import { attr, leesXml, zoekAlle, tekstVan } from "../../grafieken/xml";
 import { maakSamenvoegDocument, STANDAARD_INDELING } from "./documenten";
 import { samenvoegVelden } from "./pakket";
 import { voegNootIn } from "../pagina/noten";
+import type { DocxEditorRef } from "@betteroffice/docx-react";
+import { werkVerwijzingenBij } from "../verwijzingen/opdrachten";
 const data = { kolommen: ["Naam"], records: [["Ada"], ["Grace"], ["Linus"]] };
 function template(noot = false) {
   const p = new Pakket(readFileSync("public/templates/nieuw.docx"));
@@ -13,6 +15,23 @@ function template(noot = false) {
   return noot ? voegNootIn(p.inpakken(), "MARK", "voetnoot", "Bron").bytes : p.inpakken();
 }
 describe("mail merge letters, labels and envelopes (#54)", () => {
+  it.each([[true, false, 1], [false, false, 1], [true, true, 1], [false, true, 1], [true, true, 7], [false, false, 7]] as const)("restarts mixed captions per letter: complex first=%s, quoted=%s, start=%s", async (complexFirst, quoted, start) => {
+    const p = new Pakket(template());
+    const reset = start === 1 ? "" : ` \\r ${start}`;
+    const simple = `<w:p><w:fldSimple w:instr=" SEQ Figure \\* ARABIC${complexFirst ? "" : reset} "><w:r><w:t>2</w:t></w:r></w:fldSimple></w:p>`;
+    const complex = `<w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> SE</w:instrText></w:r><w:r><w:instrText>Q ${quoted ? '"Figure"' : "Figure"} \\* ARABIC${complexFirst ? reset : ""} </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>1</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>`;
+    p.schrijf("word/document.xml", p.lees("word/document.xml").replace('<w:sectPr', (complexFirst ? complex + simple : simple + complex) + '<w:sectPr'));
+    const source = p.inpakken(), bytes = maakSamenvoegDocument(source, data, [0, 1]);
+    const s = await createYrsSession();
+    try {
+      s.openDocx(bytes, true);
+      const api = { focus() {}, getEditorRef: () => ({ getYrsSession: () => s, syncYrsInputState() {}, relayout() {}, getLayout: () => ({ pages: [] }) }) } as unknown as DocxEditorRef;
+      await werkVerwijzingenBij(api);
+      const captions = s.storySegments("body").filter(d => d.kind === "embed" && d.embedKind === "field");
+      expect(captions.map(d => d.kind === "embed" ? d.payload.displayText : "")).toEqual([start, start + 1, start, start + 1].map(String));
+      expect(new Pakket(source).lees("word/document.xml")).not.toContain('\\r 1');
+    } finally { s.destroy(); }
+  });
   it("separates headers, list numbering and split complex bookmark references per record", async () => {
     const p = new Pakket(template());
     p.schrijf("word/headerMerge.xml", '<w:hdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:fldSimple w:instr=" MERGEFIELD Naam "><w:r><w:t>Name</w:t></w:r></w:fldSimple></w:p></w:hdr>');

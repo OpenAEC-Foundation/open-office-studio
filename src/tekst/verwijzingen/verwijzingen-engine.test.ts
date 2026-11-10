@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { createYrsSession, saveYrsDocx, type YrsSession } from "@betteroffice/docx/yrs";
 import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
-import { alineas, bladwijzers, hernoemBladwijzer, nieuweBladwijzer, tekst, verwijderBladwijzer } from "./document";
+import { alineas, bladwijzers, herstelNaDialoog, hernoemBladwijzer, nieuweBladwijzer, tekst, verwijderBladwijzer } from "./document";
 import { bijschriftIn, kruisverwijzingIn, verwijsDoelen, werkVerwijzingenBij } from "./opdrachten";
 import { voegNootIn } from "../pagina/noten";
 import { registreerVeldBijwerker, werkDocumentVeldenBij } from "../veldenDocument/opdrachten";
@@ -22,6 +22,37 @@ const fields = (s: YrsSession) => alineas(s).flatMap(p => p.delen.filter(d => d.
 const xml = async (s: YrsSession) => strFromU8(unzipSync((await saveYrsDocx(s)).bytes)["word/document.xml"]);
 
 describe("native captions, bookmarks and cross-references (#52)", () => {
+  it.each(["selection", "content", "pending-input", "unchanged"])("restores dialog focus only before newer %s state", async change => {
+    const s = await createYrsSession(); let frame: FrameRequestCallback | undefined;
+    const doc = new EventTarget(); vi.stubGlobal("document", doc);
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { frame = callback; return 1; });
+    try {
+      s.openDocx(bron(para(run("Heading"))), true); s.setSelection(at(s), at(s, 0, 7));
+      const focus = vi.fn(), api = { ...ref(s), focus } as DocxEditorRef;
+      herstelNaDialoog(api);
+      if (change === "selection") s.setSelection(at(s));
+      if (change === "content") s.insertText(at(s), "New ");
+      if (change === "pending-input") doc.dispatchEvent(new Event("beforeinput"));
+      const selection = s.selection(); frame!(0);
+      expect(s.selection()).toEqual(selection); expect(focus).toHaveBeenCalledTimes(change === "unchanged" ? 1 : 0);
+      expect(s.paragraphs("body")[0].text).toBe(change === "content" ? "New Heading" : "Heading");
+    } finally { vi.unstubAllGlobals(); s.destroy(); }
+  });
+  it.each(["stale-document", "layout-unavailable", "always-stale", "version-change"])("handles %s layout failures without writing stale caches", async failure => {
+    const s = await createYrsSession();
+    try {
+      s.openDocx(bron(para('<w:bookmarkStart w:id="1" w:name="Target"/>'+run("Target")+'<w:bookmarkEnd w:id="1"/>')+para('<w:fldSimple w:instr=" PAGEREF Target ">'+run("99")+'</w:fldSimple>')), true);
+      const ed = { ...ref(s).getEditorRef()!, getLayout: () => ({ pages: [{ fragments: [{ pmStart: 0, pmEnd: 100 }] }] }), yrsLocToDisplayPosition: () => 1 };
+      let calls = 0;
+      const api = { focus() {}, getEditorRef: () => ed, flushPendingInput: async () => {}, whenLayoutComplete: async () => {}, exportStructuredWithPages: async () => {
+        calls++;
+        if (failure === "version-change" && calls === 1) s.insertText(at(s), "New ");
+        return (failure === "stale-document" && calls > 1) || failure === "version-change" ? { ok: true, content: { layout: { pages: [{ pageIndex: 0, displayedLabel: "2" }] } } } : { ok: false, failure: { code: failure === "always-stale" ? "stale-document" : failure } };
+      } } as unknown as DocxEditorRef;
+      if (["stale-document", "version-change"].includes(failure)) { await werkVerwijzingenBij(api); expect(fields(s)[0].payload!.displayText).toBe("2"); expect(calls).toBeGreaterThan(1); }
+      else { await expect(werkVerwijzingenBij(api)).rejects.toThrow("references.layout"); expect(calls).toBe(failure === "always-stale" ? 3 : 1); expect(fields(s)[0].payload!.displayText).toBe("99"); }
+    } finally { s.destroy(); }
+  });
   it("updates TITLE and PAGEREF together through F9 after publishing the changed layout", async () => {
     const s = await createYrsSession();
     try {

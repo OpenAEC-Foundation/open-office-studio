@@ -10,7 +10,8 @@ const { chromium } = await import(
 const outDir = process.argv[2] ?? ".local/writer-performance",
   label = process.argv[3] ?? "kandidaat",
   rate = Number(process.argv[4] ?? 4),
-  diagnostic = process.argv.includes("--diagnostic");
+  diagnostic = process.argv.includes("--diagnostic"),
+  checkWarmup = process.argv.includes("--check-warmup");
 if (!/^[a-zA-Z0-9_-]+$/.test(label) || !Number.isFinite(rate) || rate < 1)
   throw new Error("Invalid label or CPU rate");
 fs.mkdirSync(".local", { recursive: true });
@@ -151,6 +152,10 @@ try {
     { timeout: 180000 },
   );
   await page.evaluate(() => document.fonts.ready);
+  if (checkWarmup) {
+    await page.waitForFunction(() => window.__writerWarmup);
+    await page.evaluate(() => window.__writerWarmup);
+  }
   await page.waitForTimeout(2000);
   const before = await page.evaluate(() => {
     const ref = window.__writerApis.tekst(),
@@ -391,11 +396,18 @@ try {
         ),
     };
   });
-  const saved = await page.evaluate(async () => {
-    const b = await window.__writerApis.tekst().save();
-    if (!b) throw Error("Save failed");
-    return Array.from(new Uint8Array(b));
-  });
+  let saved;
+  if (checkWarmup) await page.context().setOffline(true);
+  try {
+    saved = await page.evaluate(async () => {
+      const b = await window.__writerApis.tekst().save();
+      if (!b) throw Error("Save failed");
+      return Array.from(new Uint8Array(b));
+    });
+    if (checkWarmup) result.offlineSaveAfterWarmup = true;
+  } finally {
+    if (checkWarmup) await page.context().setOffline(false);
+  }
   await page.evaluate(() => {
     window.__previousSession = window.__writerApis
       .tekst()

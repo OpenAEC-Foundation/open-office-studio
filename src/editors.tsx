@@ -27,6 +27,7 @@ import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
 import { installeerBladBeveiliging, installeerBeveiligdeSelectie } from "./rekenblad/bladbeveiliging";
 import { bereidVoorwaardelijkeWeergave } from "./rekenblad/voorwaardelijke-weergave";
 import { bereidBladEigenschappen } from "./rekenblad/bladEigenschappen";
+import { bereidGroepen } from "./rekenblad/groepsbediening";
 import { metBeginregio } from "./rekenblad/werkmapregio";
 import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
@@ -49,6 +50,7 @@ import { useAuteur } from "./auteursprofiel";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
 import { maakMarkeringenPlugin } from "./tekst/pagina/Markeringen";
+import { bereidTekstOpslagVoor } from "./tekst/gedeeld/opslagvoorbereiding";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -273,19 +275,14 @@ export default function OfficeEditor(props: EditorProps) {
         await werkDocumentVeldenBij(ref);
       },
     }));
-    // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij
-    // opslaan ophaalt, zodat opslaan ook na een nieuwe uitrol blijft werken.
+    // Laad de opslagafhankelijkheden vooraf, ook voor later offline opslaan.
+    // Een groot gebruikersdocument hiervoor serialiseren onderbreekt invoer.
     let proef = 0;
     if (!("__TAURI_INTERNALS__" in window))
       proef = window.setTimeout(() => {
-        if (exporteren.current || !docx.current?.getDocument()) return;
-        exporteren.current = true;
-        void Promise.resolve(docx.current.save())
+        void bereidTekstOpslagVoor()
           .catch(() => {
             // Alleen een voorbereiding; echte fouten verschijnen bij opslaan.
-          })
-          .finally(() => {
-            exporteren.current = false;
           });
       }, 2500);
     return () => {
@@ -339,6 +336,7 @@ export default function OfficeEditor(props: EditorProps) {
       }
       bereidBladEigenschappen(api.handle, herladenRecent.current.bytes);
       bereidVoorwaardelijkeWeergave(api.handle);
+      bereidGroepen(api.handle, herladenRecent.current.bytes);
       setRekenbladApi(api);
       const stopWijziging = registreerWijziging(api.handle, () =>
         recent.current.gewijzigd(),

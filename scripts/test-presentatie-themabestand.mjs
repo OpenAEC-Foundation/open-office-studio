@@ -44,15 +44,12 @@ async function setup(b, filename) {
     ),
   );
   await p.goto(url);
-  await p
-    .locator(".office input[type=file]")
-    .first()
-    .setInputFiles({
-      name: filename,
-      mimeType:
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      buffer: b,
-    });
+  await p.locator(".office input[type=file]").first().setInputFiles({
+    name: filename,
+    mimeType:
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    buffer: b,
+  });
   await p.evaluate(() => {
     window.proefApi = () => {
       const el = document.querySelector(
@@ -237,6 +234,30 @@ try {
           await page.evaluate(() => Array.from(proefApi().handle.save())),
         ),
       );
+      const current = await dialog();
+      assert.equal(
+        await current.getByLabel("Name", { exact: true }).inputValue(),
+        name,
+      );
+      assert.equal(
+        await current.getByLabel("Accent 1", { exact: true }).inputValue(),
+        "#12ab34",
+      );
+      assert.equal(
+        await current.getByLabel("Background", { exact: true }).inputValue(),
+        "#efe4dc",
+      );
+      await current.getByLabel("Accent 2", { exact: true }).fill("#abcdef");
+      await page.evaluate(() => (window.beforeTheme = proefApi()));
+      await current.getByRole("button", { name: "Apply", exact: true }).click();
+      await current.waitFor({ state: "hidden" });
+      await page.waitForFunction(() => {
+        try {
+          return proefApi() && proefApi() !== window.beforeTheme;
+        } catch {
+          return false;
+        }
+      });
     },
   );
   await run(
@@ -263,6 +284,22 @@ try {
           await page.evaluate(() => Array.from(proefApi().handle.save())),
         ),
       );
+      const current = await dialog();
+      assert.equal(
+        await current.getByLabel("Name", { exact: true }).inputValue(),
+        name,
+      );
+      assert.equal(
+        await current.getByLabel("Accent 1", { exact: true }).inputValue(),
+        "#12ab34",
+      );
+      assert.equal(
+        await current.getByLabel("Accent 2", { exact: true }).inputValue(),
+        "#abcdef",
+      );
+      await current
+        .getByRole("button", { name: "Cancel", exact: true })
+        .click();
     },
   );
   assert.deepEqual(report.errors, []);

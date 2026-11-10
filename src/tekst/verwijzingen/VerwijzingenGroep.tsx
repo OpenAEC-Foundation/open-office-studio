@@ -7,7 +7,7 @@ import { EigenKnop } from "../../lint/tekst-opdrachten";
 import { useEditorApi } from "../../lint/editorApi";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { engine } from "../gedeeld/engine";
-import { bladwijzers, gaNaar, hernoemBladwijzer, nieuweBladwijzer, verwijderBladwijzer } from "./document";
+import { bladwijzers, gaNaar, herstelNaDialoog, hernoemBladwijzer, nieuweBladwijzer, verwijderBladwijzer } from "./document";
 import { bijschriftIn, kruisverwijzingIn, verwijsDoelen } from "./opdrachten";
 import { werkDocumentVeldenBij } from "../veldenDocument/opdrachten";
 
@@ -33,12 +33,9 @@ export function VerwijzingenGroep() {
       }} />
     </div>
     {open && <VerwijsDialoog type={open.type} refApi={open.ref} bewerkbaar={!!bewerkbaar} sluit={() => {
-      const ref = api(), sessie = ref?.getEditorRef()?.getYrsSession(), selectie = sessie?.selection();
+      const ref = api();
       setOpen(null);
-      requestAnimationFrame(() => {
-        if (!ref || !sessie || ref.getEditorRef()?.getYrsSession() !== sessie) return;
-        if (selectie) gaNaar(ref, selectie.anchor, selectie.head); else ref.focus();
-      });
+      if (ref) herstelNaDialoog(ref);
     }} />}
   </Groep>;
 }
