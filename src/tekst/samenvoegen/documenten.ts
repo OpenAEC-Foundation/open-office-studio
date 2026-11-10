@@ -96,12 +96,28 @@ export function maakSamenvoegDocument(template: Uint8Array, data: Gegevens, reco
       const m = /^(\s*(?:REF|PAGEREF|NOTEREF)\s+)("[^"]*"|[^\s]+)([\s\S]*)$/i.exec(code);
       if (m) return m[1] + (names.get(m[2].replace(/^"|"$/g, "")) ?? m[2]) + m[3];
       const seq = /^\s*SEQ\s+("[^"]*"|[^\s]+)/i.exec(code);
-      if (resetSequence && ordinal && seq && !firstSeq.has(seq[1].toLowerCase())) { firstSeq.add(seq[1].toLowerCase()); if (!/\\r\s+\d+/.test(code)) return code + " \\r 1"; }
+      const sequenceName = seq?.[1].replace(/^"|"$/g, "").toLowerCase();
+      if (resetSequence && ordinal && sequenceName && !firstSeq.has(sequenceName)) { firstSeq.add(sequenceName); if (!/\\r\s+\d+/.test(code)) return code + " \\r 1"; }
       return code;
     };
     const transform = (xml: string, scope: string, main = false) => {
       const root = leesXml(xml), changes: Vervanging[] = [];
+      // Complete split instructions during the same document-order walk as
+      // simple fields, so the first SEQ is independent of its OOXML form.
+      const stack: { nodes: XmlElement[]; code: boolean }[] = [];
+      const finish = () => {
+        const frame = stack.at(-1); if (!frame?.code) return;
+        frame.code = false;
+        const old = frame.nodes.map(tekstVan).join(""), value = instruction(old, main);
+        if (value !== old) frame.nodes.forEach((n, i) => changes.push({ start: n.inhoudStart, eind: n.inhoudEind, tekst: i ? "" : ontsnap(value) }));
+      };
       const visit = (e: XmlElement) => {
+        if (e.lokaal === "fldChar") {
+          const type = attr(e, "fldCharType");
+          if (type === "begin") stack.push({ nodes: [], code: true });
+          else if (type === "separate") finish();
+          else if (type === "end") { finish(); stack.pop(); }
+        } else if (e.lokaal === "instrText" && stack.at(-1)?.code) stack.at(-1)!.nodes.push(e);
         const attrs = { ...e.attrs };
         const set = (name: string, value: string | number) => { const k = key(e, name); if (k) attrs[k] = String(value); };
         const old = attr(e, "id");
@@ -131,26 +147,7 @@ export function maakSamenvoegDocument(template: Uint8Array, data: Gegevens, reco
         if (Object.entries(attrs).some(([k, v]) => e.attrs[k] !== v)) changes.push({ start: e.start, eind: e.inhoudStart, tekst: `<${e.naam}${attrTekst(attrs)}${e.leeg ? "/>" : ">"}` });
         for (const child of elementen(e)) visit(child);
       };
-      visit(root);
-      // A Word field instruction may be split across arbitrary runs. Rewrite
-      // its combined code, keeping the result runs and their formatting.
-      const stack: { nodes: XmlElement[]; code: boolean }[] = [];
-      const finish = () => {
-        const frame = stack.at(-1); if (!frame?.code) return;
-        frame.code = false;
-        const old = frame.nodes.map(tekstVan).join(""), value = instruction(old, main);
-        if (value !== old) frame.nodes.forEach((n, i) => changes.push({ start: n.inhoudStart, eind: n.inhoudEind, tekst: i ? "" : ontsnap(value) }));
-      };
-      const fields = (e: XmlElement) => {
-        if (e.lokaal === "fldChar") {
-          const type = attr(e, "fldCharType");
-          if (type === "begin") stack.push({ nodes: [], code: true });
-          else if (type === "separate") finish();
-          else if (type === "end") { finish(); stack.pop(); }
-        } else if (e.lokaal === "instrText" && stack.at(-1)?.code) stack.at(-1)!.nodes.push(e);
-        for (const child of elementen(e)) fields(child);
-      };
-      fields(root); return vervang(xml, changes);
+      visit(root); return vervang(xml, changes);
     };
     if (ordinal) for (const rel of p.relaties(d.pad)) {
       if (rel.extern) continue;
