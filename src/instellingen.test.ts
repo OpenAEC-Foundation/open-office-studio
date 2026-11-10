@@ -40,6 +40,17 @@ describe("instellingen", () => {
       pptx: "odp",
     });
   });
+  it("migreert en bewaart de documentweergave los van thema en bestaande tekstkeuzes", () => {
+    expect(normaliseerInstellingen({tekst:{miniWerkbalk:false}}).tekst).toEqual({
+      sneltoetsprofiel:"standaard", miniWerkbalk:false, documentWeergave:"thema",
+    });
+    const gewijzigd=pasToe(normaliseerInstellingen({tekst:{sneltoetsprofiel:"word",miniWerkbalk:false}}),{tekst:{documentWeergave:"papier"}});
+    expect(normaliseerInstellingen(JSON.parse(JSON.stringify(gewijzigd))).tekst).toEqual({
+      sneltoetsprofiel:"word",miniWerkbalk:false,documentWeergave:"papier",
+    });
+    expect(pasToe(gewijzigd,{thema:"light"}).tekst.documentWeergave).toBe("papier");
+    expect(normaliseerInstellingen({tekst:{documentWeergave:"ongeldig"}}).tekst.documentWeergave).toBe("thema");
+  });
   it("behoudt oude statuskeuzes en bewaart de vijf selectiestatistieken afzonderlijk", () => {
     const oud = normaliseerInstellingen({ statusbalk: { rekenblad: false, zoom: true } });
     expect(oud.statusbalk.rekenblad).toBe(false);
