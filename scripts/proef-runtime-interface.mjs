@@ -1,7 +1,7 @@
 /** Real packaged UI on isolated CI hosts; never opens the user's installed app. */
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
-import { readFile, writeFile } from "node:fs/promises";
+import { access, readFile, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
@@ -48,7 +48,7 @@ export async function proefInterface(
         await readFile(`src/i18n/locales/${locale}/backstage.json`, "utf8"),
       ).saveAs.sourceBundled,
     );
-  let process_, browser, session, driverPort;
+  let process_, browser, session, driverPort, installedWindows, installedLinux;
   const request = async (method, route, body) => {
     const response = await fetch(`http://127.0.0.1:${driverPort}${route}`, {
       method,
@@ -69,17 +69,28 @@ export async function proefInterface(
     await new Promise((resolve) => server.close(resolve));
     return port;
   }
+  let evaluate, screenshot;
   try {
-    let evaluate, screenshot;
     if (process.platform === "win32") {
+      const installation = join(temporary, "installed");
+      // The disposable host exercises the standard installer and WebView2
+      // bootstrapper, without assuming a developer's installed browser runtime.
+      execFileSync(payload.packagePath, ["/S", `/D=${installation}`], {
+        env,
+        windowsHide: true,
+        stdio: "inherit",
+        timeout: 600_000,
+      });
+      await access(join(installation, "open-office-studio.exe"));
+      await access(join(installation, "uninstall.exe"));
+      installedWindows = installation;
       const port = await freePort();
       env.WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS = `--remote-debugging-port=${port} --remote-debugging-address=127.0.0.1`;
       env.WEBVIEW2_USER_DATA_FOLDER = join(temporary, "webview-profile");
-      process_ = spawn(
-        join(payload.resources, "open-office-studio.exe"),
-        [input],
-        { env, stdio: "ignore" },
-      );
+      process_ = spawn(join(installation, "open-office-studio.exe"), [input], {
+        env,
+        stdio: "ignore",
+      });
       process_.on("error", () => {});
       for (let attempt = 0; attempt < 180; attempt++) {
         if (process_.exitCode !== null)
@@ -114,6 +125,7 @@ export async function proefInterface(
       execFileSync("sudo", ["dpkg", "--install", payload.packagePath], {
         stdio: "inherit",
       });
+      installedLinux = true;
       driverPort = await freePort();
       process_ = spawn("tauri-driver", ["--port", String(driverPort)], {
         env,
@@ -230,6 +242,16 @@ export async function proefInterface(
       saveAsShowsBundledRuntime: true,
       originalUnchanged: true,
     };
+  } catch (error) {
+    if (screenshot)
+      await screenshot(join(reportRoot, "native-interface-failure.png")).catch(
+        () => {},
+      );
+    await writeFile(
+      join(reportRoot, "native-interface.json"),
+      JSON.stringify({ status: "failed", error: String(error) }, null, 2),
+    );
+    throw error;
   } finally {
     if (session) await request("DELETE", `/session/${session}`).catch(() => {});
     if (browser) await browser.close().catch(() => {});
@@ -241,11 +263,28 @@ export async function proefInterface(
             stdio: "ignore",
           });
         } catch {
+          await delay(250);
           if (process_.exitCode === null)
             throw new Error("Unable to close the owned native test app");
         }
       } else process_.kill("SIGTERM");
       await delay(1000);
     }
+    if (installedWindows) {
+      execFileSync(
+        join(installedWindows, "uninstall.exe"),
+        ["/S", `_?=${installedWindows}`],
+        {
+          env,
+          windowsHide: true,
+          stdio: "inherit",
+          timeout: 120_000,
+        },
+      );
+    }
+    if (installedLinux)
+      execFileSync("sudo", ["dpkg", "--remove", "open-office-studio"], {
+        stdio: "inherit",
+      });
   }
 }

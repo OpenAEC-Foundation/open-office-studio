@@ -321,6 +321,7 @@ export async function prepareRuntime({
         ? join(DESTINATION, "LibreOffice.app/Contents/Resources")
         : DESTINATION;
     if (
+      receipt.schemaVersion === 1 &&
       receipt.target === key &&
       receipt.version === MANIFEST.version &&
       receipt.sourceSha256 === asset.sha256 &&

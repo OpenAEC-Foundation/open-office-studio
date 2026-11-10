@@ -57,6 +57,7 @@ describe("meegeleverde conversieruntime (#30)", () => {
       const notes = await studioConfig("notition", platform);
       expect(notes.bundle.resources["resources/kantoorruntime/"]).toBeNull();
       expect(notes.bundle.macOS.files["Helpers/LibreOffice.app"]).toBeNull();
+      expect(notes.bundle.macOS.minimumSystemVersion).toBeNull();
       for (const name of ["writer", "spreadsheet", "presentation", "email"]) {
         const office = await studioConfig(name, platform);
         expect(office.bundle.resources).toBeUndefined();

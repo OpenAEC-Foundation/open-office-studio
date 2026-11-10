@@ -70,6 +70,10 @@ function run(program, args, log, extraEnv = {}) {
 }
 
 const results = [];
+const codePoint = execFileSync("git", ["rev-parse", "HEAD"], {
+  encoding: "utf8",
+  windowsHide: true,
+}).trim();
 for (const packageFile of packages) {
   const name = basename(packageFile).replace(/[^a-zA-Z0-9.-]/g, "_");
   const reportRoot = join(output, name);
@@ -173,6 +177,7 @@ for (const packageFile of packages) {
       JSON.stringify(nativeInterface, null, 2) + "\n",
     );
     results.push({
+      status: "passed",
       package: payload.package,
       packageBytes: payload.packageBytes,
       packageSha256: payload.packageSha256,
@@ -190,6 +195,13 @@ for (const packageFile of packages) {
       ),
     });
     console.log(`Private bundled runtime verified: ${payload.package}`);
+  } catch (error) {
+    results.push({
+      status: "failed",
+      package: basename(packageFile),
+      error: String(error),
+    });
+    throw error;
   } finally {
     // Validate the resolved absolute target before recursive cleanup on Windows.
     const target = await realpath(temporary);
@@ -201,7 +213,11 @@ for (const packageFile of packages) {
     await rm(target, { recursive: true, force: true });
     await writeFile(
       join(output, "resultaat.json"),
-      JSON.stringify({ results }, null, 2) + "\n",
+      JSON.stringify(
+        { codePoint, platform: process.platform, arch: process.arch, results },
+        null,
+        2,
+      ) + "\n",
     );
   }
 }

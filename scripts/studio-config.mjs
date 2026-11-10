@@ -77,7 +77,7 @@ export async function studioConfig(sleutel, platform = process.platform) {
           "resources/kantoorruntime/": null,
           "resources/kantoorruntime/meta/": null,
         },
-        macOS: { files: { "Helpers/LibreOffice.app": null } },
+        macOS: { minimumSystemVersion: null, files: { "Helpers/LibreOffice.app": null } },
       } : {}),
       icon: ["32x32.png", "128x128.png", "128x128@2x.png", "512x512.png", "icon.icns", "icon.ico"]
         .map(naam => `icons/${studio.sleutel}/${naam}`),

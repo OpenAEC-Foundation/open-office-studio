@@ -16,6 +16,14 @@ verliesrapporten blijven van toepassing; de bundeling maakt ongeteste varianten
 niet automatisch ondersteund. De [dekking per extensie](../tests/formatendekking/matrix.md)
 uit #43 blijft het controleerbare bewijs voor het verschil.
 
+De registrymetadata van de private Windows x64-distributie bevat alle in de
+catalogus genoemde exportfilternamen. Van de invoerextensies staan alleen de
+drie modulegebonden UOF-extensies (`uot`, `uos`, `uop`) en het app-eigen `ifcx`
+niet als afzonderlijke extensie in die metadata. IFCX heeft een eigen approute;
+voor de UOF-varianten blijven de expliciete ontbrekende praktijkvoorbeelden uit
+#43 gelden. Dit is beschikbaarheidsinformatie uit de configuratie, geen bewijs
+dat ieder document of iedere variant correct wordt geconverteerd.
+
 | Route | Bevinding | Besluit |
 |---|---|---|
 | A: native sidecar/runtime | De bestaande conversiecode en echte legacyproeven werken met een onveranderde, uitgepakte officiële distributie. Deze bevat Writer, Calc, Impress en de oudere importfilters. Installatieomvang en geheugen zijn aanzienlijk; exacte pakketten/hashes worden vastgelegd. | Gebruiken voor ontbrekende conversies, rechtstreeks uit de appresources. |
@@ -141,8 +149,9 @@ markerbestand niet schrijven. De 32 vastgepinde legacyproeven uit #43 worden
 met de converter uit precies dat installerbestand herhaald. Prestatie- en
 pakketmetingen blijven onder `.local/gebundelde-runtime-proef` als CI-artefact.
 
-De Windows-proef start daarnaast de werkelijke uitgepakte desktopapp en bedient
-haar WebView2 via de gedocumenteerde CDP-testaansluiting. Linux installeert de
+De Windows-proef installeert daarnaast de eigen NSIS op de tijdelijke CI-host,
+inclusief de ingebouwde WebView2-voorbereiding, en bedient de geïnstalleerde
+app via de gedocumenteerde CDP-testaansluiting. Linux installeert de
 eigen DEB op de tijdelijke CI-host en bedient WebKitGTK via `tauri-driver` 2.1.0.
 Beide proeven openen een ODT in Writer, vragen de echte native runtime-status
 op en controleren dat Opslaan als de meegeleverde bron toont. De oorspronkelijke
@@ -169,3 +178,17 @@ bestaande browserroutes beschikbaar. Strict-XLSX en de overige conversieformaten
 vragen de desktopapp. De bestandsfout uit #43 noemt deze beperking en een
 alternatief vanuit de bronapp. De volledige desktopconversiedekking wordt dus
 niet als browserdekking geclaimd.
+
+## Resterende observatie op de gedeelde Windows-testhost
+
+Tijdens de aanvullende lokale legacyproef op 10 november meldde de native
+acceptatiechat een venster 'Please wait for printer connection or cancel
+connection'. De integratiechat koppelde dat via het procespad en profiel aan
+deze private runtime tijdens WK3 → XLSX. Dit is een door die chat waargenomen
+venster; in deze chat is het niet opnieuw met bediening gereproduceerd.
+De eigen proefboom is beëindigd en verdere lokale conversieproeven zijn gestopt
+om de andere acceptatie niet te hinderen. De gedeelde conversiehelper zette
+beide `SAL_DISABLE_*`-variabelen toen al; extra waarden in de buitenste
+proefharness zijn daarom geen bewezen oplossing voor deze melding. De
+OS-printer en het productieprofiel zijn niet gewijzigd. CI gebruikt afzonderlijke
+hosts; slagen daar sluit een printerafhankelijk verschil op deze host niet uit.
