@@ -1,0 +1,247 @@
+{
+  "date": "2026-11-10",
+  "base": "2eb45a3953835db8b57b4ee2273c821169cad45d",
+  "suite": {
+    "numPassedTests": 2059,
+    "numFailedTests": 2,
+    "numPendingTests": 10
+  },
+  "initialTimeouts": [
+    {
+      "file": "csvimport.test.ts",
+      "test": "CSV naar XLSX meldt kolomverlies ook wanneer de brede rij pas na rij 1000 staat",
+      "milliseconds": 6466.233399999999
+    },
+    {
+      "file": "i18n.test.ts",
+      "test": "controle-script alle vertalingen van de app zijn in orde",
+      "milliseconds": 5034.527999999999
+    }
+  ],
+  "retest": {
+    "command": "pnpm exec vitest run src/import/csvimport.test.ts src/i18n/i18n.test.ts --maxWorkers=1 --reporter=verbose",
+    "passed": 28,
+    "failed": 0,
+    "timeoutChanged": false
+  },
+  "typecheck": true,
+  "productionViteBuild": true,
+  "i18n": true,
+  "currentBrowser": {
+    "stappen": [
+      "Imported image and text box are visible with decoded image data",
+      "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
+      "Saved internal hyperlink reopens and navigates to its target cell",
+      "File links retain encoded relative paths and show a clear browser-only open message",
+      "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
+      "Image anchor and dimensions edited; original pixels and neighboring text box retained",
+      "Existing shape text edited with XML escaping and multiline persistence",
+      "Image insertion uses real file input and persists its native drawing relationship",
+      "Pointer dragging and resize handles update real cell anchors and dimensions",
+      "Text box insertion and keyboard removal preserve the other three drawing objects",
+      "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+      "A drawing-only worksheet scrolls to a distant image without adding cells",
+      "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+      "Frozen-cell images stay fixed while body images follow both scroll axes",
+      "An embedded oversized image header gets a preserved placeholder before browser decoding",
+      "Nested groups render images and rotated text shapes in their own coordinate spaces",
+      "Moving/resizing a group preserves descendant XML, image bytes and unknown extensions",
+      "Nested group scaling remains correct across 50%, 100% and 200% zoom",
+      "An unsupported child stays a named preserved placeholder within its visible group",
+      "A screenshot pixel confirms the combined group reflection and 30-degree rotation"
+    ],
+    "fouten": [],
+    "wasmSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+    "formulaQueries": false,
+    "zoom": [
+      {
+        "scale": 0.5,
+        "before": {
+          "x": 1064.6875,
+          "y": 883.5,
+          "width": 50,
+          "height": 30
+        },
+        "delta": -20
+      },
+      {
+        "scale": 2,
+        "before": {
+          "x": 1159.75,
+          "y": 794,
+          "width": 200,
+          "height": 120
+        },
+        "delta": -20
+      },
+      {
+        "scale": 1,
+        "before": {
+          "x": 1260.375,
+          "y": 854,
+          "width": 100,
+          "height": 60
+        },
+        "delta": -20
+      }
+    ]
+  },
+  "queryBrowser": {
+    "stappen": [
+      "Imported image and text box are visible with decoded image data",
+      "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
+      "Saved internal hyperlink reopens and navigates to its target cell",
+      "File links retain encoded relative paths and show a clear browser-only open message",
+      "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
+      "Image anchor and dimensions edited; original pixels and neighboring text box retained",
+      "Existing shape text edited with XML escaping and multiline persistence",
+      "Image insertion uses real file input and persists its native drawing relationship",
+      "Pointer dragging and resize handles update real cell anchors and dimensions",
+      "Text box insertion and keyboard removal preserve the other three drawing objects",
+      "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+      "A drawing-only worksheet scrolls to a distant image without adding cells",
+      "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+      "Frozen-cell images stay fixed while body images follow both scroll axes",
+      "An embedded oversized image header gets a preserved placeholder before browser decoding",
+      "Nested groups render images and rotated text shapes in their own coordinate spaces",
+      "Moving/resizing a group preserves descendant XML, image bytes and unknown extensions",
+      "Nested group scaling remains correct across 50%, 100% and 200% zoom",
+      "An unsupported child stays a named preserved placeholder within its visible group",
+      "A screenshot pixel confirms the combined group reflection and 30-degree rotation"
+    ],
+    "fouten": [],
+    "wasmSha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e",
+    "formulaQueries": true,
+    "zoom": [
+      {
+        "scale": 0.5,
+        "before": {
+          "x": 1064.6875,
+          "y": 883.5,
+          "width": 50,
+          "height": 30
+        },
+        "delta": -20
+      },
+      {
+        "scale": 2,
+        "before": {
+          "x": 1159.75,
+          "y": 794,
+          "width": 200,
+          "height": 120
+        },
+        "delta": -20
+      },
+      {
+        "scale": 1,
+        "before": {
+          "x": 1260.375,
+          "y": 854,
+          "width": 100,
+          "height": 60
+        },
+        "delta": -20
+      }
+    ]
+  },
+  "print": {
+    "pages": 1,
+    "blauw": 5940,
+    "oranje": 14568,
+    "text": "Printed shape",
+    "terugval": [],
+    "groups": [
+      {
+        "name": "group",
+        "pages": 1,
+        "blue": 4740,
+        "orange": 2333,
+        "delta": {
+          "x": 120.69738534076296,
+          "y": 129.65259322760394
+        },
+        "text": "",
+        "terugval": []
+      },
+      {
+        "name": "group-flipped",
+        "pages": 1,
+        "blue": 4662,
+        "orange": 2388,
+        "delta": {
+          "x": -167.81246645065738,
+          "y": 52.58881710137993
+        },
+        "text": "",
+        "terugval": []
+      }
+    ]
+  },
+  "independentPdf": [
+    {
+      "name": "objects",
+      "pages": 1,
+      "embeddedImages": 1,
+      "searchableText": "Printed shape"
+    },
+    {
+      "name": "group",
+      "pages": 1,
+      "embeddedImages": 1,
+      "searchableText": "OK",
+      "independentlyRenderedAngle": 45.61
+    },
+    {
+      "name": "group-flipped",
+      "pages": 1,
+      "embeddedImages": 1,
+      "searchableText": "OK",
+      "independentlyRenderedAngle": 75.51
+    }
+  ],
+  "libreOffice": {
+    "pass": true,
+    "before": {
+      "anchor": "oneCellAnchor",
+      "from": {
+        "col": 4,
+        "colOff": 0,
+        "row": 6,
+        "rowOff": 0
+      },
+      "groups": 2,
+      "names": [
+        "Moved group",
+        "Grouped image",
+        "Inner group",
+        "Grouped text"
+      ]
+    },
+    "after": {
+      "anchor": "twoCellAnchor",
+      "from": {
+        "col": 4,
+        "colOff": 0,
+        "row": 6,
+        "rowOff": 0
+      },
+      "groups": 2,
+      "names": [
+        "Moved group",
+        "Grouped image",
+        "Inner group",
+        "Grouped text"
+      ]
+    },
+    "milliseconds": 33828,
+    "output": ".local/group-libreoffice/conversion-04d124adaee4/output/group-moved.xlsx"
+  },
+  "libreOfficeSubsequentAttempts": {
+    "timeouts": 2,
+    "limitSeconds": 45,
+    "context": "Concurrent builds/tests; fresh profiles; no converter output before timeout"
+  },
+  "standardBuildLimitation": "Prebuild could not build the existing spelling WASM module; explicit TypeScript and Vite build passed",
+  "vendorModified": false
+}
