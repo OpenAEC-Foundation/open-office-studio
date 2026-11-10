@@ -71,7 +71,22 @@ de lokale successen zijn geen claim over een nog niet uitgevoerde CI-run.
 gedeelde stijlen, willekeurige namespaceprefixen, alle richtingen, gemengd
 klikbeleid, externe geluidsverwijzingen, geërfde stijlen, onbekende effecten,
 kindvolgorde, precieze ZIP-bewaring, duurvalidatie en save/reopen. TypeScript
-`tsc --noEmit` is geslaagd.
+`tsc --noEmit` is geslaagd. De volledige suite op deze bron slaagt met
+**2885 geslaagde tests, 10 overgeslagen, 275 bestanden, geen fouten**.
+De Vite-productiebuild slaagt. Chromium op die build controleert alle twaalf
+teruggekeerde overgangen, acht echte audioplaybacks, opslaan en heropenen:
+alle exacte waarden kloppen en er zijn geen JavaScript-paginafouten. De
+heropende dialoog is na zijn openingsanimatie visueel gecontroleerd.
+
+## Onafhankelijke Linux-CI
+
+[GitHub-run 42791671399](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42791671399)
+slaagt op productcommit `89aab689c2311f4c3ad4a1fb80b8d9638aeb6b24`, met
+LibreOffice `1:7.3.7-0ubuntu0.22.04.13` op Ubuntu 22.04. Het gedownloade
+artifactrapport bevestigt alle drie native rondreizen, alle 13 officiële
+schemacontroles, overgangstakken, geluidsbytes en notitiebehoud. De Linux-
+export/importtijden zijn respectievelijk 1810/1280 ms (ODP), 1437/1352 ms
+(OTP) en 1273/1225 ms (FODP). Dit zijn metingen, geen prestatietoezeggingen.
 
 ## Resterende grenzen
 
