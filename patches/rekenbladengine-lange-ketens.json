@@ -17,7 +17,7 @@
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
   "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
   "wasmBytes": 7745388,
-  "stand": "Kandidaat voor #74: negende patch vermijdt tijdelijke Vec-allocaties voor kleine celarrays. Bestaande vendorpin blijft de geteste acht-patchkern totdat vergelijkende tests slagen.",
+  "stand": "Kandidaten voor #74: kleine celarrays zonder tijdelijke Vec en alleen canonieke identiteit bij standalone openen. Samenwerkende werkmappen behouden alle oude protocolvingerafdrukken. Vendor blijft de geteste acht-patchkern totdat vergelijkende tests slagen.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -128,6 +128,28 @@
         {
           "pakket": "betteroffice-xlsx",
           "lib": "authority::tests"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-lokale-vingerafdruk.patch",
+      "patchSha256": "3d8fea67054da3eed5cbf79515bb9546aa93dcab73957ecf0f9983663626da73",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "snapshot::"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "save_reopen"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "workbook"
         }
       ]
     }

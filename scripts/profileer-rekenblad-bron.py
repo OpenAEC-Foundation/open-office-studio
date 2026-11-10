@@ -16,6 +16,9 @@ source = source.replace(needle, '''            std::env::var("OOS_OPEN_PROFILE_C
 start = source.index('    fn from_source_with_seed_chunk(')
 end = source.index('    pub(crate) fn client_id(', start)
 body = source[start:end]
+base_call = ('WorkbookBase::from_model_with_style_readings_mode('
+             if 'WorkbookBase::from_model_with_style_readings_mode(' in body
+             else 'WorkbookBase::from_model_with_style_readings(')
 
 
 def report(phase):
@@ -25,8 +28,8 @@ def report(phase):
 
 
 changes = [
-    ('        let base = WorkbookBase::from_model_with_style_readings(',
-     '        let oos_phase = std::time::Instant::now();\n        let base = WorkbookBase::from_model_with_style_readings('),
+    ('        let base = ' + base_call,
+     '        let oos_phase = std::time::Instant::now();\n        let base = ' + base_call),
     ('        if client_id == Some(base.bootstrap_client_id) {',
      report('fingerprints') + '        if client_id == Some(base.bootstrap_client_id) {'),
     ('        drop(bootstrap);', '        drop(bootstrap);\n' + report('seedAndEncode')),
