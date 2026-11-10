@@ -12,6 +12,7 @@ const outDir = process.argv[2] ?? ".local/writer-performance",
   rate = Number(process.argv[4] ?? 4),
   diagnostic = process.argv.includes("--diagnostic"),
   checkWarmup = process.argv.includes("--check-warmup"),
+  nativeDiagnostic = process.argv.includes("--native-diagnostic"),
   viewportChecks = process.argv.includes("--viewport-checks");
 if (!/^[a-zA-Z0-9_-]+$/.test(label) || !Number.isFinite(rate) || rate < 1)
   throw new Error("Invalid label or CPU rate");
@@ -161,6 +162,33 @@ try {
     await page.evaluate(() => window.__writerWarmup);
   }
   await page.waitForTimeout(2000);
+  if (nativeDiagnostic) {
+    await page.evaluate(() => {
+      const s = window.__writerApis.tekst().getEditorRef().getYrsSession();
+      for (const key of [
+        "paragraphs",
+        "storySegmentUnits",
+        "paragraphSpans",
+        "selectionText",
+      ]) {
+        const original = s[key].bind(s);
+        s[key] = (...args) => {
+          if (!window.__measuring) return original(...args);
+          const start = performance.now();
+          try {
+            return original(...args);
+          } finally {
+            const stat = (window.__calls[`native.${key}`] ??= {
+              count: 0,
+              ms: 0,
+            });
+            stat.count++;
+            stat.ms += performance.now() - start;
+          }
+        };
+      }
+    });
+  }
   const before = await page.evaluate(() => {
     const ref = window.__writerApis.tekst(),
       s = ref.getEditorRef().getYrsSession();
@@ -207,6 +235,7 @@ try {
     label,
     rate,
     diagnostic,
+    nativeDiagnostic,
     pages: before.pages,
     paragraphs: before.paragraphs.length,
     spelling: await page.evaluate(() => ({
@@ -273,9 +302,34 @@ try {
   await phase("typing", () =>
     page.keyboard.type(" Rustige testinvoer 123", { delay: 50 }),
   );
+  const cursor = () =>
+    page.evaluate(() =>
+      window.__writerApis.tekst().getEditorRef().getYrsSession().selection(),
+    );
+  const cursorVoor = await cursor();
   await phase("caret", async () => {
     for (let i = 0; i < 30; i++) await page.keyboard.press("ArrowLeft");
   });
+  const cursorNa = await cursor();
+  const verwachtPunt = {
+    ...cursorVoor.head,
+    offset: cursorVoor.head.offset - 30,
+  };
+  result.caret = {
+    before: cursorVoor,
+    after: cursorNa,
+    expected: verwachtPunt,
+    equal:
+      cursorNa &&
+      [cursorNa.anchor, cursorNa.head].every(
+        (p) =>
+          p.story === verwachtPunt.story &&
+          p.paraId === verwachtPunt.paraId &&
+          p.offset === verwachtPunt.offset,
+      ),
+  };
+  if (!result.caret.equal)
+    throw Error(`Caret position differs: ${JSON.stringify(result.caret)}`);
   if (diagnostic) {
     const { profile } = await cdp.send("Profiler.stop");
     fs.writeFileSync(

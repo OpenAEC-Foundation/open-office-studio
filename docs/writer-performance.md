@@ -103,3 +103,32 @@ Deze aanvullende CPU4-browserproef gebruikt Nederlandstalige en Engelstalige run
 De raw SDK-save roept ook de host-`onSave` aan, die het venster Save as opent. De proef annuleert dit venster na ontvangst van de bytes voordat hij opnieuw met de documenten werkt. Een eerdere proef liet de modal open en concludeerde daardoor ten onrechte dat de taalstatus bij het tweede document ontbrak. Issue #268 is ingetrokken; er is hiervoor geen appwijziging opgenomen.
 
 De zes gerichte aansluitingstests controleren wisselende publieke refs, stille cursorbewegingen, echte meldingen zonder dubbele polling, vervangen, openen zonder native sessie, sluiten en stoppen. TypeScript, 22 gerichte tests en de volledige suite (2.050 geslaagd, 7 bestaande skips) slagen, evenals de normale productiebuild.
+
+## Cursornavigatie leest de huidige alinea (#279)
+
+Het vervolgprofiel wees circa 3,09 seconden native tijd toe aan `paragraphs()` vanuit `YrsInput.navigate` van SDK 0.5.1. De handler las voor iedere horizontale cursorbeweging alle alineateksten en -eigenschappen van het verhaal. Ook Home/End lazen die tekst, hoewel deze takken uitsluitend de bestaande posities/lengtes gebruiken. Een gerichte teller op de bestaande sessie bevestigde 30 volledige lezingen voor 30 pijltjestoetsen.
+
+Een afzonderlijke, getypeerde adapter gebruikt nu `storySegmentUnits(verhaal, [index])` voor de benodigde ruwe cursoralinea. De afsluitende alineamarkering moet bij het verwachte id horen; anders blijft de oorspronkelijke volledige leesroute beschikbaar. De tekst wordt op dezelfde manier als Rusts `paragraphs()` samengesteld uit de tekstsegmenten. Bijgehouden verwijderingen blijven daardoor aanwezig en embeds blijven op dezelfde manier buiten deze string. Er is geen tekstcache. De invoerwachtrij en bestaande teken-/woordnavigatie verwerken daarna dezelfde tekst.
+
+Home/End en bewegingen vanaf de alineagrens lezen geen tekst. Bij één alinea blijft de oorspronkelijke compacte tekstprojectie in gebruik: een native API-matrix liet bij één alinea met 200 opgemaakte runs meer werk voor de volledige ruwe segmentgegevens zien. Zo krijgt dit geval geen extra formatteringspayload. Documenten met meerdere alinea's gebruiken de beperkte leesroute.
+
+De aparte Vite-plugin controleert de SHA256 van de oorspronkelijke SDK-entry en één unieke navigatiebron, ook na de bestaande adapters. Een gewijzigde SDK stopt de build totdat de aansluiting opnieuw is beoordeeld. De eerdere worker-/tabel-/versieadapters zijn niet aangepast. De nieuwe helper wordt in de gewone build opgenomen; de diagnostiek blijft uitsluitend in de browserproef.
+
+```powershell
+node scripts/meet-writer.mjs .local/writer-viewport navigatie 4 --diagnostic --native-diagnostic --viewport-checks
+```
+
+`--native-diagnostic` telt en meet vier bestaande native leesmethoden op de testsessie. De proef controleert nu ook dat 30 ArrowLeft-toetsen de ingeklapte selectie exact 30 posities naar links verplaatsen in deze ASCII-fixture. De teller omvat de synchrone native aanroep en de bestaande JSON-projectie.
+
+| CPU4, 600 alinea's | Volledige alinealezingen | Lezingen van één unit | Tijd in deze leesmethoden | Totale cursorreeks |
+| --- | ---: | ---: | ---: | ---: |
+| Oud A1 | 30 | 0 | 5.412,5 ms | 11,82 s |
+| Kandidaat B1 | 0 | 30 | 16,3 ms | 2,31 s |
+| Afgerond B2 | 0 | 30 | 28,2 ms | 6,23 s |
+| Oud A2 | 30 | 0 | 5.252,2 ms | 11,62 s |
+
+B1 ging vooraf aan de extra bescherming voor een rijk opgemaakte enkele alinea en de expliciete cursorassertie; de gemeten route in dit document met 600 alinea's is dezelfde. B2 en A2 controleren ook de exacte cursorpositie. Alle vier bewaren de 600 teksten tijdens invoer en SDK-opslaan/heropenen en alle 92 zichtbare spellingrechthoeken. B1/B2/A2 slagen ook voor de acht extra viewportcontroles. Er waren geen JavaScript-fouten.
+
+De afgeronde kandidaat slaagt tevens bij CPU8: 30 unit-lezingen nemen samen circa 33,0 ms en de cursorreeks duurt 5,72 s. De cursorpositie, alle teksten, de opslag/heropening, 92 spellingrechthoeken en acht viewportgevallen blijven exact gelijk. De wisselende totale typ-, cursor- en scrolltijden laten nog lange frames zien; deze beperkte leesoptimalisatie is geen garantie dat de volledige app al soepel draait op zwakke hardware.
+
+Negentien gerichte tests controleren bronbewaking en compositie, de werkelijk gegenereerde leesexpressie, terugval en de tekst uit de echte engine: Unicode/combinerende tekens, revisies met Undo/Redo, kop-/voetteksten, voet-/eindnoten en geneste tabelcellen. Die lezingen wijzigen de documentversie niet. Ook de elf taal-/opslag-/tabwisselcontroles slagen op deze nieuwe runtime. TypeScript, de normale productiebuild en de volledige suite slagen met 2.069 tests en 7 bestaande skips. De productieassets bevatten geen meetbrug of diagnostische globals.
