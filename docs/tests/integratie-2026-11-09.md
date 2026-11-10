@@ -154,6 +154,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr269-targeted | `3731f25ba3000e1f2927171cdd49bafd314dab11` | 2 | 0 | 0 |
 | pr270-related-unit | `949e511afad54af8bda20b7e3d3e5f94da87c92f` | 6 | 0 | 0 |
 | pr271-targeted | `607ece964943462d7018d827978ccd98517735e2` | 4 | 0 | 0 |
+| pr267-related-unit | `3f0413d3660335cbee41289b8d4fc486593abdc5` | 6 | 0 | 0 |
 
 ## Pending deliveries
 
