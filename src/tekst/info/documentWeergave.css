@@ -1,0 +1,24 @@
+/* Filter the displayed page, including text/caret/selection, rather than its
+   bitmap or document model. Canvas exports keep their original pixels. */
+@media screen {
+  .office .office-tekst-donker .canvas-page {
+    filter: invert(0.9) hue-rotate(180deg);
+  }
+  .office .office-tekst-donker .docx-editor__scroll-container {
+    background: #222228 !important;
+    color-scheme: dark;
+  }
+}
+@media print {
+  .office .office-tekst-donker .canvas-page {
+    filter: none;
+  }
+}
+@media (forced-colors: active) {
+  .office .office-tekst-donker .canvas-page {
+    filter: none;
+  }
+  .office .office-tekst-donker .docx-editor__scroll-container {
+    background: Canvas !important;
+  }
+}

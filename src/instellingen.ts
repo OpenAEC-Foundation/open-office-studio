@@ -8,6 +8,7 @@ import { useSyncExternalStore } from "react";
 import { isTaalKeuze, type TaalKeuze } from "./i18n/talen";
 
 export type Thema = "light" | "forge" | "systeem";
+export type DocumentWeergave = "thema" | "papier" | "donker";
 export type DocumentSoort = "docx" | "xlsx" | "pptx";
 export const REKENBLAD_STATISTIEKEN = {
   gemiddelde: "average", aantal: "count", som: "sum", minimum: "minimum", maximum: "maximum",
@@ -46,7 +47,7 @@ export interface Instellingen {
     cijferwoordenNegeren: boolean;
   };
   /** Tekst: sneltoetsprofiel (LibreOffice-achtig of Word) en de mini-werkbalk bij selectie. */
-  tekst: { sneltoetsprofiel: "standaard" | "word"; miniWerkbalk: boolean };
+  tekst: { sneltoetsprofiel: "standaard" | "word"; miniWerkbalk: boolean; documentWeergave: DocumentWeergave };
   /** Automatische updates van de desktopapp (#26, src/updates.ts): controle bij start en kanaal. */
   updates: { automatisch: boolean; kanaal: "stabiel" | "ontwikkel" };
 }
@@ -75,7 +76,7 @@ export const standaardInstellingen: Instellingen = {
     hoofdletterwoordenNegeren: true,
     cijferwoordenNegeren: true,
   },
-  tekst: { sneltoetsprofiel: "standaard", miniWerkbalk: true },
+  tekst: { sneltoetsprofiel: "standaard", miniWerkbalk: true, documentWeergave: "thema" },
   // Alle uitgaven zijn (nog) pre-releases; het ontwikkelkanaal neemt ze mee.
   updates: { automatisch: true, kanaal: "ontwikkel" },
 };
@@ -146,6 +147,7 @@ export function normaliseerInstellingen(ruw: unknown, oudeAuteur = ""): Instelli
     tekst: {
       sneltoetsprofiel: kies(tekst.sneltoetsprofiel, ["standaard", "word"] as const, "standaard"),
       miniWerkbalk: waarOnwaar(tekst.miniWerkbalk, s.tekst.miniWerkbalk),
+      documentWeergave: kies(tekst.documentWeergave, ["thema", "papier", "donker"] as const, s.tekst.documentWeergave),
     },
     updates: {
       automatisch: waarOnwaar(updates.automatisch, s.updates.automatisch),

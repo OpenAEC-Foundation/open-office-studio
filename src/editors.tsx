@@ -47,6 +47,8 @@ import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { useAuteur } from "./auteursprofiel";
+import { useDocumentWeergave } from "./tekst/info/documentWeergave";
+import "./tekst/info/documentWeergave.css";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
 import { maakMarkeringenPlugin } from "./tekst/pagina/Markeringen";
@@ -91,6 +93,7 @@ const behoudSynchroneProjectie = () => {};
 
 export default function OfficeEditor(props: EditorProps) {
   const auteursnaam = useAuteur();
+  const documentWeergave = useDocumentWeergave();
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
   const { t } = useTranslation("shell");
@@ -439,9 +442,9 @@ export default function OfficeEditor(props: EditorProps) {
               showRuler={false}
               showOutline={navigatie}
               showOutlineButton={false}
-              colorMode="light"
+              colorMode={documentWeergave.thema === "forge" ? "dark" : "light"}
               i18n={engineTaal.tekst}
-              className="office-tekst"
+              className={`office-tekst${documentWeergave.donker ? " office-tekst-donker" : ""}`}
               // Het tabpaneel blokkeert invoer met inert. Een verborgen editor
               // moet zijn bewerksessie houden: readOnly kiest een viewer zonder
               // de synchrone document-API die het eigen lint gebruikt.
