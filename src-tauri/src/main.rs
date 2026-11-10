@@ -55,14 +55,16 @@ async fn converteer_document(
         Err(_) => conversie::Opties::default(),
     };
     let instelling = conversie::lees_instelling(&app);
+    let resources = conversie::appresources(&app);
     tauri::async_runtime::spawn_blocking(move || {
-        conversie::converteer_met(
+        conversie::converteer_met_bundel(
             &bytes,
             &bron,
             &doel,
             &module,
             &opties,
             instelling.as_deref(),
+            resources.as_deref(),
         )
         .map(tauri::ipc::Response::new)
     })

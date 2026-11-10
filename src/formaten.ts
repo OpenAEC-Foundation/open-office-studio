@@ -147,7 +147,7 @@ export interface ConversieStatus {
   gevonden: boolean;
   pad?: string;
   versie?: string | null;
-  bron?: "omgeving" | "instelling" | "automatisch";
+  bron?: "omgeving" | "instelling" | "meegeleverd" | "automatisch";
   profiel: "eigen" | "veilig";
   gekozen?: string | null;
 }

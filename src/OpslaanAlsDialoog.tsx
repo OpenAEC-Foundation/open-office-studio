@@ -295,7 +295,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                       ? t("saveAs.sourceEnvironment")
                       : status.bron === "instelling"
                         ? t("saveAs.sourceSetting")
-                        : t("saveAs.sourceAutomatic"),
+                        : status.bron === "meegeleverd"
+                          ? t("saveAs.sourceBundled")
+                          : t("saveAs.sourceAutomatic"),
                   profile:
                     status.profiel === "veilig"
                       ? t("saveAs.profileSafe")

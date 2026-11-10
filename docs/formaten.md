@@ -1,6 +1,6 @@
 # Bestandsformaten
 
-DOCX, XLSX en PPTX werken rechtstreeks in de editors. Eenvoudige tekst- en tabelbestanden hebben een eigen import; OOXML-varianten hebben eigen pakketbehandeling. De overige invoerformaten worden in de desktopversie lokaal geconverteerd. Daarvoor moet een kantoorruntime (LibreOffice) geïnstalleerd zijn. De app zoekt die zelf; zie [Kantoorruntime](#kantoorruntime-conversieprogramma). Een catalogusvermelding betekent dat conversie geprobeerd kan worden; niet dat iedere variant getest of verliesvrij is.
+DOCX, XLSX en PPTX werken rechtstreeks in de editors. Eenvoudige tekst- en tabelbestanden hebben een eigen import; OOXML-varianten hebben eigen pakketbehandeling. De overige invoerformaten worden in de desktopversie lokaal geconverteerd met de meegeleverde private kantoorruntime (LibreOffice). De standaardinstallatie vereist daarvoor geen afzonderlijk programma of omgevingsvariabele; zie [Kantoorruntime](#kantoorruntime-conversieprogramma). Een catalogusvermelding betekent dat conversie geprobeerd kan worden; niet dat iedere variant getest of verliesvrij is.
 
 | Module | Rechtstreeks | Overige invoer |
 |---|---|---|
@@ -43,7 +43,7 @@ Een echt leeg origineel blijft te openen. Tekstloze afbeeldingen, tabellen,
 formules en vormen worden hierbij niet automatisch als leeg beschouwd.
 De oudere minimale Linux-runtime 7.3.7.2 weigert bovendien de DBF- en SXI-proef
 die op Windows met 26.8.2.2 wel slagen; de matrix legt dat versieverschil vast.
-De runtime wordt nog niet meegeleverd; die distributie valt onder #30.
+De desktopbouw levert de runtime mee (#30). De browser kan geen native conversieprogramma uitvoeren en noemt bij zulke bestanden de desktopbeperking en een alternatief. Zie de [distributiekeuze, metingen en platformcontroles](ontwerp/2026-11-10-gebundelde-kantoorruntime.md).
 
 ## Opslaan als
 
@@ -190,16 +190,17 @@ De catalogus legt per uitvoerformaat het exportfilter en eventuele standaardopti
 
 ## Kantoorruntime (conversieprogramma)
 
-De runtime wordt niet met de installers meegeleverd. De desktopapp vindt hem in deze volgorde:
+De standaardinstallers leveren LibreOffice 26.8.2.2 privé mee, inclusief de oorspronkelijke licenties en bronverwijzingen. Writer, Spreadsheet, Presentation en Email gebruiken dezelfde distributie; Notition en de zelfstandige Database-app hebben deze conversieruntime niet nodig. De desktopapp vindt hem in deze volgorde:
 
 1. `OPENAEC_CONVERSIE_PROGRAMMA`: het volledige pad naar het programma. Dit heeft altijd voorrang.
 2. Een programma dat je in de app hebt gekozen: Opslaan als → "Conversieprogramma kiezen". Het pad wordt bewaard in `conversie.json` in de app-gegevensmap. De app accepteert alleen een bestaand, uitvoerbaar bestand met de naam `soffice`, `soffice.exe` of `soffice.bin`.
-3. Automatisch, op vaste, bekende installatiepaden. Er wordt niet door andere mappen gezocht:
+3. De meegeleverde runtime onder de eigen app-resources (op macOS als ondertekende helper-app). De ontvangstregistratie moet overeenkomen met versie, platform, architectuur en vastgepinde bronhash.
+4. Automatisch, op vaste, bekende installatiepaden, als fallback voor ontwikkelbouw of een ontbrekende private runtime. Er wordt niet door andere mappen gezocht:
    - Linux: `/usr/bin/soffice`, `/usr/lib/libreoffice/program/soffice`, `/usr/lib64/libreoffice/program/soffice`, `/opt/libreoffice*/program/soffice` (nieuwste eerst), de Flatpak-export `org.libreoffice.LibreOffice` (systeem en gebruiker), en daarna `soffice` in het zoekpad (gelijk aan `which soffice`).
    - macOS: `/Applications/LibreOffice.app/Contents/MacOS/soffice`, daarna `soffice` in het zoekpad.
    - Windows: `%ProgramFiles%\LibreOffice\program\soffice.exe`, `%ProgramW6432%\…` en `%ProgramFiles(x86)%\…`.
 
-Opslaan als toont welk programma is gevonden, de versie (`soffice --version`) en de bron (omgeving, zelf gekozen of automatisch). Dat komt van het Tauri-commando `conversie_status`.
+Opslaan als toont welk programma is gevonden, de versie (`soffice --version`) en de bron (omgeving, zelf gekozen, meegeleverd met de app of automatisch). Dat komt van het Tauri-commando `conversie_status`. Een eigen programmakeuze wissen valt terug op de meegeleverde runtime. Ontbreekt die in een standaardinstallatie, dan adviseert de melding de volledige desktopapp opnieuw te installeren of een eigen conversieprogramma te kiezen.
 
 ### Veilig profiel
 
