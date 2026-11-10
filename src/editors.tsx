@@ -54,6 +54,8 @@ import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { useAuteur } from "./auteursprofiel";
 import { useDocumentWeergave } from "./tekst/info/documentWeergave";
 import "./tekst/info/documentWeergave.css";
+import { leesBewaardeInstellingen } from "./instellingen";
+import { noteerNieuweOpmerkingInitialen } from "./tekst/opmerkingen/initialen";
 import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 import { laadTekenobjecten, metTekenAnkers } from "./rekenblad/tekenAnkers";
 import { maakMarkeringenPlugin } from "./tekst/pagina/Markeringen";
@@ -439,6 +441,9 @@ export default function OfficeEditor(props: EditorProps) {
               downloadOnSave={false}
               // Naam bij opmerkingen en bijgehouden wijzigingen (Instellingen), niet "User".
               author={auteursnaam || i18next.t("writer:general.unknownAuthor")}
+              onCommentReply={(antwoord) => noteerNieuweOpmerkingInitialen(
+                herladen.api, antwoord, leesBewaardeInstellingen().gebruiker.initialen,
+              )}
               onSave={() => {
                 if (!exporteren.current) props.opslaan();
               }}
