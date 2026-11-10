@@ -133,9 +133,11 @@ export async function converteer(
   ) {
     const { naPresentatieConversie } = await import("./presentatie/odf-overgangen");
     const { behoudOdfMediavolume } = await import("./presentatie/odf-mediavolume");
-    return behoudOdfMediavolume(
+    const { herstelOdfMedianamen } = await import("./presentatie/odf-medianamen");
+    const media = await behoudOdfMediavolume(
       bytes, van, naar, naPresentatieConversie(bytes, van, naar, omgezet),
     );
+    return herstelOdfMedianamen(bytes, van, naar, media);
   }
   if (!writer || !voorbereid || !secties) return omgezet;
   // Restore physical sections before resolving the note/list/table bookmarks;

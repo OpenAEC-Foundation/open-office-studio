@@ -155,7 +155,7 @@ function lees(p: Pakket, index: number): DiaMedium[] {
     return [
       {
         id,
-        naam: attr(pr, "name") ?? `Media ${id}`,
+        naam: attr(pr, "name") ?? "",
         soort,
         mime: FORMATS[ext]?.mime ?? "application/octet-stream",
         bytes: path ? (p.bytes(path) ?? null) : null,

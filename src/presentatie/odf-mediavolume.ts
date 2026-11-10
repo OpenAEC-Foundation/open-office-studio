@@ -435,3 +435,11 @@ export async function behoudOdfMediavolume(
     return importVolume(bron, result);
   return result;
 }
+
+// Dezelfde conservatieve mediakoppeling wordt ook voor verloren namen gebruikt.
+export {
+  frames as leesOdfMediaKoppelingen,
+  pptxMedia as leesPptxMediaKoppelingen,
+  same as gelijkeMediaGeometrie,
+  unique as uniekeMediaKoppelingen,
+};

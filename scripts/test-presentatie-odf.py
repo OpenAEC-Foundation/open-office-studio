@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import platform
 import shutil
 import subprocess
 import sys
@@ -106,6 +107,8 @@ def independent_volume(ext, expected):
                 found.add(kind)
                 value = expected["levels"][i if kind == "audio" else 3-i]
                 shape_id = pic.find(P + "nvPicPr/" + P + "cNvPr").get("id")
+                name = pic.find(P + "nvPicPr/" + P + "cNvPr").get("name")
+                assert name == expected["names"][kind]
                 nodes = [m for m in root.findall(".//" + P + "cMediaNode")
                          if m.find(P + "tgtEl/" + P + "spTgt").get("spid") == shape_id]
                 if not nodes:
@@ -117,7 +120,7 @@ def independent_volume(ext, expected):
             assert found == {"audio", "video"}
         notes = ["".join(E.fromstring(z.read(n)).itertext()) for n in z.namelist() if n.startswith("ppt/notesSlides/") and n.endswith(".xml")]
         assert any(expected["notes"] in text for text in notes)
-    return {"slides": 4, "exactVolumes": count, "mediaBytesPreserved": True, "notesPreserved": True, "pass": True}
+    return {"slides": 4, "exactVolumes": count, "mediaNames": count, "mediaBytesPreserved": True, "notesPreserved": True, "pass": True}
 
 
 def main():
@@ -128,8 +131,17 @@ def main():
     runner.OUT = OUT
     doc, manifest = runner.schema("OpenDocument-v1.3-schema.rng"), runner.schema("OpenDocument-v1.3-manifest-schema.rng")
     node("prepare")
-    expected = json.loads((OUT / "expected.json").read_text())
-    report = {"cases": [], "pass": False}
+    expected = json.loads((OUT / "expected.json").read_text(encoding="utf-8"))
+    version_profile = Path(tempfile.mkdtemp(prefix="oos-slides-version-"))
+    (version_profile / "user").mkdir()
+    (version_profile / "user/registrymodifications.xcu").write_bytes((ROOT / "src-tauri/src/conversieprofiel.xcu").read_bytes())
+    version_dir = OUT / "version"
+    version_dir.mkdir(exist_ok=True)
+    runner.run(exe, ["-env:UserInstallation=" + version_profile.as_uri(), "--headless", "--version"], version_dir)
+    report = {"codepoint": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+              "platform": platform.platform(), "converterVersion": (version_dir / "converter.log").read_text(encoding="utf-8", errors="replace").strip(),
+              "profileSha256": hashlib.sha256((ROOT / "src-tauri/src/conversieprofiel.xcu").read_bytes()).hexdigest(),
+              "cases": [], "pass": False}
     try:
         for ext, filter_name in [("odp", "impress8"), ("otp", "impress8_template"), ("fodp", "OpenDocument Presentation Flat XML")]:
             if VOLUME and ext == "fodp":
