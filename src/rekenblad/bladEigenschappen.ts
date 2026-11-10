@@ -165,7 +165,7 @@ export function leesBladEigenschappen(bytes: Uint8Array): BladEigenschappen[] {
   });
 }
 
-function zetBladSelectie(
+export function zetBladSelectie(
   p: Pakket,
   index: number,
   geselecteerd: boolean,

@@ -144,9 +144,14 @@
     "toEnd": "（移至最后）",
     "makeCopy": "建立副本",
     "moveUnavailable": "表格引擎尚不能移动工作表；将创建一个副本。",
-    "copyScope": "副本包含内容及公式、格式、列宽、行高、合并单元格和冻结窗格；图表、图片和批注不会复制。",
+    "copyScope": "副本保留单元格、格式、工作表设置、图表、图片、备注、批注和链接。工作簿将重新加载，撤销历史记录将被清除。目前尚不支持复制宏或数据透视图。",
     "copy": "复制",
-    "structureLocked": "工作簿结构已受保护。无法添加、删除、移动或重命名工作表。"
+    "structureLocked": "工作簿结构已受保护。无法添加、删除、移动或重命名工作表。",
+    "copyInvalid": "This worksheet could not be copied safely. The workbook has not changed.",
+    "copyMacros": "Copying worksheets in a workbook with macros is not supported yet. The workbook has not changed.",
+    "copyPivotChart": "Copying worksheets with PivotCharts is not supported yet. The workbook has not changed.",
+    "copyUnavailable": "Copying worksheets is unavailable in this editor.",
+    "copyUnsupported": "This sheet uses an unsupported sheet type, linked controls, slicers or timelines. Copying is not available yet; the workbook has not changed."
   },
   "numberFormat": {
     "title": "设置单元格格式 › 数字",
