@@ -297,6 +297,16 @@
 .rekenblad-cf-stijl input[type="color"] { width: 48px; padding: 3px; }
 .rekenblad-cf-toevoegen { justify-content: flex-start; }
 
+.rekenblad-outline-actief [data-testid="xlsx-workspace"] { box-sizing: border-box; padding-inline-start: var(--oos-outline-rijen); padding-top: var(--oos-outline-kolommen); }
+.rekenblad-outline-rail { position: absolute; z-index: 9; overflow: hidden; pointer-events: none; background: #f3f5f7; }
+.rekenblad-outline-rail.is-rij { border-inline-end: 1px solid #d8dde4; }
+.rekenblad-outline-rail.is-kolom { border-bottom: 1px solid #d8dde4; }
+.rekenblad-outline-rail button { position: absolute; padding: 0; border: 1px solid #83909c; border-radius: 2px; background: #fff; color: #283645; font-size: 13px; line-height: 10px; pointer-events: auto; cursor: pointer; }
+.rekenblad-outline-rail button:focus-visible { outline: 2px solid #a95606; outline-offset: 1px; }
+.rekenblad-outline-rail button:disabled { opacity: .45; cursor: default; }
+.rekenblad-outline-lijn { position: absolute; border-left: 1px solid #b4bec8; border-top: 1px solid #b4bec8; }
+.rekenblad-outline-beheer { position: absolute; z-index: 10; width: 14px; height: 14px; padding: 0; border: 1px solid #83909c; border-radius: 2px; background: #fff; color: #283645; font-size: 12px; line-height: 10px; cursor: pointer; }
+
 .rekenblad-formulefout { position: relative; flex: 0 0 auto; color: #9a5b00; font-size: 12px; }
 .rekenblad-formulefout summary { display: flex; align-items: center; gap: 4px; cursor: pointer; padding: 4px; }
 .rekenblad-formulefout > div { position: absolute; right: 0; top: 100%; width: 300px; z-index: 80; padding: 12px; border: 1px solid #c4a56f; background: #fff8e8; color: #382b18; box-shadow: 0 4px 16px #0002; }
