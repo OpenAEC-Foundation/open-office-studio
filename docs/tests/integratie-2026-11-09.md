@@ -98,6 +98,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#330](https://github.com/OpenAEC-Foundation/open-office-studio/pull/330) | `8a2ab22556af01be986b61731d55d392fbf08573` | `44b146a104d32b2ba0a11b74d5d3a91c1debb892` | Independent structure and defined-name remapping regressions on existing kernels |
 | [#220](https://github.com/OpenAEC-Foundation/open-office-studio/pull/220) | `4a21ad18c2b7861cf1d227e05f572a3f337fcdb9` | `725d6f52038695aa9979454aa3c770f00462eb4e` | Preserve Writer image replacement exact geometry and crop |
 | [#328](https://github.com/OpenAEC-Foundation/open-office-studio/pull/328) | `27082918a71a677c0ed4e9910096c35d6752a462` | `f20d9a7dd87c410ab5600f20aa2b4e51d928e252` | Restart completed embedded media while preserving ordinary resume and loops |
+| [#331](https://github.com/OpenAEC-Foundation/open-office-studio/pull/331) | `7fd5e6899cb0f89ff17350927ef5b5aad864e75d` | `63e337422709f07bc8d814e589788ce3e74ceecb` | Presentation whole-word search preserves Unicode offsets and one-step replacement Undo |
 
 ## Earlier fixes included in bundles
 
@@ -217,6 +218,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr330-targeted | `44b146a104d32b2ba0a11b74d5d3a91c1debb892` | 38 | 0 | 0 |
 | pr220-targeted | `725d6f52038695aa9979454aa3c770f00462eb4e` | 14 | 0 | 0 |
 | pr328-related-unit | `f20d9a7dd87c410ab5600f20aa2b4e51d928e252` | 25 | 0 | 0 |
+| pr331-targeted | `63e337422709f07bc8d814e589788ce3e74ceecb` | 10 | 0 | 0 |
 
 ## Pending deliveries
 
