@@ -84,6 +84,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | [#290](https://github.com/OpenAEC-Foundation/open-office-studio/pull/290) | `66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c` | `df20016b5a57e69c3dd17204ef650d4aeaf5fcc4` | Writer note continuation preserves body formatting after note reference Enter |
 | [#273](https://github.com/OpenAEC-Foundation/open-office-studio/pull/273) | `c3232dd704f1d3b069b7596f1ed7ca969fea04d6` | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | Test-only table probe synchronization; real keyboard selection and saved filter state |
 | [#307](https://github.com/OpenAEC-Foundation/open-office-studio/pull/307) | `2da5abe361d18824d1fd84f1dee717f152f7e545` | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | Writer remembers successful header/footer opening before quick close or reload |
+| [#300](https://github.com/OpenAEC-Foundation/open-office-studio/pull/300) | `b8426dc453c16a4a8863d67dd914070453c4a079` | `77da4ffa4eb9fb9f09014bea933db57253a51dc4` | Writer screen display mode and colour-control contrast |
 
 ## Earlier fixes included in bundles
 
@@ -189,6 +190,7 @@ Branch: `codex/integratie-2026-11-09`. Base main: `e741e504e35a7dc195ea31daab693
 | pr273-browser-probe-correction | `794ff133fbcf807d3d6044aa3d66e7dea1be775f` | 6 | 0 | 0 |
 | pr307-targeted | `ee176619c6ba2aceed1d88fe9b82a2b5e07050b0` | 6 | 0 | 0 |
 | full-accepted-2026-11-10 | `1e5afa399117fd84df628955ec82b0e597993c83` | 3147 | 0 | 7 |
+| pr300-targeted | `77da4ffa4eb9fb9f09014bea933db57253a51dc4` | 5 | 0 | 0 |
 
 ## Pending deliveries
 
