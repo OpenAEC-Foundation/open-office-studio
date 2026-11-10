@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { createServer, preview } from "vite";
+import { createHash } from "node:crypto";
 const { chromium } = await import(
   process.env.OOS_PLAYWRIGHT_MODULE ?? "playwright"
 );
@@ -73,6 +74,19 @@ const stap = (naam) => {
   console.log(naam);
 };
 try {
+  const override = process.env.OOS_TEST_REKENBLAD_WASM
+    ? await readFile(process.env.OOS_TEST_REKENBLAD_WASM)
+    : null;
+  rapport.wasmSha256 = createHash("sha256")
+    .update(
+      override ?? (await readFile("vendor/rekenbladengine/xlsx_wasm_bg.wasm")),
+    )
+    .digest("hex");
+  if (override) {
+    await page.route(/\/assets\/xlsx_wasm_bg-[^/]+\.wasm(?:\?.*)?$/, (route) =>
+      route.fulfill({ body: override, contentType: "application/wasm" }),
+    );
+  }
   await page.addInitScript(() =>
     localStorage.setItem(
       "openaec-office-instellingen",
@@ -232,8 +246,29 @@ try {
   stap(
     "File links retain encoded relative paths and show a clear browser-only open message",
   );
-  await page.evaluate(async () => {
+  const formuleDoelen = await page.evaluate(async () => {
     const api = proefApis().rekenblad;
+    let queries = false;
+    try {
+      queries = Array.isArray(
+        api.handle.readCells({
+          ranges: [],
+          formulaQueries: [
+            {
+              sheetId: api.handle.sheetInfo().sheetIds[0],
+              origin: { row: 2, col: 0 },
+              target: { row: 2, col: 0 },
+              formula: '"probe"',
+            },
+          ],
+        }).formulaResults,
+      );
+    } catch (error) {
+      if (!/unknown field [`'"]formulaQueries/.test(error.message)) throw error;
+    }
+    const internalFormula = queries
+      ? '=HYPERLINK(IF(ROW()=3,"#L20","#A1"),"Internal formula")'
+      : '=HYPERLINK("#L20","Internal formula")';
     const r = await api.applyEdits({
       expectVersion: await api.version(),
       steps: [
@@ -241,19 +276,32 @@ try {
           op: "setCellInputs",
           target: {
             sheetId: api.handle.sheetInfo().sheetIds[0],
-            range: { kind: "a1", a1: "A3:B6" },
+            range: { kind: "a1", a1: "A3:B7" },
           },
           inputs: [
-            ['=HYPERLINK("#L20","Internal formula")', ""],
+            [internalFormula, ""],
             ['=HYPERLINK(B4,"File formula")', "../Linked formula.xlsx"],
-            ['=HYPERLINK(B5&"/formula","Web formula")', "https://example.com"],
+            [
+              queries
+                ? '=HYPERLINK(LOWER(B5)&"/formula","Web formula")'
+                : '=HYPERLINK(B5&"/formula","Web formula")',
+              queries ? "HTTPS://EXAMPLE.COM" : "https://example.com",
+            ],
             ['=HYPERLINK("javascript:alert(1)","Unsafe")', ""],
+            ['=HYPERLINK(UNSUPPORTED_TARGET(1),"Unavailable target")', ""],
           ],
         },
       ],
     });
     if (!r.ok) throw new Error("Formula fixture edit failed");
+    return { queries, internalFormula };
   });
+  rapport.formulaQueries = formuleDoelen.queries;
+  if (override)
+    assert(
+      formuleDoelen.queries,
+      "Pinned query engine must expose read-only expressions",
+    );
   async function ctrlKlik(row) {
     await kies(row, 0);
     const painted = await page.waitForFunction((row) => {
@@ -314,7 +362,19 @@ try {
   await link.getByRole("button", { name: "Close", exact: true }).click();
   assert.equal(
     await page.evaluate(() => proefApis().rekenblad.handle.cell(0, 2, 0).input),
-    '=HYPERLINK("#L20","Internal formula")',
+    formuleDoelen.internalFormula,
+  );
+  await ctrlKlik(6);
+  await link
+    .getByText(
+      "The link target of this formula could not be resolved. Check the formula or use an explicit hyperlink.",
+      { exact: true },
+    )
+    .waitFor();
+  await link.getByRole("button", { name: "Close", exact: true }).click();
+  assert.equal(
+    await page.evaluate(() => proefApis().rekenblad.handle.cell(0, 6, 0).input),
+    '=HYPERLINK(UNSUPPORTED_TARGET(1),"Unavailable target")',
   );
   stap(
     "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",

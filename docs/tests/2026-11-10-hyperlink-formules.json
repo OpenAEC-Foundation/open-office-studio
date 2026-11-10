@@ -1,0 +1,268 @@
+{
+  "date": "2026-11-10",
+  "base": "9de53c798334456808a1c7cef815f7872a25ee89",
+  "unitSuite": {
+    "numPassedTests": 2055,
+    "numFailedTests": 0,
+    "numPendingTests": 10
+  },
+  "current": {
+    "variant": "current",
+    "wasmSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+    "queries": false,
+    "reference": null,
+    "cases": [
+      {
+        "expression": "\"#L20\"",
+        "expected": "#L20",
+        "actual": "#L20",
+        "unchanged": true
+      },
+      {
+        "expression": "\"../Report.xlsx\"",
+        "expected": "../Report.xlsx",
+        "actual": "../Report.xlsx",
+        "unchanged": true
+      },
+      {
+        "expression": "B1&\"/\"&C1",
+        "expected": "HTTPS://EXAMPLE.COM/12",
+        "actual": "HTTPS://EXAMPLE.COM/12",
+        "unchanged": true
+      },
+      {
+        "expression": "LOWER(B1)",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "LOWER(B1)&\"/\"&C1",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "IF(AND(ROW()=3,COLUMN()=1),\"#L20\",\"#A1\")",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "LinkTarget",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "IF(1/0,\"bad\",\"also bad\")",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "UNSUPPORTED_TARGET(1)",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "NOW()",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "B1:C1",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      }
+    ]
+  },
+  "reference": {
+    "variant": "reference",
+    "wasmSha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e",
+    "queries": true,
+    "reference": {
+      "commit": "10b9ac1c7634da666498d21de3258dd3573ad397",
+      "sha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e"
+    },
+    "cases": [
+      {
+        "expression": "\"#L20\"",
+        "expected": "#L20",
+        "actual": "#L20",
+        "unchanged": true
+      },
+      {
+        "expression": "\"../Report.xlsx\"",
+        "expected": "../Report.xlsx",
+        "actual": "../Report.xlsx",
+        "unchanged": true
+      },
+      {
+        "expression": "B1&\"/\"&C1",
+        "expected": "HTTPS://EXAMPLE.COM/12",
+        "actual": "HTTPS://EXAMPLE.COM/12",
+        "unchanged": true
+      },
+      {
+        "expression": "LOWER(B1)",
+        "expected": "https://example.com",
+        "actual": "https://example.com",
+        "unchanged": true
+      },
+      {
+        "expression": "LOWER(B1)&\"/\"&C1",
+        "expected": "https://example.com/12",
+        "actual": "https://example.com/12",
+        "unchanged": true
+      },
+      {
+        "expression": "IF(AND(ROW()=3,COLUMN()=1),\"#L20\",\"#A1\")",
+        "expected": "#L20",
+        "actual": "#L20",
+        "unchanged": true
+      },
+      {
+        "expression": "LinkTarget",
+        "expected": "https://example.com/local",
+        "actual": "https://example.com/local",
+        "unchanged": true
+      },
+      {
+        "expression": "IF(1/0,\"bad\",\"also bad\")",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "UNSUPPORTED_TARGET(1)",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "NOW()",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      },
+      {
+        "expression": "B1:C1",
+        "expected": null,
+        "actual": null,
+        "unchanged": true
+      }
+    ]
+  },
+  "currentBrowser": {
+    "stappen": [
+      "Imported image and text box are visible with decoded image data",
+      "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
+      "Saved internal hyperlink reopens and navigates to its target cell",
+      "File links retain encoded relative paths and show a clear browser-only open message",
+      "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
+      "Image anchor and dimensions edited; original pixels and neighboring text box retained",
+      "Existing shape text edited with XML escaping and multiline persistence",
+      "Image insertion uses real file input and persists its native drawing relationship",
+      "Pointer dragging and resize handles update real cell anchors and dimensions",
+      "Text box insertion and keyboard removal preserve the other three drawing objects",
+      "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+      "A drawing-only worksheet scrolls to a distant image without adding cells",
+      "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+      "Frozen-cell images stay fixed while body images follow both scroll axes",
+      "An embedded oversized image header gets a preserved placeholder before browser decoding"
+    ],
+    "fouten": [],
+    "wasmSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+    "formulaQueries": false,
+    "zoom": [
+      {
+        "scale": 0.5,
+        "before": {
+          "x": 1064.6875,
+          "y": 883.5,
+          "width": 50,
+          "height": 30
+        },
+        "delta": -20
+      },
+      {
+        "scale": 2,
+        "before": {
+          "x": 1159.75,
+          "y": 794,
+          "width": 200,
+          "height": 120
+        },
+        "delta": -20
+      },
+      {
+        "scale": 1,
+        "before": {
+          "x": 1260.375,
+          "y": 854,
+          "width": 100,
+          "height": 60
+        },
+        "delta": -20
+      }
+    ]
+  },
+  "queryBrowser": {
+    "stappen": [
+      "Imported image and text box are visible with decoded image data",
+      "Ctrl+K from Home creates hyperlink with native Undo/Redo and escaped relationship",
+      "Saved internal hyperlink reopens and navigates to its target cell",
+      "File links retain encoded relative paths and show a clear browser-only open message",
+      "Ctrl-click follows literal/reference/concatenated HYPERLINK targets and rejects executable schemes without rewriting formulas",
+      "Image anchor and dimensions edited; original pixels and neighboring text box retained",
+      "Existing shape text edited with XML escaping and multiline persistence",
+      "Image insertion uses real file input and persists its native drawing relationship",
+      "Pointer dragging and resize handles update real cell anchors and dimensions",
+      "Text box insertion and keyboard removal preserve the other three drawing objects",
+      "Drawing positions follow scrolling and recover after their anchor leaves the viewport",
+      "A drawing-only worksheet scrolls to a distant image without adding cells",
+      "Drawing size and scroll displacement remain correct at 50%, 100% and 200% zoom",
+      "Frozen-cell images stay fixed while body images follow both scroll axes",
+      "An embedded oversized image header gets a preserved placeholder before browser decoding"
+    ],
+    "fouten": [],
+    "wasmSha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e",
+    "formulaQueries": true,
+    "zoom": [
+      {
+        "scale": 0.5,
+        "before": {
+          "x": 1064.6875,
+          "y": 883.5,
+          "width": 50,
+          "height": 30
+        },
+        "delta": -20
+      },
+      {
+        "scale": 2,
+        "before": {
+          "x": 1159.75,
+          "y": 794,
+          "width": 200,
+          "height": 120
+        },
+        "delta": -20
+      },
+      {
+        "scale": 1,
+        "before": {
+          "x": 1260.375,
+          "y": 854,
+          "width": 100,
+          "height": 60
+        },
+        "delta": -20
+      }
+    ]
+  }
+}
