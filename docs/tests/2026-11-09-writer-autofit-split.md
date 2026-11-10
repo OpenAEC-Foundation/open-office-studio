@@ -16,7 +16,7 @@ The meter is registered after the editor is ready, scoped to the document's exac
 
 ## Validation
 
-- 24 source combinations: lower-cell x/width differences below 0.1 px, unchanged original width preferences, save/reopen twice, Undo and Redo.
+- 24 source combinations: lower-cell x/width differences below 0.1 px, unchanged original width preferences, save/reopen, Undo and Redo.
 - Missing and ambiguous meter registration, input/display facade handles, invalid row span, exact SDK bindings and normalized Windows module resolution.
 - Existing table-split and geometric regression files: 50 tests pass across the three files in this checkout.
 - TypeScript check passes; production build passes.
