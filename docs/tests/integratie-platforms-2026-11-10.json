@@ -129,14 +129,14 @@
       ]
     },
     "nativeUi": {
-      "status": "PARTIAL PASS:282;284/302/custom-story persistence still running",
+      "status": "PASS targeted282/284/302+PR266 and independent bothDOCX/PDF pairs; separate PDF header layout overlap remains",
       "scope": [282, 284, 302, "PR266 custom stories"],
       "installationAuthorized": true,
       "artifactId": 13757222843,
       "artifactSha256": "843bbe7fa245d2e3a549ee1f1768c12f1027eb3aac6ce111ac35467b813eb80c",
       "installerSha256": "ad2c083f20dc196810548c528526c1ffc40d3ef3262d91e1f6e821ab343a372b",
       "initialBlock": "Windows Application Control; user reports handling it and operator resumed",
-      "independentSavedDocxPdf": "PASS282: independent ZIP/XML and Poppler-rendered PDF inspection; no282 completion claim for other issues",
+      "independentSavedDocxPdf": "COMPLETE: both exact-hash pairs independently checked; native notes1page and customstories3pages rendered/reviewed; PDF layout overlap retained",
       "issue282": {
         "source": "1e5afa399117fd84df628955ec82b0e597993c83",
         "issue": 282,
@@ -202,7 +202,141 @@
         ]
       },
       "installedCheckpoint": "1e5afa399117fd84df628955ec82b0e597993c83",
-      "owner": "dedicated Windows installation/native-test chat"
+      "owner": "dedicated Windows installation/native-test chat",
+      "installedExecutableSha256": "c2d82629902b365181c952322de75bb371e4c46242e06eaaa716a9ce017e8032",
+      "tests": [
+        {
+          "issue": 282,
+          "result": "pass",
+          "evidence": [
+            "Created fresh synthetic document through native Writer",
+            "Inserted real footnote then body click, End, Enter, ordinary follow-up paragraph remained baseline",
+            "Inserted endnote then body click, End, Enter, ordinary follow-up paragraph remained baseline",
+            "Ctrl+Z removed final inserted text; Ctrl+Y restored baseline text",
+            "Saved DOCX, closed tab, reopened recent document; ordinary paragraphs still normal",
+            "OOXML ordinary body text has no Reference style or vertAlign; actual marks retain Reference+superscript",
+            "Native PDF export reopened DOCX; one page, complete selectable text; Poppler render inspected"
+          ]
+        },
+        {
+          "issue": 284,
+          "pullRequest": 266,
+          "result": "pass",
+          "evidence": [
+            "CustomStoryParts original preserved; tested byte-identical separate native copy",
+            "FooterCellProbe selected with Home then Shift+End; clicked Home ribbon and All Styles, selection retained",
+            "CursorStoryCharacter persisted on selected footer run through later reload/save/reopen",
+            "Header current-position PAGE field persisted in word/headerProef.xml",
+            "CursorFooterTable and CursorStoryParagraph persisted in word/footerProef.xml",
+            "First footnote CursorStoryParagraph persisted in word/footnotes.xml",
+            "First endnote CursorStoryCharacter persisted in word/endnotes.xml; Ctrl+Z/Ctrl+Y visually toggled style",
+            "Saved native copy then closed/reopened via Recent; exported three-page PDF",
+            "word/document.xml byte-identical to original source fixture; no OOSMARK in XML"
+          ]
+        },
+        {
+          "issue": 302,
+          "result": "pass-targeted-manual-native",
+          "evidence": [
+            "Edit Header then immediate Close Header and Footer through native ribbon: no false header-open notification observed",
+            "Edit Footer then immediate Close Header and Footer: no false footer-open notification observed",
+            "Subsequent header PAGE insertion and footer table-style reload succeeded without false header/footer-open notification"
+          ],
+          "limitation": "Manual UI pacing; sub-frame timing permutations covered by source/browser owner, not independently timing-instrumented here"
+        }
+      ],
+      "artifacts": [
+        {
+          "fixture": "noten",
+          "format": "docx",
+          "bytes": 38260,
+          "sha256": "4a1ed5040bdb34a80d9da1f0b5b296c45308895535f39e83652c5739c6e44541",
+          "filename": "writer-native-noten-1e5afa39-2026-11-10.docx"
+        },
+        {
+          "fixture": "noten",
+          "format": "pdf",
+          "bytes": 12991,
+          "sha256": "a596a10edd647340dcac8f66b557658069e25badccbe2c5080748ea2cbd984a2",
+          "filename": "writer-native-noten-1e5afa39-2026-11-10.pdf"
+        },
+        {
+          "fixture": "stories",
+          "format": "docx",
+          "bytes": 40226,
+          "sha256": "ccfc6c397f87acf6bcda0bce39f77957718375e6cbcb3ee358130aefdf1ef6bf",
+          "filename": "writer-native-stories-1e5afa39-2026-11-10.docx"
+        },
+        {
+          "fixture": "stories",
+          "format": "pdf",
+          "bytes": 30028,
+          "sha256": "63ff0892ebbd45ba9d8a931ab4cd8a340acc70a433606b9b520d94c8b63931e2",
+          "filename": "writer-native-stories-1e5afa39-2026-11-10.pdf"
+        }
+      ],
+      "operatorPdfReview": "All four rendered PDF pages independently viewed by operator; extraction complete",
+      "fullOfficeNative": "NOT PERFORMED",
+      "pdfLayoutObservation": {
+        "kind": "independent exported PDF screenshot observation; not yet tracked by this chat",
+        "description": "In the custom-story PDF the long FILENAME field value crowds/overlaps the following separator and Writer Test Author field on all three header lines. Text extraction is complete. Targeted style/cursor persistence acceptance passes; PDF field spacing is a separate observation for Writer owner triage.",
+        "source": "writer-native-stories-1e5afa39-2026-11-10.pdf",
+        "reportedToWriterOwner": true,
+        "newIssueCreatedByThisChat": false,
+        "independentlyConfirmed": true
+      },
+      "independentCustomStory": {
+        "source": "1e5afa399117fd84df628955ec82b0e597993c83",
+        "issues": [284, 302],
+        "docx": "writer-native-stories-1e5afa39-2026-11-10.docx",
+        "docxSha256": "ccfc6c397f87acf6bcda0bce39f77957718375e6cbcb3ee358130aefdf1ef6bf",
+        "pdf": "writer-native-stories-1e5afa39-2026-11-10.pdf",
+        "pdfSha256": "63ff0892ebbd45ba9d8a931ab4cd8a340acc70a433606b9b520d94c8b63931e2",
+        "xmlChecks": {
+          "source": "1e5afa399117fd84df628955ec82b0e597993c83",
+          "bodyByteIdentical": true,
+          "noMarkers": true,
+          "footerStyles": true,
+          "noteStylesScoped": true,
+          "headerFields": [
+            " PAGE ",
+            " PAGE ",
+            " NUMPAGES ",
+            " FILENAME ",
+            " AUTHOR ",
+            " TITLE "
+          ],
+          "originalHeaderFields": [
+            " PAGE ",
+            " NUMPAGES ",
+            " FILENAME ",
+            " AUTHOR ",
+            " TITLE "
+          ]
+        },
+        "pdfPages": 3,
+        "pdfBodyNotesFooterAndFieldsPreserved": true,
+        "pdfRenderReviewedPages": [1, 2, 3],
+        "nativeUi": {
+          "source": "Dedicated Windows test owner750b",
+          "selectionHomeStylesSaveCloseRecentReopen": true,
+          "noFalseHeaderFooterAlertObserved": true,
+          "sub600msNativeTimingMeasured": false
+        },
+        "browserTiming": "66.4/83.6ms close cases already passed on the same canonical SHA",
+        "newObservationForLater": {
+          "kind": "PDF header layout overlap",
+          "pages": [1, 2, 3],
+          "description": "Expanded FILENAME visually overlaps the following author field; extracted text is complete.",
+          "rootCause": "not investigated",
+          "scope": "Recorded for later triage only; no source edit, new issue or native UI by this reviewer"
+        },
+        "limits": [
+          "Does not establish a fully correct PDF layout",
+          "Linux/macOS native UI not reviewed",
+          "No main merge/direct push"
+        ]
+      }
     }
   },
   "linux": {
@@ -405,10 +539,10 @@
     ]
   },
   "remaining": [
-    "Finish native Windows284/302/PR266 persistence and corresponding independent saved-output inspection;282 has passed",
+    "Separate longFILENAME header PDF overlap independently confirmed on3pages; root cause/repair deferred to later triage. Targeted282/284/302 and both independent artifact reviews are complete.",
     "macOS runner/build/package/native-open completion",
     "Interactive installed Linux GUI/system association acceptance",
     "Additional supported browser engine/runtime acceptance; live Y remains excluded"
   ],
-  "asOf": "2026-11-10T11:17:11.372854+00:00"
+  "asOf": "2026-11-10T11:29:37.984843+00:00"
 }

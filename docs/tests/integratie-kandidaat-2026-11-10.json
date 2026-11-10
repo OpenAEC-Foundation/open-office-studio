@@ -60,7 +60,7 @@
     "productionBuild": "PASS TypeScript + production assets/build27.35s; immutable544file dist",
     "i18n": "PASS9x21/7949keys;23 existing warnings",
     "browser": "PASS exact1e5 Writer6custom+4note with zero errors; real standalone hosted /office/ all3modules pass without Tauri IPC",
-    "nativeWindows": "PARTIAL PASS282 with independently inspected savedDOCX/PDF;284/302/custom-story persistence in progress",
+    "nativeWindows": "PASS targeted282/284/302+PR266 on installed1e5; bothDOCX/PDF pairs independently inspected/rendered; separate longFILENAME PDF header overlap confirmed and deferred",
     "platformReport": "integratie-platforms-2026-11-10.json"
   },
   "resolvedSources": [
@@ -76,7 +76,7 @@
       "pr": 266,
       "head": "617f23bf7dd0d258f337ec54075139ef38b01a5e",
       "scope": "one-shot cancelable DOCX reload navigation",
-      "nativeAcceptance": "pending"
+      "nativeAcceptance": "PASS installed1e5 targetstory selection/styles/pagefield/save/close/reopen; independentDOCX/PDF confirms bodybyteidentical and no markers; separate PDF overlap retained"
     }
   ],
   "limits": [
@@ -109,7 +109,8 @@
     "scope": "Successful header/footer opening stays confirmed after rapid close/reload; genuine failure remains visible",
     "targetedPassed": 6,
     "productionBrowser": "PASS:6customcases plus rapidheader/footerclose with no false errors; genuine-failure6behavior tests pass",
-    "baseline": "Olde9:6 content steps pass;2 false errors after closes at61.8ms/70.7ms"
+    "baseline": "Olde9:6 content steps pass;2 false errors after closes at61.8ms/70.7ms",
+    "nativeWindows": "PASS manual native header/footer immediate-close and subsequent reload without false open-error; sub-frame permutations not timing-instrumented in native test"
   },
   "testOnlyCorrection": {
     "pr": 273,
@@ -153,7 +154,7 @@
       "head": "a9ba379336d0234499536c85cce79f757b9f153c",
       "issues": [297],
       "scope": "Direct character-format comparison plus313dependency",
-      "status": "next round; includes315, do NOT apply315 twice; source tests/browser pass; platformCI running"
+      "status": "HOLD/WITHDRAWN by sourceowner12:26: individual paneelknop Save→Undo has overly broad deletion range; bulk passes. Four new reproductions; fix still being validated. Await new exact released heads; current baabdd9a/a9ba3793 are NOT intake-approved even if CI green."
     },
     {
       "pr": 309,
@@ -181,7 +182,7 @@
       "head": "baabdd9acde54e5e76dc7dd90b1e647a9bd692fb",
       "issues": [313],
       "scope": "Review Undo transaction/worker echo plus three awaited command harness calls",
-      "status": "next round; source tests/browser pass; platformCI running"
+      "status": "HOLD/WITHDRAWN by sourceowner12:26: individual paneelknop Save→Undo has overly broad deletion range; bulk passes. Four new reproductions; fix still being validated. Await new exact released heads; current baabdd9a/a9ba3793 are NOT intake-approved even if CI green."
     },
     {
       "issue": 303,
@@ -196,6 +197,38 @@
       "issues": [30],
       "scope": "Bundled conversion runtime investigation",
       "status": "DRAFT; not released or included; ownerpausedlocalconversionduringnativeacceptance"
+    },
+    {
+      "pr": 320,
+      "head": "137f378123b7a159c3c780a82a92d30373e5ca2c",
+      "branch": "codex/writer-reply-initials-2026-11-10",
+      "issues": [318],
+      "scope": "Configured initials on newly created Writer comment replies under23",
+      "status": "NEXTBATCH;16targeted/tsc/build/3realbrowser saved output pass; exactCI42806714095 running Windows/Linux,macOS queued; nativeGUI untested; minimal publiconCommentReply hook, noSDK/reviewUndo change"
+    },
+    {
+      "pr": 319,
+      "issues": [74],
+      "scope": "Large-workbook startup patch series above identical first8patches",
+      "status": "DRAFT NOT RELEASED; owner investigating one query-WASM-override objectCtrl-click matrix failure in42806653427; production-kernel object check passes. Not a certified74regression and not currentcandidate. Await exact released head; do not pin9/10patches here"
+    },
+    {
+      "pr": 321,
+      "head": "834b1d6cf12e97e3dc492547b4f8cd5a2255e39b",
+      "runtimeCode": "c1e5e9055ce03083f293342ee4531c7ccddb6e3d",
+      "branch": "codex/spreadsheet-trend-66-2026-11-10-e0d7",
+      "issues": [308],
+      "scope": "Linear trendlines on ordinary2Dline/scatter in actualnative renderer",
+      "status": "NEXTBATCH; source Windows225+1native and Linux577tests/contracts/Clippy plus realbrowser/independentfit proof PASS; macOS queued; private9patchWASM e80ac4ef...7752260bytes only; activation through kernelowner, NOT current8patchpin"
+    },
+    {
+      "pr": 316,
+      "head": "a7669b86f1a5fcd85658d399a1507993cf2bb3b5",
+      "branch": "codex/presentation-odp-media-names-2026-11-10",
+      "issues": [310],
+      "dependsOn": [304],
+      "scope": "Unambiguous empty embedded media names after ODP/OTP plus display-only fallback labels",
+      "status": "NEXTBATCH;Windows/Linux exact-head92tests/build/nativeconversion and browser18names+4fallback+18playbacks/save-reopen pass; macOS queued; actual installedGUI/fullpackageacceptance not certified. PR304 already in ancestry; do not apply dependency twice"
     }
   ],
   "platformCheckpoint": "1e5afa399117fd84df628955ec82b0e597993c83",
@@ -221,9 +254,9 @@
       "scope": "future ninth/tenth kernel patches NOT pinned"
     },
     {
-      "issue": 308,
+      "issue": 60,
       "owner": "CF/e0",
-      "scope": "linear trendline native renderer"
+      "scope": "e0 next bounded actual-kernel formula/name-reference checks after row/column insert/delete; investigate/duplicate-check before any new issue/fix"
     },
     {
       "issue": 30,
@@ -231,14 +264,42 @@
       "scope": "bundled converter/runtime"
     },
     {
-      "issue": 23,
+      "issue": 318,
       "owner": "a1bc",
-      "scope": "confirmed new reply custom-initial gap; future source only"
+      "scope": "Reply-initial fix delivered as320/137f3781 for nextbatch; no currentfreeze intake"
     },
     {
-      "issue": 73,
+      "issue": 322,
       "owner": "d410",
-      "scope": "research built-in TableStyleMedium2 rendering with no customDXF; no new issue/source yet"
+      "scope": "Confirmed built-in TableStyleMedium2 font/fill rendering gap under73; separate codex/spreadsheet-builtin-table-styles-d410 branch from1e5; no native pin/converter change"
+    },
+    {
+      "issue": 29,
+      "owner": "a1bc",
+      "scope": "Presentation whole-word search only; missing-feature/duplicate check first, own branch/nextbatch, no SDK/notes/ODP"
     }
-  ]
+  ],
+  "inheritedClosingCommitReview": {
+    "commits": [
+      {
+        "commit": "a40a6662b8d357e77ece0c67b8147f1d7b7d8189",
+        "issue": 189,
+        "approved": false
+      }
+    ],
+    "documentation": "https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue",
+    "warning": "PR body closingIssuesReferences is empty, but an inherited source commit can still close189 when merged into default branch. Do not merge source history directly before explicit closure review; use a reviewed squash message or separately approve189 after required acceptance. No history rewrite/main merge performed."
+  },
+  "remainingObservations": [
+    {
+      "kind": "independent exported PDF screenshot observation; not yet tracked by this chat",
+      "description": "In the custom-story PDF the long FILENAME field value crowds/overlaps the following separator and Writer Test Author field on all three header lines. Text extraction is complete. Targeted style/cursor persistence acceptance passes; PDF field spacing is a separate observation for Writer owner triage.",
+      "source": "writer-native-stories-1e5afa39-2026-11-10.pdf",
+      "reportedToWriterOwner": true,
+      "newIssueCreatedByThisChat": false,
+      "independentlyConfirmed": true
+    }
+  ],
+  "asOf": "2026-11-10T11:28:49.788050+00:00",
+  "queuePolicy": "This is an as-of handoff snapshot, not continuous intake. Future deliveries remain on their owner branches. Unreleased/held candidates require a new exact released head; do not apply old315/306 or unpinned kernels."
 }
