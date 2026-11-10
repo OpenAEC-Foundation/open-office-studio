@@ -7,7 +7,7 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { createYrsSession, saveYrsDocx } from "@betteroffice/docx/yrs";
 import i18next from "../../i18n/config";
-import { begin, engine, klaar, type Sessie } from "../gedeeld/engine.ts";
+import { begin, engine, sluitStap, type Sessie } from "../gedeeld/engine.ts";
 import { getoond, inSelectie, type Revisie } from "./logica.ts";
 
 export function revisies(s: Sessie): Revisie[] {
@@ -32,8 +32,37 @@ export interface Reikwijdte {
   ids?: readonly string[];
 }
 
+/** Houdt ook bij een losse beslissing de sluitmarkering van de eerste revisie
+ * in de Undo-stap. De betekenis van de bestaande markeringen blijft gelijk. */
+function begrensStartMarkeringen(s: Sessie, doel: readonly Revisie[], wat: Besluit) {
+  const kandidaten = new Map<string, Set<string>>();
+  for (const r of doel) {
+    if (r.kind !== (wat === "accepteren" ? "deletion" : "insertion") || r.range.start.offset !== 0) continue;
+    if (!kandidaten.has(r.story)) kandidaten.set(r.story, new Set());
+    kandidaten.get(r.story)!.add(r.range.start.paraId);
+  }
+  for (const [story, ids] of kandidaten) {
+    const segmenten = s.storySegments(story);
+    const eerste = segmenten.find(segment => segment.kind === "pilcrow");
+    if (eerste?.kind !== "pilcrow" || !ids.has(eerste.paraId)) continue;
+    let index = 0;
+    const ops: Parameters<Sessie["applyRawOps"]>[1][number][] = [];
+    for (const segment of segmenten) {
+      if (segment.kind === "pilcrow") break;
+      const len = segment.kind === "text" ? segment.text.length : 1;
+      ops.push({ op: "format", index, len, attrs: {
+        ins: segment.attributes.ins ?? null, del: segment.attributes.del ?? null,
+      } });
+      index += len;
+    }
+    if (index) s.applyRawOps(story, [
+      { op: "format", index: 0, len: index, attrs: { ins: null, del: null } }, ...ops,
+    ]);
+  }
+}
+
 /** Accepteert of weigert wijzigingen; geeft het aantal afgehandelde revisies. */
-export function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Reikwijdte = {}): number {
+export async function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Reikwijdte = {}): Promise<number> {
   const e = engine(ref);
   const s = e.sessie;
   let doel = getoond(revisies(s), reikwijdte.verborgen ?? new Set());
@@ -56,21 +85,39 @@ export function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Rei
     doel = doel.filter((r) => inSelectie(r, sel.anchor, sel.head, volgorde));
   }
   if (!doel.length) return 0;
-  const verhalen = new Set<string>();
-  const afgehandeld = new Set<string>();
-  begin(e);
+  const versie = s.version();
+  const staat = s.encodeState();
+  const vector = s.encodeStateVector();
+  const proef = await createYrsSession();
   try {
+    // Resolutie kan leidende opmaakmarkeringen achterlaten die een worker
+    // later opruimt. Neem die opruiming meteen in dezelfde lokale Undo-stap
+    // op: bereid de besluiten in een replica voor en publiceer één update.
+    proef.loadState(staat);
+    begrensStartMarkeringen(proef, doel, wat);
+    const verhalen = new Set<string>();
+    const afgehandeld = new Set<string>();
     for (const r of doel) {
       if (afgehandeld.has(r.revisionId)) continue;
-      const ontvangst = wat === "accepteren" ? s.acceptChange({ revisionId: r.revisionId }) : s.rejectChange({ revisionId: r.revisionId });
+      const ontvangst = wat === "accepteren" ? proef.acceptChange({ revisionId: r.revisionId }) : proef.rejectChange({ revisionId: r.revisionId });
       ontvangst.revisionIds.forEach((id) => afgehandeld.add(id));
       afgehandeld.add(r.revisionId);
       verhalen.add(r.story);
     }
+    const update = proef.encodeStateAsUpdate(vector);
+    if (ref?.getEditorRef()?.getYrsSession() !== s || s.version() !== versie)
+      throw new Error(i18next.t("writer:changes.documentChanged"));
+    begin(e);
+    try {
+      s.applyLocalUpdate(update);
+    } finally {
+      sluitStap(e);
+    }
+    e.weergave.syncYrsInputState(true, [...verhalen]);
+    return afgehandeld.size;
   } finally {
-    klaar(e, [...verhalen], false);
+    proef.destroy();
   }
-  return afgehandeld.size;
 }
 
 /**
