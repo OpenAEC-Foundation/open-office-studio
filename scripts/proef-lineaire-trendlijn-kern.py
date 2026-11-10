@@ -37,12 +37,16 @@ def prepare(repo, target, metadata):
                 with tar.extractfile(member) as source, dest.open("xb") as output:
                     while chunk := source.read(1024 * 1024):
                         output.write(chunk)
+    subprocess.run(["git", "init", "--quiet", str(target)], check=True)
+    subprocess.run(["git", "config", "core.autocrlf", "false"], cwd=target, check=True)
     for entry in [metadata, *metadata.get("extraPatches", [])]:
         patch = repo / "patches" / entry["patch"]
         if hashlib.sha256(patch.read_bytes()).hexdigest() != entry["patchSha256"]:
             raise SystemExit("Patch checksum differs: " + entry["patch"])
         subprocess.run(["git", "apply", "--check", str(patch)], cwd=target, check=True)
         subprocess.run(["git", "apply", str(patch)], cwd=target, check=True)
+    if not (target / "crates/betteroffice-xlsx/tests/linear_trendlines.rs").is_file():
+        raise SystemExit("The trendline patch was not applied to the isolated source.")
 
 
 def main():
