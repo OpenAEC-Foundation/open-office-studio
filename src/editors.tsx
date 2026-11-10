@@ -26,6 +26,8 @@ import {
 } from "./lint/editorApi";
 import { bereidStructuurBeveiliging } from "./rekenblad/structuurbeveiliging";
 import { installeerValidatie } from "./rekenblad/gegevensvalidatie";
+import { laadTabellen } from "./rekenblad/tabellen";
+import { bereidTabelweergave } from "./rekenblad/tabelweergave";
 import { metValidatieAnkers } from "./rekenblad/validatieAnkers";
 import { installeerBladBeveiliging, installeerBeveiligdeSelectie } from "./rekenblad/bladbeveiliging";
 import { bereidVoorwaardelijkeWeergave } from "./rekenblad/voorwaardelijke-weergave";
@@ -333,6 +335,12 @@ export default function OfficeEditor(props: EditorProps) {
       installeerValidatie(api.handle, herladenRecent.current.bytes);
       installeerBladBeveiliging(api.handle, herladenRecent.current.bytes);
       installeerBeveiligdeSelectie(api);
+      try {
+        laadTabellen(api.handle, herladenRecent.current.bytes);
+        bereidTabelweergave(api.handle, herladenRecent.current.bytes);
+      } catch {
+        // Source XML remains in the package if table metadata cannot be read.
+      }
       try {
         laadCelnotities(api.handle, api.save());
       } catch {

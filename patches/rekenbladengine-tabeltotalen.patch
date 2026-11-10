@@ -1,0 +1,123 @@
+diff --git a/crates/xlsx-calc/src/functions/stats.rs b/crates/xlsx-calc/src/functions/stats.rs
+index 8e8faf3..102c6aa 100644
+--- a/crates/xlsx-calc/src/functions/stats.rs
++++ b/crates/xlsx-calc/src/functions/stats.rs
+@@ -265,8 +265,7 @@ pub(crate) fn quartile(args: &[Expr], ctx: &EvalContext<'_>) -> CellValue {
+ }
+ 
+ /// SUBTOTAL(code, ...): one of eleven aggregates, chosen by code. 1-11 and
+-/// 101-111 select the same function; the 100 series also skips manually
+-/// hidden rows, which we do not model, so both behave alike here.
++/// 101-111 select the same function, excluding hidden rows from references.
+ pub(crate) fn subtotal(args: &[Expr], ctx: &EvalContext<'_>) -> CellValue {
+     if args.len() < 2 {
+         return err(ErrorValue::Value);
+@@ -275,7 +274,16 @@ pub(crate) fn subtotal(args: &[Expr], ctx: &EvalContext<'_>) -> CellValue {
+         Ok(code) => code,
+         Err(e) => return err(e),
+     };
+-    let rest = &args[1..];
++    let visible;
++    let rest = if (101..=111).contains(&code) {
++        visible = match subtotal_visible_arguments(&args[1..], ctx) {
++            Ok(args) => args,
++            Err(error) => return err(error),
++        };
++        &visible[..]
++    } else {
++        &args[1..]
++    };
+     match code {
+         1 | 101 => average(rest, ctx),
+         2 | 102 => count(rest, ctx),
+@@ -292,6 +300,45 @@ pub(crate) fn subtotal(args: &[Expr], ctx: &EvalContext<'_>) -> CellValue {
+     }
+ }
+ 
++/// Keep reference semantics (text and booleans are not numeric literals),
++/// grouping consecutive visible rows instead of allocating one AST per cell.
++fn subtotal_visible_arguments(args: &[Expr], ctx: &EvalContext<'_>) -> Result<Vec<Expr>, ErrorValue> {
++    let Some(model) = ctx.provider.workbook() else { return Ok(args.to_vec()); };
++    let mut out = Vec::new();
++    for arg in args {
++        let areas = match union_areas(arg, ctx) {
++            Some(areas) => areas?,
++            None => match as_area(arg, ctx) {
++                Some(area) => vec![area],
++                None => { out.push(arg.clone()); continue; }
++            },
++        };
++        for area in areas {
++            let area = crate::eval::bound_area(area, ctx);
++            let Some(sheet) = model.sheet(area.sheet) else { return Err(ErrorValue::Ref); };
++            if !ctx.consume_cells(area.rows as u64) { return Err(ErrorValue::Num); }
++            let mut start = None;
++            for offset in 0..=area.rows {
++                let row = area.start.row + offset as u32;
++                let visible = offset < area.rows && !sheet.row_hidden(row);
++                if visible { start.get_or_insert(row); }
++                else if let Some(first) = start.take() {
++                    if area.cols > 0 {
++                        out.push(Expr::Range {
++                            sheet: Some(sheet.name.clone()),
++                            range: xlsx_model::CellRange {
++                                start: xlsx_model::CellRef::new(first, area.start.col),
++                                end: xlsx_model::CellRef::new(row - 1, area.start.col + area.cols as u32 - 1),
++                            },
++                        });
++                    }
++                }
++            }
++        }
++    }
++    Ok(out)
++}
++
+ /// AGGREGATE(code, options, ...): the SUBTOTAL aggregates plus LARGE, SMALL,
+ /// PERCENTILE and QUARTILE, with an options flag that says what to ignore.
+ /// Options 2,3,6,7 ignore errors, which is the whole point of the function in
+diff --git a/crates/betteroffice-xlsx/tests/subtotal_visibility.rs b/crates/betteroffice-xlsx/tests/subtotal_visibility.rs
+new file mode 100644
+--- /dev/null
++++ b/crates/betteroffice-xlsx/tests/subtotal_visibility.rs
+@@ -0,0 +1,40 @@
++use betteroffice_xlsx::{CalculationOptions, CellRef, CellValue, Op, Sheet, SheetId, Workbook, WorkbookModel};
++fn source() -> Workbook {
++    let mut model = WorkbookModel::default();
++    model.sheets.push(Sheet::new("Data"));
++    let mut w = Workbook::from_model(model).unwrap();
++    for (row, input) in ["2", "3", "text"].iter().enumerate() {
++        w.edit_cell(SheetId(0), CellRef::new(row as u32,0), input, CalculationOptions::default()).unwrap();
++    }
++    w
++}
++fn number(w: &Workbook, row: u32) -> f64 {
++    match w.model().sheets[0].cell(CellRef::new(row,2)).unwrap().value {
++        CellValue::Number{value} => value,
++        ref v => panic!("expected number, got {v:?}"),
++    }
++}
++#[test]
++fn hidden_rows_recalculate_totals_with_undo_redo_and_save_reopen() {
++    let mut w=source();
++    let codes=[109,103,101,105,104,102];
++    for (row,code) in codes.iter().enumerate() {
++        w.edit_cell(SheetId(0),CellRef::new(row as u32,2),&format!("=SUBTOTAL({code},A1:A3)"),CalculationOptions::default()).unwrap();
++    }
++    assert_eq!((0..6).map(|r|number(&w,r)).collect::<Vec<_>>(),vec![5.0,3.0,2.5,2.0,3.0,2.0]);
++    w.apply_ops(vec![Op::SetRowHeight{sheet:SheetId(0),row:1,height:Some(0.0)}],CalculationOptions::default()).unwrap();
++    assert_eq!((0..6).map(|r|number(&w,r)).collect::<Vec<_>>(),vec![2.0,2.0,2.0,2.0,2.0,1.0]);
++    w.undo(CalculationOptions::default()).unwrap();assert_eq!(number(&w,0),5.0);
++    w.redo(CalculationOptions::default()).unwrap();assert_eq!(number(&w,0),2.0);
++    let saved=w.save().unwrap();let reopened=Workbook::open(&saved).unwrap();assert_eq!(number(&reopened,0),2.0);
++}
++#[test]
++fn whole_columns_unions_and_all_hidden_keep_reference_types() {
++    let mut w=source();
++    w.edit_cell(SheetId(0),CellRef::new(0,2),"=SUBTOTAL(109,A:A)",CalculationOptions::default()).unwrap();
++    w.edit_cell(SheetId(0),CellRef::new(1,2),"=SUBTOTAL(109,(A1:A2,A3:A3))",CalculationOptions::default()).unwrap();
++    for row in 0..3 { w.apply_ops(vec![Op::SetRowHeight{sheet:SheetId(0),row,height:Some(0.0)}],CalculationOptions::default()).unwrap(); }
++    assert_eq!(number(&w,0),0.0);assert_eq!(number(&w,1),0.0);
++    w.undo(CalculationOptions::default()).unwrap();assert_eq!(number(&w,0),0.0);
++    w.undo(CalculationOptions::default()).unwrap();assert_eq!(number(&w,0),3.0);
++}

@@ -15,9 +15,9 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "ad3d40536ad80eaebfa4a06dc2099885a485d850160e65e23f6306ba99abbe1e",
-  "wasmBytes": 7712658,
-  "stand": "Werkstand voor #59/#67: de eerdere keten-, regio- en opslagpatches blijven aanwezig. Voorwaardelijke regels kunnen atomair met undo/redo worden vervangen, uitgebreide stijlen en gewijzigde toepassingsbereiken worden bewaard, en voorwaarden worden zonder documentmutatie op de broncel geëvalueerd. Geen wijziging van de JS/WASM-interface of snapshotlayout. Nog niet opgenomen in een gepubliceerde uitgave.",
+  "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
+  "wasmBytes": 7745388,
+  "stand": "Gecontroleerde kern met acht bronpatches: CF, tabelgroei, selectie-opmaak en SUBTOTAL op zichtbare rijen. Native CI42783728814 groen; JS/WASM-interface ongewijzigd. Frontend voor #73 nog in uitvoering.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -90,8 +90,38 @@
           "test": "conditional_formula_queries"
         }
       ]
+    },
+    {
+      "patch": "rekenbladengine-tabellen.patch",
+      "patchSha256": "1db379a9f88c347b6bbc4ff768b42963d4220416bb4cd9e108d6cda122a21829",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "table_growth"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-selectie-opmaak.patch",
+      "patchSha256": "c8334412c2fe239576bf3d838f495976c8f13a90f67247a2a259f36c95549167",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "selection_format_performance_tests"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-tabeltotalen.patch",
+      "patchSha256": "a704c979f863a360e3c34a67bbdb8b19af8df4506e3d34945195181bcc100dd3",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "subtotal_visibility"
+        }
+      ]
     }
   ],
-  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42625934529",
-  "bouwCommit": "34ca6426045ca88f363babd5d168cc46af873e9f"
+  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42783728814",
+  "bouwCommit": "abf24c8cb7666280cdeebcd7d47f5ef08c1d3876"
 }
