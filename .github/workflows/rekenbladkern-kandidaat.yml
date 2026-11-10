@@ -7,6 +7,7 @@ on:
         codex/spreadsheet-tables-73-d410,
         codex/spreadsheet-73-wip-d410,
         codex/spreadsheet-large-workbooks-2026-11-10,
+        codex/spreadsheet-kernel15-compat-e0d7,
       ]
     paths:
       - .github/workflows/rekenbladkern-kandidaat.yml
@@ -34,7 +35,7 @@ jobs:
       - name: Vastgezette bouwgereedschappen installeren
         shell: bash
         run: |
-          rustup toolchain install 1.98.1 --profile minimal --target wasm32-unknown-unknown
+          rustup toolchain install 1.98.1 --profile minimal --target wasm32-unknown-unknown --component clippy --component rustfmt
           rustup override set 1.98.1
           mkdir -p .local/tools
           cd .local/tools
@@ -48,6 +49,12 @@ jobs:
           echo "$PWD/binaryen-version_132/bin" >> "$GITHUB_PATH"
       - name: Bronpatches testen en kandidaat bouwen
         run: python3 scripts/bouw-rekenbladkern.py --bronmap .local/kernbron --uitvoer .local/kern-kandidaat --controle --nieuwe-kern ${{ github.ref_name == 'codex/spreadsheet-large-workbooks-2026-11-10' && '--profiel-namen' || '' }}
+      - name: Gecombineerde trendlijnroute controleren
+        if: github.ref_name == 'codex/spreadsheet-kernel15-compat-e0d7'
+        working-directory: .local/kernbron
+        run: |
+          cargo test -p betteroffice-drawingml --features chart --lib chart:: --locked --jobs 2
+          cargo clippy -p betteroffice-drawingml --features chart --lib --tests --locked --jobs 2 -- -D warnings
       - uses: actions/upload-artifact@v4
         with:
           name: rekenbladkern-kandidaat
