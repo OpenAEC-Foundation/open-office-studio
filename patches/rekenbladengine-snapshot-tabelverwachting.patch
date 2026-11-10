@@ -1,0 +1,77 @@
+diff --git a/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs b/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs
+index 1bdf9db..7cd10ab 100644
+--- a/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs
++++ b/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs
+@@ -1245,37 +1245,42 @@ fn snapshot_cell_edit_recapture_parses_and_matches_worker_refusal() {
+ }
+ 
+ #[test]
+-fn snapshot_structured_reference_insert_rows_refusal_matches_source() {
+-    let mut worker = worker(&source(false, false));
+-    let mut peer = hydrate(&worker, budgets()[0]);
+-    assert_edited_identity(&worker, &peer);
+-    for workbook in [&mut worker, &mut peer] {
+-        workbook
+-            .edit_cell(SheetId(0), CellRef::new(0, 0), "7", context())
+-            .unwrap();
+-        workbook.recalculate_all(context());
+-        workbook.set_active_sheet(SheetId(0)).unwrap();
+-    }
+-    let operation = Op::InsertRows {
+-        sheet: SheetId(0),
+-        at: 0,
+-        count: 1,
+-    };
+-    for workbook in [&mut worker, &mut peer] {
+-        let before = canonical_model(workbook.model());
+-        let failure = workbook
+-            .apply_ops(vec![operation.clone()], context())
+-            .unwrap_err();
+-        assert!(matches!(
+-            failure,
+-            crate::Error::Operation(xlsx_ops::OpError::FormulaNotRewritable {
+-                sheet: SheetId(0),
+-                cell,
+-            }) if cell == CellRef::new(2, 0)
+-        ));
+-        assert_eq!(canonical_model(workbook.model()), before);
++fn snapshot_structured_reference_insert_rows_matches_source() {
++    for budget in budgets() {
++        let mut worker = worker(&source(false, false));
++        let mut peer = hydrate(&worker, budget);
++        assert_edited_identity(&worker, &peer);
++        for workbook in [&mut worker, &mut peer] {
++            workbook.edit_cell(SheetId(0), CellRef::new(0, 0), "7", context()).unwrap();
++            workbook.recalculate_all(context());
++            workbook.set_active_sheet(SheetId(0)).unwrap();
++        }
++        let before = canonical_model(worker.model());
++        for workbook in [&mut worker, &mut peer] {
++            workbook.apply_ops(vec![Op::InsertRows { sheet: SheetId(0), at: 0, count: 1 }], context()).unwrap();
++            assert_eq!(workbook.model().tables[0].range.to_a1(), "A5:B7");
++            let formula = workbook.model().sheets[0].cell(CellRef::new(3, 0)).unwrap();
++            assert_eq!(formula.formula.as_deref(), Some("SUM(Items[Qty])+Input"));
++            assert_eq!(formula.value, CellValue::Number { value: 13.0 });
++            let reopened = Workbook::open(&workbook.save().unwrap()).unwrap();
++            assert_eq!(reopened.model().tables[0].range.to_a1(), "A5:B7");
++            let restored = reopened.model().sheets[0].cell(CellRef::new(3, 0)).unwrap();
++            assert_eq!(restored.formula, formula.formula);
++            assert_eq!(restored.value, formula.value);
++        }
++        assert_edited_identity(&worker, &peer);
++        let after = canonical_model(worker.model());
++        for workbook in [&mut worker, &mut peer] {
++            workbook.undo(context()).unwrap();
++            assert_eq!(canonical_model(workbook.model()), before);
++        }
++        assert_edited_identity(&worker, &peer);
++        for workbook in [&mut worker, &mut peer] {
++            workbook.redo(context()).unwrap();
++            assert_eq!(canonical_model(workbook.model()), after);
++        }
++        assert_edited_identity(&worker, &peer);
+     }
+-    assert_edited_identity(&worker, &peer);
+ }
+ 
+ #[test]

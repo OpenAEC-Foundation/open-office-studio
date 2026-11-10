@@ -8,16 +8,14 @@
   "wasmBindgen": "0.2.129",
   "binaryen": "132",
   "binaryenLinuxSha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
-  "wasmOptArgumenten": [
-    "-O3"
-  ],
+  "wasmOptArgumenten": ["-O3"],
   "pakket": "@betteroffice/xlsx",
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
-  "wasmBytes": 7745388,
-  "stand": "Gecontroleerde kern met acht bronpatches: CF, tabelgroei, selectie-opmaak en SUBTOTAL op zichtbare rijen. Native CI42783728814 groen; JS/WASM-interface ongewijzigd. Frontend voor #73 nog in uitvoering.",
+  "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+  "wasmBytes": 7788115,
+  "stand": "Gerichte startup-optimalisaties voor #74 met gedeelde celopslag en bijgewerkte snapshot-tabeltest. De 100k×30-acceptatie en asynchrone hoofdeditor blijven openstaand.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
@@ -120,8 +118,92 @@
           "test": "subtotal_visibility"
         }
       ]
+    },
+    {
+      "patch": "rekenbladengine-kleine-celarrays.patch",
+      "patchSha256": "71719ba8f0c53117077ddf5bc87d367b7bad02b023acc567c008f13fe08629f4",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::tests::small_arrays_preserve_wire_bytes_and_checked_decoding"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-lokale-vingerafdruk.patch",
+      "patchSha256": "3d8fea67054da3eed5cbf79515bb9546aa93dcab73957ecf0f9983663626da73",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "snapshot::"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "save_reopen"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "workbook"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-stromende-celopbouw.patch",
+      "patchSha256": "143b50d72ab1a52853e07e0b80fbb0bc0aa12089fc4f16016cb70db94b954832",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::tests::streamed_seed_preserves_wire_order_at_decimal_boundaries"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-vroege-modelvrijgave.patch",
+      "patchSha256": "473f67216ff6e99352a6f60543be8cb48863c8d1916cace6e539eb0196c716f0",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "authority::tests::owning_the_source_keeps_the_same_projection_and_bootstrap_bytes"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "source_cached_results"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-gedeelde-cellen.patch",
+      "patchSha256": "3d5ab6fc7393843dcf7df4a4d65fdfcd87f8fbbbc2029dd37eea5d2a8b1c193f",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx-model",
+          "lib": "workbook::"
+        },
+        {
+          "pakket": "betteroffice-xlsx-calc",
+          "lib": ""
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": ""
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-snapshot-tabelverwachting.patch",
+      "patchSha256": "f21e263646ac7d867a82fa56fe6c14e03e85b99df8cf78e4c58f122508361624",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "lib": "snapshot_structured_reference_insert_rows_matches_source"
+        }
+      ]
     }
   ],
-  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42783728814",
-  "bouwCommit": "abf24c8cb7666280cdeebcd7d47f5ef08c1d3876"
+  "bouwRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42804064301",
+  "bouwCommit": "9a28503dad3adf2821eb4d4760cdfd479dcb3546"
 }

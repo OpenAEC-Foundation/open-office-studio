@@ -1,0 +1,410 @@
+{
+  "codepoint": "f0274b786ff2c444d4a5d724bd75189cb22ae57a",
+  "nativeSourceCodepoint": "9a28503dad3adf2821eb4d4760cdfd479dcb3546",
+  "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+  "nativeBuild": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42804064301",
+  "unchangedFirstEightPatches": true,
+  "patches": [
+    {
+      "patch": "rekenbladengine-lange-ketens.patch",
+      "sha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b"
+    },
+    {
+      "patch": "rekenbladengine-werkmapregio.patch",
+      "sha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9"
+    },
+    {
+      "patch": "rekenbladengine-herberekende-opslag.patch",
+      "sha256": "112e472bd62f61bf203ca5af4123d72816dce9bb9b41a10e6435cc6f31738995"
+    },
+    {
+      "patch": "rekenbladengine-uitgebreide-voorwaardelijke-opmaak.patch",
+      "sha256": "e12319cb9b36a1eb5b5248880e2759a5083c6c17c96150249915026a70196171"
+    },
+    {
+      "patch": "rekenbladengine-voorwaardelijke-evaluatie.patch",
+      "sha256": "a1e08c04424d97ed87777280193bf75d459a024b97a8a8d171d125df52bcd27e"
+    },
+    {
+      "patch": "rekenbladengine-tabellen.patch",
+      "sha256": "1db379a9f88c347b6bbc4ff768b42963d4220416bb4cd9e108d6cda122a21829"
+    },
+    {
+      "patch": "rekenbladengine-selectie-opmaak.patch",
+      "sha256": "c8334412c2fe239576bf3d838f495976c8f13a90f67247a2a259f36c95549167"
+    },
+    {
+      "patch": "rekenbladengine-tabeltotalen.patch",
+      "sha256": "a704c979f863a360e3c34a67bbdb8b19af8df4506e3d34945195181bcc100dd3"
+    },
+    {
+      "patch": "rekenbladengine-kleine-celarrays.patch",
+      "sha256": "71719ba8f0c53117077ddf5bc87d367b7bad02b023acc567c008f13fe08629f4"
+    },
+    {
+      "patch": "rekenbladengine-lokale-vingerafdruk.patch",
+      "sha256": "3d8fea67054da3eed5cbf79515bb9546aa93dcab73957ecf0f9983663626da73"
+    },
+    {
+      "patch": "rekenbladengine-stromende-celopbouw.patch",
+      "sha256": "143b50d72ab1a52853e07e0b80fbb0bc0aa12089fc4f16016cb70db94b954832"
+    },
+    {
+      "patch": "rekenbladengine-vroege-modelvrijgave.patch",
+      "sha256": "473f67216ff6e99352a6f60543be8cb48863c8d1916cace6e539eb0196c716f0"
+    },
+    {
+      "patch": "rekenbladengine-gedeelde-cellen.patch",
+      "sha256": "3d5ab6fc7393843dcf7df4a4d65fdfcd87f8fbbbc2029dd37eea5d2a8b1c193f"
+    },
+    {
+      "patch": "rekenbladengine-snapshot-tabelverwachting.patch",
+      "sha256": "f21e263646ac7d867a82fa56fe6c14e03e85b99df8cf78e4c58f122508361624"
+    }
+  ],
+  "nativeLibraryTests": {
+    "modelWorkbook": {
+      "passed": 14
+    },
+    "calculation": {
+      "passed": 256,
+      "ignored": 1
+    },
+    "facade": {
+      "passed": 471,
+      "ignored": 12
+    }
+  },
+  "localAlternatingOpenRuns": {
+    "basis8": [
+      {
+        "naam": "300k-cellen",
+        "openMs": 2639,
+        "tekenMs": 34,
+        "herberekenMs": null,
+        "rssMiB": 303,
+        "piekRssMiB": 299,
+        "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa"
+      },
+      {
+        "naam": "300k-cellen",
+        "openMs": 2613,
+        "tekenMs": 35,
+        "herberekenMs": null,
+        "rssMiB": 302,
+        "piekRssMiB": 298,
+        "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa"
+      },
+      {
+        "naam": "300k-cellen",
+        "openMs": 2648,
+        "tekenMs": 37,
+        "herberekenMs": null,
+        "rssMiB": 302,
+        "piekRssMiB": 299,
+        "wasmSha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa"
+      }
+    ],
+    "kandidaat14": [
+      {
+        "naam": "300k-cellen",
+        "openMs": 1549,
+        "tekenMs": 36,
+        "herberekenMs": null,
+        "rssMiB": 273,
+        "piekRssMiB": 271,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437"
+      },
+      {
+        "naam": "300k-cellen",
+        "openMs": 1516,
+        "tekenMs": 35,
+        "herberekenMs": null,
+        "rssMiB": 273,
+        "piekRssMiB": 270,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437"
+      },
+      {
+        "naam": "300k-cellen",
+        "openMs": 2119,
+        "tekenMs": 40,
+        "herberekenMs": null,
+        "rssMiB": 274,
+        "piekRssMiB": 270,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437"
+      }
+    ]
+  },
+  "localEditSaveReopen": [
+    {
+      "naam": "300k-cellen",
+      "openMs": 2071,
+      "tekenMs": 42,
+      "herberekenMs": null,
+      "bewerken": {
+        "editHistoryMs": 39,
+        "saveMs": 804,
+        "reopenMs": 1537,
+        "viewportMs": [3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 1]
+      },
+      "rssMiB": 312,
+      "piekRssMiB": 336,
+      "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+      "invoerSha256": "9087bd4f425984da4d2753259139e9c2845efb9c8f11e1d57d60ffe5c357114e",
+      "platform": "win32",
+      "architectuur": "x64",
+      "node": "v24.22.1"
+    }
+  ],
+  "browserWorker": {
+    "openMs": 1643,
+    "beats": 346,
+    "maxGap": 13,
+    "before": {
+      "calculation": {
+        "cycleCells": [],
+        "limitedCells": [],
+        "truncated": false
+      },
+      "ok": true,
+      "ranges": [
+        {
+          "cells": [
+            [
+              {
+                "a1": "B50000",
+                "displayText": "50002",
+                "formula": "$A$1*2+50000",
+                "value": {
+                  "kind": "number",
+                  "value": 50002
+                }
+              }
+            ]
+          ],
+          "target": {
+            "range": {
+              "a1": "B50000",
+              "kind": "a1"
+            },
+            "sheetId": "sheet:0"
+          }
+        }
+      ],
+      "sheets": [
+        {
+          "editable": true,
+          "name": "Blad 1",
+          "sheetId": "sheet:0",
+          "visibility": "visible"
+        }
+      ],
+      "version": "da450c7cb1be417696b4d7a3bdbc0639-0"
+    },
+    "edited": true,
+    "after": {
+      "calculation": {
+        "cycleCells": [],
+        "limitedCells": [],
+        "truncated": false
+      },
+      "ok": true,
+      "ranges": [
+        {
+          "cells": [
+            [
+              {
+                "a1": "B50000",
+                "displayText": "50004",
+                "formula": "$A$1*2+50000",
+                "value": {
+                  "kind": "number",
+                  "value": 50004
+                }
+              }
+            ]
+          ],
+          "target": {
+            "range": {
+              "a1": "B50000",
+              "kind": "a1"
+            },
+            "sheetId": "sheet:0"
+          }
+        }
+      ],
+      "sheets": [
+        {
+          "editable": true,
+          "name": "Blad 1",
+          "sheetId": "sheet:0",
+          "visibility": "visible"
+        }
+      ],
+      "version": "da450c7cb1be417696b4d7a3bdbc0639-1"
+    },
+    "savedBytes": 716688,
+    "verifiedCells": 50000,
+    "savedCachedCells": 50000,
+    "savedSha256": "d7e5de7a6b8f63751dad645ee784182a21d3e07e49e2ded69bf955040faaf1a2",
+    "interrupted": {
+      "started": 1,
+      "terminated": 1,
+      "reason": "AbortError",
+      "ms": 27
+    },
+    "aborted": true
+  },
+  "browserProduction300k": {
+    "code": "f0274b786ff2c444d4a5d724bd75189cb22ae57a",
+    "platform": "win32",
+    "browser": "151.0.7922.34",
+    "status": "passed",
+    "rows": 10000,
+    "columns": 30,
+    "openWallMs": 3406,
+    "farCell": "AD10000",
+    "scrollPosition": {
+      "top": 199318,
+      "left": 582
+    },
+    "scrollFramesMs": [7, 23, 19, 19, 18, 18, 17, 16, 16, 16, 16, 21],
+    "pageErrors": []
+  },
+  "browserProduction3m": {
+    "code": "f0274b786ff2c444d4a5d724bd75189cb22ae57a",
+    "platform": "win32",
+    "browser": "151.0.7922.34",
+    "fixture": ".local/prestatie/rekenbladen/100k-rijen-30-kolommen.xlsx",
+    "sha256": "5455b5b1390a68536dac7ab5be4b55123f6f9c145100112463438b226dea0f6b",
+    "status": "blocked",
+    "reason": "Openen mislukt: Error: Dit pakket is te groot om veilig te openen: maximaal 256 MB uitgepakt, 64 MB per onderdeel en 10.000 onderdelen.",
+    "editorOpened": false,
+    "pageErrors": []
+  },
+  "platformRun": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42805718734",
+  "platforms": {
+    "linux": {
+      "300k": {
+        "naam": "300k-cellen",
+        "openMs": 2888,
+        "tekenMs": 73,
+        "herberekenMs": null,
+        "bewerken": {
+          "editHistoryMs": 59,
+          "saveMs": 815,
+          "reopenMs": 2250,
+          "viewportMs": [8, 6, 5, 5, 4, 5, 4, 4, 4, 4, 3]
+        },
+        "rssMiB": 395,
+        "piekRssMiB": 411,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "9c74cbc8548ad67a3fba2b462c823d2ab08d8edd002a983b9c4e8b1c5df4a321",
+        "platform": "linux",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      },
+      "50k": {
+        "naam": "50k-afhankelijke-formules",
+        "openMs": 1629,
+        "tekenMs": 48,
+        "herberekenMs": 182,
+        "bewerken": null,
+        "rssMiB": 231,
+        "piekRssMiB": 231,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "fb57e994be14f49f2b85599ce65c91b7f88c960463e2dc73cfbef124765bcf40",
+        "platform": "linux",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      },
+      "js1024": {
+        "naam": "100k-rijen-30-kolommen",
+        "fout": "Error: 60000-ms benchmark limit",
+        "fase": "open",
+        "verstrekenMs": 60003,
+        "piekRssMiB": 1789,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "73ca1c568aca5cca41ff71870c75502a3474abcba4d7d33af484583049849df8",
+        "platform": "linux",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      },
+      "js4096": {
+        "naam": "100k-rijen-30-kolommen",
+        "fout": "Error: 1800-MiB benchmark process limit",
+        "fase": "open",
+        "verstrekenMs": 33334,
+        "piekRssMiB": 1800,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "73ca1c568aca5cca41ff71870c75502a3474abcba4d7d33af484583049849df8",
+        "platform": "linux",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      }
+    },
+    "windows": {
+      "300k": {
+        "naam": "300k-cellen",
+        "openMs": 3347,
+        "tekenMs": 74,
+        "herberekenMs": null,
+        "bewerken": {
+          "editHistoryMs": 49,
+          "saveMs": 1144,
+          "reopenMs": 2421,
+          "viewportMs": [7, 12, 5, 5, 5, 5, 4, 4, 4, 5, 3]
+        },
+        "rssMiB": 296,
+        "piekRssMiB": 361,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "9c74cbc8548ad67a3fba2b462c823d2ab08d8edd002a983b9c4e8b1c5df4a321",
+        "platform": "win32",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      },
+      "50k": {
+        "naam": "50k-afhankelijke-formules",
+        "openMs": 1866,
+        "tekenMs": 49,
+        "herberekenMs": 188,
+        "bewerken": null,
+        "rssMiB": 180,
+        "piekRssMiB": 180,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "fb57e994be14f49f2b85599ce65c91b7f88c960463e2dc73cfbef124765bcf40",
+        "platform": "win32",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      },
+      "js1024": {
+        "naam": "100k-rijen-30-kolommen",
+        "fout": "Error: 60000-ms benchmark limit",
+        "fase": "open",
+        "verstrekenMs": 60007,
+        "piekRssMiB": 1365,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "73ca1c568aca5cca41ff71870c75502a3474abcba4d7d33af484583049849df8",
+        "platform": "win32",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      },
+      "js4096": {
+        "naam": "100k-rijen-30-kolommen",
+        "fout": "Error: 60000-ms benchmark limit",
+        "fase": "open",
+        "verstrekenMs": 60008,
+        "piekRssMiB": 1494,
+        "wasmSha256": "91b9feea05bbf0610a745a5b29cb57b0ef68e59aa3243248ffe946e0bc8c5437",
+        "invoerSha256": "73ca1c568aca5cca41ff71870c75502a3474abcba4d7d33af484583049849df8",
+        "platform": "win32",
+        "architectuur": "x64",
+        "node": "v22.23.4"
+      }
+    },
+    "macos": {
+      "status": "queued",
+      "reason": "No runner started at the time this report was recorded; no functional or package success claimed."
+    }
+  }
+}

@@ -1,0 +1,93 @@
+diff --git a/crates/betteroffice-xlsx/src/authority.rs b/crates/betteroffice-xlsx/src/authority.rs
+index 3e586a5..b1c0551 100644
+--- a/crates/betteroffice-xlsx/src/authority.rs
++++ b/crates/betteroffice-xlsx/src/authority.rs
+@@ -210,6 +210,21 @@ impl WorkbookBase {
+         legacy_dimensions: &[xlsx_parse::LegacySheetDimensions],
+         legacy_styles: Option<&Stylesheet>,
+         legacy_style_readings: &[Stylesheet],
++    ) -> Result<Self, String> {
++        Self::from_model_with_style_readings_mode(
++            model, legacy_dimensions, legacy_styles, legacy_style_readings, true,
++        )
++    }
++
++    /// Standalone workbooks never adopt remote Yrs state. They need the same
++    /// canonical identity, but not fingerprints for released replica schemas.
++    /// Collaborative opens retain every compatibility reading.
++    fn from_model_with_style_readings_mode(
++        model: &WorkbookModel,
++        legacy_dimensions: &[xlsx_parse::LegacySheetDimensions],
++        legacy_styles: Option<&Stylesheet>,
++        legacy_style_readings: &[Stylesheet],
++        legacy_replicas: bool,
+     ) -> Result<Self, String> {
+         let mut builder = FingerprintBuilder::new(model, legacy_dimensions);
+         let ((fingerprint, bootstrap_client_id), fingerprints) = builder.batched(|builder| {
+@@ -219,11 +234,17 @@ impl WorkbookBase {
+             } else {
+                 styles.with_written_fills()
+             })?;
+-            let mut fingerprints = builder.style_fingerprints(&model.styles, legacy_styles)?;
+-            for reading in legacy_style_readings {
+-                for (version, accepted) in builder.style_fingerprints(reading, None)? {
+-                    for fingerprint in accepted {
+-                        append_fingerprint(&mut fingerprints, version, fingerprint);
++            let mut fingerprints = if legacy_replicas {
++                builder.style_fingerprints(&model.styles, legacy_styles)?
++            } else {
++                BTreeMap::from([(SCHEMA_VERSION, vec![current.0.clone()])])
++            };
++            if legacy_replicas {
++                for reading in legacy_style_readings {
++                    for (version, accepted) in builder.style_fingerprints(reading, None)? {
++                        for fingerprint in accepted {
++                            append_fingerprint(&mut fingerprints, version, fingerprint);
++                        }
+                     }
+                 }
+             }
+@@ -1003,11 +1024,12 @@ impl WorkbookAuthority {
+         legacy_style_readings: &[Stylesheet],
+         chunk: usize,
+     ) -> Result<(Self, WorkbookModel, WorkbookStructure), AuthorityError> {
+-        let base = WorkbookBase::from_model_with_style_readings(
++        let base = WorkbookBase::from_model_with_style_readings_mode(
+             model,
+             legacy_dimensions,
+             legacy_styles,
+             legacy_style_readings,
++            client_id.is_some(),
+         )
+         .map_err(AuthorityError::InvalidState)?;
+         if client_id == Some(base.bootstrap_client_id) {
+@@ -10944,6 +10966,29 @@ mod tests {
+         chunks
+     }
+ 
++    #[test]
++    fn standalone_open_retains_canonical_identity_and_replica_opens_keep_legacy_readings() {
++        for case in open_test_cases::matrix() {
++            let (local, local_model, _) = WorkbookAuthority::from_source_with_projection(
++                &case.model, None, &case.legacy_dimensions, case.legacy_styles.as_ref(), &[],
++            ).unwrap();
++            let (replica, replica_model, _) = WorkbookAuthority::from_source_with_projection(
++                &case.model, Some(11), &case.legacy_dimensions, case.legacy_styles.as_ref(), &[],
++            ).unwrap();
++            let full = WorkbookBase::from_model_with_style_readings(
++                &case.model, &case.legacy_dimensions, case.legacy_styles.as_ref(), &[],
++            ).unwrap();
++            assert_eq!(local.base.fingerprint, full.fingerprint, "{}", case.label);
++            assert_eq!(local.base.bootstrap_client_id, full.bootstrap_client_id, "{}", case.label);
++            assert_eq!(local.base.fingerprints, BTreeMap::from([
++                (SCHEMA_VERSION, vec![full.fingerprint.clone()]),
++            ]));
++            assert_eq!(replica.base.fingerprints, full.fingerprints);
++            assert_eq!(local_model, replica_model);
++            assert_eq!(local.encode_state_as_update_v1(), replica.encode_state_as_update_v1());
++        }
++    }
++
+     #[test]
+     fn a_chunked_open_matches_one_bootstrap_update_across_sheets() {
+         let mut model = rich_model();
