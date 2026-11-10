@@ -1,3 +1,5 @@
+import { bereidTekstWerkersOpslagVoor } from "./workerStart";
+
 let voorbereiding: Promise<void> | null = null;
 
 /** Laad dezelfde OPC-/parserkern als opslaan, zonder de actieve editor te flushen of op te slaan. */
@@ -14,6 +16,7 @@ export function bereidTekstOpslagVoor(): Promise<void> {
       // Dit kleine ingebouwde document laadt beide openbare parserafhankelijkheden.
       // Fontregistratie en de volledige gebruikersinhoud zijn hiervoor niet nodig.
       await parseDocx(bytes, { preloadFonts: false });
+      await bereidTekstWerkersOpslagVoor();
     })().catch((fout) => {
       voorbereiding = null;
       throw fout;
