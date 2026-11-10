@@ -136,6 +136,7 @@ import { ValidatieGroep } from "../rekenblad/ValidatieLint";
 import { BeveiligingGroep } from "../rekenblad/BeveiligingLint";
 import { CelstijlGroep } from "../rekenblad/CelstijlUi";
 import { TabelGroep } from "../rekenblad/TabelUi";
+import { DraaitabelGroep } from "../rekenblad/DraaitabelUi";
 import { useObjectenGroep } from "../rekenblad/ObjectenGroep";
 
 type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
@@ -910,6 +911,7 @@ export function RekenbladRibbon({
             inhoud: (
               <>
                 <ValidatieGroep />
+                <DraaitabelGroep />
                 <Groep naam={t("spreadsheet.groups.sortFilter")}>
                   <div className="ribbon-stapel">
                     <A
