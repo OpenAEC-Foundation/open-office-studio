@@ -600,7 +600,12 @@ export function OfficeStudio() {
     tabs.verwerk(
       id === null ? { type: "toonStart" } : { type: "activeer", id },
     );
-    if (focus) herstelFocus();
+    if (focus) {
+      // Ook een klik op het al actieve tabblad verplaatst de focus naar de balk.
+      // Er volgt dan geen actiefId-effect; herstel zonder een verzoek te laten hangen.
+      if (id === toestand.actief) focusTabInhoud(id);
+      else herstelFocus();
+    }
   }
   // Editors renderen hun invoerveld soms buiten het paneel (portal); daarom
   // onthouden we de focus per actief tabblad en halen die bij wisselen weg.
@@ -614,11 +619,29 @@ export function OfficeStudio() {
     if (oud && document.activeElement === oud) oud.blur();
     if (!focusHerstellen.current) return;
     focusHerstellen.current = false;
-    const element =
-      actiefId === null ? null : laatsteFocus.current.get(actiefId);
-    if (element?.isConnected) element.focus({ preventScroll: true });
-    else document.getElementById(tabId(actiefId))?.focus();
+    focusTabInhoud(actiefId);
   }, [actiefId]);
+  function focusTabInhoud(id: number | null) {
+    const element = id === null ? null : laatsteFocus.current.get(id);
+    const paneel = document.getElementById(paneelId(id));
+    // Bewaar editor-/invoerfocus (ook portals), maar geen lintknop die de
+    // documentsneltoetsen blokkeert of bij het wisselen verwijderd is.
+    if (
+      element?.isConnected &&
+      !element.closest("[hidden], [inert]") &&
+      (paneel?.contains(element) ||
+        element.matches("input, textarea, [contenteditable='true']"))
+    ) {
+      element.focus({ preventScroll: true });
+      if (document.activeElement === element) return;
+    }
+    const tabblad = toestand.tabbladen.find((tab) => tab.id === id);
+    const focus = tabblad?.type === "document"
+      ? editorKoppeling(tabblad.soort)?.focus
+      : undefined;
+    if (focus) focus();
+    else document.getElementById(tabId(id))?.focus();
+  }
   useEffect(() => {
     const focus = (event: FocusEvent) => {
       const id = actiefRef.current;
@@ -1107,7 +1130,7 @@ export function OfficeStudio() {
         <TabBalk
           tabbladen={toestand.tabbladen}
           actief={toestand.actief}
-          activeer={(id) => wissel(id)}
+          activeer={(id, focus) => wissel(id, focus)}
           sluit={(ids) => void sluit(ids)}
           verplaats={(id, naar) =>
             tabs.verwerk({ type: "verplaats", id, naar })

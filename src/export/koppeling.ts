@@ -7,6 +7,8 @@ import type { AfdrukBron } from "../afdrukken/bron";
  */
 export interface EditorKoppeling {
   soort: Soort;
+  /** Focus op het bestaande werkvlak, zonder de selectie of geschiedenis te wijzigen. */
+  focus?: () => void;
   /** Opent het afdrukvoorbeeld van de editor. */
   afdrukken?: () => Promise<void> | void;
   bladen?: () => { namen: string[]; actief: number };
