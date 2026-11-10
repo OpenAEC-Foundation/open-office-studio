@@ -4,6 +4,15 @@ import sys
 
 path = Path(sys.argv[1]) / 'crates/betteroffice-xlsx/src/authority.rs'
 source = path.read_text(encoding='utf-8')
+needle = '            SEED_CHUNK,\n        )\n    }\n\n    fn from_source_with_seed_chunk('
+assert source.count(needle) == 1
+source = source.replace(needle, '''            std::env::var("OOS_OPEN_PROFILE_CHUNK").ok()
+                .and_then(|v| v.parse::<usize>().ok()).filter(|&v| v > 0)
+                .unwrap_or(SEED_CHUNK),
+        )
+    }
+
+    fn from_source_with_seed_chunk(''')
 start = source.index('    fn from_source_with_seed_chunk(')
 end = source.index('    pub(crate) fn client_id(', start)
 body = source[start:end]

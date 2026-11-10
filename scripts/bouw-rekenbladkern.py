@@ -29,6 +29,7 @@ def main():
     parser.add_argument('--controle', action='store_true', help='Draai ook de gerichte native kernproeven.')
     parser.add_argument('--nieuwe-kern', action='store_true', help='Bouw een kandidaat en rapporteer de nieuwe checksum, zonder de vastgezette uitvoerchecksum te eisen. Bron, patches, tools en WASM-interface blijven gecontroleerd.')
     parser.add_argument('--alleen-bron', action='store_true', help='Controleer en prepareer alleen de gepinde bron en patches, zonder bouwgereedschappen uit te voeren.')
+    parser.add_argument('--profiel-namen', action='store_true', help='Schrijf daarnaast een diagnostische WASM met functienamen; de gewone uitvoer blijft checksum-gecontroleerd.')
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     metadata = json.loads((repo / 'patches/rekenbladengine-lange-ketens.json').read_text())
@@ -106,6 +107,8 @@ def main():
     kern = uitvoer / 'xlsx_wasm_bg.wasm'
     tijdelijk = uitvoer / 'xlsx_wasm_bg-geoptimaliseerd.wasm'
     subprocess.run([args.wasm_opt, '-O3', str(kern), '-o', str(tijdelijk)], check=True)
+    if args.profiel_namen:
+        subprocess.run([args.wasm_opt, '-O3', '--debuginfo', str(kern), '-o', str(uitvoer / 'xlsx_wasm_profile.wasm')], check=True)
     tijdelijk.replace(kern)
     if not args.nieuwe_kern and sha256(kern) != metadata['wasmSha256']:
         raise SystemExit('De herbouwde rekenbladkern wijkt af van de vastgelegde checksum.')

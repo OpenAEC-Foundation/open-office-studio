@@ -1,7 +1,13 @@
 name: Rekenbladkern kandidaat bouwen
 on:
   push:
-    branches: [codex/spreadsheet-five-e0d7, codex/spreadsheet-tables-73-d410, codex/spreadsheet-73-wip-d410]
+    branches:
+      [
+        codex/spreadsheet-five-e0d7,
+        codex/spreadsheet-tables-73-d410,
+        codex/spreadsheet-73-wip-d410,
+        codex/spreadsheet-large-workbooks-2026-11-10,
+      ]
     paths:
       - .github/workflows/rekenbladkern-kandidaat.yml
       - patches/rekenbladengine-*
@@ -41,7 +47,7 @@ jobs:
           echo "$PWD/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl" >> "$GITHUB_PATH"
           echo "$PWD/binaryen-version_132/bin" >> "$GITHUB_PATH"
       - name: Bronpatches testen en kandidaat bouwen
-        run: python3 scripts/bouw-rekenbladkern.py --bronmap .local/kernbron --uitvoer .local/kern-kandidaat --controle --nieuwe-kern
+        run: python3 scripts/bouw-rekenbladkern.py --bronmap .local/kernbron --uitvoer .local/kern-kandidaat --controle ${{ github.ref_name == 'codex/spreadsheet-large-workbooks-2026-11-10' && '--profiel-namen' || '--nieuwe-kern' }}
       - uses: actions/upload-artifact@v4
         with:
           name: rekenbladkern-kandidaat

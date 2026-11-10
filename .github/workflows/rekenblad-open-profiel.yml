@@ -38,7 +38,9 @@ jobs:
           OOS_OPEN_PROFILE_DIR: ${{ github.workspace }}/.local/openprofiel
         run: |
           set -o pipefail
-          /usr/bin/time -v timeout 90s cargo test --manifest-path .local/kernbron/Cargo.toml -p betteroffice-xlsx --locked --release --test open_profiel -- --nocapture 2>&1 | tee .local/openprofiel/native.log
+          for chunk in 8192 32768 200000 1000000; do
+            OOS_OPEN_PROFILE_CHUNK=$chunk /usr/bin/time -v timeout 90s cargo test --manifest-path .local/kernbron/Cargo.toml -p betteroffice-xlsx --locked --release --test open_profiel -- --nocapture 2>&1 | tee .local/openprofiel/native-$chunk.log
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
