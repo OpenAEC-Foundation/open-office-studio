@@ -358,6 +358,18 @@ function displayLijst(geometrie: DocxPluginGeometry | null): DisplayList | null 
   }
 }
 
+/** Behoud alle vervolgpagina’s van zichtbare tabellen, zonder andere tabellen op te zoeken. */
+export function lijstVoorTabelPagina(lijst: DisplayList, pagina: number): DisplayList {
+  const huidig = lijst.pages.find(p => p.pageIndex === pagina);
+  if (!huidig) return lijst;
+  // Oudere lijsten zonder tabelidentiteit blijven de volledige ankerroute gebruiken.
+  if (huidig.primitives.some(p => p.cell && !p.table?.tableId)) return lijst;
+  const ids = new Set(huidig.primitives.flatMap(p => p.table?.tableId ? [p.table.tableId] : []));
+  if (!ids.size) return lijst;
+  return { ...lijst, pages: lijst.pages.filter(p => p.pageIndex === pagina
+    || p.primitives.some(primitief => primitief.table?.tableId && ids.has(primitief.table.tableId))) };
+}
+
 /** Tabellen op de pagina's `van`..`tot`, met hun randen in paginapixels. */
 export function tabelBeelden(
   weergave: Weergave,
@@ -408,7 +420,7 @@ export function tabelBeelden(
           return cel;
         });
       });
-      const vakken = deriveDisplayListSelectedCellRects(lijst, cellen, sleutelVan).filter((c) => c.pageIndex === f.pageIndex);
+      const vakken = deriveDisplayListSelectedCellRects(lijstVoorTabelPagina(lijst, f.pageIndex), cellen, sleutelVan).filter((c) => c.pageIndex === f.pageIndex);
       const { raster, lijnen } = getekendRaster(rasterVan(info.payload), f.originX, vakken);
       const banden = [...f.rowBands].sort((a, b) => a.rowIndex - b.rowIndex);
       const rijen = banden.map((b, i) => {

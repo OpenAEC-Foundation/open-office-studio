@@ -1,0 +1,1395 @@
+{
+  "datum": "2026-11-11",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 144.07528751896461,
+    "head": "8cda0ab10ecbacbe647f7bd27935dca3ab968de4",
+    "diff_sha256": "dc8e6b13a1d30dcdb1aeafe6b40590d9c2de728141af12dc57c27d00ac47fa2c",
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "vrije_bytes_start": 3693486080,
+    "vrije_bytes_eind": 3690631168,
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-profiel/open-office-studio-tabelpagina",
+    "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f"
+  },
+  "wijziging": "Celgeometrie bij tabelgrepen leest alleen pagina’s van zichtbare tabelidentiteiten. Alle eerdere/vervolgpagina’s met dezelfde identiteit blijven beschikbaar voor doorlopende cellen. Bij ontbrekende identiteiten blijft de volledige oude ankerroute bestaan. Geen renderer- of stijlwijziging.",
+  "tests": "Drie gerichte regressies vergelijken echte celvakken van een doorlopende cel met de volledige route, bewaken ontbrekende identiteiten en meerdere zichtbare/geneste identiteiten. Zeven echte geometrie-/klikvarianten en vijf tabelcachetests groen. Alle2324standaardtests groen; vier optionele hostdraadtests apart met echte Rust-CLI groen:2328in totaal. TypeScript, Vite en127Python-tests groen.",
+  "native": {
+    "kandidaat2": {
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "meting": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 45268,
+        "begin_tot_bron_ms": 21342.000000000007,
+        "laatste_keyup_tot_bron_ms": 267.0000000000073,
+        "laatste_keyup_tot_frame_ms": 3018,
+        "begin_tot_frame_ms": 24093,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 24325,
+        "wall_verzonden_tot_frame_ms": 22413,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "schema": 2,
+      "undo_groepen": 7,
+      "native_opdrachten_totaal_inclusief_vervolg": 126,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "referentie2": {
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "meting": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 49048,
+        "begin_tot_bron_ms": 24888,
+        "laatste_keyup_tot_bron_ms": 328,
+        "laatste_keyup_tot_frame_ms": 3542,
+        "begin_tot_frame_ms": 28102,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 28345,
+        "wall_verzonden_tot_frame_ms": 26502,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "schema": 2,
+      "undo_groepen": 6,
+      "native_opdrachten_totaal_inclusief_vervolg": 124,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat3": {
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "meting": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 63756,
+        "begin_tot_bron_ms": 38209,
+        "laatste_keyup_tot_bron_ms": 283,
+        "laatste_keyup_tot_frame_ms": 4963.000000000015,
+        "begin_tot_frame_ms": 42889.000000000015,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 42899,
+        "wall_verzonden_tot_frame_ms": 41067,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "schema": 3,
+      "undo_groepen": 8,
+      "native_opdrachten_totaal_inclusief_vervolg": 323,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "tabelgrepen": {
+    "geslaagd": true,
+    "versie": "2026.45.52",
+    "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+    "script_sha256": "64d0e30e5527caa0a027902d21a241d109f10abb2be8aec67844cc9d017e3966",
+    "bron_begin_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "stappen": [
+      "Echte kolomrand versleept; aangrenzende breedtes en alle teksten correct",
+      "Fysieke Undo en Redo herstellen de brongebonden tabelgegevens exact",
+      "Fysiek opgeslagen; kolombreedtes onafhankelijk in DOCX-XML gecontroleerd",
+      "Nieuw eigen proces behoudt alle kolombreedtes, alinea- en celteksten"
+    ],
+    "grens": "Echte tabelrand slepen, Undo/Redo en DOCX bewaren/heropenen in een eigen profiel.",
+    "begin": {
+      "teksten": {
+        "body": [
+          "OPENAEC   /   ONTWERPNOTITIE 01",
+          "Ruimte voor ideeën.",
+          "Een heldere basis voor een open werkplek.",
+          "Van eerste schets naar samenhang",
+          "Goed werk begint met ruimte om te denken. Een rustige indeling, bruikbare materialen en duidelijke afspraken vormen samen de basis voor een prettige werkplek.",
+          "Deze notitie brengt de uitgangspunten bij elkaar. Van licht en materiaal tot de manier waarop we een ontwerp delen, bespreken en verder brengen.",
+          "Drie uitgangspunten",
+          "VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes."
+        ],
+        "body:t0:r0c0": [
+          "01"
+        ],
+        "body:t0:r0c1": [
+          "Maak ruimte  Een heldere structuur geeft ideeën de ruimte."
+        ],
+        "body:t0:r1c0": [
+          "02"
+        ],
+        "body:t0:r1c1": [
+          "Werk samen  Deel inzichten en houd besluiten navolgbaar."
+        ],
+        "body:t0:r2c0": [
+          "03"
+        ],
+        "body:t0:r2c1": [
+          "Denk vooruit  Kies materialen die lang meegaan en opnieuw bruikbaar zijn."
+        ]
+      },
+      "grids": [
+        [
+          624,
+          9014
+        ]
+      ]
+    },
+    "greep": {
+      "x": 431,
+      "y": 678,
+      "links": 427.5,
+      "index": 0
+    },
+    "na_slepen": {
+      "teksten": {
+        "body": [
+          "OPENAEC   /   ONTWERPNOTITIE 01",
+          "Ruimte voor ideeën.",
+          "Een heldere basis voor een open werkplek.",
+          "Van eerste schets naar samenhang",
+          "Goed werk begint met ruimte om te denken. Een rustige indeling, bruikbare materialen en duidelijke afspraken vormen samen de basis voor een prettige werkplek.",
+          "Deze notitie brengt de uitgangspunten bij elkaar. Van licht en materiaal tot de manier waarop we een ontwerp delen, bespreken en verder brengen.",
+          "Drie uitgangspunten",
+          "VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes."
+        ],
+        "body:t0:r0c0": [
+          "01"
+        ],
+        "body:t0:r0c1": [
+          "Maak ruimte  Een heldere structuur geeft ideeën de ruimte."
+        ],
+        "body:t0:r1c0": [
+          "02"
+        ],
+        "body:t0:r1c1": [
+          "Werk samen  Deel inzichten en houd besluiten navolgbaar."
+        ],
+        "body:t0:r2c0": [
+          "03"
+        ],
+        "body:t0:r2c1": [
+          "Denk vooruit  Kies materialen die lang meegaan en opnieuw bruikbaar zijn."
+        ]
+      },
+      "grids": [
+        [
+          907,
+          8731
+        ]
+      ]
+    },
+    "docx_grids": [
+      [
+        907,
+        8731
+      ]
+    ]
+  },
+  "profiel": {
+    "bron": "Eigen rijke128tabellen/65pbron; oude16fELF. Begrensde1500msopname met WebKit-stackkalibratie en exacte ingebedde scriptbronnen.",
+    "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+    "samenvatting": {
+      "hoofdthread": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 862,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [
+          [
+            [
+              "xTe",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              4439
+            ],
+            59
+          ],
+          [
+            [
+              "/[\\uD800-\\uDBFF](?![\\uDC00-\\uDFFF])|(?<![\\uD800-\\uDBFF])[\\uDC00-\\uDFFF]/",
+              "",
+              -1,
+              -1
+            ],
+            39
+          ],
+          [
+            [
+              "kE",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              147710
+            ],
+            33
+          ],
+          [
+            [
+              ".wasm-function[2229]",
+              "",
+              -1,
+              -1
+            ],
+            30
+          ],
+          [
+            [
+              ".wasm-function[1421]",
+              "",
+              -1,
+              -1
+            ],
+            29
+          ],
+          [
+            [
+              "buildStory",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              6766
+            ],
+            24
+          ],
+          [
+            [
+              "VG",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              148530
+            ],
+            20
+          ],
+          [
+            [
+              ".wasm-function[5657]",
+              "",
+              -1,
+              -1
+            ],
+            20
+          ],
+          [
+            [
+              ".wasm-function[3038]",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[8637]",
+              "",
+              -1,
+              -1
+            ],
+            15
+          ],
+          [
+            [
+              ".wasm-function[589]",
+              "",
+              -1,
+              -1
+            ],
+            15
+          ],
+          [
+            [
+              ".wasm-function[7706]",
+              "",
+              -1,
+              -1
+            ],
+            14
+          ],
+          [
+            [
+              ".wasm-function[4434]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[10752]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              "map",
+              "",
+              1,
+              11
+            ],
+            10
+          ],
+          [
+            [
+              "p",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              34,
+              8947
+            ],
+            10
+          ],
+          [
+            [
+              "getClientRects",
+              "",
+              -1,
+              -1
+            ],
+            10
+          ],
+          [
+            [
+              "parse",
+              "",
+              -1,
+              -1
+            ],
+            9
+          ],
+          [
+            [
+              "stringify",
+              "",
+              -1,
+              -1
+            ],
+            9
+          ],
+          [
+            [
+              "fetch",
+              "",
+              -1,
+              -1
+            ],
+            9
+          ],
+          [
+            [
+              "filter",
+              "",
+              1,
+              11
+            ],
+            8
+          ],
+          [
+            [
+              "P0e",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              148110
+            ],
+            8
+          ],
+          [
+            [
+              "$G",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              144849
+            ],
+            7
+          ],
+          [
+            [
+              "BG",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              144233
+            ],
+            7
+          ],
+          [
+            [
+              "getBoundingClientRect",
+              "",
+              -1,
+              -1
+            ],
+            7
+          ]
+        ],
+        "inclusief": [
+          [
+            [
+              "SM",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              125934
+            ],
+            514
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              139388
+            ],
+            495
+          ],
+          [
+            [
+              "Bp",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              137537
+            ],
+            495
+          ],
+          [
+            [
+              "zM",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              139324
+            ],
+            495
+          ],
+          [
+            [
+              "LM",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              137952
+            ],
+            495
+          ],
+          [
+            [
+              "Zte",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              129963
+            ],
+            491
+          ],
+          [
+            [
+              "RM",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              130944
+            ],
+            491
+          ],
+          [
+            [
+              "d1",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              129472
+            ],
+            491
+          ],
+          [
+            [
+              "hx",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              50535
+            ],
+            482
+          ],
+          [
+            [
+              "Mx",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              9,
+              73815
+            ],
+            449
+          ],
+          [
+            [
+              "nee",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              48,
+              20310
+            ],
+            390
+          ],
+          [
+            [
+              "sL",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              34,
+              8890
+            ],
+            364
+          ],
+          [
+            [
+              "kE",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              147710
+            ],
+            308
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            306
+          ],
+          [
+            [
+              "p",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              34,
+              8947
+            ],
+            276
+          ],
+          [
+            [
+              "zBe",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              150624
+            ],
+            269
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              8,
+              80054
+            ],
+            220
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              8,
+              77536
+            ],
+            176
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              8,
+              78159
+            ],
+            159
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              8,
+              77702
+            ],
+            159
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              12,
+              144230
+            ],
+            152
+          ],
+          [
+            [
+              "yn",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              12,
+              149689
+            ],
+            136
+          ],
+          [
+            [
+              "yk",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              34,
+              4872
+            ],
+            130
+          ],
+          [
+            [
+              "lY",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              9711
+            ],
+            128
+          ],
+          [
+            [
+              "iY",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              4379
+            ],
+            126
+          ],
+          [
+            [
+              "sY",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              4819
+            ],
+            126
+          ],
+          [
+            [
+              "buildStory",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              6766
+            ],
+            126
+          ],
+          [
+            [
+              "tablePayload",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              219,
+              90828
+            ],
+            124
+          ],
+          [
+            [
+              "table_payload",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              74612
+            ],
+            123
+          ],
+          [
+            [
+              ".wasm-function[12931]",
+              "",
+              -1,
+              -1
+            ],
+            118
+          ],
+          [
+            [
+              "plak",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              72,
+              169972
+            ],
+            117
+          ],
+          [
+            [
+              ".wasm-function[2125]",
+              "",
+              -1,
+              -1
+            ],
+            110
+          ],
+          [
+            [
+              "FBe",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              141,
+              147214
+            ],
+            96
+          ],
+          [
+            [
+              "xTe",
+              "tauri://localhost/assets/index-DeofpAhR.js",
+              223,
+              4439
+            ],
+            92
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-DyhLnmCy.js",
+              8,
+              48468
+            ],
+            88
+          ]
+        ]
+      },
+      "worker:0.1": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 755,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [
+          [
+            [
+              ".wasm-function[2969]",
+              "",
+              -1,
+              -1
+            ],
+            43
+          ],
+          [
+            [
+              ".wasm-function[589]",
+              "",
+              -1,
+              -1
+            ],
+            42
+          ],
+          [
+            [
+              ".wasm-function[2908]",
+              "",
+              -1,
+              -1
+            ],
+            36
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            35
+          ],
+          [
+            [
+              ".wasm-function[3038]",
+              "",
+              -1,
+              -1
+            ],
+            32
+          ],
+          [
+            [
+              ".wasm-function[3678]",
+              "",
+              -1,
+              -1
+            ],
+            32
+          ],
+          [
+            [
+              ".wasm-function[6030]",
+              "",
+              -1,
+              -1
+            ],
+            29
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            23
+          ],
+          [
+            [
+              ".wasm-function[4434]",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              ".wasm-function[5582]",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[372]",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[7126]",
+              "",
+              -1,
+              -1
+            ],
+            15
+          ],
+          [
+            [
+              ".wasm-function[49]",
+              "",
+              -1,
+              -1
+            ],
+            15
+          ],
+          [
+            [
+              "(unknown)",
+              "",
+              -1,
+              -1
+            ],
+            15
+          ],
+          [
+            [
+              ".wasm-function[5657]",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              ".wasm-function[10752]",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              ".wasm-function[12426]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[2229]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[7068]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[4995]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[5165]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[129]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              ".wasm-function[3559]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              ".wasm-function[5921]",
+              "",
+              -1,
+              -1
+            ],
+            10
+          ],
+          [
+            [
+              ".wasm-function[889]",
+              "",
+              -1,
+              -1
+            ],
+            10
+          ]
+        ],
+        "inclusief": [
+          [
+            [
+              "k",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              3427
+            ],
+            740
+          ],
+          [
+            [
+              "k",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              3429
+            ],
+            740
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              2351
+            ],
+            740
+          ],
+          [
+            [
+              "Cc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              33984
+            ],
+            739
+          ],
+          [
+            [
+              "b",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              2861
+            ],
+            739
+          ],
+          [
+            [
+              "Cc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              33987
+            ],
+            739
+          ],
+          [
+            [
+              "Fc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              35282
+            ],
+            739
+          ],
+          [
+            [
+              "b",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              2858
+            ],
+            739
+          ],
+          [
+            [
+              "Fc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              35285
+            ],
+            739
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            726
+          ],
+          [
+            [
+              "gg",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              10,
+              59926
+            ],
+            670
+          ],
+          [
+            [
+              "layout_font_requirements_json",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              8,
+              176604
+            ],
+            669
+          ],
+          [
+            [
+              ".wasm-function[71]",
+              "",
+              -1,
+              -1
+            ],
+            638
+          ],
+          [
+            [
+              ".wasm-function[13025]",
+              "",
+              -1,
+              -1
+            ],
+            638
+          ],
+          [
+            [
+              ".wasm-function[540]",
+              "",
+              -1,
+              -1
+            ],
+            551
+          ],
+          [
+            [
+              ".wasm-function[2994]",
+              "",
+              -1,
+              -1
+            ],
+            523
+          ],
+          [
+            [
+              ".wasm-function[494]",
+              "",
+              -1,
+              -1
+            ],
+            517
+          ],
+          [
+            [
+              ".wasm-function[321]",
+              "",
+              -1,
+              -1
+            ],
+            517
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            502
+          ],
+          [
+            [
+              ".wasm-function[725]",
+              "",
+              -1,
+              -1
+            ],
+            134
+          ],
+          [
+            [
+              ".wasm-function[347]",
+              "",
+              -1,
+              -1
+            ],
+            120
+          ],
+          [
+            [
+              ".wasm-function[49]",
+              "",
+              -1,
+              -1
+            ],
+            112
+          ],
+          [
+            [
+              ".wasm-function[5824]",
+              "",
+              -1,
+              -1
+            ],
+            108
+          ],
+          [
+            [
+              ".wasm-function[2484]",
+              "",
+              -1,
+              -1
+            ],
+            85
+          ],
+          [
+            [
+              ".wasm-function[1286]",
+              "",
+              -1,
+              -1
+            ],
+            76
+          ],
+          [
+            [
+              ".wasm-function[889]",
+              "",
+              -1,
+              -1
+            ],
+            69
+          ],
+          [
+            [
+              "S",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              9,
+              45500
+            ],
+            67
+          ],
+          [
+            [
+              "apply_update_with_inference",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              8,
+              156769
+            ],
+            65
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+              9,
+              66023
+            ],
+            65
+          ],
+          [
+            [
+              ".wasm-function[13024]",
+              "",
+              -1,
+              -1
+            ],
+            64
+          ],
+          [
+            [
+              ".wasm-function[3559]",
+              "",
+              -1,
+              -1
+            ],
+            61
+          ],
+          [
+            [
+              ".wasm-function[8728]",
+              "",
+              -1,
+              -1
+            ],
+            54
+          ],
+          [
+            [
+              ".wasm-function[2229]",
+              "",
+              -1,
+              -1
+            ],
+            52
+          ],
+          [
+            [
+              ".wasm-function[6030]",
+              "",
+              -1,
+              -1
+            ],
+            47
+          ],
+          [
+            [
+              ".wasm-function[589]",
+              "",
+              -1,
+              -1
+            ],
+            45
+          ]
+        ]
+      },
+      "worker:0.2": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 0,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [],
+        "inclusief": []
+      }
+    },
+    "afkeuring": "Eerste profiel gebruikte kleine letters na een punt en faalde op de inhoudsassertie doordat autocorrectie hoofdletters aanbracht. Alle data behouden; definitieve profieltekst heeft expliciete hoofdletters en broncontrole slaagt. Geen appdataverlies geclaimd.",
+    "grens": "Samplingfrequenties en inclusieve stacks zijn geen gemeten proces-CPUduur; runtime gaf geen trackingUpdate-intervallen. Geen oorzaak afgeleid uit minificatienamen van een andere build."
+  },
+  "pakketvergelijking": {
+    "onderdelen": 14,
+    "verschillend": [
+      "docProps/core.xml",
+      "docProps/app.xml"
+    ]
+  },
+  "beelden": {
+    "invoer-redo": {
+      "bbox": [
+        1118,
+        995,
+        1132,
+        999
+      ],
+      "afwijkende_pixels": 11,
+      "documentvlak_bbox": null
+    },
+    "snel-getypt-bewaard": {
+      "bbox": null,
+      "afwijkende_pixels": 0,
+      "documentvlak_bbox": null
+    },
+    "nieuw-na-laat-antwoord": {
+      "bbox": [
+        555,
+        327,
+        557,
+        345
+      ],
+      "afwijkende_pixels": 36,
+      "documentvlak_bbox": [
+        234,
+        116,
+        236,
+        134
+      ]
+    }
+  },
+  "ruimte": "Begrensde herbouw van uitsluitend de appcrate; startgrens3,25GiB, absolute stop3GiB en20min. Oude brede6GiB-marge niet gewijzigd. Frontendbundel verplaatst om dubbele kopie te vermijden; oude standaarddist behouden. Referentie-ELFs niet vervangen, normale Cargo-cache wel opnieuw gegenereerd.",
+  "grenzen": [
+    "Eén korte opeenvolgende fysieke vergelijking per nieuwe route, geen statistische of algemene snelheidsacceptatie. De ernstige Writer-vertraging blijft open.",
+    "Exacte1052tekens en echte native antwoorden; latere vastgehouden-antwoordenproeven vallen buiten de gewone invoertijd. WebKit-keyup en twee rAFs zijn geen fysieke schermpaint/FPS.",
+    "Beelden en pakketverschillen ongewijzigd vermeld; geen volledige pixelacceptatie.",
+    "Gebruikersapp en documenten niet gewijzigd. Experimentele journaalroute blijft standaard uit. Geen volledige Rust-/7editie-/platform-GUI-acceptatie. CI-groen43048315760/43048310231 geldt voor eerdere appbron4c13723b; nieuwe bron krijgt eigen remote controle."
+  ],
+  "volgende_stap": "Herhaal fysieke rijke invoer in omgekeerde volgorde en meet opnieuw hoofdthread/workerprofiel. Onderzoek resterende bronprojectie en mutatie/publicatiefrequentie; bewaak selectie tijdens echte achterstand. Nieuwe kandidaat nog niet installeren op basis van één ronde.",
+  "bewijs": {
+    "pad": "docs/tests/writer-tabelpagina-2026-11-11/bewijs.tar.gz",
+    "sha256": "6dfa101a55c715de58d3e30f3b751603a00a2fd0c7ada4b77dfbc36e42bdeb08",
+    "bytes": 6154416,
+    "leden": 71
+  },
+  "conclusie": "Eén nieuwe fysieke vergelijking: kandidaatstandaardroute24,325s tegenover referentie28,345s, circa14%korter. Kandidaatjournaal42,899s tegenover eerdere50,203/51,588s; geen vers controlerondje op die route. De ernstige vertraging blijft open; geen algemene/statistische snelheidsacceptatie. Journaal blijft uit.",
+  "visuele_controle": "Kandidaat2-invoerbeeld visueel bekeken: lange tekst en tabellen leesbaar. Bewaarbeeld volledig pixelgelijk aan referentie. Invoerbeeld11afwijkende statuspixels buiten document. Nieuw document36afwijkende pixels bij de tekstcursor; geen volledige pixelacceptatie."
+}
