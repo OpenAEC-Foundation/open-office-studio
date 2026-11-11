@@ -148,3 +148,9 @@ fn prepare_clipboard_in_doc(doc: &EditingDoc,range: &LocRange,fragment: Fragment
     let update=doc.encode_diff_v1(&base_vector).map_err(OpError::from)?;
     Ok(ClipboardBatchResult{update,base_vector,caret})
 }
+
+// OpenAEC: de native journaalroute blijft standaard uitgeschakeld.
+#[cfg(feature = "writer-bronjournaal")]
+mod journal_api;
+#[cfg(feature = "writer-bronjournaal")]
+pub use journal_api::{import_source_journal_update, prepare_source_journal_fragment};

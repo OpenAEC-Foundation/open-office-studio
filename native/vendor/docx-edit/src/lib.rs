@@ -3469,3 +3469,7 @@ pub mod bridge;
 mod clipboard_batch;
 pub use clipboard_batch::{prepare_clipboard_fragment,ClipboardBatchResult,prepare_confirmed_clipboard_fragment,ConfirmedClipboardBatchResult,prepare_confirmed_clipboard_fragment_cached,PreparedClipboardReplica};
 
+
+// OpenAEC: expliciete native replica-API, geen wijziging van de standaardroute.
+#[cfg(feature = "writer-bronjournaal")]
+pub use clipboard_batch::{import_source_journal_update, prepare_source_journal_fragment};

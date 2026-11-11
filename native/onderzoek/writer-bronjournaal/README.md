@@ -252,3 +252,48 @@ Zie [voorraadbewijs en resterende productkoppeling](../../../docs/tests/2026-11-
 De volgende integratiestap is de geteste kern/adapter/werker/voorraad achter een
 expliciete Rust-feature in de echte desktoplaag onderbrengen, met veilige
 vendor-API's, standaard schema 2 behouden, daarna frontendprotocol en echte GUI.
+
+## Port naar de echte Writer-crate
+
+De geteste kern, adapter, werker en voorraad staan nu ook in
+`native/crates/office-writer-plakken/src/bronjournaal`. De expliciete Cargo-feature
+`writer-bronjournaal` is standaard uitgeschakeld en wordt door `src-tauri`
+doorgegeven. Zonder die feature bestaat de publieke module niet. Inschakelen
+bouwt de Rust-API; het schakelt nog geen Tauri-opdracht of frontendprotocol om.
+Het is dus nog geen gebruikersoptie of nieuwe snellere desktopversie.
+
+De vendorbron heeft twee permanente, eveneens featuregebonden replica-API's.
+Er is voor deze port geen gekopieerde of tijdens uitvoeren gepatchte vendorbron
+meer nodig. Bronimport behoudt expliciet de bestaande verbatim-identiteiten;
+fragmentvoorbereiding gebruikt dezelfde interne implementatie en validatie.
+De bevestigde bron blijft van de aanroeper; deze API's horen uitsluitend op de
+afzonderlijke documentwerker thuis.
+
+De port houdt algoritme en protocol van de proef aan. Alleen importpaden/API-namen
+zijn aangepast, niet gebruikte onderzoekshulpen zijn test-only gemaakt en het
+kanaal verstuurt de aanvraag in een Box om een grote enumvariant te vermijden.
+De featuretests gebruiken een vastgelegde kopie van de echte 25-aanvragengeschiedenis
+in de crate, zonder afhankelijkheid van lokale `.local`-paden. Een extra kernproef
+gebruikt de twintig gewone invoergroepen vóór de vastgelegde geschiedenisdelta
+en controleert ook zestien fout-/grens-/herstelgevallen en de volledige eindbron.
+
+Gericht controleren met Cargo:
+
+```sh
+cargo test --manifest-path native/Cargo.toml -p office-writer-plakken --locked
+cargo test --manifest-path native/Cargo.toml -p office-writer-plakken --features writer-bronjournaal --locked -- --test-threads=1
+cargo clippy --manifest-path native/Cargo.toml -p office-writer-plakken --features writer-bronjournaal --locked --lib -- -D warnings
+```
+
+De lokale uitvoering gebruikte `rustc`/Clippy met vastgelegde bestaande
+afhankelijkheidsbibliotheken en beide rechtstreeks uit de echte vendorbron
+gebouwde varianten: 28 standaardtests en 59 featuretests slagen. Cargo's volledige
+Linux-resolutie met `--locked` slaagt voor beide werkruimten; dit is geen volledige
+Cargo-desktopbouw. De platformworkflow test de feature voortaan afzonderlijk.
+Tauri-hostbinding, frontendlease/bronversie/selectie/volgorde, echte GUI-invoer,
+bewaren/heropenen/verwerpen en fysieke snelheid blijven open.
+
+De eerdere `voorbereiden.py` en `bron-pinnen.json` zijn historische proeven op
+hun vastgezette bronrevisie. Zij weigeren de nu gewijzigde vendorbron bewust;
+gebruik voor de port de bovenstaande echte crate, niet een versoepelde pincontrole.
+Zie [port, concrete opdrachten en grenzen](../../../docs/tests/2026-11-11-writer-feature.json).

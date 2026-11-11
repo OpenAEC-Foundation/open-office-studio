@@ -5,6 +5,11 @@ description = "Lokale OpenAEC-kantooromgeving"
 license = "Apache-2.0"
 edition = "2021"
 
+[features]
+default = []
+# Experimentele Rust-kern; geen automatische protocol- of UI-inschakeling.
+writer-bronjournaal = ["office-writer-plakken/writer-bronjournaal"]
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 

@@ -37,6 +37,8 @@ license = "Apache-2.0"
 repository = "https://github.com/openooxml/betteroffice"
 
 [features]
+# OpenAEC: alleen expliciet voor de afzonderlijke native bronjournaalroute.
+writer-bronjournaal = []
 heap-stats = ["wasm"]
 metafile = ["docx-parse/metafile"]
 tiff = ["docx-parse/tiff"]

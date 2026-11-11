@@ -1,4 +1,6 @@
 //! Bereid Writer-bewerkingen buiten de UI voor zonder de levende documentsessie te wijzigen.
+#[cfg(feature = "writer-bronjournaal")]
+pub mod bronjournaal;
 mod bronspiegel;
 mod bronvoorraad;
 mod tekst;
