@@ -1,0 +1,103 @@
+{
+  "datum": "2026-11-11",
+  "basis": "01351d0a17a3ff749575c5cd08dff006121e077a",
+  "wijziging": "De echte editor kiest een schema-3-lease uitsluitend na expliciete URL-opt-in, geldige hostmogelijkheden en opening. Bestaande standaardroute blijft schema 2; rijke plakacties blijven op de bestaande handler.",
+  "inschakeling": "Alleen eigen kandidaat met Rust-feature writer-bronjournaal en URL-query writerBronjournaal=1 vóór openen van de editor. Geen voorkeur opgeslagen; geen nieuwe productie-instelling. Zonder feature, query of geldige handshake blijft de bestaande route actief.",
+  "bewaking": [
+    "Route vast per bewerking; een late handshake verandert een lopende schema-2-aanvraag niet. Iedere lease en nieuwe fallback krijgt een eigen broncache.",
+    "Editorlevensduur, sessie, actuele bronversie, meebewegende invoegpositie en selectie blijven vóór toepassen bewaakt. Late opening na stoppen wordt expliciet vergeten. Nieuwe opening wacht op opruimen van oude opening.",
+    "Per lease worden transportopdrachten geserialiseerd, levensduur als exacte u64-string en volgnummer/bronvelden gecontroleerd. Geen automatische voortzetting na onduidelijke transportfout.",
+    "Alleen exact gebonden bestaandeRoute/fallbackSchema2/requiresFull true geeft een expliciete nieuwe schema-2-aanvraag met verse volledige bron. Geen relabelen van antwoorden of terugval na corrupte/misvormde gegevens."
+  ],
+  "lokaal": {
+    "frontendtests": 2325,
+    "testbestanden": 226,
+    "echte_host_draadproeven": 4,
+    "terugvalproeven_met_sdk_orakel": 5,
+    "handshake_unitproeven": 28,
+    "python": 127,
+    "typescript": "geslaagd",
+    "productiebundel": "geslaagd, afzonderlijke uitvoermap; bestaande dist en referentie-apps behouden",
+    "bron_stijl_migratie_formattering": [
+      {
+        "naam": "bron",
+        "code": 0,
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-bron.py"
+        ]
+      },
+      {
+        "naam": "stijl",
+        "code": 0,
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-webview-bron.py"
+        ]
+      },
+      {
+        "naam": "migratie",
+        "code": 0,
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-migratie.py"
+        ]
+      },
+      {
+        "naam": "fmt",
+        "code": 0,
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "fmt",
+          "--manifest-path",
+          "native/Cargo.toml",
+          "-p",
+          "office-writer-plakken",
+          "--",
+          "--check"
+        ]
+      },
+      {
+        "naam": "diff",
+        "code": 0,
+        "opdracht": [
+          "git",
+          "diff",
+          "--check"
+        ]
+      }
+    ],
+    "linux_cargo_resolutie": "--offline --locked met x86_64-unknown-linux-gnu-filter en feature; voorbeeld vereist de feature. Geen volledige Cargo-desktopbouw.",
+    "echte_host": "Echte ongewijzigde HostJournaal en journaalkern van 01351d0a, via voorbeeld op stdin/stdout. Lokaal met gepinde echte bibliotheek gecompileerd; bron- en binaryhashes in bewijs. 36 gewone/Unicode-bewerkingen, aansluitende Undo/Redo en bronherlezing, plus vertraagd antwoord bij gewijzigde selectie, gewijzigde bron en sluiten/heractiveren. Geen Tauri-IPC.",
+    "selectie": "Bij invoegen vóór de selectie verschuiven offsets; zowel vaste ankers als de oorspronkelijke geselecteerde letters eind blijven behouden.",
+    "unicode": "Componentniveau; geen GUI-/IME-dekking."
+  },
+  "ci": {
+    "oude_bron": "01351d0a",
+    "native_run": 43037025218,
+    "windows": "volledige native taak inclusief feature-Clippy en featuretests geslaagd",
+    "macos": "volledige native taak inclusief feature-Clippy en featuretests geslaagd",
+    "linux": "DNS-fout Ubuntu-mirror vóór Rust; featurechecks overgeslagen, geen platformacceptatie",
+    "desktop_run": 43037031175,
+    "desktop_afkeuring": "Windows/macOS Python-kopiebeveiligingstest liep op historische bronhash. Alleen unittest maakt nu een tijdelijke actuele fixture; oorspronkelijke historische voorbereider en bron.json blijven strikt en ongewijzigd. Alle vier oorspronkelijke bronpinnen op 7cbc667a gecontroleerd.",
+    "nieuwe_stappen": "Desktopworkflow bouwt nu de echte featuregebonden hostbrug met Cargo en voert de vier draadproeven expliciet uit op iedere platformtaak. Nieuwe run na push vereist."
+  },
+  "afkeuringen": [
+    "Eerste lokale Python-oproep miste Node in PATH: zes fouten/twee skips; herhaald met de juiste runtime: alle 127 groen.",
+    "Eerste selectieproef vergeleek ongewijzigde offsets na invoeging; vaste ankers tonen de correcte verschuiving. Tweede verwachting had woordliteral inde in plaats van eind; gecorrigeerd. Eerste volledige ronde had alleen die ene testfout; definitieve ronde heeft alle 2325 groen.",
+    "Productiebundel heeft niet-blokkerende waarschuwingen over use client, JSON-importattributen en grote chunks; geen waarschuwingen onderdrukt."
+  ],
+  "niet_gecontroleerd": [
+    "Nieuwe desktop-ELF met feature, feitelijke Tauri-IPC, venstersluiting tijdens IPC of volledige app-GUI.",
+    "Fysieke typ-/selectievertraging, FPS, grote rijke documenten, urenlang geheugen, native DOCX-bewaren/heropenen/verwerpen of IME in deze nieuwe route.",
+    "Pixelgelijkheid, zeven releasevarianten en volledige Rust-migratie. Tien migratiegebieden blijven open.",
+    "Appinstallatie of nieuwe release: bestaande versie en documenten ongewijzigd."
+  ],
+  "bewijs": {
+    "pad": "docs/tests/writer-frontendjournaal-2026-11-11/bewijs.tar.gz",
+    "sha256": "06caaedb89463976eede59bb96a7119eabc851b6278b285448501e6e0a8d4d23",
+    "bytes": 91222
+  },
+  "volgende_stap": "CI op nieuwe bron controleren. Voor kandidaatbouw eerst voldoende eigen cache verliesloos archiveren: circa 2.3 GiB vrij, minimum 6 GiB voor volledige bouw. Eigen feature-ELF bouwen met tauri/custom-protocol,writer-bronjournaal; dezelfde ELF in eigen profiel met/zonder query fysiek testen tegen bewaarde c88-referentie. Werkelijke IPC, bron/selectie, Undo/Redo, DOCX-opslaan/heropenen en Niet opslaan plus afbeeldingen/latency bewijzen vóór inschakelen of installeren.",
+  "integratiebron": "4c13723b0f5dec055ea79e1dfb1be3629f5c9bb9"
+}
