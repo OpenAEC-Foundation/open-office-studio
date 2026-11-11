@@ -1,4 +1,4 @@
-name: Office document tab focus
+name: Office browser regressions
 on:
   pull_request:
     paths:
@@ -6,6 +6,13 @@ on:
       - "src/TabBalk.tsx"
       - "src/export/koppeling.ts"
       - "src/export/editorKoppeling.ts"
+      - "src/export/**"
+      - "src/presentatie/**"
+      - "scripts/test-presentatie-zoeklimiet.mjs"
+      - "scripts/proef-presentatie-media-pauze.mjs"
+      - "scripts/proef-presentatie-poster-capture.mjs"
+      - "scripts/test-presentatie-odf-volume.mjs"
+      - "scripts/test-writer-pdf-interne-links.mjs"
       - "scripts/test-office-tab-undo.mjs"
       - ".github/workflows/office-tab-focus.yml"
   workflow_dispatch:
@@ -38,6 +45,16 @@ jobs:
         env:
           OOS_TEST_DIST: .local/dist-focus
           OOS_TEST_UIT: .local/tab-focus
+      - name: Presentation and Writer production regressions
+        if: runner.os == 'Linux'
+        run: |
+          node scripts/test-presentatie-odf-volume.mjs prepare
+          node scripts/proef-presentatie-media-pauze.mjs .local/dist-focus
+          node scripts/proef-presentatie-poster-capture.mjs .local/dist-focus
+          node scripts/test-presentatie-zoeklimiet.mjs
+          node scripts/test-writer-pdf-interne-links.mjs
+        env:
+          OFFICE_TEST_DIST: .local/dist-focus
       - name: Standalone hosted browser route
         run: |
           pnpm exec vite build --base=./ --mode hosted --outDir .local/dist-focus-hosted --logLevel error
@@ -53,4 +70,8 @@ jobs:
           path: |
             .local/tab-focus/
             .local/tab-focus-hosted/
+            .local/presentatie-media-pauze/
+            .local/presentatie-poster-capture/
+            .local/presentation-truncation-fixed/
+            .local/writer-pdf-interne-links/
           include-hidden-files: true

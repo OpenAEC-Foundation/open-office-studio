@@ -1,0 +1,355 @@
+{
+  "productcodepunt": "45f50a2f8c3ec5351b5e7e65f01a17e9eeaf908b",
+  "toelichting": "Oorspronkelijke rapportvelden ongewijzigd. Dirty betreft gelijktijdige test- en documentatieaanpassingen; geen wijziging in productcode. Zoeklimiet gebruikt de nader op .ribbon begrensde testselector. PDF gebruikt een testbrug voor layoutwachten en DOCX-behoud; de PDF-bestanden komen uit de werkelijke afdrukdialoog.",
+  "rapporten": {
+    "tabfocus": {
+      "codepoint": "45f50a2f8c3ec5351b5e7e65f01a17e9eeaf908b",
+      "dirty": true,
+      "sourceHashes": {
+        "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+        "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+        "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+        "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+      },
+      "platform": "linux",
+      "browser": "151.0.7922.34",
+      "route": "/",
+      "cases": [
+        {
+          "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+          "passed": true
+        },
+        {
+          "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+          "passed": true
+        },
+        {
+          "name": "Spreadsheet: mouse activation preserves cell history",
+          "passed": true
+        },
+        {
+          "name": "Writer: tab switches preserve the caret and do not create history",
+          "passed": true
+        },
+        {
+          "name": "Search input retains focus and local Undo after a mouse tab switch",
+          "passed": true
+        },
+        {
+          "name": "Formula input keeps its existing Undo behavior and committed cell",
+          "passed": true
+        },
+        {
+          "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+          "passed": true
+        },
+        {
+          "name": "Modal input keeps local Undo; document history remains untouched",
+          "passed": true
+        },
+        {
+          "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    "mediapauze": {
+      "codepoint": "45f50a2f8c3ec5351b5e7e65f01a17e9eeaf908b",
+      "worktreeDirty": true,
+      "platform": "linux",
+      "manualPause": [
+        {
+          "kind": "audio",
+          "key": "b",
+          "pass": true,
+          "before": 0.172541,
+          "after": {
+            "time": 0.172541,
+            "paused": true
+          }
+        },
+        {
+          "kind": "audio",
+          "key": "w",
+          "pass": true,
+          "before": 0.172541,
+          "after": {
+            "time": 0.172541,
+            "paused": true
+          }
+        },
+        {
+          "kind": "video",
+          "key": "b",
+          "pass": true,
+          "before": 1.065423,
+          "after": {
+            "time": 1.065423,
+            "paused": true
+          }
+        },
+        {
+          "kind": "video",
+          "key": "w",
+          "pass": true,
+          "before": 1.065423,
+          "after": {
+            "time": 1.065423,
+            "paused": true
+          }
+        }
+      ],
+      "resume": [
+        {
+          "kind": "audio",
+          "key": "b",
+          "pass": true
+        },
+        {
+          "kind": "audio",
+          "key": "w",
+          "pass": true
+        },
+        {
+          "kind": "video",
+          "key": "b",
+          "pass": true
+        },
+        {
+          "kind": "video",
+          "key": "w",
+          "pass": true
+        }
+      ],
+      "initialStarts": 2,
+      "reentryStarts": 2,
+      "completed": [
+        {
+          "kind": "audio",
+          "pass": true
+        },
+        {
+          "kind": "video",
+          "pass": true
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    "poster": {
+      "codepoint": "45f50a2f8c3ec5351b5e7e65f01a17e9eeaf908b",
+      "worktreeDirty": true,
+      "platform": "linux",
+      "cases": [
+        {
+          "name": "stale success after selection change",
+          "posterReady": 0,
+          "alerts": 0,
+          "pass": true
+        },
+        {
+          "name": "stale failure after selection change",
+          "posterReady": 0,
+          "alerts": 0,
+          "pass": true
+        },
+        {
+          "name": "current capture failure remains visible",
+          "pass": true
+        },
+        {
+          "name": "latest requested capture wins and survives real save/reopen",
+          "pass": true,
+          "posterSha256": "a36519899a632ab76c5fd0bac800ea3e091eb5761906fb36f721a3b6b89e18ac"
+        }
+      ],
+      "saveReopen": true,
+      "errors": [],
+      "pass": true
+    },
+    "zoeklimiet": {
+      "baseline": false,
+      "native": {
+        "returned": 10000,
+        "truncated": true
+      },
+      "cases": [
+        "Find reports incomplete search instead of a false no-match or count",
+        "Replace current/all on incomplete results leave every story unchanged in actual download",
+        "Refining the query restores normal search/replace and one Undo",
+        "Actual Dutch UI displays the localized limit warning"
+      ],
+      "errors": [],
+      "status": "Te veel zoekresultaten. Verfijn de zoekopdracht; er is niets vervangen.",
+      "passed": true
+    },
+    "pdf": {
+      "browser": "151.0.7922.34",
+      "url": "http://127.0.0.1:43215/",
+      "cases": [
+        {
+          "name": "all",
+          "range": "",
+          "pageIds": [
+            6,
+            7,
+            8
+          ],
+          "internal": 4,
+          "targets": [
+            {
+              "id": 7,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 8,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 8,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 7,
+              "xy": "90 687.447 0"
+            },
+            {
+              "id": 7,
+              "xy": "0 706 0"
+            },
+            {
+              "id": 8,
+              "xy": "0 706 0"
+            }
+          ]
+        },
+        {
+          "name": "first-only",
+          "range": "1",
+          "pageIds": [
+            6
+          ],
+          "internal": 0,
+          "targets": []
+        },
+        {
+          "name": "subset",
+          "range": "1,3",
+          "pageIds": [
+            6,
+            7
+          ],
+          "internal": 2,
+          "targets": [
+            {
+              "id": 7,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 7,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 7,
+              "xy": "0 706 0"
+            }
+          ]
+        },
+        {
+          "name": "reordered",
+          "range": "3,1",
+          "pageIds": [
+            6,
+            7
+          ],
+          "internal": 2,
+          "targets": [
+            {
+              "id": 6,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 6,
+              "xy": "90 706.67 0"
+            },
+            {
+              "id": 6,
+              "xy": "0 706 0"
+            }
+          ]
+        }
+      ],
+      "errors": []
+    },
+    "pdfOnafhankelijk": [
+      {
+        "bestand": "all.pdf",
+        "sha256": "277d0ab05069d87822f3903604da5183881da2327bace282014bb86010c63651",
+        "paginas": 3,
+        "interneBestemmingen": [
+          {
+            "pagina": 1,
+            "x": 90.0,
+            "y": 706.67
+          },
+          {
+            "pagina": 2,
+            "x": 90.0,
+            "y": 706.67
+          },
+          {
+            "pagina": 2,
+            "x": 90.0,
+            "y": 706.67
+          },
+          {
+            "pagina": 1,
+            "x": 90.0,
+            "y": 687.447
+          }
+        ]
+      },
+      {
+        "bestand": "first-only.pdf",
+        "sha256": "cccf3c54f83c01d2779928b8448876025d16f3abd29c11be104e382842d7d655",
+        "paginas": 1,
+        "interneBestemmingen": []
+      },
+      {
+        "bestand": "subset.pdf",
+        "sha256": "d41b984d393f379fd4874aa3d77cb46df4161a64eb04cdadfbf0991c608cdafa",
+        "paginas": 2,
+        "interneBestemmingen": [
+          {
+            "pagina": 1,
+            "x": 90.0,
+            "y": 706.67
+          },
+          {
+            "pagina": 1,
+            "x": 90.0,
+            "y": 706.67
+          }
+        ]
+      },
+      {
+        "bestand": "reordered.pdf",
+        "sha256": "8841db69dc38a968529763fbfbd4095b15775c021b70960f3edcac0c09edbcb9",
+        "paginas": 2,
+        "interneBestemmingen": [
+          {
+            "pagina": 0,
+            "x": 90.0,
+            "y": 706.67
+          },
+          {
+            "pagina": 0,
+            "x": 90.0,
+            "y": 706.67
+          }
+        ]
+      }
+    ]
+  }
+}

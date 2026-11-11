@@ -104,6 +104,7 @@ function texts(bytes) {
 try {
   await open("en", "Truncation.pptx");
   await page
+    .locator(".ribbon")
     .getByRole("button", { name: "Find and replace", exact: true })
     .click();
   let dialog = page.getByRole("dialog", {
@@ -169,6 +170,7 @@ try {
     page.on("pageerror", (e) => report.errors.push(e.message));
     await open("nl", "Nederlands.pptx");
     await page
+      .locator(".ribbon")
       .getByRole("button", { name: "Zoeken en vervangen", exact: true })
       .click();
     dialog = page.getByRole("dialog", {
