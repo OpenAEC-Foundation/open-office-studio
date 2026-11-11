@@ -18,7 +18,7 @@ def bereid(uitvoer):
     shutil.copytree(bron, kopie)
     p=kopie/'src/clipboard_batch.rs';p.write_text(p.read_text()+'''\n// Uitsluitend een afzonderlijke onderzoeksbibliotheek; de productroute blijft gelijk.\npub fn prepare_journal_fragment(doc: &EditingDoc, range: &LocRange, fragment: &Value, ctx: &EditCtx) -> OpResult<ClipboardBatchResult> {\n    let fragment: Fragment = serde_json::from_value(fragment.clone()).map_err(|e| ongeldig(e.to_string()))?;\n    if range.start.story != range.end.story { return Err(ongeldig("Bereik loopt over verschillende verhalen")); }\n    prepare_clipboard_in_doc(doc, range, fragment, ctx)\n}\n''');p=kopie/'src/clipboard_batch.rs';p.write_text(p.read_text()+'\npub fn import_journal_source(doc: &EditingDoc, bytes: &[u8]) -> OpResult<()> { doc.apply_verbatim_v1(bytes).map_err(OpError::from) }\n');p=kopie/'src/lib.rs';p.write_text(p.read_text()+'\npub use clipboard_batch::prepare_journal_fragment;\n\npub use clipboard_batch::import_journal_source;\n')
 
-    for naam in ['journaal.rs', 'proef.rs', 'geschiedenis.rs', 'unicode.rs', 'grenzen.rs', 'middelen.rs', 'grote_bron.rs', 'adapter.rs', 'adapterproef.rs']:
+    for naam in ['journaal.rs', 'proef.rs', 'geschiedenis.rs', 'unicode.rs', 'grenzen.rs', 'middelen.rs', 'grote_bron.rs', 'adapter.rs', 'adapterproef.rs', 'werker.rs', 'werkerproef.rs']:
         shutil.copyfile(lokaal / naam, uitvoer / naam)
     return kopie
 

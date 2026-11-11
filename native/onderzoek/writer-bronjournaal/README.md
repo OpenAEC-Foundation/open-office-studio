@@ -168,3 +168,41 @@ werkerthreads, scheiding van oudere protocollen en alle 25 inhoudelijke
 antwoorden van de werkelijk opgenomen geschiedenisreeks. De twee bewuste
 weglatingen van levensduurbewaking en corruptie-afkeur laten hun gerichte proef
 falen. [Exact bewijs en resterende integratie](../../../docs/tests/2026-11-11-writer-adapter.json).
+
+## Begrensde documentwerker
+
+`werker.rs` voert de onderzoeksadapter uit op een eigen Rust-thread met precies
+één wachtende kanaalopdracht. De adapter en haar EditingDocs worden op die thread
+aangemaakt, gebruikt en vernietigd. Alleen aanvragen/antwoorden en atomaire
+boekhouding gaan over de threadgrens. `stuur` kan op een volle wachtrij wachten
+en mag daarom uitsluitend buiten de UI worden aangeroepen. Aanroepen voor
+hetzelfde document moeten vooraf in invoervolgorde staan; deze werker herschikt
+geen verkeerd aangeboden opdrachten.
+
+`vergeet` trekt alle gekloonde handles in en wekt een idle werker zonder te wachten
+op een volle wachtrij. Een lopende kernbewerking wordt niet hard onderbroken;
+haar antwoord wordt achteraf geweigerd. Ook al verzonden, nog niet overgenomen
+antwoorden worden bij `ontvang` opnieuw tegen intrekking gecontroleerd. Bij
+intrekking worden geblokkeerde zenders vrijgegeven zodra de lopende bewerking
+eindigt en de ontvanger opruimt. Een verdwenen antwoordontvanger blokkeert de
+volgende opdracht niet. Het laatste handle laten vallen sluit eveneens af.
+Een onverwacht gestopte werker levert `Gestopt`, geen normaal `Verouderd`.
+
+De byteboekhouding blijft de nog levende kern meetellen tot opruiming op de
+werker. Zij omvat opgeslagen bron-/voorstelbytes, niet alle heap, geblokkeerde
+producenten of transportpayloads. Dit is nog geen globale geheugenbegrenzing of
+productvoorraad. Een toekomstige voorraad moet bij verwijderen expliciet
+`vergeet` aanroepen, ook wanneer lopende aanvragers nog een handle hebben.
+
+`werkerproef.rs` bevat elf tests met eigen gecontroleerde wachtpoorten, waaronder
+één wachtende opdracht, geblokkeerde zender bij intrekking, een al verzonden echt
+antwoord, intrekking tussen voorstel en antwoord, verdwenen aanvrager, laatste
+handle, opzettelijke threadpanic, onafhankelijk tweede document en alle 25 echte
+geschiedenisaanvragen. Opruiming wordt pas gemeld na het vernietigen van de kern.
+De negen adaptertests slagen opnieuw. Twee bewuste mutanten (twee kanaalplaatsen
+of geen late antwoordcontrole) worden afgekeurd. Een aparte gewone bouw zonder
+`cfg(test)` voert ook een echte tekstbewerking uit; de wacht-/paniekhooks zijn
+uitsluitend aanwezig in de testbouw.
+
+Geen Tauri-/productvoorraad-/frontendintegratie, evictie, GUI, appversnelling of
+platformacceptatie. Zie [werkerbewijs en resterende aansluiting](../../../docs/tests/2026-11-11-writer-werker.json).

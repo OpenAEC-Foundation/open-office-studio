@@ -92,6 +92,9 @@ impl Adapter {
     pub fn antwoord_actueel(&self, binding: &Binding) -> bool {
         self.actief.as_ref() == Some(binding)
     }
+    pub fn opgeslagen_bytes(&self) -> usize {
+        self.journaal.bytes()
+    }
     #[cfg(test)]
     pub fn stel_proefgrens(&mut self, bytes: usize) {
         self.journaal.grens = bytes
