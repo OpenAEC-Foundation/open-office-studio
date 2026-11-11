@@ -236,6 +236,21 @@ impl Voorraad {
         v.ruim_op();
         Ok(())
     }
+    /// Laatste hostcontrole na terugkeer uit een asynchrone opdracht.
+    /// De frontend controleert daarnaast de eigen actuele editor en selectie.
+    pub fn actueel(&self, eigenaar: &str, b: &Binding) -> Result<bool, VoorraadFout> {
+        if eigenaar != b.eigenaar {
+            return Ok(false);
+        }
+        let mut v = self
+            .binnen
+            .lock()
+            .map_err(|_| VoorraadFout::NietBeschikbaar)?;
+        v.ruim_op();
+        Ok(v.actief
+            .get(&(eigenaar.to_owned(), b.document.clone()))
+            .is_some_and(|w| w.binding() == b))
+    }
     pub fn stand(&self) -> Result<(usize, usize, usize), VoorraadFout> {
         let mut v = self
             .binnen

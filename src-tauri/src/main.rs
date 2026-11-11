@@ -218,6 +218,7 @@ fn main() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(updates::Updates::default())
         .manage(office_writer_plakken::BronVoorraad::default())
+        .manage(office_writer_plakken::HostJournaal::default())
         .manage(vensters::Vensters::default())
         .manage(werkbestanden::Werkbestanden::default())
         .manage(recent::Recent::default())
@@ -247,6 +248,10 @@ fn main() {
             writer_plakken::writer_plakken_voorbereiden,
             writer_plakken::writer_tekst_voorbereiden,
             writer_plakken::writer_bron_vergeten,
+            writer_plakken::writer_journaal_mogelijkheden,
+            writer_plakken::writer_journaal_openen,
+            writer_plakken::writer_journaal_voorbereiden,
+            writer_plakken::writer_journaal_vergeten,
             bewaar_kopie,
             lettertypen::systeemlettertypen,
             lettertypen::systeemlettertype,

@@ -115,6 +115,8 @@ jobs:
         if: runner.os == 'Linux'
         run: node scripts/test-database-worker.mjs .local/corpus/bestanden/jackcess-b9d004aa5f8287ae413074a933e2c54235f1de29.mdb .local/corpus/bestanden/jackcess-e16c664c03d368bc37fb55265544ba23c201f174.accdb .local/corpus/bestanden/jackcess-6121fc34bed66f15e836e8130cd9489184e7a384.mdb
       - run: cargo test --manifest-path src-tauri/Cargo.toml --locked
+      - name: Experimentele Writer-desktopkoppeling controleren
+        run: cargo check --manifest-path src-tauri/Cargo.toml --locked --features writer-bronjournaal
       - name: ODF, oudere formaten en PDF werkelijk converteren
         if: runner.os == 'Linux' && vars.CONVERSIE_PROGRAMMA != ''
         env:

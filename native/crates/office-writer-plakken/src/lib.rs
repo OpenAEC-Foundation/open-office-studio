@@ -1,4 +1,6 @@
 //! Bereid Writer-bewerkingen buiten de UI voor zonder de levende documentsessie te wijzigen.
+mod hostjournaal;
+pub use hostjournaal::{HostJournaal, HostJournaalFout};
 #[cfg(feature = "writer-bronjournaal")]
 pub mod bronjournaal;
 mod bronspiegel;

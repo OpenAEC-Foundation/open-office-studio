@@ -69,10 +69,65 @@ pub fn bij_venstergebeurtenis<R: tauri::Runtime>(
     use tauri::Manager;
     if let tauri::WindowEvent::Destroyed = gebeurtenis {
         if let Err(fout) = venster
+            .state::<office_writer_plakken::HostJournaal>()
+            .vergeet_eigenaar(venster.label())
+        {
+            eprintln!("{}", fout.melding);
+        }
+        if let Err(fout) = venster
             .state::<office_writer_plakken::BronVoorraad>()
             .vergeet_eigenaar(venster.label())
         {
             eprintln!("{fout}");
         }
     }
+}
+
+/// Beschikbaarheid is geen inschakeling: iedere nieuwe lease vraagt optIn=true.
+#[tauri::command]
+pub fn writer_journaal_mogelijkheden(
+    host: tauri::State<'_, office_writer_plakken::HostJournaal>,
+) -> serde_json::Value {
+    host.mogelijkheden()
+}
+
+#[tauri::command]
+pub fn writer_journaal_openen(
+    venster: tauri::Window,
+    host: tauri::State<'_, office_writer_plakken::HostJournaal>,
+    gegevens: serde_json::Value,
+) -> Result<serde_json::Value, office_writer_plakken::HostJournaalFout> {
+    host.open(venster.label(), gegevens)
+}
+
+/// Eigenaar komt uitsluitend van Tauri, nooit uit de JSON van de aanvrager.
+/// De opdrachtwachtrij en threadgebonden documentreplica leven in de Rust-kern.
+#[tauri::command]
+pub async fn writer_journaal_voorbereiden(
+    venster: tauri::Window,
+    host: tauri::State<'_, office_writer_plakken::HostJournaal>,
+    gegevens: serde_json::Value,
+) -> Result<serde_json::Value, office_writer_plakken::HostJournaalFout> {
+    let eigenaar = venster.label().to_owned();
+    let host = host.inner().clone();
+    let werker = host.clone();
+    let eigen_venster = eigenaar.clone();
+    let antwoord =
+        tauri::async_runtime::spawn_blocking(move || werker.bereid(&eigen_venster, gegevens))
+            .await
+            .map_err(|fout| office_writer_plakken::HostJournaalFout {
+                soort: "nietBeschikbaar",
+                melding: format!("De Writer-journaalvoorbereiding is afgebroken: {fout}"),
+            })??;
+    host.controleer_antwoord(&eigenaar, &antwoord)?;
+    Ok(antwoord)
+}
+
+#[tauri::command]
+pub fn writer_journaal_vergeten(
+    venster: tauri::Window,
+    host: tauri::State<'_, office_writer_plakken::HostJournaal>,
+    gegevens: serde_json::Value,
+) -> Result<(), office_writer_plakken::HostJournaalFout> {
+    host.vergeet(venster.label(), gegevens)
 }
