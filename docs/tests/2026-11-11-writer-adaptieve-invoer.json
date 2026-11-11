@@ -1,0 +1,2667 @@
+{
+  "datum": "2026-11-12",
+  "begonnen_op": "2026-11-11",
+  "vastgelegd": "2026-11-12T00:01:24.823752+01:00",
+  "appbron": "0a43e8c603d8f7053081a23f7c78d268f8bae91c",
+  "documentatiebasis": "9c0e2fdbb9708836765b36c205b722ffe29bef47",
+  "besluit": "Ook bundelen op basis van meerdere reeds toegelaten acties is afgewezen. Korte eindlatency is in beide ABBA-kandidaatronden hoger. Geen productwijziging doorgevoerd; oorspronkelijke bron, SDK en frontendbundel exact hersteld. Alleen bewijs gepubliceerd.",
+  "prototype": {
+    "ontwerp": "Eerste/losse invoeractie start direct. Nieuwe bundel krijgt toelatingen1; extra invoeractie in bestaande bundel verhoogt teller. Alleen native bundel met teller>1 wacht16ms vóór tekst/tijdspan wordt genomen. Eén actie met meerdere ASCIItekens wacht niet. Na wachten opnieuw eigenaar toetsen; alleen eigen bundelref opruimen bij gesloten sessie. Bestaande pending-input-/selectie-/bewaarwachtrij omvat de wacht. Geen nieuwe ritmerefs, hooks of typesnelheidsheuristiek.",
+    "programma_sha256": "5f394b993ed21ab28322d45684ab8ce3ae88516bc4c71f4c4b3b0fe1bbc78b04",
+    "bronpinnen": {
+      "bestanden": {
+        "patches/@betteroffice__docx-react@0.5.1.patch": "f2d27f8da77c45f99424d45417250d5f1c65f225e4959a7b2309e06c50a914b9",
+        "pnpm-lock.yaml": "9a3fbed3c42384f9ff68e1cd2b5d3982e894e7012af6d5d85f1efa017feb4b24",
+        "src/tekst/invoer-tijdspan.test.ts": "8167646212030ba12a00e4b02d9e0b592158b248862c165004e45a7f25364a0e"
+      },
+      "sdk": "55cc3a287b81ee46f62d9f82989d4fff13cf1971a0636e439a49daeccd27659d"
+    },
+    "bouw": {
+      "code": 0,
+      "reden": null,
+      "seconden": 144.07589010498486,
+      "head": "9c0e2fdbb9708836765b36c205b722ffe29bef47",
+      "diff_sha256": "3e641079bb71bc89b0377f09815edf6d640bc029d0d2ae21b35d07437590e118",
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "vrije_bytes_start": 3624083456,
+      "vrije_bytes_eind": 3621629952,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/adaptieve-invoer/open-office-studio-adaptieve-bundels",
+      "programma_sha256": "5f394b993ed21ab28322d45684ab8ce3ae88516bc4c71f4c4b3b0fe1bbc78b04"
+    },
+    "eerdere_unitopzet": "Een eerste versie met ritmeref/grens16ms doorstaat17unittests; vóór nativebouw vereenvoudigd omdat een losse actie altijd direct hoort te starten. Die variant heeft geen native acceptatie en is alleen als historische proefbron bewaard."
+  },
+  "korte_ABBA": {
+    "methode": "Dezelfde bestaande voorbeeldbron met1pagina/1tabel,27fysieke ASCIItekens; xdotool-delayparameter80ms. Zelfde helperbytes voor oude/nieuwe/nieuwe/oude. Geen gelijktijdige builds, tests of beeldanalyse tijdens deze metingen.",
+    "resultaten": {
+      "oud-klein-a": {
+        "schema": 2,
+        "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+        "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16697,
+          "begin_tot_bron_ms": 1352,
+          "laatste_keyup_tot_bron_ms": 27,
+          "laatste_keyup_tot_frame_ms": 464,
+          "begin_tot_frame_ms": 1789,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1894,
+          "wall_verzonden_tot_frame_ms": 721,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "gewone_native_aanvragen": 23,
+        "gewone_met_caret": 23,
+        "native_tekst_exact": true,
+        "undo_groepen": 1,
+        "bewaarde_tabellen_exact": 1,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      },
+      "nieuw-klein-a": {
+        "schema": 2,
+        "programma_sha256": "5f394b993ed21ab28322d45684ab8ce3ae88516bc4c71f4c4b3b0fe1bbc78b04",
+        "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 17505,
+          "begin_tot_bron_ms": 1967,
+          "laatste_keyup_tot_bron_ms": 60,
+          "laatste_keyup_tot_frame_ms": 536,
+          "begin_tot_frame_ms": 2443,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 2521,
+          "wall_verzonden_tot_frame_ms": 1368,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "gewone_native_aanvragen": 21,
+        "gewone_met_caret": 21,
+        "native_tekst_exact": true,
+        "undo_groepen": 1,
+        "bewaarde_tabellen_exact": 1,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      },
+      "nieuw-klein-b": {
+        "schema": 2,
+        "programma_sha256": "5f394b993ed21ab28322d45684ab8ce3ae88516bc4c71f4c4b3b0fe1bbc78b04",
+        "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16924,
+          "begin_tot_bron_ms": 1614,
+          "laatste_keyup_tot_bron_ms": 149,
+          "laatste_keyup_tot_frame_ms": 430,
+          "begin_tot_frame_ms": 1895,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 2028,
+          "wall_verzonden_tot_frame_ms": 868,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "gewone_native_aanvragen": 24,
+        "gewone_met_caret": 24,
+        "native_tekst_exact": true,
+        "undo_groepen": 1,
+        "bewaarde_tabellen_exact": 1,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      },
+      "oud-klein-b": {
+        "schema": 2,
+        "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+        "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 19175,
+          "begin_tot_bron_ms": 2920,
+          "laatste_keyup_tot_bron_ms": 71,
+          "laatste_keyup_tot_frame_ms": 304,
+          "begin_tot_frame_ms": 3153,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 3306,
+          "wall_verzonden_tot_frame_ms": 1870,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "gewone_native_aanvragen": 25,
+        "gewone_met_caret": 25,
+        "native_tekst_exact": true,
+        "undo_groepen": 2,
+        "bewaarde_tabellen_exact": 1,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      }
+    },
+    "beoordeling": "Laatste-keyup-tot-frame: referentie464/304ms, kandidaat536/430ms. Totale wall-tijd is gemengd: referentie1894/3306ms, kandidaat2521/2028ms. Daarom geen snelheidsacceptatie; geen statistische of algemene FPS-conclusie. De teller alleen bewijst geen voldoende lange werkachterstand."
+  },
+  "diagnose": {
+    "methode": "Afzonderlijke rich/small/rich-rondes op dezelfde bewaarde referentie7afdfb82. Eén bestaande SDK-invoerwachtrij in eigen verse editor gevonden; alleen admit-wrapping met exacte overdracht van this, argumenten, retourbelofte en fouten. Geen extra promise/await in de wrapper. Opname stopt na gewone invoer en vóór Undo/selectie/bewaarproeven. IPC-interceptor registreert alleen extra klokvelden. Laatste ronde activeert de bestaande begrensde __OPENAEC_WRITER_INVOERMETING__, zonder productwijziging.",
+    "zelfcontrole": "Nodeproef voert echte SDK-wachtrijklasse uit en bewaakt volgorde, taak-this, resultaatbelofte-identiteit, run/enqueue, flush, foutmelding, diepte en herstel.3taken;geslaagd.",
+    "ronden": {
+      "oud-rijk-wachtrij": {
+        "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+        "script_sha256": "7a08f8a6b29518accc11bed6d84ddad31c0cc76bef715f118568cb931fdb3972",
+        "schema": 2,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 56600,
+          "begin_tot_bron_ms": 33047,
+          "laatste_keyup_tot_bron_ms": 274,
+          "laatste_keyup_tot_frame_ms": 3542,
+          "begin_tot_frame_ms": 36315,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 37112,
+          "wall_verzonden_tot_frame_ms": 35261,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "bewaarde_tabellen_exact": 128,
+        "undo_groepen": 21,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      },
+      "oud-klein-wachtrij": {
+        "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+        "script_sha256": "d9fc16fb34ed80d182f059c3fd81edbad14f3260163f87073269d9fee2dc5e65",
+        "schema": 2,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 17036,
+          "begin_tot_bron_ms": 1617,
+          "laatste_keyup_tot_bron_ms": 46,
+          "laatste_keyup_tot_frame_ms": 310,
+          "begin_tot_frame_ms": 1881,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 2012,
+          "wall_verzonden_tot_frame_ms": 861,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "bewaarde_tabellen_exact": 1,
+        "undo_groepen": 1,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      },
+      "oud-rijk-fasen": {
+        "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+        "script_sha256": "2e3ddb8184edade8f6cc48be365610b4a3bae23382e422f0181a1b89078c2e2e",
+        "schema": 2,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 44321,
+          "begin_tot_bron_ms": 20595,
+          "laatste_keyup_tot_bron_ms": 254,
+          "laatste_keyup_tot_frame_ms": 2714.0000000000073,
+          "begin_tot_frame_ms": 23055.000000000007,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 23446,
+          "wall_verzonden_tot_frame_ms": 21617,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "bewaarde_tabellen_exact": 128,
+        "undo_groepen": 6,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "fouten": {
+          "gui": [],
+          "engine": [],
+          "console": []
+        }
+      }
+    },
+    "wachtrij": {
+      "oud-rijk-wachtrij": {
+        "meting": "Afzonderlijke geïnstrumenteerde diagnose, geen ongestoorde prestatievergelijking",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 56600,
+          "begin_tot_bron_ms": 33047,
+          "laatste_keyup_tot_bron_ms": 274,
+          "laatste_keyup_tot_frame_ms": 3542,
+          "begin_tot_frame_ms": 36315,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 37112,
+          "wall_verzonden_tot_frame_ms": 35261,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "wachtrijtaken": 117,
+        "max_diepte_voor_toelating": 2,
+        "wachten": {
+          "aantal": 117,
+          "min_ms": 22,
+          "mediaan_ms": 143.99999999999272,
+          "p95_ms": 270,
+          "max_ms": 345,
+          "tenminste32_ms": 116,
+          "tenminste100_ms": 114
+        },
+        "synchrone_taakaanroep": {
+          "aantal": 117,
+          "min_ms": 0.999999999992724,
+          "mediaan_ms": 2,
+          "p95_ms": 3,
+          "max_ms": 59,
+          "tenminste32_ms": 2,
+          "tenminste100_ms": 0
+        },
+        "native_aanvragen": 116,
+        "start_tot_fetch": {
+          "aantal": 116,
+          "min_ms": 1,
+          "mediaan_ms": 4.0,
+          "p95_ms": 687,
+          "max_ms": 1111,
+          "tenminste32_ms": 24,
+          "tenminste100_ms": 21
+        },
+        "ipc_rondreis": {
+          "aantal": 116,
+          "min_ms": 50,
+          "mediaan_ms": 66.00000000000364,
+          "p95_ms": 141,
+          "max_ms": 440,
+          "tenminste32_ms": 116,
+          "tenminste100_ms": 10
+        },
+        "na_flush_tot_marker_en_twee_frames_ms": 3268,
+        "koppeling": [
+          {
+            "taak": 0,
+            "aanvraag": "f9cdc932-7311-427c-aaa2-ba81f2fb0239",
+            "wachten_tot_start_ms": 32,
+            "start_tot_fetch_ms": 192,
+            "ipc_rondreis_ms": 440,
+            "antwoord_tot_volgende_taak_ms": 174
+          },
+          {
+            "taak": 1,
+            "aanvraag": "7a9545f6-de69-409a-b888-f94818a124ca",
+            "wachten_tot_start_ms": 22,
+            "start_tot_fetch_ms": 170,
+            "ipc_rondreis_ms": 76.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 108.99999999999636
+          },
+          {
+            "taak": 2,
+            "aanvraag": "7839aea7-e965-499b-a632-6e37b130c19c",
+            "wachten_tot_start_ms": 163.99999999999636,
+            "start_tot_fetch_ms": 7,
+            "ipc_rondreis_ms": 169.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 99.99999999999636
+          },
+          {
+            "taak": 3,
+            "aanvraag": "fe7ff119-8bbe-4946-9a9e-e265a53fb503",
+            "wachten_tot_start_ms": 264,
+            "start_tot_fetch_ms": 12,
+            "ipc_rondreis_ms": 75,
+            "antwoord_tot_volgende_taak_ms": 97
+          },
+          {
+            "taak": 4,
+            "aanvraag": "55adb490-cf44-40ea-8001-327b1f588d2a",
+            "wachten_tot_start_ms": 164,
+            "start_tot_fetch_ms": 11,
+            "ipc_rondreis_ms": 78,
+            "antwoord_tot_volgende_taak_ms": 102
+          },
+          {
+            "taak": 5,
+            "aanvraag": "748eac83-b44f-4c10-aaa6-2e9b7d38be57",
+            "wachten_tot_start_ms": 183,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 124,
+            "antwoord_tot_volgende_taak_ms": 86
+          },
+          {
+            "taak": 6,
+            "aanvraag": "dbcc108c-4e2c-4cb6-a071-7eb299bde845",
+            "wachten_tot_start_ms": 203,
+            "start_tot_fetch_ms": 73,
+            "ipc_rondreis_ms": 71,
+            "antwoord_tot_volgende_taak_ms": 83
+          },
+          {
+            "taak": 7,
+            "aanvraag": "e773e67f-c9b2-4c23-8206-9086c447c6e3",
+            "wachten_tot_start_ms": 221.99999999999636,
+            "start_tot_fetch_ms": 8,
+            "ipc_rondreis_ms": 72.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 90.99999999999636
+          },
+          {
+            "taak": 8,
+            "aanvraag": "dc376f60-c62f-45fb-9a98-12f36c37e97c",
+            "wachten_tot_start_ms": 166,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 80,
+            "antwoord_tot_volgende_taak_ms": 80
+          },
+          {
+            "taak": 9,
+            "aanvraag": "5491b70a-168b-4b62-95ba-75da3409a74d",
+            "wachten_tot_start_ms": 156,
+            "start_tot_fetch_ms": 10,
+            "ipc_rondreis_ms": 64,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 10,
+            "aanvraag": "11b1113c-4f2e-49d6-9e0e-5174d7ce31cd",
+            "wachten_tot_start_ms": 143,
+            "start_tot_fetch_ms": 6.000000000003638,
+            "ipc_rondreis_ms": 56.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 79
+          },
+          {
+            "taak": 11,
+            "aanvraag": "133b0145-eddf-4554-864a-849dab717fb9",
+            "wachten_tot_start_ms": 138,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 67
+          },
+          {
+            "taak": 12,
+            "aanvraag": "bd3dbd34-6260-48a6-a480-de57a5fdfd88",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 63,
+            "antwoord_tot_volgende_taak_ms": 69
+          },
+          {
+            "taak": 13,
+            "aanvraag": "5c23a172-eb31-4df7-ac52-0ff2d377f25c",
+            "wachten_tot_start_ms": 98,
+            "start_tot_fetch_ms": 8.000000000003638,
+            "ipc_rondreis_ms": 52.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 14,
+            "aanvraag": "c2bf2769-0adb-49a4-9e2c-a5e15cb0a4bc",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 50,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 15,
+            "aanvraag": "c68021aa-bc22-4448-b18f-944801edcffa",
+            "wachten_tot_start_ms": 120,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 16,
+            "aanvraag": "fe516bb8-0f15-44be-b0ac-3cf5e8196bfb",
+            "wachten_tot_start_ms": 135,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 70
+          },
+          {
+            "taak": 17,
+            "aanvraag": "0a3ff574-1f8f-40dd-a4ff-436ec1cd343b",
+            "wachten_tot_start_ms": 132,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 67,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 18,
+            "aanvraag": "b8cffe01-491a-433d-a28b-e5e9245baabf",
+            "wachten_tot_start_ms": 142,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 65
+          },
+          {
+            "taak": 19,
+            "aanvraag": "ec704cb1-7046-4e90-a33f-917b58c020de",
+            "wachten_tot_start_ms": 126.99999999999636,
+            "start_tot_fetch_ms": 4.000000000003638,
+            "ipc_rondreis_ms": 56.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 20,
+            "aanvraag": "fc07498b-1ef2-4cc3-b8d7-c4614c376b42",
+            "wachten_tot_start_ms": 127.99999999999636,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 55.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 74.99999999999636
+          },
+          {
+            "taak": 21,
+            "aanvraag": "96467aca-d164-4f4f-8cfb-e670ebf2176c",
+            "wachten_tot_start_ms": 122,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 70.00000000000364
+          },
+          {
+            "taak": 22,
+            "aanvraag": "f5fd9a22-7153-496c-9014-d0cf77cd903a",
+            "wachten_tot_start_ms": 126.00000000000364,
+            "start_tot_fetch_ms": 3.0,
+            "ipc_rondreis_ms": 70.0,
+            "antwoord_tot_volgende_taak_ms": 76.99999999999636
+          },
+          {
+            "taak": 23,
+            "aanvraag": "7ce62bd0-ab05-46cb-b4de-ac15e69dbf1e",
+            "wachten_tot_start_ms": 143.99999999999636,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 62,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 24,
+            "aanvraag": "bef9b417-b602-4cf2-ac34-75a2e4120706",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 56.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 80.99999999999636
+          },
+          {
+            "taak": 25,
+            "aanvraag": "7341d0bb-d447-4dfc-a5a8-4b8dd4c1f221",
+            "wachten_tot_start_ms": 134,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 26,
+            "aanvraag": "38ab62da-ef40-4930-a6b7-bf2f4a2f878c",
+            "wachten_tot_start_ms": 138,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 27,
+            "aanvraag": "12297af5-50e8-4feb-a140-bb89c605c402",
+            "wachten_tot_start_ms": 126,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 56,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 28,
+            "aanvraag": "b810a9bc-515f-465c-a771-adeb11c82662",
+            "wachten_tot_start_ms": 118.99999999999636,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 29,
+            "aanvraag": "8e530ad5-b579-472f-8b6f-f6af9f8cfdfc",
+            "wachten_tot_start_ms": 127,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 57.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 82.99999999999636
+          },
+          {
+            "taak": 30,
+            "aanvraag": "a1928513-af6d-4788-ab6e-3675f264019f",
+            "wachten_tot_start_ms": 137,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 75
+          },
+          {
+            "taak": 31,
+            "aanvraag": "12c71af1-8140-48cd-9b89-0b345d37a7ac",
+            "wachten_tot_start_ms": 126,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 32,
+            "aanvraag": "79a75af2-425e-4e70-88e9-9b48ebdb15ed",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 57.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 74.99999999999636
+          },
+          {
+            "taak": 33,
+            "aanvraag": "665ce3f4-347b-4b10-8137-221342dd936e",
+            "wachten_tot_start_ms": 123,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 56,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 34,
+            "aanvraag": "7704409f-bb5a-4954-9c26-65971ab273f8",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 98,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 68
+          },
+          {
+            "taak": 35,
+            "aanvraag": "0f20199d-126e-4716-beb6-a918cb8f687c",
+            "wachten_tot_start_ms": 127.99999999999636,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 36,
+            "aanvraag": "84d8539d-26aa-4ad3-9f22-a24ce2b0aa5e",
+            "wachten_tot_start_ms": 124,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 70
+          },
+          {
+            "taak": 37,
+            "aanvraag": "eaf76b13-5735-4259-9628-46927316db97",
+            "wachten_tot_start_ms": 126,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 53,
+            "antwoord_tot_volgende_taak_ms": 73.00000000000364
+          },
+          {
+            "taak": 38,
+            "aanvraag": "354e8479-ab5a-4f52-a580-327bb59db87c",
+            "wachten_tot_start_ms": 124.00000000000364,
+            "start_tot_fetch_ms": 3.999999999996362,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 39,
+            "aanvraag": "00ab23ff-c7ac-48d0-bd3e-1bd34d1b8ebd",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 40,
+            "aanvraag": "5e46b8da-4890-4715-8894-62b0021ce51f",
+            "wachten_tot_start_ms": 134,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 41,
+            "aanvraag": "a7b8ce31-a4e9-4ae6-bacd-e448860c83cd",
+            "wachten_tot_start_ms": 127,
+            "start_tot_fetch_ms": 2.000000000003638,
+            "ipc_rondreis_ms": 283.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 69
+          },
+          {
+            "taak": 42,
+            "aanvraag": "5d820a60-7235-4192-9f7e-667ee4f8fea7",
+            "wachten_tot_start_ms": 345,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 56,
+            "antwoord_tot_volgende_taak_ms": 69
+          },
+          {
+            "taak": 43,
+            "aanvraag": "bdff5525-ff95-490d-8297-2ffe58d6f324",
+            "wachten_tot_start_ms": 122,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 66
+          },
+          {
+            "taak": 44,
+            "aanvraag": "dce42a55-5821-4121-92e8-12fdecf114d3",
+            "wachten_tot_start_ms": 117,
+            "start_tot_fetch_ms": 13.000000000003638,
+            "ipc_rondreis_ms": 61.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 119
+          },
+          {
+            "taak": 45,
+            "aanvraag": "59ccda58-25af-41a3-8f06-5e5a6a32a85f",
+            "wachten_tot_start_ms": 174.99999999999636,
+            "start_tot_fetch_ms": 8.000000000003638,
+            "ipc_rondreis_ms": 81.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 120
+          },
+          {
+            "taak": 46,
+            "aanvraag": "d197d915-156c-4804-a8c4-c929495ab2ac",
+            "wachten_tot_start_ms": 195,
+            "start_tot_fetch_ms": 8,
+            "ipc_rondreis_ms": 58.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 101.99999999999636
+          },
+          {
+            "taak": 47,
+            "aanvraag": "c5055f4b-0757-4425-aa64-44bc973d36b6",
+            "wachten_tot_start_ms": 160.99999999999636,
+            "start_tot_fetch_ms": 8.000000000003638,
+            "ipc_rondreis_ms": 70.0,
+            "antwoord_tot_volgende_taak_ms": 101.99999999999636
+          },
+          {
+            "taak": 48,
+            "aanvraag": "b8665e3e-98de-4eaa-8847-0d926690f72a",
+            "wachten_tot_start_ms": 174,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 77.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 126.00000000000728
+          },
+          {
+            "taak": 49,
+            "aanvraag": "c8e688ba-6cae-439c-a0c2-e593b17961af",
+            "wachten_tot_start_ms": 198.0,
+            "start_tot_fetch_ms": 3.0,
+            "ipc_rondreis_ms": 74.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 126.00000000000364
+          },
+          {
+            "taak": 50,
+            "aanvraag": "abc36d93-4a70-4a4e-a52f-1989eb849cf9",
+            "wachten_tot_start_ms": 196.00000000000728,
+            "start_tot_fetch_ms": 10.999999999996362,
+            "ipc_rondreis_ms": 77.00000000000728,
+            "antwoord_tot_volgende_taak_ms": 86.99999999999272
+          },
+          {
+            "taak": 51,
+            "aanvraag": "e9d97389-f258-4936-97c4-d8c5dbb94af1",
+            "wachten_tot_start_ms": 167,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 91
+          },
+          {
+            "taak": 52,
+            "aanvraag": "6aa681cc-0dc8-4b3d-aa36-3ee3fffad6e4",
+            "wachten_tot_start_ms": 147,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 91
+          },
+          {
+            "taak": 53,
+            "aanvraag": "ee4d19b0-3c4d-4aa4-8b68-51e562d5243b",
+            "wachten_tot_start_ms": 152.99999999999272,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 98
+          },
+          {
+            "taak": 54,
+            "aanvraag": "77a80428-1844-4e24-a74f-b5988de0d286",
+            "wachten_tot_start_ms": 163,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 70,
+            "antwoord_tot_volgende_taak_ms": 114
+          },
+          {
+            "taak": 55,
+            "aanvraag": "8c7537b5-f369-4825-a564-56d396f49f0d",
+            "wachten_tot_start_ms": 179,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 87,
+            "antwoord_tot_volgende_taak_ms": 104
+          },
+          {
+            "taak": 56,
+            "aanvraag": "8a571334-d006-4eb9-8980-765390603f94",
+            "wachten_tot_start_ms": 186,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 77,
+            "antwoord_tot_volgende_taak_ms": 104
+          },
+          {
+            "taak": 57,
+            "aanvraag": "918aea0b-61f3-4700-b57d-b5ee017c9d03",
+            "wachten_tot_start_ms": 176,
+            "start_tot_fetch_ms": 8,
+            "ipc_rondreis_ms": 141,
+            "antwoord_tot_volgende_taak_ms": 120
+          },
+          {
+            "taak": 58,
+            "aanvraag": "87f05c10-2acf-4e5b-a88c-99b1ff05e9e5",
+            "wachten_tot_start_ms": 251,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 68,
+            "antwoord_tot_volgende_taak_ms": 106
+          },
+          {
+            "taak": 59,
+            "aanvraag": "f3043030-feb0-40bc-8440-96d292fada6b",
+            "wachten_tot_start_ms": 162,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 68,
+            "antwoord_tot_volgende_taak_ms": 101
+          },
+          {
+            "taak": 60,
+            "aanvraag": "bc882a07-8d83-416c-a0c3-ac7f8a90c0a8",
+            "wachten_tot_start_ms": 164,
+            "start_tot_fetch_ms": 7,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 101
+          },
+          {
+            "taak": 61,
+            "aanvraag": "8e5c2224-96d6-4413-bdf9-14b51a67aa8f",
+            "wachten_tot_start_ms": 167,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 95,
+            "antwoord_tot_volgende_taak_ms": 104
+          },
+          {
+            "taak": 62,
+            "aanvraag": "494f3777-4728-4c6f-b4a4-b13f55dc21fd",
+            "wachten_tot_start_ms": 193,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 99,
+            "antwoord_tot_volgende_taak_ms": 105
+          },
+          {
+            "taak": 63,
+            "aanvraag": "7d5287ff-1dcd-45cb-97f3-7414879164cc",
+            "wachten_tot_start_ms": 198,
+            "start_tot_fetch_ms": 13,
+            "ipc_rondreis_ms": 103,
+            "antwoord_tot_volgende_taak_ms": 118
+          },
+          {
+            "taak": 64,
+            "aanvraag": "5d2a8515-1676-475a-95a3-f944004cf362",
+            "wachten_tot_start_ms": 207,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 77,
+            "antwoord_tot_volgende_taak_ms": 138
+          },
+          {
+            "taak": 65,
+            "aanvraag": "b0ff82b3-dc5e-4b5d-9210-3d67bedf8de7",
+            "wachten_tot_start_ms": 210,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 87,
+            "antwoord_tot_volgende_taak_ms": 181.00000000000728
+          },
+          {
+            "taak": 66,
+            "aanvraag": "b119b4e6-155c-44de-a362-96c993b781ee",
+            "wachten_tot_start_ms": 263.0000000000073,
+            "start_tot_fetch_ms": 23.999999999992724,
+            "ipc_rondreis_ms": 115,
+            "antwoord_tot_volgende_taak_ms": 141
+          },
+          {
+            "taak": 67,
+            "aanvraag": "fbffc767-61de-4717-9616-6067bfccdc98",
+            "wachten_tot_start_ms": 270,
+            "start_tot_fetch_ms": 10,
+            "ipc_rondreis_ms": 78,
+            "antwoord_tot_volgende_taak_ms": 118
+          },
+          {
+            "taak": 68,
+            "aanvraag": "f5a71941-b202-4e05-a591-1ca5e55f06b1",
+            "wachten_tot_start_ms": 185,
+            "start_tot_fetch_ms": 14.000000000007276,
+            "ipc_rondreis_ms": 74.99999999999272,
+            "antwoord_tot_volgende_taak_ms": 188
+          },
+          {
+            "taak": 69,
+            "aanvraag": "f4a74431-f2c0-4337-a9f6-15d4f9a76172",
+            "wachten_tot_start_ms": 267,
+            "start_tot_fetch_ms": 13,
+            "ipc_rondreis_ms": 132,
+            "antwoord_tot_volgende_taak_ms": 114
+          },
+          {
+            "taak": 70,
+            "aanvraag": "fdb8b8b5-e808-477a-bc1f-1e531aff6403",
+            "wachten_tot_start_ms": 249,
+            "start_tot_fetch_ms": 10,
+            "ipc_rondreis_ms": 80,
+            "antwoord_tot_volgende_taak_ms": 122
+          },
+          {
+            "taak": 71,
+            "aanvraag": "9053df23-170e-4024-b3b6-62e18616c97c",
+            "wachten_tot_start_ms": 204,
+            "start_tot_fetch_ms": 1111,
+            "ipc_rondreis_ms": 260,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 72,
+            "aanvraag": "01ba62cf-02cb-4a75-9822-e409e50cb5fa",
+            "wachten_tot_start_ms": 307,
+            "start_tot_fetch_ms": 755.0000000000073,
+            "ipc_rondreis_ms": 77.99999999999272,
+            "antwoord_tot_volgende_taak_ms": 83
+          },
+          {
+            "taak": 73,
+            "aanvraag": "ebe3ef67-dc6e-4a84-aed7-c290054d60a0",
+            "wachten_tot_start_ms": 163,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 83
+          },
+          {
+            "taak": 74,
+            "aanvraag": "570f6d3e-8f8d-4844-b265-43585e9816d1",
+            "wachten_tot_start_ms": 301,
+            "start_tot_fetch_ms": 654,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 85
+          },
+          {
+            "taak": 75,
+            "aanvraag": "8af9e2e0-60f7-46cf-9f0f-1b5cefb13461",
+            "wachten_tot_start_ms": 140,
+            "start_tot_fetch_ms": 764,
+            "ipc_rondreis_ms": 71,
+            "antwoord_tot_volgende_taak_ms": 99.00000000000728
+          },
+          {
+            "taak": 76,
+            "aanvraag": "430d163d-8f6b-490a-917a-72c3f55fc189",
+            "wachten_tot_start_ms": 156.00000000000728,
+            "start_tot_fetch_ms": 534.9999999999927,
+            "ipc_rondreis_ms": 75,
+            "antwoord_tot_volgende_taak_ms": 80
+          },
+          {
+            "taak": 77,
+            "aanvraag": "cc3a152d-18b4-4dbc-b8d1-93d0bea70c0b",
+            "wachten_tot_start_ms": 146,
+            "start_tot_fetch_ms": 33,
+            "ipc_rondreis_ms": 79,
+            "antwoord_tot_volgende_taak_ms": 93
+          },
+          {
+            "taak": 78,
+            "aanvraag": "68a380c9-298d-4fbe-aeee-4e51fc11b2a8",
+            "wachten_tot_start_ms": 330,
+            "start_tot_fetch_ms": 745.0000000000073,
+            "ipc_rondreis_ms": 74.99999999999272,
+            "antwoord_tot_volgende_taak_ms": 81
+          },
+          {
+            "taak": 79,
+            "aanvraag": "601b5b44-f30b-4e25-a413-0b019f3197dd",
+            "wachten_tot_start_ms": 143,
+            "start_tot_fetch_ms": 627,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 80,
+            "aanvraag": "82064d88-faa7-4d72-af9d-7b20ba4a9c57",
+            "wachten_tot_start_ms": 126.99999999999272,
+            "start_tot_fetch_ms": 637,
+            "ipc_rondreis_ms": 62.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 78.99999999999272
+          },
+          {
+            "taak": 81,
+            "aanvraag": "3ddfd979-3640-4ced-ba7f-49de1439aa95",
+            "wachten_tot_start_ms": 127,
+            "start_tot_fetch_ms": 687,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 88
+          },
+          {
+            "taak": 82,
+            "aanvraag": "e9f63a45-26e1-4189-911f-d4b36816402f",
+            "wachten_tot_start_ms": 155,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 62,
+            "antwoord_tot_volgende_taak_ms": 82
+          },
+          {
+            "taak": 83,
+            "aanvraag": "6e14ae5f-90fd-4a48-a7ec-b2d788df124f",
+            "wachten_tot_start_ms": 279,
+            "start_tot_fetch_ms": 614.0000000000073,
+            "ipc_rondreis_ms": 70.0,
+            "antwoord_tot_volgende_taak_ms": 76.99999999999272
+          },
+          {
+            "taak": 84,
+            "aanvraag": "80dfa5a0-a1e6-4cf7-aab6-2ff2f47c0604",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 689,
+            "ipc_rondreis_ms": 72,
+            "antwoord_tot_volgende_taak_ms": 81
+          },
+          {
+            "taak": 85,
+            "aanvraag": "aa9119e9-9627-4b4f-b524-9a4e03bd0c91",
+            "wachten_tot_start_ms": 143,
+            "start_tot_fetch_ms": 581.0000000000073,
+            "ipc_rondreis_ms": 70.99999999999272,
+            "antwoord_tot_volgende_taak_ms": 88
+          },
+          {
+            "taak": 86,
+            "aanvraag": "3c3368bf-10ee-4271-9184-30a50a022c4a",
+            "wachten_tot_start_ms": 149,
+            "start_tot_fetch_ms": 677,
+            "ipc_rondreis_ms": 72,
+            "antwoord_tot_volgende_taak_ms": 83.00000000000728
+          },
+          {
+            "taak": 87,
+            "aanvraag": "3e61a482-024f-481e-8f00-6799ed3db4b6",
+            "wachten_tot_start_ms": 143.00000000000728,
+            "start_tot_fetch_ms": 671.9999999999927,
+            "ipc_rondreis_ms": 148.00000000000728,
+            "antwoord_tot_volgende_taak_ms": 91.99999999999272
+          },
+          {
+            "taak": 88,
+            "aanvraag": "62719d8c-fba1-4f3c-94f5-199a86332f14",
+            "wachten_tot_start_ms": 175,
+            "start_tot_fetch_ms": 611,
+            "ipc_rondreis_ms": 73,
+            "antwoord_tot_volgende_taak_ms": 88
+          },
+          {
+            "taak": 89,
+            "aanvraag": "f3aeb335-8256-4412-9e63-4b58bac7e63e",
+            "wachten_tot_start_ms": 152,
+            "start_tot_fetch_ms": 616,
+            "ipc_rondreis_ms": 74,
+            "antwoord_tot_volgende_taak_ms": 106
+          },
+          {
+            "taak": 90,
+            "aanvraag": "09c8c21b-acb7-4a4c-a223-f866f2d30888",
+            "wachten_tot_start_ms": 168,
+            "start_tot_fetch_ms": 656,
+            "ipc_rondreis_ms": 59.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 73.0
+          },
+          {
+            "taak": 91,
+            "aanvraag": "84e9601b-da98-4726-8c15-fbb99a7b8c00",
+            "wachten_tot_start_ms": 134.0,
+            "start_tot_fetch_ms": 6.999999999992724,
+            "ipc_rondreis_ms": 62,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 92,
+            "aanvraag": "ca3e1b0d-ddab-4865-966c-7a5aae293ac2",
+            "wachten_tot_start_ms": 261,
+            "start_tot_fetch_ms": 563,
+            "ipc_rondreis_ms": 64,
+            "antwoord_tot_volgende_taak_ms": 97
+          },
+          {
+            "taak": 93,
+            "aanvraag": "9e503a0d-f338-453d-9d13-5af1497573ed",
+            "wachten_tot_start_ms": 152,
+            "start_tot_fetch_ms": 484,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 94,
+            "aanvraag": "b786ded4-a3f9-45bb-a9fc-27a61e9b231b",
+            "wachten_tot_start_ms": 140,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 95,
+            "aanvraag": "66fd46d3-91e4-4c58-a615-a797682006f3",
+            "wachten_tot_start_ms": 143.99999999999272,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 88
+          },
+          {
+            "taak": 96,
+            "aanvraag": "80f34dcf-5799-4fa2-85f3-067ef856ba4d",
+            "wachten_tot_start_ms": 145,
+            "start_tot_fetch_ms": 2.000000000007276,
+            "ipc_rondreis_ms": 70.0,
+            "antwoord_tot_volgende_taak_ms": 83.99999999999272
+          },
+          {
+            "taak": 97,
+            "aanvraag": "b97493f7-0728-4ee5-9d95-264348fd5a0e",
+            "wachten_tot_start_ms": 149,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 74,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 98,
+            "aanvraag": "648ad04e-4d65-4711-b0ab-a2fd2d16ae72",
+            "wachten_tot_start_ms": 146,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 72,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 99,
+            "aanvraag": "c1f9a691-262c-4825-ac7c-799c91d604d5",
+            "wachten_tot_start_ms": 141.99999999999272,
+            "start_tot_fetch_ms": 7,
+            "ipc_rondreis_ms": 58.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 79.99999999999272
+          },
+          {
+            "taak": 100,
+            "aanvraag": "ac77f299-cdc0-45e6-80ab-92876332066d",
+            "wachten_tot_start_ms": 140,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 79
+          },
+          {
+            "taak": 101,
+            "aanvraag": "b64446bd-977c-483b-94c3-a7ee00ea0886",
+            "wachten_tot_start_ms": 143,
+            "start_tot_fetch_ms": 5.000000000007276,
+            "ipc_rondreis_ms": 83.99999999999272,
+            "antwoord_tot_volgende_taak_ms": 85
+          },
+          {
+            "taak": 102,
+            "aanvraag": "6a09b858-6882-4af1-badb-2a4629b705e9",
+            "wachten_tot_start_ms": 165.99999999999272,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 79.00000000000728
+          },
+          {
+            "taak": 103,
+            "aanvraag": "042b7499-2b17-46a8-b318-d6f7f3823a01",
+            "wachten_tot_start_ms": 136.00000000000728,
+            "start_tot_fetch_ms": 6.999999999992724,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 104,
+            "aanvraag": "e164769a-057c-455a-b8f1-747c2c0cfa27",
+            "wachten_tot_start_ms": 141,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 64,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 105,
+            "aanvraag": "63dac7f8-3116-4e78-8e38-9c81bd066cf1",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 78.00000000000728
+          },
+          {
+            "taak": 106,
+            "aanvraag": "348149ea-6c4d-437f-b991-635a09c70ac4",
+            "wachten_tot_start_ms": 139.00000000000728,
+            "start_tot_fetch_ms": 1.999999999992724,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 75
+          },
+          {
+            "taak": 107,
+            "aanvraag": "d7120e76-abc3-4dd9-b92a-1a4bef81c6f7",
+            "wachten_tot_start_ms": 131.99999999999272,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 60.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 73.99999999999272
+          },
+          {
+            "taak": 108,
+            "aanvraag": "36a31106-0242-42d0-a6b4-109960bd32d1",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 67,
+            "antwoord_tot_volgende_taak_ms": 75
+          },
+          {
+            "taak": 109,
+            "aanvraag": "57388e03-3c18-4c22-bc00-01fdae2620b4",
+            "wachten_tot_start_ms": 138,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 63,
+            "antwoord_tot_volgende_taak_ms": 85
+          },
+          {
+            "taak": 110,
+            "aanvraag": "71481d62-e9b8-41a4-af5d-bdf3b81cb1db",
+            "wachten_tot_start_ms": 144,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 56,
+            "antwoord_tot_volgende_taak_ms": 82
+          },
+          {
+            "taak": 111,
+            "aanvraag": "f6c8409f-f33c-4ea5-9557-bf711eca3771",
+            "wachten_tot_start_ms": 132,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 66.00000000000728,
+            "antwoord_tot_volgende_taak_ms": 84.99999999999272
+          },
+          {
+            "taak": 112,
+            "aanvraag": "ab3cfcd0-660e-4853-aed0-0c88e8f7daaa",
+            "wachten_tot_start_ms": 146,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 113,
+            "aanvraag": "1c477e3d-d615-41ff-b5e0-b0973e2cf65a",
+            "wachten_tot_start_ms": 126,
+            "start_tot_fetch_ms": 1,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 79.00000000000728
+          },
+          {
+            "taak": 114,
+            "aanvraag": "35ebfd93-c775-4e5f-a983-106a17995a62",
+            "wachten_tot_start_ms": 139.00000000000728,
+            "start_tot_fetch_ms": 1.999999999992724,
+            "ipc_rondreis_ms": 62.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 80.99999999999272
+          },
+          {
+            "taak": 115,
+            "aanvraag": "a5d41b52-720b-4623-a7de-db5d66a14638",
+            "wachten_tot_start_ms": 132,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 50.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 73.99999999999272
+          }
+        ],
+        "grenzen": "IPC-rondreis omvat Rust/transport en vertraging van antwoordverwerking door de browser; geen zuivere backend-CPU. Wachttijden overlappen uitvoering van andere taken en mogen niet worden opgeteld tot totale gebruikersvertraging. Tijd tot marker plus2rAFs is geen fysieke paint. Synchrone taakmuurtijd is geen CPUtijd."
+      },
+      "oud-klein-wachtrij": {
+        "meting": "Afzonderlijke geïnstrumenteerde diagnose, geen ongestoorde prestatievergelijking",
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 17036,
+          "begin_tot_bron_ms": 1617,
+          "laatste_keyup_tot_bron_ms": 46,
+          "laatste_keyup_tot_frame_ms": 310,
+          "begin_tot_frame_ms": 1881,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 2012,
+          "wall_verzonden_tot_frame_ms": 861,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "wachtrijtaken": 25,
+        "max_diepte_voor_toelating": 1,
+        "wachten": {
+          "aantal": 25,
+          "min_ms": 0,
+          "mediaan_ms": 19.99999999999818,
+          "p95_ms": 30,
+          "max_ms": 112,
+          "tenminste32_ms": 1,
+          "tenminste100_ms": 1
+        },
+        "synchrone_taakaanroep": {
+          "aantal": 25,
+          "min_ms": 0.0,
+          "mediaan_ms": 0.999999999996362,
+          "p95_ms": 1.000000000001819,
+          "max_ms": 11,
+          "tenminste32_ms": 0,
+          "tenminste100_ms": 0
+        },
+        "native_aanvragen": 24,
+        "start_tot_fetch": {
+          "aantal": 24,
+          "min_ms": 0.999999999998181,
+          "mediaan_ms": 3.0,
+          "p95_ms": 23,
+          "max_ms": 225,
+          "tenminste32_ms": 1,
+          "tenminste100_ms": 1
+        },
+        "ipc_rondreis": {
+          "aantal": 24,
+          "min_ms": 6,
+          "mediaan_ms": 9.99999999999909,
+          "p95_ms": 39,
+          "max_ms": 102,
+          "tenminste32_ms": 3,
+          "tenminste100_ms": 1
+        },
+        "na_flush_tot_marker_en_twee_frames_ms": 264,
+        "koppeling": [
+          {
+            "taak": 0,
+            "aanvraag": "b1a3826e-e4a6-4b6a-8d44-857cddffc7a2",
+            "wachten_tot_start_ms": 13,
+            "start_tot_fetch_ms": 225,
+            "ipc_rondreis_ms": 26,
+            "antwoord_tot_volgende_taak_ms": 29
+          },
+          {
+            "taak": 1,
+            "aanvraag": "9dcbada0-ef8a-4557-b76d-0d29a3e13d8b",
+            "wachten_tot_start_ms": 30,
+            "start_tot_fetch_ms": 4.000000000001819,
+            "ipc_rondreis_ms": 11.999999999998181,
+            "antwoord_tot_volgende_taak_ms": 17.00000000000182
+          },
+          {
+            "taak": 2,
+            "aanvraag": "157416ad-b9a9-4c17-967c-666e8c6f1c4d",
+            "wachten_tot_start_ms": 18.00000000000182,
+            "start_tot_fetch_ms": 0.999999999998181,
+            "ipc_rondreis_ms": 102,
+            "antwoord_tot_volgende_taak_ms": 21
+          },
+          {
+            "taak": 3,
+            "aanvraag": "a993bc3e-ae12-4df7-94db-6cdedea5bbd0",
+            "wachten_tot_start_ms": 112,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 7,
+            "antwoord_tot_volgende_taak_ms": 19
+          },
+          {
+            "taak": 4,
+            "aanvraag": "8c2b0fad-368c-4417-84b4-978058b1edef",
+            "wachten_tot_start_ms": 21.99999999999818,
+            "start_tot_fetch_ms": 1,
+            "ipc_rondreis_ms": 8,
+            "antwoord_tot_volgende_taak_ms": 20
+          },
+          {
+            "taak": 5,
+            "aanvraag": "729a35e5-b65b-428c-8ab8-ab6a311547d9",
+            "wachten_tot_start_ms": 24.99999999999818,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 9,
+            "antwoord_tot_volgende_taak_ms": 13.000000000001819
+          },
+          {
+            "taak": 6,
+            "aanvraag": "ede1313f-82f4-4ea6-957f-7bd71ea8190d",
+            "wachten_tot_start_ms": 23.00000000000182,
+            "start_tot_fetch_ms": 0.999999999998181,
+            "ipc_rondreis_ms": 9,
+            "antwoord_tot_volgende_taak_ms": 18
+          },
+          {
+            "taak": 7,
+            "aanvraag": "dbd2dec3-a706-485e-9308-a5e29e2b1d9a",
+            "wachten_tot_start_ms": 24,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 9,
+            "antwoord_tot_volgende_taak_ms": 15.999999999998181
+          },
+          {
+            "taak": 8,
+            "aanvraag": "3df33ece-0246-48e9-a804-1df5109f6843",
+            "wachten_tot_start_ms": 24.99999999999818,
+            "start_tot_fetch_ms": 1.000000000001819,
+            "ipc_rondreis_ms": 6,
+            "antwoord_tot_volgende_taak_ms": 15.999999999998181
+          },
+          {
+            "taak": 9,
+            "aanvraag": "2fc20f67-e06d-4686-af40-4d730b036e05",
+            "wachten_tot_start_ms": 19.99999999999818,
+            "start_tot_fetch_ms": 4.000000000001819,
+            "ipc_rondreis_ms": 7.000000000001819,
+            "antwoord_tot_volgende_taak_ms": 17.0
+          },
+          {
+            "taak": 10,
+            "aanvraag": "5fa0c81a-de00-45e4-92fb-d0a808987826",
+            "wachten_tot_start_ms": 25.000000000003638,
+            "start_tot_fetch_ms": 4.999999999998181,
+            "ipc_rondreis_ms": 8,
+            "antwoord_tot_volgende_taak_ms": 19.00000000000182
+          },
+          {
+            "taak": 11,
+            "aanvraag": "4cfbd487-008e-4abe-868c-2e2027cbe6ed",
+            "wachten_tot_start_ms": 28.000000000003638,
+            "start_tot_fetch_ms": 1.999999999998181,
+            "ipc_rondreis_ms": 9,
+            "antwoord_tot_volgende_taak_ms": 18.99999999999818
+          },
+          {
+            "taak": 12,
+            "aanvraag": "b572d8d9-c08c-459e-9346-95cb5157ed9b",
+            "wachten_tot_start_ms": 24.99999999999818,
+            "start_tot_fetch_ms": 3.0,
+            "ipc_rondreis_ms": 12.000000000001819,
+            "antwoord_tot_volgende_taak_ms": 12
+          },
+          {
+            "taak": 13,
+            "aanvraag": "81c9c7db-50ae-469b-bfc2-087e5f1626dc",
+            "wachten_tot_start_ms": 20,
+            "start_tot_fetch_ms": 4.000000000001819,
+            "ipc_rondreis_ms": 10.999999999998181,
+            "antwoord_tot_volgende_taak_ms": 20
+          },
+          {
+            "taak": 14,
+            "aanvraag": "6167b570-f911-4d83-8fb5-262066f6d325",
+            "wachten_tot_start_ms": 21.00000000000182,
+            "start_tot_fetch_ms": 7.000000000001819,
+            "ipc_rondreis_ms": 13.999999999998181,
+            "antwoord_tot_volgende_taak_ms": 15.999999999998181
+          },
+          {
+            "taak": 15,
+            "aanvraag": "c9f196ff-9fbc-47cf-a2b3-e11be523d971",
+            "wachten_tot_start_ms": 17.999999999996362,
+            "start_tot_fetch_ms": 2.000000000003638,
+            "ipc_rondreis_ms": 9.0,
+            "antwoord_tot_volgende_taak_ms": 29.99999999999818
+          },
+          {
+            "taak": 16,
+            "aanvraag": "1eba0959-72dd-4d53-bac4-3d3113e01204",
+            "wachten_tot_start_ms": 0,
+            "start_tot_fetch_ms": 21,
+            "ipc_rondreis_ms": 17,
+            "antwoord_tot_volgende_taak_ms": 54
+          },
+          {
+            "taak": 17,
+            "aanvraag": "196d0409-8776-442b-ba51-ee3aceedba5c",
+            "wachten_tot_start_ms": 0,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 36,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 18,
+            "aanvraag": "ce3d2c70-dfef-4e56-a016-cadef858d1b4",
+            "wachten_tot_start_ms": 0,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 39,
+            "antwoord_tot_volgende_taak_ms": 23
+          },
+          {
+            "taak": 19,
+            "aanvraag": "f6d4c9e1-04b4-4ac4-a55c-762efa82fc36",
+            "wachten_tot_start_ms": 1,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 9,
+            "antwoord_tot_volgende_taak_ms": 68
+          },
+          {
+            "taak": 20,
+            "aanvraag": "cabf7a16-3243-4e33-9df5-376800c9f533",
+            "wachten_tot_start_ms": 0,
+            "start_tot_fetch_ms": 23,
+            "ipc_rondreis_ms": 13.000000000003638,
+            "antwoord_tot_volgende_taak_ms": 257.99999999999636
+          },
+          {
+            "taak": 21,
+            "aanvraag": "57b0331f-5a49-4673-842e-c69bceb5e04a",
+            "wachten_tot_start_ms": 6,
+            "start_tot_fetch_ms": 23,
+            "ipc_rondreis_ms": 13,
+            "antwoord_tot_volgende_taak_ms": 10
+          },
+          {
+            "taak": 22,
+            "aanvraag": "cb489d8c-c2b0-4d3c-ad10-50f39d009369",
+            "wachten_tot_start_ms": 11,
+            "start_tot_fetch_ms": 1,
+            "ipc_rondreis_ms": 11,
+            "antwoord_tot_volgende_taak_ms": 11
+          },
+          {
+            "taak": 23,
+            "aanvraag": "dcaa1332-4ea7-4f36-a502-db3a1ea75cc9",
+            "wachten_tot_start_ms": 12,
+            "start_tot_fetch_ms": 1,
+            "ipc_rondreis_ms": 7,
+            "antwoord_tot_volgende_taak_ms": 12
+          }
+        ],
+        "grenzen": "IPC-rondreis omvat Rust/transport en vertraging van antwoordverwerking door de browser; geen zuivere backend-CPU. Wachttijden overlappen uitvoering van andere taken en mogen niet worden opgeteld tot totale gebruikersvertraging. Tijd tot marker plus2rAFs is geen fysieke paint. Synchrone taakmuurtijd is geen CPUtijd."
+      },
+      "oud-rijk-fasen": {
+        "meting": "Afzonderlijke geïnstrumenteerde diagnose, geen ongestoorde prestatievergelijking",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 44321,
+          "begin_tot_bron_ms": 20595,
+          "laatste_keyup_tot_bron_ms": 254,
+          "laatste_keyup_tot_frame_ms": 2714.0000000000073,
+          "begin_tot_frame_ms": 23055.000000000007,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 23446,
+          "wall_verzonden_tot_frame_ms": 21617,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "wachtrijtaken": 110,
+        "max_diepte_voor_toelating": 2,
+        "wachten": {
+          "aantal": 110,
+          "min_ms": 25,
+          "mediaan_ms": 137.50000000000182,
+          "p95_ms": 252,
+          "max_ms": 324,
+          "tenminste32_ms": 109,
+          "tenminste100_ms": 108
+        },
+        "synchrone_taakaanroep": {
+          "aantal": 110,
+          "min_ms": 0.999999999992724,
+          "mediaan_ms": 2.0,
+          "p95_ms": 3,
+          "max_ms": 58.00000000000364,
+          "tenminste32_ms": 2,
+          "tenminste100_ms": 0
+        },
+        "native_aanvragen": 109,
+        "start_tot_fetch": {
+          "aantal": 109,
+          "min_ms": 1.999999999992724,
+          "mediaan_ms": 3,
+          "p95_ms": 338,
+          "max_ms": 859,
+          "tenminste32_ms": 7,
+          "tenminste100_ms": 6
+        },
+        "ipc_rondreis": {
+          "aantal": 109,
+          "min_ms": 44,
+          "mediaan_ms": 61,
+          "p95_ms": 103,
+          "max_ms": 258,
+          "tenminste32_ms": 109,
+          "tenminste100_ms": 6
+        },
+        "na_flush_tot_marker_en_twee_frames_ms": 2460.0000000000073,
+        "koppeling": [
+          {
+            "taak": 0,
+            "aanvraag": "8c3f9bb0-9878-4ca1-870b-9182baa0a7d5",
+            "wachten_tot_start_ms": 25,
+            "start_tot_fetch_ms": 338,
+            "ipc_rondreis_ms": 225,
+            "antwoord_tot_volgende_taak_ms": 124
+          },
+          {
+            "taak": 1,
+            "aanvraag": "f74d47e4-8ee3-4fbc-b6e5-cd809681fb45",
+            "wachten_tot_start_ms": 252,
+            "start_tot_fetch_ms": 29,
+            "ipc_rondreis_ms": 82,
+            "antwoord_tot_volgende_taak_ms": 106.00000000000364
+          },
+          {
+            "taak": 2,
+            "aanvraag": "ebb15330-bd49-447d-863c-13c8aa1ca285",
+            "wachten_tot_start_ms": 190.00000000000364,
+            "start_tot_fetch_ms": 3.999999999996362,
+            "ipc_rondreis_ms": 139,
+            "antwoord_tot_volgende_taak_ms": 94
+          },
+          {
+            "taak": 3,
+            "aanvraag": "767a4bfc-7b6b-4d99-a663-922c70adc5c1",
+            "wachten_tot_start_ms": 219,
+            "start_tot_fetch_ms": 9,
+            "ipc_rondreis_ms": 133,
+            "antwoord_tot_volgende_taak_ms": 83.00000000000364
+          },
+          {
+            "taak": 4,
+            "aanvraag": "693ab685-314f-4373-9de3-76c4b5348396",
+            "wachten_tot_start_ms": 87.0,
+            "start_tot_fetch_ms": 1.999999999996362,
+            "ipc_rondreis_ms": 87,
+            "antwoord_tot_volgende_taak_ms": 92
+          },
+          {
+            "taak": 5,
+            "aanvraag": "9a0021f6-ec72-4751-a45c-2c6853e3847a",
+            "wachten_tot_start_ms": 105,
+            "start_tot_fetch_ms": 8.000000000003638,
+            "ipc_rondreis_ms": 58.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 87
+          },
+          {
+            "taak": 6,
+            "aanvraag": "746d379d-8260-458a-b766-613e24a8e77a",
+            "wachten_tot_start_ms": 139.99999999999636,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 62,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 7,
+            "aanvraag": "a1e952dc-5efb-4998-bce8-db28c72a2efd",
+            "wachten_tot_start_ms": 134.99999999999636,
+            "start_tot_fetch_ms": 10,
+            "ipc_rondreis_ms": 76.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 100.99999999999636
+          },
+          {
+            "taak": 8,
+            "aanvraag": "1ca570ee-c739-420a-92bc-1eb009cf8738",
+            "wachten_tot_start_ms": 173,
+            "start_tot_fetch_ms": 8,
+            "ipc_rondreis_ms": 76,
+            "antwoord_tot_volgende_taak_ms": 86
+          },
+          {
+            "taak": 9,
+            "aanvraag": "d7837445-efe4-44b9-904c-c12ca7b92d00",
+            "wachten_tot_start_ms": 164,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 62,
+            "antwoord_tot_volgende_taak_ms": 85
+          },
+          {
+            "taak": 10,
+            "aanvraag": "991a77d5-1cf9-4bfd-9efe-ae9a0d8f505c",
+            "wachten_tot_start_ms": 147.99999999999636,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 75
+          },
+          {
+            "taak": 11,
+            "aanvraag": "e4f96590-0424-45ee-94d7-c1d34283dc38",
+            "wachten_tot_start_ms": 134,
+            "start_tot_fetch_ms": 4.000000000003638,
+            "ipc_rondreis_ms": 64.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 81
+          },
+          {
+            "taak": 12,
+            "aanvraag": "b023082f-62c4-4387-a824-34215419cf3c",
+            "wachten_tot_start_ms": 142.99999999999636,
+            "start_tot_fetch_ms": 5.000000000003638,
+            "ipc_rondreis_ms": 64.0,
+            "antwoord_tot_volgende_taak_ms": 70.99999999999636
+          },
+          {
+            "taak": 13,
+            "aanvraag": "f31efdde-55fa-4af4-b725-84a10c4f6508",
+            "wachten_tot_start_ms": 136,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 14,
+            "aanvraag": "ea32e45e-11d0-4016-a91c-18d598fa2bf8",
+            "wachten_tot_start_ms": 129,
+            "start_tot_fetch_ms": 8.000000000003638,
+            "ipc_rondreis_ms": 56.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 82
+          },
+          {
+            "taak": 15,
+            "aanvraag": "b64df988-ccb0-4e3f-af57-5c09797715e0",
+            "wachten_tot_start_ms": 140,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 16,
+            "aanvraag": "4be56b1c-8fdf-46c8-9d19-7fa393bda918",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 17,
+            "aanvraag": "b72ac7d4-5938-441a-92a9-32bf17dfe606",
+            "wachten_tot_start_ms": 128.99999999999636,
+            "start_tot_fetch_ms": 9,
+            "ipc_rondreis_ms": 63,
+            "antwoord_tot_volgende_taak_ms": 70
+          },
+          {
+            "taak": 18,
+            "aanvraag": "6cfa64a2-d68f-4642-87c2-a50dd315eab5",
+            "wachten_tot_start_ms": 133.99999999999636,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 64,
+            "antwoord_tot_volgende_taak_ms": 73.00000000000364
+          },
+          {
+            "taak": 19,
+            "aanvraag": "227742fe-7e89-434e-aeb3-956c6a32cbda",
+            "wachten_tot_start_ms": 133.00000000000364,
+            "start_tot_fetch_ms": 3.0,
+            "ipc_rondreis_ms": 58.0,
+            "antwoord_tot_volgende_taak_ms": 77.99999999999636
+          },
+          {
+            "taak": 20,
+            "aanvraag": "6fbad4ad-8d3a-47a7-bfd5-5f1d83cde364",
+            "wachten_tot_start_ms": 132,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 21,
+            "aanvraag": "ec9c1fdb-d538-47e5-b1df-7b10f150474e",
+            "wachten_tot_start_ms": 142,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 22,
+            "aanvraag": "b409e0b3-c2cf-4a27-8d00-e84c705d9d2f",
+            "wachten_tot_start_ms": 124,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 75
+          },
+          {
+            "taak": 23,
+            "aanvraag": "2d4c9bcb-c373-4d23-9742-c3d6e37bea1b",
+            "wachten_tot_start_ms": 141,
+            "start_tot_fetch_ms": 4.000000000003638,
+            "ipc_rondreis_ms": 58.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 24,
+            "aanvraag": "b713a290-6713-48d4-ab50-1cc3996a1c8b",
+            "wachten_tot_start_ms": 129,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 74.00000000000364
+          },
+          {
+            "taak": 25,
+            "aanvraag": "11a65978-ca7d-47b4-bda0-467e85affbe2",
+            "wachten_tot_start_ms": 137.00000000000364,
+            "start_tot_fetch_ms": 1.999999999996362,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 26,
+            "aanvraag": "10ec65df-11a5-4abd-853d-41f9526b3478",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 55.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 75.99999999999636
+          },
+          {
+            "taak": 27,
+            "aanvraag": "330df92a-78ee-40f6-b967-946dac465f7d",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 86.00000000000364
+          },
+          {
+            "taak": 28,
+            "aanvraag": "87c5d868-9b61-4c52-8663-d186dbe8977e",
+            "wachten_tot_start_ms": 138.00000000000364,
+            "start_tot_fetch_ms": 1.999999999996362,
+            "ipc_rondreis_ms": 53.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 72.99999999999636
+          },
+          {
+            "taak": 29,
+            "aanvraag": "902d1000-a21c-447e-909b-6db8d8790ff3",
+            "wachten_tot_start_ms": 122,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 30,
+            "aanvraag": "f2b695ba-5367-4ac6-bb51-beb548beed86",
+            "wachten_tot_start_ms": 143,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 81
+          },
+          {
+            "taak": 31,
+            "aanvraag": "2f5a13ba-0e36-4b5a-997e-d110e79c9251",
+            "wachten_tot_start_ms": 135,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 79
+          },
+          {
+            "taak": 32,
+            "aanvraag": "76781a2e-c652-43bb-a849-27a2da72af1d",
+            "wachten_tot_start_ms": 134,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 56.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 80.99999999999636
+          },
+          {
+            "taak": 33,
+            "aanvraag": "357d597a-aaa2-45e5-92c5-622b5d6c9565",
+            "wachten_tot_start_ms": 133,
+            "start_tot_fetch_ms": 6.000000000003638,
+            "ipc_rondreis_ms": 55.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 82
+          },
+          {
+            "taak": 34,
+            "aanvraag": "94cb54ac-061c-43db-a415-4371825bacf5",
+            "wachten_tot_start_ms": 139,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 146,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 35,
+            "aanvraag": "2bfe8cd2-9623-4638-9b00-14dcc78f4687",
+            "wachten_tot_start_ms": 213,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 54,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 36,
+            "aanvraag": "e9431e5a-ca93-4f0f-bd23-aaa20f7ecd5b",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 82
+          },
+          {
+            "taak": 37,
+            "aanvraag": "db16ecc3-32bb-41d8-ad1c-51e9c3d47dfd",
+            "wachten_tot_start_ms": 134,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 38,
+            "aanvraag": "b951931c-7765-45e4-ae5e-c7ed33a191d1",
+            "wachten_tot_start_ms": 135,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 67,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 39,
+            "aanvraag": "fc63389f-8322-47f4-87c8-7fa8102bf65c",
+            "wachten_tot_start_ms": 140.99999999999636,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 73,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 40,
+            "aanvraag": "81d007b0-4391-4853-b83d-d3b3dc3ddc76",
+            "wachten_tot_start_ms": 144,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 41,
+            "aanvraag": "e355ea41-9436-4987-b66f-16fe88cb4f9f",
+            "wachten_tot_start_ms": 135,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 258,
+            "antwoord_tot_volgende_taak_ms": 69
+          },
+          {
+            "taak": 42,
+            "aanvraag": "1d6cbbf9-9346-431c-82c2-fabee9009481",
+            "wachten_tot_start_ms": 324,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 56.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 72.99999999999636
+          },
+          {
+            "taak": 43,
+            "aanvraag": "cb948f2c-33ba-446f-bcfe-e4ef87ddb06f",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 52,
+            "antwoord_tot_volgende_taak_ms": 75.00000000000364
+          },
+          {
+            "taak": 44,
+            "aanvraag": "df9694eb-0989-4bf7-9a85-a87bc017c1a8",
+            "wachten_tot_start_ms": 128.00000000000364,
+            "start_tot_fetch_ms": 12.0,
+            "ipc_rondreis_ms": 58.0,
+            "antwoord_tot_volgende_taak_ms": 97.99999999999636
+          },
+          {
+            "taak": 45,
+            "aanvraag": "f0475a76-1f2b-4c3a-be6a-944ce02a1c3a",
+            "wachten_tot_start_ms": 153,
+            "start_tot_fetch_ms": 8,
+            "ipc_rondreis_ms": 82,
+            "antwoord_tot_volgende_taak_ms": 122
+          },
+          {
+            "taak": 46,
+            "aanvraag": "7618a7f5-d8f8-40ed-bbbe-1dd7aec8bf2d",
+            "wachten_tot_start_ms": 207,
+            "start_tot_fetch_ms": 4.000000000003638,
+            "ipc_rondreis_ms": 65.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 104
+          },
+          {
+            "taak": 47,
+            "aanvraag": "73e093b2-58d1-4534-bc77-662077fe6465",
+            "wachten_tot_start_ms": 165,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 61.99999999999636,
+            "antwoord_tot_volgende_taak_ms": 98.00000000000728
+          },
+          {
+            "taak": 48,
+            "aanvraag": "73dc7f07-05f5-4ee3-92d0-1a15c01e762a",
+            "wachten_tot_start_ms": 156.00000000000364,
+            "start_tot_fetch_ms": 1.999999999996362,
+            "ipc_rondreis_ms": 67,
+            "antwoord_tot_volgende_taak_ms": 86
+          },
+          {
+            "taak": 49,
+            "aanvraag": "2aea8085-0322-42b9-a95d-81a41b7b1f28",
+            "wachten_tot_start_ms": 147.99999999999636,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 72,
+            "antwoord_tot_volgende_taak_ms": 101
+          },
+          {
+            "taak": 50,
+            "aanvraag": "7ff6a3d3-8aba-4705-9512-d457bff02adf",
+            "wachten_tot_start_ms": 168.99999999999636,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 60.00000000000364,
+            "antwoord_tot_volgende_taak_ms": 83.99999999999636
+          },
+          {
+            "taak": 51,
+            "aanvraag": "b81d01d4-4b79-4dd6-a176-b2150a84b514",
+            "wachten_tot_start_ms": 138,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 97
+          },
+          {
+            "taak": 52,
+            "aanvraag": "ef4ce305-613f-4790-9bc2-61304317a174",
+            "wachten_tot_start_ms": 154,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 66,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 53,
+            "aanvraag": "92b2570b-d9eb-4153-912c-612b4adc6f76",
+            "wachten_tot_start_ms": 133,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 54,
+            "aanvraag": "79d87e21-da67-4495-8f3f-e0efaebc5beb",
+            "wachten_tot_start_ms": 136,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 61,
+            "antwoord_tot_volgende_taak_ms": 123
+          },
+          {
+            "taak": 55,
+            "aanvraag": "4ea67697-807f-4172-8994-7553a5538686",
+            "wachten_tot_start_ms": 176.99999999999272,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 75,
+            "antwoord_tot_volgende_taak_ms": 125
+          },
+          {
+            "taak": 56,
+            "aanvraag": "8f781cbe-a4ed-4ae9-811c-977c8f342d87",
+            "wachten_tot_start_ms": 194,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 103,
+            "antwoord_tot_volgende_taak_ms": 114
+          },
+          {
+            "taak": 57,
+            "aanvraag": "de9e2970-6a50-443f-bcd5-4599f9d615e9",
+            "wachten_tot_start_ms": 210,
+            "start_tot_fetch_ms": 7,
+            "ipc_rondreis_ms": 64,
+            "antwoord_tot_volgende_taak_ms": 94
+          },
+          {
+            "taak": 58,
+            "aanvraag": "2c7762d8-26b3-4ad7-a406-4e96839585db",
+            "wachten_tot_start_ms": 152,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 68,
+            "antwoord_tot_volgende_taak_ms": 66
+          },
+          {
+            "taak": 59,
+            "aanvraag": "4e39d4ad-3ee3-47b6-bcdc-df0c5af9a07e",
+            "wachten_tot_start_ms": 129,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 60,
+            "aanvraag": "46df0515-45c3-4d4f-9aca-f3a96f519dca",
+            "wachten_tot_start_ms": 122,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 65,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 61,
+            "aanvraag": "14635168-6dde-4e60-b96d-481d94dbc91d",
+            "wachten_tot_start_ms": 136,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 70,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 62,
+            "aanvraag": "822dec20-4c09-425c-8433-e4b042cae820",
+            "wachten_tot_start_ms": 142,
+            "start_tot_fetch_ms": 11,
+            "ipc_rondreis_ms": 74,
+            "antwoord_tot_volgende_taak_ms": 88.00000000000728
+          },
+          {
+            "taak": 63,
+            "aanvraag": "2fa8924e-13a3-4d95-aa35-6717dbed90de",
+            "wachten_tot_start_ms": 158.00000000000728,
+            "start_tot_fetch_ms": 3.999999999992724,
+            "ipc_rondreis_ms": 69.00000000000728,
+            "antwoord_tot_volgende_taak_ms": 98.99999999999272
+          },
+          {
+            "taak": 64,
+            "aanvraag": "02076a83-3347-4be4-906e-a2c25bf4ab5a",
+            "wachten_tot_start_ms": 164,
+            "start_tot_fetch_ms": 9,
+            "ipc_rondreis_ms": 97,
+            "antwoord_tot_volgende_taak_ms": 164.00000000000728
+          },
+          {
+            "taak": 65,
+            "aanvraag": "d8c1ae01-2cfd-4015-9c63-a7cf9fcdab78",
+            "wachten_tot_start_ms": 250.0,
+            "start_tot_fetch_ms": 3.999999999992724,
+            "ipc_rondreis_ms": 79,
+            "antwoord_tot_volgende_taak_ms": 91
+          },
+          {
+            "taak": 66,
+            "aanvraag": "d76dc935-d007-4c60-ad89-209b102dca0c",
+            "wachten_tot_start_ms": 160,
+            "start_tot_fetch_ms": 9.000000000007276,
+            "ipc_rondreis_ms": 70.0,
+            "antwoord_tot_volgende_taak_ms": 95.99999999999272
+          },
+          {
+            "taak": 67,
+            "aanvraag": "de269d2f-662f-4d3a-9f69-4dd71c0278b6",
+            "wachten_tot_start_ms": 168,
+            "start_tot_fetch_ms": 52,
+            "ipc_rondreis_ms": 71,
+            "antwoord_tot_volgende_taak_ms": 87
+          },
+          {
+            "taak": 68,
+            "aanvraag": "286b6d06-a13e-47c0-90ec-540217489567",
+            "wachten_tot_start_ms": 204,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 71,
+            "antwoord_tot_volgende_taak_ms": 85
+          },
+          {
+            "taak": 69,
+            "aanvraag": "19075f24-31b4-47aa-b750-e0f618ef9d83",
+            "wachten_tot_start_ms": 304,
+            "start_tot_fetch_ms": 859,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 68
+          },
+          {
+            "taak": 70,
+            "aanvraag": "1b14a60e-91a9-48b1-8187-79dd22831456",
+            "wachten_tot_start_ms": 139,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 63,
+            "antwoord_tot_volgende_taak_ms": 75
+          },
+          {
+            "taak": 71,
+            "aanvraag": "c5b36d8f-2601-4d0b-abe4-be47ae7f6fb9",
+            "wachten_tot_start_ms": 258,
+            "start_tot_fetch_ms": 650,
+            "ipc_rondreis_ms": 68,
+            "antwoord_tot_volgende_taak_ms": 82
+          },
+          {
+            "taak": 72,
+            "aanvraag": "90a8ae4a-3532-4e78-bb31-23305edf72b9",
+            "wachten_tot_start_ms": 151,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 73,
+            "aanvraag": "cc18e312-f421-441a-8b05-e8a90b936cb7",
+            "wachten_tot_start_ms": 268,
+            "start_tot_fetch_ms": 601,
+            "ipc_rondreis_ms": 56.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 71.99999999999272
+          },
+          {
+            "taak": 74,
+            "aanvraag": "3796bb3d-3833-45d5-9e22-844432837caf",
+            "wachten_tot_start_ms": 129,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 60,
+            "antwoord_tot_volgende_taak_ms": 69
+          },
+          {
+            "taak": 75,
+            "aanvraag": "79b22209-9c7e-43d9-839e-7284caaafdec",
+            "wachten_tot_start_ms": 242,
+            "start_tot_fetch_ms": 526,
+            "ipc_rondreis_ms": 53,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 76,
+            "aanvraag": "a6007916-c1ae-4d31-9569-bf0eb59448d7",
+            "wachten_tot_start_ms": 120,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 72
+          },
+          {
+            "taak": 77,
+            "aanvraag": "d84eb251-8ac4-46e4-b573-a388d56e42fd",
+            "wachten_tot_start_ms": 211,
+            "start_tot_fetch_ms": 455,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 78,
+            "aanvraag": "d119c7fa-d51d-44e6-82d3-ebd2d622289f",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 87
+          },
+          {
+            "taak": 79,
+            "aanvraag": "934728a8-0c5e-441a-863c-31746485a461",
+            "wachten_tot_start_ms": 267,
+            "start_tot_fetch_ms": 28.000000000007276,
+            "ipc_rondreis_ms": 55.999999999992724,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 80,
+            "aanvraag": "f6651327-d012-4d23-9c61-5d1ab75aebdb",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 56,
+            "antwoord_tot_volgende_taak_ms": 70
+          },
+          {
+            "taak": 81,
+            "aanvraag": "1d7f29fc-3bac-4d29-a77e-df9984e857ed",
+            "wachten_tot_start_ms": 127,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 82,
+            "aanvraag": "a542ec54-a76e-4717-8090-68f8f06b471a",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 83,
+            "aanvraag": "013709b6-0059-4c25-8e7e-ae35527a73bd",
+            "wachten_tot_start_ms": 127,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 84,
+            "aanvraag": "32457660-3c8f-4c2b-b7f2-0ddaf1150f4e",
+            "wachten_tot_start_ms": 128,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 85,
+            "aanvraag": "53c16b6b-59a8-474e-942c-487519439a33",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 7.000000000007276,
+            "ipc_rondreis_ms": 58.999999999992724,
+            "antwoord_tot_volgende_taak_ms": 74
+          },
+          {
+            "taak": 86,
+            "aanvraag": "e2a8300c-4c6a-4a24-866a-850a5e78fac6",
+            "wachten_tot_start_ms": 135,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 67,
+            "antwoord_tot_volgende_taak_ms": 67
+          },
+          {
+            "taak": 87,
+            "aanvraag": "ce4b0c56-ead5-40f9-9e33-b1d428253a44",
+            "wachten_tot_start_ms": 130,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 63,
+            "antwoord_tot_volgende_taak_ms": 94
+          },
+          {
+            "taak": 88,
+            "aanvraag": "bfe15cc4-ad59-4247-bf02-9c15ba343e74",
+            "wachten_tot_start_ms": 154,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 66.00000000000728,
+            "antwoord_tot_volgende_taak_ms": 80.99999999999272
+          },
+          {
+            "taak": 89,
+            "aanvraag": "32dfc1a5-a5cf-4dee-8855-00c587e4f674",
+            "wachten_tot_start_ms": 143,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 81
+          },
+          {
+            "taak": 90,
+            "aanvraag": "b2fef071-be33-422b-92a4-695efee513a8",
+            "wachten_tot_start_ms": 136,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 91,
+            "aanvraag": "c57f382c-fe47-44e1-9cda-a8f5a3a8cc50",
+            "wachten_tot_start_ms": 125,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 63,
+            "antwoord_tot_volgende_taak_ms": 77.00000000000728
+          },
+          {
+            "taak": 92,
+            "aanvraag": "c1e54507-b52b-4caf-bdd8-d4562917636d",
+            "wachten_tot_start_ms": 141.00000000000728,
+            "start_tot_fetch_ms": 1.999999999992724,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 71
+          },
+          {
+            "taak": 93,
+            "aanvraag": "572b4bbf-8999-4d85-8a08-fce0ca51d37b",
+            "wachten_tot_start_ms": 125,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 57.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 73.99999999999272
+          },
+          {
+            "taak": 94,
+            "aanvraag": "0278410b-5ccd-4c35-9f4a-86951b06bbbd",
+            "wachten_tot_start_ms": 127,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 54.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 70.99999999999272
+          },
+          {
+            "taak": 95,
+            "aanvraag": "80509c97-9c7c-430a-b59a-3fc35868975d",
+            "wachten_tot_start_ms": 122,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 58.000000000007276,
+            "antwoord_tot_volgende_taak_ms": 70.99999999999272
+          },
+          {
+            "taak": 96,
+            "aanvraag": "6a44a98c-24d2-4bbd-9699-66b2027a93bd",
+            "wachten_tot_start_ms": 126,
+            "start_tot_fetch_ms": 4,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 69
+          },
+          {
+            "taak": 97,
+            "aanvraag": "e17df09d-065b-434e-8230-128b9f75cd72",
+            "wachten_tot_start_ms": 123,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 68,
+            "antwoord_tot_volgende_taak_ms": 80
+          },
+          {
+            "taak": 98,
+            "aanvraag": "03f7584c-531e-4dba-8a10-311c50b1ec5b",
+            "wachten_tot_start_ms": 150,
+            "start_tot_fetch_ms": 7.000000000007276,
+            "ipc_rondreis_ms": 62.999999999992724,
+            "antwoord_tot_volgende_taak_ms": 74.00000000000728
+          },
+          {
+            "taak": 99,
+            "aanvraag": "48330c10-45ba-4101-be3f-619f34b6bccb",
+            "wachten_tot_start_ms": 140.0,
+            "start_tot_fetch_ms": 1.999999999992724,
+            "ipc_rondreis_ms": 67,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 100,
+            "aanvraag": "2f50910d-7d40-4415-a106-4b269403a1f2",
+            "wachten_tot_start_ms": 137,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 77
+          },
+          {
+            "taak": 101,
+            "aanvraag": "97a72978-bfc8-48c9-ba7c-0e395d7de43d",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 3,
+            "ipc_rondreis_ms": 58,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 102,
+            "aanvraag": "a3fa15ad-53fc-4b00-ad4e-00bc9039e786",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 2.000000000007276,
+            "ipc_rondreis_ms": 67.0,
+            "antwoord_tot_volgende_taak_ms": 108.99999999999272
+          },
+          {
+            "taak": 103,
+            "aanvraag": "83f0c62c-2437-4108-8fe0-77cfb49d9ad7",
+            "wachten_tot_start_ms": 172,
+            "start_tot_fetch_ms": 6,
+            "ipc_rondreis_ms": 69,
+            "antwoord_tot_volgende_taak_ms": 85
+          },
+          {
+            "taak": 104,
+            "aanvraag": "f9ec8c51-c097-4b98-b79d-f8a958bb379b",
+            "wachten_tot_start_ms": 155,
+            "start_tot_fetch_ms": 7,
+            "ipc_rondreis_ms": 86,
+            "antwoord_tot_volgende_taak_ms": 84
+          },
+          {
+            "taak": 105,
+            "aanvraag": "d2726a50-2ca1-40d2-94d1-c2523e22f42e",
+            "wachten_tot_start_ms": 172,
+            "start_tot_fetch_ms": 10,
+            "ipc_rondreis_ms": 57,
+            "antwoord_tot_volgende_taak_ms": 78
+          },
+          {
+            "taak": 106,
+            "aanvraag": "44c5f752-f8e7-41b9-9deb-6e49c3174f52",
+            "wachten_tot_start_ms": 141,
+            "start_tot_fetch_ms": 5,
+            "ipc_rondreis_ms": 59,
+            "antwoord_tot_volgende_taak_ms": 76
+          },
+          {
+            "taak": 107,
+            "aanvraag": "fbbda55a-26b7-4d2b-87f0-8c2c914165dd",
+            "wachten_tot_start_ms": 131,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 55,
+            "antwoord_tot_volgende_taak_ms": 73
+          },
+          {
+            "taak": 108,
+            "aanvraag": "a76186ba-2f57-479e-be08-ee62da92442a",
+            "wachten_tot_start_ms": 116.99999999999272,
+            "start_tot_fetch_ms": 2,
+            "ipc_rondreis_ms": 44,
+            "antwoord_tot_volgende_taak_ms": 76
+          }
+        ],
+        "grenzen": "IPC-rondreis omvat Rust/transport en vertraging van antwoordverwerking door de browser; geen zuivere backend-CPU. Wachttijden overlappen uitvoering van andere taken en mogen niet worden opgeteld tot totale gebruikersvertraging. Tijd tot marker plus2rAFs is geen fysieke paint. Synchrone taakmuurtijd is geen CPUtijd."
+      }
+    },
+    "native_fasen": {
+      "metingen": 109,
+      "overgeslagen": 0,
+      "uitkomsten": [
+        "rust"
+      ],
+      "fasen": {
+        "cursor": {
+          "mediaan_ms": 1,
+          "p95_ms": 1.000000000007276,
+          "max_ms": 2,
+          "som_ms": 72.00000000002183
+        },
+        "bron": {
+          "mediaan_ms": 1,
+          "p95_ms": 1.000000000007276,
+          "max_ms": 51,
+          "som_ms": 128.99999999999636
+        },
+        "hash": {
+          "mediaan_ms": 1.000000000007276,
+          "p95_ms": 266,
+          "max_ms": 858,
+          "som_ms": 3691.0
+        },
+        "aanvraag": {
+          "mediaan_ms": 0,
+          "p95_ms": 1,
+          "max_ms": 5,
+          "som_ms": 12.0
+        },
+        "transport": {
+          "mediaan_ms": 61,
+          "p95_ms": 103,
+          "max_ms": 258,
+          "som_ms": 7511.000000000011
+        },
+        "binding": {
+          "mediaan_ms": 0,
+          "p95_ms": 1,
+          "max_ms": 3,
+          "som_ms": 30.999999999970896
+        },
+        "mutatie": {
+          "mediaan_ms": 2.000000000007276,
+          "p95_ms": 4,
+          "max_ms": 7,
+          "som_ms": 281.00000000002547
+        },
+        "selectie": {
+          "mediaan_ms": 4,
+          "p95_ms": 6,
+          "max_ms": 9,
+          "som_ms": 475.99999999998545
+        },
+        "rustBinnenMs": {
+          "mediaan_ms": 55,
+          "p95_ms": 70,
+          "max_ms": 166,
+          "som_ms": 6371
+        },
+        "duurMs": {
+          "mediaan_ms": 74.00000000000364,
+          "p95_ms": 518,
+          "max_ms": 933,
+          "som_ms": 12204.000000000011
+        }
+      },
+      "grens": "Transport en hash bevatten wachttijd op de hoofdthread; rustBinnenMs is alleen de bestaande Rust-binnenmeting. Geen volledige CPU-, SDK-publicatie- of tekentijd.",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 44321,
+        "begin_tot_bron_ms": 20595,
+        "laatste_keyup_tot_bron_ms": 254,
+        "laatste_keyup_tot_frame_ms": 2714.0000000000073,
+        "begin_tot_frame_ms": 23055.000000000007,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 23446,
+        "wall_verzonden_tot_frame_ms": 21617,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    "bevinding": "Rijke wachtrijmediaan144/137,5ms, korte20ms. Rijk114van117 en108van110taken wachten minstens100ms; kort1van25. In de gecombineerde rijke ronde:109native fases, allemaal rust,0overgeslagen. Hashfase totaal3691ms/p95266ms/max858ms; Rust-binnenmeting mediaan55ms, transport61ms. Na flush nog2460ms tot marker plus2rAFs. Dit wijst op meerdere te onderzoeken fasen, geen enkele bewezen volledige oorzaak.",
+    "grenzen": "Diagnoses zijn geïnstrumenteerd en geen ongestoorde prestatievergelijking. De eerste rijke ronde meet37112ms, de gecombineerde23446ms; geen causale snelheidsclaim uit dat verschil. Hash- en transportfase omvatten hoofdthreadwachttijd. Rust-binnenmeting is geen CPUmeting en zit binnen transport; niet erbij optellen. Wachttijden van taken overlappen andere uitvoering. Geen fysieke paint/FPS uit marker en2rAFs afgeleid."
+  },
+  "functioneel": "Alle7definitieve native ronden slagen op gewone exacte invoer/bronexacte Undo-Redo, fysiek selecteren/vervangen/bewaren vóór een vastgehouden echt antwoord met onafhankelijke DOCX-teruglezing, en verwerpen/nieuw document met laat antwoord. De kandidaat is uitsluitend op de kleine bron/schema2 getoetst: geen rijke kandidaat- of schema3-GUI-acceptatie. Diagnoses op referentie bewaren beide keren alle128tabellen, de kleine bron1tabel. Foutlijsten zijn leeg. Unicode/compositie alleen op callbackniveau; geen echte OS-IME-acceptatie of nieuwe volledige heropenproef.",
+  "visueel": {
+    "nieuw-klein-a": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    },
+    "nieuw-klein-b": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    },
+    "oud-klein-b": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 91,
+          "begrenzing": [
+            6,
+            4,
+            1335,
+            997
+          ],
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    },
+    "oud-klein-wachtrij": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    }
+  },
+  "visuele_grens": "De zes kandidaatbeelden zijn volledig pixelgelijk aan de eerste referentie. Bewaarde DOCX-pakketten verschillen uitsluitend in core.xml. Het tweede referentiebewaarbeeld heeft91interfacepixels verschil buiten het document. Eén kandidaatbewaarbeeld handmatig bekeken. Geen volledige suite-/module-/platformpixelacceptatie.",
+  "controles": {
+    "kandidaat": "16gerichte echte SDK-callbacktests;2340frontendtests in227bestanden inclusief4echte Rust-hosttests;TypeScript;127Python-tests;Vite;geoptimaliseerde Linux-featurebouw slagen. Oude callback:2gerichte afkeuringen/14slagen op de nieuwe uitgestelde-bundel-/sluitvoorwaarden.",
+    "hersteld": "2328frontendtests in227bestanden inclusief4echte Rust-hosttests enTypeScript slagen na exact bron-/SDK-herstel. Geen nieuwe assertie of tijdslimiet aangepast.",
+    "eerdere_proefrunner": "Eerste negatieve private testpad wordt terecht uitgesloten door .local-config; daarna dezelfde proef tijdelijk binnen src uitgevoerd,2fail/14pass, uitsluitend eigen tijdelijke kopie verwijderd. Geen productfout uit NoTestFiles afgeleid."
+  },
+  "behoud": "Gebruikersapp/profielen/documenten en5vaste referentiebinaries ongewijzigd; beide afgewezen prototype-ELFs en bronnen blijven lokaal. Eigen oude uitgepakte dev7594-cache verliesloos gecomprimeerd, alle bestanden/links teruggelezen; eigen ELF daadwerkelijk hersteld en bytes/mode/mtime gecontroleerd vóór alleen de losse cache is verwijderd. De dubbele losse AppImage bytegelijk aan het bewaarde oorspronkelijke tar.gz geverifieerd; alleen die losse kopie verwijderd, download/startscript/metadata/manifest behouden. Deze oudere testcaches zijn uit archief herstelbaar. Vorige standaardfrontendbundel opnieuw op alle529bestandshashes/modes/mtime hersteld. Geen bibliotheekcache of oorspronkelijke bron verwijderd.",
+  "platformgrens": "Deze kandidaat alleen als Linux-featurekandidaat gebouwd en met schema2 fysiek getest. Geen Windows/macOS-/zeveneditie-/AppImage-/FUSE-/releaseacceptatie. Bestaande groene desktop- en Linux-dev-CI op appbron0a43e8c6 blijft afzonderlijk; geen nieuwe product-CI of release nodig voor dit uitsluitend bewijsmatige checkpoint.",
+  "vervolg": "Eerst de gemeten hash-/voorbereidings-/Rust-binnen-/renderfasen gericht uitsplitsen op dezelfde rijke bron. Gebruik bestaande invoerMeting plus de veilige wachtrijprobe. Hashbinding nooit verzwakken; eventuele synchrone SHA-256-route alleen met gevestigde implementatie, onafhankelijke bekende vectoren, bytegelijke bron/antwoordbinding en native ABBA-bewijs. Indien bundeling nog wordt geprobeerd, begrens die op werkelijk gemeten toelating-tot-uitvoeringtijd, niet alleen teller of typesnelheid, en bewijs eerst korte eindlatency. Geen nieuwe implementatie als bewezen versnelling verklaren vóór functie- en beeldbewijs.",
+  "open": "Ernstige Writer-invoer-/selectievertraging blijft prioritair. Geen issue, migratiegebied of uitgavevariant afgesloten. Database blijft laatste prioriteit.",
+  "bewijs": {
+    "pad": "docs/tests/writer-adaptieve-invoer-2026-11-11/bewijs.tar.gz",
+    "sha256": "a58cbf206a0924422004698352776036121d5083e5028f60465ddf0a6c3a9e09",
+    "bytes": 4709455
+  }
+}
