@@ -1,0 +1,122 @@
+{
+  "datum": "2026-11-11",
+  "basis": "2678f414aa807a6e06494c60c816b46ae67d668b",
+  "wijziging": "Expliciet opt-in hostwirecontract, gedeelde Tauri-staat en vier echte commands; bestaande schema-1-/2-handlers ongewijzigd. Venstereigenaar uitsluitend via Window.label().",
+  "standaard": "Feature uit: beschikbaar false; open/prepare/forget weigeren. Feature aan: standaardIngeschakeld false; elke opening vereist optIn true. Alleen openen maakt een werker. Geen frontendconsument ingeschakeld.",
+  "contract": {
+    "mogelijkheden": "writer_journaal_mogelijkheden",
+    "openen": {
+      "command": "writer_journaal_openen",
+      "gegevens": {
+        "documentId": "eigen-editor-id",
+        "optIn": true
+      },
+      "antwoord": {
+        "documentId": "eigen-editor-id",
+        "levensduur": "decimale-u64-string"
+      }
+    },
+    "voorbereiden": {
+      "command": "writer_journaal_voorbereiden",
+      "gegevens": {
+        "koppeling": "exacte openantwoord zonder eigenaar",
+        "volgnummer": "integer 1..9007199254740991",
+        "aanvraag": "ongewijzigde schema-3-bronaanvraag; geen leasevelden in aanvraag"
+      }
+    },
+    "vergeten": {
+      "command": "writer_journaal_vergeten",
+      "gegevens": "exacte koppeling"
+    },
+    "fouten": "Serializeerbaar object met soort en melding; ongeldig/verouderd/volgorde/capaciteit/nietBeschikbaar/uitgeschakeld apart. Geen stille terugval.",
+    "antwoord": "Schema 3 en exacte bronbinding/cursor uit de kern, levensduur als decimale string en volgnummer als veilig getal. Route gereed/volledigeBron/bestaandeRoute ongewijzigd.",
+    "laat": "Voorraad controleert na de werkeraanvraag; Tauri controleert nogmaals na await. Frontend moet na ontvangst actuele editor, sessie, bronversie, selectie en levensduur bewaken.",
+    "grenzen": "Vier levende werkers; 256 MiB retentie na berekening, geen harde piek-heapgarantie. Geen tabregistratie/LRU/automatische heropening."
+  },
+  "getest": {
+    "echte_crate_feature": 70,
+    "echte_crate_standaard": 30,
+    "hosttests": "Negen tests bij feature aan en twee bij uit, inclusief één gedeelde proef; echte documentdelta, afzonderlijke schema-2-route, verkeerde vensters, oud sluiten/heropenen, venstersluiting, te grote/verkeerd getypeerde volgnummers, onbekende eigenaarvelden, gehele u64-stringcodec, fouten verbruiken volgnummer, volledig-bronverzoek en capaciteit zonder verdringing.",
+    "clippy": "Beide modi -D warnings groen",
+    "tauri": "Echte writer_plakken.rs inclusief macros, oude/nieuwe commands, statebeheer en eventhandler compileert in afzonderlijke registratiedriver met echte gepinde Tauri-bibliotheek. Beide kernmodi, --emit=metadata -D warnings. Geen stubs en geen venster gestart. Dit is geen volledige appbouw of feitelijke IPC-uitvoering.",
+    "overige": [
+      {
+        "naam": "bron",
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-bron.py"
+        ],
+        "code": 0
+      },
+      {
+        "naam": "webview",
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-webview-bron.py"
+        ],
+        "code": 0
+      },
+      {
+        "naam": "migratie",
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-migratie.py"
+        ],
+        "code": 0
+      },
+      {
+        "naam": "fmt",
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "fmt",
+          "--manifest-path",
+          "native/Cargo.toml",
+          "-p",
+          "office-writer-plakken",
+          "--",
+          "--check"
+        ],
+        "code": 0
+      },
+      {
+        "naam": "hostfmt",
+        "opdracht": [
+          "/home/aia01/.cargo/bin/rustfmt",
+          "--edition",
+          "2021",
+          "--check",
+          "src-tauri/src/writer_plakken.rs"
+        ],
+        "code": 0
+      },
+      {
+        "naam": "diff",
+        "opdracht": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "code": 0
+      }
+    ],
+    "workflow": "YAML gelezen; desktopmatrix bevat nu expliciete volledige Cargo-check van de Tauri-feature. Nog niet afgerond remote."
+  },
+  "afkeuringen": [
+    "Clippy standaardmodus vereiste afgeleide Default; opgelost met cfg_attr en featuregebonden handmatige Default.",
+    "Eerste registratiedriver koos oude cachemetadata; daarna compatibele huidige Tauri-/serde_json-pinnen gebruikt. Macros vereisen ook CARGO_PKG_NAME=open-office-studio; dit is in de driver vastgelegd.",
+    "Vorige CI 43035092301: Linux stopt vóór Rust op Ubuntu-mirror-DNS; Windows/macOS nog lopend bij eerste momentopname. Geen geslaagde platformacceptatie afgeleid."
+  ],
+  "niet_getest": [
+    "Volledige lokale Cargo-desktopbuild: 2.6 GiB vrije ruimte, bestaande minimumgrens 6 GiB gerespecteerd.",
+    "Werkelijke Tauri-IPC onder venster openen/sluiten, frontendhandshake, sessie-/selectie-integratie en native GUI.",
+    "Nieuwe desktop-ELF, visuele gelijkheid, fysieke invoersnelheid, zeven uitgaven of crossplatformacceptatie."
+  ],
+  "bewijs": {
+    "pad": "docs/tests/writer-hostjournaal-2026-11-11/bewijs.tar.gz",
+    "sha256": "cc04582a884566485bbaa5d7bd21969d3b2146cc212f4bfa19278eace53b32df",
+    "bytes": 31480
+  },
+  "volgende_stap": "Remote platformuitslagen controleren; frontendhandshake met expliciete opt-in en veilig opruimen van late openingsantwoorden. Broncache per route/lease isoleren. Daarna eigen kandidaatprofiel en fysieke schema-2/3-vergelijking; geen gebruikersapp vervangen zonder bewijs.",
+  "integratiebron": "01351d0a17a3ff749575c5cd08dff006121e077a",
+  "platformronde": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43037025218"
+}
