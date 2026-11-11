@@ -1,0 +1,310 @@
+{
+  "datum_utc": "2026-11-11T06:07:33.478857+00:00",
+  "status": "Afzonderlijke Rust-proef afgerond; niet geïntegreerd of geïnstalleerd. Ernstige Writer-vertraging in de app blijft open.",
+  "basis_commit": "d36192a8",
+  "broncode": {
+    "native/onderzoek/writer-bronjournaal/bron-pinnen.json": "15c3cfa164300ecc1f06da028ab116642cfcae181376d6ef0a3557a39bec6bd1",
+    "native/onderzoek/writer-bronjournaal/README.md": "b5c33016c758249a6f40ab75f6306de360a84a915347eb89ebd6225eef427171",
+    "native/onderzoek/writer-bronjournaal/journaal.rs": "c32319a1bac528299eeab6d5e16e99ac7af3d4a49f5216e17c522a275dc287af",
+    "native/onderzoek/writer-bronjournaal/voorbereiden.py": "9c4c85938d367f630afa2f806590d16d8090fd85e72782e56b2e8c65490c9d72",
+    "native/onderzoek/writer-bronjournaal/proef.rs": "d2c12d14fa806d15b849dedd930cbaefc2083a8a3388574ba595ab08ea9e8f35"
+  },
+  "programma_sha256": "783b7f2fc626376901cfa7526848c063c4ac68a279f10e84d02d0f0c85251382",
+  "onderzoeksbibliotheek_sha256": "bd5270a33c8f61bab09d753e875f6948545edcd1e8dbcb75dd49aa28e091e21f",
+  "resultaat": {
+    "grens": "Geen desktop-, Undo/revisie-, volledige suite- of prestatieacceptatie; schema en bron-token veranderen uitsluitend in deze losse proef.",
+    "herbouwd": 2,
+    "hergebruikt": 20,
+    "journal_en_voorstel_bytes": 6099718,
+    "negatieve_bindingen": [
+      "schema",
+      "hash",
+      "base64",
+      "lege_tekst",
+      "alineagrens",
+      "request",
+      "basis",
+      "document",
+      "client",
+      "vector",
+      "herstel_na_vectorfout",
+      "onbevestigd_voorstel_verlaten",
+      "bytegrens_na_mutatie_en_herstel",
+      "volledige_bronreset",
+      "bytegrens",
+      "stapgrens"
+    ],
+    "rondes": [
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 0,
+        "ms": 181.237405
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 1,
+        "ms": 17.911773999999998
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 2,
+        "ms": 19.111172
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 3,
+        "ms": 18.459087
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 4,
+        "ms": 19.482656000000002
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 5,
+        "ms": 16.837054000000002
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 6,
+        "ms": 20.494754
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 7,
+        "ms": 17.877972
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 8,
+        "ms": 18.817339999999998
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 9,
+        "ms": 19.163873000000002
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 10,
+        "ms": 18.571558
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 11,
+        "ms": 19.224404
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 12,
+        "ms": 17.028275
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 13,
+        "ms": 20.213821
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 14,
+        "ms": 17.622301
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 15,
+        "ms": 19.156493
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 16,
+        "ms": 18.478107
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 17,
+        "ms": 18.402737
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 18,
+        "ms": 19.317994000000002
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 19,
+        "ms": 17.613651
+      },
+      {
+        "antwoord_gelijk_behalve_schema_token_meettijd": true,
+        "groep": 20,
+        "ms": 20.476843000000002
+      }
+    ],
+    "schema": 3,
+    "uitsluitend_proef": true,
+    "volledige_eindbron_bytegelijk": true
+  },
+  "vergelijking": [
+    {
+      "ronde": 1,
+      "naam": "referentie",
+      "programma_sha256": "1e2ba98d2bd0e27461f9f050ff2603976c9a8fa60beded233e59b584a90f8dc6",
+      "code": 0,
+      "warme_20_groepen_mediaan_ms": 72.458488,
+      "warme_20_groepen_som_ms": 1457.968717,
+      "eerste_groep_ms": 222.95052700000002,
+      "hele_proef_wandtijd_s": 1.8620790570275858,
+      "grens": "Losse native functies, geen GUI/FPS/desktopmeting. Schema3 wijzigt alleen in de journaalproef het tokencontract. JSON-deserialisatie ligt in de twee wrappers niet op exact hetzelfde meetpunt."
+    },
+    {
+      "ronde": 2,
+      "naam": "journaal",
+      "programma_sha256": "783b7f2fc626376901cfa7526848c063c4ac68a279f10e84d02d0f0c85251382",
+      "code": 0,
+      "warme_20_groepen_mediaan_ms": 17.905942500000002,
+      "warme_20_groepen_som_ms": 357.67611800000003,
+      "eerste_groep_ms": 190.893801,
+      "hele_proef_wandtijd_s": 3.1682547229574993,
+      "grens": "Losse native functies, geen GUI/FPS/desktopmeting. Schema3 wijzigt alleen in de journaalproef het tokencontract. JSON-deserialisatie ligt in de twee wrappers niet op exact hetzelfde meetpunt."
+    },
+    {
+      "ronde": 3,
+      "naam": "journaal",
+      "programma_sha256": "783b7f2fc626376901cfa7526848c063c4ac68a279f10e84d02d0f0c85251382",
+      "code": 0,
+      "warme_20_groepen_mediaan_ms": 18.501012,
+      "warme_20_groepen_som_ms": 372.1517,
+      "eerste_groep_ms": 181.114632,
+      "hele_proef_wandtijd_s": 3.1653179779532366,
+      "grens": "Losse native functies, geen GUI/FPS/desktopmeting. Schema3 wijzigt alleen in de journaalproef het tokencontract. JSON-deserialisatie ligt in de twee wrappers niet op exact hetzelfde meetpunt."
+    },
+    {
+      "ronde": 4,
+      "naam": "referentie",
+      "programma_sha256": "1e2ba98d2bd0e27461f9f050ff2603976c9a8fa60beded233e59b584a90f8dc6",
+      "code": 0,
+      "warme_20_groepen_mediaan_ms": 73.15418299999999,
+      "warme_20_groepen_som_ms": 1479.517809,
+      "eerste_groep_ms": 240.72152799999998,
+      "hele_proef_wandtijd_s": 1.843767998041585,
+      "grens": "Losse native functies, geen GUI/FPS/desktopmeting. Schema3 wijzigt alleen in de journaalproef het tokencontract. JSON-deserialisatie ligt in de twee wrappers niet op exact hetzelfde meetpunt."
+    }
+  ],
+  "bouw": {
+    "code": 0,
+    "seconden": 129.15203466598177,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/rustc",
+      "--crate-name",
+      "docx_edit_journaal",
+      "--crate-type",
+      "rlib",
+      "--edition=2024",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "debuginfo=0",
+      "-L",
+      "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/docx-edit/src/lib.rs",
+      "-o",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib",
+      "--extern",
+      "foldhash=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libfoldhash-da3805bb81549e60.rlib",
+      "--extern",
+      "ooxml_opc=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libooxml_opc-130c6c12073632a5.rlib",
+      "--extern",
+      "wuff=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libwuff-dcd58653703589f6.rlib",
+      "--extern",
+      "serde=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde-450f0c2c242de8f7.rlib",
+      "--extern",
+      "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+      "--extern",
+      "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+      "--extern",
+      "ooxml_diff=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libooxml_diff-78a918cd50a76e49.rlib",
+      "--extern",
+      "ooxml_text=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libooxml_text-c9f58c2323f38255.rlib",
+      "--extern",
+      "docx_layout=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libdocx_layout-d162a6e5c70d6370.rlib",
+      "--extern",
+      "ryu_js=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libryu_js-434dd3be3a36ee3b.rlib",
+      "--extern",
+      "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+      "--extern",
+      "docx_parse=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libdocx_parse.rlib",
+      "--extern",
+      "unicode_segmentation=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libunicode_segmentation-5ccd35ab818de5a5.rlib"
+    ],
+    "bibliotheken": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libfoldhash-da3805bb81549e60.rlib": "b61d1f8c7ce6245f0f68d6dccb1400a11973e8a29d5bf4dcb8fe4f1bd2c7c133",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libooxml_opc-130c6c12073632a5.rlib": "bdecb993b452ccbb96a5938c180ec1fa07eef15effea13387d960d1854a1ccb4",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libwuff-dcd58653703589f6.rlib": "997ae586a7926e75385c02657fb2a5a68de7a92992b68787d32b950f625e3d9a",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde-450f0c2c242de8f7.rlib": "fede31f6102f3230f130e81a2f95c40b1b40e8157be045028f956ce2c9aa46e0",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib": "0d79206f5f4f0252e2a9b33883c96e3c181e79239d4a4af1ce52ec306b79a9f4",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib": "c4766e4ae1a29e9308d99bab903756de0458ef0a784432e25d48e2a45edb04e2",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libooxml_diff-78a918cd50a76e49.rlib": "673a31b507a880b5e3098b62dfd33c2ead6bf5b99ba7f1d78cdc598038fd4b21",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libooxml_text-c9f58c2323f38255.rlib": "f211d2a24bb64e1cab84ee5cfd4124a8b1558cf809e57f03b0804121573bacdb",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libdocx_layout-d162a6e5c70d6370.rlib": "9253f255f51fd57f7b5b0b971edf3c3d6fc2fa7e61236b1bf6858d207305a11b",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libryu_js-434dd3be3a36ee3b.rlib": "2a27eaa8d0b9aa287644ab5297ae7f8ef69b5ebfce8a2aae4eb7b918d3bc2622",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib": "1709ca2107720263f123fc1917c547299ea9a696f4c7e1da02e56a6d848f585e",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libdocx_parse.rlib": "9bf86fce9d873cc02426a0efbe4485a8e7979c169151af11893df0a7548e8029",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libunicode_segmentation-5ccd35ab818de5a5.rlib": "7288f601d4599f45df1ede4e903d377e75253c15e8f38e5d9927ed78093c3f26"
+    }
+  },
+  "proefbouw": {
+    "code": 0,
+    "seconden": 2.2050419870065525,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/rustc",
+      "--edition=2024",
+      "-C",
+      "opt-level=3",
+      "-L",
+      "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+      "-L",
+      "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/proef.rs",
+      "-o",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/proef",
+      "--extern",
+      "office_writer_plakken=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/liboffice_writer_plakken-6c28f4e48422749f.rlib",
+      "--extern",
+      "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+      "--extern",
+      "base64=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libbase64-9e740c72a4866227.rlib",
+      "--extern",
+      "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+      "--extern",
+      "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+      "--extern",
+      "docx_journal=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib"
+    ]
+  },
+  "gevoeligheidscontrole": {
+    "code": 101,
+    "verwachte_afkeuring": "Negatief vector",
+    "afkeuring_gecontroleerd": true,
+    "doel": "De regressieproef keurt werkelijk ontbrekende bronvectorcontrole af."
+  },
+  "werkwijze": "Bevestigde bron is een beginbestand met bevestigde delta’s; het nog niet bevestigde voorstel blijft afzonderlijk. Exacte terugkomst bij dezelfde binding mag de bestaande replica hergebruiken. Een afwijkende geldige delta bouwt uitsluitend de bevestigde bron opnieuw op. Fouten mogen die bron niet vervangen.",
+  "protocolgrens": "Onderzoeksschema3 met SHA-256-ketentoken. Het token is geen SHA van telkens volledig opnieuw gecodeerde bron. Schema, token en meettijd zijn daarom uitgezonderd van antwoordpariteit; alle overige antwoordvelden en de volledige gecodeerde eindbron zijn gelijk aan de echte bestaande reeks. Bestaand schema2 en de Tauri-handler zijn niet gewijzigd.",
+  "gecontroleerd": [
+    "21 echte opgenomen invoergroepen van de openbare proefkopie: inhoudelijke antwoordpariteit en volledige gecodeerde eindbron bytegelijk;20hergebruik/1herbouw in de oorspronkelijke reeks. De tweede herbouw in het verslag hoort bij herstel na een opzettelijke fout.",
+    "16 bindings-, grens- en herstelgevallen; bron blijft bevestigd na foutieve vector en na overschrijding van de bytegrens na de mutatie. Ander onbevestigd voorstel wordt verlaten; volledige bronreset slaagt.",
+    "Een mutatieproef zonder vectorcontrole faalt zoals bedoeld met Negatief vector; de fout is dus aantoonbaar bewaakt.",
+    "Voorbereider controleert alle181vendorpinnen; beide private exports zijn bytegelijk aan de geteste bibliotheekkopie. Bestaande uitvoer en afwijkende bron worden vóór schrijven geweigerd.",
+    "Rustfmt en diffcontrole groen. Alle relevante bewijsbestanden, oorspronkelijke compileerafkeuring, gecorrigeerde bronnen, bibliotheekpinnen en negatieve mutatie zijn bewaard."
+  ],
+  "prestatiegrens": "ABBA van losse native functies geeft warme medianen72.458/17.906/18.501/73.154ms voor de20vervolggroepen. Geen app-/FPS-/teken-/CPU- of platformacceptatie: de wrappers verschillen in extra controles en deserialisatiemeetpunt. Totale procesduur is niet vergelijkbaar omdat de journaalproef ook negatieve gevallen en eindbronvergelijkingen uitvoert.",
+  "niet_gecontroleerd": [
+    "Werkelijke Undo/Redo- en revisiereeksen, Unicode/IME, langdurige geheugenontwikkeling, alle bronsoorten en alle bewakingsdrempels. De staplimietproef gebruikt een nuldrempel; geen256stappenstressproef.",
+    "Volledige native heapgrens: alleen opgeslagen journaal-/voorstelbytes zijn begrensd.",
+    "Nieuwe desktop-GUI, volledige functie-/UI-pixelgelijkheid,7edities, andere platforms/installers en volledige Rust-migratie. Geen appcode/SDK/frontend gewijzigd, geen brede productsuite opnieuw uitgevoerd."
+  ],
+  "vervolg": "Neem eerst werkelijke Undo/Redo-, revisie- en Unicode-invoerreeksen uit uitsluitend eigen proefkopieën op en speel die brongetrouw na; breid journal-/heap-/grenspariteit uit. Pas daarna een optionele productroute met expliciet protocol3 en schema2-terugval bouwen. Vóór desktopbouw de beperkte vrije schijfruimte oplossen met uitsluitend geverifieerde eigen tussenartefacten, alle referentie-ELFs/documenten behouden. Vervolgens native GUI, opslaan/heropenen/verwerpen, selectie, beelden en fysieke respons op dezelfde kandidaat; platforms/edities afzonderlijk.",
+  "bewijs": {
+    "docs/tests/writer-bronjournaal-2026-11-11/bewijs.tar.gz": "4fb646d0401826fb2b222f81133e70afbe1519f840e765d05653bb89e4548661"
+  }
+}
