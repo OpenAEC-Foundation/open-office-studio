@@ -103,3 +103,32 @@ fout tijdens voorbereiding wordt uitsluitend behoud van de bevestigde bron
 gegarandeerd; een voorstel kan worden verlaten en vereist dan een herbouw.
 
 Zie [middelentoelating en regressiebewijs](../../../docs/tests/2026-11-11-writer-middelen.json).
+
+## Werkelijke grote bronbytes
+
+`grote_bron.rs` maakt uitsluitend eigen synthetische bronnen: één kleine
+alinea en een opaque binaire metadatabuffer van 63, 65, 99 of 101 MiB. De
+gecodeerde CRDT-bron bevat aantoonbaar de volledige buffer. Er worden geen
+gebruikersdocumenten geopend of bestanden met deze grote buffers geschreven.
+
+63 MiB past in het journaal. Voor 65 en 99 MiB wordt expliciet een nieuwe,
+ongewijzigde schema-2-spiegel met de volledige bron aangeroepen. De delta en
+cursor worden vergeleken met de fragmentbewerking; een onafhankelijke import
+van bron plus antwoord geeft de volledige bytegelijke bron, inclusief metadata.
+Beide routes weigeren de 101-MiB-buffer boven de bestaande transportlimiet.
+
+De tweede parameter is een begrensd aantal vervolgbewerkingen, alleen bij
+63 MiB, maximaal 1.028. De proef wisselt gewone tekst en emoji af, controleert
+iedere delta en UTF-16-cursor en vergelijkt de volledige bron iedere 64 stappen
+en aan het einde. Bij 1.028 vervolgen worden vier volledige bronherstarts en
+zeventien volledige bronvergelijkingen bereikt. De 256-stappengrens blijft
+ongewijzigd. Op vaste meetpunten worden opgeslagen bytes en proces-RSS gemeld.
+
+De vastgelegde uitvoerder start elke proef in een eigen proces met maximaal
+3 GiB adresruimte, 120 seconden looptijd en een bewakingsgrens van 1,5 GiB
+bemonsterde RSS. Ook beschikbaar systeemgeheugen en vrije schijfruimte worden
+bewaakt. `/usr/bin/time` geeft daarnaast de maximale proces-RSS. Dit omvat
+fixture, orakel en onafhankelijke kopieën; het is geen gemeten appgeheugen of
+algemene heapgarantie. De 1.028-groepenreeks duurt enkele seconden, geen uren.
+Veel tekstpagina’s, rijke tabellen, GUI-invoer en langdurige lekproeven blijven
+apart nodig. Zie [uitvoering, bronhashes en grenzen](../../../docs/tests/2026-11-11-writer-grote-bron.json).

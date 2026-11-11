@@ -1,0 +1,327 @@
+{
+  "datum_utc": "2026-11-11T09:02:04.160684+00:00",
+  "status": "Grote bronbytes en begrensde vervolgreeks in onderzoeksprototype getest; geen productintegratie.",
+  "bronbasis": "a40eeba4e0a74cea4fe9d6421171d1dbd0822bf4",
+  "bronbestanden": {
+    "native/onderzoek/writer-bronjournaal/geschiedenis.rs": "139c3c7ed989219feb310ae4dafd9993e42d115758c251304667d7f50c3b8e05",
+    "native/onderzoek/writer-bronjournaal/grote_bron.rs": "5a0415851824fbe5c6f084e7a9ee327eae2422f7f36bffa2f120b39f0a4bb470",
+    "native/onderzoek/writer-bronjournaal/middelen.rs": "0a5b5e8b5694e4d2f4423cd8279bfab1868fc1dc72fbd7a88b4fcb26312b3876",
+    "native/onderzoek/writer-bronjournaal/bron-pinnen.json": "15c3cfa164300ecc1f06da028ab116642cfcae181376d6ef0a3557a39bec6bd1",
+    "native/onderzoek/writer-bronjournaal/README.md": "ed8c606c8b2ef4ce0793f86c7c3a2dda573f7dad8bf0fe754dd6e865165b976a",
+    "native/onderzoek/writer-bronjournaal/unicode.rs": "ede60897a35560a8d4068705eebab6d10166be2c1b60c640caeba862f0a32008",
+    "native/onderzoek/writer-bronjournaal/journaal.rs": "445069d35e4cab125ac89f2b03a13077c0745983c22466253bc8e2f07d2a2aa4",
+    "native/onderzoek/writer-bronjournaal/voorbereiden.py": "4562864084f2433a0cadec25cd83acc4f975f15b786bf06ceb084739177edbd3",
+    "native/onderzoek/writer-bronjournaal/proef.rs": "d2c12d14fa806d15b849dedd930cbaefc2083a8a3388574ba595ab08ea9e8f35",
+    "native/onderzoek/writer-bronjournaal/grenzen.rs": "bd2c448eef890bf57d41ad69441e655a4a333641b26eb37f67fdfe48d06bb014"
+  },
+  "fixture": "Eigen kleine alinea met opaque binaire metadatabuffer. Geen grote tekst-/paginafixture of DOCX-gebruikersbestand. Werkelijke gecodeerde CRDT-bronomvang wordt getoetst; geen grote bronbestanden op schijf.",
+  "uitkomsten": [
+    {
+      "payload_mib": 63,
+      "vervolgstappen": 0,
+      "code": 0,
+      "seconden": 1.0096236629760824,
+      "stopreden": null,
+      "rss_kib_bemonsterd": 451856,
+      "time_maxrss_kib": 456844,
+      "opdracht": [
+        "/usr/bin/time",
+        "-f",
+        "%M",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/63-piek-kib.txt",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/grote_bron",
+        "63",
+        "0"
+      ],
+      "binary_sha256": "a368f02bed07c72071d470afab2ec18a2dc81c494f442e6513730bb72cc3649e"
+    },
+    {
+      "payload_mib": 65,
+      "vervolgstappen": 0,
+      "code": 0,
+      "seconden": 1.3127456299844198,
+      "stopreden": null,
+      "rss_kib_bemonsterd": 427628,
+      "time_maxrss_kib": 427376,
+      "opdracht": [
+        "/usr/bin/time",
+        "-f",
+        "%M",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/65-piek-kib.txt",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/grote_bron",
+        "65",
+        "0"
+      ],
+      "binary_sha256": "a368f02bed07c72071d470afab2ec18a2dc81c494f442e6513730bb72cc3649e"
+    },
+    {
+      "payload_mib": 99,
+      "vervolgstappen": 0,
+      "code": 0,
+      "seconden": 1.917290679004509,
+      "stopreden": null,
+      "rss_kib_bemonsterd": 648124,
+      "time_maxrss_kib": 648016,
+      "opdracht": [
+        "/usr/bin/time",
+        "-f",
+        "%M",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/99-piek-kib.txt",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/grote_bron",
+        "99",
+        "0"
+      ],
+      "binary_sha256": "a368f02bed07c72071d470afab2ec18a2dc81c494f442e6513730bb72cc3649e"
+    },
+    {
+      "payload_mib": 101,
+      "vervolgstappen": 0,
+      "code": 0,
+      "seconden": 0.8077829899848439,
+      "stopreden": null,
+      "rss_kib_bemonsterd": 327796,
+      "time_maxrss_kib": 348780,
+      "opdracht": [
+        "/usr/bin/time",
+        "-f",
+        "%M",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/101-piek-kib.txt",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/grote_bron",
+        "101",
+        "0"
+      ],
+      "binary_sha256": "a368f02bed07c72071d470afab2ec18a2dc81c494f442e6513730bb72cc3649e"
+    },
+    {
+      "payload_mib": 63,
+      "vervolgstappen": 1028,
+      "code": 0,
+      "seconden": 5.248981187993195,
+      "stopreden": null,
+      "rss_kib_bemonsterd": 464100,
+      "time_maxrss_kib": 478392,
+      "opdracht": [
+        "/usr/bin/time",
+        "-f",
+        "%M",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/63-1028-piek-kib.txt",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-grote-bron/grote_bron",
+        "63",
+        "1028"
+      ],
+      "binary_sha256": "a368f02bed07c72071d470afab2ec18a2dc81c494f442e6513730bb72cc3649e"
+    }
+  ],
+  "inhoud": {
+    "63": {
+      "bron_sha256": "7526f0f1c52699d56a7c5d56d816caa4c729167d5d6c78ea2f740ee02d4090c5",
+      "bronbytes": 66060441,
+      "delta_en_utf16_caret_exact": true,
+      "expliciete_bestaande_route": false,
+      "grens": "Opaque metadata in eigen kleine tekstbron; geen grote tekst-/pagina-, desktop-, FPS- of langdurige-heapacceptatie.",
+      "journaal_opgeslagen_bytes": 66060453,
+      "journaalroute": true,
+      "payload_mib": 63,
+      "sessie": null,
+      "volledige_bron_met_binaire_metadata_bytegelijk": true
+    },
+    "65": {
+      "bron_sha256": "4d7dcf5c3a1ea88a5510e1e1a4aabb411663cbf225a942b36bed3997da4764a2",
+      "bronbytes": 68157593,
+      "delta_en_utf16_caret_exact": true,
+      "expliciete_bestaande_route": true,
+      "grens": "Opaque metadata in eigen kleine tekstbron; geen grote tekst-/pagina-, desktop-, FPS- of langdurige-heapacceptatie.",
+      "journaal_opgeslagen_bytes": 0,
+      "journaalroute": false,
+      "payload_mib": 65,
+      "sessie": null,
+      "volledige_bron_met_binaire_metadata_bytegelijk": true
+    },
+    "99": {
+      "bron_sha256": "65c52748f50b23aea2ae3fcc5e4e94521c89854ad91fafcccfca7851b82110f6",
+      "bronbytes": 103809177,
+      "delta_en_utf16_caret_exact": true,
+      "expliciete_bestaande_route": true,
+      "grens": "Opaque metadata in eigen kleine tekstbron; geen grote tekst-/pagina-, desktop-, FPS- of langdurige-heapacceptatie.",
+      "journaal_opgeslagen_bytes": 0,
+      "journaalroute": false,
+      "payload_mib": 99,
+      "sessie": null,
+      "volledige_bron_met_binaire_metadata_bytegelijk": true
+    },
+    "101": {
+      "beide_routes_weigeren_boven_100_mib": true,
+      "bronbytes": 105906329,
+      "payload_mib": 101
+    },
+    "63-1028": {
+      "bron_sha256": "7526f0f1c52699d56a7c5d56d816caa4c729167d5d6c78ea2f740ee02d4090c5",
+      "bronbytes": 66060441,
+      "delta_en_utf16_caret_exact": true,
+      "expliciete_bestaande_route": false,
+      "grens": "Opaque metadata in eigen kleine tekstbron; geen grote tekst-/pagina-, desktop-, FPS- of langdurige-heapacceptatie.",
+      "journaal_opgeslagen_bytes": 66061928,
+      "journaalroute": true,
+      "payload_mib": 63,
+      "sessie": {
+        "alle_delta_en_cursors_exact": true,
+        "grens": "Eén begrensde reeks op opaque binaire bron; geen algemene heapgrens of urenlange lektest.",
+        "metingen": [
+          {
+            "opgeslagen_bytes": 66061248,
+            "rss_kib": 263352,
+            "stap": 64
+          },
+          {
+            "opgeslagen_bytes": 66062096,
+            "rss_kib": 263360,
+            "stap": 128
+          },
+          {
+            "opgeslagen_bytes": 66063019,
+            "rss_kib": 263368,
+            "stap": 192
+          },
+          {
+            "opgeslagen_bytes": 66063942,
+            "rss_kib": 263396,
+            "stap": 256
+          },
+          {
+            "opgeslagen_bytes": 66061736,
+            "rss_kib": 263508,
+            "stap": 320
+          },
+          {
+            "opgeslagen_bytes": 66062659,
+            "rss_kib": 263536,
+            "stap": 384
+          },
+          {
+            "opgeslagen_bytes": 66063585,
+            "rss_kib": 263552,
+            "stap": 448
+          },
+          {
+            "opgeslagen_bytes": 66064508,
+            "rss_kib": 263584,
+            "stap": 512
+          },
+          {
+            "opgeslagen_bytes": 66062090,
+            "rss_kib": 263604,
+            "stap": 576
+          },
+          {
+            "opgeslagen_bytes": 66063013,
+            "rss_kib": 263632,
+            "stap": 640
+          },
+          {
+            "opgeslagen_bytes": 66063936,
+            "rss_kib": 263664,
+            "stap": 704
+          },
+          {
+            "opgeslagen_bytes": 66064859,
+            "rss_kib": 263672,
+            "stap": 768
+          },
+          {
+            "opgeslagen_bytes": 66062441,
+            "rss_kib": 263672,
+            "stap": 832
+          },
+          {
+            "opgeslagen_bytes": 66063367,
+            "rss_kib": 263672,
+            "stap": 896
+          },
+          {
+            "opgeslagen_bytes": 66064290,
+            "rss_kib": 263672,
+            "stap": 960
+          },
+          {
+            "opgeslagen_bytes": 66065213,
+            "rss_kib": 263672,
+            "stap": 1024
+          },
+          {
+            "opgeslagen_bytes": 66061928,
+            "rss_kib": 263672,
+            "stap": 1028
+          }
+        ],
+        "vervolgen": 1028,
+        "volledige_broncontroles": 17,
+        "volledige_herstarts": 4
+      },
+      "volledige_bron_met_binaire_metadata_bytegelijk": true
+    }
+  },
+  "geheugen": "time_maxrss_kib is Linux maximale RSS van het volledige proefproces, inclusief fixture, orakel en kopieën. De afzonderlijke RSS-bemonstering kan kortstondige pieken missen en omvat procesobservatie; geen appgeheugen of algemene heapgrens.",
+  "begrenzing": {
+    "adresruimte_gib": 3,
+    "bemonsterde_rss_stop_gib": 1.5,
+    "looptijd_max_seconden_per_proef": 120,
+    "beschikbaar_geheugen_stop_gib": 2,
+    "vrije_schijf_stop_gib": 1,
+    "alleen_eigen_procesgroep": true
+  },
+  "voorbereiding": {
+    "zeven_bronnen_bytegelijk": true,
+    "vendorpinnen_gevalideerd": true,
+    "bestaande_uitvoer_geweigerd": true,
+    "rustfmt_en_diffcheck": true
+  },
+  "archief": {
+    "pad": "docs/tests/writer-grote-bron-2026-11-11/bewijs.tar.gz",
+    "bytes": 31626,
+    "sha256": "5fbeb667139ecd02aad143b3640c956858cdf4d547dff5d7bdf4b611fdc43de9",
+    "bestandsbytes_teruggelezen": true,
+    "manifest": {
+      ".local/integratiecontrole/journaal-grote-bron/bestaande-uitvoer.log": "5ab16d3798c0a68718df23a637ccff23861f64f697bf8d973b9bf6f6b81f5908",
+      ".local/integratiecontrole/journaal-grote-bron/uitvoeren.py": "c5f614173a49f230a06995ab404d91ac9e41affb476cef47abbe4b546a161dbf",
+      ".local/integratiecontrole/journaal-grote-bron/bewijs.py": "dfa68f3c5eefe409c463b1a89a5b6aa121c51e4c6e9a967d46536ab776823085",
+      ".local/integratiecontrole/journaal-grote-bron/63-1028.log": "dff3f1bf37deebdf43bf5512cdcce6fd189172a5bbbd74e5f1d10919d8f313f9",
+      ".local/integratiecontrole/journaal-grote-bron/bouw.log": "97c3104272150b504afab77b618f9fcbfb601783ab71b57c354a2d84f51d8261",
+      ".local/integratiecontrole/journaal-grote-bron/uitkomst.json": "93f907979a1a15668458be30636926c706ff54a749410384b554d48c30174d0d",
+      ".local/integratiecontrole/journaal-grote-bron/99-piek-kib.txt": "5c79aaf675943125baf6512e86cefa82a47ce696dd9d39e427f8843532a53a99",
+      ".local/integratiecontrole/journaal-grote-bron/101.log": "1ccc9a3ab00ac47471496adc6d1466c899996250362ef8ffe75b44725046078f",
+      ".local/integratiecontrole/journaal-grote-bron/bouw.json": "f7e438529a66899ac5c8af18641c0e8ec7b524199b1d9ca219fb94ee340985fb",
+      ".local/integratiecontrole/journaal-grote-bron/63-1028-piek-kib.txt": "429874662a9139b297e1791716b8a53d4ba0d0e8e3d2b0d263d0d71568dae719",
+      ".local/integratiecontrole/journaal-grote-bron/101-piek-kib.txt": "7c4e08cbd79031b5c40e4748f61cc170e634bd0e8e42f6a7be6d3652b8ef9aa0",
+      ".local/integratiecontrole/journaal-grote-bron/65.log": "80295343b73719811e40359cf11b68c891c5712283ad6b36745b6552eb34ab08",
+      ".local/integratiecontrole/journaal-grote-bron/bibliotheken.json": "5ccaccae2446c74f1cec4be847d4ace95b247532c255e63ea375e8474b318a76",
+      ".local/integratiecontrole/journaal-grote-bron/63.log": "2318359660793aec7923ac1ce152136085fa597c93fcecf156473400fe87f1b7",
+      ".local/integratiecontrole/journaal-grote-bron/63-piek-kib.txt": "2eeec4edd3e1666381a0c3326f4b1c33612add591fffeedd246a33420bad59e8",
+      ".local/integratiecontrole/journaal-grote-bron/99.log": "58f3be607d9bda260da4670029b786cb1df190e4fb0034d3ccf6209f21f50488",
+      ".local/integratiecontrole/journaal-grote-bron/65-piek-kib.txt": "308879376b09e267d8445680871a64f6d92b2d46bfc11c10882f224c723d3c49",
+      "native/onderzoek/writer-bronjournaal/geschiedenis.rs": "139c3c7ed989219feb310ae4dafd9993e42d115758c251304667d7f50c3b8e05",
+      "native/onderzoek/writer-bronjournaal/grote_bron.rs": "5a0415851824fbe5c6f084e7a9ee327eae2422f7f36bffa2f120b39f0a4bb470",
+      "native/onderzoek/writer-bronjournaal/middelen.rs": "0a5b5e8b5694e4d2f4423cd8279bfab1868fc1dc72fbd7a88b4fcb26312b3876",
+      "native/onderzoek/writer-bronjournaal/bron-pinnen.json": "15c3cfa164300ecc1f06da028ab116642cfcae181376d6ef0a3557a39bec6bd1",
+      "native/onderzoek/writer-bronjournaal/README.md": "ed8c606c8b2ef4ce0793f86c7c3a2dda573f7dad8bf0fe754dd6e865165b976a",
+      "native/onderzoek/writer-bronjournaal/unicode.rs": "ede60897a35560a8d4068705eebab6d10166be2c1b60c640caeba862f0a32008",
+      "native/onderzoek/writer-bronjournaal/journaal.rs": "445069d35e4cab125ac89f2b03a13077c0745983c22466253bc8e2f07d2a2aa4",
+      "native/onderzoek/writer-bronjournaal/voorbereiden.py": "4562864084f2433a0cadec25cd83acc4f975f15b786bf06ceb084739177edbd3",
+      "native/onderzoek/writer-bronjournaal/proef.rs": "d2c12d14fa806d15b849dedd930cbaefc2083a8a3388574ba595ab08ea9e8f35",
+      "native/onderzoek/writer-bronjournaal/grenzen.rs": "bd2c448eef890bf57d41ad69441e655a4a333641b26eb37f67fdfe48d06bb014"
+    }
+  },
+  "niet_getest": [
+    "Geen desktopadapter, appbuild, visuele/GUI-pariteit of appversnelling",
+    "Geen grote tekstpagina’s, rijke tabellen, echte Unicode/IME-GUI of revisie-GUI op nieuwe route",
+    "Geen urenlange lektest; 1028 vervolgstappen duren slechts enkele seconden",
+    "Geen nieuwe platform- of zeveneditieacceptatie"
+  ],
+  "product": "Appcode, journaalkern, SDK, versies, gebruikersgegevens en referentiebinaries blijven gelijk. Alleen nieuwe onderzoekstest/voorbereider/documentatie.",
+  "vervolg": "Ontwerp een afzonderlijk opt-in desktopadaptercontract voor schema 3 met zelfstandige volledige schema-2-validatie bij capaciteit en volledige bronreset bij verlopen binding. Behoud standaardroute. Test fout-/levensduur-/wachtrij-/selectiegedrag voordat kandidaatbouw en echte GUI-pariteit worden uitgevoerd. Rijke grote tekst/heap en urenlange lektests blijven daarnaast open.",
+  "vrije_gib": 1.7
+}
