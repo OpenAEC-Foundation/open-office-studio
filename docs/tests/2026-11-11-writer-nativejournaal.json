@@ -1,0 +1,356 @@
+{
+  "datum": "2026-11-11",
+  "appbron": "4c13723b0f5dec055ea79e1dfb1be3629f5c9bb9",
+  "kandidaat": {
+    "bestand": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-desktop/open-office-studio-4c13723b-journaal",
+    "sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+    "versie": "2026.45.52",
+    "platform": "Linux x86_64",
+    "feature": "tauri/custom-protocol,writer-bronjournaal",
+    "bouw": "Volledige echte Cargo-releasebouw, --locked --offline, 556,28 seconden. Alle ingebedde frontendbestanden vooraf tegen geteste bundel gehasht. Geen installatie of nieuwe uitgave.",
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ]
+  },
+  "getest": {
+    "baseline-schema2": {
+      "schema": 2,
+      "opdrachten": 16,
+      "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "script_sha256": "49aed1dafcc34469ae90dd83f24fc2caaaae3efd366384a307ab9e95cc67cabc",
+      "bewaring_sha256": "d420bb0774cb019277ed7811898d0166840dc961c3c05a097e561b1bcb53b8a4",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat-schema2": {
+      "schema": 2,
+      "opdrachten": 16,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "49aed1dafcc34469ae90dd83f24fc2caaaae3efd366384a307ab9e95cc67cabc",
+      "bewaring_sha256": "939af37f65e2c496a933430484aabb306f2303f0a03931f8f340234441b09e78",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat-schema3": {
+      "schema": 3,
+      "opdrachten": 16,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "49aed1dafcc34469ae90dd83f24fc2caaaae3efd366384a307ab9e95cc67cabc",
+      "bewaring_sha256": "ff8da65d6df496f72d1aeb54ca4fa71020c20a9bee9c5f0c1b30551d6fce8456",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat-schema2-stabiel": {
+      "schema": 2,
+      "opdrachten": 17,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "e92596cf39f1e4a6bea4c6bed32d6e9f54fb3212ce2008c3926261ed0b27f583",
+      "bewaring_sha256": "dd302edd7c7a56e488c480137574678ad94feedba81bc31a738170b7815f825e",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat-schema3-stabiel": {
+      "schema": 3,
+      "opdrachten": 17,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "e92596cf39f1e4a6bea4c6bed32d6e9f54fb3212ce2008c3926261ed0b27f583",
+      "bewaring_sha256": "4cd1c8707dd1933ab4fd6556b09f189ea8b7ed931f4de4ddd9853a9897477622",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat-schema2-eindbeeld": {
+      "schema": 2,
+      "opdrachten": 17,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "6cc4fe3e12563aaa4983d1e4cb75efc7bc64b09cd2546e00ea127016142649ed",
+      "bewaring_sha256": "d50043df1014ed509a55c95dca778f64527af68d9e927530bc95eea3788c9319",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "kandidaat-schema3-eindbeeld": {
+      "schema": 3,
+      "opdrachten": 18,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "6cc4fe3e12563aaa4983d1e4cb75efc7bc64b09cd2546e00ea127016142649ed",
+      "bewaring_sha256": "53bec4ec4e4c1f621b221b79058825d3d8a0faa6b7b69674a60c83be227b30f5",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "repohelper-schema3": {
+      "schema": 3,
+      "opdrachten": 16,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "28862c32bd871f6e5e9f184c64b43c57e05874a4ccd6f1c5a3b27109674cf0ca",
+      "bewaring_sha256": "364f4bd26bb580d10927bf37624440760c449c61b07bb98f6d6bac8a17e719e9",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "werkelijke_aanvragen": "Iedere native tekstaanvraag onderschept op de feitelijke IPC-URL; schema en alle bronvelden, en bij3 ook levensduur/volgnummer gecontroleerd. Zelfde ELF met query0/1. Geen kunstmatig gelabelde schema-2-antwoorden.",
+  "herhaling": "Alleen functionaliteit en beelden. De helper vertraagt bewust berekende antwoorden en houdt ze vast; geen tijden/FPS als snelheidsresultaat gebruikt.",
+  "negatieve_controle": {
+    "schema_verwacht": 3,
+    "query_geforceerd": 0,
+    "werkelijk_schema": 2,
+    "native_opdrachten": 16,
+    "alle_functionele_stappen_slaagden": true,
+    "routeguard_keurt_terecht_af": true
+  },
+  "docx": {
+    "baseline-schema2__kandidaat-schema2": {
+      "onderdelen": 14,
+      "bytegelijk": 13,
+      "alleen_verschil": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    },
+    "kandidaat-schema2__kandidaat-schema3": {
+      "onderdelen": 14,
+      "bytegelijk": 13,
+      "alleen_verschil": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    },
+    "kandidaat-schema2-eindbeeld__kandidaat-schema3-eindbeeld": {
+      "onderdelen": 14,
+      "bytegelijk": 13,
+      "alleen_verschil": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    },
+    "kandidaat-schema2-eindbeeld__repohelper-schema3": {
+      "onderdelen": 14,
+      "bytegelijk": 13,
+      "alleen_verschil": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    }
+  },
+  "beelden": {
+    "vroege": {
+      "invoer-redo": {
+        "volledig_bbox": null,
+        "maat": [
+          1440,
+          1000
+        ],
+        "afwijkende_pixels": 0
+      },
+      "snel-getypt-bewaard": {
+        "volledig_bbox": [
+          6,
+          5,
+          1428,
+          1000
+        ],
+        "maat": [
+          1440,
+          1000
+        ],
+        "afwijkende_pixels": 51159
+      },
+      "nieuw-na-laat-antwoord": {
+        "volledig_bbox": [
+          423,
+          214,
+          1438,
+          997
+        ],
+        "maat": [
+          1440,
+          1000
+        ],
+        "afwijkende_pixels": 4321
+      }
+    },
+    "na_stabiliteit": {
+      "invoer-redo": {
+        "bbox": null,
+        "maat": [
+          1440,
+          1000
+        ],
+        "afwijkende_pixels": 0
+      },
+      "snel-getypt-bewaard": {
+        "bbox": null,
+        "maat": [
+          1440,
+          1000
+        ],
+        "afwijkende_pixels": 0
+      },
+      "nieuw-na-laat-antwoord": {
+        "bbox": [
+          1433,
+          214,
+          1438,
+          708
+        ],
+        "maat": [
+          1440,
+          1000
+        ],
+        "afwijkende_pixels": 2470
+      }
+    },
+    "eindbeelden": {
+      "invoer-redo": {
+        "bbox": null,
+        "afwijkende_pixels": 0,
+        "maat": [
+          1440,
+          1000
+        ]
+      },
+      "snel-getypt-bewaard": {
+        "bbox": [
+          6,
+          4,
+          1335,
+          997
+        ],
+        "afwijkende_pixels": 91,
+        "maat": [
+          1440,
+          1000
+        ],
+        "max_kanaalverschil": 46,
+        "documentvlak_bbox": null
+      },
+      "nieuw-na-laat-antwoord": {
+        "bbox": null,
+        "afwijkende_pixels": 0,
+        "maat": [
+          1440,
+          1000
+        ]
+      }
+    },
+    "visueel_bekeken": "Native Forge-interface en document zichtbaar; oorspronkelijke en kandidaatbeelden bekeken, inclusief vergrote interface-iconen.",
+    "conclusie": "Twee volledige 1440x1000-beelden exact gelijk. Het zichtbare documentvlak van het bewaarde document ook exact gelijk. In dat volledige bewaarbeeld nog91afwijkende pixels buiten het document; grootste kanaalverschil46. Oorzaak van deze kleine interfacevariatie niet vastgesteld; geen volledige pixelacceptatie.",
+    "geen_aanpassing_productstijl": "Geen CSS, renderer, kleurwaarden of productbron aangepast om beelden gelijk te maken. Test wacht op canvas/tekststabiliteit, verdwenen meldingen en minstens4seconden; eerdere onvoldoende stabiele beelden behouden."
+  },
+  "helper": "Bestaande native invoerhelper uitgebreid met expliciete eigen querykeuze, echte routebewaking en stabiele beelden. Functie-AST gelijk aan de uitgevoerde privékopie; ook de definitieve repoversie afzonderlijk positief op3 getoetst. Alle127Python-tests groen.",
+  "ruimte": {
+    "alleen_oude_eigen_cache": true,
+    "deel3": {
+      "pad": ".local/cargo-cache-archief-2026-11-11-deel3/oude-bouwcache.tar.zst",
+      "sha256": "f9150dec8dc6e0f518aa57c5246f0ba4a3c2416c0540fcbeaf962a04aa4ce934",
+      "bytes": 440091036,
+      "alle_binaire_hashes_teruggelezen": true,
+      "aantal": 22
+    },
+    "aantal_deel3": 22,
+    "aantal_samen_met_eerdere_delen": 54,
+    "echte_herstelproef": {
+      "pad": ".local/cargo-cache-archief-2026-11-11-deel3/herstelproef/open_office_studio-652e50d1ec51be44",
+      "sha256": "7a0b1048263df705e0c3a1977b73c95b898cb44a595d06434b8eb451c635b173",
+      "modus_gelijk": true,
+      "mtime_ns_gelijk": true,
+      "proef": true
+    },
+    "bouw_start_bytes": 4156026880,
+    "bouw_eind_bytes": 3953819648,
+    "begrenzing": "Afzonderlijke beperkte herbouw met startgrens3,75GiB en ongewijzigde stopgrens3GiB; bij onverwachte compilecrate of40min ook stoppen. Alleen de drie verwachte crates werden herbouwd. De algemene6GiB-marge is voor brede herbouw niet gewijzigd.",
+    "cache_en_referenties": "Archiveren verwijdert geen rlibs of bronbestanden. Cargo regenereert normale eigen bibliotheekcache tijdens de bouw. Vaste referentie-ELFs98d/c88 zijn ook na bouw hashgelijk; gebruikersdocumenten en geïnstalleerde app niet gewijzigd.",
+    "frontend": "Oude standaarddist behouden in lokale dist-voor-bouw; huidige standaarddist bytegelijk aan de eerder geteste nieuwe bundel."
+  },
+  "platforms": {
+    "appbron": "4c13723b0f5dec055ea79e1dfb1be3629f5c9bb9",
+    "desktop_run": 43048315760,
+    "windows": "desktoptaak geslaagd, inclusief featurecheck en echte hostdraadproeven",
+    "macos": "desktoptaak geslaagd, inclusief featurecheck en echte hostdraadproeven",
+    "linux": "lokale feature-ELF en deze native proef geslaagd; remote desktoptaak nog apart volgen",
+    "native_run": 43048310231,
+    "native_windows_macos": "geslaagd",
+    "native_linux_conversie": "mislukt; eerdere snapshots tonen pakketmirror/DNS vóór inhoudelijke Rust-controles. Geen algemene platformacceptatie."
+  },
+  "niet_getest": [
+    "Grote rijke documenten en fysieke inputlatency/FPS zonder kunstmatige antwoordvertraging; geen soepelheidsacceptatie.",
+    "Langdurige geheugenbelasting, IME, alle Writerfuncties en alle bestandsvarianten.",
+    "Volledige pixelgelijkheid:91UI-pixels bij één bewaarbeeld staan nog open.",
+    "Alle zeven releasevarianten of Windows/macOS desktop-GUI in deze featuremodus.",
+    "Volledige Rust-migratie: tien migratiegebieden blijven open. Geen issue gesloten."
+  ],
+  "bewijs": {
+    "pad": "docs/tests/writer-nativejournaal-2026-11-11/bewijs.tar.gz",
+    "sha256": "d5972e21bb5b7836aae1553ed3beffb180910717ff6732f8b4e90967525ee213",
+    "bytes": 3884835,
+    "leden": 96
+  },
+  "volgende_stap": "Remote Linux-desktopuitslag controleren en eventuele echte fout herstellen. Daarna de grote fysieke invoerproef aanpassen voor echte schema3-IPC, uitvoeren met dezelfde kandidaat-ELF in2/3 en c88; zonder kunstmatige vertraging, met bron/Undo/bewaar/heropen/pixelcontrole.91UI-pixels afzonderlijk onderzoeken. Niet standaard inschakelen of installeren op basis van de kleine functionele proef.",
+  "bewijsopbouw": "Twee lokale fouten door hergebruik van generatorvariabelen hersteld; definitieve generator eindigt met code 0 en leest alle 96 archiefleden op SHA256 terug. Dit wijzigde geen appcode of GUI-testuitkomsten."
+}

@@ -3,6 +3,9 @@
 
 Alleen het terugbezorgen van een werkelijk berekend tekstantwoord wordt
 vastgehouden. Eigen bron/profiel/venster; dit is geen snelheidsmeting.
+OFFICE_TEST_JOURNAAL=1 kiest expliciet schema 3; standaard wordt schema 2
+getest. De werkelijke IPC-route en binding worden per aanvraag gecontroleerd.
+Beelden wachten op bron-/tekststabiliteit, verdwenen meldingen en native fading.
 """
 import asyncio
 import hashlib
@@ -63,6 +66,22 @@ async def proef(a):
         raw = v.get_image(0, 0, g.width, g.height, X.ZPixmap, 0xffffffff)
         Image.frombytes('RGB', (g.width, g.height), raw.data, 'raw', 'BGRX').save(a.uitvoer / (naam + '.png'))
 
+    async def beeld_stabiel(p, naam):
+        gegevens = await p.run('''await api().flushPendingInput();await document.fonts.ready;
+          let begin=performance.now(),vorig=null,sinds=performance.now();
+          while(true){
+            const nu=performance.now();
+            const melding=!!document.querySelector('.office-melding');
+            const sleutel=document.body.innerText+Array.from(document.querySelectorAll('canvas')).map(c=>c.toDataURL()).join('|');
+            if(melding||sleutel!==vorig){vorig=sleutel;sinds=nu}
+            if(!melding&&nu-sinds>=1600&&nu-begin>=4000){await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {wachtMs:performance.now()-begin,taal:document.querySelector('.statusbalk-taal')?.textContent,bron:stand(),selectie:sessie().selection()}}
+            if(nu-begin>15000)throw Error('Beeld wordt niet stabiel: '+String(melding));
+            await new Promise(r=>setTimeout(r,100));
+          }
+        ''')
+        r.setdefault('beeldstabiliteit', {})[naam] = gegevens
+        beeld(naam)
+
     async def toets(p, *toetsen, leeg=True):
         vanaf = await p.ev('_toetsen.length')
         subprocess.run(['xdotool', 'key', '--clearmodifiers', *toetsen], check=True)
@@ -101,6 +120,18 @@ async def proef(a):
                 await p.run("window.api=()=>{let el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,n=0;s&&n<200;n++,s=s.next){let v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let eind=performance.now()+60000;while(!api()?.getEditorRef()?.getYrsSession()){if(performance.now()>eind)throw Error('Geen sessie');await new Promise(r=>setTimeout(r,100))}await api().flushPendingInput();return true;")
                 assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|version');") == a.versie
                 assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier');") == 'org.openaec.office-studio'
+                # Zelfde eigen proefbron opnieuw openen na vastzetten van de testoptie.
+                schema = 3 if os.environ.get('OFFICE_TEST_JOURNAAL') == '1' else 2
+                await p.ev("history.replaceState(null,''," + json.dumps('?writerBronjournaal=1' if schema == 3 else '?writerBronjournaal=0') + ");true")
+                subprocess.run(['xdotool', 'key', '--clearmodifiers', 'ctrl+w'], check=True)
+                await p.run('let eind=performance.now()+15000;while(document.querySelector(".office-tekst")){if(document.querySelector(".office-dialoogacties"))throw Error("Verse bron onverwacht gewijzigd");if(performance.now()>eind)throw Error("Oude editor sluit niet");await new Promise(r=>setTimeout(r,50))}return true;')
+                tweede = subprocess.run([str(a.programma), str(bron)], stdout=log, stderr=subprocess.STDOUT, timeout=30)
+                assert tweede.returncode == 0
+                await p.run("let eind=performance.now()+60000;while(!api()?.getEditorRef()?.getYrsSession()){if(performance.now()>eind)throw Error('Geen heropende sessie');await new Promise(r=>setTimeout(r,100))}await api().flushPendingInput();return true;")
+                r['schema'] = schema
+                if schema == 3:
+                    r['mogelijkheden'] = await p.run("return await window.__TAURI_INTERNALS__.invoke('writer_journaal_mogelijkheden');")
+                    assert r['mogelijkheden']['beschikbaar'] is True
                 await p.begin_foutbewaking()
                 await p.ev('''(() => {
                   window.sessie=()=>api().getEditorRef().getYrsSession();
@@ -108,15 +139,15 @@ async def proef(a):
                   window.stand=()=>JSON.stringify(Object.fromEntries(sessie().storyIds().sort().map(id=>[id,sessie().storySegments(id)])));
                   window._toetsen=[];window.addEventListener('keyup',e=>_toetsen.push(e.key.toLowerCase()),true);
                   window._rust={aanvragen:[],updates:0,houd:false,vertragingMs:1000};window._diagnose=[];
-                  const intern=window.__TAURI_INTERNALS__,oud=window.fetch,doel=intern.convertFileSrc('writer_tekst_voorbereiden','ipc'),s=sessie(),pasToe=s.applyLocalUpdate;
+                  const intern=window.__TAURI_INTERNALS__,oud=window.fetch,doel=intern.convertFileSrc('writer_tekst_voorbereiden','ipc'),doel3=intern.convertFileSrc('writer_journaal_voorbereiden','ipc'),s=sessie(),pasToe=s.applyLocalUpdate;
                   window.fetch=async function(url,args,...rest){
-                    if(String(url)!==doel)return oud.call(this,url,args,...rest);
-                    const a=JSON.parse(args.body).aanvraag,m={requestId:a.requestId,position:a.position,text:a.text,gereed:false,wacht:false};_rust.aanvragen.push(m);
+                    if(String(url)!==doel&&String(url)!==doel3)return oud.call(this,url,args,...rest);
+                    const envelop=JSON.parse(args.body),a=envelop.gegevens?.aanvraag??envelop.aanvraag,m={schema:a.schema,levensduur:envelop.gegevens?.koppeling.levensduur,volgnummer:envelop.gegevens?.volgnummer,requestId:a.requestId,position:a.position,text:a.text,gereed:false,wacht:false};_rust.aanvragen.push(m);
                     const response=await oud.call(this,url,args,...rest),json=response.json.bind(response);
                     response.json=async()=>{
                       const antwoord=await json();
                       m.bronbinding=['schema','requestId','documentId','sourceVersion','snapshotSha256','clientId'].every(k=>antwoord[k]===a[k]);
-                      m.gereed=true;m.caret=antwoord.caret;
+                      m.bronbinding=m.bronbinding&&(a.schema!==3||(antwoord.levensduur===m.levensduur&&antwoord.volgnummer===m.volgnummer));m.gereed=true;m.caret=antwoord.caret;
                       m.vertragingMs=_rust.vertragingMs;
                       if(m.vertragingMs)await new Promise(resolve=>setTimeout(resolve,m.vertragingMs));
                       if(_rust.houd)await new Promise(resolve=>{m.wacht=true;_rust.los=()=>{_rust.houd=false;m.wacht=false;delete _rust.los;resolve()}});
@@ -144,7 +175,7 @@ async def proef(a):
                 await toets(p, 'ctrl+y')
                 assert await p.ev('stand()===_getypt'), 'Redo herstelt de tekst niet exact'
                 r['stappen'].append('Fysieke tekstinvoer, één Undo en bronexacte Redo')
-                beeld('invoer-redo')
+                await beeld_stabiel(p, 'invoer-redo')
                 await p.ev('_rust.vertragingMs=0;true')
 
                 await toets(p, 'ctrl+End')
@@ -170,7 +201,7 @@ async def proef(a):
                 assert terug == await p.ev('tekst()'), 'Bewaring mist invoer of bevat verkeerde selectie'
                 r['bewaring_sha256'] = hashlib.sha256(bron.read_bytes()).hexdigest()
                 r['stappen'].append('Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen')
-                beeld('snel-getypt-bewaard')
+                await beeld_stabiel(p, 'snel-getypt-bewaard')
 
                 await toets(p, 'ctrl+End')
                 updates_voor_sluiten = await p.ev('_rust.updates')
@@ -197,10 +228,10 @@ async def proef(a):
                 assert hashlib.sha256(bron.read_bytes()).hexdigest() == r['bewaring_sha256'], 'Niet opslaan wijzigt bewaarde bron'
                 r['stappen'].append('Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer')
                 r['native_opdrachten'] = await p.ev('_rust.aanvragen')
-                assert len(r['native_opdrachten']) >= 3 and all(m['gereed'] and m['bronbinding'] for m in r['native_opdrachten'])
+                assert len(r['native_opdrachten']) >= 3 and all(m['gereed'] and m['bronbinding'] and m['schema'] == schema for m in r['native_opdrachten'])
                 r['fouten'] = await p.fouten()
                 assert not any(r['fouten'].values()), 'GUI of engine meldt fouten'
-                beeld('nieuw-na-laat-antwoord')
+                await beeld_stabiel(p, 'nieuw-na-laat-antwoord')
                 r['geslaagd'] = True
             finally:
                 try:
