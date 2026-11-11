@@ -1,0 +1,2288 @@
+{
+  "productbron": "11f9f9286255ec4f727da2a58242ad55caad4584",
+  "baseline": "fb66ff92ae7c7d288f79fa21de37099d95f66849",
+  "alleenBaselineOverrides": [
+    "src/tekst/info/TekstInfo.tsx",
+    "src/tekst/gedeeld/editorvolgen.ts"
+  ],
+  "proeven": [
+    {
+      "bestand": "perf-taal-voor-4.json",
+      "label": "taal-voor-4",
+      "cpu": 4,
+      "fasen": [
+        {
+          "name": "typing",
+          "wallMs": 5941.936956000001,
+          "calls": {
+            "selection": {
+              "count": 58,
+              "ms": 0.5999999642372131
+            },
+            "getEditorRef": {
+              "count": 72,
+              "ms": 3.1000001430511475
+            },
+            "getYrsSession": {
+              "count": 72,
+              "ms": 0
+            },
+            "version": {
+              "count": 59,
+              "ms": 3
+            },
+            "paragraphSpans": {
+              "count": 4,
+              "ms": 77.99999994039536
+            },
+            "native.paragraphSpans": {
+              "count": 4,
+              "ms": 78.29999989271164
+            },
+            "spellingViewport": {
+              "count": 3
+            },
+            "spellingProjection": {
+              "count": 6,
+              "geometries": {
+                "1": 1,
+                "2": 1,
+                "3": 1,
+                "4": 3
+              },
+              "layouts": {
+                "layout-5": 2,
+                "layout-6": 4
+              }
+            },
+            "spellingRanges": {
+              "count": 212
+            },
+            "spellingRects": {
+              "count": 140,
+              "ms": 319.19999998807907
+            },
+            "yrsBlocksForStory": {
+              "count": 2,
+              "ms": 188.0999999642372
+            },
+            "selectionContext": {
+              "count": 2,
+              "ms": 1.800000011920929
+            },
+            "native.storySegmentUnits": {
+              "count": 2,
+              "ms": 7.400000035762787
+            },
+            "native.selectionText": {
+              "count": 3,
+              "ms": 33.59999996423721
+            },
+            "getSelectionInfo": {
+              "count": 3,
+              "ms": 34.30000001192093
+            },
+            "getDocument": {
+              "count": 8,
+              "ms": 625.6999999880791
+            },
+            "languageStatus.selectie": {
+              "count": 2,
+              "ms": 491.10000002384186
+            },
+            "storySegments": {
+              "count": 3,
+              "ms": 229.80000001192093
+            },
+            "languageStatus.inhoud": {
+              "count": 1,
+              "ms": 16.400000035762787
+            }
+          }
+        },
+        {
+          "name": "caret",
+          "wallMs": 6172.408432000004,
+          "calls": {
+            "selection": {
+              "count": 144,
+              "ms": 1.100000023841858
+            },
+            "native.storySegmentUnits": {
+              "count": 30,
+              "ms": 23.500000178813934
+            },
+            "getEditorRef": {
+              "count": 60,
+              "ms": 3.699999988079071
+            },
+            "getYrsSession": {
+              "count": 60,
+              "ms": 0.20000004768371582
+            },
+            "version": {
+              "count": 46,
+              "ms": 0.9000000357627869
+            },
+            "native.selectionText": {
+              "count": 1,
+              "ms": 9.099999964237213
+            },
+            "getSelectionInfo": {
+              "count": 1,
+              "ms": 9.899999976158142
+            },
+            "getDocument": {
+              "count": 1,
+              "ms": 136.10000002384186
+            },
+            "languageStatus.selectie": {
+              "count": 1,
+              "ms": 136.60000002384186
+            },
+            "spellingViewport": {
+              "count": 1
+            },
+            "spellingProjection": {
+              "count": 2,
+              "geometries": {
+                "5": 1,
+                "6": 1
+              },
+              "layouts": {
+                "layout-7": 2
+              }
+            },
+            "spellingRanges": {
+              "count": 76
+            },
+            "spellingRects": {
+              "count": 76,
+              "ms": 126.7000002861023
+            }
+          }
+        },
+        {
+          "name": "scroll",
+          "wallMs": 11408.104438000002,
+          "calls": {
+            "getEditorRef": {
+              "count": 130,
+              "ms": 4.900000154972076
+            },
+            "getYrsSession": {
+              "count": 130,
+              "ms": 0.699999988079071
+            },
+            "selection": {
+              "count": 103,
+              "ms": 1.2000000476837158
+            },
+            "version": {
+              "count": 58,
+              "ms": 4
+            },
+            "spellingViewport": {
+              "count": 21
+            },
+            "spellingProjection": {
+              "count": 11,
+              "geometries": {
+                "7": 8,
+                "8": 1,
+                "9": 2
+              },
+              "layouts": {
+                "layout-8": 8,
+                "layout-9": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 804
+            },
+            "spellingRects": {
+              "count": 276,
+              "ms": 1004.4000004529953
+            }
+          }
+        }
+      ],
+      "inhoudExact": true,
+      "opgeslagenExact": null,
+      "caret": {
+        "before": {
+          "anchor": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "after": {
+          "anchor": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "expected": {
+          "offset": 373,
+          "paraId": "body:p599",
+          "story": "body"
+        },
+        "equal": true
+      },
+      "geometrie": [
+        {
+          "naam": "documentbegin",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 4622.055619999999,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1197.0027529999934,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 929.1215000000084,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 990.5473910000001,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 2",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 2098.7454969999962,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 868.9137879999907,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 839.3443759999936,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 914.6715760000079,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 9122.684045000002,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 15285.583500000008,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 0,
+          "actual": 0,
+          "afwijkingen": [],
+          "equal": false,
+          "settledMs": 25021.22464,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        }
+      ],
+      "fouten": [],
+      "volledigGeslaagd": false
+    },
+    {
+      "bestand": "perf-taal-na-4-uitgebreid.json",
+      "label": "taal-na-4-uitgebreid",
+      "cpu": 4,
+      "fasen": [
+        {
+          "name": "typing",
+          "wallMs": 9528.989608000003,
+          "calls": {
+            "selection": {
+              "count": 64,
+              "ms": 1.800000011920929
+            },
+            "getEditorRef": {
+              "count": 88,
+              "ms": 5.300000011920929
+            },
+            "getYrsSession": {
+              "count": 88,
+              "ms": 0.10000002384185791
+            },
+            "version": {
+              "count": 68,
+              "ms": 4.699999809265137
+            },
+            "spellingProjection": {
+              "count": 5,
+              "geometries": {
+                "1": 1,
+                "2": 1,
+                "3": 1,
+                "4": 2
+              },
+              "layouts": {
+                "layout-2": 1,
+                "layout-3": 1,
+                "layout-4": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 182
+            },
+            "spellingRects": {
+              "count": 144,
+              "ms": 502.5999997854233
+            },
+            "paragraphSpans": {
+              "count": 4,
+              "ms": 115.99999988079071
+            },
+            "native.paragraphSpans": {
+              "count": 4,
+              "ms": 116.09999990463257
+            },
+            "spellingViewport": {
+              "count": 3
+            },
+            "yrsBlocksForStory": {
+              "count": 2,
+              "ms": 271.0999999642372
+            },
+            "selectionContext": {
+              "count": 2,
+              "ms": 3.799999952316284
+            },
+            "native.storySegmentUnits": {
+              "count": 2,
+              "ms": 10.400000035762787
+            },
+            "getDocument": {
+              "count": 5,
+              "ms": 698
+            },
+            "storySegments": {
+              "count": 4,
+              "ms": 412.30000001192093
+            },
+            "native.selectionText": {
+              "count": 2,
+              "ms": 25.100000023841858
+            },
+            "getSelectionInfo": {
+              "count": 2,
+              "ms": 27.000000059604645
+            },
+            "languageStatus.inhoud": {
+              "count": 1,
+              "ms": 0.7999999523162842
+            },
+            "languageStatus.selectie": {
+              "count": 1,
+              "ms": 260.69999998807907
+            },
+            "readParagraphs": {
+              "count": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "name": "caret",
+          "wallMs": 6451.444912999985,
+          "calls": {
+            "selection": {
+              "count": 128,
+              "ms": 3.0000000596046448
+            },
+            "native.storySegmentUnits": {
+              "count": 30,
+              "ms": 26.19999998807907
+            },
+            "getEditorRef": {
+              "count": 46,
+              "ms": 3.300000011920929
+            },
+            "getYrsSession": {
+              "count": 46,
+              "ms": 0
+            },
+            "version": {
+              "count": 33,
+              "ms": 2.8999999165534973
+            },
+            "native.selectionText": {
+              "count": 1,
+              "ms": 14.699999988079071
+            },
+            "getSelectionInfo": {
+              "count": 1,
+              "ms": 14.799999952316284
+            },
+            "getDocument": {
+              "count": 1,
+              "ms": 27.5
+            },
+            "languageStatus.selectie": {
+              "count": 1,
+              "ms": 28.100000023841858
+            }
+          }
+        },
+        {
+          "name": "scroll",
+          "wallMs": 18458.93630099998,
+          "calls": {
+            "getEditorRef": {
+              "count": 168,
+              "ms": 11.100000023841858
+            },
+            "getYrsSession": {
+              "count": 168,
+              "ms": 1.7999999523162842
+            },
+            "selection": {
+              "count": 139,
+              "ms": 0.8999999761581421
+            },
+            "version": {
+              "count": 89,
+              "ms": 5.799999833106995
+            },
+            "spellingViewport": {
+              "count": 23
+            },
+            "spellingProjection": {
+              "count": 15,
+              "geometries": {
+                "4": 4,
+                "5": 1,
+                "6": 3,
+                "7": 2,
+                "8": 2,
+                "9": 1,
+                "10": 2
+              },
+              "layouts": {
+                "layout-4": 4,
+                "layout-5": 4,
+                "layout-6": 4,
+                "layout-7": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 1081
+            },
+            "spellingRects": {
+              "count": 553,
+              "ms": 2531.899999022484
+            }
+          }
+        }
+      ],
+      "inhoudExact": true,
+      "opgeslagenExact": true,
+      "caret": {
+        "before": {
+          "anchor": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "after": {
+          "anchor": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "expected": {
+          "offset": 373,
+          "paraId": "body:p599",
+          "story": "body"
+        },
+        "equal": true
+      },
+      "geometrie": [
+        {
+          "naam": "documentbegin",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1479.300997000013,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 977.1732159999956,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 793.7855869999912,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 958.5590730000113,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 2",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1128.6118460000143,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 823.4041699999943,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 865.2611210000177,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 843.9658190000046,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 7575.0735730000015,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 7868.165370000002,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 8683.353153999982,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 60",
+          "expected": 92,
+          "actual": 92,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 7636.4027759999735,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 5759.477899999998,
+          "rangeCache": {
+            "bereiken": 154,
+            "rechthoeken": 154
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 6257.47706200002,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 6342.625765000004,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 5268.195448999992,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "voor cachebewerking",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1638.437294000003,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "na cachebewerking",
+          "expected": 32,
+          "actual": 32,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1108.1155399999989,
+          "rangeCache": {
+            "bereiken": 32,
+            "rechthoeken": 32
+          }
+        },
+        {
+          "naam": "cache Undo",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 721.1858969999885,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "cache Redo",
+          "expected": 32,
+          "actual": 32,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 712.7790660000173,
+          "rangeCache": {
+            "bereiken": 32,
+            "rechthoeken": 32
+          }
+        },
+        {
+          "naam": "cache hersteld na Undo",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1463.171233000001,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "verschoven venster",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 788.4771820000024,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "editorhoogte zonder window.resize",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 733.2578640000138,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "herstelde editorhoogte",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 759.8557649999857,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "zoom 75 procent",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1028.934011000034,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "browservenster",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 833.0315820000251,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "verborgen vlak",
+          "actual": 0,
+          "equal": true,
+          "rangeCache": {
+            "bereiken": 0,
+            "rechthoeken": 0
+          }
+        },
+        {
+          "naam": "opnieuw zichtbaar",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1471.8152869999758,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "heropend document",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 891.81091499998,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        }
+      ],
+      "fouten": [],
+      "volledigGeslaagd": true
+    },
+    {
+      "bestand": "perf-taal-voor-4-twee.json",
+      "label": "taal-voor-4-twee",
+      "cpu": 4,
+      "fasen": [
+        {
+          "name": "typing",
+          "wallMs": 6083.383745999996,
+          "calls": {
+            "selection": {
+              "count": 55,
+              "ms": 1.5999999642372131
+            },
+            "getEditorRef": {
+              "count": 70,
+              "ms": 1.7000000476837158
+            },
+            "getYrsSession": {
+              "count": 70,
+              "ms": 0
+            },
+            "version": {
+              "count": 57,
+              "ms": 3
+            },
+            "paragraphSpans": {
+              "count": 4,
+              "ms": 78.80000007152557
+            },
+            "native.paragraphSpans": {
+              "count": 4,
+              "ms": 78.90000009536743
+            },
+            "spellingViewport": {
+              "count": 3
+            },
+            "spellingProjection": {
+              "count": 5,
+              "geometries": {
+                "1": 1,
+                "2": 1,
+                "3": 1,
+                "4": 2
+              },
+              "layouts": {
+                "layout-4": 2,
+                "layout-5": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 178
+            },
+            "spellingRects": {
+              "count": 140,
+              "ms": 372.5000004172325
+            },
+            "yrsBlocksForStory": {
+              "count": 2,
+              "ms": 192.80000001192093
+            },
+            "selectionContext": {
+              "count": 2,
+              "ms": 1.9999999403953552
+            },
+            "native.storySegmentUnits": {
+              "count": 2,
+              "ms": 8.400000035762787
+            },
+            "native.selectionText": {
+              "count": 3,
+              "ms": 36.89999997615814
+            },
+            "getSelectionInfo": {
+              "count": 3,
+              "ms": 37.09999990463257
+            },
+            "getDocument": {
+              "count": 7,
+              "ms": 604.8000001311302
+            },
+            "languageStatus.selectie": {
+              "count": 2,
+              "ms": 479
+            },
+            "storySegments": {
+              "count": 4,
+              "ms": 306.99999994039536
+            },
+            "languageStatus.inhoud": {
+              "count": 1,
+              "ms": 21.399999976158142
+            }
+          }
+        },
+        {
+          "name": "caret",
+          "wallMs": 5802.435285,
+          "calls": {
+            "selection": {
+              "count": 143,
+              "ms": 0.40000003576278687
+            },
+            "native.storySegmentUnits": {
+              "count": 30,
+              "ms": 23.599999845027924
+            },
+            "getEditorRef": {
+              "count": 59,
+              "ms": 1.7999998927116394
+            },
+            "getYrsSession": {
+              "count": 59,
+              "ms": 0.5000000596046448
+            },
+            "version": {
+              "count": 46,
+              "ms": 2.900000035762787
+            },
+            "native.selectionText": {
+              "count": 1,
+              "ms": 11.800000011920929
+            },
+            "getSelectionInfo": {
+              "count": 1,
+              "ms": 11.900000035762787
+            },
+            "getDocument": {
+              "count": 1,
+              "ms": 138.19999998807907
+            },
+            "languageStatus.selectie": {
+              "count": 1,
+              "ms": 138.5
+            },
+            "readParagraphs": {
+              "count": 1,
+              "ms": 0
+            },
+            "spellingViewport": {
+              "count": 1
+            },
+            "spellingProjection": {
+              "count": 2,
+              "geometries": {
+                "5": 1,
+                "6": 1
+              },
+              "layouts": {
+                "layout-6": 2
+              }
+            },
+            "spellingRanges": {
+              "count": 76
+            },
+            "spellingRects": {
+              "count": 76,
+              "ms": 137.10000026226044
+            }
+          }
+        },
+        {
+          "name": "scroll",
+          "wallMs": 11690.845951000003,
+          "calls": {
+            "getEditorRef": {
+              "count": 133,
+              "ms": 2.1000001430511475
+            },
+            "getYrsSession": {
+              "count": 133,
+              "ms": 0.20000004768371582
+            },
+            "selection": {
+              "count": 106,
+              "ms": 1.2000000476837158
+            },
+            "version": {
+              "count": 63,
+              "ms": 6.800000250339508
+            },
+            "spellingProjection": {
+              "count": 12,
+              "geometries": {
+                "7": 9,
+                "8": 1,
+                "9": 2
+              },
+              "layouts": {
+                "layout-7": 9,
+                "layout-8": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 842
+            },
+            "spellingRects": {
+              "count": 314,
+              "ms": 1146.1000007987022
+            },
+            "spellingViewport": {
+              "count": 21
+            }
+          }
+        }
+      ],
+      "inhoudExact": true,
+      "opgeslagenExact": true,
+      "caret": {
+        "before": {
+          "anchor": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "after": {
+          "anchor": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "expected": {
+          "offset": 373,
+          "paraId": "body:p599",
+          "story": "body"
+        },
+        "equal": true
+      },
+      "geometrie": [
+        {
+          "naam": "documentbegin",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 4134.412076999994,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 842.7094930000021,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 844.4484850000008,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 2011.4728719999985,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 2",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 4144.148017000014,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1352.545822,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 900.6892500000104,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 823.1834729999973,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 7682.308096000008,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 9518.711689999996,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 7751.049551999997,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 60",
+          "expected": 92,
+          "actual": 92,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 7831.876715000006,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 6175.966970999987,
+          "rangeCache": {
+            "bereiken": 154,
+            "rechthoeken": 154
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 6541.025038000007,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 6448.696064999996,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 4955.315209000022,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "voor cachebewerking",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1475.8299199999892,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "na cachebewerking",
+          "expected": 32,
+          "actual": 32,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1241.9738669999933,
+          "rangeCache": {
+            "bereiken": 32,
+            "rechthoeken": 32
+          }
+        },
+        {
+          "naam": "cache Undo",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1495.1546300000045,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "cache Redo",
+          "expected": 32,
+          "actual": 32,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 855.6028769999975,
+          "rangeCache": {
+            "bereiken": 32,
+            "rechthoeken": 32
+          }
+        },
+        {
+          "naam": "cache hersteld na Undo",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 762.5520170000091,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "verschoven venster",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 811.467588999978,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "editorhoogte zonder window.resize",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 844.6325480000232,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "herstelde editorhoogte",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 798.002513000014,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "zoom 75 procent",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 811.0241070000047,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "browservenster",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 841.8890890000039,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "verborgen vlak",
+          "actual": 0,
+          "equal": true,
+          "rangeCache": {
+            "bereiken": 0,
+            "rechthoeken": 0
+          }
+        },
+        {
+          "naam": "opnieuw zichtbaar",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1648.7728260000004,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "heropend document",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 749.3915229999984,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        }
+      ],
+      "fouten": [],
+      "volledigGeslaagd": true
+    },
+    {
+      "bestand": "perf-taal-na-8.json",
+      "label": "taal-na-8",
+      "cpu": 8,
+      "fasen": [
+        {
+          "name": "typing",
+          "wallMs": 20586.475323000006,
+          "calls": {
+            "selection": {
+              "count": 59,
+              "ms": 5.700000047683716
+            },
+            "getEditorRef": {
+              "count": 82,
+              "ms": 9.399999976158142
+            },
+            "getYrsSession": {
+              "count": 82,
+              "ms": 1.800000011920929
+            },
+            "version": {
+              "count": 65,
+              "ms": 16.399999976158142
+            },
+            "paragraphSpans": {
+              "count": 4,
+              "ms": 192.70000004768372
+            },
+            "native.paragraphSpans": {
+              "count": 4,
+              "ms": 194.4000000357628
+            },
+            "spellingViewport": {
+              "count": 3
+            },
+            "spellingProjection": {
+              "count": 5,
+              "geometries": {
+                "1": 1,
+                "2": 1,
+                "3": 1,
+                "4": 2
+              },
+              "layouts": {
+                "layout-4": 2,
+                "layout-5": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 178
+            },
+            "spellingRects": {
+              "count": 140,
+              "ms": 912.1999996900558
+            },
+            "yrsBlocksForStory": {
+              "count": 2,
+              "ms": 739.4000000357628
+            },
+            "selectionContext": {
+              "count": 2,
+              "ms": 6.100000023841858
+            },
+            "native.storySegmentUnits": {
+              "count": 2,
+              "ms": 22.69999998807907
+            },
+            "getDocument": {
+              "count": 5,
+              "ms": 1134.0999999046326
+            },
+            "storySegments": {
+              "count": 4,
+              "ms": 1321.0000000596046
+            },
+            "native.selectionText": {
+              "count": 2,
+              "ms": 89.19999998807907
+            },
+            "getSelectionInfo": {
+              "count": 2,
+              "ms": 97.09999996423721
+            },
+            "languageStatus.inhoud": {
+              "count": 1,
+              "ms": 3.400000035762787
+            },
+            "languageStatus.selectie": {
+              "count": 1,
+              "ms": 60.69999998807907
+            },
+            "readParagraphs": {
+              "count": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "name": "caret",
+          "wallMs": 10553.399624999991,
+          "calls": {
+            "selection": {
+              "count": 128,
+              "ms": 1.5999999642372131
+            },
+            "native.storySegmentUnits": {
+              "count": 30,
+              "ms": 51.3999999165535
+            },
+            "getEditorRef": {
+              "count": 45,
+              "ms": 6.399999916553497
+            },
+            "getYrsSession": {
+              "count": 45,
+              "ms": 0
+            },
+            "version": {
+              "count": 33,
+              "ms": 4.100000083446503
+            },
+            "native.selectionText": {
+              "count": 1,
+              "ms": 26.5
+            },
+            "getSelectionInfo": {
+              "count": 1,
+              "ms": 28
+            },
+            "getDocument": {
+              "count": 1,
+              "ms": 62.700000047683716
+            },
+            "languageStatus.selectie": {
+              "count": 1,
+              "ms": 62.700000047683716
+            }
+          }
+        },
+        {
+          "name": "scroll",
+          "wallMs": 25214.527331999998,
+          "calls": {
+            "getEditorRef": {
+              "count": 181,
+              "ms": 8.600000083446503
+            },
+            "getYrsSession": {
+              "count": 181,
+              "ms": 1.8000000715255737
+            },
+            "selection": {
+              "count": 146,
+              "ms": 2.300000011920929
+            },
+            "version": {
+              "count": 91,
+              "ms": 13.49999988079071
+            },
+            "spellingViewport": {
+              "count": 23
+            },
+            "spellingProjection": {
+              "count": 15,
+              "geometries": {
+                "4": 4,
+                "5": 1,
+                "6": 3,
+                "7": 2,
+                "8": 2,
+                "9": 1,
+                "10": 2
+              },
+              "layouts": {
+                "layout-5": 4,
+                "layout-6": 4,
+                "layout-7": 4,
+                "layout-8": 3
+              }
+            },
+            "spellingRanges": {
+              "count": 1081
+            },
+            "spellingRects": {
+              "count": 553,
+              "ms": 3402.0999996066093
+            }
+          }
+        }
+      ],
+      "inhoudExact": true,
+      "opgeslagenExact": true,
+      "caret": {
+        "before": {
+          "anchor": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 403,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "after": {
+          "anchor": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          },
+          "head": {
+            "offset": 373,
+            "paraId": "body:p599",
+            "story": "body"
+          }
+        },
+        "expected": {
+          "offset": 373,
+          "paraId": "body:p599",
+          "story": "body"
+        },
+        "equal": true
+      },
+      "geometrie": [
+        {
+          "naam": "documentbegin",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 2736.680771000014,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1471.5020220000006,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1390.9663930000097,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1569.7918910000008,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 2",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 2913.832035999978,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1.5",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 988.447565999988,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 1",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1194.2057259999856,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0.5",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1024.4477640000114,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 15569.812844,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 17123.609431999997,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 18139.61368900002,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 60",
+          "expected": 92,
+          "actual": 92,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 16415.024789000017,
+          "rangeCache": {
+            "bereiken": 92,
+            "rechthoeken": 92
+          }
+        },
+        {
+          "naam": "cache scroll pagina 40",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 13162.459300999995,
+          "rangeCache": {
+            "bereiken": 154,
+            "rechthoeken": 154
+          }
+        },
+        {
+          "naam": "cache scroll pagina 20",
+          "expected": 61,
+          "actual": 61,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 13658.968758000003,
+          "rangeCache": {
+            "bereiken": 61,
+            "rechthoeken": 61
+          }
+        },
+        {
+          "naam": "cache scroll pagina 10",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 14056.871694000001,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "cache scroll pagina 0",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 11461.212627,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "voor cachebewerking",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 948.8440410000039,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "na cachebewerking",
+          "expected": 32,
+          "actual": 32,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 2438.437876000011,
+          "rangeCache": {
+            "bereiken": 32,
+            "rechthoeken": 32
+          }
+        },
+        {
+          "naam": "cache Undo",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1306.5016769999638,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "cache Redo",
+          "expected": 32,
+          "actual": 32,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1952.2432259999914,
+          "rangeCache": {
+            "bereiken": 32,
+            "rechthoeken": 32
+          }
+        },
+        {
+          "naam": "cache hersteld na Undo",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 969.9881540000206,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "verschoven venster",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1392.7085879999795,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "editorhoogte zonder window.resize",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1960.517086000007,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        },
+        {
+          "naam": "herstelde editorhoogte",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 2313.369267000002,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "zoom 75 procent",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1893.2598720000242,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "browservenster",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1922.2430710000335,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "verborgen vlak",
+          "actual": 0,
+          "equal": true,
+          "rangeCache": {
+            "bereiken": 0,
+            "rechthoeken": 0
+          }
+        },
+        {
+          "naam": "opnieuw zichtbaar",
+          "expected": 62,
+          "actual": 62,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 3645.2884670000058,
+          "rangeCache": {
+            "bereiken": 62,
+            "rechthoeken": 62
+          }
+        },
+        {
+          "naam": "heropend document",
+          "expected": 31,
+          "actual": 31,
+          "afwijkingen": [],
+          "equal": true,
+          "settledMs": 1094.7101419999963,
+          "rangeCache": {
+            "bereiken": 31,
+            "rechthoeken": 31
+          }
+        }
+      ],
+      "fouten": [],
+      "volledigGeslaagd": true
+    }
+  ],
+  "conclusie": "Minder documentlezingen, geen aangetoonde snelheidswinst. PR #349 blijft concept; issue #327 blijft open.",
+  "ci": {
+    "headRefOid": "679d0edfde2924cbde489e7e179b2e783b6e1e8d",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:19:14Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026059085/job/130540930467",
+        "name": "desktop (ubuntu-22.04)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Kantooromgeving controleren en bouwen"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:07:42Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058575/job/130540929394",
+        "name": "legacy",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Legacy format coverage"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:10:19Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058545/job/130540929559",
+        "name": "browser (ubuntu-22.04)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Office browser regressions"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:11:20Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058635/job/130540929692",
+        "name": "presentation (Linux)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Preserve presentation ODF data"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:09:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058553/job/130540929136",
+        "name": "matrix",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Rekenbladmatrix onafhankelijk controleren"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:08:52Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058660/job/130540929536",
+        "name": "writer",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Writer format round trips"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:07:01Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058592/job/130540929125",
+        "name": "voorbeeld",
+        "startedAt": "2026-11-11T13:05:56Z",
+        "status": "COMPLETED",
+        "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:20:21Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058589/job/130540929260",
+        "name": "database (ubuntu-22.04)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:24:54Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026059085/job/130540930741",
+        "name": "desktop (windows-latest)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Kantooromgeving controleren en bouwen"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:10:50Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058545/job/130540929160",
+        "name": "browser (windows-latest)",
+        "startedAt": "2026-11-11T13:05:56Z",
+        "status": "COMPLETED",
+        "workflowName": "Office browser regressions"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:12:07Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058635/job/130540929320",
+        "name": "presentation (Windows)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Preserve presentation ODF data"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:20:03Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058589/job/130540929777",
+        "name": "database (windows-latest)",
+        "startedAt": "2026-11-11T13:05:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:34:53Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026059085/job/130540930917",
+        "name": "desktop (macos-latest)",
+        "startedAt": "2026-11-11T13:18:07Z",
+        "status": "COMPLETED",
+        "workflowName": "Kantooromgeving controleren en bouwen"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:10:34Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058545/job/130540929379",
+        "name": "browser (macos-latest)",
+        "startedAt": "2026-11-11T13:06:10Z",
+        "status": "COMPLETED",
+        "workflowName": "Office browser regressions"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:22:50Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058635/job/130540929743",
+        "name": "presentation (macOS)",
+        "startedAt": "2026-11-11T13:17:30Z",
+        "status": "COMPLETED",
+        "workflowName": "Preserve presentation ODF data"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T13:24:42Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43026058589/job/130540929510",
+        "name": "database (macos-latest)",
+        "startedAt": "2026-11-11T13:10:44Z",
+        "status": "COMPLETED",
+        "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+      }
+    ]
+  }
+}
