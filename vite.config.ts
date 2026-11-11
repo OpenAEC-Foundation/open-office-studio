@@ -50,6 +50,8 @@ export default defineConfig({
   plugins: [studioBeeldmerk(), fontsUitPublic(), tekstengineCompatibiliteit(), tekstnavigatieCompatibiliteit(), rekenbladengineCompatibiliteit(), presentatieengineCompatibiliteit()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {
+    // Zware WASM-suites delen twee workers voor voorspelbare CPU- en geheugendruk.
+    maxWorkers: 2,
     exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
     setupFiles: ["src/i18n/testopzet.ts", "src/tekst/gedeeld/kern-testopzet.ts", "src/rekenblad/kern-testopzet.ts"],
