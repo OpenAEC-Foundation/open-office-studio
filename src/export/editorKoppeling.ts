@@ -10,7 +10,7 @@ import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { werkboekBytes } from "../lint/rekenblad-filter";
 
 /** 0-gebaseerde index van de dia die het diapaneel als huidige toont. */
-function huidigeDia() {
+export function huidigeDia() {
   const knoppen = [
     ...(zichtbaarElement<HTMLElement>(
       ".office-presentatie",

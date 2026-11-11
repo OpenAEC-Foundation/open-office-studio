@@ -26,6 +26,7 @@ import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag"
 import { werkboekBytes } from "./lint/rekenblad-filter";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
 import { koppelEditor } from "./export/editorKoppeling";
+import { registreerActieveEditor } from "./assistent/actieveEditor";
 import { lettertypeModule } from "./lettertypen/provider";
 import { laadSysteemLettertypen } from "./lettertypen/systeem";
 import { lettertypeBasis } from "./lettertypen/catalogus";
@@ -185,6 +186,18 @@ export default function OfficeEditor(props: EditorProps) {
     presentatieApi,
     herladen.api,
   ]);
+  // De assistent van de SuperCloud-werkplek leest en bewerkt het zichtbare document (src/assistent/appTools.ts).
+  useEffect(() => {
+    if (props.zichtbaar === false) return;
+    return registreerActieveEditor({
+      soort: props.soort,
+      naam: props.naam,
+      alleenLezen: props.inactief,
+      tekst: documentGereed ? docx.current : null,
+      rekenblad: rekenbladApi,
+      presentatie: presentatieApi,
+    });
+  }, [props.soort, props.zichtbaar, props.naam, props.inactief, documentGereed, rekenbladApi, presentatieApi]);
   const zoomKoppeling = useMemo(
     () => ({
       sleutel: `${props.soort}:${props.naam}:${props.bytes.byteLength}`,

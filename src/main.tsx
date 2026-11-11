@@ -10,12 +10,15 @@ import { OfficeStudio } from "./OfficeStudio";
 import { bewaarWasmInGeheugen } from "./wasmGeheugen";
 import { gereed as taalGereed } from "./i18n/config";
 import { installeerWerkplekHost } from "./werkplek";
+import { installeerAppTools } from "./assistent/appTools";
 import versie from "../versie.json";
 import "../packages/database/src/database.css";
 import "./stijl/openaec-office.css";
 bewaarWasmInGeheugen();
 // In de SuperCloud-werkplek: opslaan en openen via de gastpagina (src/werkplek.ts).
 installeerWerkplekHost(versie.versie);
+// De assistent van de werkplek bedient het open document (src/assistent/appTools.ts); alleen in de browser.
+installeerAppTools();
 // Desktop: het voorstellingsvenster op een tweede monitor (src/presentatie/toeschouwerKanaal.ts).
 const voorstelling = new URLSearchParams(location.search).get("voorstelling");
 // Eerst de gekozen taal laden (een eigen chunk behalve nl/en), dan pas tekenen.

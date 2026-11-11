@@ -51,7 +51,7 @@ export function kopieNaam(naam: string, namen: string[]) {
   }
 }
 
-function gebruikt(api: XlsxEditorApi, blad: number): Bereik | null {
+export function gebruikt(api: XlsxEditorApi, blad: number): Bereik | null {
   const uitvoer = api.handle.exportStructured({
     scope: [{ sheet: blad, range: "A1" }],
     maxCells: 1,
