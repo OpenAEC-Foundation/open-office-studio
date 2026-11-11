@@ -41,3 +41,10 @@ hebben verschillende grenzen; geneste fasen niet dubbel optellen. Klokken en
 stderr hebben eigen overhead. Alleen Linux en deze ene bron zijn beproefd.
 
 [Resultaten, negatieve opzet en grenzen](../../../docs/tests/writer-rust-invoerfasen.md).
+
+Dit is een historische, bronvaste proef. De vier hashes in `bron.json` passen
+bij onderzoeksbron `7cbc667a`; zij zijn na de port van de journaalfeature niet
+bijgesteld. Gebruik voor reproductie een afzonderlijke checkout van die bron.
+Op de nieuwere appbron hoort de voorbereider met `Andere appbron` te stoppen.
+De unittest voor kopiebeveiliging maakt een eigen actuele bronfixture in een
+tijdelijke map; dat wijzigt of herbevestigt het historische bronbewijs niet.

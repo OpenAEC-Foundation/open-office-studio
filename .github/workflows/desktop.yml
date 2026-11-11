@@ -117,6 +117,12 @@ jobs:
       - run: cargo test --manifest-path src-tauri/Cargo.toml --locked
       - name: Experimentele Writer-desktopkoppeling controleren
         run: cargo check --manifest-path src-tauri/Cargo.toml --locked --features writer-bronjournaal
+      - name: Echte Writer-hostbrug bouwen
+        run: cargo build --manifest-path native/Cargo.toml -p office-writer-plakken --features writer-bronjournaal --example writer-journaal-draad --locked
+      - name: Frontend met echte Writer-host controleren
+        env:
+          WRITER_JOURNAAL_HOST: ${{ github.workspace }}/native/target/debug/examples/writer-journaal-draad${{ runner.os == 'Windows' && '.exe' || '' }}
+        run: pnpm exec vitest run src/tekst/bewerken/rustJournaal-echte-host.test.ts --maxWorkers=1 --no-file-parallelism
       - name: ODF, oudere formaten en PDF werkelijk converteren
         if: runner.os == 'Linux' && vars.CONVERSIE_PROGRAMMA != ''
         env:

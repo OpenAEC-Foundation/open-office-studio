@@ -31,8 +31,14 @@ class RustFaseVoorbereiding(unittest.TestCase):
     def test_bron_en_bestaande_kopieen_blijven_behouden(self):
         with tempfile.TemporaryDirectory(prefix='writer-rustfasen-') as tmp:
             root = Path(tmp)
-            for naam in ['bron.json', 'Cargo.lock']:
-                shutil.copy2(ROOT / naam, root / naam)
+            shutil.copy2(ROOT / 'Cargo.lock', root / 'Cargo.lock')
+            # Test de kopiebeveiliging met een eigen actuele bronfixture. Het
+            # historische onderzoek blijft zijn oorspronkelijke hashes eisen;
+            # die mogen bij een nieuwe productfeature juist niet meer slagen.
+            verwacht = json.loads((ROOT / 'bron.json').read_text())
+            (root / 'bron.json').write_text(json.dumps({
+                rel: module.sha(REPO / rel) for rel in verwacht
+            }))
             with patch.object(module, 'ROOT', root), patch.object(module, 'LOKAAL', root / '.local'):
                 module.bereid()
                 bewijs = json.loads((root / '.local/bronnen.json').read_text())

@@ -6,7 +6,7 @@ import { snapshotNaarBase64 } from "./binaireSnapshot";
 import { beginInvoerMeting } from "./invoerMeting";
 
 export interface RustPlakAanvraag {
-  schema: 1 | 2;
+  schema: 1 | 2 | 3;
   basis?: string;
   sourceVector?: string;
   requestId: string;
@@ -34,7 +34,18 @@ export interface RustPlakAntwoord {
   retryFull?: false;
 }
 export type RustBronOpnieuw = Pick<RustPlakAntwoord, "schema" | "requestId" | "documentId" | "sourceVersion" | "snapshotSha256" | "clientId"> & { retryFull: true };
-export type RustTransportAntwoord = RustPlakAntwoord | RustBronOpnieuw;
+export type RustBronTerugval = Pick<RustPlakAntwoord, "schema" | "requestId" | "documentId" | "sourceVersion" | "snapshotSha256" | "clientId"> & {
+  route: "bestaandeRoute"; fallbackSchema: 2; requiresFull: true; reden: string;
+};
+export type RustTransportAntwoord = RustPlakAntwoord | RustBronOpnieuw | RustBronTerugval;
+/** Per bewerking vastgezet: een latere handshake wijzigt geen lopende aanvraag. */
+export interface RustVoorbereiding {
+  schema: 2 | 3;
+  bron: RustBronKoppeling;
+  transport: (aanvraag: RustPlakAanvraag) => Promise<RustTransportAntwoord>;
+  actueel: () => boolean;
+  terugval?: () => RustVoorbereiding;
+}
 export interface RustBronKoppeling {
   lees: (sessie: YrsSession) => { bytes: Uint8Array; basis?: string; sourceVector: string };
   bevestig: (sessie: YrsSession, aanvraag: RustPlakAanvraag, antwoord: RustPlakAntwoord) => void;
@@ -47,6 +58,7 @@ export interface RustPlakOpties {
   fout?: (fout: Error) => void;
   documentId?: string;
   bron?: RustBronKoppeling;
+  voorbereiding?: (sessie: YrsSession) => RustVoorbereiding;
   /** Alleen meet-/testgegevens; geen documentinhoud. */
   meting?: (gegevens: { route: "rust" | "opnieuw" | "synchroon"; poging: number }) => void;
 }
@@ -94,7 +106,9 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
     async plak(sessie: YrsSession, bereik: YrsStoryRange, fragment: DocxClipboardFragment, auteur: YrsAuthor | undefined, zelfdeEditor: () => boolean, klembordGebeurtenis?: Event, opnemen: (mutatie: () => void) => void = mutatie => mutatie()): Promise<boolean> {
       const bereidAfronding = neemPlakAfronding(klembordGebeurtenis);
       const eigenLevensduur = levensduur;
-      const geldig = () => actief && levensduur === eigenLevensduur && zelfdeEditor();
+      if (!actief || levensduur !== eigenLevensduur || !zelfdeEditor()) return false;
+      let route = opties.voorbereiding?.(sessie);
+      const geldig = () => actief && levensduur === eigenLevensduur && zelfdeEditor() && (!route || route.actueel());
       if (!geldig()) return false;
       const meetpunt = beginInvoerMeting(sessie, eigenLevensduur);
       let meetuitkomst: "rust" | "synchroon" | "afgebroken" | "fout" = "afgebroken";
@@ -126,7 +140,8 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           const range = actueelBereik(), generatie = bronGeneratie;
           const afronden = bereidAfronding?.(sessie, range);
           meetpunt?.stap("cursor");
-          const bron = opties.bron?.lees(sessie);
+          const bronKoppeling = route?.bron ?? opties.bron;
+          const bron = bronKoppeling?.lees(sessie);
           const snapshot = new Uint8Array(bron?.bytes ?? sessie.encodeStateAsUpdate());
           meetpunt?.stap("bron");
           if (snapshot.length > MAX_SNAPSHOT_BYTES) break;
@@ -137,24 +152,32 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           if (generatie !== bronGeneratie || sourceVersion !== sessie.version()) {
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
-          const aanvraag: RustPlakAanvraag = { schema: bron ? 2 : 1, ...(bron ? { sourceVector: bron.sourceVector } : {}), ...(bron?.basis ? { basis: bron.basis } : {}), requestId: crypto.randomUUID(), documentId, sourceVersion,
+          const aanvraag: RustPlakAanvraag = { schema: route?.schema ?? (bron ? 2 : 1), ...(bron ? { sourceVector: bron.sourceVector } : {}), ...(bron?.basis ? { basis: bron.basis } : {}), requestId: crypto.randomUUID(), documentId, sourceVersion,
             snapshotSha256, snapshot: snapshotNaarBase64(snapshot), clientId: sessie.clientId, range, fragment, author: auteur };
           meetpunt?.stap("aanvraag");
-          const antwoord = await opties.transport(aanvraag);
+          const antwoord = await (route?.transport ?? opties.transport)(aanvraag);
           meetpunt?.stap("transport");
           if (!geldig()) return false;
           // Dezelfde client-id mag uitsluitend tegen de nog identieke bron schrijven.
           if (generatie !== bronGeneratie || sourceVersion !== sessie.version()) {
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
+          if ("fallbackSchema" in antwoord) {
+            antwoordBinding(antwoord, aanvraag);
+            if (aanvraag.schema !== 3 || antwoord.route !== "bestaandeRoute" || antwoord.fallbackSchema !== 2
+              || antwoord.requiresFull !== true || !route?.terugval)
+              throw new Error("Onverwachte terugval van de Writer-bronroute");
+            route = route.terugval();
+            opties.meting?.({ route: "opnieuw", poging }); continue;
+          }
           if (antwoord.retryFull === true) {
             antwoordBinding(antwoord, aanvraag);
-            if (!opties.bron || aanvraag.schema !== 2) throw new Error("Onverwacht verzoek om een volledige Writer-bron");
-            opties.bron.herbegin();
+            if (!bronKoppeling || (aanvraag.schema !== 2 && aanvraag.schema !== 3)) throw new Error("Onverwacht verzoek om een volledige Writer-bron");
+            bronKoppeling.herbegin();
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
           const delta = antwoordDelta(antwoord, aanvraag);
-          opties.bron?.bevestig(sessie, aanvraag, antwoord);
+          bronKoppeling?.bevestig(sessie, aanvraag, antwoord);
           const verplaatsCursor = sameYrsSelection(sessie.selection(), actueleSelectie());
           meetpunt?.rust(antwoord.preparationMs);
           meetpunt?.stap("binding");
