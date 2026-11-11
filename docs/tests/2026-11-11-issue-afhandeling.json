@@ -1,0 +1,347 @@
+{
+  "datum": "2026-11-11",
+  "integratiePR": 248,
+  "mainCommit": "7c8fb97f",
+  "getesteRuntime": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "geslotenIssues": [
+    {
+      "issue": 302,
+      "sourcePR": "307",
+      "report": "2026-11-10-writer-kopvoet-openmelding.md",
+      "result": "Successful header/footer opening is remembered before legitimate fast close/reload; genuine and superseded attempts retain their tested handling. Combined browser and recorded native Windows retests pass."
+    },
+    {
+      "issue": 289,
+      "sourcePR": "278",
+      "report": "2026-11-10-presentatie-odf-overgangen.md",
+      "result": "All four shared transition-sound actions and internal audio bytes survive native ODP/OTP conversion, engine save/reopen and actual browser playback."
+    },
+    {
+      "issue": 288,
+      "sourcePR": "278",
+      "report": "2026-11-10-presentatie-odf-overgangen.md",
+      "result": "Uniform enabled/disabled click policy is preserved through the standard ODF setting and returned transition branches. Mixed per-slide policies remain explicitly outside this issue."
+    },
+    {
+      "issue": 287,
+      "sourcePR": "278",
+      "report": "2026-11-10-presentatie-odf-overgangen.md",
+      "result": "The native ODP/OTP/FODP matrix preserves right/left/up/down directions and unrelated animation, notes and page-style semantics."
+    },
+    {
+      "issue": 286,
+      "sourcePR": "278",
+      "report": "2026-11-10-presentatie-odf-overgangen.md",
+      "result": "The native conversion matrix and real engine round trip preserve 1800/1234/2500/3750ms, with ODF 1.3 validation and unrelated timing/parts retained."
+    },
+    {
+      "issue": 285,
+      "sourcePR": "274",
+      "report": "2026-11-10-presentatie-dianummers.md",
+      "result": "Both application save routes refresh existing slide-number field text using current slide order and firstSlideNum. Tests cover move/delete/duplicate, hidden/unnumbered slides, source preservation and real browser save/reopen. Live cached canvas refresh remains outside this scoped issue."
+    },
+    {
+      "issue": 284,
+      "sourcePR": "266",
+      "report": "integratie-ronde2-2026-11-10.md",
+      "result": "Reload navigation is one-shot and canceled by newer input or document replacement. Four navigation regressions, six production custom-story stages and the recorded native Windows saved-file inspection verify the newer selection is preserved."
+    },
+    {
+      "issue": 282,
+      "sourcePR": "290",
+      "report": "2026-11-10-writer-nootvervolg.md",
+      "result": "Both note kinds now continue with ordinary body formatting while preserving marker styling, intentional prior formatting and Undo/Redo. Twelve native-kernel regressions, four browser cases and the recorded installed Windows save/reopen/PDF retest pass."
+    },
+    {
+      "issue": 279,
+      "sourcePR": "291",
+      "report": "../writer-performance.md",
+      "result": "Scoped raw paragraph navigation preserves exact cursor/text/format/selection behavior and safe fallback. CPU4/CPU8 probes verify 30 scoped reads instead of 30 full-story reads, save/reopen and spelling/viewport controls; no general smoothness guarantee is claimed."
+    },
+    {
+      "issue": 259,
+      "sourcePR": "260",
+      "report": "2026-11-10-samenvoeg-bijschriften.md",
+      "result": "Complex and simple SEQ fields are processed in document order, preserving explicit restarts and quoted/unquoted sequence identity. Six new real-kernel cases yield 1,2,1,2 or 7,8,7,8; existing merge preservation and production UI/export checks pass."
+    },
+    {
+      "issue": 326,
+      "sourcePR": "331",
+      "report": "integratie-ronde2-aanvulling-2026-11-10.json",
+      "result": "Whole-word counting, navigation and replacement preserve Unicode ranges, save/reopen and Undo/Redo; the bounded native two-slide test and five independent PPTX snapshots also pass."
+    },
+    {
+      "issue": 325,
+      "sourcePR": "328",
+      "report": "integratie-ronde2-2026-11-10.json",
+      "result": "The audio/video full-end and trimmed-end replay cases pass in the real player, together with pause/resume, seeking, updated boundaries and repeat controls."
+    },
+    {
+      "issue": 324,
+      "sourcePR": "333",
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "result": "Implicit default cells now receive the applicable table font/fill projection while inherited/direct overrides retain precedence. Explicit and implicit Medium2 native edit/save/close/reopen cases pass with independent package checks."
+    },
+    {
+      "issue": 323,
+      "sourcePR": "334",
+      "report": "integratie-ronde2-native-pdf-2026-11-10.json",
+      "result": "The actual three-page Windows PDF preserves the complete filename, author and title without overlap; independent geometry gives the same 8.41017pt separation on all pages. DOCX parts and fields are preserved as documented."
+    },
+    {
+      "issue": 322,
+      "sourcePR": "332",
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "result": "Built-in font/fill presets now follow theme and table options, with direct/custom precedence preserved. Native Medium2 edit/save/close/reopen and independent styles/table XML checks pass. Borders remain outside this issue."
+    },
+    {
+      "issue": 318,
+      "sourcePR": "320",
+      "report": "integratie-ronde2-antwoordinitialen-2026-11-10.json",
+      "result": "New replies preserve initials captured at creation. Targeted identity/ID reuse tests, actual browser profile/cancellation/save/reopen cases and bounded native RX save/reopen/resave checks pass."
+    },
+    {
+      "issue": 313,
+      "sourcePR": "315",
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "result": "Review uses a prepared temporary replica and one local update. Worker/save synchronization, individual and bulk review, Undo/Redo and reopened native XML snapshots preserve the leading revisions and formatting."
+    },
+    {
+      "issue": 311,
+      "sourcePR": "314",
+      "report": "integratie-ronde2-2026-11-10.json",
+      "result": "PDF font-resolution work is invalidated by the existing availability event, including old in-flight results. Targeted tests and controlled browser checks use real font bytes; an actual native permission dialog is not claimed."
+    },
+    {
+      "issue": 310,
+      "sourcePR": "316",
+      "report": "integratie-ronde2-2026-11-10.json",
+      "result": "Unambiguous ODF media frame names are restored when conversion drops them; genuinely unnamed media gets distinct localized display labels. Native ODP/OTP conversion, real selector/playback and saved-package checks pass."
+    },
+    {
+      "issue": 308,
+      "sourcePR": "321 / #335",
+      "report": "integratie-ronde2-2026-11-10.json",
+      "result": "The integrated 15-patch kernel contains the validated linear-trendline correction. Native kernel, independent geometry and actual browser edit/Undo/save/reopen checks cover supported 2-D line/scatter fits, screen/profile/print and source preservation. Other trend types remain under #66."
+    },
+    {
+      "issue": 292,
+      "sourcePR": "301",
+      "report": "2026-11-10-voorwaardelijke-visueel.md",
+      "result": "Formula thresholds use the original sheet/local-name context and follow edits/Undo without changing caches, history or saved rules; invalid formulas remain unsupported rather than becoming zero."
+    },
+    {
+      "issue": 293,
+      "sourcePR": "301",
+      "report": "2026-11-10-voorwaardelijke-visueel.md",
+      "result": "All four/five icon levels and reversed order are preserved across screen/profile/print and saved-source checks."
+    },
+    {
+      "issue": 294,
+      "sourcePR": "301",
+      "report": "2026-11-10-voorwaardelijke-visueel.md",
+      "result": "Both XML boolean spellings are handled consistently, including exclusive equality, reverse order and immutable source rules."
+    },
+    {
+      "issue": 295,
+      "sourcePR": "301",
+      "report": "2026-11-10-voorwaardelijke-visueel.md",
+      "result": "Classic bars interpolate over their CFVO range and explicit/default length bounds, with clamping and finite geometry."
+    },
+    {
+      "issue": 296,
+      "sourcePR": "301",
+      "report": "2026-11-10-voorwaardelijke-visueel.md",
+      "result": "All 17 standard icon families use font-independent vector shapes and preserve distinct levels, source names and value visibility. Unsupported families are not fabricated."
+    },
+    {
+      "issue": 299,
+      "sourcePR": "301",
+      "report": "2026-11-10-voorwaardelijke-visueel.md",
+      "result": "Merged-cell bars use the full source rectangle; independent baseline/fixed measurements and screen/profile/print checks preserve workbook state and XML."
+    },
+    {
+      "issue": 298,
+      "sourcePR": "304",
+      "report": "2026-11-10-presentatie-odf-mediavolume.md",
+      "result": "Bounded unambiguous bindings preserve media volume/mute through actual ODP/OTP conversion and real playback/save/reopen; stale or ambiguous metadata is rejected. Trim/start/loop work remains separate."
+    },
+    {
+      "issue": 305,
+      "sourcePR": "309",
+      "report": "2026-11-10-writer-empty-bibliography.md",
+      "result": "Only the bounded known empty DOCX bibliography seed is exempted. Real sources and unknown/extra/malformed custom XML still warn, while all source bytes remain intact."
+    },
+    {
+      "issue": 303,
+      "sourcePR": "329",
+      "report": "../writer-performance.md",
+      "result": "The bounded same-frame range cache passes independent geometry, edit/Undo/Redo, zoom/resize/hide/show and saved/reopened controls. CPU4/CPU8 evidence shows fewer queries, not a general speed or total-memory guarantee."
+    },
+    {
+      "issue": 297,
+      "sourcePR": "306",
+      "report": "integratie-ronde2-native-windows-2026-11-10.json",
+      "result": "Supported direct character-format differences become explicit styled replacements. Native comparison/review and nine saved XML snapshots verify Accept/Reject, Save/Undo/Redo and reopen; unsupported structures retain diagnostics."
+    },
+    {
+      "issue": 188,
+      "sourcePR": "190",
+      "report": "2026-11-09-writer-vervangen-undo.json",
+      "result": "Replace/Replace All restores document focus for immediate one-step Ctrl+Z while preserving text-input Undo. Actual production-browser baseline/fix, saved DOCX and reopen checks pass; this is distinct from still-open tab-focus #340."
+    },
+    {
+      "issue": 196,
+      "sourcePR": "242",
+      "report": "integratie-2026-11-09.md",
+      "result": "The comment-input clipboard route is isolated from document input. The incorporated PR219 regression and combined Writer production-browser checks preserve body selection/text while pasting into the active reply. The original installed Windows report is distinct from the recorded browser retest."
+    },
+    {
+      "issue": 199,
+      "sourcePR": "242",
+      "report": "2026-11-09-writer-next-style.md",
+      "result": "The next paragraph adopts resolved destination-style defaults instead of heading font/color. Actual engine tests and six production-browser scenarios cover real keypresses, Heading1/2, deliberate formatting, Undo/Redo and independent saved XML/reopen."
+    },
+    {
+      "issue": 209,
+      "sourcePR": "242",
+      "report": "2026-11-09-writer-even-header.md",
+      "result": "Header editing now carries the hit relationship ID and scrolls/verifies the chosen page margin. Production-browser tests cover actual typing in even/first/default headers, even footers, missing-header creation, Undo/Redo and saved-part reopening without changing other stories. No additional installed-native interaction is claimed here."
+    },
+    {
+      "issue": 68,
+      "sourcePR": "236",
+      "report": "2026-11-09-rekenblad-validatie.md",
+      "result": "All seven validation types, range/fixed/named dropdowns, input messages, stop/warning/information alerts and invalid-data circles are implemented. Actual-core, real UI/save/reopen and independent conversion controls pass. Documented formula, scan and dropdown bounds fail explicitly; they do not silently accept incomplete checks."
+    },
+    {
+      "issue": 71,
+      "sourcePR": "236",
+      "report": "2026-11-09-rekenblad-opmerkingen.md",
+      "result": "Classic notes and threaded replies/resolution retain author/time, cell indicators/navigation and source metadata; print modes none/at-end/as-displayed share preview/PDF rendering. Actual-core, six production-browser flows, independently inspected PDFs and XLSX interoperability checks pass."
+    },
+    {
+      "issue": 72,
+      "sourcePR": "236",
+      "report": "2026-11-09-rekenblad-beveiliging.md",
+      "result": "Sheet/workbook protection management, optional password verification, locked/unlocked/hidden flags, configured action/selection permissions and source preservation are implemented. Actual-core, UI/save/reopen and independent verifier checks pass. This is accidental-edit protection, not encryption. The documented external-converter loss remains a format limitation under #32/#35."
+    },
+    {
+      "issue": 73,
+      "sourcePR": "273 / #332 / #333",
+      "report": "2026-11-10-rekenblad-stijlen-tabellen.md",
+      "result": "Named cell styles and structured tables now support creation/modification, totals/banding, native row/column growth, structured references, filter controls and save/reopen preservation. Combined core/UI tests and independent table/style import controls pass, including subsequent built-in and implicit-style fixes. Documented transactional/bounded editing limitations remain visible."
+    }
+  ],
+  "bronPRs": [
+    {
+      "pr": 301,
+      "source": "92b1962a19c18ba2e89e67f292336f14b01e5ab4",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 291,
+      "source": "56fbdccbbcc9df88215a8d92c09a6cea6340afef",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 270,
+      "source": "14cfe8b66d33eccf78c60541dd2d4ff5e27be09e",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 267,
+      "source": "0e58e6f363af73f395025d82fd8c73f319a89f37",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 263,
+      "source": "7a90cb16da652f1d560817db533607513c4583ad",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 257,
+      "source": "3bd94cf7a827602c068462938297ef1d1fa4b33c",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 256,
+      "source": "51e0ea41e109960d8ea6ca53a149f1b663857ac3",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 254,
+      "source": "5a1c0d50f53ba31a298e9286b9c0ebec31e51782",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 252,
+      "source": "248d5a79b9248ecf59f1378490c793493032c23f",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    },
+    {
+      "pr": 250,
+      "source": "99da68f0598b3a11ed1c6411e4135a3179bbb3f9",
+      "main": "7c8fb97f",
+      "reason": "exact source ancestor of merged integration"
+    }
+  ],
+  "release": {
+    "versie": "2026.46.1",
+    "bron": "de584578f91698ec051d345a335a7c3f19011a94",
+    "run": 43021548128,
+    "status": "bouw loopt, nog niet gepubliceerd"
+  },
+  "openIssuesNaAfhandeling": 85,
+  "automatischGesloten": [
+    {
+      "number": 205,
+      "title": "Writer: table Sort selectors and options are barely readable in dark theme"
+    },
+    {
+      "number": 189,
+      "title": "Writer: whole-word search accepts an invalid regex and returns unrelated matches"
+    },
+    {
+      "number": 130,
+      "title": "Writer: splitting the top cell appears to shift column widths in other rows"
+    },
+    {
+      "number": 81,
+      "title": "Presentation: tables on slides"
+    },
+    {
+      "number": 54,
+      "title": "Writer: mail merge with an address list"
+    },
+    {
+      "number": 53,
+      "title": "Writer: insert and edit mathematical equations"
+    },
+    {
+      "number": 52,
+      "title": "Writer: captions, cross-references, and bookmarks"
+    },
+    {
+      "number": 51,
+      "title": "Writer: footnotes and endnotes"
+    },
+    {
+      "number": 45,
+      "title": "Writer: create, modify, and manage styles"
+    },
+    {
+      "number": 44,
+      "title": "Writer: headers, footers, page numbers, and fields"
+    }
+  ]
+}

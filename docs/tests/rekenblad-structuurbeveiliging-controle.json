@@ -1,11 +1,11 @@
 {
-  "binaireSha256": "edebfa030968c7fac6b869a82c3899367c2873e2f11b719bf5bfb56bd33f286f",
+  "binaireSha256": "5daa3e9d00d9234726d99c74ffa618605f11b8bafe762eb1acec7c9dcb5a2c96",
   "voorproefBinaireSha256": "138f15e9d93817ca3e908de17a250c09a96e9b8ba7dd2b278b3a802f5519ee33",
-  "bronSha256": "c31dafa8ce168a72e612533fb0f9b3baf5816ff28dc2934bcdd411e2e1f0e412",
+  "bronSha256": "8cbdf747fdc6c27dd13d8f7dc604aba1e2975244efdd583a535e128c3b37aa02",
   "bronnen": {
     "src/editors.tsx": "928301641c4cc1b4c48018b1c83dc15b5a031aa2c27c55fbf19e23b870fb5f95",
     "src/rekenblad/structuurbeveiliging.test.ts": "8fb8da50307ddc171d516c2a1198c030318646824771ee114ec75a85aeb90ff8",
-    "src/rekenblad/structuurbeveiliging.ts": "437cd07c71b0c1393f2cb1a667716f7a2b3725bb0c60b70f3a6e30aa4c5a3fa2",
+    "src/rekenblad/structuurbeveiliging.ts": "1fbadfa6b3938b896641b7ca01ca1a80ae2c7b8c637cf14e9847262df9372239",
     "src/i18n/locales/th/spreadsheet.json": "a2818b2679d59f5c43db61f2cefd94177262c4758d04a2b5e58919b118008db9",
     "src/i18n/locales/sk/spreadsheet.json": "e7821143c9be559384adf129b02dc27423d750a7f98fe2d3f448e99da3c0f254",
     "src/i18n/locales/zh-CN/spreadsheet.json": "368f49c6835d0275189b02a651aee971f5efc6030bbef00bca93f30017d64750",
@@ -211,7 +211,7 @@
     "bestanden": 176,
     "bestaandeCorpusOvergeslagen": 10,
     "workers": 2,
-    "seconden": 155.33,
+    "seconden": 169.86,
     "exitcode": 0,
     "python": 58,
     "typescriptExitcode": 0,
@@ -223,5 +223,13 @@
   "eigenProefAfgesloten": {
     "appAfgesloten": true,
     "x11Afgesloten": true
-  }
+  },
+  "eersteTypecheck": {
+    "bron": "2ce72ec6113d184b0f7354b69ec4fbb64e6ca473",
+    "exitcode": 2,
+    "fout": "TS18046: unknown-op niet vernauwd; eerste verslag onjuist, lokaal en in CI mislukt."
+  },
+  "bronHashMethode": "SHA256 van json.dumps(bronnen, sort_keys=True) in Python",
+  "herhaaldOp": "2026-11-11",
+  "bronCorrectieCommit": "931f4552"
 }

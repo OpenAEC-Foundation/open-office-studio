@@ -175,12 +175,18 @@ function MediaVenster({
   async function pakFrame() {
     const v = frame.current;
     if (!v || !v.videoWidth) return;
+    const ticket = ++request.current;
     const c = document.createElement("canvas"),
       scale = Math.min(1, 1280 / v.videoWidth, 1280 / v.videoHeight);
     c.width = Math.round(v.videoWidth * scale);
     c.height = Math.round(v.videoHeight * scale);
     c.getContext("2d")!.drawImage(v, 0, 0, c.width, c.height);
-    zetPoster(await canvasPng(c));
+    try {
+      const png = await canvasPng(c);
+      if (ticket === request.current && frame.current === v) zetPoster(png);
+    } catch (error) {
+      if (ticket === request.current && frame.current === v) throw error;
+    }
   }
   async function bewaar() {
     if (!m) return;

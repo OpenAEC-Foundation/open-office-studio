@@ -1,0 +1,77 @@
+name: Office browser regressions
+on:
+  pull_request:
+    paths:
+      - "src/OfficeStudio.tsx"
+      - "src/TabBalk.tsx"
+      - "src/export/koppeling.ts"
+      - "src/export/editorKoppeling.ts"
+      - "src/export/**"
+      - "src/presentatie/**"
+      - "scripts/test-presentatie-zoeklimiet.mjs"
+      - "scripts/proef-presentatie-media-pauze.mjs"
+      - "scripts/proef-presentatie-poster-capture.mjs"
+      - "scripts/test-presentatie-odf-volume.mjs"
+      - "scripts/test-writer-pdf-interne-links.mjs"
+      - "scripts/test-office-tab-undo.mjs"
+      - ".github/workflows/office-tab-focus.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec tsc --noEmit
+      - run: pnpm exec vitest run src/useTabSneltoetsen.test.ts src/tabbladen.test.ts src/lint/sneltoetsen.test.ts
+      - name: Production frontend and document-tab regression
+        run: |
+          pnpm exec vite build --outDir .local/dist-focus --logLevel error
+          node scripts/test-office-tab-undo.mjs
+        env:
+          OOS_TEST_DIST: .local/dist-focus
+          OOS_TEST_UIT: .local/tab-focus
+      - name: Presentation and Writer production regressions
+        if: runner.os == 'Linux'
+        run: |
+          node scripts/test-presentatie-odf-volume.mjs prepare
+          node scripts/proef-presentatie-media-pauze.mjs .local/dist-focus
+          node scripts/proef-presentatie-poster-capture.mjs .local/dist-focus
+          node scripts/test-presentatie-zoeklimiet.mjs
+          node scripts/test-writer-pdf-interne-links.mjs
+        env:
+          OFFICE_TEST_DIST: .local/dist-focus
+      - name: Standalone hosted browser route
+        run: |
+          pnpm exec vite build --base=./ --mode hosted --outDir .local/dist-focus-hosted --logLevel error
+          node scripts/test-office-tab-undo.mjs
+        env:
+          OOS_TEST_DIST: .local/dist-focus-hosted
+          OOS_TEST_ROUTE: /office/
+          OOS_TEST_UIT: .local/tab-focus-hosted
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: office-tab-focus-${{ runner.os }}
+          path: |
+            .local/tab-focus/
+            .local/tab-focus-hosted/
+            .local/presentatie-media-pauze/
+            .local/presentatie-poster-capture/
+            .local/presentation-truncation-fixed/
+            .local/writer-pdf-interne-links/
+          include-hidden-files: true

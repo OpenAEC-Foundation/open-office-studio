@@ -25,6 +25,8 @@ export interface Koppeling {
   breedte: number;
   hoogte: number;
   url: string;
+  /** Interne bestemming in de oorspronkelijke documentpagina's, vanaf linksboven. */
+  doel?: { pagina: number; x: number; y: number };
 }
 
 export interface Tekening {

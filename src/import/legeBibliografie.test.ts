@@ -247,10 +247,12 @@ describe("lege bibliografiemetadata uit het app-sjabloon (#305)", () => {
       copy = b.slice(),
       before = unzipSync(b);
     controleerPakket(b, "docx");
-    expect(b).toEqual(copy);
+    // Vergelijk de volledige bytebuffers rechtstreeks; een objectwandeling
+    // over iedere byte maakt deze behoudscontrole onnodig duur.
+    expect(Buffer.compare(b, copy)).toBe(0);
     const p = unzipSync(b);
     for (const name of Object.keys(before))
-      expect(p[name], name).toEqual(before[name]);
+      expect(Buffer.compare(p[name], before[name]), name).toBe(0);
   });
   it("does not accept missing or oversized buffers even if names match the allowlist", () => {
     const p = unzipSync(source()),

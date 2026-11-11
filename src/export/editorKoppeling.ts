@@ -142,6 +142,7 @@ export function koppelEditor(
   koppeling.afdrukken = () => vraagAfdrukvoorbeeld();
   if (soort === "docx" && apis.tekst) {
     const ref = apis.tekst;
+    koppeling.focus = () => ref.focus();
     koppeling.afdrukbron = () => ({
       soort: "docx",
       titel,
@@ -153,6 +154,7 @@ export function koppelEditor(
   }
   if (soort === "xlsx" && apis.rekenblad) {
     const api = apis.rekenblad;
+    koppeling.focus = () => api.focus();
     koppeling.bladen = () => {
       const info = api.handle.sheetInfo();
       return { namen: info.sheetNames, actief: info.activeSheet };
@@ -161,6 +163,7 @@ export function koppelEditor(
   }
   if (soort === "pptx" && apis.presentatie) {
     const api = apis.presentatie;
+    koppeling.focus = () => api.focus();
     koppeling.dias = () => ({
       aantal: api.handle.snapshot().slides.length,
       huidig: huidigeDia(),

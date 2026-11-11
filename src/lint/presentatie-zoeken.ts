@@ -28,6 +28,8 @@ export interface Zoekuitkomst {
 
 /** Een melding voor de gebruiker (engine weigerde), geen programmeerfout. */
 export class ZoekFout extends Error {}
+/** De engine heeft niet alle treffers geleverd; publiceer/vervang geen deelresultaat. */
+export class ZoekLimietFout extends ZoekFout {}
 
 const escape = (tekst: string) => tekst.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const woordTeken = /[\p{L}\p{M}\p{N}_]/u;
@@ -85,6 +87,7 @@ export async function zoekTreffers(
       if (pogingen <= 1) throw new ZoekFout(r.version);
       return zoekTreffers(api, zoek, hoofdletters, heleWoorden, pogingen - 1);
     }
+    if (r.truncated) throw new ZoekLimietFout();
     for (const { text, range } of r.matches) {
       if (verhalen) {
         const verhaal = verhalen.get(verhaalSleutel(range));

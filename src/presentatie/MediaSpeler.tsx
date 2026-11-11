@@ -43,6 +43,7 @@ export function MediaSpeler({
   const poster = useMediaUrl(medium.poster ?? null, "image/png");
   const hervatten = useRef(false),
     geladen = useRef(false);
+  const gestart = useRef(false);
   const eindstop = useRef<{ tijd: number; eind: number } | null>(null);
   const settings = useRef(instellingen);
   settings.current = instellingen;
@@ -67,6 +68,7 @@ export function MediaSpeler({
     zetFout(false);
     zetGeblokkeerd(false);
     geladen.current = false;
+    gestart.current = false;
     eindstop.current = null;
   }, [url]);
   useEffect(() => {
@@ -83,7 +85,7 @@ export function MediaSpeler({
       el.pause();
     } else if (
       geladen.current &&
-      (hervatten.current || instellingen.automatisch)
+      (hervatten.current || (instellingen.automatisch && !gestart.current))
     ) {
       hervatten.current = false;
       void speel();
@@ -151,7 +153,7 @@ export function MediaSpeler({
           Number.isFinite(el.duration) ? el.duration : settings.current.begin,
         );
       grens();
-      if (actief && settings.current.automatisch) void speel();
+      if (actief && settings.current.automatisch && !gestart.current) void speel();
     },
     onTimeUpdate: grens,
     onSeeking: grens,
@@ -159,6 +161,7 @@ export function MediaSpeler({
       zetSpeelt(true);
       if (!actief) ref.current?.pause();
       else {
+        gestart.current = true;
         const el = ref.current!,
           stop = eindstop.current;
         // Alleen onze eigen eindstop herstarten. Gewoon pauzeren, terugspoelen

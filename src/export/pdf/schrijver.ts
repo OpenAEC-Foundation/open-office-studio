@@ -41,6 +41,7 @@ export interface PdfKoppeling {
   breedte: number;
   hoogte: number;
   url: string;
+  doel?: { pagina: number; x: number; y: number };
 }
 
 export interface PdfPagina {
@@ -258,10 +259,10 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
   // Bronnen van de vectorpagina's: één woordenboek, alleen als er vectorpagina's zijn.
   const bronnenNr = doc.paginas.some((p) => p.vector) && doc.bronnen ? reserveer() : 0;
 
-  const paginaNummers: number[] = [];
-  doc.paginas.forEach((pagina) => {
-    const nr = reserveer();
-    paginaNummers.push(nr);
+  // Ook een link op de eerste pagina kan naar een latere pagina verwijzen.
+  const paginaNummers = doc.paginas.map(() => reserveer());
+  doc.paginas.forEach((pagina, paginaIndex) => {
+    const nr = paginaNummers[paginaIndex];
     const inhoudNr = reserveer();
     const beeldNr = pagina.beeld && !(pagina.vector !== undefined && bronnenNr) ? reserveer() : 0;
     const B = pagina.breedte;
@@ -287,13 +288,23 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
     const inhoudBytes = zlibSync(enc.encode(inhoud), { level: 6 });
     const annotaties: number[] = [];
     for (const k of pagina.koppelingen ?? []) {
-      const url = veiligeUrl(k.url);
-      if (!url) continue;
+      let actie: string;
+      if (k.url.startsWith("#")) {
+        const d = k.doel, doelPagina = d && doc.paginas[d.pagina];
+        if (!d || !Number.isInteger(d.pagina) || !doelPagina ||
+          !Number.isFinite(d.x) || !Number.isFinite(d.y) ||
+          d.x < 0 || d.x > doelPagina.breedte || d.y < 0 || d.y > doelPagina.hoogte) continue;
+        actie = `/Dest [${paginaNummers[d.pagina]} 0 R /XYZ ${getal(d.x)} ${getal(doelPagina.hoogte - d.y)} 0]`;
+      } else {
+        const url = veiligeUrl(k.url);
+        if (!url) continue;
+        actie = `/A << /S /URI /URI ${pdfLetterlijk(url)} >>`;
+      }
       const a = reserveer();
       annotaties.push(a);
       object(
         a,
-        `<< /Type /Annot /Subtype /Link /Rect [${getal(k.x)} ${getal(H - k.y - k.hoogte)} ${getal(k.x + k.breedte)} ${getal(H - k.y)}] /Border [0 0 0] /A << /S /URI /URI ${pdfLetterlijk(url)} >> >>`,
+        `<< /Type /Annot /Subtype /Link /Rect [${getal(k.x)} ${getal(H - k.y - k.hoogte)} ${getal(k.x + k.breedte)} ${getal(H - k.y)}] /Border [0 0 0] ${actie} >>`,
       );
     }
     const middelen =
