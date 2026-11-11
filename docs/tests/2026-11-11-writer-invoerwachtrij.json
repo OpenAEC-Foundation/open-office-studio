@@ -1,0 +1,477 @@
+{
+  "datum": "2026-11-11",
+  "appbron": "0a43e8c603d8f7053081a23f7c78d268f8bae91c",
+  "documentatiebasis": "018e42c78e0acd3e9479fe3fa4c8c193227a3d1e",
+  "besluit": "Prototype met vaste16ms-bundelwacht afgewezen; geen productwijziging doorgevoerd. Bron, lockbestand en geïnstalleerde SDK exact hersteld. De bestaande app/installatie en documenten bleven behouden.",
+  "prototype": {
+    "wijziging": "Gewone ASCII-invoer met native provider blijft16ms aan haar al gestarte wachtrijbundel toevoegen vóór het native verzoek wordt voorbereid. Sessie wordt na het wachten opnieuw gecontroleerd; gewone niet-native route, Unicode en compositie behouden hun oorspronkelijke start. De bestaande pending-inputwachtrij omvat ook de bundelwacht. Geen kunstmatige antwoordvertraging tijdens de gewone invoermeting.",
+    "programma_sha256": "a9fa9f18d6599044c459dffef721f23644c03bfd647ea8532dc4f1b1815dff3a",
+    "sdk_sha256": "b0cbc013dd08a48d46e3da3e08054e1f797093db32d032a886986684f394c0d8",
+    "bestanden": {
+      "patches/@betteroffice__docx-react@0.5.1.patch": "8a1719b0c7ffb5df5e3cfb79f2945af5dc3d2da11b6fb4363e7d3966b60f21c0",
+      "pnpm-lock.yaml": "4f86c4a33809651826509997f6ad0e63434d4896d440e0d8063422fd2c79f975",
+      "src/tekst/invoer-tijdspan.test.ts": "ec02fe8b35a795c8dc36ba4338b31e93b511b197f69a1f232831375f54a778c3"
+    },
+    "bron_diff_sha256": "589ed8736f54f9a4a2bc3c43236cc32be3aebbc0521bc59b990ae632a6367c1c"
+  },
+  "methode": {
+    "rijk": "Dezelfde eigen65-paginabron met128tabellen,1052ASCII-tekens via fysieke X11-toetsen. Eerst kandidaat, daarna verse referentie en kandidaat herhaald. Schema3 afzonderlijk. Geen gelijktijdige native benchmarks of bouw-/testsessies tijdens gewone metingen.",
+    "klein": "Bestaande eigen voorbeeldbron,1pagina/1tabel,27tekens; xdotool-delayparameter80ms. Kandidaat/referentie en vervolgens referentie/kandidaat. De volledige selectie-/bewaar-/verwerpproef blijft gelijk.",
+    "tijd": "Totale wall-tijd bevat de WebKit-invoerachterstand. Laatste-keyup-tot-renderlijst plus twee rAFs is een afzonderlijk eindpunt, geen fysieke schermpaint of FPS.",
+    "beeldanalyse": "De pakket-/beeldanalyse liep na de rijke metingen tijdens de aanvullende korte testronde; de eerste korte vergelijking was daarvoor afgerond. Dit zijn beperkte lokale proeven, geen statistische platformprestatieacceptatie."
+  },
+  "resultaten": {
+    "nieuw-rijk2": {
+      "schema": 2,
+      "programma_sha256": "a9fa9f18d6599044c459dffef721f23644c03bfd647ea8532dc4f1b1815dff3a",
+      "script_sha256": "2591944e4f4199c209fd42e78d610c20e29a7b4dd13c838819115bee43c9c1ed",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 42533,
+        "begin_tot_bron_ms": 18830,
+        "laatste_keyup_tot_bron_ms": 298,
+        "laatste_keyup_tot_frame_ms": 3736,
+        "begin_tot_frame_ms": 22268,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 22372,
+        "wall_verzonden_tot_frame_ms": 20503,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 85,
+      "gewone_met_caret": 85,
+      "native_tekst_exact": true,
+      "undo_groepen": 7,
+      "bewaarde_tabellen_exact": 128,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-klein2-definitief": {
+      "schema": 2,
+      "programma_sha256": "a9fa9f18d6599044c459dffef721f23644c03bfd647ea8532dc4f1b1815dff3a",
+      "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16733,
+        "begin_tot_bron_ms": 1343,
+        "laatste_keyup_tot_bron_ms": 27,
+        "laatste_keyup_tot_frame_ms": 430,
+        "begin_tot_frame_ms": 1746,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1854,
+        "wall_verzonden_tot_frame_ms": 638,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 14,
+      "gewone_met_caret": 14,
+      "native_tekst_exact": true,
+      "undo_groepen": 1,
+      "bewaarde_tabellen_exact": 1,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "oud-klein2": {
+      "schema": 2,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16657,
+        "begin_tot_bron_ms": 1383,
+        "laatste_keyup_tot_bron_ms": 78,
+        "laatste_keyup_tot_frame_ms": 261,
+        "begin_tot_frame_ms": 1566,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1738,
+        "wall_verzonden_tot_frame_ms": 565,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 23,
+      "gewone_met_caret": 23,
+      "native_tekst_exact": true,
+      "undo_groepen": 1,
+      "bewaarde_tabellen_exact": 1,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-rijk3": {
+      "schema": 3,
+      "programma_sha256": "a9fa9f18d6599044c459dffef721f23644c03bfd647ea8532dc4f1b1815dff3a",
+      "script_sha256": "2591944e4f4199c209fd42e78d610c20e29a7b4dd13c838819115bee43c9c1ed",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 52593,
+        "begin_tot_bron_ms": 27075,
+        "laatste_keyup_tot_bron_ms": 145,
+        "laatste_keyup_tot_frame_ms": 2158,
+        "begin_tot_frame_ms": 29088,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 29291,
+        "wall_verzonden_tot_frame_ms": 27447,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 171,
+      "gewone_met_caret": 171,
+      "native_tekst_exact": true,
+      "undo_groepen": 6,
+      "bewaarde_tabellen_exact": 128,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "oud-rijk2": {
+      "schema": 2,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "script_sha256": "2591944e4f4199c209fd42e78d610c20e29a7b4dd13c838819115bee43c9c1ed",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 45154,
+        "begin_tot_bron_ms": 21194.000000000007,
+        "laatste_keyup_tot_bron_ms": 271.0000000000073,
+        "laatste_keyup_tot_frame_ms": 3098,
+        "begin_tot_frame_ms": 24021,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 24242,
+        "wall_verzonden_tot_frame_ms": 22368,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 109,
+      "gewone_met_caret": 109,
+      "native_tekst_exact": true,
+      "undo_groepen": 7,
+      "bewaarde_tabellen_exact": 128,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-rijk2-herhaling": {
+      "schema": 2,
+      "programma_sha256": "a9fa9f18d6599044c459dffef721f23644c03bfd647ea8532dc4f1b1815dff3a",
+      "script_sha256": "2591944e4f4199c209fd42e78d610c20e29a7b4dd13c838819115bee43c9c1ed",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 44366,
+        "begin_tot_bron_ms": 20459,
+        "laatste_keyup_tot_bron_ms": 261,
+        "laatste_keyup_tot_frame_ms": 3199,
+        "begin_tot_frame_ms": 23397,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 23613,
+        "wall_verzonden_tot_frame_ms": 21700,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 93,
+      "gewone_met_caret": 93,
+      "native_tekst_exact": true,
+      "undo_groepen": 6,
+      "bewaarde_tabellen_exact": 128,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "oud-klein2-herhaling": {
+      "schema": 2,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16846,
+        "begin_tot_bron_ms": 1576,
+        "laatste_keyup_tot_bron_ms": 60,
+        "laatste_keyup_tot_frame_ms": 347,
+        "begin_tot_frame_ms": 1863,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1933,
+        "wall_verzonden_tot_frame_ms": 781,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 23,
+      "gewone_met_caret": 23,
+      "native_tekst_exact": true,
+      "undo_groepen": 1,
+      "bewaarde_tabellen_exact": 1,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-klein2-herhaling": {
+      "schema": 2,
+      "programma_sha256": "a9fa9f18d6599044c459dffef721f23644c03bfd647ea8532dc4f1b1815dff3a",
+      "script_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16683,
+        "begin_tot_bron_ms": 1365,
+        "laatste_keyup_tot_bron_ms": 158,
+        "laatste_keyup_tot_frame_ms": 446,
+        "begin_tot_frame_ms": 1653,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1766,
+        "wall_verzonden_tot_frame_ms": 551,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_aanvragen": 17,
+      "gewone_met_caret": 17,
+      "native_tekst_exact": true,
+      "undo_groepen": 1,
+      "bewaarde_tabellen_exact": 1,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "beoordeling": {
+    "rijk": "Schema2:22372/23613ms tegenover24242ms van de verse referentie; circa7,7%/2,6% korter, geen stabiele vaste winst.85/93native aanvragen tegenover109, telkens exact1052tekens.",
+    "journaal": "Schema3:29291ms en171aanvragen tegenover eerdere42899ms/309aanvragen van dezelfde referentiebinary; niet in deze ronde vers herhaald. Nog steeds langzamer dan schema2 en standaard uit.",
+    "klein": "Totale wall-tijd is gemengd:1854/1766ms tegenover1738/1933ms. Laatste-keyup-tot-frame is bij beide kandidaten later:430/446ms tegenover261/347ms. Daarom geen goedkeuring als algemene invoeroptimalisatie.",
+    "vervolg": "Bundel alleen wanneer invoer werkelijk snel opvolgt of werkachterstand aantoonbaar aanwezig is; laat de eerste/losse/tragere toetsaanslag direct starten. Bewaak flush, sessie, selectie, Undo/Redo, Unicode en compositie opnieuw, en vergelijk korte eindlatency vóór brede acceptatie."
+  },
+  "functioneel": "Alle8definitieve native proeven slagen elk op hun drie groepen: gewone invoer/bronexacte Undo-Redo, fysieke selectie/vervangen/bewaren vóór een vastgehouden echt antwoord met onafhankelijke DOCX-teruglezing, en verwerpen/nieuw document met laat antwoord. Alle128rijke tabelstructuren en de ene voorbeeldtabel blijven exact. GUI-/engine-/consolefoutlijsten zijn leeg. Geen echte OS-IME-acceptatie of volledige heropenproef op deze kandidaat geclaimd.",
+  "visueel": {
+    "nieuw-rijk2": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 41,
+          "begrenzing": [
+            1038,
+            940,
+            1132,
+            999
+          ],
+          "documentpixels": 30,
+          "documentbegrenzing": [
+            717,
+            732,
+            719,
+            747
+          ]
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 121,
+          "begrenzing": [
+            6,
+            4,
+            1335,
+            997
+          ],
+          "documentpixels": 30,
+          "documentbegrenzing": [
+            729,
+            732,
+            731,
+            747
+          ]
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    },
+    "nieuw-rijk3": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 30,
+          "begrenzing": [
+            1038,
+            940,
+            1040,
+            955
+          ],
+          "documentpixels": 30,
+          "documentbegrenzing": [
+            717,
+            732,
+            719,
+            747
+          ]
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 121,
+          "begrenzing": [
+            6,
+            4,
+            1335,
+            997
+          ],
+          "documentpixels": 30,
+          "documentbegrenzing": [
+            729,
+            732,
+            731,
+            747
+          ]
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    },
+    "nieuw-rijk2-herhaling": {
+      "pakketverschil": [
+        "docProps/core.xml"
+      ],
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 11,
+          "begrenzing": [
+            1118,
+            995,
+            1132,
+            999
+          ],
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "begrenzing": null,
+          "documentpixels": 0,
+          "documentbegrenzing": null
+        }
+      }
+    }
+  },
+  "visuele_grens": "Bewaarde DOCX-pakketten verschillen uitsluitend in core.xml. Twee beelden van de rijke herhaling zijn volledig pixelgelijk; overige verschillen omvatten onder andere de30pixels van de knipperende invoercursor en interfacepixels. Beide rijke bewaarbeelden handmatig bekeken. Geen volledige module-/migratie-/pixelacceptatie.",
+  "controles": {
+    "prototype": "2334frontendtests in227bestanden, inclusief4echte Rust-hosttests;10extractieproeven van de werkelijke SDK-callback;TypeScript;127Python-tests;Vite;geoptimaliseerde native Linux-featurebouw slagen. De oude callback faalt op2nieuwe uitgestelde bundel-/sluitvoorwaarden;6slagen.",
+    "afkeuringen": "Eerste Python-ronde mist Node op PATH:6fouten/2skips; herhaling met juiste PATH slaagt op127zonder skips. Eerste kleine proef verwacht ten onrechte2tabellen; stopt vóór de app start, bron heeft1tabel. Beide logs zijn bewaard.",
+    "hersteld": "Volledige herhaling:2328frontendtests in227bestanden inclusief4echte Rust-hosttests slagen;TypeScript slaagt. De eerste herstelde volledige ronde heeft1bestaande nootnummeringstimeout op5000ms (2327slagen); afzonderlijke7nootnummeringstests en daarna de volledige herhaling slagen zonder bron-/assertie-/tijdslimietwijziging. Oorzaak van de eenmalige timeout niet vastgesteld."
+  },
+  "ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43087891072,
+      "headSha": "0a43e8c603d8f7053081a23f7c78d268f8bae91c",
+      "status": "completed",
+      "workflowName": "Linux-ontwikkelbuild"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43087885948,
+      "headSha": "0a43e8c603d8f7053081a23f7c78d268f8bae91c",
+      "status": "completed",
+      "workflowName": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43048315760,
+      "headSha": "4c13723b0f5dec055ea79e1dfb1be3629f5c9bb9",
+      "status": "completed",
+      "workflowName": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43048310231,
+      "headSha": "4c13723b0f5dec055ea79e1dfb1be3629f5c9bb9",
+      "status": "completed",
+      "workflowName": "Native Rust controleren en bouwen"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 43037031175,
+      "headSha": "01351d0a17a3ff749575c5cd08dff006121e077a",
+      "status": "completed",
+      "workflowName": "Kantooromgeving controleren en bouwen"
+    }
+  ],
+  "platformgrens": "Prototype alleen als geoptimaliseerde Linux-featurekandidaat getest. Geen Windows/macOS-/zeveneditie-/AppImage-/FUSE-acceptatie. Eerdere groene desktop-/Linux-dev-CI hoort bij appbron0a43e8c6, niet bij dit afgewezen prototype. Geen nieuwe product-CI of release nodig voor dit uitsluitend bewijsmatige checkpoint.",
+  "behoud": "Eigen oude gegenereerde frontendbundels verliesloos gecomprimeerd, elk lid teruggelezen en een wasm-asset daadwerkelijk hersteld met bytes/mode/mtime-controle vóór alleen de losse cache verdween. Eerste trage archiefverificatie veilig gestopt vóór verwijderen en streaming opnieuw uitgevoerd. Vorige standaardbundel daadwerkelijk volledig hersteld met alle bestandshashes/modes gelijk. Prototypebron/bundel/ELF en vaste referentieprogramma’s blijven lokaal. Geen gebruikersdocument/profiel of andermans werk verwijderd. Eerste volledige bundelherstelcontrole faalde op door tar-datafilter genormaliseerde bestandsrechten. Alle529expliciete eigen manifestleden daarna opnieuw op bytes geverifieerd en oorspronkelijke mode/mtime teruggezet en gecontroleerd.",
+  "bewijs": {
+    "pad": "docs/tests/writer-invoerwachtrij-2026-11-11/bewijs.tar.gz",
+    "sha256": "e662aa0a498d98044980ec656411b764a63aac4ac184ca414c9bb0d2872c4da5",
+    "bytes": 5251205
+  },
+  "open": "Ernstige Writer-invoer-/selectievertraging blijft prioritair open. Geen issue, migratiegebied of uitgavevariant afgerond."
+}
