@@ -12,9 +12,10 @@ import i18next from "../i18n/config";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { AfdrukDocument, AfdrukPagina, Bladwijzer, Koppeling } from "./model";
 import { metTekstopname, naarPunten } from "./tekstopname";
-import { tekstKoppelingen } from "./tekstKoppelingen";
+import { tekstKoppelingen, type BladwijzerDoel } from "./tekstKoppelingen";
 import { werkDocumentVeldenBij } from "../tekst/veldenDocument/opdrachten";
 import { werkFormuleWeergaveBij } from "../tekst/vergelijking/weergave";
+import { bladwijzers as documentBladwijzers } from "../tekst/verwijzingen/document";
 
 /** De afdrukroutine rastert met twee beeldpunten per CSS-pixel. */
 const BEELDPUNTEN_PER_PX = 2;
@@ -106,6 +107,7 @@ async function koppenEnKoppelingen(ref: DocxEditorRef) {
   const bladwijzers: Bladwijzer[] = [];
   const koppelingen = new Map<number, Koppeling[]>();
   try {
+    const sessie = ref.getEditorRef()?.getYrsSession();
     const opties = {
       revisionView: "accepted" as "accepted" | "markup",
       stories: ["body", "headers", "footers", "footnotes", "endnotes"] as const,
@@ -116,7 +118,13 @@ async function koppenEnKoppelingen(ref: DocxEditorRef) {
     if (!r.ok && r.failure.code === "unsupported-revision-layout")
       r = await ref.exportStructuredWithPages({ ...opties, revisionView: "markup" });
     if (!r.ok) return { bladwijzers, koppelingen };
-    return tekstKoppelingen(r.content);
+    const zelfdeBron = sessie && ref.getEditorRef()?.getYrsSession() === sessie && sessie.version() === r.version;
+    let doelen: BladwijzerDoel[] = [];
+    if (zelfdeBron) {
+      try { doelen = documentBladwijzers(sessie); } catch { /* Externe links en koppen blijven bruikbaar. */ }
+      if (ref.getEditorRef()?.getYrsSession() !== sessie || sessie.version() !== r.version) doelen = [];
+    }
+    return tekstKoppelingen(r.content, doelen);
   } catch {
     // Zonder paginakaart: geen bladwijzers of koppelingen.
   }

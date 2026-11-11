@@ -138,6 +138,7 @@ export async function maakPdf(
 ): Promise<Uint8Array> {
   const indexen = opties.indexen ?? doc.paginas.map((_, i) => i);
   if (!indexen.length) throw new Error("Er zijn geen pagina's gekozen.");
+  const positie = new Map(indexen.map((index, n) => [index, n]));
   const kwaliteit = KWALITEITEN[opties.kwaliteit ?? "standaard"];
   const vector = opties.vector !== false;
   const terugval =
@@ -155,6 +156,11 @@ export async function maakPdf(
     const tekening = vector
       ? await metVectoropname(() => pagina.teken(kwaliteit.dpi))
       : await pagina.teken(kwaliteit.dpi);
+    const koppelingen = tekening.koppelingen?.flatMap(k => {
+      if (!k.doel) return [k];
+      const pagina = positie.get(k.doel.pagina);
+      return pagina === undefined ? [] : [{ ...k, doel: { ...k.doel, pagina } }];
+    });
     const opname = vector ? opnameVan(tekening.canvas) : undefined;
     opties.voortgang?.(n + 0.5, indexen.length);
     if (opname) {
@@ -173,19 +179,18 @@ export async function maakPdf(
     } else if (vector) terugval(indexen[n], "geen opname");
     if (inhoud !== null) {
       vectorPaginas++;
-      paginas.push({ breedte: pagina.breedte, hoogte: pagina.hoogte, vector: inhoud, koppelingen: tekening.koppelingen });
+      paginas.push({ breedte: pagina.breedte, hoogte: pagina.hoogte, vector: inhoud, koppelingen });
     } else
       paginas.push({
         breedte: pagina.breedte,
         hoogte: pagina.hoogte,
         beeld: await beeldVan(tekening.canvas, kwaliteit.jpeg),
         tekst: tekening.tekst,
-        koppelingen: tekening.koppelingen,
+        koppelingen,
       });
     opties.voortgang?.(n + 1, indexen.length);
   }
 
-  const positie = new Map(indexen.map((index, n) => [index, n]));
   const bladwijzers = (doc.bladwijzers ?? [])
     .filter((b) => positie.has(b.pagina))
     .map((b) => ({ titel: b.titel, pagina: positie.get(b.pagina)!, y: b.y }));
