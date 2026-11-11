@@ -75,3 +75,31 @@ Opslaan/heropenen/verwerpen met het geïntegreerde journaal, echte Unicode/IME,
 revisie-aanvaarden en -verwerpen, lange sessies, heapgebruik, de nieuwe desktop-GUI
 en alle platformen/edities blijven open. De bestaande app en schema 2 blijven
 ongewijzigd.
+
+## Getypeerde middelengrens
+
+`bereid_getypeerd` onderscheidt `Ongeldig` van `BestaandeRouteNodig`, met
+aparte redenen voor bron, bevestigd journaal en journaal plus voorstel.
+`Ok(None)` blijft uitsluitend een verzoek om een volledige bronbinding (ook
+bij de stapgrens). De bestaande `bereid`-hulpmethode behoudt haar oude
+String-foutinterface voor de eerder vastgelegde proeven.
+
+Transportvalidatie behoudt de bestaande grens van 100 MiB; het journaalbudget
+blijft 64 MiB. Een passend verpakte bron boven het journaalbudget geeft alleen
+een capaciteitsadvies, geen goedkeuring van het CRDT-document. Een toekomstige
+adapter moet de volledige actuele bron via schema 2 opnieuw laten valideren,
+zonder schema-3-token en zonder automatische herhaling van ongeldige aanvragen.
+Er is nog geen desktopadapter aangesloten.
+
+`middelen.rs` verlaagt de onderzoekscaps op de bestaande eigen aanvraagreeks en
+bereikt alle drie capaciteitspaden. De bevestigde token blijft behouden; de
+ongewijzigde schema-2-route geeft dezelfde delta en cursor. Na een volledige
+reset geeft het journaal een bytegelijke volledige bron. Zes transport-/schema-
+en bindingsfouten worden afzonderlijk afgekeurd; een onbekende vervolgbinding
+vraagt volledige bron. Ook een beschadigd CRDT met correcte transporthash wordt
+bij de onafhankelijke schema-2-validatie afgekeurd. Dit bewijst geen verwerking
+van echte 64–100 MiB-documenten of grens voor de volledige native heap. Na een
+fout tijdens voorbereiding wordt uitsluitend behoud van de bevestigde bron
+gegarandeerd; een voorstel kan worden verlaten en vereist dan een herbouw.
+
+Zie [middelentoelating en regressiebewijs](../../../docs/tests/2026-11-11-writer-middelen.json).

@@ -1,0 +1,284 @@
+{
+  "datum_utc": "2026-11-11T07:59:04.686114+00:00",
+  "status": "Getypeerde toelating uitsluitend in afzonderlijk onderzoeksprototype; geen productintegratie.",
+  "bronbasis": "ee82d0edffa691d45a32edc906a7a66f814b4004",
+  "bronbestanden": {
+    "native/onderzoek/writer-bronjournaal/geschiedenis.rs": "139c3c7ed989219feb310ae4dafd9993e42d115758c251304667d7f50c3b8e05",
+    "native/onderzoek/writer-bronjournaal/middelen.rs": "0a5b5e8b5694e4d2f4423cd8279bfab1868fc1dc72fbd7a88b4fcb26312b3876",
+    "native/onderzoek/writer-bronjournaal/bron-pinnen.json": "15c3cfa164300ecc1f06da028ab116642cfcae181376d6ef0a3557a39bec6bd1",
+    "native/onderzoek/writer-bronjournaal/README.md": "e36e92fe644c8feb9ff42c42987103b349bc869cfe22131135830a3ba0db702a",
+    "native/onderzoek/writer-bronjournaal/unicode.rs": "ede60897a35560a8d4068705eebab6d10166be2c1b60c640caeba862f0a32008",
+    "native/onderzoek/writer-bronjournaal/journaal.rs": "445069d35e4cab125ac89f2b03a13077c0745983c22466253bc8e2f07d2a2aa4",
+    "native/onderzoek/writer-bronjournaal/voorbereiden.py": "ea5d59f909f11db4e0b72850ff8a619099adee0c759703851cefb5a424347273",
+    "native/onderzoek/writer-bronjournaal/proef.rs": "d2c12d14fa806d15b849dedd930cbaefc2083a8a3388574ba595ab08ea9e8f35",
+    "native/onderzoek/writer-bronjournaal/grenzen.rs": "bd2c448eef890bf57d41ad69441e655a4a333641b26eb37f67fdfe48d06bb014"
+  },
+  "controles": [
+    {
+      "naam": "middelen",
+      "code": 0,
+      "seconden": 4.850094125955366,
+      "bouwopdracht": [
+        "/home/aia01/.cargo/bin/rustc",
+        "--edition=2024",
+        "-C",
+        "opt-level=3",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/onderzoek/writer-bronjournaal/middelen.rs",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-middelen/middelen",
+        "--extern",
+        "office_writer_plakken=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/liboffice_writer_plakken-6c28f4e48422749f.rlib",
+        "--extern",
+        "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+        "--extern",
+        "base64=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libbase64-9e740c72a4866227.rlib",
+        "--extern",
+        "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+        "--extern",
+        "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+        "--extern",
+        "docx_journal=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib"
+      ],
+      "argumenten": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronhergebruik/aanvraagreeks.json"
+      ],
+      "binary_sha256": "0c30d902204a3a2ef195f94769be9d86f447c84a4c36e1c8993ef10525d64b88"
+    },
+    {
+      "naam": "proef",
+      "code": 0,
+      "seconden": 5.319778460951056,
+      "bouwopdracht": [
+        "/home/aia01/.cargo/bin/rustc",
+        "--edition=2024",
+        "-C",
+        "opt-level=3",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/onderzoek/writer-bronjournaal/proef.rs",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-middelen/proef",
+        "--extern",
+        "office_writer_plakken=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/liboffice_writer_plakken-6c28f4e48422749f.rlib",
+        "--extern",
+        "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+        "--extern",
+        "base64=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libbase64-9e740c72a4866227.rlib",
+        "--extern",
+        "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+        "--extern",
+        "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+        "--extern",
+        "docx_journal=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib"
+      ],
+      "argumenten": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronhergebruik/aanvraagreeks.json"
+      ],
+      "binary_sha256": "20bbfef6cb8a574e3a05820718c09d0ba7ac8b271dff5f584b18bb5b0d8774b9"
+    },
+    {
+      "naam": "geschiedenis",
+      "code": 0,
+      "seconden": 5.459617554966826,
+      "bouwopdracht": [
+        "/home/aia01/.cargo/bin/rustc",
+        "--edition=2024",
+        "-C",
+        "opt-level=3",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/onderzoek/writer-bronjournaal/geschiedenis.rs",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-middelen/geschiedenis",
+        "--extern",
+        "office_writer_plakken=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/liboffice_writer_plakken-6c28f4e48422749f.rlib",
+        "--extern",
+        "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+        "--extern",
+        "base64=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libbase64-9e740c72a4866227.rlib",
+        "--extern",
+        "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+        "--extern",
+        "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+        "--extern",
+        "docx_journal=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib"
+      ],
+      "argumenten": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-geschiedenis/aanvraagreeks.json"
+      ],
+      "binary_sha256": "c4f2133b78de22fa405dbae8d02b4e0e8a5ea0f4da29f526e17009ef92f32297"
+    },
+    {
+      "naam": "grenzen",
+      "code": 0,
+      "seconden": 1.9468747599748895,
+      "bouwopdracht": [
+        "/home/aia01/.cargo/bin/rustc",
+        "--edition=2024",
+        "-C",
+        "opt-level=3",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/onderzoek/writer-bronjournaal/grenzen.rs",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-middelen/grenzen",
+        "--extern",
+        "office_writer_plakken=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/liboffice_writer_plakken-6c28f4e48422749f.rlib",
+        "--extern",
+        "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+        "--extern",
+        "base64=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libbase64-9e740c72a4866227.rlib",
+        "--extern",
+        "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+        "--extern",
+        "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+        "--extern",
+        "docx_journal=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib"
+      ],
+      "argumenten": [],
+      "binary_sha256": "1d9137162dd122198017302ae6814407d4a1f5cf6e16d555650d76688cc97665"
+    }
+  ],
+  "aanvullend": [
+    {
+      "naam": "journaal-unicode",
+      "code": 0,
+      "dataset_sha256": "c3ec70e97a07d003652ca083a81a794746b1ed87e38b83567b4c472e5efefbe2"
+    },
+    {
+      "naam": "journaal-unicode-revisie",
+      "code": 0,
+      "dataset_sha256": "85b3f2974cf62346820bc2fc17efccd5ae9c3bf75445e551462bcb58818b1495"
+    },
+    {
+      "naam": "mutant_zonder_hashcontrole",
+      "code": 101,
+      "verwacht_afgekeurd": true,
+      "bouwopdracht": [
+        "/home/aia01/.cargo/bin/rustc",
+        "--edition=2024",
+        "-C",
+        "opt-level=3",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-middelen/mutant/middelen.rs",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-middelen/mutant/middelen",
+        "--extern",
+        "office_writer_plakken=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/liboffice_writer_plakken-6c28f4e48422749f.rlib",
+        "--extern",
+        "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+        "--extern",
+        "base64=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libbase64-9e740c72a4866227.rlib",
+        "--extern",
+        "sha2=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+        "--extern",
+        "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+        "--extern",
+        "docx_journal=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronjournaal/libdocx_edit_journaal_import.rlib"
+      ]
+    }
+  ],
+  "middelen": {
+    "bestaande_limiet": 104857600,
+    "gevallen": [
+      {
+        "bestaande_route_delta_en_caret_exact": true,
+        "bestaande_route_weigert_corruptie": true,
+        "bevestigde_token_behouden": true,
+        "getypeerde_grens": true,
+        "route": 0,
+        "volledige_herstart_bron_bytegelijk": true
+      },
+      {
+        "bestaande_route_delta_en_caret_exact": true,
+        "bestaande_route_weigert_corruptie": true,
+        "bevestigde_token_behouden": true,
+        "getypeerde_grens": true,
+        "route": 1,
+        "volledige_herstart_bron_bytegelijk": true
+      },
+      {
+        "bestaande_route_delta_en_caret_exact": true,
+        "bestaande_route_weigert_corruptie": true,
+        "bevestigde_token_behouden": true,
+        "getypeerde_grens": true,
+        "route": 2,
+        "volledige_herstart_bron_bytegelijk": true
+      }
+    ],
+    "grens": "Verlaagde onderzoekscaps op bestaande documentreeks; geen werkelijke 64/100-MiB-heap-, desktop- of platformacceptatie.",
+    "journaallimiet": 67108864,
+    "zes_corrupties_geen_fallback": true
+  },
+  "voorbereiden": {
+    "zes_bronnen_bytegelijk": true,
+    "alle_vendorpinnen_gevalideerd": true,
+    "bestaande_uitvoer_geweigerd": true
+  },
+  "archief": {
+    "pad": "docs/tests/writer-middelen-2026-11-11/bewijs.tar.gz",
+    "bytes": 2786418,
+    "sha256": "938b45d8420a4e01e2c4d88f88cd073a765d7af01df6572ab9f18f94dc18f3be",
+    "alle_bestandsbytes_teruggelezen": true,
+    "manifest": {
+      ".local/integratiecontrole/journaal-middelen/aanvullend.json": "5acd4bce711340e9d49fa29b904b66f4f3b128d153ca8bd24dce774b1368f8d2",
+      ".local/integratiecontrole/journaal-middelen/grenzen.log": "cc1cfdb9d4cb7d49748f8bc2b7200731dce6c24260b36417d4c81f494d013093",
+      ".local/integratiecontrole/journaal-middelen/proef.log": "d9da25fc9e73eac12fa96b69bcea77cf9644b0858052e0602ea974fd832dc5ad",
+      ".local/integratiecontrole/journaal-middelen/bestaande-uitvoer.log": "5ab16d3798c0a68718df23a637ccff23861f64f697bf8d973b9bf6f6b81f5908",
+      ".local/integratiecontrole/journaal-middelen/uitvoeren.py": "af879cd3c8a7090be21376759fd3df71d236e27605484b6953f23d5570fe07f7",
+      ".local/integratiecontrole/journaal-middelen/bewijs.py": "1e86ad4d60f5499a0e7b97b3b2b8a267dfbe76bd82860ca4211d12f2a82f989c",
+      ".local/integratiecontrole/journaal-middelen/proef-bouw.log": "cf403309a83dbec166f63a7068b08d3dad08d1890d7bc0b66606d99abb29441a",
+      ".local/integratiecontrole/journaal-middelen/uitkomst.json": "0854de9bb76fd0ade000c0d92d7c19455903e9f8edd599703b7df3ca7d2da139",
+      ".local/integratiecontrole/journaal-middelen/aanvullend.log": "ed2e7764ba66d0ca9a03813b8f0c256b27ab2efe1aed21126b9477cd1bb677e5",
+      ".local/integratiecontrole/journaal-middelen/middelen-bouw.log": "97c3104272150b504afab77b618f9fcbfb601783ab71b57c354a2d84f51d8261",
+      ".local/integratiecontrole/journaal-middelen/controle.log": "613243d3b5bac5a9da1e8c154feb5d4a1307c5c6226e01f8153020a56bb479f3",
+      ".local/integratiecontrole/journaal-middelen/geschiedenis-bouw.log": "caccf7e5473d2365899d87b6f4d8b2589bcd273b819aa74f8646fa8d16ccdd42",
+      ".local/integratiecontrole/journaal-middelen/middelen.log": "1399268daecd4ca0800a2afb80cf5f5012bc1c27a6e5dda9d29c4a7d5aec371c",
+      ".local/integratiecontrole/journaal-middelen/grenzen-bouw.log": "cf403309a83dbec166f63a7068b08d3dad08d1890d7bc0b66606d99abb29441a",
+      ".local/integratiecontrole/journaal-middelen/aanvullend.py": "819aac48d2a92e87516f42e3dfe9dcb1d9dd367d47a1885ade2ae004f625fea8",
+      ".local/integratiecontrole/journaal-middelen/bibliotheken.json": "5ccaccae2446c74f1cec4be847d4ace95b247532c255e63ea375e8474b318a76",
+      ".local/integratiecontrole/journaal-middelen/journaal-unicode.log": "deb83c5238f2a6aecc61c8a75482a1fc60701fd6dd08bfba1b7a99c18e2fbfd6",
+      ".local/integratiecontrole/journaal-middelen/geschiedenis.log": "c870665cd6b974c8fee13bd99a32a0805e4d1a0c309c1a9c0c42fd993d7e278a",
+      ".local/integratiecontrole/journaal-middelen/journaal-unicode-revisie.log": "ba2c0707e43a5f7f3b6718f2909c97397a19bfaf0d255cbf3464d8ec530d20ec",
+      ".local/integratiecontrole/journaal-middelen/mutant/proef.log": "52885814c850b6e68f45275d133ab135637de56adf2eb1f3b23e8fc026b322a9",
+      ".local/integratiecontrole/journaal-middelen/mutant/middelen.rs": "0a5b5e8b5694e4d2f4423cd8279bfab1868fc1dc72fbd7a88b4fcb26312b3876",
+      ".local/integratiecontrole/journaal-middelen/mutant/bouw.log": "31410ed5f3faaf96b4d80a1a21f5c99e220dae3e48ec3f18a20e76e3cc55ea5d",
+      ".local/integratiecontrole/journaal-middelen/mutant/journaal.rs": "ed62db98d80060e958c1b0a9761d1d4d212e3962c4ef42c6000db7bd58fe7211",
+      "native/onderzoek/writer-bronjournaal/geschiedenis.rs": "139c3c7ed989219feb310ae4dafd9993e42d115758c251304667d7f50c3b8e05",
+      "native/onderzoek/writer-bronjournaal/middelen.rs": "0a5b5e8b5694e4d2f4423cd8279bfab1868fc1dc72fbd7a88b4fcb26312b3876",
+      "native/onderzoek/writer-bronjournaal/bron-pinnen.json": "15c3cfa164300ecc1f06da028ab116642cfcae181376d6ef0a3557a39bec6bd1",
+      "native/onderzoek/writer-bronjournaal/README.md": "e36e92fe644c8feb9ff42c42987103b349bc869cfe22131135830a3ba0db702a",
+      "native/onderzoek/writer-bronjournaal/unicode.rs": "ede60897a35560a8d4068705eebab6d10166be2c1b60c640caeba862f0a32008",
+      "native/onderzoek/writer-bronjournaal/journaal.rs": "445069d35e4cab125ac89f2b03a13077c0745983c22466253bc8e2f07d2a2aa4",
+      "native/onderzoek/writer-bronjournaal/voorbereiden.py": "ea5d59f909f11db4e0b72850ff8a619099adee0c759703851cefb5a424347273",
+      "native/onderzoek/writer-bronjournaal/proef.rs": "d2c12d14fa806d15b849dedd930cbaefc2083a8a3388574ba595ab08ea9e8f35",
+      "native/onderzoek/writer-bronjournaal/grenzen.rs": "bd2c448eef890bf57d41ad69441e655a4a333641b26eb37f67fdfe48d06bb014",
+      ".local/integratiecontrole/bronhergebruik/aanvraagreeks.json": "27d24a9a641ce10873313cdfff4f409412f8d789cadd028c73e312a2755fbf54",
+      ".local/integratiecontrole/journaal-geschiedenis/aanvraagreeks.json": "e8f3dc5243dc74e419d6b5e16719e4baedf143c6a6b38efee32a5d629f227c57",
+      ".local/integratiecontrole/journaal-unicode/definitief-gewoon-aanvragen.json": "c3ec70e97a07d003652ca083a81a794746b1ed87e38b83567b4c472e5efefbe2",
+      ".local/integratiecontrole/journaal-unicode/definitief-revisie-aanvragen.json": "85b3f2974cf62346820bc2fc17efccd5ae9c3bf75445e551462bcb58818b1495"
+    }
+  },
+  "niet_getest": [
+    "Echte bronnen van 64–100 MiB, native heap en langdurige grote sessies",
+    "Desktopadapter, GUI, fysieke typvertraging, selectie, opslaan/heropenen/verwerpen met dit journaal",
+    "Unicode/IME en revisies via nieuwe GUI-route",
+    "Nieuwe desktopbuild, platformen en zeven edities"
+  ],
+  "product": "Tauri/React/SDK, versie, geïnstalleerde app, documenten en referentiebinaries ongewijzigd. Geen issue of migratiegebied voltooid.",
+  "volgende_stap": "Voor productintegratie echte grote bron-/heap-/langdurige-sessiegrenzen en transactief herstel controleren; daarna expliciete adapter met schema-2-volledige-bronvalidatie en GUI-pariteit. Geen blinde fallback op ongeldige bronbinding.",
+  "vrije_gib": 1.73
+}

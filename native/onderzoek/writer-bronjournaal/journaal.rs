@@ -2,11 +2,41 @@
 //! Geen productroute. Een voorstel wordt pas bevestigd door exacte terugkomst.
 use base64::{Engine as _, engine::general_purpose::STANDARD};
 use docx_journal::{EditCtx, EditingDoc, Loc, LocRange};
-use office_writer_plakken::IncrementeleTekstAanvraag as Vraag;
+use office_writer_plakken::{IncrementeleTekstAanvraag as Vraag, MAX_SNAPSHOT_BYTES};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::sync::Arc;
 use yrs::{StateVector, updates::decoder::Decode};
+#[derive(Debug, PartialEq, Eq)]
+pub enum Middelengrens {
+    Bron,
+    BevestigdJournaal,
+    JournaalEnVoorstel,
+}
+#[derive(Debug, PartialEq, Eq)]
+pub enum Fout {
+    Ongeldig(String),
+    BestaandeRouteNodig(Middelengrens),
+}
+impl From<String> for Fout {
+    fn from(v: String) -> Self {
+        Self::Ongeldig(v)
+    }
+}
+impl From<&str> for Fout {
+    fn from(v: &str) -> Self {
+        Self::Ongeldig(v.into())
+    }
+}
+impl std::fmt::Display for Fout {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Ongeldig(v) => write!(f, "{v}"),
+            Self::BestaandeRouteNodig(g) => write!(f, "Onderzoeksmiddelengrens: {g:?}"),
+        }
+    }
+}
+impl std::error::Error for Fout {}
 fn sha(b: &[u8]) -> String {
     Sha256::digest(b)
         .iter()
@@ -75,6 +105,12 @@ impl Journaal {
             .encode_state_as_update_v1())
     }
     pub fn bereid(&mut self, a: Vraag) -> Result<Option<Value>, String> {
+        self.bereid_getypeerd(a).map_err(|e| e.to_string())
+    }
+    /// Alleen de middelengrens mag een poging via de bestaande route uitlokken.
+    /// Die route moet de volledige bron zelf opnieuw valideren; dit is geen
+    /// goedkeuring van broninhoud. None vraagt een nieuwe volledige bronbinding.
+    pub fn bereid_getypeerd(&mut self, a: Vraag) -> Result<Option<Value>, Fout> {
         if a.schema != 3 {
             return Err("Uitsluitend onderzoekschema3".into());
         }
@@ -88,13 +124,14 @@ impl Journaal {
         if a.text.is_empty() || a.text.contains(['\r', '\n']) {
             return Err("Ongeldige gewone tekst".into());
         }
-        if a.snapshot.len() > self.grens.div_ceil(3) * 4 {
+        if a.snapshot.len() > MAX_SNAPSHOT_BYTES.div_ceil(3) * 4 {
             return Err("Aanvraag te groot".into());
         }
         let bytes = STANDARD
             .decode(&a.snapshot)
             .map_err(|_| "Ongeldige base64")?;
-        if bytes.is_empty() || bytes.len() > self.grens || sha(&bytes) != a.snapshot_sha256 {
+        if bytes.is_empty() || bytes.len() > MAX_SNAPSHOT_BYTES || sha(&bytes) != a.snapshot_sha256
+        {
             return Err("Ongeldige bronhash/omvang".into());
         }
         let vector = STANDARD
@@ -114,6 +151,12 @@ impl Journaal {
         } else {
             None
         };
+        // Beschadigde transportgegevens worden nooit als capaciteitskeuze gemeld.
+        // Ook bij een geldige verpakking valideert de bestaande route straks
+        // onafhankelijk het bronformaat, de vector en de documentbinding.
+        if bytes.len() > self.grens {
+            return Err(Fout::BestaandeRouteNodig(Middelengrens::Bron));
+        }
         let warm = vervolg.is_some() && self.voorstel.as_ref().is_some_and(|p| p.delta == bytes);
         let mut bron = if let Some(mut b) = vervolg {
             b.token = token(Some(&b.token), &bytes);
@@ -129,7 +172,7 @@ impl Journaal {
             }
         };
         if bron.bytes() > self.grens {
-            return Err("Bevestigd journaal te groot".into());
+            return Err(Fout::BestaandeRouteNodig(Middelengrens::BevestigdJournaal));
         }
         let doc = if warm {
             self.voorstel.take().unwrap().doc
@@ -168,7 +211,7 @@ impl Journaal {
         )
         .map_err(|e| e.to_string())?;
         if bron.bytes().saturating_add(r.update.len()) > self.grens {
-            return Err("Journaal en voorstel te groot".into());
+            return Err(Fout::BestaandeRouteNodig(Middelengrens::JournaalEnVoorstel));
         }
         let antwoord = json!({"schema":3,"requestId":a.request_id,"documentId":a.document_id,"sourceVersion":a.source_version,"snapshotSha256":a.snapshot_sha256,"clientId":a.client_id,"delta":STANDARD.encode(&r.update),"caret":{"story":r.caret.story,"paraId":r.caret.para,"offset":r.caret.offset},"basis":bron.token,"bronvector":a.source_vector});
         if warm {
