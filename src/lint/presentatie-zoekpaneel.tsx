@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import type { PptxEditorApi } from "@betteroffice/pptx-react";
 import { formatGetal } from "../i18n/opmaak";
 import { huidigeIndex } from "./presentatie-acties";
-import { vervang, volgendeIndex, zoekTreffers, type Treffer } from "./presentatie-zoeken";
+import { vervang, volgendeIndex, zoekTreffers, ZoekLimietFout, type Treffer } from "./presentatie-zoeken";
 // Dezelfde paneelstijl als Zoeken en vervangen in Rekenblad.
 import "./rekenblad.css";
 
@@ -50,7 +50,10 @@ export function PresentatieZoeken({
     try {
       setStatus(await actie());
     } catch (fout) {
-      setStatus(fout instanceof Error ? fout.message : String(fout));
+      if (fout instanceof ZoekLimietFout) {
+        huidig.current = null;
+        setStatus(t("presentation.find.truncated"));
+      } else setStatus(fout instanceof Error ? fout.message : String(fout));
     } finally {
       bezig.current = false;
     }

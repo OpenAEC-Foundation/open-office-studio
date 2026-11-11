@@ -5,6 +5,7 @@ import {
   vervang,
   volgendeIndex,
   zoekTreffers,
+  ZoekLimietFout,
   type Treffer,
   type ZoekApi,
 } from "./presentatie-zoeken";
@@ -48,6 +49,52 @@ const verhalen = [
 ];
 
 describe("zoeken in Presentatie", () => {
+  it.each([[false, false], [false, true], [true, false], [true, true]])(
+    "weigert afgekapt zoeken/vervangen vóór mutatie (hoofdletters=%s, hele woorden=%s)",
+    async (hoofdletters, heleWoorden) => {
+      const { api, bewerkingen } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "katten kat" }]);
+      const find = api.findText;
+      api.findText = async r => ({ ...await find(r), truncated: true } as Awaited<ReturnType<typeof find>>);
+      const allesVervangen = async () => {
+        const result = await zoekTreffers(api, "kat", hoofdletters, heleWoorden);
+        return vervang(api, result, result.treffers, "hond");
+      };
+      await expect(allesVervangen()).rejects.toBeInstanceOf(ZoekLimietFout);
+      expect(bewerkingen).toEqual([]);
+    },
+  );
+
+  it("publiceert geen deelresultaat wanneer een latere schrijfwijze wordt afgekapt", async () => {
+    const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat Kat" }]);
+    const find = api.findText;
+    const requests: string[] = [];
+    api.findText = async r => {
+      requests.push(r.text);
+      expect(r.limit).toBe(10_000);
+      return { ...await find(r), truncated: r.text === "Kat" } as Awaited<ReturnType<typeof find>>;
+    };
+    await expect(zoekTreffers(api, "kat", false)).rejects.toBeInstanceOf(ZoekLimietFout);
+    expect(requests).toEqual(["kat", "Kat"]);
+  });
+
+  it("herhaalt eerst de versiecontrole vóór een verouderd truncation-signaal", async () => {
+    const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat" }]);
+    const read = api.readContent, find = api.findText;
+    let changed = false, requests = 0;
+    api.readContent = async () => ({ ...await read(), version: changed ? "v2" : "v1" } as Awaited<ReturnType<typeof read>>);
+    api.findText = async r => {
+      requests++;
+      changed = true;
+      return { ...await find(r), version: "v2", truncated: requests === 1 } as Awaited<ReturnType<typeof find>>;
+    };
+    expect((await zoekTreffers(api, "kat", false)).treffers).toHaveLength(1);
+    expect(requests).toBe(2);
+  });
+
+  it("laat exact 10000 volledige resultaten toe wanneer de engine niet afkapt", async () => {
+    const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat ".repeat(10_000) }]);
+    expect((await zoekTreffers(api, "kat", true)).treffers).toHaveLength(10_000);
+  });
   it("zoekt optioneel hele woorden met behoud van hoofdletterkeuze en standaard deelmatches", async () => {
     const { api } = nepApi([{ slideId: "s1", shapeId: "t", storyId: "a", text: "kat katten Kat katapult (kat)" }]);
     expect((await zoekTreffers(api, "kat", false)).treffers).toHaveLength(5);
