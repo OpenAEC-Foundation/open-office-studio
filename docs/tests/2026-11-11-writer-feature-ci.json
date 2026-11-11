@@ -1,0 +1,32 @@
+{
+  "datum": "2026-11-11",
+  "vorige_bron": "77b86690f3ee8bc6069f40f3814fe826aec38a5b",
+  "afgekeurde_ci": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43030612585",
+  "oorzaak": "Alle drie native platforms: fetch_update is verouderd op de actuele stabiele compiler; -D warnings weigert de featurebibliotheek. Conversiecontrole geslaagd. Featuretests in CI niet uitgevoerd door voorafgaande Clippy-fout.",
+  "correctie": "Begrensde compare_exchange_weak-lus, zonder toolchainafhankelijke hernoemde methode. Acquire/AcqRel behouden; bij u64::MAX expliciet NietBeschikbaar, nooit hergebruik.",
+  "lokaal": {
+    "featuretests": 61,
+    "standaardtests": 28,
+    "fouten": 0,
+    "methode": "Echte crate met rustc en exact dezelfde gepinde bibliotheken als het eerdere featureverslag; geen volledige Cargo-appbouw. Beide eerder gebouwde echte vendorvarianten ongewijzigd.",
+    "extra_proeven": [
+      "1024 unieke levensduren vanuit acht threads",
+      "laatste waarde beschikbaar; herhaalde uitputting behoudt u64::MAX"
+    ],
+    "clippy": 0,
+    "fmt": 0,
+    "diff_check": 0,
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)"
+  },
+  "bron_sha256": "d19b4ce303bd1d765c454c5e083b48c057ae157361a464b0579f43252ad44f84",
+  "bewijs": {
+    "pad": "docs/tests/writer-feature-ci-2026-11-11/bewijs.tar.gz",
+    "sha256": "3bf48aa1e93d0d858ac1983631d8404fb0e9f87a883950fa37640b7ff8b52941",
+    "bytes": 34000
+  },
+  "grenzen": [
+    "Nieuwe platform-CI na push vereist; nog geen groene platformacceptatie.",
+    "Geen Tauri-IPC/frontendintegratie, GUI-, appprestatie- of releasevariantacceptatie.",
+    "Bestaande app, versies, documenten en profielen ongewijzigd."
+  ]
+}

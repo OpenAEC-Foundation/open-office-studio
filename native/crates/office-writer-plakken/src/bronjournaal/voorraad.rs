@@ -130,10 +130,7 @@ impl Voorraad {
         if v.actief.len() + v.verlaten.len() >= v.max_werkers || v.bytes() >= v.max_bytes {
             return Err(VoorraadFout::Capaciteit);
         }
-        let levensduur = LEVENSDUUR
-            .fetch_update(Ordering::AcqRel, Ordering::Acquire, |n| n.checked_add(1))
-            .map_err(|_| VoorraadFout::NietBeschikbaar)?
-            + 1;
+        let levensduur = volgende_levensduur(&LEVENSDUUR)?;
         let b = Binding {
             eigenaar: eigenaar.into(),
             document: document.into(),
@@ -246,5 +243,58 @@ impl Voorraad {
             .map_err(|_| VoorraadFout::NietBeschikbaar)?;
         v.ruim_op();
         Ok((v.actief.len(), v.verlaten.len(), v.bytes()))
+    }
+}
+
+// Dezelfde begrensde atomaire verhoging op de minimale en actuele toolchain.
+// Bij uitputting nooit een oude koppeling opnieuw geldig maken.
+fn volgende_levensduur(teller: &AtomicU64) -> Result<u64, VoorraadFout> {
+    let mut huidig = teller.load(Ordering::Acquire);
+    loop {
+        let volgend = huidig.checked_add(1).ok_or(VoorraadFout::NietBeschikbaar)?;
+        match teller.compare_exchange_weak(huidig, volgend, Ordering::AcqRel, Ordering::Acquire) {
+            Ok(_) => return Ok(volgend),
+            Err(actueel) => huidig = actueel,
+        }
+    }
+}
+
+#[cfg(test)]
+mod levensduurproef {
+    use super::*;
+
+    #[test]
+    fn uitputting_behoudt_de_laatste_levensduur() {
+        let teller = AtomicU64::new(u64::MAX - 1);
+        assert_eq!(volgende_levensduur(&teller), Ok(u64::MAX));
+        for _ in 0..2 {
+            assert_eq!(
+                volgende_levensduur(&teller),
+                Err(VoorraadFout::NietBeschikbaar)
+            );
+        }
+        assert_eq!(teller.load(Ordering::Acquire), u64::MAX);
+    }
+
+    #[test]
+    fn gelijktijdige_koppelingen_krijgen_unieke_levensduren() {
+        let teller = AtomicU64::new(0);
+        let mut waarden = std::thread::scope(|s| {
+            let werkers: Vec<_> = (0..8)
+                .map(|_| {
+                    s.spawn(|| {
+                        (0..128)
+                            .map(|_| volgende_levensduur(&teller).unwrap())
+                            .collect::<Vec<_>>()
+                    })
+                })
+                .collect();
+            werkers
+                .into_iter()
+                .flat_map(|w| w.join().unwrap())
+                .collect::<Vec<_>>()
+        });
+        waarden.sort_unstable();
+        assert_eq!(waarden, (1..=1024).collect::<Vec<_>>());
     }
 }
