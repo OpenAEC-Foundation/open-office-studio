@@ -1,0 +1,155 @@
+{
+  "datum": "2026-11-11",
+  "appbron": "4c13723b0f5dec055ea79e1dfb1be3629f5c9bb9",
+  "bron": "Eigen kopie van docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx;128tabellen,65pagina’s tijdens lange invoer. Oorspronkelijke voorbeeld- en gebruikersbestanden niet gewijzigd.",
+  "methode": "Opeenvolgende eigen DBus/Xvfb-profielen. Zelfde feature-ELF, query0/1 vóór verse editoropening.1052ASCII-tekens fysiek met xdotool2msinterval; aansluitend Right als niet-schrijvende eindtoets. Geen kunstmatige antwoordvertraging tijdens deze meting. Daarna afzonderlijke vastgehouden echte antwoorden voor selectie/vervanging/bewaren/verwerpen/late sessies.",
+  "resultaten": {
+    "schema2-groepen": {
+      "schema": 2,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "2591944e4f4199c209fd42e78d610c20e29a7b4dd13c838819115bee43c9c1ed",
+      "meting": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 48365,
+        "begin_tot_bron_ms": 23555,
+        "laatste_keyup_tot_bron_ms": 358,
+        "laatste_keyup_tot_frame_ms": 2488,
+        "begin_tot_frame_ms": 25685,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 25955,
+        "wall_verzonden_tot_frame_ms": 24132,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "undo_groepen": 6,
+      "native_opdrachten": 121,
+      "bewaarde_tabellen_exact": 128,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "schema3-groepen": {
+      "schema": 3,
+      "programma_sha256": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "script_sha256": "2591944e4f4199c209fd42e78d610c20e29a7b4dd13c838819115bee43c9c1ed",
+      "meting": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 73426,
+        "begin_tot_bron_ms": 48258,
+        "laatste_keyup_tot_bron_ms": 298,
+        "laatste_keyup_tot_frame_ms": 2033,
+        "begin_tot_frame_ms": 49993,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 50203,
+        "wall_verzonden_tot_frame_ms": 48362,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "undo_groepen": 7,
+      "native_opdrachten": 315,
+      "bewaarde_tabellen_exact": 128,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "eerdere_afkeuringen": {
+    "schema3-eerste": {
+      "fout": "RuntimeError('Error: Lange broninvoer niet exact')",
+      "meting": null,
+      "script_sha256": "60afd283d09653e227b3a254c8c1143deea14f39dcff2b2b85efa76ac3d73155"
+    },
+    "schema3-eindtoets": {
+      "fout": "RuntimeError('Error: Laatste fysieke invoer niet ontvangen')",
+      "meting": null,
+      "script_sha256": "3bd3288895bf8be6b753ffa2f82330c101a1d32c1202fd06c780b19bac1e45d3"
+    },
+    "schema3-rechts": {
+      "fout": "AssertionError('Undo laat ingevoegde tekst/opmaak achter')",
+      "meting": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 75232,
+        "begin_tot_bron_ms": 49512,
+        "laatste_keyup_tot_bron_ms": 330,
+        "laatste_keyup_tot_frame_ms": 2135,
+        "begin_tot_frame_ms": 51317,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 51588,
+        "wall_verzonden_tot_frame_ms": 49788,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "script_sha256": "98bb7f979239ad2bd4a1594f94f650116ac96bdeec3a60d392c5febdcd6be5b1"
+    }
+  },
+  "testcorrecties": [
+    "De eerste aantaldrempel telde Shift-keyups mee en begon te vroeg; niet als appdataverlies geclassificeerd.",
+    "F24 werd niet als verwachte keyup waargenomen; geen geldige eindmeting. Right is de gewone, bewezen eindtoets.",
+    "Eén Undo voor een lange invoer is niet vooraf gegarandeerd. Definitieve proef telt maximaal32groepen, vereist monotone prefixterugname, exact herstel van alle storySegments en dezelfde hoeveelheid Redo tot exact getypte toestand. Aantallen behouden als UX-waarneming."
+  ],
+  "conclusie": "Ernstige invoervertraging gereproduceerd op rijke bron. Positieve gewone route2:25,955s; positieve journaalroute3:50,203s; eerdere bronexacte route3 vóór Undo-afkeuring:51,588s. Dit is een waargenomen terugval in deze casus, geen algemene statistische of oorzakelijke verklaring. Niet installeren of standaard activeren.",
+  "visueel": "Definitief schema3-invoer-redobeeld bekeken: lange tekst inclusief EINDEPROEF zichtbaar, tabellen leesbaar, geen zwart document.41/91interfacepixels verschillen in twee beelden; nieuw document exact gelijk.",
+  "pakketvergelijking": {
+    "onderdelen": 14,
+    "verschillende_onderdelen": [
+      "docProps/core.xml"
+    ]
+  },
+  "beelden": {
+    "invoer-redo": {
+      "bbox": [
+        1038,
+        940,
+        1132,
+        999
+      ],
+      "afwijkende_pixels": 41
+    },
+    "snel-getypt-bewaard": {
+      "bbox": [
+        6,
+        4,
+        1335,
+        997
+      ],
+      "afwijkende_pixels": 91
+    },
+    "nieuw-na-laat-antwoord": {
+      "bbox": null,
+      "afwijkende_pixels": 0
+    }
+  },
+  "testen": "Alle127Python-tests groen; nieuwe helper met echte native schema2/3-proeven gecontroleerd, geen appcode gewijzigd. Geen issue gesloten, feature niet standaard geactiveerd, geen nieuwe installatie of release.",
+  "ci": "Desktop43048315760 geslaagd op Linux/Windows/macOS, inclusief featurecheck en echte hostdraadproeven. Native43048310231 mislukte bij Linux-afhankelijkheden en runtime-installatie; failedjobs herstart. Nieuw --log-failed leverde geen bytes; geen nieuwe exacte DNS-logclaim voor deze native run. Nieuwe uitslag volgen.",
+  "grenzen": [
+    "Eén rijke bron en één positieve lange ronde per route; eerste schema3meting vóór de Undo-afkeuring apart behouden. Geen statistische conclusie over de hele suite of gebruikershardware.",
+    "Tijden vanaf begin tot frame bevatten bronflush en een eenmalige exacte bronuitlezing. Keyup-tot-frame begint pas bij WebKit-ontvangst, zodat wachtrijvertraging vóór ontvangst apart in totale wall-tijd zichtbaar blijft. Twee rAFs en renderlijst zijn geen fysieke pixelpaint of FPS.",
+    "Undo/Redo en latere vastgehouden-antwoordenproeven vallen buiten de gewone invoermeting.",
+    "TabelXML wordt per route exact tegen de eigen beginbron vergeleken. Andere pakket- en beeldverschillen ongewijzigd vermeld; geen volledige pixelacceptatie.",
+    "Geen volledige migratie-, platform-GUI-,7editie-,IME- of langdurige geheugenacceptatie."
+  ],
+  "volgende_stap": "Nieuwe route blijft uit. Profileer hoofdthread en workers op dezelfde rijke bron, met exacte ingebedde bronpinnen. Onderzoek verschil in aantallen native batches/bronmutaties en volledige tabelindeling; nog geen oorzakelijk bewijs dat journalisatie zelf de vertraging veroorzaakt. Pas pas daarna batching/indeling aan en herhaal rijke invoer plus selecteren tijdens echte achterstand.",
+  "bewijs": {
+    "pad": "docs/tests/writer-rijke-invoer-2026-11-11/bewijs.tar.gz",
+    "sha256": "af599ee5f776bfec2166b78686487540ebf685ca78359391fa56b03a17679e01",
+    "bytes": 2102995,
+    "leden": 44
+  }
+}
