@@ -36,11 +36,18 @@ neemt deze toestand niet van de vorige over.
   is een proef van de metadatalezer, geen volledige formaatacceptatie van die
   afwijkende werkmap.
 - **1.995 tests in 176 bestanden slagen**, tien bestaande corpusgevallen
-  overgeslagen; twee workers, 155,33 seconden, exitcode 0.
+  overgeslagen; twee workers, 169,86 seconden, exitcode 0.
 - Alle 58 Python-controles, TypeScript en de scripts voor echte kantoorengines
   en moduleopdrachten slagen.
 - Productiefrontend en native bouw slagen. De native proef voert exact de
   vastgelegde productbronnen uit.
+
+De eerste revisie `2ce72ec6` faalde lokaal en in CI op TypeScript TS18046.
+Het eerste verslag vermeldde die controle ten onrechte als geslaagd. De
+correctie vernauwt onbekende opdrachten vóór het lezen van `type`. Daarna
+slagen de afzonderlijke typecontrole, volledige suite en nieuwe frontend/native
+bouw; de onderstaande bediening en bestandscontrole zijn volledig herhaald
+met die nieuwe binary.
 
 ## Native Linux en onafhankelijk bewaarde bestanden
 
