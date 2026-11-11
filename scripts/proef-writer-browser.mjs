@@ -74,6 +74,7 @@ try {
         "__appApis",
         "__appStatus",
         "__writerWarmup",
+        "__writerLanguagePending",
         "__TAURI_INTERNALS__",
       ].filter((naam) => naam in window),
     ),
