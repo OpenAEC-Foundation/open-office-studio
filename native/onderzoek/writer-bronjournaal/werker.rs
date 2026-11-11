@@ -26,6 +26,7 @@ struct Binnen {
     #[cfg(test)]
     proef: Option<Arc<Proef>>,
     bytes: Arc<AtomicUsize>,
+    afgerond: Arc<AtomicBool>,
 }
 impl Drop for Binnen {
     fn drop(&mut self) {
@@ -82,6 +83,8 @@ impl Werker {
         let actief = Arc::new(AtomicBool::new(true));
         let bytes = Arc::new(AtomicUsize::new(0));
         let geannuleerd = Arc::new(AtomicBool::new(false));
+        let afgerond = Arc::new(AtomicBool::new(false));
+        let eigen_afgerond = afgerond.clone();
         let eigen_actief = actief.clone();
         let eigen_bytes = bytes.clone();
         let eigen_binding = binding.clone();
@@ -93,14 +96,16 @@ impl Werker {
                 struct Opruimen(
                     Arc<AtomicBool>,
                     Arc<AtomicUsize>,
+                    Arc<AtomicBool>,
                     #[cfg(test)] Option<Arc<Proef>>,
                 );
                 impl Drop for Opruimen {
                     fn drop(&mut self) {
                         self.0.store(false, Ordering::Release);
                         self.1.store(0, Ordering::Release);
+                        self.2.store(true, Ordering::Release);
                         #[cfg(test)]
-                        if let Some(p) = &self.2 {
+                        if let Some(p) = &self.3 {
                             if let Some(k) = &p.klaar {
                                 let _ = k.send(());
                             }
@@ -112,6 +117,7 @@ impl Werker {
                 let _opruimen = Opruimen(
                     eigen_actief.clone(),
                     eigen_bytes.clone(),
+                    eigen_afgerond,
                     #[cfg(test)]
                     proef_thread.clone(),
                 );
@@ -182,12 +188,16 @@ impl Werker {
                 #[cfg(test)]
                 proef,
                 bytes,
+                afgerond,
             }),
             binding,
         })
     }
     pub fn binding(&self) -> &Binding {
         &self.binding
+    }
+    pub fn afgerond(&self) -> bool {
+        self.binnen.afgerond.load(Ordering::Acquire)
     }
     pub fn bytes(&self) -> usize {
         self.binnen.bytes.load(Ordering::Acquire)

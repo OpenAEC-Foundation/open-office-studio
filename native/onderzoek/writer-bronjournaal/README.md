@@ -206,3 +206,49 @@ uitsluitend aanwezig in de testbouw.
 
 Geen Tauri-/productvoorraad-/frontendintegratie, evictie, GUI, appversnelling of
 platformacceptatie. Zie [werkerbewijs en resterende aansluiting](../../../docs/tests/2026-11-11-writer-werker.json).
+
+## Begrensde voorraad van onderzoekskoppelingen
+
+`voorraad.rs` beheert expliciet geopende werkerkoppelingen per host-eigenaar en
+document. Een procesbrede teller geeft iedere opening een nieuwe levensduur,
+ook bij een nieuwe voorraad. Een dubbel geopende koppeling wordt geweigerd.
+Een volle voorraad geeft `Capaciteit`; zij verdringt niet stilzwijgend een ander
+document. De host moet sluiten of verdringen expliciet via `vergeet` uitvoeren.
+Er is geen LRU-beleid of automatische heropening. Dit is een voorraad van
+werkerleases, geen registratie of sluitactie van de gebruikersdocumenttabs.
+
+Verwijderen trekt de werker in. Een verwijderde maar nog levende werker blijft
+meetellen in de werkerlimiet én bron-/voorstelboekhouding. Het aparte atomaire
+`afgerond` wordt pas gezet nadat de kern op haar eigen thread is vernietigd.
+Een nieuwe koppeling wordt geweigerd zolang die capaciteit niet is vrijgekomen.
+Een oud sluitbericht of laat afgeronde opdracht kan een nieuwe koppeling met
+dezelfde namen niet verwijderen, overschrijven of opnieuw registreren.
+Venstersluiting trekt uitsluitend de eigen koppelingen in.
+
+Het globale voorraadslot is vrij tijdens `stuur`/`ontvang`. De bytegrens is een
+retentiecontrole **na** voorbereiding. Bij overschrijding wordt het huidige
+voorstel geweigerd, de koppeling ingetrokken en `Capaciteit` teruggegeven; er
+wordt niets toegepast of automatisch herhaald. Dit is geen harde piek-/heapgrens:
+ook gelijktijdige voorbereidingen, transportpayloads en producenten buiten het
+kanaal vallen nog buiten die garantie.
+
+De toekomstige frontend mag een ingetrokken lease niet blind heropenen: zij
+moet eerst de actuele documentsessie/bron/selectie controleren, dan expliciet
+een nieuwe hostbinding en volledige bron aanbieden, of expliciet de bestaande
+schema-2-route met onafhankelijke bronvalidatie kiezen. Het aantal en de retentie
+aan schema-3-koppelingen mogen de bestaande 100-MiB-route niet vervangen of
+beperken. De echte desktopfallback en dat herbindingsgesprek zijn nog niet
+geïmplementeerd of geaccepteerd.
+
+`voorraadproef.rs` bevat tien tests, inclusief gecontroleerde intrekking na
+voorstel, wachten zonder globaal slot, oude afronding na heropenen, byte-/slot-
+capaciteit, hostisolatie, venstersluiting, nieuwe levensduur over voorraden en
+alle 25 echte geschiedenisaanvragen. Elf werker- en negen adaptertests slagen
+opnieuw. Twee mutanten, zonder meetellen van verlaten werkers en zonder
+generatiecontrole bij afronding, worden afgekeurd. De gewone niet-testbouw
+bewerkt tekst en wacht op de werkelijke asynchrone opruiming.
+
+Zie [voorraadbewijs en resterende productkoppeling](../../../docs/tests/2026-11-11-writer-voorraad.json).
+De volgende integratiestap is de geteste kern/adapter/werker/voorraad achter een
+expliciete Rust-feature in de echte desktoplaag onderbrengen, met veilige
+vendor-API's, standaard schema 2 behouden, daarna frontendprotocol en echte GUI.
