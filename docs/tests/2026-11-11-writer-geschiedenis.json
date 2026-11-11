@@ -1,0 +1,699 @@
+{
+  "datum_utc": "2026-11-11T07:14:09.404098+00:00",
+  "status": "Aanvullende geschiedenis-, Unicode- en grensproeven afgerond. Nieuwe Rust-kern blijft afzonderlijk; geen productintegratie of appversnelling geclaimd.",
+  "basis_commit": "3b8bb9d0",
+  "broncode": {
+    "native/onderzoek/writer-bronjournaal/geschiedenis.rs": "139c3c7ed989219feb310ae4dafd9993e42d115758c251304667d7f50c3b8e05",
+    "native/onderzoek/writer-bronjournaal/bron-pinnen.json": "15c3cfa164300ecc1f06da028ab116642cfcae181376d6ef0a3557a39bec6bd1",
+    "native/onderzoek/writer-bronjournaal/README.md": "4829d4321291abe3e64006cccde5d0df030ba39effef20ecfefc534276b25162",
+    "native/onderzoek/writer-bronjournaal/unicode.rs": "ede60897a35560a8d4068705eebab6d10166be2c1b60c640caeba862f0a32008",
+    "native/onderzoek/writer-bronjournaal/journaal.rs": "c32319a1bac528299eeab6d5e16e99ac7af3d4a49f5216e17c522a275dc287af",
+    "native/onderzoek/writer-bronjournaal/voorbereiden.py": "70d6cd5290f8b71c5a226b3c70a299df3c402817e8a1e996799422b55c808094",
+    "native/onderzoek/writer-bronjournaal/proef.rs": "d2c12d14fa806d15b849dedd930cbaefc2083a8a3388574ba595ab08ea9e8f35",
+    "native/onderzoek/writer-bronjournaal/grenzen.rs": "bd2c448eef890bf57d41ad69441e655a4a333641b26eb37f67fdfe48d06bb014"
+  },
+  "gewone_native_GUI": {
+    "programma_sha256": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+    "opname": {
+      "code": 0,
+      "duur_s": 56.529411750030704,
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-geschiedenis/proef.py",
+        "--zonder-profiel",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding",
+        "--versie",
+        "2026.45.52",
+        "--bron",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+        "--paginas",
+        "129",
+        "--tekst",
+        " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-geschiedenis/opname"
+      ]
+    },
+    "handelingen": {
+      "undo_verwijdert_nieuwe_tekst": true,
+      "redo_herstelt_exact": true,
+      "tweede_undo_gelijk": true,
+      "nieuwe_tak_exact": true,
+      "redo_na_tak_verandert_niets": true,
+      "eindtoevoeging": " vertakking",
+      "eindverwachting": "VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. S! vertakking",
+      "grens": "Native Ctrl+Z/Y en ASCII-typinvoer op eigen kopie. Geen uitspraak over gewenste Undo-groepering of algemene snelheid."
+    },
+    "bronnen": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    },
+    "rust_herhaling": {
+      "afwijkende_vervolgdeltas": 1,
+      "grens": "Inhoudelijke native bronpariteit op één eigen werkelijke reeks; geen productintegratie, GUI-/prestatie-/platform- of volledige geschiedenisacceptatie.",
+      "herbouwd": 2,
+      "hergebruikt": 23,
+      "rondes": [
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 189.980766,
+          "groep": 0,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": false
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.020680000000002,
+          "groep": 1,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.621647,
+          "groep": 2,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.879129,
+          "groep": 3,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.200927,
+          "groep": 4,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.20306,
+          "groep": 5,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.420688,
+          "groep": 6,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.518465,
+          "groep": 7,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 21.023759,
+          "groep": 8,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 20.255954,
+          "groep": 9,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.179637,
+          "groep": 10,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.20298,
+          "groep": 11,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.649377,
+          "groep": 12,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.398312,
+          "groep": 13,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.408319000000002,
+          "groep": 14,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.492756,
+          "groep": 15,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.951378000000002,
+          "groep": 16,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.351058000000002,
+          "groep": 17,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.491062,
+          "groep": 18,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.176157,
+          "groep": 19,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 221.10491299999998,
+          "groep": 20,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": false
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 20.104373,
+          "groep": 21,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.704854,
+          "groep": 22,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.095156,
+          "groep": 23,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.626843,
+          "groep": 24,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        }
+      ],
+      "schema": 3,
+      "uitsluitend_proef": true
+    },
+    "grens": "De bestaande desktoproute is bediend met echte toetsen in een eigen openbare documentkopie. Het prototype speelt de opgenomen aanvragen afzonderlijk na; niet geïntegreerd in deze GUI."
+  },
+  "revisie_GUI_dekkingsgrens": {
+    "handelingen": {
+      "undo_verwijdert_nieuwe_tekst": true,
+      "redo_herstelt_exact": true,
+      "tweede_undo_gelijk": true,
+      "nieuwe_tak_exact": true,
+      "redo_na_tak_verandert_niets": true,
+      "eindtoevoeging": " vertakking",
+      "eindverwachting": "VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. S! vertakking",
+      "grens": "Native Ctrl+Z/Y en ASCII-typinvoer op eigen kopie. Geen uitspraak over gewenste Undo-groepering of algemene snelheid.",
+      "revisies_zichtbaar_aan": true
+    },
+    "bronnen": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    },
+    "opgenomen_Rustgroepen": 19,
+    "opgenomen_gewone_tekens": 351,
+    "nieuwe_tak_tekens": 11,
+    "Rust_auteurs": 0,
+    "herhaling": [
+      {
+        "naam": "referentie",
+        "code": 0,
+        "programma_sha256": "1e2ba98d2bd0e27461f9f050ff2603976c9a8fa60beded233e59b584a90f8dc6"
+      },
+      {
+        "naam": "journaal",
+        "code": 101,
+        "programma_sha256": "b281f5016398fb36aa96b25d403972e4ccca4eb01c3e1b5d54a4a7b5eca6e1be"
+      }
+    ],
+    "verklaring": "De echte GUI schakelt Track Changes aan en toont visueel één gemarkeerde wijziging. De nieuwe tak komt niet in de gewone Rust-teksttransportopname. Alleen de eerdere gewone invoer is opgenomen. De geschiedenis-harnaspoort keurt deze reeks daarom af: geen afwijkende vervolgdeltareeks. Deze afkeuring is behouden en niet versoepeld; de opname telt niet als journaal-revisie-GUIgoedkeuring.",
+    "visueel_bekeken": "opname/profiel.png toont één wijziging, gemarkeerde vertakking en Track Changes:on; geen volledige UI-pixelvergelijking."
+  },
+  "SDK_route": {
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "parametertoewijzing": "isSuggesting:f=false",
+    "guard": "t(Mn(Wt),Fn),u.setSelection(Wt),yt();};if(!G.current&&!Xe&&Wl(nt.head.story)&&!f&&!vn&&/^[\\x20-\\x7e]+$/u.test(bt)&&!bt.includes(\"\\r\")&&!bt.includes(`\n`)&&(k||_openaecNativeTekst)){if(_openaecNativeTekst){const toegepast=await _openaecNativeTekst(u,nt.head,bt,vt(),()=>$(u),_openae",
+    "grens": "Observeerbare SDK-route selecteert gewone ASCII-invoer buiten suggesting; dit is geen bewijs dat Unicode/revisies in de hele suite ontbreken."
+  },
+  "native_Unicode_afleidingen": {
+    "uitkomsten": [
+      {
+        "naam": "gewoon",
+        "code": 0,
+        "programma_sha256": "b281f5016398fb36aa96b25d403972e4ccca4eb01c3e1b5d54a4a7b5eca6e1be",
+        "dataset_sha256": "c3ec70e97a07d003652ca083a81a794746b1ed87e38b83567b4c472e5efefbe2"
+      },
+      {
+        "naam": "revisie",
+        "code": 0,
+        "programma_sha256": "b281f5016398fb36aa96b25d403972e4ccca4eb01c3e1b5d54a4a7b5eca6e1be",
+        "dataset_sha256": "85b3f2974cf62346820bc2fc17efccd5ae9c3bf75445e551462bcb58818b1495"
+      }
+    ],
+    "gewoon": {
+      "afwijkende_vervolgdeltas": 1,
+      "grens": "Inhoudelijke native bronpariteit op één eigen werkelijke reeks; geen productintegratie, GUI-/prestatie-/platform- of volledige geschiedenisacceptatie.",
+      "herbouwd": 2,
+      "hergebruikt": 23,
+      "rondes": [
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 174.895179,
+          "groep": 0,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": false
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.491108,
+          "groep": 1,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.470411000000002,
+          "groep": 2,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.329130000000003,
+          "groep": 3,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.525686,
+          "groep": 4,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.097156,
+          "groep": 5,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.148238,
+          "groep": 6,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.188266000000002,
+          "groep": 7,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.34517,
+          "groep": 8,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.652229,
+          "groep": 9,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.744775999999998,
+          "groep": 10,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.636770000000002,
+          "groep": 11,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.918316,
+          "groep": 12,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.184914,
+          "groep": 13,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.481584,
+          "groep": 14,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.840431000000002,
+          "groep": 15,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.508350999999998,
+          "groep": 16,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.084866,
+          "groep": 17,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.614252,
+          "groep": 18,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.570272000000003,
+          "groep": 19,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 225.421018,
+          "groep": 20,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": false
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.39172,
+          "groep": 21,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.877001,
+          "groep": 22,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.675202000000002,
+          "groep": 23,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.776471,
+          "groep": 24,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        }
+      ],
+      "schema": 3,
+      "uitsluitend_proef": true
+    },
+    "revisie": {
+      "afwijkende_vervolgdeltas": 1,
+      "grens": "Inhoudelijke native bronpariteit op één eigen werkelijke reeks; geen productintegratie, GUI-/prestatie-/platform- of volledige geschiedenisacceptatie.",
+      "herbouwd": 2,
+      "hergebruikt": 23,
+      "rondes": [
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 174.23601499999998,
+          "groep": 0,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": false
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.289006999999998,
+          "groep": 1,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.496784,
+          "groep": 2,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.970443999999997,
+          "groep": 3,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.682517,
+          "groep": 4,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.084332,
+          "groep": 5,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.184179,
+          "groep": 6,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.377225000000003,
+          "groep": 7,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.238149,
+          "groep": 8,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.041743,
+          "groep": 9,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.187254,
+          "groep": 10,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.03081,
+          "groep": 11,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.672929,
+          "groep": 12,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.002777000000002,
+          "groep": 13,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.361878,
+          "groep": 14,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 17.3619,
+          "groep": 15,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 18.333868,
+          "groep": 16,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.373325,
+          "groep": 17,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 16.379033,
+          "groep": 18,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.298595000000002,
+          "groep": 19,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 219.05169999999998,
+          "groep": 20,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": false
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.604137,
+          "groep": 21,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 19.414936,
+          "groep": 22,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 23.200864000000003,
+          "groep": 23,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        },
+        {
+          "antwoord_gelijk_behalve_schema_token_tijd": true,
+          "duur_ms_diagnostisch": 49.660452,
+          "groep": 24,
+          "volledige_bron_bytegelijk": true,
+          "vorig_voorstel_bytegelijk": true
+        }
+      ],
+      "schema": 3,
+      "uitsluitend_proef": true
+    },
+    "methode": "De laatste aanvraag uit de echte geschiedenisreeks krijgt café/naïef/em-dash/euro/emoji/CJK; in de tweede afleiding ook een vaste fictieve auteur en datum. De bestaande Rust-route levert de verwachte antwoorden; de journaalproef vergelijkt alle25antwoorden en volledige bron na elke groep. Cursor wordt afzonderlijk op UTF-16 getoetst.",
+    "grens": "Native afleidingen, geen fysieke Unicode-/IME-/revisie-GUItest van het prototype."
+  },
+  "standaardgrens": {
+    "256_vervolgen_hergebruikt": true,
+    "257_groepen_exact": true,
+    "afkeuring_behoudt_bron_en_voorstel": true,
+    "geconfigureerde_bytegrens": 67108864,
+    "grens": "Kleine eigen bron en opgeslagen bytes; geen native-heap-, GUI-, platform- of langdurige grote-documentacceptatie.",
+    "grootste_opgeslagen_bytes_voor_reset": 3616,
+    "unicode_caret_UTF16_exact": true,
+    "volgende_groep_vraagt_volledige_bron": true,
+    "volledige_bronreset_exact": true
+  },
+  "getest": [
+    "Werkelijke Undo, Redo, opnieuw Undo, nieuwe invoertak en Redo zonder overschrijven; alle1537verhalen/3329teksten gecontroleerd in de bestaande app.",
+    "Oorspronkelijke native route en journaal op dezelfde25aanvragen: alle inhoudelijke antwoorden en bronbytes na elke groep gelijk,23hergebruik/2herbouw.",
+    "Beide native Unicode-afleidingen:25groepen elk; inhoudelijke en volledige bronpariteit, UTF-16-cursor exact.",
+    "257kleine native grensaanvragen inclusief Unicode;256vervolgen hergebruikt, volgende aanvraag vraagt volledige bron, bron/voorstel blijven behouden, volledige herstart exact.",
+    "Rustfmt, bron-/archiefhashes en de voorbereider:181vendorpinnen, vijf nieuwe/oude bronkopieën bytegelijk, bestaande uitvoer beschermd."
+  ],
+  "niet_getest": [
+    "Geen nieuwe app-/SDK-/Tauri-handlerroute, installatie, release, brede productsuite of algemeen prestatie-/FPSbewijs.",
+    "Geen geïntegreerde journal-GUI, fysieke Unicode/IME, revisie accepteren/verwerpen, langdurige grote native-heap-/64MiBproef of alle opmaak-/bestandsvarianten.",
+    "Geen volledige functie-/UI-pixel-, platform-/7editie- of volledigeRustacceptatie; geen issue gesloten."
+  ],
+  "vervolg": "Werk vóór productintegratie de opgeslagen-byte-/heapgrenzen en pariteit op meer bronmutaties uit; protocol3 blijft opt-in en moet expliciete schema2-terugval behouden. De huidige SDK-ASCII/suggestingkeuze apart testen vóór verruimen. Native GUI met geïntegreerde kandidaat, bewaren/heropenen/verwerpen en fysieke respons volgen daarna; platforms en edities afzonderlijk. Los eerst de beperkte bouwruimte op via uitsluitend geverifieerde eigen tussenartefacten of gebruik een afzonderlijke CI-bouw; referenties en gebruikerswerk behouden.",
+  "bewijs": {
+    "docs/tests/writer-geschiedenis-2026-11-11/bewijs.tar.gz": "eda7f9f7c63360e0d59fd6faf287be77b6990239eebd5b71a23c4e7434396077"
+  },
+  "broncode_branch": "codex/native-rust-office-integratie",
+  "broncode_url": "https://github.com/OpenAEC-Foundation/open-office-studio/tree/ee82d0ed/native/onderzoek/writer-bronjournaal"
+}
