@@ -1,0 +1,128 @@
+diff --git a/crates/betteroffice-xlsx/src/authority.rs b/crates/betteroffice-xlsx/src/authority.rs
+index caa1424..d00551c 100644
+--- a/crates/betteroffice-xlsx/src/authority.rs
++++ b/crates/betteroffice-xlsx/src/authority.rs
+@@ -1024,6 +1024,21 @@ impl WorkbookAuthority {
+         legacy_style_readings: &[Stylesheet],
+         chunk: usize,
+     ) -> Result<(Self, WorkbookModel, WorkbookStructure), AuthorityError> {
++        Self::from_source_with_seed_chunk_model(
++            Cow::Borrowed(model), client_id, legacy_dimensions, legacy_styles,
++            legacy_style_readings, chunk,
++        )
++    }
++
++    fn from_source_with_seed_chunk_model(
++        input: Cow<'_, WorkbookModel>,
++        client_id: Option<u64>,
++        legacy_dimensions: &[xlsx_parse::LegacySheetDimensions],
++        legacy_styles: Option<&Stylesheet>,
++        legacy_style_readings: &[Stylesheet],
++        chunk: usize,
++    ) -> Result<(Self, WorkbookModel, WorkbookStructure), AuthorityError> {
++        let model = input.as_ref();
+         let base = WorkbookBase::from_model_with_style_readings_mode(
+             model,
+             legacy_dimensions,
+@@ -1062,12 +1077,27 @@ impl WorkbookAuthority {
+             xlsx_model::progress::pulse();
+         }
+         let authority = Self::hydrated(doc, Arc::new(base), 0);
++        // Reuse the parsed cell model's allocation space for the projection.
++        drop(input);
+         let (model, structure) = authority
+             .strict_materialize()
+             .map_err(AuthorityError::InvalidState)?;
+         Ok((authority, model, structure))
+     }
+ 
++    pub(crate) fn from_owned_source_with_projection(
++        model: WorkbookModel,
++        client_id: Option<u64>,
++        legacy_dimensions: &[xlsx_parse::LegacySheetDimensions],
++        legacy_styles: Option<&Stylesheet>,
++        legacy_style_readings: &[Stylesheet],
++    ) -> Result<(Self, WorkbookModel, WorkbookStructure), AuthorityError> {
++        Self::from_source_with_seed_chunk_model(
++            Cow::Owned(model), client_id, legacy_dimensions, legacy_styles,
++            legacy_style_readings, SEED_CHUNK,
++        )
++    }
++
+     pub(crate) fn client_id(&self) -> u64 {
+         self.doc.client_id().get()
+     }
+@@ -11052,6 +11082,24 @@ mod tests {
+         }
+     }
+ 
++    #[test]
++    fn owning_the_source_keeps_the_same_projection_and_bootstrap_bytes() {
++        for case in open_test_cases::matrix() {
++            for client in [None, Some(11)] {
++                let (borrowed, before, before_structure) = WorkbookAuthority::from_source_with_projection(
++                    &case.model, client, &case.legacy_dimensions, case.legacy_styles.as_ref(), &[],
++                ).unwrap();
++                let (owned, after, after_structure) = WorkbookAuthority::from_owned_source_with_projection(
++                    case.model.clone(), client, &case.legacy_dimensions, case.legacy_styles.as_ref(), &[],
++                ).unwrap();
++                assert_eq!(before, after, "{}", case.label);
++                assert_eq!(before_structure, after_structure, "{}", case.label);
++                assert_eq!(borrowed.encode_state_as_update_v1(), owned.encode_state_as_update_v1());
++                assert_eq!(borrowed.base.fingerprint, owned.base.fingerprint);
++            }
++        }
++    }
++
+     #[test]
+     fn streamed_seed_preserves_wire_order_at_decimal_boundaries() {
+         let mut sheet = Sheet::new("Lexical order");
+diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
+index 00af81e..ef33ee6 100644
+--- a/crates/betteroffice-xlsx/src/workbook.rs
++++ b/crates/betteroffice-xlsx/src/workbook.rs
+@@ -695,8 +695,19 @@ impl Workbook {
+         if let Some(client_id) = client_id {
+             validate_collaboration_client_id(client_id)?;
+         }
+-        let (authority, mut projected, structure) = WorkbookAuthority::from_source_with_projection(
+-            &model,
++        // Retain only metadata the shared cell projection cannot carry. The
++        // complete parsed cell model can then be released before projecting.
++        let arrays: Vec<Vec<_>> = model.sheets.iter().map(|sheet| {
++            sheet.array_formulas().filter_map(|(at, range)| {
++                sheet.cell(at).and_then(|cell| cell.formula.clone())
++                    .map(|formula| (at, range, formula))
++            }).collect()
++        }).collect();
++        let hidden: Option<Vec<_>> = client_id.is_none().then(|| model.sheets.iter().map(|sheet| {
++            (sheet.hidden_col_widths.clone(), sheet.hidden_row_heights.clone())
++        }).collect());
++        let (authority, mut projected, structure) = WorkbookAuthority::from_owned_source_with_projection(
++            model,
+             client_id,
+             legacy_dimensions,
+             legacy_styles.0,
+@@ -708,11 +719,17 @@ impl Workbook {
+             validate_collaboration_state_entries(authority.state_vector_entries())?;
+             xlsx_model::progress::pulse();
+         }
+-        retain_array_formulas(&model, &mut projected);
+-        if client_id.is_none() {
+-            for (source, target) in model.sheets.iter().zip(&mut projected.sheets) {
+-                target.hidden_col_widths = source.hidden_col_widths.clone();
+-                target.hidden_row_heights = source.hidden_row_heights.clone();
++        for (sheet, anchors) in projected.sheets.iter_mut().zip(arrays) {
++            for (at, range, formula) in anchors {
++                if sheet.cell(at).and_then(|cell| cell.formula.as_deref()) == Some(formula.as_str()) {
++                    sheet.set_array_formula(at, range);
++                }
++            }
++        }
++        if let Some(hidden) = hidden {
++            for (target, (columns, rows)) in projected.sheets.iter_mut().zip(hidden) {
++                target.hidden_col_widths = columns;
++                target.hidden_row_heights = rows;
+             }
+         }
+         let model = projected;

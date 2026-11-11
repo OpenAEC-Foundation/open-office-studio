@@ -27,6 +27,9 @@ def main():
     parser.add_argument('--wasm-bindgen', default='wasm-bindgen')
     parser.add_argument('--wasm-opt', default='wasm-opt')
     parser.add_argument('--controle', action='store_true', help='Draai ook de gerichte native kernproeven.')
+    parser.add_argument('--nieuwe-kern', action='store_true', help='Bouw een kandidaat en rapporteer de nieuwe checksum, zonder de vastgezette uitvoerchecksum te eisen. Bron, patches, tools en WASM-interface blijven gecontroleerd.')
+    parser.add_argument('--alleen-bron', action='store_true', help='Controleer en prepareer alleen de gepinde bron en patches, zonder bouwgereedschappen uit te voeren.')
+    parser.add_argument('--profiel-namen', action='store_true', help='Schrijf daarnaast een diagnostische WASM met functienamen; de gewone uitvoer blijft checksum-gecontroleerd.')
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     metadata = json.loads((repo / 'patches/rekenbladengine-lange-ketens.json').read_text())
@@ -35,15 +38,16 @@ def main():
         patch = repo / 'patches' / onderdeel['patch']
         if sha256(patch) != onderdeel['patchSha256']:
             raise SystemExit('De rekenbladpatch wijkt af van de vastgelegde checksum: ' + onderdeel['patch'])
-    rustc = subprocess.check_output(['rustc', '--version'], text=True).strip()
-    if not rustc.startswith('rustc ' + metadata['rustc'] + ' '):
-        raise SystemExit('Gebruik de vastgelegde Rust-versie: ' + metadata['rustc'])
-    bindgen = subprocess.check_output([args.wasm_bindgen, '--version'], text=True).strip()
-    if bindgen != 'wasm-bindgen ' + metadata['wasmBindgen']:
-        raise SystemExit('Gebruik wasm-bindgen ' + metadata['wasmBindgen'])
-    optimizer = subprocess.check_output([args.wasm_opt, '--version'], text=True).strip()
-    if not optimizer.startswith('wasm-opt version ' + metadata['binaryen'] + ' '):
-        raise SystemExit('Gebruik Binaryen ' + metadata['binaryen'])
+    if not args.alleen_bron:
+        rustc = subprocess.check_output(['rustc', '--version'], text=True).strip()
+        if not rustc.startswith('rustc ' + metadata['rustc'] + ' '):
+            raise SystemExit('Gebruik de vastgelegde Rust-versie: ' + metadata['rustc'])
+        bindgen = subprocess.check_output([args.wasm_bindgen, '--version'], text=True).strip()
+        if bindgen != 'wasm-bindgen ' + metadata['wasmBindgen']:
+            raise SystemExit('Gebruik wasm-bindgen ' + metadata['wasmBindgen'])
+        optimizer = subprocess.check_output([args.wasm_opt, '--version'], text=True).strip()
+        if not optimizer.startswith('wasm-opt version ' + metadata['binaryen'] + ' '):
+            raise SystemExit('Gebruik Binaryen ' + metadata['binaryen'])
     bronmap = args.bronmap.resolve()
     if bronmap.exists():
         raise SystemExit('De bronmap bestaat al; kies een nieuwe map.')
@@ -79,12 +83,16 @@ def main():
     for onderdeel in patches:
         patch = repo / 'patches' / onderdeel['patch']
         subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(patch)], cwd=bronmap, check=True)
+    if args.alleen_bron:
+        print(json.dumps({'bronCommit': metadata['commit'], 'patches': len(patches), 'bronmap': str(bronmap)}))
+        return
     if args.controle:
         for pakket in ['betteroffice-xlsx-calc', 'betteroffice-xlsx']:
             subprocess.run(['cargo', 'test', '-p', pakket, '--locked', '--test', 'lange_ketens'], cwd=bronmap, check=True)
         for onderdeel in metadata.get('extraPatches', []):
             for proef in onderdeel.get('tests', []):
-                subprocess.run(['cargo', 'test', '-p', proef['pakket'], '--locked', '--test', proef['test']], cwd=bronmap, check=True)
+                selectie = ['--lib', proef['lib']] if 'lib' in proef else ['--test', proef['test']]
+                subprocess.run(['cargo', 'test', '-p', proef['pakket'], '--locked', *selectie], cwd=bronmap, check=True)
     uitvoer = args.uitvoer.resolve()
     if uitvoer.exists():
         raise SystemExit('De uitvoermap bestaat al; kies een nieuwe map.')
@@ -99,8 +107,10 @@ def main():
     kern = uitvoer / 'xlsx_wasm_bg.wasm'
     tijdelijk = uitvoer / 'xlsx_wasm_bg-geoptimaliseerd.wasm'
     subprocess.run([args.wasm_opt, '-O3', str(kern), '-o', str(tijdelijk)], check=True)
+    if args.profiel_namen:
+        subprocess.run([args.wasm_opt, '-O3', '--debuginfo', str(kern), '-o', str(uitvoer / 'xlsx_wasm_profile.wasm')], check=True)
     tijdelijk.replace(kern)
-    if sha256(kern) != metadata['wasmSha256']:
+    if not args.nieuwe_kern and sha256(kern) != metadata['wasmSha256']:
         raise SystemExit('De herbouwde rekenbladkern wijkt af van de vastgelegde checksum.')
     origineel = repo / 'node_modules/@betteroffice/xlsx/dist/generated/xlsx_wasm_bg.wasm'
     if sha256(origineel) != metadata['oorspronkelijkWasmSha256']:

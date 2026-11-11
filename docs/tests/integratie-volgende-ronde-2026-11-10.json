@@ -1,0 +1,964 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-10T14:16:07.852245+00:00",
+  "targetDocumentationHead": "75968e5d6e6cc1ce5dda320a715470611909bef7",
+  "testedRuntime": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "deadline": "2026-11-10T15:25:00+01:00",
+  "authorization": "User asked for useful additional work before1525; preflight only, no intake/merge/code change.",
+  "method": "git merge-tree writes local Git objects only. Synthetic commit-tree objects chain candidate trees; no checkout, index, branch, remote or application code updated. No app tests/builds run on the virtual combination.",
+  "excluded": [
+    {
+      "pr": 317,
+      "reason": "Explicitly parked by user until nextweek, not released."
+    },
+    {
+      "kind": "pivot test-only helper patch",
+      "reason": "No released PR/head, keep separate."
+    }
+  ],
+  "individual": [
+    {
+      "delivery": "issue327",
+      "issue": 327,
+      "head": "3c2595ca22134bc776132a4790e3e6851d07196a",
+      "mergeBase": "da16cea1519b301ba43af76496eb2c842828c1f0",
+      "changedFiles": [
+        "docs/writer-language-performance.md",
+        "scripts/meet-writer.mjs",
+        "scripts/proef-writer-browser.mjs",
+        "scripts/writer-performance.config.ts",
+        "src/tekst/gedeeld/editorvolgen.ts",
+        "src/tekst/info/TekstInfo.tsx",
+        "src/tekst/info/taalvolgen.test.ts",
+        "src/tekst/info/taalvolgen.ts"
+      ],
+      "clean": true,
+      "tree": "1e3a1d75ebcd880d12a3d900710217a5957d2c00",
+      "rawProof": ".local/round2-next-individual-issue327.txt",
+      "requiredPredecessors": []
+    },
+    {
+      "delivery": "337",
+      "issue": 336,
+      "head": "2359ea6059025999b83f8083b9885dd93b03a4a3",
+      "mergeBase": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "changedFiles": [
+        ".github/workflows/presentation-odf.yml",
+        "docs/tests/2026-11-10-presentatie-media-handmatig-pauzeren.md",
+        "scripts/proef-presentatie-media-pauze.mjs",
+        "src/presentatie/MediaSpeler.tsx"
+      ],
+      "clean": true,
+      "tree": "0d0a04e00380e07839a62a8606c31a1d3b53237b",
+      "rawProof": ".local/round2-next-individual-337.txt",
+      "requiredPredecessors": []
+    },
+    {
+      "delivery": "346",
+      "issue": 345,
+      "head": "c195e3171918faf703a9c72bcf0c5c7f71a313d1",
+      "mergeBase": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "changedFiles": [
+        ".github/workflows/presentation-odf.yml",
+        "docs/tests/2026-11-10-presentatie-media-handmatig-pauzeren.md",
+        "docs/tests/2026-11-10-presentatie-poster-capture.md",
+        "scripts/proef-presentatie-media-pauze.mjs",
+        "scripts/proef-presentatie-poster-capture.mjs",
+        "src/presentatie/DiaMedia.tsx",
+        "src/presentatie/MediaSpeler.tsx"
+      ],
+      "clean": true,
+      "tree": "1770ad8f3b3e0794d9112fc64d35cfa7aa98aeb6",
+      "rawProof": ".local/round2-next-individual-346.txt",
+      "requiredPredecessors": [337]
+    },
+    {
+      "delivery": "341",
+      "issue": 339,
+      "head": "b0bd5f8189bcb2ecf0433a4849f9e6f5c9b508fd",
+      "mergeBase": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "changedFiles": [
+        "docs/tests/2026-11-10-presentatie-zoeklimiet.md",
+        "docs/tests/presentatie-zoeklimiet-2026-11-10/baseline.json",
+        "docs/tests/presentatie-zoeklimiet-2026-11-10/fixed.json",
+        "docs/tests/presentatie-zoeklimiet-2026-11-10/whole-word-regression.json",
+        "scripts/test-presentatie-zoeklimiet.mjs",
+        "src/i18n/locales/de/ribbon.json",
+        "src/i18n/locales/en/ribbon.json",
+        "src/i18n/locales/es/ribbon.json",
+        "src/i18n/locales/fr/ribbon.json",
+        "src/i18n/locales/it/ribbon.json",
+        "src/i18n/locales/lo/ribbon.json",
+        "src/i18n/locales/nl/ribbon.json",
+        "src/i18n/locales/pt-BR/ribbon.json",
+        "src/i18n/locales/zh-CN/ribbon.json",
+        "src/lint/presentatie-zoeken.test.ts",
+        "src/lint/presentatie-zoeken.ts",
+        "src/lint/presentatie-zoekpaneel.tsx"
+      ],
+      "clean": true,
+      "tree": "72c204c28678560b47115d2979c1da20f754c8e6",
+      "rawProof": ".local/round2-next-individual-341.txt",
+      "requiredPredecessors": []
+    },
+    {
+      "delivery": "343",
+      "issue": 340,
+      "head": "6c785ed0fc1fa6916144cf790ede7019e3deb5ee",
+      "mergeBase": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+      "changedFiles": [
+        ".github/workflows/office-tab-focus.yml",
+        "scripts/test-office-tab-undo.mjs",
+        "src/OfficeStudio.tsx",
+        "src/TabBalk.tsx",
+        "src/export/editorKoppeling.ts",
+        "src/export/koppeling.ts"
+      ],
+      "clean": true,
+      "tree": "db30c61f200bc44fe5053442ab5257777477b539",
+      "rawProof": ".local/round2-next-individual-343.txt",
+      "requiredPredecessors": []
+    },
+    {
+      "delivery": "344",
+      "issue": 338,
+      "head": "e19ba34e18fb108f6134dfb2025eabfde7628d41",
+      "mergeBase": "68cc7fc512d3778115395d58bfc2c2cf33131d43",
+      "changedFiles": [
+        "docs/tests/writer-pdf-interne-links.md",
+        "scripts/test-writer-pdf-interne-links.mjs",
+        "src/afdrukken/bronTekst.ts",
+        "src/afdrukken/model.ts",
+        "src/afdrukken/tekstKoppelingen-engine.test.ts",
+        "src/afdrukken/tekstKoppelingen.ts",
+        "src/export/pdf/bestemmingen.test.ts",
+        "src/export/pdf/index.ts",
+        "src/export/pdf/schrijver.ts"
+      ],
+      "clean": true,
+      "tree": "e0bc24517d87d6115ee7d3f6662c52364a694b08",
+      "rawProof": ".local/round2-next-individual-344.txt",
+      "requiredPredecessors": []
+    },
+    {
+      "delivery": "342",
+      "issue": 93,
+      "head": "12b99ca3c6b67d6e5c07b97d079bf02e65276c81",
+      "mergeBase": "1e5afa399117fd84df628955ec82b0e597993c83",
+      "changedFiles": [
+        "docs/ontwerp/tekenmodule-onderzoek.md",
+        "docs/tests/2026-11-10-tekenmodule-onderzoek.json",
+        "docs/tests/fixtures/tekenmodule-93/.gitattributes",
+        "docs/tests/fixtures/tekenmodule-93/bron.svg",
+        "docs/tests/fixtures/tekenmodule-93/paint-eigen-vorm.svg",
+        "docs/tests/fixtures/tekenmodule-93/paint-import.svg",
+        "scripts/proef-tekenmodule-connectors.mjs"
+      ],
+      "clean": true,
+      "tree": "67c2c3137075ed439d8221a81eaa0b4a6df910ea",
+      "rawProof": ".local/round2-next-individual-342.txt",
+      "requiredPredecessors": []
+    }
+  ],
+  "combinedOrder": ["issue327", "337", "346", "341", "343", "344", "342"],
+  "combined": [
+    {
+      "delivery": "issue327",
+      "inputVirtualCommit": "75968e5d6e6cc1ce5dda320a715470611909bef7",
+      "head": "3c2595ca22134bc776132a4790e3e6851d07196a",
+      "clean": true,
+      "tree": "1e3a1d75ebcd880d12a3d900710217a5957d2c00",
+      "rawProof": ".local/round2-next-combined-issue327.txt",
+      "outputVirtualCommit": "cdbe31b75a21bbf68ff2f4a17cfa783750a4a54a"
+    },
+    {
+      "delivery": "337",
+      "inputVirtualCommit": "cdbe31b75a21bbf68ff2f4a17cfa783750a4a54a",
+      "head": "2359ea6059025999b83f8083b9885dd93b03a4a3",
+      "clean": true,
+      "tree": "0f75354424e98f868e6c4d2660983b458f553712",
+      "rawProof": ".local/round2-next-combined-337.txt",
+      "outputVirtualCommit": "b6849ee28cd471a4a09227022f3a68e51a16feb0"
+    },
+    {
+      "delivery": "346",
+      "inputVirtualCommit": "b6849ee28cd471a4a09227022f3a68e51a16feb0",
+      "head": "c195e3171918faf703a9c72bcf0c5c7f71a313d1",
+      "clean": true,
+      "tree": "127b0a5383b61f42c35e177d1ce746287f9b03ef",
+      "rawProof": ".local/round2-next-combined-346.txt",
+      "outputVirtualCommit": "65689d5e018c3e266b54800c70ecf76a9ffda8ab"
+    },
+    {
+      "delivery": "341",
+      "inputVirtualCommit": "65689d5e018c3e266b54800c70ecf76a9ffda8ab",
+      "head": "b0bd5f8189bcb2ecf0433a4849f9e6f5c9b508fd",
+      "clean": true,
+      "tree": "6a139d86c0fcc55791600d44025e01d18efd05fb",
+      "rawProof": ".local/round2-next-combined-341.txt",
+      "outputVirtualCommit": "e56171a0e88e36290ab8629243fa753008a3aff0"
+    },
+    {
+      "delivery": "343",
+      "inputVirtualCommit": "e56171a0e88e36290ab8629243fa753008a3aff0",
+      "head": "6c785ed0fc1fa6916144cf790ede7019e3deb5ee",
+      "clean": true,
+      "tree": "2416cbd4ed7a9885a648ae823a00788d9dfdb3a3",
+      "rawProof": ".local/round2-next-combined-343.txt",
+      "outputVirtualCommit": "f402d7c3e8056e76c4d52dcb8dc9fe6df23761d0"
+    },
+    {
+      "delivery": "344",
+      "inputVirtualCommit": "f402d7c3e8056e76c4d52dcb8dc9fe6df23761d0",
+      "head": "e19ba34e18fb108f6134dfb2025eabfde7628d41",
+      "clean": true,
+      "tree": "a2fe410673fcef6e6144df239d3a7bc0672c8000",
+      "rawProof": ".local/round2-next-combined-344.txt",
+      "outputVirtualCommit": "c7d0efd52f7849cacbd27858ca5ae688c577c947"
+    },
+    {
+      "delivery": "342",
+      "inputVirtualCommit": "c7d0efd52f7849cacbd27858ca5ae688c577c947",
+      "head": "12b99ca3c6b67d6e5c07b97d079bf02e65276c81",
+      "clean": true,
+      "tree": "d055dc046c034917d540a048f60e648fc6c00b6e",
+      "rawProof": ".local/round2-next-combined-342.txt",
+      "outputVirtualCommit": "4677945e8016177c58d464aa31e6cde6ce705e09"
+    }
+  ],
+  "allClean": true,
+  "lastVirtualCommit": "4677945e8016177c58d464aa31e6cde6ce705e09",
+  "lastVirtualTree": "d055dc046c034917d540a048f60e648fc6c00b6e",
+  "requiredAncestry": {
+    "pr337IsAncestorOf346": true
+  },
+  "sharedSourcePaths": {
+    ".github/workflows/presentation-odf.yml": ["337", "346"],
+    "docs/tests/2026-11-10-presentatie-media-handmatig-pauzeren.md": [
+      "337",
+      "346"
+    ],
+    "scripts/proef-presentatie-media-pauze.mjs": ["337", "346"],
+    "src/presentatie/MediaSpeler.tsx": ["337", "346"]
+  },
+  "limits": [
+    "Git-clean is not functional compatibility or acceptance; virtual tree is untested and not merged/pushed.",
+    "Maintain exact source heads; later owner updates require a new comparison.",
+    "327 has documented CPU4 phase regression despite reduced lookups; acceptance decision remains open.",
+    "337/343/346 inherited broad-suite timing failures and missing platform/native gates stay separate.",
+    "342 is research and probe documentation, not a new Draw implementation.",
+    "No main permission, no official release or issue closure."
+  ],
+  "virtualDiffWhitespaceCheck": {
+    "passed": true,
+    "output": ""
+  },
+  "virtualChangedFiles": [
+    ".github/workflows/office-tab-focus.yml",
+    ".github/workflows/presentation-odf.yml",
+    "docs/ontwerp/tekenmodule-onderzoek.md",
+    "docs/tests/2026-11-10-presentatie-media-handmatig-pauzeren.md",
+    "docs/tests/2026-11-10-presentatie-poster-capture.md",
+    "docs/tests/2026-11-10-presentatie-zoeklimiet.md",
+    "docs/tests/2026-11-10-tekenmodule-onderzoek.json",
+    "docs/tests/fixtures/tekenmodule-93/.gitattributes",
+    "docs/tests/fixtures/tekenmodule-93/bron.svg",
+    "docs/tests/fixtures/tekenmodule-93/paint-eigen-vorm.svg",
+    "docs/tests/fixtures/tekenmodule-93/paint-import.svg",
+    "docs/tests/presentatie-zoeklimiet-2026-11-10/baseline.json",
+    "docs/tests/presentatie-zoeklimiet-2026-11-10/fixed.json",
+    "docs/tests/presentatie-zoeklimiet-2026-11-10/whole-word-regression.json",
+    "docs/tests/writer-pdf-interne-links.md",
+    "docs/writer-language-performance.md",
+    "scripts/meet-writer.mjs",
+    "scripts/proef-presentatie-media-pauze.mjs",
+    "scripts/proef-presentatie-poster-capture.mjs",
+    "scripts/proef-tekenmodule-connectors.mjs",
+    "scripts/proef-writer-browser.mjs",
+    "scripts/test-office-tab-undo.mjs",
+    "scripts/test-presentatie-zoeklimiet.mjs",
+    "scripts/test-writer-pdf-interne-links.mjs",
+    "scripts/writer-performance.config.ts",
+    "src/OfficeStudio.tsx",
+    "src/TabBalk.tsx",
+    "src/afdrukken/bronTekst.ts",
+    "src/afdrukken/model.ts",
+    "src/afdrukken/tekstKoppelingen-engine.test.ts",
+    "src/afdrukken/tekstKoppelingen.ts",
+    "src/export/editorKoppeling.ts",
+    "src/export/koppeling.ts",
+    "src/export/pdf/bestemmingen.test.ts",
+    "src/export/pdf/index.ts",
+    "src/export/pdf/schrijver.ts",
+    "src/i18n/locales/de/ribbon.json",
+    "src/i18n/locales/en/ribbon.json",
+    "src/i18n/locales/es/ribbon.json",
+    "src/i18n/locales/fr/ribbon.json",
+    "src/i18n/locales/it/ribbon.json",
+    "src/i18n/locales/lo/ribbon.json",
+    "src/i18n/locales/nl/ribbon.json",
+    "src/i18n/locales/pt-BR/ribbon.json",
+    "src/i18n/locales/zh-CN/ribbon.json",
+    "src/lint/presentatie-zoeken.test.ts",
+    "src/lint/presentatie-zoeken.ts",
+    "src/lint/presentatie-zoekpaneel.tsx",
+    "src/presentatie/DiaMedia.tsx",
+    "src/presentatie/MediaSpeler.tsx",
+    "src/tekst/gedeeld/editorvolgen.ts",
+    "src/tekst/info/TekstInfo.tsx",
+    "src/tekst/info/taalvolgen.test.ts",
+    "src/tekst/info/taalvolgen.ts"
+  ],
+  "sourceCiSnapshot": [
+    {
+      "baseRefName": "codex/integratie-2026-11-09",
+      "headRefOid": "2359ea6059025999b83f8083b9885dd93b03a4a3",
+      "isDraft": true,
+      "mergeStateStatus": "UNKNOWN",
+      "mergeable": "UNKNOWN",
+      "number": 337,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:49:37Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817315016/job/129833572526",
+          "name": "desktop (ubuntu-22.04)",
+          "startedAt": "2026-11-10T12:37:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:41:01Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314932/job/129833571752",
+          "name": "presentation (Linux)",
+          "startedAt": "2026-11-10T12:37:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Preserve presentation ODF transitions"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:38:20Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314591/job/129833570249",
+          "name": "voorbeeld",
+          "startedAt": "2026-11-10T12:37:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:57:53Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314835/job/129833571701",
+          "name": "database (ubuntu-22.04)",
+          "startedAt": "2026-11-10T12:37:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:42:51Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817315016/job/129833572099",
+          "name": "desktop (windows-latest)",
+          "startedAt": "2026-11-10T12:37:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:42:48Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314835/job/129833571583",
+          "name": "database (windows-latest)",
+          "startedAt": "2026-11-10T12:37:21Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:45:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314932/job/129833571278",
+          "name": "presentation (Windows)",
+          "startedAt": "2026-11-10T12:37:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Preserve presentation ODF transitions"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817315016/job/129833572617",
+          "name": "desktop (macos-latest)",
+          "startedAt": "2026-11-10T14:13:20Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:07:32Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314932/job/129833571719",
+          "name": "presentation (macOS)",
+          "startedAt": "2026-11-10T13:02:56Z",
+          "status": "COMPLETED",
+          "workflowName": "Preserve presentation ODF transitions"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:29:33Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817314835/job/129833571275",
+          "name": "database (macos-latest)",
+          "startedAt": "2026-11-10T13:17:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        }
+      ],
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/pull/337"
+    },
+    {
+      "baseRefName": "codex/integratie-2026-11-09",
+      "headRefOid": "b0bd5f8189bcb2ecf0433a4849f9e6f5c9b508fd",
+      "isDraft": true,
+      "mergeStateStatus": "UNKNOWN",
+      "mergeable": "UNKNOWN",
+      "number": 341,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:09:23Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818382974/job/129837254517",
+          "name": "desktop (ubuntu-22.04)",
+          "startedAt": "2026-11-10T12:44:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:46:16Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818383008/job/129837254660",
+          "name": "voorbeeld",
+          "startedAt": "2026-11-10T12:44:57Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:58:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818383067/job/129837255491",
+          "name": "database (ubuntu-22.04)",
+          "startedAt": "2026-11-10T12:44:57Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:04:40Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818382974/job/129837254879",
+          "name": "desktop (windows-latest)",
+          "startedAt": "2026-11-10T12:44:57Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T12:56:55Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818383067/job/129837255514",
+          "name": "database (windows-latest)",
+          "startedAt": "2026-11-10T12:44:57Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818382974/job/129837254883",
+          "name": "desktop (macos-latest)",
+          "startedAt": "2026-11-10T12:44:55Z",
+          "status": "QUEUED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42818383067/job/129837255296",
+          "name": "database (macos-latest)",
+          "startedAt": "2026-11-10T12:44:55Z",
+          "status": "QUEUED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        }
+      ],
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/pull/341"
+    },
+    {
+      "baseRefName": "codex/integratie-2026-11-09",
+      "headRefOid": "12b99ca3c6b67d6e5c07b97d079bf02e65276c81",
+      "isDraft": true,
+      "mergeStateStatus": "UNKNOWN",
+      "mergeable": "UNKNOWN",
+      "number": 342,
+      "state": "OPEN",
+      "statusCheckRollup": [],
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/pull/342"
+    },
+    {
+      "baseRefName": "codex/integratie-kandidaat2-2026-11-10",
+      "headRefOid": "6c785ed0fc1fa6916144cf790ede7019e3deb5ee",
+      "isDraft": false,
+      "mergeStateStatus": "UNKNOWN",
+      "mergeable": "UNKNOWN",
+      "number": 343,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:22:57Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654415/job/129848406324",
+          "name": "desktop (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:07:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:10:10Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654397/job/129848405778",
+          "name": "browser (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:07:33Z",
+          "status": "COMPLETED",
+          "workflowName": "Office document tab focus"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:08:43Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654535/job/129848406657",
+          "name": "voorbeeld",
+          "startedAt": "2026-11-10T13:07:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:28:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654444/job/129848405693",
+          "name": "database (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:07:33Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:13:21Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654415/job/129848405718",
+          "name": "desktop (windows-latest)",
+          "startedAt": "2026-11-10T13:07:33Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:12:36Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654444/job/129848405992",
+          "name": "database (windows-latest)",
+          "startedAt": "2026-11-10T13:07:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:14:22Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654397/job/129848405740",
+          "name": "browser (windows-latest)",
+          "startedAt": "2026-11-10T13:07:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Office document tab focus"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654415/job/129848406024",
+          "name": "desktop (macos-latest)",
+          "startedAt": "2026-11-10T13:07:32Z",
+          "status": "QUEUED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654444/job/129848405971",
+          "name": "database (macos-latest)",
+          "startedAt": "2026-11-10T13:07:32Z",
+          "status": "QUEUED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:12:48Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821654397/job/129848405468",
+          "name": "browser (macos-latest)",
+          "startedAt": "2026-11-10T13:08:42Z",
+          "status": "COMPLETED",
+          "workflowName": "Office document tab focus"
+        }
+      ],
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/pull/343"
+    },
+    {
+      "baseRefName": "codex/integratie-2026-11-09",
+      "headRefOid": "e19ba34e18fb108f6134dfb2025eabfde7628d41",
+      "isDraft": false,
+      "mergeStateStatus": "UNKNOWN",
+      "mergeable": "UNKNOWN",
+      "number": 344,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:16:31Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612243/job/129844909288",
+          "name": "desktop (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:00:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:05:20Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612392/job/129844909422",
+          "name": "matrix",
+          "startedAt": "2026-11-10T13:00:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Rekenbladmatrix onafhankelijk controleren"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:01:51Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612321/job/129844909238",
+          "name": "voorbeeld",
+          "startedAt": "2026-11-10T13:00:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:25:40Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612341/job/129844909392",
+          "name": "database (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:00:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:06:29Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612243/job/129844908546",
+          "name": "desktop (windows-latest)",
+          "startedAt": "2026-11-10T13:00:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:14:43Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612341/job/129844909012",
+          "name": "database (windows-latest)",
+          "startedAt": "2026-11-10T13:00:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612243/job/129844909230",
+          "name": "desktop (macos-latest)",
+          "startedAt": "2026-11-10T13:00:36Z",
+          "status": "QUEUED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T14:06:49Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42820612341/job/129844909644",
+          "name": "database (macos-latest)",
+          "startedAt": "2026-11-10T13:54:55Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        }
+      ],
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/pull/344"
+    },
+    {
+      "baseRefName": "codex/integratie-2026-11-09",
+      "headRefOid": "c195e3171918faf703a9c72bcf0c5c7f71a313d1",
+      "isDraft": true,
+      "mergeStateStatus": "UNKNOWN",
+      "mergeable": "UNKNOWN",
+      "number": 346,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:23:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714060/job/129848615221",
+          "name": "desktop (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:07:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:11:52Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821713992/job/129848614548",
+          "name": "presentation (Linux)",
+          "startedAt": "2026-11-10T13:07:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Preserve presentation ODF transitions"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:08:55Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714011/job/129848613157",
+          "name": "voorbeeld",
+          "startedAt": "2026-11-10T13:07:57Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:23:42Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714010/job/129848613570",
+          "name": "database (ubuntu-22.04)",
+          "startedAt": "2026-11-10T13:07:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:13:30Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714060/job/129848614845",
+          "name": "desktop (windows-latest)",
+          "startedAt": "2026-11-10T13:07:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:13:10Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714010/job/129848613507",
+          "name": "database (windows-latest)",
+          "startedAt": "2026-11-10T13:07:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:14:36Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821713992/job/129848614447",
+          "name": "presentation (Windows)",
+          "startedAt": "2026-11-10T13:07:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Preserve presentation ODF transitions"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714060/job/129848615570",
+          "name": "desktop (macos-latest)",
+          "startedAt": "2026-11-10T13:07:56Z",
+          "status": "QUEUED",
+          "workflowName": "Kantooromgeving controleren en bouwen"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821713992/job/129848613935",
+          "name": "presentation (macOS)",
+          "startedAt": "2026-11-10T13:07:56Z",
+          "status": "QUEUED",
+          "workflowName": "Preserve presentation ODF transitions"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-10T13:53:03Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42821714010/job/129848613270",
+          "name": "database (macos-latest)",
+          "startedAt": "2026-11-10T13:44:07Z",
+          "status": "COMPLETED",
+          "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+        }
+      ],
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/pull/346"
+    }
+  ],
+  "pr344WindowsFailureReview": {
+    "job": 129844908546,
+    "run": 42820612243,
+    "sourceHead": "e19ba34e18fb108f6134dfb2025eabfde7628d41",
+    "evidence": ".local/round2-next-pr344-windows-failure.log",
+    "excerpts": [
+      "2026-11-10T13:06:24.7383208Z \n2026-11-10T13:06:24.7397551Z  FAIL  src/import/legeBibliografie.test.ts > lege bibliografiemetadata uit het app-sjabloon (#305) > never edits any input ZIP bytes or its custom-XML parts during recognition\n2026-11-10T13:06:24.7422907Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.7426230Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".",
+      "2026-11-10T13:06:24.7397551Z  FAIL  src/import/legeBibliografie.test.ts > lege bibliografiemetadata uit het app-sjabloon (#305) > never edits any input ZIP bytes or its custom-XML parts during recognition\n2026-11-10T13:06:24.7422907Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.7426230Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n2026-11-10T13:06:24.7429029Z  ❯ src/import/legeBibliografie.test.ts:245:3",
+      "2026-11-10T13:06:24.7781879Z \n2026-11-10T13:06:24.7783167Z  Test Files  2 failed | 316 passed (318)\n2026-11-10T13:06:24.7784813Z       Tests  4 failed | 3416 passed | 3 skipped (3423)\n2026-11-10T13:06:24.7785919Z    Start at  13:01:43",
+      "2026-11-10T13:06:24.7783167Z  Test Files  2 failed | 316 passed (318)\n2026-11-10T13:06:24.7784813Z       Tests  4 failed | 3416 passed | 3 skipped (3423)\n2026-11-10T13:06:24.7785919Z    Start at  13:01:43\n2026-11-10T13:06:24.7787268Z    Duration  280.67s (transform 24.83s, setup 59.69s, collect 50.08s, tests 576.51s, environment 107ms, prepare 57.52s)",
+      "2026-11-10T13:06:24.7788123Z \n2026-11-10T13:06:24.7881585Z ##[error]Error: Test timed out in 5000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n ❯ src/import/legeBibliografie.test.ts:245:3",
+      "2026-11-10T13:06:24.7894864Z \n2026-11-10T13:06:24.7898895Z ##[error]Error: Test timed out in 5000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n ❯ src/tekst/wijzigingen/tekenopmaak-engine.test.ts:133:4",
+      "2026-11-10T13:06:24.7900593Z \n2026-11-10T13:06:24.7905624Z ##[error]Error: Test timed out in 5000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n ❯ src/tekst/wijzigingen/tekenopmaak-engine.test.ts:152:3",
+      "2026-11-10T13:06:24.7911844Z \n2026-11-10T13:06:24.7916914Z ##[error]Error: Test timed out in 5000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n ❯ src/tekst/wijzigingen/tekenopmaak-engine.test.ts:163:3",
+      "2026-11-10T13:06:24.7976168Z \n2026-11-10T13:06:24.7986670Z  FAIL  src/tekst/wijzigingen/tekenopmaak-engine.test.ts > directe tekenopmaak vergelijken (#297, onderdeel van #57) > vergelijkt size met auteurschap en beide native review-uitkomsten\n2026-11-10T13:06:24.7991083Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.7996799Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".",
+      "2026-11-10T13:06:24.7986670Z  FAIL  src/tekst/wijzigingen/tekenopmaak-engine.test.ts > directe tekenopmaak vergelijken (#297, onderdeel van #57) > vergelijkt size met auteurschap en beide native review-uitkomsten\n2026-11-10T13:06:24.7991083Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.7996799Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n2026-11-10T13:06:24.7999437Z  ❯ src/tekst/wijzigingen/tekenopmaak-engine.test.ts:133:4",
+      "2026-11-10T13:06:24.8026812Z \n2026-11-10T13:06:24.8032476Z  FAIL  src/tekst/wijzigingen/tekenopmaak-engine.test.ts > directe tekenopmaak vergelijken (#297, onderdeel van #57) > markeert alleen de gewijzigde tekst bij verschillende runverdelingen en behoudt Unicode/spaties\n2026-11-10T13:06:24.8037338Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.8039844Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".",
+      "2026-11-10T13:06:24.8032476Z  FAIL  src/tekst/wijzigingen/tekenopmaak-engine.test.ts > directe tekenopmaak vergelijken (#297, onderdeel van #57) > markeert alleen de gewijzigde tekst bij verschillende runverdelingen en behoudt Unicode/spaties\n2026-11-10T13:06:24.8037338Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.8039844Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n2026-11-10T13:06:24.8043630Z  ❯ src/tekst/wijzigingen/tekenopmaak-engine.test.ts:152:3",
+      "2026-11-10T13:06:24.8058050Z \n2026-11-10T13:06:24.8063387Z  FAIL  src/tekst/wijzigingen/tekenopmaak-engine.test.ts > directe tekenopmaak vergelijken (#297, onderdeel van #57) > behoudt niet-aangrenzende opmaakverschillen en afwijkende namespaceprefixen\n2026-11-10T13:06:24.8069791Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.8074204Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".",
+      "2026-11-10T13:06:24.8063387Z  FAIL  src/tekst/wijzigingen/tekenopmaak-engine.test.ts > directe tekenopmaak vergelijken (#297, onderdeel van #57) > behoudt niet-aangrenzende opmaakverschillen en afwijkende namespaceprefixen\n2026-11-10T13:06:24.8069791Z Error: Test timed out in 5000ms.\n2026-11-10T13:06:24.8074204Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n2026-11-10T13:06:24.8079491Z  ❯ src/tekst/wijzigingen/tekenopmaak-engine.test.ts:163:3"
+    ],
+    "summary": "4 timeouts5000ms: bibliography recognition245 plus character-format comparison133/152/163.3416passed/4failed/3skipped,2failedfiles. Not a proved338 regression or a fixed timing issue; requires followup."
+  },
+  "currentRuntimeCiSnapshot": {
+    "asOf": "2026-11-10T14:18:01.086141+00:00",
+    "runs": [
+      {
+        "run": 42817352468,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468",
+        "jobs": [
+          {
+            "databaseId": 129833698436,
+            "name": "desktop (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833698436"
+          },
+          {
+            "databaseId": 129833699033,
+            "name": "desktop (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699033"
+          },
+          {
+            "databaseId": 129833699052,
+            "name": "desktop (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352468/job/129833699052"
+          }
+        ]
+      },
+      {
+        "run": 42817352223,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223",
+        "jobs": [
+          {
+            "databaseId": 129833698581,
+            "name": "database (macos-latest)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833698581"
+          },
+          {
+            "databaseId": 129833699079,
+            "name": "database (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699079"
+          },
+          {
+            "databaseId": 129833699111,
+            "name": "database (ubuntu-22.04)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352223/job/129833699111"
+          }
+        ]
+      },
+      {
+        "run": 42817352213,
+        "headSha": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213",
+        "jobs": [
+          {
+            "databaseId": 129833698196,
+            "name": "presentation (Linux)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698196"
+          },
+          {
+            "databaseId": 129833698624,
+            "name": "presentation (macOS)",
+            "status": "queued",
+            "conclusion": "",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698624"
+          },
+          {
+            "databaseId": 129833698747,
+            "name": "presentation (Windows)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42817352213/job/129833698747"
+          }
+        ]
+      }
+    ]
+  },
+  "preparationOnly": true,
+  "virtualCombinationTested": false,
+  "nextSteps": [
+    "Review327 acceptance: reduced lookups but recorded CPU4phase regression; not automatically approved.",
+    "Review342 research separately; not a new Draw feature. Keep317 parked until explicit user resume.",
+    "Review source CI failures and native/platform gaps;344Windows has4timeouts, not just bibliography.",
+    "On user resume, create next isolated candidate from central branch and apply approved exact heads,337before346.",
+    "Run combined suite/build/realnormalandhostedroutes and exact-codepoint Windows/Linux/macOS/platform/native controls; do not substitute Git-clean for acceptance.",
+    "No main merge, official release or issue closure without explicit user permission."
+  ],
+  "reproduction": "Archived private round2-next-preflight.py pins base75968e5d and source heads; synthetic commit IDs are local/unpublished and may differ on rerun, while candidate tree content can be compared. No source refs are moved.",
+  "evidenceArchive": {
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-next-preflight-evidence-2026-11-10.zip",
+    "sha256": "7d9cb001c5a7e3c2d0c1742742616b58f596a00bb9f3247ccca633eb284e3fbd",
+    "bytes": 63871,
+    "files": 19
+  }
+}

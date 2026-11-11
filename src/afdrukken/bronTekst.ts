@@ -13,6 +13,8 @@ import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { AfdrukDocument, AfdrukPagina, Bladwijzer, Koppeling } from "./model";
 import { metTekstopname, naarPunten } from "./tekstopname";
 import { tekstKoppelingen } from "./tekstKoppelingen";
+import { werkDocumentVeldenBij } from "../tekst/veldenDocument/opdrachten";
+import { werkFormuleWeergaveBij } from "../tekst/vergelijking/weergave";
 
 /** De afdrukroutine rastert met twee beeldpunten per CSS-pixel. */
 const BEELDPUNTEN_PER_PX = 2;
@@ -127,6 +129,8 @@ export async function tekstPaginas(
   titel: string,
 ): Promise<AfdrukDocument> {
   await ref.flushPendingInput();
+  await werkFormuleWeergaveBij(ref);
+  await werkDocumentVeldenBij(ref);
   await ref.whenLayoutComplete({ timeoutMs: 60_000 }).catch(() => 0);
   // Met opname van de canvasopdrachten: de PDF maakt er vectoren met echte tekst van (#18).
   const { metVectoropname } = await import("../export/pdf/opname");

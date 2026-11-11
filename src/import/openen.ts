@@ -24,7 +24,11 @@ import { controleerPakket } from "../pakketcontrole";
 import { MACRO_ID, macronaam, openRapport, type Rapport } from "./rapport";
 import { MACRO_INVOER, MACROFORMAAT, scheidMacros } from "./macros";
 import type { Bronkenmerken } from "./bron";
+import { isSjabloon, OOXML_SJABLONEN, sjabloonNaarDocument } from "./sjabloon";
 import { openIfcx } from "../ifcx/dossier";
+import { bronMacros } from "./bronmacros";
+import { conversieZonderInhoud } from "./conversieinhoud";
+import { presentatieVariant } from "../presentatie/bestandsvariant";
 import {
   VerkeerdWachtwoord,
   herkenVersleuteling,
@@ -53,6 +57,8 @@ export interface Openhulp {
 }
 
 export interface Openresultaat {
+  /** Sjabloon: nieuwe naam en geen koppeling naar het oorspronkelijke bestand. */
+  alsNieuw?: boolean;
   soort: Soort;
   /** Naam van het tabblad, met de extensie van het formaat in de editor. */
   naam: string;
@@ -62,6 +68,8 @@ export interface Openresultaat {
   rapport: Rapport | null;
   /** Voorstel voor Ctrl+S als dat afwijkt van het eigen formaat. */
   exportFormaat?: string;
+  /** PPS/PPSX: bied na laden de keuze om meteen een voorstelling te starten. */
+  voorstelling?: boolean;
   /** Kenmerken van het origineel (versleuteling, macro’s). */
   bron?: Bronkenmerken;
 }
@@ -76,6 +84,23 @@ function metExtensie(naam: string, ext: string) {
 
 /** Bereidt het openen voor; null betekent dat de gebruiker heeft geannuleerd. */
 export async function bereidOpenen(
+  naam: string,
+  bytes: Uint8Array,
+  hulp: Openhulp,
+): Promise<Openresultaat | null> {
+  const resultaat = await bereidBestandOpenen(naam, bytes, hulp);
+  if (!resultaat || !isSjabloon(naam)) return resultaat;
+  return {
+    ...resultaat,
+    alsNieuw: true,
+    gewijzigd: true,
+    exportFormaat: resultaat.bron?.macro
+      ? MACROFORMAAT[resultaat.soort]
+      : resultaat.soort,
+  };
+}
+
+async function bereidBestandOpenen(
   naam: string,
   bytes: Uint8Array,
   hulp: Openhulp,
@@ -143,14 +168,16 @@ async function bereidOnversleuteld(
   const soort = bestandssoort(ext);
   if (!soort) throw new Error(i18next.t("import:errors.unsupportedFormat"));
 
-  if (ext === soort) {
+  if (ext === soort || (OOXML_SJABLONEN.has(ext) && ext !== "potx")) {
     const controle = controleerPakket(bytes, soort);
     if (controle.datum1904) bronregels = [...bronregels, datum1904()];
     if (!controle.strict)
       return {
         soort,
-        naam,
-        bytes,
+        naam: OOXML_SJABLONEN.has(ext) ? metExtensie(naam, soort) : naam,
+        bytes: OOXML_SJABLONEN.has(ext)
+          ? sjabloonNaarDocument(bytes, soort)
+          : bytes,
         gewijzigd: false,
         rapport: openRapport({
           soort,
@@ -223,6 +250,30 @@ async function bereidOnversleuteld(
         bron: { macro: macros },
       };
     }
+  }
+
+  // PPSX/POTX zijn OOXML-varianten, geen conversies: behoud alle diaonderdelen.
+  if (soort === "pptx" && (ext === "ppsx" || ext === "potx")) {
+    const controle = controleerPakket(bytes, soort);
+    const schoon = controle.macros ? await scheidMacros(bytes, soort, ext) : null;
+    const direct = presentatieVariant(schoon?.bytes ?? bytes, "pptx");
+    return {
+      soort,
+      naam: metExtensie(naam, soort),
+      bytes: direct,
+      gewijzigd: true,
+      rapport: openRapport({
+        soort,
+        risicos: controle.risicos,
+        macros: controle.macros,
+        route: "engine",
+        bronformaat: ext,
+        extra: bronregels,
+      }),
+      exportFormaat: ext === "ppsx" ? "ppsx" : undefined,
+      ...(ext === "ppsx" && { voorstelling: true }),
+      ...(schoon && { bron: { macro: schoon.macros } }),
+    };
   }
 
   const runtime =
@@ -339,9 +390,49 @@ async function bereidOnversleuteld(
     } catch {
       // Geen OOXML-pakket: niets te meten vóór de omzetting.
     }
-    const omgezet = await hulp.converteer(bytes, ext, soort, soort);
-    if (controleerPakket(omgezet, soort).datum1904)
+    const bronproject = bronMacros(bytes, ext);
+    if (bronproject === "vba") macros = true;
+    if (bronproject === "scripts")
+      bronregels = [
+        ...bronregels,
+        {
+          id: MACRO_ID,
+          onderdeel: i18next.t("import:report.parts.macroFormat"),
+          gevolg: i18next.t("import:report.open.macrosNotCopied"),
+        },
+      ];
+    let omgezet: Uint8Array;
+    let controle: ReturnType<typeof controleerPakket>;
+    try {
+      omgezet = await hulp.converteer(bytes, ext, soort, soort);
+      controle = controleerPakket(omgezet, soort);
+    } catch (oorzaak) {
+      // Een catalogusvermelding is geen garantie voor iedere bestandsvariant.
+      // Bewaar de concrete fout én geef een bruikbare route vanuit de bronapp.
+      const reden = oorzaak instanceof Error ? oorzaak.message : String(oorzaak);
+      throw new Error(
+        i18next.t("import:errors.conversionVariant", {
+          ext: ext.toUpperCase(),
+          reason: reden,
+          alternative: i18next.t(`import:errors.conversionAlternative.${soort}`),
+        }),
+        { cause: oorzaak },
+      );
+    }
+    if (controle.datum1904)
       bronregels = [...bronregels, datum1904()];
+    if (conversieZonderInhoud(omgezet, soort))
+      bronregels = [
+        ...bronregels,
+        {
+          id: "empty-conversion",
+          onderdeel: i18next.t("import:errors.emptyConversionTitle"),
+          gevolg: i18next.t("import:errors.emptyConversion", {
+            ext: ext.toUpperCase(),
+            alternative: i18next.t(`import:errors.conversionAlternative.${soort}`),
+          }),
+        },
+      ];
     return {
       soort,
       naam: metExtensie(naam, soort),
@@ -361,6 +452,7 @@ async function bereidOnversleuteld(
         Object.hasOwn(bestandstypen[soort].uitvoer, ext) && !OUD_BINAIR.has(ext)
           ? ext
           : undefined,
+      ...(soort === "pptx" && ext === "pps" && { voorstelling: true }),
     };
   }
 }

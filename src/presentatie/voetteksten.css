@@ -1,0 +1,17 @@
+.presentatie-voettekst textarea {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 6px 8px;
+  border: 1px solid var(--w-rand);
+  border-radius: 4px;
+  color: inherit;
+  background: var(--w-veld, transparent);
+  font: inherit;
+}
+.presentatie-voettekst fieldset { min-width: 0; }
+.presentatie-voettekst .werkruimte-knop.is-primair:hover:not(:disabled) {
+  background: var(--w-accent);
+  color: var(--w-accent-tekst);
+}

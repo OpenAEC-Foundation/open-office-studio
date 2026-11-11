@@ -135,6 +135,7 @@ export function VergelijkVenster({ sluit }: { sluit: () => void }) {
       }
     >
       <p className="werkruimte-uitleg">{t("changes.compare.intro")}</p>
+      <p className="werkruimte-uitleg">{t("changes.compare.formattingReplacements")}</p>
       {keuze(t("changes.compare.original"), origineel, setOrigineel, "origineel")}
       {keuze(t("changes.compare.revised"), gewijzigd, setGewijzigd, "gewijzigd")}
       <div className="tw-raster2">

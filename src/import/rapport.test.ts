@@ -199,6 +199,37 @@ describe("Openroute", () => {
     expect(resultaat.bytes).toBe(bytes);
     expect(resultaat.rapport!.regels[0].onderdeel).toBe("Ingebedde objecten");
   });
+  it("meldt onbekende XML ook bij enkele quotes en behoudt het bronpakket", async () => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8(
+        `<w:document xmlns:w='http://schemas.openxmlformats.org/wordprocessingml/2006/main' xmlns:ext = 'urn:openaec:onbekend'><w:body/></w:document>`,
+      ),
+      "word/_rels/document.xml.rels": strToU8(
+        `<Relationships xmlns='http://schemas.openxmlformats.org/package/2006/relationships'><Relationship Id='r1' Type = 'urn:openaec:onbekend' Target='onbekend.xml'/></Relationships>`,
+      ),
+      "word/onbekend.xml": strToU8("<voorbeeld/>"),
+    });
+    const voor = bytes.slice();
+    const resultaat = (await bereidOpenen("Brief.docx", bytes, {
+      converteer: niet,
+    }))!;
+    expect(resultaat.bytes).toBe(bytes);
+    expect(bytes).toEqual(voor);
+    expect(resultaat.rapport!.regels.map((r) => r.onderdeel)).toEqual([
+      "Onbekende extensie-elementen",
+      "Onbekende pakketonderdelen",
+    ]);
+    const opslaan = opslagRapport({
+      soort: "docx",
+      formaat: formaat("docx", "odt"),
+      route: "runtime",
+      risicos: controleerPakket(bytes, "docx").risicos,
+    })!;
+    expect(opslaan.regels[0].onderdeel).toContain(
+      "Onbekende extensie-elementen",
+    );
+    expect(opslaan.regels[0].gevolg).toContain("verloren");
+  });
   it("zet andere formaten om via de runtime en stelt het bronformaat voor", async () => {
     const omgezet = zipSync({ "word/document.xml": strToU8("<document/>") });
     const resultaat = (await bereidOpenen(
@@ -241,7 +272,9 @@ describe("Oude binaire formaten en datumsysteem 1904 (#34–#36)", () => {
         route: "runtime",
         risicos: [],
       })!;
-      expect(rapport.regels.map((r) => r.onderdeel)).toContain("Ouder binair formaat");
+      expect(rapport.regels.map((r) => r.onderdeel)).toContain(
+        "Ouder binair formaat",
+      );
     }
   });
   it("meldt het datumsysteem 1904 na omzetten van XLS", async () => {
@@ -249,7 +282,11 @@ describe("Oude binaire formaten en datumsysteem 1904 (#34–#36)", () => {
       converteer: async () => omgezet("xl/workbook.xml"),
     }))!;
     expect(xls.exportFormaat).toBeUndefined();
-    expect(xls.rapport!.regels.map((r) => r.onderdeel)).toContain("Datumsysteem 1904");
-    expect(controleerPakket(omgezet("xl/workbook.xml"), "xlsx").datum1904).toBe(true);
+    expect(xls.rapport!.regels.map((r) => r.onderdeel)).toContain(
+      "Datumsysteem 1904",
+    );
+    expect(controleerPakket(omgezet("xl/workbook.xml"), "xlsx").datum1904).toBe(
+      true,
+    );
   });
 });

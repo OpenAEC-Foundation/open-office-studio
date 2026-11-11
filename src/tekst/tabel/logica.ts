@@ -121,27 +121,36 @@ export function leesGetal(tekst: string): number | null {
   if (komma > punt) t = t.replace(/\./g, "").replace(",", ".");
   else if (punt > komma && komma >= 0) t = t.replace(/,/g, "");
   else if (komma < 0 && (t.match(/\./g)?.length ?? 0) > 1) t = t.replace(/\./g, "");
-  const m = /^[-+]?\d*\.?\d+(e[-+]?\d+)?/i.exec(t);
+  const m = /^[-+]?\d*\.?\d+(e[-+]?\d+)?$/i.exec(t);
   if (!m) return null;
   const n = Number(m[0]);
   return Number.isFinite(n) ? n : null;
+}
+
+/** Date.UTC normaliseert ongeldige dagen/maanden en verschuift jaren 0–99. */
+function kalenderdatum(jaar: number, maand: number, dag: number): number | null {
+  if (jaar < 1 || maand < 1 || maand > 12 || dag < 1 || dag > 31) return null;
+  const datum = new Date(0);
+  datum.setUTCFullYear(jaar, maand - 1, dag);
+  return datum.getUTCFullYear() === jaar && datum.getUTCMonth() === maand - 1 && datum.getUTCDate() === dag
+    ? datum.getTime() : null;
 }
 
 /** Datum als dd-mm-jjjj, d/m/jj of jjjj-mm-dd; als tijdstip (ms) of null. */
 export function leesDatum(tekst: string): number | null {
   const t = tekst.trim();
   let m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(t);
-  if (m) return Date.UTC(+m[1], +m[2] - 1, +m[3]);
+  if (m) return kalenderdatum(+m[1], +m[2], +m[3]);
   m = /^(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})/.exec(t);
   if (m) {
     const jaar = m[3].length === 2 ? 2000 + +m[3] : +m[3];
-    return Date.UTC(jaar, +m[2] - 1, +m[1]);
+    return kalenderdatum(jaar, +m[2], +m[1]);
   }
   const maanden = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
   m = /^(\d{1,2})\s+([a-z]{3})[a-z]*\.?\s+(\d{4})/i.exec(t);
   if (m) {
     const maand = maanden.indexOf(m[2].toLowerCase().replace("maa", "mrt"));
-    if (maand >= 0) return Date.UTC(+m[3], maand, +m[1]);
+    if (maand >= 0) return kalenderdatum(+m[3], maand + 1, +m[1]);
   }
   return null;
 }

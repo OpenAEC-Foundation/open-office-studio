@@ -6,6 +6,7 @@
  * klikken daar gaan terug naar dit venster.
  */
 import type { Scherm, Streep, Toets } from "./voorstelling-logica";
+import type { Overgang } from "./overgangen";
 
 export const NAAR_TOESCHOUWER = "oos-voorstelling";
 export const VAN_TOESCHOUWER = "oos-voorstelling-terug";
@@ -18,7 +19,7 @@ export interface ToeschouwerStaat {
 }
 
 export type NaarToeschouwer =
-  | { sessie: string; soort: "beeld"; index: number; data: string }
+  | { sessie: string; soort: "beeld"; index: number; data: string; overgang?: Overgang }
   | ({ sessie: string; soort: "staat" } & ToeschouwerStaat);
 
 export type VanToeschouwer =
@@ -29,7 +30,7 @@ export interface TauriToeschouwer {
   /** Maat van de andere monitor in beeldpunten. */
   breedte: number;
   hoogte: number;
-  stuurBeeld: (index: number, canvas: HTMLCanvasElement) => void;
+  stuurBeeld: (index: number, canvas: HTMLCanvasElement, overgang?: Overgang) => void;
   stuurStaat: (staat: ToeschouwerStaat) => void;
   /** Stuurt beeld en staat opnieuw (het venster is net klaar). */
   vergeetBeeld: () => void;
@@ -87,8 +88,8 @@ export async function openTauriToeschouwer(titel: string): Promise<TauriToeschou
   return {
     breedte: ander.size.width,
     hoogte: ander.size.height,
-    stuurBeeld(index, canvas) {
-      laatsteBeeld = { sessie, soort: "beeld", index, data: codeer(canvas) };
+    stuurBeeld(index, canvas, overgang) {
+      laatsteBeeld = { sessie, soort: "beeld", index, data: codeer(canvas), overgang };
       stuur(laatsteBeeld);
     },
     stuurStaat(staat) {

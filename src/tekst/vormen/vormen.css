@@ -1,0 +1,74 @@
+.vormen-editor {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.8fr) minmax(260px, 2fr);
+  gap: 18px;
+}
+.vormen-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 480px;
+  overflow: auto;
+}
+.vorm-lijstregel {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 4px;
+  align-items: center;
+}
+.vorm-lijstregel button {
+  text-align: start;
+}
+.vorm-kind {
+  grid-column: 2;
+  margin-inline-start: 12px;
+}
+.vormen-lijst [aria-pressed="true"] {
+  outline: 2px solid var(--accent, #2468ab);
+  outline-offset: -2px;
+}
+.vormen-formulier {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.vormen-formulier select,
+.vormen-formulier textarea {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface, white);
+  color: var(--text, #222);
+  border: 1px solid var(--border, #aaa);
+  border-radius: 4px;
+  padding: 6px;
+}
+.vorm-kleur,
+.vorm-acties {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.vorm-kleur input[type="color"] {
+  width: 48px;
+  padding: 2px;
+  height: 30px;
+}
+@media (max-width: 640px) {
+  .vormen-editor {
+    grid-template-columns: 1fr;
+  }
+  .vormen-lijst {
+    max-height: 150px;
+  }
+}
+.vorm-velden {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}

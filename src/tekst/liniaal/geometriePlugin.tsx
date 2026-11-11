@@ -8,6 +8,7 @@
 import { useLayoutEffect, useRef, useSyncExternalStore } from "react";
 import { defineDocxPlugin, type DocxPluginContext, type DocxPluginGeometry } from "@betteroffice/docx-react";
 import { TabelGrepen } from "./TabelGrepen";
+import { SplitsMetingen } from "../tabel/SplitsMetingen";
 
 export const VLAK = ".docx-editor__viewport";
 
@@ -55,6 +56,7 @@ function Laag({ context, geometry }: { context: DocxPluginContext<Record<string,
   return (
     <>
       <Doorgeven geometry={geometry} />
+      <SplitsMetingen context={context} geometry={geometry} />
       <TabelGrepen context={context} geometry={geometry} />
     </>
   );

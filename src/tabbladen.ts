@@ -55,6 +55,8 @@ export const beginToestand: TabbladToestand = {
 export type TabbladActie =
   | {
       type: "openDocument";
+      /** Maak een onafhankelijke, naamloze kopie (bij openen van een sjabloon). */
+      alsNieuw?: boolean;
       naam: string;
       soort: Soort;
       bytes: Uint8Array;
@@ -185,7 +187,7 @@ export function tabbladReducer(
 ): TabbladToestand {
   switch (actie.type) {
     case "openDocument": {
-      if (actie.vingerafdruk) {
+      if (!actie.alsNieuw && actie.vingerafdruk) {
         const bestaand = zoekDocument(toestand, actie.vingerafdruk);
         if (bestaand) return naar(toestand, bestaand.id);
       }
@@ -193,13 +195,13 @@ export function tabbladReducer(
       const tabblad: DocumentTabblad = {
         type: "document",
         id,
-        naam: actie.naam,
+        naam: actie.alsNieuw ? naamloos(toestand, actie.soort) : actie.naam,
         soort: actie.soort,
         bytes: actie.bytes,
-        vingerafdruk: actie.vingerafdruk ?? null,
-        werkbestand: actie.werkbestand ?? null,
+        vingerafdruk: actie.alsNieuw ? null : actie.vingerafdruk ?? null,
+        werkbestand: actie.alsNieuw ? null : actie.werkbestand ?? null,
         gereed: false,
-        gewijzigd: actie.gewijzigd ?? false,
+        gewijzigd: actie.alsNieuw || (actie.gewijzigd ?? false),
         exportFormaat: actie.exportFormaat ?? actie.soort,
         zoom: null,
         bron: actie.bron ?? null,

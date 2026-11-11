@@ -8,12 +8,15 @@ import { useSyncExternalStore } from "react";
 import { isTaalKeuze, type TaalKeuze } from "./i18n/talen";
 
 export type Thema = "light" | "forge" | "systeem";
+export type DocumentWeergave = "thema" | "papier" | "donker";
 export type DocumentSoort = "docx" | "xlsx" | "pptx";
 export const REKENBLAD_STATISTIEKEN = {
   gemiddelde: "average", aantal: "count", som: "sum", minimum: "minimum", maximum: "maximum",
 } as const;
 
 export interface Instellingen {
+  /** Identiteit voor nieuwe opmerkingen en bijgehouden wijzigingen. */
+  gebruiker: { naam: string; initialen: string };
   /** Taal van de interface; "auto" volgt de systeemtaal (terugval Engels). Zie docs/i18n.md. */
   taal: TaalKeuze;
   thema: Thema;
@@ -44,12 +47,13 @@ export interface Instellingen {
     cijferwoordenNegeren: boolean;
   };
   /** Tekst: sneltoetsprofiel (LibreOffice-achtig of Word) en de mini-werkbalk bij selectie. */
-  tekst: { sneltoetsprofiel: "standaard" | "word"; miniWerkbalk: boolean };
+  tekst: { sneltoetsprofiel: "standaard" | "word"; miniWerkbalk: boolean; documentWeergave: DocumentWeergave };
   /** Automatische updates van de desktopapp (#26, src/updates.ts): controle bij start en kanaal. */
   updates: { automatisch: boolean; kanaal: "stabiel" | "ontwikkel" };
 }
 
 export const standaardInstellingen: Instellingen = {
+  gebruiker: { naam: "", initialen: "" },
   taal: "auto",
   thema: "forge",
   opslagformaat: { docx: "docx", xlsx: "xlsx", pptx: "pptx" },
@@ -72,7 +76,7 @@ export const standaardInstellingen: Instellingen = {
     hoofdletterwoordenNegeren: true,
     cijferwoordenNegeren: true,
   },
-  tekst: { sneltoetsprofiel: "standaard", miniWerkbalk: true },
+  tekst: { sneltoetsprofiel: "standaard", miniWerkbalk: true, documentWeergave: "thema" },
   // Alle uitgaven zijn (nog) pre-releases; het ontwikkelkanaal neemt ze mee.
   updates: { automatisch: true, kanaal: "ontwikkel" },
 };
@@ -89,9 +93,10 @@ const waarOnwaar = (waarde: unknown, standaard: boolean) =>
   typeof waarde === "boolean" ? waarde : standaard;
 
 /** Maakt van willekeurige (oude of beschadigde) gegevens geldige instellingen. */
-export function normaliseerInstellingen(ruw: unknown): Instellingen {
+export function normaliseerInstellingen(ruw: unknown, oudeAuteur = ""): Instellingen {
   const s = standaardInstellingen;
   const r = isObject(ruw) ? ruw : {};
+  const gebruiker = isObject(r.gebruiker) ? r.gebruiker : { naam: oudeAuteur };
   const formaat = isObject(r.opslagformaat) ? r.opslagformaat : {};
   const lint = isObject(r.lint) ? r.lint : {};
   const status = isObject(r.statusbalk) ? r.statusbalk : {};
@@ -100,6 +105,10 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
   const tekst = isObject(r.tekst) ? r.tekst : {};
   const updates = isObject(r.updates) ? r.updates : {};
   return {
+    gebruiker: {
+      naam: typeof gebruiker.naam === "string" ? gebruiker.naam : "",
+      initialen: typeof gebruiker.initialen === "string" ? gebruiker.initialen : "",
+    },
     taal: isTaalKeuze(r.taal) ? r.taal : s.taal,
     thema: kies(r.thema, ["light", "forge", "systeem"] as const, s.thema),
     opslagformaat: {
@@ -138,6 +147,7 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
     tekst: {
       sneltoetsprofiel: kies(tekst.sneltoetsprofiel, ["standaard", "word"] as const, "standaard"),
       miniWerkbalk: waarOnwaar(tekst.miniWerkbalk, s.tekst.miniWerkbalk),
+      documentWeergave: kies(tekst.documentWeergave, ["thema", "papier", "donker"] as const, s.tekst.documentWeergave),
     },
     updates: {
       automatisch: waarOnwaar(updates.automatisch, s.updates.automatisch),
@@ -164,10 +174,11 @@ const desktop = () => typeof window !== "undefined" && "__TAURI_INTERNALS__" in 
 
 function leesLokaal(): Instellingen {
   try {
+    const oudeAuteur = localStorage.getItem("open-tekst-auteur") ?? "";
     const opgeslagen = localStorage.getItem(SLEUTEL);
-    if (opgeslagen) return normaliseerInstellingen(JSON.parse(opgeslagen));
+    if (opgeslagen) return normaliseerInstellingen(JSON.parse(opgeslagen), oudeAuteur);
     const oudThema = localStorage.getItem(OUDE_THEMA);
-    return normaliseerInstellingen({ thema: oudThema === "light" ? "light" : "forge" });
+    return normaliseerInstellingen({ thema: oudThema === "light" ? "light" : "forge" }, oudeAuteur);
   } catch {
     return standaardInstellingen;
   }
@@ -271,7 +282,7 @@ if (desktop())
     .then(({ invoke }) => invoke<string | null>("lees_voorkeuren"))
     .then((inhoud) => {
       if (!inhoud) return;
-      const uitBestand = normaliseerInstellingen(JSON.parse(inhoud));
+      const uitBestand = normaliseerInstellingen(JSON.parse(inhoud), huidig.gebruiker.naam);
       if (JSON.stringify(uitBestand) === JSON.stringify(huidig)) return;
       huidig = uitBestand;
       try {

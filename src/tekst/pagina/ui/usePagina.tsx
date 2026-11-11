@@ -15,13 +15,11 @@ import { engineVertalingDirect } from "../../../i18n/engine";
 import { meldWijziging, useEditorApi, useEditorZichtbaar, zichtbaarElement } from "../../../lint/editorApi";
 import { meldOpdrachtAan } from "../../menu/opdrachten";
 import { useSneltoetsen } from "../../../lint/sneltoetsen";
-import { metPakket, verwijderMarkering } from "../ooxml.ts";
 import { actieveSectie } from "../actieveSectie";
 import {
   FORMATEN,
   MARGES,
   leesSecties,
-  sectieVanMarkering,
   tekstbreedteVan,
   voegKolomeindeIn,
   voegSectieEindeIn,
@@ -50,7 +48,7 @@ import {
 } from "../kopvoet.ts";
 import { STANDAARD_INHOUD, leesInhoudsopgave, verwijderInhoudsopgave, voegInhoudsopgaveIn, werkInhoudsopgaveBij, type InhoudOpties } from "../inhoudsopgave.ts";
 import { converteerNoten, leesNootInstellingen, voegNootIn, zetNootInstellingen, type NootSoort } from "../noten.ts";
-import { bewerkKopVoet, haalKoppen, haalNoten, herstelPlek, kopVoetActief, leesPlek, sectieStand, sluitKopVoet, wachtOpIndeling, zetMarkering, type NootInfo } from "./engine.ts";
+import { bewerkKopVoet, haalKoppen, haalNoten, herstelPlek, kopVoetActief, leesPlek, sectieStand, sluitKopVoet, volgKopVoetOpening, wachtOpIndeling, zetMarkering, type NootInfo } from "./engine.ts";
 import { leesMelding, herladenBevestigd, neemBeurt, neemTaak, onthoudBevestiging, planNaHerladen, sluitMelding, toonMelding, volgMelding, type NaHerladen } from "./staat.ts";
 import {
   AfstandDialoog,
@@ -70,7 +68,7 @@ const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 interface Pakketopdracht {
   /** Voor meldingen, bijvoorbeeld "Paginanummers ingevoegd" (al vertaald). */
   klaar: string;
-  /** Een markering op de cursor: nodig, of alleen om de huidige sectie te kennen. */
+  /** Insert at the cursor, or use the section pinned before confirmation. */
   cursor?: "nodig" | "sectie";
   werk: (bytes: Uint8Array, plek: { markering: string | null; sectie: number }) => Uint8Array | null;
   /** Na herladen en indelen (bijvoorbeeld paginanummers van de inhoudsopgave nalopen). */
@@ -82,10 +80,10 @@ interface Pakketopdracht {
 /** Het lint wordt bij herladen opnieuw gemount en springt dan naar Start; onthoud het tabblad. */
 const actiefLintTab = () =>
   // Niet via zichtbaarElement: met een open venster is het lint `inert`.
-  [...document.querySelectorAll<HTMLElement>(".office-tekst [role='tab'][aria-selected='true']")].find((t) => !t.closest("[hidden]"))?.textContent ?? null;
+  [...document.querySelectorAll<HTMLElement>(".ribbon-tabknoppen [role='tab'][aria-selected='true']")].find((t) => !t.closest("[hidden]") && t.getClientRects().length > 0)?.textContent ?? null;
 function herstelLintTab(naam: string | null) {
   if (!naam) return;
-  const tabs = [...document.querySelectorAll<HTMLElement>(".office-tekst [role='tab']")].filter((t) => !t.closest("[inert], [hidden]"));
+  const tabs = [...document.querySelectorAll<HTMLElement>(".ribbon-tabknoppen [role='tab']")].filter((t) => !t.closest("[inert], [hidden]") && t.getClientRects().length > 0);
   const tab = tabs.find((t) => t.textContent === naam);
   if (tab && tab.getAttribute("aria-selected") !== "true") tab.click();
 }
@@ -163,12 +161,18 @@ export function usePagina() {
   // Volg of de engine in de bewerkmodus voor kop/voettekst staat.
   useEffect(() => {
     const vlak = zichtbaarElement<HTMLElement>(".office-tekst") ?? document.body;
-    const kijk = () => setKopVoet(kopVoetActief());
+    let wasActief = false;
+    const kijk = () => {
+      const actief = kopVoetActief();
+      setKopVoet(actief);
+      if (actief && !wasActief) herstelLintTab(t("page.headerFooter.tab"));
+      wasActief = actief;
+    };
     kijk();
     const waarnemer = new MutationObserver(kijk);
     waarnemer.observe(vlak, { childList: true, subtree: true });
     return () => waarnemer.disconnect();
-  }, []);
+  }, [t]);
 
   const api = () => apis.tekst();
   const sluit = () => {
@@ -210,6 +214,10 @@ export function usePagina() {
     let doorgegeven = false;
     try {
       const { herlaad, editor } = klaarVoor();
+      // Pin the section before confirmation moves focus. A shared header or
+      // note marker cannot identify the visible section by package part alone.
+      const gekozenSectie = o.cursor === "sectie" ? actieveSectie(editor)?.index : undefined;
+      if (o.cursor === "sectie" && gekozenSectie === undefined) throw new Error(t("page.errors.cursorLost"));
       if (!(await bevestigd(t("page.reload.confirmTitle")))) {
         editor.focus();
         return;
@@ -217,7 +225,7 @@ export function usePagina() {
       // Vóór de markering: de plek telt vanaf het eind, de markering valt dan weg.
       const plek = await leesPlek(editor);
       let markering: Awaited<ReturnType<typeof zetMarkering>> = null;
-      if (o.cursor) {
+      if (o.cursor === "nodig") {
         markering = bewerkbaar || kopVoetActief() ? await zetMarkering(editor) : null;
         if (!markering && o.cursor === "nodig") throw new Error(t("page.errors.cursorFirst"));
       }
@@ -225,14 +233,7 @@ export function usePagina() {
       let uit: Uint8Array | null;
       try {
         bytes = await herlaad.bytes();
-        let sectie = -1;
-        if (markering && o.cursor === "sectie") {
-          sectie = sectieVanMarkering(bytes, markering.markering) ?? -1;
-          bytes = metPakket(bytes, (p) => {
-            verwijderMarkering(p, markering!.markering);
-            return p.inpakken();
-          });
-        }
+        let sectie = gekozenSectie ?? -1;
         if (sectie < 0) sectie = Math.max(0, leesSecties(bytes).length - 1);
         uit = o.werk(bytes, { markering: o.cursor === "nodig" ? markering!.markering : null, sectie });
       } catch (e) {
@@ -317,7 +318,7 @@ export function usePagina() {
           koptekst={s.koptekst}
           voettekst={s.voettekst}
           sluit={sluit}
-          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), werk: b => zetKopVoetAfstand(b, actief.index, a) })}
+          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), werk: (b) => zetKopVoetAfstand(b, actief.index, a) })}
         />,
       );
     } catch (e) {
@@ -332,11 +333,13 @@ export function usePagina() {
     const sectie = actief.eigenschappen;
     const refs = soort === "header" ? sectie?.headerReferences : sectie?.footerReferences;
     const kop = soort === "header";
+    const pagina = editor.getCurrentPage();
     const openen = (e: DocxEditorRef) => {
-      if (!bewerkKopVoet(e, soort)) return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
-      setTimeout(() => {
-        if (!kopVoetActief()) fout(t(kop ? "page.errors.headerNotOpened" : "page.errors.footerNotOpened"));
-      }, 600);
+      const stop = volgKopVoetOpening(() => fout(t(kop ? "page.errors.headerNotOpened" : "page.errors.footerNotOpened")));
+      if (!bewerkKopVoet(e, soort, pagina)) {
+        stop();
+        return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
+      }
     };
     // Eerste pagina anders / even en oneven: die pagina's tonen een eigen onderdeel.
     const stand = sectieStand(editor);
@@ -399,7 +402,7 @@ export function usePagina() {
           secties={sectieStand(editor).aantalSecties}
           sluit={sluit}
           bevestig={(k: Kolommen, doel) =>
-            void pakket({ klaar: t("page.done.columnsSet"), werk: b => wijzigSecties(b, doel === "alle" ? "alle" : actief.index, { kolommen: k }) })
+            void pakket({ klaar: t("page.done.columnsSet"), werk: (b) => wijzigSecties(b, doel === "alle" ? "alle" : actief.index, { kolommen: k }) })
           }
         />,
       );
@@ -557,13 +560,18 @@ export function usePagina() {
   }
   async function nootInstellingen(soort: NootSoort = "voetnoot") {
     try {
-      const { herlaad } = klaarVoor();
+      const { herlaad, editor } = klaarVoor();
+      const actief = actieveSectie(editor);
+      if (!actief) throw new Error(t("page.errors.cursorLost"));
       const bytes = await herlaad.bytes();
+      const lijst = leesSecties(bytes);
+      if (!lijst[actief.index]) throw new Error(t("page.errors.cursorLost"));
       setVenster(
         <NootInstellingenDialoog
-          begin={{ soort, instellingen: { voetnoot: leesNootInstellingen(bytes, "voetnoot"), eindnoot: leesNootInstellingen(bytes, "eindnoot") } }}
+          begin={{ soort, instellingen: { voetnoot: leesNootInstellingen(bytes, "voetnoot", actief.index), eindnoot: leesNootInstellingen(bytes, "eindnoot", actief.index) } }}
+          secties={lijst.length}
           sluit={sluit}
-          bevestig={(s, w) => void pakket({ klaar: t("page.done.noteFormatChanged"), werk: (b) => zetNootInstellingen(b, s, w) })}
+          bevestig={(s, w, doel) => void pakket({ klaar: t("page.done.noteFormatChanged"), werk: (b) => zetNootInstellingen(b, s, w, doel === "alle" ? "alle" : actief.index) })}
         />,
       );
     } catch (e) {
@@ -616,10 +624,12 @@ export function usePagina() {
       const noten = await haalNoten(editor);
       if (!noten.length) return toonMelding(t("page.footnotes.list.none"));
       const hier = editor.getSelectionInfo()?.paraId ?? null;
-      const alineas = (await editor.readParagraphs({ view: "accepted" })) as { ok: boolean; paragraphs?: { paraId: string }[] };
+      const alineas = (await editor.readParagraphs({ view: "accepted" })) as { ok: boolean; paragraphs?: { paraId: string }[];
+      };
       const volgorde = new Map((alineas.paragraphs ?? []).map((p, i) => [p.paraId, i]));
       const positie = hier != null ? (volgorde.get(hier) ?? -1) : -1;
-      const index = (n: NootInfo) => (n.paraId != null ? (volgorde.get(n.paraId) ?? -1) : -1);
+      const index = (n: NootInfo) =>
+        n.paraId != null ? (volgorde.get(n.paraId) ?? -1) : -1;
       const doel =
         richting === 1
           ? (noten.find((n) => index(n) > positie) ?? noten[0])

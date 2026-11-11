@@ -82,8 +82,10 @@ export function past(
   e: Pick<
     KeyboardEvent,
     "key" | "code" | "ctrlKey" | "metaKey" | "shiftKey" | "altKey"
-  >,
+  > & Partial<Pick<KeyboardEvent, "getModifierState">>,
 ) {
+  // AltGr kan ook Ctrl+Alt melden, maar is bedoeld voor tekst zoals µ en ©.
+  if (e.getModifierState?.("AltGraph")) return false;
   const c = ontleed(toets);
   return (
     c.ctrl === (e.ctrlKey || e.metaKey) &&

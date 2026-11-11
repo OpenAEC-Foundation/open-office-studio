@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-09",
+  "issue": 189,
+  "baseCommit": "f4a03889eff1306fe503a72d7acb21c754d5ac8d",
+  "fixture": "kat katten Kat katapult 123 456",
+  "cause": "Word-boundary lookarounds were added before compiling the user pattern. Their closing square brackets could terminate a malformed user character class, accepting invalid input and returning unrelated matches.",
+  "repair": "Compile the unwrapped pattern first, then add whole-word boundaries. Existing validation errors clear results and disable navigation and replacement.",
+  "environment": {
+    "os": "Windows x64",
+    "node": "v24.22.1",
+    "browser": "Production frontend, headless Playwright Chromium 1.62.1",
+    "nativeWebView2Retested": false
+  },
+  "baseline": {
+    "total": 15,
+    "passed": 8,
+    "failed": 7,
+    "failedCases": [
+      {
+        "name": "regex [, hele woorden true, hoofdlettergevoelig false",
+        "status": "6 results"
+      },
+      {
+        "name": "regex [abc, hele woorden true, hoofdlettergevoelig false",
+        "status": "6 results"
+      },
+      {
+        "name": "regex a[, hele woorden true, hoofdlettergevoelig false",
+        "status": "No results."
+      },
+      {
+        "name": "regex [, hele woorden true, hoofdlettergevoelig true",
+        "status": "6 results"
+      },
+      {
+        "name": "regex [abc, hele woorden true, hoofdlettergevoelig true",
+        "status": "6 results"
+      },
+      {
+        "name": "regex a[, hele woorden true, hoofdlettergevoelig true",
+        "status": "No results."
+      },
+      {
+        "name": "Hele woorden uit/aan laat de oorspronkelijke [ ongeldig",
+        "status": "6 results"
+      }
+    ],
+    "javascriptErrors": []
+  },
+  "repaired": {
+    "total": 15,
+    "passed": 15,
+    "cases": [
+      "regex [, hele woorden false, hoofdlettergevoelig false",
+      "regex [abc, hele woorden false, hoofdlettergevoelig false",
+      "regex a[, hele woorden false, hoofdlettergevoelig false",
+      "regex [, hele woorden true, hoofdlettergevoelig false",
+      "regex [abc, hele woorden true, hoofdlettergevoelig false",
+      "regex a[, hele woorden true, hoofdlettergevoelig false",
+      "regex [, hele woorden false, hoofdlettergevoelig true",
+      "regex [abc, hele woorden false, hoofdlettergevoelig true",
+      "regex a[, hele woorden false, hoofdlettergevoelig true",
+      "regex [, hele woorden true, hoofdlettergevoelig true",
+      "regex [abc, hele woorden true, hoofdlettergevoelig true",
+      "regex a[, hele woorden true, hoofdlettergevoelig true",
+      "Hele woorden uit/aan laat de oorspronkelijke [ ongeldig",
+      "Letterlijk [ zonder regexmodus blijft een geldige zoekopdracht",
+      "Geldige hele-woorden-regex behoudt hoofdletterkeuze en groepen bij vervangen"
+    ],
+    "javascriptErrors": []
+  },
+  "validation": {
+    "unitRegressionBefore": "3 failed, 18 passed: [, [abc and a[ were accepted with whole-word mode",
+    "targetedAfter": "21 search tests passed",
+    "typescript": "pnpm exec tsc --noEmit: passed",
+    "build": "pnpm exec vite build --outDir .local/issue-189-fixed: passed",
+    "fullSuite": {
+      "command": "pnpm exec vitest run --maxWorkers=2",
+      "files": 175,
+      "passed": 1996,
+      "skipped": 10
+    },
+    "diffCheck": "git diff --check: passed"
+  },
+  "assertions": [
+    "Invalid [, [abc and a[ stay invalid with whole-word mode on or off and either case-sensitivity setting",
+    "Invalid input clears result rows and disables Previous, Next, Replace and Replace All",
+    "Toggling whole-word mode off/on does not turn [ into six false matches",
+    "Invalid searches do not modify the document",
+    "Literal [ remains a valid query outside regex mode",
+    "Valid whole-word alternatives preserve case sensitivity",
+    "Capturing groups retain their indices in $2$1 replacement, verified in exported DOCX",
+    "Other malformed patterns, including groups, escapes and quantifiers, still raise ZoekFout"
+  ],
+  "reproduction": {
+    "dependencies": "pnpm install --frozen-lockfile; supply Playwright externally via OOS_PLAYWRIGHT_MODULE if needed",
+    "fonts": "Copy both @betteroffice/fonts/assets and @betteroffice/fonts-cjk/assets to public/fonts before building",
+    "build": "pnpm exec vite build --outDir .local/issue-189-fixed",
+    "probe": "Set OOS_TEST_DIST=.local/issue-189-fixed and OOS_TEST_UIT=.local/proef-issue-189-fixed; node scripts/test-writer-ongeldige-regex.mjs",
+    "baseline": "The same script against unmodified f4a03889 fails 7 of 15 cases"
+  },
+  "hashes": {
+    "format": "SHA-256 of UTF-8 text normalized to LF (committed blob contents)",
+    "source": "76f9d82e4f2c673ded05225012f0c9fecbae5740b89268247950a3d4052ae555",
+    "unitTests": "c9742da976d4e93767b346b3cfeaef195328b610e5f5d9be6c21e423d8c1757b",
+    "probe": "441437697c57ad4b61eb7f0ef306690758f267f01aefe8c9f7c0f8399c7dca2d"
+  }
+}

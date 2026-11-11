@@ -91,10 +91,14 @@ export function passendeMaat(natuurlijk: { breedte: number; hoogte: number }, ma
   return { breedte: max, hoogte: (natuurlijk.hoogte * max) / natuurlijk.breedte };
 }
 
-/** Bij vervangen: de breedte blijft, de hoogte volgt de verhouding van het nieuwe beeld. */
-export function maatBijVervangen(breedte: number, nieuw: { breedte: number; hoogte: number }) {
-  if (nieuw.breedte <= 0 || nieuw.hoogte <= 0) return { breedte, hoogte: breedte };
-  return { breedte, hoogte: (breedte * nieuw.hoogte) / nieuw.breedte };
+/** Behoud de bestaande weergavemaat; vul alleen ontbrekende maten aan. */
+export function maatBijVervangen(breedte: number, hoogte: number, nieuw: { breedte: number; hoogte: number }) {
+  const geldig = (n: number) => Number.isFinite(n) && n > 0;
+  if (geldig(breedte) && geldig(hoogte)) return { breedte, hoogte };
+  const verhouding = geldig(nieuw.breedte) && geldig(nieuw.hoogte) ? nieuw.breedte / nieuw.hoogte : 1;
+  if (geldig(breedte)) return { breedte, hoogte: breedte / verhouding };
+  if (geldig(hoogte)) return { breedte: hoogte * verhouding, hoogte };
+  return { breedte: geldig(nieuw.breedte) ? nieuw.breedte : 1, hoogte: geldig(nieuw.hoogte) ? nieuw.hoogte : 1 };
 }
 
 // ---------------------------------------------------------------------------

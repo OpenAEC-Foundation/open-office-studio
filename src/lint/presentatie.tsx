@@ -57,6 +57,7 @@ import {
   GalleryVertical,
   Presentation,
   Search,
+  ListTree,
 } from "lucide-react";
 import {
   Actie,
@@ -79,11 +80,25 @@ import {
   useIngeslotenGrafieken,
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
+import { DiaObjecten } from "../presentatie/DiaObjecten";
+import { DiaOntwerp } from "../presentatie/DiaOntwerp";
+import { DiaTabellen } from "../presentatie/DiaTabellen";
+import { DiaHergebruik } from "../presentatie/DiaHergebruik";
+import { DiaAfbeeldingen } from "../presentatie/DiaAfbeeldingen";
+import { DiaGroepen } from "../presentatie/DiaGroepen";
+import { DiaOpmaakKopie } from "../presentatie/DiaOpmaakKopie";
+import { GrafiekPlakListener } from "../grafieken/ui/GrafiekOverdracht";
+import { DiaVoetteksten } from "../presentatie/DiaVoetteksten";
+import { DiaOvergangen } from "../presentatie/DiaOvergangen";
+import { DiaAnimaties } from "../presentatie/DiaAnimaties";
+import { DiaDiagrammen } from "../presentatie/DiaDiagrammen";
+import { DiaMedia } from "../presentatie/DiaMedia";
 import "./presentatie.css";
 
 const DiaSorteerder = lazy(() =>
   import("../presentatie/DiaSorteerder").then((m) => ({ default: m.DiaSorteerder })),
 );
+const DiaOverzicht = lazy(() => import("../presentatie/DiaOverzicht").then(m => ({ default: m.DiaOverzicht })));
 
 /** Een engine-opdracht met een sneltoets die het lint zelf afhandelt. */
 function PT<K extends PptxCommandId>({
@@ -238,6 +253,8 @@ function Weergaven({
         uit={uit}
         onClick={() => zet(weergave === "sorteerder" ? "normaal" : "sorteerder")}
       />
+      <DiaKnop naam={t("presentation:outline.title")} icoon={ListTree} groot
+        aan={weergave === "overzicht"} uit={uit} onClick={() => zet("overzicht")} />
     </Groep>
   );
 }
@@ -280,6 +297,11 @@ function useWeergave(acties: DiaActies) {
             huidig={huidigeIndex}
             fout={fout}
           />
+        </Suspense>
+      )}
+      {weergave === "overzicht" && sleutel && (
+        <Suspense fallback={null}>
+          <DiaOverzicht api={api} anker={anker} bewerkbaar={acties.bewerkbaar} sluit={() => zet("normaal")} fout={fout} />
         </Suspense>
       )}
     </>
@@ -492,6 +514,7 @@ export function PresentatieRibbon({
   diaBreedte?: number;
 }) {
   const { t } = useTranslation("ribbon");
+  const { t: tp } = useTranslation("presentation");
   const zoom = usePptxCommand("zoom"),
     vulling = usePptxCommand("shapeFill"),
     rand = usePptxCommand("shapeStrokeColor");
@@ -518,6 +541,9 @@ export function PresentatieRibbon({
   return (
     <>
     {grafieken.venster}
+    <GrafiekPlakListener />
+    <DiaHergebruik bediening={false}/>
+    <DiaGroepen bediening={false}/>
     {weergave.element}
     {acties.voorstellingElement}
     {api && acties.zoeken && (
@@ -606,7 +632,10 @@ export function PresentatieRibbon({
                 </div>
               </Groep>
               <GrafiekGroep g={grafieken} uit={!acties.bewerkbaar} />
+              <Groep naam={tp("diagrams.title")}><DiaDiagrammen /></Groep>
+              <Groep naam={t("presentation:tables.title")}><DiaTabellen /></Groep>
               <Groep naam={t("presentation.groups.text")}>
+                <DiaVoetteksten />
                 <P
                   id="tool"
                   args={{ value: "textBox" }}
@@ -655,6 +684,9 @@ export function PresentatieRibbon({
                   groot
                 />
               </Groep>
+              <Groep naam={tp("media.title")}>
+                <DiaMedia />
+              </Groep>
             </>
           ),
         },
@@ -668,6 +700,8 @@ export function PresentatieRibbon({
                 <DiaVerwijderen acties={acties} />
               </Groep>
               <DiaVerplaatsen acties={acties} />
+              <Groep naam={t("presentation.groups.slides")}><DiaHergebruik /></Groep>
+              <Groep naam={t("presentation.groups.slides")}><DiaOntwerp /></Groep>
               <DiaNavigatie acties={acties} />
             </>
           ),
@@ -677,6 +711,7 @@ export function PresentatieRibbon({
           naam: t("presentation.tabs.shapeFormat"),
           inhoud: (
             <>
+              <Groep naam={t("presentation:pictures.title")}><DiaAfbeeldingen /></Groep>
               <Groep naam={t("presentation.groups.shapeStyle")}>
                 <div className="ribbon-stapel">
                   <OpdrachtKleur
@@ -725,6 +760,9 @@ export function PresentatieRibbon({
             <>
               <Rangschikken />
               <ObjectUitlijnen acties={acties} />
+              <Groep naam={t("presentation.groups.object")}><DiaObjecten /></Groep>
+              <Groep naam={t("presentation.groups.object")}><DiaGroepen /></Groep>
+              <Groep naam={t("presentation.groups.object")}><DiaOpmaakKopie /></Groep>
               <Groep naam={t("presentation.groups.object")}>
                 <DiaKnop
                   naam={t("presentation.commands.delete")}
@@ -801,6 +839,12 @@ export function PresentatieRibbon({
           inhoud: (
             <>
               <Voorstelling acties={acties} />
+              <Groep naam={tp("transitions.title")}>
+                <DiaOvergangen />
+              </Groep>
+              <Groep naam={tp("animations.title")}>
+                <DiaAnimaties />
+              </Groep>
               <Groep naam={t("presentation.groups.prepare")}>
                 <P
                   id="zoom"

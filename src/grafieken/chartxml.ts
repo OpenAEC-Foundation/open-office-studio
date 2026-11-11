@@ -13,6 +13,8 @@ import {
   type GrafiekSoort,
   type LegendaPositie,
   type Reeks,
+  type Trendlijn,
+  TRENDLIJNEN,
 } from "./model.ts";
 import {
   attr,
@@ -121,7 +123,7 @@ function reeksXml(model: GrafiekModel, r: Reeks, i: number, groep: "bar" | "line
       )
       .join("");
   }
-  const kop = `${v("idx", i)}${v("order", i)}${tx}${opmaak}${extra}`;
+  const kop = `${v("idx", i)}${v("order", i)}${tx}${opmaak}${extra}${(r.trendlijnen ?? []).map(trendlijnXml).join("")}`;
   if (groep === "scatter") {
     const x = model.categorieen.map((c) => leesGetal(c));
     return `<c:ser>${kop}<c:xVal>${numBron(x, model.categorieenRef)}</c:xVal><c:yVal>${numBron(r.waarden, r.waardenRef)}</c:yVal>${v("smooth", 0)}</c:ser>`;
@@ -129,6 +131,42 @@ function reeksXml(model: GrafiekModel, r: Reeks, i: number, groep: "bar" | "line
   const cat = `<c:cat>${strBron(model.categorieen, model.categorieenRef)}</c:cat>`;
   const val = `<c:val>${numBron(r.waarden, r.waardenRef)}</c:val>`;
   return `<c:ser>${kop}${cat}${val}${groep === "line" ? v("smooth", 0) : ""}</c:ser>`;
+}
+
+function trendlijnXml(t: Trendlijn): string {
+  if (t.soort === "unknown") return t.bronXml ?? "";
+  const velden: Record<string, string> = {
+    name: t.naam ? `<c:name>${ontsnap(t.naam)}</c:name>` : "",
+    trendlineType: v("trendlineType", t.soort),
+    order: t.soort === "poly" ? v("order", t.graad ?? 2) : "",
+    period: t.soort === "movingAvg" ? v("period", t.periode ?? 2) : "",
+    forward: t.vooruit !== undefined ? v("forward", t.vooruit) : "",
+    backward: t.achteruit !== undefined ? v("backward", t.achteruit) : "",
+    intercept: t.intercept !== undefined ? v("intercept", t.intercept) : "",
+    dispRSqr: v("dispRSqr", t.toonR2 ? 1 : 0),
+    dispEq: v("dispEq", t.toonVergelijking ? 1 : 0),
+  };
+  if (!t.bronXml) return `<c:trendline>${velden.name}<c:spPr><a:ln w="19050"><a:prstDash val="dash"/></a:ln></c:spPr>${Object.entries(velden).filter(([k]) => k !== "name").map(([, v]) => v).join("")}</c:trendline>`;
+  const root = leesXml(t.bronXml), wijzigingen: Vervanging[] = [];
+  const volgorde = ["name", "spPr", "trendlineType", "order", "period", "forward", "backward", "intercept", "dispRSqr", "dispEq", "trendlineLbl", "extLst"];
+  for (const [naam, tekst] of Object.entries(velden)) {
+    const oud = kind(root, naam);
+    if (oud) wijzigingen.push({ start: oud.start, eind: oud.eind, tekst });
+    else if (tekst) {
+      const volgende = elementen(root).find(e => volgorde.indexOf(e.lokaal) > volgorde.indexOf(naam));
+      const plek = volgende?.start ?? root.inhoudEind;
+      wijzigingen.push({ start: plek, eind: plek, tekst });
+    }
+  }
+  return vervang(t.bronXml, wijzigingen);
+}
+
+function leesTrendlijnen(ser: XmlElement, xml: string): Trendlijn[] {
+  return kinderen(ser, "trendline").map(t => {
+    const soort = attr(kind(t, "trendlineType"), "val") ?? "";
+    const getal = (naam: string) => { const v = attr(kind(t, naam), "val"); return v !== null && v !== undefined && Number.isFinite(Number(v)) ? Number(v) : undefined; };
+    return { soort: TRENDLIJNEN.includes(soort as typeof TRENDLIJNEN[number]) ? soort as typeof TRENDLIJNEN[number] : "unknown", graad: getal("order"), periode: getal("period"), vooruit: getal("forward"), achteruit: getal("backward"), intercept: getal("intercept"), naam: tekstVan(kind(t, "name")) || undefined, toonVergelijking: AAN(kind(t, "dispEq")), toonR2: AAN(kind(t, "dispRSqr")), bronXml: xml.slice(t.start, t.eind) };
+  });
 }
 
 function labelsXml(model: GrafiekModel, procent: boolean) {
@@ -449,11 +487,11 @@ export function leesGrafiekXml(xml: string): GelezenGrafiek {
     }
     const waarden = Array.from({ length: categorieen.length }, (_, k) => val.getal[k] ?? null);
     const naam = reeksNaam(ser, i);
-    reeksen.push({ naam: naam.naam, naamRef: naam.ref, waarden, waardenRef: val.ref, kleur: reeksKleur(ser) });
+    reeksen.push({ naam: naam.naam, naamRef: naam.ref, waarden, waardenRef: val.ref, kleur: reeksKleur(ser), ...(kind(ser, "trendline") ? { trendlijnen: leesTrendlijnen(ser, xml) } : {}) });
     if (val.getal.length > categorieen.length) waarschuwingen.push(i18next.t("charts:read.warnings.moreValuesThanCategories", { name: naam.naam }));
   });
   if (!series.length && !reden) reden = i18next.t("charts:read.reasons.noSeries");
-  if (series.some((s) => kind(s, "trendline") || kind(s, "errBars")))
+  if (series.some((s) => kind(s, "errBars")))
     waarschuwingen.push(i18next.t("charts:read.warnings.trendlinesDropped"));
 
   // Assen.

@@ -5,6 +5,8 @@
  * revisie, statistieken en bewerkingstijd).
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import { leesAuteur as auteur } from "../../auteursprofiel";
+import { bewaarOpmerkingInitialen } from "../opmerkingen/initialen";
 import { meldWijziging } from "../../lint/editorApi";
 import { telTekst } from "../../lint/tekst-logica";
 import { leesAlleAlineas } from "../gedeeld/engine";
@@ -51,15 +53,6 @@ export function sessieMinuten(handle: object | null | undefined) {
   return handle ? Math.round((staten.get(handle)?.actief ?? 0) / 60000) : 0;
 }
 
-const AUTEUR = "open-tekst-auteur";
-function auteur() {
-  try {
-    return localStorage.getItem(AUTEUR)?.trim() ?? "";
-  } catch {
-    return "";
-  }
-}
-
 /**
  * Werkt de eigenschappen in de opgeslagen bytes bij. `volledig` bij echt
  * opslaan (statistieken, revisie, bewerkingstijd); anders (herladen na een
@@ -73,8 +66,9 @@ export async function werkEigenschappenBij(
   volledig: boolean,
 ): Promise<Uint8Array> {
   const s = staten.get(handle);
-  if (!volledig && (!s || !Object.keys(s.kern).length)) return bytes;
   try {
+    bytes = bewaarOpmerkingInitialen(handle, bytes);
+    if (!volledig && (!s || !Object.keys(s.kern).length)) return bytes;
     const wijziging: Parameters<typeof schrijfEigenschappen>[1] = { ...(s?.kern ?? {}) };
     if (volledig) {
       const naam = auteur();

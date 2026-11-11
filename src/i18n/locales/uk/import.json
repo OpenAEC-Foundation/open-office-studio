@@ -70,7 +70,15 @@
     "unknownEncryption": "This file uses an unknown encryption (version {{version}}) and cannot be opened.",
     "encryptedGeneric": "This file is encrypted.",
     "choosePassword": "Choose a password.",
-    "passwordTooLong": "The password can be at most 255 characters long."
+    "passwordTooLong": "The password can be at most 255 characters long.",
+    "conversionVariant": "This {{ext}} file could not be opened. {{reason}} {{alternative}}",
+    "conversionAlternative": {
+      "docx": "Export the file from its original app as DOCX or RTF, then open that copy.",
+      "xlsx": "Export the file from its original app as XLSX. CSV is also possible, but keeps only the values from one sheet.",
+      "pptx": "Export the file from its original app as PPTX, then open that copy."
+    },
+    "emptyConversionTitle": "Empty conversion result",
+    "emptyConversion": "The conversion of this {{ext}} file contains no visible document content. The original may be empty, or this variant may not be read correctly. {{alternative}}"
   },
   "password": {
     "title": "Password Required",

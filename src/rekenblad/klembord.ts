@@ -21,7 +21,8 @@ import {
   type Bereik,
   type Cel,
 } from "../lint/rekenblad-logica";
-import { leesSelectie, Melding, voerOpsUit } from "../lint/rekenblad-opdrachten";
+import { leesSelectie, Melding, voerOpsUit, type RuweOp } from "../lint/rekenblad-opdrachten";
+import { controleerValidatieBewerking } from "./gegevensvalidatie";
 import { kolomPx } from "./structuur";
 import {
   leesHtmlTabel,
@@ -48,7 +49,9 @@ const melding = (sleutel: string, opties?: Record<string, unknown>) =>
 
 interface Kopie {
   tsv: string;
-  blad: number;
+  api: XlsxEditorApi;
+  sheetId: string;
+  versie: string;
   bereik: Bereik;
   cellen: BronCel[][];
   opmaak: CapturedFormat | null;
@@ -166,7 +169,9 @@ export function kopieerSelectie(api: XlsxEditorApi, knippen = false) {
   const tsv = naarTsv(teksten);
   laatste = {
     tsv,
-    blad,
+    api,
+    sheetId,
+    versie: h.version(),
     bereik,
     cellen,
     opmaak: h.captureFormat(blad, a1),
@@ -301,6 +306,25 @@ export async function plak(
     throw new Melding(melding("outOfSheet"));
   const intern = bron.intern;
   if (opties.wat === "opmaak" && !intern?.opmaak) throw new Melding(melding("noFormats"));
+  const bronOngewijzigd = intern?.versie === versie;
+  const verplaatsen = intern?.knippen && opties.wat !== "opmaak";
+  const zelfdeWerkmap = intern?.api.handle === api.handle;
+  let bronVersie: string | undefined;
+  let wissen: XlsxEditStep[] = [];
+  if (verplaatsen) {
+    bronVersie = await intern.api.version();
+    const h = intern.api.handle;
+    // Engine-blad-ID's zijn indexgebaseerd. Na een wijziging opnieuw knippen:
+    // anders kan het bronadres inmiddels bij andere cellen of een ander blad horen.
+    if (bronVersie !== intern.versie || h.version() !== bronVersie)
+      throw new Melding(i18next.t("ribbon:spreadsheet.messages.staleVersion"));
+    wissen = leegmaken(intern.sheetId, intern.bereik,
+      zelfdeWerkmap && intern.sheetId === sheetId ? gebied : null);
+    if (wissen.length) {
+      const controle = await intern.api.validateEdits({ expectVersion: bronVersie, steps: wissen });
+      if (!controle.ok) throw new Melding(controle.failure.message);
+    }
+  }
 
   // Gewoon plakken geeft de onbewerkte tekst aan de echte celparser. Voor
   // waarden/bewerkingen lezen we eerst de bronwaarden met dezelfde parser,
@@ -344,26 +368,36 @@ export async function plak(
     ? cellen.map((rij) => rij.map((c) => opties.legeOverslaan && c.invoer === "" ? null : c.invoer))
     : plakInvoer(cellen, huidig, opties, verschuiving);
 
-  // 1. Opmaak (uit de app), vóór de inhoud: invoer wordt gelezen met de notatie van de cel.
+  const stappen: XlsxEditStep[] = invoerStappen(sheetId, gebied, nieuw, regionaal, cellen.map((rij) => rij.map((c) => !!c.canoniek)));
+  if (zelfdeWerkmap) stappen.push(...wissen);
+  const opmaakOps:RuweOp[]=[];
   if (intern?.opmaak && (opties.wat === "alles" || opties.wat === "opmaak")) {
-    await voerOpsUit(api, [
+    opmaakOps.push(
       {
         type: "applyRangeFormat",
         sheet: blad,
         range: { start: { row: gebied.top, col: gebied.left }, end: { row: gebied.bottom, col: gebied.right } },
         format: opmaakNaar(intern.opmaak, opties.transponeren),
       },
-    ], versie);
+    );
+  }
+  if(stappen.length)controleerValidatieBewerking(h,opmaakOps,{expectVersion:versie,steps:stappen});
+  // Opmaak gaat vóór inhoud, nadat de volledige combinatie zonder mutatie is gecontroleerd.
+  if(opmaakOps.length){
+    await voerOpsUit(api,opmaakOps,versie);
     versie = h.version();
   }
 
   // Inhoud en afgeleide getalnotaties zijn één Undo-stap. Overgeslagen
   // cellen komen niet in de opdracht; hun tekst/formule wordt niet herlezen.
-  const stappen: XlsxEditStep[] = invoerStappen(sheetId, gebied, nieuw, regionaal, cellen.map((rij) => rij.map((c) => !!c.canoniek)));
-  if (intern?.knippen && opties.wat !== "opmaak" && intern.blad === blad)
-    stappen.push(...leegmaken(sheetId, intern.bereik, gebied));
   if (stappen.length) await bewerk(api, stappen, versie);
-  if (intern?.knippen) laatste = null;
+  // Twee werkmappen hebben afzonderlijke transacties en Undo-geschiedenissen.
+  // Wis de bron pas na een geslaagde doelbewerking, met de gecontroleerde versie.
+  if (!zelfdeWerkmap && wissen.length) await bewerk(intern!.api, wissen, bronVersie!);
+  if (verplaatsen && laatste === intern) laatste = null;
+  else if (intern?.knippen && laatste === intern && zelfdeWerkmap && bronOngewijzigd)
+    // Alleen opmaak plakken verbruikt de knipkopie niet; dit was onze eigen wijziging.
+    intern.versie = api.handle.version();
 
   api.selectCells(blad, {
     anchor: { row: gebied.bottom, col: gebied.right },
@@ -393,13 +427,13 @@ function invoerStappen(sheetId: string, gebied: Bereik, invoer: (string | null)[
 }
 
 /** Stappen die de bron leeg maken, buiten het doelgebied (in stroken per rij). */
-function leegmaken(sheetId: string, bron: Bereik, doelGebied: Bereik): XlsxEditStep[] {
+function leegmaken(sheetId: string, bron: Bereik, doelGebied: Bereik | null): XlsxEditStep[] {
   const stappen: XlsxEditStep[] = [];
   for (let r = bron.top; r <= bron.bottom; r++) {
     let k = bron.left;
     while (k <= bron.right) {
       const inDoel = (kol: number) =>
-        r >= doelGebied.top && r <= doelGebied.bottom && kol >= doelGebied.left && kol <= doelGebied.right;
+        doelGebied !== null && r >= doelGebied.top && r <= doelGebied.bottom && kol >= doelGebied.left && kol <= doelGebied.right;
       if (inDoel(k)) {
         k++;
         continue;

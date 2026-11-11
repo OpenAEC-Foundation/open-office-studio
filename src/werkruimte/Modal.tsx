@@ -12,10 +12,8 @@ import { useTranslation } from "react-i18next";
 import { focusbare } from "../openaec-lint";
 import { useOfficeThema } from "../stijl/ThemaKnop";
 import { volgendeInDialoog } from "./Dialoog";
+import { registreerDialoog } from "./dialoogstapel";
 import "./Modal.css";
-
-/** Open modals, de bovenste laatst (voor Esc zonder focus in een venster). */
-const openModals: object[] = [];
 
 /** Nieuwe linkerbovenhoek bij slepen, binnen de grenzen van de overlay. */
 export function begrensPositie(
@@ -81,16 +79,7 @@ export function Modal({
       venster.current?.querySelector<HTMLElement>("[data-autofocus]") ??
       (venster.current ? focusbare(venster.current)[0] : null);
     doel?.focus();
-    const sleutel = {};
-    openModals.push(sleutel);
-    const esc = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || event.defaultPrevented) return;
-      const actief = document.activeElement;
-      if (actief && actief !== document.body) return;
-      if (openModals[openModals.length - 1] !== sleutel) return;
-      event.preventDefault();
-      sluitRef.current();
-    };
+    const verwijder = registreerDialoog(() => sluitRef.current());
     const beweeg = (event: PointerEvent) => {
       const v = venster.current;
       const o = overlay.current;
@@ -110,14 +99,12 @@ export function Modal({
     const los = () => {
       sleep.current = null;
     };
-    window.addEventListener("keydown", esc);
     window.addEventListener("pointermove", beweeg);
     window.addEventListener("pointerup", los);
     return () => {
-      window.removeEventListener("keydown", esc);
+      verwijder();
       window.removeEventListener("pointermove", beweeg);
       window.removeEventListener("pointerup", los);
-      openModals.splice(openModals.indexOf(sleutel), 1);
       for (const kind of inert) kind.removeAttribute("inert");
       if (vorige?.isConnected) vorige.focus();
     };

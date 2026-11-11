@@ -12,7 +12,7 @@ import { useOpmaak } from "../../i18n/opmaak";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { AlineaVenster } from "../alinea/AlineaVenster";
 import { LettertypeVenster } from "../lettertype/LettertypeVenster";
-import { alsEigenschappen, losOp, opgelosteOpmaak, stijlNaam, uitOpmaak, voorbeeldStijl, type OpgelosteStijl } from "./model";
+import { alsEigenschappen, losOp, opgelosteOpmaak, stijlNaam, uitOpmaak, voorbeeldStijl, tabelEigenschappen, type OpgelosteStijl } from "./model";
 import { alineaBegin, lettertypeBegin, vanAlineaOpmaak, vanTekenOpmaak } from "./opmaakvensters";
 import {
   nieuweStijl,
@@ -22,6 +22,7 @@ import {
   type Uitlijning,
 } from "./stijlenxml";
 import { useStijlen, type StijlVenster } from "./StijlenBeheer";
+import { StijlExtra } from "./StijlExtra";
 
 type Formulier = Required<
   Pick<
@@ -116,10 +117,10 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
   const huidigeAlinea = staat.alineastijl ?? alle.find((s) => s.type === "paragraph" && s.default)?.styleId ?? "";
 
   const [soort, setSoort] = useState<StijlSoort>(
-    bestaand ? (bestaand.type === "character" ? "character" : "paragraph") : nieuwType ?? "paragraph",
+    bestaand ? bestaand.type : nieuwType ?? "paragraph",
   );
   const [naam, setNaam] = useState(bestaand ? stijlNaam(bestaand) : "");
-  const [basis, setBasis] = useState(bestaand ? bestaand.basedOn ?? "" : huidigeAlinea);
+  const [basis, setBasis] = useState(bestaand ? bestaand.basedOn ?? "" : nieuwType && nieuwType !== "paragraph" ? "" : huidigeAlinea);
   const [volgende, setVolgende] = useState(bestaand ? bestaand.next ?? bestaand.styleId : "");
   const [galerij, setGalerij] = useState(bestaand ? !!bestaand.qFormat : true);
   const begin = useMemo(() => {
@@ -134,10 +135,18 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
   }, []);
   const [f, setF] = useState<Formulier>(begin);
   /** Eigenschappen uit de W1-vensters die dit formulier zelf niet toont. */
-  const [extra, setExtra] = useState<StijlEigenschappen>({});
+  const [extra, setExtra] = useState<StijlEigenschappen>(() => {
+    if (!uitSelectie) return {};
+    const s = staat.selectieOpmaak();
+    return Object.fromEntries(Object.entries({ ...uitOpmaak(s.tekst, s.alinea, soort, staat.thema), ...tabelEigenschappen(s.tabel, staat.thema) }).filter(([k]) => !(SLEUTELS as string[]).includes(k)));
+  });
   const [opmaakVenster, setOpmaakVenster] = useState<"lettertype" | "alinea" | null>(null);
   const [fout, setFout] = useState("");
   const [bezig, setBezig] = useState(false);
+  const nummering = staat.document?.package.numbering;
+  const numId = bestaand?.pPr?.numPr?.numId, abstractId = nummering?.nums.find(n => n.numId === numId)?.abstractNumId;
+  const niveau = nummering?.abstractNums.find(n => n.abstractNumId === abstractId)?.levels[0];
+  const [lijstFormaat, setLijstFormaat] = useState<string>(niveau?.numFmt ?? "decimal"), [lijstStart, setLijstStart] = useState(niveau?.start ?? 1), [lijstGewijzigd, setLijstGewijzigd] = useState(false);
   const zet = <K extends keyof Formulier>(k: K, v: Formulier[K]) => setF((oud) => ({ ...oud, [k]: v }));
 
   // De naam van de stijl zelf telt niet als dubbel.
@@ -161,6 +170,7 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
         const eigenschappen = { ...verschil(f, begin, soort), ...extraVoor(soort) };
         const naamWijziging = naam.trim() !== stijlNaam(bestaand) ? naam.trim() : undefined;
         await staat.herlaadStijlen((o) => ({
+          nieuweNummering: soort === "numbering" && lijstGewijzigd ? { styleId: bestaand.styleId, format: lijstFormaat, start: lijstStart } : undefined,
           stijlen: wijzigStijl(o.stijlen, bestaand.styleId, {
             naam: naamWijziging,
             gebaseerdOp: (bestaand.basedOn ?? "") !== basis ? basis || null : undefined,
@@ -182,7 +192,8 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
             eigenschappen,
           });
           // Zoals gebruikelijk krijgt de alinea van de selectie de nieuwe stijl.
-          return { stijlen: xml, alineastijl: uitSelectie && soort === "paragraph" ? styleId : undefined };
+          return { stijlen: xml, alineastijl: uitSelectie && soort === "paragraph" ? styleId : undefined,
+            nieuweNummering: soort === "numbering" && (lijstGewijzigd || !eigenschappen.lijst) ? { styleId, format: lijstFormaat, start: lijstStart } : undefined };
         });
       }
       staat.sluit();
@@ -194,9 +205,9 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
 
   /** Extra eigenschappen, zonder alinea-eigenschappen bij een tekenstijl. */
   function extraVoor(s: StijlSoort): StijlEigenschappen {
-    if (s === "paragraph") return extra;
-    const { uitlijning, ruimteVoor, ruimteNa, regelafstand, regelafstandPt, inspringLinks, inspringRechts, eersteRegel, bijVolgende, regelsBijElkaar, paginaEindeVoor, zwevendeRegels, contextueel, ...teken } = extra;
-    void [uitlijning, ruimteVoor, ruimteNa, regelafstand, regelafstandPt, inspringLinks, inspringRechts, eersteRegel, bijVolgende, regelsBijElkaar, paginaEindeVoor, zwevendeRegels, contextueel];
+    if (s !== "character") return extra;
+    const { uitlijning, ruimteVoor, ruimteNa, regelafstand, regelafstandPt, inspringLinks, inspringRechts, eersteRegel, bijVolgende, regelsBijElkaar, paginaEindeVoor, zwevendeRegels, contextueel, tabs, randen, arcering, lijst, tabelRanden, tabelArcering, ...teken } = extra;
+    void [uitlijning, ruimteVoor, ruimteNa, regelafstand, regelafstandPt, inspringLinks, inspringRechts, eersteRegel, bijVolgende, regelsBijElkaar, paginaEindeVoor, zwevendeRegels, contextueel, tabs, randen, arcering, lijst, tabelRanden, tabelArcering];
     return teken;
   }
 
@@ -224,7 +235,9 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
 
   // Beginwaarden voor de W1-vensters: de opgeloste basis plus wat hier al gekozen is.
   const opgelost = opgelosteOpmaak(staat.stijlen, bestaand?.styleId ?? (basis || null));
-  const huidig: StijlEigenschappen = { ...f, ...extra };
+  const huidig: StijlEigenschappen = { ...uitOpmaak(opgelost.r, opgelost.p, soort, staat.thema),
+    ...(bestaand?.tblPr?.borders ? { tabelRanden: Object.fromEntries(Object.entries(bestaand.tblPr.borders).map(([k, b]) => [k, { style: b?.style ?? "single", size: b?.size, color: { rgb: b?.color?.rgb ?? "000000" } }])) } : {}),
+    ...(bestaand?.tblPr?.shading?.fill?.rgb ? { tabelArcering: { pattern: bestaand.tblPr.shading.pattern, fill: { rgb: bestaand.tblPr.shading.fill.rgb } } } : {}), ...f, ...extra };
 
   const voorbeeld: OpgelosteStijl = {
     lettertype: f.lettertype ?? undefined,
@@ -264,9 +277,11 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
         </label>
         <label className="werkruimte-veld">
           <span>{t("styles.editor.type")}</span>
-          <select value={soort} disabled={!!bestaand} onChange={(e) => setSoort(e.target.value as StijlSoort)}>
+          <select value={soort} disabled={!!bestaand} onChange={(e) => { setSoort(e.target.value as StijlSoort); setBasis(""); }}>
             <option value="paragraph">{t("styles.editor.typeParagraph")}</option>
             <option value="character">{t("styles.editor.typeCharacter")}</option>
+            <option value="table">{t("styles.manage.type.table")}</option>
+            <option value="numbering">{t("styles.manage.type.numbering")}</option>
           </select>
         </label>
         <label className="werkruimte-veld">
@@ -315,7 +330,7 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
           </label>
           <button type="button" className="werkruimte-knop" disabled={!f.kleur} onClick={() => zet("kleur", null)}>{t("styles.editor.automatic")}</button>
         </div>
-        {soort === "paragraph" && (
+        {soort !== "character" && (
           <>
             <label className="werkruimte-veld">
               <span>{t("styles.editor.alignment")}</span>
@@ -350,6 +365,12 @@ export function StijlEditor({ venster }: { venster: Extract<StijlVenster, { soor
           <input type="checkbox" checked={galerij} onChange={(e) => setGalerij(e.target.checked)} /> {t("styles.editor.showInGallery")}
         </label>
       </fieldset>
+
+      {soort === "numbering" && <fieldset className="werkruimte-groep"><legend>{t("styles.manage.type.numbering")}</legend>
+        <label className="werkruimte-veld"><span>{t("styles.manage.listFormat")}</span><select value={lijstFormaat} onChange={e => { setLijstFormaat(e.target.value); setLijstGewijzigd(true); }}>{["decimal", "lowerLetter", "upperLetter", "lowerRoman", "upperRoman", "bullet"].map(v => <option key={v} value={v}>{t(`styles.manage.numberFormat.${v}`)}</option>)}</select></label>
+        <Getal label={t("styles.manage.start")} waarde={lijstStart} eenheid="" min={1} max={32767} zet={v => { setLijstStart(Math.round(v)); setLijstGewijzigd(true); }}/>
+      </fieldset>}
+      <StijlExtra soort={soort} waarde={huidig} wijzig={neemOver}/>
 
       <div className="tekst-stijlvoorbeeld" aria-label={t("styles.editor.preview")}>
         <p style={{ ...voorbeeldStijl(voorbeeld, 28), textAlign: f.uitlijning === "both" ? "justify" : (f.uitlijning ?? "left") as "left" }}>

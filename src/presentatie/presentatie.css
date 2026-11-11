@@ -1,5 +1,22 @@
 /* Diasorteerder (#76) en diavoorstelling met presentatorweergave (#79). */
 
+.dia-overzicht {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: var(--oa-ui-bg, #f3f4f6);
+  color: var(--oa-ui-text, #1f2328);
+  font: 13px Inter, system-ui, sans-serif;
+}
+.dia-overzicht-inhoud { overflow: auto; padding: 16px; }
+.dia-overzicht article { max-width: 1000px; margin: 0 auto 20px; padding: 12px 18px; border: 1px solid var(--oa-shell-border, #d0d7de); border-radius: 8px; }
+.dia-overzicht h2 { margin: 0 0 8px; font-size: 15px; }
+.dia-overzicht h2 button { color: inherit; background: transparent; border: 0; font: inherit; cursor: pointer; }
+.dia-overzicht textarea { display: block; width: 100%; box-sizing: border-box; resize: vertical; margin: 5px 0; padding: 7px; border: 1px solid var(--oa-shell-border, #d0d7de); border-radius: 4px; background: var(--oa-ui-bg, #fff); color: inherit; font: inherit; }
+.dia-overzicht textarea:focus-visible { outline: 2px solid var(--oa-color-brand-warm-gold, #a95606); outline-offset: 1px; }
+
 .sorteerder {
   position: absolute;
   inset: 0;

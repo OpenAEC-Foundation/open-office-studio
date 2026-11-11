@@ -1,15 +1,14 @@
-/**
- * Bladen beheren (#61): kopiëren naar een gekozen positie, lijst met
- * zichtbaarheid. Verbergen en tabkleur hebben nog geen bewerking in de
- * huidige aansluiting; die staan in het menu uitgeschakeld met uitleg.
- */
+/** Worksheet navigation, movement and complete in-workbook copy (#61). */
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
-import type { CellInputEdit } from "@betteroffice/xlsx";
 import i18next from "../i18n/config";
-import { bereikA1, bladnaamFout, ontleedBereik, type Bereik } from "../lint/rekenblad-logica";
-import { gaNaarBlad, Melding, voerOpsUit, type RuweOp } from "../lint/rekenblad-opdrachten";
-import { meldWijziging } from "../lint/editorApi";
-import { breedteTekens, hoogtePunten } from "./maten";
+import {
+  alleenLezen,
+  gaNaarBlad,
+  Melding,
+  voerOpsUit,
+} from "../lint/rekenblad-opdrachten";
+import type { Herladen } from "../lint/editorApi";
+import { kopieerWerkblad } from "./bladkopie";
 import { leesBladZichtbaarheid } from "./bladzichtbaarheid";
 
 export interface BladInfo {
@@ -34,99 +33,56 @@ export function kopieNaam(naam: string, namen: string[]) {
   }
 }
 
-function gebruikt(api: XlsxEditorApi, blad: number): Bereik | null {
-  const uitvoer = api.handle.exportStructured({
-    scope: [{ sheet: blad, range: "A1" }],
-    maxCells: 1,
-    includeDefinedNames: false,
-  });
-  const bereik = uitvoer.ok ? uitvoer.content.sheets[0]?.usedRange : null;
-  return bereik ? ontleedBereik(bereik) : null;
+/** Verplaatst het actieve blad vóór `positie`; behoudt de identiteit en verwijzingen. */
+export async function bladVerplaatsen(
+  api: XlsxEditorApi,
+  positie: number,
+  bron?: number,
+  versie?: string,
+) {
+  const info = api.handle.sheetInfo();
+  const van = bron ?? info.activeSheet;
+  const voor = Math.max(
+    0,
+    Math.min(info.sheetNames.length, Math.trunc(positie)),
+  );
+  const naar = voor > van ? voor - 1 : voor;
+  if (naar === van) return;
+  await voerOpsUit(api, [{ type: "moveSheet", from: van, to: naar }], versie);
+  await gaNaarBlad(api, naar);
 }
 
-/**
- * Kopieert het actieve blad naar `positie` (0 = vooraan) onder `naam`: celinhoud
- * met formules, opmaak, kolombreedten, rijhoogten, samengevoegde cellen en
- * vaste titels. Grafieken, afbeeldingen, opmerkingen en koppelingen gaan niet mee.
- */
-export async function bladKopieren(api: XlsxEditorApi, positie: number, naam: string) {
-  const h = api.handle;
-  const info = h.sheetInfo();
-  const bron = info.activeSheet;
-  const fout = bladnaamFout(naam, info.sheetNames);
-  if (fout) throw new Melding(fout);
-  const doel = Math.max(0, Math.min(positie, info.sheetNames.length));
-  const bereik = gebruikt(api, bron);
-
-  // Eerst alles van de bron lezen: na addSheet verschuiven de indexen.
-  const a1 = bereik ? bereikA1(bereik) : null;
-  const invoer = a1 ? h.rangeCells(bron, a1).map((r) => r.map((c) => c.input)) : [];
-  const opmaak = a1 ? h.captureFormat(bron, a1) : null;
-  // Samenvoegingen kunnen ook buiten het gebruikte bereik liggen (lege cellen).
-  const samengevoegd = h.mergedRanges(bron, "A1:XFD1048576");
-  const breedten: number[] = [];
-  const hoogten: number[] = [];
-  const laatsteKolom = Math.max(bereik?.right ?? 0, 25);
-  const laatsteRij = Math.max(bereik?.bottom ?? 0, 0);
-  for (let k = 0; k <= laatsteKolom + 1; k++) breedten.push(h.cellPosition(bron, 0, k).x);
-  for (let r = 0; r <= laatsteRij + 1; r++) hoogten.push(h.cellPosition(bron, r, 0).y);
-
-  // Standaardmaten van de bron: een kolom en rij ver buiten het gebruikte bereik.
-  const verKolom = h.cellPosition(bron, 0, 16001).x - h.cellPosition(bron, 0, 16000).x;
-  const verRij = h.cellPosition(bron, 1048001, 0).y - h.cellPosition(bron, 1048000, 0).y;
-  // De kern controleert een reeks ops tegen de stand vooraf: eerst het blad
-  // zelf, dan opmaak en maten in één stap, dan de inhoud.
-  await voerOpsUit(api, [{ type: "addSheet", index: doel, name: naam.trim() }]);
-  const ops: RuweOp[] = [];
-  if (bereik && opmaak)
-    ops.push({
-      type: "applyRangeFormat",
-      sheet: doel,
-      range: {
-        start: { row: bereik.top, col: bereik.left },
-        end: { row: bereik.bottom, col: bereik.right },
-      },
-      format: opmaak,
-    });
-  for (let k = 0; k < breedten.length - 1; k++) {
-    const px = breedten[k + 1] - breedten[k];
-    if (Math.abs(px - verKolom) > 0.1)
-      ops.push({ type: "setColWidth", sheet: doel, col: k, width: breedteTekens(px) });
-  }
-  for (let r = 0; r < hoogten.length - 1; r++) {
-    const px = hoogten[r + 1] - hoogten[r];
-    if (Math.abs(px - verRij) > 0.1)
-      ops.push({ type: "setRowHeight", sheet: doel, row: r, height: hoogtePunten(px) });
-  }
-  for (const m of samengevoegd)
-    ops.push({ type: "mergeCells", sheet: doel, range: { start: m.start, end: m.end } });
-  if (info.frozenRows + info.frozenCols > 0)
-    ops.push({
-      type: "setFreezePane",
-      sheet: doel,
-      pane: {
-        rows: info.frozenRows,
-        cols: info.frozenCols,
-        top_left: { row: info.frozenRows, col: info.frozenCols },
-      },
-    });
-  if (ops.length) await voerOpsUit(api, ops);
-
-  // Inhoud via het plakpad van de kern: lege cellen (en dus de volgcellen van
-  // samengevoegde cellen) worden niet beschreven.
-  if (bereik) {
-    const cellen: CellInputEdit[] = [];
-    invoer.forEach((rij, i) =>
-      rij.forEach((tekst, j) => {
-        if (tekst) cellen.push({ row: bereik.top + i, col: bereik.left + j, input: tekst });
-      }),
-    );
-    if (cellen.length) {
-      h.editCells(doel, cellen);
-      meldWijziging(h);
-    }
-  }
-  await gaNaarBlad(api, doel);
+/** Copy through the saved package so sheet-owned objects and unknown parts survive. */
+export async function bladKopieren(
+  api: XlsxEditorApi,
+  positie: number,
+  naam: string,
+  opties: {
+    herlaad: Herladen | null | undefined;
+    bron: number;
+    versie: string;
+    voorVervangen?: () => void;
+    signal?: AbortSignal;
+  },
+): Promise<boolean> {
+  const { herlaad, bron, versie, signal } = opties;
+  const controleer = () => {
+    if (alleenLezen(api))
+      throw new Melding(i18next.t("ribbon:spreadsheet.messages.readOnly"));
+    if (api.handle.version() !== versie)
+      throw new Melding(i18next.t("ribbon:spreadsheet.messages.staleVersion"));
+  };
+  if (signal?.aborted) return false;
+  controleer();
+  if (!herlaad)
+    throw new Melding(i18next.t("spreadsheet:sheets.copyUnavailable"));
+  const bytes = await herlaad.bytes();
+  if (signal?.aborted) return false;
+  controleer();
+  const nieuw = kopieerWerkblad(bytes, bron, positie, naam);
+  opties.voorVervangen?.();
+  herlaad.vervang(nieuw.bytes, { blad: nieuw.blad, cel: { row: 0, col: 0 } });
+  return true;
 }
 
 /** Tekst voor een verborgen blad in de lijst. */

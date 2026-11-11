@@ -202,7 +202,21 @@ export interface DocPropsWijziging extends Partial<KernEigenschappen> {
   manager?: string | null;
 }
 
-const W3CDTF = ` xsi:type="dcterms:W3CDTF"`;
+/** Een niet-lege alias voor een QName/attribuut, zonder bestaande aliassen te overschrijven. */
+function metVoorvoegsel(xml: string, ns: string, voorkeur: string) {
+  const wortel = leesXml(xml);
+  for (const [naam, waarde] of Object.entries(wortel.attrs))
+    if (naam.startsWith("xmlns:") && waarde === ns)
+      return { xml, prefix: naam.slice(6) };
+  let prefix = voorkeur;
+  for (let n = 1; Object.hasOwn(wortel.attrs, `xmlns:${prefix}`); n++)
+    prefix = `${voorkeur}${n}`;
+  const plek = wortel.inhoudStart - (wortel.leeg ? 2 : 1);
+  return {
+    xml: vervang(xml, [{ start: plek, eind: plek, tekst: ` xmlns:${prefix}="${ns}"` }]),
+    prefix,
+  };
+}
 
 /** Past de wijziging toe op core.xml (bestaand of leeg). */
 export function wijzigKern(kernXml: string | null, w: DocPropsWijziging): string {
@@ -220,13 +234,10 @@ export function wijzigKern(kernXml: string | null, w: DocPropsWijziging): string
   if (w.gewijzigd !== undefined) {
     // Een datum zonder milliseconden, zoals Office die schrijft.
     const datum = w.gewijzigd.replace(/\.\d{3}Z$/, "Z");
-    lijst.push({ ns: NS.dcterms, lokaal: "modified", tekst: datum, attrs: W3CDTF });
-    // xsi moet gedeclareerd zijn voor xsi:type.
-    if (voorvoegsel(leesXml(xml), NS.xsi) === null) {
-      const wortel = leesXml(xml);
-      const eindKop = wortel.leeg ? wortel.inhoudStart - 2 : wortel.inhoudStart - 1;
-      xml = vervang(xml, [{ start: eindKop, eind: eindKop, tekst: ` xmlns:xsi="${NS.xsi}"` }]);
-    }
+    const xsi = metVoorvoegsel(xml, NS.xsi, "xsi");
+    const termen = metVoorvoegsel(xsi.xml, NS.dcterms, "dcterms");
+    xml = termen.xml;
+    lijst.push({ ns: NS.dcterms, lokaal: "modified", tekst: datum, attrs: ` ${xsi.prefix}:type="${termen.prefix}:W3CDTF"` });
   }
   return zetKinderen(xml, lijst, KERN_VOLGORDE, { [NS.cp]: "cp", [NS.dc]: "dc", [NS.dcterms]: "dcterms", [NS.xsi]: "xsi" });
 }

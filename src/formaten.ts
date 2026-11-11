@@ -108,10 +108,44 @@ export async function converteer(
   };
   if (opties && Object.keys(opties).length)
     headers["x-office-opties"] = JSON.stringify(opties);
-  const resultaat = await invoke<ArrayBuffer>("converteer_document", bytes, {
-    headers,
-  });
-  return new Uint8Array(resultaat);
+  const writer =
+    soort === "docx" &&
+    ((van === "docx" && ["odt", "ott"].includes(naar)) ||
+      (["odt", "ott"].includes(van) && naar === "docx"))
+      ? await import("./tekst/behoud/odt")
+      : null;
+  const secties = writer ? await import("./tekst/pagina/odtSecties") : null;
+  const voorbereid = writer
+    ? await writer.voorWriterConversie(bytes, van, naar)
+    : null;
+  const resultaat = await invoke<ArrayBuffer>(
+    "converteer_document",
+    voorbereid?.bytes ?? bytes,
+    {
+      headers,
+    },
+  );
+  let omgezet: Uint8Array = new Uint8Array(resultaat);
+  if (
+    soort === "pptx" &&
+    ((van === "pptx" && ["odp", "otp", "fodp"].includes(naar)) ||
+      (["odp", "otp", "fodp"].includes(van) && naar === "pptx"))
+  ) {
+    const { naPresentatieConversie } = await import("./presentatie/odf-overgangen");
+    const { behoudOdfMediavolume } = await import("./presentatie/odf-mediavolume");
+    const { herstelOdfMedianamen } = await import("./presentatie/odf-medianamen");
+    const media = await behoudOdfMediavolume(
+      bytes, van, naar, naPresentatieConversie(bytes, van, naar, omgezet),
+    );
+    return herstelOdfMedianamen(bytes, van, naar, media);
+  }
+  if (!writer || !voorbereid || !secties) return omgezet;
+  // Restore physical sections before resolving the note/list/table bookmarks;
+  // record export hashes only after all ODF content changes are complete.
+  if (naar === "docx")
+    omgezet = await secties.herstelOdtSecties(bytes, omgezet);
+  omgezet = await writer.naWriterConversie(voorbereid, omgezet);
+  return van === "docx" ? secties.bewaarOdtSecties(bytes, omgezet) : omgezet;
 }
 
 export interface ConversieStatus {

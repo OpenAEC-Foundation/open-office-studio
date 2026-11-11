@@ -716,6 +716,14 @@ function RekenbladOpties(props: {
         </label>
         <StandKeuze stand={inst.stand} wijzig={(stand) => wijzig({ stand })} />
         <label>
+          {t("printPreview.cellComments")}
+          <select aria-label={t("printPreview.cellComments")} value={inst.opmerkingen} onChange={e=>wijzig({opmerkingen:e.target.value as BladAfdrukInstellingen["opmerkingen"]})}>
+            <option value="none">{t("printPreview.commentsNone")}</option>
+            <option value="atEnd">{t("printPreview.commentsAtEnd")}</option>
+            <option value="asDisplayed">{t("printPreview.commentsDisplayed")}</option>
+          </select>
+        </label>
+        <label>
           {t("printPreview.scale")}
           <select
             value={inst.passend ? (inst.passendHoog === 0 ? "breedte" : "pagina") : "procent"}

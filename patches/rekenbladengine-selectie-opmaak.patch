@@ -1,0 +1,182 @@
+diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
+index 92d84d5..805749e 100644
+--- a/crates/betteroffice-xlsx/src/workbook.rs
++++ b/crates/betteroffice-xlsx/src/workbook.rs
+@@ -8,6 +8,8 @@ mod edit_tests;
+ mod format_calculation_tests;
+ #[cfg(test)]
+ mod format_facets_tests;
++#[cfg(test)]
++mod selection_format_performance_tests;
+ mod geometry;
+ mod recovery;
+ mod rich_text;
+@@ -1512,8 +1514,15 @@ impl Workbook {
+         sheet: SheetId,
+         range: CellRange,
+     ) -> Result<SelectionFormatting> {
+-        self.validate_bounded_range(sheet, range)?;
+-        let formats = self.range_formats(sheet, range)?;
++        let (rows, columns) = self.validate_bounded_range(sheet, range)?;
++        let formats = if rows * columns >= 64 {
++            match self.uniform_borderless_range_format(sheet, range)? {
++                Some(format) => vec![(range.start, format)],
++                None => self.range_formats(sheet, range)?,
++            }
++        } else {
++            self.range_formats(sheet, range)?
++        };
+         let number_formats = formats
+             .iter()
+             .map(|(_, format)| number_format_kind(&format.number_format))
+@@ -2737,6 +2746,34 @@ impl Workbook {
+         Ok((rows, columns))
+     }
+ 
++    /// A large uniform, borderless selection needs one resolved format, not
++    /// an owned font/fill/alignment/number-format clone for every cell. Check
++    /// effective styles, including row/column inheritance and empty cells.
++    /// Borders retain the positional aggregation used by the general route.
++    fn uniform_borderless_range_format(
++        &self,
++        sheet: SheetId,
++        range: CellRange,
++    ) -> Result<Option<CellFormat>> {
++        let sheet_ref = self.sheet(sheet)?;
++        let mut defaults = xlsx_model::workbook::ColumnDefaults::new(sheet_ref);
++        let first = defaults.effective_style(range.start).unwrap_or(0);
++        let format = self.model.styles.cell_format(Some(first));
++        if border_edges(&format.border).iter().any(Option::is_some)
++            || format.font.size_pt.is_some_and(f64::is_nan)
++        {
++            return Ok(None);
++        }
++        for row in range.start.row..=range.end.row {
++            for col in range.start.col..=range.end.col {
++                if defaults.effective_style(CellRef::new(row, col)).unwrap_or(0) != first {
++                    return Ok(None);
++                }
++            }
++        }
++        Ok(Some(format))
++    }
++
+     fn range_formats(
+         &self,
+         sheet: SheetId,
+diff --git a/crates/betteroffice-xlsx/src/workbook/selection_format_performance_tests.rs b/crates/betteroffice-xlsx/src/workbook/selection_format_performance_tests.rs
+new file mode 100644
+index 0000000..4a950fa
+--- /dev/null
++++ b/crates/betteroffice-xlsx/src/workbook/selection_format_performance_tests.rs
+@@ -0,0 +1,110 @@
++use super::*;
++use xlsx_model::{Border, BorderEdge, BorderStyle, Cell, CellFormat, Color, Fill};
++
++fn range(rows: u32, cols: u32) -> CellRange {
++    CellRange::new(CellRef::new(0, 0), CellRef::new(rows - 1, cols - 1))
++}
++
++fn model() -> WorkbookModel {
++    let mut model = WorkbookModel::default();
++    model.sheets.push(Sheet::new("Data"));
++    model.styles.cell_xfs.push(xlsx_model::Xf::default());
++    model
++}
++
++#[test]
++fn large_uniform_selection_matches_one_cell_without_mutating_the_model() {
++    let workbook = Workbook::from_model(model()).unwrap();
++    let before = workbook.model().clone();
++    let large = range(10_000, 10);
++    assert!(workbook.uniform_borderless_range_format(SheetId(0), large).unwrap().is_some());
++    assert_eq!(
++        workbook.selection_formatting(SheetId(0), large).unwrap(),
++        workbook.selection_formatting(SheetId(0), range(1, 1)).unwrap()
++    );
++    assert_eq!(workbook.model(), &before);
++}
++
++#[test]
++fn non_reflexive_font_sizes_keep_the_original_uniformity_semantics() {
++    let mut model = model();
++    model.styles.fonts.push(xlsx_model::Font { size_pt: Some(f64::NAN), ..Default::default() });
++    model.styles.cell_xfs[0].font = Some(0);
++    let workbook = Workbook::from_model(model).unwrap();
++    assert!(workbook.uniform_borderless_range_format(SheetId(0), range(8, 8)).unwrap().is_none());
++    assert_eq!(workbook.selection_formatting(SheetId(0), range(8, 8)).unwrap().font_size, None);
++}
++
++#[test]
++fn uniform_inherited_formats_preserve_every_toolbar_property() {
++    let mut model = model();
++    let mut format = CellFormat::default();
++    format.font.name = Some("Source Serif 4".into());
++    format.font.size_pt = Some(14.0);
++    format.font.bold = true;
++    format.font.italic = true;
++    format.font.strike = true;
++    format.font.color = Some(Color::Rgb("#123456".into()));
++    format.fill = Fill::Solid(Color::Rgb("#fedcba".into()));
++    format.alignment.h = Some(xlsx_model::HAlign::Center);
++    format.alignment.v = Some(xlsx_model::VAlign::Top);
++    format.alignment.wrap_text = true;
++    format.number_format = xlsx_model::NumberFormat::Custom { pattern: "0.0000".into() };
++    let style = model.styles.intern_cell_format(&format).unwrap().unwrap();
++    model.sheets[0].col_styles.push(xlsx_model::workbook::ColStyle { first: 0, last: 9, xf: style });
++    // A row default with the same resolved style remains uniform.
++    model.sheets[0].row_styles.insert(5, style);
++    model.sheets[0].set_cell(CellRef::new(9, 9), Cell { value: CellValue::Number { value: 42.0 }, style: Some(style), ..Cell::default() });
++    let workbook = Workbook::from_model(model).unwrap();
++    let large = range(100, 10);
++    assert!(workbook.uniform_borderless_range_format(SheetId(0), large).unwrap().is_some());
++    let actual = workbook.selection_formatting(SheetId(0), large).unwrap();
++    assert_eq!(actual, workbook.selection_formatting(SheetId(0), range(1, 1)).unwrap());
++    assert_eq!(actual.font_family.as_deref(), Some("Source Serif 4"));
++    assert_eq!(actual.bold, Some(true));
++    assert_eq!(actual.number_format_pattern.as_deref(), Some("0.0000"));
++}
++
++#[test]
++fn a_late_explicit_cell_or_row_style_refuses_the_uniform_fast_path() {
++    for row_default in [false, true] {
++        let mut model = model();
++        let mut format = CellFormat::default();
++        format.font.bold = true;
++        let style = model.styles.intern_cell_format(&format).unwrap().unwrap();
++        model.sheets[0].col_styles.push(xlsx_model::workbook::ColStyle { first: 0, last: 9, xf: style });
++        if row_default {
++            model.sheets[0].row_styles.insert(99, 0);
++        } else {
++            // Existing cells with no explicit xf do not inherit the column's xf.
++            model.sheets[0].set_cell(CellRef::new(99, 9), Cell { value: CellValue::Number { value: 7.0 }, style: None, ..Cell::default() });
++        }
++        let workbook = Workbook::from_model(model).unwrap();
++        let large = range(100, 10);
++        assert!(workbook.uniform_borderless_range_format(SheetId(0), large).unwrap().is_none());
++        assert_eq!(workbook.selection_formatting(SheetId(0), large).unwrap().bold, None);
++    }
++}
++
++#[test]
++fn positional_outer_borders_keep_the_general_aggregation() {
++    let mut model = model();
++    let edge = BorderEdge { style: BorderStyle::Thin, color: Some(Color::Rgb("#112233".into())) };
++    for row in 0..8 {
++        for col in 0..8 {
++            let format = CellFormat { border: Border {
++                left: (col == 0).then(|| edge.clone()),
++                right: (col == 7).then(|| edge.clone()),
++                top: (row == 0).then(|| edge.clone()),
++                bottom: (row == 7).then(|| edge.clone()),
++            }, ..CellFormat::default() };
++            let style = model.styles.intern_cell_format(&format).unwrap();
++            model.sheets[0].set_cell(CellRef::new(row, col), Cell { value: CellValue::Number { value: 1.0 }, style, ..Cell::default() });
++        }
++    }
++    let workbook = Workbook::from_model(model).unwrap();
++    assert!(workbook.uniform_borderless_range_format(SheetId(0), range(8, 8)).unwrap().is_none());
++    let actual = workbook.selection_formatting(SheetId(0), range(8, 8)).unwrap();
++    assert_eq!(actual.border_preset, Some(BorderPreset::Outer));
++    assert_eq!(actual.border_color.as_deref(), Some("#112233"));
++}

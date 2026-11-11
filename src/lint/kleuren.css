@@ -1,0 +1,38 @@
+/* The glyph follows the application theme; only the swatch shows the authored
+   text/highlight colour. A light default button/hover must not hide the glyph. */
+.office[data-office-thema] .ribbon-kleur {
+  background: transparent;
+  color: var(--oa-shell-text, #36363e);
+  font: inherit;
+}
+.office[data-office-thema]
+  .ribbon-kleur:hover:not(:disabled):not([data-disabled="true"]),
+.office[data-office-thema] .ribbon-kleur[aria-expanded="true"] {
+  background: var(--oa-shell-ribbon-btn-active-bg, #eee);
+  border-color: var(--oa-shell-ribbon-btn-active-border, #aaa);
+  color: var(--oa-shell-text, #36363e);
+}
+.office[data-office-thema] .ribbon-kleur > svg {
+  color: inherit;
+}
+.office[data-office-thema] .ribbon-kleur > i {
+  box-shadow: 0 0 0 1px var(--oa-shell-text-secondary, #515968);
+}
+.office[data-office-thema] .ribbon-kleur:focus-visible,
+.office[data-office-thema] .ribbon-kleur:focus-within {
+  outline: 2px solid var(--oa-shell-accent, #bc6a15);
+  outline-offset: 1px;
+}
+@media (forced-colors: active) {
+  .office[data-office-thema] .ribbon-kleur,
+  .office[data-office-thema] .ribbon-kleur:hover,
+  .office[data-office-thema] .ribbon-kleur[aria-expanded="true"] {
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+  }
+  .office[data-office-thema] .ribbon-kleur > i {
+    forced-color-adjust: none;
+    outline: 1px solid CanvasText;
+  }
+}

@@ -20,6 +20,7 @@ import {
 import { vermelding } from "./voorbeeld";
 import { selectieUitVerhaal, woordBijCursor } from "./koppeling";
 import { citeerFamilies } from "./canvasFont";
+import { documentLettertypen } from "./document";
 import manifest from "../../assets/lettertypen.json";
 
 const voorbeeld = (naam: string) =>
@@ -30,6 +31,32 @@ const gebundeldExact = (f: string) =>
   isExtraFamilie(f);
 
 describe("lettertypen in een document", () => {
+  it.each([
+    ["word/footnotes.xml", '<w:footnotes><w:rFonts w:ascii="Noot Serif"/></w:footnotes>'],
+    ["word/endnotes.xml", '<w:endnotes><w:rFonts w:hAnsi="Noot Serif"/></w:endnotes>'],
+    ["word/comments.xml", '<w:comments><w:rFonts w:ascii="Noot Serif"/></w:comments>'],
+    ["ppt/notesSlides/notesSlide1.xml", '<p:notes><a:latin typeface="Noot Serif"/></p:notes>'],
+    ["ppt/notesMasters/notesMaster1.xml", '<p:notesMaster><a:latin typeface="Noot Serif"/></p:notesMaster>'],
+  ])("vindt een lettertype dat alleen in %s staat", (pad, xml) => {
+    expect(lettertypenInDocument(zipSync({ [pad]: strToU8(xml) }))).toEqual(["Noot Serif"]);
+  });
+  it("meldt ook ontbrekende nootlettertypen en behoudt de pakketbytes", async () => {
+    const bytes = zipSync({
+      "word/document.xml": strToU8('<w:document><w:rFonts w:ascii="Inter"/></w:document>'),
+      "word/footnotes.xml": strToU8('<w:footnotes><w:rFonts w:ascii="Unieke Noot Serif"/></w:footnotes>'),
+      "word/endnotes.xml": strToU8('<w:endnotes><w:rFonts w:hAnsi="unieke noot serif"/></w:endnotes>'),
+      "word/fontTable.xml": strToU8('<w:fonts><w:font w:name="Ongebruikt"/></w:fonts>'),
+      "word/media/plaatje.svg": strToU8('<svg><w:rFonts w:ascii="Geen tekstfont"/></svg>'),
+    });
+    const origineel = bytes.slice();
+    const info = await documentLettertypen(bytes);
+    expect(info.namen).toEqual(["Inter", "Unieke Noot Serif"]);
+    expect(info.vervangingen).toEqual([
+      { origineel: "Unieke Noot Serif", vervanger: "Liberation Serif", soort: "benadering" },
+    ]);
+    expect(vervangingsMelding(info.vervangingen)).toContain("Unieke Noot Serif → Liberation Serif");
+    expect(bytes).toEqual(origineel);
+  });
   it("vindt de lettertypen van tekst, rekenblad en presentatie", () => {
     expect(
       lettertypenInDocument(voorbeeld("Ontwerpnotitie.docx")).length,

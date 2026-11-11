@@ -140,7 +140,7 @@ function sectieXml(secties: readonly Sectie[], ids: number[], p14: string) {
 }
 
 /** Schrijft de secties (opnieuw) in presentation.xml; een lege lijst verwijdert ze. */
-function schrijfSecties(pakket: Pakket, secties: readonly Sectie[]) {
+export function schrijfSecties(pakket: Pakket, secties: readonly Sectie[]) {
   const { pres, xml, wortel, dias } = presentatie(pakket);
   const ids = dias.map((d) => d.id);
   const gevonden = sectieLijst(wortel);

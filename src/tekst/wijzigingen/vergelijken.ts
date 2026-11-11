@@ -7,7 +7,10 @@
 import type { DocxCompareDiagnostic, DocxComparedChange } from "@betteroffice/docx";
 import { strFromU8, unzipSync } from "fflate";
 import i18next from "../../i18n/config";
+import { Pakket, REL } from "../../grafieken/pakket";
+import { elementen, leesXml, namespaceVan, type XmlElement } from "../../grafieken/xml";
 import { voorbeeld } from "./opdrachten.ts";
+import { vergelijkTekenopmaak, zonderLegeSlotSectie, type OpmaakWijziging } from "./tekenopmaak";
 
 export interface VergelijkOpties {
   auteur: string;
@@ -18,15 +21,46 @@ export interface VergelijkOpties {
 }
 
 export type Vergelijking =
-  | { ok: true; bytes: Uint8Array; wijzigingen: DocxComparedChange[]; meldingen: DocxCompareDiagnostic[]; verschillen: number }
+  | { ok: true; bytes: Uint8Array; wijzigingen: (DocxComparedChange | OpmaakWijziging)[]; meldingen: DocxCompareDiagnostic[]; verschillen: number }
   | { ok: false; meldingen: DocxCompareDiagnostic[] };
 
-/** Of het hoofddocument van een DOCX bijgehouden wijzigingen bevat. */
+const WORD_NAMESPACES = new Set([
+  "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+  "http://purl.oclc.org/ooxml/wordprocessingml/main",
+]);
+const REVISIEMARKERINGEN = new Set([
+  "ins", "del", "moveFrom", "moveTo",
+  "rPrChange", "pPrChange", "tblPrChange", "trPrChange", "tcPrChange",
+  "tblGridChange", "sectPrChange", "tblPrExChange", "numberingChange",
+  "cellIns", "cellDel", "cellMerge", "moveFromRangeStart", "moveToRangeStart",
+  "customXmlInsRangeStart", "customXmlDelRangeStart",
+  "customXmlMoveFromRangeStart", "customXmlMoveToRangeStart",
+]);
+
+function bevatRevisie(el: XmlElement): boolean {
+  return (
+    (REVISIEMARKERINGEN.has(el.lokaal) && WORD_NAMESPACES.has(namespaceVan(el, el.voorvoegsel) ?? "")) ||
+    elementen(el).some(bevatRevisie)
+  );
+}
+
+/** Of het hoofddocument van een DOCX bijgehouden wijzigingen bevat, ongeacht XML-prefix. */
 export function heeftWijzigingen(bytes: Uint8Array) {
   try {
-    const pakket = unzipSync(bytes, { filter: (f) => f.name === "word/document.xml" });
-    const xml = pakket["word/document.xml"];
-    return !!xml && /<w:(ins|del|moveFrom|moveTo)\b/.test(strFromU8(xml));
+    // Alleen de pakketrelaties en het hoofddocument uitpakken, geen afbeeldingen.
+    const relaties = unzipSync(bytes, { filter: (f) => f.name === "_rels/.rels" })["_rels/.rels"];
+    let pad = "word/document.xml";
+    if (relaties) {
+      const relatie = elementen(leesXml(strFromU8(relaties))).find((el) =>
+        el.lokaal === "Relationship" &&
+        namespaceVan(el, el.voorvoegsel) === "http://schemas.openxmlformats.org/package/2006/relationships" &&
+        (el.attrs.Type === REL.officeDocument || el.attrs.Type === "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument") &&
+        el.attrs.TargetMode !== "External",
+      );
+      if (relatie?.attrs.Target) pad = decodeURIComponent(Pakket.doelPad("", relatie.attrs.Target));
+    }
+    const xml = unzipSync(bytes, { filter: (f) => f.name === pad })[pad];
+    return !!xml && bevatRevisie(leesXml(strFromU8(xml)));
   } catch {
     return false;
   }
@@ -42,12 +76,28 @@ export async function vergelijk(origineel: Uint8Array, gewijzigd: Uint8Array, op
   const auteur = opties.auteur.trim().replace(/[\u0000-\u001f]/g, "") || i18next.t("writer:changes.compare.defaultAuthor");
   // Pas bij gebruik laden: de vergelijking hoort niet in de opstartbundel.
   const { compareDocx } = await import("@betteroffice/docx");
-  const uit = await compareDocx(a, b, {
+  const instellingen = {
     author: auteur,
     date: (opties.datum ?? new Date()).toISOString(),
     granularity: opties.korrel,
-    unsupported: "report",
-  });
+    unsupported: "report" as const,
+  };
+  const uit = await compareDocx(a, b, instellingen);
+  if (!uit.ok && uit.diagnostics.some(d => d.code === "formatting-change") &&
+    uit.diagnostics.every(d => d.code === "formatting-change" || d.code === "metadata-difference")) {
+    const kandidaat = await vergelijkTekenopmaak(a,b,auteur,instellingen.date);
+    if (kandidaat) {
+      // Beide review-uitkomsten moeten de onafhankelijke native vergelijking
+      // doorstaan voordat de gebruiker een resultaat krijgt.
+      const geaccepteerd = await voorbeeld(kandidaat.bytes,"accepteren");
+      const geweigerd = await voorbeeld(kandidaat.bytes,"weigeren");
+      const nieuw = await compareDocx(zonderLegeSlotSectie(geaccepteerd.bytes),zonderLegeSlotSectie(b),instellingen);
+      const oud = await compareDocx(zonderLegeSlotSectie(geweigerd.bytes),zonderLegeSlotSectie(a),instellingen);
+      if (nieuw.ok && !nieuw.changes.length && oud.ok && !oud.changes.length)
+        return {ok:true,bytes:kandidaat.bytes,wijzigingen:kandidaat.wijzigingen,verschillen:kandidaat.wijzigingen.length,
+          meldingen:uit.diagnostics.filter(d=>d.code!=="formatting-change")};
+    }
+  }
   if (!uit.ok) return { ok: false, meldingen: uit.diagnostics };
   return { ok: true, bytes: uit.docx, wijzigingen: uit.changes, meldingen: uit.diagnostics, verschillen: uit.changes.length };
 }
@@ -94,7 +144,8 @@ export function meldingen(lijst: readonly DocxCompareDiagnostic[]) {
 }
 
 /** Korte omschrijving van één verschil: ‘oud’ → ‘nieuw’. */
-export function verschilTekst(w: DocxComparedChange) {
+export function verschilTekst(w: DocxComparedChange | OpmaakWijziging) {
+  if ("opmaak" in w && w.opmaak) return {soort:i18next.t("writer:changes.compare.kinds.formatted"),oud:w.original.text,nieuw:w.revised.text};
   const soort = (s: "inserted" | "deleted" | "replaced") => i18next.t(`writer:changes.compare.kinds.${s}`);
   if (w.kind === "insertion") return { soort: soort("inserted"), oud: "", nieuw: w.revised.text };
   if (w.kind === "deletion") return { soort: soort("deleted"), oud: w.original.text, nieuw: "" };

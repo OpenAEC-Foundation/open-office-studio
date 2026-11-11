@@ -1,0 +1,90 @@
+.presentatie-ontwerp {
+  width: min(740px, calc(100vw - 32px));
+}
+.presentatie-ontwerp fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.presentatie-ontwerp label {
+  display: grid;
+  gap: 5px;
+}
+.presentatie-ontwerp input:not([type="checkbox"]):not([type="color"]),
+.presentatie-ontwerp select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 7px;
+}
+.presentatie-ontwerp p {
+  margin: 0;
+  line-height: 1.5;
+}
+.ontwerp-doel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ontwerp-acties,
+.ontwerp-themas {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.presentatie-ontwerp .ontwerp-check {
+  display: flex;
+  align-items: center;
+}
+.ontwerp-kleuren {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.ontwerp-thema {
+  cursor: pointer;
+  padding: 5px;
+  background: var(--w-bg-zacht);
+  color: inherit;
+  border: 1px solid var(--w-rand);
+  border-radius: 5px;
+  min-width: 115px;
+}
+.ontwerp-thema[aria-pressed="true"] {
+  outline: 2px solid var(--w-accent);
+}
+.ontwerp-thema > span {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+.ontwerp-thema b {
+  font-size: 25px;
+}
+.ontwerp-thema i {
+  display: flex;
+  gap: 3px;
+}
+.ontwerp-thema em {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #8888;
+}
+.ontwerp-voorbeeld {
+  height: 90px;
+  border: 1px solid var(--w-rand);
+  border-radius: 5px;
+}
+@media (max-width: 540px) {
+  .ontwerp-doel {
+    grid-template-columns: 1fr;
+  }
+  .ontwerp-kleuren {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,17 @@
+.diagram-dialoog { width: min(1080px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); }
+.diagram-modi { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 8px 16px; }
+.diagram-modi button[aria-pressed="true"] { border-color: var(--w-accent); background: var(--w-bg-zacht); }
+.diagram-indeling { display: grid; grid-template-columns: minmax(230px, .8fr) minmax(320px, 1.2fr); gap: 22px; align-items: start; }
+.diagram-veld { display: grid; gap: 6px; margin-block: 10px; }
+.diagram-veld textarea, .diagram-veld select { width: 100%; min-width: 0; border: 1px solid var(--w-rand); border-radius: 5px; padding: 7px 9px; color: var(--w-tekst); background: var(--w-bg); font: inherit; }
+.diagram-veld textarea { resize: vertical; }
+.diagram-veld select option { color: var(--w-tekst); background: var(--w-bg); }
+.diagram-veld small { color: var(--w-tekst-zacht); }
+.diagram-veld textarea:focus-visible, .diagram-veld select:focus-visible { outline: 2px solid var(--w-accent); outline-offset: 2px; }
+.diagram-schema { display: block; width: 100%; color: var(--w-accent); background: var(--w-bg-zacht); border: 1px solid var(--w-rand); }
+.diagram-schema rect { fill: var(--w-accent); }
+.diagram-label { fill: var(--w-accent-tekst); font: 17px sans-serif; text-anchor: middle; }
+.diagram-voorbeeld canvas { display: block; width: 100%; background: #fff; }
+.diagram-teksten { max-height: 420px; overflow: auto; padding-inline-end: 5px; }
+.diagram-dialoog .werkruimte-knop.is-primair:hover:not(:disabled) { background: var(--w-accent); color: var(--w-accent-tekst); }
+@media (max-width: 700px) { .diagram-indeling { grid-template-columns: minmax(0,1fr); } .diagram-teksten { max-height: 280px; } }

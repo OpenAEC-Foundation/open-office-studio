@@ -128,6 +128,7 @@ export function useTabbladen(opties: Opties) {
   );
 
   function openDocument(document: {
+    alsNieuw?: boolean;
     naam: string;
     soort: Soort;
     bytes: Uint8Array;
@@ -150,7 +151,7 @@ export function useTabbladen(opties: Opties) {
     if (!opslagen.current.has(id)) {
       const opslag = new DocumentOpslag();
       opslag.wissel();
-      if (document.gewijzigd) opslag.wijzig(opslag.documentId);
+      if (document.gewijzigd || document.alsNieuw) opslag.wijzig(opslag.documentId);
       opslagen.current.set(id, opslag);
     }
     const aantal = aantalDocumenten(na);

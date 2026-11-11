@@ -7,6 +7,20 @@ import { editorKoppeling } from "./koppeling";
 import { celPositie } from "./csv";
 import type { AppPdfKeuze } from "./PdfOpties";
 import { kolomLetters } from "../lint/rekenblad-logica";
+import type { SpreadsheetOptions } from "../../packages/rekenbladen/src/index";
+
+let exportRekenkern: Promise<WebAssembly.Module> | undefined;
+async function rekenbladExportOpties(): Promise<SpreadsheetOptions> {
+  if (typeof Worker === "undefined") return { mode: "local" };
+  if (!exportRekenkern) {
+    exportRekenkern = import("../rekenblad/kern").then(async ({ rekenbladKernUrl }) => {
+      const r = await fetch(rekenbladKernUrl); if (!r.ok) throw new Error(`Spreadsheet engine: HTTP ${r.status}`);
+      return WebAssembly.compile(await r.arrayBuffer());
+    });
+    void exportRekenkern.catch(() => { exportRekenkern = undefined; });
+  }
+  return { mode: "worker", wasm: await exportRekenkern };
+}
 
 export interface ExportOpties extends CsvOpties {
   /** 0-gebaseerd blad (CSV, TSV, PNG van rekenblad); standaard het actieve blad. */
@@ -134,8 +148,8 @@ async function berekenOntbrekendeFormules(bytes: Uint8Array, blad: Blad) {
   });
   if (!formules.length) return;
 
-  const { openWorkbook } = await import("@betteroffice/xlsx");
-  const werkmap = openWorkbook(bytes);
+  const { openSpreadsheet } = await import("../../packages/rekenbladen/src/index");
+  const werkmap = await openSpreadsheet(bytes, await rekenbladExportOpties());
   try {
     const sheetId = formules[0].sheetId;
     const perRij = new Map<number, { links: number; rechts: number }>();
@@ -149,7 +163,7 @@ async function berekenOntbrekendeFormules(bytes: Uint8Array, blad: Blad) {
       }
     }
 
-    const lezing = werkmap.readCells({
+    const lezing = await werkmap.readCells({
       ranges: [...perRij].map(([rij, bereik]) => {
         const van = `${kolomLetters(bereik.links)}${rij + 1}`;
         const tot = `${kolomLetters(bereik.rechts)}${rij + 1}`;
@@ -171,7 +185,7 @@ async function berekenOntbrekendeFormules(bytes: Uint8Array, blad: Blad) {
       cel.displayText = waarde.displayText;
     }
   } finally {
-    werkmap.dispose();
+    await werkmap.dispose();
   }
 }
 

@@ -150,7 +150,7 @@ export interface SectieWijziging {
   titelpagina?: boolean;
   /** Paginanummering: notatie en (null = doorlopend) beginnummer. */
   nummering?: { notatie?: Paginanotatie; beginBij?: number | null };
-  begin?: "nextPage" | "continuous" | "evenPage" | "oddPage";
+  begin?: "nextPage" | "continuous" | "evenPage" | "oddPage" | "nextColumn";
 }
 
 /** Kolommen voor een voorkeur bij een gegeven tekstbreedte. */

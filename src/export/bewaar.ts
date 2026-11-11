@@ -17,6 +17,7 @@ import type { Codering, Scheidingsteken } from "./csv";
 import type { AppPdfKeuze } from "./PdfOpties";
 import { bereidIfcxOpslag } from "../ifcx/opslag";
 import { MIME, type IfcxBron } from "../ifcx/dossier";
+import { presentatieVariant, PPSX_MIME } from "../presentatie/bestandsvariant";
 
 /** Wat de gebruiker in Opslaan als heeft gekozen. */
 export interface OpslaanKeuze {
@@ -162,6 +163,10 @@ export async function bewaarInFormaat(
     uitvoer = klaar.bytes;
     ifcx = klaar.bron;
     mime = MIME;
+  } else if (soort === "pptx" && keuze.ext === "ppsx") {
+    // Een PPSX is hetzelfde OOXML-pakket met het diavoorstelling-inhoudstype.
+    uitvoer = presentatieVariant(bytes, "ppsx");
+    mime = PPSX_MIME;
   } else if (keuze.route === "runtime") {
     uitvoer = await converteer(
       bytes,

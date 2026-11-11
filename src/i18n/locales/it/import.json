@@ -69,7 +69,15 @@
     "unknownEncryption": "Questo file usa una crittografia sconosciuta (versione {{version}}) e non può essere aperto.",
     "encryptedGeneric": "Questo file è crittografato.",
     "choosePassword": "Scegli una password.",
-    "passwordTooLong": "La password può contenere al massimo 255 caratteri."
+    "passwordTooLong": "La password può contenere al massimo 255 caratteri.",
+    "conversionVariant": "Impossibile aprire questo file {{ext}}. {{reason}} {{alternative}}",
+    "conversionAlternative": {
+      "docx": "Esporta il file dalla sua applicazione originale in formato DOCX o RTF, quindi apri quella copia.",
+      "xlsx": "Esporta il file dalla sua applicazione originale in formato XLSX. È possibile anche usare CSV, ma conserva solo i valori di un foglio.",
+      "pptx": "Esporta il file dalla sua applicazione originale in formato PPTX, quindi apri quella copia."
+    },
+    "emptyConversionTitle": "Risultato della conversione vuoto",
+    "emptyConversion": "La conversione di questo file {{ext}} non contiene contenuti visibili. Il file originale potrebbe essere vuoto oppure questa variante potrebbe non essere letta correttamente. {{alternative}}"
   },
   "password": {
     "title": "Password richiesta",
@@ -139,7 +147,8 @@
       "slicers": "filtri dati o sequenze temporali",
       "externalLinks": "collegamenti a cartelle di lavoro esterne",
       "dataConnections": "connessioni dati o query",
-      "protection": "protezione da scrittura, del documento o della cartella di lavoro"
+      "protection": "protezione da scrittura, del documento o della cartella di lavoro",
+      "workbookStructure": "protezione della struttura della cartella di lavoro"
     },
     "parts": {
       "conversion": "Conversione",

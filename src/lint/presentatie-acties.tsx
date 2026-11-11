@@ -69,7 +69,7 @@ function inInvoer() {
 const inVoorstelling = () =>
   Boolean(wortel()?.querySelector("dialog[open]") || document.querySelector(".voorstelling"));
 /** De diasorteerder ligt over het werkvlak en handelt zijn eigen toetsen af. */
-const inSorteerder = () => Boolean(wortel()?.querySelector(".sorteerder"));
+const inSorteerder = () => Boolean(wortel()?.querySelector(".sorteerder, .dia-overzicht"));
 /** Focus op de dia, het diapaneel of nergens; niet in het lint of een invoerveld. */
 function focusOpDia() {
   const actief = document.activeElement;

@@ -1,0 +1,66 @@
+.presentatie-tabellen {
+  width: min(1040px, calc(100vw - 32px));
+}
+.presentatie-tabellen fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.presentatie-tabellen p {
+  margin: 0;
+  line-height: 1.4;
+}
+.presentatie-tabellen label {
+  display: grid;
+  gap: 4px;
+}
+.presentatie-tabellen input[type="number"] {
+  width: 76px;
+  padding: 5px;
+}
+.presentatie-tabellen select {
+  padding: 6px;
+}
+.tabel-bediening {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.tabel-rooster {
+  max-height: 280px;
+  overflow: auto;
+  border: 1px solid var(--w-rand);
+}
+.tabel-rooster table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.tabel-rooster td {
+  border: 1px solid var(--w-rand);
+  padding: 2px;
+  min-width: 100px;
+}
+.tabel-rooster td.is-geselecteerd {
+  outline: 2px solid var(--w-accent);
+  outline-offset: -2px;
+}
+.tabel-rooster textarea {
+  width: 100%;
+  min-width: 96px;
+  min-height: 44px;
+  box-sizing: border-box;
+  resize: vertical;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  padding: 6px;
+  font: inherit;
+}
+.tabel-celstijl {
+  padding-top: 6px;
+  border-top: 1px solid var(--w-rand);
+}

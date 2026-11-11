@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "branch": "codex/integratie-2026-11-09",
+  "candidateBranch": "codex/integratie-kandidaat-2026-11-10",
+  "codeCheckpoint": "14db5c1ccdf357ba75ae827c9050d5bb9393c565",
+  "sourceIntakeClosed": true,
+  "sourcePRs": 68,
+  "deliveries": 78,
+  "additionalPRsInBundles": 17,
+  "installationReleased": true,
+  "mainMerged": false,
+  "releasePublished": false,
+  "nativeKernel": {
+    "sha256": "52b25be9f50cb30215a547d5ee074eefc00c8a3726b19c0a3dc83870fda91cfa",
+    "bytes": 7745388,
+    "patchCount": 8,
+    "patchHashesVerified": true
+  },
+  "checks": [
+    {
+      "kind": "phase1",
+      "head": "6bbcf79e",
+      "passed": 2916,
+      "failed": 0,
+      "skipped": 7,
+      "files": 280,
+      "sha256": "cc67c2b70e963f6398223129c64cefe26888e4e3a4f237f96599fe97d9fff6e3"
+    },
+    {
+      "kind": "phase3",
+      "head": "828dcbeb",
+      "passed": 3016,
+      "failed": 0,
+      "skipped": 7,
+      "files": 290,
+      "sha256": "e324b3afa57b08827e2182fb3725b3bb2098dd81bec18f0aa2d9b9a4a6d304fb"
+    },
+    {
+      "kind": "first-final",
+      "head": "e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a",
+      "passed": 3141,
+      "failed": 0,
+      "skipped": 7,
+      "files": 300,
+      "sha256": "5a50499950c152f03492d94baa5eecef43559d85f9217762074aa4c34f93d184"
+    },
+    {
+      "kind": "accepted-full",
+      "head": "1e5afa399117fd84df628955ec82b0e597993c83",
+      "passed": 3147,
+      "failed": 0,
+      "skipped": 7,
+      "files": 301,
+      "sha256": "470a988192a61830291e62bc7099ac1d859d7b73532c52f7f27b8b2c0337677e"
+    }
+  ],
+  "finalValidation": {
+    "fullSuite": "PASS3147/0/7 in301files",
+    "productionBuild": "PASS TypeScript + production assets/build27.35s; immutable544file dist",
+    "i18n": "PASS9x21/7949keys;23 existing warnings",
+    "browser": "PASS exact1e5 Writer6custom+4note with zero errors; real standalone hosted /office/ all3modules pass without Tauri IPC",
+    "nativeWindows": "PASS targeted282/284/302+PR266 on installed1e5; bothDOCX/PDF pairs independently inspected/rendered; separate longFILENAME PDF header overlap confirmed and deferred",
+    "platformReport": "integratie-platforms-2026-11-10.json"
+  },
+  "resolvedSources": [
+    {
+      "issue": 282,
+      "pr": 290,
+      "head": "66018850725ba6d1e2a449dbf0dd7c2ab4fdca8c",
+      "scope": "note reference style continuation",
+      "nativeAcceptance": "PASS exact1e5 Windows footnote/endnote input/Undo/Redo/save/close/reopen; independentDOCX/PDF checks"
+    },
+    {
+      "issue": 284,
+      "pr": 266,
+      "head": "617f23bf7dd0d258f337ec54075139ef38b01a5e",
+      "scope": "one-shot cancelable DOCX reload navigation",
+      "nativeAcceptance": "PASS installed1e5 targetstory selection/styles/pagefield/save/close/reopen; independentDOCX/PDF confirms bodybyteidentical and no markers; separate PDF overlap retained"
+    }
+  ],
+  "limits": [
+    "Broad issues remain open; integrating a completed fix does not certify every acceptance criterion.",
+    "Native Windows builds are checked in CI because local Application Control blocks Cargo build scripts.",
+    "No live Y-app storage environment is used, as requested by the user.",
+    "Experimental PR116 and uncommitted work are not integration deliveries."
+  ],
+  "nextWork": [
+    "Writer280/281 theme/highlighter UI; separate branch",
+    "Writer297 compare character formatting, linked57; separate branch",
+    "Spreadsheet74 ninth/tenth native patch is NOT pinned; eight-patch kernel remains fixed",
+    "Spreadsheet69 and292–296 CF follow-ups are outside this checkpoint",
+    "Further format30/media85 work is outside this checkpoint"
+  ],
+  "manualReviews": [
+    {
+      "pr": 283,
+      "scope": "AGENTS focused issue reporting plus two synthetic native-test screenshots",
+      "imagesVisuallyReviewed": true,
+      "productionCodeChanged": false
+    }
+  ],
+  "previousCodeCheckpoint": "fe0aeb605032b980b6caa074d7d279ab0b698518",
+  "previousCiCheckpoint": "e9eabc3c1874414f3f79bfeeb5ca4b07d118fc0a",
+  "acceptanceCorrection": {
+    "issue": 302,
+    "pr": 307,
+    "head": "2da5abe361d18824d1fd84f1dee717f152f7e545",
+    "scope": "Successful header/footer opening stays confirmed after rapid close/reload; genuine failure remains visible",
+    "targetedPassed": 6,
+    "productionBrowser": "PASS:6customcases plus rapidheader/footerclose with no false errors; genuine-failure6behavior tests pass",
+    "baseline": "Olde9:6 content steps pass;2 false errors after closes at61.8ms/70.7ms",
+    "nativeWindows": "PASS manual native header/footer immediate-close and subsequent reload without false open-error; sub-frame permutations not timing-instrumented in native test"
+  },
+  "testOnlyCorrection": {
+    "pr": 273,
+    "head": "c3232dd704f1d3b069b7596f1ed7ca969fea04d6",
+    "scope": "Await committed testAPI selection; actual keyboard selection works",
+    "rootBrowserPassed": 6,
+    "ownerBrowserRuns": 3,
+    "productionCodeChanged": false
+  },
+  "readyAfterFreeze": [
+    {
+      "pr": 220,
+      "head": "4a21ad18c2b7861cf1d227e05f572a3f337fcdb9",
+      "issues": [49],
+      "scope": "Writer replacement image exact geometry/crop",
+      "status": "available source outside checkpoint; owner8ca directed to verify/release for next batch"
+    },
+    {
+      "pr": 300,
+      "head": "b8426dc453c16a4a8863d67dd914070453c4a079",
+      "issues": [280, 281],
+      "scope": "Writer screen theme and highlighter contrast",
+      "status": "next round; native acceptance pending"
+    },
+    {
+      "pr": 301,
+      "head": "92b1962a19c18ba2e89e67f292336f14b01e5ab4",
+      "issues": [292, 293, 294, 295, 296, 299],
+      "scope": "Spreadsheet CF visual cases",
+      "status": "next round; source CI pending"
+    },
+    {
+      "pr": 304,
+      "head": "2afa8c7f42a7505e10993ab3d11cee5ea6f5fe2a",
+      "issues": [298],
+      "scope": "ODP/OTP embedded media volume/mute",
+      "status": "next round"
+    },
+    {
+      "pr": 306,
+      "head": "a9ba379336d0234499536c85cce79f757b9f153c",
+      "issues": [297],
+      "scope": "Direct character-format comparison plus313dependency",
+      "status": "HOLD/WITHDRAWN by sourceowner12:26: individual paneelknop Save→Undo has overly broad deletion range; bulk passes. Four new reproductions; fix still being validated. Await new exact released heads; current baabdd9a/a9ba3793 are NOT intake-approved even if CI green."
+    },
+    {
+      "pr": 309,
+      "head": "589a1d5794dd77e89c161a98cfc24969f5aa4c66",
+      "issues": [305],
+      "scope": "Known empty bibliography customXML warning",
+      "status": "next round"
+    },
+    {
+      "pr": 312,
+      "head": "ea4ff465cc181e298a674ff915a285f43ccd4ecb",
+      "issues": [69],
+      "scope": "Bounded pivots/refresh",
+      "status": "next round; source Windows/Linux CI/browser/converter pass;macOS queued; native pivot GUI not certified"
+    },
+    {
+      "pr": 314,
+      "head": "5675a3ccad192bea93f806a5c74dc97cdc2416be",
+      "issues": [311],
+      "scope": "PDFfont availability cache invalidation after existing notification",
+      "status": "next round; source tests/browserPDF pass; native permission dialog not tested"
+    },
+    {
+      "pr": 315,
+      "head": "baabdd9acde54e5e76dc7dd90b1e647a9bd692fb",
+      "issues": [313],
+      "scope": "Review Undo transaction/worker echo plus three awaited command harness calls",
+      "status": "HOLD/WITHDRAWN by sourceowner12:26: individual paneelknop Save→Undo has overly broad deletion range; bulk passes. Four new reproductions; fix still being validated. Await new exact released heads; current baabdd9a/a9ba3793 are NOT intake-approved even if CI green."
+    },
+    {
+      "issue": 303,
+      "head": "da16cea1519b301ba43af76496eb2c842828c1f0",
+      "branch": "codex/writer-spelling-range-cache-2026-11-10",
+      "scope": "Writer bounded spelling-range geometry cache",
+      "status": "next round;36targeted and CPU4/8 semantic/browser save-reopen pass; sourceWindows/Linux/macOSCI42802562261 passes; nativeWriter typing/scrolling still untested; apply ONLY this new commit"
+    },
+    {
+      "pr": 317,
+      "head": "dd683cfa0cb419f1aae87bb78d9a59adfc201608",
+      "issues": [30],
+      "scope": "Bundled conversion runtime investigation",
+      "status": "DRAFT; not released or included; ownerpausedlocalconversionduringnativeacceptance"
+    },
+    {
+      "pr": 320,
+      "head": "137f378123b7a159c3c780a82a92d30373e5ca2c",
+      "branch": "codex/writer-reply-initials-2026-11-10",
+      "issues": [318],
+      "scope": "Configured initials on newly created Writer comment replies under23",
+      "status": "NEXTBATCH;16targeted/tsc/build/3realbrowser saved output pass; exactCI42806714095 running Windows/Linux,macOS queued; nativeGUI untested; minimal publiconCommentReply hook, noSDK/reviewUndo change"
+    },
+    {
+      "pr": 319,
+      "issues": [74],
+      "scope": "Large-workbook startup patch series above identical first8patches",
+      "status": "DRAFT NOT RELEASED; owner investigating one query-WASM-override objectCtrl-click matrix failure in42806653427; production-kernel object check passes. Not a certified74regression and not currentcandidate. Await exact released head; do not pin9/10patches here"
+    },
+    {
+      "pr": 321,
+      "head": "834b1d6cf12e97e3dc492547b4f8cd5a2255e39b",
+      "runtimeCode": "c1e5e9055ce03083f293342ee4531c7ccddb6e3d",
+      "branch": "codex/spreadsheet-trend-66-2026-11-10-e0d7",
+      "issues": [308],
+      "scope": "Linear trendlines on ordinary2Dline/scatter in actualnative renderer",
+      "status": "NEXTBATCH; source Windows225+1native and Linux577tests/contracts/Clippy plus realbrowser/independentfit proof PASS; macOS queued; private9patchWASM e80ac4ef...7752260bytes only; activation through kernelowner, NOT current8patchpin"
+    },
+    {
+      "pr": 316,
+      "head": "a7669b86f1a5fcd85658d399a1507993cf2bb3b5",
+      "branch": "codex/presentation-odp-media-names-2026-11-10",
+      "issues": [310],
+      "dependsOn": [304],
+      "scope": "Unambiguous empty embedded media names after ODP/OTP plus display-only fallback labels",
+      "status": "NEXTBATCH;Windows/Linux exact-head92tests/build/nativeconversion and browser18names+4fallback+18playbacks/save-reopen pass; macOS queued; actual installedGUI/fullpackageacceptance not certified. PR304 already in ancestry; do not apply dependency twice"
+    }
+  ],
+  "platformCheckpoint": "1e5afa399117fd84df628955ec82b0e597993c83",
+  "installationScope": "Development/native acceptance only; no main merge or release approval",
+  "acceptanceAdministration": {
+    "register": "integratie-issues-2026-11-10.json",
+    "issues": 75,
+    "partialIssueProgressComments": 43,
+    "commentsStatus": "COMPLETE43 published; exact comment URLs in issue register",
+    "approvedClosingReferences": [],
+    "reason": "Native/platform acceptance is incomplete; supplied31implementationcandidates are not closure approval",
+    "metadataPreserved": true
+  },
+  "remainingClaims": [
+    {
+      "issue": 303,
+      "owner": "performance6f",
+      "scope": "spelling geometry cache"
+    },
+    {
+      "issue": 74,
+      "owner": "a1ac",
+      "scope": "future ninth/tenth kernel patches NOT pinned"
+    },
+    {
+      "issue": 60,
+      "owner": "CF/e0",
+      "scope": "e0 next bounded actual-kernel formula/name-reference checks after row/column insert/delete; investigate/duplicate-check before any new issue/fix"
+    },
+    {
+      "issue": 30,
+      "owner": "formats8020",
+      "scope": "bundled converter/runtime"
+    },
+    {
+      "issue": 318,
+      "owner": "a1bc",
+      "scope": "Reply-initial fix delivered as320/137f3781 for nextbatch; no currentfreeze intake"
+    },
+    {
+      "issue": 322,
+      "owner": "d410",
+      "scope": "Confirmed built-in TableStyleMedium2 font/fill rendering gap under73; separate codex/spreadsheet-builtin-table-styles-d410 branch from1e5; no native pin/converter change"
+    },
+    {
+      "issue": 29,
+      "owner": "a1bc",
+      "scope": "Presentation whole-word search only; missing-feature/duplicate check first, own branch/nextbatch, no SDK/notes/ODP"
+    }
+  ],
+  "inheritedClosingCommitReview": {
+    "commits": [
+      {
+        "commit": "a40a6662b8d357e77ece0c67b8147f1d7b7d8189",
+        "issue": 189,
+        "approved": false
+      }
+    ],
+    "documentation": "https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue",
+    "warning": "PR body closingIssuesReferences is empty, but an inherited source commit can still close189 when merged into default branch. Do not merge source history directly before explicit closure review; use a reviewed squash message or separately approve189 after required acceptance. No history rewrite/main merge performed."
+  },
+  "remainingObservations": [
+    {
+      "kind": "independent exported PDF screenshot observation; not yet tracked by this chat",
+      "description": "In the custom-story PDF the long FILENAME field value crowds/overlaps the following separator and Writer Test Author field on all three header lines. Text extraction is complete. Targeted style/cursor persistence acceptance passes; PDF field spacing is a separate observation for Writer owner triage.",
+      "source": "writer-native-stories-1e5afa39-2026-11-10.pdf",
+      "reportedToWriterOwner": true,
+      "newIssueCreatedByThisChat": false,
+      "independentlyConfirmed": true
+    }
+  ],
+  "asOf": "2026-11-10T11:28:49.788050+00:00",
+  "queuePolicy": "This is an as-of handoff snapshot, not continuous intake. Future deliveries remain on their owner branches. Unreleased/held candidates require a new exact released head; do not apply old315/306 or unpinned kernels.",
+  "historicalRound": 1,
+  "supersededBy": "integratie-ronde2-2026-11-10.json"
+}

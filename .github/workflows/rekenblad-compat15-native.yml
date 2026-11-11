@@ -1,0 +1,36 @@
+name: Veertien plus trendlijn native controleren
+on:
+  push:
+    branches: [codex/spreadsheet-kernel15-compat-e0d7]
+    paths:
+      - .github/workflows/rekenblad-compat15-native.yml
+      - patches/rekenbladengine-*
+      - scripts/prepareer-compat15.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    name: native vijftien (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          rustup override set 1.98.1
+      - run: python scripts/prepareer-compat15.py .local/compat15-source
+      - name: Trendlijnen met de veertienpatchbasis testen
+        working-directory: .local/compat15-source
+        run: |
+          cargo test -p betteroffice-drawingml --features chart --lib chart:: --locked --jobs 2
+          cargo test -p betteroffice-xlsx --test linear_trendlines --locked --jobs 2
+      - name: Bestaande vendorpin ongemoeid controleren
+        run: git diff --exit-code -- vendor/rekenbladengine

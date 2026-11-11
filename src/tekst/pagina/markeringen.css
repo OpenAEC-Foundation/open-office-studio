@@ -1,0 +1,23 @@
+.writer-structuurmarkeringen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+.writer-structuurmarkeringen span {
+  position: absolute;
+  color: #526778;
+  font-family: sans-serif;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.writer-sectiemarkering {
+  background: #ffffffdd;
+}
+@media print {
+  .writer-structuurmarkeringen {
+    display: none !important;
+  }
+}

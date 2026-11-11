@@ -4,7 +4,7 @@
  * en -kolommen, rasterlijnen, rij- en kolomkoppen en kop- en voetteksten.
  *
  * De cellen tekent de engine zelf via `printDisplayList` en `paintDisplayList`;
- * deze module bepaalt alleen welke cellen op welke pagina komen.
+ * deze module bepaalt de pagina's en voegt de eigen tekenobjecten toe.
  */
 import i18next from "../i18n/config";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
@@ -24,6 +24,11 @@ import {
 import { indeling, maten, paginaVolgorde, type Groep } from "./rekenbladIndeling";
 import { metTekstopname, naarPunten } from "./tekstopname";
 import { LETTER, datumTekst, schrijf, tijdTekst } from "./tekenhulp";
+import { tekenobjecten } from "../rekenblad/tekenAnkers";
+import { objectBereik } from "../rekenblad/objectGeometrie";
+import { tekenObjectenOpCanvas } from "../rekenblad/tekenobjectCanvas";
+import { annotatieInGebied, annotatiePaginas, leesAfdrukAnnotaties, tekenZichtbareAnnotatie, type CelAnnotatie } from "./celAnnotaties";
+import { ontleedAdres } from "../lint/rekenblad-logica";
 
 export type RekenbladOmvang = "blad" | "werkmap" | "selectie";
 
@@ -183,8 +188,10 @@ function bladPaginas(
   inst: BladAfdrukInstellingen,
   gebied: Bereik,
   metriek: PrintMetrics,
+  annotaties: CelAnnotatie[] = [],
 ): { paginas: Omit<AfdrukPagina, "label">[]; labels: string[] } {
   const handle = ctx.api.handle;
+  const objecten = tekenobjecten(handle, blad);
   const {
     kolomBreedtes,
     rijHoogtes,
@@ -258,6 +265,7 @@ function bladPaginas(
       c.fillRect(0, 0, canvas.width, canvas.height);
       const ox = vlak.x + dx;
       const oy = vlak.y + dy;
+      const annotatiePosities: {n:CelAnnotatie;x:number;y:number}[]=[];
       // Cellen via de engine; de tekst wordt opgenomen voor de PDF-tekstlaag.
       const { tekstVan } = await metTekstopname(async () => {
         for (const blok of blokken) {
@@ -272,10 +280,20 @@ function bladPaginas(
           const hoogte = maten(lijst.grid?.rowOffsets ?? [], blok.bereik.rij2 - blok.bereik.rij1 + 1).reduce((a, b) => a + b, 0);
           lijst.width = Math.min(lijst.width, breedte + 1);
           lijst.height = Math.min(lijst.height, hoogte + 1);
+          if(inst.opmerkingen === "asDisplayed") for(const n of annotaties){
+            if(!n.zichtbaar||!annotatieInGebied(n,blok.bereik))continue;
+            const p=ontleedAdres(n.cel)!;
+            const ks=maten(lijst.grid?.colOffsets??[],blok.bereik.kol2-blok.bereik.kol1+1),rs=maten(lijst.grid?.rowOffsets??[],blok.bereik.rij2-blok.bereik.rij1+1);
+            const k=p.col-blok.bereik.kol1,r=p.row-blok.bereik.rij1;
+            if((ks[k]??0)<=0||(rs[r]??0)<=0)continue;
+            annotatiePosities.push({n,x:(ox+(blok.x+ks.slice(0,k+1).reduce((a,b)=>a+b,0))*s)*PT_PER_PX,y:(oy+(blok.y+rs.slice(0,r).reduce((a,b)=>a+b,0))*s)*PT_PER_PX});
+          }
           paintDisplayList(c, lijst, factor * s, {
             x: (ox + blok.x * s) * factor,
             y: (oy + blok.y * s) * factor,
           });
+          await tekenObjectenOpCanvas(c, handle, objecten, blok.bereik, breedte, hoogte,
+            (ox + blok.x * s) * factor, (oy + blok.y * s) * factor, factor * s);
         }
       });
       // Doorzichtige delen (gewist door de engine) wit maken.
@@ -309,6 +327,7 @@ function bladPaginas(
       }
       // Kop- en voettekst (in punten).
       c.setTransform(dpi / 72, 0, 0, dpi / 72, 0, 0);
+      for(const {n,x,y} of annotatiePosities) tekst.push(...tekenZichtbareAnnotatie(c,n,x,y,{links:vlak.x*PT_PER_PX,boven:vlak.y*PT_PER_PX,rechts:(vlak.x+vlak.breedte)*PT_PER_PX,onder:(vlak.y+vlak.hoogte)*PT_PER_PX}));
       const waarden = {
         pagina: paginaIndex + 1,
         paginas: totaal,
@@ -408,6 +427,7 @@ export async function rekenbladPaginas(
     includeDefinedNames: false,
   });
   const metriek = meetMetriek();
+  const annotaties = keuze.instellingen.some(i=>i.opmerkingen && i.opmerkingen!=="none") ? leesAfdrukAnnotaties(ctx.bytes) : [];
   const paginas: AfdrukPagina[] = [];
   const bladwijzers: AfdrukDocument["bladwijzers"] = [];
   const meldingen: string[] = [];
@@ -426,12 +446,23 @@ export async function rekenbladPaginas(
       continue;
     }
     const inst = keuze.instellingen[blad];
-    const gebied = gebiedVan(ctx, keuze, blad, bladExport?.usedRange ?? null);
-    if (!gebied) continue;
+    let gebied = gebiedVan(ctx, keuze, blad, bladExport?.usedRange ?? null);
+    const notities=(annotaties[blad]??[]).filter(n=>{
+      if(keuze.omvang==="selectie"&&ctx.selectie?.blad===blad)return annotatieInGebied(n,ctx.selectie.bereik);
+      const bereik=!keuze.negeerAfdrukbereik&&inst.afdrukbereik?ontleedBereikA1(inst.afdrukbereik):null;
+      return !bereik||annotatieInGebied(n,bereik);
+    });
+    if(inst.opmerkingen==="asDisplayed"&&!(inst.afdrukbereik&&!keuze.negeerAfdrukbereik)&&keuze.omvang!=="selectie")for(const n of notities.filter(n=>n.zichtbaar)){
+      const p=ontleedAdres(n.cel)!;
+      gebied=gebied?{rij1:Math.min(gebied.rij1,p.row),rij2:Math.max(gebied.rij2,p.row),kol1:Math.min(gebied.kol1,p.col),kol2:Math.max(gebied.kol2,p.col)}:{rij1:p.row,rij2:p.row,kol1:p.col,kol2:p.col};
+    }
     const naam = info.sheetNames[blad];
-    const { paginas: lijst, labels } = bladPaginas(ctx, blad, naam, inst, gebied, metriek);
+    const bijlagen=inst.opmerkingen==="atEnd"?annotatiePaginas(naam,inst,notities):[];
+    if(!gebied&&!bijlagen.length)continue;
+    const { paginas: lijst, labels } = gebied?bladPaginas(ctx, blad, naam, inst, gebied, metriek,notities):{paginas:[],labels:[]};
     bladwijzers.push({ titel: naam, pagina: paginas.length });
     lijst.forEach((p, i) => paginas.push({ ...p, label: labels[i] }));
+    paginas.push(...bijlagen);
   }
   if (!paginas.length) throw new Error(i18next.t("print:errors.sheetsEmpty"));
   return { titel: ctx.titel, paginas, bladwijzers, meldingen };
@@ -449,7 +480,11 @@ function gebiedVan(
     const b = ontleedBereikA1(inst.afdrukbereik);
     if (b) return b;
   }
-  return gebruikt ? ontleedBereikA1(gebruikt) : null;
+  const cellen = gebruikt ? ontleedBereikA1(gebruikt) : null;
+  const objecten = objectBereik(ctx.api.handle, tekenobjecten(ctx.api.handle, blad));
+  if (!cellen) return objecten;
+  if (!objecten) return cellen;
+  return { rij1: Math.min(cellen.rij1, objecten.rij1), kol1: Math.min(cellen.kol1, objecten.kol1), rij2: Math.max(cellen.rij2, objecten.rij2), kol2: Math.max(cellen.kol2, objecten.kol2) };
 }
 
 /** De indeling van één blad, voor het pagina-eindevoorbeeld. */

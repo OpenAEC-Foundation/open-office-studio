@@ -8,12 +8,22 @@ import { useEffect, useState } from "react";
 export type MenuSoort = "kolom" | "rij" | "cel" | "blad" | "lijst";
 
 export type Venster =
+  | { soort: "beveiliging"; beveiliging:"blad"|"werkmap"|"cellen" }
+  | { soort: "validatie" }
+  | { soort: "celstijl" }
+  | { soort: "tabel" }
+  | { soort: "draaitabel" }
+  | { soort: "notitie"; cel?: string; blad?: number }
+  | { soort: "discussie"; cel?: string; blad?: number }
   | { soort: "breedte" }
   | { soort: "hoogte" }
   | { soort: "getal" }
+  | { soort: "voorwaardelijkeOpmaak" }
+  | { soort: "groepen"; as?: "rij" | "kolom" }
+  | { soort: "bladEigenschappen"; actie: "verbergen" | "zichtbaar" | "kleur" }
   | { soort: "plakkenSpeciaal" }
   | { soort: "bladVerwijderen" }
-  | { soort: "bladVerplaatsen" }
+  | { soort: "bladVerplaatsen"; positie?: number; kopie?: boolean }
   | { soort: "bladHernoemen" }
   | { soort: "menu"; menu: MenuSoort; x: number; y: number };
 

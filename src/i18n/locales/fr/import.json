@@ -69,7 +69,15 @@
     "unknownEncryption": "Ce fichier utilise un chiffrement inconnu (version {{version}}) et ne peut pas être ouvert.",
     "encryptedGeneric": "Ce fichier est chiffré.",
     "choosePassword": "Choisissez un mot de passe.",
-    "passwordTooLong": "Le mot de passe ne peut pas dépasser 255 caractères."
+    "passwordTooLong": "Le mot de passe ne peut pas dépasser 255 caractères.",
+    "conversionVariant": "Ce fichier {{ext}} n’a pas pu être ouvert. {{reason}} {{alternative}}",
+    "conversionAlternative": {
+      "docx": "Exportez le fichier depuis son application d’origine au format DOCX ou RTF, puis ouvrez cette copie.",
+      "xlsx": "Exportez le fichier depuis son application d’origine au format XLSX. Le format CSV est aussi possible, mais ne conserve que les valeurs d’une seule feuille.",
+      "pptx": "Exportez le fichier depuis son application d’origine au format PPTX, puis ouvrez cette copie."
+    },
+    "emptyConversionTitle": "Résultat de conversion vide",
+    "emptyConversion": "La conversion de ce fichier {{ext}} ne contient aucun contenu visible. Le document d’origine peut être vide, ou cette variante peut être mal lue. {{alternative}}"
   },
   "password": {
     "title": "Mot de passe requis",
@@ -139,7 +147,8 @@
       "slicers": "segments ou chronologies",
       "externalLinks": "liaisons vers des classeurs externes",
       "dataConnections": "connexions de données ou requêtes",
-      "protection": "protection en écriture, du document ou du classeur"
+      "protection": "protection en écriture, du document ou du classeur",
+      "workbookStructure": "protection de la structure du classeur"
     },
     "parts": {
       "conversion": "Conversion",

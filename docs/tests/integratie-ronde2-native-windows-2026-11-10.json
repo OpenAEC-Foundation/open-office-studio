@@ -1,0 +1,845 @@
+{
+  "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+  "build": {
+    "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "sourceTree": "3a49ea4f704f8171a60e11913936cd9d0b1b5b86",
+    "pullRequestMergeCommit": "15d87a0b6f8f9e7a07b86cfd4a16991e04e56023",
+    "mergeTreeMatchesSource": true,
+    "workflowRun": 42817352468,
+    "windowsJob": 129833698436,
+    "windowsJobConclusion": "success",
+    "artifactId": 13765369748,
+    "artifactSha256": "29391cc54e3803824da84090058221accc39f07942497660872fa4a0556f0a71",
+    "packageReportArtifactId": 13766740011,
+    "installerSha256": "68a31bd38604894794fe9e05461f41e9c3b0b689cf8696e5d6ae5f17f00689f1",
+    "installerBytes": 73505743,
+    "nativeKernelSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+    "nativeKernelBytes": 7794993,
+    "nativeKernelPatches": 15,
+    "sourceWasmIndependentlyHashed": true,
+    "ownerApprovedInstall": true,
+    "intendedInstallDirectory": "C:\\Users\\alper\\AppData\\Local\\OpenAEC Office Dev\\2026-11-10-integration-4a7a3acf",
+    "installed": true,
+    "fullNativeAcceptance": false,
+    "installedExecutable": {
+      "path": "C:\\Users\\alper\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\OpenAEC Office Dev\\2026-11-10-integration-4a7a3acf\\open-office-studio.exe",
+      "sha256": "c5607da784846b48053391c64bd5d59fc38d000bdb05389ae155fbdf779162f7",
+      "bytes": 88102400,
+      "version": "2026.45.4"
+    },
+    "nativeReceipt": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\native-acceptance-4a7a3acf.json",
+    "boundedPriorityNativeChecksPassed": true
+  },
+  "operatorReceipt": {
+    "source": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "fullNativeAcceptance": false,
+    "platformLimits": [
+      "Windows native only in this chat; owner browser and platform CI evidence tracked separately"
+    ],
+    "sourceChanges": "none",
+    "installed": true,
+    "tests": [
+      {
+        "route": "Copied prior 1e5 fixture; CtrlS; close; Recent reopen; F12 PDF all pages; native Save",
+        "allPageRendersInspected": true,
+        "limits": "Synthetic same previously failing custom-story fixture; other font/embedded-font cases not certified",
+        "observed": "Full 42-character filename plus author and title readable without overlap on all three pages",
+        "pageCount": 3,
+        "docx": "C:\\Users\\alper\\Desktop\\Documents\\writer-native-stories-4a7a3acf-2026-11-10.docx",
+        "issue": 323,
+        "result": "pass bounded three-page long-filename field case",
+        "docxSha256": "e25bfed30651e885015e0c382b4cc70062e6c7c9c9f308d5275d9c84cfcdd9bf",
+        "pdf": "C:\\Users\\alper\\Desktop\\Documents\\writer-native-stories-4a7a3acf-2026-11-10.pdf",
+        "independentReview": "Integration coordinator independently inspected all three rendered pages, measured positive field gaps, verified hashes and DOCX package preservation; only FILENAME cache and modified/revision metadata changed.",
+        "pdfSha256": "78e942b0c6700410947d94c20422dd8b2e4f3ff9b1ab789f3000326a45d1cd0c"
+      },
+      {
+        "result": "pass bounded native Compare and review Save/Undo/Redo",
+        "nativeRoutes": [
+          "Review Compare revised against original produces one red DEL and one blue INS",
+          "Review Accept All then CtrlS; canvas CtrlZ then CtrlS restores two revisions; CtrlY then CtrlS restores blue/no revisions",
+          "Review Reject All then CtrlS; canvas CtrlZ then CtrlS restores two revisions; CtrlY then CtrlS restores red/no revisions",
+          "Changes pane accept DEL only then CtrlS; canvas CtrlZ then CtrlS restores two bounded revisions; CtrlY then CtrlS retains one blue INS"
+        ],
+        "packageEvidence": "review-{accept,reject,individual}-{before-undo,undo,redo}.docx/.json",
+        "expectedTextPerRevision": "De kat.",
+        "issues": [297, 313],
+        "comparisonAuthor": "Controle297",
+        "limits": "Bounded comparison fixture and three review routes only; author-filter/selection/multiple-revision corpus not claimed; known340 avoided with canvas focus",
+        "nativeFinalOutputsReopenedAfterAppRestart": true
+      },
+      {
+        "scope": "Spreadsheet kernel15 Medium2 explicit s=0 and implicit default",
+        "result": "pass bounded native open/edit/save/close/reopen",
+        "range": "A1:B5",
+        "observed": "Both blue headers with white bold text and alternating blue bands; B2 2 to 6 persists after close/reopen",
+        "nativeReopenConfirmed": true,
+        "packageEvidence": [
+          {
+            "path": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-explicit-4a7a3acf.xlsx",
+            "sha256": "68bb5942cd6673355d02934502a3a191990526308f67d1ec21e8d1514441a242",
+            "values": {
+              "A1": "Item",
+              "B1": "Amount",
+              "A2": "First",
+              "B2": "6",
+              "A3": "Second",
+              "B3": "3",
+              "A4": "Third",
+              "B4": "4",
+              "A5": "Fourth",
+              "B5": "5"
+            },
+            "onlyB2ValueChanged": true,
+            "tableXmlByteIdentical": true,
+            "stylesXmlByteIdentical": true,
+            "tableStyle": {
+              "name": "TableStyleMedium2",
+              "showFirstColumn": "0",
+              "showLastColumn": "0",
+              "showRowStripes": "1",
+              "showColumnStripes": "0"
+            },
+            "sourceSha256": "40b516dc70c91f441721e4083c1939f13c487296da756d56c08834beebf426c0"
+          },
+          {
+            "path": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-implicit-4a7a3acf.xlsx",
+            "sha256": "eb11e78af9a96485ba60bb9bbb0e3d2a58148d80abeafbb0147781655cd0ee53",
+            "values": {
+              "A1": "Item",
+              "B1": "Amount",
+              "A2": "First",
+              "B2": "6",
+              "A3": "Second",
+              "B3": "3",
+              "A4": "Third",
+              "B4": "4",
+              "A5": "Fourth",
+              "B5": "5"
+            },
+            "onlyB2ValueChanged": true,
+            "tableXmlByteIdentical": true,
+            "stylesXmlByteIdentical": true,
+            "tableStyle": {
+              "name": "TableStyleMedium2",
+              "showFirstColumn": "0",
+              "showLastColumn": "0",
+              "showRowStripes": "1",
+              "showColumnStripes": "0"
+            },
+            "sourceSha256": "f4f606b15f30ae4658f61d5976410920df543f0d8420dc79b654d768b4718a55"
+          }
+        ],
+        "independentReview": "Coordinator independently compared both native outputs against original fixtures",
+        "limits": "These two Medium2 fixtures only; protection warning observed but protection behavior not investigated"
+      },
+      {
+        "issue": 280,
+        "result": "pass partial native viewing controls",
+        "routes": [
+          "View Dark page toggled off: white paper with blue text",
+          "Full app exit/restart: white-paper preference persists",
+          "Application light theme and dark theme toggled; white paper remains",
+          "Dark page and original dark theme restored"
+        ],
+        "documentRemainedClean": true,
+        "savedFileSha256": "ee80e610f608524ff264e795890a7913833f39f9f4f30ee72b949be850ea50c5",
+        "limits": "No new PDF/print comparison, image/highlight/caret/selection corpus or full issue acceptance claimed"
+      },
+      {
+        "issue": 326,
+        "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "platform": "Windows native installed NSIS devbuild 2026.45.4",
+        "result": "pass bounded two-slide whole-word fixture",
+        "observedStatuses": [
+          "Whole words off: Result 1 of 15, then Result 2 of 15 on partial katten",
+          "Whole words toggled on: prior status cleared; Replace selects Result 1 of 5 without modifying text",
+          "Match case plus whole words: Result 1 of 3",
+          "Match case off: Result 1 of 5",
+          "Previous wraps from Result 1 on slide1 to Result 5 on slide2; Next returns to slide1",
+          "Replace current: Replaced. Result 1 of 4",
+          "Replace all: Replaced 5 times (one undo step)",
+          "Fresh application restart and file reopen: both slides visually match saved output",
+          "Reopened whole-word kat: Search term not found",
+          "Reopened whole words off: Result 1 of 10"
+        ],
+        "packageChecks": [
+          {
+            "result": "pass",
+            "mode": "one",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-one-4a7a3acf.pptx",
+            "sha256": "189b6057983a03cfd875470d5ac7c7169bb35e54af72b09214da02a1c1728c0c",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 hond katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+              "kat Kat"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": ["ppt/slides/slide1.xml"]
+          },
+          {
+            "result": "pass",
+            "mode": "original",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-one-4a7a3acf.pptx",
+            "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+              "kat Kat"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": []
+          },
+          {
+            "result": "pass",
+            "mode": "all",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-all-4a7a3acf.pptx",
+            "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+              "hond hond"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": [
+              "ppt/slides/slide1.xml",
+              "ppt/slides/slide2.xml"
+            ]
+          },
+          {
+            "result": "pass",
+            "mode": "original",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-all-4a7a3acf.pptx",
+            "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+              "kat Kat"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": []
+          },
+          {
+            "result": "pass",
+            "mode": "all",
+            "nativeSavedPath": "C:\\Users\\alper\\Desktop\\Documents\\presentation-wholewords-native-4a7a3acf.pptx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-redo-all-4a7a3acf.pptx",
+            "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+            "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+            "texts": [
+              "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+              "hond hond"
+            ],
+            "nonTextSlideXmlPreserved": true,
+            "packagePartsChanged": [
+              "ppt/slides/slide1.xml",
+              "ppt/slides/slide2.xml"
+            ]
+          }
+        ],
+        "nativeFinalReopenedAfterFullAppRestart": true,
+        "nativeBothSlidesVisuallyInspected": true,
+        "sourceUnchanged": true,
+        "saveRoute": "Close Find and replace pane, then quick-access Save",
+        "cleanFinish": "Find pane closed and presentation tab closed with CtrlW, no unsaved prompt; Start page open",
+        "limits": [
+          "Bounded Arial20 two-slide fixture only, no general corpus guarantee",
+          "Native Dutch localization, checkbox keyboard activation, ShiftEnter and version retry not exercised",
+          "No new code/build, no LibreOffice, no Linux/macOS/browser tests in this chat",
+          "CtrlS while Find pane open did not save in one observation; not investigated as a separate issue, final saves used toolbar after pane closure"
+        ],
+        "finishedAtUtc": "2026-11-10T13:43:40.2523631Z"
+      },
+      {
+        "issue": 318,
+        "sourceCommit": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+        "platform": "Windows native 2026.45.4 installed 4a7",
+        "result": "pass bounded native new reply RX, save-close-reopen-resave and identity preserved after restoring original profile",
+        "evidence": {
+          "result": "pass",
+          "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+          "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+          "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+          "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-first-save-4a7a3acf.docx",
+          "sha256": "6dc47c7652bf1b8d4cf33fec4b96dae3b6e3ef3429de697f2a3f2ba6925dd8e8",
+          "existingCommentCount": 2,
+          "newReplies": [
+            {
+              "id": "3",
+              "author": "QA Native Reply",
+              "initials": "RX",
+              "text": "Native RX reply 4a7 2026-11-10.",
+              "date": "2026-11-10T13:59:14Z"
+            }
+          ],
+          "bodyXmlPreservedExceptNewCommentAnchors": true,
+          "existingCommentXmlIdentical": true,
+          "changedPackageParts": [
+            "docProps/core.xml",
+            "word/document.xml",
+            "word/comments.xml",
+            "word/commentsExtended.xml",
+            "word/commentsIds.xml",
+            "word/commentsExtensible.xml"
+          ]
+        },
+        "initialsConfigured": "RX",
+        "testAuthor": "QA Native Reply",
+        "originalProfileRecordedPrivately": true,
+        "profileRestored": true,
+        "nativeReopened": true,
+        "secondReplyTested": false,
+        "stopReason": "Earlier physical Escape interruption resolved by explicit user instruction to resume testing and restore original profile",
+        "cleanupRequired": "none: original name and initials restored, Settings reopened and both confirmed empty; document closed clean without prompt",
+        "fullNativeAcceptance": false,
+        "finishedAtUtc": "2026-11-10T14:04:24.0576569Z",
+        "packageChecks": [
+          {
+            "result": "pass",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+            "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+            "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-first-save-4a7a3acf.docx",
+            "sha256": "6dc47c7652bf1b8d4cf33fec4b96dae3b6e3ef3429de697f2a3f2ba6925dd8e8",
+            "existingCommentCount": 2,
+            "newReplies": [
+              {
+                "id": "3",
+                "author": "QA Native Reply",
+                "initials": "RX",
+                "text": "Native RX reply 4a7 2026-11-10.",
+                "date": "2026-11-10T13:59:14Z"
+              }
+            ],
+            "bodyXmlPreservedExceptNewCommentAnchors": true,
+            "existingCommentXmlIdentical": true,
+            "changedPackageParts": [
+              "docProps/core.xml",
+              "word/document.xml",
+              "word/comments.xml",
+              "word/commentsExtended.xml",
+              "word/commentsIds.xml",
+              "word/commentsExtensible.xml"
+            ]
+          },
+          {
+            "result": "pass",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+            "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+            "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-reopened-resave-4a7a3acf.docx",
+            "sha256": "aafae3b8517af2affac7a168dc599c4b2f9cf25aa76b151b98e38bf62604644e",
+            "existingCommentCount": 2,
+            "newReplies": [
+              {
+                "id": "3",
+                "author": "QA Native Reply",
+                "initials": "RX",
+                "text": "Native RX reply 4a7 2026-11-10.",
+                "date": "2026-11-10T13:59:14Z"
+              }
+            ],
+            "bodyXmlPreservedExceptNewCommentAnchors": true,
+            "existingCommentXmlIdentical": true,
+            "changedPackageParts": [
+              "docProps/core.xml",
+              "word/document.xml",
+              "word/comments.xml",
+              "word/commentsExtended.xml",
+              "word/commentsIds.xml",
+              "word/commentsExtensible.xml"
+            ]
+          },
+          {
+            "result": "pass",
+            "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+            "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+            "savedPath": "C:\\Users\\alper\\Desktop\\Documents\\writer-replies-native-4a7a3acf.docx",
+            "snapshot": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-restored-profile-resave-4a7a3acf.docx",
+            "sha256": "e87f4ba472b16ed473f28789306b3dffe9b428b8322201798d02934f4bb62056",
+            "existingCommentCount": 2,
+            "newReplies": [
+              {
+                "id": "3",
+                "author": "QA Native Reply",
+                "initials": "RX",
+                "text": "Native RX reply 4a7 2026-11-10.",
+                "date": "2026-11-10T13:59:14Z"
+              }
+            ],
+            "bodyXmlPreservedExceptNewCommentAnchors": true,
+            "existingCommentXmlIdentical": true,
+            "changedPackageParts": [
+              "docProps/core.xml",
+              "word/document.xml",
+              "word/comments.xml",
+              "word/commentsExtended.xml",
+              "word/commentsIds.xml",
+              "word/commentsExtensible.xml"
+            ]
+          }
+        ],
+        "limits": [
+          "One explicit RX reply only; optional second RY reply not performed before cutoff",
+          "Cancellation, reused IDs and different document corpus not exercised",
+          "No full application restart, native document close/reopen completed",
+          "Independent extended-thread XML review delegated to integration coordinator"
+        ]
+      }
+    ],
+    "notRun": [
+      "325 media replay after end",
+      "340 known tab focus route not retested",
+      "Linux/macOS native and browser not executed by this chat on 4a7"
+    ],
+    "cleanFinish": "All document tabs closed without save prompt; Start page left open; original dark theme and dark-page view restored",
+    "nativeFinishedAtUtc": "2026-11-10T14:04:24.0576569Z"
+  },
+  "independentReviewSnapshots": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "integration ROOT, independent read-only XML inspection of native operator outputs",
+    "cases": [
+      {
+        "route": "accept",
+        "phase": "before-undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-accept-before-undo.docx",
+        "sha256": "94782399cf3bb161bd52c682cd40768e628c8f374c76264423e550ff6403578d",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "accept",
+        "phase": "undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-accept-undo.docx",
+        "sha256": "1f42b68596cbe53de4e066938c18a949fea3f9f883d92dd56d98564944ff6393",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "del",
+            "text": "De kat.",
+            "colors": ["FF0000"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "0"
+          },
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "accept",
+        "phase": "redo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-accept-redo.docx",
+        "sha256": "ee80e610f608524ff264e795890a7913833f39f9f4f30ee72b949be850ea50c5",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "reject",
+        "phase": "before-undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-reject-before-undo.docx",
+        "sha256": "69faf7e702134cf3131d06dfb088313aaa32e458f4fb916984a801bdc0f3b013",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "reject",
+        "phase": "undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-reject-undo.docx",
+        "sha256": "f9e435627f9183bff06a369f681e351936a86282820f31fe94fd136f6fb8c5e8",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "del",
+            "text": "De kat.",
+            "colors": ["FF0000"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "0"
+          },
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "reject",
+        "phase": "redo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-reject-redo.docx",
+        "sha256": "04245a4325dcfaa19e1a52ab42174b31313dd085507f4be4fd3ab091708d4788",
+        "acceptedViewText": "De kat.",
+        "revisions": [],
+        "result": "pass"
+      },
+      {
+        "route": "individual",
+        "phase": "before-undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-individual-before-undo.docx",
+        "sha256": "56967fa3350c2c91592145081c851fc7e2552a0a252a9b1bc608186b7486e891",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "individual",
+        "phase": "undo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-individual-undo.docx",
+        "sha256": "01b224f04c609d5cb53d93209e34ab768d3bac5d46f2c31956e3ce2aa00f4efb",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "del",
+            "text": "De kat.",
+            "colors": ["FF0000"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "0"
+          },
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      },
+      {
+        "route": "individual",
+        "phase": "redo",
+        "file": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\review-individual-redo.docx",
+        "sha256": "5cd9b8a8dc78b36a14d34d2674f4c44b5bf7205b89408e7c16dd98f0756e4eef",
+        "acceptedViewText": "De kat.",
+        "revisions": [
+          {
+            "kind": "ins",
+            "text": "De kat.",
+            "colors": ["0000FF"],
+            "author": "Controle297",
+            "date": "2026-11-10T13:05:09.626Z",
+            "id": "1"
+          }
+        ],
+        "result": "pass"
+      }
+    ],
+    "passed": 9,
+    "failed": 0,
+    "limitations": "Native operations executed only by750b. Bounded fixture, known340 avoided through canvas focus; no general revision corpus certification."
+  },
+  "independentSpreadsheetFiles": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "ROOT independent of native operator, read-only ZIP/XML comparison",
+    "cases": [
+      {
+        "kind": "explicit",
+        "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-native-fixtures\\Medium2-explicit-default0.xlsx",
+        "sourceSha256": "40b516dc70c91f441721e4083c1939f13c487296da756d56c08834beebf426c0",
+        "nativeOutput": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-explicit-4a7a3acf.xlsx",
+        "sha256": "68bb5942cd6673355d02934502a3a191990526308f67d1ec21e8d1514441a242",
+        "valueChange": {
+          "cell": "B2",
+          "before": "2",
+          "after": "6"
+        },
+        "allOtherWorksheetXmlCanonicalIdentical": true,
+        "normalization": "B2 numeric t=n equals omitted numeric default; attribute order ignored; all other XML unchanged",
+        "stylesAndTableXmlByteIdentical": true,
+        "tableRef": "A1:B5",
+        "style": {
+          "name": "TableStyleMedium2",
+          "showFirstColumn": "0",
+          "showLastColumn": "0",
+          "showRowStripes": "1",
+          "showColumnStripes": "0"
+        },
+        "result": "pass"
+      },
+      {
+        "kind": "implicit",
+        "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-native-fixtures\\Medium2-implicit-default.xlsx",
+        "sourceSha256": "f4f606b15f30ae4658f61d5976410920df543f0d8420dc79b654d768b4718a55",
+        "nativeOutput": "C:\\Users\\alper\\Desktop\\Documents\\sheet-medium2-implicit-4a7a3acf.xlsx",
+        "sha256": "eb11e78af9a96485ba60bb9bbb0e3d2a58148d80abeafbb0147781655cd0ee53",
+        "valueChange": {
+          "cell": "B2",
+          "before": "2",
+          "after": "6"
+        },
+        "allOtherWorksheetXmlCanonicalIdentical": true,
+        "normalization": "B2 numeric t=n equals omitted numeric default; attribute order ignored; all other XML unchanged",
+        "stylesAndTableXmlByteIdentical": true,
+        "tableRef": "A1:B5",
+        "style": {
+          "name": "TableStyleMedium2",
+          "showFirstColumn": "0",
+          "showLastColumn": "0",
+          "showRowStripes": "1",
+          "showColumnStripes": "0"
+        },
+        "result": "pass"
+      }
+    ],
+    "limitations": "No native UI automation by ROOT; visual/native reopen confirmation belongs to operator750b."
+  },
+  "independentFieldPdfReport": "integratie-ronde2-native-pdf-2026-11-10.json",
+  "independentPresentationSnapshots": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "ROOT independent read-only verification of native750b snapshots",
+    "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\presentation-wholewords\\fixture.pptx",
+    "sourceSha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+    "passed": 5,
+    "failed": 0,
+    "cases": [
+      {
+        "mode": "replace-one",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-one-4a7a3acf.pptx",
+        "sha256": "189b6057983a03cfd875470d5ac7c7169bb35e54af72b09214da02a1c1728c0c",
+        "changedPackageParts": ["ppt/slides/slide1.xml"],
+        "fixtureTexts": [
+          "🧱 hond katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+          "kat Kat"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "undo-one",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-one-4a7a3acf.pptx",
+        "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+        "changedPackageParts": [],
+        "fixtureTexts": [
+          "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+          "kat Kat"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "replace-all",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-replace-all-4a7a3acf.pptx",
+        "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+        "changedPackageParts": [
+          "ppt/slides/slide1.xml",
+          "ppt/slides/slide2.xml"
+        ],
+        "fixtureTexts": [
+          "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+          "hond hond"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "undo-all",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-undo-all-4a7a3acf.pptx",
+        "sha256": "59a39c2bd1a7ec64a025d6898b1e4fe5bef8d77249d4d0ffc1e372742d712355",
+        "changedPackageParts": [],
+        "fixtureTexts": [
+          "🧱 kat katten Kat katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (kat)",
+          "kat Kat"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      },
+      {
+        "mode": "redo-all",
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\presentation-wholewords-redo-all-4a7a3acf.pptx",
+        "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+        "changedPackageParts": [
+          "ppt/slides/slide1.xml",
+          "ppt/slides/slide2.xml"
+        ],
+        "fixtureTexts": [
+          "🧱 hond katten hond katapult _kat kat_ kat2 ékat katé kat́ 𐐀kat kat𐐀 (hond)",
+          "hond hond"
+        ],
+        "allNonTextXmlAndOtherPartsIdentical": true,
+        "result": "pass"
+      }
+    ]
+  },
+  "additionalQAReport": "integratie-ronde2-aanvulling-2026-11-10.json",
+  "laterReplyInitialsAttempt": {
+    "report": "integratie-ronde2-antwoordinitialen-2026-11-10.json",
+    "result": "pass bounded native RX reply, save/close/reopen/resave and preserved identity after original profile restoration; optional secondRY/cancel corpus not run",
+    "cleanup": {
+      "status": "completed after explicit user instruction in native chat; no cleanup remains",
+      "authorization": {
+        "thread": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+        "instruction": "ga verder met de test en herstel daarna de oorspronkelijke naam en initialen"
+      },
+      "profileRestored": true,
+      "documentClosed": true,
+      "originalValues": {
+        "Name for comments": "",
+        "Initials": ""
+      },
+      "verification": "Operator reopened Settings and confirmed both fields empty; saved document closed without prompt, Start open",
+      "finishedAtUtc": "2026-11-10T14:04:24.0576569Z"
+    },
+    "finalSaveSha256": "e87f4ba472b16ed473f28789306b3dffe9b428b8322201798d02934f4bb62056"
+  },
+  "independentReplyInitialsSnapshots": {
+    "checkpoint": "4a7a3acf3c8a8747f5de081556e3192f303cb2fc",
+    "reviewer": "ROOT independent read-only native DOCX review",
+    "source": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-kandidaat-9635\\.local\\round2-browser\\writer-replies\\first-save.docx",
+    "sourceSha256": "7d542b2710f0a0e597766f3989d22c58372996a6083e35a2445e72c842df96b7",
+    "cases": [
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-first-save-4a7a3acf.docx",
+        "sha256": "6dc47c7652bf1b8d4cf33fec4b96dae3b6e3ef3429de697f2a3f2ba6925dd8e8",
+        "existingCommentsPreserved": true,
+        "bodyAndStylesPreserved": true,
+        "added": [
+          {
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        ],
+        "comments": {
+          "1": {
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "Control top-level comment.",
+            "date": "2026-11-10T12:37:49Z"
+          },
+          "2": {
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "First new reply.",
+            "date": "2026-11-10T12:37:49Z"
+          },
+          "3": {
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        },
+        "commentsExtendedXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w15:commentsEx xmlns:wpc=\"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas\" xmlns:cx=\"http://schemas.microsoft.com/office/drawing/2014/chartex\" xmlns:cx1=\"http://schemas.microsoft.com/office/drawing/2015/9/8/chartex\" xmlns:cx2=\"http://schemas.microsoft.com/office/drawing/2015/10/21/chartex\" xmlns:cx3=\"http://schemas.microsoft.com/office/drawing/2016/5/9/chartex\" xmlns:cx4=\"http://schemas.microsoft.com/office/drawing/2016/5/10/chartex\" xmlns:cx5=\"http://schemas.microsoft.com/office/drawing/2016/5/11/chartex\" xmlns:cx6=\"http://schemas.microsoft.com/office/drawing/2016/5/12/chartex\" xmlns:cx7=\"http://schemas.microsoft.com/office/drawing/2016/5/13/chartex\" xmlns:cx8=\"http://schemas.microsoft.com/office/drawing/2016/5/14/chartex\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:aink=\"http://schemas.microsoft.com/office/drawing/2016/ink\" xmlns:am3d=\"http://schemas.microsoft.com/office/drawing/2017/model3d\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:oel=\"http://schemas.microsoft.com/office/2019/extlst\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16du=\"http://schemas.microsoft.com/office/word/2023/wordml/word16du\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16sdtfl=\"http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:wpi=\"http://schemas.microsoft.com/office/word/2010/wordprocessingInk\" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14\"><w15:commentEx w15:paraId=\"27BA826F\" w15:done=\"0\" /><w15:commentEx w15:paraId=\"6E9E7736\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /><w15:commentEx w15:paraId=\"35826C0F\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /></w15:commentsEx>",
+        "result": "pass",
+        "newReplyThreadParentPreserved": true,
+        "parentParaId": "27BA826F",
+        "newReplyParaId": "35826C0F"
+      },
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-reopened-resave-4a7a3acf.docx",
+        "sha256": "aafae3b8517af2affac7a168dc599c4b2f9cf25aa76b151b98e38bf62604644e",
+        "existingCommentsPreserved": true,
+        "bodyAndStylesPreserved": true,
+        "added": [
+          {
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        ],
+        "comments": {
+          "1": {
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "Control top-level comment.",
+            "date": "2026-11-10T12:37:49Z"
+          },
+          "2": {
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "First new reply.",
+            "date": "2026-11-10T12:37:49Z"
+          },
+          "3": {
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        },
+        "commentsExtendedXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w15:commentsEx xmlns:wpc=\"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas\" xmlns:cx=\"http://schemas.microsoft.com/office/drawing/2014/chartex\" xmlns:cx1=\"http://schemas.microsoft.com/office/drawing/2015/9/8/chartex\" xmlns:cx2=\"http://schemas.microsoft.com/office/drawing/2015/10/21/chartex\" xmlns:cx3=\"http://schemas.microsoft.com/office/drawing/2016/5/9/chartex\" xmlns:cx4=\"http://schemas.microsoft.com/office/drawing/2016/5/10/chartex\" xmlns:cx5=\"http://schemas.microsoft.com/office/drawing/2016/5/11/chartex\" xmlns:cx6=\"http://schemas.microsoft.com/office/drawing/2016/5/12/chartex\" xmlns:cx7=\"http://schemas.microsoft.com/office/drawing/2016/5/13/chartex\" xmlns:cx8=\"http://schemas.microsoft.com/office/drawing/2016/5/14/chartex\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:aink=\"http://schemas.microsoft.com/office/drawing/2016/ink\" xmlns:am3d=\"http://schemas.microsoft.com/office/drawing/2017/model3d\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:oel=\"http://schemas.microsoft.com/office/2019/extlst\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16du=\"http://schemas.microsoft.com/office/word/2023/wordml/word16du\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16sdtfl=\"http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:wpi=\"http://schemas.microsoft.com/office/word/2010/wordprocessingInk\" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14\"><w15:commentEx w15:paraId=\"27BA826F\" w15:done=\"0\" /><w15:commentEx w15:paraId=\"6E9E7736\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /><w15:commentEx w15:paraId=\"35826C0F\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /></w15:commentsEx>",
+        "result": "pass",
+        "newReplyThreadParentPreserved": true,
+        "parentParaId": "27BA826F",
+        "newReplyParaId": "35826C0F"
+      },
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\openaec\\open-office-studio\\.local\\devbuild-2026-11-10-integration\\writer-replies-restored-profile-resave-4a7a3acf.docx",
+        "sha256": "e87f4ba472b16ed473f28789306b3dffe9b428b8322201798d02934f4bb62056",
+        "existingCommentsPreserved": true,
+        "bodyAndStylesPreserved": true,
+        "added": [
+          {
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        ],
+        "comments": {
+          "1": {
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "Control top-level comment.",
+            "date": "2026-11-10T12:37:49Z"
+          },
+          "2": {
+            "author": "Ada Lovelace",
+            "initials": "ZZ",
+            "text": "First new reply.",
+            "date": "2026-11-10T12:37:49Z"
+          },
+          "3": {
+            "author": "QA Native Reply",
+            "initials": "RX",
+            "text": "Native RX reply 4a7 2026-11-10.",
+            "date": "2026-11-10T13:59:14Z"
+          }
+        },
+        "commentsExtendedXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w15:commentsEx xmlns:wpc=\"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas\" xmlns:cx=\"http://schemas.microsoft.com/office/drawing/2014/chartex\" xmlns:cx1=\"http://schemas.microsoft.com/office/drawing/2015/9/8/chartex\" xmlns:cx2=\"http://schemas.microsoft.com/office/drawing/2015/10/21/chartex\" xmlns:cx3=\"http://schemas.microsoft.com/office/drawing/2016/5/9/chartex\" xmlns:cx4=\"http://schemas.microsoft.com/office/drawing/2016/5/10/chartex\" xmlns:cx5=\"http://schemas.microsoft.com/office/drawing/2016/5/11/chartex\" xmlns:cx6=\"http://schemas.microsoft.com/office/drawing/2016/5/12/chartex\" xmlns:cx7=\"http://schemas.microsoft.com/office/drawing/2016/5/13/chartex\" xmlns:cx8=\"http://schemas.microsoft.com/office/drawing/2016/5/14/chartex\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:aink=\"http://schemas.microsoft.com/office/drawing/2016/ink\" xmlns:am3d=\"http://schemas.microsoft.com/office/drawing/2017/model3d\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:oel=\"http://schemas.microsoft.com/office/2019/extlst\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16du=\"http://schemas.microsoft.com/office/word/2023/wordml/word16du\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16sdtfl=\"http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:wpi=\"http://schemas.microsoft.com/office/word/2010/wordprocessingInk\" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14\"><w15:commentEx w15:paraId=\"27BA826F\" w15:done=\"0\" /><w15:commentEx w15:paraId=\"6E9E7736\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /><w15:commentEx w15:paraId=\"35826C0F\" w15:done=\"0\" w15:paraIdParent=\"27BA826F\" /></w15:commentsEx>",
+        "result": "pass",
+        "newReplyThreadParentPreserved": true,
+        "parentParaId": "27BA826F",
+        "newReplyParaId": "35826C0F"
+      }
+    ],
+    "passed": 3
+  }
+}

@@ -10,7 +10,7 @@
 import type { AfdrukDocument } from "../../afdrukken/model";
 import { canvasNaarBlob, opWit } from "../../afdrukken/afdrukframe";
 import { schrijfPdf, type PdfBeeld, type PdfBronnen, type PdfPagina } from "./schrijver.ts";
-import { metVectoropname, opnameVan, type Opname } from "./opname";
+import { metVectoropname, opnameVan } from "./opname";
 import { Bronnen, fontsIn, Onvectoriseerbaar, vectorPagina } from "./vector";
 import { laadLettertype, ontleedFont, type GeladenLettertype } from "./lettertypebron";
 import { codeerBeeld } from "./beelden";
@@ -143,30 +143,24 @@ export async function maakPdf(
   const terugval =
     opties.terugval ?? ((pagina: number, reden: string) => console.info(`[pdf] pagina ${pagina + 1} als beeld: ${reden}`));
 
-  // 1. Tekenen (met opname).
-  const getekend: { tekening: Awaited<ReturnType<AfdrukDocument["paginas"][number]["teken"]>>; opname: Opname | undefined }[] = [];
-  for (let n = 0; n < indexen.length; n++) {
-    const pagina = doc.paginas[indexen[n]];
-    const tekening = vector
-      ? await metVectoropname(() => pagina.teken(kwaliteit.dpi))
-      : await pagina.teken(kwaliteit.dpi);
-    getekend.push({ tekening, opname: vector ? opnameVan(tekening.canvas) : undefined });
-    opties.voortgang?.(n + 0.5, indexen.length);
-  }
-
-  // 2. Lettertypen voor alle tekst.
-  const opgaven = new Set<string>();
-  for (const { opname } of getekend) if (opname) for (const f of fontsIn(opname)) opgaven.add(f);
-  const fonts = opgaven.size ? await laadFonts(opgaven) : new Map<string, GeladenLettertype | null>();
+  const fonts = new Map<string, GeladenLettertype | null>();
   const lettertype = (font: string) => fonts.get(font) ?? null;
 
   // 3. Per pagina vector of beeld. Eerst een proef, zodat een mislukte pagina geen bronnen achterlaat.
   const bronnen = new Bronnen();
   const paginas: PdfPagina[] = [];
   let vectorPaginas = 0;
-  for (let n = 0; n < getekend.length; n++) {
+  for (let n = 0; n < indexen.length; n++) {
     const pagina = doc.paginas[indexen[n]];
-    const { tekening, opname } = getekend[n];
+    const tekening = vector
+      ? await metVectoropname(() => pagina.teken(kwaliteit.dpi))
+      : await pagina.teken(kwaliteit.dpi);
+    const opname = vector ? opnameVan(tekening.canvas) : undefined;
+    opties.voortgang?.(n + 0.5, indexen.length);
+    if (opname) {
+      const nieuw = new Set([...fontsIn(opname)].filter(f => !fonts.has(f)));
+      for (const [naam, font] of await laadFonts(nieuw)) fonts.set(naam, font);
+    }
     let inhoud: string | null = null;
     if (opname) {
       try {

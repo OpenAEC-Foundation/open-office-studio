@@ -78,6 +78,7 @@
     }
   },
   "changes": {
+    "documentChanged": "The document changed while reviewing. Try again.",
     "groups": {
       "all": "全部",
       "view": "标记",
@@ -193,7 +194,8 @@
       "kinds": {
         "inserted": "已插入",
         "deleted": "已删除",
-        "replaced": "已替换"
+        "replaced": "已替换",
+        "formatted": "Character formatting changed"
       },
       "diagnostics": {
         "invalidOptions": "比较设置无效。",
@@ -208,7 +210,7 @@
         "fieldChange": "域不同；这些不会显示为修订。",
         "objectChange": "图像或对象不同；这些不会显示为修订。",
         "contentControlChange": "内容控件不同。",
-        "formattingChange": "格式不同；格式更改不会显示为修订。",
+        "formattingChange": "These formatting differences cannot be compared safely.",
         "unsupportedContent": "文档包含比较功能不支持的内容。",
         "unsupportedFormatting": "文档包含比较功能不支持的格式。",
         "outOfScopeChange": "正文以外存在差异（页眉、页脚、注释）；这些不进行比较。",
@@ -219,7 +221,8 @@
         "batchRefused": "无法将差异记录为修订。",
         "serializationFailed": "无法保存结果。",
         "roundtripMismatch": "结果与修订的版本不一致。"
-      }
+      },
+      "formattingReplacements": "Supported character formatting differences appear as a replacement of the same text. Accept the changes for the new formatting or reject them for the old formatting."
     }
   },
   "editing": {
@@ -439,6 +442,12 @@
           "number": "批注编号",
           "list": "批注",
           "none": "此文档中没有批注。"
+        },
+        "bookmark": {
+          "name": "书签",
+          "number": "书签编号",
+          "list": "书签",
+          "none": "正文或表格中没有用户书签。"
         }
       },
       "labels": {
@@ -452,7 +461,8 @@
         "picture": "图片 {{n}}",
         "pictureAlt": "图片 {{n}}：{{alt}}",
         "comment": "{{author}}：{{text}}"
-      }
+      },
+      "bookmarkGone": "此书签已不存在。"
     }
   },
   "font": {
@@ -1442,16 +1452,78 @@
       "allStyles": "所有样式…"
     },
     "manage": {
-      "group": "管理样式",
-      "pane": "样式窗格",
-      "newStyle": "新建样式",
-      "newStyleHint": "基于所选内容新建样式",
-      "updateStyle": "更新样式",
-      "updateHint": "更新当前段落的样式以匹配所选内容",
-      "modifyNamed": "修改 {{name}}…",
-      "modifyStyle": "修改样式…",
-      "styleSet": "样式集和字体…",
-      "styleSetHint": "文档的主题字体和段落间距"
+      "import": "Import styles…",
+      "importTitle": "Import document styles",
+      "delete": "Delete style…",
+      "deleteTitle": "Delete custom style",
+      "deleteNotice": "Delete “{{name}}” and replace its uses throughout the document. Built-in and default styles are protected.",
+      "replacement": "Replace with",
+      "inherit": "Use base style or inherit",
+      "source": "Document or template",
+      "overwrite": "Replace matching style IDs",
+      "importNotice": "Dependencies and list definitions are imported too. Existing styles get a unique name unless replacement is selected. Source theme colours and fonts are preserved.",
+      "fileTooLarge": "Choose a file smaller than 50 MB.",
+      "type": {
+        "paragraph": "Paragraph style",
+        "character": "Character style",
+        "table": "Table style",
+        "numbering": "List style"
+      },
+      "advanced": "Tabs, borders and language",
+      "language": "Language code",
+      "tabs": "Tab stops",
+      "position": "Position",
+      "leader": "Leader",
+      "removeTab": "Remove tab stop",
+      "addTab": "Add tab stop",
+      "borders": "Borders and shading",
+      "side": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right",
+        "between": "Between paragraphs",
+        "insideH": "Inside horizontal",
+        "insideV": "Inside vertical"
+      },
+      "borderStyle": "Line style",
+      "width": "Width",
+      "shading": "Shading",
+      "line": {
+        "single": "Single",
+        "double": "Double",
+        "dotted": "Dotted",
+        "dashed": "Dashed",
+        "nil": "None"
+      },
+      "tabAlignment": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right",
+        "decimal": "Decimal",
+        "bar": "Bar",
+        "clear": "Clear inherited stop"
+      },
+      "tabLeader": {
+        "none": "None",
+        "dot": "Dots",
+        "hyphen": "Dashes",
+        "underscore": "Underline",
+        "middleDot": "Middle dots",
+        "heavy": "Heavy line"
+      },
+      "listFormat": "List format",
+      "start": "Start at",
+      "numberFormat": {
+        "decimal": "1, 2, 3",
+        "lowerLetter": "a, b, c",
+        "upperLetter": "A, B, C",
+        "lowerRoman": "i, ii, iii",
+        "upperRoman": "I, II, III",
+        "bullet": "• Bullets"
+      },
+      "tableCursor": "Place the cursor in a table first.",
+      "noNumbering": "This list style has no numbering definition."
     },
     "sets": {
       "title": "样式集和主题字体",
@@ -1692,5 +1764,250 @@
       "column": "第 {{a}} 列：{{wa}} 厘米",
       "row": "第 {{n}} 行：{{value}} 厘米"
     }
+  },
+  "fields": {
+    "insert": "Insert field…",
+    "update": "Update fields",
+    "title": "Insert document field",
+    "kind": "Field",
+    "pattern": "Date/time format",
+    "cursor": "Place the cursor in the document first.",
+    "stale": "The document changed. Reopen this dialog before inserting.",
+    "unresolved": "{{count}} field values could not be updated; their previous results were retained.",
+    "hint": "The field remains editable in Word. F9 updates field results; print and PDF update them automatically. AUTHOR and TITLE use File › Info.",
+    "names": {
+      "PAGE": "Page number",
+      "NUMPAGES": "Number of pages",
+      "DATE": "Date",
+      "TIME": "Time",
+      "FILENAME": "File name",
+      "AUTHOR": "Author",
+      "TITLE": "Title"
+    }
+  },
+  "structure": {
+    "waitForLayout": "请等待表格布局完成，然后重新拆分单元格。",
+    "invalidSplit": "请选择有效的行数和列数。",
+    "splitSizing": "拆分会保留当前列宽。之后可重新应用自动调整。",
+    "marks": "格式标记",
+    "marksTip": "编辑时显示段落和分节边界",
+    "section": "分节符",
+    "nextPage": "下一页",
+    "continuous": "连续",
+    "evenPage": "偶数页",
+    "oddPage": "奇数页",
+    "nextColumn": "下一栏"
+  },
+  "math": {
+    "title": "公式",
+    "expression": "表达式",
+    "block": "独立公式",
+    "invalid": "请检查表达式和括号（最多2048个字符）。",
+    "select": "请在编辑模式下将光标放入正文或表格，或选择一个公式。",
+    "unsupported": "此公式包含不支持的结构，已保持不变。",
+    "changed": "文档已更改。请重新打开此对话框。",
+    "viewHint": "The equation stays editable in DOCX. The document view, printing and PDF use the same equation layout.",
+    "renderFailed": "The equation cannot be rendered. Its original source remains intact."
+  },
+  "mailMerge": {
+    "title": "邮件合并",
+    "source": "Data source file",
+    "record": "记录 {{number}} / {{total}}",
+    "field": "字段",
+    "insertField": "插入字段",
+    "saveCopy": "保存记录副本",
+    "saved": "已创建文档副本。",
+    "noFields": "请先在模板中添加合并字段。",
+    "scope": "Choose a file with column names on its first row, or an open Database Studio table. Up to 1,000 records and 100 columns.",
+    "errors": {
+      "data": "Choose a valid XLSX/ODS file up to 10 MB, a CSV/TSV file up to 2 MB, or a table with usable columns.",
+      "columns": "标题须唯一且非空（最多100列，不含引号或反斜杠）。",
+      "records": "请使用1至1000条数据记录。",
+      "missing": "缺少“{{name}}”列。",
+      "template": "此模板没有可用字段或包含不支持的字段结构。",
+      "cursor": "请在编辑模式下将光标放入正文或表格，不选择文本。",
+      "render": "The document could not be rendered. Try again.",
+      "outputSize": "The output exceeds 200 MB. Select fewer records."
+    },
+    "sourceType": "Source type",
+    "fileSource": "File (XLSX, ODS, CSV or TSV)",
+    "databaseSource": "Database Studio table",
+    "database": "Database",
+    "table": "Table",
+    "noDatabase": "Open a database in Database Studio to use one of its tables.",
+    "useTable": "Use this table",
+    "sheet": "Worksheet",
+    "filterSort": "Filter and sort",
+    "filterColumn": "Filter column",
+    "allRecords": "All records",
+    "condition": "Condition",
+    "filterValue": "Value",
+    "sortColumn": "Sort by",
+    "sourceOrder": "Original order",
+    "descending": "Descending",
+    "includeRecord": "Include this record",
+    "layout": "Document layout",
+    "documentType": "Document type",
+    "types": {
+      "letters": "Letters",
+      "labels": "Labels",
+      "envelopes": "Envelopes"
+    },
+    "labelHint": "A4: 21 labels, 63.5 × 38.1 mm. The template content repeats in each label; adjust the dimensions for your label stock.",
+    "labelSize": {
+      "kolommen": "Columns",
+      "rijen": "Rows",
+      "breedte": "Label width (mm)",
+      "hoogte": "Label height (mm)",
+      "links": "Left margin (mm)",
+      "boven": "Top margin (mm)",
+      "tussen": "Horizontal gap (mm)"
+    },
+    "envelopeHint": "DL envelopes: 220 × 110 mm. The template is the recipient address block, positioned 100 mm from the left and 40 mm from the top.",
+    "preview": "Preview document",
+    "hidePreview": "Hide document preview",
+    "rendering": "Preparing document preview…",
+    "output": "Finish merging",
+    "range": "Records to output",
+    "selectedRecords": "Selected records: {{count}}",
+    "currentRecord": "Current record",
+    "outputType": "Merge to",
+    "outputs": {
+      "document": "New document",
+      "docx": "DOCX file",
+      "pdf": "One PDF",
+      "pdfPerRecord": "PDF per record (ZIP)",
+      "printer": "Printer"
+    },
+    "finish": "Create merge",
+    "progress": "Prepared {{done}} of {{total}} records",
+    "cancelled": "Merge cancelled.",
+    "conditions": {
+      "contains": "Contains",
+      "equals": "Equals",
+      "notEquals": "Does not equal",
+      "empty": "Is empty",
+      "notEmpty": "Is not empty"
+    }
+  },
+  "references": {
+    "group": "Captions and references",
+    "caption": "Insert caption",
+    "reference": "Cross-reference",
+    "bookmarks": "Bookmarks",
+    "update": "Update references",
+    "updated": "Updated {{count}} references.",
+    "unresolved": "Unresolved references: {{names}}",
+    "failed": "Unable to update references.",
+    "name": "Name",
+    "nameHint": "Start with a letter; use letters, digits and underscores (maximum 40 characters).",
+    "hidden": "Show hidden bookmarks",
+    "go": "Go to",
+    "rename": "Rename",
+    "add": "Add",
+    "insert": "Insert",
+    "label": "Label",
+    "figure": "Figure",
+    "table": "Table",
+    "equation": "Equation",
+    "description": "Description",
+    "position": "Position",
+    "below": "Below the object",
+    "above": "Above the object",
+    "chapter": "Include chapter number",
+    "noChapter": "No chapter number",
+    "headingLevel": "Heading {{level}}",
+    "objectHint": "Place the cursor immediately before or after an image or equation, or in a table cell.",
+    "target": "Reference to",
+    "show": "Insert reference to",
+    "targets": {
+      "heading": "Headings",
+      "caption": "Captions",
+      "bookmark": "Bookmarks",
+      "note": "Footnotes and endnotes"
+    },
+    "forms": {
+      "text": "Text",
+      "number": "Number",
+      "page": "Page number"
+    },
+    "busy": "Updating…",
+    "invalidName": "Use a unique bookmark name starting with a letter, with at most 40 letters, digits or underscores.",
+    "selection": "Place the cursor at the insertion point, or select text for a bookmark.",
+    "missing": "The reference target no longer exists.",
+    "changed": "The document changed. Try again.",
+    "unnumbered": "This target has no number. Choose text or page number.",
+    "labelInvalid": "Start the caption label with a letter; use at most 40 letters, digits, spaces or underscores.",
+    "object": "Place the cursor next to an image or equation, or in the table to caption.",
+    "chapterMissing": "Add a numbered heading at the selected level before this object.",
+    "layout": "The page layout is not ready. Try updating again."
+  },
+  "shapes": {
+    "group": "Shapes and text boxes",
+    "insert": "Insert shape",
+    "edit": "Edit shapes",
+    "apply": "Apply",
+    "new": "New shape",
+    "select": "Select shape",
+    "part": "Part",
+    "empty": "This document has no editable shapes.",
+    "groupTip": "Group shapes on the same page, or adjacent shapes in one text line.",
+    "groupAction": "Group",
+    "ungroup": "Ungroup",
+    "type": "Shape",
+    "breedte": "Width (cm)",
+    "hoogte": "Height (cm)",
+    "text": "Text",
+    "fill": "Fill",
+    "outline": "Outline",
+    "textColor": "Text color",
+    "lineWidth": "Outline width (pt)",
+    "shadow": "Shadow",
+    "wrap": "Text wrapping",
+    "links": "Horizontal offset (cm)",
+    "boven": "Vertical offset (cm)",
+    "enabled": "Enabled",
+    "front": "Bring to front",
+    "back": "Send to back",
+    "remove": "Delete shape",
+    "changed": "The document changed. Close and reopen this dialog.",
+    "cursor": "Place the cursor in the document first.",
+    "types": {
+      "rect": "Rectangle",
+      "roundRect": "Rounded rectangle",
+      "ellipse": "Oval",
+      "line": "Line",
+      "rightArrow": "Arrow",
+      "wedgeRectCallout": "Callout",
+      "textBox": "Text box"
+    },
+    "wraps": {
+      "inline": "In line with text",
+      "square": "Square",
+      "tight": "Tight",
+      "through": "Through",
+      "topAndBottom": "Top and bottom",
+      "behind": "Behind text",
+      "inFront": "In front of text"
+    },
+    "errors": {
+      "dimensions": "Enter valid shape dimensions.",
+      "color": "Choose a valid color.",
+      "position": "Place the cursor in a valid paragraph.",
+      "changed": "The shape changed. Reopen the dialog.",
+      "groupSelect": "Select adjacent inline shapes in the same paragraph.",
+      "selectGroup": "Select an editable group.",
+      "unsupported": "This object cannot be safely edited here.",
+      "layout": "Wait for the shape layout to finish and try again."
+    },
+    "proces": "Process diagram",
+    "organisatie": "Organization chart",
+    "start": "Start",
+    "step": "Step",
+    "end": "End",
+    "manager": "Manager",
+    "team": "Team",
+    "groupEdit": "Select a part to edit its text and formatting. The group size scales all parts together.",
+    "unsupported": "This object contains drawing features that cannot be safely edited here. They are preserved when saving."
   }
 }

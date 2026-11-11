@@ -12,3 +12,17 @@ export async function leesKlembordTekst(): Promise<string> {
     return await navigator.clipboard.readText();
   throw new Error("Het klembord kan hier niet worden gelezen.");
 }
+
+/** Alleen na een kopieeropdracht: desktop via Tauri, browser via zijn eigen API. */
+export async function schrijfKlembordTekst(tekst: string): Promise<void> {
+  if (typeof window !== "undefined" && "__TAURI_INTERNALS__" in window) {
+    const { writeText } = await import("@tauri-apps/plugin-clipboard-manager");
+    await writeText(tekst);
+    return;
+  }
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(tekst);
+    return;
+  }
+  throw new Error("Het klembord kan hier niet worden beschreven.");
+}

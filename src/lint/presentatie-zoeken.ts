@@ -30,6 +30,9 @@ export interface Zoekuitkomst {
 export class ZoekFout extends Error {}
 
 const escape = (tekst: string) => tekst.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const woordTeken = /[\p{L}\p{M}\p{N}_]/u;
+const verhaalSleutel = (r: { slideId: string; shapeId: string; storyId: string }) =>
+  JSON.stringify([r.slideId, r.shapeId, r.storyId]);
 
 /** Alle schrijfwijzen van `zoek` in de teksten, zonder op hoofdletters te letten. */
 export function schrijfwijzen(teksten: readonly string[], zoek: string): string[] {
@@ -63,6 +66,7 @@ export async function zoekTreffers(
   api: ZoekApi,
   zoek: string,
   hoofdletters: boolean,
+  heleWoorden = false,
   pogingen = 3,
 ): Promise<Zoekuitkomst> {
   const inhoud = await api.readContent();
@@ -70,6 +74,7 @@ export async function zoekTreffers(
   if (!zoek) return { versie: inhoud.version, treffers: [] };
   const dia = new Map(inhoud.slides.map((s, i) => [s.id, i + 1]));
   const volgorde = new Map(inhoud.stories.map((s, i) => [`${s.slideId}/${s.storyId}`, i]));
+  const verhalen = heleWoorden ? new Map(inhoud.stories.map((s) => [verhaalSleutel(s), s.text])) : null;
   const varianten = hoofdletters ? [zoek] : schrijfwijzen(inhoud.stories.map((s) => s.text), zoek);
   const treffers: Treffer[] = [];
   for (const tekst of varianten) {
@@ -78,10 +83,23 @@ export async function zoekTreffers(
     // Een nieuwere versie dan gelezen: de gebruiker typte tussendoor; opnieuw beginnen is veilig.
     if (r.version !== inhoud.version) {
       if (pogingen <= 1) throw new ZoekFout(r.version);
-      return zoekTreffers(api, zoek, hoofdletters, pogingen - 1);
+      return zoekTreffers(api, zoek, hoofdletters, heleWoorden, pogingen - 1);
     }
-    for (const { text, range } of r.matches)
+    for (const { text, range } of r.matches) {
+      if (verhalen) {
+        const verhaal = verhalen.get(verhaalSleutel(range));
+        if (
+          verhaal === undefined || range.start < 0 || range.end > verhaal.length ||
+          verhaal.slice(range.start, range.end) !== text
+        ) continue;
+        // Engineposities zijn UTF-16. Twee code-eenheden behouden een eventuele
+        // astrale letter naast de treffer; combining marks horen bij het woord.
+        const voor = Array.from(verhaal.slice(Math.max(0, range.start - 2), range.start)).at(-1) ?? "";
+        const na = Array.from(verhaal.slice(range.end, range.end + 2))[0] ?? "";
+        if (woordTeken.test(voor) || woordTeken.test(na)) continue;
+      }
       treffers.push({ ...range, dia: dia.get(range.slideId) ?? 0, tekst: text });
+    }
   }
   return { versie: inhoud.version, treffers: ordenTreffers(treffers, volgorde) };
 }

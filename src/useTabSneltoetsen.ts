@@ -113,6 +113,14 @@ export function useTabSneltoetsen(opties: Opties) {
       if (o.uit || e.defaultPrevented) return;
       const uitkomst = tabToets(e, o);
       if (!uitkomst) return;
+      // Module- en werkruimtedialogen staan vaak in een portal en zijn niet
+      // opgenomen in `uit`. Hun eigen toetsen/invoervelden hebben voorrang.
+      const doel = e.target instanceof Element ? e.target : document.activeElement;
+      if (doel?.closest("[role='dialog'], [role='alertdialog'], dialog")) return;
+      // Ook bij verloren focus (body) mag een toets de achtergrond niet wijzigen.
+      if ([...document.querySelectorAll("[aria-modal='true'], dialog[open]")]
+        .some(venster => venster.getClientRects().length > 0 && !venster.closest("[hidden], [inert]")))
+        return;
       // Escape mag menu's en dialogen binnen Start eerst laten sluiten.
       if (uitkomst.opdracht === "terug") {
         if (

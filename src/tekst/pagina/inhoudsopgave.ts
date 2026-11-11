@@ -388,6 +388,22 @@ function nummerVervanging(xml: string, p: XmlElement, pagina: string): Vervangin
   return { start: t.inhoudStart, eind: t.inhoudEind, tekst: ontsnap(m[1] + pagina + m[3]) };
 }
 
+/** Koptekst van een TOC-regel, zonder de afsluitende paginaverwijzing. */
+function kopVanRegel(p: XmlElement): string {
+  // alineaTekst laat w:tab weg. Lees daarom de echte XML-positie van de
+  // laatste teksttab; de tabstop in pPr is geen scheiding in de inhoud.
+  const tabs = zoekAlle(p, "tab").filter(t => t.ouder?.lokaal === "r");
+  const laatsteTab = tabs.at(-1);
+  if (laatsteTab) {
+    const delen = [...zoekAlle(p, "t"), ...tabs].filter(t => t.start < laatsteTab.start);
+    return vergelijkTekst(delen.sort((a, b) => a.start - b.start)
+      .map(t => t.lokaal === "tab" ? " " : tekstVan(t)).join(""));
+  }
+  // Zonder tab staat het paginalabel na een spatie. Verwijder alleen een
+  // ondersteund label, zodat cijfers/Romeinse tekens in de kop behouden blijven.
+  return vergelijkTekst(alineaTekst(p).replace(/\s+(?:\d+|[ivxlcdm]+|[a-z]|\?)\s*$/i, ""));
+}
+
 /**
  * Werkt de inhoudsopgave bij: `paginas` vervangt alleen de paginanummers,
  * `alles` bouwt de regels opnieuw op uit de koppen.
@@ -422,6 +438,7 @@ export function werkInhoudsopgaveBij(bytes: Uint8Array, koppen: Kop[], modus: "p
       return { bytes: pakket.inpakken(), gewijzigd: true };
     }
     // Alleen paginanummers.
+    if (!o.paginanummers) return { bytes, gewijzigd: false };
     const perBladwijzer = new Map<string, string>();
     for (const k of koppelingen) if (k.bladwijzer && k.kop.pagina) perBladwijzer.set(k.bladwijzer, k.kop.pagina);
     const gebruikt = new Set<number>();
@@ -432,10 +449,10 @@ export function werkInhoudsopgaveBij(bytes: Uint8Array, koppen: Kop[], modus: "p
       if (!anker && !/^TOC\d$/i.test(stijl)) continue;
       let pagina = anker ? perBladwijzer.get(anker) : undefined;
       if (!pagina) {
-        // Zonder anker: op tekst (vóór de tab) koppelen aan de eerste ongebruikte kop.
-        const regel = vergelijkTekst(alineaTekst(p).split("\t")[0].replace(/\s*\S+\s*$/, ""));
-        const volledig = vergelijkTekst(alineaTekst(p));
-        const i = koppen.findIndex((k, j) => !gebruikt.has(j) && (vergelijkTekst(k.tekst) === regel || volledig.startsWith(vergelijkTekst(k.tekst))));
+        // Zonder anker alleen de volledige koptekst koppelen. Een kortere kop
+        // met dezelfde beginwoorden mag deze regel niet overnemen.
+        const regel = kopVanRegel(p);
+        const i = koppen.findIndex((k, j) => !gebruikt.has(j) && k.niveau <= o.niveaus && vergelijkTekst(k.tekst) === regel);
         if (i >= 0) {
           gebruikt.add(i);
           pagina = koppen[i].pagina ?? undefined;

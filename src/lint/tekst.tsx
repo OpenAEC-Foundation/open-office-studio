@@ -1,4 +1,7 @@
 import { useEditorApi, zichtbaarElement } from "./editorApi";
+import { VeldKnoppen, VeldSneltoets } from "../tekst/veldenDocument/VeldKnoppen";
+import { VerwijsNavigatie } from "../tekst/verwijzingen/VerwijsNavigatie";
+import { FormuleWeergave } from "../tekst/vergelijking/FormuleWeergave";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { GrafiekGroep, useIngeslotenGrafieken } from "../grafieken/ui/ingesloten";
 import {
@@ -68,6 +71,8 @@ import {
   SpellCheck,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { OpmaakmarkeringenKnop } from "../tekst/pagina/Markeringen";
+import { VormenGroep } from "../tekst/vormen/Vormen";
 import { openSpellingVenster } from "../spelling/tekst/menu";
 import { formatGetal } from "../i18n/opmaak";
 import {
@@ -91,6 +96,8 @@ import { datumTekst, tijdTekst, type Hoofdlettersoort } from "./tekst-logica";
 import { TabelKiezer } from "../tabelvoorbeeld/TabelKiezer";
 import { TabelIndeling, TekstNaarTabelKnop } from "../tekst/tabel/TabelIndeling";
 import { AfbeeldingGroepen } from "../tekst/afbeelding/AfbeeldingGroepen";
+import { SamenvoegenKnop } from "../tekst/samenvoegen/SamenvoegenKnop";
+import { VergelijkingKnop } from "../tekst/vergelijking/VergelijkingKnop";
 import { ZoekKnoppen } from "../tekst/zoeken/ZoekPaneel";
 import { WordHost } from "../tekst/WordHost";
 import { Liniaal } from "../tekst/liniaal/Liniaal";
@@ -564,6 +571,9 @@ export function TekstRibbon({
     <TekstBewerken opdrachten={opdrachten}>
     <TekstOpmaakProvider>
     <StijlenBeheer>
+      <VerwijsNavigatie />
+      <FormuleWeergave />
+      <VeldSneltoets />
       <Ribbon
         bestand={bestand}
         beginTab={herlaad ? lintTabPerDocument.get(herlaad) : undefined}
@@ -606,12 +616,15 @@ export function TekstRibbon({
                 </Groep>
                 <Groep naam={t("writer.groups.illustrations")}>
                   <W id="insertImage" naam={t("writer.commands.picture")} icoon={Image} groot />
+                  <VergelijkingKnop />
                 </Groep>
+                <VormenGroep />
                 <GrafiekGroep g={grafieken} uit={!opdrachten.bewerkbaar} />
                 <Groep naam={t("writer.groups.links")}>
                   <W id="insertLink" naam={t("writer.commands.hyperlink")} icoon={Link} groot />
                 </Groep>
                 <KopVoetInvoegenGroep p={pagina} />
+                <Groep naam={t("writer:mailMerge.title")}><SamenvoegenKnop /></Groep>
                 <Groep naam={t("writer.groups.comments")}>
                   <Opmerking opdrachten={opdrachten} />
                 </Groep>
@@ -640,6 +653,7 @@ export function TekstRibbon({
                       onClick={() => opdrachten.voegIn(tijdTekst(new Date()))}
                     />
                     <DatumTijdKnop />
+                    <VeldKnoppen />
                   </div>
                 </Groep>
               </>
@@ -840,6 +854,7 @@ export function TekstRibbon({
               <>
                 <WeergaveGroep />
                 <Groep naam={t("writer.groups.show")}>
+                  <OpmaakmarkeringenKnop />
                   <Actie
                     icoon={Ruler}
                     naam={t("writer.commands.ruler")}

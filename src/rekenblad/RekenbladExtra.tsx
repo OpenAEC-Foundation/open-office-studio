@@ -14,6 +14,8 @@ import {
   BetweenVerticalStart,
   ClipboardPaste,
   ClipboardList,
+  ChevronLeft,
+  ChevronRight,
   Copy,
   Eye,
   EyeOff,
@@ -26,6 +28,7 @@ import {
   Scissors,
   SquarePlus,
   Trash2,
+  StickyNote,
   Ungroup,
 } from "lucide-react";
 import { RibbonFout } from "../Ribbon";
@@ -47,6 +50,12 @@ import {
 import { bladenLijst, verborgenLabel } from "./bladen";
 import { BladVerplaatsen, BladVerwijderen } from "./BladVensters";
 import { GetalVenster } from "./GetalVenster";
+import { VoorwaardelijkeOpmaakVenster } from "./VoorwaardelijkeOpmaakVenster";
+import { koppelBladSlepen } from "./bladslepen";
+import { GroepenVenster } from "./GroepenVenster";
+import { GroepenBesturing } from "./GroepenBesturing";
+import { BladEigenschappenVenster } from "./BladEigenschappenVenster";
+import { koppelTabKleuren } from "./bladEigenschappen";
 import { kopieer, leesKlembord, plak, type KlembordInhoud } from "./klembord";
 import { MaatVenster } from "./MaatVenster";
 import { RekenbladMenu, type MenuItem } from "./Menu";
@@ -54,6 +63,13 @@ import { PlakkenSpeciaal } from "./PlakkenSpeciaal";
 import { optimaleBreedte, optimaleHoogte } from "./structuur";
 import { openVenster, useVenster, type Venster } from "./vensters";
 import "./rekenblad.css";
+import { CelnotitieVenster } from "./CelnotitieUi";
+import { CelstijlVenster } from "./CelstijlUi";
+import { TabelVenster } from "./TabelUi";
+import { DraaitabelVenster } from "./DraaitabelUi";
+import { DiscussieVenster } from "./DiscussieUi";
+import { ValidatieVenster } from "./ValidatieUi";
+import { BeveiligingVenster } from "./BeveiligingUi";
 
 const TABS = '[data-testid="xlsx-sheet-tabs"]';
 
@@ -95,6 +111,8 @@ export function RekenbladExtra() {
     api?.focus();
   }, [api, setVenster]);
   const sluitMenu = useCallback(() => setVenster(null), [setVenster]);
+  useEffect(() => host && api ? koppelBladSlepen(host, api, positie => setVenster({ soort: "bladVerplaatsen", positie, kopie: true }), fout) : undefined, [host, api, setVenster, fout]);
+  useEffect(() => host && api ? koppelTabKleuren(host, api.handle) : undefined, [host, api]);
 
   const plakkenSpeciaal = useCallback(async () => {
     setPlakInhoud(await leesKlembord());
@@ -198,7 +216,8 @@ export function RekenbladExtra() {
     };
   }, [host, api, setVenster]);
 
-  // De knop met alle bladen links van de tabs.
+  // Navigatie blijft naast de scrollbare tabs staan. Alleen horizontaal
+  // schuiven: scrollIntoView zou ook de pagina of het raster verplaatsen.
   useEffect(() => {
     if (!host || !api) return;
     let frame = 0;
@@ -208,18 +227,28 @@ export function RekenbladExtra() {
       if (!tabs) return setTabsPlek(null);
       const a = tabs.getBoundingClientRect();
       const b = host.getBoundingClientRect();
-      setTabsPlek({ left: a.left - b.left + 4, top: a.top - b.top + (a.height - 24) / 2 });
+      setTabsPlek({ left: a.left - b.left - 84, top: a.top - b.top + (a.height - 24) / 2 });
+      const actief = tabs.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]');
+      if (actief) {
+        const r = actief.getBoundingClientRect();
+        if (r.left < a.left) tabs.scrollLeft += r.left - a.left;
+        else if (r.right > a.right) tabs.scrollLeft += Math.min(r.left - a.left, r.right - a.right);
+      }
     };
     const plan = () => {
       if (!frame) frame = requestAnimationFrame(plaats);
     };
     const kijker = new ResizeObserver(plan);
     kijker.observe(host);
+    // De editor kan de nieuwe tab pas na onUpdate renderen.
+    const tabsKijker = new MutationObserver(plan);
+    tabsKijker.observe(host, { childList: true, subtree: true, attributes: true, attributeFilter: ["aria-selected"] });
     const stop = api.handle.onUpdate(plan);
     plan();
     return () => {
       cancelAnimationFrame(frame);
       kijker.disconnect();
+      tabsKijker.disconnect();
       stop();
     };
   }, [host, api]);
@@ -228,6 +257,10 @@ export function RekenbladExtra() {
     return <span ref={anker} hidden />;
 
   const uit = alleenLezen(api);
+  const zichtbareBladen = bladenLijst(api).filter((b) => !b.verborgen);
+  const actiefBlad = zichtbareBladen.findIndex((b) => b.index === api.handle.sheetInfo().activeSheet);
+  const vorigBlad = zichtbareBladen[actiefBlad - 1];
+  const volgendBlad = actiefBlad < 0 ? undefined : zichtbareBladen[actiefBlad + 1];
   const engineUitleg = t("menu.engineMissing");
   const klembordItems: MenuItem[] = [
     { naam: t("menu.cut"), icoon: Scissors, sneltoets: "Ctrl+X", uit, doe: () => uitvoeren((a) => kopieer(a, true)) },
@@ -262,7 +295,7 @@ export function RekenbladExtra() {
             { naam: t("structure.optimalWidth"), icoon: ArrowLeftRight, uit, doe: () => uitvoeren((a) => optimaleBreedte(a)) },
             { naam: t("menu.hide"), icoon: EyeOff, uit, doe: () => uitvoeren((a) => kolommenZichtbaarheid(a, true)) },
             { naam: t("menu.unhide"), icoon: Eye, uit, doe: () => uitvoeren((a) => kolommenZichtbaarheid(a, false)) },
-            { naam: t("menu.group"), icoon: Ungroup, uit: true, uitleg: engineUitleg, doe: () => {} },
+            { naam: t("menu.group"), icoon: Ungroup, uit, doe: () => setVenster({ soort: "groepen", as: "kolom" }) },
           ],
         ];
       case "rij":
@@ -277,12 +310,13 @@ export function RekenbladExtra() {
             { naam: t("structure.optimalHeight"), icoon: MoveVertical, uit, doe: () => uitvoeren((a) => optimaleHoogte(a)) },
             { naam: t("menu.hide"), icoon: EyeOff, uit, doe: () => uitvoeren((a) => rijenZichtbaarheid(a, true)) },
             { naam: t("menu.unhide"), icoon: Eye, uit, doe: () => uitvoeren((a) => rijenZichtbaarheid(a, false)) },
-            { naam: t("menu.group"), icoon: Ungroup, uit: true, uitleg: engineUitleg, doe: () => {} },
+            { naam: t("menu.group"), icoon: Ungroup, uit, doe: () => setVenster({ soort: "groepen", as: "rij" }) },
           ],
         ];
       case "cel":
         return [
           klembordItems,
+          [{ naam: t("notes.edit"), icoon: StickyNote, doe: () => setVenster({ soort: "notitie" }) }],
           [
             { naam: t("menu.insertRowsAbove"), icoon: BetweenHorizontalStart, uit, doe: () => uitvoeren((a) => rijenInvoegen(a, false)) },
             { naam: t("menu.insertColumnsLeft"), icoon: BetweenVerticalStart, uit, doe: () => uitvoeren((a) => kolommenInvoegen(a, false)) },
@@ -305,9 +339,9 @@ export function RekenbladExtra() {
             { naam: t("sheets.moveCopy"), icoon: Copy, uit, doe: () => setVenster({ soort: "bladVerplaatsen" }) },
           ],
           [
-            { naam: t("sheets.hide"), icoon: EyeOff, uit: true, uitleg: engineUitleg, doe: () => {} },
-            { naam: t("sheets.unhide"), icoon: Eye, uit: true, uitleg: engineUitleg, doe: () => {} },
-            { naam: t("sheets.tabColor"), icoon: Palette, uit: true, uitleg: engineUitleg, doe: () => {} },
+            { naam: t("sheets.hide"), icoon: EyeOff, uit, doe: () => setVenster({ soort: "bladEigenschappen", actie: "verbergen" }) },
+            { naam: t("sheets.unhide"), icoon: Eye, uit, doe: () => setVenster({ soort: "bladEigenschappen", actie: "zichtbaar" }) },
+            { naam: t("sheets.tabColor"), icoon: Palette, uit, doe: () => setVenster({ soort: "bladEigenschappen", actie: "kleur" }) },
           ],
         ];
       }
@@ -331,6 +365,7 @@ export function RekenbladExtra() {
       {host &&
         createPortal(
           <>
+            <GroepenBesturing host={host} api={api} />
             <textarea
               ref={vang}
               className="rekenblad-plakvang"
@@ -361,21 +396,48 @@ export function RekenbladExtra() {
               }}
             />
             {tabsPlek && (
-              <button
-                type="button"
-                className="rekenblad-bladenknop"
-                style={tabsPlek}
-                title={t("sheets.allSheets")}
-                aria-label={t("sheets.allSheets")}
-                aria-haspopup="menu"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={(e) => {
-                  const r = e.currentTarget.getBoundingClientRect();
-                  setVenster({ soort: "menu", menu: "lijst", x: r.left, y: r.top - 8 });
-                }}
-              >
-                <List size={15} />
-              </button>
+              <div className="rekenblad-bladnavigatie" style={tabsPlek} role="group" aria-label={t("sheets.navigation")}>
+                <button
+                  type="button"
+                  className="rekenblad-bladenknop"
+                  title={t("sheets.previousSheet")}
+                  aria-label={t("sheets.previousSheet")}
+                  disabled={!vorigBlad}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => uitvoeren((a) => {
+                    if (vorigBlad) return gaNaarBlad(a, vorigBlad.index);
+                  })}
+                >
+                  <ChevronLeft size={15} />
+                </button>
+                <button
+                  type="button"
+                  className="rekenblad-bladenknop"
+                  title={t("sheets.nextSheet")}
+                  aria-label={t("sheets.nextSheet")}
+                  disabled={!volgendBlad}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => uitvoeren((a) => {
+                    if (volgendBlad) return gaNaarBlad(a, volgendBlad.index);
+                  })}
+                >
+                  <ChevronRight size={15} />
+                </button>
+                <button
+                  type="button"
+                  className="rekenblad-bladenknop"
+                  title={t("sheets.allSheets")}
+                  aria-label={t("sheets.allSheets")}
+                  aria-haspopup="menu"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    setVenster({ soort: "menu", menu: "lijst", x: r.left, y: r.top - 8 });
+                  }}
+                >
+                  <List size={15} />
+                </button>
+              </div>
             )}
           </>,
           host,
@@ -393,11 +455,21 @@ export function RekenbladExtra() {
         <MaatVenster api={api} soort={venster.soort} sluiten={sluiten} />
       )}
       {venster?.soort === "getal" && <GetalVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "notitie" && <CelnotitieVenster api={api} cel={venster.cel} blad={venster.blad} sluiten={sluiten} />}
+      {venster?.soort === "celstijl" && <CelstijlVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "draaitabel" && <DraaitabelVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "tabel" && <TabelVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "discussie" && <DiscussieVenster api={api} cel={venster.cel} blad={venster.blad} sluiten={sluiten} />}
+      {venster?.soort === "validatie" && <ValidatieVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "beveiliging" && <BeveiligingVenster api={api} soort={venster.beveiliging} sluiten={sluiten} />}
+      {venster?.soort === "voorwaardelijkeOpmaak" && <VoorwaardelijkeOpmaakVenster api={api} sluiten={sluiten} />}
+      {venster?.soort === "groepen" && <GroepenVenster api={api} sluiten={sluiten} beginAs={venster.as} />}
+      {venster?.soort === "bladEigenschappen" && <BladEigenschappenVenster api={api} actie={venster.actie} sluiten={sluiten} />}
       {venster?.soort === "plakkenSpeciaal" && (
         <PlakkenSpeciaal api={api} inhoud={plakInhoud} sluiten={sluiten} />
       )}
       {venster?.soort === "bladVerwijderen" && <BladVerwijderen api={api} sluiten={sluiten} />}
-      {venster?.soort === "bladVerplaatsen" && <BladVerplaatsen api={api} sluiten={sluiten} />}
+      {venster?.soort === "bladVerplaatsen" && <BladVerplaatsen api={api} sluiten={sluiten} beginPositie={venster.positie} beginKopie={venster.kopie} />}
       {venster?.soort === "bladHernoemen" && <BladHernoemen api={api} sluiten={sluiten} />}
     </>
   );

@@ -24,35 +24,43 @@ import type {
   StyleDefinitions,
   TextFormatting,
   Theme,
+  TableFormatting,
 } from "@betteroffice/docx/types/document";
-import i18next from "../../i18n/config";
 import { useTranslation } from "react-i18next";
 import { RibbonFout } from "../../Ribbon";
 import { useEditorApi, zichtbaarElement } from "../../lint/editorApi";
 import { useSneltoetsen } from "../../lint/sneltoetsen";
 import {
   directeOpmaak,
-  eigenTekenopmaak,
   gebruikteStijlen,
   runOpPositie,
   uitOpmaak,
   vindAlinea,
+  tabelBijAlinea,
+  tabelEigenschappen,
 } from "./model";
 import { herlaadMetStijlen, type StijlBewerking, type StijlOnderdelen } from "./pakket";
-import { wijzigStijl, type StijlEigenschappen } from "./stijlenxml";
+import { wijzigStijl, type StijlEigenschappen, type StijlSoort } from "./stijlenxml";
+import { StijlBeheerDialoog } from "./StijlBeheerDialoog";
+import { pasTabelStijlToe } from "./beheer";
+import { zetMarkering } from "../pagina/ui/engine";
+import { pasAlineasToe } from "../opmaak";
 import { StijlEditor } from "./StijlEditor";
-import { metHeleAlinea } from "./toepassen";
+import { metHeleAlinea, pasTekenstijlToe as tekenstijl } from "./toepassen";
 import { Herhaalmelding } from "../bewerken/herhaalmelding";
 import { StijlenVenster } from "./StijlenVenster";
 import { StijlSets } from "./StijlSets";
 import { Bevestiging } from "./Bevestiging";
+import { volgDocumentStaat } from "./documentvolgen";
 import "./stijlen.css";
 
 export type StijlVenster =
-  | { soort: "nieuw"; uitSelectie?: boolean; type?: "paragraph" | "character" }
+  | { soort: "nieuw"; uitSelectie?: boolean; type?: StijlSoort }
   | { soort: "wijzig"; styleId: string }
   | { soort: "venster" }
   | { soort: "sets" }
+  | { soort: "importeer" }
+  | { soort: "verwijder"; styleId: string }
   | { soort: "bijwerken"; styleId: string };
 
 export interface StijlenStaat {
@@ -73,10 +81,12 @@ export interface StijlenStaat {
   pasToe: (styleId: string) => void;
   /** Pakketroute: bewerk styles.xml/thema en herlaad. */
   herlaadStijlen: (bewerk: (o: StijlOnderdelen) => StijlBewerking) => Promise<boolean>;
+  herlaadPakket: (bewerk: (bytes: Uint8Array) => Uint8Array | Promise<Uint8Array>) => Promise<void>;
   /** Stijl bijwerken zodat hij overeenkomt met de selectie. */
   werkBij: (styleId: string) => Promise<void>;
   /** Directe opmaak op de cursorpositie (model), voor ‘nieuwe stijl uit selectie’. */
-  selectieOpmaak: () => { tekst?: TextFormatting; alinea?: ParagraphFormatting };
+  selectieOpmaak: () => { tekst?: TextFormatting; alinea?: ParagraphFormatting; tabel?: TableFormatting;
+  };
   fout: (bericht: unknown) => void;
 }
 
@@ -100,78 +110,12 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
   const [selectie, setSelectie] = useState<SelectionState | null>(null);
   const [versie, setVersie] = useState(0);
   useEffect(() => {
-    let gekoppeld: DocxEditorRef | null = null;
-    let laatste: Document | null = null;
-    let opruimen: (() => void)[] = [];
-    let wachten: ReturnType<typeof setTimeout> | undefined;
-    const koppel = () => {
-      const ref = api();
-      if (ref === gekoppeld && (!ref || ref.getDocument() === laatste)) return;
-      opruimen.forEach((weg) => weg());
-      opruimen = [];
-      gekoppeld = ref;
-      const doc = ref?.getDocument() ?? null;
-      laatste = doc;
-      setDocument(doc);
-      setSelectie(null);
-      if (!ref || !doc) {
-        gekoppeld = null;
-        return;
-      }
-      opruimen = [
-        ref.onSelectionChange((staat) => setSelectie(staat)),
-        ref.onContentChange((nieuw) => {
-          clearTimeout(wachten);
-          wachten = setTimeout(() => {
-            laatste = nieuw;
-            setDocument(nieuw);
-            setVersie((v) => v + 1);
-          }, 400);
-        }),
-      ];
-    };
-    koppel();
-    const poging = setInterval(koppel, 600);
-    return () => {
-      clearInterval(poging);
-      clearTimeout(wachten);
-      opruimen.forEach((weg) => weg());
-    };
+    return volgDocumentStaat(api, (nieuw, wijziging) => {
+      setDocument(nieuw);
+      if (wijziging) setVersie((v) => v + 1);
+    }, setSelectie);
   }, [api]);
   return { document, selectie, versie };
-}
-
-/**
- * Een tekenstijl op de selectie. De bewerkingslaag van de engine (0.4.3)
- * schrijft geen `w:rStyle`; daarom zetten we de opmaak van de stijl (met
- * zijn basisstijlen) als directe opmaak, met ongedaan maken.
- */
-function tekenstijl(ref: DocxEditorRef, stijlen: StyleDefinitions | undefined, styleId: string, thema?: Theme) {
-  const editor = ref.getEditorRef();
-  const sessie = editor?.getYrsSession();
-  const bereik = editor?.getSelectionRange();
-  if (!editor || !sessie || !bereik || bereik.from === bereik.to)
-    throw new Error(i18next.t("writer:styles.errors.selectTextFirst"));
-  const van = editor.displayPositionToYrsLoc(Math.min(bereik.from, bereik.to));
-  const tot = editor.displayPositionToYrsLoc(Math.max(bereik.from, bereik.to));
-  if (!van || !tot || van.story !== tot.story)
-    throw new Error(i18next.t("writer:styles.errors.cannotApplyHere"));
-  const e = eigenTekenopmaak(stijlen, styleId, thema);
-  const delta = {
-    ...(e.vet !== undefined ? { bold: !!e.vet } : {}),
-    ...(e.cursief !== undefined ? { italic: !!e.cursief } : {}),
-    ...(e.onderstreept !== undefined ? { underline: !!e.onderstreept } : {}),
-    ...(e.doorgehaald !== undefined ? { strike: !!e.doorgehaald } : {}),
-    ...(e.kleur ? { color: { rgb: e.kleur } } : {}),
-    ...(e.grootte ? { fontSize: e.grootte } : {}),
-    ...(e.lettertype ? { fontFamily: { ascii: e.lettertype, hAnsi: e.lettertype } } : {}),
-  };
-  if (!Object.keys(delta).length) throw new Error(i18next.t("writer:styles.errors.nothingToApply"));
-  sessie.formatRange(
-    { story: van.story, start: { paraId: van.paraId, offset: van.offset }, end: { paraId: tot.paraId, offset: tot.offset } },
-    delta,
-  );
-  editor.syncYrsInputState(true, [van.story]);
 }
 
 /** Wacht tot de editor na herladen een nieuwe engine-handle heeft. */
@@ -193,7 +137,9 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
   const herhaalbaar = useContext(Herhaalmelding);
   const opdrachten = useDocxCommands();
   const stijlOpdracht = useDocxCommand("paragraphStyle");
-  const bewerkbaar = useDocxCommand("insertPageBreak").state.enabled;
+  // Page breaks are forbidden in header/footer and note stories, while their
+  // text and styles remain editable. Use an inline formatting capability.
+  const bewerkbaar = useDocxCommand("bold").state.enabled;
   const { document, selectie } = useDocumentStaat(api);
   const [venster, setVenster] = useState<StijlVenster | null>(null);
   const recent = useRef({ selectie, document });
@@ -206,6 +152,15 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
   const stijlen = document?.package.styles;
   const thema = document?.package.theme;
   const gebruikt = useMemo(() => gebruikteStijlen(document), [document]);
+
+  async function herlaadPakket(bewerk: (bytes: Uint8Array) => Uint8Array | Promise<Uint8Array>) {
+    if (!herlaad) throw new Error(t("styles.errors.notAvailable"));
+    const ref = api(); if (!ref) throw new Error(t("styles.errors.notReady"));
+    await ref.flushPendingInput();
+    const paraId = ref.getSelectionInfo()?.paraId ?? undefined;
+    const oud = await herlaad.bytes(), nieuw = await bewerk(oud);
+    if (nieuw !== oud) herlaad.vervang(nieuw, paraId ? { paraId } : undefined);
+  }
 
   async function herlaadStijlen(bewerk: (o: StijlOnderdelen) => StijlBewerking) {
     if (!herlaad) throw new Error(t("styles.errors.notAvailable"));
@@ -248,7 +203,7 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
     const direct = directeOpmaak(doc, info?.paraId);
     if (direct) {
       const run = runOpPositie(vindAlinea(doc, info?.paraId)?.content ?? [], info?.before.length ?? 0);
-      return { tekst: run ?? undefined, alinea: direct.alinea };
+      return { tekst: run ?? undefined, alinea: direct.alinea, tabel: tabelBijAlinea(doc, info?.paraId ?? undefined) };
     }
     const sel = recent.current.selectie;
     return { tekst: sel?.textFormatting, alinea: sel?.paragraphFormatting };
@@ -260,8 +215,8 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
     const ref = api();
     await ref?.flushPendingInput();
     const sel = selectieOpmaak();
-    const soort = stijl.type === "character" ? "character" : "paragraph";
-    const eigenschappen: StijlEigenschappen = uitOpmaak(sel.tekst, sel.alinea, soort, thema);
+    const soort = stijl.type;
+    const eigenschappen: StijlEigenschappen = { ...uitOpmaak(sel.tekst, sel.alinea, soort, thema), ...(soort === "table" ? tabelEigenschappen(sel.tabel, thema) : {}) };
     if (!Object.keys(eigenschappen).length)
       throw new Error(t("styles.errors.selectionHasNoFormatting"));
     await herlaadStijlen((o) => ({ stijlen: wijzigStijl(o.stijlen, styleId, { eigenschappen }) }));
@@ -274,6 +229,25 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
       if (!ref) throw new Error(t("styles.errors.notReady"));
       if (stijl?.type === "character") {
         tekenstijl(ref, stijlen, styleId, thema);
+        return;
+      }
+      if (stijl?.type === "table") {
+        void (async () => {
+          const marker = await zetMarkering(ref);
+          if (!marker) throw new Error(t("styles.manage.tableCursor"));
+          try { await herlaadPakket((b) => pasTabelStijlToe(b, marker.markering, styleId)); }
+          catch (e) { marker.ongedaan(); throw e; }
+        })().catch(fout);
+        return;
+      }
+      if (stijl?.type === "numbering") {
+        const ed = ref.getEditorRef(), s = ed?.getYrsSession(), plek = s?.selection()?.head;
+        const num = stijl.pPr?.numPr;
+        if (!ed || !s || !plek || num?.numId === undefined) throw new Error(t("styles.manage.noNumbering"));
+        const selectie = s.selection()!;
+        const ps = s.paragraphs(plek.story), ai = ps.findIndex((p) => p.paraId === selectie.anchor.paraId), bi = ps.findIndex((p) => p.paraId === plek.paraId);
+        pasAlineasToe(s, plek.story, ps.slice(Math.min(ai, bi), Math.max(ai, bi) + 1).map((p) => p.paraId), { numPr: { numId: num.numId, ilvl: num.ilvl ?? 0 } });
+        ed.syncYrsInputState(true, [plek.story]);
         return;
       }
       herhaalbaar("paragraphStyle", { styleId });
@@ -308,6 +282,7 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
     },
     pasToe,
     herlaadStijlen,
+    herlaadPakket,
     werkBij,
     selectieOpmaak,
     fout,
@@ -344,6 +319,8 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
         <StijlSets />
       ) : venster?.soort === "bijwerken" ? (
         <Bevestiging styleId={venster.styleId} />
+      ) : venster?.soort === "importeer" || venster?.soort === "verwijder" ? (
+        <StijlBeheerDialoog venster={venster} />
       ) : null}
     </Context.Provider>
   );

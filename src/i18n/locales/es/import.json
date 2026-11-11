@@ -69,7 +69,15 @@
     "unknownEncryption": "Este archivo usa un cifrado desconocido (versión {{version}}) y no se puede abrir.",
     "encryptedGeneric": "Este archivo está cifrado.",
     "choosePassword": "Elija una contraseña.",
-    "passwordTooLong": "La contraseña puede tener como máximo 255 caracteres."
+    "passwordTooLong": "La contraseña puede tener como máximo 255 caracteres.",
+    "conversionVariant": "No se pudo abrir este archivo {{ext}}. {{reason}} {{alternative}}",
+    "conversionAlternative": {
+      "docx": "Exporte el archivo desde su aplicación original como DOCX o RTF y abra esa copia.",
+      "xlsx": "Exporte el archivo desde su aplicación original como XLSX. También puede usar CSV, pero solo conserva los valores de una hoja.",
+      "pptx": "Exporte el archivo desde su aplicación original como PPTX y abra esa copia."
+    },
+    "emptyConversionTitle": "Resultado de conversión vacío",
+    "emptyConversion": "La conversión de este archivo {{ext}} no contiene contenido visible. El original puede estar vacío o esta variante puede no leerse correctamente. {{alternative}}"
   },
   "password": {
     "title": "Se requiere contraseña",
@@ -139,7 +147,8 @@
       "slicers": "segmentaciones o escalas de tiempo",
       "externalLinks": "vínculos a libros externos",
       "dataConnections": "conexiones de datos o consultas",
-      "protection": "protección contra escritura, del documento o del libro"
+      "protection": "protección contra escritura, del documento o del libro",
+      "workbookStructure": "protección de la estructura del libro"
     },
     "parts": {
       "conversion": "Conversión",
