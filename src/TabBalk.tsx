@@ -35,7 +35,8 @@ interface Props {
   tabbladen: Tabblad[];
   /** null: Start is actief. */
   actief: number | null;
-  activeer: (id: number | null) => void;
+  /** Muisactivatie geeft de focus terug aan het document; pijltjes blijven in de tabbalk. */
+  activeer: (id: number | null, documentFocus?: boolean) => void;
   sluit: (ids: number[]) => void;
   verplaats: (id: number, naar: number) => void;
   /** "+": opent Start om een document of module toe te voegen. */
@@ -342,7 +343,7 @@ export function TabBalk(props: Props) {
                   negeerKlik.current = false;
                   return;
                 }
-                props.activeer(tabblad.id);
+                props.activeer(tabblad.id, true);
               }}
               onMouseDown={(event) => {
                 // Voorkom automatisch scrollen bij een middenklik.
