@@ -32,14 +32,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
-          sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils
-      # De conversieruntime staat niet in deze repository: zet de Actions-variabelen
-      # CONVERSIE_APT_PAKKETTEN en CONVERSIE_PROGRAMMA om de echte conversieproeven te draaien.
-      - name: Conversieruntime installeren
-        if: runner.os == 'Linux' && vars.CONVERSIE_APT_PAKKETTEN != ''
-        env:
-          PAKKETTEN: ${{ vars.CONVERSIE_APT_PAKKETTEN }}
-        run: sudo apt-get install -y --no-install-recommends $PAKKETTEN
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils webkit2gtk-driver xvfb
       - run: pnpm install --frozen-lockfile
       # Extra open lettertypen (assets/lettertypen.json): bewaard per manifestversie,
       # zodat een build zonder netwerk naar GitHub ook werkt.
@@ -72,6 +65,14 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: ./scripts/voorbereiden-windows.ps1
+      - name: Cache van de vastgepinde kantoorruntime
+        uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json') }}
+          restore-keys: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-
+      - name: Private kantoorruntime voorbereiden zonder systeeminstallatie
+        run: node scripts/voorbereiden-kantoorruntime.mjs
       - run: pnpm build
       - name: Chromium voor offline Writer-opslag
         if: runner.os == 'Linux'
@@ -79,6 +80,9 @@ jobs:
       - name: Writer werkelijk offline bewerken, opslaan en heropenen
         if: runner.os == 'Linux'
         run: node scripts/proef-writer-offline.mjs dist
+      - name: Browser toont de beperking van native conversie en behoudt het document
+        if: runner.os == 'Linux'
+        run: node scripts/proef-formaatbeperking-browser.mjs dist
       - name: Native document-link path regressions
         run: cargo test --manifest-path src-tauri/Cargo.toml --locked documentkoppeling --no-default-features
       - name: Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen
@@ -89,21 +93,21 @@ jobs:
         run: node scripts/test-database-worker.mjs .local/corpus/bestanden/jackcess-b9d004aa5f8287ae413074a933e2c54235f1de29.mdb .local/corpus/bestanden/jackcess-e16c664c03d368bc37fb55265544ba23c201f174.accdb .local/corpus/bestanden/jackcess-6121fc34bed66f15e836e8130cd9489184e7a384.mdb
       - run: cargo test --manifest-path src-tauri/Cargo.toml --locked
       - name: ODF, oudere formaten en PDF werkelijk converteren
-        if: runner.os == 'Linux' && vars.CONVERSIE_PROGRAMMA != ''
+        if: runner.os == 'Linux'
         env:
-          OPENAEC_CONVERSIE_PROGRAMMA: ${{ vars.CONVERSIE_PROGRAMMA }}
+          OPENAEC_CONVERSIE_PROGRAMMA: ${{ github.workspace }}/src-tauri/resources/kantoorruntime/program/soffice
           OFFICE_TEST_UIT: ${{ runner.temp }}/formaatcontrole
           OFFICE_TEST_STRICT: ${{ github.workspace }}/.local/corpus/bestanden/poi-7ed3e45d2b7affb9ddf46ff84b6b5d3d08c414a6.xlsx
         run: cargo test --manifest-path src-tauri/Cargo.toml --locked voorbeelden_in_odf_oud_en_pdf -- --ignored
       - name: Geconverteerde inhoud onafhankelijk controleren
-        if: runner.os == 'Linux' && vars.CONVERSIE_PROGRAMMA != ''
+        if: runner.os == 'Linux'
         run: |
           python -m pip install python-docx==1.2.0 openpyxl==3.1.5 python-pptx==1.0.2
           python scripts/test-formaatuitvoer.py "${{ runner.temp }}/formaatcontrole"
           node scripts/corpus-bestand.mjs "${{ runner.temp }}/formaatcontrole/Strict-omgezet.xlsx" xlsx
       - name: Linux-pakket bouwen
         if: runner.os == 'Linux'
-        run: pnpm desktop:build --bundles deb,appimage
+        run: pnpm desktop:build --verbose --bundles deb,appimage
       - name: Windows-pakket bouwen
         if: runner.os == 'Windows'
         run: pnpm desktop:build --bundles nsis
@@ -122,6 +126,24 @@ jobs:
       - name: Windows-installer werkelijk uitpakken en controleren
         if: runner.os == 'Windows'
         run: python scripts/controleer-installers.py --platform windows --rapport .local/pakketcontrole-Windows.json
+      - name: Meet- en inhoudscontrole voor de meegeleverde runtime
+        run: python -m pip install -r scripts/requirements-runtime-probe.txt
+      - name: Werkelijke installer openen met uitsluitend de private runtime
+        if: runner.os != 'Linux'
+        run: node scripts/proef-gebundelde-runtime.mjs
+      - name: Linux native WebKit-interface en private installer controleren
+        if: runner.os == 'Linux'
+        run: |
+          cargo install tauri-driver --version 2.1.0 --locked
+          xvfb-run -a node scripts/proef-gebundelde-runtime.mjs
+      - name: Runtimebewijs bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gebundelde-runtime-${{ runner.os }}
+          path: .local/gebundelde-runtime-proef
+          include-hidden-files: true
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         with:
           name: open-office-studio-${{ runner.os }}

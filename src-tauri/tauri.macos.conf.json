@@ -1,5 +1,15 @@
 {
   "bundle": {
+    "resources": {
+      "resources/kantoorruntime/": null,
+      "resources/kantoorruntime/meta/": "kantoorruntime/meta/"
+    },
+    "macOS": {
+      "minimumSystemVersion": "11.0",
+      "files": {
+        "Helpers/LibreOffice.app": "resources/kantoorruntime/LibreOffice.app"
+      }
+    },
     "fileAssociations": [
       {
         "ext": [
