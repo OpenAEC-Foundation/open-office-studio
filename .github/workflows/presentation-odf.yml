@@ -14,6 +14,7 @@ on:
       - "src/i18n/locales/*/presentation.json"
       - "scripts/proef-presentatie-medianamen.mjs"
       - "scripts/proef-presentatie-media-herstart.mjs"
+      - "scripts/proef-presentatie-media-pauze.mjs"
       - "src/presentatie/testbestanden/synthetic-volume.*"
       - "scripts/test-odf-13.py"
       - "src/presentatie/odf-overgangen*"
@@ -106,6 +107,8 @@ jobs:
         run: node scripts/proef-presentatie-medianamen.mjs dist
       - name: Browser media replay, pause, seek, changed end and loop
         run: node scripts/proef-presentatie-media-herstart.mjs dist
+      - name: Slide-show autoplay respects manual pause across black and white screens
+        run: node scripts/proef-presentatie-media-pauze.mjs dist
       - name: Preserve schemas, native outputs and independent report
         if: always()
         uses: actions/upload-artifact@v4
@@ -117,5 +120,6 @@ jobs:
             .local/presentation-targeted-tests.json
             .local/presentatie-medianamen-browser
             .local/presentatie-media-herstart
+            .local/presentatie-media-pauze
           include-hidden-files: true
           if-no-files-found: error
