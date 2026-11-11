@@ -132,3 +132,39 @@ fixture, orakel en onafhankelijke kopieën; het is geen gemeten appgeheugen of
 algemene heapgarantie. De 1.028-groepenreeks duurt enkele seconden, geen uren.
 Veel tekstpagina’s, rijke tabellen, GUI-invoer en langdurige lekproeven blijven
 apart nodig. Zie [uitvoering, bronhashes en grenzen](../../../docs/tests/2026-11-11-writer-grote-bron.json).
+
+## Afzonderlijk adaptercontract
+
+`adapter.rs` is een per-documentcontract voor een toekomstige opt-in route,
+nog zonder Tauri-handler, frontend of productvoorraad. Aanmaken vereist expliciet
+`ingeschakeld = true`. De host moet eigenaar en documentidentiteit zelf binden,
+en bij heropenen een nieuwe, nooit hergebruikte levensduur leveren; deze velden
+mogen niet blind uit een WebView-aanvraag worden vertrouwd. De adapter moet op
+de documentwerker worden aangemaakt, gebruikt en vernietigd.
+
+Schema 1 en 2 blijven buiten deze adapter. Een aanvaarde schema-3-opdracht heeft
+een opeenvolgend volgnummer; ook een kernfout of bronverzoek verbruikt dat nummer.
+Een verkeerd venster/document, oude levensduur, herhaalde of overgeslagen opdracht
+wordt geweigerd. `vergeet` maakt de adapter ongeldig en ruimt het journaal op.
+Een nieuw document krijgt een nieuwe adapter, geen stille heropening.
+
+Alle geslaagde antwoordsoorten herhalen de bestaande bron-/opdrachtvelden plus
+`levensduur` en `volgnummer`. `route = gereed` bevat de delta; `volledigeBron`
+bevat uitsluitend `retryFull = true`; `bestaandeRoute` bevat uitsluitend een
+capaciteitsadvies met `fallbackSchema = 2` en `requiresFull = true`. Dat advies
+bevat geen delta, bron-token of algemene retry. Ongeldige aanvragen blijven
+fouten. Deze adapter voert zelf geen schema-2-fallback uit: dat moet expliciet
+met de volledige actuele bron en onafhankelijke validatie gebeuren.
+
+`antwoord_actueel` controleert uitsluitend de levensduur. Een toekomstige
+frontend moet daarnaast de oorspronkelijke bronversie, opdracht, sessie en
+selectie toetsen vóór toepassen, en resultaten in invoervolgorde verwerken.
+Dit is nog geen implementatie of bewijs van die frontendcontroles, een
+begrensde wachtrij, globale cache of selectie-/sluitgedrag in de app.
+
+`adapterproef.rs` bevat negen Rust-tests: expliciete inschakeling, binding,
+volgorde en fouttoelating, beide bronverzoeken, vergeten/heropenen, twee eigen
+werkerthreads, scheiding van oudere protocollen en alle 25 inhoudelijke
+antwoorden van de werkelijk opgenomen geschiedenisreeks. De twee bewuste
+weglatingen van levensduurbewaking en corruptie-afkeur laten hun gerichte proef
+falen. [Exact bewijs en resterende integratie](../../../docs/tests/2026-11-11-writer-adapter.json).
