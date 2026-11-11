@@ -42,6 +42,8 @@ def main():
     p.add_argument('--programma', type=Path, required=True)
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
+    p.add_argument('--tekstschema', type=int, choices=[2, 3], default=2, help='Kies de echte native invoerroute vóór een verse editoropening.')
+    p.add_argument('--verwacht-bronjournaal', action='store_true', help='Vereis echte schema-3-IPC met bronbinding, levensduur en volgnummer; geen relabeling.')
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
     p.add_argument('--verwacht-incrementele-bron', action='store_true', help='Vereis schema 2 en kleine bevestigde brondelta’s na de eerste native invoer.')
     p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
@@ -82,6 +84,9 @@ def main():
         http, inspectie = poorten()
         omgeving.update(GDK_BACKEND='x11', LC_ALL='C.UTF-8', WEBKIT_DISABLE_DMABUF_RENDERER='1', WEBKIT_INSPECTOR_HTTP_SERVER=f'127.0.0.1:{http}', WEBKIT_INSPECTOR_SERVER=f'127.0.0.1:{inspectie}', OFFICE_PROEF_HTTP=str(http))
         extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
+        extra += ['--tekstschema', str(a.tekstschema)]
+        if a.verwacht_bronjournaal:
+            extra.append('--verwacht-bronjournaal')
         if a.verwacht_rust_tekst:
             extra.append('--verwacht-rust-tekst')
         if a.verwacht_incrementele_bron:
@@ -258,6 +263,18 @@ async def proef(a):
         await start()
         async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
             await gereed(p)
+            # Querykeuze geldt pas voor een nieuw gemonteerde editor. Sluit
+            # uitsluitend de ongewijzigde eigen proefbron en open haar opnieuw.
+            await p.ev("history.replaceState(null,'',"+json.dumps('?writerBronjournaal='+str(int(a.tekstschema == 3)))+");true")
+            subprocess.run(['xdotool', 'key', '--clearmodifiers', 'ctrl+w'], check=True)
+            await p.run('let eind=performance.now()+15000;while(document.querySelector(".office-tekst")){if(document.querySelector(".office-dialoogacties"))throw Error("Verse proefbron onverwacht gewijzigd");if(performance.now()>eind)throw Error("Eigen editor sluit niet");await new Promise(r=>setTimeout(r,50))}return true;')
+            tweede = subprocess.run([str(a.programma), str(bron)], stdout=log, stderr=subprocess.STDOUT, timeout=30)
+            assert tweede.returncode == 0
+            await gereed(p)
+            rapport['gekozen_tekstschema'] = a.tekstschema
+            if a.tekstschema == 3:
+                rapport['journaalmogelijkheden'] = await p.run("return await window.__TAURI_INTERNALS__.invoke('writer_journaal_mogelijkheden');")
+                assert rapport['journaalmogelijkheden']['beschikbaar'] is True
             await controle(p, 'beginbron', origineel)
             await p.run("let e=proefApi().getEditorRef(),a=e.getYrsSession().paragraphs('body').at(-1);e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:a.paraId,offset:a.text.length}));proefApi().scrollToPage(500);proefApi().focus();await proefApi().flushPendingInput();return true;")
             await asyncio.sleep(3)
@@ -338,13 +355,16 @@ async def proef(a):
             """)
             vanaf = await p.ev('_toetsenProef.length')
             await p.ev("""
-              window._tekstTransport = {aanvragen: [], bronnen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: [], native_encoder_bevestigd: 0};
+              window._tekstTransport = {aanvragen: [], bronnen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: [], native_encoder_bevestigd: 0, bindingen: []};
               _tekstTransport.invoke_wijzigbaar = Object.getOwnPropertyDescriptor(window.__TAURI_INTERNALS__, 'invoke')?.writable ?? null;
               window._tekstFetchOud = window.fetch;
               window._tekstDoel = window.__TAURI_INTERNALS__.convertFileSrc('writer_tekst_voorbereiden', 'ipc');
+              window._tekstDoel3 = window.__TAURI_INTERNALS__.convertFileSrc('writer_journaal_voorbereiden', 'ipc');
               window.fetch = async function(url, gegevens, ...rest) {
-                if (String(url) !== _tekstDoel) return _tekstFetchOud.call(this, url, gegevens, ...rest);
-                const a = JSON.parse(gegevens.body).aanvraag;
+                if (String(url) !== _tekstDoel && String(url) !== _tekstDoel3) return _tekstFetchOud.call(this, url, gegevens, ...rest);
+                const envelop = JSON.parse(gegevens.body), a = envelop.gegevens?.aanvraag ?? envelop.aanvraag;
+                const binding = {schema:a.schema, opdracht:String(url) === _tekstDoel3 ? 'writer_journaal_voorbereiden' : 'writer_tekst_voorbereiden', levensduur:envelop.gegevens?.koppeling?.levensduur, volgnummer:envelop.gegevens?.volgnummer, gereed:false};
+                _tekstTransport.bindingen.push(binding);
                 _tekstTransport.aanvragen.push(a.text);
                 _tekstTransport.bronnen.push({schema:a.schema,basis:typeof a.basis==='string',base64_bytes:a.snapshot.length});
                 if (typeof _base64Laatste === 'string' && a.snapshot === _base64Laatste) _tekstTransport.native_encoder_bevestigd++;
@@ -352,6 +372,9 @@ async def proef(a):
                 const response = await _tekstFetchOud.call(this, url, gegevens, ...rest), json = response.json.bind(response);
                 response.json = async () => {
                   const antwoord = await json();
+                  binding.bronbinding = ['schema','requestId','documentId','sourceVersion','snapshotSha256','clientId'].every(k=>antwoord[k]===a[k]);
+                  binding.bronbinding = binding.bronbinding && (a.schema!==3 || (antwoord.levensduur===binding.levensduur && antwoord.volgnummer===binding.volgnummer));
+                  binding.gereed = true;
                   _tekstTransport.antwoorden++;
                   _tekstTransport.voorbereiding_ms.push(antwoord.preparationMs);
                   _tekstTransport.antwoord_ms.push(performance.now()-begin);
@@ -378,6 +401,11 @@ async def proef(a):
             if a.verwacht_rust_tekst:
                 assert ''.join(rapport['rust_teksttransport']['aanvragen']) == ' Een proefzin.', 'Gewone toetsreeks niet geheel via native Rust'
                 assert rapport['rust_teksttransport']['antwoorden'] == len(rapport['rust_teksttransport']['aanvragen']), 'Native tekstantwoord ontbreekt'
+            if a.verwacht_bronjournaal:
+                bindingen = rapport['rust_teksttransport']['bindingen']
+                assert bindingen and all(b['schema'] == 3 and b['opdracht'] == 'writer_journaal_voorbereiden' and b['gereed'] and b['bronbinding'] and isinstance(b['levensduur'], str) and b['volgnummer'] > 0 for b in bindingen), 'Geen volledige echte schema-3-journaalroute'
+                assert ''.join(rapport['rust_teksttransport']['aanvragen']) == ' Een proefzin.', 'Journaalroute mist getypte tekens'
+                assert len({b['levensduur'] for b in bindingen}) == 1 and [b['volgnummer'] for b in bindingen] == list(range(1, len(bindingen)+1)), 'Journaalvolgorde tijdens invoer wijkt af'
             if a.verwacht_incrementele_bron:
                 bronnen = rapport['rust_teksttransport']['bronnen']
                 assert len(bronnen) >= 2 and all(b['schema'] == 2 for b in bronnen), 'Geen volledige incrementele invoerroute'
