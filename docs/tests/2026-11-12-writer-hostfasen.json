@@ -1,0 +1,180 @@
+{
+  "datum": "2026-11-12",
+  "basis_integratie": "54d2f21271b212dfcdd4b9d07ad91d94b65a754b",
+  "productbron": "abe87e99e58d6483a0b30b9793d8932bc1917bd9",
+  "wijziging": "Alleen diagnose en bewijs. Productexpressies, appinstallatie en invoerprotocollen ongewijzigd.",
+  "conclusie": "Volledige bevestigde bron serialiseren domineert de geïsoleerde schema-2-Rust-kern. De voorraad kloont een Arc, geen document. Voorstelreplica al104van105keer hergebruikt. Geen nieuwe snelheids- of stabiliteitsfix geaccepteerd.",
+  "native": {
+    "programma_sha256": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+    "eigen_fixture": "docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx",
+    "geslaagd": true,
+    "fysieke_invoer": {
+      "tekens": 1052,
+      "interval_ms": 2,
+      "laatste_keyup_ms": 36473,
+      "begin_tot_bron_ms": 14642,
+      "laatste_keyup_tot_bron_ms": 216,
+      "laatste_keyup_tot_frame_ms": 2471,
+      "begin_tot_frame_ms": 16897,
+      "paginas": 65,
+      "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+      "wall_begin_tot_frame_ms": 16906,
+      "wall_verzonden_tot_frame_ms": 15140,
+      "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+    },
+    "undo_groepen": 2,
+    "functies": [
+      "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+      "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+      "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+    ],
+    "fouten": {
+      "gui": [],
+      "engine": [],
+      "console": []
+    },
+    "docx": {
+      "sha256": "a4c420e081673d3d764a8a9966f9f43ec7cd0843ed066aae6212d4641fe62e80",
+      "tabellen": 128,
+      "tekens_utf16": 91423,
+      "staarteind": "n en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF. S!"
+    },
+    "beelden": "invoer-redo.png en snel-getypt-bewaard.png visueel bekeken: geselecteerde pagina’s behouden tekst en tabellen. Geen volledige65pagina-/pixel-/taalacceptatie.",
+    "opname": "Max256aanvragen/32MiB;105echte volledige schema-2-aanvragen en antwoorden van eigen fixture, alleen gewone invoerfase. Geen kunstmatige antwoordvertraging in die fase. Overige functieproeven houden antwoorden bewust vast."
+  },
+  "analyse": {
+    "aanvragen": 105,
+    "volledige_bronnen": 1,
+    "exacte_voorstelovernames": 104,
+    "native_fasen_ms": {
+      "cursor": 68.0,
+      "bron": 114.0,
+      "hash": 1147.0,
+      "aanvraag": 7,
+      "transport": 6063.0,
+      "binding": 21.0,
+      "mutatie": 237.0,
+      "selectie": 366.0,
+      "rustBinnenMs": 5278,
+      "fetch_tot_json_ms": 6037.999999999982
+    },
+    "afspelen": {
+      "oorspronkelijke_bibliotheek": {
+        "direct": {
+          "json_ns": 3.794,
+          "parse_ns": 0.372,
+          "kern_ns": 3168.27,
+          "naar_value_ns": 0.72,
+          "antwoord_ns": 0.78,
+          "eenheid": "ms per105aanvragen, gemiddelde van3vooraf bepaalde reeksen"
+        },
+        "gemeten": {
+          "json_ns": 1.988,
+          "parse_ns": 0.369,
+          "kern_ns": 3158.3,
+          "naar_value_ns": 0.712,
+          "antwoord_ns": 0.726,
+          "eenheid": "ms per105aanvragen, gemiddelde van3vooraf bepaalde reeksen"
+        },
+        "voorraad": {
+          "json_ns": 2.476,
+          "parse_ns": 0.532,
+          "kern_ns": 3182.094,
+          "naar_value_ns": 1.471,
+          "antwoord_ns": 1.472,
+          "eenheid": "ms per105aanvragen, gemiddelde van3vooraf bepaalde reeksen"
+        }
+      },
+      "meetkopie": {
+        "direct": {
+          "json_ns": 3.736,
+          "parse_ns": 0.385,
+          "kern_ns": 3204.567,
+          "naar_value_ns": 0.76,
+          "antwoord_ns": 0.795,
+          "eenheid": "ms per105aanvragen, gemiddelde van3vooraf bepaalde reeksen"
+        },
+        "gemeten": {
+          "json_ns": 2.067,
+          "parse_ns": 0.384,
+          "kern_ns": 3203.544,
+          "naar_value_ns": 0.739,
+          "antwoord_ns": 0.73,
+          "eenheid": "ms per105aanvragen, gemiddelde van3vooraf bepaalde reeksen"
+        },
+        "voorraad": {
+          "json_ns": 2.763,
+          "parse_ns": 0.548,
+          "kern_ns": 3307.972,
+          "naar_value_ns": 1.391,
+          "antwoord_ns": 1.435,
+          "eenheid": "ms per105aanvragen, gemiddelde van3vooraf bepaalde reeksen"
+        }
+      }
+    },
+    "diepe_fasen_ms_per105": {
+      "encode": 2019.538,
+      "mutatie": 261.412,
+      "locate": 209.226,
+      "voorstel_hash": 180.46,
+      "hergebruikt": 178.627,
+      "caret": 92.95,
+      "delta": 39.007,
+      "import": 35.923,
+      "invoer": 0.494,
+      "vector": 0.298,
+      "batch_vector": 0.261,
+      "batch": 0.111,
+      "revisiebegin": 0.066,
+      "fragmentcontrole": 0.021,
+      "revisiebewaren": 0.02,
+      "cache": 0.006,
+      "nieuw": 0.0
+    },
+    "proces": {
+      "oorspronkelijk": {
+        "code": 0,
+        "wall_s": 28.80663316400023,
+        "cpu_user_s": 28.728219,
+        "cpu_system_s": 0.118971,
+        "binary_sha256": "7173d9155c348a99bc37898ea5c560d92d23f5c0fa192878d36d46c99da58786"
+      },
+      "meetkopie": {
+        "code": 0,
+        "wall_s": 29.459221327000705,
+        "cpu_user_s": 29.353644,
+        "cpu_system_s": 0.140988,
+        "binary_sha256": "d4a6264c0e0c626ca3e4c12340675ebdbfac2768d7837168b9599e05578dc794"
+      }
+    }
+  },
+  "controle": {
+    "exacte_antwoorden": 1890,
+    "vergelijking": "Twee drivers; ieder3vooraf bepaalde reeksen ×3routes ×105aanvragen. Alle antwoordvelden byte-/inhoudgelijk na normaliseren van alleen preparationMs. Geen nieuwe aanvragen gegenereerd, geen retries,104opeenvolgende exacte voorstelbytes en basisbindingen gecontroleerd.",
+    "routes": [
+      "Oorspronkelijke BronSpiegel rechtstreeks",
+      "Afzonderlijke bronspiegelkopie met faseklokken, dezelfde expressies",
+      "Oorspronkelijke BronVoorraad met eigen documentwerker"
+    ],
+    "bibliotheken": "Geoptimaliseerde rustc-drivers met afzonderlijk gepinde echte afhankelijkheden. Alle oorspronkelijke host/vendorbronbestanden sinds01351d0a bytegelijk, afgezien van uitsluitend cfg(test)-module-inclusie voor latere sorteergoldentest. Ruwe diff bewaard. Diepe meetkopie heeft alleen tijdmarkeringen en publieke uitlezer;332overige vendorbestanden bytegelijk.",
+    "referenties": 12,
+    "checks": "Native volledige functieronde, zelfstandige ZIP/XML-/tekst-/tabelcontrole,1890exacte antwoordvergelijkingen, meetexpressie-/bronpinnen- en archiefcontrole. Geen frontend-,TypeScript-,Python-suite of volledige appbouw herhaald: uitsluitend diagnose/documentatie, geen productwijziging.",
+    "eerste_afkeuring": "Brede bronvergelijking sinds01351d0a was terecht niet leeg door latere test/documentatie. Beperkte expliciete uitzondering controleert daarna alle oorspronkelijke bronbytes. Eerste driverbouw had een ongebruikte bytes-methodewaarschuwing; definitieve bouw gebruikt deze buiten de tijdmeting en is zonder waarschuwing."
+  },
+  "grenzen": [
+    "Native hash-/transportfasen zijn wandtijd inclusief WebKit-/eventloopwachten; rustBinnenMs is bestaande afgeronde binnenmeting. Transport minus binnenmeting is geen zuivere IPC-tijd. Tauri-scheduling/IPC-CPU niet afzonderlijk gemeten.",
+    "Losse Rust-fasen zijn synchrone wandtijd; proces-user/system-CPU afzonderlijk vastgelegd. Geen gelijkstelling van geïsoleerde3,2seconden met daadwerkelijke5,278seconden native Rust-binnenmeting. Meetkopie wijzigt timing; oorspronkelijke bibliotheek afzonderlijk gemeten.",
+    "Fysiek begin→frame16.906ms en verzonden→frame15.140ms blijven leidend. Ontvangen keyup→frame2.471ms alleen is onvoldoende. Renderlijst+twee rAFs bewijst geen fysieke paint/FPS.",
+    "Geen nieuwe app-ELF, Windows/macOS, releasevarianten, IME, urenlange stabiliteit of volledige functie-/visueledekking. Eerdere RefCell/geheugentoegangsfouten blijven open.",
+    "Geen issue gesloten of migratiegebied geaccepteerd; tien acceptatiegebieden blijven open. Geen nieuwe CI gestart voor deze productongewijzigde diagnose."
+  ],
+  "vervolg": "Onderzoek of de herhaalde volledige bevestigde bronserialisatie begrensd kan worden uitgesteld met exact behouden bronvector-, client-, document-, eigenaar-, voorstelbyte- en herstelbinding. Eerst apart schema-2-orakel inclusief cachemissers/afwijkende bytes/verkeerde vectoren/Undo/Redosynchronisatie; pas daarna eigen appkandidaat en vaste korte/rijke fysieke ABBA. Oude schema-3-route blijft uit totdat eigen appbewijs winst toont; oude sorteer-/hash-/wachtrijprototypes niet als fix overnemen.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-12-writer-hostfasen.tar.gz",
+    "sha256": "7fd36a5a2614bf7159eb789b13657002bb372627e93e4603803205d36a63124a",
+    "bytes": 2737611,
+    "reguliere_leden": 365,
+    "alle_leden_bytegecontroleerd": true,
+    "geen_elf_rlib_dist": true
+  }
+}
