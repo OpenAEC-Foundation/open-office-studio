@@ -18,8 +18,8 @@ await mkdir(uit, { recursive: true });
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const rapport = {
   executableSha256: hash(await readFile(exe)),
-  release: "v2026.46.1",
-  source: "de584578f91698ec051d345a335a7c3f19011a94",
+  release: process.env.RELEASE_TAG ?? "v2026.46.1",
+  source: process.env.RELEASE_SOURCE ?? "de584578f91698ec051d345a335a7c3f19011a94",
   checks: [],
   errors: [],
 };

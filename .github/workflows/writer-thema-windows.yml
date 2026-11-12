@@ -5,6 +5,22 @@ on:
       - ".github/workflows/writer-thema-windows.yml"
       - "scripts/proef-writer-thema-windows.mjs"
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Exact release tag to verify
+        default: v2026.46.1
+        required: true
+        type: string
+      installer_sha256:
+        description: Expected SHA256 of the Office Windows installer
+        default: 050d114c2ae230fa39c495755842371c432a8430289ec5c7bde956d6994f30db
+        required: true
+        type: string
+      source_commit:
+        description: Expected source commit of the release
+        default: de584578f91698ec051d345a335a7c3f19011a94
+        required: true
+        type: string
 permissions:
   contents: read
 jobs:
@@ -24,12 +40,21 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag || 'v2026.46.1' }}
+          INSTALLER_SHA256: ${{ inputs.installer_sha256 || '050d114c2ae230fa39c495755842371c432a8430289ec5c7bde956d6994f30db' }}
+          RELEASE_SOURCE: ${{ inputs.source_commit || 'de584578f91698ec051d345a335a7c3f19011a94' }}
         run: |
-          $installer = 'Open.Office.Studio_2026.46.1_x64-setup.exe'
-          gh release download v2026.46.1 --repo OpenAEC-Foundation/open-office-studio --pattern $installer --dir $env:RUNNER_TEMP
+          if ($env:RELEASE_TAG -notmatch '^v20[0-9]{2}\.[0-9]{1,2}\.[0-9]+$' -or $env:INSTALLER_SHA256 -notmatch '^[a-f0-9]{64}$' -or $env:RELEASE_SOURCE -notmatch '^[a-f0-9]{40}$') { throw 'Invalid pinned release inputs' }
+          $releases = gh api 'repos/OpenAEC-Foundation/open-office-studio/releases?per_page=100' | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Release lookup failed' }
+          $release = @($releases | Where-Object { $_.tag_name -eq $env:RELEASE_TAG } | Sort-Object draft)[0]
+          if ($null -eq $release -or $release.target_commitish -ne $env:RELEASE_SOURCE) { throw 'Release source differs' }
+          $version = $env:RELEASE_TAG.Substring(1)
+          $installer = "Open.Office.Studio_${version}_x64-setup.exe"
+          gh release download $env:RELEASE_TAG --repo OpenAEC-Foundation/open-office-studio --pattern $installer --dir $env:RUNNER_TEMP
           if ($LASTEXITCODE -ne 0) { throw 'Download failed' }
           $path = Join-Path $env:RUNNER_TEMP $installer
-          if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLower() -ne '050d114c2ae230fa39c495755842371c432a8430289ec5c7bde956d6994f30db') { throw 'Installer hash differs' }
+          if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLower() -ne $env:INSTALLER_SHA256) { throw 'Installer hash differs' }
           if ((Get-AuthenticodeSignature $path).Status -ne 'Valid') { throw 'Installer signature is invalid' }
           $target = Join-Path $env:RUNNER_TEMP 'OfficeThemeQA'
           $install = Start-Process $path -ArgumentList @('/S', "/D=$target") -PassThru -Wait
