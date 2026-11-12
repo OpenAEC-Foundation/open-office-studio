@@ -1,0 +1,52 @@
+name: Native Windows Writer theme acceptance
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/writer-thema-windows.yml"
+      - "scripts/proef-writer-thema-windows.mjs"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  installed-release:
+    runs-on: windows-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile
+      - name: Install the pinned public release in an isolated directory
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $installer = 'Open.Office.Studio_2026.46.1_x64-setup.exe'
+          gh release download v2026.46.1 --repo OpenAEC-Foundation/open-office-studio --pattern $installer --dir $env:RUNNER_TEMP
+          if ($LASTEXITCODE -ne 0) { throw 'Download failed' }
+          $path = Join-Path $env:RUNNER_TEMP $installer
+          if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLower() -ne '050d114c2ae230fa39c495755842371c432a8430289ec5c7bde956d6994f30db') { throw 'Installer hash differs' }
+          if ((Get-AuthenticodeSignature $path).Status -ne 'Valid') { throw 'Installer signature is invalid' }
+          $target = Join-Path $env:RUNNER_TEMP 'OfficeThemeQA'
+          $install = Start-Process $path -ArgumentList @('/S', "/D=$target") -PassThru -Wait
+          if ($install.ExitCode -ne 0) { throw "Installation failed: $($install.ExitCode)" }
+          node scripts/proef-writer-thema-windows.mjs (Join-Path $target 'open-office-studio.exe')
+          if ($LASTEXITCODE -ne 0) { throw 'Native theme acceptance failed' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer-theme-native-windows
+          path: .local/writer-thema-windows/*.json
+          include-hidden-files: true
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer-theme-native-windows-screenshots
+          path: .local/writer-thema-windows/*.png
+          include-hidden-files: true
+          if-no-files-found: ignore
