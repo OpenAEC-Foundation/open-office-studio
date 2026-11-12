@@ -1,5 +1,28 @@
 import { describe, expect, it } from "vitest";
-import { kenToetstips, lettersVan, zoekToetstip } from "./toetstips";
+import { kenToetstips, lettersVan, lintToetsActie, zoekToetstip } from "./toetstips";
+
+describe("lintopdrachten bij keydown", () => {
+  const toets = (key: string, extra = {}) => ({ key, ctrlKey: false, metaKey: false, altKey: false, shiftKey: false, defaultPrevented: false, ...extra });
+
+  it("laat gewone invoer en andere sneltoetsen zonder lintmeting door", () => {
+    for (const key of ["a", "A", " ", "Enter", "Backspace", "Delete", "ArrowLeft", "Escape", "Alt", "Shift", "Control", "Dead", "Unidentified"])
+      for (let masker = 0; masker < 16; masker++)
+        expect(lintToetsActie(toets(key, { ctrlKey: !!(masker & 1), metaKey: !!(masker & 2), altKey: !!(masker & 4), shiftKey: !!(masker & 8) }))).toBeNull();
+  });
+
+  it("behoudt F10 en Ctrl/Meta+F1 met precies de bestaande modifiers", () => {
+    for (let masker = 0; masker < 16; masker++) {
+      const modifiers = { ctrlKey: !!(masker & 1), metaKey: !!(masker & 2), altKey: !!(masker & 4), shiftKey: !!(masker & 8) };
+      expect(lintToetsActie(toets("F10", modifiers))).toBe(masker === 0 ? "tips" : null);
+      expect(lintToetsActie(toets("F1", modifiers))).toBe([1, 2, 3].includes(masker) ? "inklappen" : null);
+    }
+  });
+
+  it("neemt een al afgehandelde sneltoets niet over", () => {
+    expect(lintToetsActie(toets("F10", { defaultPrevented: true }))).toBeNull();
+    expect(lintToetsActie(toets("F1", { ctrlKey: true, defaultPrevented: true }))).toBeNull();
+  });
+});
 
 const prefixvrij = (codes: string[]) =>
   codes.every((a, i) =>

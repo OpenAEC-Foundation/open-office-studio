@@ -17,7 +17,7 @@ import {
   type GroepMaten,
   type Niveau,
 } from "./inklappen";
-import { kenToetstips, zoekToetstip } from "./toetstips";
+import { kenToetstips, lintToetsActie, zoekToetstip } from "./toetstips";
 import { focusbare, houdtPijltjes, naamVan, volgendeIndex } from "./focus";
 import "./lint.css";
 
@@ -374,12 +374,13 @@ export function Lint({
     const omlaag = (e: KeyboardEvent) => {
       altAlleen =
         e.key === "Alt" && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.repeat;
-      if (e.defaultPrevented || !bruikbaar()) return;
-      const zonder = !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey;
-      if (e.key === "F10" && zonder) {
+      // Gewone teksttoetsen mogen geen synchrone opmaakmeting van het lint afdwingen.
+      const actie = lintToetsActie(e);
+      if (!actie || !bruikbaar()) return;
+      if (actie === "tips") {
         e.preventDefault();
         schakel();
-      } else if (e.key === "F1" && (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) {
+      } else {
         e.preventDefault();
         setIngeklapt((oud) => !oud);
       }

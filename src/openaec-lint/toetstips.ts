@@ -90,3 +90,12 @@ export function zoekToetstip(
   if (index >= 0) return { index };
   return codes.some((code) => code.startsWith(getypt)) ? "verder" : null;
 }
+/** Alleen lintopdrachten vragen daarna of het lint zichtbaar en beschikbaar is. */
+export function lintToetsActie(
+  e: Pick<KeyboardEvent, "key" | "ctrlKey" | "metaKey" | "altKey" | "shiftKey" | "defaultPrevented">,
+): "tips" | "inklappen" | null {
+  if (e.defaultPrevented) return null;
+  if (e.key === "F10" && !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) return "tips";
+  if (e.key === "F1" && (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) return "inklappen";
+  return null;
+}
