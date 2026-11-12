@@ -1,0 +1,219 @@
+{
+  "onderwerp": "Geneste geometrie tijdens bewaaradoptie op de exact afgekeurde runtime",
+  "bronbasis": "7650833c",
+  "productwijziging": false,
+  "runtime": {
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-observatie/open-office-studio-ci-afgekeurd",
+    "sha256": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+    "bronzip": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-paniek/foutcontext.zip",
+    "alleen_eigen_kopie": true
+  },
+  "observatie": {
+    "probe-a": {
+      "geslaagd": true,
+      "runtime_sha256": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+      "over": 0,
+      "hersteld": true,
+      "queryObjecten": 1,
+      "tellingen": [
+        {
+          "methode": "caretRect:begin",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 13
+        },
+        {
+          "methode": "caretRect:eind",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 13
+        },
+        {
+          "methode": "rangeRects:begin",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 2
+        },
+        {
+          "methode": "rangeRects:eind",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 2
+        },
+        {
+          "methode": "applyUpdate:begin",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "applyUpdate:eind",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        }
+      ],
+      "gui_fouten": [],
+      "console_fouten": [],
+      "engine_fouten": []
+    },
+    "probe-b": {
+      "geslaagd": true,
+      "runtime_sha256": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+      "over": 0,
+      "hersteld": true,
+      "queryObjecten": 3,
+      "tellingen": [
+        {
+          "methode": "caretRect:begin",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 22
+        },
+        {
+          "methode": "caretRect:eind",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 22
+        },
+        {
+          "methode": "rangeRects:begin",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 4
+        },
+        {
+          "methode": "rangeRects:eind",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 4
+        },
+        {
+          "methode": "applyUpdate:begin",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "caretRect:begin",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "caretRect:eind",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "applyUpdate:eind",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        }
+      ],
+      "gui_fouten": [],
+      "console_fouten": [],
+      "engine_fouten": []
+    },
+    "probe-c": {
+      "geslaagd": true,
+      "runtime_sha256": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+      "over": 0,
+      "hersteld": true,
+      "queryObjecten": 3,
+      "tellingen": [
+        {
+          "methode": "caretRect:begin",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 22
+        },
+        {
+          "methode": "caretRect:eind",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 22
+        },
+        {
+          "methode": "rangeRects:begin",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 4
+        },
+        {
+          "methode": "rangeRects:eind",
+          "update_diepte": 0,
+          "bewaar_adoptie": false,
+          "aantal": 4
+        },
+        {
+          "methode": "applyUpdate:begin",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "caretRect:begin",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "caretRect:eind",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        },
+        {
+          "methode": "applyUpdate:eind",
+          "update_diepte": 1,
+          "bewaar_adoptie": true,
+          "aantal": 2
+        }
+      ],
+      "gui_fouten": [],
+      "console_fouten": [],
+      "engine_fouten": []
+    }
+  },
+  "bevinding": "Probe-b en probe-c volgen elk drie geometrieobjecten; in beide rondes twee caretRect-aanroepen met updateDiepte1 en bewaarAdoptie=true, dus vóór applyUpdate terugkeert. Het bijbehorende stackpad loopt via dezelfde bewaaradoptieroute als de eerdere CI-fout. Een facadeaanroep is niet automatisch een nieuwe Wasm-leesaanroep; caching en niet bereikbare objecten blijven een beperking.",
+  "negatieve_waarneming": "De eerste probe volgde alleen het aanvankelijke geometrieobject en zag geen geneste lezing. Na objectvervanging miste die probe activiteit. Dit was onvoldoende dekking, geen bewijs dat reentrantie ontbrak. Eerste script en ruwe resultaten behouden.",
+  "proefcontrole": "Afzonderlijke JS-VM-proef controleert this, argument- en retouridentiteit, oorspronkelijke exception-identiteit, oorspronkelijke functies en descriptors. Ook een vervangen geometrieobject wordt vóór de volgende update gevolgd en exact hersteld. Beide definitieve controles groen.",
+  "functioneel": "Drie afzonderlijke proeven op dezelfde exacte CI-ELF, elk drie plakrondes, bewaren na ronde1, verder bewerken, onafhankelijke DOCX-controle, verwerpen en nieuw document. Alle functiecontroles slagen, geen GUI/console/enginefouten; probe telkens hersteld, nul overgeslagen rijen. Paniek niet opnieuw lokaal opgetreden.",
+  "docx_nacontrole": {
+    "probe-a": {
+      "tabellen": 8,
+      "tekens": 5648,
+      "bestand_sha256": "fdfd6a5de8c4d1eea2db5d799f6d01fa20cd451ab165c9860da4f49b50b9e18f"
+    },
+    "probe-b": {
+      "tabellen": 8,
+      "tekens": 5648,
+      "bestand_sha256": "ca8809530c2e71292bcb1fe18053e5ded7f8792f64a73e1527c72640df46b754"
+    },
+    "probe-c": {
+      "tabellen": 8,
+      "tekens": 5648,
+      "bestand_sha256": "f232dc61f9bc9630bbd2da888ecac9d095624276bb07f5a6bde0169482261368"
+    }
+  },
+  "visueel": "probe-b/na-plakken.png en probe-c/nieuw-na-verwerpen-zonder-tooltip.png bekeken: geplakte tabeltekst,5 pagina’s/5648 tekens en daarna leeg nieuw document zichtbaar. Geen pixelvergelijking of acceptatie van de afgekeurde Linux-runtime.",
+  "grenzen": [
+    "Alleen diagnostische private scripts toegevoegd; geen SDK/runtime-/productbron, bundel, installatie of release veranderd.",
+    "Observatie wikkelt reeds bereikbare query-objecten; ververst vóór applyUpdate, maar garandeert niet dat elke interne of tijdens de callback nieuw gemaakte query wordt gevolgd.",
+    "Geen kunstmatige vertraging toegevoegd, maar de probe kost tijd en kan het optreden van een timingfout beïnvloeden. Geen performanceclaim.",
+    "Bevestigde geneste facadelezing ondersteunt onderzoek naar reentrantie; bewijst niet op zichzelf de precieze Rust-borrowoorzaak. De echte CI-paniek blijft staan.",
+    "Geen frontend-, Python- of native-workspacebouw/tests opnieuw uitgevoerd: er is geen productbron gewijzigd. Wel transparantieproeven en de drie echte GUI-rondes.",
+    "Zeven bestaande vaste ELF’s exact intact; de afgekeurde CI-ELF als achtste eigen observatiereferentie uit het oorspronkelijke ZIP hersteld en op hash gecontroleerd. Geen bouw gestart onder de bestaande vrije-ruimteondergrens.",
+    "Geen issue of migratiegebied voltooid."
+  ],
+  "volgende_stap": "Gerichte wijziging van de synchrone remote-updateprojectie tijdens bewaaradoptie onderzoeken: geometrie pas na beëindigen van de adoptie lezen, met expliciete editor-/sessie-/generatiebinding en opruiming. Eerst deterministische regressies voor timing, normale remote updates, lokale invoer, meerdere updates en gesloten/herladen editors; daarna native kandidaat en afgekeurde herstelproef opnieuw. Geen foutonderdrukking of algemene invoervertraging. Voor bouw eerst eigen duplicaten met exact herstelbewijs opruimen; grenzen3.1GiB start/3GiB stop behouden.",
+  "bewijs": {
+    "pad": "writer-bewaarobservatie-2026-11-12/bewijs.tar.gz",
+    "sha256": "f5fa855aa5f1a475037734d650f58e0e3945352b3f148fa9715f3f736c2400a1",
+    "bytes": 2100385,
+    "leden": 47
+  }
+}
