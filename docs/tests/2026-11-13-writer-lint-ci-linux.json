@@ -1,0 +1,100 @@
+{
+  "datum": "2026-11-13",
+  "bron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "ci": {
+    "id": 43320225062,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43320225062",
+    "status": "completed",
+    "conclusion": "failure",
+    "taken": {
+      "desktop (windows-latest)": "failure",
+      "desktop (macos-latest)": "success",
+      "desktop (ubuntu-22.04)": "success",
+      "runtimevergelijking": "skipped"
+    }
+  },
+  "native_linux": {
+    "artifact_ids": [
+      13993035439,
+      13992037948
+    ],
+    "zip_sha256": {
+      "native-volgorde.zip": "96e783fb6abc6cd25e7251d592f2daa1d16b5f75477461baf0a731d20b83ed8f",
+      "native-bewaren.zip": "14ee1d74ecd9b75278e2edcb1c2ab89e95dd0517c0526cf1edc02ab2f961fd38"
+    },
+    "zip_crc_en_paden_gecontroleerd": true,
+    "proeven": {
+      "native-volgorde/proef-native-writer-volgorde/rapport.json": {
+        "geslaagd": true,
+        "programma_sha256": "a31ab9f2b0069abb9509253f69b01bf5062e992ba7fcd3726cd120933d9de29a",
+        "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a",
+        "stappen": [
+          "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+        ],
+        "grenzen": "Echte WebKit-invoer tijdens native plakken: opmaak/undo, bewaren en verwerpen.\n\nAlleen het terugbezorgen van een werkelijk berekend Rust-antwoord wordt in\ntwee gevallen vastgehouden. Dit is een volgordeproef, geen snelheidsmeting.\n"
+      },
+      "native-volgorde/proef-native-writer-tekst/rapport.json": {
+        "geslaagd": true,
+        "programma_sha256": "a31ab9f2b0069abb9509253f69b01bf5062e992ba7fcd3726cd120933d9de29a",
+        "script_sha256": "28862c32bd871f6e5e9f184c64b43c57e05874a4ccd6f1c5a3b27109674cf0ca",
+        "stappen": [
+          "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "grenzen": "Echte native tekstinvoer: Undo, selectie en bewaren tijdens een vertraagd Rust-antwoord.\n\nAlleen het terugbezorgen van een werkelijk berekend tekstantwoord wordt\nvastgehouden. Eigen bron/profiel/venster; dit is geen snelheidsmeting.\nOFFICE_TEST_JOURNAAL=1 kiest expliciet schema 3; standaard wordt schema 2\ngetest. De werkelijke IPC-route en binding worden per aanvraag gecontroleerd.\nBeelden wachten op bron-/tekststabiliteit, verdwenen meldingen en native fading.\n"
+      },
+      "native-bewaren/rapport.json": {
+        "geslaagd": true,
+        "programma_sha256": "a31ab9f2b0069abb9509253f69b01bf5062e992ba7fcd3726cd120933d9de29a",
+        "script_sha256": "cf218701aaf0a2aeaeaae8aa42abc32b8c215e15626691f158130049761501fa",
+        "stappen": null,
+        "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières."
+      }
+    },
+    "docx": {
+      "native-volgorde/proef-native-writer-volgorde/Ontwerpnotitie.docx": {
+        "sha256": "c7d0ce223bd798c992bf87f22515ce609e667b588280af19030f6e920bebf87d",
+        "tabellen": 4,
+        "tekens_utf16": 2827
+      },
+      "native-volgorde/proef-native-writer-tekst/Ontwerpnotitie.docx": {
+        "sha256": "ee7706d6517cdb364a230dab597f4676e6bb6a7bd68bf266277a72c2254e4ebb",
+        "tabellen": 1,
+        "tekens_utf16": 715
+      },
+      "native-bewaren/geplakt.docx": {
+        "sha256": "678b510356d09c9df0e42f58f5b3a6590925d2ec2ff576147dc849107769c380",
+        "tabellen": 8,
+        "tekens_utf16": 5648
+      },
+      "native-bewaren/tussenbewaring.docx": {
+        "sha256": "7b86fea20cdabbdc34008ef4b71581b785d813fdf56947898ab22fba090c8bcd",
+        "tabellen": 2,
+        "tekens_utf16": 1412
+      },
+      "native-bewaren/Ontwerpnotitie.docx": {
+        "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+        "tabellen": 1,
+        "tekens_utf16": 706
+      }
+    },
+    "visueel": "Rijke native-volgorde/snel-getypt-bewaard.png en native-bewaren/na-plakken.png bekeken. Tekst, tabelrijen, paginaovergang en bewaartoestand zichtbaar; geen volledige pixelpariteit of alle pagina’s geaccepteerd.",
+    "elf_grens": "CIrapporten binden alle drie proeven aan ELF a31ab9f2; appbinary zelf niet gedownload of lokaal herhaald. Deze remote ELF verschilt van lokale acb770; geen runtimegelijkheid geclaimd."
+  },
+  "interpretatie": "Deze normale Linux-run reproduceert de oudere geheugenfouten niet. Dat bewijst geen oorzaak of oplossing. Windows is alleen tot Python-tests gekomen; testcorrectie4793522d wordt apart gecontroleerd in43324642811. macOS-taak groen, lokale macOS-pakket/GUI-inspectie niet uitgevoerd.",
+  "niet_gecontroleerd": [
+    "Geen nieuwe releasevariant-, installatie-, volledige pixel-, langdurige stabiliteits- of migratieacceptatie.",
+    "Alleen deze twee Linux-bewijsartifacts lokaal geopend; overige Linux-artifacts en macOS-installatie niet lokaal nagekeken.",
+    "Geen algemene Writer-snelheidsclaim uit deze doelbewust vertraagde native antwoordvolgordeproeven."
+  ],
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-lint-ci-linux.tar.gz",
+    "sha256": "91a223e28903c317e1f6bd96e0601f3c2bd7accb9baf80a732a908d444b3e541",
+    "bytes": 1539867,
+    "reguliere_leden": 25,
+    "alle_leden_bytegecontroleerd": true
+  }
+}
