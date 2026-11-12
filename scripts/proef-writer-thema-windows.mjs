@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { resolve, dirname } from "node:path";
 import { setTimeout as wacht } from "node:timers/promises";
 import { chromium } from "playwright";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
@@ -34,12 +34,25 @@ const fixture = Buffer.from(zipSync(pakket));
 let child, browser, page;
 async function start() {
   child = spawn(exe, [], {
+    cwd: dirname(exe),
     env: {
       ...process.env,
       WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: "--remote-debugging-port=9222",
       WEBVIEW2_USER_DATA_FOLDER: resolve(uit, "webview"),
     },
-    stdio: "ignore",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  const startLog = { pid: child.pid, stdout: "", stderr: "", exit: null };
+  rapport.starts ??= [];
+  rapport.starts.push(startLog);
+  child.stdout.on("data", (bytes) => {
+    startLog.stdout += bytes.toString();
+  });
+  child.stderr.on("data", (bytes) => {
+    startLog.stderr += bytes.toString();
+  });
+  child.on("exit", (code, signal) => {
+    startLog.exit = { code, signal };
   });
   let fout;
   child.on("error", (e) => {
@@ -47,6 +60,8 @@ async function start() {
   });
   for (let poging = 0; poging < 90; poging++) {
     if (fout) throw fout;
+    if (startLog.exit)
+      throw new Error(`App stopte voor CDP: ${JSON.stringify(startLog)}`);
     try {
       const r = await fetch("http://127.0.0.1:9222/json/version");
       if (r.ok) {
@@ -57,6 +72,21 @@ async function start() {
       /* Het eigen WebView2-proces start nog. */
     }
     await wacht(1000);
+  }
+  if (!browser) {
+    try {
+      startLog.processes = execFileSync(
+        "powershell.exe",
+        [
+          "-NoProfile",
+          "-Command",
+          "Get-CimInstance Win32_Process | Where-Object { $_.Name -in @('open-office-studio.exe', 'msedgewebview2.exe') } | Select-Object Name,ProcessId,ParentProcessId,ExecutablePath,CommandLine | ConvertTo-Json -Depth 3",
+        ],
+        { encoding: "utf8" },
+      );
+    } catch (e) {
+      startLog.diagnosticError = String(e);
+    }
   }
   assert(browser, "Geen CDP-verbinding met de geïnstalleerde WebView2-app");
   for (let poging = 0; poging < 60; poging++) {
@@ -92,15 +122,12 @@ async function stop() {
   child = undefined;
 }
 async function open() {
-  await page
-    .locator(".office input[type=file]")
-    .first()
-    .setInputFiles({
-      name: "Native-theme.docx",
-      mimeType:
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      buffer: fixture,
-    });
+  await page.locator(".office input[type=file]").first().setInputFiles({
+    name: "Native-theme.docx",
+    mimeType:
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    buffer: fixture,
+  });
   await page.locator(".office-tekst canvas").first().waitFor();
   await page.evaluate(() => {
     window.themaProef = () => {
