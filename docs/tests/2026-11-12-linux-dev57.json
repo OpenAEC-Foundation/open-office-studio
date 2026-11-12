@@ -1,0 +1,48 @@
+{
+  "onderwerp": "Beschikbare Linux-devbuild 57 en afgeronde desktopmatrix",
+  "desktop": {
+    "bron": "18617aa5476f5d8948a7b46b3a571f28b97f91c1",
+    "run": 43156543781,
+    "linux": "success",
+    "windows": "success",
+    "macos": "success",
+    "grens": "Alle geconfigureerde platformtaken slagen; overgeslagen platformspecifieke stappen staan exact in het ruwe CI-overzicht. Geen volledige GUI-dekking op Windows/macOS of alle distributies."
+  },
+  "dev": {
+    "bron": "2a63b96f8c7a91ab47423a2a5c70e1f2f0023bf6",
+    "run": 43155455626,
+    "artifact": {
+      "id": 13917185379,
+      "name": "Open-Office-Studio-Dev-Linux-x86_64-57",
+      "size_in_bytes": 154580257,
+      "digest": "sha256:22b0b5502eab7b59b3b2475fbdc61106098793d00bcddae79fb06951aec5e373",
+      "expired": false,
+      "expires_at": "2026-12-12T04:53:20Z"
+    },
+    "download": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43155455626/artifacts/13917185379",
+    "uitpakken": "Pak de gedownloade ZIP uit, vervolgens Open-Office-Studio-Dev-2026.45.52-linux-x86_64-2a63b96.tar.gz. Start ./start-dev.sh zonder sudo. Zonder FUSE: APPIMAGE_EXTRACT_AND_RUN=1 ./start-dev.sh",
+    "profiel": "org.openaec.office-studio.dev",
+    "release": "Afzonderlijk Actions-artefact; geen reguliere release gepubliceerd, updater uit. Bronverschil met desktopmatrix betreft uitsluitend de geteste checkoutregel.",
+    "pakketcontrole": "CI pakt de AppImage uit, controleert pakket en hashes van AppRun/ELF, voert GUI-proef uit en verpakt daarna. Downloadpakket in deze vervolgstap niet opnieuw lokaal opgehaald; GUI-artefact en CI-resultaten wel."
+  },
+  "functioneel": {
+    "gui": "Drie echte native plakrondes, tussentijds bewaren en verder bewerken; onafhankelijke DOCX-controle, verwerpen en nieuw document. Alle foutlijsten leeg.",
+    "nacontrole": {
+      "eindbestand_sha256": "822ef0c1e32b88292048208ce8f840f356329fd45318bc1953dc4da51a3838f8",
+      "tabellen": 8,
+      "tekens_in_w_t": 5648
+    },
+    "visueel": "na-plakken.png en nieuw-na-verwerpen-zonder-tooltip.png bekeken; document/tabeltekst, 5 pagina’s en status 5648 tekens respectievelijk leeg nieuw document zichtbaar. Geen pixelpariteit of volledige visuele acceptatie.",
+    "grenzen": [
+      "FUSE-mount niet getoetst; uitgepakte AppRun wel.",
+      "Andere Linux-pc/distributie niet getest.",
+      "Grote Writer-invoer-/selectievertraging blijft open.",
+      "Geen volledige migratie- of issueacceptatie."
+    ]
+  },
+  "bewijs": {
+    "pad": "linux-dev57-2026-11-12/bewijs.tar.gz",
+    "sha256": "550e044e59227dcd4a3b0117a8952e9e528adad9aa8897a04683b9113b731263",
+    "leden": 14
+  }
+}
