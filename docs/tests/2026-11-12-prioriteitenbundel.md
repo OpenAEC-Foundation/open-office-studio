@@ -29,8 +29,9 @@ uitsluitend beveiliging toetst.
   browsergevallen groen, geen paginafouten. Ook DOCX-kleuren, ongewijzigde
   documentstatus, afdrukvoorbeeld en PDF-inhoud worden vergeleken.
   [Volledig resultaat](prioriteiten-2026-11-12/donkere-weergave.json).
-  Dit is Chromium op Linux; de nog vereiste native Windows-toestanden en
-  volledige herstart-/printacceptatie zijn hiermee niet afgetekend.
+  Dit is Chromium op Linux. De aanvullende native Windows-bediening en
+  herstart zijn hieronder afzonderlijk vastgelegd; PDF/afdrukkleurvergelijking
+  is op de productiebuild in Chromium uitgevoerd.
 - #327: de taalstatuskandidaat uit PR #349 wordt afzonderlijk gemeten. De
   productcode van die kandidaat is geen onderdeel van deze bundel. Het
   bestaande meetinstrument telt ook uitgestelde rusttijd en taalopzoekingen.
@@ -58,8 +59,9 @@ De afzonderlijke native Windows-themaproef
 [43254061930](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43254061930)
 installeerde de vastgelegde openbare versie 2026.46.1 en bevestigde de
 installerhash en handtekening, maar kreeg geen CDP-verbinding met WebView2.
-Die bedieningsacceptatie is dus **niet geslaagd**; #280 en #281 blijven open.
-Deze proef toetst de oudere openbare installer, niet de nieuwe productcode.
+Deze eerste bedieningspoging is dus **niet geslaagd**. Deze proef toetst de
+oudere openbare installer, niet de nieuwe productcode. De gecorrigeerde
+testrunner en geslaagde vervolgproef staan hieronder.
 
 De systeemconverter 24.2.7.2 doorliep elf import-/exportgevallen, elf
 bewerk-/bewaar-/heropengevallen op de echte productiekern en tien opnieuw
@@ -86,3 +88,31 @@ De nieuwe lokale productiebuild op dezelfde productrevisie slaagde in 41,12
 seconden. Daarna slaagden alle tien donkere-weergaveproeven op die build.
 De bijbehorende [definitieve browsercontrole](prioriteiten-2026-11-12/donkere-weergave-definitief.json)
 blijft nadrukkelijk een Linux/Chromium-proef.
+
+## Native Windows-vervolgproef
+
+[Run 43330030560](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43330030560)
+slaagt op proefrevisie `9983fc19`. De werkelijk geïnstalleerde openbare
+installer blijft versie 2026.46.1, bron
+`de584578f91698ec051d345a335a7c3f19011a94`, programma-SHA256
+`5af483a7f4935baf82c69888296d589b5cda92dc5494746e2054bca452fbac7b`.
+
+De eerdere CDP-fout zat in de testconfiguratie: de app en WebView2 draaiden,
+maar de debuggeroptie ontbrak in het browserproces. Verhoogd gestarte hosts
+negeren volgens de [WebView2-documentatie](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/security#for-an-elevated-host-app-use-appropriate-override-flags)
+gebruikersgebonden overschrijvingen. De wegwerp-CI-runner krijgt daarom een
+tijdelijke machine-instelling voor uitsluitend deze programmanaam; de proef
+herstelt die instelling in `finally`. De geïnstalleerde app wordt niet aangepast.
+
+Veertien controles slagen: donkere en witte pagina zonder documentwijziging;
+de vijf knoptoestanden in beide thema's; behoud van de gekozen markeerkleur
+bij themawissel; en behoud van de donkere-paginavoorkeur na een echte
+procesherstart. De laagste gemeten glyphcontrastverhouding is 8,93:1.
+De proef kiest een nieuwe markeerkleur via de echte dialoog, controleert de
+indicator en de opgeslagen DOCX-XML, en meldt geen paginafouten.
+
+[Machineresultaat](prioriteiten-2026-11-12/native-windows-rapport.json),
+[donker thema](prioriteiten-2026-11-12/native-windows-forge.png) en
+[licht thema](prioriteiten-2026-11-12/native-windows-light.png). Samen met de
+bovenstaande tien productieproeven ondersteunt dit de acceptatie van #280
+en #281. Het is geen volledige native afdrukdialoog- of printerdrivermatrix.
