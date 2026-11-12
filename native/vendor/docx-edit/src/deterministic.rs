@@ -345,6 +345,9 @@ fn json_value(any: &Any) -> Value {
 }
 
 #[cfg(test)]
+mod sorteringproeven;
+
+#[cfg(test)]
 mod tests {
     use std::sync::Arc;
 

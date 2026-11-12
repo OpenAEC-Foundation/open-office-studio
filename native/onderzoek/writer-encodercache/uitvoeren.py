@@ -9,7 +9,7 @@ import sys
 ROOT=Path(__file__).resolve().parent
 REPO=ROOT.parents[2]
 LOKAAL=ROOT/'.local'
-BRON=REPO/'native/vendor/docx-edit/src/deterministic.rs'
+BRON=REPO/'native/onderzoek/referenties/deterministic-50467df1.rs'
 BRON_SHA='50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a'
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def vervang(s,oud,nieuw):
@@ -40,7 +40,7 @@ def controleer_regressies(tekst):
         raise RuntimeError("De drie vereiste Rust-proeven zijn niet volledig uitgevoerd")
 
 def main():
-    assert sha(BRON)==BRON_SHA,'Productie-encoder wijkt af van de gecontroleerde referentie'
+    assert sha(BRON)==BRON_SHA,'Historische encoder wijkt af van de gecontroleerde referentie'
     ref,kandidaat=genereer(BRON.read_text())
     bron=REPO/'native/onderzoek/writer-deterministische-sortering/.local/encoderbron.bin'
     assert sha(bron)=='abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55','Andere eigen proefbron'

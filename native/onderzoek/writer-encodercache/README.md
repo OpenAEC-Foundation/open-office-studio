@@ -1,7 +1,8 @@
 # Begrensde cache voor onveranderlijke encoderwaarden
 
 Afzonderlijke Linux-proef, zonder wijziging van appcode, protocol of appversie.
-De oorspronkelijke deterministische encoder wordt op zijn vastgelegde hash
+De oorspronkelijke deterministische encoder staat bevroren in
+`../referenties/deterministic-50467df1.rs` en wordt op zijn ongewijzigde hash
 gecontroleerd. De referentie blijft ongewijzigd. De kandidaat geeft alleen
 `write_any`/`write_json` toegang tot een objectgebonden cache. Sortering,
 JSON-conversie en alle overige encoderregels blijven gelijk. Geen globale

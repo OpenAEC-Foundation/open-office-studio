@@ -15,7 +15,7 @@ spec.loader.exec_module(module)
 
 class WriterDeterministischeSortering(unittest.TestCase):
     def test_alleen_tijdelijke_sorteerstructuur_verandert(self):
-        bron = (REPO/'native/vendor/docx-edit/src/deterministic.rs').read_text()
+        bron = (REPO/'native/onderzoek/referenties/deterministic-50467df1.rs').read_text()
         nieuw = module.sorteercode(bron)
         verschil = list(difflib.ndiff(bron.splitlines(), nieuw.splitlines()))
         self.assertEqual([r[2:] for r in verschil if r.startswith('- ')], ['            let sorted: BTreeMap<_, _> = values.iter().collect();'])
@@ -36,7 +36,7 @@ class WriterDeterministischeSortering(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             ref = root/'referentie'
-            bron = REPO/'native/vendor/docx-edit/src/deterministic.rs'
+            bron = REPO/'native/onderzoek/referenties/deterministic-50467df1.rs'
             bestanden = {
                 'voorbereiden.py': 'def bereid(): pass\n',
                 'Cargo.lock': '# Eigen vaste proeflock\n',

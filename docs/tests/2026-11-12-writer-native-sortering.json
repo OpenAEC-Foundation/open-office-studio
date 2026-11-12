@@ -1,0 +1,542 @@
+{
+  "schema": 1,
+  "datum": "2026-11-12",
+  "status": "Sorteeroptimalisatie afgewezen: componentwinst levert geen voldoende veilige appwinst. Oorspronkelijke encoder behouden; nieuwe gouden bytebehoudtest en CI-controle toegevoegd. Ernstige Writer-vertraging blijft open.",
+  "head_voor_stap": "2ea1c0f40e1550661501c2337a7f341d0c3ece52",
+  "productiefuncties_bytegelijk_aan_historische_encoder": true,
+  "runtimewijziging": "Geen. Alleen cfg(test)-module, gouden regressie, CI-uitvoering en bevroren historische onderzoeksreferentie blijven behouden. De twee sorteeraanpassingen zijn volledig teruggedraaid.",
+  "gouden_controlesom": "df68e07c726a0124a33b45b01cad3aae1e6c107487576e63af615bd416e0e148",
+  "gevaldekking": "704 gevallen: lege/kleine/grote objecten, Unicode-sleutels, geneste arrays, null/undefined, bijzondere getallen, buffers en BigInt; zowel binaire Any als JSON. Hash met lengteprefixen vóór de wijziging op originele encoder vastgelegd.",
+  "historische_referentie": {
+    "pad": "native/onderzoek/referenties/deterministic-50467df1.rs",
+    "sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+    "grens": "Oorspronkelijke hash blijft ongewijzigd. Cacheproef en sorteertest gebruiken voortaan vaste oude bron, niet een voortschrijdende productie-encoder. Oude proefankers en afwijzingen blijven streng."
+  },
+  "lokale_controles": {
+    "afgewezen_kandidaat_bouw": {
+      "code": 0,
+      "reden": null,
+      "seconden": 332.34023358201375,
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "minimum_vrije_bytes": 3285504000,
+      "start_vrije_bytes": 3492773888,
+      "toegestane_crates": [
+        "betteroffice-docx-edit",
+        "office-writer-plakken",
+        "open-office-studio"
+      ],
+      "bron_sha256": "cf99ae7d23a12ace4a535837e15061bef10728536b9a6c550450118c355b7e4a",
+      "test_sha256": "d03ceb116d89bc64aeb3f6e556227e2f2a638e2232fdf2a0abb3821703802f36",
+      "gecompileerde_crates": [
+        "betteroffice-docx-edit",
+        "office-writer-plakken",
+        "open-office-studio"
+      ],
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/native-sortering/open-office-studio-sortering",
+      "programma_sha256": "cb44a9c3ff47c793678da68487b3b1be346a723d765d24a9d8e1b53cab959d25"
+    },
+    "afgewezen_kandidaat_native_cratetests": 70,
+    "native_gui_ronden": 8,
+    "definitieve_python_tests": 127,
+    "native_python_tests_inclusief_vier_nieuwe_parserproeven": 13,
+    "gouden_runner_op_herstelde_encoder": {
+      "geslaagd": true,
+      "gevallen": 704,
+      "bron_sha256": "6f6b64c72c2c33c5fb022817967bbdbd39c46a3f87abe94d6a4834012ccbbe19",
+      "proef_sha256": "dbd114413f0b5817a6a755bc890f6e3ab63b364edf24ee6dddf3fb0b581c3cd1",
+      "bibliotheken": {
+        "yrs": {
+          "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+          "sha256": "1709ca2107720263f123fc1917c547299ea9a696f4c7e1da02e56a6d848f585e"
+        },
+        "serde_json": {
+          "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libserde_json-2b291618093ba6bc.rlib",
+          "sha256": "0d79206f5f4f0252e2a9b33883c96e3c181e79239d4a4af1ce52ec306b79a9f4"
+        },
+        "sha2": {
+          "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target/release/deps/libsha2-c5164a4bc2486fdb.rlib",
+          "sha256": "c4766e4ae1a29e9308d99bab903756de0458ef0a784432e25d48e2a45edb04e2"
+        }
+      },
+      "grens": "Alle echte encoderfuncties plus de gouden test; algemene upstreamtestmodule niet gecompileerd. Geen volledige Rust-/app-/platformacceptatie."
+    },
+    "artifacten_overdracht": "Zelfgemaakte Cargo-JSON met echt gepinde bibliotheekpaden door dezelfde CLI succesvol getest. Geen echte lokale Cargo-JSON-opname; CI voert de echte Cargo-stap nog uit.",
+    "yaml": "Syntactisch ingelezen; gewijzigde stappen gecontroleerd.",
+    "bron_webview_migratie": "Alle drie scripts slagen; alle tien migratiegebieden blijven open."
+  },
+  "invoermetingen": {
+    "oud-klein-a": {
+      "geslaagd": true,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16859,
+        "begin_tot_bron_ms": 1439,
+        "laatste_keyup_tot_bron_ms": 34,
+        "laatste_keyup_tot_frame_ms": 346.00000000000364,
+        "begin_tot_frame_ms": 1751.0000000000036,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1887,
+        "wall_verzonden_tot_frame_ms": 742,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 24,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-klein-a": {
+      "geslaagd": true,
+      "programma_sha256": "cb44a9c3ff47c793678da68487b3b1be346a723d765d24a9d8e1b53cab959d25",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16790,
+        "begin_tot_bron_ms": 1415,
+        "laatste_keyup_tot_bron_ms": 31,
+        "laatste_keyup_tot_frame_ms": 366,
+        "begin_tot_frame_ms": 1750,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1890,
+        "wall_verzonden_tot_frame_ms": 718,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 23,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-klein-b": {
+      "geslaagd": true,
+      "programma_sha256": "cb44a9c3ff47c793678da68487b3b1be346a723d765d24a9d8e1b53cab959d25",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16857,
+        "begin_tot_bron_ms": 1553,
+        "laatste_keyup_tot_bron_ms": 65,
+        "laatste_keyup_tot_frame_ms": 350,
+        "begin_tot_frame_ms": 1838,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1971,
+        "wall_verzonden_tot_frame_ms": 826,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 24,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "oud-klein-b": {
+      "geslaagd": true,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 17100,
+        "begin_tot_bron_ms": 1748,
+        "laatste_keyup_tot_bron_ms": 17,
+        "laatste_keyup_tot_frame_ms": 308,
+        "begin_tot_frame_ms": 2039,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 2173,
+        "wall_verzonden_tot_frame_ms": 991,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 25,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "oud-rijk-a": {
+      "geslaagd": true,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 46318,
+        "begin_tot_bron_ms": 22678.999999999996,
+        "laatste_keyup_tot_bron_ms": 264,
+        "laatste_keyup_tot_frame_ms": 3095.0000000000073,
+        "begin_tot_frame_ms": 25510.000000000004,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 25581,
+        "wall_verzonden_tot_frame_ms": 23771,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 121,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-rijk-a": {
+      "geslaagd": true,
+      "programma_sha256": "cb44a9c3ff47c793678da68487b3b1be346a723d765d24a9d8e1b53cab959d25",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 46082,
+        "begin_tot_bron_ms": 22485,
+        "laatste_keyup_tot_bron_ms": 277,
+        "laatste_keyup_tot_frame_ms": 2900,
+        "begin_tot_frame_ms": 25108,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 25310,
+        "wall_verzonden_tot_frame_ms": 23462,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 126,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "nieuw-rijk-b": {
+      "geslaagd": true,
+      "programma_sha256": "cb44a9c3ff47c793678da68487b3b1be346a723d765d24a9d8e1b53cab959d25",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 46662,
+        "begin_tot_bron_ms": 22736,
+        "laatste_keyup_tot_bron_ms": 243,
+        "laatste_keyup_tot_frame_ms": 3286,
+        "begin_tot_frame_ms": 25779,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 25868,
+        "wall_verzonden_tot_frame_ms": 24066,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 127,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "oud-rijk-b": {
+      "geslaagd": true,
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 46690,
+        "begin_tot_bron_ms": 21330,
+        "laatste_keyup_tot_bron_ms": 175,
+        "laatste_keyup_tot_frame_ms": 1800,
+        "begin_tot_frame_ms": 22955,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 23151,
+        "wall_verzonden_tot_frame_ms": 21356,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 107,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "beeldvergelijking": {
+    "oud-klein-a__nieuw-klein-a": {
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        }
+      },
+      "pakketverschillen": [
+        "docProps/core.xml"
+      ],
+      "alleen_wijzigingstijd_en_eventueel_TotalTime": true
+    },
+    "oud-klein-a__nieuw-klein-b": {
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        }
+      },
+      "pakketverschillen": [
+        "docProps/core.xml"
+      ],
+      "alleen_wijzigingstijd_en_eventueel_TotalTime": true
+    },
+    "oud-klein-a__oud-klein-b": {
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        }
+      },
+      "pakketverschillen": [
+        "docProps/core.xml"
+      ],
+      "alleen_wijzigingstijd_en_eventueel_TotalTime": true
+    },
+    "oud-rijk-a__nieuw-rijk-a": {
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 195,
+          "bbox": [
+            11,
+            4,
+            1438,
+            963
+          ]
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 91,
+          "bbox": [
+            6,
+            4,
+            1335,
+            997
+          ]
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        }
+      },
+      "pakketverschillen": [
+        "docProps/core.xml",
+        "docProps/app.xml"
+      ],
+      "alleen_wijzigingstijd_en_eventueel_TotalTime": true
+    },
+    "oud-rijk-a__nieuw-rijk-b": {
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 63,
+          "bbox": [
+            11,
+            4,
+            1132,
+            999
+          ]
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 30,
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ]
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        }
+      },
+      "pakketverschillen": [
+        "docProps/core.xml",
+        "docProps/app.xml"
+      ],
+      "alleen_wijzigingstijd_en_eventueel_TotalTime": true
+    },
+    "oud-rijk-a__oud-rijk-b": {
+      "beelden": {
+        "invoer-redo.png": {
+          "afwijkende_pixels": 33,
+          "bbox": [
+            1038,
+            940,
+            1120,
+            997
+          ]
+        },
+        "snel-getypt-bewaard.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord.png": {
+          "afwijkende_pixels": 0,
+          "bbox": null
+        }
+      },
+      "pakketverschillen": [
+        "docProps/core.xml"
+      ],
+      "alleen_wijzigingstijd_en_eventueel_TotalTime": true
+    }
+  },
+  "visuele_controle": "Vier bewaarbeelden samen bekeken: tekst, tabel, donkere pagina en pagina-indeling herkenbaar behouden. Alle drie korte beelden van beide kandidaten zijn pixelgelijk aan referentie. Rijk zijn cursor-/interfacepixels afwijkend; geen volledige pixelacceptatie. Alle bewaarde delen zijn bytegelijk behalve core.xml:modified en soms app.xml:TotalTime; na uitsluitend die metadata te neutraliseren ook die XML gelijk.",
+  "afkeurreden": "Korte kandidaat totalen1890/1971ms tegenover referentie1887/2173ms; eind366/350ms tegenover346/308ms. Rijk kandidaat25310/25868ms tegenover25581/23151ms; eind2900/3286ms tegenover3095/1800ms. Gemengde totalen en hoger einde zonder aantoonbare volledige verbetering. Gewone rijke native aanvragen126/127 tegenover121/107; de batching verandert mee. Geen bewezen oorzakelijke verklaring of statistische acceptatie.",
+  "afkeuringen_en_harnasfouten": [
+    "Eerste127Python-run faalde op historische productiehash/ankers. Vastgezet aan bytegelijke oude bron; checks niet versoepeld.",
+    "Eerste gouden placeholderassertie was bedoeld negatief en leverde de oude controlesom; log behouden.",
+    "Een herstelharnas gebruikte per ongeluk documentatietekst als Rustbron. Gecorrigeerd naar echte productiefuncties; geen productfout.",
+    "Eerste CI-uitvoercontrole vond de testnaam niet door een tussenliggende println. Debugprint verwijderd, dezelfde gouden test slaagt; niets gefilterd.",
+    "Eerste pakketvergelijking verwachtte alleen core.xml. Extra TotalTime-metadata in app.xml onafhankelijk onderzocht en exacte verschillen bewaard."
+  ],
+  "ruimte_en_behoud": {
+    "dubbele_eigen_download": {
+      "bron_zip": ".local/integratiecontrole/dev-7594/pakket.zip",
+      "zip_sha256": "5849d8d1a56583527b477802d15d1b7070b094fb45d8bceaa214e49fa3b21eac",
+      "lid": "Open-Office-Studio-Dev-2026.45.52-linux-x86_64-7594c20.tar.gz",
+      "losse_kopie": ".local/integratiecontrole/dev-7594/pakket/Open-Office-Studio-Dev-2026.45.52-linux-x86_64-7594c20.tar.gz",
+      "sha256": "cc8cee3e9cab6cba3f879fac71c9c97ea83e89c1a9094973eb2b69f4faa671d4",
+      "bytes": 154522367,
+      "mode": 436,
+      "mtime_ns": 1794005124422950481,
+      "onafhankelijk_hersteld_en_gecontroleerd": true,
+      "alleen_dubbele_eigen_download_verwijderd": true
+    },
+    "zes_eigen_oude_cli_programmas": {
+      "archief": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/native-sortering/eigen-oude-clis.tar.gz",
+      "sha256": "a674e02dfb1dfd149a567fc6f2f8bfeeebf8c654a819fd8054d358895fda0859",
+      "leden": {
+        "native-voorbereiding/meet": {
+          "sha256": "bc9d72357648852828233d0ba9159884ad00b422ac11db41a1a79cb142a1d268",
+          "mode": 509,
+          "mtime_ns": 1794443206864319173,
+          "bytes": 15508240
+        },
+        "native-voorbereiding/meet-beide": {
+          "sha256": "d7a496d2f6ba4a38a7ebedf05483e39da433b428fbfcfc63f8467684650f9cdb",
+          "mode": 509,
+          "mtime_ns": 1794443295960797871,
+          "bytes": 15513584
+        },
+        "native-voorbereiding/meet-controle": {
+          "sha256": "d8bb013aa17f23d05daf4b06ca961d61d32775b23280c47fc11ec63e2c7caae6",
+          "mode": 509,
+          "mtime_ns": 1794443363200178327,
+          "bytes": 15527568
+        },
+        "bronhergebruik/herhaal": {
+          "sha256": "b984f492d2934187ff194a85745a9d414372b07e0bd074d70ee3a91c4caf2e5f",
+          "mode": 509,
+          "mtime_ns": 1794011389060096641,
+          "bytes": 14631600
+        },
+        "bronhergebruik/herhaal-desktop": {
+          "sha256": "1e2ba98d2bd0e27461f9f050ff2603976c9a8fa60beded233e59b584a90f8dc6",
+          "mode": 509,
+          "mtime_ns": 1794011453043753609,
+          "bytes": 15024336
+        },
+        "bronhergebruik/huidige-bronkosten": {
+          "sha256": "e8259524a88a7912b055b962232626089027ca974502ebd5b451cd360df45821",
+          "mode": 509,
+          "mtime_ns": 1794011534520588106,
+          "bytes": 15291704
+        }
+      },
+      "elk_lid_ook_los_hersteld_en_gecontroleerd": true
+    },
+    "samenvatting": "Alleen dubbele eigen uitgepakte download verwijderd na echte herstel-/hash/mode/mtimeproef; originele ZIP behouden. Zes eigen oude diagnostiek-ELFs verliesloos gecomprimeerd en elk los herstelgetest. Alle vijf vaste referenties, twee eerdere prototype-ELFs, SDK, standaarddist en gebruikersapp behouden."
+  },
+  "niet_gecontroleerd": [
+    "Geen Windows/macOS of echte CI-uitvoering van de nieuwe teststap gecontroleerd in deze lokale ronde.",
+    "Geen volledige Rust-werkruimte-/upstreamtestdekking of nieuwe frontendtestuitslag geclaimd.70echte voorbereidingscratetests horen bij de afgewezen kandidaat; definitieve productie-encoder is hersteld en de nieuwe test controleert haar echte functies.",
+    "Geen schema3-GUI, fysieke OS-IME, alle edities, GUI-heropening van deze bewaarde DOCX of fysieke schermpaint/FPS.",
+    "Testtijden zijn wall-tijd. De gewone invoermeting bevat geen kunstmatige antwoordvertraging; vervolgselectie-/bewaar-/verwerpproeven houden echte antwoorden bewust vast.",
+    "Geen issue of migratiegebied afgerond; geen nieuwe runtimeoptimalisatie/installatie/release."
+  ],
+  "vervolg": "Volg nieuwe native CI-resultaten afzonderlijk. Prioriteit: hoofdthread/bronpublicaties/renderstaart in rijke invoer onderzoeken; meer native aanvragen bij snellere voorbereidingen expliciet meenemen. Geen nieuwe blinde bundelwacht of microbenchmarkwinst als appwinst overnemen.",
+  "bewijs": {
+    "pad": "docs/tests/writer-native-sortering-2026-11-12/bewijs.tar.gz",
+    "sha256": "23b8c7606c5dac8fe73f4ad2fca3c2aaae382ef03a6bdd45455a0bbd0e134b09",
+    "bytes": 4572592,
+    "bestanden": 124,
+    "alle_leden_bytegelijk_gecontroleerd": true
+  }
+}

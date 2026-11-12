@@ -46,3 +46,7 @@ tellerstap. Zo blijft de allocatievolgorde van andere nieuwe identiteiten,
 zoals alinea’s, gelijk; alleen de nieuwe revisienaam gebruikt de eigen
 naamruimte. Gerichte controles eisen ongewijzigde bestaande identiteiten
 en een bijectie tussen de nieuwe revisies, zonder auteurs of rollen te wissen.
+
+Een vaste controlesom bewaakt sinds 12 november 704 canonieke object- en
+JSON-gevallen met onder meer Unicode, lege objecten, arrays, buffers en
+bijzondere getallen. De oorspronkelijke boomencoder blijft behouden.
