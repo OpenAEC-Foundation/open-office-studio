@@ -1,0 +1,53 @@
+{
+  "onderwerp": "Windows-checkout van de bevroren Writer-encoder",
+  "afgekeurde_ci": {
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43155451946",
+    "bron": "2a63b96f8c7a91ab47423a2a5c70e1f2f0023bf6",
+    "windows": "127 tests, 1 fout, 2 overgeslagen; hash van bevroren referentie wijkt af",
+    "linux_macos": "nog bezig bij vastlegging"
+  },
+  "oorzaak_en_bewijs": {
+    "voor": {
+      "sha256": "38a8c6bd3e55e9e8d6d74eee1ae06da3cd90df602efe20d764a910e8f99794a7",
+      "crlf": 722,
+      "bytes": 24635,
+      "attributen": "native/onderzoek/referenties/deterministic-50467df1.rs: text: unspecified\nnative/onderzoek/referenties/deterministic-50467df1.rs: eol: unspecified"
+    },
+    "na": {
+      "sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+      "crlf": 0,
+      "bytes": 23913,
+      "attributen": "native/onderzoek/referenties/deterministic-50467df1.rs: text: unset\nnative/onderzoek/referenties/deterministic-50467df1.rs: eol: unspecified"
+    }
+  },
+  "wijziging": "Alleen .gitattributes: native/onderzoek/referenties/*.rs -text -whitespace. De bronbytes en verwachte hash blijven exact gelijk.",
+  "controles": {
+    "git_checkout": "Echte afzonderlijke Git-repository met core.autocrlf=true: oude Windows-fouthash exact gereproduceerd; nieuwe checkout exact oorspronkelijk. Linux-simulatie van Git-checkout, geen uitgevoerde Windows-app.",
+    "python": "127 geslaagd, geen overgeslagen met Node in PATH",
+    "typescript": "pnpm exec tsc --noEmit: exit 0",
+    "afkeuringen": {
+      "checkout_eerste_poging": "Afgekeurd door assertie: tweede variant gebruikte de eerder naar CRLF omgezette werkkopie als invoer. Herhaald met oorspronkelijke bytes voor elke variant; beide exacte hashes vervolgens bewezen.",
+      "python_eerste_poging": "Afgekeurd: Node niet in PATH, zes fouten en twee overgeslagen proeven. Herhaald met expliciet Node-pad: alle 127 groen."
+    }
+  },
+  "grenzen": [
+    "Nieuwe Windows-CI moet na push nog volgen.",
+    "Geen runtimewijziging, GUI-proef, pakketbouw of snelheidsclaim in deze stap.",
+    "Linux-devbuild 43155455626 loopt nog op 2a63b96f.",
+    "Geen issue of migratiegebied voltooid."
+  ],
+  "bewijs": {
+    "pad": "writer-referentie-checkout-2026-11-12/bewijs.tar.gz",
+    "sha256": "c1a36776c2d1625d030c4c1735046b233fc4ad5e45b1928777362353001e7fa9",
+    "bytes": 5466,
+    "leden": [
+      "checkout.json",
+      "windows-foutfragment.log",
+      "afgekeurde-controles.json",
+      "python-zonder-node-afgekeurd.log",
+      "python.log",
+      "typescript.log"
+    ]
+  },
+  "integratiecommit": "18617aa5476f5d8948a7b46b3a571f28b97f91c1"
+}
