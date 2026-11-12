@@ -116,3 +116,15 @@ indicator en de opgeslagen DOCX-XML, en meldt geen paginafouten.
 [licht thema](prioriteiten-2026-11-12/native-windows-light.png). Samen met de
 bovenstaande tien productieproeven ondersteunt dit de acceptatie van #280
 en #281. Het is geen volledige native afdrukdialoog- of printerdrivermatrix.
+
+## Stabiele rekenbladbediening in CI
+
+Run 43332049509 selecteerde bij de hyperlinkproef een rij te laag: de
+naamcel was al bijgewerkt, terwijl het beeld na programmatische selectie
+nog verschoof. Het foutscherm toonde A7 en de bijbehorende onoplosbare
+formule, terwijl de stap A6 met het verboden adres verwachtte. De proef
+wacht nu tot celpositie en scrollpositie over gerenderde frames stabiel
+zijn en klikt binnen de cel in plaats van op de rand. De echte muisklik,
+beide exacte foutmeldingen en oorspronkelijke tijdslimieten blijven behouden.
+De volledige object-/hyperlinkproef slaagde lokaal met zowel de huidige
+kern als de vastgezette referentiekern; CI toetst dezelfde proef opnieuw.
