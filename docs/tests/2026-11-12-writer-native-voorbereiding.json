@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "datum": "2026-11-12",
+  "status": "Afgeronde componentdiagnose, geen productwijziging; sorteervariant nog geen volledige appkandidaat. Writer-vertraging en alle migratie-/platformacceptaties blijven open.",
+  "head": "40ab2129f15f87230f4378eaf43e3a9db18be4eb",
+  "productbron": "0a43e8c603d8f7053081a23f7c78d268f8bae91c",
+  "bronpinnen": {
+    "native/vendor/docx-edit/src/deterministic.rs": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+    "native/vendor/docx-edit/src/clipboard_batch.rs": "b43ca6af112aef44a16cc09245d4fbf85c813dbca9edae9db688567d41987c79",
+    "native/crates/office-writer-plakken/src/bronspiegel.rs": "1d60a1652c7fc5428b8336073a452a23b204d78dc34b8fef850f42f8bc0c7404",
+    "native/crates/office-writer-plakken/examples/meet_bronkosten.rs": "654c1ddf9ccd3e3873cfbefbe5abe8c6b15cccffe410aa94ff9058bc58750932",
+    "src/tekst/bewerken/rustPlakken.ts": "51154fab14b0386f460bd2959117ea34ca343b6ce952537269bde8f4c7f1eb9a",
+    "pnpm-lock.yaml": "8159a0c3b0c5117d63c8baca7d3c02b162905b3284d98a3b47499034f7dcd2aa"
+  },
+  "methode": "Eerste echte schema2-aanvraag uit de vaste eigen rijke fixture in de bestaande Linux-ELF opgenomen. Kleine rustc-hulpmiddelen gebruiken vastgelegde bestaande Cargo-bibliotheken; bronimport gevolgd door24 heen/weer-encoderparen met exact dezelfde bron. Alle gemeten encoderuitvoer moet bytegelijk zijn aan de productiecodec. Tweede eigen bewaarde bron gebruikt5997678bytes. Geen nieuwe appbouw of installatie.",
+  "uitkomsten": {
+    "rijk-meting": {
+      "bronbytes": 3017829,
+      "canonieke_bytes": 3017829,
+      "aanvraag_sha256": "616bf4cbf126c8a2aa430553945a5ca06d2e10a13fc08070fde8d25d0c4f81fc",
+      "bestaand": {
+        "aantal": 24,
+        "min_ms": 19.285107,
+        "mediaan_ms": 20.8783465,
+        "p95_ms": 21.776711,
+        "max_ms": 23.198809
+      },
+      "vector": {
+        "aantal": 24,
+        "min_ms": 17.028345,
+        "mediaan_ms": 18.7467235,
+        "p95_ms": 20.475123,
+        "max_ms": 21.375008
+      },
+      "sha_ns": {
+        "aantal": 24,
+        "min_ms": 1.88006,
+        "mediaan_ms": 1.9015755,
+        "p95_ms": 1.92313,
+        "max_ms": 1.926671
+      },
+      "sha_hex_ns": {
+        "aantal": 24,
+        "min_ms": 1.88491,
+        "mediaan_ms": 1.892731,
+        "p95_ms": 1.906961,
+        "max_ms": 1.910491
+      },
+      "voorbereiding_volledige_aanvraag_ms": 107.000704,
+      "voorbereiding_vervolgen": {
+        "aantal": 19,
+        "min_ms": 33.264565,
+        "mediaan_ms": 33.990689,
+        "p95_ms": 36.349572,
+        "max_ms": 36.349572
+      },
+      "geencodeerde_mediaanwinst_pct": 10.209730928644166,
+      "grens": "Alleen encoderafzondering; de twintig voorbereidingen gebruiken de bestaande productbibliotheek. Hun tijden zijn GEEN meting van de vectorvariant."
+    },
+    "rijk-beide": {
+      "bronbytes": 3017829,
+      "canonieke_bytes": 3017829,
+      "aanvraag_sha256": "616bf4cbf126c8a2aa430553945a5ca06d2e10a13fc08070fde8d25d0c4f81fc",
+      "bestaand": {
+        "aantal": 24,
+        "min_ms": 19.934136,
+        "mediaan_ms": 20.6775305,
+        "p95_ms": 22.28304,
+        "max_ms": 24.703075
+      },
+      "vector": {
+        "aantal": 24,
+        "min_ms": 16.906449,
+        "mediaan_ms": 17.704068,
+        "p95_ms": 18.617359,
+        "max_ms": 20.405329
+      },
+      "sha_ns": {
+        "aantal": 24,
+        "min_ms": 1.898131,
+        "mediaan_ms": 1.913016,
+        "p95_ms": 1.951942,
+        "max_ms": 2.024712
+      },
+      "sha_hex_ns": {
+        "aantal": 24,
+        "min_ms": 1.898561,
+        "mediaan_ms": 1.907636,
+        "p95_ms": 1.952312,
+        "max_ms": 2.021662
+      },
+      "voorbereiding_volledige_aanvraag_ms": 109.795142,
+      "voorbereiding_vervolgen": {
+        "aantal": 19,
+        "min_ms": 33.366685,
+        "mediaan_ms": 35.307857,
+        "p95_ms": 39.469141,
+        "max_ms": 39.469141
+      },
+      "geencodeerde_mediaanwinst_pct": 14.380162563416366,
+      "grens": "Alleen encoderafzondering; de twintig voorbereidingen gebruiken de bestaande productbibliotheek. Hun tijden zijn GEEN meting van de vectorvariant."
+    },
+    "groot-beide": {
+      "bronbytes": 5997678,
+      "canonieke_bytes": 5997678,
+      "aanvraag_sha256": "9a977123f0ca4948189c660092a702a14dd67959361b6f71c9acac383da2dadd",
+      "bestaand": {
+        "aantal": 24,
+        "min_ms": 39.848725,
+        "mediaan_ms": 41.023557,
+        "p95_ms": 42.748013,
+        "max_ms": 45.506419
+      },
+      "vector": {
+        "aantal": 24,
+        "min_ms": 34.122511,
+        "mediaan_ms": 35.293268,
+        "p95_ms": 37.804983,
+        "max_ms": 39.091881
+      },
+      "sha_ns": {
+        "aantal": 24,
+        "min_ms": 3.743192,
+        "mediaan_ms": 3.7659979999999997,
+        "p95_ms": 3.789822,
+        "max_ms": 3.870223
+      },
+      "sha_hex_ns": {
+        "aantal": 24,
+        "min_ms": 3.749662,
+        "mediaan_ms": 3.764067,
+        "p95_ms": 3.850862,
+        "max_ms": 3.871212
+      },
+      "voorbereiding_volledige_aanvraag_ms": 216.053045,
+      "voorbereiding_vervolgen": {
+        "aantal": 19,
+        "min_ms": 69.125948,
+        "mediaan_ms": 70.842558,
+        "p95_ms": 72.668289,
+        "max_ms": 72.668289
+      },
+      "geencodeerde_mediaanwinst_pct": 13.968289000390676,
+      "grens": "Alleen encoderafzondering; de twintig voorbereidingen gebruiken de bestaande productbibliotheek. Hun tijden zijn GEEN meting van de vectorvariant."
+    },
+    "rijk-controle": {
+      "bronbytes": 3017829,
+      "canonieke_bytes": 3017829,
+      "aanvraag_sha256": "616bf4cbf126c8a2aa430553945a5ca06d2e10a13fc08070fde8d25d0c4f81fc",
+      "bestaand": {
+        "aantal": 24,
+        "min_ms": 19.401438,
+        "mediaan_ms": 20.524364499999997,
+        "p95_ms": 22.492077,
+        "max_ms": 24.123967
+      },
+      "vector": {
+        "aantal": 24,
+        "min_ms": 16.531641,
+        "mediaan_ms": 17.592067,
+        "p95_ms": 19.072146,
+        "max_ms": 22.682887
+      },
+      "sha_ns": {
+        "aantal": 24,
+        "min_ms": 1.888822,
+        "mediaan_ms": 1.899942,
+        "p95_ms": 1.930072,
+        "max_ms": 2.007073
+      },
+      "sha_hex_ns": {
+        "aantal": 24,
+        "min_ms": 1.880392,
+        "mediaan_ms": 1.8948765,
+        "p95_ms": 1.924371,
+        "max_ms": 2.010192
+      },
+      "voorbereiding_volledige_aanvraag_ms": 107.098511,
+      "voorbereiding_vervolgen": {
+        "aantal": 19,
+        "min_ms": 33.793505,
+        "mediaan_ms": 35.676597,
+        "p95_ms": 44.385909,
+        "max_ms": 44.385909
+      },
+      "geencodeerde_mediaanwinst_pct": 14.286910077045246,
+      "grens": "Alleen encoderafzondering; de twintig voorbereidingen gebruiken de bestaande productbibliotheek. Hun tijden zijn GEEN meting van de vectorvariant."
+    },
+    "groot-controle": {
+      "bronbytes": 5997678,
+      "canonieke_bytes": 5997678,
+      "aanvraag_sha256": "9a977123f0ca4948189c660092a702a14dd67959361b6f71c9acac383da2dadd",
+      "bestaand": {
+        "aantal": 24,
+        "min_ms": 39.054072,
+        "mediaan_ms": 41.771178500000005,
+        "p95_ms": 44.787837,
+        "max_ms": 44.982439
+      },
+      "vector": {
+        "aantal": 24,
+        "min_ms": 33.821459,
+        "mediaan_ms": 35.55544999999999,
+        "p95_ms": 36.930319,
+        "max_ms": 38.167937
+      },
+      "sha_ns": {
+        "aantal": 24,
+        "min_ms": 3.740083,
+        "mediaan_ms": 3.7672185000000002,
+        "p95_ms": 3.797814,
+        "max_ms": 3.862274
+      },
+      "sha_hex_ns": {
+        "aantal": 24,
+        "min_ms": 3.752824,
+        "mediaan_ms": 3.7748530000000002,
+        "p95_ms": 3.827594,
+        "max_ms": 3.876524
+      },
+      "voorbereiding_volledige_aanvraag_ms": 216.246489,
+      "voorbereiding_vervolgen": {
+        "aantal": 19,
+        "min_ms": 71.752325,
+        "mediaan_ms": 74.791173,
+        "p95_ms": 87.489652,
+        "max_ms": 87.489652
+      },
+      "geencodeerde_mediaanwinst_pct": 14.88042407039105,
+      "grens": "Alleen encoderafzondering; de twintig voorbereidingen gebruiken de bestaande productbibliotheek. Hun tijden zijn GEEN meting van de vectorvariant."
+    }
+  },
+  "interpretatie": "In twee kleine-componentronden gebruikt de bestaande rijke serialisatie circa20,5–20,7ms tegenover17,6–17,7ms met beide Vec-sorteringen; grotere bron41,0–41,8ms tegenover35,3–35,6ms. Dit is circa14% winst in alleen de serialisatiefunctie. Losse bestaande voorbereidingen gebruiken circa35–36ms en71–75ms op deze bronnen. Hash is circa2ms bij3MB. Dit bewijst geen volledige appwinst: de voorbereidingslus gebruikt de bestaande bibliotheek en browser/IPC/render/backlog ontbreken. Tijden van los gemeten componenten niet zonder meer optellen of aftrekken als exacte fasetijd.",
+  "controles": {
+    "bestaande_native_gui": {
+      "geslaagd": true,
+      "schema": 2,
+      "paginas": 65,
+      "teksttekens": 1052,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f"
+    },
+    "704_any_json_gevallen_per_bron": true,
+    "20_exacte_volledige_bronvervolgen_per_bron": true,
+    "alle_24_benchmarkparen_bytegelijk_per_ronde": true,
+    "python_tests": 127,
+    "python_syntaxis": "Opnamehelper en drie kleine bouwscripts slagen.",
+    "beoordeeld_beeld": "Bewaarde rijke bron van het bestaande programma bekeken: donkere paginas, tabel en tekstweergave herkenbaar behouden; geen beeld of pixelacceptatie van een gewijzigde app."
+  },
+  "prototype": "Alleen lokale kopieën van deterministic.rs: vervang BTreeMap-sortering van Any::Map en JSON-map door Vec-sleutelreferenties, lexicografische sort_unstable_by, vervolgens dezelfde schrijfroutine en dezelfde JSON-map. Unieke sleutels maken de volgorde gelijk. Specifieke waarden, bronvector, hash, bevestigde basis, limieten en sessiechecks blijven behouden.",
+  "niet_gecontroleerd": [
+    "Instant meet wandkloktijd, geen proces-CPUtijd. Scheduler- en cachevariatie blijven mogelijk.",
+    "Geen volledige productbouw, kandidaat-GUI of kandidaatlatency. Het prototype is niet in productiebron/SDK/standaardbundel opgenomen.",
+    "Geen nieuwe frontend- of volledige Rust-workspacetests; alleen genoemde echte native GUI-ronde, kleine Rust-component-/bronproeven en Python-controles.",
+    "Geen Windows/macOS, schema3, fysieke OS-IME, alle edities of volledige functiedekking. Geen issue of migratiegebied gesloten.",
+    "Opgenomen bron is een eigen fixturekopie. De gewone opname is geïnstrumenteerd, dus geen ongestoorde snelheidsvergelijking. Keyup en renderlijst met twee rAFs zijn geen fysieke paint/FPS."
+  ],
+  "vervolg": "Sorteervariant in echte native bibliotheek met gerichte deterministische/pending-/JSON-/bronbehoudtests aansluiten en daarna begrensd als volledige app bouwen. Eerst korte totale én eindlatency, daarna rijke ABBA plus selectie/bewaren/verwerpen en visuele controle. Alleen bij geen terugval als productwijziging overnemen. Onderzoek daarnaast bronserialisatiefrequentie en flush-tot-renderstaart; deze componentwinst verklaart de ernstige totale vertraging niet volledig.",
+  "behoud": "Vijf vaste referenties, twee oude prototype-ELFs, SDK en bronbestanden geverifieerd behouden. Geen gebruikersdocument, geïnstalleerde app of andere checkout gewijzigd.",
+  "bewijs": {
+    "pad": "docs/tests/writer-native-voorbereiding-2026-11-12/bewijs.tar.gz",
+    "sha256": "f4ba20d35221cdff83c427decfe442173143ef0ed4b2a2c1da4ed7c2576f9c2d",
+    "bytes": 1646423,
+    "bestanden": 47,
+    "alle_leden_bytegelijk_gecontroleerd": true
+  }
+}
