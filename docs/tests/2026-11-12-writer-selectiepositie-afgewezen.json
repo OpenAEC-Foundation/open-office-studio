@@ -1333,7 +1333,7 @@
     "niet_gedaan": "Geen nieuwe frontendrun op byte-exact herstelde basis. Geen nieuwe Windows/macOS-, Writer-variant-, installatie- of releasecontrole. Tien migratieacceptatiegebieden blijven open.",
     "sdk": "Geen SDK-bestanden op schijf aangepast; bridge en callback zijn uitsluitend via strikte Vite-ankers ingebracht. Bekende SDK-indexpin ongewijzigd."
   },
-  "reproductie": "Archive bevat per variant bron.diff, bronpinnen en bronkopieën naast eigen tests en ruwe resultaten. Breng per variant afzonderlijk de diff aan op basis1cb2524d voor herhaling; patches niet combineren. ELF/dist zijn niet meegearchiveerd; beide exacte ELF’s lokaal behouden.",
+  "reproductie": "Gebruik per variant een afzonderlijke geïsoleerde checkout op basis1cb2524d. Plaats de drie bronkopieën op de relatieve paden uit bronpinnen en verifieer hun SHA; alle zes bronkopieën zijn in het archief tegen hun pin gecontroleerd. bron.diff bevat uitsluitend de destijds getrackte wijziging en is alleen niet voldoende om de nieuwe modules te herstellen. Varianten niet combineren. Gebruik de definitieve vite.config.ts voor de kernproeven. ELF/dist zijn niet meegearchiveerd; beide exacte ELF’s lokaal behouden.",
   "volgende_stap": "Stop deze positiekaartvarianten als optimalisatieroute. Meet op vaste8d67basis de frontendvoorbereiding/bronbinding, Tauri-transport en Rust-hostwerk afzonderlijk met fysieke verzend-tot-frame-tijd als hoofdmaat. Leg eerst vast welke hostfase CPU-werk is en welke wachttijd; geen stille terugval uit de Rust-route of nieuwe batching zonder behoudsbewijs.",
   "archief": {
     "bestand": "2026-11-12-writer-selectiepositie-afgewezen.tar.gz",
