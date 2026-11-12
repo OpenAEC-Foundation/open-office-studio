@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import tarfile
 import tempfile
@@ -30,7 +31,12 @@ class DiagnoseRuntime(unittest.TestCase):
     def test_exact_alleen_elf_en_controle_zonder_schrijven(self):
         r = m.controleer(self.zip, self.json); self.assertFalse(r['uitgepakt'])
         doel = self.pad/'runtime'; m.controleer(self.zip, self.json, doel)
-        self.assertEqual(doel.read_bytes(), self.elf); self.assertEqual(doel.stat().st_mode & 0o777, 0o755)
+        self.assertEqual(doel.read_bytes(), self.elf)
+        # Windows kent hier alleen de alleen-lezenvlag, geen Unix-uitvoerrechten.
+        if os.name == 'nt':
+            self.assertTrue(doel.stat().st_mode & 0o200)
+        else:
+            self.assertEqual(doel.stat().st_mode & 0o777, 0o755)
         self.assertEqual(set(f.name for f in self.pad.iterdir()), {'fout.zip', 'meta.json', 'runtime'})
 
     def test_bestaand_pad_of_symlink_nooit_vervangen(self):

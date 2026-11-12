@@ -1,0 +1,27 @@
+{
+  "datum": "2026-11-12",
+  "basis_integratie": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "ci": {
+    "id": 43320225062,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43320225062",
+    "windows": "Afgekeurd bij Python-unittests; 136 tests uitgevoerd, één fout en twee platformskips. Desktopbouw en latere functies daardoor niet uitgevoerd.",
+    "macos": "Volledige desktoptaak geslaagd; geen zelfstandige lokale pakket-/visuele acceptatie hiermee geclaimd.",
+    "linux": "Nog actief bij vastleggen; afzonderlijk volgen."
+  },
+  "oorzaak": "test_writer_diagnoseruntime verwacht st_mode & 0777 == 0755 op Windows; werkelijke mode0666. Windows-chmod ondersteunt alleen alleen-lezenvlag. Geen aangetoonde fout in lintproductcode.",
+  "bron": "https://docs.python.org/3/library/os.html#os.chmod",
+  "wijziging": "Alleen de bestandsrechtassertie is platformspecifiek: Windows controleert schrijfbit, overige platformen exact0755. ELF-/ZIP-/tarhash, bytegelijkheid, uitsluitend eigen ELF uitpakken en weigeren van bestaande paden/symlinks blijven gehandhaafd. Het uitpakscript en alle productbron zijn ongewijzigd.",
+  "controles": {
+    "lokaal_linux": "Alle136Python-tests groen, inclusief alle drie werkelijke hash-/bestand-/symlinkproeven; git diff --check groen.",
+    "windows": "Niet lokaal uitgevoerd of nagebootst; nieuwe CI op gecorrigeerde bron moet dit nog bevestigen.",
+    "frontend_native": "Niet herhaald: uitsluitend Python-test en verslag gewijzigd; geteste productbron41e70001 identiek."
+  },
+  "bewijs": {
+    "pad": "docs/tests/2026-11-12-writer-lint-ci.tar.gz",
+    "sha256": "ca40887a0ba90f6ff07f2b31f1f6e261d67eb6dba94c27d4a7e80ac4b772b811",
+    "bytes": 34615,
+    "reguliere_leden": 4,
+    "alle_leden_bytegecontroleerd": true
+  },
+  "vervolg": "Nieuwe normale desktop-CI starten op de testcorrectie; oude Linux-taak laten afronden en werkelijke Writer-bestanden/beelden afzonderlijk beoordelen. Geen migratiegebied, issue of releasevariant gesloten."
+}
