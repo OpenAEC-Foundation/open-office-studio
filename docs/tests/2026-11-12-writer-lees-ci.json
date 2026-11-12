@@ -1,0 +1,155 @@
+{
+  "onderwerp": "Geïnstrumenteerde desktopmatrix groen op exact eerder afgekeurde runtime; normale controle voorbereid",
+  "broncommit": "db5b75a53f504ce5fa344a38bbd737ad326c8aab",
+  "run": 43231298691,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43231298691",
+  "platforms": [
+    {
+      "naam": "desktop (windows-latest)",
+      "conclusie": "success"
+    },
+    {
+      "naam": "desktop (ubuntu-22.04)",
+      "conclusie": "success"
+    },
+    {
+      "naam": "desktop (macos-latest)",
+      "conclusie": "success"
+    }
+  ],
+  "runtime_sha256": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+  "zelfde_als_eerder_afgekeurde_run": 43212793550,
+  "leesobservatie": {
+    "tellingen": [
+      {
+        "methode": "applyLocalUpdate:begin",
+        "schrijfdiepte": 1,
+        "leesdiepte": 0,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 3
+      },
+      {
+        "methode": "applyLocalUpdate:eind",
+        "schrijfdiepte": 1,
+        "leesdiepte": 0,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 3
+      },
+      {
+        "methode": "readParagraphs:begin",
+        "schrijfdiepte": 0,
+        "leesdiepte": 1,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 8
+      },
+      {
+        "methode": "readParagraphs:eind",
+        "schrijfdiepte": 0,
+        "leesdiepte": 1,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 8
+      },
+      {
+        "methode": "applyRawOps:begin",
+        "schrijfdiepte": 1,
+        "leesdiepte": 0,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 3
+      },
+      {
+        "methode": "applyRawOps:eind",
+        "schrijfdiepte": 1,
+        "leesdiepte": 0,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 3
+      },
+      {
+        "methode": "readStories:begin",
+        "schrijfdiepte": 0,
+        "leesdiepte": 1,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 14
+      },
+      {
+        "methode": "readStories:eind",
+        "schrijfdiepte": 0,
+        "leesdiepte": 1,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 14
+      },
+      {
+        "methode": "applyUpdate:begin",
+        "schrijfdiepte": 1,
+        "leesdiepte": 0,
+        "bewaaradoptie": true,
+        "vernietigd": false,
+        "aantal": 2
+      },
+      {
+        "methode": "applyUpdate:eind",
+        "schrijfdiepte": 1,
+        "leesdiepte": 0,
+        "bewaaradoptie": true,
+        "vernietigd": false,
+        "aantal": 2
+      },
+      {
+        "methode": "destroy:begin",
+        "schrijfdiepte": 0,
+        "leesdiepte": 0,
+        "bewaaradoptie": false,
+        "vernietigd": false,
+        "aantal": 1
+      },
+      {
+        "methode": "destroy:eind",
+        "schrijfdiepte": 0,
+        "leesdiepte": 0,
+        "bewaaradoptie": false,
+        "vernietigd": true,
+        "aantal": 1
+      }
+    ],
+    "hersteld": true,
+    "over": 0,
+    "vervangen": []
+  },
+  "native_bewijs": [
+    "Geïnstrumenteerde herstelkopieproef groen: bron/plakopmaak, tussenbewaring, vervolgplakken, status5648, bewaren en verwerpen. Eind-DOCX opnieuw8tabellen/5648tekens en exacte SHA gecontroleerd.",
+    "Native rijke invoervolgorde én gewone-tekstproef groen: echte toetsen/Undo/Redo/selectievervanging/Save vóór native antwoord en verwerpen/nieuwdocument met laat antwoord. Afzonderlijke rapporten en bestanden gehasht.",
+    "Bewaar-, gewone-tekst-eindbeeld en nieuwdocumentbeeld na laat antwoord bekeken. Geen pixelvergelijking."
+  ],
+  "gewijzigd": "Workflow krijgt een boolean workflow_dispatch-input writer_leesobservatie, standaard false. Normale push/PR en standaard handmatige run gebruiken geen probe; expliciete observatie blijft mogelijk. Bestaande native opdracht/asserties en grenzen blijven gelijk.",
+  "configuratiecontrole": {
+    "yaml_geldig": true,
+    "handmatige_optie_type": "boolean",
+    "standaard": false,
+    "gewone_push_pr": "geen meetprobe",
+    "native_proefgrenzen_ongewijzigd": true,
+    "expressie": "${{ inputs.writer_leesobservatie && '1' || '0' }}",
+    "grens": "GitHub-evaluatie volgt bij dispatch; dit is YAML-/configuratiecontrole."
+  },
+  "grenzen": [
+    "Zelfde product-ELF was eerder afgekeurd en slaagt nu; geen bewezen verklaring voor de incidentele geheugentoegangsfout. De invloed van instrumentatie versus andere timing/omstandigheden niet geïsoleerd.",
+    "Geïnstrumenteerde groene run bewijst geen volledige stabiliteitsfix; eerdere normale Linux-afkeuring blijft open. Geen herhaling van ongewijzigde CI enkel om groen te verkrijgen: vervolg schakelt expliciet observatie uit als controle.",
+    "Geen lokale native/webbouw of nieuwe productcode. Volledige frontend-, TypeScript- en Python-controle niet herhaald voor deze kleine workflowconfiguratie; YAML/type/default/proefgrenzen wel gecontroleerd. Remote toepassing van het nieuwe input volgt na push.",
+    "Windows/macOS-jobs groen, geen nieuwe lokale GUIcontrole daar. Geen volledige functie-/visuele/platform-/releasevariant- of migratieacceptatie en geen snelheidsclaim.",
+    "Probe volgt openbare sessiefacade, niet iedere interne Wasm-leesactie. Negen bestaande vaste ELF’s ongewijzigd."
+  ],
+  "vervolg": "Start normale desktopmatrix met writer_leesobservatie=false. Controleer werkelijke envwaarde0 en afwezigheid van leesobservatie in herstelkopierapport; beoordeel platforms en bewaar-/invoer-/visueel bewijs afzonderlijk. Geheugenfout alleen sluiten met passende oorzaak- en regressiebewijzen.",
+  "bewijs": {
+    "pad": "docs/tests/writer-lees-ci-2026-11-12/bewijs.tar.gz",
+    "sha256": "8ebed49c303c4ad5734005c71b65f5fbfaaee7441d3bfaa78bfa89125ce683ee",
+    "bytes": 1544789,
+    "leden": 29,
+    "teruggelezen_bytegelijk": true
+  }
+}

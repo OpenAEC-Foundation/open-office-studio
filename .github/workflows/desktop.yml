@@ -4,6 +4,11 @@ on:
     branches: [main, "feat/**"]
   pull_request:
   workflow_dispatch:
+    inputs:
+      writer_leesobservatie:
+        description: "Writer-leessessie observeren (beïnvloedt timing; geen stabiliteitsacceptatie)"
+        type: boolean
+        default: false
 permissions:
   contents: read
 # Laat de lopende controle afronden; bewaar alleen de nieuwste wachtende bron.
@@ -207,7 +212,7 @@ jobs:
         run: node scripts/test-writer-revisies-gui.mjs
       - name: Writer bewerken na een herstelkopie
         env:
-          OFFICE_PLAK_LEESOBSERVATIE: "1"
+          OFFICE_PLAK_LEESOBSERVATIE: ${{ inputs.writer_leesobservatie && '1' || '0' }}
         if: runner.os == 'Linux'
         run: |
           node scripts/test-writer-leeslevensduur.mjs
