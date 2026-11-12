@@ -1,0 +1,645 @@
+{
+  "datum": "2026-11-12",
+  "basis_integratie": "5a6614354224e61791064f472f61ace6478b56ba",
+  "productbron": "abe87e99e58d6483a0b30b9793d8932bc1917bd9",
+  "status": "Nieuwe HashMap-waardecache afgewezen. Productbron exact hersteld; geen nieuwe productfix.",
+  "aanleiding": "Hostprofiel wijst volledige bevestigde bronserialisatie aan. Historische begrensde encodercache van5nov was al native6,25%trager; deze nieuwe index heeft andere trefdekking en wordt daarom afzonderlijk gemeten, niet als eerdere fix overgenomen.",
+  "prototype": {
+    "opslag": "Per PreparedClipboardReplica; sterke Any-eigenaar houdt onveranderlijke Arc levend. Vorm/pointer/lengte/binaire-JSON-vorm in sleutel. Kopie-on-write kan geen oude treffer geven.",
+    "grenzen": "Max16384regels en8MiB gecodeerde buffers; gewone codering bij vol/pending-bron. Volledige snapshot/basis-hash, client/document/vector/basis-/voorstelbytecontroles blijven bestaan.",
+    "open_acceptatieprobleem": "Gewicht van index en sterk behouden waarden wordt in dit prototype niet volledig meegeteld in BronSpiegel::bytes/64MiB-voorraad. Geen volledige nativeheapgrens. Deze onvolledige kandidaat mag ook bij goede snelheid niet als productfix worden overgenomen.",
+    "elf": {
+      "code": 0,
+      "reden": null,
+      "seconden": 293.27757948100043,
+      "minimum_vrije_bytes": 18865049600,
+      "start_vrije_bytes": 18996428800,
+      "gecompileerde_crates": [
+        "betteroffice-docx-edit",
+        "office-writer-plakken",
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/waardecache/open-office-studio-waardecache",
+      "programma_sha256": "57377138f6c721bd7bbed02e04988212c188d6cf0e62006d974813f3fd19268c",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "bronkopieen": {
+      "basis": "5a6614354224e61791064f472f61ace6478b56ba",
+      "pinnen": {
+        "native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md": "448ac271fffbc6947fc66cfd1e89b414edbe2b3e769b228deaae5fe357d7b606",
+        "native/vendor/docx-edit/src/clipboard_batch.rs": "cd8e714150d2e42d5cf51a13cd968e87364dd4aa574f929cacbe83aab557ffd4",
+        "native/vendor/docx-edit/src/deterministic.rs": "354b35a87707cc47d10b36373bd5b4b6d20ff2a0c8f0608cf41e519bf3624681",
+        "native/vendor/docx-edit/src/deterministic/waardecache.rs": "692c9ef852c555ce6cf1e7f563014250e1414621f4619bf098327ed2c1e76de3",
+        "native/vendor/docx-edit/src/deterministic/cacheproeven.rs": "cf9284882eaf22d2dced0dfaf050bebd56faa47f6958e40f8d3ffeabc117ca75",
+        "native/vendor/docx-edit/src/deterministic/cached_gouden.rs": "e1d8901164e5ddd4b472f8a2b5a58081dc9de2614800262b9af85163b26c168d"
+      },
+      "reproduceren": "Gebruik een afzonderlijke checkout op basis_integratie. Kopieer elk prototypebron-bestand naar exact het pad in deze pinnen en controleer alle zes SHA256waarden. bron.diff alleen bevat de drie nieuwe Rust-modules niet. Niet toepassen in een checkout met gebruikerswijzigingen.",
+      "geen_product_wip": true
+    }
+  },
+  "losse_proeven": {
+    "snapshotmomenten": 840,
+    "alle_bytes_en_basis_hashes_exact": true,
+    "componenten": {
+      "4096regels": [
+        {
+          "ronde": 0,
+          "referentie_ms": 2135.523171,
+          "cache_ms": 1617.297817,
+          "laatste_cijfers": {
+            "raak": 425984,
+            "mis": 837691,
+            "cachebytes": 1059756,
+            "vol": 833595
+          }
+        },
+        {
+          "ronde": 1,
+          "referentie_ms": 1961.68282,
+          "cache_ms": 1473.343215,
+          "laatste_cijfers": {
+            "raak": 425984,
+            "mis": 837691,
+            "cachebytes": 1059756,
+            "vol": 833595
+          }
+        },
+        {
+          "ronde": 2,
+          "referentie_ms": 1920.05431,
+          "cache_ms": 1443.237636,
+          "laatste_cijfers": {
+            "raak": 425984,
+            "mis": 837691,
+            "cachebytes": 1059756,
+            "vol": 833595
+          }
+        },
+        {
+          "ronde": 3,
+          "referentie_ms": 1960.04439,
+          "cache_ms": 1470.843861,
+          "laatste_cijfers": {
+            "raak": 425984,
+            "mis": 837691,
+            "cachebytes": 1059756,
+            "vol": 833595
+          }
+        }
+      ],
+      "16384regels": [
+        {
+          "ronde": 0,
+          "referentie_ms": 2175.079383,
+          "cache_ms": 982.22161,
+          "laatste_cijfers": {
+            "raak": 1251640,
+            "mis": 12035,
+            "cachebytes": 1959174,
+            "vol": 0
+          }
+        },
+        {
+          "ronde": 1,
+          "referentie_ms": 2224.348283,
+          "cache_ms": 1031.086721,
+          "laatste_cijfers": {
+            "raak": 1251640,
+            "mis": 12035,
+            "cachebytes": 1959174,
+            "vol": 0
+          }
+        },
+        {
+          "ronde": 2,
+          "referentie_ms": 2119.366403,
+          "cache_ms": 971.789211,
+          "laatste_cijfers": {
+            "raak": 1251640,
+            "mis": 12035,
+            "cachebytes": 1959174,
+            "vol": 0
+          }
+        },
+        {
+          "ronde": 3,
+          "referentie_ms": 1981.917563,
+          "cache_ms": 857.259874,
+          "laatste_cijfers": {
+            "raak": 1251640,
+            "mis": 12035,
+            "cachebytes": 1959174,
+            "vol": 0
+          }
+        }
+      ]
+    },
+    "kandidaatkern_ms_per105": {
+      "direct": 2088.96577,
+      "gemeten": 2069.626074,
+      "voorraad": 2085.3104606666666
+    },
+    "grens": "Losse wandtijd;4afwisselende codecparen op dezelfde bron bij16384regels. Kern circa2,09sec versus eerdere3,17sec op dezelfde opgenomen105aanvragen, geen nieuwe appacceptatie en geen verse kern-ABBA op beide bibliotheken.",
+    "echte_kernregressies": 70,
+    "cache_en_gouden_tests": 8,
+    "gouden_gevallen": 704,
+    "gouden_sha256": "df68e07c726a0124a33b45b01cad3aae1e6c107487576e63af615bd416e0e148",
+    "exacte_native_antwoorden": 945,
+    "antwoordvergelijking": "3vooraf bepaalde reeksen ×3routes ×105echte native aanvragen; alleen preparationMs genormaliseerd.",
+    "dekking": [
+      "Sterke eigendom en copy-on-write; gelijke inhoud op andere Arc mist terecht; afzonderlijke caches; vrijgeven bij einde cache.",
+      "Regel-/bytegrens, scalair/te groot en pending-update-terugval; oorspronkelijke en gecachte gouden bytes.",
+      "Alle70bestaande voorbereidingscratetests inclusief bronbinding, afwijzingen, geschiedenis en herstel blijven ongewijzigd."
+    ]
+  },
+  "native": {
+    "schema": 2,
+    "volgorde": "Per klein/rijk vaste referentie-a/kandidaat-a/kandidaat-b/referentie-b; geen andere builds/tests tijdens deze reeks.",
+    "alle_acht_functioneel_geslaagd": true,
+    "uitslagen": {
+      "klein-referentie-a": {
+        "docx_sha256": "bb8ebf6f448737c960ed935dccd885f2acd36444e78bd021a6212b74e564af76",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16333.000000000002,
+          "begin_tot_bron_ms": 1298.9999999999982,
+          "laatste_keyup_tot_bron_ms": 46.99999999999636,
+          "laatste_keyup_tot_frame_ms": 178.99999999999818,
+          "begin_tot_frame_ms": 1431,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1547,
+          "wall_verzonden_tot_frame_ms": 408,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "363688 kB",
+          "VmRSS": "346872 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "klein-kandidaat-a": {
+        "docx_sha256": "f07fcc09d0f302894a0376bce4d45424c13ffffbb78fd77b092840af1fa4d040",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16030.999999999998,
+          "begin_tot_bron_ms": 1247.9999999999982,
+          "laatste_keyup_tot_bron_ms": 42.00000000000182,
+          "laatste_keyup_tot_frame_ms": 287.00000000000364,
+          "begin_tot_frame_ms": 1493,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1530,
+          "wall_verzonden_tot_frame_ms": 358,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "380816 kB",
+          "VmRSS": "360752 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "klein-kandidaat-b": {
+        "docx_sha256": "7f174226ac8dede1d840a27618e7088d958c274ab15b03301765b4ff4e846773",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16302,
+          "begin_tot_bron_ms": 1289.0000000000018,
+          "laatste_keyup_tot_bron_ms": 36.00000000000182,
+          "laatste_keyup_tot_frame_ms": 431,
+          "begin_tot_frame_ms": 1684,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1821,
+          "wall_verzonden_tot_frame_ms": 667,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "378092 kB",
+          "VmRSS": "359880 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "klein-referentie-b": {
+        "docx_sha256": "fc6b3483df863baec991b59b997bc6537bd3e4f8db990c91aae502887c4d520f",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16257.000000000002,
+          "begin_tot_bron_ms": 1257.9999999999982,
+          "laatste_keyup_tot_bron_ms": 55.99999999999636,
+          "laatste_keyup_tot_frame_ms": 335.9999999999982,
+          "begin_tot_frame_ms": 1538,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1674,
+          "wall_verzonden_tot_frame_ms": 531,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "376936 kB",
+          "VmRSS": "359372 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "rijk-referentie-a": {
+        "docx_sha256": "8d66781be15440bceb97ca5e0aacad8ccfeca63fa0435ad42ad8376cfc94549c",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 36907,
+          "begin_tot_bron_ms": 15084.999999999996,
+          "laatste_keyup_tot_bron_ms": 232,
+          "laatste_keyup_tot_frame_ms": 2393.0000000000073,
+          "begin_tot_frame_ms": 17246.999999999996,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 17262,
+          "wall_verzonden_tot_frame_ms": 15467,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "445316 kB",
+          "VmRSS": "404892 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 108,
+        "rust_binnen_ms": 5431,
+        "duursom_ms": 8304.999999999978,
+        "fasen_ms": {
+          "bron": 118.99999999997817,
+          "hash": 1341.9999999999782,
+          "transport": 6145.000000000044,
+          "mutatie": 230.9999999999891,
+          "selectie": 362.99999999999636
+        },
+        "lezingen": {
+          "readStories": 53,
+          "tablePayload": 540,
+          "readParagraphs": 770
+        }
+      },
+      "rijk-kandidaat-a": {
+        "docx_sha256": "f3993590d348269f9efa899f762490aa5ace751bf4fa37716624a038bd37716f",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 39043,
+          "begin_tot_bron_ms": 16827,
+          "laatste_keyup_tot_bron_ms": 249,
+          "laatste_keyup_tot_frame_ms": 2838,
+          "begin_tot_frame_ms": 19416,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 19426,
+          "wall_verzonden_tot_frame_ms": 17655,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "448444 kB",
+          "VmRSS": "384496 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 133,
+        "rust_binnen_ms": 5084,
+        "duursom_ms": 8410.999999999953,
+        "fasen_ms": {
+          "bron": 122.00000000001091,
+          "hash": 1397.0000000000218,
+          "transport": 5989.999999999996,
+          "mutatie": 276.00000000005093,
+          "selectie": 500.99999999995634
+        },
+        "lezingen": {
+          "readStories": 53,
+          "tablePayload": 665,
+          "readParagraphs": 770
+        }
+      },
+      "rijk-kandidaat-b": {
+        "docx_sha256": "07d2d433f1998ff06e99222bb83b1e5556f6247d83563ae08701103e369c4ab3",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 39653,
+          "begin_tot_bron_ms": 17347,
+          "laatste_keyup_tot_bron_ms": 143,
+          "laatste_keyup_tot_frame_ms": 2430,
+          "begin_tot_frame_ms": 19634,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 19813,
+          "wall_verzonden_tot_frame_ms": 18039,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "448712 kB",
+          "VmRSS": "406736 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 139,
+        "rust_binnen_ms": 5291,
+        "duursom_ms": 8670.999999999993,
+        "fasen_ms": {
+          "bron": 133.99999999997453,
+          "hash": 1410.9999999999854,
+          "transport": 6244.000000000011,
+          "mutatie": 274.0000000000473,
+          "selectie": 470.99999999995634
+        },
+        "lezingen": {
+          "readStories": 53,
+          "tablePayload": 695,
+          "readParagraphs": 770
+        }
+      },
+      "rijk-referentie-b": {
+        "docx_sha256": "7a7e683cc4ae5b21cd51b829cdd080924372491069514f756a73ac3815948216",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 36539,
+          "begin_tot_bron_ms": 14460,
+          "laatste_keyup_tot_bron_ms": 221,
+          "laatste_keyup_tot_frame_ms": 2601,
+          "begin_tot_frame_ms": 16840,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 17020,
+          "wall_verzonden_tot_frame_ms": 15239,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": {
+          "VmHWM": "446876 kB",
+          "VmRSS": "383092 kB"
+        },
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 100,
+        "rust_binnen_ms": 5201,
+        "duursom_ms": 8058.000000000015,
+        "fasen_ms": {
+          "bron": 117.99999999998545,
+          "hash": 1454.0,
+          "transport": 5826.000000000004,
+          "mutatie": 221.9999999999818,
+          "selectie": 348.00000000002547
+        },
+        "lezingen": {
+          "readStories": 53,
+          "tablePayload": 500,
+          "readParagraphs": 770
+        }
+      }
+    },
+    "interpretatie": "Rijke fysieke begin→frame kandidaat19426/19813ms versus referentie17262/17020ms: beide slechter. Groepen133/139 versus108/100, tablePayload665/695 versus540/500. Rust-binnenmeting in totaal5084/5291ms versus5431/5201ms: snellere groep levert geen structurele winst in de totale invoer. Meer groepen en publicaties zijn aangetoond; precieze CPU-oorzaak van de extra totale tijd is hiermee nog niet afzonderlijk bewezen. Kort totaal1530/1821vs1547/1674ms is gemengd; ontvangen-keyupstaart287/431vs179/336ms beide slechter.",
+    "geheugen": "Alleen VmHWM/VmRSS van het eigen native appproces na functieronden. Geen totale procesboom-/allocator-/cachebijdragebewijs.",
+    "framegrens": "Fysieke dispatch in eigen virtuele X11. Keyup is WebKit-ontvangst. Renderlijst+twee rAFs is geen fysieke schermpaint/FPS."
+  },
+  "bestanden_en_beelden": {
+    "docx": [
+      {
+        "soort": "klein",
+        "paar": "a",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      }
+    ],
+    "onafhankelijk": "Alle8opgeslagen DOCX-bestanden opnieuw ZIP/CRC/XML/UTF16-/tabelgeteld en SHA met native rapport vergeleken. Rijk128tabellen/91423tekens; klein1tabel/736tekens. Pakketten verschillen per vergelijking uitsluitend in docProps/core.xml; geen algemene bytegelijkheid beweerd.",
+    "pixels": [
+      {
+        "soort": "klein",
+        "paar": "a",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 91,
+        "bbox": [
+          6,
+          4,
+          1335,
+          997
+        ]
+      },
+      {
+        "soort": "klein",
+        "paar": "a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "a",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 34,
+        "bbox": [
+          1011,
+          940,
+          1040,
+          988
+        ]
+      }
+    ],
+    "visueel": "Rijk-kandidaat-a/snel-getypt-bewaard.png en rijk-kandidaat-b/invoer-redo.png bekeken. Documenttekst, tabellen en paginaovergang ogen gelijk in die uitsnede.30/36pixels passen bij smalle caret-rechthoeken; overige34/91pixels bevatten ook interfaceverschillen. Geen volledige pixel- of65paginaacceptatie."
+  },
+  "afkeuringen_en_checks": {
+    "eerste_compile": "Ontbrekende yrs::Transact-import; vóór kandidaatbouw hersteld, eerste foutlog bewaard.",
+    "python_kandidaat": "136uitgevoerd,6fouten door historische snapshot-/encoderankers. Niet versoepeld en niet als groen geteld.",
+    "volledige_vendortests": "Directe rustc-testbouw faalt op36ontbrekende devtestsupport-/hulpmiddelimports in gepinde runtimebibliotheken, waaronder docx_layout::work_counters. Geen volledige engine-testsuite geslaagd.",
+    "gerichte_actuele_cachetests": "De werkelijke modulebronnen in een apart harnas:8tests groen; algemene upstreamtestmodule daar niet uitgevoerd.",
+    "uiteindelijke_productbron": "Alle zes eigen bronbestanden gecontroleerd tegen kandidaatpinnen, daarna byte-exact HEADherstel/nieuwe eigen modules verwijderd. Geen tests of historische bronpinnen gewijzigd.",
+    "python_na_herstel": "Alle136groen.",
+    "vite": "Afzonderlijke bundel groen; standaarddist529bestanden byte/mode/mtime exact hersteld.",
+    "migratie": "Script groen;10acceptatiegebieden open.",
+    "sdk": "Eerste nacontrole zocht verkeerde SDK-indexlocatie; gestopt, juiste historische react-SDK-pin bevestigd. Geen SDK-bytes gewijzigd.",
+    "referenties": "Twaalf eerdere ELF-referenties exact en nieuwe afgewezen57377138-ELF apart behouden."
+  },
+  "niet_gecontroleerd": [
+    "Geen volledige frontend-/TypeScript-suite herhaald; frontendbron bleef exact ongewijzigd. Geen nieuwe CI voor afgewezen en teruggezette productbron.",
+    "Geen nieuwe Windows/macOS-/releasevarianten-/IME-/meerbestands-/urenlange stabiliteitsacceptatie.",
+    "Incidentele RefCell/geheugentoegangsfouten niet verklaard of opgelost; alle migratiegebieden en issues blijven open."
+  ],
+  "vervolg": "Stop verdere per-groep-serialisatiecachevarianten. Onderzoek op de vaste8d67-referentie de volledige invoerperiode vanaf vóór fysieke dispatch: aantal bronpublicaties, SDK/React-callbacks, positieprojectie en tekenen per groep, plus pending-toetsen en terminale framegereedheid. Bestaande afgewezen vaste/adaptieve wachtrij- en tabelgrepenprototypes niet blind herhalen. Eerst causaal profiel van die publicatieroute; pas daarna één gerichte verandering met bron/selectie/Undo/bewaar/verwerp en vaste korte/rijke fysieke vergelijking.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-12-writer-waardecache-afgewezen.tar.gz",
+    "sha256": "cc144e8782dbb3daca1fae6f6ee90618b885fa0281a845c753919b6ecaa3ec81",
+    "bytes": 5027849,
+    "reguliere_leden": 134,
+    "alle_leden_bytegecontroleerd": true,
+    "geen_elf_rlib_dist": true
+  }
+}
