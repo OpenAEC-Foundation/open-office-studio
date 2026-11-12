@@ -1,0 +1,39 @@
+{
+  "onderwerp": "Voorbereide Writer-statusgroepslezer, nog niet aangesloten",
+  "bronbasis": "5e5da1e5",
+  "bestanden": [
+    "src/tekst/info/statusLeesgroepen.ts",
+    "src/tekst/info/statusLeesgroepen.test.ts",
+    "src/tekst/info/statusLeesgroepen-echt.test.ts"
+  ],
+  "gedrag": [
+    "Expliciete koppeling met context, sessie en plugin-generatie; huidige editor moet dezelfde sessie hebben. De toekomstige plugin moet deze beginbinding correct maken.",
+    "Uitsluitend verse plugin-read-clients via context.run; hoogstens 32 body-/celverhalen per groep, expectVersion en accepted-view. Tussen groepen een taakpauze.",
+    "Controle voor/na elk antwoord en na context.run: bronversie, eigenaar/sessie, pending input, generatie en levensduur; optioneel annuleringssignaal.",
+    "Geen deelresultaten: afkapping, ontbrekende/dubbele/extra verhalen, verkeerde alinea-story, weigering, fouten of gemengde versie geven null.",
+    "Geen directe sessie-uitlezing van alinea-inhoud of handmatige flush; alleen storyIds/version via bestaande eigenaar."
+  ],
+  "controles": {
+    "frontend": "2367 tests in 230 bestanden geslaagd, inclusief 4 bestaande echte Rust-hostgevallen.",
+    "eigen_tests": "29 fout-/levensduur-/groepsproeven plus 1 echte Wasm-proef: alle 3329 alinea’s exact gelijk aan losse reads, 49 groepen, onveranderde bronversie/vector.",
+    "typescript": "pnpm exec tsc --noEmit: exit 0, definitieve bron.",
+    "negatieve_proef": "Aanvullende test laat de verse levensduur eindigen ná callback en vóór run terugkeert. Eerste kern faalt terecht (1 fout, 28 groen); finale extra controle herstelt dit. Log behouden. De afgekeurde kernvariant in bewijs is gereconstrueerd door uitsluitend die laatste controle terug te zetten.",
+    "historische_volledige_ronde": "Vóór extra levensduurtest: 2366 groen; daarna finale 2367 groen. Alleen finale bron is gecommit.",
+    "referenties": "Zes vaste ELF-bestanden opnieuw op exacte oorspronkelijke SHA gecontroleerd."
+  },
+  "grenzen": [
+    "Geen import vanuit productiepad: bestaande statusbalk blijft leesAlleAlineas gebruiken. Dit is een voorbereide leeskern, geen geactiveerde optimalisatie.",
+    "Echte Wasm-proef gebruikt nagebootste context.run om de kern met echte reads te testen; echte plugin-eigenaarkoppeling, cleanup en mount-/reloadgedrag moeten nog worden gemaakt en getest.",
+    "Geen nieuwe frontendbundel, native kandidaatbouw, GUI-proef, snelheidsmeting of platformacceptatie voor deze bronstap. Eerder native pariteitsbewijs staat in 2026-11-12-writer-statusleesgroepen.json.",
+    "Geen nieuwe Python- of native-workspacetests uitgevoerd: gewijzigd zijn uitsluitend nog niet aangesloten TypeScript-kern en tests.",
+    "Geen issue of migratiegebied voltooid; ernstige rijke Writer-eindlatency blijft open."
+  ],
+  "volgende_stap": "Maak per editor een leesplugin die sessie, generatie en cleanup expliciet bindt. Sluit alleen de achtergrondstatus via een annuleringstoken aan; laat expliciete telling/bewaarlezers intact. Test laden/herladen/eindigen/twee editors en weigerende of afgekorte groepen; pas daarna begrensde native kandidaatbouw en korte/rijk ABBA, bronbehoud en visuele controle.",
+  "bewijs": {
+    "pad": "writer-statuslezer-kern-2026-11-12/bewijs.tar.gz",
+    "sha256": "6fed802a10fb0105f26c3d31e90f131b3b2e60ba38acad42c352f8ed8b82ad34",
+    "bytes": 29582,
+    "leden": 11
+  },
+  "integratiecommit": "750f3a017eb22713c28bc87b3162be492b34f674"
+}
