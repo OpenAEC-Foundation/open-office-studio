@@ -1,4 +1,4 @@
-name: Uitgave bouwen, ondertekenen en publiceren
+name: Build, sign and publish release
 on:
   push:
     tags: ["v*"]
@@ -382,8 +382,14 @@ jobs:
           # zelf hernoemen houdt SHA256SUMS gelijk aan de downloadnamen.
           for bestand in *' '*; do [ -e "$bestand" ] && mv -- "$bestand" "${bestand// /.}"; done
           node ../scripts/controleer-uitgave.mjs . "$VERSIE"
+          # Publieke rapportnamen zijn Engels; de inhoudscontrole hierboven gebruikt de interne namen.
+          for report in pakketcontrole-*.json; do
+            target="${report/pakketcontrole-/package-verification-}"
+            target="${target/Database-/database-}"
+            mv -- "$report" "$target"
+          done
           # latest.json voor de updater (#26); zonder handtekeningen (geen geheim) wordt het overgeslagen.
-          node ../scripts/maak-latest-json.mjs . "$VERSIE" "$TAG" "Open Office Studio $VERSIE: zie de uitgavenpagina voor de wijzigingen."
+          node ../scripts/maak-latest-json.mjs . "$VERSIE" "$TAG" "Open Office Studio $VERSIE: see the release page for changes."
       - name: Linux-pakketten en checksums ondertekenen en verifiëren
         env:
           OPENAEC_GPG_PRIVATE_KEY: ${{ secrets.OPENAEC_GPG_PRIVATE_KEY }}
@@ -416,4 +422,4 @@ jobs:
         run: |
           gh release create "$TAG" uitgave/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --prerelease \
             --title "Open Office Studio $VERSIE" \
-            --notes "Ontwikkelversie $VERSIE: Open Office Studio, Open Writer Studio, Open Spreadsheet Studio, Open Presentation Studio, Open Email Studio, Open Notition Studio en Open Database Studio. Iedere app heeft een eigen installer en profiel. Windows x64 (ondertekend), macOS Apple Silicon (ondertekend en genotariseerd), Linux x64 (DEB en AppImage). Pakketrapporten en SHA256SUMS zijn bijgevoegd. Dit zijn ontwikkelversies; zie de controleverslagen voor beperkingen en nog niet geteste functies."
+            --notes "Development release $VERSIE: Open Office Studio, Open Writer Studio, Open Spreadsheet Studio, Open Presentation Studio, Open Email Studio, Open Notition Studio and Open Database Studio. Each app has its own installer and profile. Windows x64 (signed), macOS Apple Silicon (signed and notarized), Linux x64 (DEB and AppImage). Package verification reports and SHA256SUMS are attached. See the verification records for limitations and remaining coverage."
