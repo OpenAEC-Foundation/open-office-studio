@@ -1,12 +1,11 @@
 # Goedgekeurde studiobeeldmerken
 
-De zes geselecteerde Store-afbeeldingen van 6 november 2026 staan ongewijzigd
+De zes geselecteerde Store-afbeeldingen staan ongewijzigd
 onder `docs/branding`, met bytegelijke webkopieën onder `public/studios`
 en `public/studio-icons`. Bron-URL, goedgekeurde SHA-256 en issue staan per app
 in [de studiocatalogus](../assets/studios.json). Dit zijn **512 × 512
 raster-PNG's**, geen vectorbestanden. Grotere afgeleide iconen bevatten geen
-extra brondetail. De kalenderachtige afbeelding voor Spreadsheet is de
-daadwerkelijk gekozen bron van #167 en wordt niet vervangen door een ander ontwerp.
+extra brondetail. Spreadsheet gebruikt hetzelfde pictogram als de Snap Store: witte cellen met dikke rasterlijnen en een geel-oranje diagonaal.
 
 | App | Issue | Afgeleide platformiconen |
 | --- | --- | --- |

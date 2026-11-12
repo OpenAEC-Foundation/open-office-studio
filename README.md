@@ -48,6 +48,9 @@ All screenshots show version 2026-W44.5 in a local production build, with the pr
 - Find and replace, Go to, word count, document properties and a reading mode.
 
 ### Spreadsheet (Open Rekenblad Studio)
+
+<img src="docs/branding/open-spreadsheet-studio.png" width="64" height="64" alt="Open Spreadsheet Studio">
+
 - Edits XLSX directly: formulas, cell formatting, rows, columns and sheets, sorting, fill, AutoSum, freeze panes, find and replace.
 - Dutch-style input such as `1,5`, `12,5%`, `€ 1.234,50` and `26-10-2026` is recognised as a number or date.
 - CSV/TSV import and export.

@@ -48,6 +48,9 @@ Alle beelden tonen versie 2026-W44.5 in een lokale productiebuild, met de eigen 
 - Zoeken en vervangen, Ga naar, woorden tellen, documenteigenschappen en een leesmodus.
 
 ### Rekenblad (Open Rekenblad Studio)
+
+<img src="docs/branding/open-spreadsheet-studio.png" width="64" height="64" alt="Open Spreadsheet Studio">
+
 - Bewerkt XLSX rechtstreeks: formules, celopmaak, rijen, kolommen en bladen, sorteren, doorvoeren, AutoSom, vensters fixeren, zoeken en vervangen.
 - Nederlandse invoer zoals `1,5`, `12,5%`, `€ 1.234,50` en `26-10-2026` wordt als getal of datum herkend.
 - CSV/TSV importeren en exporteren.
