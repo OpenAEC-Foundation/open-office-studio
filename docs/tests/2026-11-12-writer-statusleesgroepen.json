@@ -1,0 +1,77 @@
+{
+  "onderwerp": "Gegroepeerde statuslezing: inhoudspariteit en bestaande bewaakte desktoproute",
+  "broncommit": "569e3a60",
+  "productwijziging": false,
+  "component": {
+    "uit": [
+      {
+        "pad": "docs/tests/writer-doortypen/bron.docx",
+        "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+        "verhalen": 1537,
+        "alineas": 3329,
+        "oud_aanroepen": 1537,
+        "groepen": 49,
+        "oudMs": 3465.2179220000007,
+        "nieuwMs": 185.8836110000002,
+        "exacte_alineas": true,
+        "bron_ongewijzigd": true
+      },
+      {
+        "pad": "docs/voorbeelden/Ontwerpnotitie.docx",
+        "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+        "verhalen": 7,
+        "alineas": 14,
+        "oud_aanroepen": 7,
+        "groepen": 1,
+        "oudMs": 0.8952790000003006,
+        "nieuwMs": 0.36074399999961315,
+        "exacte_alineas": true,
+        "bron_ongewijzigd": true
+      }
+    ],
+    "grenzen": "Componentproef op echte Wasm-sessie; geen pluginlevensduur, GUI, invoerlatency, versieovergang of afgekorte resultaten geaccepteerd. Volgorde oud/nieuw, geen snelheidsacceptatie."
+  },
+  "desktop": {
+    "programma_sha256": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+    "pariteit": {
+      "verhalen": 769,
+      "alineas": 1665,
+      "groepen": 25,
+      "oudMs": 445,
+      "nieuwMs": 44,
+      "exact": true,
+      "bron_ongewijzigd": true,
+      "route": "bestaande spellingcontext.run, verse read-clients"
+    },
+    "functioneel": "Volledige bestaande rijke proef na extra diagnostische lezing geslaagd: 1052 fysieke tekens, exacte bron/opmaak, Undo/Redo, selectie/vervangen/bewaren en 128 tabellen, verwerpen met laat antwoord en nieuw document.",
+    "status_na_bewaren": {
+      "tekst": "13,987 words, 91,423 characters",
+      "tekens": 91423
+    },
+    "status_nieuw_document": "Page 1 of 1|2 words, 14 characters|Language unknown · 1 spelling error|Track Changes: off",
+    "fouten": {
+      "gui": [],
+      "engine": [],
+      "console": []
+    },
+    "visueel": "snel-getypt-bewaard.png en nieuw-na-laat-antwoord.png bekeken: 65 pagina’s, 91.423 tekens, tabellen en nieuw document met 14 tekens zichtbaar. Geen pixelvergelijking.",
+    "latency_ms": 2107
+  },
+  "referenties": "Zes vaste ELF-referenties opnieuw op exacte SHA-256 gecontroleerd. Geen nieuwe bouw, bundel, installatie, SDK-patch of runtimewijziging.",
+  "grenzen": [
+    "Componenttijden en desktopleestijden zijn eenmalige oud-dan-nieuw-metingen; geen algemene snelheidsacceptatie.",
+    "De diagnose gebruikt uitsluitend een eigen fixture en vindt de bestaande spellingcontext via React-instrumentatie. Dat is geen product-API of gewenste productkoppeling.",
+    "De echte context.run en read-clients worden gebruikt; de statusbalk blijft de bestaande losse lezer gebruiken.",
+    "Bron was stabiel tijdens de vergelijkende lezing. Mutaties, gewijzigde sessies, einde pluginlevensduur, weigering en afgekorte groepen zijn nog niet functioneel beproefd voor een nieuwe statuslezer.",
+    "Rijke invoer-eindlatency 2107 ms in deze geïnstrumenteerde ronde is geen gepaarde snelheidswinst en geen fysieke paint.",
+    "Geen nieuwe platformacceptatie, issue of migratiegebied voltooid."
+  ],
+  "volgende_stap": "Statusleesplugin met expliciete koppeling per editor/eigenaar en opruiming; ctx.run met verse read-client, versie- en sessiebinding voor/na elke groep. Geen gedeeltelijke of gemengde telling publiceren; afgekorte/weigerende antwoorden veilig afhandelen. Daarna native korte/rijk-vergelijking op echte kandidaat.",
+  "bewijs": {
+    "pad": "writer-statusleesgroepen-2026-11-12/bewijs.tar.gz",
+    "sha256": "56c218184e64ae956afdbc9000be085b7dbac35c1e954595d9784503b5110930",
+    "leden": 12,
+    "bytes": 672098
+  },
+  "integratiecommit": "5e5da1e536cafbc883c34031ab4c002b6a9b51ad"
+}
