@@ -1,8 +1,9 @@
 /** Achtergrondtelling wacht op de gewone invoer; ze flusht of onderbreekt die niet. */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 
-export function planStatusTelling<T>(huidige: () => DocxEditorRef | null, lees: (ref: DocxEditorRef) => Promise<T>, publiceer: (telling: T) => void) {
+export function planStatusTelling<T>(huidige: () => DocxEditorRef | null, lees: (ref: DocxEditorRef, signal: AbortSignal) => Promise<T | null>, publiceer: (telling: T) => void) {
   let actief = true;
+  const annuleren = new AbortController();
   let timer: ReturnType<typeof setTimeout>;
   const bron = () => {
     try {
@@ -20,14 +21,14 @@ export function planStatusTelling<T>(huidige: () => DocxEditorRef | null, lees: 
     if (!voor) return;
     if (voor.invoer) { plan(); return; }
     try {
-      const telling = await lees(voor.ref);
+      const telling = await lees(voor.ref, annuleren.signal);
       if (!actief) return;
       const na = bron();
       if (!na || na.sessie !== voor.sessie) return;
       if (na.invoer || na.versie !== voor.versie) { plan(); return; }
-      publiceer(telling);
+      if (telling !== null) publiceer(telling);
     } catch { /* De vorige telling blijft staan; een volgende wijziging plant opnieuw. */ }
   };
   plan();
-  return () => { actief = false; clearTimeout(timer); };
+  return () => { actief = false; annuleren.abort(); clearTimeout(timer); };
 }

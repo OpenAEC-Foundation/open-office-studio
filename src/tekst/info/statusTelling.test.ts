@@ -62,3 +62,17 @@ it("behoudt een telling als de openbare editor-ref wisselt met dezelfde sessie e
   klaar(["Zelfde document"]); await vi.advanceTimersByTimeAsync(0);
   expect(p.publiceer).toHaveBeenCalledWith(["Zelfde document"]); stop();
 });
+
+it("annuleert ook de lopende leesroute wanneer een telling wordt vervangen", async () => {
+  const p = proef(); p.stand.invoer = false; let signaal: AbortSignal | undefined;
+  const lees = vi.fn(async (_ref: DocxEditorRef, signal: AbortSignal) => { signaal = signal; return null; });
+  const stop = planStatusTelling(() => p.ref, lees, p.publiceer);
+  await vi.advanceTimersByTimeAsync(600); expect(signaal?.aborted).toBe(false);
+  expect(p.publiceer).not.toHaveBeenCalled(); stop(); expect(signaal?.aborted).toBe(true);
+});
+it("publiceert geen onvolledige telling en probeert die niet eindeloos opnieuw", async () => {
+  const p = proef(); p.stand.invoer = false;
+  const lees = vi.fn(async () => null); const stop = planStatusTelling(() => p.ref, lees, p.publiceer);
+  await vi.advanceTimersByTimeAsync(3000);
+  expect(lees).toHaveBeenCalledOnce(); expect(p.publiceer).not.toHaveBeenCalled(); expect(vi.getTimerCount()).toBe(0); stop();
+});

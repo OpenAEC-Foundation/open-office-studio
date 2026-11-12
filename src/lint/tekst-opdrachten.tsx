@@ -20,6 +20,7 @@ import { useInstellingen } from "../instellingen";
 import { useProfielToets } from "../tekst/bewerken/profielToets";
 import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
 import { leesAlleAlineas } from "../tekst/gedeeld/engine";
+import { leesStatusAlineas } from "../tekst/info/statusLeesPlugin";
 import { planStatusTelling } from "../tekst/info/statusTelling";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
@@ -846,7 +847,7 @@ export function TekstStatus({
     };
     const tel = () => {
       stopTelling?.();
-      stopTelling = planStatusTelling(api, leesAlleAlineas, (alineas) => {
+      stopTelling = planStatusTelling(api, leesStatusAlineas, (alineas) => {
         if (!actief) return;
         setTelling(telTekst(alineas.map((a) => a.text)));
         const ref = api();

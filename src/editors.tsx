@@ -36,6 +36,7 @@ import { DocumentLettertypen } from "./lettertypen/context";
 import { tekstSelectiePlugin } from "./lettertypen/koppeling";
 import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
+import { maakStatusLeesPlugin } from "./tekst/info/statusLeesPlugin";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
 import { useOfficeThema } from "./stijl/ThemaKnop";
@@ -202,7 +203,8 @@ export default function OfficeEditor(props: EditorProps) {
     props.soort === "docx" && props.zichtbaar !== false,
     () => herladenRecent.current.bytes,
   );
-  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, ...spelling.plugins], [spelling.plugins]);
+  const statusLeesPlugin = useMemo(() => maakStatusLeesPlugin(() => docx.current), []);
+  const tekstPlugins = useMemo(() => [...TEKST_PLUGINS, statusLeesPlugin, ...spelling.plugins], [statusLeesPlugin, spelling.plugins]);
   // Tekst: wijzigingen buiten de engine (zoals Bestand › Info) als gewijzigd melden.
   useEffect(
     () => registreerWijziging(herladen.api, () => recent.current.gewijzigd()),

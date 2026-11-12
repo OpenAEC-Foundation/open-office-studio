@@ -1,4 +1,4 @@
-/** Voorbereide statuslezer; pas koppelen na native kandidaatcontrole. */
+/** Groepslezer voor de achtergrondstatus, met één geldige documentbron. */
 import type { DocxParagraphText } from "@betteroffice/docx";
 import type { DocxEditorRef, DocxPluginContext } from "@betteroffice/docx-react";
 
