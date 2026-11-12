@@ -71,3 +71,6 @@ native/onderzoek/writer-wachtrijmeting/** text=auto eol=lf
 patches/*.patch text eol=lf -whitespace
 vendor/tekstengine/*.wasm binary
 vendor/rekenbladengine/*.wasm binary
+
+# Bevroren onderzoeksbronnen behouden ook op Windows hun exacte Git-bytes.
+native/onderzoek/referenties/*.rs -text -whitespace
