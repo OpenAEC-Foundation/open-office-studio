@@ -1,0 +1,314 @@
+{
+  "onderwerp": "Native controle bewaarprojectie: andere Linux-afkeuring en begrensde lokale tegenproeven",
+  "broncommit": "abe87e99e58d6483a0b30b9793d8932bc1917bd9",
+  "runtime": {
+    "broncommit": "abe87e99e58d6483a0b30b9793d8932bc1917bd9",
+    "artifact": {
+      "id": 13943217582,
+      "node_id": "MDg6QXJ0aWZhY3QxMzk0MzIxNzU4Mg==",
+      "name": "writer-foutcontext-Kantooromgeving controleren en bouwen-ubuntu-22.04",
+      "size_in_bytes": 232150542,
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13943217582",
+      "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13943217582/zip",
+      "expired": false,
+      "digest": "sha256:c53c90eba2bca096f733472b069315830b28eb08d7ea6f39ae628b0a16fe7ab0",
+      "created_at": "2026-11-12T12:12:24Z",
+      "updated_at": "2026-11-12T12:12:24Z",
+      "expires_at": "2026-12-12T12:12:20Z",
+      "workflow_run": {
+        "id": 43212793550,
+        "repository_id": 1427673882,
+        "head_repository_id": 1427673882,
+        "head_branch": "codex/native-rust-office-integratie",
+        "head_sha": "abe87e99e58d6483a0b30b9793d8932bc1917bd9"
+      }
+    },
+    "zip_sha256": "c53c90eba2bca096f733472b069315830b28eb08d7ea6f39ae628b0a16fe7ab0",
+    "crc_gecontroleerd": true,
+    "tar_sha256": "ee3da8aa3095ed640811118a944972126ddf2ad5ad759636448b54aea059d395",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaarprojectie-ci/open-office-studio-ci-statusfout",
+    "programma_sha256": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+    "member": "writer-foutcontext/open-office-studio",
+    "bytes": 108456496
+  },
+  "platforms": [
+    {
+      "naam": "desktop (ubuntu-22.04)",
+      "conclusie": "failure",
+      "mislukte_stappen": [
+        "Writer bewerken na een herstelkopie"
+      ]
+    },
+    {
+      "naam": "desktop (macos-latest)",
+      "conclusie": "success",
+      "mislukte_stappen": []
+    },
+    {
+      "naam": "desktop (windows-latest)",
+      "conclusie": "success",
+      "mislukte_stappen": []
+    }
+  ],
+  "ci": {
+    "run": 43212793550,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43212793550",
+    "geslaagd": false,
+    "fout": "RuntimeError('Error: Statusbalktotalen blijven achter: [\"Page 4 of 5\",\"433 words, 2,824 characters\",\"Dutch (Netherlands) · 3 spelling errors\",\"Track Changes: off\"]')",
+    "bron_na_drie_plakrondes": {
+      "tabellen": 8,
+      "verwachte_tekens": 5648,
+      "statusbalk_tekens": 2824
+    },
+    "eerste_consolefout": "Spellingcontrole-plug-in gestopt: RuntimeError: Out of bounds memory access bij editsession_read_stories_json",
+    "latere_consolefout": "Wasm-paniek: cannot recursively acquire mutex bij read_stories_json",
+    "eerdere_caret_refcell_paniek_in_dit_rapport": false,
+    "latere_native_invoervolgordeproef": "overgeslagen wegens afkeuring"
+  },
+  "lokaal": {
+    "bewaren": {
+      "geslaagd": false,
+      "fout": "RuntimeError('Error: Statusbalktotalen blijven achter: [\"Page 4 of 5\",\"433 words, 2,824 characters\",\"Dutch (Netherlands) · 3 spelling errors\",\"Track Changes: off\"]')",
+      "docx": [
+        {
+          "naam": "tussenbewaring.docx",
+          "sha256": "e916839d87ca4a91d89621a5d39ceff7d5cd2cc218cafa561b41ddaa826854dc",
+          "tabellen": 2,
+          "tekens_utf16": 1412
+        },
+        {
+          "naam": "Ontwerpnotitie.docx",
+          "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+          "tabellen": 1,
+          "tekens_utf16": 706
+        }
+      ],
+      "gui_fouten": null,
+      "console_fouten": null,
+      "engine_fouten": null,
+      "gc": null,
+      "probe": null
+    },
+    "lokaal-a": {
+      "geslaagd": true,
+      "fout": null,
+      "docx": [
+        {
+          "naam": "geplakt.docx",
+          "sha256": "12426aa4e60dc0b52c58ef19b72f9cfd87897b1919d140b1ee3619ad2c4a0069",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        {
+          "naam": "tussenbewaring.docx",
+          "sha256": "05a8e9723ccb7910b04a6b0c54f86dd6e7b4fe74b0d7fc0eaace931ed67596f2",
+          "tabellen": 2,
+          "tekens_utf16": 1412
+        },
+        {
+          "naam": "Ontwerpnotitie.docx",
+          "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+          "tabellen": 1,
+          "tekens_utf16": 706
+        }
+      ],
+      "gui_fouten": [],
+      "console_fouten": [],
+      "engine_fouten": [],
+      "gc": null,
+      "probe": null
+    },
+    "observatie-b": {
+      "geslaagd": true,
+      "fout": null,
+      "docx": [
+        {
+          "naam": "geplakt.docx",
+          "sha256": "0b43f5d837b016b9611a9c0453fb2089ce5680fd783474134d946861f97dc753",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        {
+          "naam": "tussenbewaring.docx",
+          "sha256": "35dce22a841c3e49c86918a16bbe4206ea1cf6bca5d3b225e58e537776c8b2df",
+          "tabellen": 2,
+          "tekens_utf16": 1412
+        },
+        {
+          "naam": "Ontwerpnotitie.docx",
+          "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+          "tabellen": 1,
+          "tekens_utf16": 706
+        }
+      ],
+      "gui_fouten": [],
+      "console_fouten": [],
+      "engine_fouten": [],
+      "gc": null,
+      "probe": {
+        "tellingen": [
+          {
+            "methode": "caretRect:begin",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 21
+          },
+          {
+            "methode": "caretRect:eind",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 21
+          },
+          {
+            "methode": "rangeRects:begin",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 2
+          },
+          {
+            "methode": "rangeRects:eind",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 2
+          },
+          {
+            "methode": "applyUpdate:begin",
+            "diepte": 1,
+            "bewaaradoptie": true,
+            "aantal": 2
+          },
+          {
+            "methode": "applyUpdate:eind",
+            "diepte": 1,
+            "bewaaradoptie": true,
+            "aantal": 2
+          }
+        ],
+        "hersteld": true,
+        "objecten": 3,
+        "over": 0
+      }
+    },
+    "gc-c": {
+      "geslaagd": true,
+      "fout": null,
+      "docx": [
+        {
+          "naam": "geplakt.docx",
+          "sha256": "05b4dec379e806c3938bf6c9afe1fb0120132eaf20d42670895e1bbdda895e85",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        {
+          "naam": "tussenbewaring.docx",
+          "sha256": "26307839f9966e66ab47b40876766a3a50604336b7e2078fc9e47ca9f769b043",
+          "tabellen": 2,
+          "tekens_utf16": 1412
+        },
+        {
+          "naam": "Ontwerpnotitie.docx",
+          "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+          "tabellen": 1,
+          "tekens_utf16": 706
+        }
+      ],
+      "gui_fouten": [],
+      "console_fouten": [],
+      "engine_fouten": [],
+      "gc": [
+        {
+          "na_ronde": 1,
+          "antwoord": {
+            "result": {},
+            "id": 34
+          }
+        },
+        {
+          "na_ronde": 2,
+          "antwoord": {
+            "result": {},
+            "id": 55
+          }
+        },
+        {
+          "na_ronde": 3,
+          "antwoord": {
+            "result": {},
+            "id": 71
+          }
+        }
+      ],
+      "probe": {
+        "tellingen": [
+          {
+            "methode": "caretRect:begin",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 20
+          },
+          {
+            "methode": "caretRect:eind",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 20
+          },
+          {
+            "methode": "rangeRects:begin",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 7
+          },
+          {
+            "methode": "rangeRects:eind",
+            "diepte": 0,
+            "bewaaradoptie": false,
+            "aantal": 7
+          },
+          {
+            "methode": "applyUpdate:begin",
+            "diepte": 1,
+            "bewaaradoptie": true,
+            "aantal": 2
+          },
+          {
+            "methode": "applyUpdate:eind",
+            "diepte": 1,
+            "bewaaradoptie": true,
+            "aantal": 2
+          }
+        ],
+        "hersteld": true,
+        "objecten": 3,
+        "over": 0
+      }
+    }
+  },
+  "bevindingen": [
+    "De exacte afgekeurde ELF slaagt lokaal ongewijzigd in drie afzonderlijke native herstelkopieproeven; de nieuwe CI-paniek is niet lokaal gereproduceerd.",
+    "De ongewijzigde geometrieprobe volgt in beide observatieproeven drie queryobjecten en twee bewaar-applyUpdates; nul geneste caretRect-aanroepen, tegenover twee in elk van de vorige probe-b/probe-c-proeven op cec0e887. Geen verloren regels en wrappers exact hersteld. Dit ondersteunt de gerichte routecorrectie; het bewijst geen volledige afwezigheid van geneste Wasm-lezingen.",
+    "Derde proef vraagt na elke plakronde Heap.gc aan; alle drie opdrachten zonder protocolfout. Geen GC- of geheugenstabiliteitsacceptatie.",
+    "Negen vaste ELF-referenties gehasht; nieuwe exacte afgekeurde kopie toegevoegd. Originele fout-ZIP, CRC, API-digest, nested tar-SHA en exacte ELF-SHA gecontroleerd."
+  ],
+  "visueel_bekeken": [
+    "bewaren/afgekeurd.png: eindtekst zichtbaar, statusbalk blijft op 2824; geen popup vereist om deze fout af te keuren.",
+    "observatie-b/na-plakken.png: vijf pagina’s, status 5648 tekens, bestaande tekst en tabelcellen zichtbaar.",
+    "gc-c/nieuw-na-verwerpen-zonder-tooltip.png: nieuw leeg document na verwerpen, status nul."
+  ],
+  "grenzen": [
+    "Geen productcode gewijzigd, geen nieuwe native of webbouw, geen volledige frontend-/Python-/typecontrole herhaald; die broncontroles horen bij abe87e99.",
+    "Geen herhaalde CI-run om een toevallig groen resultaat te verkrijgen. Geen testgrens verruimd of fout onderdrukt.",
+    "Drie lokale successen vervangen de echte CI-afkeuring niet. Geen oorzaak voor de readStories-geheugenfout vastgesteld; geen nieuwe productfix.",
+    "CI einddocument kon door de afkeuring niet worden geserialiseerd; alleen de tussenbewaring is onafhankelijk als DOCX gecontroleerd (2 tabellen/1412 tekens). Lokaal alle drie eind-DOCX-uitvoeren opnieuw gecontroleerd (8 tabellen/5648 tekens).",
+    "Geen pixelvergelijking, volledige visuele dekking, lokale Windows/macOS-GUI, latencyacceptatie, releasevariantacceptatie of migratiegebied afgerond.",
+    "De geometrieprobe ziet alleen bereikbare facadeobjecten en kan timing beïnvloeden. GC-proef is een bewust beïnvloede functionele proef."
+  ],
+  "vervolg": "Onderzoek readStories en de gedeelde Wasm-leessessie in spelling/status bij bewaren en verdere plakacties: leg sessielevensduur, bronversie en nesting vast vóór gerichte wijziging. Behoud alle oorspronkelijke fouten; geen blinde retries of extra geneste leesopdrachten. Linux blijft afgekeurd.",
+  "bewijs": {
+    "pad": "docs/tests/writer-bewaarprojectie-native-2026-11-12/bewijs.tar.gz",
+    "sha256": "b9acb6f3c050f7c444d7ac32136ee9a8856f75db0d2e192a7a5dabf4790d0015",
+    "bytes": 2477227,
+    "leden": 51,
+    "teruggelezen_bytegelijk": true,
+    "exclusief": "ELF, oorspronkelijke grote fout-ZIP; lokaal ongewijzigd behouden."
+  }
+}
