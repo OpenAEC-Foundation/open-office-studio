@@ -168,7 +168,7 @@ describe("Beveiliging zonder versleuteling", () => {
     const pakket = zipSync({
       "word/document.xml": strToU8("<document/>"),
       "word/settings.xml": strToU8(
-        '<w:settings xmlns:w="x"><w:writeProtection w:recommended="1"/></w:settings>',
+        '<w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:writeProtection w:recommended="1"/></w:settings>',
       ),
     });
     const { risicos } = controleerPakket(pakket, "docx");

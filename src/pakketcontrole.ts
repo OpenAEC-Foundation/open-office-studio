@@ -8,19 +8,23 @@ import {
 // entiteitsdecoder onafhankelijk van de browserconfiguratie van grafieken.
 function ontcijfer(tekst: string) {
   if (!tekst.includes("&")) return tekst;
-  return tekst.replace(/&(#x[0-9a-fA-F]+|#\d+|amp|lt|gt|quot|apos);/g, (_, e) => {
-    if (e === "amp") return "&";
-    if (e === "lt") return "<";
-    if (e === "gt") return ">";
-    if (e === "quot") return '"';
-    if (e === "apos") return "'";
-    const code = e[1] === "x" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
-    try {
-      return String.fromCodePoint(code);
-    } catch {
-      return "";
-    }
-  });
+  return tekst.replace(
+    /&(#x[0-9a-fA-F]+|#\d+|amp|lt|gt|quot|apos);/g,
+    (_, e) => {
+      if (e === "amp") return "&";
+      if (e === "lt") return "<";
+      if (e === "gt") return ">";
+      if (e === "quot") return '"';
+      if (e === "apos") return "'";
+      const code =
+        e[1] === "x" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+      try {
+        return String.fromCodePoint(code);
+      } catch {
+        return "";
+      }
+    },
+  );
 }
 
 /** Kenmerken waarvan behoud per route in de testmatrix is gemeten. */
@@ -153,6 +157,8 @@ function risicosVan(
       !BEKEND_INHOUDSTYPE.test(attrs.ContentType)
     )
       risicos.add("onbekende_onderdelen");
+  // Extensies kunnen ook in kopteksten, stijlen, werkbladen en diamodellen
+  // staan. Alleen de hoofdtekst inspecteren laat die inhoud ongemeld.
   const hoofdtekst =
     soort === "docx"
       ? [tekst("word/document.xml")]
@@ -161,7 +167,12 @@ function risicosVan(
             .filter((n) => /^ppt\/slides\/slide\d+\.xml$/.test(n))
             .map(tekst)
         : [];
-  for (const xml of hoofdtekst)
+  const map = { docx: "word/", xlsx: "xl/", pptx: "ppt/" }[soort];
+  const documentdelen = Object.keys(delen).filter(
+    (naam) => naam.startsWith(map) && naam.endsWith(".xml"),
+  );
+  for (const naam of documentdelen) {
+    const xml = tekst(naam);
     for (const { attrs } of begintags(xml))
       for (const [naam, ns] of Object.entries(attrs))
         if (
@@ -170,6 +181,7 @@ function risicosVan(
           !BEKEND.test(ns)
         )
           risicos.add("onbekende_extensies");
+  }
   const heeft = (patroon: RegExp) => [...namen].some((n) => patroon.test(n));
   if (
     heeft(/^customXml\//) &&
@@ -275,16 +287,16 @@ export function controleerPakket(bytes: Uint8Array, soort: Soort) {
         throw new Error(
           "Dit pakket is te groot om veilig te openen: maximaal 256 MB uitgepakt, 64 MB per onderdeel en 10.000 onderdelen.",
         );
-      // Alleen de kleine onderdelen die de risicodetectie nodig heeft.
+      // Lees document-XML ook buiten de hoofdtekst voor onbekende extensies.
+      // Binaire inhoud en media blijven ongeopend; de pakketlimieten gelden
+      // zoals voorheen voor alle onderdelen, ook voor niet uitgepakte inhoud.
+      const map = { docx: "word/", xlsx: "xl/", pptx: "ppt/" }[soort];
       return (
-        (soort === "xlsx" && naam === "xl/workbook.xml") ||
         naam === "[Content_Types].xml" ||
         naam.endsWith(".rels") ||
-        (soort === "docx" && leesLegeBibliografieDeel(naam, bestand.originalSize)) ||
-        (soort === "docx" && naam === "word/document.xml") ||
-        (soort === "docx" && naam === "word/settings.xml") ||
-        (soort === "pptx" && naam === "ppt/presentation.xml") ||
-        (soort === "pptx" && /^ppt\/slides\/slide\d+\.xml$/.test(naam))
+        (naam.startsWith(map) && naam.endsWith(".xml")) ||
+        (soort === "docx" &&
+          leesLegeBibliografieDeel(naam, bestand.originalSize))
       );
     },
   });

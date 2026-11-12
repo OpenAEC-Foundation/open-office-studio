@@ -9,6 +9,34 @@ export default defineConfig({
       enforce: "pre",
       transform(code, id) {
         const path = id.replaceAll("\\", "/");
+        if (path.endsWith("/src/tekst/info/TekstInfo.tsx")) {
+          const markers = [
+            "setTaal(taalOpCursor(ref.getDocument(), info?.paraId, info?.before.length ?? 0));",
+            "setTaal(taalOpCursor(document ?? ref.getDocument(), info?.paraId, info?.before.length ?? 0));",
+          ];
+          const marker = markers.find((m) => code.split(m).length === 2);
+          if (!marker)
+            throw Error("Language status measurement source changed");
+          let uit = code.replace(
+            marker,
+            "if (!(globalThis as any).__measuring) { " +
+              marker +
+              " } else { const start = performance.now(); try { " +
+              marker +
+              " } finally { const stat = ((globalThis as any).__calls['languageStatus.' + soort] ??= { count: 0, ms: 0 }); stat.count++; stat.ms += performance.now() - start; } }",
+          );
+          if (code.includes("volgTaalWijzigingen")) {
+            const pending = "return volger.stop;";
+            if (code.split(pending).length !== 2)
+              throw Error("Language pending bridge source changed");
+            uit = uit.replace(
+              pending,
+              "(globalThis as any).__writerLanguagePending = () => volger.wacht;\n" +
+                pending,
+            );
+          }
+          return uit;
+        }
         if (path.endsWith("/src/spelling/tekst/Golflijnen.tsx")) {
           const marker = "const v = vlak.getBoundingClientRect();";
           const projectie = "const uit: Rechthoek[] = [];";

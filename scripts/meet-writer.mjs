@@ -14,6 +14,7 @@ const outDir = process.argv[2] ?? ".local/writer-performance",
   checkWarmup = process.argv.includes("--check-warmup"),
   nativeDiagnostic = process.argv.includes("--native-diagnostic"),
   profileScroll = process.argv.includes("--profile-scroll"),
+  languageStatusChecks = process.argv.includes("--language-status-checks"),
   rangeCacheChecks = process.argv.includes("--range-cache-checks"),
   viewportChecks =
     rangeCacheChecks || process.argv.includes("--viewport-checks");
@@ -240,6 +241,7 @@ try {
     diagnostic,
     nativeDiagnostic,
     profileScroll,
+    languageStatusChecks,
     rangeCacheChecks,
     pages: before.pages,
     paragraphs: before.paragraphs.length,
@@ -273,6 +275,11 @@ try {
         requestAnimationFrame(() => requestAnimationFrame(r)),
       );
     });
+    if (languageStatusChecks) {
+      // Dezelfde rusttijd voor controle en kandidaat; tel uitgesteld werk mee.
+      await page.waitForTimeout(1200);
+      await page.waitForFunction(() => !window.__writerLanguagePending?.());
+    }
     const wallMs = performance.now() - start;
     const data = await page.evaluate(() => {
       window.__measuring = false;

@@ -230,3 +230,23 @@ describe("opgeslagen uitkomst tegenover herberekening", () => {
     ).toThrow("Geen geldig XLSX-werkboek");
   });
 });
+
+describe("iteratieve werkmappen (#59)", () => {
+  it.each(["1", "true"])("waarschuwt bij ingeschakelde iteratie (%s), ook met een opgeslagen uitkomst", (iterate) => {
+    const controle = inventariseerRekenblad(werkboek({ Iteratie: '<row r="1"><c r="A1"><f>(A1+2)/2</f><v>2</v></c></row>' },
+      { calcPr: `<calcPr iterate="${iterate}" iterateCount="100" iterateDelta="0.001"/>` }));
+    expect(rekenbladMelding(controle)).toMatchObject({ ernst: "waarschuwing" });
+    expect(rekenbladMelding(controle)?.regels.join(" ")).toContain("Iteratief rekenen");
+  });
+  it.each(["0", "false"])("waarschuwt niet voor uitgeschakelde iteratie (%s)", (iterate) => {
+    const controle = inventariseerRekenblad(werkboek({ Gewoon: '<row r="1"><c r="A1"><v>2</v></c></row>' },
+      { calcPr: `<calcPr iterate="${iterate}"/>` }));
+    expect(rekenbladMelding(controle)).toBeNull();
+  });
+});
+
+it("leest geen iteratie-instelling uit XML-commentaar", () => {
+  const controle = inventariseerRekenblad(werkboek({ Gewoon: '<row r="1"><c r="A1"><v>2</v></c></row>' },
+    { calcPr: '<!-- <calcPr iterate="1"/> --><calcPr iterate="0"/>' }));
+  expect(rekenbladMelding(controle)).toBeNull();
+});

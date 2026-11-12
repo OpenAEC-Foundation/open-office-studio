@@ -61,12 +61,31 @@ export function verdeelKolommen(breedtes: readonly number[], van = 0, tot = bree
 
 /** Schaalt de kolommen evenredig naar `beschikbaar` twips (passend in het venster). */
 export function passendInVenster(breedtes: readonly number[], beschikbaar: number): number[] {
-  const som = breedtes.reduce((x, y) => x + Math.max(y, 1), 0);
-  if (!breedtes.length || som <= 0 || beschikbaar <= 0) return [...breedtes];
-  const geschaald = breedtes.map((w) => Math.max(MIN_KOLOM, Math.floor((Math.max(w, 1) / som) * beschikbaar)));
-  const verschil = beschikbaar - geschaald.reduce((x, y) => x + y, 0);
-  geschaald[geschaald.length - 1] = Math.max(MIN_KOLOM, geschaald[geschaald.length - 1] + verschil);
-  return geschaald;
+  if (!breedtes.length || beschikbaar <= 0) return [...breedtes];
+  const totaal = Math.max(Math.round(beschikbaar), MIN_KOLOM * breedtes.length);
+  const gewichten = breedtes.map(w => Math.max(w, 1));
+  const uit = breedtes.map(() => MIN_KOLOM);
+  let vrij = gewichten.map((_, i) => i);
+  let ruimte = totaal;
+  // Eerst te smalle kolommen vastzetten. Hun minimum mag niet uitsluitend
+  // van de laatste kolom worden afgetrokken: die kan zelf al minimaal zijn.
+  while (vrij.length) {
+    const som = vrij.reduce((n, i) => n + gewichten[i], 0);
+    const klein = vrij.filter(i => gewichten[i] / som * ruimte < MIN_KOLOM);
+    if (klein.length) {
+      ruimte -= klein.length * MIN_KOLOM;
+      const vast = new Set(klein);
+      vrij = vrij.filter(i => !vast.has(i));
+      continue;
+    }
+    let rest = ruimte;
+    for (const [positie, i] of vrij.entries()) {
+      uit[i] = positie === vrij.length - 1 ? rest : Math.floor(gewichten[i] / som * ruimte);
+      rest -= uit[i];
+    }
+    break;
+  }
+  return uit;
 }
 
 /**
