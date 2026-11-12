@@ -1,0 +1,142 @@
+{
+  "onderwerp": "Dev58 beschikbaar; reguliere Linux-herstelproef afgekeurd",
+  "bron": "85998c43dc0f1f3a6c3749ec6db1682a27c7ca68",
+  "productwijziging": false,
+  "desktop_ci": {
+    "run": 43189383966,
+    "conclusie": "failure",
+    "platformen": [
+      {
+        "name": "desktop (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "desktop (macos-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "desktop (ubuntu-22.04)",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ],
+    "afgekeurde_stap": "Writer bewerken na een herstelkopie",
+    "gevolg": "Reguliere Linux-desktop op deze bron niet geaccepteerd; volgende volgorde-/tekstproeven in die job zijn overgeslagen."
+  },
+  "paniek": {
+    "gui": [
+      {
+        "tekst": "ErrorUnreachable code should not be executed (evaluating 'r.range_rects_by_handle(e,n,_)')",
+        "ronde": 3
+      }
+    ],
+    "wasm": "RefCell already mutably borrowed, crates/docx-layout/src/session.rs:555:26",
+    "route": "CI-stack: overnemen worker-bewaarupdates → remote onUpdate → directe input-/selectiepublicatie → caretRect/rangeRectsByHandle → Wasm-paniek. De precieze oorzaak en relatie met de statusplugin zijn nog niet vastgesteld.",
+    "broncontrole": {
+      "exact": true,
+      "sha256": "b0f2cd8d9c4c3a1bf7268880cc0dd7af66705cccb875c02edd618bc0d9a6cc62",
+      "bytes": 37649,
+      "body_met_opmaak_sha256": "77c0f02d2543f42afc8fa540c94b32fd41c9a3de0e5d950c597d718403fecde9",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "binary_sha256": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+    "bevestiging": "Foutbericht zichtbaar op afgekeurd.png, bekeken. Geen aangetoond documentverlies in deze proef; GUI-fout maakt de proef toch ongeldig.",
+    "brononderzoek": "De bestaande Vite-compatibiliteit markeert bewaaradoptie al met oosBewaarUpdate voor versiemeldingen. De remote selectie-/geometriecallback loopt nog synchroon. Lokale bundel heeft dezelfde assetnamen en passende stackposities; dit is een aanknopingspunt, geen bewezen oplossing."
+  },
+  "lokale_herhaling": {
+    "nieuw-a": {
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "programma_sha256": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971"
+    },
+    "oud-a": {
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "programma_sha256": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157"
+    }
+  },
+  "duiding_herhaling": "Exact hetzelfde bestaande herstelkopiehulpscript: drie plakrondes, bewaren na één, echte Rust-plakroute. Eén ronde op277b6d en één opoude d9ae slagen. Twee groene lokale controles weerleggen de echte CI-afkeuring niet; geen timeout of assertie versoepeld.",
+  "dev58": {
+    "run": 43189389434,
+    "conclusie": "success",
+    "artifact": {
+      "id": 13931575648,
+      "name": "Open-Office-Studio-Dev-Linux-x86_64-58",
+      "size_in_bytes": 154580775,
+      "digest": "sha256:4fa1e5d2448ad2841b48fa8edd6d8dfe70760905d27961871888de874ebdd183",
+      "expired": false,
+      "expires_at": "2026-12-12T09:25:59Z"
+    },
+    "download": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43189389434/artifacts/13931575648",
+    "profiel": "org.openaec.office-studio.dev",
+    "gui": "Drie native plakrondes, tussentijds bewaren, verder bewerken, onafhankelijke DOCX-controle, verwerpen en nieuw document slagen. na-plakken.png en nieuw-na-verwerpen-zonder-tooltip.png bekeken.",
+    "nacontrole": {
+      "tabellen": 8,
+      "tekens": 5648,
+      "exacte_bestandshashes": true
+    },
+    "beperking": "Eigen succesvolle devproef is geen algemene acceptatie van de bron met de bekende reguliere Linux-paniek. Geen FUSE-mount of andere pc getest; downloadpakket niet opnieuw lokaal opgehaald, GUI-artefact wel.",
+    "start": "ZIP en tar.gz uitpakken; ./start-dev.sh, zonder FUSE APPIMAGE_EXTRACT_AND_RUN=1 ./start-dev.sh. Geen reguliere release gewijzigd."
+  },
+  "foutcontext": {
+    "download": {
+      "artifact": {
+        "id": 13931563289,
+        "node_id": "MDg6QXJ0aWZhY3QxMzkzMTU2MzI4OQ==",
+        "name": "writer-foutcontext-Kantooromgeving controleren en bouwen-ubuntu-22.04",
+        "size_in_bytes": 232122571,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13931563289",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13931563289/zip",
+        "expired": false,
+        "digest": "sha256:0f5a31102e8cf82a95defe97a91f9efe533262657d3e3f4d93a389acefd3ce1a",
+        "created_at": "2026-11-12T09:43:47Z",
+        "updated_at": "2026-11-12T09:43:47Z",
+        "expires_at": "2026-12-12T09:43:40Z",
+        "workflow_run": {
+          "id": 43189383966,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/native-rust-office-integratie",
+          "head_sha": "85998c43dc0f1f3a6c3749ec6db1682a27c7ca68"
+        }
+      },
+      "zip_sha256": "0f5a31102e8cf82a95defe97a91f9efe533262657d3e3f4d93a389acefd3ce1a",
+      "zip_bytes": 232122571,
+      "zip_crc_goed": true,
+      "niet_uitgepakt": true
+    },
+    "inhoud": {
+      "tar_sha256": "9753186b229b8aa96e7473ebdf2bb024580ae8ced4443a1abc3471088d19ae1f",
+      "sha256sums": "9753186b229b8aa96e7473ebdf2bb024580ae8ced4443a1abc3471088d19ae1f  writer-foutcontext.tar.gz\n",
+      "leden": [
+        {
+          "pad": "writer-foutcontext/open-office-studio",
+          "bytes": 108455880,
+          "sha256": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af"
+        }
+      ],
+      "afgekeurde_binary_hash_bevestigd": true
+    },
+    "bewaring": "Volledig oorspronkelijk artifact-ZIP lokaal bewaard onder .local/integratiecontrole/herstel-paniek/foutcontext.zip, niet uitgepakt. ZIP-checksum en CRC, checksum van ingesloten tar.gz en checksum van afgekeurde ELF bevestigd. Geen extra losse kopie van232MB gemaakt. Het grote ZIP zit niet in de publieke bewijsbundel; metadata en controles wel."
+  },
+  "grenzen": [
+    "Geen runtime-/SDK-fix gedaan; paniek blijft hoogste prioriteit vóór verdere snelheidsoptimalisatie.",
+    "Geen issue of migratiegebied gesloten; eerdere lokale acht-rondenacceptatie is geen algemene Linux-platformacceptatie.",
+    "Vrije ruimte na behoud foutpakket circa3.02GB, onder bestaande native-bouwstartgrens. Voor een nieuwe bouw eerst eigen duplicaten uitsluitend met exact herstelbewijs opruimen; grens niet verlagen en zeven vaste ELF’s behouden."
+  ],
+  "vervolg": "Bewaakte observatie van save-adoptie, remote update en selectierechthoeken op de exact afgekeurde runtime; reentrantie/invalidatie aantoonbaar reproduceren. Daarna gerichte bron-/versie-/levensduurgefencete oplossing en regressie op herstelkopie, native invoer/Undo/bewaren/verwerpen. Niet alleen herstarten of de fout negeren.",
+  "bewijs": {
+    "pad": "writer-herstelpaniek-2026-11-12/bewijs.tar.gz",
+    "sha256": "0bfcc72ba12779493e3f163428a9570e523a128e2bf7245fe34ab8054b15997e",
+    "bytes": 3035471,
+    "leden": 54
+  }
+}
