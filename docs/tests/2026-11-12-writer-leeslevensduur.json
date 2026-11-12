@@ -1,0 +1,437 @@
+{
+  "onderwerp": "Begrensde observatie van Writer-leessessie, aangesloten op native afkeurroute",
+  "bronbasis": "5d31e7fad0f9f733f448638a05ef6d8cf8a386a3",
+  "productfix": false,
+  "diagnostische_wijziging": [
+    "Optionele sessieprobe volgt readStories/readParagraphs, drie schrijfroutes en destroy zonder broninhoud of versielezingen binnen de aanroep.",
+    "Maximaal8192regels/64stacks; oorspronkelijke this/args/retour/exception/Promise-identiteit behouden. Stopt vóór Inspector sluit, ook bij oorspronkelijke fouten.",
+    "Nieuwe wrapper nooit overschrijven bij opruiming; gedeeltelijke opname behouden, onvolledigheid/verloren regels of herstelconflict keuren de meetproef af.",
+    "Native helper standaard zonder observatie; alleen bestaande Linux-herstelkopie-CI schakelt de probe in en voert de transparantieproef uit. Native opdracht/bronasserties/tijdgrenzen ongewijzigd."
+  ],
+  "controles": {
+    "python": {
+      "aantal": 133,
+      "geslaagd": true,
+      "log": "python-v2.log"
+    },
+    "javascript": {
+      "geslaagd": true,
+      "log": "probe-definitief-v2.log"
+    },
+    "native": {
+      "lees-a": {
+        "functionele_broncontroles_geslaagd": true,
+        "meting_afgekeurd": false,
+        "fout": null,
+        "meetfout": null,
+        "gui_fouten": [],
+        "engine_fouten": [],
+        "console_fouten": [],
+        "gc": null,
+        "docx": {
+          "sha256": "1145776a260405f201747cc3d98ed9e7a0cc3a50b9c51883a90020be37a68272",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        "probe": {
+          "tellingen": [
+            {
+              "methode": "applyLocalUpdate:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "applyLocalUpdate:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "readParagraphs:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 8
+            },
+            {
+              "methode": "readParagraphs:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 8
+            },
+            {
+              "methode": "applyRawOps:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "applyRawOps:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "readStories:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 14
+            },
+            {
+              "methode": "readStories:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 14
+            },
+            {
+              "methode": "applyUpdate:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": true,
+              "vernietigd": false,
+              "aantal": 2
+            },
+            {
+              "methode": "applyUpdate:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": true,
+              "vernietigd": false,
+              "aantal": 2
+            },
+            {
+              "methode": "destroy:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 1
+            },
+            {
+              "methode": "destroy:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": true,
+              "aantal": 1
+            }
+          ],
+          "over": 0,
+          "hersteld": true,
+          "vernietigd": true
+        }
+      },
+      "lees-gc-b": {
+        "functionele_broncontroles_geslaagd": true,
+        "meting_afgekeurd": false,
+        "fout": null,
+        "meetfout": null,
+        "gui_fouten": [],
+        "engine_fouten": [],
+        "console_fouten": [],
+        "gc": [
+          {
+            "na_ronde": 1,
+            "antwoord": {
+              "result": {},
+              "id": 34
+            }
+          },
+          {
+            "na_ronde": 2,
+            "antwoord": {
+              "result": {},
+              "id": 57
+            }
+          },
+          {
+            "na_ronde": 3,
+            "antwoord": {
+              "result": {},
+              "id": 73
+            }
+          }
+        ],
+        "docx": {
+          "sha256": "65ae6842f846c711d382d519450032ad4ae3d1d0f3300224de5335d0aeafa421",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        "probe": {
+          "tellingen": [
+            {
+              "methode": "applyLocalUpdate:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "applyLocalUpdate:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "readParagraphs:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 8
+            },
+            {
+              "methode": "readParagraphs:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 8
+            },
+            {
+              "methode": "applyRawOps:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "applyRawOps:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "readStories:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 14
+            },
+            {
+              "methode": "readStories:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 14
+            },
+            {
+              "methode": "applyUpdate:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": true,
+              "vernietigd": false,
+              "aantal": 2
+            },
+            {
+              "methode": "applyUpdate:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": true,
+              "vernietigd": false,
+              "aantal": 2
+            },
+            {
+              "methode": "destroy:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 1
+            },
+            {
+              "methode": "destroy:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": true,
+              "aantal": 1
+            }
+          ],
+          "over": 0,
+          "hersteld": true,
+          "vernietigd": true
+        }
+      },
+      "aangesloten": {
+        "functionele_broncontroles_geslaagd": true,
+        "meting_afgekeurd": true,
+        "fout": "RuntimeError({'result': {'result': {'type': 'object', 'objectId': '{\"injectedScriptId\":1,\"id\":1}', 'subtype': 'error', 'className': 'Error', 'description': 'Error: Methode onderweg vervangen: applyLocalUpdate'}, 'wasThrown': True}, 'id': 101})",
+        "meetfout": "RuntimeError({'result': {'result': {'type': 'object', 'objectId': '{\"injectedScriptId\":1,\"id\":1}', 'subtype': 'error', 'className': 'Error', 'description': 'Error: Methode onderweg vervangen: applyLocalUpdate'}, 'wasThrown': True}, 'id': 101})",
+        "gui_fouten": [],
+        "engine_fouten": [],
+        "console_fouten": [],
+        "gc": null,
+        "docx": {
+          "sha256": "97268d88cde79fc766dade7d263ffd5cac5ec4f611b5e5f5b3b677474999d7d7",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        "probe": null
+      },
+      "aangesloten-v2": {
+        "functionele_broncontroles_geslaagd": true,
+        "meting_afgekeurd": false,
+        "fout": null,
+        "meetfout": null,
+        "gui_fouten": [],
+        "engine_fouten": [],
+        "console_fouten": [],
+        "gc": null,
+        "docx": {
+          "sha256": "b77e48c9211af6702487df38e9bb2a83919bb4216f4eadc8d4ca1827bf458632",
+          "tabellen": 8,
+          "tekens_utf16": 5648
+        },
+        "probe": {
+          "tellingen": [
+            {
+              "methode": "applyLocalUpdate:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "applyLocalUpdate:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "readParagraphs:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 8
+            },
+            {
+              "methode": "readParagraphs:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 8
+            },
+            {
+              "methode": "applyRawOps:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "applyRawOps:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 3
+            },
+            {
+              "methode": "readStories:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 14
+            },
+            {
+              "methode": "readStories:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 1,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 14
+            },
+            {
+              "methode": "applyUpdate:begin",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": true,
+              "vernietigd": false,
+              "aantal": 2
+            },
+            {
+              "methode": "applyUpdate:eind",
+              "schrijfdiepte": 1,
+              "leesdiepte": 0,
+              "bewaaradoptie": true,
+              "vernietigd": false,
+              "aantal": 2
+            },
+            {
+              "methode": "destroy:begin",
+              "schrijfdiepte": 0,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": false,
+              "aantal": 1
+            },
+            {
+              "methode": "destroy:eind",
+              "schrijfdiepte": 0,
+              "leesdiepte": 0,
+              "bewaaradoptie": false,
+              "vernietigd": true,
+              "aantal": 1
+            }
+          ],
+          "over": 0,
+          "hersteld": true,
+          "vernietigd": true
+        }
+      }
+    },
+    "referenties_exact": 9
+  },
+  "afgewezen_eerste_aansluiting": "Startte vóór de bestaande Rust-plakmeting; die verving applyLocalUpdate, waardoor strikte opruiming terecht afkeurde. Eerste rapport had geslaagd=true met exitcode1; bewaard als rapportagefout. Definitief start ná bestaande instrumentatie en markeert een meetfout ook expliciet als niet geslaagd. Regressies toetsen dit.",
+  "bevinding": "Drie geobserveerde native proeven: telkens14storylezingen/8alinealezingen, geen waargenomen geneste lezingen of lezingen na destroy; 3lokale updates/3raw-ops/2bewaarupdates/1destroy. De echte CI-geheugenfout niet lokaal gereproduceerd.",
+  "visueel_bekeken": [
+    "aangesloten-v2/na-plakken.png: pagina4van5 en5648tekens, tekst/tabelcellen zichtbaar."
+  ],
+  "grenzen": [
+    "Geen productcode of engine gewijzigd en geen lokale native/webbouw. Volledige frontend- en TypeScriptcontrole niet herhaald: geen betreffende bronwijziging.",
+    "Probe volgt alleen één vooraf gekoppelde openbare sessiefacade en synchrone aanroepduur; niet alle interne Wasm-aanroepen, async Promise-duur of finalizers. Vervangende sessies en lezingen buiten gevolgde methodes vallen buiten dekking.",
+    "Probes beïnvloeden timing. Lokaal slagen vervangt de reguliere Linux-CI-afkeuring niet, ook niet met expliciete GC.",
+    "Eerste aansluiting afgekeurd en behouden; definitieve opname zonder ontbrekende regels en met exact herstelde functies. Bij definitieve test waarschuwde de bestaande portalopruimer over een eigen tijdelijke profielmap; geen gebruikersbestanden verwijderd.",
+    "Geen nieuwe snelheids-, pakket-, releasevariant-, platform- of migratieacceptatie. Geheugentoegangsfout en Wasm-mutexpaniek blijven open."
+  ],
+  "vervolg": "Na push desktopmatrix met nieuwe observatie starten en de afkeurroute plus leesobservatie/stackvolgorde beoordelen. Geen groen resultaat als volledige stabiliteitsfix uitleggen; normale niet-geïnstrumenteerde afkeuring behouden.",
+  "bewijs": {
+    "pad": "docs/tests/writer-leeslevensduur-2026-11-12/bewijs.tar.gz",
+    "sha256": "23e3d2d204bb18780c83514f5f13d3a4ce45840fabf762a79c9a8dc146b42ef5",
+    "bytes": 2897862,
+    "leden": 66,
+    "teruggelezen_bytegelijk": true
+  }
+}
