@@ -1,0 +1,63 @@
+name: Build Open Spreadsheet Studio Snap
+on:
+  push:
+    branches: [release/spreadsheet-snap-2026.46.2]
+permissions:
+  contents: read
+jobs:
+  snap:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: open-spreadsheet-studio-2026.46.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Linux build dependencies
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools xvfb xauth
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/haal-lettertypen.mjs && node scripts/haal-woordenboeken.mjs
+      - run: node scripts/bouw-spelling-wasm.mjs
+      - run: pnpm versie:check && node scripts/controleer-studio-iconen.mjs && pnpm exec vitest run scripts/studio-iconen.test.mjs
+      - name: Build the application with the store icon
+        run: node scripts/bouw-studio.mjs spreadsheet --bundles deb
+      - name: Prepare and verify the Snap inputs
+        run: |
+          set -euo pipefail
+          cp dist-installers/spreadsheet/deb/*.deb release.deb
+          test "$(dpkg-deb -f release.deb Version)" = 2026.46.2
+          cmp docs/branding/open-spreadsheet-studio.png dist-studios/spreadsheet/studios/open-spreadsheet-studio.png
+          cp snap/recipes/open-spreadsheet-studio.yaml snap/snapcraft.yaml
+          sed -i "s/^version:.*/version: '2026.46.2'/" snap/snapcraft.yaml
+      - uses: snapcore/action-build@v1
+        id: build
+      - name: Verify the packaged launcher, icon and version
+        env:
+          SNAP_FILE: ${{ steps.build.outputs.snap }}
+        run: |
+          set -euo pipefail
+          unsquashfs -d "$RUNNER_TEMP/packed" "$SNAP_FILE"
+          test -x "$RUNNER_TEMP/packed/usr/bin/open-spreadsheet-studio"
+          grep -qx 'name: open-spreadsheet-studio' "$RUNNER_TEMP/packed/meta/snap.yaml"
+          grep -Eq "^version: ['\"]?2026\.46\.2['\"]?$" "$RUNNER_TEMP/packed/meta/snap.yaml"
+          cmp "$RUNNER_TEMP/packed/meta/gui/icon.png" src-tauri/icons/spreadsheet/icon.png
+          mkdir publish
+          cp "$SNAP_FILE" publish/open-spreadsheet-studio_2026.46.2_amd64.snap
+          cd publish && sha256sum *.snap > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spreadsheet-snap-2026.46.2
+          path: publish/
+          if-no-files-found: error
