@@ -1,0 +1,152 @@
+{
+  "onderwerp": "Normale CI: renderer-geheugenfout; exact-runtimevergelijking voorbereid",
+  "broncommit": "3508cdee4e1e1a91a09cdedc3ced290325baed4d",
+  "run": 43241085975,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43241085975",
+  "platforms": [
+    {
+      "naam": "desktop (ubuntu-22.04)",
+      "conclusie": "failure",
+      "afgekeurde_stappen": [
+        "Invoervolgorde, bewaren en verwerpen tijdens native Writer-antwoorden"
+      ]
+    },
+    {
+      "naam": "desktop (macos-latest)",
+      "conclusie": "success",
+      "afgekeurde_stappen": []
+    },
+    {
+      "naam": "desktop (windows-latest)",
+      "conclusie": "success",
+      "afgekeurde_stappen": []
+    }
+  ],
+  "probe_werkelijk_uit": {
+    "env0_in_joblog": true,
+    "geen_leesobservatievelden_in_bewaarrapport": true
+  },
+  "bewaarproef": "Groen zonder probe, exact8d67ELF; onafhankelijk8tabellen/5648tekens en bestandsSHA gecontroleerd.",
+  "afkeuring": {
+    "proef": "Native rijke invoervolgorde",
+    "gui": [
+      {
+        "tekst": "ErrorOut of bounds memory access (evaluating 'r.update_display_list(e,_,t)')",
+        "ronde": 0
+      }
+    ],
+    "engine_fouten": [
+      {
+        "bericht": "Out of bounds memory access (evaluating 'r.update_display_list(e,_,t)')",
+        "tijd": 1794496716727
+      },
+      {
+        "bericht": "Out of bounds memory access (evaluating 'r.update_display_list(e,_,t)')",
+        "tijd": 1794496738433
+      }
+    ],
+    "console": [],
+    "functionele_bron_bewaar_selectie_stappen": [
+      "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+      "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+      "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+    ],
+    "eerste_fout_voor_toetsreeks": true,
+    "gewone_tekstproef": "Niet uitgevoerd nadat rijke proef de gecombineerde stap afkeurde."
+  },
+  "lokaal": {
+    "dezelfde_elf": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+    "geslaagd": true,
+    "fouten": {
+      "gui": [],
+      "engine": [],
+      "console": []
+    },
+    "proef": "Ongewijzigde native rijke invoervolgorde, een volledige lokale herhaling."
+  },
+  "runtimearchief": {
+    "artifact": {
+      "id": 13957545444,
+      "node_id": "MDg6QXJ0aWZhY3QxMzk1NzU0NTQ0NA==",
+      "name": "writer-foutcontext-Kantooromgeving controleren en bouwen-ubuntu-22.04",
+      "size_in_bytes": 232046386,
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13957545444",
+      "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13957545444/zip",
+      "expired": false,
+      "digest": "sha256:ace66b4830f20267f6d45c66bc8eed80ed9f2445221828ac73fe04da5d49b95d",
+      "created_at": "2026-11-12T15:19:25Z",
+      "updated_at": "2026-11-12T15:19:25Z",
+      "expires_at": "2026-12-12T15:19:18Z",
+      "workflow_run": {
+        "id": 43241085975,
+        "repository_id": 1427673882,
+        "head_repository_id": 1427673882,
+        "head_branch": "codex/native-rust-office-integratie",
+        "head_sha": "3508cdee4e1e1a91a09cdedc3ced290325baed4d"
+      }
+    },
+    "zip_sha256": "ace66b4830f20267f6d45c66bc8eed80ed9f2445221828ac73fe04da5d49b95d",
+    "crc": true,
+    "tar_sha256": "95c7d79162be3374808e61652f911231f10a1a0bceb6d5cc93f3b19e28568b79",
+    "elf_sha256": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+    "nieuwe_elf_kopie": false,
+    "dezelfde_als_vaste_referentie": ".local/integratiecontrole/bewaarprojectie-ci/open-office-studio-ci-statusfout"
+  },
+  "omgevingsverschil": {
+    "ci": "Ubuntu22.04; JavaScriptCore/WebKit2.50.4",
+    "lokaal": "Ubuntu24.04; JavaScriptCore/WebKit2.52.6",
+    "duiding": "Een concrete te onderzoeken factor, geen bewezen oorzaak. Ook andere bibliotheken, runner en timing verschillen."
+  },
+  "diagnostische_wijziging": "Handmatige optionele route via bestaande desktopworkflow roept herbruikbare diagnose aan: exact dezelfde gehashte ELF, drie vooraf vastgelegde invoervolgordeproeven op Ubuntu22.04 en24.04, geen app/Rust/Wasm-bouw, geen release. Beide normale desktopmatrix en meetprobe-keuze blijven standaard bruikbaar. Alleen contents/actions-leesrechten.",
+  "controles": {
+    "python_tests": 136,
+    "geslaagd": true,
+    "echte_archiefcontrole": {
+      "zip_sha256": "ace66b4830f20267f6d45c66bc8eed80ed9f2445221828ac73fe04da5d49b95d",
+      "tar_sha256": "95c7d79162be3374808e61652f911231f10a1a0bceb6d5cc93f3b19e28568b79",
+      "elf_sha256": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+      "bytes": 108456496,
+      "uitgepakt": false
+    },
+    "workflow": {
+      "yaml": true,
+      "herbruikbaar_via_bestaande_desktopworkflow": true,
+      "aparte_concurrencygroep": true,
+      "normale_matrix_ongewijzigd_bij_standaardinput": true,
+      "python310_syntax": true,
+      "omgevingen": [
+        "ubuntu-22.04",
+        "ubuntu-24.04"
+      ],
+      "vaste_steekproef": 3,
+      "timeout_per_proef": 450,
+      "job_timeout_minuten": 25,
+      "rechten": {
+        "contents": "read",
+        "actions": "read"
+      },
+      "native_wasm_of_app_bouw": false,
+      "grens": "Remote dispatch en uitvoering volgen na push."
+    },
+    "referenties_exact": 9,
+    "visueel_bekeken": [
+      "volgorde/proef-native-writer-volgorde/afgekeurd.png: nieuw document met14tekens, foutpopupupdate_display_list zichtbaar."
+    ]
+  },
+  "grenzen": [
+    "Geen productfix of nieuwe lokale app/web/Wasm-bouw; frontend/TypeScript niet herhaald voor Python-/workflowwijziging. Geheugenfouten blijven open; geen issue/platform/migratieacceptatie.",
+    "Dezelfde ELF slaagt en faalt op verschillende momenten. Bewaren en bron-/Undo-/selectiecontroles alleen bewijzen geen gezonde renderer; zichtbare fout blijft afkeuring.",
+    "Nieuwe diagnoseworkflow nog niet remote uitgevoerd; YAML, Python3.10-syntax en koppeling/rechten/concurrency gecontroleerd. Lokale bibliotheken zijn niet verwisseld.",
+    "Drie proeven per omgeving zijn een begrensde steekproef, geen zekerheid over afwezigheid van incidentele fouten of isolatie van alleen JavaScriptCore.",
+    "Oorspronkelijk fout-ZIP lokaal geverifieerd behouden. Geen extra ELF-kopie: de bytegelijke vaste referentie bestaat al. Publiek bewijs bevat geen volledige runtime/ZIP.",
+    "Pakket-/FUSE-/releasevariantacceptatie niet opnieuw uitgevoerd. Geen pixelvergelijking of nieuwe snelheidsclaim."
+  ],
+  "vervolg": "Start desktop.yml met writer_runtimevergelijking=true. Controleer dat de gewone bouwmatrix is overgeslagen, beide jobs dezelfde runtimehash testen, alle3uitslagen behouden en pakketversies bekend zijn. Onderzoek eventuele foutframes/stack vóór een productwijziging; niet tot groen herhalen.",
+  "bewijs": {
+    "pad": "docs/tests/writer-normale-ci-2026-11-12/bewijs.tar.gz",
+    "sha256": "907af09afb20807bf8f0da26dcb62680983b484c00a9b19fb413ee779eebed08",
+    "bytes": 1615725,
+    "leden": 43,
+    "teruggelezen_bytegelijk": true
+  }
+}
