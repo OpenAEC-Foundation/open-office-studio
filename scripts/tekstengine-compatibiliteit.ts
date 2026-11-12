@@ -102,6 +102,14 @@ export function herstelDirecteVersiemelding(bron: string): string {
     .replace(adoptie, 'Le=>{const oosVorige=ge.oosBewaarUpdate;ge.oosBewaarUpdate=true;try{L.current.adoptWorkerSaveUpdates(Le)}finally{ge.oosBewaarUpdate=oosVorige}}');
 }
 
+export function herstelBewaarProjectie(bron: string): string {
+  const ingang = 'useEffect(()=>{let T=r.session;if(T)return T.onUpdate((I,ze)=>{ze==="remote"&&(!r.experimentalWorkerOpen||!H(T))&&wr(true,ze);})},[wr,r.session]);';
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor bewaarprojectie.");
+  return 'import { useBewaarProjectie as oosBewaarProjectie } from "openaec-tekst-bewaarprojectie";\n'
+    + bron.replace(ingang, 'oosBewaarProjectie(r.session,wr,r.experimentalWorkerOpen,H);');
+}
+
 export function herstelTabelKlik(bron: string): string {
   for (const stuk of [TABELPUNT, ...CELSELECTIE.map(([oud]) => oud)]) {
     if (bron.split(stuk).length !== 2)
@@ -189,6 +197,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-bewaarprojectie")
+        return fileURLToPath(new URL("../src/tekst/gedeeld/bewaarProjectie.ts", import.meta.url));
       if (id === "openaec-tekst-nootkern")
         return fileURLToPath(new URL("../src/tekst/gedeeld/nootKern.ts", import.meta.url));
       if (id === "openaec-tekst-workerstart")
@@ -218,7 +228,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelTabelContext(bron), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))), map: null };
+      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelBewaarProjectie(herstelDirecteVersiemelding(bron))))), map: null };
     },
   };
 }

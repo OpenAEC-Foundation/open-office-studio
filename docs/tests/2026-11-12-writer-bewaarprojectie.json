@@ -1,0 +1,87 @@
+{
+  "onderwerp": "Gerichte uitgestelde Writer-projectie tijdens bewaaradoptie",
+  "bronbasis": "1bc69968576377a999bc3cee14d2e3a62441e5fc",
+  "productwijziging": true,
+  "wijzigingen": [
+    "Alleen remote projecties met actieve oosBewaarUpdate-markering naar een microtaak verplaatst; gewone remote updates blijven direct.",
+    "Nieuwe updates maken ouder wachtend werk ongeldig; renderbinding en layoutopruiming bewaken sessie en levensduur.",
+    "Bestaande workerguard en zichtbare projectiefouten behouden; vastgezet engineanker faalt bij afwijkende bron."
+  ],
+  "controles": {
+    "gericht": {
+      "bestanden": 2,
+      "tests": 20,
+      "geslaagd": true
+    },
+    "frontend": {
+      "bestanden": 232,
+      "tests": 2389,
+      "geslaagd": true
+    },
+    "overig": [
+      {
+        "naam": "typescript",
+        "opdracht": [
+          "pnpm",
+          "exec",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitcode": 0,
+        "seconden": 34.63706078904215
+      },
+      {
+        "naam": "python",
+        "opdracht": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-v"
+        ],
+        "exitcode": 0,
+        "seconden": 3.1672125830082223
+      },
+      {
+        "naam": "migratie",
+        "opdracht": [
+          "python3",
+          "native/scripts/controleer-migratie.py"
+        ],
+        "exitcode": 0,
+        "seconden": 0.054390882956795394
+      },
+      {
+        "naam": "webbouw",
+        "opdracht": [
+          "pnpm",
+          "exec",
+          "vite",
+          "build",
+          "--outDir",
+          ".local/integratiecontrole/bewaarprojectie/dist"
+        ],
+        "exitcode": 0,
+        "seconden": 32.497218925040215
+      }
+    ],
+    "referenties": 8,
+    "standaard_dist": 529
+  },
+  "bewijs": {
+    "pad": "docs/tests/writer-bewaarprojectie-2026-11-12/bewijs.tar.gz",
+    "sha256": "7265680325c1e88b6f14d26c73dc8f8d6ddc68b81568d1f7d8d2b4198bb7f23a",
+    "bytes": 61214,
+    "bestanden": 15,
+    "teruggelezen_bytegelijk": true
+  },
+  "grenzen": [
+    "Deterministische tegenproef voert de oorspronkelijke enginecallback uit met een gesimuleerde uitleenblokkering; geen lokale reproductie van de echte Wasm-paniek.",
+    "Hooklevensduur getest met gecontroleerde React-haken; geen echte React-DOM-integratieproef in deze stap.",
+    "Geen lokale native kandidaatbouw wegens vrije ruimte onder bestaande startgrens; geen grens verlaagd of gebruikersdata/referentie verwijderd.",
+    "Geen nieuwe native GUI-, visuele-, latency-, pakket-, platform- of migratieacceptatie. De eerdere Linux-afkeuring blijft staan.",
+    "Desktopmatrix moet na push op deze ontwikkelbranch worden gestart; resultaten nog niet bekend. Geen reguliere release gewijzigd."
+  ]
+}
