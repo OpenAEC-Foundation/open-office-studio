@@ -19,6 +19,7 @@ async def proef(a):
     from Xlib import X, display
     from PIL import Image
     from gui.webkit_inspector import Inspector
+    from gui.leeslevensduur import LeesLevensduur
     a.uitvoer.mkdir(parents=True, exist_ok=False)
     bron = a.uitvoer / 'Ontwerpnotitie.docx'
     bronkeuze = os.environ.get('OFFICE_PLAK_BRON', 'voorbeeld')
@@ -101,7 +102,7 @@ async def proef(a):
         assert werkelijk.startswith(b'\x7fELF'), 'Eigen zichtbare proces is geen ELF'
         r['programma_sha256'] = hashlib.sha256(werkelijk).hexdigest()
         await asyncio.sleep(12)
-        async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
+        async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p, LeesLevensduur(p, r, os.environ.get('OFFICE_PLAK_LEESOBSERVATIE') == '1') as leesobservatie:
             await p.run("window.api=()=>{let el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,n=0;s&&n<200;n++,s=s.next){let v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let eind=performance.now()+60000;while(!api()?.getEditorRef()?.getYrsSession()){if(performance.now()>eind)throw Error('Document niet gereed');await new Promise(r=>setTimeout(r,100))}await api().flushPendingInput();return true;")
             assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|version');") == a.versie
             assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier');") == profiel
@@ -163,6 +164,7 @@ async def proef(a):
                   return true;
                 })()''')
             await p.ev("window.proefStand=()=>{let s=api().getEditorRef().getYrsSession(),tabellen=s.storySegments('body').filter(x=>x.kind==='embed'&&x.embedKind==='table'),cellen=[];for(let t of tabellen)for(let r of t.payload.rows)for(let c of r.cells)cellen.push({story:c.story,tekst:s.paragraphs(c.story).map(p=>p.text).join('')});let a=s.paragraphs('body');return{body:a.map(p=>p.text).join(''),alineas:a.length,uniekeAlineas:new Set(a.map(p=>p.paraId)).size,tabellen:tabellen.length,tabelvormen:tabellen.map(t=>t.payload.rows.map(r=>r.cells.length)),cellen,paginas:api().getTotalPages(),lengte:s.storyLength('body')}};window._plakToetsen=[];window.addEventListener('keyup',e=>_plakToetsen.push({key:e.key.toLowerCase(),ms:performance.now()}),true);true")
+            await leesobservatie.start()
             stand = await p.ev('proefStand()')
             r['begin'] = stand
             beeld('begin')
