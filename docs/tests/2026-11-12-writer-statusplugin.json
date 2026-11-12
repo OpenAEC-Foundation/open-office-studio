@@ -1,0 +1,612 @@
+{
+  "onderwerp": "Writer-achtergrondstatus via eigen bewaakte leesplugin",
+  "bronbasis": "750f3a01",
+  "aanvaard": "Beperkte optimalisatie van achtergrondlezing na volledige lokale functievergelijking; geen algemene Writer-snelheidsacceptatie.",
+  "wijzigingen": [
+    "Een alleen-lezende plugin per editor koppelt huidige sessie, plugin-generatie en levensduur; versiechecks en groepchecks blijven in de voorbereide lezer.",
+    "Opruiming verwijdert uitsluitend de eigen koppeling; een laat oud cleanup verwijdert geen herladen koppeling.",
+    "De achtergrondstatus gebruikt groepen van hoogstens 32, met taakpauzes en annuleren bij vervangen telling. Ongeldige/deelresultaten worden niet gepubliceerd.",
+    "Zonder gekoppelde plugin blijft de bestaande openbare lezer bruikbaar; expliciete woordentelling en bewaarstatistieken blijven ongewijzigd. De SDK-read-clients kunnen zelf invoer flushen; de planner start geen expliciete flush."
+  ],
+  "controles": {
+    "frontend": "2377 tests in 231 bestanden, inclusief 4 bestaande echte Rust-hostgevallen, geslaagd.",
+    "gericht": "49 gerichte kern-/plugin-/plannergevallen, inclusief echte Wasm-pariteit, groen.",
+    "typescript": "pnpm exec tsc --noEmit: exit 0.",
+    "python": "127 tests geslaagd, geen skips.",
+    "webbouw": "Vite-productiebouw in aparte uitvoerboom geslaagd.",
+    "negatief": "Eerste volledige frontendronde had 1 timeout in de bestaande 5-secondennotentest, 2376 groen; tegelijk liep TypeScript. Zonder gelijktijdige TypeScript herhaald: alle 2377 groen, testgrens ongewijzigd. De oorzaak van de timeout is niet bewezen; foutlog behouden.",
+    "native_bouw": {
+      "code": 0,
+      "reden": null,
+      "seconden": 143.14791390195023,
+      "minimum_vrije_bytes": 3313164288,
+      "start_vrije_bytes": 3424591872,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/open-office-studio-status-plugin",
+      "programma_sha256": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "native_functie": "Acht volledige afzonderlijke Linux-X11-rondes: kort ABBA (27 tekens, delay80), rijk ABBA (1052 tekens, delay2). Exacte tekst/opmaak, Undo/Redo, selectie/vervangen/bewaren en verwerpen met echt vastgehouden laat antwoord en nieuw document; geen GUI-/engine-/consolefouten. Alle native bronbindingsvelden geldig.",
+    "rijke_status": "Alle vier rijke rondes: 91423 tekens na bewaren, 14 tekens in nieuw document; opgeslagen XML onafhankelijk nageteld en 128 tabellen exact.",
+    "bundel_en_refs": "529 standaard-distbestanden exact hersteld op bytes/mode/mtime; zes oude ELF’s intact, nieuwe zevende referentie vastgelegd."
+  },
+  "vergelijking": {
+    "klein": {
+      "oud": {
+        "wall_ms": [
+          2165,
+          1729
+        ],
+        "laatste_keyup_tot_frame_ms": [
+          634,
+          179.99999999999636
+        ],
+        "native_opdrachten": [
+          24,
+          23
+        ]
+      },
+      "nieuw": {
+        "wall_ms": [
+          1857,
+          1749
+        ],
+        "laatste_keyup_tot_frame_ms": [
+          339,
+          341
+        ],
+        "native_opdrachten": [
+          24,
+          25
+        ]
+      },
+      "mediane_wall_ms": {
+        "oud": 1947.0,
+        "nieuw": 1803.0
+      },
+      "paarverschil_wall_ms": [
+        -308,
+        20
+      ],
+      "paarverschil_eind_ms": [
+        -295,
+        161.00000000000364
+      ]
+    },
+    "rijk": {
+      "oud": {
+        "wall_ms": [
+          21407,
+          22031
+        ],
+        "laatste_keyup_tot_frame_ms": [
+          2492.9999999999927,
+          3464
+        ],
+        "native_opdrachten": [
+          111,
+          111
+        ]
+      },
+      "nieuw": {
+        "wall_ms": [
+          20216,
+          21072
+        ],
+        "laatste_keyup_tot_frame_ms": [
+          2176,
+          2395
+        ],
+        "native_opdrachten": [
+          106,
+          111
+        ]
+      },
+      "mediane_wall_ms": {
+        "oud": 21719.0,
+        "nieuw": 20644.0
+      },
+      "paarverschil_wall_ms": [
+        -1191,
+        -959
+      ],
+      "paarverschil_eind_ms": [
+        -316.9999999999927,
+        -1069
+      ]
+    }
+  },
+  "rondes": {
+    "klein-oud-a": {
+      "geslaagd": true,
+      "programma_sha256": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16754,
+        "begin_tot_bron_ms": 1440,
+        "laatste_keyup_tot_bron_ms": 44,
+        "laatste_keyup_tot_frame_ms": 634,
+        "begin_tot_frame_ms": 2030,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 2165,
+        "wall_verzonden_tot_frame_ms": 930,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 24,
+      "undo_groepen": 1,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "klein-nieuw-a": {
+      "geslaagd": true,
+      "programma_sha256": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16878,
+        "begin_tot_bron_ms": 1446,
+        "laatste_keyup_tot_bron_ms": 62,
+        "laatste_keyup_tot_frame_ms": 339,
+        "begin_tot_frame_ms": 1723,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1857,
+        "wall_verzonden_tot_frame_ms": 668,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 24,
+      "undo_groepen": 1,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "klein-nieuw-b": {
+      "geslaagd": true,
+      "programma_sha256": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16765,
+        "begin_tot_bron_ms": 1318,
+        "laatste_keyup_tot_bron_ms": 40,
+        "laatste_keyup_tot_frame_ms": 341,
+        "begin_tot_frame_ms": 1619,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1749,
+        "wall_verzonden_tot_frame_ms": 559,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 25,
+      "undo_groepen": 1,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "klein-oud-b": {
+      "geslaagd": true,
+      "programma_sha256": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16836.000000000004,
+        "begin_tot_bron_ms": 1467,
+        "laatste_keyup_tot_bron_ms": 42.99999999999636,
+        "laatste_keyup_tot_frame_ms": 179.99999999999636,
+        "begin_tot_frame_ms": 1604,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1729,
+        "wall_verzonden_tot_frame_ms": 515,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 23,
+      "undo_groepen": 1,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "rijk-oud-a": {
+      "geslaagd": true,
+      "programma_sha256": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 44288.00000000001,
+        "begin_tot_bron_ms": 19007,
+        "laatste_keyup_tot_bron_ms": 309.9999999999927,
+        "laatste_keyup_tot_frame_ms": 2492.9999999999927,
+        "begin_tot_frame_ms": 21190,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 21407,
+        "wall_verzonden_tot_frame_ms": 19552,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 111,
+      "undo_groepen": 2,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "sessie_uitlezingen": {
+        "tablePayload": 555,
+        "readParagraphs": 1539,
+        "readStories": 26
+      },
+      "synchrone_uitleesduur_ms": {
+        "tablePayload": 1618.0,
+        "readParagraphs": 1428.0,
+        "readStories": 86.0
+      },
+      "status_na_bewaren": {
+        "tekst": "13,987 words, 91,423 characters",
+        "tekens": 91423
+      },
+      "status_nieuw_document": "Page 1 of 1|2 words, 14 characters|English (United States) · 1 spelling error|Track Changes: off"
+    },
+    "rijk-nieuw-a": {
+      "geslaagd": true,
+      "programma_sha256": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 42759,
+        "begin_tot_bron_ms": 18355,
+        "laatste_keyup_tot_bron_ms": 327,
+        "laatste_keyup_tot_frame_ms": 2176,
+        "begin_tot_frame_ms": 20204,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 20216,
+        "wall_verzonden_tot_frame_ms": 18405,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 106,
+      "undo_groepen": 2,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "sessie_uitlezingen": {
+        "readStories": 53,
+        "tablePayload": 530,
+        "readParagraphs": 770
+      },
+      "synchrone_uitleesduur_ms": {
+        "readStories": 186.0,
+        "tablePayload": 1506.0,
+        "readParagraphs": 854.0
+      },
+      "status_na_bewaren": {
+        "tekst": "13,987 words, 91,423 characters",
+        "tekens": 91423
+      },
+      "status_nieuw_document": "Page 1 of 1|2 words, 14 characters|Language unknown · 1 spelling error|Track Changes: off"
+    },
+    "rijk-nieuw-b": {
+      "geslaagd": true,
+      "programma_sha256": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 43881,
+        "begin_tot_bron_ms": 18753.000000000007,
+        "laatste_keyup_tot_bron_ms": 285.0000000000073,
+        "laatste_keyup_tot_frame_ms": 2395,
+        "begin_tot_frame_ms": 20863,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 21072,
+        "wall_verzonden_tot_frame_ms": 19139,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 111,
+      "undo_groepen": 2,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "sessie_uitlezingen": {
+        "readStories": 54,
+        "tablePayload": 555,
+        "readParagraphs": 770
+      },
+      "synchrone_uitleesduur_ms": {
+        "readStories": 200.0,
+        "tablePayload": 1608.0,
+        "readParagraphs": 746.0
+      },
+      "status_na_bewaren": {
+        "tekst": "13,987 words, 91,423 characters",
+        "tekens": 91423
+      },
+      "status_nieuw_document": "Page 1 of 1|2 words, 14 characters|Language unknown · 1 spelling error|Track Changes: off"
+    },
+    "rijk-oud-b": {
+      "geslaagd": true,
+      "programma_sha256": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 42938,
+        "begin_tot_bron_ms": 18828,
+        "laatste_keyup_tot_bron_ms": 273,
+        "laatste_keyup_tot_frame_ms": 3464,
+        "begin_tot_frame_ms": 22019,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 22031,
+        "wall_verzonden_tot_frame_ms": 20207,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "gewone_native_opdrachten": 111,
+      "undo_groepen": 2,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "sessie_uitlezingen": {
+        "readStories": 29,
+        "tablePayload": 555,
+        "readParagraphs": 1539
+      },
+      "synchrone_uitleesduur_ms": {
+        "readStories": 122.0,
+        "tablePayload": 1642.0,
+        "readParagraphs": 1288.0
+      },
+      "status_na_bewaren": {
+        "tekst": "13,987 words, 91,423 characters",
+        "tekens": 91423
+      },
+      "status_nieuw_document": "Page 1 of 1|2 words, 14 characters|English (United States) · 1 spelling error|Track Changes: off"
+    }
+  },
+  "visueel": {
+    "pixelvergelijking": {
+      "klein-nieuw-a": {
+        "invoer-redo": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "snel-getypt-bewaard": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord": {
+          "pixels": 0,
+          "bbox": null
+        }
+      },
+      "klein-nieuw-b": {
+        "invoer-redo": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "snel-getypt-bewaard": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord": {
+          "pixels": 0,
+          "bbox": null
+        }
+      },
+      "klein-oud-b": {
+        "invoer-redo": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "snel-getypt-bewaard": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord": {
+          "pixels": 0,
+          "bbox": null
+        }
+      },
+      "rijk-nieuw-a": {
+        "invoer-redo": {
+          "pixels": 38,
+          "bbox": [
+            1038,
+            940,
+            1132,
+            999
+          ]
+        },
+        "snel-getypt-bewaard": {
+          "pixels": 30,
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ]
+        },
+        "nieuw-na-laat-antwoord": {
+          "pixels": 0,
+          "bbox": null
+        }
+      },
+      "rijk-nieuw-b": {
+        "invoer-redo": {
+          "pixels": 38,
+          "bbox": [
+            1038,
+            940,
+            1132,
+            999
+          ]
+        },
+        "snel-getypt-bewaard": {
+          "pixels": 30,
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ]
+        },
+        "nieuw-na-laat-antwoord": {
+          "pixels": 0,
+          "bbox": null
+        }
+      },
+      "rijk-oud-b": {
+        "invoer-redo": {
+          "pixels": 3,
+          "bbox": [
+            1118,
+            995,
+            1120,
+            997
+          ]
+        },
+        "snel-getypt-bewaard": {
+          "pixels": 0,
+          "bbox": null
+        },
+        "nieuw-na-laat-antwoord": {
+          "pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        }
+      }
+    },
+    "bekeken": [
+      "klein-nieuw-a/snel-getypt-bewaard.png",
+      "rijk-nieuw-a/invoer-redo.png",
+      "rijk-nieuw-b/snel-getypt-bewaard.png",
+      "rijk-nieuw-b/nieuw-na-laat-antwoord.png"
+    ],
+    "duiding": "Beide korte kandidaatsets volledig pixelgelijk aan oud-a. Rijke verschillen 0–38 pixels bij cursor/statusbalk; geen volledige rijke pixelpariteit geclaimd.",
+    "docx": {
+      "klein-nieuw-a": {
+        "docProps/core.xml": [
+          {
+            "tag": "{http://purl.org/dc/terms/}modified",
+            "oud": "2026-11-12T09:00:32Z",
+            "nieuw": "2026-11-12T09:01:17Z"
+          }
+        ]
+      },
+      "klein-nieuw-b": {
+        "docProps/core.xml": [
+          {
+            "tag": "{http://purl.org/dc/terms/}modified",
+            "oud": "2026-11-12T09:00:32Z",
+            "nieuw": "2026-11-12T09:02:02Z"
+          }
+        ]
+      },
+      "klein-oud-b": {
+        "docProps/core.xml": [
+          {
+            "tag": "{http://purl.org/dc/terms/}modified",
+            "oud": "2026-11-12T09:00:32Z",
+            "nieuw": "2026-11-12T09:02:48Z"
+          }
+        ]
+      },
+      "rijk-nieuw-a": {
+        "docProps/core.xml": [
+          {
+            "tag": "{http://purl.org/dc/terms/}modified",
+            "oud": "2026-11-12T09:04:09Z",
+            "nieuw": "2026-11-12T09:05:29Z"
+          }
+        ]
+      },
+      "rijk-nieuw-b": {
+        "docProps/core.xml": [
+          {
+            "tag": "{http://purl.org/dc/terms/}modified",
+            "oud": "2026-11-12T09:04:09Z",
+            "nieuw": "2026-11-12T09:06:50Z"
+          }
+        ]
+      },
+      "rijk-oud-b": {
+        "docProps/core.xml": [
+          {
+            "tag": "{http://purl.org/dc/terms/}modified",
+            "oud": "2026-11-12T09:04:09Z",
+            "nieuw": "2026-11-12T09:08:15Z"
+          }
+        ]
+      }
+    },
+    "docx_duiding": "Alle ZIP-leden gelijk, behalve exact gecontroleerde Modified/TotalTime; alleen deze velden zijn genormaliseerd."
+  },
+  "grenzen": [
+    "Slechts twee metingen per variant/omvang; geen statistische zekerheid. Korte tweede paar-eindlatency 341 versus180ms is hoger; totale tijd +20ms.",
+    "Rijke eindlatency blijft2176/2395ms, tegenover2493/3464ms; totale tijden20216/21072 tegenover21407/22031ms. Ernstige vertraging dus niet volledig verholpen.",
+    "Keyup is ontvangst in WebKit; totale wall omvat ook voorafgaande backlog. Displaylist plus twee rAFs is geen fysieke paint/FPS.",
+    "Nieuwe plugin is in deze reguliere Linux-runtime beproefd; Windows, macOS en aparte devbuild op deze bron moeten na push nog volgen. Schema2 getest; schema3-feature alleen meegebouwd.",
+    "Geen lokaal volledig native workspace-/vendor-testpakket uitgevoerd; alleen cached appcrate gebouwd.",
+    "Bewaarde DOCX onafhankelijk uitgelezen; niet opnieuw in GUI geopend in deze helpers.",
+    "Geen versie, SDK, native runtimecode, installer, geïnstalleerde app, release of database gewijzigd.",
+    "Tien migratieacceptatiegebieden blijven open; geen issue gesloten."
+  ],
+  "ruimte": {
+    "los_pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ci-7594-context/uitgepakt/writer-foutcontext/Open Office Studio_2026.45.52_amd64.AppImage",
+    "archief": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ci-7594-context/writer-foutcontext.tar.gz",
+    "lid": "writer-foutcontext/Open Office Studio_2026.45.52_amd64.AppImage",
+    "sha256": "7ac6fbd921a548c10d39d409cbb5fb97b522a14f1b3506157cc0920e2d500a33",
+    "bytes": 155142648,
+    "mode": 493,
+    "mtime_ns": 1794001770634327888,
+    "herstel_getest": true,
+    "reden": "Uitsluitend uitgepakte eigen CI-downloadduplicaat verwijderd; oorspronkelijke archieven, zes vaste app-ELFs en gebruikersbestanden behouden."
+  },
+  "vervolg": "Na push desktopmatrix en afzonderlijke Linux-devbuild controleren. Resterende Writer-hoofdthreadkosten opnieuw profileren op de nieuwe vaste277b6d-ELF, met aandacht voor tabelPayload/grepen en volledige storyprojectie. Geen blind cachehergebruik zonder bron-/eigenaarinvalidatie.",
+  "bewijs": {
+    "pad": "writer-statusplugin-2026-11-12/bewijs.tar.gz",
+    "sha256": "1cd84335b1f48d670b8e003261feecc9c3eb5336f636f818367a8e537030e233",
+    "bytes": 4456206,
+    "leden": 96
+  },
+  "integratiecommit": "85998c43dc0f1f3a6c3749ec6db1682a27c7ca68",
+  "nieuwe_ci": {
+    "desktop": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43189383966",
+    "linux_dev": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43189389434",
+    "status": "Beide in_progress bij vastlegging; geen acceptatie vooruitgelopen."
+  }
+}
