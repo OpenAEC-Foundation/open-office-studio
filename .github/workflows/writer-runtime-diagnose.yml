@@ -1,0 +1,67 @@
+name: Writer-runtime vergelijken op twee Linux-omgevingen
+on:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: writer-runtime-diagnose-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Afhankelijkheden van de bestaande GUI-proef
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev python3-xlib python3-pil python3-gi python3-venv xvfb xauth xdotool
+          /usr/bin/python3 -m venv --system-site-packages "$RUNNER_TEMP/writer-gui"
+          "$RUNNER_TEMP/writer-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
+          echo "OFFICE_GUI_PYTHON=$RUNNER_TEMP/writer-gui/bin/python" >> "$GITHUB_ENV"
+      - name: Exact eerder afgekeurde runtime controleren
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/runtime-diagnose
+          gh api repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/13957545444/zip > .local/runtime-diagnose/foutcontext.zip
+          python3 scripts/pak-writer-diagnoseruntime.py --archief .local/runtime-diagnose/foutcontext.zip --metadata docs/tests/writer-runtime-diagnose.json --uitvoer .local/runtime-diagnose/programma > .local/runtime-diagnose/herkomst.json
+          dpkg-query -W -f='${Package} ${Version}\n' 'libc6' 'libgtk-3-*' 'libwebkit2gtk-4.1-*' 'libjavascriptcoregtk-4.1-*' > .local/runtime-diagnose/pakketten.txt
+      - name: Drie vooraf begrensde invoervolgordeproeven zonder meetprobe
+        env:
+          OFFICE_PLAK_LEESOBSERVATIE: "0"
+        run: |
+          "$OFFICE_GUI_PYTHON" - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          p = Path('.local/runtime-diagnose'); uitslagen = []
+          for ronde in range(1, 4):
+              doel = p/f'ronde-{ronde}'
+              with (p/f'ronde-{ronde}.log').open('x') as log:
+                  try:
+                      r = subprocess.run([os.environ['OFFICE_GUI_PYTHON'], 'scripts/test-writer-rust-plakken-volgorde-native.py', '--programma', str(p/'programma'), '--versie', '2026.45.52', '--uitvoer', str(doel)], stdout=log, stderr=subprocess.STDOUT, timeout=450)
+                      uitslagen.append({'ronde': ronde, 'exitcode': r.returncode})
+                  except subprocess.TimeoutExpired:
+                      uitslagen.append({'ronde': ronde, 'tijdgrens': True})
+              (p/'uitslagen.json').write_text(json.dumps(uitslagen, indent=2)+'\n')
+          raise SystemExit(1 if any(r.get('exitcode') != 0 for r in uitslagen) else 0)
+          PY
+      - name: Alleen meetbewijs bewaren, geen nieuwe release
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-runtime-${{ matrix.os }}
+          path: |
+            .local/runtime-diagnose/ronde-*/
+            .local/runtime-diagnose/ronde-*.log
+            .local/runtime-diagnose/uitslagen.json
+            .local/runtime-diagnose/herkomst.json
+            .local/runtime-diagnose/pakketten.txt
+          include-hidden-files: true
+          if-no-files-found: warn

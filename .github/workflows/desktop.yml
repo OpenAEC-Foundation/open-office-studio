@@ -5,6 +5,10 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
+      writer_runtimevergelijking:
+        description: "Exact afgekeurde Writer-runtime op twee Linux-omgevingen vergelijken; geen nieuwe bouw"
+        type: boolean
+        default: false
       writer_leesobservatie:
         description: "Writer-leessessie observeren (beïnvloedt timing; geen stabiliteitsacceptatie)"
         type: boolean
@@ -17,6 +21,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   desktop:
+    if: ${{ !inputs.writer_runtimevergelijking }}
     strategy:
       fail-fast: false
       matrix:
@@ -338,3 +343,10 @@ jobs:
           path: .local/pakketcontrole-*.json
           include-hidden-files: true
           if-no-files-found: error
+
+  runtimevergelijking:
+    if: ${{ inputs.writer_runtimevergelijking }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/writer-runtime-diagnose.yml
