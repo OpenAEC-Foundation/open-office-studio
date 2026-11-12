@@ -34,8 +34,21 @@ jobs:
           $target = Join-Path $env:RUNNER_TEMP 'OfficeThemeQA'
           $install = Start-Process $path -ArgumentList @('/S', "/D=$target") -PassThru -Wait
           if ($install.ExitCode -ne 0) { throw "Installation failed: $($install.ExitCode)" }
-          node scripts/proef-writer-thema-windows.mjs (Join-Path $target 'open-office-studio.exe')
-          if ($LASTEXITCODE -ne 0) { throw 'Native theme acceptance failed' }
+          # Elevated hosted runners ignore user-scoped WebView2 argument overrides.
+          # https://learn.microsoft.com/microsoft-edge/webview2/concepts/security#for-an-elevated-host-app-use-appropriate-override-flags
+          # Scope debugging to this executable on this disposable runner and restore the value afterwards.
+          $key = 'HKLM:\Software\Policies\Microsoft\Edge\WebView2\AdditionalBrowserArguments'
+          $name = 'open-office-studio.exe'
+          $old = Get-ItemProperty -Path $key -Name $name -ErrorAction SilentlyContinue
+          New-Item -Path $key -Force | Out-Null
+          try {
+            New-ItemProperty -Path $key -Name $name -Value '--remote-debugging-port=9222 --remote-debugging-address=127.0.0.1' -PropertyType String -Force | Out-Null
+            node scripts/proef-writer-thema-windows.mjs (Join-Path $target 'open-office-studio.exe')
+            if ($LASTEXITCODE -ne 0) { throw 'Native theme acceptance failed' }
+          } finally {
+            if ($null -ne $old) { Set-ItemProperty -Path $key -Name $name -Value $old.$name }
+            else { Remove-ItemProperty -Path $key -Name $name -ErrorAction SilentlyContinue }
+          }
       - uses: actions/upload-artifact@v4
         if: always()
         with:
