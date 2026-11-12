@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "datum": "2026-11-12",
+  "status": "Hoofdthreadroutes in twee echte rijke invoerproeven vastgelegd; geen productwijziging of snelheidsacceptatie.",
+  "ontwikkelbron": "4e1e22f5f99c4c112e164a5b5620f36bc57402f0",
+  "runtimebron": "0a43e8c603d8f7053081a23f7c78d268f8bae91c",
+  "programma_sha256": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+  "proef": "Eigen 65-pagina-/128-tabellenbron, 1052 echte xdotool-tekens met delay 2. ScriptProfiler begint na het verzenden van de toetsen en omvat nog ongeveer25s invoerachterstand plus renderstaart. Geen kunstmatige antwoordvertraging tijdens de gewone invoer.",
+  "opnamen": {
+    "opname-a": {
+      "geslaagd": true,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 47384,
+        "begin_tot_bron_ms": 23454,
+        "laatste_keyup_tot_bron_ms": 196,
+        "laatste_keyup_tot_frame_ms": 3374,
+        "begin_tot_frame_ms": 26632,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 26747,
+        "wall_verzonden_tot_frame_ms": 24884,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "profielvenster_ms": 24926,
+      "samples": 14864,
+      "gewone_native_opdrachten": 120,
+      "stacklidmaatschap": {
+        "paragraphSpans": 1045,
+        "storyprojectie": 2437,
+        "storySegmentUnitDigests": 1558,
+        "tabelankers": 2685,
+        "tabelgrepen": 3512,
+        "tabelbeelden": 3260,
+        "tablePayload": 1431,
+        "tablePayload_via_tabelgrepen": 1431,
+        "readParagraphs": 2654,
+        "readParagraphs_zonder_hogere_aanroeper": 2634
+      },
+      "stack_kalibratie": null,
+      "undo_groepen": 6,
+      "bewaarde_tabellen_exact": 128,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "opname-b": {
+      "geslaagd": true,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 47259,
+        "begin_tot_bron_ms": 23586.000000000004,
+        "laatste_keyup_tot_bron_ms": 282.0000000000073,
+        "laatste_keyup_tot_frame_ms": 2984,
+        "begin_tot_frame_ms": 26287.999999999996,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 26694,
+        "wall_verzonden_tot_frame_ms": 24845,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "profielvenster_ms": 24944.999999999996,
+      "samples": 15009,
+      "gewone_native_opdrachten": 118,
+      "stacklidmaatschap": {
+        "paragraphSpans": 998,
+        "storyprojectie": 2357,
+        "storySegmentUnitDigests": 1506,
+        "tabelankers": 2553,
+        "tabelgrepen": 3282,
+        "tabelbeelden": 3036,
+        "tablePayload": 1317,
+        "tablePayload_via_tabelgrepen": 1317,
+        "readParagraphs": 3263,
+        "readParagraphs_zonder_hogere_aanroeper": 3242
+      },
+      "stack_kalibratie": {
+        "leaf_eerst": true,
+        "aantal": 90,
+        "voorbeelden": [
+          [
+            "sqrt",
+            "profielOnder",
+            "profielMidden",
+            "profielBoven",
+            "",
+            "(program)",
+            "evaluateWithScopeExtension",
+            "",
+            "_wrapCall"
+          ],
+          [
+            "profielOnder",
+            "profielMidden",
+            "profielBoven",
+            "",
+            "(program)",
+            "evaluateWithScopeExtension",
+            "",
+            "_wrapCall"
+          ]
+        ]
+      },
+      "undo_groepen": 6,
+      "bewaarde_tabellen_exact": 128,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "bevindingen": [
+    "In beide opnamen komen alle tablePayload-samples via TabelGrepen → tabelBeelden → tabelankers → tabelVanCel. Dit is een concrete te onderzoeken hoofdthreadroute, geen bewijs van de totale oorzaak.",
+    "De volledige story-positieprojectie blijft zichtbaar in de SDK-selectiesynchronisatie, met storySegmentUnitDigests en paragraphSpans in de opname. Bestaande levensduur-, bron-, versie-, Undo- en selectiecontroles blijven behouden.",
+    "De meeste readParagraphs-stacks missen hogere aanroepers; die zijn niet aan een component toegeschreven.",
+    "De actuele fragmentroute filtert tabelankers al op zichtbare tabelidentiteiten. Deze opname bewijst dus niet dat alle verre tabellen worden uitgelezen. Cross-page ankers en terugval bij ontbrekende tabelidentiteiten blijven nodig."
+  ],
+  "functioneel": [
+    "Beide volledige proeven geslaagd, nul GUI-/engine-/consolefouten.",
+    "Gewone invoer, volledige verhaal-/opmaakstand en Undo/Redo exact gecontroleerd.",
+    "Afzonderlijke vastgehouden echte antwoorden: typen/selecteren/vervangen/bewaren; 128 tabellen en opgeslagen hoofdtekst onafhankelijk uit DOCX exact teruggelezen.",
+    "Niet opslaan en nieuw document vóór laat antwoord; oud antwoord wijzigt gesloten sessie, opgeslagen bestand en nieuwe tekst niet."
+  ],
+  "visueel": {
+    "bekeken": [
+      "opname-a/invoer-redo.png",
+      "opname-b/snel-getypt-bewaard.png",
+      "opname-b/nieuw-na-laat-antwoord.png"
+    ],
+    "beschikbaar": "Alle zes screenshots in bewijsarchief. Geen pixelgelijkheid of volledige visuele dekking geclaimd."
+  },
+  "controles": [
+    "127 Python-tests geslaagd.",
+    "Analyse valideert programmahash, gewone brongebonden aanvragen zonder antwoordvertraging, exacte profilerbronnen, niet-lege profielresultaten en source-locaties.",
+    "Tweede opname:90 geneste kalibratiesamples bevestigen leaf-first stackvolgorde. Eerste opname heeft geen eigen kalibratie en wordt voor stacklidmaatschap gebruikt.",
+    "Vijf vaste ELF-referenties opnieuw bytegelijk gecontroleerd.",
+    "Migratiecontrole meldt nog10 open acceptatiegebieden."
+  ],
+  "native_ci": {
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43139016443",
+    "bron": "4e1e22f5f99c4c112e164a5b5620f36bc57402f0",
+    "status_bij_peiling": "in_progress",
+    "banen": [
+      {
+        "name": "native (windows-latest)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "native (macos-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Conversie met geïnstalleerde kantoorruntime",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "native (ubuntu-22.04)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "grens": "Alle drie native platformbanen en conversie zijn groen, inclusief golden encoder, releasebuild en verpakking. Afzonderlijke vergelijking van native beelden en pakketbron tussen platforms loopt nog. Dit zijn native controles; geen volledige desktop-GUI-, editie- of functieacceptatie.",
+    "laatste_peiling": {
+      "status": "in_progress",
+      "conclusion": "",
+      "banen": [
+        {
+          "name": "native (windows-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "native (macos-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Conversie met geïnstalleerde kantoorruntime",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "native (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Native beelden en pakketbron tussen platforms",
+          "status": "in_progress",
+          "conclusion": ""
+        }
+      ]
+    }
+  },
+  "grenzen": [
+    "Geen runtime-, SDK-, standaardbundel-, installatie- of databasewijziging. Geen issue gesloten.",
+    "Profielinstrumentatie beïnvloedt timing; geen vergelijking met onbespiede productie of bewijs van winst. Stacklidmaatschappen overlappen en zijn geen CPU-tijdpercentages.",
+    "Keyup is ontvangst in WebKit, niet hardwaretijd; renderlijst plus twee rAFs is geen fysieke paint/FPS.",
+    "Geen volledige frontend-/workspace-/vendor-suite lokaal herhaald, geen schema3-GUI, fysieke IME, opgeslagen DOCX opnieuw via GUI geopend, alle edities of platformen aanvaard."
+  ],
+  "vervolg": "Onderzoek de herhaalde tabelPayload-herlezing bij gewone tekst buiten tabellen: alleen veilig hergebruik bij bewezen ongewijzigde tabelinhoud, met harde invalidatie voor echte tabel-/cel-/remote-/Undo-/sessiewijzigingen. Vergelijk daarna de echte app functioneel en visueel; behoud cross-page ankers. Volledige positieprojectie apart blijven volgen.",
+  "bewijs": {
+    "pad": "docs/tests/writer-renderstaart-2026-11-12/bewijs.tar.gz",
+    "sha256": "1d9d8b3b16d1aba4bb88e31e28f8be7de330be38f367573eba1f4f34566bca97",
+    "bytes": 5347199,
+    "bestanden": 36,
+    "elk_lid_bytegelijk_geverifieerd": true
+  },
+  "herhalen": "Exacte gemeten proef-a.py/proef.py in archief. Basishelper en inspector uit ontwikkelbron; wachtrij-probe.js komt bytegelijk uit .local/integratiecontrole/adaptieve-invoer en moet daar bij replay worden teruggezet. Alleen eigen tijdelijke profielen/documentkopieën gebruiken.",
+  "integratie_commit": "8f2154627be1ada3772cfaab6c985123043aef49"
+}
