@@ -1,0 +1,84 @@
+{
+  "onderwerp": "Actueel Writer-hoofdthreadprofiel: tabelgrepen blijven zichtbaar in invoerstaart",
+  "broncommit": "231d19454c1e01d8e15e144536b820a0d6786e7a",
+  "productbron": "abe87e99e58d6483a0b30b9793d8932bc1917bd9",
+  "analyse": {
+    "geslaagd": true,
+    "programma_sha256": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+    "samples": 9948,
+    "profielvenster_ms": 17092,
+    "invoer": {
+      "tekens": 1052,
+      "interval_ms": 2,
+      "laatste_keyup_ms": 38673,
+      "begin_tot_bron_ms": 16598,
+      "laatste_keyup_tot_bron_ms": 219,
+      "laatste_keyup_tot_frame_ms": 2282,
+      "begin_tot_frame_ms": 18661,
+      "paginas": 65,
+      "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+      "wall_begin_tot_frame_ms": 18840,
+      "wall_verzonden_tot_frame_ms": 17066,
+      "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+    },
+    "stacklidmaatschap": {
+      "wasm-stub": 4570,
+      "storySegmentUnitDigests": 1215,
+      "buildStory": 1859,
+      "tabelgrepen": 2611,
+      "tabelbeelden": 2420,
+      "tabel_van_cel": 1128,
+      "tablePayload": 1054,
+      "tablePayload_via_tabelgrepen": 1054,
+      "readParagraphs": 528
+    },
+    "scriptbronnen": [
+      {
+        "url": "tauri://localhost/assets/chunk-XUXC3ZKS-BBetVHG6.js",
+        "bestand": "bron-chunk-XUXC3ZKS-BBetVHG6.js.gz",
+        "sha256": "39bb106c7b853ff63a0d91865227da161261a1bec1fa01c8b384f516fc19096e"
+      },
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-EW2ZgGN5.js",
+        "bestand": "bron-editors-EW2ZgGN5.js.gz",
+        "sha256": "69072c844392523a2ffba8bb26baf187f73d6bef2e174a220b2901e7ec5cd110"
+      },
+      {
+        "url": "tauri://localhost/assets/index-DfZTET1E.js",
+        "bestand": "bron-index-DfZTET1E.js.gz",
+        "sha256": "74c504af1c6e2e018ae5b18cd43987de511132226ac3fd2bb009262b04f809b9"
+      }
+    ],
+    "gewone_native_opdrachten": 111,
+    "bewaarde_tabellen_exact": 128,
+    "docx_sha256": "c83adee62d032da68e1318fb9e8142eb308c5fef9179657317c255ae7771740e",
+    "fouten": {
+      "gui": [],
+      "engine": [],
+      "console": []
+    },
+    "grenzen": [
+      "Een geprofileerde ronde, geen prestatievergelijking of acceptatie.",
+      "Profiel begint na verzenden van toetsen; WebKit ontvangt nog toetsen tijdens profielvenster. Dus niet uitsluitend na laatste ontvangen keyup.",
+      "Stacklidmaatschappen overlappen en zijn geen CPU-tijdpercentages.",
+      "Renderlijst en twee rAFs bewijzen geen fysieke schermpaint.",
+      "Bewaarde DOCX onafhankelijk op ZIP-integriteit en tabelaantal gecontroleerd; geen afzonderlijke GUI-heropening."
+    ]
+  },
+  "visueel": "snel-getypt-bewaard.png bekeken: tekstmarker en aansluitende bewerking zichtbaar, tabellen en lint aanwezig; geen volledige pixel-/statusacceptatie.",
+  "controles": "Analyse-script groen; bronhashes, normale native opdrachten, ZIP-integriteit en 128 tabelstructuren gecontroleerd. Geen productwijziging, build, frontendtests of platformtests voor deze profielopname.",
+  "volgende_stap": "Gerichte begrenzing van optionele tabelgrepen tijdens actieve invoer onderzoeken, met sessie-/levensduurafscherming en expliciet herstel na lege invoerwachtrij. Pas overnemen na rijke en korte native vergelijking plus tabelinteractie.",
+  "archief": {
+    "bestand": "2026-11-12-writer-actuele-invoerstaart.tar.gz",
+    "sha256": "a6b4ddcb34825e4001071f66b50ecbb4dcd5514532361818e064f482bdd5360c",
+    "bytes": 2559855,
+    "leden": 17,
+    "bytecontrole": true
+  },
+  "acceptatie": "Geen productfix, prestatieacceptatie, oorzaak van geheugenfout, issue- of migratieafsluiting."
+}
