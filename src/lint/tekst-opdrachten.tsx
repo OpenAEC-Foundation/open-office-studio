@@ -20,6 +20,7 @@ import { useInstellingen } from "../instellingen";
 import { useProfielToets } from "../tekst/bewerken/profielToets";
 import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
 import { leesAlleAlineas } from "../tekst/gedeeld/engine";
+import { planStatusTelling } from "../tekst/info/statusTelling";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
@@ -830,7 +831,7 @@ export function TekstStatus({
   useEffect(() => {
     let actief = true;
     let opruimen: (() => void)[] = [];
-    let wachten: ReturnType<typeof setTimeout> | undefined;
+    let stopTelling: (() => void) | undefined;
     let frame = 0;
     let selectieWachten: ReturnType<typeof setTimeout> | undefined;
     let gekoppeld: HTMLElement | null = null;
@@ -843,17 +844,14 @@ export function TekstStatus({
           : { huidig, totaal },
       );
     };
-    const tel = (ref: DocxEditorRef) => {
-      clearTimeout(wachten);
-      wachten = setTimeout(() => {
-        leesAlleAlineas(ref)
-          .then((alineas) => {
-            if (!actief) return;
-            setTelling(telTekst(alineas.map((a) => a.text)));
-            paginas(ref);
-          })
-          .catch(() => {});
-      }, 600);
+    const tel = () => {
+      stopTelling?.();
+      stopTelling = planStatusTelling(api, leesAlleAlineas, (alineas) => {
+        if (!actief) return;
+        setTelling(telTekst(alineas.map((a) => a.text)));
+        const ref = api();
+        if (ref) paginas(ref);
+      });
     };
     const koppel = () => {
       const ref = api();
@@ -866,7 +864,7 @@ export function TekstStatus({
       if (!ref || !vlak || !scroll || !ref.getEditorRef()?.getYrsSession()) return;
       gekoppeld = vlak;
       setDoel(vlak);
-      tel(ref);
+      tel();
       const opScroll = () => {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => paginas(ref));
@@ -874,7 +872,7 @@ export function TekstStatus({
       scroll.addEventListener("scroll", opScroll, { passive: true });
       opruimen = [
         () => scroll.removeEventListener("scroll", opScroll),
-        ref.onDocumentChange(() => tel(ref)),
+        ref.onDocumentChange(tel),
         ref.onSelectionChange(() => {
           opScroll();
           // Tijdens slepen niet elke frame een grote selectie uitlezen en
@@ -904,7 +902,7 @@ export function TekstStatus({
     return () => {
       actief = false;
       clearInterval(poging);
-      clearTimeout(wachten);
+      stopTelling?.();
       cancelAnimationFrame(frame);
       opruimen.forEach((weg) => weg());
     };
