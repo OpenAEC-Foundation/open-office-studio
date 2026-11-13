@@ -1,0 +1,1561 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "992fe97d",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Beide private replicacachevarianten afgewezen als Writer-snelheidsfix. Componentpariteit en versnelling vormen geen desktopacceptatie. Productbron ongewijzigd; vier eigen private Rust-proefbestanden exact hersteld naar toestand vóór beide varianten.",
+  "werking": {
+    "variant_a": "Bestaande edit_resident_text-registratiestaart byteexact gedeeld met strikt waargenomen replica-invoeging. Prepare vóór integratie; exacte bron/epoch/cache/env/media/lengte en volledige attributen. Afwijzing/fout wist eigen patch-/previewcertificaat.",
+    "variant_b": "Zelfde font-/blokpatchregistratie, maar replica zet typing_epoch en typing_preserves_seeds terug; lokale inputroute ongewijzigd. Hypothese over lokale invoerhint niet bewezen door desktopmetingen.",
+    "bronpinnen": {
+      "engine.rs": {
+        "voor": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+        "variant_a": "79bdc3224656937239f59fdcc8d41112a19319f6e2bd14885ca7c45ed6380bd0",
+        "variant_b": "b5839274b3f1ec8ea48eefcf28d819fd6a563d427cfba7f7c5c78cb1d7d88877"
+      },
+      "wasm.rs": {
+        "voor": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+        "variant_a": "28f4e4b9911f1645dc5ae7c575bf868454e7976d53af332e543d7b47f776ff21",
+        "variant_b": "28f4e4b9911f1645dc5ae7c575bf868454e7976d53af332e543d7b47f776ff21"
+      },
+      "mutation_proof.rs": {
+        "voor": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+        "variant_a": "ce5eb863024327dd9d4409b3ed89c5c55e8f32c43bc132865738d68c2d615602",
+        "variant_b": "ce5eb863024327dd9d4409b3ed89c5c55e8f32c43bc132865738d68c2d615602"
+      },
+      "lib.rs": {
+        "voor": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+        "variant_a": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+        "variant_b": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+      }
+    },
+    "herstel": {
+      "herstel": "Alleen eigen vier private proefbestanden terug naar exacte toestand vóór beide cachevarianten. Snapshots, diffs, kernen en ELF’s behouden. Productbron niet bewerkt.",
+      "bestanden": {
+        "engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+        "wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+        "mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+        "lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+      }
+    },
+    "gedeelde_staart": {
+      "gedeelde_registratie_code_byteexact_uit_bestaande_methode": true,
+      "sha256": "bb5489c24c69efebeef26d4bc0592517f570024b91bf1e3f30fbab917f6f3ffe"
+    }
+  },
+  "kernen": {
+    "a": {
+      "sha256": "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4",
+      "bytes": 24367921
+    },
+    "b": {
+      "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995",
+      "bytes": 24367937
+    },
+    "volledige_abi_behouden": true,
+    "basisbron_en_gereedschap": "Zie 2026-11-13-writer-font-kern.json; broncommit4e982c3a plus vastgepinde nootpatch, Rust1.98.1/bindgen0.2.129/Binaryen132.",
+    "corpus_afhankelijkheid": {
+      "pad": "docs/tests/2026-11-13-writer-mutatiebewijs.tar.gz",
+      "sha256": "a220e60b1f0297ac8fbfd0d5899da41774ad3464dab395db8ce8f9c56c0d4235",
+      "reden": "Oorspronkelijke corpuspakketten en meegeleverde gouden projecties; uitbreidingen in dit archief."
+    }
+  },
+  "component": {
+    "a": "30 gevallen/43 updates exact voor staat/vector/body/eigenschappen/marges/fontJSON/blokken. 19 classificaties toegelaten,18 cachepatches; hyperlink valt terug. Warm/koud/lokaal-uit28/41 exact. Extra eerste/middelste alinea in30/43. Acht updates vóór lowering: eerste patch,zeven conservatieve terugvallen; eindstaat/fonts/blokken/volledige indeling exact.",
+    "b": {
+      "gevallen": 30,
+      "updates": 43,
+      "acht_indelingen_exact": true,
+      "tegen_meegeleverde_kern_en_eerste_variant": true
+    },
+    "abba_a_font_medianen_ms": [
+      73.21,
+      11.72,
+      11.53,
+      75.92
+    ],
+    "abba_a_api_plus_font_medianen_ms": [
+      78.22,
+      16.36,
+      16.2,
+      81.26
+    ],
+    "abba_a_32_stappen_volledige_indeling_exact": true,
+    "afgekeurde_overlap": "Eerste component-ABBA overlapt corpusproef; volledig bewaard onder replica-paragraaf/abba-overlap en niet gebruikt voor snelheidsclaim."
+  },
+  "native": {
+    "platform": "Linux x86_64, release2026.45.52, writer-bronjournaal, schema2; geïsoleerde eigen X11/DBus/XDG-profielen en fixtures.",
+    "bouw_a": {
+      "code": 0,
+      "reden": null,
+      "seconden": 153.13487282900314,
+      "minimum_vrije_bytes": 15366860800,
+      "start_vrije_bytes": 15481688064,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf",
+      "programma_sha256": "5934f4985ea248c7dac6525b1753fd164c596f3e0220d9ba3dba616a2d906e82",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "bouw_b": {
+      "code": 0,
+      "reden": null,
+      "seconden": 154.15053222300048,
+      "minimum_vrije_bytes": 15118938112,
+      "start_vrije_bytes": 15233818624,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache",
+      "programma_sha256": "206c24ab5a8fb941a9e71b1f4f4ce889896b02290dc9ab0f111a60c544d8b12d",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "a_ronden": [
+      {
+        "naam": "native-klein-a-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.713392520003254,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-klein-a-een"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16347.999999999998,
+          "begin_tot_bron_ms": 1238.9999999999982,
+          "laatste_keyup_tot_bron_ms": 32,
+          "laatste_keyup_tot_frame_ms": 314.0000000000018,
+          "begin_tot_frame_ms": 1521,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1569,
+          "wall_verzonden_tot_frame_ms": 419,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-klein-b-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.50752331699914,
+        "programma_sha256": "5934f4985ea248c7dac6525b1753fd164c596f3e0220d9ba3dba616a2d906e82",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-klein-b-een"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16184.000000000002,
+          "begin_tot_bron_ms": 1246,
+          "laatste_keyup_tot_bron_ms": 53.99999999999818,
+          "laatste_keyup_tot_frame_ms": 321.9999999999982,
+          "begin_tot_frame_ms": 1514,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1652,
+          "wall_verzonden_tot_frame_ms": 497,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-klein-b-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.66837407199637,
+        "programma_sha256": "5934f4985ea248c7dac6525b1753fd164c596f3e0220d9ba3dba616a2d906e82",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-klein-b-twee"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16456,
+          "begin_tot_bron_ms": 1516,
+          "laatste_keyup_tot_bron_ms": 48,
+          "laatste_keyup_tot_frame_ms": 173,
+          "begin_tot_frame_ms": 1641,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1749,
+          "wall_verzonden_tot_frame_ms": 574,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-klein-a-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.71386605600128,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-klein-a-twee"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16510,
+          "begin_tot_bron_ms": 1361.9999999999982,
+          "laatste_keyup_tot_bron_ms": 49,
+          "laatste_keyup_tot_frame_ms": 266,
+          "begin_tot_frame_ms": 1578.9999999999982,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1735,
+          "wall_verzonden_tot_frame_ms": 599,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-a-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 63.89095179499418,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-rijk-a-een"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30413,
+          "begin_tot_bron_ms": 8164.999999999996,
+          "laatste_keyup_tot_bron_ms": 239,
+          "laatste_keyup_tot_frame_ms": 1267,
+          "begin_tot_frame_ms": 9192.999999999996,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 9444,
+          "wall_verzonden_tot_frame_ms": 7662,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-b-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 67.27800173099968,
+        "programma_sha256": "5934f4985ea248c7dac6525b1753fd164c596f3e0220d9ba3dba616a2d906e82",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-rijk-b-een"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31558,
+          "begin_tot_bron_ms": 9316.000000000004,
+          "laatste_keyup_tot_bron_ms": 371.00000000000364,
+          "laatste_keyup_tot_frame_ms": 4234,
+          "begin_tot_frame_ms": 13179,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13370,
+          "wall_verzonden_tot_frame_ms": 11465,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-b-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 67.91637857800379,
+        "programma_sha256": "5934f4985ea248c7dac6525b1753fd164c596f3e0220d9ba3dba616a2d906e82",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-rijk-b-twee"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31726,
+          "begin_tot_bron_ms": 9526.999999999996,
+          "laatste_keyup_tot_bron_ms": 326.99999999999636,
+          "laatste_keyup_tot_frame_ms": 4373.000000000007,
+          "begin_tot_frame_ms": 13573.000000000007,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13597,
+          "wall_verzonden_tot_frame_ms": 11709,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-a-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 62.52570774900232,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/native-rijk-a-twee"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30381,
+          "begin_tot_bron_ms": 7704,
+          "laatste_keyup_tot_bron_ms": 236,
+          "laatste_keyup_tot_frame_ms": 1320,
+          "begin_tot_frame_ms": 8788,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8915,
+          "wall_verzonden_tot_frame_ms": 7149,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      }
+    ],
+    "b_ronden": [
+      {
+        "naam": "native-klein-a-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.812088163002045,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-klein-a-een"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16340,
+          "begin_tot_bron_ms": 1222.9999999999982,
+          "laatste_keyup_tot_bron_ms": 51,
+          "laatste_keyup_tot_frame_ms": 287,
+          "begin_tot_frame_ms": 1458.9999999999982,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1591,
+          "wall_verzonden_tot_frame_ms": 417,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-klein-b-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.76395682200382,
+        "programma_sha256": "206c24ab5a8fb941a9e71b1f4f4ce889896b02290dc9ab0f111a60c544d8b12d",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-klein-b-een"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16354,
+          "begin_tot_bron_ms": 1353.9999999999982,
+          "laatste_keyup_tot_bron_ms": 25.99999999999818,
+          "laatste_keyup_tot_frame_ms": 503,
+          "begin_tot_frame_ms": 1831,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1927,
+          "wall_verzonden_tot_frame_ms": 772,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-klein-b-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.34890661999816,
+        "programma_sha256": "206c24ab5a8fb941a9e71b1f4f4ce889896b02290dc9ab0f111a60c544d8b12d",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-klein-b-twee"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16245.999999999998,
+          "begin_tot_bron_ms": 1297.0000000000018,
+          "laatste_keyup_tot_bron_ms": 43.00000000000364,
+          "laatste_keyup_tot_frame_ms": 256.0000000000018,
+          "begin_tot_frame_ms": 1510,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1668,
+          "wall_verzonden_tot_frame_ms": 515,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-klein-a-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 43.91444096799387,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-klein-a-twee"
+        ],
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16315.000000000002,
+          "begin_tot_bron_ms": 1227,
+          "laatste_keyup_tot_bron_ms": 53.99999999999818,
+          "laatste_keyup_tot_frame_ms": 476.9999999999982,
+          "begin_tot_frame_ms": 1650,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1752,
+          "wall_verzonden_tot_frame_ms": 615,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-a-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 66.6780374230002,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-rijk-a-een"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30738,
+          "begin_tot_bron_ms": 8067,
+          "laatste_keyup_tot_bron_ms": 223.00000000000364,
+          "laatste_keyup_tot_frame_ms": 4882,
+          "begin_tot_frame_ms": 12725.999999999996,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12737,
+          "wall_verzonden_tot_frame_ms": 10956,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-b-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 67.12021179099975,
+        "programma_sha256": "206c24ab5a8fb941a9e71b1f4f4ce889896b02290dc9ab0f111a60c544d8b12d",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-rijk-b-een"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31599,
+          "begin_tot_bron_ms": 9285,
+          "laatste_keyup_tot_bron_ms": 302,
+          "laatste_keyup_tot_frame_ms": 4636,
+          "begin_tot_frame_ms": 13619,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13630,
+          "wall_verzonden_tot_frame_ms": 11735,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-b-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 67.08222901100089,
+        "programma_sha256": "206c24ab5a8fb941a9e71b1f4f4ce889896b02290dc9ab0f111a60c544d8b12d",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-rijk-b-twee"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31782,
+          "begin_tot_bron_ms": 9415,
+          "laatste_keyup_tot_bron_ms": 325,
+          "laatste_keyup_tot_frame_ms": 4057,
+          "begin_tot_frame_ms": 13147,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13324,
+          "wall_verzonden_tot_frame_ms": 11449,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "naam": "native-rijk-a-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 66.06881797299866,
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/native-rijk-a-twee"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30518,
+          "begin_tot_bron_ms": 8046,
+          "laatste_keyup_tot_bron_ms": 212,
+          "laatste_keyup_tot_frame_ms": 4760,
+          "begin_tot_frame_ms": 12594,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12836,
+          "wall_verzonden_tot_frame_ms": 11033,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      }
+    ],
+    "a_rijk_wall_ms": [
+      9444,
+      13370,
+      13597,
+      8915
+    ],
+    "b_rijk_wall_ms": [
+      12737,
+      13630,
+      13324,
+      12836
+    ],
+    "a_rijk_keyup_tot_frame_ms": [
+      1267,
+      4234,
+      4373,
+      1320
+    ],
+    "b_rijk_keyup_tot_frame_ms": [
+      4882,
+      4636,
+      4057,
+      4760
+    ],
+    "oordeel": "Geen aangetoonde desktopwinst. A-rijk duidelijk trager in die reeks. B-rijk ook geen winst. Referentie in tweede reeks zelf veel trager,vooral laatste-keyup-tot-frame; geen zekere oorzakelijke verklaring of vergelijking over reeksen. Geen exclusieve CPU-/fysieke-paintclaim.",
+    "kort_b_beperking": {
+      "tijd_utc": "2026-11-13T09:53:14.721352+00:00",
+      "check": "rustfmt --check --edition 2024 engine.rs wasm.rs mutation_proof.rs",
+      "code": 1,
+      "duur_seconden": 5.03,
+      "bevinding": "Formattering wijkt af, deels bestaande nootpatch en deels private kandidaat. Niets herschreven. Uitgevoerd tijdens korte native ABBA; korte timing niet als onbeïnvloede meting accepteren. Rijke ABBA moet zonder deze overlap blijven."
+    },
+    "functies": "Alle16 vaste ABBA-ronden plus2 extra geïnstrumenteerde ronden groen: fysieke invoer,Undo/Redo,selecteren/vervangen,bewaren vóór antwoord,verwerpen,nieuw document en laat antwoord; rijke DOCX128tabellen/91423UTF16.",
+    "runtime_a": {
+      "bytes": 24367921,
+      "sha256": "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+    },
+    "runtime_b": {
+      "bytes": 24367937,
+      "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+    },
+    "instrumentatie": "Extra ronden bevestigen geladen Wasm via fetch/WebCrypto en Worker-verkeer. Hun tijden zijn geen gecontroleerde desktopbenchmark. Worker-fontberichtduur omvat wachtrij,overlap; niet optellen als CPU-tijd."
+  },
+  "documenten_en_beelden": {
+    "a": {
+      "documenten": {
+        "native-functie": {
+          "sha256": "9e4ef8b3252a7f465bfbfbb41473dd4964b8b301e01b299b37fa683888649794",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "abc825b9a0ee34d249ad762c587e80f5a6deb963bc59a0c85ee918a500311038",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-a-een": {
+          "sha256": "f1eb3d6f61441c9f808ceb5fd0adcf25318cbd05cf93aed7653d138adf5803cb",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "dc43815170100279b9bc020d7999d9163eea7e98ba20c5ca1164bfda02c60a35",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-a-twee": {
+          "sha256": "82ac61be46e76cd22ab54e1aabad7ade8693a0700bd6f679efa55a37d526f921",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "82d6da938b7c0b0d67d98ef04caae470d4de3c17d94121c58163d086cef8cc00",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-b-een": {
+          "sha256": "11ecffe81afb058a7cd8e9de05eaff0224570e5b27b1d0987b72d257180ce097",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "3cff1eff78e88e080ba8871cc83b039dad882744a715cee25aece716ee889dbe",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-b-twee": {
+          "sha256": "4286f3720d2f83e9f5881e4ebb698e084305a4917c04449d47108f8ff967ecca",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "9ebff7124307002f594e1d32380d1989c29ab44b23f6abfbca5df4c65b08ceb3",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-a-een": {
+          "sha256": "6b41324d4d7184edc315b67140c73f9f4917c4ee2869d82e2f98bbf1b695762f",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "07a44a2f0fa0c85d842933306bd813502a17f2af25f30f18e92b4d935c30b36a",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-a-twee": {
+          "sha256": "bbbcf956558b87b10876ee35093285589642b3a745e7b5a3fcba2ab0073e90d5",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "65bc762c6ef2dd36747e923ac5d82f28fd94a6c01c077baec3bc054ade021c30",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-b-een": {
+          "sha256": "aebf8a1a93521b115e95c043857928cdebfad8e0923eed158cf7f02b43ed2447",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "6373d159b055ad7493bd3176d9996a4f7856fa4fb498b1faa799c7213e1b5587",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-b-twee": {
+          "sha256": "d0225e8504caa4b3a34ce233e80daf5dae26ad3776af3372dd2c143086143d8e",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "57bbeeb060b7d3f884e086588c7a0e7eb4039c4cc2da0f2c55d362abec04e092",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        }
+      },
+      "beelden": [
+        {
+          "referentie": "native-klein-a-een/invoer-redo.png",
+          "vergeleken": "native-klein-b-een/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-klein-b-een/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-klein-b-een/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/invoer-redo.png",
+          "vergeleken": "native-klein-b-twee/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-klein-b-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-klein-b-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/invoer-redo.png",
+          "vergeleken": "native-klein-a-twee/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-klein-a-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-klein-a-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/invoer-redo.png",
+          "vergeleken": "native-rijk-b-een/invoer-redo.png",
+          "verschillende_pixels": 30,
+          "bbox": [
+            1038,
+            940,
+            1040,
+            955
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-rijk-b-een/snel-getypt-bewaard.png",
+          "verschillende_pixels": 30,
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-rijk-b-een/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/invoer-redo.png",
+          "vergeleken": "native-rijk-b-twee/invoer-redo.png",
+          "verschillende_pixels": 30,
+          "bbox": [
+            1038,
+            940,
+            1040,
+            955
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-rijk-b-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-rijk-b-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/invoer-redo.png",
+          "vergeleken": "native-rijk-a-twee/invoer-redo.png",
+          "verschillende_pixels": 30,
+          "bbox": [
+            1038,
+            940,
+            1040,
+            955
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-rijk-a-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-rijk-a-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      ],
+      "gehele_beelden_exact": 13,
+      "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+    },
+    "b": {
+      "documenten": {
+        "native-functie": {
+          "sha256": "1c5ec113f35c63499b59d65e9d222000f007b418d41892cb7146dca8777f5f0e",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "fd17e86f2b6876642361334f6766d2d498006c8218f71aaf4d9fe52152f5a551",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-a-een": {
+          "sha256": "402648d136765754b83bbaf944f3b2df3f77ed3a05f2ae0a25a5e024eb9fca36",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "e973ca4722fce66b185805aafcf4d7aa5db31f2e7a59dd2de90bffdb2e213a7f",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-a-twee": {
+          "sha256": "0559a6206fd8439a8b1ac2c1dec457816cb7904f39700408b6f3de38d7be456a",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "2cbf3beca08d82311f678f581a4fc78baf4ed08d9bcb0c344ba86df1e9efd309",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-b-een": {
+          "sha256": "412148ff3c0025fa891d177d4bac6bc68619b59190a820846453c5ad5abfb1d3",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "2d7f7393bb957cc1e0cfac6ffc19ece16ae998a26425501b8bb0d3ce8367cbad",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-klein-b-twee": {
+          "sha256": "f2264dd56db5f1c39f357c973d87779beb06eb9d930dea4be12d14847fa094f2",
+          "tabellen": 1,
+          "utf16": 736,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "44a78c903ea78d34d57775b706a5f1e228e93352e8c44e84522c67a1b9d99b8c",
+            "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+            "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-a-een": {
+          "sha256": "781cda8b4e246f8db0e3aae0875e57055dbafbe3542afed36de7382f341384e0",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "66c2982da9aaa898ed6268edc2e83425201d5c3f93fcece280b4f3586225c7b9",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-a-twee": {
+          "sha256": "017218869d317d2bb9dac23b503f3c6efdf3fda7f89f0498d09995395409acfb",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "d262324d39e439ab48715073d52c3c01aeebae15db6b7c2002afe448e768e585",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-b-een": {
+          "sha256": "425803c8ce0797905c87755abdd7cc862f5f4a1c21e397e2792d477964f1b1bd",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "caa3e09304eb81553e40ba93a2d79184eb1145a10a9c6db929b632c0f507c3e0",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "native-rijk-b-twee": {
+          "sha256": "c23501d0afe3019b1da40aa533964eb9b0a80a8b0337fa30c84d177a1f9109f8",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "e7c3c39b6ed4595e5f79dc20f401039bd5a529bf03dfa182fe930baffe025a78",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        }
+      },
+      "beelden": [
+        {
+          "referentie": "native-klein-a-een/invoer-redo.png",
+          "vergeleken": "native-klein-b-een/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-klein-b-een/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-klein-b-een/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/invoer-redo.png",
+          "vergeleken": "native-klein-b-twee/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-klein-b-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-klein-b-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/invoer-redo.png",
+          "vergeleken": "native-klein-a-twee/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-klein-a-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-klein-a-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/invoer-redo.png",
+          "vergeleken": "native-rijk-b-een/invoer-redo.png",
+          "verschillende_pixels": 30,
+          "bbox": [
+            1038,
+            940,
+            1040,
+            955
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-rijk-b-een/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-rijk-b-een/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/invoer-redo.png",
+          "vergeleken": "native-rijk-b-twee/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-rijk-b-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-rijk-b-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        },
+        {
+          "referentie": "native-rijk-a-een/invoer-redo.png",
+          "vergeleken": "native-rijk-a-twee/invoer-redo.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+          "vergeleken": "native-rijk-a-twee/snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "native-rijk-a-twee/nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        }
+      ],
+      "gehele_beelden_exact": 14,
+      "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+    },
+    "controle": "18 DOCX: SHA gelijk aan rapport,ZIP/CRC/alleXML en relaties parsebaar,tabellen exact. Binnen elke rijke ABBA verschillen pakketdelen alleen in docProps/core.xml.",
+    "pixels": "36 hele-beeldparen,27 exact; overige9 verschillen30/36 pixels op smalle2px-bboxen,ongemaskerd vastgelegd. Geen algemene visuele acceptatie.",
+    "bekeken": [
+      "replica-paragraaf/native-rijk-b-een/snel-getypt-bewaard.png",
+      "replica-fontcache/native-rijk-b-een/snel-getypt-bewaard.png",
+      "replica-fontcache/native-rijk-b-een/nieuw-na-laat-antwoord.png"
+    ],
+    "waarneming": "Bekeken bewaarbeelden houden tekst/opmaak en paginaopbouw; nieuwdocumentbeeld bevat de verwachte14tekens. Geen zichtbare overlap in deze beelden."
+  },
+  "controles": {
+    "scripts": [
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/abba.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/bouw-opdracht.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/bouw.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/bouwen-native.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/documenten-beelden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/maak.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/native-proef.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/native-ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/acht-stappen.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/burst.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/extra-corpus.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/extra-projectie.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/posities-corpus.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/posities-projectie.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/proef-35.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-paragraaf/proef.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/bouw-opdracht.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/bouw.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/bouwen-native.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/controle-en-bouwen.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/documenten-beelden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/native-proef.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/native-ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/acht-stappen.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": ".local/integratiecontrole/replica-fontcache/proef.mjs",
+        "controle": "node --check",
+        "code": 0
+      }
+    ],
+    "rustfmt": {
+      "opdracht": [
+        "/home/aia01/.cargo/bin/rustfmt",
+        "--check",
+        "--edition",
+        "2024",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs"
+      ],
+      "code": 1,
+      "gewijzigd": false,
+      "opmerking": "Bestaande nootpatch en private proefcode hebben formatteringsverschillen. Geen productacceptatie; bron niet herschreven."
+    },
+    "behoud": {
+      "elf_referenties": 18,
+      "standaardbundel_exact_sha_mode_mtime": 529,
+      "wasm": [
+        {
+          "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+          "bytes": 24549413
+        },
+        {
+          "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+          "sha256": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+          "bytes": 4366717
+        }
+      ],
+      "sdk_index_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "npm_edit_sha256": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431"
+    }
+  },
+  "niet_gecontroleerd": [
+    "Geen productievariant zonder diagnosegetter/klokken gebouwd. Bestaande profielgetter is privaat hergebruikt; niet geschikt voor productie.",
+    "Geen nieuwe volledige frontend/TypeScript/Python-suite of desktop-CI: alleen private kernen/testbundels en documentatie gewijzigd.",
+    "Geen nieuwe Windows/macOS-,installer-,andere feature/schema-/releasevariantacceptatie.",
+    "Geen volledige IME/accessibility/glyph/alle stories/previews/alle mutaties-functiedekking. Geen issue gesloten. Bestaande geheugen-/RefCell-fouten en migratiegebieden blijven open.",
+    "Rustfmt --check faalt: bestaande nootpatch en private proefcode hebben opmaakverschillen. Geen bestanden automatisch herschreven."
+  ],
+  "vervolg": "Meet eerst de totale kosten vóór/tijdens apply_update_with_inference (prepare/certificaat/patch) en de werkelijke Worker-layout-/font-/bewaarfasen met dezelfde bron. Componentfontwinst kan elders extra werk veroorzaken. Onderzoek ook variabele referentietail met herhaalde referentieronden. Behoud aparte lokale/replicahints en conservatieve terugval; geen productovername van deze varianten. Elke nieuwe kandidaat opnieuw vaste korte/rijke ABBA zonder andere controles,gevolgd door functies/beelden en afzonderlijke release/platformcontroles. Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-replicacache.tar.gz",
+    "sha256": "2e1faca1577ef3c215a95b2bd3633107dee55c937e3db785e5ae1718dd0ca216",
+    "bytes": 25729209,
+    "bestanden": 364,
+    "alle_leden_byteexact_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/dist/hele bronboom; binaire referenties blijven privé behouden en vastgepind. Bronvoor/na/diffs,corpusuitbreidingen,ruwe proeven/logs/DOCX/PNG meegeleverd."
+  }
+}
