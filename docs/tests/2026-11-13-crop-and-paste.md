@@ -26,9 +26,31 @@ half-EMU rounding inherent in DOCX dimensions (1 EMU = 1/9525 pixel).
 Pointer and keyboard crop input both call the tested `sleepGreep` helper.
 This is not a claim of new native mouse/keyboard platform acceptance.
 
+## Production browser and CI follow-up
+
+The ordinary production build at `9b8624f9` also passes Chromium interaction:
+open a DOCX with a 320×160 px image cropped 20% above and 30% below, select it,
+open Crop, and move the top handle twelve times with Shift+Down. The top stops
+at 65% and the bottom stays at 30%. Up moves back to 64%; dragging the top
+handle 200 px down stops at 65% again. Saving through Ctrl+S produces crop XML
+`t="65000" b="30000"` and dimensions `cx="3048000" cy="152400"`, with no page errors.
+
+The first CI matrix run failed in the existing hyperlink GUI helper before a
+mouse click: its asynchronous `waitForFunction` predicate was accepted as a
+truthy Promise even when it resolved to `false`. A standalone Playwright probe
+reproduced this, and the installed polling implementation confirms it checks
+the predicate result without awaiting it. The helper now uses a synchronous
+predicate with state across animation-frame polls, requires two stable
+intervals and validates finite coordinates before clicking. It keeps the
+existing timeout, real mouse input and every product assertion.
+
 Repeat the focused tests with:
 
 ```sh
 pnpm exec vitest run src/tekst/afbeelding src/rekenblad/klembord-tabelgrens.test.ts src/rekenblad/klembord-maten.test.ts
 pnpm exec tsc --noEmit
 ```
+
+All 20 object/hyperlink GUI scenarios pass with both the current engine and the
+pinned query-capable engine after this helper correction (40 scenarios total).
+The two product fixes are unchanged by the CI follow-up.
