@@ -13,7 +13,7 @@ const ssr = await createServer({
   optimizeDeps: { noDiscovery: true },
   appType: "custom",
 });
-const { leesDraaitabellen } = await ssr.ssrLoadModule(
+const { leesDraaitabellen, draaitabelBereik } = await ssr.ssrLoadModule(
     "/src/rekenblad/draaitabellen.ts",
   ),
   { Pakket } = await ssr.ssrLoadModule("/src/grafieken/pakket.ts");
@@ -289,7 +289,10 @@ try {
   await page.waitForFunction(
     () => proefApi()?.handle && proefApi().handle !== voorHeropen,
   );
-  await kies(1, 0, 0);
+  const importTabel = leesDraaitabellen(imported)[0];
+  assert.equal(importTabel.keuze, null);
+  const importBereik = draaitabelBereik(importTabel);
+  await kies(importTabel.blad, importBereik.top, importBereik.left);
   await page.getByRole("tab", { name: "Data", exact: true }).click();
   await page.getByRole("button", { name: "Pivot table", exact: true }).click();
   d = page.getByRole("dialog", { name: "Pivot table", exact: true });
