@@ -1,0 +1,348 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "5fbe7f8c",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Cache-/patch-/volledige-loweringroute afzonderlijk vastgesteld in private klok-Wasm. Opzet met beeldframe corrigeert ontbrekende voorwaarde van eerdere componentproef; geen productfix.",
+  "bronbinding": {
+    "bron": "https://github.com/openooxml/betteroffice",
+    "commit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "pakket": "@betteroffice/docx",
+    "versie": "0.5.1",
+    "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+    "patch": "tekstengine-nootnummering.patch",
+    "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+    "rustc": "1.98.1",
+    "wasmBindgen": "0.2.129",
+    "stand": "Nootsymbolen: 599 layoutproeven en gerichte native bewerkingskernproef groen; 30 geoptimaliseerde WASM-rondgangsproeven en volledige Office-set (1728 geslaagd, 7 overgeslagen) groen. Typecontrole, productie- en native bouw groen. Native notatie, noottekst bewerken, Undo/Redo, opslag en heropenen gecontroleerd.",
+    "bronarchiefUrl": "https://api.github.com/repos/openooxml/betteroffice/tarball/4e982c3aea0065578604c3fe7727938533888f66",
+    "binaryen": "132",
+    "binaryenLinuxSha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
+    "wasmOptArgumenten": [
+      "-O3"
+    ],
+    "oorspronkelijkWasmSha256": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+    "wasmSha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "wasmBytes": 24549413,
+    "oorspronkelijkLayoutWasmSha256": "070296adf0c3940fa75c1cb7dde8a5d3350c742fe8a1cd8f3e9e2cefead2080a",
+    "layoutWasmSha256": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+    "layoutWasmBytes": 4366717
+  },
+  "route_bouw": {
+    "sha256": "e756d948781b27c75aaf2cbf3c839b3c0fe9b39534e4a783673da305a6fc82ba",
+    "bytes": 24538599,
+    "interface_exact": true,
+    "doel": "uitsluitend font-klokken via bestaande profielgetter, geen productievariant"
+  },
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 265.057845784002,
+    "min_vrij_bytes": 15969452032,
+    "opdracht": [
+      "python3",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/bouw-route-opdracht.py"
+    ],
+    "offline": true
+  },
+  "bronpinnen": {
+    "engine_voor": "ee999df55f5d05a314412c78bb2da49cc88ca9bcfb52d9d14cd09fc09a37b019",
+    "engine_na": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+    "wasm_wrapper": "db15c0f694a9d7e547cab39e47579363b916add06e163ec6696c22ba4c71693e",
+    "extra_route_klokpunten": true,
+    "productbestanden_ongemoeid": true
+  },
+  "ronden": [
+    {
+      "opzet": "zonder-beeld",
+      "kernvergelijking_acht_stappen_exact": true,
+      "routes": {
+        "a": [
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren"
+        ],
+        "b": [
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren"
+        ]
+      },
+      "herhaalde_routes": [
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit"
+      ]
+    },
+    {
+      "opzet": "beeld-laatste",
+      "kernvergelijking_acht_stappen_exact": true,
+      "routes": {
+        "a": [
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch"
+        ],
+        "b": [
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren"
+        ]
+      },
+      "herhaalde_routes": [
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit"
+      ]
+    },
+    {
+      "opzet": "beeld-voorlaatste",
+      "kernvergelijking_acht_stappen_exact": true,
+      "routes": {
+        "a": [
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch",
+          "route_overige_patch"
+        ],
+        "b": [
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren"
+        ]
+      },
+      "herhaalde_routes": [
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit"
+      ]
+    },
+    {
+      "opzet": "beeld-geen-lokaal",
+      "kernvergelijking_acht_stappen_exact": true,
+      "routes": {
+        "a": [
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren"
+        ],
+        "b": [
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren",
+          "route_volledig_loweren"
+        ]
+      },
+      "herhaalde_routes": [
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit",
+        "route_cache_hit"
+      ]
+    }
+  ],
+  "tijden": {
+    "zonder-beeld": {
+      "a": {
+        "alle_acht_ms": [
+          132.95828200000005,
+          79.24343299999964,
+          78.7058979999997,
+          84.06944500000009,
+          76.22145599999976,
+          76.4461080000001,
+          81.16860899999983,
+          72.95733699999982
+        ],
+        "mediaan_ms": 78.97466549999967,
+        "min_ms": 72.95733699999982,
+        "max_ms": 132.95828200000005
+      },
+      "b": {
+        "alle_acht_ms": [
+          90.64780199999996,
+          74.5437609999999,
+          73.20147899999984,
+          77.09660399999984,
+          73.90806599999996,
+          73.47766200000024,
+          76.53473899999972,
+          69.21732500000007
+        ],
+        "mediaan_ms": 74.22591349999993,
+        "min_ms": 69.21732500000007,
+        "max_ms": 90.64780199999996
+      }
+    },
+    "beeld-laatste": {
+      "a": {
+        "alle_acht_ms": [
+          14.385925999999927,
+          12.17865699999993,
+          11.895355000000109,
+          12.02203499999996,
+          12.848031999999876,
+          12.539650000000165,
+          11.868693999999778,
+          11.97387499999968
+        ],
+        "mediaan_ms": 12.100345999999945,
+        "min_ms": 11.868693999999778,
+        "max_ms": 14.385925999999927
+      },
+      "b": {
+        "alle_acht_ms": [
+          99.11411500000031,
+          76.98480199999995,
+          73.95404499999995,
+          74.8093130000002,
+          80.44283200000018,
+          84.86759100000017,
+          74.2570480000004,
+          72.41382199999998
+        ],
+        "mediaan_ms": 75.89705750000007,
+        "min_ms": 72.41382199999998,
+        "max_ms": 99.11411500000031
+      }
+    },
+    "beeld-voorlaatste": {
+      "a": {
+        "alle_acht_ms": [
+          14.768999000000349,
+          12.90218300000015,
+          12.961263000000145,
+          17.680453999999827,
+          12.299337000000378,
+          12.904943000000003,
+          12.547298999999839,
+          12.199155999999675
+        ],
+        "mediaan_ms": 12.903563000000076,
+        "min_ms": 12.199155999999675,
+        "max_ms": 17.680453999999827
+      },
+      "b": {
+        "alle_acht_ms": [
+          92.71899899999971,
+          82.4727399999997,
+          75.725191,
+          73.64502300000004,
+          72.39168199999995,
+          76.15626400000019,
+          72.88877600000023,
+          75.96471299999985
+        ],
+        "mediaan_ms": 75.84495199999992,
+        "min_ms": 72.39168199999995,
+        "max_ms": 92.71899899999971
+      }
+    },
+    "beeld-geen-lokaal": {
+      "a": {
+        "alle_acht_ms": [
+          86.34144399999968,
+          67.32910700000002,
+          59.13160599999992,
+          58.323879000000034,
+          60.29237599999988,
+          58.81984300000022,
+          57.546741999999995,
+          55.84009699999979
+        ],
+        "mediaan_ms": 58.97572450000007,
+        "min_ms": 55.84009699999979,
+        "max_ms": 86.34144399999968
+      },
+      "b": {
+        "alle_acht_ms": [
+          57.79038400000036,
+          59.20924600000035,
+          56.173609999999826,
+          56.48210300000028,
+          60.12688500000013,
+          55.17617199999995,
+          54.36384399999997,
+          55.658096000000114
+        ],
+        "mediaan_ms": 56.32785650000005,
+        "min_ms": 54.36384399999997,
+        "max_ms": 60.12688500000013
+      }
+    }
+  },
+  "controles": [
+    "Vier opzetten, elk acht lokale bewerkingen en acht replica-updates; tekst, fontJSON en bronvector lokaal/replica exact.",
+    "Elk van de vier opzetten ook acht stappen meegeleverde kern versus klokmodule exact op zeven velden.",
+    "Elke opzet vijf herhaalde lezingen zonder mutatie vastgelegd.",
+    "JavaScript-syntax en Python-compilatie van de nieuwe proefscripts groen; volledige JS/Wasm-import/exportinterface identiek.",
+    "Zestien eerdere ELF-referenties, 529 standaardbundelbestanden inclusief mode/mtime, SDK-index, npm-Wasm en beide vendor-Wasms intact."
+  ],
+  "grenzen": [
+    "Node/V8-componentmetingen op eigen rijke bron; geen nieuwe desktop-, IME-, pixel-, platform- of releaseacceptatie.",
+    "Vaste volgorde, lokale bewerking voor replica; geen ABBA of snelheidsacceptatie. Klokpunten en tellerlezingen kunnen verstoren.",
+    "route_volledig_loweren betekent toename van render.cache_misses door lower_story_into_cache; die functie kan intern previeweenheden hergebruiken. Geen bewijs dat ieder blok opnieuw is opgebouwd.",
+    "route_overige_patch betekent geen cachehit/miss/previewpatch-tellerverschil. Dit past bij patch_lowered_body in de bronroute; het individuele patchsucces en de pending-update-foutterugval zijn niet rechtstreeks gemarkeerd. Geen sterkere branchclaim uitsluitend op grond van tijdwinst.",
+    "De eerdere opzet miste build_display_list_frame; can_apply_input vereist display.extras_json. Daarom was eerder uitblijven van winst geen valide vergelijking van de snelle route.",
+    "Geen productbronwijziging, frontend/TypeScript/Python-productsuite, appbouw of CI in deze stap. De bestaande geheugenfouten blijven open.",
+    "De private bestaande apply_input_profile_json-getter bevat fontklokken; module ongeschikt voor productie.",
+    "Body/leeg renderEnv en acht invoerstukken met Grieks, Arabisch, CJK en emoji; geen volledige stijl-/kop-/noot-/previewdekking."
+  ],
+  "behoud": {
+    "ELFs_exact": 16,
+    "standaardbundel_byte_mode_mtime_exact": 529,
+    "sdk_en_vendor_exact": true
+  },
+  "vervolg": "Onderzoek hoe de werkelijke Worker-update veilig dezelfde paragraafpatch kan behouden. Stel eerst de herkomst en exacte mutatiegrenzen van de Worker-update vast; typing-caretinference bewijst geen uitsluitend tekstuele update. Geen cacheguard versoepelen. Daarna prototype en vaste native korte/rijke ABBA plus functioneel/visueel bewijs.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-font-routes.tar.gz",
+    "sha256": "303d607a77f4ed4692a69191d928d746111ffd8584947a31b229300b629d37e9",
+    "bytes": 453650,
+    "reguliere_leden": 33,
+    "byteexact_gecontroleerd": true
+  }
+}
