@@ -1,0 +1,550 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "a3c051fb79e06bb206820a8fec7f50d4aad878c5",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+  "besluit": "Diagnose afgerond, geen productfix. SDK-save is in deze opname het grootste verstreken bewaarvenster; werkEigenschappenBij is niet de volledige oorzaak. Geen issue/migratie/platform/releaseacceptatie.",
+  "metingen": {
+    "opname": {
+      "geslaagd": true,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 30752,
+        "begin_tot_bron_ms": 8637,
+        "laatste_keyup_tot_bron_ms": 249,
+        "laatste_keyup_tot_frame_ms": 5005,
+        "begin_tot_frame_ms": 13393,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13403,
+        "wall_verzonden_tot_frame_ms": 11615,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": [
+        {
+          "soort": "geregistreerd.bewaren.begin",
+          "begin": 31171,
+          "einde": 31171,
+          "id": 1,
+          "duur_ms": 0
+        },
+        {
+          "soort": "geregistreerd.bewaren.einde",
+          "begin": 31171,
+          "einde": 35305,
+          "id": 1,
+          "fout": false,
+          "duur_ms": 4134
+        }
+      ],
+      "probe": {
+        "bewaarfuncties": 1,
+        "faserefs": 71,
+        "oorspronkelijke_ref_nog_actueel": false,
+        "aantal_nieuwe_refs": 70,
+        "refgrens": 128,
+        "leesgroepgrens": 64,
+        "aanroepergrens_per_label": 4,
+        "overgeslagen": 0,
+        "grens": 8192,
+        "hersteld": true,
+        "geen_extra_enginelezingen": true
+      },
+      "tellingen": {
+        "rAF": 467,
+        "readStories": 53,
+        "keydown": 1083,
+        "keyup": 1083,
+        "onUpdate": 62,
+        "applyLocalUpdate": 62,
+        "setSelection": 63,
+        "tablePayload": 310,
+        "readParagraphs": 770,
+        "geregistreerd.bewaren.begin": 1,
+        "geregistreerd.bewaren.einde": 1
+      },
+      "docx": {
+        "sha256": "e2c09a5de544d5578bbbe068509e7e8ad36eed655023edd08230fa0b2f817381",
+        "tabellen": 128,
+        "tekens_utf16": 91423
+      },
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ]
+    },
+    "opname-refscan": {
+      "geslaagd": true,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31595.000000000004,
+        "begin_tot_bron_ms": 9368.999999999996,
+        "laatste_keyup_tot_bron_ms": 385.99999999999636,
+        "laatste_keyup_tot_frame_ms": 4488.999999999996,
+        "begin_tot_frame_ms": 13471.999999999996,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13683,
+        "wall_verzonden_tot_frame_ms": 11889,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": [
+        {
+          "soort": "geregistreerd.bewaren.begin",
+          "begin": 30910,
+          "einde": 30910,
+          "id": 1,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31114,
+          "einde": 31114,
+          "id": 2,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31114,
+          "einde": 31309,
+          "id": 2,
+          "fout": false,
+          "duur_ms": 195
+        },
+        {
+          "soort": "api.save.begin",
+          "begin": 31309,
+          "einde": 31309,
+          "id": 3,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31604,
+          "einde": 31604,
+          "id": 4,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31604,
+          "einde": 31981,
+          "id": 4,
+          "fout": false,
+          "duur_ms": 377
+        },
+        {
+          "soort": "api.save.einde",
+          "begin": 31309,
+          "einde": 34442,
+          "id": 3,
+          "fout": false,
+          "duur_ms": 3133
+        },
+        {
+          "soort": "geregistreerd.bewaren.einde",
+          "begin": 30910,
+          "einde": 35224.00000000001,
+          "id": 1,
+          "fout": false,
+          "duur_ms": 4314.000000000007
+        }
+      ],
+      "probe": {
+        "bewaarfuncties": 1,
+        "faserefs": 72,
+        "fasemethoden": [
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ]
+        ],
+        "oorspronkelijke_ref_nog_actueel": false,
+        "aantal_nieuwe_refs": 71,
+        "refgrens": 128,
+        "leesgroepgrens": 64,
+        "aanroepergrens_per_label": 4,
+        "overgeslagen": 0,
+        "grens": 8192,
+        "hersteld": true,
+        "geen_extra_enginelezingen": true
+      },
+      "tellingen": {
+        "readStories": 51,
+        "rAF": 461,
+        "keydown": 1083,
+        "keyup": 1083,
+        "onUpdate": 64,
+        "applyLocalUpdate": 64,
+        "setSelection": 65,
+        "tablePayload": 320,
+        "geregistreerd.bewaren.begin": 1,
+        "api.flushPendingInput.begin": 2,
+        "api.flushPendingInput.einde": 2,
+        "api.save.begin": 1,
+        "readParagraphs": 770,
+        "api.save.einde": 1,
+        "geregistreerd.bewaren.einde": 1
+      },
+      "docx": {
+        "sha256": "f9ee84a1c1daec79f12dc2c886622e612572b9e894504ee4887aa99d3fa2aecf",
+        "tabellen": 128,
+        "tekens_utf16": 91423
+      },
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ]
+    }
+  },
+  "uitsplitsing_ms": {
+    "voor_eerste_flush": 204,
+    "eerste_flush": 195,
+    "sdk_save": 3133,
+    "na_sdk_save_tot_bewaarresultaat": 782,
+    "geregistreerd_totaal": 4314,
+    "na_bewaarresultaat_tot_renderlijst_plus_twee_raf": 860,
+    "test_flush_binnen_sdk_venster": 377
+  },
+  "lezingen": {
+    "sdk_venster": {
+      "alineas": 1,
+      "storylezingen": 50,
+      "story_synchroon_ms": 120
+    },
+    "na_sdk_venster": {
+      "alineas": 769,
+      "synchroon_ms": 600,
+      "eerste_ms": 34499,
+      "laatste_ms": 35107
+    }
+  },
+  "grenzen": [
+    "Twee diagnostische native Linux schema-2-functieronden op eigen kopie, geen onbeïnvloede snelheidsvergelijking.",
+    "Eerste probe volgt openbare API-refs maar mist werkelijk gebruikte save/flushref. Alleen geregistreerd totaal 4134ms gemeten; niet als volledige fase-uitsplitsing geteld. Tweede volgt ook bewaarrefs uit React-ouders; 72refs, geen grensoverschrijding, alle wrappers hersteld.",
+    "SDK-save omvat wachten, nieuwe invoer en renderwerk; de afzonderlijke test-flush van377ms overlapt dat venster en mag niet worden opgeteld. Geen exclusieve CPU-tijden.",
+    "782ms na SDK-save omvat eigenschapswerk, 769 alinealezingen en scheduling. ZIP/XML niet afzonderlijk geïsoleerd; adoptie niet apart gemeten.",
+    "Promise-identiteit/this/argumenten/uitzonderingen behouden; extra Promise-settleobserver kan microtasks en rejectionboekhouding beïnvloeden.",
+    "Samplertijden niet geschikt voor CPU-tijdlijn; eerdere nul-timestampbeperking blijft gelden.",
+    "18 actuele transparantie-/opruim-/grenscontroles groen. Geen volledige frontend/TS/Python/build/CI opnieuw: uitsluitend private diagnose en bewijsdocs, productbron ongewijzigd.",
+    "Beide DOCX onafhankelijk SHA/ZIP/CRC/XML gecontroleerd:128tabellen/91423UTF16. Tweede bewaarbeeld bekeken: documenttekst/tabellen/lint zichtbaar; geen volledige65pagina- of pixelacceptatie."
+  ],
+  "behoud": {
+    "referenties": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-desktop/open-office-studio-4c13723b-journaal": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-profiel/open-office-studio-tabelpagina": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/open-office-studio-integratie-56aa1fec": "c8e22ebd5501bcbf03a50682919715daf03b0b237ba7a19674129352caf86fee",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-telling/open-office-studio-status-telling": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/open-office-studio-status-plugin": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-observatie/open-office-studio-ci-afgekeurd": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaarprojectie-ci/open-office-studio-ci-statusfout": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabelrust/open-office-studio-tabelrust": "24a6a728bb8cd810f19ec91b6432ec92a180d55f1a29bb87c6dbf7ab1f00ef91",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectieprojectie/open-office-studio-selectieprojectie": "338561007b05b3564f67f171b3817ca88868d6a9bbc6552ceaac04642cb6b8d7",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectiecache/open-office-studio-selectiecache": "d0657a3ef77c5c60180bd11896134f7a55940d922ef30990d02245bad6851c4d",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/waardecache/open-office-studio-waardecache": "57377138f6c721bd7bbed02e04988212c188d6cf0e62006d974813f3fd19268c",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaar-groepen/open-office-studio-bewaar-groepen": "b6162e59e9c2dfdfcb98eb85d1b731ba52d2d4ee97f3a6429b6106a6127c3421"
+    },
+    "standaardbundel_exact": 529,
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "geen_productwijziging": true
+  },
+  "vervolg": "Meet binnen de werkelijk gebruikte SDK-save-ref de interne flush/worker-save/metadata/adoptiegrenzen op dezelfde acb770, zonder extra enginelezingen. Scheid wachttijd van synchroon werk; source-/versie-/bewaargrenzen behouden. Pas daarna gerichte wijziging met vaste korte/rijke ABBA-ronden. Geheugenfouten en tien migratiegebieden blijven open, Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-bewaarfasen.tar.gz",
+    "sha256": "dd618026dd0083568eb3a0e54087b285164bdd3588c6c9ee5896bd4d94310496",
+    "bytes": 4918973,
+    "reguliere_leden": 41,
+    "alle_leden_byteexact_gecontroleerd": true
+  }
+}
