@@ -1,0 +1,2093 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "37ba549eeda45156429e5e06e59c7e0d1155bacd",
+  "vorige_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": {
+    "status": "afgewezen-geen-productwijziging",
+    "reden": "Rijk fysiek begin→frame13669/13208ms tegenover13305/12427ms, beide kandidaten langer. Verzonden→frame11883/11387ms tegenover11502/10630ms eveneens langer. Ontvangenkeyupstaart4395/4560ms tegenover4213/4688ms gemengd. Kort1884/1700ms tegenover1934/1569ms gemengd. Minder losse lezingen levert dus geen aantoonbare native snelheidswinst op.",
+    "werking": "RijkreadParagraphs770→1;readStoriesreferentie52/51,kandidaat78/79. Groepenreferentie61/60,kandidaat64/58. Bewaarstatistieken zijn dus werkelijk gegroepeerd, maar een aanroeper vinden en aanroepen reduceren verklaart de hele bewaarlatency niet.",
+    "herstel": {
+      "tracked_bron_exact_HEAD": true,
+      "eigen_nieuwe_test_verwijderd_na_hashcontrole": true,
+      "geen_product_wip": true,
+      "candidate_bronkopieen_exact": true
+    },
+    "python_na_herstel": "Alle136groen. Geen volledige frontend-/TypeScript-suite opnieuw op de byte-exact herstelde basis; die basis is reeds geaccepteerd met normaleCI43324642811 opdrieplatforms.",
+    "visueel": "Rijk-kandidaat-b/snel-getypt-bewaard.png en rijk-kandidaat-b/nieuw-na-laat-antwoord.png bekeken; geselecteerde documenttekst, tabelrijen en paginaovergang ogen gelijk. Negen van12beeldparen pixelgelijk; drie verschillen elk30pixels in smalle caretrechthoeken. Geen volledige65pagina-/pixelacceptatie.",
+    "vervolg": "Stop deze groepslezer-variant als snelheidsfix. Meet op geaccepteerde acb770 de geregistreerde bewaarfunctie afzonderlijk: wachten/flush, SDKsave/serialisatie, werkEigenschappenBij (inclusief ZIP-/XMLlezen en schrijven) en beëindiging/adoptie. Volg actuele openbare refs, want React vervangt ze. Behoud originele Promises/this/argumenten/uitzonderingen en tracebegrenzing. Geen statistieken blind schrappen of bron/versie/metadata-behoud afzwakken. Daarna pas een gerichte wijziging met dezelfde korte/rijke en bewaarproeven. Eerdere geheugenfouten en alle tien migratiegebieden open; Database laatst. Geen nieuweCIvoorafgewezen/hersteldeproductbron."
+  },
+  "oorzaak": "De na-invoer-bulklezing komt uit werkEigenschappenBij via leesAlleAlineas/Promise.all, aangeroepen door de geregistreerde bewaarfunctie. De eerste openbare-refprobe miste dit doordat React de ref vervangt. Actuele probe volgt79refs (limiet128) en bindt vier echte stacks aan precies die bron. Een afzonderlijke cursorlezing komt uit autocorrectie.",
+  "geen_afkapping": "Alle55gemeten readStories-antwoorden volledig:52groepen van32 en3van1. Afkapping/terugval van die groepsantwoorden verklaart de bulklezing niet.",
+  "bronbinding": [
+    {
+      "url": "tauri://localhost/assets/index-DtZ2IWH9.js",
+      "line": 291,
+      "column": 29010,
+      "sha256": "0467fd0d1cef8ba92c50247885307d442242cbd72c81db454691eff5ba1a401c",
+      "context": "e:new Date().toISOString()}:void 0}function CFe(e,t){e.beginUndoCapture(t)}function vUe(e,t,n){CFe(e,t),e.applyRawOps(t,n)}const yUe=e=>e instanceof Error?e.message:String(e);async function wUe(e){const{sessie:t}=fee(e);let n;try{n=(t.storyIds?.()??[\"body\"]).filter(i=>i===\"body\"||/^body:t\\d+:r\\d+c\\d+/.test(i)),n.includes(\"body\")||(n=[\"body\",...n])}catch{n=[\"body\"]}const a=(await Promise.all(n.map(async o=>{const i=await e.readParagraphs({view:\"accepted\",story:o});return i.ok?i.paragraphs:null}))).filter(o=>o!==null);if(!a.length)throw new Error(be.t(\"ribbon:writer.errors.documentUnreadable\"));return a.flat()}const EFe=[\"alignment\",\"spaceBefore\",\"spaceAfter\",\"lineSpacing\",\"lineSpacingRule\",\"indentLeft\",\"indentRight\",\"indentFirstLine\",\"numPr\"],RFe=[\"hangingIndent\",\"tabs\",\"keepNext\",\"keepLines\",\"widowControl\",\"pageBreakBefore\",\"contextualSpacing\",\"borders\",\"shading\"],ks=e=>e!==null&&typeof e==\"object\"&&!Array.isArray(e);function AFe(e,t){const n={...ks(e)?e:{}},r=ks(n.spacingExplicit)?{...n.spacingExplicit}:{};for(const[a,o]of Object.entries(t))o!==void 0&&(o===null?delete n[a]:n[a]=o,a===\"spaceBefore\"&&(r.before=o!==null||void 0),a===\"spaceAfter\"&&(r.after=o!==null||void 0));t.indentFirstLine===null&&delete n.hangingIndent,n.hangingIndent===!1&&delete n.hangingIndent;for(const a of"
+    },
+    {
+      "url": "tauri://localhost/assets/editors-bODdYQ4o.js",
+      "line": 70,
+      "column": 4999,
+      "sha256": "4ec7dcee2304c018f60ff49f1f76d272aef13495b523d60da00c995f9656f04b",
+      "context": "rn localStorage.getItem(ose)?.trim()??\"\"}catch{return\"\"}}async function SI(e,t,n,r){const o=Dd.get(e);if(!r&&(!o||!Object.keys(o.kern).length))return n;try{const a={...o?.kern??{}};if(r){const l=ase();l&&(a.laatstGewijzigdDoor=l),a.gewijzigd=new Date().toISOString(),a.revisieOphogen=!0;const c=Ok(n).bewerkingstijd??0;if(a.bewerkingstijd=c+Math.round((o?.actief??0)/6e4),t){try{const f=Uc((await om(t)).map(p=>p.text));a.woorden=f.woorden,a.tekens=f.tekensZonderSpaties,a.tekensMetSpaties=f.tekens,a.alineas=f.alineas}catch{}const d=t.getTotalPages();d>0&&(a.paginas=d)}}const s=AN(n,a);return r&&o&&(o.actief=0),s}catch(a){return console.warn(\"Documenteigenschappen niet bijgewerkt:\",a),n}}const CI=[{sleutel:\"titel\"},{sleutel:\"onderwerp\"},{sleutel:\"auteur\"},{sleutel:\"trefwoorden\"},{sleutel:\"categorie\"},{sleutel:\"status\"},{sleutel:\"opmerkingen\",lang:!0}],Hl=e=>e==null?\"—\":vr(e);function II(e){if(!e)return\"—\";const t=new Date(e);return Number.isNaN(t.getTime())?e:cE(t,{dateStyle:\"long\",timeStyle:\"short\"})}function sse(e,t=Se.t){if(e<60)return t(\"writer:info.properties.minutes\",{minutes:vr(e)});const n=Math.floor(e/60);return t(\"writer:info.properties.hoursMinutes\",{hours:vr(n),minutes:vr(e%60)})}function ise({api:e,herlaad:t,sluit:n,inspecteren:r}){const[o,a]=u.useState(null),[s,l]=u.useS"
+    },
+    {
+      "url": "tauri://localhost/assets/editors-bODdYQ4o.js",
+      "line": 72,
+      "column": 184643,
+      "sha256": "4ec7dcee2304c018f60ff49f1f76d272aef13495b523d60da00c995f9656f04b",
+      "context": "?.(),f.current=null}},[j,N.sleutel,e.soort]),u.useEffect(()=>{if(e.soort!==\"docx\"||!j)return;e.registreer(Object.assign(async()=>{const G=l.current;if(!G?.getDocument())throw new Error(Se.t(\"shell:errors.documentNotReady\"));return d.voerUit(async()=>{p.current=!0;try{await G.flushPendingInput();const re=await G.save();if(!re)throw new Error(Se.t(\"shell:errors.documentSaveFailed\"));return await SI(N.api,G,new Uint8Array(re),!0)}finally{p.current=!1}})},{bereidVoor:async()=>{const G=l.current;if(!G)throw new Error(Se.t(\"shell:errors.documentNotReady\"));await G.flushPendingInput()}}));let O=0;return\"__TAURI_INTERNALS__\"in window||(O=window.setTimeout(()=>{const G=l.current;p.current||!G?.getDocument()||d.voerUit(async()=>{p.current=!0;try{await G.flushPendingInput(),await G.save()}finally{p.current=!1}}).catch(()=>{})},2500)),()=>{window.clearTimeout(O),e.registreer(null)}},[j,d]),u.useEffect(()=>{let O=!0;return(async()=>{const G=await $n(()=>import(\"./document-Ds97PxNL.js\"),__vite__mapDeps([26,0,1])),{vervangingsMelding:re}=await $n(async()=>{const{vervangingsMelding:ae}=await import(\"./index-DtZ2IWH9.js\").then(Me=>Me.jv);return{vervangingsMelding:ae}},__vite__mapDeps([0,1]));let ge={namen:[],vervangingen:[]};try{ge=await G.documentLettertypen(e.bytes)}catch{}if(O&&b(ge.namen),e.s"
+    }
+  ],
+  "diagnoses": {
+    "lint-aanroeper": {
+      "analyse": {
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "functioneel_geslaagd": true,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 34340,
+          "begin_tot_bron_ms": 10491,
+          "laatste_keyup_tot_bron_ms": 435,
+          "laatste_keyup_tot_frame_ms": 4029,
+          "begin_tot_frame_ms": 14085,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 14100,
+          "wall_verzonden_tot_frame_ms": 12215,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "native_groepen": 65,
+        "tijdlijnregels": 3931,
+        "telling": {
+          "rAF": 422,
+          "readStories": 52,
+          "keydown": 1083,
+          "keyup": 1083,
+          "onUpdate": 65,
+          "applyLocalUpdate": 65,
+          "setSelection": 66,
+          "tablePayload": 325,
+          "readParagraphs": 770
+        },
+        "vensters": {
+          "invoer": {
+            "onUpdate": {
+              "aantal": 63,
+              "som_ms": 0.0,
+              "max_ms": 0.0,
+              "eerste_begin_ms": 24772.000000000004,
+              "laatste_einde_ms": 34256
+            },
+            "applyLocalUpdate": {
+              "aantal": 63,
+              "som_ms": 186.00000000000728,
+              "max_ms": 8,
+              "eerste_begin_ms": 24765,
+              "laatste_einde_ms": 34256
+            },
+            "setSelection": {
+              "aantal": 63,
+              "som_ms": 273.9999999999927,
+              "max_ms": 9,
+              "eerste_begin_ms": 24772.000000000004,
+              "laatste_einde_ms": 34260
+            },
+            "tablePayload": {
+              "aantal": 315,
+              "som_ms": 870.9999999999527,
+              "max_ms": 10,
+              "eerste_begin_ms": 24839.000000000004,
+              "laatste_einde_ms": 34313
+            },
+            "readParagraphs": {
+              "aantal": 0,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": null,
+              "laatste_einde_ms": null
+            },
+            "readStories": {
+              "aantal": 0,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": null,
+              "laatste_einde_ms": null
+            },
+            "raf_callbackpauzes": [
+              {
+                "begin": 24285,
+                "einde": 24541,
+                "pauze_ms": 256
+              },
+              {
+                "begin": 30875,
+                "einde": 31101,
+                "pauze_ms": 226
+              },
+              {
+                "begin": 25372,
+                "einde": 25593,
+                "pauze_ms": 221
+              },
+              {
+                "begin": 29833.000000000004,
+                "einde": 30015,
+                "pauze_ms": 181.99999999999636
+              },
+              {
+                "begin": 26290,
+                "einde": 26469,
+                "pauze_ms": 179
+              },
+              {
+                "begin": 33322,
+                "einde": 33499,
+                "pauze_ms": 177
+              },
+              {
+                "begin": 25961.000000000004,
+                "einde": 26123,
+                "pauze_ms": 161.99999999999636
+              },
+              {
+                "begin": 24756,
+                "einde": 24913,
+                "pauze_ms": 157
+              }
+            ]
+          },
+          "staart": {
+            "onUpdate": {
+              "aantal": 2,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": 34387,
+              "laatste_einde_ms": 34586
+            },
+            "applyLocalUpdate": {
+              "aantal": 2,
+              "som_ms": 8,
+              "max_ms": 5,
+              "eerste_begin_ms": 34384,
+              "laatste_einde_ms": 34586
+            },
+            "setSelection": {
+              "aantal": 3,
+              "som_ms": 13,
+              "max_ms": 8,
+              "eerste_begin_ms": 34387,
+              "laatste_einde_ms": 34774
+            },
+            "tablePayload": {
+              "aantal": 10,
+              "som_ms": 49.0,
+              "max_ms": 8,
+              "eerste_begin_ms": 34437,
+              "laatste_einde_ms": 34693
+            },
+            "readParagraphs": {
+              "aantal": 770,
+              "som_ms": 726.0,
+              "max_ms": 38,
+              "eerste_begin_ms": 34851,
+              "laatste_einde_ms": 35754
+            },
+            "readStories": {
+              "aantal": 50,
+              "som_ms": 97.00000000000728,
+              "max_ms": 13,
+              "eerste_begin_ms": 35895,
+              "laatste_einde_ms": 36380
+            },
+            "raf_callbackpauzes": [
+              {
+                "begin": 34974.00000000001,
+                "einde": 35909,
+                "pauze_ms": 934.9999999999927
+              },
+              {
+                "begin": 34580,
+                "einde": 34974.00000000001,
+                "pauze_ms": 394.0000000000073
+              },
+              {
+                "begin": 37876,
+                "einde": 38171,
+                "pauze_ms": 295
+              },
+              {
+                "begin": 35909,
+                "einde": 36121,
+                "pauze_ms": 212
+              },
+              {
+                "begin": 34383,
+                "einde": 34506,
+                "pauze_ms": 123
+              },
+              {
+                "begin": 38171,
+                "einde": 38281,
+                "pauze_ms": 110
+              },
+              {
+                "begin": 36393,
+                "einde": 36487,
+                "pauze_ms": 94
+              },
+              {
+                "begin": 38281,
+                "einde": 38369,
+                "pauze_ms": 88
+              }
+            ]
+          }
+        },
+        "profiel_begin_ms": 24280,
+        "invoer_begin_ms": 24284,
+        "eerste_keydown_ms": 24300,
+        "laatste_keyup_ms": 34340,
+        "framegrens_ms": 38369,
+        "profiel_eind_ms": 38513,
+        "samples": 7791,
+        "sampletijdstempels": {
+          "0": 7791
+        },
+        "stacks_overlappend": {
+          "wasm-stub": 3582,
+          "targetAt": 12,
+          "buildStory": 1298,
+          "storySegmentUnitDigests": 844,
+          "tablePayload": 709,
+          "readParagraphs": 612
+        },
+        "getClientRects_leafsamples": 0,
+        "getClientRects_broncontexten": [],
+        "grenzen": [
+          "Eén geïnstrumenteerde ronde, geen prestatieacceptatie of herhaling tot groen.",
+          "Klokvensters gebruiken echte performance.now-tijdstempels van de probe. Aantallen delen grenspunten; synchrone duren tellen per methode en zijn geen exclusieve CPU.",
+          "Sampletijdstempels kunnen alle nul zijn; geen tijdkoppeling van CPUstacks naar invoer of staart.",
+          "Probe-opruimen/exporteren en inspectie bij stoppen vallen deels na frame in profielvenster.",
+          "rAF-callbackpauzes zijn geen fysieke schermpaint/FPS. Geen app-/issue-/migratieacceptatie."
+        ],
+        "aanroepers": [
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 34852.00000000001,
+            "stack": "herkomst@\nwrapper@\nleesCursorAlinea@tauri://localhost/assets/editors-bODdYQ4o.js:72:146453\ncursor@tauri://localhost/assets/editors-bODdYQ4o.js:72:145968\ncorrigeerNaInvoer@tauri://localhost/assets/editors-bODdYQ4o.js:72:156139\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:156099"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35063,
+            "stack": "herkomst@\nwrapper@"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35075,
+            "stack": "herkomst@\nwrapper@"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35076,
+            "stack": "herkomst@\nwrapper@"
+          }
+        ]
+      },
+      "transparantieproeven": 10
+    },
+    "lint-leesgroepen": {
+      "analyse": {
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "functioneel_geslaagd": true,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 34333,
+          "begin_tot_bron_ms": 11184,
+          "laatste_keyup_tot_bron_ms": 281,
+          "laatste_keyup_tot_frame_ms": 4070,
+          "begin_tot_frame_ms": 14973,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 15053,
+          "wall_verzonden_tot_frame_ms": 13245,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "native_groepen": 70,
+        "tijdlijnregels": 3976,
+        "telling": {
+          "rAF": 424,
+          "readStories": 55,
+          "keydown": 1083,
+          "keyup": 1083,
+          "onUpdate": 70,
+          "applyLocalUpdate": 70,
+          "setSelection": 71,
+          "tablePayload": 350,
+          "readParagraphs": 770
+        },
+        "vensters": {
+          "invoer": {
+            "onUpdate": {
+              "aantal": 68,
+              "som_ms": 0.0,
+              "max_ms": 0,
+              "eerste_begin_ms": 23939,
+              "laatste_einde_ms": 34239
+            },
+            "applyLocalUpdate": {
+              "aantal": 68,
+              "som_ms": 173.0,
+              "max_ms": 11,
+              "eerste_begin_ms": 23928,
+              "laatste_einde_ms": 34240
+            },
+            "setSelection": {
+              "aantal": 68,
+              "som_ms": 302.9999999999927,
+              "max_ms": 10.000000000003638,
+              "eerste_begin_ms": 23939,
+              "laatste_einde_ms": 34242
+            },
+            "tablePayload": {
+              "aantal": 340,
+              "som_ms": 927.0000000001055,
+              "max_ms": 12.000000000003638,
+              "eerste_begin_ms": 24007,
+              "laatste_einde_ms": 34297.00000000001
+            },
+            "readParagraphs": {
+              "aantal": 0,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": null,
+              "laatste_einde_ms": null
+            },
+            "readStories": {
+              "aantal": 1,
+              "som_ms": 27,
+              "max_ms": 27,
+              "eerste_begin_ms": 24090,
+              "laatste_einde_ms": 24117
+            },
+            "raf_callbackpauzes": [
+              {
+                "begin": 30952,
+                "einde": 31198,
+                "pauze_ms": 246
+              },
+              {
+                "begin": 31728,
+                "einde": 31957,
+                "pauze_ms": 229
+              },
+              {
+                "begin": 23696,
+                "einde": 23917,
+                "pauze_ms": 221
+              },
+              {
+                "begin": 24355,
+                "einde": 24558,
+                "pauze_ms": 203
+              },
+              {
+                "begin": 23917,
+                "einde": 24117,
+                "pauze_ms": 200
+              },
+              {
+                "begin": 24732,
+                "einde": 24921,
+                "pauze_ms": 189
+              },
+              {
+                "begin": 32003.999999999996,
+                "einde": 32186,
+                "pauze_ms": 182.00000000000364
+              },
+              {
+                "begin": 29854,
+                "einde": 30027,
+                "pauze_ms": 173
+              }
+            ]
+          },
+          "staart": {
+            "onUpdate": {
+              "aantal": 2,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": 34354,
+              "laatste_einde_ms": 34487
+            },
+            "applyLocalUpdate": {
+              "aantal": 2,
+              "som_ms": 4.999999999992724,
+              "max_ms": 3,
+              "eerste_begin_ms": 34352.00000000001,
+              "laatste_einde_ms": 34487
+            },
+            "setSelection": {
+              "aantal": 3,
+              "som_ms": 8.000000000007276,
+              "max_ms": 4.000000000007276,
+              "eerste_begin_ms": 34354,
+              "laatste_einde_ms": 34614
+            },
+            "tablePayload": {
+              "aantal": 10,
+              "som_ms": 25.00000000003638,
+              "max_ms": 4.000000000007276,
+              "eerste_begin_ms": 34398,
+              "laatste_einde_ms": 34553
+            },
+            "readParagraphs": {
+              "aantal": 770,
+              "som_ms": 668.0,
+              "max_ms": 28,
+              "eerste_begin_ms": 34670,
+              "laatste_einde_ms": 36373
+            },
+            "readStories": {
+              "aantal": 50,
+              "som_ms": 137.99999999999272,
+              "max_ms": 21.999999999992724,
+              "eerste_begin_ms": 34846,
+              "laatste_einde_ms": 36995
+            },
+            "raf_callbackpauzes": [
+              {
+                "begin": 35666.00000000001,
+                "einde": 36683,
+                "pauze_ms": 1016.9999999999927
+              },
+              {
+                "begin": 35064,
+                "einde": 35506,
+                "pauze_ms": 442
+              },
+              {
+                "begin": 34479,
+                "einde": 34787,
+                "pauze_ms": 308
+              },
+              {
+                "begin": 38023,
+                "einde": 38289,
+                "pauze_ms": 266
+              },
+              {
+                "begin": 35506,
+                "einde": 35666.00000000001,
+                "pauze_ms": 160.00000000000728
+              },
+              {
+                "begin": 36813,
+                "einde": 36928,
+                "pauze_ms": 115
+              },
+              {
+                "begin": 38289,
+                "einde": 38403,
+                "pauze_ms": 114
+              },
+              {
+                "begin": 34350,
+                "einde": 34438,
+                "pauze_ms": 88
+              }
+            ]
+          }
+        },
+        "profiel_begin_ms": 23405,
+        "invoer_begin_ms": 23430,
+        "eerste_keydown_ms": 23444,
+        "laatste_keyup_ms": 34333,
+        "framegrens_ms": 38403,
+        "profiel_eind_ms": 38661,
+        "samples": 8309,
+        "sampletijdstempels": {
+          "0": 8309
+        },
+        "stacks_overlappend": {
+          "wasm-stub": 3793,
+          "targetAt": 296,
+          "buildStory": 1422,
+          "storySegmentUnitDigests": 929,
+          "tablePayload": 776,
+          "readParagraphs": 564
+        },
+        "getClientRects_leafsamples": 0,
+        "getClientRects_broncontexten": [],
+        "grenzen": [
+          "Eén geïnstrumenteerde ronde, geen prestatieacceptatie of herhaling tot groen.",
+          "Klokvensters gebruiken echte performance.now-tijdstempels van de probe. Aantallen delen grenspunten; synchrone duren tellen per methode en zijn geen exclusieve CPU.",
+          "Sampletijdstempels kunnen alle nul zijn; geen tijdkoppeling van CPUstacks naar invoer of staart.",
+          "Probe-opruimen/exporteren en inspectie bij stoppen vallen deels na frame in profielvenster.",
+          "rAF-callbackpauzes zijn geen fysieke schermpaint/FPS. Geen app-/issue-/migratieacceptatie."
+        ],
+        "leesgroepen": [
+          {
+            "begin": 23324,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 23327,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 23427,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 23429.000000000004,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 24117,
+            "gevraagd": 1,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 1
+          },
+          {
+            "begin": 34861.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34872,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34877,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34881,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34884,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34887,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34891,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34894,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34900,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34903,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34911,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34919.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34927,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34935,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34944,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34956,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34995,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35015,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35024,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35031,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35039,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35047.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35055,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35063,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35070,
+            "gevraagd": 1,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 1
+          },
+          {
+            "begin": 35505,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35677,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36689,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36702,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36705,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36706,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36708,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36710,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36712,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36713,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36723,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36731,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36744,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36751,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36759,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36795,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36812,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36925.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36945,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36955,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36963,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36971,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36979,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36988,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 36995,
+            "gevraagd": 1,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 1
+          }
+        ],
+        "aanroepers": [
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 34670,
+            "stack": "herkomst@\nwrapper@\nleesCursorAlinea@tauri://localhost/assets/editors-bODdYQ4o.js:72:146453\ncursor@tauri://localhost/assets/editors-bODdYQ4o.js:72:145968\ncorrigeerNaInvoer@tauri://localhost/assets/editors-bODdYQ4o.js:72:156139\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:156099"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35726,
+            "stack": "herkomst@\nwrapper@"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35737,
+            "stack": "herkomst@\nwrapper@"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35738,
+            "stack": "herkomst@\nwrapper@"
+          }
+        ]
+      },
+      "transparantieproeven": 12
+    },
+    "lint-aanroeper-actueel": {
+      "analyse": {
+        "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+        "functioneel_geslaagd": true,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33974.00000000001,
+          "begin_tot_bron_ms": 11109,
+          "laatste_keyup_tot_bron_ms": 248.99999999999272,
+          "laatste_keyup_tot_frame_ms": 4141.999999999993,
+          "begin_tot_frame_ms": 15002,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 15014,
+          "wall_verzonden_tot_frame_ms": 13157,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "native_groepen": 71,
+        "tijdlijnregels": 3992,
+        "telling": {
+          "rAF": 435,
+          "readStories": 52,
+          "keydown": 1083,
+          "keyup": 1083,
+          "onUpdate": 71,
+          "applyLocalUpdate": 71,
+          "setSelection": 72,
+          "tablePayload": 355,
+          "readParagraphs": 770
+        },
+        "vensters": {
+          "invoer": {
+            "onUpdate": {
+              "aantal": 69,
+              "som_ms": 0.0,
+              "max_ms": 0,
+              "eerste_begin_ms": 23677,
+              "laatste_einde_ms": 33849.00000000001
+            },
+            "applyLocalUpdate": {
+              "aantal": 69,
+              "som_ms": 178.99999999998545,
+              "max_ms": 6,
+              "eerste_begin_ms": 23671,
+              "laatste_einde_ms": 33849.00000000001
+            },
+            "setSelection": {
+              "aantal": 69,
+              "som_ms": 298.9999999999927,
+              "max_ms": 10,
+              "eerste_begin_ms": 23677,
+              "laatste_einde_ms": 33853
+            },
+            "tablePayload": {
+              "aantal": 345,
+              "som_ms": 942.9999999999782,
+              "max_ms": 6,
+              "eerste_begin_ms": 23727,
+              "laatste_einde_ms": 33906
+            },
+            "readParagraphs": {
+              "aantal": 0,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": null,
+              "laatste_einde_ms": null
+            },
+            "readStories": {
+              "aantal": 0,
+              "som_ms": 0,
+              "max_ms": 0,
+              "eerste_begin_ms": null,
+              "laatste_einde_ms": null
+            },
+            "raf_callbackpauzes": [
+              {
+                "begin": 23115.000000000004,
+                "einde": 23438,
+                "pauze_ms": 322.99999999999636
+              },
+              {
+                "begin": 31001,
+                "einde": 31283,
+                "pauze_ms": 282
+              },
+              {
+                "begin": 24015,
+                "einde": 24257,
+                "pauze_ms": 242
+              },
+              {
+                "begin": 23571,
+                "einde": 23810,
+                "pauze_ms": 239
+              },
+              {
+                "begin": 24273,
+                "einde": 24504,
+                "pauze_ms": 231
+              },
+              {
+                "begin": 24504,
+                "einde": 24711.000000000004,
+                "pauze_ms": 207.00000000000364
+              },
+              {
+                "begin": 29839.000000000004,
+                "einde": 30026,
+                "pauze_ms": 186.99999999999636
+              },
+              {
+                "begin": 25437,
+                "einde": 25586.000000000004,
+                "pauze_ms": 149.00000000000364
+              }
+            ]
+          },
+          "staart": {
+            "onUpdate": {
+              "aantal": 2,
+              "som_ms": 0.0,
+              "max_ms": 0.0,
+              "eerste_begin_ms": 33980.00000000001,
+              "laatste_einde_ms": 34089
+            },
+            "applyLocalUpdate": {
+              "aantal": 2,
+              "som_ms": 5.000000000007276,
+              "max_ms": 3,
+              "eerste_begin_ms": 33978,
+              "laatste_einde_ms": 34089
+            },
+            "setSelection": {
+              "aantal": 3,
+              "som_ms": 7.0,
+              "max_ms": 4,
+              "eerste_begin_ms": 33980.00000000001,
+              "laatste_einde_ms": 34222
+            },
+            "tablePayload": {
+              "aantal": 10,
+              "som_ms": 24,
+              "max_ms": 4,
+              "eerste_begin_ms": 34016,
+              "laatste_einde_ms": 34154
+            },
+            "readParagraphs": {
+              "aantal": 770,
+              "som_ms": 703.0,
+              "max_ms": 24,
+              "eerste_begin_ms": 34284,
+              "laatste_einde_ms": 36117
+            },
+            "readStories": {
+              "aantal": 50,
+              "som_ms": 170.99999999999272,
+              "max_ms": 35,
+              "eerste_begin_ms": 34445,
+              "laatste_einde_ms": 35076
+            },
+            "raf_callbackpauzes": [
+              {
+                "begin": 35374,
+                "einde": 36285.00000000001,
+                "pauze_ms": 911.0000000000073
+              },
+              {
+                "begin": 34073,
+                "einde": 34378,
+                "pauze_ms": 305
+              },
+              {
+                "begin": 37657,
+                "einde": 37931,
+                "pauze_ms": 274
+              },
+              {
+                "begin": 35113,
+                "einde": 35374,
+                "pauze_ms": 261
+              },
+              {
+                "begin": 34668,
+                "einde": 34800.00000000001,
+                "pauze_ms": 132.00000000000728
+              },
+              {
+                "begin": 37931,
+                "einde": 38048,
+                "pauze_ms": 117
+              },
+              {
+                "begin": 36290,
+                "einde": 36403,
+                "pauze_ms": 113
+              },
+              {
+                "begin": 38048,
+                "einde": 38116,
+                "pauze_ms": 68
+              }
+            ]
+          }
+        },
+        "profiel_begin_ms": 23111,
+        "invoer_begin_ms": 23114.0,
+        "eerste_keydown_ms": 23226,
+        "laatste_keyup_ms": 33974.00000000001,
+        "framegrens_ms": 38116.0,
+        "profiel_eind_ms": 38255,
+        "samples": 8339,
+        "sampletijdstempels": {
+          "0": 8339
+        },
+        "stacks_overlappend": {
+          "targetAt": 336,
+          "wasm-stub": 3791,
+          "buildStory": 1398,
+          "storySegmentUnitDigests": 917,
+          "tablePayload": 797,
+          "readParagraphs": 599
+        },
+        "getClientRects_leafsamples": 0,
+        "getClientRects_broncontexten": [],
+        "grenzen": [
+          "Eén geïnstrumenteerde ronde, geen prestatieacceptatie of herhaling tot groen.",
+          "Klokvensters gebruiken echte performance.now-tijdstempels van de probe. Aantallen delen grenspunten; synchrone duren tellen per methode en zijn geen exclusieve CPU.",
+          "Sampletijdstempels kunnen alle nul zijn; geen tijdkoppeling van CPUstacks naar invoer of staart.",
+          "Probe-opruimen/exporteren en inspectie bij stoppen vallen deels na frame in profielvenster.",
+          "rAF-callbackpauzes zijn geen fysieke schermpaint/FPS. Geen app-/issue-/migratieacceptatie."
+        ],
+        "openbare_referentie": {
+          "oorspronkelijke_ref_nog_actueel": false,
+          "aantal_nieuwe_refs": 79,
+          "refgrens": 128
+        },
+        "leesgroepen": [
+          {
+            "begin": 23091,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 23114,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34459,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34461,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34464,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34465,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34469,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34470,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34472,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34474.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34475,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34478,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34489,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34496,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34505,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34517,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34534,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34541.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34548,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34557,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34565,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34574,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34584,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34593,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34600,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34608.00000000001,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34616,
+            "gevraagd": 1,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 1
+          },
+          {
+            "begin": 34847,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34854,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34859,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34872,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34875,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34881,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34885,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34889,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34894,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34900,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34909,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34917,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34928,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34940,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34950,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34958,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 34964,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35005,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35024,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35032,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35040,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35049,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35057,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35067,
+            "gevraagd": 32,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 32
+          },
+          {
+            "begin": 35076,
+            "gevraagd": 1,
+            "ok": true,
+            "truncated": false,
+            "ontvangen": 1
+          }
+        ],
+        "aanroepers": [
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 34284,
+            "stack": "herkomst@\nwrapper@\nleesCursorAlinea@tauri://localhost/assets/editors-bODdYQ4o.js:72:146453\ncursor@tauri://localhost/assets/editors-bODdYQ4o.js:72:145968\ncorrigeerNaInvoer@tauri://localhost/assets/editors-bODdYQ4o.js:72:156139\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:156099"
+          },
+          {
+            "label": "actueel.readParagraphs",
+            "begin": 35415,
+            "stack": "herkomst@\nwrapper@\n@tauri://localhost/assets/index-DtZ2IWH9.js:291:29051\nmap@[native code]\nwUe@tauri://localhost/assets/index-DtZ2IWH9.js:291:29010\nSI@tauri://localhost/assets/editors-bODdYQ4o.js:70:4999\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:184643"
+          },
+          {
+            "label": "actueel.readParagraphs",
+            "begin": 35415,
+            "stack": "herkomst@\nwrapper@\n@tauri://localhost/assets/index-DtZ2IWH9.js:291:29051\nmap@[native code]\nwUe@tauri://localhost/assets/index-DtZ2IWH9.js:291:29010\nSI@tauri://localhost/assets/editors-bODdYQ4o.js:70:4999\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:184643"
+          },
+          {
+            "label": "actueel.readParagraphs",
+            "begin": 35415,
+            "stack": "herkomst@\nwrapper@\n@tauri://localhost/assets/index-DtZ2IWH9.js:291:29051\nmap@[native code]\nwUe@tauri://localhost/assets/index-DtZ2IWH9.js:291:29010\nSI@tauri://localhost/assets/editors-bODdYQ4o.js:70:4999\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:184643"
+          },
+          {
+            "label": "actueel.readParagraphs",
+            "begin": 35415,
+            "stack": "herkomst@\nwrapper@\n@tauri://localhost/assets/index-DtZ2IWH9.js:291:29051\nmap@[native code]\nwUe@tauri://localhost/assets/index-DtZ2IWH9.js:291:29010\nSI@tauri://localhost/assets/editors-bODdYQ4o.js:70:4999\n@tauri://localhost/assets/editors-bODdYQ4o.js:72:184643"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35429,
+            "stack": "herkomst@\nwrapper@"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35440,
+            "stack": "herkomst@\nwrapper@"
+          },
+          {
+            "label": "sessie.readParagraphs",
+            "begin": 35441,
+            "stack": "herkomst@\nwrapper@"
+          }
+        ]
+      },
+      "transparantieproeven": 13
+    }
+  },
+  "diagnosebestanden": {
+    "lint-aanroeper": {
+      "geslaagd": true,
+      "docx_sha256": "30730473448403a849d0ccf6c638ee8cd9df4e0270f94fbff574ab749112bbbc",
+      "tabellen": 128,
+      "tekens_utf16": 91423
+    },
+    "lint-leesgroepen": {
+      "geslaagd": true,
+      "docx_sha256": "db25b04c24c4c192d9c8eff2a567e296ac9d458b67598f31d89e103bd35fb28e",
+      "tabellen": 128,
+      "tekens_utf16": 91423
+    },
+    "lint-aanroeper-actueel": {
+      "geslaagd": true,
+      "docx_sha256": "3d1f54a6c23e259b1cbe5b660964aa45d608e46cccb6b79b0d7c8b4c28f4365a",
+      "tabellen": 128,
+      "tekens_utf16": 91423
+    }
+  },
+  "wijziging": "Bewaarstatistieken gebruiken dezelfde bestaande32story-plug-inlezer als de status. Bronversie, generatie, levensduur, eigenaar en pending-invoer blijven bewaakt. Ongeldigheid/null behoudt bestaande cijfers. Zonder gekoppelde plug-in blijft de bestaande openbare terugval bestaan. Pakketinhoud en overige bewaarroute blijven behouden.",
+  "controles": {
+    "frontend": "2394tests/233bestanden groen; TypeScript groen.",
+    "python": "Alle136tests groen.",
+    "gerichte_tests": "Twee echte enginegevallen:66stories/65tabellen verdeeld over3groepen; exacte bestaande tellingen, ongewijzigd document.xml/bronvector en geen partiële cijfers bij nieuwe invoer.",
+    "eerste_afkeuring": "De eerste grote1537storyfixture slaagt afzonderlijk, maar de ongeldigheidsproef overschrijdt in de parallelle volledige suite5000ms;2393andere tests groen. Eerste log bewaard. Unitfixture verkleind tot drie volledige groepen, limiet niet verhoogd; positieve30suitzondering eveneens verwijderd. Grote functionele dekking wordt afzonderlijk native gecontroleerd.",
+    "vite": "Afzonderlijke productiebundel groen.",
+    "native_bouw": {
+      "code": 0,
+      "reden": null,
+      "seconden": 147.14586924499963,
+      "minimum_vrije_bytes": 17108234240,
+      "start_vrije_bytes": 17112657920,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaar-groepen/open-office-studio-bewaar-groepen",
+      "programma_sha256": "b6162e59e9c2dfdfcb98eb85d1b731ba52d2d4ee97f3a6429b6106a6127c3421",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "native_acht": {
+      "klein-referentie-a": {
+        "docx_sha256": "ca088f56b8d52a74e6c961d3490ffaea6d804782202cc83a3ef16338e306567a",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 17115.000000000004,
+          "begin_tot_bron_ms": 1504,
+          "laatste_keyup_tot_bron_ms": 61.99999999999636,
+          "laatste_keyup_tot_frame_ms": 365.99999999999636,
+          "begin_tot_frame_ms": 1808,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1934,
+          "wall_verzonden_tot_frame_ms": 737,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "klein-kandidaat-a": {
+        "docx_sha256": "94e6e4c561e1caf9f8b9c4b1eb39bd6109c302207f38622eb6b929843aa70db2",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16624,
+          "begin_tot_bron_ms": 1569,
+          "laatste_keyup_tot_bron_ms": 37,
+          "laatste_keyup_tot_frame_ms": 308,
+          "begin_tot_frame_ms": 1840,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1884,
+          "wall_verzonden_tot_frame_ms": 725,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "klein-kandidaat-b": {
+        "docx_sha256": "61b182475ea683b8c2f62676326cc3ad6886e44079607ec089e3863da1309700",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16558,
+          "begin_tot_bron_ms": 1445,
+          "laatste_keyup_tot_bron_ms": 46,
+          "laatste_keyup_tot_frame_ms": 185.00000000000364,
+          "begin_tot_frame_ms": 1584.0000000000036,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1700,
+          "wall_verzonden_tot_frame_ms": 557,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "klein-referentie-b": {
+        "docx_sha256": "900e899c1683358e0080f12da7b3583115a21580b9abfc4e53a05ef73d5d5740",
+        "tabellen": 1,
+        "tekens_utf16": 736,
+        "invoer": {
+          "tekens": 27,
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16579,
+          "begin_tot_bron_ms": 1303.9999999999982,
+          "laatste_keyup_tot_bron_ms": 50,
+          "laatste_keyup_tot_frame_ms": 200,
+          "begin_tot_frame_ms": 1453.9999999999982,
+          "paginas": 1,
+          "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 1569,
+          "wall_verzonden_tot_frame_ms": 439,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ]
+      },
+      "rijk-referentie-a": {
+        "docx_sha256": "82c0803d54c9fd84cde79ccee916caf376a9883b2a0c8ec4652a4c52147146ec",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32535.000000000004,
+          "begin_tot_bron_ms": 9169,
+          "laatste_keyup_tot_bron_ms": 269.99999999999636,
+          "laatste_keyup_tot_frame_ms": 4212.999999999996,
+          "begin_tot_frame_ms": 13112,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13305,
+          "wall_verzonden_tot_frame_ms": 11502,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 61,
+        "rust_binnen_ms": 3260,
+        "duursom_ms": 4777.000000000018,
+        "fasen_ms": {
+          "bron": 92.00000000002183,
+          "hash": 265.0000000000073,
+          "transport": 3964.9999999999636,
+          "mutatie": 150.99999999998545,
+          "selectie": 248.0000000000291
+        },
+        "lezingen": {
+          "readStories": 52,
+          "tablePayload": 305,
+          "readParagraphs": 770
+        }
+      },
+      "rijk-kandidaat-a": {
+        "docx_sha256": "a4e22d706d3c4245e631729fdfa6910450cf04cb8a439306c06aa712dd15519a",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32823,
+          "begin_tot_bron_ms": 9262,
+          "laatste_keyup_tot_bron_ms": 190,
+          "laatste_keyup_tot_frame_ms": 4395,
+          "begin_tot_frame_ms": 13467,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13669,
+          "wall_verzonden_tot_frame_ms": 11883,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 64,
+        "rust_binnen_ms": 3304,
+        "duursom_ms": 4874.999999999982,
+        "fasen_ms": {
+          "bron": 89.99999999999272,
+          "hash": 461.99999999998545,
+          "transport": 3857.000000000018,
+          "mutatie": 154.0000000000109,
+          "selectie": 244.99999999997453
+        },
+        "lezingen": {
+          "readStories": 78,
+          "tablePayload": 320,
+          "readParagraphs": 1
+        }
+      },
+      "rijk-kandidaat-b": {
+        "docx_sha256": "99581ba9be67f0bbbf3835b9867f29025edf380a552ab17e4e69d96ac23c350e",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32764.000000000004,
+          "begin_tot_bron_ms": 8951,
+          "laatste_keyup_tot_bron_ms": 323.99999999999636,
+          "laatste_keyup_tot_frame_ms": 4559.999999999996,
+          "begin_tot_frame_ms": 13187,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13208,
+          "wall_verzonden_tot_frame_ms": 11387,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 58,
+        "rust_binnen_ms": 3162,
+        "duursom_ms": 4692.999999999978,
+        "fasen_ms": {
+          "bron": 89.00000000000728,
+          "hash": 413.9999999999927,
+          "transport": 3762.000000000018,
+          "mutatie": 142.0,
+          "selectie": 226.99999999997817
+        },
+        "lezingen": {
+          "readStories": 79,
+          "tablePayload": 290,
+          "readParagraphs": 1
+        }
+      },
+      "rijk-referentie-b": {
+        "docx_sha256": "27f935e92f974a5a74b6ec6282a4bf38266611fa58f421d1e5c2d1c998dc6dd0",
+        "tabellen": 128,
+        "tekens_utf16": 91423,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30623,
+          "begin_tot_bron_ms": 7955.999999999996,
+          "laatste_keyup_tot_bron_ms": 227,
+          "laatste_keyup_tot_frame_ms": 4688,
+          "begin_tot_frame_ms": 12416.999999999996,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12427,
+          "wall_verzonden_tot_frame_ms": 10630,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "geheugen": null,
+        "geslaagd": true,
+        "stappen": [
+          "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+          "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+          "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+        ],
+        "groepen": 60,
+        "rust_binnen_ms": 3001,
+        "duursom_ms": 4233.000000000015,
+        "fasen_ms": {
+          "bron": 75.00000000000728,
+          "hash": 353.00000000002547,
+          "transport": 3400.9999999999673,
+          "mutatie": 129.00000000001455,
+          "selectie": 206.0
+        },
+        "lezingen": {
+          "readStories": 51,
+          "tablePayload": 300,
+          "readParagraphs": 770
+        }
+      }
+    },
+    "volgorde": "Per kort/rijk vaste referentie-a/kandidaat-a/kandidaat-b/referentie-b, nu tegen de laatste geaccepteerde lintfixacb770. Ongewijzigde oorspronkelijke helpers; geen build/tests/heavyanalyse gedurende deze metingen.",
+    "bestanden": [
+      {
+        "soort": "klein",
+        "paar": "a",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "onderdelen": 14,
+        "verschillen": [
+          "docProps/core.xml"
+        ]
+      }
+    ],
+    "pixels": [
+      {
+        "soort": "klein",
+        "paar": "a",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "a",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "klein",
+        "paar": "b",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "a",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "beeld": "snel-getypt-bewaard.png",
+        "afwijkende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "afwijkende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "soort": "rijk",
+        "paar": "b",
+        "beeld": "invoer-redo.png",
+        "afwijkende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      }
+    ],
+    "visueel": "Rijk-kandidaat-b/snel-getypt-bewaard.png en rijk-kandidaat-b/nieuw-na-laat-antwoord.png bekeken; geselecteerde documenttekst, tabelrijen en paginaovergang ogen gelijk. Negen van12beeldparen pixelgelijk; drie verschillen elk30pixels in smalle caretrechthoeken. Geen volledige65pagina-/pixelacceptatie.",
+    "behoud": {
+      "eerdere_elfs": 14,
+      "sdk_index_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "standaarddist_exact": 529
+    }
+  },
+  "vorige_ci": {
+    "id": 43324642811,
+    "bron": "4793522d31378ef2cd3625388ab661f698520651",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43324642811",
+    "taken": {
+      "desktop (windows-latest)": "success",
+      "desktop (macos-latest)": "success",
+      "desktop (ubuntu-22.04)": "success",
+      "runtimevergelijking": "skipped"
+    },
+    "grens": "Windows-rechtenassertie nu werkelijk groen; alle drie desktopjobs groen. Dit is vorige productbron/testcorrectie, geen CIuitslag van deze nieuwe bewaarwijziging. Nieuwe CIapart volgen."
+  },
+  "grenzen": [
+    "Alle timings eigen virtueleX11; renderlijst+twee rAFs is geen fysieke schermpaint/FPS.",
+    "Diagnostische profielen zijn geïnstrumenteerd en alle sampletijdstempels nul; geen CPUtijdlijn of percentages. Eerste refprobe was niet actueel en mag geen uitsluiting van de openbare leesroute bewijzen.",
+    "Geen volledige65pagina-/pixel-/releasevariant-/IME-/urenlange stabiliteitsacceptatie.",
+    "Eerdere RefCell/readStories/update_display_list-geheugenfouten niet verklaard of opgelost. Alle tien migratiegebieden en issues blijven open."
+  ],
+  "bronpinnen_doel": "Deze pinnen binden de afgewezen kandidaatkopieën, niet de inmiddels herstelde productbron.",
+  "bronpinnen": {
+    "src/tekst/info/opslaan.ts": "1e46bcc92cf101e9269e3744f14b364e6accdc90b843efe77e56b7286732bc63",
+    "src/tekst/info/opslaan-groepslezing.test.ts": "550a85bf6e892e61bfcd1589516cc85e09957964b7eb68c104462cdd8f38dd5f"
+  },
+  "vervolg": "Stop deze groepslezer-variant als snelheidsfix. Meet op geaccepteerde acb770 de geregistreerde bewaarfunctie afzonderlijk: wachten/flush, SDKsave/serialisatie, werkEigenschappenBij (inclusief ZIP-/XMLlezen en schrijven) en beëindiging/adoptie. Volg actuele openbare refs, want React vervangt ze. Behoud originele Promises/this/argumenten/uitzonderingen en tracebegrenzing. Geen statistieken blind schrappen of bron/versie/metadata-behoud afzwakken. Daarna pas een gerichte wijziging met dezelfde korte/rijke en bewaarproeven. Eerdere geheugenfouten en alle tien migratiegebieden open; Database laatst. Geen nieuweCIvoorafgewezen/hersteldeproductbron.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-bewaarstatistieken.tar.gz",
+    "sha256": "b662ecce901a4dcc4c94b2b711b6fd727bced1bc9283cfce22eea1caf5403951",
+    "bytes": 11899936,
+    "reguliere_leden": 158,
+    "alle_leden_bytegecontroleerd": true,
+    "geen_elf_dist": true
+  }
+}
