@@ -1,0 +1,447 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "bd47dd9d",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Werkelijke Worker-Wasm-update-API vastgesteld en met replica-inhoud gecontroleerd. Typing-inference is aantoonbaar geen certificaat voor een uitsluitend lokale tekstwijziging; geen cacheguard versoepeld en geen productfix.",
+  "bronbinding": {
+    "edit_wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "private_route_wasm_sha256": "e756d948781b27c75aaf2cbf3c839b3c0fe9b39534e4a783673da305a6fc82ba",
+    "private_module_hergebruikt_geen_nieuwe_bouw": true,
+    "native_referentie_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+    "meegeleverde_workerbundel_sha256": "900d652842189028b701e3ba7f5b2c433931c56085c76b7a489e84de3f605834",
+    "bundelfragmenten": "bundelbinding.json in bewijsarchief",
+    "rust_en_typescriptfragmenten": "bronfragmenten.json in bewijsarchief, ieder met volledige-bestandhash en exacte regelnummers"
+  },
+  "keten": [
+    "useDisplayList onUpdate stuurt client.invalidate(update,null); commentaar verbiedt herintrede in EditSession vanuit de transactiewaarnemer.",
+    "Client.invalidate kopieert de update, verhoogt documentSequence, zet ready=false en verzendt applyUpdate.",
+    "Worker.applyUpdate/syncUpdate roept noteDocumentChange, wist fontRequirements en roept session.applyUpdate aan.",
+    "De vastgepinde uitgegeven Workerbundel gebruikt apply_update_with_inference via de sessiewrapper; fontvereisten zijn owner/version/input-gebonden en onUpdate wist de cache.",
+    "Rust-inference selecteert de laatste tekstinvoeging van een enkele auteur; behoudt geen volledig mutatiecertificaat. integrate_updates kan daarna ook paragraafidentiteiten en commentaarankers herstellen."
+  ],
+  "uitkomst": {
+    "geslaagd": true,
+    "kernen_acht_stappen_acht_velden_exact": true,
+    "routes": {
+      "a": [
+        "route_overige_patch",
+        "route_overige_patch",
+        "route_overige_patch",
+        "route_overige_patch",
+        "route_overige_patch",
+        "route_overige_patch",
+        "route_overige_patch",
+        "route_overige_patch"
+      ],
+      "b": [
+        "route_volledig_loweren",
+        "route_volledig_loweren",
+        "route_volledig_loweren",
+        "route_volledig_loweren",
+        "route_volledig_loweren",
+        "route_volledig_loweren",
+        "route_volledig_loweren",
+        "route_volledig_loweren"
+      ]
+    },
+    "mediaan_font_ms": {
+      "lokaal_font_ms": 11.74307500000009,
+      "replica_font_ms": 73.36781900000005
+    },
+    "zes_updategevallen_groen": true,
+    "vijf_inferences_identiek_ondanks_vier_gemengde_updates": true,
+    "eerste_afkeuring_bewaard": "De compacte read_paragraphs_json-projectie bevat geen alineaeigenschappen; die proef gaf terecht geen bewijs van de uitlijningswijziging. Vervolgens paragraphs plus alle body-story_segments over drie sessies vergeleken en uitlijning expliciet geverifieerd. Eerste bron/log/resultaat en tweede geslaagde vijfgevallenronde behouden.",
+    "behoud": {
+      "ELFs_exact": 16,
+      "standaarddist_byte_mode_mtime_exact": 529,
+      "sdk_vendor_npm_exact": true
+    }
+  },
+  "gevallen": {
+    "geslaagd": true,
+    "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+    "gevallen": [
+      {
+        "kind": "tekst",
+        "inference": {
+          "clientId": 901,
+          "endOffset": 85,
+          "paraId": "60638A83",
+          "story": "body"
+        },
+        "herhaling_inference": null,
+        "update_sha256": "71c1c0baf577409e32071f16584fe18292e2f290abe6fc3d77eab4f0b0e48af0",
+        "update_bytes": 2339,
+        "bronvector_sha256": "983bfed6e22fcf01a03b23de05cd45f9cfea39dec61887584d72dfa77f672811",
+        "alinea_sha256": "86d187add5f4524133b72e4971a8e1300cff188602ae693f5e1f03905e4781de",
+        "story_segmenten_sha256": "86546b66d53e558ca7d3408e7163aa1d0939446df90a3469d1c1f36171211945",
+        "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+        "font_gewijzigd": true,
+        "andere_alinea_gewijzigd": false,
+        "font_en_alineas_en_vector_alle_drie_exact": true,
+        "fontvereisten": [
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "carlito|1|0",
+            "family": "Carlito",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "|0|0",
+            "family": "",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "ｍｓ 明朝|0|0",
+            "family": "ＭＳ 明朝",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "andere-alinea-font-en-tekst",
+        "inference": {
+          "clientId": 901,
+          "endOffset": 85,
+          "paraId": "60638A83",
+          "story": "body"
+        },
+        "herhaling_inference": null,
+        "update_sha256": "59777994ff28ef19b45f7f3ec6f57639d70d38a19fa9aeb71e2e53c19bda0c26",
+        "update_bytes": 2566,
+        "bronvector_sha256": "134cd3546b083b6fc6a20038af2cbd91230e129f53b398cd807e76f2d4d9a13b",
+        "alinea_sha256": "86d187add5f4524133b72e4971a8e1300cff188602ae693f5e1f03905e4781de",
+        "story_segmenten_sha256": "2d15517e2b733d31a321a35e0a8aeefd41930359d2ed288851a5d9b2bddf6730",
+        "font_sha256": "36619e08d68ed59e6e2a21f11a9f754c1efea68d5f254b5abe3fcb07108d42de",
+        "font_gewijzigd": true,
+        "andere_alinea_gewijzigd": false,
+        "font_en_alineas_en_vector_alle_drie_exact": true,
+        "fontvereisten": [
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "carlito|1|0",
+            "family": "Carlito",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "liberation serif|0|0",
+            "family": "Liberation Serif",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "liberation serif|1|0",
+            "family": "Liberation Serif",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "|0|0",
+            "family": "",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "ｍｓ 明朝|0|0",
+            "family": "ＭＳ 明朝",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "andere-alinea-uitlijning-en-tekst",
+        "inference": {
+          "clientId": 901,
+          "endOffset": 85,
+          "paraId": "60638A83",
+          "story": "body"
+        },
+        "herhaling_inference": null,
+        "update_sha256": "142dafa6e7b4e9a9e876a4dbee0cc514f37f7880eb368841131c757076c86568",
+        "update_bytes": 2363,
+        "bronvector_sha256": "c1765b266165098a834f2eb56b9be8d0b9264c079b4192a35644334f4ca061e8",
+        "alinea_sha256": "02d1ca920023e72c1a8d9deeed4a727605340cf2b53e1bf1fbdbfcb21cf0b318",
+        "story_segmenten_sha256": "3bc4d382884ba8b7fe756f879eb66f61c178d4ba84a4e915670ac4c37dbe80cb",
+        "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+        "font_gewijzigd": true,
+        "andere_alinea_gewijzigd": true,
+        "font_en_alineas_en_vector_alle_drie_exact": true,
+        "fontvereisten": [
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "carlito|1|0",
+            "family": "Carlito",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "|0|0",
+            "family": "",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "ｍｓ 明朝|0|0",
+            "family": "ＭＳ 明朝",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "andere-alinea-verwijderen-en-tekst",
+        "inference": {
+          "clientId": 901,
+          "endOffset": 85,
+          "paraId": "60638A83",
+          "story": "body"
+        },
+        "herhaling_inference": null,
+        "update_sha256": "3882e712a3139ea2a16c8e2c7e977263e03ef292b7bec4b16eecd0543a88b2b6",
+        "update_bytes": 2339,
+        "bronvector_sha256": "983bfed6e22fcf01a03b23de05cd45f9cfea39dec61887584d72dfa77f672811",
+        "alinea_sha256": "b78f71c67b54923df7ff905afb75ae637648c3d27fc279a157c93c8354a15de3",
+        "story_segmenten_sha256": "089ca19f31c78e510008fe960cf7736c1a173d818372690bac7cd9f84e230015",
+        "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+        "font_gewijzigd": true,
+        "andere_alinea_gewijzigd": true,
+        "font_en_alineas_en_vector_alle_drie_exact": true,
+        "fontvereisten": [
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "carlito|1|0",
+            "family": "Carlito",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "|0|0",
+            "family": "",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "ｍｓ 明朝|0|0",
+            "family": "ＭＳ 明朝",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "andere-alinea-splitsen-en-tekst",
+        "inference": {
+          "clientId": 901,
+          "endOffset": 85,
+          "paraId": "60638A83",
+          "story": "body"
+        },
+        "herhaling_inference": null,
+        "update_sha256": "6318847bf1494579447dedb24a43394c7aba073d7e30eca5eb87455424bb2288",
+        "update_bytes": 3728,
+        "bronvector_sha256": "2605bad145e0b588c4a4869dd1d0815f01e848ae35e34ab7540d1fc801e54bf1",
+        "alinea_sha256": "af5314074630726f017155a356d044ba7233e925a2d4a38cd41739477fbe4bf1",
+        "story_segmenten_sha256": "da70f94bb78014b07c50030a43fa070384873e634620a88936d7a1ec4656dfdf",
+        "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+        "font_gewijzigd": true,
+        "andere_alinea_gewijzigd": true,
+        "font_en_alineas_en_vector_alle_drie_exact": true,
+        "fontvereisten": [
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "carlito|1|0",
+            "family": "Carlito",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "|0|0",
+            "family": "",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "ｍｓ 明朝|0|0",
+            "family": "ＭＳ 明朝",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "twee-auteurs",
+        "inference": null,
+        "herhaling_inference": null,
+        "update_sha256": "578ad61977177daf192524ff3f993426777b96661c7865849c6582e71daf202d",
+        "update_bytes": 2362,
+        "bronvector_sha256": "42226e03684d44f140b4224a01d2491097e5164db9aac5ce73dd78fc547cd5ce",
+        "alinea_sha256": "cb9ba626d6cbd296bf380bd427ec02f316a41fde9773dc29ae671a536f7f5383",
+        "story_segmenten_sha256": "5eff5dd170629a2f65d2c59b5e4bcaf46da836c34782bc127ece419f8b27121f",
+        "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+        "font_gewijzigd": true,
+        "andere_alinea_gewijzigd": true,
+        "font_en_alineas_en_vector_alle_drie_exact": true,
+        "fontvereisten": [
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "carlito|1|0",
+            "family": "Carlito",
+            "bold": true,
+            "italic": false
+          },
+          {
+            "key": "|0|0",
+            "family": "",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          },
+          {
+            "key": "ｍｓ 明朝|0|0",
+            "family": "ＭＳ 明朝",
+            "bold": false,
+            "italic": false,
+            "scripts": [
+              "cjk-sc",
+              "arabic"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "betekenis": [
+    "Bij alleen tekst en bij vier gemengde updates is de inference exact dezelfde clientId/story/paraId/endOffset. De gemengde updates wijzigen elders lettertype, uitlijning, tekstverwijdering of alineastructuur.",
+    "Alleen een inference-paragraaf opnieuw verlagen of fontcache behouden zou wijzigingen elders kunnen missen. De bestaande brede terugval blijft daarom behouden.",
+    "Lettertypegeval verifieert Liberation Serif expliciet in de vereisten; uitlijning expliciet right; splitsing verhoogt het aantal alineas. Alle volledige body-story-segmenten, alineas/eigenschappen, fontJSON en bronvectoren zijn tussen verzender, inference-ontvanger en gewone ontvanger gelijk.",
+    "Twee auteurs geeft null; zes dubbele updates geven null en behouden inhoud/fontvereisten.",
+    "Acht Unicode-stappen via apply_update_with_inference op beide kernen: acht velden per stap exact. Private tellers: lokaal overige-patchroute, replica telkens lower-cachemiss; mediane fontcontrole 11,74 versus 73,37 ms. Geen ABBA/snelheidsacceptatie."
+  ],
+  "validatie": [
+    "Zes updategevallen op de meegeleverde kern met drie inhoudelijk vergeleken sessies en een aanvullende auteursessie; volledige herhalingscontroles.",
+    "Acht stappen met beeldframe op meegeleverde en private klokmodule, inclusief Grieks/Arabisch/CJK/emoji; 64 vergeleken velden over kernen exact.",
+    "Twee definitieve JavaScript-proefscripts syntactisch gecontroleerd; Python-controles uitgevoerd.",
+    "Zestien ELF-referenties, 529 standaardbundelbestanden inclusief mode/mtime, SDK-index, beide vendor-Wasms en originele npm-Wasm exact behouden.",
+    "Eerste afgekeurde compacte-projectieproef en tweede geslaagde vijfgevallenronde bewaard; daarna uitbreiding naar zes gevallen zonder versoepelde semantische eisen."
+  ],
+  "grenzen": [
+    "Node/V8 voert dezelfde Wasm-API uit, geen nieuwe volledige WebKit-Worker- of Tauri-desktopproef. Bundelbinding is statisch aan de bewaarde exacte native bundel.",
+    "De volledige JS-sessiewrapper, layoutreservation-/partLayoutInput-aanpassing en echte berichtrondgang zijn hier niet opnieuw uitgevoerd of getimed. Geen bewijs dat alle native latency door deze route ontstaat.",
+    "Kleine eigen verzameling; geen algemene classificatie van elke CRDT-update, alle metadatawortels, headers/noten, previews, Undo/Redo of identiteitsherstel bewezen.",
+    "Body/leeg renderEnv; geen echte lettertypeselectie/glyphs visueel beoordeeld, geen nieuwe DOCX-bewaar-/pixel-/IME-acceptatie.",
+    "De overige-patchroute volgt uit counters; individuele patchsucces/pending-updatefoutterugval niet rechtstreeks gemarkeerd.",
+    "Private route-Wasm geeft fontklokken via de bestaande inputprofielgetter en is ongeschikt voor productie.",
+    "Geen productbron-/SDK-/vendorwijziging, nieuwe Wasm-/appbouw, frontend/TypeScript/Python-productsuite, CI, platform- of releaseacceptatie. Geheugenfouten en tien migratiegebieden blijven open."
+  ],
+  "vervolg": "Maak in de echte kern eerst een strikt, begrensd mutatiebewijs rond update-integratie: alle gewijzigde wortels/stories, tekst-/attribuut-/embed-/structuurwijzigingen, epochgrenzen, pending updates en eventuele identiteits-/commentaarreparaties. Alleen bewezen enkelvoudige tekstwijziging mag de bestaande TextEdit-/seedroute onderhouden; elke twijfel terugval. Vermijd herintrede vanuit update-observer. Daarna component-invarianties en vaste korte/rijke native ABBA plus functioneel/visueel bewijs; geen typing-inference als bewijs op zichzelf.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-worker-updategrens.tar.gz",
+    "sha256": "9e992cc5aabc94a4b821e32dd5177d8f9943fe493d96c62c8d304f53922618e5",
+    "bytes": 24389,
+    "reguliere_leden": 20,
+    "alle_leden_byteexact_gecontroleerd": true
+  }
+}
