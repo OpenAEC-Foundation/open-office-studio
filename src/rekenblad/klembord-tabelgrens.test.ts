@@ -1,6 +1,22 @@
 import { describe, expect, it } from "vitest";
 import { leesHtmlTabel } from "./klembordLogica";
 
+it("negeert onzichtbare rijen en ruwe getallen in tabelcommentaar", () => {
+  const getallen: unknown[] = [];
+  expect(leesHtmlTabel(
+    '<table><!-- <tr><td x:num="99">Verborgen</td></tr> -->' +
+    '<tr><td x:num="2">2</td><td>Voor<!-- onzichtbaar -->na</td></tr></table>',
+    (...cel) => getallen.push(cel),
+  )).toEqual([["2", "Voorna"]]);
+  expect(getallen).toEqual([[0, 0, 2]]);
+});
+
+it("laat commentaar met sluitende tabeltags de echte cellen niet afbreken", () => {
+  expect(leesHtmlTabel(
+    '<table><tr><td>A<!-- </td></tr></table><table><tr><td>Fout -->B</td><td>C</td></tr></table>',
+  )).toEqual([["AB", "C"]]);
+});
+
 describe("één klembordtabel per plakbewerking (#20)", () => {
   it("plakt geen tweede tabel onder de eerste en leest daarvan geen ruwe getallen", () => {
     const getallen: unknown[] = [];

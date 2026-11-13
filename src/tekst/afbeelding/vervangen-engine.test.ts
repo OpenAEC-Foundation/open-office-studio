@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { createYrsSession, saveYrsDocx, type YrsSession } from "@betteroffice/docx/yrs";
 import { strFromU8, unzipSync } from "fflate";
-import { beeldOp, vervangAfbeelding } from "./opdrachten";
-import type { BeeldAttrs } from "./logica";
+import { beeldOp, bijsnijden, vervangAfbeelding } from "./opdrachten";
+import { leesBijsnijding, sleepGreep, type BeeldAttrs } from "./logica";
 
 const oud = `data:image/png;base64,${readFileSync("src-tauri/icons/32x32.png").toString("base64")}`;
 const nieuwBytes = readFileSync("src-tauri/icons/128x128.png");
@@ -41,6 +41,34 @@ const leesBeeld = (s: YrsSession) => {
 };
 
 describe("afbeelding vervangen zonder de documentopmaak te wijzigen (#49)", () => {
+  it("bewaart de vaste bijsnijrand en de schaal na Undo/Redo en DOCX-heropenen", async () => {
+    const { s, loc } = await maak();
+    const terug = await createYrsSession();
+    try {
+      const voor = beeldOp(s, loc)!;
+      const snede = sleepGreep(leesBijsnijding(voor), "n", 2, 2);
+      bijsnijden(ref(s), snede);
+      // 20% boven + 30% onder wordt 65% boven + 30% onder:
+      // 5% zichtbaar in plaats van 50%, dus een tiende van de oude hoogte.
+      const verwacht = { cropTop: 0.65, cropBottom: 0.3, width: 320.13, height: 16.01 };
+      expect(beeldOp(s, loc)).toMatchObject(verwacht);
+      expect(s.undo()).toBe(true);
+      expect(beeldOp(s, loc)).toEqual(voor);
+      expect(s.redo()).toBe(true);
+      expect(beeldOp(s, loc)).toMatchObject(verwacht);
+      const bytes = (await saveYrsDocx(s)).bytes;
+      const xml = strFromU8(unzipSync(bytes)["word/document.xml"]);
+      expect(xml).toContain('t="65000"');
+      expect(xml).toContain('b="30000"');
+      terug.openDocx(bytes, true);
+      const heropend = leesBeeld(terug);
+      expect(heropend).toMatchObject({ cropTop: 0.65, cropBottom: 0.3 });
+      // DOCX rondt af op gehele EMU (1/9525 pixel).
+      expect(Math.abs(heropend.width! - verwacht.width)).toBeLessThanOrEqual(0.5 / 9525);
+      expect(Math.abs(heropend.height! - verwacht.height)).toBeLessThanOrEqual(0.5 / 9525);
+    } finally { s.destroy(); terug.destroy(); }
+  });
+
   it.each(["inline", "square"])("behoudt exacte maten en opmaak bij %s, als één Undo-stap", async wrap => {
     const { s, loc } = await maak(wrap);
     try {
