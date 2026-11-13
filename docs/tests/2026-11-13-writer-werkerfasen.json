@@ -1,0 +1,6875 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "a1478a2c",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Diagnostische kopie, geen productfix. Fontwerk tijdens invoer en afzonderlijke save-projectie/pakketfasen daadwerkelijk geklokt. Beide volledige native functieronden groen.",
+  "programma": {
+    "code": 0,
+    "reden": null,
+    "seconden": 119.11823527099477,
+    "minimum_vrije_bytes": 17732710400,
+    "start_vrije_bytes": 17842679808,
+    "gecompileerde_crates": [
+      "open-office-studio"
+    ],
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "startgrens_gib": 3.1,
+    "stopgrens_gib": 3,
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/werker-fasekopie/open-office-studio-werker-fasemeting",
+    "programma_sha256": "2f3beb123423d48b8db4dfcd268c76a98ae956ef656cf99cde955fcc929f5bf2",
+    "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+  },
+  "bundelwijzigingen": [
+    {
+      "bestand": "chunk-Q7OC7M5Q-BzppsI5m.js",
+      "voor": "900d652842189028b701e3ba7f5b2c433931c56085c76b7a489e84de3f605834",
+      "na": "1c3bca5a4eb5104a07ea2b0698269e1e6c4940cb248ed42699bfc1352207dd67",
+      "vervangingen": 5
+    },
+    {
+      "bestand": "chunk-YTGFUEEE-BR8wyl1E.js",
+      "voor": "1fe089a1f9a34edb7f707f95711c0071439608946b60af93e56e548051651c71",
+      "na": "af4eff25a93ca2159582f0149b5755d100259df202f5a1fb0f07a65b40f02ffd",
+      "vervangingen": 4
+    }
+  ],
+  "ronden": {
+    "opname": {
+      "geslaagd": true,
+      "fout": null,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31484,
+        "begin_tot_bron_ms": 8826,
+        "laatste_keyup_tot_bron_ms": 376,
+        "laatste_keyup_tot_frame_ms": 4502.000000000007,
+        "begin_tot_frame_ms": 12952.000000000007,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 12962,
+        "wall_verzonden_tot_frame_ms": 11192,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": {
+        "font": [
+          {
+            "id": 13,
+            "begin": 10227,
+            "eind": 10357.000000000002,
+            "ms": 130.00000000000182
+          },
+          {
+            "id": 15,
+            "begin": 10380,
+            "eind": 10483,
+            "ms": 103
+          },
+          {
+            "id": 17,
+            "begin": 10582,
+            "eind": 10722,
+            "ms": 140
+          },
+          {
+            "id": 19,
+            "begin": 10754,
+            "eind": 10879,
+            "ms": 125
+          },
+          {
+            "id": 21,
+            "begin": 10898,
+            "eind": 11007,
+            "ms": 109
+          },
+          {
+            "id": 23,
+            "begin": 11031,
+            "eind": 11136.000000000002,
+            "ms": 105.00000000000182
+          },
+          {
+            "id": 25,
+            "begin": 11171,
+            "eind": 11282,
+            "ms": 111
+          },
+          {
+            "id": 27,
+            "begin": 11311,
+            "eind": 11428,
+            "ms": 117
+          },
+          {
+            "id": 29,
+            "begin": 11456,
+            "eind": 11554,
+            "ms": 98
+          },
+          {
+            "id": 31,
+            "begin": 11581,
+            "eind": 11677,
+            "ms": 96
+          },
+          {
+            "id": 33,
+            "begin": 11703,
+            "eind": 11800,
+            "ms": 97
+          },
+          {
+            "id": 35,
+            "begin": 11825.000000000002,
+            "eind": 11929,
+            "ms": 103.99999999999818
+          },
+          {
+            "id": 37,
+            "begin": 11950.000000000002,
+            "eind": 12045,
+            "ms": 94.99999999999818
+          },
+          {
+            "id": 39,
+            "begin": 12070,
+            "eind": 12161,
+            "ms": 91
+          },
+          {
+            "id": 41,
+            "begin": 12185,
+            "eind": 12279,
+            "ms": 94
+          },
+          {
+            "id": 43,
+            "begin": 12302,
+            "eind": 12399,
+            "ms": 97
+          },
+          {
+            "id": 45,
+            "begin": 12426,
+            "eind": 12529,
+            "ms": 103
+          },
+          {
+            "id": 47,
+            "begin": 12554,
+            "eind": 12647,
+            "ms": 93
+          },
+          {
+            "id": 49,
+            "begin": 12686,
+            "eind": 12776,
+            "ms": 90
+          },
+          {
+            "id": 51,
+            "begin": 12805,
+            "eind": 12903,
+            "ms": 98
+          },
+          {
+            "id": 53,
+            "begin": 12926,
+            "eind": 13022,
+            "ms": 96
+          },
+          {
+            "id": 55,
+            "begin": 13049,
+            "eind": 13147,
+            "ms": 98
+          },
+          {
+            "id": 57,
+            "begin": 13169,
+            "eind": 13278,
+            "ms": 109
+          },
+          {
+            "id": 59,
+            "begin": 13292,
+            "eind": 13383,
+            "ms": 91
+          },
+          {
+            "id": 61,
+            "begin": 13413,
+            "eind": 13512,
+            "ms": 99
+          },
+          {
+            "id": 63,
+            "begin": 13531,
+            "eind": 13628,
+            "ms": 97
+          },
+          {
+            "id": 65,
+            "begin": 13656,
+            "eind": 13749,
+            "ms": 93
+          },
+          {
+            "id": 67,
+            "begin": 13776,
+            "eind": 13876,
+            "ms": 100
+          },
+          {
+            "id": 69,
+            "begin": 13915.000000000002,
+            "eind": 14016,
+            "ms": 100.99999999999818
+          },
+          {
+            "id": 71,
+            "begin": 14050,
+            "eind": 14152.000000000002,
+            "ms": 102.00000000000182
+          },
+          {
+            "id": 73,
+            "begin": 14181.000000000002,
+            "eind": 14277.000000000002,
+            "ms": 96.0
+          },
+          {
+            "id": 75,
+            "begin": 14302,
+            "eind": 14396,
+            "ms": 94
+          },
+          {
+            "id": 77,
+            "begin": 14417,
+            "eind": 14508,
+            "ms": 91
+          },
+          {
+            "id": 79,
+            "begin": 14534,
+            "eind": 14625,
+            "ms": 91
+          },
+          {
+            "id": 81,
+            "begin": 14657,
+            "eind": 14752,
+            "ms": 95
+          },
+          {
+            "id": 83,
+            "begin": 14774,
+            "eind": 14883,
+            "ms": 109
+          },
+          {
+            "id": 85,
+            "begin": 14893,
+            "eind": 14992,
+            "ms": 99
+          },
+          {
+            "id": 87,
+            "begin": 15024,
+            "eind": 15124,
+            "ms": 100
+          },
+          {
+            "id": 89,
+            "begin": 15141,
+            "eind": 15229.000000000002,
+            "ms": 88.00000000000182
+          },
+          {
+            "id": 91,
+            "begin": 15263,
+            "eind": 15358,
+            "ms": 95
+          },
+          {
+            "id": 93,
+            "begin": 15388,
+            "eind": 15484,
+            "ms": 96
+          },
+          {
+            "id": 95,
+            "begin": 15505,
+            "eind": 15603,
+            "ms": 98
+          },
+          {
+            "id": 97,
+            "begin": 15628,
+            "eind": 15727,
+            "ms": 99
+          },
+          {
+            "id": 99,
+            "begin": 15751,
+            "eind": 15842,
+            "ms": 91
+          },
+          {
+            "id": 101,
+            "begin": 15864,
+            "eind": 15970,
+            "ms": 106
+          },
+          {
+            "id": 103,
+            "begin": 15993,
+            "eind": 16113,
+            "ms": 120
+          },
+          {
+            "id": 105,
+            "begin": 16152.000000000002,
+            "eind": 16250,
+            "ms": 97.99999999999818
+          },
+          {
+            "id": 107,
+            "begin": 16298.000000000002,
+            "eind": 16399,
+            "ms": 100.99999999999818
+          },
+          {
+            "id": 109,
+            "begin": 16426.000000000004,
+            "eind": 16522.000000000004,
+            "ms": 96.0
+          },
+          {
+            "id": 111,
+            "begin": 16544,
+            "eind": 16638,
+            "ms": 94
+          },
+          {
+            "id": 113,
+            "begin": 16725,
+            "eind": 16825,
+            "ms": 100
+          },
+          {
+            "id": 115,
+            "begin": 16835,
+            "eind": 16931,
+            "ms": 96
+          },
+          {
+            "id": 117,
+            "begin": 16948,
+            "eind": 17046,
+            "ms": 98
+          },
+          {
+            "id": 119,
+            "begin": 17061,
+            "eind": 17156,
+            "ms": 95
+          },
+          {
+            "id": 121,
+            "begin": 17182,
+            "eind": 17277,
+            "ms": 95
+          },
+          {
+            "id": 123,
+            "begin": 17301.000000000004,
+            "eind": 17395,
+            "ms": 93.99999999999636
+          },
+          {
+            "id": 125,
+            "begin": 17420,
+            "eind": 17529,
+            "ms": 109
+          },
+          {
+            "id": 127,
+            "begin": 17745,
+            "eind": 17848,
+            "ms": 103
+          },
+          {
+            "id": 129,
+            "begin": 17874,
+            "eind": 17968,
+            "ms": 94
+          },
+          {
+            "id": 131,
+            "begin": 17992,
+            "eind": 18101,
+            "ms": 109
+          },
+          {
+            "id": 135,
+            "begin": 21051.000000000004,
+            "eind": 21160,
+            "ms": 108.99999999999636
+          },
+          {
+            "id": 137,
+            "begin": 21169,
+            "eind": 21270,
+            "ms": 101
+          },
+          {
+            "id": 139,
+            "begin": 21279,
+            "eind": 21395,
+            "ms": 116
+          }
+        ],
+        "projectie": [
+          {
+            "id": null,
+            "begin": 18527,
+            "eind": 19264,
+            "ms": 737
+          }
+        ],
+        "pakket": [
+          {
+            "id": null,
+            "begin": 19264,
+            "eind": 21048,
+            "ms": 1784
+          }
+        ],
+        "resident": [
+          {
+            "id": null,
+            "begin": 18142,
+            "eind": 21048,
+            "ms": 2906
+          }
+        ],
+        "save": [
+          {
+            "id": 134,
+            "begin": 18128,
+            "eind": 21048,
+            "ms": 2920
+          }
+        ],
+        "updatecode": [
+          {
+            "id": 134,
+            "begin": 21048,
+            "eind": 21050,
+            "ms": 2
+          }
+        ]
+      },
+      "sommen": {
+        "font": {
+          "aantal": 63,
+          "som_ms": 6357.999999999991,
+          "mediaan_ms": 98
+        },
+        "projectie": {
+          "aantal": 1,
+          "som_ms": 737,
+          "mediaan_ms": 737
+        },
+        "pakket": {
+          "aantal": 1,
+          "som_ms": 1784,
+          "mediaan_ms": 1784
+        },
+        "resident": {
+          "aantal": 1,
+          "som_ms": 2906,
+          "mediaan_ms": 2906
+        },
+        "save": {
+          "aantal": 1,
+          "som_ms": 2920,
+          "mediaan_ms": 2920
+        },
+        "updatecode": {
+          "aantal": 1,
+          "som_ms": 2,
+          "mediaan_ms": 2
+        }
+      },
+      "bewaartaken": {
+        "134": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 134,
+            "type": "save",
+            "tijd": 18128
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 134,
+            "type": "save",
+            "tijd": 18128
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 134,
+            "type": "save",
+            "tijd": 21050
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 2922
+        }
+      },
+      "alle_taken": {
+        "12": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 10111
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 10111
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 10127
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 16
+        },
+        "13": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 10226
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 10226
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 10357.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 131.00000000000182
+        },
+        "14": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 10357.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 10357.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 10369
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 11.999999999998181
+        },
+        "15": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10380
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10380
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10483
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "16": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10487
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10487
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10500
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 13
+        },
+        "17": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10582
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10582
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10723
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 141
+        },
+        "18": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10723
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10723
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10735
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 12
+        },
+        "19": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10753
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10754
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10879
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 125
+        },
+        "20": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10879
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10879
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10891
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 12
+        },
+        "21": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10898
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10898
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 11007
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 109
+        },
+        "22": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 11007
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 11007
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 11016
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "23": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 11031
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 11031
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 11136.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 105.00000000000182
+        },
+        "24": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 11136.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 11136.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 11147
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 10.999999999998181
+        },
+        "25": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 11171
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 11171
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 11282
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 111
+        },
+        "26": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 11282
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 11282
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 11293.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 11.000000000001819
+        },
+        "27": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 11311
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 11311
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 11428
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 117
+        },
+        "28": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 11428
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 11428
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 11439
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 11
+        },
+        "29": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11456
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11456
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11554
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 98
+        },
+        "30": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11554
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11554
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11563
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "31": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11581
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11581
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11677
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 96
+        },
+        "32": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11677
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11677
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11685
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "33": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11703
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11703
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11800
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "34": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11800
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11800
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11808
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "35": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11825.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11825.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11929
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 103.99999999999818
+        },
+        "36": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11929
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11929
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11939
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 10
+        },
+        "37": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11950.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11950.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 12046
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 95.99999999999818
+        },
+        "38": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 12046
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 12046
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 12054
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "39": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 12070
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 12070
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 12161
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 91
+        },
+        "40": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 12161
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 12161
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 12168.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7.000000000001819
+        },
+        "41": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 12185
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 12185
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 12279
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 94
+        },
+        "42": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 12279
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 12279
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 12286
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "43": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 12302
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 12302
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 12399
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "44": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 12399
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 12399
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 12407
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "45": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 12426
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 12426
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 12529
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "46": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 12529
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 12529
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 12537
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "47": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12554
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12554
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12647
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 93
+        },
+        "48": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12647
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12647
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12656
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "49": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12686
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12686
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12776
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 90
+        },
+        "50": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12776
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12776
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12783
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "51": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12805
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12805
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12903
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 98
+        },
+        "52": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12904
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12904
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12911
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "53": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12926
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12926
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 13022
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 96
+        },
+        "54": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 13022
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 13022
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 13031
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "55": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 13048
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 13049
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 13148
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 99
+        },
+        "56": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 13148
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 13148
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 13156
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "57": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 13169
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 13169
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 13278
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 109
+        },
+        "58": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 13278
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 13278
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 13286
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "59": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 13292
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 13292
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 13383
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 91
+        },
+        "60": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 13383
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 13383
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 13391
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "61": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 13413
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 13413
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 13512
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 99
+        },
+        "62": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 13512
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 13512
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 13520
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "63": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 13531
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 13531
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 13628
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "64": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 13628
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 13628
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 13636.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8.000000000001819
+        },
+        "65": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13656
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13656
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13749
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 93
+        },
+        "66": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13749
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13749
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13757
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "67": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13776
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13776
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13876
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        },
+        "68": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13876
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13876
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13884
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "69": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13915.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13915.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 14016
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 100.99999999999818
+        },
+        "70": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 14016
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 14016
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 14024
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "71": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 14050
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 14050
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 14152.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 102.00000000000182
+        },
+        "72": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 14152.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 14152.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 14161
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 8.999999999998181
+        },
+        "73": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 14180
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 14180
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 14277.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97.00000000000182
+        },
+        "74": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 14277.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 14277.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 14285
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 7.999999999998181
+        },
+        "75": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 14302
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 14302
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 14397
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "76": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 14397
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 14397
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 14404
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "77": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 14416
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 14416
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 14508
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 92
+        },
+        "78": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 14508
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 14508
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 14515
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "79": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 14533
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 14534
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 14625
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 91
+        },
+        "80": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 14625
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 14625
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 14632
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "81": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14657
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14657
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14752
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "82": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14752
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14752
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14760
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "83": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14774
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14774
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14883
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 109
+        },
+        "84": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14884
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14884
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14893
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "85": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14893
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14893
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14992
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 99
+        },
+        "86": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14992
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14992
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 15001
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "87": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 15024
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 15024
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 15124
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        },
+        "88": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 15124
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 15124
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 15132
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "89": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 15141
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 15141
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 15230
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 89
+        },
+        "90": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 15230
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 15230
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 15237
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "91": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 15263
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 15263
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 15358
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "92": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 15358
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 15358
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 15366
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "93": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 15388
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 15388
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 15485.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97.00000000000182
+        },
+        "94": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 15485.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 15485.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 15492
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 6.999999999998181
+        },
+        "95": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 15505
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 15505
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 15603
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 98
+        },
+        "96": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 15603
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 15603
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 15613
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 10
+        },
+        "97": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 15628
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 15628
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 15728
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        },
+        "98": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 15728
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 15728
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 15737
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "99": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15751
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15751
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15842
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 91
+        },
+        "100": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15843
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15843
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15850
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "101": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15864
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15864
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15970
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 106
+        },
+        "102": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15970
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15970
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15979.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9.000000000001819
+        },
+        "103": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15993
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15993
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 16113
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 120
+        },
+        "104": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 16113
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 16113
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 16120.999999999998
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7.999999999998181
+        },
+        "105": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 16151
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 16152.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 16250
+          },
+          "wachttijd_ms": 1.000000000001819,
+          "taak_ms": 97.99999999999818
+        },
+        "106": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 16250
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 16250
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 16262
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 12
+        },
+        "107": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 16298.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 16298.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 16399
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 100.99999999999818
+        },
+        "108": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 16399
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 16399
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 16407
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "109": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 16426.000000000004
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 16426.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 16523
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 96.99999999999636
+        },
+        "110": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 16523
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 16523
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 16531
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "111": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 16544
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 16544
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 16638
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 94
+        },
+        "112": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 16663
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 16663
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 16673
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 10
+        },
+        "113": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 16725
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 16725
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 16825
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        },
+        "114": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 16825
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 16825
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 16833.000000000004
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8.000000000003638
+        },
+        "115": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 16834
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 16835
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 16931
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 96
+        },
+        "116": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 16931
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 16931
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 16938
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "117": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 16948
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 16948
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 17046
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 98
+        },
+        "118": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 17046
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 17046
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 17054.000000000004
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8.000000000003638
+        },
+        "119": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 17061
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 17061
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 17156
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "120": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 17156
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 17156
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 17165
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "121": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 17182
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 17182
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 17277
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "122": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 17277
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 17277
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 17284
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "123": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 17301.000000000004
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 17301.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 17395
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 93.99999999999636
+        },
+        "124": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 17395
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 17395
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 17403
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "125": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 17420
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 17420
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 17529
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 109
+        },
+        "126": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 126,
+            "type": "applyUpdate",
+            "tijd": 17529
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 126,
+            "type": "applyUpdate",
+            "tijd": 17529
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 126,
+            "type": "applyUpdate",
+            "tijd": 17536
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "127": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 127,
+            "type": "fontRequirements",
+            "tijd": 17745
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 127,
+            "type": "fontRequirements",
+            "tijd": 17745
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 127,
+            "type": "fontRequirements",
+            "tijd": 17848
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "128": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 128,
+            "type": "applyUpdate",
+            "tijd": 17848
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 128,
+            "type": "applyUpdate",
+            "tijd": 17848
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 128,
+            "type": "applyUpdate",
+            "tijd": 17856
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "129": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 129,
+            "type": "fontRequirements",
+            "tijd": 17874
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 129,
+            "type": "fontRequirements",
+            "tijd": 17874
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 129,
+            "type": "fontRequirements",
+            "tijd": 17968
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 94
+        },
+        "130": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 130,
+            "type": "applyUpdate",
+            "tijd": 17968
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 130,
+            "type": "applyUpdate",
+            "tijd": 17968
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 130,
+            "type": "applyUpdate",
+            "tijd": 17976
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "131": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 131,
+            "type": "fontRequirements",
+            "tijd": 17992
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 131,
+            "type": "fontRequirements",
+            "tijd": 17992
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 131,
+            "type": "fontRequirements",
+            "tijd": 18102
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 110
+        },
+        "132": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 132,
+            "type": "applyUpdate",
+            "tijd": 18102
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 132,
+            "type": "applyUpdate",
+            "tijd": 18102
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 132,
+            "type": "applyUpdate",
+            "tijd": 18110
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "133": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 133,
+            "type": "applyUpdate",
+            "tijd": 18115.000000000004
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 133,
+            "type": "applyUpdate",
+            "tijd": 18115.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 133,
+            "type": "applyUpdate",
+            "tijd": 18116
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 0.999999999996362
+        },
+        "134": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 134,
+            "type": "save",
+            "tijd": 18128
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 134,
+            "type": "save",
+            "tijd": 18128
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 134,
+            "type": "save",
+            "tijd": 21050
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 2922
+        },
+        "135": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 135,
+            "type": "fontRequirements",
+            "tijd": 18130
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 135,
+            "type": "fontRequirements",
+            "tijd": 21050
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 135,
+            "type": "fontRequirements",
+            "tijd": 21160
+          },
+          "wachttijd_ms": 2920,
+          "taak_ms": 110
+        },
+        "136": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 136,
+            "type": "applyUpdate",
+            "tijd": 20298
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 136,
+            "type": "applyUpdate",
+            "tijd": 21160
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 136,
+            "type": "applyUpdate",
+            "tijd": 21169
+          },
+          "wachttijd_ms": 862,
+          "taak_ms": 9
+        },
+        "137": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 137,
+            "type": "fontRequirements",
+            "tijd": 20299
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 137,
+            "type": "fontRequirements",
+            "tijd": 21169
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 137,
+            "type": "fontRequirements",
+            "tijd": 21270
+          },
+          "wachttijd_ms": 870,
+          "taak_ms": 101
+        },
+        "138": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 138,
+            "type": "applyUpdate",
+            "tijd": 20299
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 138,
+            "type": "applyUpdate",
+            "tijd": 21270
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 138,
+            "type": "applyUpdate",
+            "tijd": 21279
+          },
+          "wachttijd_ms": 971,
+          "taak_ms": 9
+        },
+        "139": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 139,
+            "type": "fontRequirements",
+            "tijd": 20299
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 139,
+            "type": "fontRequirements",
+            "tijd": 21279
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 139,
+            "type": "fontRequirements",
+            "tijd": 21395
+          },
+          "wachttijd_ms": 980,
+          "taak_ms": 116
+        },
+        "140": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 140,
+            "type": "sync",
+            "tijd": 21793
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 140,
+            "type": "sync",
+            "tijd": 21794
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 140,
+            "type": "sync",
+            "tijd": 22147.000000000004
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 353.00000000000364
+        },
+        "141": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 141,
+            "type": "buildPages",
+            "tijd": 22559
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 141,
+            "type": "buildPages",
+            "tijd": 22559
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 141,
+            "type": "buildPages",
+            "tijd": 22659
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        }
+      },
+      "open_fases": [],
+      "regels": 526,
+      "docx_sha256": "82e9145b511149427f9595171d8a8de259040f2c4f0a4f32b5f9318a310bc251",
+      "docx_tabellen": 128,
+      "docx_utf16": 91423,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ]
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "fout": null,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31467.000000000004,
+        "begin_tot_bron_ms": 9088,
+        "laatste_keyup_tot_bron_ms": 388.99999999999636,
+        "laatste_keyup_tot_frame_ms": 4528.999999999996,
+        "begin_tot_frame_ms": 13228,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13241,
+        "wall_verzonden_tot_frame_ms": 11465,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": {
+        "font": [
+          {
+            "id": 13,
+            "begin": 10090,
+            "eind": 10234,
+            "ms": 144
+          },
+          {
+            "id": 15,
+            "begin": 10281,
+            "eind": 10390,
+            "ms": 109
+          },
+          {
+            "id": 17,
+            "begin": 10474,
+            "eind": 10606,
+            "ms": 132
+          },
+          {
+            "id": 19,
+            "begin": 10643,
+            "eind": 10761.000000000002,
+            "ms": 118.00000000000182
+          },
+          {
+            "id": 21,
+            "begin": 10782,
+            "eind": 10892,
+            "ms": 110
+          },
+          {
+            "id": 23,
+            "begin": 10921,
+            "eind": 11031,
+            "ms": 110
+          },
+          {
+            "id": 25,
+            "begin": 11059.000000000002,
+            "eind": 11162,
+            "ms": 102.99999999999818
+          },
+          {
+            "id": 27,
+            "begin": 11197.000000000002,
+            "eind": 11312,
+            "ms": 114.99999999999818
+          },
+          {
+            "id": 29,
+            "begin": 11339,
+            "eind": 11438,
+            "ms": 99
+          },
+          {
+            "id": 31,
+            "begin": 11466.000000000002,
+            "eind": 11561,
+            "ms": 94.99999999999818
+          },
+          {
+            "id": 33,
+            "begin": 11591.000000000002,
+            "eind": 11687,
+            "ms": 95.99999999999818
+          },
+          {
+            "id": 35,
+            "begin": 11717,
+            "eind": 11816,
+            "ms": 99
+          },
+          {
+            "id": 37,
+            "begin": 11847,
+            "eind": 11962,
+            "ms": 115
+          },
+          {
+            "id": 39,
+            "begin": 11971,
+            "eind": 12059.000000000002,
+            "ms": 88.00000000000182
+          },
+          {
+            "id": 41,
+            "begin": 12094,
+            "eind": 12185,
+            "ms": 91
+          },
+          {
+            "id": 43,
+            "begin": 12220,
+            "eind": 12315,
+            "ms": 95
+          },
+          {
+            "id": 45,
+            "begin": 12347,
+            "eind": 12461,
+            "ms": 114
+          },
+          {
+            "id": 47,
+            "begin": 12471,
+            "eind": 12574,
+            "ms": 103
+          },
+          {
+            "id": 49,
+            "begin": 12588.000000000002,
+            "eind": 12689,
+            "ms": 100.99999999999818
+          },
+          {
+            "id": 51,
+            "begin": 12709,
+            "eind": 12802,
+            "ms": 93
+          },
+          {
+            "id": 53,
+            "begin": 12843,
+            "eind": 12950.000000000002,
+            "ms": 107.00000000000182
+          },
+          {
+            "id": 55,
+            "begin": 12983,
+            "eind": 13083,
+            "ms": 100
+          },
+          {
+            "id": 57,
+            "begin": 13111,
+            "eind": 13208,
+            "ms": 97
+          },
+          {
+            "id": 59,
+            "begin": 13234,
+            "eind": 13327,
+            "ms": 93
+          },
+          {
+            "id": 61,
+            "begin": 13350,
+            "eind": 13443,
+            "ms": 93
+          },
+          {
+            "id": 63,
+            "begin": 13473,
+            "eind": 13572.000000000002,
+            "ms": 99.00000000000182
+          },
+          {
+            "id": 65,
+            "begin": 13588.000000000002,
+            "eind": 13703,
+            "ms": 114.99999999999818
+          },
+          {
+            "id": 67,
+            "begin": 13721,
+            "eind": 13822.000000000002,
+            "ms": 101.00000000000182
+          },
+          {
+            "id": 69,
+            "begin": 13836,
+            "eind": 13928,
+            "ms": 92
+          },
+          {
+            "id": 71,
+            "begin": 13951,
+            "eind": 14053,
+            "ms": 102
+          },
+          {
+            "id": 73,
+            "begin": 14068,
+            "eind": 14163,
+            "ms": 95
+          },
+          {
+            "id": 75,
+            "begin": 14188,
+            "eind": 14299,
+            "ms": 111
+          },
+          {
+            "id": 77,
+            "begin": 14320,
+            "eind": 14416,
+            "ms": 96
+          },
+          {
+            "id": 79,
+            "begin": 14445,
+            "eind": 14548,
+            "ms": 103
+          },
+          {
+            "id": 81,
+            "begin": 14566,
+            "eind": 14669,
+            "ms": 103
+          },
+          {
+            "id": 83,
+            "begin": 14697.000000000002,
+            "eind": 14787,
+            "ms": 89.99999999999818
+          },
+          {
+            "id": 85,
+            "begin": 14813,
+            "eind": 14912,
+            "ms": 99
+          },
+          {
+            "id": 87,
+            "begin": 14934.000000000002,
+            "eind": 15034,
+            "ms": 99.99999999999818
+          },
+          {
+            "id": 89,
+            "begin": 15061,
+            "eind": 15149,
+            "ms": 88
+          },
+          {
+            "id": 91,
+            "begin": 15180,
+            "eind": 15275,
+            "ms": 95
+          },
+          {
+            "id": 93,
+            "begin": 15295,
+            "eind": 15389.000000000002,
+            "ms": 94.00000000000182
+          },
+          {
+            "id": 95,
+            "begin": 15419,
+            "eind": 15529,
+            "ms": 110
+          },
+          {
+            "id": 97,
+            "begin": 15555,
+            "eind": 15649,
+            "ms": 94
+          },
+          {
+            "id": 99,
+            "begin": 15671.000000000002,
+            "eind": 15769,
+            "ms": 97.99999999999818
+          },
+          {
+            "id": 101,
+            "begin": 15786,
+            "eind": 15882,
+            "ms": 96
+          },
+          {
+            "id": 103,
+            "begin": 15903,
+            "eind": 16000,
+            "ms": 97
+          },
+          {
+            "id": 105,
+            "begin": 16021,
+            "eind": 16112.000000000002,
+            "ms": 91.00000000000182
+          },
+          {
+            "id": 107,
+            "begin": 16163,
+            "eind": 16268,
+            "ms": 105
+          },
+          {
+            "id": 109,
+            "begin": 16304.000000000002,
+            "eind": 16399,
+            "ms": 94.99999999999818
+          },
+          {
+            "id": 111,
+            "begin": 16423,
+            "eind": 16522.000000000004,
+            "ms": 99.00000000000364
+          },
+          {
+            "id": 113,
+            "begin": 16549,
+            "eind": 16646,
+            "ms": 97
+          },
+          {
+            "id": 115,
+            "begin": 16803,
+            "eind": 16895,
+            "ms": 92
+          },
+          {
+            "id": 117,
+            "begin": 16921,
+            "eind": 17012,
+            "ms": 91
+          },
+          {
+            "id": 119,
+            "begin": 17047,
+            "eind": 17141,
+            "ms": 94
+          },
+          {
+            "id": 121,
+            "begin": 17167,
+            "eind": 17265,
+            "ms": 98
+          },
+          {
+            "id": 123,
+            "begin": 17292,
+            "eind": 17395,
+            "ms": 103
+          },
+          {
+            "id": 125,
+            "begin": 17420,
+            "eind": 17512,
+            "ms": 92
+          },
+          {
+            "id": 127,
+            "begin": 17536,
+            "eind": 17638,
+            "ms": 102
+          },
+          {
+            "id": 129,
+            "begin": 17654,
+            "eind": 17747,
+            "ms": 93
+          },
+          {
+            "id": 131,
+            "begin": 17913,
+            "eind": 18043,
+            "ms": 130
+          },
+          {
+            "id": 133,
+            "begin": 18091,
+            "eind": 18186,
+            "ms": 95
+          },
+          {
+            "id": 137,
+            "begin": 21157,
+            "eind": 21260,
+            "ms": 103
+          },
+          {
+            "id": 139,
+            "begin": 21269.000000000004,
+            "eind": 21367,
+            "ms": 97.99999999999636
+          },
+          {
+            "id": 141,
+            "begin": 21377,
+            "eind": 21501,
+            "ms": 124
+          }
+        ],
+        "projectie": [
+          {
+            "id": null,
+            "begin": 18626,
+            "eind": 19382,
+            "ms": 756
+          }
+        ],
+        "pakket": [
+          {
+            "id": null,
+            "begin": 19382,
+            "eind": 21156,
+            "ms": 1774
+          }
+        ],
+        "resident": [
+          {
+            "id": null,
+            "begin": 18230,
+            "eind": 21156,
+            "ms": 2926
+          }
+        ],
+        "save": [
+          {
+            "id": 136,
+            "begin": 18218,
+            "eind": 21156,
+            "ms": 2938
+          }
+        ],
+        "updatecode": [
+          {
+            "id": 136,
+            "begin": 21156,
+            "eind": 21157,
+            "ms": 1
+          }
+        ]
+      },
+      "sommen": {
+        "font": {
+          "aantal": 64,
+          "som_ms": 6499.9999999999945,
+          "mediaan_ms": 99.0
+        },
+        "projectie": {
+          "aantal": 1,
+          "som_ms": 756,
+          "mediaan_ms": 756
+        },
+        "pakket": {
+          "aantal": 1,
+          "som_ms": 1774,
+          "mediaan_ms": 1774
+        },
+        "resident": {
+          "aantal": 1,
+          "som_ms": 2926,
+          "mediaan_ms": 2926
+        },
+        "save": {
+          "aantal": 1,
+          "som_ms": 2938,
+          "mediaan_ms": 2938
+        },
+        "updatecode": {
+          "aantal": 1,
+          "som_ms": 1,
+          "mediaan_ms": 1
+        }
+      },
+      "bewaartaken": {
+        "136": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 136,
+            "type": "save",
+            "tijd": 18217
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 136,
+            "type": "save",
+            "tijd": 18217
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 136,
+            "type": "save",
+            "tijd": 21157
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 2940
+        }
+      },
+      "alle_taken": {
+        "12": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9956
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9956
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9973
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 17
+        },
+        "13": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 10089
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 10090
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 10235
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 145
+        },
+        "14": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 10235
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 10235
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 10247
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 12
+        },
+        "15": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10281
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10281
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10390
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 109
+        },
+        "16": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10398
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10398
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10409
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 11
+        },
+        "17": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10474
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10474
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10606
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 132
+        },
+        "18": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10606
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10606
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10618
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 12
+        },
+        "19": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10643
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10643
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10761.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 118.00000000000182
+        },
+        "20": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10761.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10761.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10771
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 9.999999999998181
+        },
+        "21": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10782
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10782
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10892
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 110
+        },
+        "22": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10892
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10892
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10902.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 10.000000000001819
+        },
+        "23": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10921
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10921
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 11031
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 110
+        },
+        "24": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 11031
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 11031
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 11040.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9.000000000001819
+        },
+        "25": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 11059.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 11059.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 11162
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 102.99999999999818
+        },
+        "26": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 11162
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 11162
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 11172
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 10
+        },
+        "27": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 11197.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 11197.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 11312
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 114.99999999999818
+        },
+        "28": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 11312
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 11312
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 11323
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 11
+        },
+        "29": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11339
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11339
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11438
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 99
+        },
+        "30": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11439
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11439
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11448
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "31": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11466.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11466.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11561
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 94.99999999999818
+        },
+        "32": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11561
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11561
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11570
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "33": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11591.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11591.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11687
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 95.99999999999818
+        },
+        "34": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11687
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11687
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11696
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "35": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11716.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11717
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11817
+          },
+          "wachttijd_ms": 0.999999999998181,
+          "taak_ms": 100
+        },
+        "36": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11817
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11817
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11828
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 11
+        },
+        "37": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11847
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11847
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11962
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 115
+        },
+        "38": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11962
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11962
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11971
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "39": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11971
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11971
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 12059.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 88.00000000000182
+        },
+        "40": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 12059.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 12059.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 12067
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 7.999999999998181
+        },
+        "41": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 12094
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 12094
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 12185
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 91
+        },
+        "42": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 12185
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 12185
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 12192
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "43": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 12220
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 12220
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 12315
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "44": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 12315
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 12315
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 12325.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 10.000000000001819
+        },
+        "45": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 12347
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 12347
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 12461
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 114
+        },
+        "46": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 12461
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 12461
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 12470
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "47": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12471
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12471
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12574
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "48": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12575.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12575.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12584
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 8.999999999998181
+        },
+        "49": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12588.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12588.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12690
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 101.99999999999818
+        },
+        "50": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12690
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12690
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12698
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "51": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12709
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12709
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12802
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 93
+        },
+        "52": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12802
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12802
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12811
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "53": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12843
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12843
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12950.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 107.00000000000182
+        },
+        "54": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12951
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12951
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12958
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "55": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12983
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12983
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 13083
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        },
+        "56": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 13084
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 13084
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 13091.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7.000000000001819
+        },
+        "57": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 13111
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 13111
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 13208
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "58": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 13208
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 13208
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 13216.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8.000000000001819
+        },
+        "59": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 13234
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 13234
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 13327
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 93
+        },
+        "60": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 13327
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 13327
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 13334
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "61": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 13350
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 13350
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 13443
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 93
+        },
+        "62": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 13443
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 13443
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 13450.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7.000000000001819
+        },
+        "63": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 13473
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 13473
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 13572.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 99.00000000000182
+        },
+        "64": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 13572.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 13572.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 13579
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 6.999999999998181
+        },
+        "65": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13588.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13588.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13703
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 114.99999999999818
+        },
+        "66": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13703
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13703
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13711
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "67": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13721
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13721
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13823
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 102
+        },
+        "68": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13823
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13823
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13830
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "69": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13836
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13836
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13928
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 92
+        },
+        "70": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13928
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13928
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13935
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "71": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13951
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13951
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 14053
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 102
+        },
+        "72": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 14053
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 14053
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 14062.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9.000000000001819
+        },
+        "73": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 14068
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 14068
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 14163
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "74": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 14163
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 14163
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 14170
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "75": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 14188
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 14188
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 14299
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 111
+        },
+        "76": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 14299
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 14299
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 14307
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "77": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 14319
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 14319
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 14416
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "78": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 14416
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 14416
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 14424
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "79": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 14445
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 14445
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 14548
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "80": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 14548
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 14548
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 14556.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8.000000000001819
+        },
+        "81": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14566
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14566
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14669
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "82": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14669
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14669
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14676
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "83": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14697.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14697.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14787
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 89.99999999999818
+        },
+        "84": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14787
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14787
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14794
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "85": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14813
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14813
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14913
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 100
+        },
+        "86": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14913
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14913
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14920
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "87": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14934.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14934.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 15035
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 100.99999999999818
+        },
+        "88": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 15035
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 15035
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 15042
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "89": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 15061
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 15061
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 15149
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 88
+        },
+        "90": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 15149
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 15149
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 15157
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "91": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 15180
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 15180
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 15275
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 95
+        },
+        "92": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 15275
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 15276
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 15283
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 7
+        },
+        "93": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 15295
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 15295
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 15389.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 94.00000000000182
+        },
+        "94": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 15390
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 15390
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 15397
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "95": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 15419
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 15419
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 15529
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 110
+        },
+        "96": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 15529
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 15529
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 15537
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "97": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 15555
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 15555
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 15649
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 94
+        },
+        "98": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 15649
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 15649
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 15656
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "99": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15671.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15671.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15769
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 97.99999999999818
+        },
+        "100": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15769
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15769
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15777.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8.000000000001819
+        },
+        "101": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15786
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15786
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15882
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 96
+        },
+        "102": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15882
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15882
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15889.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7.000000000001819
+        },
+        "103": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15903
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15903
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 16000
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "104": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 16000
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 16000
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 16008
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "105": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 16021
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 16021
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 16112.000000000002
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 91.00000000000182
+        },
+        "106": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 16112.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 16113
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 16122
+          },
+          "wachttijd_ms": 0.999999999998181,
+          "taak_ms": 9
+        },
+        "107": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 16163
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 16163
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 16268
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 105
+        },
+        "108": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 16268
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 16269.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 16277.000000000002
+          },
+          "wachttijd_ms": 1.000000000001819,
+          "taak_ms": 8.0
+        },
+        "109": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 16304.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 16304.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 16399
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 94.99999999999818
+        },
+        "110": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 16399
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 16399
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 16406
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "111": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 16423
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 16423
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 16522.000000000004
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 99.00000000000364
+        },
+        "112": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 16522.000000000004
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 16522.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 16532
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 9.999999999996362
+        },
+        "113": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 16549
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 16549
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 16646
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 97
+        },
+        "114": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 16646
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 16646
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 16655
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "115": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 16803
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 16803
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 16895
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 92
+        },
+        "116": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 16895
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 16895
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 16903
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "117": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 16921
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 16921
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 17012
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 91
+        },
+        "118": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 17012
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 17013
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 17020
+          },
+          "wachttijd_ms": 1,
+          "taak_ms": 7
+        },
+        "119": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 17047
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 17047
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 17141
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 94
+        },
+        "120": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 17141
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 17141
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 17148
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "121": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 17167
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 17167
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 17265
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 98
+        },
+        "122": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 17266
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 17266
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 17274
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "123": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 17292
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 17292
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 17395
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 103
+        },
+        "124": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 17395
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 17395
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 17402
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 7
+        },
+        "125": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 17420
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 17420
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 17512
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 92
+        },
+        "126": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 126,
+            "type": "applyUpdate",
+            "tijd": 17513
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 126,
+            "type": "applyUpdate",
+            "tijd": 17513
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 126,
+            "type": "applyUpdate",
+            "tijd": 17521
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "127": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 127,
+            "type": "fontRequirements",
+            "tijd": 17536
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 127,
+            "type": "fontRequirements",
+            "tijd": 17536
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 127,
+            "type": "fontRequirements",
+            "tijd": 17638
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 102
+        },
+        "128": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 128,
+            "type": "applyUpdate",
+            "tijd": 17638
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 128,
+            "type": "applyUpdate",
+            "tijd": 17638
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 128,
+            "type": "applyUpdate",
+            "tijd": 17646
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 8
+        },
+        "129": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 129,
+            "type": "fontRequirements",
+            "tijd": 17654
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 129,
+            "type": "fontRequirements",
+            "tijd": 17654
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 129,
+            "type": "fontRequirements",
+            "tijd": 17747
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 93
+        },
+        "130": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 130,
+            "type": "applyUpdate",
+            "tijd": 17854
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 130,
+            "type": "applyUpdate",
+            "tijd": 17854
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 130,
+            "type": "applyUpdate",
+            "tijd": 17865.000000000004
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 11.000000000003638
+        },
+        "131": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 131,
+            "type": "fontRequirements",
+            "tijd": 17913
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 131,
+            "type": "fontRequirements",
+            "tijd": 17913
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 131,
+            "type": "fontRequirements",
+            "tijd": 18043
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 130
+        },
+        "132": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 132,
+            "type": "applyUpdate",
+            "tijd": 18043
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 132,
+            "type": "applyUpdate",
+            "tijd": 18043
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 132,
+            "type": "applyUpdate",
+            "tijd": 18052
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "133": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 133,
+            "type": "fontRequirements",
+            "tijd": 18090
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 133,
+            "type": "fontRequirements",
+            "tijd": 18090
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 133,
+            "type": "fontRequirements",
+            "tijd": 18186
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 96
+        },
+        "134": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 134,
+            "type": "applyUpdate",
+            "tijd": 18186
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 134,
+            "type": "applyUpdate",
+            "tijd": 18186
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 134,
+            "type": "applyUpdate",
+            "tijd": 18195
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 9
+        },
+        "135": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 135,
+            "type": "applyUpdate",
+            "tijd": 18205.000000000004
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 135,
+            "type": "applyUpdate",
+            "tijd": 18205.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 135,
+            "type": "applyUpdate",
+            "tijd": 18206
+          },
+          "wachttijd_ms": 0.0,
+          "taak_ms": 0.999999999996362
+        },
+        "136": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 136,
+            "type": "save",
+            "tijd": 18217
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 136,
+            "type": "save",
+            "tijd": 18217
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 136,
+            "type": "save",
+            "tijd": 21157
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 2940
+        },
+        "137": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 137,
+            "type": "fontRequirements",
+            "tijd": 18220
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 137,
+            "type": "fontRequirements",
+            "tijd": 21157
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 137,
+            "type": "fontRequirements",
+            "tijd": 21260
+          },
+          "wachttijd_ms": 2937,
+          "taak_ms": 103
+        },
+        "138": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 138,
+            "type": "applyUpdate",
+            "tijd": 20418
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 138,
+            "type": "applyUpdate",
+            "tijd": 21260
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 138,
+            "type": "applyUpdate",
+            "tijd": 21269.000000000004
+          },
+          "wachttijd_ms": 842,
+          "taak_ms": 9.000000000003638
+        },
+        "139": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 139,
+            "type": "fontRequirements",
+            "tijd": 20418
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 139,
+            "type": "fontRequirements",
+            "tijd": 21269.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 139,
+            "type": "fontRequirements",
+            "tijd": 21367
+          },
+          "wachttijd_ms": 851.0000000000036,
+          "taak_ms": 97.99999999999636
+        },
+        "140": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 140,
+            "type": "applyUpdate",
+            "tijd": 20418
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 140,
+            "type": "applyUpdate",
+            "tijd": 21367
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 140,
+            "type": "applyUpdate",
+            "tijd": 21377
+          },
+          "wachttijd_ms": 949,
+          "taak_ms": 10
+        },
+        "141": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 141,
+            "type": "fontRequirements",
+            "tijd": 20418
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 141,
+            "type": "fontRequirements",
+            "tijd": 21377
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 141,
+            "type": "fontRequirements",
+            "tijd": 21501
+          },
+          "wachttijd_ms": 959,
+          "taak_ms": 124
+        },
+        "142": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 142,
+            "type": "sync",
+            "tijd": 21916
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 142,
+            "type": "sync",
+            "tijd": 21916
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 142,
+            "type": "sync",
+            "tijd": 22278
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 362
+        },
+        "143": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 143,
+            "type": "buildPages",
+            "tijd": 22695
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 143,
+            "type": "buildPages",
+            "tijd": 22695
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 143,
+            "type": "buildPages",
+            "tijd": 22782
+          },
+          "wachttijd_ms": 0,
+          "taak_ms": 87
+        }
+      },
+      "open_fases": [],
+      "regels": 534,
+      "docx_sha256": "38d360fb06003842624e3f5bc24cdcf1a3dc37589d890045ec760c18a9bac199",
+      "docx_tabellen": 128,
+      "docx_utf16": 91423,
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ]
+    }
+  },
+  "pakketverschillen_tegen_vorige_referentieronde": {
+    "opname": [
+      "docProps/core.xml"
+    ],
+    "herhaling": [
+      "docProps/core.xml"
+    ]
+  },
+  "validatie": [
+    "Twee gewijzigde gekopieerde JS-bestanden door Node-syntaxcontrole;4loggercontroles groen;Python-collector compileert.",
+    "Native Linux-featurebouw groen,alleen app-crate opnieuw gecompileerd,119sec. Geen Vite/SDK/productbron gewijzigd.",
+    "Beide eigen native Linux/schema2-ronden behouden bron/opmaak/UndoRedo/selectie/vervangen/bewaren/verwerpen/nieuwdocument/laatantwoord.",
+    "Twee DOCX onafhankelijkSHA/ZIP/CRC/XML:128tabellen/91423UTF16, exact dezelfde pakketdelen als vorige referentie behalvecore.xml.",
+    "Herhalingsbewaarbeeld bekeken: lint,tekst,tabellen,paginaovergang zichtbaar. Geen volledige65pagina-/pixelacceptatie.",
+    "Vijftien eerdere ELF-referenties behouden; nieuwe2f3beb apart als16de. Standaarddist529bestanden byte/mode/mtime exact hersteld;SDK-index exact,geenSDKbestanden bewerkt."
+  ],
+  "grenzen": [
+    "Ingebedde compiled-JS-meetkopie,oudebestandsnamen behouden met gedocumenteerde nieuwe hashes; alleen eigen ELF,geen installatie/release.",
+    "Klokken zijn verstreken milliseconden in dezelfdeWorker. Fontfunctie/projectie/updateencoding synchronisch; pakket/save/resident omvatten await/scheduling. Geen exclusieveCPU-tijd of uitsluitendZIP-tijd.",
+    "Fontsom betreft hele invoerperiode:63/64aanroepen,6358/6500ms. Niet bij de eindstaart optellen.",
+    "Save2920/2938ms enresident2906/2926ms bevatten projectie737/756ms enpakket1784/1774ms. Geen overlappende fases optellen; overigeworkerwerking blijft apart.",
+    "Ontvangst→taakstart0ms op deze twee save-aanvragen bij klokresolutie van circa1ms; geen algemene wachtrijgarantie.",
+    "Geen onbeïnvloede ABBA-snelheidsvergelijking. Extra klokken/inspectors/profilers kunnen uitvoering beïnvloeden.",
+    "Bestaande externe fase-/transportprobes ongewijzigd uit vorige25getestecontroles gebruikt; niet opnieuw alle25synthetischecontroles uitgevoerd. Nieuwe4loggercontroles apart.",
+    "Geen volledige frontend/TS/Python-producttests/CI voor deze private meetkopie; geen platform-/release-/migratieacceptatie of geheugenfoutfix."
+  ],
+  "behoud": {
+    "referenties_exact": 16,
+    "standaardbundel_byte_mode_mtime_exact": 529,
+    "sdk_index_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "sdk_bestanden_niet_bewerkt": true,
+    "productbron_niet_gewijzigd": true
+  },
+  "vervolg": "Prioriteer aantoonbaar herhaald fontwerk: onderzoek versievaste samenvoeging van fontRequests of incrementele fontvereisten in native/vendor/docx-edit/src/engine.rs::layout_font_requirements/with_resident_story. Behoud nieuweUnicode-/fallbackfonts, stijlen, previews, body/cellen/koppen/noten en actieve bron/versie; huidigefontcache vervalt op iedere update. Geen blinde stale-cache. Controleer werkelijkeWasm/nativebronbinding vóór kernwijziging. Pakket1780ms enprojectie750ms zijn afzonderlijke tweede onderzoekslijn; updateencoding1–2ms geenprioriteit. Nieuwe gerichte kandidaat alleen na equivalentieproeven en vaste korte/rijke ABBA met inhoud/beeldbehoud. Tien migratiegebieden/geheugenfouten open; Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-werkerfasen.tar.gz",
+    "sha256": "3ef8cb9428047af18131b945ecc22c1eb725291c7e4a27daab632c13fa2a2f97",
+    "bytes": 5411224,
+    "reguliere_leden": 55,
+    "alle_leden_byteexact_gecontroleerd": true
+  }
+}
