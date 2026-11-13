@@ -1,0 +1,735 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "346be8d1",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Werkelijke edit- en layout-Wasm byteexact uit vastgezette bron herbouwd. Private klokvariant zonder ABI-uitbreiding behoudt acht stappen exact. Componentklok wijst vooral op gereedmaken van resident bodyblokken; geen productfix of native-UI-snelheidsclaim.",
+  "bronbinding": {
+    "gebruikte_kern": "vendor/tekstengine/docx_edit_bg.wasm",
+    "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "npm_kern_sha256": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+    "commit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "bronarchief": {
+      "url": "https://api.github.com/repos/openooxml/betteroffice/tarball/4e982c3aea0065578604c3fe7727938533888f66",
+      "commit": "4e982c3aea0065578604c3fe7727938533888f66",
+      "sha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+      "bytes": 53049820
+    },
+    "nootpatch_sha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+    "beide_herbouwde_modules_byteexact": true,
+    "basis": {
+      "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+      "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+      "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+      "wasmBindgen": "wasm-bindgen 0.2.129",
+      "wasmOpt": "wasm-opt version 132 (version_132)",
+      "kernen": {
+        "docx_edit": {
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+          "bytes": 24549413
+        },
+        "docx_layout": {
+          "sha256": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+          "bytes": 4366717
+        }
+      }
+    },
+    "gereedschap": [
+      {
+        "naam": "bindgen",
+        "url": "https://github.com/wasm-bindgen/wasm-bindgen/releases/download/0.2.129/wasm-bindgen-0.2.129-x86_64-unknown-linux-musl.tar.gz",
+        "sha256": "82d12bb940e2d4e72e0d5605387fc1b8ca179044e012b620f0ce4e7440e8320e",
+        "bytes": 11695824
+      },
+      {
+        "naam": "binaryen",
+        "url": "https://github.com/WebAssembly/binaryen/releases/download/version_132/binaryen-version_132-x86_64-linux.tar.gz",
+        "sha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
+        "bytes": 117057408
+      },
+      {
+        "uitvoerbaar": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/bindgen/wasm-bindgen",
+        "versie": "wasm-bindgen 0.2.129",
+        "sha256": "fb59da714982a04273e9e4b09a85e523e5dd04de35b1a4a8b1641785ee7a71cf"
+      },
+      {
+        "uitvoerbaar": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/binaryen/bin/wasm-opt",
+        "versie": "wasm-opt version 132 (version_132)",
+        "sha256": "1014958e6f20d412f1542320b43970214b0fb1ed780595e8f7c0d8761ed53725"
+      }
+    ]
+  },
+  "bouw": {
+    "basis": {
+      "code": 0,
+      "reden": null,
+      "seconden": 665.1314287979985,
+      "min_vrij_bytes": 16233459712,
+      "opdracht": [
+        "python3",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/bouw-tekstkern.py",
+        "--bronmap",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/bron",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/basis",
+        "--bronarchief",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/bron.tar.gz",
+        "--wasm-bindgen",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/bindgen/wasm-bindgen",
+        "--wasm-opt",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/binaryen/bin/wasm-opt"
+      ],
+      "offline": true
+    },
+    "profiel": {
+      "code": 0,
+      "reden": null,
+      "seconden": 339.0725736469976,
+      "min_vrij_bytes": 16050163712,
+      "opdracht": [
+        "python3",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/bouw-profiel-opdracht.py"
+      ],
+      "offline": true
+    },
+    "profielmodule": {
+      "sha256": "f069bac0bb2e965b26c61c56ef1a8d8ccb53ec4ffadf583ec30ceecf65a5d9cb",
+      "bytes": 24538320,
+      "interface_exact": true,
+      "doel": "uitsluitend font-klokken via bestaande profielgetter, geen productievariant"
+    },
+    "bronpinnen": {
+      "engine_voor": "3d12a8ac26f5f145ab8a956a0ea8f6078a4e2862c99600e43893bb0e8bcd9f6d",
+      "engine_na": "ee999df55f5d05a314412c78bb2da49cc88ca9bcfb52d9d14cd09fc09a37b019",
+      "wasm_voor": "90c353a12a0f9660fe559cf017e78e743db862ed1431366a74a9b207f6df570b",
+      "wasm_na": "db15c0f694a9d7e547cab39e47579363b916add06e163ec6696c22ba4c71693e"
+    }
+  },
+  "component": {
+    "eerste_zonder_layout": {
+      "geslaagd": true,
+      "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "metingen": [
+        {
+          "stap": 0,
+          "tekst": " Een proef",
+          "lokaal_bewerken_ms": 12.673787999999831,
+          "replica_update_ms": 3.4319170000001122,
+          "lokaal_font_ms": 89.02099099999987,
+          "replica_font_ms": 81.62466399999994,
+          "update_bytes": 2319,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 1,
+          "tekst": " met woorden",
+          "lokaal_bewerken_ms": 3.005623000000014,
+          "replica_update_ms": 2.018395000000055,
+          "lokaal_font_ms": 80.12359300000003,
+          "replica_font_ms": 71.01115299999992,
+          "update_bytes": 2321,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 2,
+          "tekst": " en spaties.",
+          "lokaal_bewerken_ms": 2.8891819999998916,
+          "replica_update_ms": 1.601872000000185,
+          "lokaal_font_ms": 82.62373200000002,
+          "replica_font_ms": 74.6005009999999,
+          "update_bytes": 2321,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 3,
+          "tekst": " Ω",
+          "lokaal_bewerken_ms": 3.31054499999982,
+          "replica_update_ms": 1.5843919999997524,
+          "lokaal_font_ms": 74.2278980000001,
+          "replica_font_ms": 71.1046339999998,
+          "update_bytes": 2312,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 4,
+          "tekst": " العربية",
+          "lokaal_bewerken_ms": 3.1595440000000963,
+          "replica_update_ms": 1.5813720000001013,
+          "lokaal_font_ms": 73.64596299999994,
+          "replica_font_ms": 69.60229200000003,
+          "update_bytes": 2324,
+          "font_sha256": "321b44e0b6accda157e8a3630e6dbff7d949832bc9737460ee4f71bd1a8a8107",
+          "font_bytes": 235,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 5,
+          "tekst": " 漢字",
+          "lokaal_bewerken_ms": 3.326035000000047,
+          "replica_update_ms": 1.6727730000002339,
+          "lokaal_font_ms": 80.81291800000008,
+          "replica_font_ms": 71.45515699999987,
+          "update_bytes": 2316,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 6,
+          "tekst": " 🙂",
+          "lokaal_bewerken_ms": 2.71603099999993,
+          "replica_update_ms": 1.511250999999902,
+          "lokaal_font_ms": 73.79510500000015,
+          "replica_font_ms": 71.14275399999997,
+          "update_bytes": 2314,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 7,
+          "tekst": " extra",
+          "lokaal_bewerken_ms": 2.7421410000001742,
+          "replica_update_ms": 1.5377120000002833,
+          "lokaal_font_ms": 71.138285,
+          "replica_font_ms": 70.697001,
+          "update_bytes": 2315,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        }
+      ]
+    },
+    "met_layout": {
+      "geslaagd": true,
+      "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "metingen": [
+        {
+          "stap": 0,
+          "tekst": " Een proef",
+          "lokaal_bewerken_ms": 11.832320999999865,
+          "replica_update_ms": 2.8969319999996515,
+          "lokaal_font_ms": 131.56352800000013,
+          "replica_font_ms": 84.95954000000029,
+          "update_bytes": 2319,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 1,
+          "tekst": " met woorden",
+          "lokaal_bewerken_ms": 3.366465999999946,
+          "replica_update_ms": 1.7667330000003858,
+          "lokaal_font_ms": 82.29655099999991,
+          "replica_font_ms": 77.82825599999978,
+          "update_bytes": 2321,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 2,
+          "tekst": " en spaties.",
+          "lokaal_bewerken_ms": 3.0232230000001437,
+          "replica_update_ms": 1.6156229999996867,
+          "lokaal_font_ms": 82.81479499999978,
+          "replica_font_ms": 73.61432400000012,
+          "update_bytes": 2321,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 3,
+          "tekst": " Ω",
+          "lokaal_bewerken_ms": 3.2569249999996828,
+          "replica_update_ms": 1.6303429999998116,
+          "lokaal_font_ms": 77.72553500000004,
+          "replica_font_ms": 82.46489199999996,
+          "update_bytes": 2312,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 4,
+          "tekst": " العربية",
+          "lokaal_bewerken_ms": 3.2114740000001802,
+          "replica_update_ms": 1.6831829999996444,
+          "lokaal_font_ms": 78.19835899999998,
+          "replica_font_ms": 75.78216999999995,
+          "update_bytes": 2324,
+          "font_sha256": "321b44e0b6accda157e8a3630e6dbff7d949832bc9737460ee4f71bd1a8a8107",
+          "font_bytes": 235,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 5,
+          "tekst": " 漢字",
+          "lokaal_bewerken_ms": 3.261895000000095,
+          "replica_update_ms": 1.5508310000000165,
+          "lokaal_font_ms": 80.23811399999977,
+          "replica_font_ms": 74.67626199999995,
+          "update_bytes": 2316,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 6,
+          "tekst": " 🙂",
+          "lokaal_bewerken_ms": 3.0016230000001087,
+          "replica_update_ms": 1.829613999999765,
+          "lokaal_font_ms": 83.31396799999993,
+          "replica_font_ms": 77.55904400000009,
+          "update_bytes": 2314,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 7,
+          "tekst": " extra",
+          "lokaal_bewerken_ms": 2.7286509999999,
+          "replica_update_ms": 1.7548130000000128,
+          "lokaal_font_ms": 71.9131010000001,
+          "replica_font_ms": 69.03073899999981,
+          "update_bytes": 2315,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        }
+      ],
+      "herhaalde_lezingen": [
+        {
+          "ms": 11.585129000000052,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 10.931594000000132,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 11.323617000000013,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 11.300105999999687,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 10.946553000000222,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        }
+      ]
+    },
+    "voorlaatste_alinea": {
+      "geslaagd": true,
+      "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "metingen": [
+        {
+          "stap": 0,
+          "tekst": " Een proef",
+          "lokaal_bewerken_ms": 22.161419999999907,
+          "replica_update_ms": 4.232271999999739,
+          "lokaal_font_ms": 180.80485,
+          "replica_font_ms": 89.25985500000024,
+          "update_bytes": 2319,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 1,
+          "tekst": " met woorden",
+          "lokaal_bewerken_ms": 3.6110279999998056,
+          "replica_update_ms": 1.9470550000000912,
+          "lokaal_font_ms": 84.98894300000029,
+          "replica_font_ms": 80.61641999999983,
+          "update_bytes": 2321,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 2,
+          "tekst": " en spaties.",
+          "lokaal_bewerken_ms": 3.38886599999978,
+          "replica_update_ms": 1.8392139999996289,
+          "lokaal_font_ms": 83.24785999999995,
+          "replica_font_ms": 78.28763100000015,
+          "update_bytes": 2321,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 3,
+          "tekst": " Ω",
+          "lokaal_bewerken_ms": 3.922729999999774,
+          "replica_update_ms": 1.860265000000254,
+          "lokaal_font_ms": 87.60409299999992,
+          "replica_font_ms": 84.71867100000009,
+          "update_bytes": 2312,
+          "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a",
+          "font_bytes": 138,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 4,
+          "tekst": " العربية",
+          "lokaal_bewerken_ms": 3.5841879999998127,
+          "replica_update_ms": 1.8250339999999596,
+          "lokaal_font_ms": 82.17801099999997,
+          "replica_font_ms": 80.88789199999974,
+          "update_bytes": 2324,
+          "font_sha256": "321b44e0b6accda157e8a3630e6dbff7d949832bc9737460ee4f71bd1a8a8107",
+          "font_bytes": 235,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 5,
+          "tekst": " 漢字",
+          "lokaal_bewerken_ms": 3.4507159999998294,
+          "replica_update_ms": 1.7045530000000326,
+          "lokaal_font_ms": 82.89134700000022,
+          "replica_font_ms": 82.58759400000008,
+          "update_bytes": 2316,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 6,
+          "tekst": " 🙂",
+          "lokaal_bewerken_ms": 3.58551800000032,
+          "replica_update_ms": 1.8375040000000809,
+          "lokaal_font_ms": 84.58571900000015,
+          "replica_font_ms": 79.50021100000004,
+          "update_bytes": 2314,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        },
+        {
+          "stap": 7,
+          "tekst": " extra",
+          "lokaal_bewerken_ms": 3.4215570000001208,
+          "replica_update_ms": 1.719543000000158,
+          "lokaal_font_ms": 81.91543000000001,
+          "replica_font_ms": 78.78335599999946,
+          "update_bytes": 2315,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f",
+          "font_bytes": 364,
+          "fontresultaat_exact": true,
+          "alinearesultaat_exact": true,
+          "bronvector_exact": true
+        }
+      ],
+      "herhaalde_lezingen": [
+        {
+          "ms": 12.31281399999989,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 13.031399999999849,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 12.164972999999918,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 12.214923000000454,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        },
+        {
+          "ms": 14.120417999999518,
+          "font_sha256": "b06751034f9a75959d33fb2e72bef68e69f6b9020d93bf6b8773424707dd554f"
+        }
+      ]
+    },
+    "vergelijking_meegeleverd_profiel": {
+      "cross_kern_acht_stappen_exact": true,
+      "velden": [
+        "font_sha256",
+        "font_bytes",
+        "alinea_sha256",
+        "bronvector_sha256"
+      ],
+      "fasen": [
+        {
+          "stap": 0,
+          "route": "a",
+          "voorbereiding_ms": 0.027749999999969077,
+          "blokken_ms": 119.6674710000002,
+          "verzamelen_ms": 12.263310999999703,
+          "na_collect_ms": 0.02923000000009779,
+          "totaal_ms": 131.98776199999998
+        },
+        {
+          "stap": 0,
+          "route": "b",
+          "voorbereiding_ms": 0.023869999999988067,
+          "blokken_ms": 70.9043099999999,
+          "verzamelen_ms": 12.110159000000294,
+          "na_collect_ms": 0.023690999999871565,
+          "totaal_ms": 83.06203000000005
+        },
+        {
+          "stap": 1,
+          "route": "a",
+          "voorbereiding_ms": 0.01900999999998021,
+          "blokken_ms": 66.17920300000014,
+          "verzamelen_ms": 11.037079000000176,
+          "na_collect_ms": 0.019979999999577558,
+          "totaal_ms": 77.25527199999988
+        },
+        {
+          "stap": 1,
+          "route": "b",
+          "voorbereiding_ms": 0.020320000000083382,
+          "blokken_ms": 59.87288099999978,
+          "verzamelen_ms": 11.518723000000136,
+          "na_collect_ms": 0.02193100000022241,
+          "totaal_ms": 71.43385500000022
+        },
+        {
+          "stap": 2,
+          "route": "a",
+          "voorbereiding_ms": 0.019719999999779247,
+          "blokken_ms": 65.39441500000021,
+          "verzamelen_ms": 11.1885299999999,
+          "na_collect_ms": 0.021381000000019412,
+          "totaal_ms": 76.62404599999991
+        },
+        {
+          "stap": 2,
+          "route": "b",
+          "voorbereiding_ms": 0.01955099999986487,
+          "blokken_ms": 59.810379999999896,
+          "verzamelen_ms": 11.334282000000258,
+          "na_collect_ms": 0.02179999999998472,
+          "totaal_ms": 71.186013
+        },
+        {
+          "stap": 3,
+          "route": "a",
+          "voorbereiding_ms": 0.02007000000003245,
+          "blokken_ms": 63.47544599999992,
+          "verzamelen_ms": 11.70127599999978,
+          "na_collect_ms": 0.03276000000005297,
+          "totaal_ms": 75.22955199999979
+        },
+        {
+          "stap": 3,
+          "route": "b",
+          "voorbereiding_ms": 0.02842000000009648,
+          "blokken_ms": 67.52302699999973,
+          "verzamelen_ms": 11.912807000000157,
+          "na_collect_ms": 0.02242999999998574,
+          "totaal_ms": 79.48668399999997
+        },
+        {
+          "stap": 4,
+          "route": "a",
+          "voorbereiding_ms": 0.02003100000001723,
+          "blokken_ms": 66.54732599999988,
+          "verzamelen_ms": 11.228951000000052,
+          "na_collect_ms": 0.019330000000081782,
+          "totaal_ms": 77.81563800000004
+        },
+        {
+          "stap": 4,
+          "route": "b",
+          "voorbereiding_ms": 0.018959999999879074,
+          "blokken_ms": 58.93326100000013,
+          "verzamelen_ms": 10.950268000000051,
+          "na_collect_ms": 0.023249999999734428,
+          "totaal_ms": 69.9257389999998
+        },
+        {
+          "stap": 5,
+          "route": "a",
+          "voorbereiding_ms": 0.019090000000232976,
+          "blokken_ms": 61.8855209999997,
+          "verzamelen_ms": 11.077509000000191,
+          "na_collect_ms": 0.020309999999881256,
+          "totaal_ms": 73.00243
+        },
+        {
+          "stap": 5,
+          "route": "b",
+          "voorbereiding_ms": 0.02147000000013577,
+          "blokken_ms": 63.49165599999969,
+          "verzamelen_ms": 11.693606000000273,
+          "na_collect_ms": 0.02511999999978798,
+          "totaal_ms": 75.23185199999989
+        },
+        {
+          "stap": 6,
+          "route": "a",
+          "voorbereiding_ms": 0.02319100000022445,
+          "blokken_ms": 67.47245500000008,
+          "verzamelen_ms": 11.919247999999698,
+          "na_collect_ms": 0.024100000000089494,
+          "totaal_ms": 79.4389940000001
+        },
+        {
+          "stap": 6,
+          "route": "b",
+          "voorbereiding_ms": 0.019829999999728898,
+          "blokken_ms": 62.913220000000365,
+          "verzamelen_ms": 12.779185999999754,
+          "na_collect_ms": 0.02653099999997721,
+          "totaal_ms": 75.73876699999983
+        },
+        {
+          "stap": 7,
+          "route": "a",
+          "voorbereiding_ms": 0.01900999999998021,
+          "blokken_ms": 61.266165,
+          "verzamelen_ms": 11.172250000000076,
+          "na_collect_ms": 0.02510000000029322,
+          "totaal_ms": 72.48252500000035
+        },
+        {
+          "stap": 7,
+          "route": "b",
+          "voorbereiding_ms": 0.018950000000131695,
+          "blokken_ms": 58.0174219999999,
+          "verzamelen_ms": 11.330181999999695,
+          "na_collect_ms": 0.025610000000142463,
+          "totaal_ms": 69.39216399999987
+        }
+      ],
+      "samen": {
+        "blokken_ms": {
+          "mediaan": 63.48355099999981,
+          "min": 58.0174219999999,
+          "max": 119.6674710000002
+        },
+        "verzamelen_ms": {
+          "mediaan": 11.426502500000197,
+          "min": 10.950268000000051,
+          "max": 12.779185999999754
+        },
+        "totaal_ms": {
+          "mediaan": 75.48530949999986,
+          "min": 69.39216399999987,
+          "max": 131.98776199999998
+        }
+      },
+      "zonder_eerste_stap": {
+        "blokken_ms": {
+          "mediaan": 63.19433300000014,
+          "min": 58.0174219999999,
+          "max": 67.52302699999973
+        },
+        "verzamelen_ms": {
+          "mediaan": 11.332231999999976,
+          "min": 10.950268000000051,
+          "max": 12.779185999999754
+        },
+        "totaal_ms": {
+          "mediaan": 75.23070199999984,
+          "min": 69.39216399999987,
+          "max": 79.48668399999997
+        }
+      }
+    }
+  },
+  "duiding": [
+    "Na eerste bewerking op beide replica’s: blokvoorbereiding58.0–67.5ms,mediaan63.2; verzamelen11.0–12.8ms,mediaan11.3. Eerste stap staat volledig in ruwe data; uitsplitsing zonder die stap expliciet apart.",
+    "story_begin→story_gereed omvat de hele with_resident_story-route: cachecontrole,eventuele patches/lowering en blokgereedmaking. Geen afzonderlijke claim dat al die tijd uitsluitend serialiseren of één specifieke lower-functie is.",
+    "Behoud van een ongewijzigde fontlijst is onvoldoende voor algemeen hergebruik: Arabische/CJK-invoer wijzigt de uitvoerhash. Alleen familie-/stijlcache zou script- en terugvalvereisten missen.",
+    "edit_text_resident gaf in drie componentopzetten geen snelheidswinst tegenover apply_update. Die API mag terugvallen; er is geen apart bewijs dat iedere bewerking de resident snelle route nam. Geen algemene routewissel ingevoerd."
+  ],
+  "validatie": [
+    "Drie componentopzetten op meegeleverdeWasm,ieder8opeenvolgende eigen bewerkingen:fontJSON/alinea’s/bronvectoren lokaal versusreplica exact.",
+    "Extra referentie- en klokvariant-run:8stappen fontJSON-hash/bytes,alinea-hash enbronvector-hash volledig gelijk over beide kernen.",
+    "VolledigeJS/Wasm-import/exportcontracten van beide basisbouwmodules en de privateklokmodule gecontroleerd. Basisbouw is ook byteexact,geen alleen-buildbewijs.",
+    "Alle16eerdereELFs,529standaardbundelbestanden byte/mode/mtime,SDK-index,origineleSDK-Wasm enmeegeleverdebeidevendor-Wasms intact."
+  ],
+  "grenzen": [
+    "Node/V8-componentproeven op eigen rijke bron,geen nieuwe native desktop-/IME-/pixel-/platform-/releaseacceptatie. Vorige native functieronden blijven afzonderlijk gelden.",
+    "Verstreken kloktijden,geen exclusieveCPU-tijd. Verzamelen en blokvoorbereiding afzonderlijk; geen ononderbouwde vertaling naar heleWebKit-invoerstaart.",
+    "Vaste bewerkingsvolgorde,lokale route vóórreplica,geenABBA. Derde/extra referentiecomponent deels tijdensbouwbelasting; geen snelheidsvergelijking geaccepteerd.",
+    "Componentrequest bodyStory=body/renderEnv leeg; geen volledige kop-/noot-/preview-/fallback-renderdekking. Unicode-vraaguitvoer is gecontroleerd,werkelijkeglyphs/lettertypeselectie nietvisueel getest.",
+    "Kernprofiel heeft alleen klokpunten. Bestaande apply_input_profile_json-getter geeft in die private module fontklokken; die diagnostische semantiek is ongeschikt als productievariant.",
+    "Geen volledige frontend/TS/Python-suite/CI ofnieuwe appbouw voor deze kernelcomponent:productbron ongewijzigd. Geheugenfouten en tien migratiegebieden niet opgelost."
+  ],
+  "behoud": {
+    "ELF_referenties_exact": 16,
+    "standaardbundel_byte_mode_mtime_exact": 529,
+    "sdk_index_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "vendor_edit_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "vendor_layout_sha256": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+    "sdk_vendor_en_productbron_niet_gewijzigd": true
+  },
+  "vervolg": "Optimaliseer bewezen veilige hergebruik/actualisering van bodyblokken voor tekstwijzigingen in de werkelijke bronkopie,met terugval bij structurele,stijl-,bron- enversiewijzigingen; geen blinde fontresultaatcache. Gebruik nu beschikbareherbouwbarekern en klokgetter om wijzigingen te vergelijken. Begin met exact vaststellen of volledige lowering ofeen cache-/patchcontrole de58–68ms veroorzaakt,bijvoorbeeldvia bestaandeenginecache-statistieken. Herstel privateklokwijzigingen uit engine-voor.rs/wasm-voor.rs vóór echtekandidaat; bewaar baseline/profielmodules en referenties. Voorproductacceptatie: Unicode/cellen/koppen/noten/previews/Undo/Redo/opslaan,vastekorte/rijkeABBA enwerkelijkeGUI/beelden. Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-font-kern.tar.gz",
+    "sha256": "6838fe4031e540811784ecdbc8e605d16e246dea18c4c4455cac87efd23f0df2",
+    "bytes": 588391,
+    "reguliere_leden": 40,
+    "alle_leden_byteexact_gecontroleerd": true
+  }
+}
