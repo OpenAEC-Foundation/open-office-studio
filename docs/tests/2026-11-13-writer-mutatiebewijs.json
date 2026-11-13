@@ -1,0 +1,631 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "a65eafef",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Private read-only Rust-waarnemer rond volledige update-integratie gebouwd en aan werkelijk Wasm getoetst. 24 gevallen/35 updates behouden de referentiestaat en font-/blokprojectie exact; alleen 12 eenvoudige tekstinvoegingen toegelaten. Geen cacheonderhoud of productfix ingevoerd.",
+  "bronbinding": {
+    "broncommit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "eerdere_bron_en_gereedschap": "2026-11-13-writer-font-kern.json",
+    "eerdere_routeklokken": "2026-11-13-writer-font-routes.json",
+    "mutatie_patch": "bron.diff in bewijsarchief",
+    "bronpinnen": {
+      "lib.rs": {
+        "na_sha256": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+        "voor_sha256": "a9b56635127036a5c11257ef39e733b9454ee89165a1875955de6fbc8c57a5be"
+      },
+      "wasm.rs": {
+        "na_sha256": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+        "voor_sha256": "db15c0f694a9d7e547cab39e47579363b916add06e163ec6696c22ba4c71693e"
+      },
+      "mutation_proof.rs": {
+        "na_sha256": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+        "voor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "afgekeurde_eerste_module": {
+      "sha256": "109f811dd74c488f972f7a0bfbb4d582984f95e6d6eff41c0e4a280509cd867e",
+      "bytes": 24415288,
+      "interface_exact": true,
+      "doel": "uitsluitend font-klokken via bestaande profielgetter, geen productievariant"
+    },
+    "ruwe_herstelde_module": {
+      "sha256": "302dbbf7c7dc8d47636ce50db3789a2a676acbde9169b94f2881599f58671903",
+      "wasm_opt": false,
+      "interface_exact": true
+    },
+    "definitieve_private_module": {
+      "sha256": "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7",
+      "bytes": 24599782,
+      "interface_exact": true,
+      "doel": "uitsluitend font-klokken via bestaande profielgetter, geen productievariant"
+    },
+    "interface": "Alle volledige imports en exports identiek aan meegeleverde edit-Wasm; geen nieuwe JS/Wasm-API. Bestaande profielgetter is in deze private module diagnostisch veranderd en is ongeschikt voor productie. Het overgenomen bouwmetadata-doellabel vermeldt fontklokken; feitelijk zijn ook mutatiewaarneming toegevoegd."
+  },
+  "waarneming": [
+    "Bestaande observe_commit-hook leest transactiedata zonder herintrede in EditingDoc of JS. Die blijft actief tijdens integratie en eventuele identiteits-/commentaarreparaties.",
+    "Story-deepobserver verzamelt tekst-/attribuut-/embed-/mapgebeurtenissen. Alleen één body-tekstgebeurtenis met één invoeging van 1–4096 UTF16-eenheden zonder CR/LF komt in aanmerking. Retained opmaakwijziging, verwijdering, embed en niet-body/mapgebeurtenissen vallen terug.",
+    "Na integratie: precies één storecommit/epochstap, alleen stories als gewijzigde wortel, ongewijzigde wortelset, geen pending update voor of na en dezelfde alinea/startgrens in de voor-/na-index. Revisieattributen vallen terug.",
+    "Registratie heeft limieten voor aantallen gebeurtenissen/wortels/attributen en naam-/tekstlengtes. Profiel staat vooraf op accepted=false; fouten kunnen geen eerder positief resultaat nalaten.",
+    "Toelating betekent hier alleen deze beperkte waargenomen tekstclassificatie. Geen bron-/renderEnv-/media-/seedgeneratie- of volledige attribuutwaardencontrole voor het onderhouden van een TextEdit uitgevoerd."
+  ],
+  "validatie": {
+    "geslaagd": true,
+    "gevallen": 24,
+    "updates": 35,
+    "toegelaten": 12,
+    "afgewezen": 23,
+    "ruwe_kern_gevallen": 23,
+    "ruwe_kern_updates": 27,
+    "ruwe_en_geoptimaliseerde_kern_functioneel_gecontroleerd": true,
+    "geoptimaliseerd_alle_stappen_volledige_staat_vector_body_metadata_font_blokken_exact": true,
+    "nieuwe_mutatiebron_en_bestaande_font_engine_exact_aan_bouw_gebonden": true,
+    "behoud": {
+      "ELFs_exact": 16,
+      "standaarddist_byte_mode_mtime_exact": 529,
+      "sdk_vendor_npm_exact": true
+    },
+    "eerder_afgewezen": {
+      "bouw_afgebroken": "Eigen bron vooraf aangescherpt: geen oud positief profiel na fout; registratielimieten.",
+      "bouw_lege_map": "Herstart geweigerd omdat de lege eigen uitvoermap al bestond; lege map en foutlog behouden, opnieuw met lege nieuwe uitvoer.",
+      "eerste_corpus": "Er werd null doorgegeven aan een verplichte datumstring; uitsluitend proef gecorrigeerd naar vaste synthetische datum, eerste corpus en log behouden.",
+      "eerste_kern": "Arc::try_unwrap nam ten onrechte uniek eigendom van de meetbuffer aan. Eigen Wasm-panic en daaropvolgende free-borrowfout vastgelegd. Buffer wordt nu onder mutex uitgenomen na afmelden; oude module109f811d behouden, geen productstabiliteitsclaim."
+    }
+  },
+  "gevallen": [
+    {
+      "kind": "latin",
+      "stappen": [
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "unicode",
+      "stappen": [
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 85,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "leeg-tekst",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "herhaling",
+      "stappen": [
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "andere-font",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "retained_format_change"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "andere-uitlijning",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "non_text_event"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "andere-delete",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "deletion",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "andere-split",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "embedded_content",
+            "non_text_event",
+            "not_one_root",
+            "other_root",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "marges",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_one_root",
+            "other_root"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "documentmetadata",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_one_root",
+            "other_root"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "commentaar",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_one_root",
+            "other_root"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "nieuwe-story",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "non_text_event"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "headertekst",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_body_text"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 5,
+            "paraId": "901:769",
+            "story": "hf-proef"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "twee-posities",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_one_insertion"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 82,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "te-groot",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "paragraph_boundary",
+            "text_boundary"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 4166,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "zelfde-opmaak",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "retained_format_change"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "pending",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary",
+            "pending_update"
+          ],
+          "fout": null,
+          "inference": null
+        },
+        {
+          "toegelaten": false,
+          "redenen": [
+            "pending_update"
+          ],
+          "fout": null,
+          "inference": null
+        },
+        {
+          "toegelaten": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "fout-na-goed",
+      "stappen": [
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": false,
+          "redenen": [],
+          "fout": "incomplete_update",
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "alleen-delete",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "deletion",
+            "not_one_insertion",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "alleen-opmaak",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_one_insertion",
+            "paragraph_boundary",
+            "retained_format_change"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "twee-auteurs",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "not_one_insertion"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "lege-update",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary"
+          ],
+          "fout": null,
+          "inference": null
+        }
+      ]
+    },
+    {
+      "kind": "wijzigingsvoorstel",
+      "stappen": [
+        {
+          "toegelaten": false,
+          "redenen": [
+            "revision_attributes"
+          ],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 75,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "acht-opeenvolgend",
+      "stappen": [
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 73,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 78,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 80,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 88,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 91,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 94,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 100,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        },
+        {
+          "toegelaten": true,
+          "redenen": [],
+          "fout": null,
+          "inference": {
+            "clientId": 901,
+            "endOffset": 105,
+            "paraId": "60638A83",
+            "story": "body"
+          }
+        }
+      ]
+    }
+  ],
+  "controles": [
+    "Meegeleverde kern maakt vaste CRDT-updatecorpus met checksums en exacte referentiestaat. Afzonderlijke baseline-run legt fontJSON en bodyblokken vast. Geen nieuwe updates uit de kandidaat als eigen waarheid gebruikt.",
+    "Geoptimaliseerde kandidaat: alle 35 stappen exact op volledige CRDT-staat, bronvector, body-segmenten, documentmetadata, sectiemarges, fontJSON en verlaagde bodyblokken. Ook inference/foutstatus gelijk.",
+    "Afkeuringen omvatten font-/uitlijnings-/verwijderings-/splitsingswerk elders, marges, documentmetadata, commentaar, nieuwe story, headertekst, meerdere invoegplaatsen, te grote invoeging, opmaak, twee auteurs en wijzigingsvoorstellen.",
+    "Pending updates in verkeerde volgorde, herhaling, lege updates en malformed update na positieve invoeging vallen terug. Acht afzonderlijke opeenvolgende Unicode-/Latijnse invoegingen op dezelfde sessie blijven correct toegelaten met exacte projecties.",
+    "Ongeoptimaliseerde herstelmodule: 23 gevallen/27 stappen op oorspronkelijke staat-/metadata-controles groen. Definitieve module: 24/35 inclusief projecties groen.",
+    "Rustfmt op nieuwe module, Wasm-builds/ABI en echte Node-proeven; proef-JavaScript en Python-hulpscripts syntactisch gecontroleerd. Geen gewone native cargo-test die wasm-only-code zou overslaan als dekking geclaimd.",
+    "Zestien ELF-referenties, SDK-index, beide vendor-Wasms, oorspronkelijke npm-Wasm en 529 standaardbundelbestanden inclusief mode/mtime exact behouden."
+  ],
+  "grenzen": [
+    "Geen productiebron-/SDK-/vendorwijziging, nieuwe desktopbouw of frontend/TypeScript/Python-productsuite/CI. Geen Linux/macOS/Windows-, release-, IME-, pixel- of DOCX-bewaaracceptatie in deze stap.",
+    "Node/V8-componentproeven met eigen rijke bron. Geen complete WebKit-Worker-transportproef en geen snelheidsclaim of ABBA. Ruwe tijden zijn uitsluitend bewaard.",
+    "Geen algemeen bewijs voor alle CRDT-schema’s, onbekende wortels, limietoverschrijdingen, identiteitsbotsingen, commentaarreparaties, alle revisievormen of elke glyph-/fallback-/story-/previewvariant.",
+    "Een geweigerde classificatie voorkomt niet dat de normale update correct wordt toegepast; deze proef past geen cache of renderblokken aan.",
+    "Bewijsvelden bevatten alleen attribuutnamen en tekstgrenzen; volledige attributen en alle bestaande seed-/bron-/omgevings-/media-/generatiegrenzen moeten vóór echte cachekoppeling nog worden verbonden.",
+    "Nieuwe watcher maakt zo nodig een voor-index; mogelijke overhead en geheugenlevensduur niet als prestatieverbetering geaccepteerd. Geen onbegrensde-workload-/fuzz-/heapacceptatie.",
+    "De eerste eigen module panict door verkeerde aanname over Arc-eigenaarschap; afgewezen en bewaard. Die fout zit niet in de geleverde module en bewijst geen oorzaak of oplossing van bestaande geheugenfouten.",
+    "Tien migratiegebieden en Writer-stabiliteits-/snelheidsacceptatie blijven open."
+  ],
+  "vervolg": "Gebruik de getoetste classificatie uitsluitend als eerste guard voor een private cachekandidaat. Hergebruik/refactor de bestaande prepare/record-fasen van edit_resident_text; verbind exact voor-/na-paragraafbereik en volledige invoegattributen aan de bestaande TextEdit, bron/env/media/seed-/generatiegrenzen en fallbacks. Geen guard versoepelen, geen blinde fontcache. Eerst negatieve corpus behouden en uitbreiden voor structurele/revisie/repair/undo-situaties; daarna vaste korte/rijke native ABBA, bewaren/UndoRedo en beelden. Herstel oude private font-/route-/mutatieklokken voor een echte productievariant.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-mutatiebewijs.tar.gz",
+    "sha256": "a220e60b1f0297ac8fbfd0d5899da41774ad3464dab395db8ce8f9c56c0d4235",
+    "bytes": 6885949,
+    "reguliere_leden": 148,
+    "alle_leden_byteexact_gecontroleerd": true
+  }
+}
