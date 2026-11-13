@@ -149,7 +149,9 @@ export function leesHtmlTabel(bron: string, leesGetal?: (rij: number, kolom: num
     }
   }
   if (begin < 0) return null;
-  const tabel = bron.slice(begin, einde);
+  // Commentaar telt ook binnen de gekozen tabel niet mee als rij of cel.
+  // Gebruik dezelfde tokenizer zodat tekst in echte attributen intact blijft.
+  const tabel = bron.slice(begin, einde).replace(tags, (tag, _sluit, naam) => naam ? tag : "");
   const rijen: string[][] = [];
   const bezet: boolean[][] = [];
   let r = 0;

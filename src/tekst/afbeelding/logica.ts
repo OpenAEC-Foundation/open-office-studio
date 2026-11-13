@@ -70,10 +70,14 @@ export function sleepGreep(b: Bijsnijding, greep: Greep, dx: number, dy: number)
     const sy = Math.max(-n.top, Math.min(n.bottom, dy));
     return begrensBijsnijding({ left: n.left + sx, right: n.right - sx, top: n.top + sy, bottom: n.bottom - sy });
   }
-  if (greep.includes("n")) n.top += dy;
-  if (greep.includes("z")) n.bottom -= dy;
-  if (greep.includes("w")) n.left += dx;
-  if (greep.includes("o")) n.right -= dx;
+  // Een greep mag de tegenoverliggende rand niet meetrekken wanneer hij
+  // het minimale zichtbare deel bereikt. Begrens alleen de gewijzigde kant.
+  const grens = (waarde: number, tegenover: number) =>
+    Math.max(0, Math.min(1 - MIN_ZICHTBAAR - tegenover, waarde));
+  if (greep.includes("n")) n.top = grens(n.top + dy, n.bottom);
+  if (greep.includes("z")) n.bottom = grens(n.bottom - dy, n.top);
+  if (greep.includes("w")) n.left = grens(n.left + dx, n.right);
+  if (greep.includes("o")) n.right = grens(n.right - dx, n.left);
   return begrensBijsnijding(n);
 }
 
