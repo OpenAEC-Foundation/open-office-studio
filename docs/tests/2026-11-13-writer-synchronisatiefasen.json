@@ -1,0 +1,3920 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "15ba818e",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Fontwinst blijft in echte Worker aantoonbaar,maar gaat samen met veel meer dure sync-taken. Volgende optimalisatiegrens is hoofddraad-aanvraagplanning en sync-inhoud,geen extra bewijs dat pure mutatieclassificatie/prepare de componentwinst opslokt. Geen productfix geaccepteerd.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-13-writer-font-kern.tar.gz",
+      "sha256": "6838fe4031e540811784ecdbc8e605d16e246dea18c4c4455cac87efd23f0df2"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-mutatiebewijs.tar.gz",
+      "sha256": "a220e60b1f0297ac8fbfd0d5899da41774ad3464dab395db8ce8f9c56c0d4235"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-replicacache.tar.gz",
+      "sha256": "2e1faca1577ef3c215a95b2bd3633107dee55c937e3db785e5ae1718dd0ca216"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-werkerfasen.tar.gz",
+      "sha256": "3ef8cb9428047af18131b945ecc22c1eb725291c7e4a27daab632c13fa2a2f97"
+    }
+  ],
+  "component": {
+    "opzet": {
+      "modules": [
+        {
+          "naam": "basis",
+          "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        },
+        {
+          "naam": "waarnemer",
+          "pad": ".local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+          "sha256": "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+        },
+        {
+          "naam": "patch",
+          "pad": ".local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+          "sha256": "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+        },
+        {
+          "naam": "fonthint",
+          "pad": ".local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        }
+      ],
+      "posities": {
+        "eerste": 0,
+        "middelste": null,
+        "laatste": -1
+      },
+      "volgorde": [
+        "basis",
+        "waarnemer",
+        "patch",
+        "fonthint",
+        "fonthint",
+        "patch",
+        "waarnemer",
+        "basis"
+      ],
+      "grenzen": "Componentproef in Node met lege renderEnv; geen native snelheid/letterbeeldacceptatie. Alle API-klokken verstreken tijd,geen exclusieve CPU. Retained/frame vóór bron-/blokverificatie; volledige JSON-indeling daarna afzonderlijk getimed. Geen gelijktijdige bouw/test."
+    },
+    "resultaten": {
+      "geslaagd": true,
+      "afgeronde_ronden": 24,
+      "geplande_ronden": 24,
+      "seconden": 125.49502288099757,
+      "ronden": [
+        {
+          "naam": "eerste-basis-een",
+          "module": "basis",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/vendor/tekstengine/docx_edit_bg.wasm",
+            "eerste-basis-een",
+            "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                5.7159059999999045,
+                4.89947600000005,
+                4.31809899999962,
+                4.69342400000005,
+                4.552512000000206,
+                4.860576000000037,
+                4.773084000000381,
+                4.632322999999815
+              ],
+              "mediaan_zonder_eerste": 4.69342400000005,
+              "som": 38.44540000000006
+            },
+            "replica_font_ms": {
+              "alle": [
+                101.53853800000024,
+                77.76076700000021,
+                76.80894500000022,
+                72.94351199999983,
+                78.14667999999983,
+                73.01885199999924,
+                77.53883399999995,
+                74.68336100000033
+              ],
+              "mediaan_zonder_eerste": 76.80894500000022,
+              "som": 632.4394889999999
+            },
+            "replica_retained_ms": {
+              "alle": [
+                19.860465999999633,
+                10.488898999999947,
+                12.829157000000123,
+                11.195817000000261,
+                11.360329999999976,
+                10.95327399999951,
+                10.949694999999338,
+                13.209341000000677
+              ],
+              "mediaan_zonder_eerste": 11.195817000000261,
+              "som": 100.84697899999946
+            },
+            "replica_frame_ms": {
+              "alle": [
+                36.751628999999866,
+                109.64359999999988,
+                110.46381900000006,
+                104.86968500000012,
+                115.17190200000005,
+                107.6275770000002,
+                106.05514799999946,
+                111.27706699999999
+              ],
+              "mediaan_zonder_eerste": 109.64359999999988,
+              "som": 801.8604269999996
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                48.35140199999978,
+                42.43331399999988,
+                37.587759000000005,
+                31.654291000000285,
+                36.01965100000052,
+                34.305779999999686,
+                35.30024199999934,
+                34.97622800000045
+              ],
+              "mediaan_zonder_eerste": 35.30024199999934,
+              "som": 300.62866699999995
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                163.86653899999965,
+                202.7927420000001,
+                204.42002000000002,
+                193.70243800000026,
+                209.23142400000006,
+                196.460278999999,
+                199.31676099999913,
+                203.8020920000008
+              ],
+              "mediaan_zonder_eerste": 202.7927420000001,
+              "som": 1573.592294999999
+            }
+          }
+        },
+        {
+          "naam": "eerste-waarnemer-een",
+          "module": "waarnemer",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+            "eerste-waarnemer-een",
+            "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.097505000000183,
+                4.7599740000000565,
+                5.110258000000158,
+                4.572662000000037,
+                5.038387000000057,
+                4.888856000000487,
+                4.7596739999999045,
+                5.3074500000002445
+              ],
+              "mediaan_zonder_eerste": 4.888856000000487,
+              "som": 44.53476600000113
+            },
+            "replica_font_ms": {
+              "alle": [
+                131.4141749999999,
+                77.56191199999967,
+                81.08932200000027,
+                74.30880500000012,
+                74.02258200000006,
+                73.66988799999945,
+                74.91431100000045,
+                78.89023699999962
+              ],
+              "mediaan_zonder_eerste": 74.91431100000045,
+              "som": 665.8712319999995
+            },
+            "replica_retained_ms": {
+              "alle": [
+                23.905801999999767,
+                10.539068999999927,
+                11.580750999999964,
+                11.164567000000261,
+                10.953833999999915,
+                11.017174999999952,
+                11.349578999999721,
+                11.390730000000076
+              ],
+              "mediaan_zonder_eerste": 11.164567000000261,
+              "som": 101.90150699999958
+            },
+            "replica_frame_ms": {
+              "alle": [
+                39.10133500000029,
+                110.63752899999963,
+                106.67443300000014,
+                110.6365780000001,
+                105.85859400000027,
+                114.78736500000014,
+                104.29725600000074,
+                106.72011300000031
+              ],
+              "mediaan_zonder_eerste": 106.72011300000031,
+              "som": 798.7132030000016
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                49.505853000000116,
+                43.82210900000018,
+                40.091545000000224,
+                33.55998099999988,
+                35.44673299999977,
+                32.36681700000008,
+                31.077652999999373,
+                33.263818000000356
+              ],
+              "mediaan_zonder_eerste": 33.55998099999988,
+              "som": 299.134509
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                204.51881700000013,
+                203.49848399999928,
+                204.45476400000052,
+                200.68261200000052,
+                195.8733970000003,
+                204.36328400000002,
+                195.32082000000082,
+                202.30853000000025
+              ],
+              "mediaan_zonder_eerste": 202.30853000000025,
+              "som": 1611.0207080000018
+            }
+          }
+        },
+        {
+          "naam": "eerste-patch-een",
+          "module": "patch",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+            "eerste-patch-een",
+            "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.965245000000323,
+                4.623481999999967,
+                4.133886999999959,
+                4.100047000000359,
+                4.435899999999947,
+                4.2316970000001675,
+                4.173527000000831,
+                3.9610649999995076
+              ],
+              "mediaan_zonder_eerste": 4.173527000000831,
+              "som": 40.62485000000106
+            },
+            "replica_font_ms": {
+              "alle": [
+                12.628733000000011,
+                11.814564000000246,
+                11.94611599999962,
+                11.240498000000116,
+                11.778693000000203,
+                11.430249999999887,
+                10.914633000000322,
+                10.924673999999868
+              ],
+              "mediaan_zonder_eerste": 11.430249999999887,
+              "som": 92.67816100000027
+            },
+            "replica_retained_ms": {
+              "alle": [
+                23.41297600000007,
+                10.5328599999998,
+                11.515651000000162,
+                10.486898999999994,
+                10.013744000000315,
+                9.700840000000426,
+                9.489698000000317,
+                9.23075499999959
+              ],
+              "mediaan_zonder_eerste": 10.013744000000315,
+              "som": 94.38342300000068
+            },
+            "replica_frame_ms": {
+              "alle": [
+                34.014196000000084,
+                114.47315899999967,
+                109.33149000000003,
+                104.33169399999997,
+                108.97515599999997,
+                103.788587,
+                108.14834699999938,
+                103.63220599999931
+              ],
+              "mediaan_zonder_eerste": 108.14834699999938,
+              "som": 786.6948349999984
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                55.58910100000003,
+                51.07692999999972,
+                42.080197000000226,
+                34.86898599999995,
+                33.47438999999986,
+                30.28560400000015,
+                29.278612000000066,
+                30.88545999999951
+              ],
+              "mediaan_zonder_eerste": 33.47438999999986,
+              "som": 307.5392799999995
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                81.02115000000049,
+                141.44406499999968,
+                136.92714399999977,
+                130.15913800000044,
+                135.20349300000044,
+                129.1513740000005,
+                132.72620500000085,
+                127.74869999999828
+              ],
+              "mediaan_zonder_eerste": 132.72620500000085,
+              "som": 1014.3812690000004
+            }
+          }
+        },
+        {
+          "naam": "eerste-fonthint-een",
+          "module": "fonthint",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+            "eerste-fonthint-een",
+            "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.242975999999999,
+                4.754523000000063,
+                4.166246999999657,
+                4.13413700000001,
+                4.231008000000202,
+                4.36209000000008,
+                4.813024000000041,
+                4.494350999999369
+              ],
+              "mediaan_zonder_eerste": 4.36209000000008,
+              "som": 41.19835599999942
+            },
+            "replica_font_ms": {
+              "alle": [
+                13.988168000000314,
+                12.042825999999877,
+                11.381488999999874,
+                11.094086000000061,
+                11.901324999999815,
+                11.595252000000073,
+                11.694942000000083,
+                11.659472000000278
+              ],
+              "mediaan_zonder_eerste": 11.659472000000278,
+              "som": 95.35756000000038
+            },
+            "replica_retained_ms": {
+              "alle": [
+                24.117393999999877,
+                11.51050099999975,
+                9.802871000000323,
+                9.855211999999938,
+                9.964602999999897,
+                9.615038999999797,
+                9.86829200000011,
+                9.4767269999993
+              ],
+              "mediaan_zonder_eerste": 9.855211999999938,
+              "som": 94.21063899999899
+            },
+            "replica_frame_ms": {
+              "alle": [
+                32.44696700000031,
+                134.62320499999987,
+                102.9631260000001,
+                103.063447,
+                107.3010849999996,
+                103.02231600000005,
+                109.19549600000028,
+                106.33380399999987
+              ],
+              "mediaan_zonder_eerste": 106.33380399999987,
+              "som": 798.9494460000001
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                62.50593800000024,
+                41.39037899999994,
+                34.508200000000215,
+                35.37114100000008,
+                33.64512100000002,
+                30.8953590000001,
+                38.64368800000011,
+                35.20013899999958
+              ],
+              "mediaan_zonder_eerste": 35.20013899999958,
+              "som": 312.1599650000003
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                80.7955050000005,
+                162.93105499999956,
+                128.31373299999996,
+                128.146882,
+                133.39802099999952,
+                128.594697,
+                135.5717540000005,
+                131.96435399999882
+              ],
+              "mediaan_zonder_eerste": 131.96435399999882,
+              "som": 1029.7160009999989
+            }
+          }
+        },
+        {
+          "naam": "eerste-fonthint-twee",
+          "module": "fonthint",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+            "eerste-fonthint-twee",
+            "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.609629999999925,
+                5.611453999999867,
+                3.9353249999999207,
+                4.589002000000164,
+                4.059685999999601,
+                4.071206000000075,
+                4.343619000000217,
+                4.185217000000193
+              ],
+              "mediaan_zonder_eerste": 4.185217000000193,
+              "som": 41.40513899999996
+            },
+            "replica_font_ms": {
+              "alle": [
+                11.618621000000076,
+                13.910037999999986,
+                10.872343,
+                12.463170999999875,
+                10.855231999999887,
+                11.35396800000035,
+                10.831551999999647,
+                10.305365999999594
+              ],
+              "mediaan_zonder_eerste": 10.872343,
+              "som": 92.21029099999942
+            },
+            "replica_retained_ms": {
+              "alle": [
+                24.208834000000024,
+                12.446080000000165,
+                10.850973000000067,
+                11.57763100000011,
+                10.028243999999631,
+                9.741719999999987,
+                9.610778999999638,
+                9.266804999999295
+              ],
+              "mediaan_zonder_eerste": 10.028243999999631,
+              "som": 97.73106599999892
+            },
+            "replica_frame_ms": {
+              "alle": [
+                35.09148699999969,
+                123.76904000000013,
+                105.84423599999991,
+                109.84166200000027,
+                105.30342999999993,
+                109.84561200000007,
+                100.90332899999976,
+                113.35273099999995
+              ],
+              "mediaan_zonder_eerste": 109.84166200000027,
+              "som": 803.9515269999997
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                64.52463899999975,
+                44.23825999999963,
+                41.25685599999997,
+                33.89591300000029,
+                34.28756799999974,
+                30.483753999999863,
+                28.901136999999835,
+                32.29956500000026
+              ],
+              "mediaan_zonder_eerste": 33.89591300000029,
+              "som": 309.88769199999933
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                81.52857199999971,
+                155.73661200000015,
+                131.5028769999999,
+                138.47146600000042,
+                130.24659199999905,
+                135.01250600000049,
+                125.68927899999926,
+                137.11011899999903
+              ],
+              "mediaan_zonder_eerste": 135.01250600000049,
+              "som": 1035.298022999998
+            }
+          }
+        },
+        {
+          "naam": "eerste-patch-twee",
+          "module": "patch",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+            "eerste-patch-twee",
+            "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.417687000000114,
+                4.551942000000054,
+                4.273478000000068,
+                4.190537000000404,
+                4.077695999999833,
+                4.765524000000369,
+                4.718142999999145,
+                4.816703999999845
+              ],
+              "mediaan_zonder_eerste": 4.551942000000054,
+              "som": 41.81171099999983
+            },
+            "replica_font_ms": {
+              "alle": [
+                12.954036999999971,
+                12.71428399999968,
+                11.531910000000153,
+                11.472019000000273,
+                11.592301000000134,
+                12.060415999999805,
+                11.214316999999937,
+                12.279139000000214
+              ],
+              "mediaan_zonder_eerste": 11.592301000000134,
+              "som": 95.81842300000017
+            },
+            "replica_retained_ms": {
+              "alle": [
+                24.57071700000006,
+                10.761281000000054,
+                10.232344999999896,
+                10.00553200000013,
+                9.685678999999709,
+                9.955413000000135,
+                9.564987000000656,
+                10.638049999999566
+              ],
+              "mediaan_zonder_eerste": 10.00553200000013,
+              "som": 95.4140040000002
+            },
+            "replica_frame_ms": {
+              "alle": [
+                33.983584000000064,
+                115.06049800000028,
+                104.93591399999968,
+                104.7979519999999,
+                102.75998900000013,
+                106.19653699999981,
+                102.83920000000035,
+                110.89206999999988
+              ],
+              "mediaan_zonder_eerste": 104.93591399999968,
+              "som": 781.4657440000001
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                56.82917099999986,
+                40.1832330000002,
+                38.86587799999961,
+                34.71843099999978,
+                38.199751000000106,
+                29.690365000000384,
+                29.482161999999335,
+                34.09084499999972
+              ],
+              "mediaan_zonder_eerste": 34.71843099999978,
+              "som": 302.059835999999
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                81.92602500000021,
+                143.08800500000007,
+                130.9736469999998,
+                130.4660400000007,
+                128.1156649999998,
+                132.97789000000012,
+                128.33664700000008,
+                138.6259629999995
+              ],
+              "mediaan_zonder_eerste": 130.9736469999998,
+              "som": 1014.5098820000003
+            }
+          }
+        },
+        {
+          "naam": "eerste-waarnemer-twee",
+          "module": "waarnemer",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+            "eerste-waarnemer-twee",
+            "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.423187999999755,
+                4.623512000000119,
+                4.53568099999984,
+                4.597941999999875,
+                4.579901999999947,
+                4.768363000000136,
+                5.07945699999982,
+                4.894274999999652
+              ],
+              "mediaan_zonder_eerste": 4.623512000000119,
+              "som": 43.502319999999145
+            },
+            "replica_font_ms": {
+              "alle": [
+                121.13114399999995,
+                74.61753099999987,
+                72.84222999999974,
+                74.13571500000035,
+                74.15376399999968,
+                79.65401699999984,
+                72.93984100000034,
+                79.04483999999957
+              ],
+              "mediaan_zonder_eerste": 74.15376399999968,
+              "som": 648.5190819999993
+            },
+            "replica_retained_ms": {
+              "alle": [
+                22.73358700000017,
+                11.604380999999648,
+                11.964844999999968,
+                10.887812999999824,
+                11.388188999999784,
+                11.282137000000148,
+                10.785840999999891,
+                11.707981000000473
+              ],
+              "mediaan_zonder_eerste": 11.388188999999784,
+              "som": 102.3547739999999
+            },
+            "replica_frame_ms": {
+              "alle": [
+                33.97142199999962,
+                123.77244400000018,
+                107.30684800000017,
+                116.17017699999997,
+                114.6834200000003,
+                113.83091100000001,
+                103.95791999999983,
+                109.40950100000009
+              ],
+              "mediaan_zonder_eerste": 113.83091100000001,
+              "som": 823.1026430000002
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                49.950632999999925,
+                43.724151999999776,
+                41.42463600000019,
+                33.217973000000256,
+                35.193435999999565,
+                32.011679999999615,
+                35.715611999999965,
+                33.4277460000003
+              ],
+              "mediaan_zonder_eerste": 35.193435999999565,
+              "som": 304.6658679999996
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                188.2593409999995,
+                214.61786799999982,
+                196.64960399999973,
+                205.791647,
+                204.8052749999997,
+                209.53542800000014,
+                192.76305899999988,
+                205.05659699999978
+              ],
+              "mediaan_zonder_eerste": 205.05659699999978,
+              "som": 1617.4788189999986
+            }
+          }
+        },
+        {
+          "naam": "eerste-basis-twee",
+          "module": "basis",
+          "positie": "eerste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/vendor/tekstengine/docx_edit_bg.wasm",
+            "eerste-basis-twee",
+            "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 0,
+            "paraId": "body:p0",
+            "tekens": 31
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                6.44350200000008,
+                5.274449999999888,
+                4.296868000000359,
+                4.39985999999999,
+                4.5218009999998685,
+                5.259498999999778,
+                4.89073499999995,
+                4.899934999999459
+              ],
+              "mediaan_zonder_eerste": 4.89073499999995,
+              "som": 39.98664999999937
+            },
+            "replica_font_ms": {
+              "alle": [
+                108.54485000000022,
+                74.74207999999999,
+                73.1115520000003,
+                76.76069199999984,
+                72.91613899999993,
+                77.90275500000007,
+                73.03053999999975,
+                82.96211200000016
+              ],
+              "mediaan_zonder_eerste": 74.74207999999999,
+              "som": 639.9707200000003
+            },
+            "replica_retained_ms": {
+              "alle": [
+                20.35414899999978,
+                10.886733000000277,
+                10.993933999999626,
+                11.545320000000174,
+                11.50416899999982,
+                11.610760000000482,
+                11.652810999999929,
+                11.132395000000542
+              ],
+              "mediaan_zonder_eerste": 11.50416899999982,
+              "som": 99.68027100000063
+            },
+            "replica_frame_ms": {
+              "alle": [
+                35.01726299999973,
+                121.660347,
+                105.39878399999998,
+                112.40155199999981,
+                114.36844400000018,
+                109.7877640000006,
+                104.62306399999943,
+                108.21029499999986
+              ],
+              "mediaan_zonder_eerste": 109.7877640000006,
+              "som": 811.4675129999996
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                49.677787999999964,
+                39.50842300000022,
+                38.060407999999825,
+                31.978969000000234,
+                38.49850199999946,
+                32.348093999999946,
+                33.82440000000042,
+                33.2138930000001
+              ],
+              "mediaan_zonder_eerste": 33.82440000000042,
+              "som": 297.1104770000002
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                170.3597639999998,
+                212.56361000000015,
+                193.80113800000026,
+                205.1074239999998,
+                203.3105529999998,
+                204.56077800000094,
+                194.19714999999906,
+                207.20473700000002
+              ],
+              "mediaan_zonder_eerste": 204.56077800000094,
+              "som": 1591.1051539999999
+            }
+          }
+        },
+        {
+          "naam": "middelste-basis-een",
+          "module": "basis",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/vendor/tekstengine/docx_edit_bg.wasm",
+            "middelste-basis-een",
+            "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                6.157619000000068,
+                4.9926369999998315,
+                4.434089999999742,
+                4.680841999999757,
+                4.543501000000106,
+                5.080345999999736,
+                4.700803000000633,
+                5.217427999999927
+              ],
+              "mediaan_zonder_eerste": 4.700803000000633,
+              "som": 39.8072659999998
+            },
+            "replica_font_ms": {
+              "alle": [
+                95.08623699999998,
+                80.57588400000031,
+                73.68071599999985,
+                72.85689600000023,
+                74.01393899999994,
+                72.60804300000018,
+                77.8918819999999,
+                74.39569399999982
+              ],
+              "mediaan_zonder_eerste": 74.01393899999994,
+              "som": 621.1092910000002
+            },
+            "replica_retained_ms": {
+              "alle": [
+                19.39236800000026,
+                10.737050000000181,
+                10.248614999999972,
+                10.693029000000024,
+                10.897593000000143,
+                10.67887999999948,
+                10.994472999999743,
+                11.301456000000144
+              ],
+              "mediaan_zonder_eerste": 10.737050000000181,
+              "som": 94.94346399999995
+            },
+            "replica_frame_ms": {
+              "alle": [
+                35.44560700000011,
+                114.03512899999987,
+                107.6599470000001,
+                109.25701400000025,
+                121.57874200000015,
+                106.8494469999996,
+                115.79689700000017,
+                109.25335399999949
+              ],
+              "mediaan_zonder_eerste": 109.25701400000025,
+              "som": 819.8761369999997
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                51.456326999999874,
+                38.003036000000066,
+                41.051260000000184,
+                33.966791000000285,
+                35.910823000000164,
+                32.32237200000054,
+                32.130529000000024,
+                37.484919999999875
+              ],
+              "mediaan_zonder_eerste": 35.910823000000164,
+              "som": 302.326058000001
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                156.08183100000042,
+                210.3407000000002,
+                196.02336799999966,
+                197.48778100000027,
+                211.03377500000033,
+                195.216715999999,
+                209.38405500000044,
+                200.16793199999938
+              ],
+              "mediaan_zonder_eerste": 200.16793199999938,
+              "som": 1575.7361579999997
+            }
+          }
+        },
+        {
+          "naam": "middelste-waarnemer-een",
+          "module": "waarnemer",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+            "middelste-waarnemer-een",
+            "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.901412000000164,
+                4.994714999999815,
+                4.650692000000163,
+                4.679163000000244,
+                4.8747339999999895,
+                5.134288000000197,
+                5.48562099999981,
+                5.224839000000429
+              ],
+              "mediaan_zonder_eerste": 4.994714999999815,
+              "som": 45.94546400000081
+            },
+            "replica_font_ms": {
+              "alle": [
+                91.99213999999984,
+                74.5085140000001,
+                73.6244840000004,
+                72.28504900000007,
+                75.76009699999986,
+                73.33687000000009,
+                78.087853,
+                70.59575899999982
+              ],
+              "mediaan_zonder_eerste": 73.6244840000004,
+              "som": 610.1907660000002
+            },
+            "replica_retained_ms": {
+              "alle": [
+                19.112743000000137,
+                9.944120999999996,
+                10.389055999999982,
+                10.664258999999674,
+                10.960332999999991,
+                10.852061999999933,
+                11.02620300000035,
+                10.507967000000463
+              ],
+              "mediaan_zonder_eerste": 10.664258999999674,
+              "som": 93.45674400000053
+            },
+            "replica_frame_ms": {
+              "alle": [
+                34.180792999999994,
+                108.67661599999974,
+                112.12074400000029,
+                106.7244740000001,
+                110.0750009999997,
+                106.90499499999987,
+                107.26110900000003,
+                105.914264
+              ],
+              "mediaan_zonder_eerste": 107.26110900000003,
+              "som": 791.8579959999997
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                54.144754999999805,
+                40.51052299999992,
+                38.42345000000023,
+                33.09587999999985,
+                35.84895099999994,
+                35.95245199999954,
+                32.49314299999969,
+                34.90965999999935
+              ],
+              "mediaan_zonder_eerste": 35.84895099999994,
+              "som": 305.37881399999833
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                156.18708800000013,
+                198.12396599999965,
+                200.78497600000082,
+                194.3529450000001,
+                201.67016499999954,
+                196.2282150000001,
+                201.8607860000002,
+                192.2428290000007
+              ],
+              "mediaan_zonder_eerste": 198.12396599999965,
+              "som": 1541.4509700000012
+            }
+          }
+        },
+        {
+          "naam": "middelste-patch-een",
+          "module": "patch",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+            "middelste-patch-een",
+            "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.068283000000065,
+                4.567692000000079,
+                4.20418699999982,
+                4.413028999999824,
+                4.245516999999836,
+                5.184867999999824,
+                4.741501999999855,
+                5.094576000000416
+              ],
+              "mediaan_zonder_eerste": 4.567692000000079,
+              "som": 43.51965399999972
+            },
+            "replica_font_ms": {
+              "alle": [
+                12.305187999999816,
+                12.456098999999995,
+                11.2639250000002,
+                11.524288999999953,
+                11.625060000000303,
+                12.228925999999774,
+                11.753351000000293,
+                12.052153999999973
+              ],
+              "mediaan_zonder_eerste": 11.753351000000293,
+              "som": 95.20899200000031
+            },
+            "replica_retained_ms": {
+              "alle": [
+                22.416109999999662,
+                9.73529899999994,
+                9.386754999999994,
+                9.607516999999916,
+                9.291063000000122,
+                9.667257999999947,
+                9.452256000000489,
+                9.213493000000199
+              ],
+              "mediaan_zonder_eerste": 9.452256000000489,
+              "som": 88.76975100000027
+            },
+            "replica_frame_ms": {
+              "alle": [
+                42.17841099999987,
+                109.25157000000036,
+                107.27276699999993,
+                107.11019600000009,
+                104.64681900000005,
+                105.59347800000023,
+                104.80959900000016,
+                112.70671800000036
+              ],
+              "mediaan_zonder_eerste": 107.11019600000009,
+              "som": 793.569558000001
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                60.59519599999976,
+                37.37393699999984,
+                39.046166000000085,
+                34.72370699999965,
+                36.07774300000028,
+                30.44441000000006,
+                33.8444070000005,
+                31.70313299999998
+              ],
+              "mediaan_zonder_eerste": 34.72370699999965,
+              "som": 303.80869900000016
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                87.96799199999941,
+                136.01066000000037,
+                132.12763399999994,
+                132.65503099999978,
+                129.8084590000003,
+                132.67452999999978,
+                130.7567080000008,
+                139.06694100000095
+              ],
+              "mediaan_zonder_eerste": 132.65503099999978,
+              "som": 1021.0679550000013
+            }
+          }
+        },
+        {
+          "naam": "middelste-fonthint-een",
+          "module": "fonthint",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+            "middelste-fonthint-een",
+            "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.269166000000041,
+                4.90896500000008,
+                4.7493829999998525,
+                4.134816000000228,
+                4.586300999999821,
+                4.975895999999921,
+                4.703153000000384,
+                4.717262999999548
+              ],
+              "mediaan_zonder_eerste": 4.717262999999548,
+              "som": 44.044942999999876
+            },
+            "replica_font_ms": {
+              "alle": [
+                11.919581999999991,
+                11.925823000000037,
+                11.755510999999842,
+                11.37115700000004,
+                11.975323000000117,
+                11.170333999999912,
+                11.320235999999568,
+                11.223675000000185
+              ],
+              "mediaan_zonder_eerste": 11.37115700000004,
+              "som": 92.66164099999969
+            },
+            "replica_retained_ms": {
+              "alle": [
+                23.438930999999684,
+                9.49910600000021,
+                10.867051000000174,
+                9.787799000000177,
+                9.710388000000421,
+                9.387343999999757,
+                11.132493999999497,
+                9.908370000000104
+              ],
+              "mediaan_zonder_eerste": 9.787799000000177,
+              "som": 93.73148300000003
+            },
+            "replica_frame_ms": {
+              "alle": [
+                34.56113499999992,
+                112.31542199999967,
+                104.88586900000018,
+                105.88242900000023,
+                108.16411500000004,
+                104.22799200000009,
+                109.67630199999985,
+                108.44050799999968
+              ],
+              "mediaan_zonder_eerste": 108.16411500000004,
+              "som": 788.1537719999997
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                59.33684099999982,
+                38.679951000000074,
+                38.910223000000315,
+                34.038428999999724,
+                33.60552499999994,
+                35.09255099999973,
+                33.47644299999956,
+                32.4280719999997
+              ],
+              "mediaan_zonder_eerste": 34.038428999999724,
+              "som": 305.5680349999989
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                81.18881399999964,
+                138.649316,
+                132.25781400000005,
+                131.17620100000067,
+                134.4361270000004,
+                129.76156599999968,
+                136.8321849999993,
+                134.28981599999952
+              ],
+              "mediaan_zonder_eerste": 134.28981599999952,
+              "som": 1018.5918389999993
+            }
+          }
+        },
+        {
+          "naam": "middelste-fonthint-twee",
+          "module": "fonthint",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+            "middelste-fonthint-twee",
+            "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.318456000000424,
+                4.50640999999996,
+                4.723653000000013,
+                4.476159999999709,
+                4.410139000000072,
+                4.307628000000022,
+                4.4982600000003,
+                4.279046999999991
+              ],
+              "mediaan_zonder_eerste": 4.476159999999709,
+              "som": 42.51975300000049
+            },
+            "replica_font_ms": {
+              "alle": [
+                11.641479999999774,
+                11.804760999999871,
+                11.384096000000227,
+                11.39121600000044,
+                11.842620999999781,
+                11.323304999999891,
+                11.812281999999868,
+                10.449725999999828
+              ],
+              "mediaan_zonder_eerste": 11.39121600000044,
+              "som": 91.64948699999968
+            },
+            "replica_retained_ms": {
+              "alle": [
+                22.999135999999908,
+                9.423874999999953,
+                9.463154999999915,
+                9.853830000000016,
+                9.460015999999996,
+                9.390564000000268,
+                9.57750599999963,
+                8.76300700000047
+              ],
+              "mediaan_zonder_eerste": 9.460015999999996,
+              "som": 88.93108900000016
+            },
+            "replica_frame_ms": {
+              "alle": [
+                35.357772999999725,
+                114.73936599999979,
+                103.62474300000031,
+                106.80880799999977,
+                104.45945099999972,
+                103.75435400000015,
+                105.37564199999997,
+                106.15179999999964
+              ],
+              "mediaan_zonder_eerste": 105.37564199999997,
+              "som": 780.2719369999991
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                56.69029999999975,
+                39.5629899999999,
+                37.272073999999975,
+                36.00076999999965,
+                33.5690139999997,
+                32.954587000000174,
+                29.431797000000188,
+                31.383928000000196
+              ],
+              "mediaan_zonder_eerste": 33.5690139999997,
+              "som": 296.86545999999953
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                81.31684499999983,
+                140.47441199999957,
+                129.19564700000046,
+                132.53001399999994,
+                130.17222699999957,
+                128.77585100000033,
+                131.26368999999977,
+                129.64357999999993
+              ],
+              "mediaan_zonder_eerste": 130.17222699999957,
+              "som": 1003.3722659999994
+            }
+          }
+        },
+        {
+          "naam": "middelste-patch-twee",
+          "module": "patch",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+            "middelste-patch-twee",
+            "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.443316999999752,
+                4.677972000000409,
+                4.382948000000397,
+                5.373439999999846,
+                4.535750000000007,
+                4.214836999999989,
+                4.338488000000325,
+                4.817024000000856
+              ],
+              "mediaan_zonder_eerste": 4.535750000000007,
+              "som": 43.78377600000158
+            },
+            "replica_font_ms": {
+              "alle": [
+                12.548459999999977,
+                12.551288999999997,
+                11.3991860000001,
+                12.267406000000392,
+                11.732120000000123,
+                11.117823999999928,
+                11.428846999999223,
+                11.045063000000482
+              ],
+              "mediaan_zonder_eerste": 11.428846999999223,
+              "som": 94.09019500000022
+            },
+            "replica_retained_ms": {
+              "alle": [
+                23.656723000000056,
+                9.522106000000349,
+                9.281062999999904,
+                10.214902999999595,
+                9.472625000000335,
+                9.546335999999883,
+                9.33584400000018,
+                8.903749000000062
+              ],
+              "mediaan_zonder_eerste": 9.472625000000335,
+              "som": 89.93334900000036
+            },
+            "replica_frame_ms": {
+              "alle": [
+                37.227662999999666,
+                114.25879899999973,
+                106.1030679999999,
+                112.18141500000002,
+                111.79711099999986,
+                114.46106999999984,
+                104.77231200000006,
+                109.69865699999991
+              ],
+              "mediaan_zonder_eerste": 111.79711099999986,
+              "som": 810.500094999999
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                63.025890000000345,
+                39.20658500000036,
+                39.40920700000015,
+                35.45420400000012,
+                34.02769799999987,
+                31.005965000000288,
+                29.962813000000097,
+                33.03311599999961
+              ],
+              "mediaan_zonder_eerste": 34.02769799999987,
+              "som": 305.12547800000084
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                84.87616299999945,
+                141.01016600000048,
+                131.1662650000003,
+                140.03716399999985,
+                137.53760600000032,
+                139.34006699999964,
+                129.87549099999978,
+                134.4644930000013
+              ],
+              "mediaan_zonder_eerste": 137.53760600000032,
+              "som": 1038.3074150000011
+            }
+          }
+        },
+        {
+          "naam": "middelste-waarnemer-twee",
+          "module": "waarnemer",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+            "middelste-waarnemer-twee",
+            "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                16.996208999999908,
+                5.034235999999964,
+                5.121617000000242,
+                4.920984000000317,
+                4.936914999999772,
+                4.816192999999657,
+                4.757661999999982,
+                5.099487000000408
+              ],
+              "mediaan_zonder_eerste": 4.936914999999772,
+              "som": 51.68330300000025
+            },
+            "replica_font_ms": {
+              "alle": [
+                134.64510199999995,
+                73.79033699999991,
+                74.16672199999994,
+                73.66926599999988,
+                73.57414500000004,
+                80.13140699999985,
+                73.6808860000001,
+                78.19909599999937
+              ],
+              "mediaan_zonder_eerste": 73.79033699999991,
+              "som": 661.856960999999
+            },
+            "replica_retained_ms": {
+              "alle": [
+                22.044554000000062,
+                9.992121000000225,
+                10.23427300000003,
+                10.48574600000029,
+                10.306984000000284,
+                11.060323000000608,
+                10.751978999999665,
+                10.996212000000014
+              ],
+              "mediaan_zonder_eerste": 10.48574600000029,
+              "som": 95.87219200000118
+            },
+            "replica_frame_ms": {
+              "alle": [
+                36.32180299999982,
+                109.28807099999995,
+                104.60508900000013,
+                117.26078899999993,
+                106.1051350000007,
+                110.77198700000008,
+                106.44806900000003,
+                110.00413799999933
+              ],
+              "mediaan_zonder_eerste": 109.28807099999995,
+              "som": 800.805081
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                59.57256000000007,
+                42.0224360000002,
+                38.755779000000075,
+                35.448243000000275,
+                35.13072000000011,
+                31.784912000000077,
+                35.445692999999665,
+                32.666911000000255
+              ],
+              "mediaan_zonder_eerste": 35.445692999999665,
+              "som": 310.8272540000007
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                210.00766799999974,
+                198.10476500000004,
+                194.12770100000034,
+                206.33678500000042,
+                194.9231790000008,
+                206.7799100000002,
+                195.63859599999978,
+                204.29893299999912
+              ],
+              "mediaan_zonder_eerste": 198.10476500000004,
+              "som": 1610.2175370000004
+            }
+          }
+        },
+        {
+          "naam": "middelste-basis-twee",
+          "module": "basis",
+          "positie": "middelste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/vendor/tekstengine/docx_edit_bg.wasm",
+            "middelste-basis-twee",
+            "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": 448,
+            "paraId": "08859E1D",
+            "tekens": 100
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                5.982777000000169,
+                5.013335999999981,
+                5.18555699999979,
+                5.021965999999793,
+                4.618160999999873,
+                4.74702200000047,
+                4.90362499999992,
+                4.987914999999703
+              ],
+              "mediaan_zonder_eerste": 4.987914999999703,
+              "som": 40.4603589999997
+            },
+            "replica_font_ms": {
+              "alle": [
+                102.27945100000034,
+                82.43098099999997,
+                74.3008920000002,
+                78.46505699999989,
+                74.71860599999991,
+                74.31955099999959,
+                76.08428099999946,
+                72.93175599999995
+              ],
+              "mediaan_zonder_eerste": 74.71860599999991,
+              "som": 635.5305749999993
+            },
+            "replica_retained_ms": {
+              "alle": [
+                20.842900999999983,
+                10.111761999999999,
+                10.296694000000116,
+                10.798399999999674,
+                10.876770000000306,
+                11.50902700000006,
+                12.751651000000493,
+                10.627137000000403
+              ],
+              "mediaan_zonder_eerste": 10.798399999999674,
+              "som": 97.81434200000103
+            },
+            "replica_frame_ms": {
+              "alle": [
+                35.91291700000011,
+                111.45360299999993,
+                106.17014299999983,
+                109.19571700000006,
+                124.03092100000003,
+                106.99487300000055,
+                110.90042499999981,
+                105.28188399999999
+              ],
+              "mediaan_zonder_eerste": 109.19571700000006,
+              "som": 809.9404830000003
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                47.74316799999997,
+                37.73521699999992,
+                41.675780999999915,
+                33.506331000000046,
+                37.303092000000106,
+                31.84338200000002,
+                32.885803000000124,
+                33.3931190000003
+              ],
+              "mediaan_zonder_eerste": 33.506331000000046,
+              "som": 296.0858930000004
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                165.0180460000006,
+                209.00968199999988,
+                195.95328599999993,
+                203.4811399999994,
+                214.24445800000012,
+                197.57047300000067,
+                204.6399819999997,
+                193.82869200000005
+              ],
+              "mediaan_zonder_eerste": 203.4811399999994,
+              "som": 1583.7457590000004
+            }
+          }
+        },
+        {
+          "naam": "laatste-basis-een",
+          "module": "basis",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/vendor/tekstengine/docx_edit_bg.wasm",
+            "laatste-basis-een",
+            "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                6.427161000000069,
+                5.892425000000003,
+                4.996335000000272,
+                4.9306540000002315,
+                4.674590999999964,
+                5.391859000000295,
+                5.516891000000214,
+                5.391250000000582
+              ],
+              "mediaan_zonder_eerste": 5.391250000000582,
+              "som": 43.22116600000163
+            },
+            "replica_font_ms": {
+              "alle": [
+                98.02670200000011,
+                75.42281300000013,
+                73.238699,
+                73.54539199999999,
+                77.97484000000031,
+                74.27421999999933,
+                77.35514400000011,
+                74.5929529999994
+              ],
+              "mediaan_zonder_eerste": 74.5929529999994,
+              "som": 624.4307629999994
+            },
+            "replica_retained_ms": {
+              "alle": [
+                17.240469999999732,
+                9.38549299999977,
+                9.639696000000185,
+                9.740296999999828,
+                10.448624999999993,
+                10.189862000000176,
+                10.424854999999297,
+                10.365743999999722
+              ],
+              "mediaan_zonder_eerste": 10.189862000000176,
+              "som": 87.4350419999987
+            },
+            "replica_frame_ms": {
+              "alle": [
+                34.77661399999988,
+                108.74344999999994,
+                110.91528400000016,
+                106.05436000000009,
+                116.8589590000006,
+                105.67232599999988,
+                108.69971899999928,
+                110.13147500000014
+              ],
+              "mediaan_zonder_eerste": 108.74344999999994,
+              "som": 801.852187
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                52.50610999999981,
+                37.84376799999973,
+                39.51888600000029,
+                33.4561090000002,
+                35.28020899999956,
+                33.8822339999997,
+                37.74565699999948,
+                34.427810000000136
+              ],
+              "mediaan_zonder_eerste": 35.28020899999956,
+              "som": 304.6607829999989
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                156.4709469999998,
+                199.44418099999984,
+                198.7900140000006,
+                194.27070300000014,
+                209.95701500000087,
+                195.5282669999997,
+                201.9966089999989,
+                200.48142199999984
+              ],
+              "mediaan_zonder_eerste": 199.44418099999984,
+              "som": 1556.9391579999997
+            }
+          }
+        },
+        {
+          "naam": "laatste-waarnemer-een",
+          "module": "waarnemer",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+            "laatste-waarnemer-een",
+            "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.485865000000103,
+                5.064984999999979,
+                4.991964999999709,
+                4.582921000000169,
+                5.512321000000156,
+                4.785283000000163,
+                5.017345000000205,
+                4.984794999999394
+              ],
+              "mediaan_zonder_eerste": 4.991964999999709,
+              "som": 45.42547999999988
+            },
+            "replica_font_ms": {
+              "alle": [
+                101.73258999999962,
+                73.58527099999992,
+                74.69294300000001,
+                74.04781600000024,
+                77.97169799999983,
+                73.60476999999992,
+                77.46196299999974,
+                72.59057900000062
+              ],
+              "mediaan_zonder_eerste": 74.04781600000024,
+              "som": 625.6876299999999
+            },
+            "replica_retained_ms": {
+              "alle": [
+                17.712065000000166,
+                9.208051000000069,
+                10.093730999999934,
+                9.944708999999875,
+                10.160531999999876,
+                10.202781999999388,
+                10.189032000000225,
+                10.395835000000261
+              ],
+              "mediaan_zonder_eerste": 10.160531999999876,
+              "som": 87.9067369999998
+            },
+            "replica_frame_ms": {
+              "alle": [
+                36.571012999999766,
+                108.40250400000014,
+                110.76650999999993,
+                106.93669799999998,
+                111.2320749999999,
+                110.8463010000005,
+                106.31898999999976,
+                109.52972499999942
+              ],
+              "mediaan_zonder_eerste": 109.52972499999942,
+              "som": 800.6038159999994
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                53.78574200000003,
+                39.4151139999999,
+                39.27382200000011,
+                33.95149399999991,
+                35.74013399999967,
+                33.254125999999815,
+                31.21269399999983,
+                35.17044699999951
+              ],
+              "mediaan_zonder_eerste": 35.17044699999951,
+              "som": 301.8035729999988
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                166.50153299999965,
+                196.2608110000001,
+                200.54514899999958,
+                195.51214400000026,
+                204.87662599999976,
+                199.43913599999996,
+                198.98732999999993,
+                197.5009339999997
+              ],
+              "mediaan_zonder_eerste": 198.98732999999993,
+              "som": 1559.623662999999
+            }
+          }
+        },
+        {
+          "naam": "laatste-patch-een",
+          "module": "patch",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+            "laatste-patch-een",
+            "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.110261999999693,
+                5.111325999999735,
+                4.345047999999679,
+                4.512828999999783,
+                4.288297000000057,
+                5.064284999999927,
+                4.6948810000003505,
+                4.953993999999511
+              ],
+              "mediaan_zonder_eerste": 4.6948810000003505,
+              "som": 44.080921999998736
+            },
+            "replica_font_ms": {
+              "alle": [
+                11.504337000000305,
+                12.31079600000021,
+                11.238324000000375,
+                11.874221000000034,
+                11.525306999999884,
+                12.530697000000146,
+                11.23106400000006,
+                11.371954999999616
+              ],
+              "mediaan_zonder_eerste": 11.525306999999884,
+              "som": 93.58670100000063
+            },
+            "replica_retained_ms": {
+              "alle": [
+                18.392031999999745,
+                9.115429999999833,
+                8.67710500000021,
+                9.328092000000197,
+                8.7428960000002,
+                9.253031000000192,
+                8.978908000000047,
+                8.569884999999886
+              ],
+              "mediaan_zonder_eerste": 8.978908000000047,
+              "som": 81.05737900000031
+            },
+            "replica_frame_ms": {
+              "alle": [
+                32.34240499999987,
+                110.13818100000026,
+                102.83037000000013,
+                106.757114,
+                104.88842299999988,
+                109.94593899999973,
+                104.98731399999951,
+                114.68921099999989
+              ],
+              "mediaan_zonder_eerste": 106.757114,
+              "som": 786.5789569999993
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                66.85803499999975,
+                39.50564399999985,
+                40.49017599999979,
+                33.89263299999993,
+                33.306776000000355,
+                30.364952999999787,
+                35.04810499999985,
+                34.05723500000022
+              ],
+              "mediaan_zonder_eerste": 34.05723500000022,
+              "som": 313.5235569999995
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                73.34903599999961,
+                136.67573300000004,
+                127.0908470000004,
+                132.47225600000002,
+                129.44492300000002,
+                136.793952,
+                129.89216699999997,
+                139.5850449999989
+              ],
+              "mediaan_zonder_eerste": 132.47225600000002,
+              "som": 1005.3039589999989
+            }
+          }
+        },
+        {
+          "naam": "laatste-fonthint-een",
+          "module": "fonthint",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+            "laatste-fonthint-een",
+            "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                13.77476200000001,
+                4.966175000000021,
+                4.153975999999602,
+                5.25183799999968,
+                4.252977000000101,
+                4.308356999999887,
+                4.342967999999928,
+                4.66736100000071
+              ],
+              "mediaan_zonder_eerste": 4.342967999999928,
+              "som": 45.71841399999994
+            },
+            "replica_font_ms": {
+              "alle": [
+                12.231484000000364,
+                11.602066999999806,
+                11.080120999999963,
+                11.594736999999895,
+                11.556446999999935,
+                11.189871999999923,
+                11.15910299999996,
+                10.400904000000082
+              ],
+              "mediaan_zonder_eerste": 11.189871999999923,
+              "som": 90.81473499999993
+            },
+            "replica_retained_ms": {
+              "alle": [
+                19.530894999999873,
+                8.75546600000007,
+                8.705175999999938,
+                9.092679999999746,
+                8.740505999999641,
+                8.88217799999984,
+                8.98302799999965,
+                8.620844999999463
+              ],
+              "mediaan_zonder_eerste": 8.75546600000007,
+              "som": 81.31077399999822
+            },
+            "replica_frame_ms": {
+              "alle": [
+                35.19148600000017,
+                114.69835899999998,
+                114.3936749999998,
+                105.33325599999989,
+                109.81790500000034,
+                105.2955850000003,
+                103.51243500000055,
+                106.05618299999969
+              ],
+              "mediaan_zonder_eerste": 106.05618299999969,
+              "som": 794.2988840000007
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                55.99276400000008,
+                40.635365999999976,
+                38.89427599999999,
+                30.877997999999934,
+                35.45439899999974,
+                30.669867000000067,
+                30.110961000000316,
+                31.706668000000718
+              ],
+              "mediaan_zonder_eerste": 31.706668000000718,
+              "som": 294.3422990000008
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                80.72862700000042,
+                140.02206699999988,
+                138.3329479999993,
+                131.2725109999992,
+                134.367835,
+                129.67599199999995,
+                127.99753400000009,
+                129.74529299999995
+              ],
+              "mediaan_zonder_eerste": 131.2725109999992,
+              "som": 1012.1428069999988
+            }
+          }
+        },
+        {
+          "naam": "laatste-fonthint-twee",
+          "module": "fonthint",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/kern/docx_edit_bg.wasm",
+            "laatste-fonthint-twee",
+            "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.192651999999725,
+                5.08433500000001,
+                4.246446000000105,
+                5.152706999999737,
+                4.536709999999857,
+                4.457119000000148,
+                5.023983999999473,
+                4.792653000000428
+              ],
+              "mediaan_zonder_eerste": 4.792653000000428,
+              "som": 44.48660599999948
+            },
+            "replica_font_ms": {
+              "alle": [
+                11.682098000000224,
+                11.462585999999646,
+                11.580856999999924,
+                10.995739999999842,
+                11.670898000000307,
+                11.057440999999926,
+                11.203742000000602,
+                10.93966999999975
+              ],
+              "mediaan_zonder_eerste": 11.203742000000602,
+              "som": 90.59303200000022
+            },
+            "replica_retained_ms": {
+              "alle": [
+                25.92432400000007,
+                9.148859999999786,
+                9.271091999999953,
+                9.118299999999635,
+                9.15589,
+                9.019317999999657,
+                10.59307600000011,
+                8.726086000000578
+              ],
+              "mediaan_zonder_eerste": 9.148859999999786,
+              "som": 90.95694599999979
+            },
+            "replica_frame_ms": {
+              "alle": [
+                33.93754200000012,
+                109.87805399999979,
+                104.94961899999998,
+                104.22049199999992,
+                108.54914899999994,
+                104.46038399999998,
+                109.88671299999987,
+                105.3744630000001
+              ],
+              "mediaan_zonder_eerste": 105.3744630000001,
+              "som": 781.2564159999997
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                59.36698100000012,
+                42.475794999999835,
+                39.48629200000005,
+                37.555001000000175,
+                30.52562399999988,
+                36.897853999999825,
+                30.48919400000068,
+                34.610759000000144
+              ],
+              "mediaan_zonder_eerste": 36.897853999999825,
+              "som": 311.4075000000007
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                82.73661600000014,
+                135.57383499999924,
+                130.04801399999997,
+                129.48723899999914,
+                133.9126470000001,
+                128.9942619999997,
+                136.70751500000006,
+                129.83287200000086
+              ],
+              "mediaan_zonder_eerste": 130.04801399999997,
+              "som": 1007.2929999999992
+            }
+          }
+        },
+        {
+          "naam": "laatste-patch-twee",
+          "module": "patch",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/kern/docx_edit_bg.wasm",
+            "laatste-patch-twee",
+            "c4cd65ef9e1cd34fea9be8ae67b2fe8694487045e92ce192f27a2376af105cc4"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                11.448995000000195,
+                4.665661,
+                4.4470289999999295,
+                4.387958000000253,
+                4.853432999999768,
+                4.340787000000091,
+                5.077666000000136,
+                4.783462000000327
+              ],
+              "mediaan_zonder_eerste": 4.665661,
+              "som": 44.0049910000007
+            },
+            "replica_font_ms": {
+              "alle": [
+                11.501745999999912,
+                11.557146000000103,
+                11.233382999999776,
+                11.274573000000146,
+                12.191912999999658,
+                11.121141999999963,
+                12.586018000000422,
+                11.06742099999974
+              ],
+              "mediaan_zonder_eerste": 11.274573000000146,
+              "som": 92.53334199999972
+            },
+            "replica_retained_ms": {
+              "alle": [
+                19.548393999999917,
+                8.694904999999835,
+                8.814805999999862,
+                9.089109000000008,
+                9.095589000000018,
+                8.700295000000096,
+                10.56262500000048,
+                8.451223000000027
+              ],
+              "mediaan_zonder_eerste": 8.814805999999862,
+              "som": 82.95694600000024
+            },
+            "replica_frame_ms": {
+              "alle": [
+                32.470544999999674,
+                115.89344799999981,
+                104.70540600000004,
+                105.41151300000001,
+                106.32581300000038,
+                104.47441200000003,
+                110.79898200000025,
+                105.604284
+              ],
+              "mediaan_zonder_eerste": 105.604284,
+              "som": 785.6844030000002
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                56.41094699999985,
+                43.48114600000008,
+                39.37146100000018,
+                33.520236000000295,
+                35.167625000000044,
+                39.503361999999925,
+                32.929300000000694,
+                32.609457000000475
+              ],
+              "mediaan_zonder_eerste": 35.167625000000044,
+              "som": 312.99353400000155
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                74.9696799999997,
+                140.81115999999975,
+                129.2006239999996,
+                130.16315300000042,
+                132.46674799999982,
+                128.63663600000018,
+                139.0252910000013,
+                129.9063900000001
+              ],
+              "mediaan_zonder_eerste": 130.16315300000042,
+              "som": 1005.1796820000009
+            }
+          }
+        },
+        {
+          "naam": "laatste-waarnemer-twee",
+          "module": "waarnemer",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/mutatiebewijs/kern2/docx_edit_bg.wasm",
+            "laatste-waarnemer-twee",
+            "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                10.780027999999675,
+                5.143795999999838,
+                4.604050999999799,
+                4.813083000000006,
+                4.636349999999766,
+                4.770292000000154,
+                4.8594929999999295,
+                5.1396960000001854
+              ],
+              "mediaan_zonder_eerste": 4.813083000000006,
+              "som": 44.74678899999935
+            },
+            "replica_font_ms": {
+              "alle": [
+                102.98723400000017,
+                79.5507389999998,
+                73.77667499999961,
+                75.52932400000009,
+                74.28409999999985,
+                77.14369199999965,
+                80.47896799999944,
+                70.88457299999936
+              ],
+              "mediaan_zonder_eerste": 75.52932400000009,
+              "som": 634.635304999998
+            },
+            "replica_retained_ms": {
+              "alle": [
+                17.115716999999677,
+                9.340692000000217,
+                10.172171000000162,
+                10.037549000000126,
+                11.019681000000219,
+                10.939430000000357,
+                10.316211999999723,
+                10.023470000000088
+              ],
+              "mediaan_zonder_eerste": 10.172171000000162,
+              "som": 88.96492200000057
+            },
+            "replica_frame_ms": {
+              "alle": [
+                34.74419900000021,
+                111.78071999999975,
+                109.80689900000016,
+                107.55169399999977,
+                113.24893599999996,
+                109.75076800000079,
+                109.94548000000032,
+                118.15434900000037
+              ],
+              "mediaan_zonder_eerste": 109.94548000000032,
+              "som": 814.9830450000013
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                57.4380570000003,
+                39.116457999999966,
+                43.24905200000012,
+                33.82057900000018,
+                35.52908799999932,
+                31.588064999999915,
+                30.89431700000023,
+                34.83947999999964
+              ],
+              "mediaan_zonder_eerste": 34.83947999999964,
+              "som": 306.47509599999967
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                165.62717799999973,
+                205.8159469999996,
+                198.35979599999973,
+                197.93165,
+                203.1890669999998,
+                202.60418200000095,
+                205.6001529999994,
+                204.202088
+              ],
+              "mediaan_zonder_eerste": 203.1890669999998,
+              "som": 1583.3300609999992
+            }
+          }
+        },
+        {
+          "naam": "laatste-basis-twee",
+          "module": "basis",
+          "positie": "laatste",
+          "opdracht": [
+            "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/acht-stappen.mjs",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/vendor/tekstengine/docx_edit_bg.wasm",
+            "laatste-basis-twee",
+            "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          ],
+          "volledige_projectie_acht_stappen_exact": true,
+          "doel": {
+            "aantal_alineas": 897,
+            "index": -1,
+            "paraId": "60638A83",
+            "tekens": 69
+          },
+          "tijden": {
+            "replica_update_ms": {
+              "alle": [
+                6.2603690000000825,
+                5.26820699999962,
+                5.148166000000401,
+                4.963893999999982,
+                4.9396740000001955,
+                4.990483999999924,
+                5.134396000000379,
+                5.234026999999514
+              ],
+              "mediaan_zonder_eerste": 5.134396000000379,
+              "som": 41.9392170000001
+            },
+            "replica_font_ms": {
+              "alle": [
+                103.37731699999995,
+                76.29313100000036,
+                82.75100100000009,
+                74.71434399999998,
+                78.54386599999998,
+                75.22595899999942,
+                74.44522000000052,
+                71.86008300000049
+              ],
+              "mediaan_zonder_eerste": 75.22595899999942,
+              "som": 637.2109210000008
+            },
+            "replica_retained_ms": {
+              "alle": [
+                22.204521999999997,
+                9.212420999999722,
+                9.917047999999795,
+                9.768305999999939,
+                10.461463999999978,
+                10.202261000000362,
+                10.045379999999568,
+                9.93996799999968
+              ],
+              "mediaan_zonder_eerste": 9.93996799999968,
+              "som": 91.75136999999904
+            },
+            "replica_frame_ms": {
+              "alle": [
+                41.41282100000035,
+                110.05198900000005,
+                110.89026799999965,
+                108.25840900000003,
+                116.9352229999995,
+                114.7912809999998,
+                110.92782799999986,
+                117.35292800000025
+              ],
+              "mediaan_zonder_eerste": 110.92782799999986,
+              "som": 830.6207469999995
+            },
+            "replica_volledig_json_ms": {
+              "alle": [
+                52.81762499999968,
+                37.61108000000013,
+                38.49701899999991,
+                43.01773800000001,
+                35.77350999999999,
+                33.90698899999916,
+                31.96896800000013,
+                33.00796899999932
+              ],
+              "mediaan_zonder_eerste": 35.77350999999999,
+              "som": 306.6008979999983
+            },
+            "replica_voor_controle_totaal_ms": {
+              "alle": [
+                173.25502900000038,
+                200.82574799999975,
+                208.70648299999993,
+                197.70495299999993,
+                210.88022699999965,
+                205.2099849999995,
+                200.55282400000033,
+                204.38700599999993
+              ],
+              "mediaan_zonder_eerste": 204.38700599999993,
+              "som": 1601.5222549999994
+            }
+          }
+        }
+      ]
+    },
+    "pariteit": "24 ronden ×8 updates =192. Per positie alle zes velden exact tegen eerste meegeleverde-kernronde: volledige indelingJSON,bodyblokJSON,volledige alineaprojectie,bronvector,fontJSON en fontlengte. Geen claim volledige CRDT-staatvergelijking boven deze velden.",
+    "tijden": "Medianen zonder eerste stap: replica-update4,17–5,39ms; fontreferentie/waarnemer73,62–76,81ms,patchvarianten10,87–11,75ms; retained8,76–11,50ms; frame104,94–113,83ms. API+font+retained+frame referentie/waarnemer198,10–205,06ms,patchvarianten130,05–137,54ms. Volledige JSON-serialisatie daarna afzonderlijk gemeten. Geen desktop-/CPU-/glyphclaim.",
+    "klasse": "Vier vaste kernen,bestaande proefmodules; geen nieuwe Rust-mutatie of Wasm-bouw. Elke module per eerste/middelste/laatste alinea tweemaal,vaste omgekeerde volgorde; geen andere bouw/test tijdens componentronden.",
+    "volledige_layouts": {
+      "alle": 192,
+      "uniek_in_archief": 24
+    }
+  },
+  "native": {
+    "bouw": {
+      "code": 0,
+      "reden": null,
+      "seconden": 119.12404529500054,
+      "minimum_vrije_bytes": 14186516480,
+      "start_vrije_bytes": 14291214336,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/open-office-studio-replica-kosten",
+      "programma_sha256": "faf0e96d3806f68298039c4e93574226fd5a93b352254cb1b1f0a68a8222e5c8",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "bundelbinding": "Exact eerdere Worker-fasebundel met dezelfde JS-klokken; uitsluitend edit-Wasm vervangen door7f7877f1. Alle assethashes in native-bundel.json. BaselineELF2f3beb12,nieuwe19eELFfaf0e96d. Runtime-Wasm via fetch/WebCrypto in alle zes ronden bevestigd.",
+    "platform": "Linux x86_64,release2026.45.52,writer-bronjournaal,schema2; eigen X11/DBus/XDG-profielen en eigen DOCX.",
+    "ABBA": [
+      {
+        "naam": "native-a-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 74.54549279899948,
+        "programma_sha256": "2f3beb123423d48b8db4dfcd268c76a98ae956ef656cf99cde955fcc929f5bf2",
+        "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-proef.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/werker-fasekopie/open-office-studio-werker-fasemeting",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-a-een"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32967,
+          "begin_tot_bron_ms": 9319,
+          "laatste_keyup_tot_bron_ms": 349,
+          "laatste_keyup_tot_frame_ms": 3938,
+          "begin_tot_frame_ms": 12908,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12921,
+          "wall_verzonden_tot_frame_ms": 11146,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "runtime_wasm": {
+          "bytes": 24549413,
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        }
+      },
+      {
+        "naam": "native-b-een",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 74.2312997889967,
+        "programma_sha256": "faf0e96d3806f68298039c4e93574226fd5a93b352254cb1b1f0a68a8222e5c8",
+        "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-proef.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/open-office-studio-replica-kosten",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-b-een"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33105.00000000001,
+          "begin_tot_bron_ms": 10088,
+          "laatste_keyup_tot_bron_ms": 295.9999999999927,
+          "laatste_keyup_tot_frame_ms": 3317,
+          "begin_tot_frame_ms": 13109.000000000007,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13292,
+          "wall_verzonden_tot_frame_ms": 11407,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "runtime_wasm": {
+          "bytes": 24367937,
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        }
+      },
+      {
+        "naam": "native-b-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 74.78047512899502,
+        "programma_sha256": "faf0e96d3806f68298039c4e93574226fd5a93b352254cb1b1f0a68a8222e5c8",
+        "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-proef.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/open-office-studio-replica-kosten",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-b-twee"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33364,
+          "begin_tot_bron_ms": 10068,
+          "laatste_keyup_tot_bron_ms": 361,
+          "laatste_keyup_tot_frame_ms": 3106,
+          "begin_tot_frame_ms": 12813,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13017,
+          "wall_verzonden_tot_frame_ms": 11085,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "runtime_wasm": {
+          "bytes": 24367937,
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        }
+      },
+      {
+        "naam": "native-a-twee",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 73.70830035499966,
+        "programma_sha256": "2f3beb123423d48b8db4dfcd268c76a98ae956ef656cf99cde955fcc929f5bf2",
+        "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-proef.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/werker-fasekopie/open-office-studio-werker-fasemeting",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-a-twee"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32427.999999999996,
+          "begin_tot_bron_ms": 9207,
+          "laatste_keyup_tot_bron_ms": 310.00000000000364,
+          "laatste_keyup_tot_frame_ms": 4411.000000000004,
+          "begin_tot_frame_ms": 13308,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13320,
+          "wall_verzonden_tot_frame_ms": 11567,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "runtime_wasm": {
+          "bytes": 24549413,
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        }
+      }
+    ],
+    "extra_sync_metadata": [
+      {
+        "naam": "native-sync-a",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 73.46843563400034,
+        "programma_sha256": "2f3beb123423d48b8db4dfcd268c76a98ae956ef656cf99cde955fcc929f5bf2",
+        "helper_sha256": "85dd0f359ab647e44df2a2ad777d8cc244a7afde11a39da1d3e13022ca54d7e2",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-sync-proef.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/werker-fasekopie/open-office-studio-werker-fasemeting",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-sync-a"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31980,
+          "begin_tot_bron_ms": 8984.000000000004,
+          "laatste_keyup_tot_bron_ms": 336.00000000000364,
+          "laatste_keyup_tot_frame_ms": 4243,
+          "begin_tot_frame_ms": 12891,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12991,
+          "wall_verzonden_tot_frame_ms": 11218,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "runtime_wasm": {
+          "bytes": 24549413,
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        }
+      },
+      {
+        "naam": "native-sync-b",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "seconden": 75.53188706399669,
+        "programma_sha256": "faf0e96d3806f68298039c4e93574226fd5a93b352254cb1b1f0a68a8222e5c8",
+        "helper_sha256": "85dd0f359ab647e44df2a2ad777d8cc244a7afde11a39da1d3e13022ca54d7e2",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-sync-proef.py",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/open-office-studio-replica-kosten",
+          "--versie",
+          "2026.45.52",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/native-sync-b"
+        ],
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33985,
+          "begin_tot_bron_ms": 10785,
+          "laatste_keyup_tot_bron_ms": 247,
+          "laatste_keyup_tot_frame_ms": 2785,
+          "begin_tot_frame_ms": 13323,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13587,
+          "wall_verzonden_tot_frame_ms": 11683,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "runtime_wasm": {
+          "bytes": 24367937,
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        }
+      }
+    ],
+    "fase_resultaten": {
+      "native-a-een": {
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32967,
+          "begin_tot_bron_ms": 9319,
+          "laatste_keyup_tot_bron_ms": 349,
+          "laatste_keyup_tot_frame_ms": 3938,
+          "begin_tot_frame_ms": 12908,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12921,
+          "wall_verzonden_tot_frame_ms": 11146,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "sommen": {
+          "taak/applyUpdate": {
+            "aantal": 65,
+            "som_ms": 549.0000000000018,
+            "mediaan_ms": 8,
+            "min_ms": 1,
+            "max_ms": 20
+          },
+          "font/font": {
+            "aantal": 64,
+            "som_ms": 6366.9999999999945,
+            "mediaan_ms": 96.0,
+            "min_ms": 81.00000000000364,
+            "max_ms": 132.00000000000182
+          },
+          "taak/fontRequirements": {
+            "aantal": 64,
+            "som_ms": 6378.999999999993,
+            "mediaan_ms": 96.0,
+            "min_ms": 81.00000000000364,
+            "max_ms": 133
+          },
+          "projectie/resident": {
+            "aantal": 1,
+            "som_ms": 849,
+            "mediaan_ms": 849,
+            "min_ms": 849,
+            "max_ms": 849
+          },
+          "pakket/resident": {
+            "aantal": 1,
+            "som_ms": 2103.0000000000036,
+            "mediaan_ms": 2103.0000000000036,
+            "min_ms": 2103.0000000000036,
+            "max_ms": 2103.0000000000036
+          },
+          "resident/resident": {
+            "aantal": 1,
+            "som_ms": 3305,
+            "mediaan_ms": 3305,
+            "min_ms": 3305,
+            "max_ms": 3305
+          },
+          "save/save": {
+            "aantal": 1,
+            "som_ms": 3317,
+            "mediaan_ms": 3317,
+            "min_ms": 3317,
+            "max_ms": 3317
+          },
+          "updatecode/save": {
+            "aantal": 1,
+            "som_ms": 1,
+            "mediaan_ms": 1,
+            "min_ms": 1,
+            "max_ms": 1
+          },
+          "taak/save": {
+            "aantal": 1,
+            "som_ms": 3319.0000000000036,
+            "mediaan_ms": 3319.0000000000036,
+            "min_ms": 3319.0000000000036,
+            "max_ms": 3319.0000000000036
+          },
+          "taak/sync": {
+            "aantal": 1,
+            "som_ms": 345,
+            "mediaan_ms": 345,
+            "min_ms": 345,
+            "max_ms": 345
+          },
+          "taak/buildPages": {
+            "aantal": 1,
+            "som_ms": 95,
+            "mediaan_ms": 95,
+            "min_ms": 95,
+            "max_ms": 95
+          }
+        },
+        "taakinterval_unie_ms": 10686.999999999998,
+        "overlappende_taakintervallen": [],
+        "runtime_wasm": {
+          "bytes": 24549413,
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        },
+        "geslaagd": true,
+        "geen_logverlies": true
+      },
+      "native-b-een": {
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33105.00000000001,
+          "begin_tot_bron_ms": 10088,
+          "laatste_keyup_tot_bron_ms": 295.9999999999927,
+          "laatste_keyup_tot_frame_ms": 3317,
+          "begin_tot_frame_ms": 13109.000000000007,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13292,
+          "wall_verzonden_tot_frame_ms": 11407,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "sommen": {
+          "taak/applyUpdate": {
+            "aantal": 67,
+            "som_ms": 668.0000000000036,
+            "mediaan_ms": 9,
+            "min_ms": 0,
+            "max_ms": 30
+          },
+          "font/font": {
+            "aantal": 66,
+            "som_ms": 1255.9999999999964,
+            "mediaan_ms": 16.0,
+            "min_ms": 13,
+            "max_ms": 107
+          },
+          "taak/fontRequirements": {
+            "aantal": 66,
+            "som_ms": 1268.9999999999945,
+            "mediaan_ms": 16.99999999999727,
+            "min_ms": 13,
+            "max_ms": 107
+          },
+          "taak/sync": {
+            "aantal": 16,
+            "som_ms": 6017.000000000002,
+            "mediaan_ms": 364.0,
+            "min_ms": 323.0000000000018,
+            "max_ms": 525.9999999999982
+          },
+          "projectie/resident": {
+            "aantal": 1,
+            "som_ms": 852,
+            "mediaan_ms": 852,
+            "min_ms": 852,
+            "max_ms": 852
+          },
+          "pakket/resident": {
+            "aantal": 1,
+            "som_ms": 1934,
+            "mediaan_ms": 1934,
+            "min_ms": 1934,
+            "max_ms": 1934
+          },
+          "resident/resident": {
+            "aantal": 1,
+            "som_ms": 3195,
+            "mediaan_ms": 3195,
+            "min_ms": 3195,
+            "max_ms": 3195
+          },
+          "save/save": {
+            "aantal": 1,
+            "som_ms": 3207,
+            "mediaan_ms": 3207,
+            "min_ms": 3207,
+            "max_ms": 3207
+          },
+          "updatecode/save": {
+            "aantal": 1,
+            "som_ms": 3,
+            "mediaan_ms": 3,
+            "min_ms": 3,
+            "max_ms": 3
+          },
+          "taak/save": {
+            "aantal": 1,
+            "som_ms": 3210,
+            "mediaan_ms": 3210,
+            "min_ms": 3210,
+            "max_ms": 3210
+          },
+          "taak/buildPages": {
+            "aantal": 1,
+            "som_ms": 86.00000000000364,
+            "mediaan_ms": 86.00000000000364,
+            "min_ms": 86.00000000000364,
+            "max_ms": 86.00000000000364
+          }
+        },
+        "taakinterval_unie_ms": 11250.000000000004,
+        "overlappende_taakintervallen": [],
+        "runtime_wasm": {
+          "bytes": 24367937,
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        },
+        "geslaagd": true,
+        "geen_logverlies": true
+      },
+      "native-b-twee": {
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33364,
+          "begin_tot_bron_ms": 10068,
+          "laatste_keyup_tot_bron_ms": 361,
+          "laatste_keyup_tot_frame_ms": 3106,
+          "begin_tot_frame_ms": 12813,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13017,
+          "wall_verzonden_tot_frame_ms": 11085,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "sommen": {
+          "taak/applyUpdate": {
+            "aantal": 66,
+            "som_ms": 635.9999999999964,
+            "mediaan_ms": 9.0,
+            "min_ms": 0,
+            "max_ms": 25
+          },
+          "font/font": {
+            "aantal": 65,
+            "som_ms": 1223.0000000000036,
+            "mediaan_ms": 16,
+            "min_ms": 12,
+            "max_ms": 101
+          },
+          "taak/fontRequirements": {
+            "aantal": 65,
+            "som_ms": 1245.0000000000036,
+            "mediaan_ms": 16,
+            "min_ms": 12,
+            "max_ms": 102
+          },
+          "taak/sync": {
+            "aantal": 15,
+            "som_ms": 5529.000000000007,
+            "mediaan_ms": 359,
+            "min_ms": 328,
+            "max_ms": 510
+          },
+          "projectie/resident": {
+            "aantal": 1,
+            "som_ms": 817,
+            "mediaan_ms": 817,
+            "min_ms": 817,
+            "max_ms": 817
+          },
+          "pakket/resident": {
+            "aantal": 1,
+            "som_ms": 2054,
+            "mediaan_ms": 2054,
+            "min_ms": 2054,
+            "max_ms": 2054
+          },
+          "resident/resident": {
+            "aantal": 1,
+            "som_ms": 3227,
+            "mediaan_ms": 3227,
+            "min_ms": 3227,
+            "max_ms": 3227
+          },
+          "save/save": {
+            "aantal": 1,
+            "som_ms": 3247,
+            "mediaan_ms": 3247,
+            "min_ms": 3247,
+            "max_ms": 3247
+          },
+          "updatecode/save": {
+            "aantal": 1,
+            "som_ms": 5,
+            "mediaan_ms": 5,
+            "min_ms": 5,
+            "max_ms": 5
+          },
+          "taak/save": {
+            "aantal": 1,
+            "som_ms": 3252,
+            "mediaan_ms": 3252,
+            "min_ms": 3252,
+            "max_ms": 3252
+          },
+          "taak/buildPages": {
+            "aantal": 1,
+            "som_ms": 94,
+            "mediaan_ms": 94,
+            "min_ms": 94,
+            "max_ms": 94
+          }
+        },
+        "taakinterval_unie_ms": 10756.000000000007,
+        "overlappende_taakintervallen": [],
+        "runtime_wasm": {
+          "bytes": 24367937,
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        },
+        "geslaagd": true,
+        "geen_logverlies": true
+      },
+      "native-a-twee": {
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 32427.999999999996,
+          "begin_tot_bron_ms": 9207,
+          "laatste_keyup_tot_bron_ms": 310.00000000000364,
+          "laatste_keyup_tot_frame_ms": 4411.000000000004,
+          "begin_tot_frame_ms": 13308,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13320,
+          "wall_verzonden_tot_frame_ms": 11567,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "sommen": {
+          "taak/applyUpdate": {
+            "aantal": 64,
+            "som_ms": 539.0000000000218,
+            "mediaan_ms": 8.0,
+            "min_ms": 0,
+            "max_ms": 12
+          },
+          "font/font": {
+            "aantal": 63,
+            "som_ms": 6517.999999999984,
+            "mediaan_ms": 101.99999999999818,
+            "min_ms": 86,
+            "max_ms": 144
+          },
+          "taak/fontRequirements": {
+            "aantal": 63,
+            "som_ms": 6530.99999999998,
+            "mediaan_ms": 101.99999999999818,
+            "min_ms": 86,
+            "max_ms": 144
+          },
+          "taak/sync": {
+            "aantal": 2,
+            "som_ms": 822,
+            "mediaan_ms": 411.0,
+            "min_ms": 399,
+            "max_ms": 423
+          },
+          "projectie/resident": {
+            "aantal": 1,
+            "som_ms": 795,
+            "mediaan_ms": 795,
+            "min_ms": 795,
+            "max_ms": 795
+          },
+          "pakket/resident": {
+            "aantal": 1,
+            "som_ms": 1864.0000000000036,
+            "mediaan_ms": 1864.0000000000036,
+            "min_ms": 1864.0000000000036,
+            "max_ms": 1864.0000000000036
+          },
+          "resident/resident": {
+            "aantal": 1,
+            "som_ms": 3065.0000000000036,
+            "mediaan_ms": 3065.0000000000036,
+            "min_ms": 3065.0000000000036,
+            "max_ms": 3065.0000000000036
+          },
+          "save/save": {
+            "aantal": 1,
+            "som_ms": 3133.0000000000036,
+            "mediaan_ms": 3133.0000000000036,
+            "min_ms": 3133.0000000000036,
+            "max_ms": 3133.0000000000036
+          },
+          "updatecode/save": {
+            "aantal": 1,
+            "som_ms": 1.999999999996362,
+            "mediaan_ms": 1.999999999996362,
+            "min_ms": 1.999999999996362,
+            "max_ms": 1.999999999996362
+          },
+          "taak/save": {
+            "aantal": 1,
+            "som_ms": 3135,
+            "mediaan_ms": 3135,
+            "min_ms": 3135,
+            "max_ms": 3135
+          },
+          "taak/buildPages": {
+            "aantal": 1,
+            "som_ms": 109,
+            "mediaan_ms": 109,
+            "min_ms": 109,
+            "max_ms": 109
+          }
+        },
+        "taakinterval_unie_ms": 11136.000000000002,
+        "overlappende_taakintervallen": [],
+        "runtime_wasm": {
+          "bytes": 24549413,
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        },
+        "geslaagd": true,
+        "geen_logverlies": true
+      },
+      "native-sync-a": {
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31980,
+          "begin_tot_bron_ms": 8984.000000000004,
+          "laatste_keyup_tot_bron_ms": 336.00000000000364,
+          "laatste_keyup_tot_frame_ms": 4243,
+          "begin_tot_frame_ms": 12891,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 12991,
+          "wall_verzonden_tot_frame_ms": 11218,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "sommen": {
+          "taak/applyUpdate": {
+            "aantal": 65,
+            "som_ms": 559.0000000000182,
+            "mediaan_ms": 8.000000000001819,
+            "min_ms": 1,
+            "max_ms": 21.00000000000182
+          },
+          "font/font": {
+            "aantal": 64,
+            "som_ms": 6507.999999999991,
+            "mediaan_ms": 99.0,
+            "min_ms": 88.99999999999818,
+            "max_ms": 170
+          },
+          "taak/fontRequirements": {
+            "aantal": 64,
+            "som_ms": 6521.999999999993,
+            "mediaan_ms": 99.0,
+            "min_ms": 88.99999999999818,
+            "max_ms": 171
+          },
+          "projectie/resident": {
+            "aantal": 1,
+            "som_ms": 828,
+            "mediaan_ms": 828,
+            "min_ms": 828,
+            "max_ms": 828
+          },
+          "pakket/resident": {
+            "aantal": 1,
+            "som_ms": 1889,
+            "mediaan_ms": 1889,
+            "min_ms": 1889,
+            "max_ms": 1889
+          },
+          "resident/resident": {
+            "aantal": 1,
+            "som_ms": 3149,
+            "mediaan_ms": 3149,
+            "min_ms": 3149,
+            "max_ms": 3149
+          },
+          "save/save": {
+            "aantal": 1,
+            "som_ms": 3237,
+            "mediaan_ms": 3237,
+            "min_ms": 3237,
+            "max_ms": 3237
+          },
+          "updatecode/save": {
+            "aantal": 1,
+            "som_ms": 2,
+            "mediaan_ms": 2,
+            "min_ms": 2,
+            "max_ms": 2
+          },
+          "taak/save": {
+            "aantal": 1,
+            "som_ms": 3239,
+            "mediaan_ms": 3239,
+            "min_ms": 3239,
+            "max_ms": 3239
+          },
+          "taak/sync": {
+            "aantal": 1,
+            "som_ms": 355,
+            "mediaan_ms": 355,
+            "min_ms": 355,
+            "max_ms": 355
+          },
+          "taak/buildPages": {
+            "aantal": 1,
+            "som_ms": 109,
+            "mediaan_ms": 109,
+            "min_ms": 109,
+            "max_ms": 109
+          }
+        },
+        "taakinterval_unie_ms": 10784.000000000011,
+        "overlappende_taakintervallen": [],
+        "runtime_wasm": {
+          "bytes": 24549413,
+          "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+        },
+        "geslaagd": true,
+        "geen_logverlies": true
+      },
+      "native-sync-b": {
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 33985,
+          "begin_tot_bron_ms": 10785,
+          "laatste_keyup_tot_bron_ms": 247,
+          "laatste_keyup_tot_frame_ms": 2785,
+          "begin_tot_frame_ms": 13323,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 13587,
+          "wall_verzonden_tot_frame_ms": 11683,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "sommen": {
+          "taak/applyUpdate": {
+            "aantal": 70,
+            "som_ms": 678.0000000000036,
+            "mediaan_ms": 9.0,
+            "min_ms": 0.999999999996362,
+            "max_ms": 27
+          },
+          "font/font": {
+            "aantal": 69,
+            "som_ms": 1264.000000000011,
+            "mediaan_ms": 15,
+            "min_ms": 12.999999999998181,
+            "max_ms": 108
+          },
+          "taak/fontRequirements": {
+            "aantal": 69,
+            "som_ms": 1281.000000000009,
+            "mediaan_ms": 16,
+            "min_ms": 13,
+            "max_ms": 108
+          },
+          "taak/sync": {
+            "aantal": 16,
+            "som_ms": 5797.9999999999945,
+            "mediaan_ms": 347.9999999999982,
+            "min_ms": 305.9999999999982,
+            "max_ms": 545
+          },
+          "projectie/resident": {
+            "aantal": 1,
+            "som_ms": 818,
+            "mediaan_ms": 818,
+            "min_ms": 818,
+            "max_ms": 818
+          },
+          "pakket/resident": {
+            "aantal": 1,
+            "som_ms": 2216,
+            "mediaan_ms": 2216,
+            "min_ms": 2216,
+            "max_ms": 2216
+          },
+          "resident/resident": {
+            "aantal": 1,
+            "som_ms": 3428,
+            "mediaan_ms": 3428,
+            "min_ms": 3428,
+            "max_ms": 3428
+          },
+          "save/save": {
+            "aantal": 1,
+            "som_ms": 3440,
+            "mediaan_ms": 3440,
+            "min_ms": 3440,
+            "max_ms": 3440
+          },
+          "updatecode/save": {
+            "aantal": 1,
+            "som_ms": 1,
+            "mediaan_ms": 1,
+            "min_ms": 1,
+            "max_ms": 1
+          },
+          "taak/save": {
+            "aantal": 1,
+            "som_ms": 3442,
+            "mediaan_ms": 3442,
+            "min_ms": 3442,
+            "max_ms": 3442
+          },
+          "taak/buildPages": {
+            "aantal": 1,
+            "som_ms": 72,
+            "mediaan_ms": 72,
+            "min_ms": 72,
+            "max_ms": 72
+          }
+        },
+        "taakinterval_unie_ms": 11271.000000000007,
+        "overlappende_taakintervallen": [],
+        "runtime_wasm": {
+          "bytes": 24367937,
+          "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+        },
+        "geslaagd": true,
+        "geen_logverlies": true
+      }
+    },
+    "bevindingen": [
+      "Vaste geïnstrumenteerde ABBA: font6.367/1.256/1.223/6.518ms; sync1/16/15/2taken en345/6.017/5.529/822ms. ApplyUpdate549/668/636/539ms totaal; Save3.317/3.207/3.247/3.133ms. Punten zijn duizendtallen,geen decimaalteken.",
+      "Geen overlappende buitenste taakintervallen in deze opnamen; fases resident/projectie/pakket zijn ouder/kind en overlappen wel. Niet dubbel optellen. Dit zijn verstreken tijden,geen exclusieve CPU.",
+      "Wandtijd ABBA12.921/13.292/13.017/13.320ms. Geïnstrumenteerd,geen normale desktop-snelheidsacceptatie of proof dat volledige regressie verklaard is.",
+      "Twee aanvullende metadataronden reproduceren1 tegenover16syncs. Alle16kandidaat-syncs hebben fontsRevision8,expectedFrameEpoch6 en layoutInput-lengte1843; layoutRevision2..17 en updategroottes veranderen. Gelijke lengte bewijst geen gelijke inhoud.",
+      "Sync-verzendstack wijst steeds naar dezelfde hoofdthread-layoutaanroep editors-bODdYQ4o.js:12:206572; exact bundelhash/context bewaard. Geen normatieve reden vastgesteld om sync weg te laten."
+    ]
+  },
+  "synchronisatie": {
+    "metadata": {
+      "native-sync-a": {
+        "aantal": 1,
+        "fonts_revisions": [
+          8
+        ],
+        "layout_revisions": [
+          2
+        ],
+        "frame_epochs": [
+          6
+        ],
+        "state_bytes": [
+          2417
+        ],
+        "layout_input_lengten": [
+          1843
+        ],
+        "stacks": [
+          "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:206572\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936"
+        ]
+      },
+      "native-sync-b": {
+        "aantal": 16,
+        "fonts_revisions": [
+          8
+        ],
+        "layout_revisions": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "frame_epochs": [
+          6
+        ],
+        "state_bytes": [
+          2320,
+          2332,
+          2350,
+          2356,
+          2374,
+          2362,
+          2348,
+          2365,
+          2401,
+          2378,
+          2384,
+          2378,
+          2399,
+          2377,
+          2360,
+          2634
+        ],
+        "layout_input_lengten": [
+          1843
+        ],
+        "stacks": [
+          "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:206572\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936"
+        ]
+      }
+    },
+    "aanroeper": {
+      "bestand": ".local/integratiecontrole/lint-invoer/dist/assets/editors-bODdYQ4o.js",
+      "sha256": "4ec7dcee2304c018f60ff49f1f76d272aef13495b523d60da00c995f9656f04b",
+      "stack_regel": 12,
+      "stack_kolom": 206572,
+      "kolom_eenheid": "UTF16; omgeving van de waargenomen kolom,geen bronmap",
+      "context": "worker holding proposals cannot lay out the document\"));return mn.current&&nr(F),null}let Ne=my(je)??\"\";yj(L.current,Be,Ne),$.current!==null&&Ne!==$.current&&(E.current+=1,P.invalidate()),$.current=Ne;let et=E.current,It={layoutExtras:JSON.stringify(Mt()),...!ee&&d?.current?{layoutReply:\"meta\",headersFootersEpoch:Qt.current.get(H)?.epoch??0}:{},stateVector:f(F)||mn.current&&to(F)?A.stateVector:F.encodeStateVector(),...ee&&A.opened?{opened:!0}:{},displayWindow:Ze.current.has(F)?bj:zt.current,...ee?{provisionalPages:AH,heapLimitBytes:v.current,...tn()}:{}},ot=!ee&&Zt.current&&qt.shouldPaint(performance.now()),yt=ee?H.bootstrap(Be,\"\",It):H.sync(Be,\"\",ie?.frameEpoch??0,ot,It),Wt=st=>{let $t=U.current;if(Vn.current||A.load!==K.current||$t&&$t.engine!==F)return Yn(F)?To(new Kn):null;let Sn=Ve.current.get(F);if(Sn)return To(Sn);if(f(F)&&st instanceof Kn)return To(st);if(yo(F)&&st instanceof Kn)return null;let ln=st instanceof $o;if(ln&&ke.current.get(F))return To(st);if(!ln&&f(F))return Tt(st,A);if(!$t)return yo(F)?To(Ln(F,st)):null;if(ln){i",
+      "grens": "Vastgepinde bundel,read-only gelezen. Stabiele fontsRevision en gelijke layoutInput-lengte bewijzen geen identieke layoutInput of veilige weglating van sync. layoutRevision en CRDT-updatebytegrootte veranderen wel."
+    },
+    "volgende_stap": "Onderzoek deze hoofdthread-layoutaanroep na fontRequirements en begrens/samenvoeg uitsluitend aantoonbaar achterhaalde renderverzoeken vóór Worker-sync. Meet fg(snapshot),Ea/layoutopbouw,buildDisplayListFrame en xr/verzending afzonderlijk indien nodig. Worker-CRDT-updates/versie/bron/env/fonts/headers/marges/preview moeten blijven aansluiten; sync is een muterende inputtaak,niet blind overslaan. Behoud elke invoer/UndoRedo/selectie/bewaar-/verwerp-/lateantwoordgarantie. Nieuwe kandidaat eerst private component-/negatieve dekking en echte korte/rijke ABBA zonder profiler."
+  },
+  "functioneel": {
+    "zes_volledige_ronden_groen": true,
+    "checks": "Fysieke1052tekens,bronexacteUndo/Redo,Shift-selectie/vervangen,bewaren vóór vastgehouden antwoord,verwerpen,nieuw document en laat antwoord. Geen bron-/UI-/engine-/consolefouten in rapporten.",
+    "documenten": {
+      "native-a-een": {
+        "sha256": "8260cb1c6cad334842337f1269b9c412c1fe434f84b71292db5ccab92302981b",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "8222a9ce54b1ff18f3bdb4c3af51384439cffe5288110ac7b21d093f2ea194f3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_a_een": []
+      },
+      "native-b-een": {
+        "sha256": "dda23abf6b386f5ec60029673998b2454853b8728bb188c7f88dc778aaeb75f5",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "f67f06b1feec17277bbd1ffe15bf9b81896887e20da17237c5025d9aa92e6cd8",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_a_een": [
+          "docProps/core.xml"
+        ]
+      },
+      "native-b-twee": {
+        "sha256": "e84271b180c64d7bf287402b9be6b1bc8a42c8a393348caf14148b17714ffb94",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "e2075015c93b076f4ad6f530c7a16756084ca0cf89c99622f37298c1093e1875",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_a_een": [
+          "docProps/core.xml"
+        ]
+      },
+      "native-a-twee": {
+        "sha256": "215848206bede73348b5c7b92e62a93ac0db12d8dba73dff20d672efac8be3b9",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "a1987618f4e2ef508621cb37546f622f02d6dd8eb8a2655846d8c7bfb52b39d2",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_a_een": [
+          "docProps/core.xml"
+        ]
+      },
+      "native-sync-a": {
+        "sha256": "4a52fdf13b1371e5d8e0cedaa7043240529bbfa0a79746fdf53c9250c92c800d",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "6c864682f480cd490f6a95c64c20d4ecebc4c6b1198e83ae474d7b836e7a3925",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_a_een": [
+          "docProps/core.xml"
+        ]
+      },
+      "native-sync-b": {
+        "sha256": "64b6a17d1dfdc7dc866f6d4475293d1f26330a4b851a8097902795258489b9b7",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "e159c03d130d4bda23c8ba61aa7e1332ed4b3866eedac8b9318764068d026b74",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_a_een": [
+          "docProps/core.xml"
+        ]
+      }
+    },
+    "docx": "Zes DOCX onafhankelijk SHA/ZIP/CRC/alleXML en relaties;128tabellen/91423UTF16. Alle pakketdelen gelijk aan eerste referentie behalve core.xml.",
+    "beelden": {
+      "paren": [
+        {
+          "referentie": "native-a-een/invoer-redo.png",
+          "kandidaat": "native-b-een/invoer-redo.png",
+          "bbox": [
+            1038,
+            940,
+            1040,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "native-a-een/snel-getypt-bewaard.png",
+          "kandidaat": "native-b-een/snel-getypt-bewaard.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "native-a-een/nieuw-na-laat-antwoord.png",
+          "kandidaat": "native-b-een/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "native-a-een/invoer-redo.png",
+          "kandidaat": "native-b-twee/invoer-redo.png",
+          "bbox": [
+            1038,
+            940,
+            1040,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "native-a-een/snel-getypt-bewaard.png",
+          "kandidaat": "native-b-twee/snel-getypt-bewaard.png",
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "native-a-een/nieuw-na-laat-antwoord.png",
+          "kandidaat": "native-b-twee/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "native-a-een/invoer-redo.png",
+          "kandidaat": "native-a-twee/invoer-redo.png",
+          "bbox": [
+            11,
+            4,
+            1120,
+            997
+          ],
+          "verschillende_pixels": 28
+        },
+        {
+          "referentie": "native-a-een/snel-getypt-bewaard.png",
+          "kandidaat": "native-a-twee/snel-getypt-bewaard.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "native-a-een/nieuw-na-laat-antwoord.png",
+          "kandidaat": "native-a-twee/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "native-sync-a/invoer-redo.png",
+          "kandidaat": "native-sync-b/invoer-redo.png",
+          "bbox": [
+            11,
+            4,
+            1120,
+            997
+          ],
+          "verschillende_pixels": 28
+        },
+        {
+          "referentie": "native-sync-a/snel-getypt-bewaard.png",
+          "kandidaat": "native-sync-b/snel-getypt-bewaard.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "native-sync-a/nieuw-na-laat-antwoord.png",
+          "kandidaat": "native-sync-b/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        }
+      ],
+      "exact": 7,
+      "grens": "Alleen drie vaste gehele screenshots; geen maskers of volledige visuele-/platformacceptatie."
+    },
+    "bekeken": [
+      "native-b-een/snel-getypt-bewaard.png"
+    ],
+    "waarneming": "Bekeken bewaarbeeld toont verwachte opmaak/tekst en65pagina’s zonder zichtbare overlap; beperkte momentopname. Overige ongelijkepixelbboxen en aantallen integraal vastgelegd,geen maskers of volledige visuele acceptatie."
+  },
+  "behoud": {
+    "elf_referenties_exact": 19,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "sdk_vendor_npm_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431"
+    },
+    "private_rust_bron_exact_ongewijzigd": {
+      "engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      "wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      "mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      "lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+    },
+    "scriptcontroles": [
+      {
+        "pad": "analyse.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "beelden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "bewijs.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "bouwen-native.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "eindcontrole.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "native-proef.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "native-ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "native-sync-proef.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "native-sync-ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "acht-stappen.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": "sync-probe.js",
+        "controle": "node --check",
+        "code": 0
+      }
+    ]
+  },
+  "niet_gecontroleerd": [
+    "Geen productiecode/SDK/vendor/Rust-proefbron gewijzigd; alleen private meting en documentatie. Bestaande cachevarianten blijven afgewezen.",
+    "Geen nieuwe volledige frontend/TypeScript/Python-suite of product-CI. Geen nieuwe Wasm-/Rust-eenheidstests: bestaande vaste modules gebruikt.",
+    "Geen Windows/macOS-,installer-,andere feature/schema-/releasevariantacceptatie.",
+    "Geen volledige IME/accessibility/alle mutaties/stories/previews/glyphdekking. Bestaande geheugen-/RefCell-fouten en tien migratiegebieden blijven open;geen issue gesloten.",
+    "Fonts-/layoutmetadata bevat geen volledige inhoudshash; geen bewijs dat de16syncs veilig redundant zijn. Geen definitieve causale of totaleCPU-verklaring."
+  ],
+  "vervolg": "Eerst hoofdthread-sync-aanvraagplanning en eigen sync-fasen onderzoeken zoals hierboven;geen nieuwe fontcachevariant blind overnemen. Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-synchronisatiefasen.tar.gz",
+    "sha256": "1e41233b29574a279f205208de8237d9cab3f01ab54a47f238051ac37c48d3dc",
+    "bytes": 18392913,
+    "bestanden": 184,
+    "alle_leden_en192_layoutverwijzingen_byteexact_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/dist.192private volledige layouts behouden;24unieke JSONs in archief en192hashverwijzingen. Alle scripts/logs/metagegevens/ruwe profielen/DOCX/PNG behouden. Bestaande kernen en loggerbron via voorgaande bewijsbundels plus hashen vastgepind."
+  }
+}
