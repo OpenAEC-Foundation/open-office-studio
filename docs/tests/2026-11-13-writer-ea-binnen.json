@@ -1,0 +1,779 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "e2502229",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Ea-kosten vrijwel geheel gelokaliseerd in blok-API waarvan de aanroeper het resultaat weggooit,en volledige retained-layout-JSON. Volgende kandidaat: echte warmroute zonder grote JSON-retour,met behoud van alle lowering-/font-/env-/foutbijwerkingen. Nog geen productfix of algemene desktopwinst bewezen.",
+  "variant": {
+    "bouw": {
+      "code": 0,
+      "reden": null,
+      "seconden": 119.11523837299319,
+      "minimum_vrije_bytes": 13808214016,
+      "start_vrije_bytes": 13917507584,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/open-office-studio-ea-binnen",
+      "programma_sha256": "6180c89c4dc8d14618bc57359abb5b14f57458029786e79127ffcf6c8070400a",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "wijzigingscontrole": {
+      "exacte_vervangingen": 15,
+      "uitsluitend_binnen_Ea": true,
+      "voor_sha256": "4f5ffd628ffd7b6bf5a75731f8df95d29e454b30564c8bc08eedc57abe1da751",
+      "na_sha256": "b00581b90135f1bc0fb193b8e4fe06e13886816b9168e4e32363f3b8f20f4626",
+      "afgekeurde_voorbereiding_heeft_geen_JS_gewijzigd": true
+    },
+    "basis": "sync-binnen/dist met bestaande7f7877f1-Wasm;uitsluitend15kloktoevoegingen binnen Ea in één privateWorker-JS-kopie. Geen Rust-/Wasm-bouw of SDK/productbronwijziging.",
+    "platform": "Linux x86_64,release2026.45.52,writer-bronjournaal,schema2;eigenX11/DBus/XDG-profielen en eigenfixture. Runtime-Wasm via fetch/WebCrypto bevestigd.",
+    "eerste_voorbereiding": {
+      "fase": "Voorbereiding vóór enige JS-schrijfactie of native bouw",
+      "fout": "AssertionError: ('if(e.fontsRevision!==dn){', 0)",
+      "oorzaak": "Voorwaarde is laatste term van een komma-expressie in if;anker bevatte onterecht direct if.",
+      "gevolg": "Oude hardlinked dist onveranderd bewaard;geen product-/SDK-mutatie."
+    }
+  },
+  "ronden": [
+    {
+      "naam": "opname",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 75.40205522200267,
+      "programma_sha256": "6180c89c4dc8d14618bc57359abb5b14f57458029786e79127ffcf6c8070400a",
+      "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/native-proef.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/open-office-studio-ea-binnen",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/opname"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33232,
+        "begin_tot_bron_ms": 10329,
+        "laatste_keyup_tot_bron_ms": 348,
+        "laatste_keyup_tot_frame_ms": 3262,
+        "begin_tot_frame_ms": 13243,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13433,
+        "wall_verzonden_tot_frame_ms": 11547,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      }
+    },
+    {
+      "naam": "herhaling",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 75.20216092800547,
+      "programma_sha256": "6180c89c4dc8d14618bc57359abb5b14f57458029786e79127ffcf6c8070400a",
+      "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/native-proef.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/open-office-studio-ea-binnen",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/herhaling"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33625,
+        "begin_tot_bron_ms": 10578,
+        "laatste_keyup_tot_bron_ms": 275,
+        "laatste_keyup_tot_frame_ms": 2877,
+        "begin_tot_frame_ms": 13180,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13372,
+        "wall_verzonden_tot_frame_ms": 11406,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      }
+    }
+  ],
+  "analyse": {
+    "opname": {
+      "geslaagd": true,
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      },
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33232,
+        "begin_tot_bron_ms": 10329,
+        "laatste_keyup_tot_bron_ms": 348,
+        "laatste_keyup_tot_frame_ms": 3262,
+        "begin_tot_frame_ms": 13243,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13433,
+        "wall_verzonden_tot_frame_ms": 11547,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "sommen": {
+        "taak/applyUpdate": {
+          "aantal": 68,
+          "som_ms": 661.9999999999945,
+          "mediaan_ms": 9.0,
+          "min_ms": 0,
+          "max_ms": 26
+        },
+        "font/font": {
+          "aantal": 67,
+          "som_ms": 1232.0,
+          "mediaan_ms": 15,
+          "min_ms": 12,
+          "max_ms": 117
+        },
+        "taak/fontRequirements": {
+          "aantal": 67,
+          "som_ms": 1246.0000000000036,
+          "mediaan_ms": 16,
+          "min_ms": 13,
+          "max_ms": 117
+        },
+        "sync.fg/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0.0,
+          "max_ms": 0.0,
+          "deel_sync_procent": 0.0
+        },
+        "ea.load/sync": {
+          "aantal": 16,
+          "som_ms": 13.000000000001819,
+          "mediaan_ms": 1.0,
+          "min_ms": 0,
+          "max_ms": 3.999999999998181
+        },
+        "ea.partial/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0
+        },
+        "ea.media/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0
+        },
+        "ea.notes/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0
+        },
+        "ea.input/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0
+        },
+        "ea.blocks/sync": {
+          "aantal": 16,
+          "som_ms": 1938.0000000000073,
+          "mediaan_ms": 119.50000000000182,
+          "min_ms": 102,
+          "max_ms": 170
+        },
+        "ea.layout.json/sync": {
+          "aantal": 16,
+          "som_ms": 1874.9999999999945,
+          "mediaan_ms": 115.0,
+          "min_ms": 98.00000000000182,
+          "max_ms": 157
+        },
+        "ea.selection/sync": {
+          "aantal": 16,
+          "som_ms": 19.0,
+          "mediaan_ms": 1.0,
+          "min_ms": 0.999999999998181,
+          "max_ms": 2
+        },
+        "sync.ea/sync": {
+          "aantal": 16,
+          "som_ms": 3845.0000000000036,
+          "mediaan_ms": 230.5,
+          "min_ms": 208,
+          "max_ms": 329,
+          "deel_sync_procent": 65.90675351388408
+        },
+        "sync.frame/sync": {
+          "aantal": 16,
+          "som_ms": 1444.0000000000018,
+          "mediaan_ms": 89.00000000000091,
+          "min_ms": 75,
+          "max_ms": 125,
+          "deel_sync_procent": 24.751456976345555
+        },
+        "sync.reply/sync": {
+          "aantal": 16,
+          "som_ms": 542.0000000000036,
+          "mediaan_ms": 33.99999999999909,
+          "min_ms": 13.000000000001819,
+          "max_ms": 60,
+          "deel_sync_procent": 9.290366815221166
+        },
+        "taak/sync": {
+          "aantal": 16,
+          "som_ms": 5834.000000000009,
+          "mediaan_ms": 354.0000000000009,
+          "min_ms": 315,
+          "max_ms": 515
+        },
+        "projectie/resident": {
+          "aantal": 1,
+          "som_ms": 822,
+          "mediaan_ms": 822,
+          "min_ms": 822,
+          "max_ms": 822
+        },
+        "pakket/resident": {
+          "aantal": 1,
+          "som_ms": 2049,
+          "mediaan_ms": 2049,
+          "min_ms": 2049,
+          "max_ms": 2049
+        },
+        "resident/resident": {
+          "aantal": 1,
+          "som_ms": 3280,
+          "mediaan_ms": 3280,
+          "min_ms": 3280,
+          "max_ms": 3280
+        },
+        "save/save": {
+          "aantal": 1,
+          "som_ms": 3375,
+          "mediaan_ms": 3375,
+          "min_ms": 3375,
+          "max_ms": 3375
+        },
+        "updatecode/save": {
+          "aantal": 1,
+          "som_ms": 3,
+          "mediaan_ms": 3,
+          "min_ms": 3,
+          "max_ms": 3
+        },
+        "taak/save": {
+          "aantal": 1,
+          "som_ms": 3378,
+          "mediaan_ms": 3378,
+          "min_ms": 3378,
+          "max_ms": 3378
+        },
+        "taak/buildPages": {
+          "aantal": 1,
+          "som_ms": 79.99999999999636,
+          "mediaan_ms": 79.99999999999636,
+          "min_ms": 79.99999999999636,
+          "max_ms": 79.99999999999636
+        }
+      },
+      "ea_residu_som_ms": 0.0,
+      "ea_kindfasen_zonder_overlap": true,
+      "residu_som_ms": 3.0,
+      "kindfasen_eenmaal_binnen_sync_en_zonder_overlap": true,
+      "geen_logverlies": true,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      },
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33625,
+        "begin_tot_bron_ms": 10578,
+        "laatste_keyup_tot_bron_ms": 275,
+        "laatste_keyup_tot_frame_ms": 2877,
+        "begin_tot_frame_ms": 13180,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13372,
+        "wall_verzonden_tot_frame_ms": 11406,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "sommen": {
+        "taak/applyUpdate": {
+          "aantal": 70,
+          "som_ms": 699.0000000000055,
+          "mediaan_ms": 9.0,
+          "min_ms": 0,
+          "max_ms": 24
+        },
+        "font/font": {
+          "aantal": 69,
+          "som_ms": 1318.9999999999982,
+          "mediaan_ms": 16.999999999996362,
+          "min_ms": 12,
+          "max_ms": 109
+        },
+        "taak/fontRequirements": {
+          "aantal": 69,
+          "som_ms": 1342.0000000000055,
+          "mediaan_ms": 17,
+          "min_ms": 12,
+          "max_ms": 110
+        },
+        "sync.fg/sync": {
+          "aantal": 16,
+          "som_ms": 0.999999999998181,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0.999999999998181,
+          "deel_sync_procent": 0.01687194196048897
+        },
+        "ea.load/sync": {
+          "aantal": 16,
+          "som_ms": 13.000000000003638,
+          "mediaan_ms": 1.0,
+          "min_ms": 0,
+          "max_ms": 5
+        },
+        "ea.partial/sync": {
+          "aantal": 16,
+          "som_ms": 1.000000000001819,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 1.000000000001819
+        },
+        "ea.media/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0
+        },
+        "ea.notes/sync": {
+          "aantal": 16,
+          "som_ms": 2.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 1
+        },
+        "ea.input/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0
+        },
+        "ea.blocks/sync": {
+          "aantal": 16,
+          "som_ms": 1978.9999999999964,
+          "mediaan_ms": 116.99999999999909,
+          "min_ms": 98,
+          "max_ms": 168
+        },
+        "ea.layout.json/sync": {
+          "aantal": 16,
+          "som_ms": 1871.0000000000036,
+          "mediaan_ms": 110.50000000000091,
+          "min_ms": 99,
+          "max_ms": 167
+        },
+        "ea.selection/sync": {
+          "aantal": 16,
+          "som_ms": 20.99999999999818,
+          "mediaan_ms": 1.0,
+          "min_ms": 0.999999999998181,
+          "max_ms": 3
+        },
+        "sync.ea/sync": {
+          "aantal": 16,
+          "som_ms": 3889.0000000000036,
+          "mediaan_ms": 227.5,
+          "min_ms": 203,
+          "max_ms": 320,
+          "deel_sync_procent": 65.61498228446102
+        },
+        "sync.frame/sync": {
+          "aantal": 16,
+          "som_ms": 1468.0,
+          "mediaan_ms": 90.0,
+          "min_ms": 77,
+          "max_ms": 118.00000000000182,
+          "deel_sync_procent": 24.768010798042862
+        },
+        "sync.reply/sync": {
+          "aantal": 16,
+          "som_ms": 564.9999999999945,
+          "mediaan_ms": 35.5,
+          "min_ms": 8,
+          "max_ms": 53.99999999999818,
+          "deel_sync_procent": 9.532647207693516
+        },
+        "taak/sync": {
+          "aantal": 16,
+          "som_ms": 5926.999999999998,
+          "mediaan_ms": 357.9999999999991,
+          "min_ms": 321,
+          "max_ms": 493
+        },
+        "projectie/resident": {
+          "aantal": 1,
+          "som_ms": 818,
+          "mediaan_ms": 818,
+          "min_ms": 818,
+          "max_ms": 818
+        },
+        "pakket/resident": {
+          "aantal": 1,
+          "som_ms": 2098,
+          "mediaan_ms": 2098,
+          "min_ms": 2098,
+          "max_ms": 2098
+        },
+        "resident/resident": {
+          "aantal": 1,
+          "som_ms": 3305,
+          "mediaan_ms": 3305,
+          "min_ms": 3305,
+          "max_ms": 3305
+        },
+        "save/save": {
+          "aantal": 1,
+          "som_ms": 3384,
+          "mediaan_ms": 3384,
+          "min_ms": 3384,
+          "max_ms": 3384
+        },
+        "updatecode/save": {
+          "aantal": 1,
+          "som_ms": 3,
+          "mediaan_ms": 3,
+          "min_ms": 3,
+          "max_ms": 3
+        },
+        "taak/save": {
+          "aantal": 1,
+          "som_ms": 3388,
+          "mediaan_ms": 3388,
+          "min_ms": 3388,
+          "max_ms": 3388
+        },
+        "taak/buildPages": {
+          "aantal": 1,
+          "som_ms": 86,
+          "mediaan_ms": 86,
+          "min_ms": 86,
+          "max_ms": 86
+        }
+      },
+      "ea_residu_som_ms": 2.0,
+      "ea_kindfasen_zonder_overlap": true,
+      "residu_som_ms": 4.000000000001819,
+      "kindfasen_eenmaal_binnen_sync_en_zonder_overlap": true,
+      "geen_logverlies": true,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "kernbevindingen": [
+    "Beide ronden16syncs. Ea totaal3.845/3.889ms: blok-API1.938/1.979ms,volledige retained-layout-JSON1.875/1.871ms,loadState13/13ms,selectie19/21ms. Punten zijn duizendtallen.",
+    "Partial/media/nootscheiders/Ro samen onder enkele ms. Fontregistratie en afzonderlijke paragraphmetingen niet uitgevoerd tijdens deze opnamen;geen claim dat zij altijd goedkoop zijn.",
+    "Alle gemeten Ea-kindfasen binnen bijbehorende Ea en zonder onderlinge overlap;precies één layouttak per Ea. Residu opgenomen per taak. Bovenliggende fasen niet bij kindfasen optellen.",
+    "Blok-API-klok omvat Rust-lowering/JSON-retour en JS-adapterwerk. Dit is geen bewijs dat alle1,9s uitsluitend serialisatie-CPU is. Layoutklok omvat de concrete API-aanroep,inclusief JSON-productie. Tijden zijn verstreken Worker-tijd,geen exclusieve CPU.",
+    "De Ea-lus negeert het resultaat van yrsBlocksForStory. Rust lower_story_json warmt eerst with_resident_story op,serialiseert daarna resident blocks,lazily gecachet en gekloond. Een adapter doet ook JSON.parse en envregistratie via structuredClone;andere adapter parseert alleen. Een nieuwe warmroute moet alle noodzakelijke bijwerkingen behouden.",
+    "Geen speedacceptatie uit deze geïnstrumenteerde ronden. Eerder afgewezen cachevarianten blijven afgewezen. Aanvraagplanning blijft relevant omdat sneller voorbereiden meer syncs kan toelaten."
+  ],
+  "adaptercontext": {
+    "bestand": "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+    "sha256": "b00581b90135f1bc0fb193b8e4fe06e13886816b9168e4e32363f3b8f20f4626",
+    "contexten": [
+      "ds(),hasStory:_=>!U_.test(_)&&e.has_story(_),storyLength:_=>e.story_len(_),storyChecksum:_=>BigInt(e.story_checksum(_)),yrsBlocksForStory:(_,P={})=>{let z=e.yrs_blocks_for_story(_,JSON.stringify(P)),le=JSON.parse(z);return m.set(_,structuredClone(P)),le},paragraphs:_=>JSON.parse(e.paragraphs(_)),searchText:(_,P={})=>{if(!_)return[];let z=P.limit??Number.POSITIVE_INFINITY;if(!Number.isSafeInteger(z)&&z!==Number.POSITIVE_INFINITY||z<0)throw new RangeError(\"search limit must be a non-negative safe integer\");return JSON.parse(e.search_text(_,P.caseSensitive??!1,Number",
+      "row new Error(\"yrs selection must stay inside one story\");r.set_selection(w.story,w.paraId,w.offset,x.paraId,x.offset)},yrsBlocksForStory:(w,x={})=>JSON.parse(r.yrs_blocks_for_story(w,JSON.stringify(x))),destroy:()=>{j||(j=!0,A.clear(),re.clear(),ye.clear(),q.clear(),h.clear(),y=[],g=void 0,n=void 0,F?queueMicrotask(ge):ge())}};return K}function hS(e,t){let r=new Set(t),n=[],i=()=>e.listRevisions().filter(({revisionId:a})=>r.has(a));for(let a of e.storyIds().sort()){let o=0,s=new Set,l=[],d=new Map;for(let u of e.storySegments(a)){if(u.kind===\"pilcrow\"){if(ul(u.pr"
+    ],
+    "duiding": "Ea negeert retourwaarde van yrsBlocksForStory,maar adapters kunnen JSON.parse en envregistratie/structuredClone doen. Nieuwe warmroute moet alle noodzakelijke bijwerkingen behouden;de gemeten API-duur is niet uitsluitend serialisatie."
+  },
+  "warmroute_bron": {
+    "engine.rs": {
+      "huidige_bron": ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs",
+      "huidige_sha256": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      "cachemodule_bron": ".local/integratiecontrole/replica-fontcache/engine.rs.na",
+      "cachemodule_bron_sha256": "b5839274b3f1ec8ea48eefcf28d819fd6a563d427cfba7f7c5c78cb1d7d88877",
+      "relevante_sectie_exact_gelijk": true,
+      "sectie": "    pub fn lower_story_json(&self, story: &str, env: &RenderEnv) -> Result<String, BridgeError> {\n        self.with_resident_story(story, env, |_| ())?;\n        let mut render = self.render.borrow_mut();\n        let lowered = render\n            .stories\n            .get_mut(story)\n            .expect(\"resident story exists after lowering\");\n        Ok(lowered\n            .serialized_blocks\n            .get_or_insert_with(|| {\n                serde_json::to_string(&lowered.blocks)\n                    .expect(\"LayoutBlock serialization is infallible after lowering\")\n            })\n            .clone())\n    }\n\n"
+    },
+    "wasm.rs": {
+      "huidige_bron": ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs",
+      "huidige_sha256": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      "cachemodule_bron": ".local/integratiecontrole/replica-fontcache/wasm.rs.na",
+      "cachemodule_bron_sha256": "28f4e4b9911f1645dc5ae7c575bf868454e7976d53af332e543d7b47f776ff21",
+      "relevante_sectie_exact_gelijk": true,
+      "sectie": "    pub fn yrs_blocks_for_story(&self, story: &str, env_json: &str) -> Result<String, JsValue> {\n        let _fonts = self.fonts.enter();\n        let env = parse_render_env(env_json)?;\n        self.engine.lower_story_json(story, &env).map_err(js_err)\n    }\n\n    /// `[{\"paraId\",\"text\",\"properties\"}, …]` in document order. `text` is the\n    /// paragraph's plain text without its pilcrow; `properties` is the\n    /// pilcrow's authored property map (`pStyle`, `alignment` and whatever\n    /// else has been set on it). Errors on an unknown story.\n"
+    }
+  },
+  "functioneel": {
+    "twee_volledige_native_ronden_groen": true,
+    "checks": "Fysieke1052tekens,Undo/Redo,Shift-selectie/vervangen,bewaren vóór vastgehouden antwoord,verwerpen,nieuw document en laat antwoord;geen GUI/engine/consolefouten.",
+    "documenten": {
+      "opname": {
+        "sha256": "29aa8725416bb50a57ef6ee599f411d7f98b54639ef0fa7b6482688b31b0713a",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "ec3ea7279b2b64f2e5724cf6ba0b7b7e8c4e0867136f59d2d55adda53e3b4ac9",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_opname": []
+      },
+      "herhaling": {
+        "sha256": "b86c00cc29e8539cfcca04676abe279437f1dedf3b01a1daad7b1e656b19dd3d",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "d5d8721be31e4e1d9a9900b034bd33cfc27822bac701af1fed5f5c78f21e30f3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_opname": [
+          "docProps/core.xml"
+        ]
+      }
+    },
+    "docx": "Twee DOCX onafhankelijk SHA/ZIP/CRC/alleXML en relaties;128tabellen/91423UTF16. Onderling alleen core.xml verschillend.",
+    "beelden": {
+      "paren": [
+        {
+          "referentie": "ea-binnen/opname/invoer-redo.png",
+          "vergeleken": "ea-binnen/herhaling/invoer-redo.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "ea-binnen/opname/snel-getypt-bewaard.png",
+          "vergeleken": "ea-binnen/herhaling/snel-getypt-bewaard.png",
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "ea-binnen/opname/nieuw-na-laat-antwoord.png",
+          "vergeleken": "ea-binnen/herhaling/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "sync-binnen/herhaling/invoer-redo.png",
+          "vergeleken": "ea-binnen/opname/invoer-redo.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "sync-binnen/herhaling/snel-getypt-bewaard.png",
+          "vergeleken": "ea-binnen/opname/snel-getypt-bewaard.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "sync-binnen/herhaling/nieuw-na-laat-antwoord.png",
+          "vergeleken": "ea-binnen/opname/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "sync-binnen/herhaling/invoer-redo.png",
+          "vergeleken": "ea-binnen/herhaling/invoer-redo.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "sync-binnen/herhaling/snel-getypt-bewaard.png",
+          "vergeleken": "ea-binnen/herhaling/snel-getypt-bewaard.png",
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "sync-binnen/herhaling/nieuw-na-laat-antwoord.png",
+          "vergeleken": "ea-binnen/herhaling/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        }
+      ],
+      "exact": 7,
+      "grens": "Gehele beelden zonder maskers;drie vaste momenten,geen volledige visuele acceptatie."
+    },
+    "bekeken": [
+      "herhaling/snel-getypt-bewaard.png"
+    ],
+    "waarneming": "Verwachte opmaak/tekst/65pagina’s in bekeken bewaarbeeld;geen zichtbare overlap. Negen hele-beeldparen,zeven exact,twee30-pixelverschillen in2px-brede bbox. Geen volledige visuele acceptatie."
+  },
+  "behoud": {
+    "elf_referenties_exact": 21,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "sdk_vendor_npm_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431"
+    },
+    "private_rust_bron_exact_ongewijzigd": {
+      "engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      "wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      "mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      "lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+    },
+    "scriptcontroles": [
+      {
+        "pad": "analyse.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "beelden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "bewijs.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "bouwen-native.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "controle-wijziging.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "eindcontrole.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "native-proef.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "voorbereiden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "dist/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+        "controle": "node --check",
+        "code": 0,
+        "sha256": "b00581b90135f1bc0fb193b8e4fe06e13886816b9168e4e32363f3b8f20f4626"
+      }
+    ]
+  },
+  "niet_gecontroleerd": [
+    "Geen functionele kandidaat gemaakt,geen productiecode/SDK/vendor/privateRust-bron gewijzigd.",
+    "Geen nieuwe volledige frontend/TypeScript/Python-suite,product-CI,Windows/macOS-,installer- of anderefeature/schema-/releaseacceptatie.",
+    "Geen volledige IME/accessibility/allemutaties/stories/previews/glyphdekking. Bestaande geheugen-/RefCell-fouten en migratiegebieden blijven open;geen issue gesloten.",
+    "Geen bewijs van veilig overslaan van sync,renderInputs of hydratatie. Returnwaarde ongebruikt betekent niet dat de hele aanroep overbodig is."
+  ],
+  "vervolg": "Maak eerst een private,getypeerde warm-story-proef op dezelfde with_resident_story-route zonder blokserialisatie. Behoud fonts.enter,parse_render_env,alle fouten/bron/env/media/generatiebewaking en JS-envregistratie. Geen verborgen vlag die normale body-JSON leeg maakt en geen misbruik van profielgetter. Werk bindgenglue/typen/API expliciet bij,met compatibele terugval. Vergelijk volledige CRDT/vector/fonts/blocks/indeling en negatieve env/story/preview/structuurgevallen tegen bestaande route;daarna echte native korte/rijke ABBA,bewaren/UndoRedo/selectie/beelden. Meet of extra syncs de winst weer opeten. Database laatst.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-13-writer-sync-binnen.tar.gz",
+      "sha256": "26f1a38b1b7111edb26009bd45aee42c917ba214fb85e91ec3788b6777fa2309"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-replicacache.tar.gz",
+      "sha256": "2e1faca1577ef3c215a95b2bd3633107dee55c937e3db785e5ae1718dd0ca216"
+    }
+  ],
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-ea-binnen.tar.gz",
+    "sha256": "080e95ce8c0ebb5e24f8f7d9ad5e786c02e48c8518417009c2d55a87a1b786e3",
+    "bytes": 5604334,
+    "bestanden": 59,
+    "alle_leden_byteexact_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/dist. Wel volledige klok-JSvoor/na-gzip,exacte vervangingen,voorbereidingsafkeuring,broncontext,proefscripts,profielen,DOCX,PNG enlogs. Alle21ELF-referenties privé behouden en vastgepind."
+  }
+}
