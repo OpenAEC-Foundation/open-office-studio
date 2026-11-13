@@ -128,9 +128,28 @@ const attribuut = (tag: string, naam: string) =>
  * (Excel `x:num`, LibreOffice `sdval`) gaat voor de getoonde tekst.
  */
 export function leesHtmlTabel(bron: string, leesGetal?: (rij: number, kolom: number, waarde: number) => void): string[][] | null {
-  const begin = bron.search(/<table[\s>]/i);
+  // De HTML op het klembord kan meerdere tabellen bevatten. De plakroute
+  // leest alleen de eerste; volgende tabellen mogen geen extra cellen maken.
+  // Hele tags lezen voorkomt dat een voorbeeld in een attribuut of commentaar
+  // ten onrechte het begin/einde van die tabel aangeeft.
+  const tags = /<!--[\s\S]*?-->|<(\/?)([a-z][\w:-]*)(?=[\s/>])(?:[^<>"']|"[^"]*"|'[^']*')*>/gi;
+  let begin = -1;
+  let einde = bron.length;
+  let diepte = 0;
+  for (const tag of bron.matchAll(tags)) {
+    if (tag[2]?.toLowerCase() !== "table") continue;
+    if (begin < 0) {
+      if (tag[1]) continue;
+      begin = tag.index;
+    }
+    diepte += tag[1] ? -1 : 1;
+    if (diepte === 0) {
+      einde = tag.index + tag[0].length;
+      break;
+    }
+  }
   if (begin < 0) return null;
-  const tabel = bron.slice(begin);
+  const tabel = bron.slice(begin, einde);
   const rijen: string[][] = [];
   const bezet: boolean[][] = [];
   let r = 0;

@@ -122,3 +122,19 @@ describe("inhoudsopgave: alleen paginanummers bijwerken zonder hyperlinks (#50)"
     } finally { s.destroy(); }
   });
 });
+
+it.each([true, false])("werkt samengestelde paginalabels volledig bij (tabs: %s)", rechts => {
+  const koppen: Kop[] = [{ tekst: "Bijlage", niveau: 1, pagina: "A-12" }];
+  const uit = werkInhoudsopgaveBij(inhoudsopgave(koppen, rechts), [{ ...koppen[0], pagina: "B-14" }], "paginas");
+  expect(regels(uit.bytes)).toEqual([rechts ? "Bijlage\tB-14" : "Bijlage B-14"]);
+  expect(werkInhoudsopgaveBij(uit.bytes, [{ ...koppen[0], pagina: "B-14" }], "paginas").gewijzigd).toBe(false);
+});
+
+it("werkt een over meerdere tekstfragmenten verdeeld paginalabel bij zonder de kop te wijzigen", () => {
+  const koppen: Kop[] = [{ tekst: "Fase 12", niveau: 1, pagina: "A-12" }];
+  const p = new Pakket(inhoudsopgave(koppen));
+  p.schrijf("word/document.xml", p.lees("word/document.xml").replace('>A-12</w:t>', '>A-</w:t></w:r><w:r><w:rPr><w:b/></w:rPr><w:t>12</w:t>'));
+  const uit = werkInhoudsopgaveBij(p.inpakken(), [{ ...koppen[0], pagina: "B-14" }], "paginas");
+  expect(regels(uit.bytes)).toEqual(["Fase 12\tB-14"]);
+  expect(werkInhoudsopgaveBij(uit.bytes, [{ ...koppen[0], pagina: "B-14" }], "paginas").gewijzigd).toBe(false);
+});

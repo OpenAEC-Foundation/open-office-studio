@@ -373,20 +373,26 @@ export function voegInhoudsopgaveIn(bytes: Uint8Array, markering: string | null,
 }
 
 /** Een getoond paginanummer aan het eind van een regel vervangen. */
-function nummerVervanging(xml: string, p: XmlElement, pagina: string): Vervanging | null {
+function nummerVervanging(p: XmlElement, pagina: string): Vervanging[] {
   const ts = zoekAlle(p, "t");
   const tabs = zoekAlle(p, "tab").filter((t) => t.ouder?.lokaal === "r");
   const laatsteTab = tabs[tabs.length - 1];
-  const na = laatsteTab ? ts.filter((t) => t.start > laatsteTab.start) : ts.slice(-1);
-  if (!na.length) return null;
-  const t = na[na.length - 1];
+  if (laatsteTab) {
+    // Het volledige label na de tab vervangen, ook bij hoofdstuknummers
+    // (A-12) of een paginalabel dat over meerdere tekstfragmenten is verdeeld.
+    const na = ts.filter(t => t.start > laatsteTab.start);
+    if (!na.length || na.map(tekstVan).join("") === pagina) return [];
+    return na.map((t, i) => ({ start: t.inhoudStart, eind: t.inhoudEind, tekst: i === 0 ? ontsnap(pagina) : "" }));
+  }
+  const t = ts.at(-1);
+  if (!t) return [];
   const oud = tekstVan(t);
-  const m = /^(.*?)(\d+|[ivxlcdm]+|[IVXLCDM]+|[a-z]|[A-Z]|\?)(\s*)$/.exec(oud);
-  if (!m) return null;
-  if (!laatsteTab && !/\s$/.test(m[1]) && m[1] !== "") return null;
-  if (m[2] === pagina) return null;
-  return { start: t.inhoudStart, eind: t.inhoudEind, tekst: ontsnap(m[1] + pagina + m[3]) };
+  const m = new RegExp(`^(.*?)(${PAGINALABEL})(\\s*)$`, "i").exec(oud);
+  if (!m || (!/\s$/.test(m[1]) && m[1] !== "") || m[2] === pagina) return [];
+  return [{ start: t.inhoudStart, eind: t.inhoudEind, tekst: ontsnap(m[1] + pagina + m[3]) }];
 }
+
+const PAGINALABEL = "(?:\\d+|[ivxlcdm]+|[a-z]|\\?)(?:[-.:](?:\\d+|[ivxlcdm]+|[a-z]))*";
 
 /** Koptekst van een TOC-regel, zonder de afsluitende paginaverwijzing. */
 function kopVanRegel(p: XmlElement): string {
@@ -401,7 +407,7 @@ function kopVanRegel(p: XmlElement): string {
   }
   // Zonder tab staat het paginalabel na een spatie. Verwijder alleen een
   // ondersteund label, zodat cijfers/Romeinse tekens in de kop behouden blijven.
-  return vergelijkTekst(alineaTekst(p).replace(/\s+(?:\d+|[ivxlcdm]+|[a-z]|\?)\s*$/i, ""));
+  return vergelijkTekst(alineaTekst(p).replace(new RegExp(`\\s+${PAGINALABEL}\\s*$`, "i"), ""));
 }
 
 /**
@@ -459,8 +465,7 @@ export function werkInhoudsopgaveBij(bytes: Uint8Array, koppen: Kop[], modus: "p
         }
       }
       if (!pagina) continue;
-      const v = nummerVervanging(doc.xml, p, pagina);
-      if (v) w.push(v);
+      w.push(...nummerVervanging(p, pagina));
     }
     if (!w.length) return { bytes, gewijzigd: false };
     pakket.schrijf(doc.pad, vervang(doc.xml, w));

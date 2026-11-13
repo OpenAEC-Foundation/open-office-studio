@@ -307,22 +307,49 @@ try {
     );
   async function ctrlKlik(row) {
     await kies(row, 0);
-    const painted = await page.waitForFunction((row) => {
-      const r = document
-        .querySelector(
+    // Programmatic selection updates the name box before scrolling/painting settles.
+    // Sample a cell's interior across rendered frames, rather than clicking its moving edge.
+    await page.bringToFront();
+    const painted = await page.waitForFunction(async (row) => {
+      const sample = () => {
+        const scroll = document.querySelector(
           '.office-tabpaneel:not([hidden]) [data-testid="xlsx-scroll"]',
-        )
-        .getBoundingClientRect();
-      for (let y = 2; y < 180; y += 2)
+        );
+        const r = scroll.getBoundingClientRect();
         for (const x of [50, 60, 70, 80]) {
-          const p = proefApis().rekenblad.getPositionAtPoint(
-            r.left + x,
-            r.top + y,
-          );
-          if (p?.row === row && p.col === 0)
-            return { x: r.left + x, y: r.top + y };
+          const ys = [];
+          for (let y = 2; y < 180; y += 2) {
+            const p = proefApis().rekenblad.getPositionAtPoint(
+              r.left + x,
+              r.top + y,
+            );
+            if (p?.row === row && p.col === 0) ys.push(y);
+          }
+          if (ys.length < 3) continue;
+          const point = { x: r.left + x, y: r.top + (ys[0] + ys.at(-1)) / 2 };
+          if (
+            !(
+              document.elementFromPoint(point.x, point.y) instanceof
+              HTMLCanvasElement
+            )
+          )
+            continue;
+          return {
+            ...point,
+            scrollTop: scroll.scrollTop,
+            scrollLeft: scroll.scrollLeft,
+          };
         }
-      return false;
+        return null;
+      };
+      const before = sample();
+      await new Promise((done) =>
+        requestAnimationFrame(() => requestAnimationFrame(done)),
+      );
+      const after = sample();
+      return before && after && JSON.stringify(before) === JSON.stringify(after)
+        ? after
+        : false;
     }, row);
     const point = await painted.jsonValue();
     await painted.dispose();

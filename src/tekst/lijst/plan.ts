@@ -76,7 +76,7 @@ export function planLijst(
     if (!num) throw new Error(vertaal("writer:lists.errors.numberingMissing", "De nummering van deze lijst staat niet in het document."));
     const { numId } = vrijeIds(nummering);
     for (const i of restVanBlok(alle, van, tot)) zet(i, numId, plan.get(i)?.ilvl);
-    pakket = { soort: "opnieuw", numId, abstractNumId: num.abstractNumId, ilvl: huidig.ilvl, beginBij };
+    pakket = { soort: "opnieuw", numId, abstractNumId: num.abstractNumId, ilvl: keuze.niveau ?? huidig.ilvl, beginBij };
   }
 
   return {

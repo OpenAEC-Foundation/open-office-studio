@@ -74,6 +74,8 @@ export interface RekenbladControle {
   volledigHerberekenen: boolean;
   /** Het bestand is opgeslagen met handmatig rekenen. */
   handmatigRekenen: boolean;
+  /** De bron vraagt om iteratieve berekening van kringverwijzingen. */
+  iteratiefRekenen: boolean;
   /** Er is een calcChain-onderdeel. */
   rekenketen: boolean;
   /** Verwijzingen naar externe werkboeken. */
@@ -200,7 +202,9 @@ export function inventariseerRekenblad(bytes: Uint8Array): RekenbladControle {
     if (a.Id && a.Target && a.TargetMode !== "External")
       doelen.set(a.Id, normaliseerPad("xl/workbook.xml", a.Target));
   }
-  const calc = /<(?:\w+:)?calcPr\b([^>]*?)\/?>/.exec(wbXml);
+  const calc = /<(?:\w+:)?calcPr\b([^>]*?)\/?>/.exec(
+    wbXml.replace(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>/g, ""),
+  );
   const calcAttr = calc ? attributen(calc[1]) : {};
   const controle: RekenbladControle = {
     formules: 0,
@@ -209,6 +213,7 @@ export function inventariseerRekenblad(bytes: Uint8Array): RekenbladControle {
     zonderUitkomst: [],
     volledigHerberekenen: ["1", "true"].includes(calcAttr.fullCalcOnLoad ?? ""),
     handmatigRekenen: calcAttr.calcMode === "manual",
+    iteratiefRekenen: ["1", "true"].includes(calcAttr.iterate ?? ""),
     rekenketen: "xl/calcChain.xml" in delen,
     externeKoppelingen: Object.keys(delen).filter((d) =>
       /^xl\/externalLinks\/[^/]+\.xml$/.test(d),
@@ -382,6 +387,10 @@ export function rekenbladMelding(
         examples: voorbeelden(afwijkend),
       }),
     );
+  }
+  if (controle.iteratiefRekenen) {
+    waarschuwing = true;
+    regels.push(t("iterativeCalculation"));
   }
   if (controle.handmatigRekenen) {
     waarschuwing = true;

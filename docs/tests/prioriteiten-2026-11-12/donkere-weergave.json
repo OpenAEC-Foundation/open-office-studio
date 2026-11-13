@@ -1,0 +1,142 @@
+{
+  "baseline": false,
+  "cases": [
+    "Dark page follows Forge while raw pixels and the document remain unchanged",
+    "View-only changes preserve raw canvas pixels and remove the effect for printing",
+    "Print-preview pixels and exported PDF content are identical in dark and paper views",
+    "Light/dark application themes keep the explicit page preference",
+    "Existing text gets the selected highlight; the swatch updates and remains readable",
+    "Light theme keeps the highlight glyph readable without changing its chosen colour",
+    "The adjacent font-colour swatch follows the chosen text colour while its glyph keeps contrast",
+    "Document view is discoverable in settings; Cancel restores the preview and Save persists it",
+    "A dark page retains mouse hit-testing, typing and native Undo",
+    "Following the system theme updates the page; forced-colours keeps a readable native palette"
+  ],
+  "errors": [],
+  "initialColorState": {
+    "highlight": null,
+    "text": null
+  },
+  "normal": {
+    "glyph": "rgb(250, 250, 249)",
+    "background": "rgb(54, 54, 62)",
+    "button": "rgba(0, 0, 0, 0)",
+    "swatch": "rgb(246, 211, 45)",
+    "border": "rgba(0, 0, 0, 0)",
+    "outline": "none"
+  },
+  "hover": {
+    "glyph": "rgb(250, 250, 249)",
+    "background": "rgb(86.60000000000001, 67, 50.800000000000004)",
+    "button": "rgba(217, 119, 6, 0.2)",
+    "swatch": "rgb(246, 211, 45)",
+    "border": "rgba(217, 119, 6, 0.4)",
+    "outline": "none"
+  },
+  "hoverContrast": 8.929596203308703,
+  "page": {
+    "filter": "invert(0.9) hue-rotate(180deg)",
+    "background": "rgba(0, 0, 0, 0)",
+    "parent": "rgb(34, 34, 40)"
+  },
+  "canvases": [
+    {
+      "html": "<canvas data-page-index=\"0\" width=\"816\" height=\"1056\" style=\"display: block; width: 816px; height: 1056px; background: rgb(255, 255, 255); box-shadow: 0 1px 3px var(--doc-shadow);\"></canvas>",
+      "width": 816,
+      "height": 1056
+    }
+  ],
+  "rawCanvas": "fe7cbbae1aed83e8a0280b4409726ad9de4ac009f74525a6e2898adb848031d3",
+  "previewHash": "062037fc56ff90a1be03f0fe514ec8888cf19b2aac32f62add5ee4c8a5cf1a5a",
+  "pressed": {
+    "glyph": "rgb(250, 250, 249)",
+    "background": "rgb(86.60000000000001, 67, 50.800000000000004)",
+    "button": "rgba(217, 119, 6, 0.2)",
+    "swatch": "rgb(246, 211, 45)",
+    "border": "rgba(217, 119, 6, 0.4)",
+    "outline": "none"
+  },
+  "open": {
+    "glyph": "rgb(250, 250, 249)",
+    "background": "rgb(86.60000000000001, 67, 50.800000000000004)",
+    "button": "rgba(217, 119, 6, 0.2)",
+    "swatch": "rgb(246, 211, 45)",
+    "border": "rgba(217, 119, 6, 0.4)",
+    "outline": "none"
+  },
+  "applied": {
+    "glyph": "rgb(250, 250, 249)",
+    "background": "rgb(54, 54, 62)",
+    "button": "rgba(0, 0, 0, 0)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(0, 0, 0, 0)",
+    "outline": "none"
+  },
+  "focus": {
+    "glyph": "rgb(250, 250, 249)",
+    "background": "rgb(86.60000000000001, 67, 50.800000000000004)",
+    "button": "rgba(217, 119, 6, 0.2)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(217, 119, 6, 0.4)",
+    "outline": "solid"
+  },
+  "lightHover": {
+    "glyph": "rgb(54, 54, 62)",
+    "background": "rgb(245.05, 230.35, 212.55)",
+    "button": "rgba(217, 119, 6, 0.15)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(217, 119, 6, 0.35)",
+    "outline": "none"
+  },
+  "lightNormal": {
+    "glyph": "rgb(54, 54, 62)",
+    "background": "rgb(250, 250, 249)",
+    "button": "rgba(0, 0, 0, 0)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(0, 0, 0, 0)",
+    "outline": "none"
+  },
+  "lightFocus": {
+    "glyph": "rgb(54, 54, 62)",
+    "background": "rgb(250, 250, 249)",
+    "button": "rgba(0, 0, 0, 0)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(0, 0, 0, 0)",
+    "outline": "solid"
+  },
+  "lightPressed": {
+    "glyph": "rgb(54, 54, 62)",
+    "background": "rgb(245.05, 230.35, 212.55)",
+    "button": "rgba(217, 119, 6, 0.15)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(217, 119, 6, 0.35)",
+    "outline": "solid"
+  },
+  "lightOpen": {
+    "glyph": "rgb(54, 54, 62)",
+    "background": "rgb(245.05, 230.35, 212.55)",
+    "button": "rgba(217, 119, 6, 0.15)",
+    "swatch": "rgb(224, 27, 36)",
+    "border": "rgba(217, 119, 6, 0.35)",
+    "outline": "none"
+  },
+  "fontColor": "008844",
+  "fontColourControl": {
+    "glyph": "rgb(54, 54, 62)",
+    "background": "rgb(245.05, 230.35, 212.55)",
+    "button": "rgba(217, 119, 6, 0.15)",
+    "swatch": "rgb(0, 136, 68)",
+    "border": "rgba(217, 119, 6, 0.35)",
+    "outline": "none"
+  },
+  "forcedColours": {
+    "glyph": "rgb(255, 255, 255)",
+    "background": "rgb(0, 0, 0)",
+    "button": "rgba(0, 0, 0, 0.2)",
+    "swatch": "rgb(246, 211, 45)",
+    "border": "rgba(0, 230, 255, 0.8)",
+    "outline": "none"
+  },
+  "sourceCommit": "0c177980eadf022ad5e0f21116f0e05affa881e7",
+  "nativeWindows": false
+}
