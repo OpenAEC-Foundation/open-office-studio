@@ -1,0 +1,486 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "e683c59d",
+  "basis_hoofdbranch": "a83a9345",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Algemene compacte editorretour afgewezen als huidige optimalisatiestap. Werkelijke productafnemers hebben volledige paginafragmenten nodig;ook lege-fragmentterugval verandert bediening. Geen productcode gewijzigd.",
+  "proef": {
+    "geslaagd": true,
+    "resultaten": [
+      {
+        "naam": "liniaal-pagina",
+        "volledige_layout": 0,
+        "compact": "werpt fragmentfout",
+        "lege_fragmenten": -1
+      },
+      {
+        "naam": "tabel-sectiebreedte",
+        "volledige_layout": 7500,
+        "compact": "werpt fragmentfout",
+        "lege_fragmenten": null
+      },
+      {
+        "naam": "paginanavigatie",
+        "volledige_layout": [
+          [
+            "selectie",
+            12
+          ],
+          "focus",
+          [
+            "pagina",
+            1
+          ]
+        ],
+        "compact": "werpt fragmentfout",
+        "lege_fragmenten": [
+          [
+            "pagina",
+            1
+          ]
+        ]
+      },
+      {
+        "naam": "regelnavigatie",
+        "volledige_layout": 1,
+        "compact": "werpt fragmentfout",
+        "lege_fragmenten": 0
+      },
+      {
+        "naam": "zichtbaar-spellingsbereik",
+        "volledige_layout": [
+          10,
+          30
+        ],
+        "compact": "werpt fragmentfout",
+        "lege_fragmenten": null
+      }
+    ],
+    "bronfuncties": [
+      {
+        "pad": ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/layoutMeta.ts",
+        "sha256": "5b5e5aa08cb265df25b92812404018cef9825a69bfc0e43a42099a843e48db3c",
+        "functies": [
+          "layoutMetaSummary"
+        ],
+        "uitgevoerd": "function layoutMetaSummary(meta: LayoutMetaV1): Layout & { summaryOnly: true } {\n  const layout = JSON.parse(meta.layoutShell) as Layout;\n  const refuse = (): never => {\n    throw new Error('the fragments of a worker layout summary live in the worker');\n  };\n  for (const page of layout.pages) {\n    Object.defineProperty(page, 'fragments', { get: refuse, enumerable: true, configurable: true });\n  }\n  return Object.assign(layout, { summaryOnly: true as const });\n}"
+      },
+      {
+        "pad": "src/tekst/liniaal/geometrie.ts",
+        "sha256": "2fd19901a1159517c37591f4b05fd8ea003521ad751a835712895fca3f0297c9",
+        "functies": [
+          "paginaMetPositie"
+        ],
+        "uitgevoerd": "function paginaMetPositie(paginas: readonly IndelingPagina[], positie: number | null) {\n  if (positie === null) return -1;\n  return paginas.findIndex((p) =>\n    p.fragments.some((f) => f.pmStart !== undefined && f.pmEnd !== undefined && f.pmStart <= positie && positie <= f.pmEnd),\n  );\n}"
+      },
+      {
+        "pad": "src/tekst/tabel/logica.ts",
+        "sha256": "a6560b3bddb9fc299f7e6c0fde340508a9852202a5fb6d85e3a9775d99e6f00f",
+        "functies": [
+          "tekstbreedteOpPagina"
+        ],
+        "uitgevoerd": "function tekstbreedteOpPagina(paginas: readonly IndelingPagina[], positie: number | null | undefined): number | null {\n  if (positie === null || positie === undefined) return null;\n  for (const p of paginas) {\n    if (!p.size || !p.margins) continue;\n    if (p.fragments.some((f) => f.pmStart !== undefined && f.pmEnd !== undefined && f.pmStart <= positie && positie <= f.pmEnd))\n      return Math.round((p.size.w - p.margins.left - p.margins.right) * TWIPS_PER_PX);\n  }\n  return null;\n}"
+      },
+      {
+        "pad": "src/tekst/paginabereik.ts",
+        "sha256": "5727ed3afeabaaad92548ad49b12489ca908dd30d48ec2679e84208efc3ec4c5",
+        "functies": [
+          "paginaSelectie",
+          "zichtbarePaginaElementen"
+        ],
+        "uitgevoerd": "function paginaSelectie<T, R extends Rand>(\n  paginas: readonly T[],\n  meet: (pagina: T) => R,\n  boven: number,\n  onder: number,\n  gestapeld = false,\n): { pagina: T; rect: R; index: number }[] {\n  const cache = new Map<number, R>();\n  const rect = (i: number) => {\n    let r = cache.get(i);\n    if (!r) {\n      r = meet(paginas[i]);\n      cache.set(i, r);\n    }\n    return r;\n  };\n  const verzamel = (van: number, tot: number) => {\n    const uit = [];\n    for (let i = van; i < tot; i++) {\n      const r = rect(i);\n      if (!(r.bottom < boven || r.top > onder))\n        uit.push({ pagina: paginas[i], rect: r, index: i });\n    }\n    return uit;\n  };\n  if (\n    !gestapeld ||\n    paginas.length < 16 ||\n    !Number.isFinite(boven) ||\n    !Number.isFinite(onder) ||\n    boven > onder\n  )\n    return verzamel(0, paginas.length);\n  let van = 0,\n    tot = paginas.length;\n  while (van < tot) {\n    const midden = van + Math.floor((tot - van) / 2),\n      r = rect(midden);\n    if (\n      !Number.isFinite(r.top) ||\n      !Number.isFinite(r.bottom) ||\n      r.bottom < r.top\n    )\n      return verzamel(0, paginas.length);\n    if (r.bottom < boven) van = midden + 1;\n    else tot = midden;\n  }\n  const eerste = van;\n  tot = paginas.length;\n  while (van < tot) {\n    const midden = van + Math.floor((tot - van) / 2),\n      r = rect(midden);\n    if (\n      !Number.isFinite(r.top) ||\n      !Number.isFinite(r.bottom) ||\n      r.bottom < r.top\n    )\n      return verzamel(0, paginas.length);\n    if (r.top <= onder) van = midden + 1;\n    else tot = midden;\n  }\n  return verzamel(eerste, van);\n}\nfunction zichtbarePaginaElementen(\n  paginas: readonly HTMLElement[],\n  venster: Rand,\n  marge: number,\n) {\n  const kolom = paginas[0]?.parentElement;\n  const stijl = kolom?.classList.contains(\"canvas-pages__column\")\n    ? getComputedStyle(kolom)\n    : null;\n  // Alleen de eigen paginakolom heeft deze vaste verticale indeling.\n  const gestapeld =\n    stijl?.display === \"flex\" &&\n    stijl.flexDirection === \"column\" &&\n    paginas.every((p) => p.parentElement === kolom);\n  return paginaSelectie(\n    paginas,\n    (p) => p.getBoundingClientRect(),\n    venster.top - marge,\n    venster.bottom + marge,\n    gestapeld,\n  );\n}"
+      },
+      {
+        "pad": "src/spelling/tekst/Golflijnen.tsx",
+        "sha256": "3f3214612255ddfc9f51888bc3dae0c427a36a7c83349e95e1ea94db6910069a",
+        "functies": [
+          "zichtbaarBereik",
+          "bereikInBeeld"
+        ],
+        "uitgevoerd": "function zichtbaarBereik(\n  pagina: readonly { boven: number; onder: number; van: number; tot: number }[],\n  venster: { boven: number; onder: number },\n): [number, number] | null {\n  let van = Infinity;\n  let tot = -Infinity;\n  for (const p of pagina) {\n    if (p.onder < venster.boven - MARGE || p.boven > venster.onder + MARGE) continue;\n    van = Math.min(van, p.van);\n    tot = Math.max(tot, p.tot);\n  }\n  return van <= tot ? [van, tot] : null;\n}\nfunction bereikInBeeld(sessie: SpellingSessie, laag: HTMLElement | null): [number, number] | null | undefined {\n  const vlak = laag?.closest<HTMLElement>(SCROLLVLAK);\n  if (!vlak) return null;\n  // Het zichtbare deel: het scrollvlak, begrensd door het venster.\n  const v = vlak.getBoundingClientRect();\n  // Een verborgen tabblad houdt zijn spellingsgegevens, maar hoeft geen\n  // pagina's of woordgeometrie voor een onzichtbare laag uit te lezen.\n  if (v.width <= 0 || v.bottom <= v.top || v.bottom <= 0 || v.top >= window.innerHeight) return undefined;\n  const zichtbaarheid = getComputedStyle(vlak).visibility;\n  if (zichtbaarheid === \"hidden\" || zichtbaarheid === \"collapse\") return undefined;\n  const indeling = sessie.editor()?.getEditorRef()?.getLayout();\n  if (!indeling) return null;\n  const venster = { boven: Math.max(v.top, 0), onder: Math.min(v.bottom, window.innerHeight) };\n  const elementen = vlak.querySelectorAll<HTMLElement>(\".canvas-page\");\n  if (elementen.length !== indeling.pages.length) return null;\n  const paginas = zichtbarePaginaElementen([...elementen], { top: venster.boven, bottom: venster.onder }, MARGE).map(({ index, rect: r }) => {\n    const p = indeling.pages[index];\n    let van = Infinity;\n    let tot = -Infinity;\n    for (const f of p.fragments as { pmStart?: number; pmEnd?: number }[]) {\n      if (typeof f.pmStart === \"number\") van = Math.min(van, f.pmStart);\n      if (typeof f.pmEnd === \"number\") tot = Math.max(tot, f.pmEnd);\n    }\n    return { boven: r.top, onder: r.bottom, van, tot };\n  });\n  return zichtbaarBereik(paginas, venster);\n}"
+      },
+      {
+        "pad": "src/tekst/zoeken/ganaar.ts",
+        "sha256": "51017f0ecde21f1c7f328d4c55a87b3aabc86110cea5d5fbc782b9a9a2fd2916",
+        "functies": [
+          "paginas",
+          "naarPositie",
+          "gaNaarPagina",
+          "regelDoelen"
+        ],
+        "uitgevoerd": "function paginas(ref: DocxEditorRef) {\n  return (engine(ref).weergave.getLayout()?.pages ?? []) as unknown as { number?: number; sectionIndex?: number; fragments: Fragment[] }[];\n}\nfunction naarPositie(ref: DocxEditorRef, positie: number | null | undefined) {\n  if (positie === null || positie === undefined) return false;\n  const { weergave } = engine(ref);\n  weergave.setSelection(positie);\n  weergave.scrollToPosition(positie);\n  ref.focus();\n  return true;\n}\nfunction gaNaarPagina(ref: DocxEditorRef, nummer: number) {\n  const lijst = paginas(ref);\n  if (!Number.isInteger(nummer) || nummer < 1 || nummer > lijst.length) return;\n  const eerste = (fragmenten: Fragment[]) => {\n    for (const f of fragmenten) {\n      const positie = f.kind === \"paragraph\"\n        ? f.resolvedLines?.[0]?.segments?.find((s) => typeof s.run?.pmStart === \"number\")?.run?.pmStart ?? f.pmStart\n        : f.pmStart;\n      if (positie !== undefined) return positie;\n    }\n    return undefined;\n  };\n  let positie = eerste(lijst[nummer - 1].fragments);\n  // Een lege tussenpagina kan door een sectie-einde ontstaan. Kies dan de\n  // eerstvolgende invoegpositie, of het einde van de voorgaande hoofdtekst.\n  if (positie === undefined) {\n    for (let i = nummer; i < lijst.length && positie === undefined; i++)\n      positie = eerste(lijst[i].fragments);\n    for (let i = nummer - 2; i >= 0 && positie === undefined; i--)\n      positie = [...lijst[i].fragments].reverse().find((f) => f.pmEnd !== undefined)?.pmEnd;\n  }\n  if (positie !== undefined) {\n    engine(ref).weergave.setSelection(positie);\n    ref.focus();\n  }\n  ref.scrollToPage(nummer);\n}\nfunction regelDoelen(ref: DocxEditorRef): Doel[] {\n  const uit: Doel[] = [];\n  for (const p of paginas(ref))\n    for (const f of p.fragments) {\n      if (f.kind !== \"paragraph\") continue;\n      const regels = f.resolvedLines ?? [];\n      const aantal = Math.max(regels.length, (f.toLine ?? 0) - (f.fromLine ?? 0));\n      for (let i = 0; i < aantal; i++) {\n        const positie = regels[i]?.segments?.find((s) => typeof s.run?.pmStart === \"number\")?.run?.pmStart ?? f.pmStart;\n        uit.push({ nr: uit.length + 1, label: i18next.t(\"writer:find.goTo.labels.line\", { n: uit.length + 1 }), ga: (r) => void naarPositie(r, positie) });\n      }\n    }\n  return uit;\n}"
+      }
+    ],
+    "grenzen": [
+      "Werkelijke ongewijzigde functies via TypeScript AST geëxtraheerd;één gecontroleerde pagina,editor/DOM-referenties gecontroleerd.",
+      "Geen volledige SDK/React/native/GUI/beeld/snelheidsproef;geen nieuwe productvariant.",
+      "Lege fragmenten veroorzaken stille functieverliezen en zijn geen terugval."
+    ]
+  },
+  "bestaande_proeven": {
+    "success": true,
+    "numTotalTests": 74,
+    "numPassedTests": 74,
+    "numFailedTests": 0,
+    "numPendingTests": 0
+  },
+  "bestaande_proeven_opdracht": "node node_modules/vitest/vitest.mjs run src/spelling/tekst/Golflijnen-venster.test.ts src/tekst/tabel/tabel.test.ts src/tekst/zoeken/ganaar.test.ts src/tekst/liniaal/liniaal.test.ts --reporter=json --outputFile=.local/integratiecontrole/fragmentafnemers/bestaande-proeven.json",
+  "afnemers": [
+    {
+      "pad": "src/tekst/liniaal/geometrie.ts",
+      "sha256": "2fd19901a1159517c37591f4b05fd8ea003521ad751a835712895fca3f0297c9",
+      "uitsneden": [
+        {
+          "begin": 505,
+          "eind": 525,
+          "regels": [
+            "  const indeling = weergave?.getLayout();",
+            "  if (!weergave || !sessie || !indeling) return null;",
+            "  const paginas = indeling.pages as unknown as IndelingPagina[];",
+            "  const head = sessie.selection()?.head ?? null;",
+            "  let positie: number | null = null;",
+            "  try {",
+            "    positie = head ? weergave.yrsLocToDisplayPosition(head) : null;",
+            "  } catch {",
+            "    positie = null;",
+            "  }",
+            "  const verhaal = head?.story ?? \"\";",
+            "  const inHoofdtekst = verhaal === \"body\" || verhaal.startsWith(\"body:\");",
+            "  const index = inHoofdtekst ? paginaMetPositie(paginas, positie) : -1;",
+            "  // Alleen de pagina met de cursor meten (elke meting van een pagina kost een herberekening van de opmaak).",
+            "  let beeld = paginaBeeld(vlak, paginas, index);",
+            "  if (!beeld) {",
+            "    const venster = rechthoek(vlak.querySelector(\".docx-editor__scroll-container\") ?? vlak);",
+            "    beeld = paginaInBeeld(paginaBeelden(vlak, paginas, venster), venster);",
+            "  }",
+            "  if (!beeld) return null;",
+            "  const p = beeld.pagina;"
+          ]
+        }
+      ]
+    },
+    {
+      "pad": "src/tekst/tabel/opdrachten.ts",
+      "sha256": "7b17bb0277ac7c985ff1c31869592b98a51adbaec7e64e3d60da9a3e2ae3a9e2",
+      "uitsneden": [
+        {
+          "begin": 202,
+          "eind": 217,
+          "regels": [
+            "/**",
+            " * Tekstbreedte (twips) voor een nieuwe tabel bij de cursor: in een tabelcel de",
+            " * breedte van die cel, anders paginabreedte min marges van de pagina (sectie)",
+            " * waarop de cursor staat. Vraag dit vóór de bewerking: de indeling kent de",
+            " * nieuwe tabel pas na de herindeling.",
+            " */",
+            "export function breedteBijCursor(e: Engine) {",
+            "  const head = e.sessie.selection()?.head;",
+            "  // Alleen het verhaal van de cursor telt: de sessie onthoudt een celselectie",
+            "  // ook nadat de cursor de tabel heeft verlaten.",
+            "  const celBreedte = head && breedteInCel(e.sessie, head.story);",
+            "  if (celBreedte != null) return celBreedte;",
+            "  const positie = head ? e.weergave.yrsLocToDisplayPosition(head) : null;",
+            "  return tekstbreedteOpPagina(paginasVan(e), positie) ?? breedteLaatsteSectie(e);",
+            "}",
+            ""
+          ]
+        },
+        {
+          "begin": 168,
+          "eind": 186,
+          "regels": [
+            "const paginasVan = (e: Engine) => (e.weergave.getLayout()?.pages ?? []) as unknown as IndelingPagina[];",
+            "",
+            "/** Tekstbreedte van de laatste sectie: de terugval als de pagina onbekend is. */",
+            "function breedteLaatsteSectie(e: Engine) {",
+            "  const sectie = e.ref.getDocument()?.package.document.finalSectionProperties as",
+            "    | { pageWidth?: number; marginLeft?: number; marginRight?: number }",
+            "    | undefined;",
+            "  if (sectie?.pageWidth) return sectie.pageWidth - (sectie.marginLeft ?? 1440) - (sectie.marginRight ?? 1440);",
+            "  return 9026;",
+            "}",
+            "",
+            "/** Beschikbare tekstbreedte (twips) op de pagina waar de tabel staat. */",
+            "export function beschikbareBreedte(e: Engine, loc: TabelLoc) {",
+            "  const celBreedte = breedteInCel(e.sessie, loc.story);",
+            "  if (celBreedte !== null) return celBreedte;",
+            "  const eersteCel = tabelEmbed(e.sessie, loc).payload.rows[0]?.cells[0]?.story;",
+            "  for (const p of paginasVan(e)) {",
+            "    if (eersteCel && p.fragments.some((f) => f.kind === \"table\" && f.blockId?.endsWith(`:${eersteCel}`)) && p.size && p.margins)",
+            "      return Math.round((p.size.w - p.margins.left - p.margins.right) * TWIPS_PER_PX);"
+          ]
+        },
+        {
+          "begin": 479,
+          "eind": 496,
+          "regels": [
+            "}",
+            "",
+            "/** Hoogte van de tabel in pixels volgens de huidige indeling, over alle pagina's. */",
+            "function tabelHoogtePx(e: Engine, loc: TabelLoc) {",
+            "  const eersteCel = tabelEmbed(e.sessie, loc).payload.rows[0]?.cells[0]?.story;",
+            "  let hoogte = 0;",
+            "  for (const pagina of e.weergave.getLayout()?.pages ?? [])",
+            "    for (const f of (pagina as unknown as { fragments: { kind: string; blockId?: string; height?: number }[] }).fragments)",
+            "      if (f.kind === \"table\" && eersteCel && f.blockId?.endsWith(`:${eersteCel}`)) hoogte += f.height ?? 0;",
+            "  return hoogte;",
+            "}",
+            "",
+            "/** Geselecteerde rijen (of de hele tabel) krijgen dezelfde minimale hoogte. */",
+            "export function rijenGelijk(ref: DocxEditorRef | null) {",
+            "  const e = engine(ref);",
+            "  const plek = vereistPlek(e);",
+            "  const { payload } = tabelEmbed(e.sessie, plek.tabel);",
+            "  const heel = plek.rijen[0] === plek.rijen[1];"
+          ]
+        }
+      ]
+    },
+    {
+      "pad": "src/spelling/tekst/Golflijnen.tsx",
+      "sha256": "3f3214612255ddfc9f51888bc3dae0c427a36a7c83349e95e1ea94db6910069a",
+      "uitsneden": [
+        {
+          "begin": 123,
+          "eind": 135,
+          "regels": [
+            "      zichtbaarheidsobserver?.disconnect();",
+            "    };",
+            "  }, []);",
+            "",
+            "  // Zonder laag (eerste render) nog niets; null = onbekend, dan alles.",
+            "  // Een renderer-id hoort bij één getekend beeld. Nieuwe plug-incontexten met",
+            "  // hetzelfde beeld hoeven de paginaboxen niet opnieuw synchroon te meten.",
+            "  const bereik = useMemo(() => laag.current ? bereikInBeeld(sessie, laag.current) : undefined,",
+            "    [sessie, layout.id, layout.version, layout.previewVersion, layout.reservationsVersion, layout.zoom, layout.pageCount, scroll]);",
+            "  const van = bereik?.[0] ?? -1;",
+            "  const tot = bereik?.[1] ?? -1;",
+            "",
+            "  const rechthoeken = useMemo(() => {"
+          ]
+        }
+      ]
+    },
+    {
+      "pad": "src/lint/tekst-opdrachten.tsx",
+      "sha256": "c3a3a1509c0b12df0aa018b4c5294c91fda1cd68c777c25e30f62d8d14d96b41",
+      "uitsneden": [
+        {
+          "begin": 754,
+          "eind": 764,
+          "regels": [
+            "  const [pagina, setPagina] = useState(String(ref?.getCurrentPage() || 1));",
+            "  const nummer = Number(pagina);",
+            "  const geldig =",
+            "    Number.isInteger(nummer) && nummer >= 1 && (!totaal || nummer <= totaal);",
+            "  function ga() {",
+            "    if (!geldig) return;",
+            "    sluit();",
+            "    const ref = api();",
+            "    if (ref) gaNaarPagina(ref, nummer);",
+            "  }",
+            "  return ("
+          ]
+        }
+      ]
+    },
+    {
+      "pad": ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/residentEngineWorkerClient.ts",
+      "sha256": "19f0e4ed0a7c41e7f789bdc6dff98f6b4e213d18a5897a37281244ead7fdc6c8",
+      "uitsneden": [
+        {
+          "begin": 598,
+          "eind": 626,
+          "regels": [
+            "  /** The font requirements of a region layout request, read from the opened document. */",
+            "  fontRequirements(layoutInput: string): Promise<string> {",
+            "    const shared = this.fontRead;",
+            "    if (shared && shared.layoutInput === layoutInput && shared.id === this.nextId - 1) {",
+            "      return shared.reply;",
+            "    }",
+            "    const reply = this.request({ type: 'fontRequirements', layoutInput }).then((response) => {",
+            "      if (response.requirementsJson === undefined) {",
+            "        throw new ResidentWorkerFailureError('Document worker omitted the font requirements');",
+            "      }",
+            "      return response.requirementsJson;",
+            "    });",
+            "    const read = { layoutInput, id: this.nextId - 1, reply };",
+            "    this.fontRead = read;",
+            "    const settle = () => {",
+            "      if (this.fontRead === read) this.fontRead = null;",
+            "    };",
+            "    reply.then(settle, settle);",
+            "    return reply;",
+            "  }",
+            "",
+            "  async layoutJson(layoutRevision: number): Promise<{ status: 'ok'; layoutJson: string } | { status: 'stale' }> {",
+            "    const response = await this.request({ type: 'layoutJson', layoutRevision });",
+            "    if (response.layoutJsonStatus === 'stale') return { status: 'stale' };",
+            "    if (response.layoutJsonStatus !== 'ok' || response.layoutJson === undefined) {",
+            "      throw new ResidentWorkerFailureError('Document worker omitted its retained layout');",
+            "    }",
+            "    return { status: 'ok', layoutJson: response.layoutJson };",
+            "  }"
+          ]
+        }
+      ]
+    },
+    {
+      "pad": ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/hooks/useDisplayList.ts",
+      "sha256": "28b8a9f1bc5571805cb212b9acb2978caaff7fd42d42b46967fb2081914d8695",
+      "uitsneden": [
+        {
+          "begin": 2858,
+          "eind": 2884,
+          "regels": [
+            "      const contentEpoch = contentEpochRef.current;",
+            "      const options = {",
+            "        layoutExtras: JSON.stringify(frameExtrasInputs()),",
+            "        ...(!bootstrapping && viewerSessionRef?.current ? {",
+            "          layoutReply: 'meta' as const,",
+            "          headersFootersEpoch: workerLayoutHeadersRef.current.get(worker)?.epoch ?? 0,",
+            "        } : {}),",
+            "        stateVector: isViewerSession(hostEngine) ||",
+            "          (workerOpenEnabledRef.current && workerOpenReplicaPending(hostEngine))",
+            "          ? owner.stateVector",
+            "          : hostEngine.encodeStateVector(),",
+            "        ...(bootstrapping && owner.opened ? { opened: true } : {}),",
+            "        displayWindow: workerPreviewEnginesRef.current.has(hostEngine)",
+            "          ? WORKER_PREVIEW_DISPLAY_WINDOW",
+            "          : displayWindowRef.current,",
+            "        ...(bootstrapping",
+            "          ? {",
+            "              provisionalPages: PROVISIONAL_LAYOUT_PAGES,",
+            "              heapLimitBytes: workerHeapLimitRef.current,",
+            "              ...bootstrapFrameEpoch(),",
+            "            }",
+            "          : {}),",
+            "      };",
+            "      const paintCaret =",
+            "        !bootstrapping &&",
+            "        workerPresentationActiveRef.current &&",
+            "        paintedCaretMachine.shouldPaint(performance.now());"
+          ]
+        },
+        {
+          "begin": 2938,
+          "eind": 2981,
+          "regels": [
+            "            cause",
+            "          );",
+            "        }",
+            "        return null;",
+            "      };",
+            "      // `base` is the frame the reply's frame applies to; without one the",
+            "      // display builds its own frame for the layout.",
+            "      const adopt = async (",
+            "        result: ResidentEngineWorkerFrame,",
+            "        base: RetainedFrame | null | undefined",
+            "      ): Promise<LayoutComputation | null> => {",
+            "        let computation: LayoutComputation;",
+            "        const meta = result.layoutMeta;",
+            "        const previous = workerLayoutHeadersRef.current.get(worker);",
+            "        const payload = isLayoutMetaV1(meta) && meta.layoutRevision === result.layoutRevision",
+            "          ? meta.headersFooters ??",
+            "            (previous?.epoch === meta.headersFootersEpoch ? previous.payload : undefined)",
+            "          : undefined;",
+            "        if (meta === undefined) {",
+            "          if (result.layoutJson === undefined) {",
+            "            throw new ResidentWorkerFailureError('Document worker omitted its layout');",
+            "          }",
+            "          computation = workerLayoutComputation(result.layoutJson, result.layoutRevision);",
+            "        } else if (payload !== undefined && isLayoutMetaV1(meta)) {",
+            "          workerLayoutHeadersRef.current.set(worker, { epoch: meta.headersFootersEpoch, payload });",
+            "          computation = workerLayoutComputation(meta, result.layoutRevision, payload);",
+            "        } else {",
+            "          // an unknown summary version, or headers this host has not seen: read the full layout",
+            "          const full = await worker.layoutJson(result.layoutRevision);",
+            "          if (full.status === 'stale') {",
+            "            requestLayoutRef.current?.();",
+            "            return null;",
+            "          }",
+            "          if (!isCurrentWorker(hostEngine, owner) ||",
+            "            hostEngine.residentWorkerProbe()?.layoutRevision !== adoptedRevision) return null;",
+            "          computation = workerLayoutComputation(full.layoutJson, result.layoutRevision);",
+            "        }",
+            "        if (isCurrentWorker(hostEngine, owner) &&",
+            "          hostEngine.residentWorkerProbe()?.layoutRevision === adoptedRevision) {",
+            "          notifyWorkerOpenLayoutProgress(hostEngine, result.layoutProvisional ? 'provisional' : 'complete');",
+            "        }",
+            "        workerLayoutPassesRef.current.set(computation.layout, layoutPass);",
+            "        if (base === undefined) return computation;",
+            "        workerLayoutFramesRef.current.set(computation.layout, {"
+          ]
+        }
+      ]
+    }
+  ],
+  "behoud": {
+    "elf_referenties_exact": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-desktop/open-office-studio-4c13723b-journaal": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-profiel/open-office-studio-tabelpagina": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/open-office-studio-integratie-56aa1fec": "c8e22ebd5501bcbf03a50682919715daf03b0b237ba7a19674129352caf86fee",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-telling/open-office-studio-status-telling": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/open-office-studio-status-plugin": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-observatie/open-office-studio-ci-afgekeurd": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaarprojectie-ci/open-office-studio-ci-statusfout": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabelrust/open-office-studio-tabelrust": "24a6a728bb8cd810f19ec91b6432ec92a180d55f1a29bb87c6dbf7ab1f00ef91",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectieprojectie/open-office-studio-selectieprojectie": "338561007b05b3564f67f171b3817ca88868d6a9bbc6552ceaac04642cb6b8d7",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectiecache/open-office-studio-selectiecache": "d0657a3ef77c5c60180bd11896134f7a55940d922ef30990d02245bad6851c4d",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/waardecache/open-office-studio-waardecache": "57377138f6c721bd7bbed02e04988212c188d6cf0e62006d974813f3fd19268c",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaar-groepen/open-office-studio-bewaar-groepen": "b6162e59e9c2dfdfcb98eb85d1b731ba52d2d4ee97f3a6429b6106a6127c3421",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/werker-fasekopie/open-office-studio-werker-fasemeting": "2f3beb123423d48b8db4dfcd268c76a98ae956ef656cf99cde955fcc929f5bf2",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf": "5934f4985ea248c7dac6525b1753fd164c596f3e0220d9ba3dba616a2d906e82",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache": "206c24ab5a8fb941a9e71b1f4f4ce889896b02290dc9ab0f111a60c544d8b12d",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/open-office-studio-replica-kosten": "faf0e96d3806f68298039c4e93574226fd5a93b352254cb1b1f0a68a8222e5c8",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/open-office-studio-sync-binnen": "5c42839678ee6ebabebb5cd7f360f847dab74d7d2c57d4d4c428c9b144d42b89",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/open-office-studio-ea-binnen": "6180c89c4dc8d14618bc57359abb5b14f57458029786e79127ffcf6c8070400a",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/warm-story/open-office-studio-warm-story": "dd90bec210dc81ed12bb40844ca831eee05bfdddb3240fec413d2e8a0aa7e948",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/warm-layout-request/open-office-studio-warm-layout-request": "9c290f4eddd5a830b8897e0442e5d1f4b0812e47139c3d8799ca8907fd9862ed"
+    },
+    "standaardbundel_byte_mode_mtime_exact": 529,
+    "sdk_vendor_npm_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431"
+    },
+    "canonieke_bron_exact": {
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356"
+    },
+    "node_syntaxis": 0
+  },
+  "bevindingen": [
+    "Vijf echte bronfuncties/functieketens via TypeScript AST geëxtraheerd:getekende pagina bij positie,tabelbreedte per sectie,paginanavigatie,regelnavigatie en zichtbaar spellingbereik. De bestaande layoutMetaSummary genereert de echte fragmentgetterfout;geen nagebootste summarygetter. Eén gecontroleerde pagina en gecontroleerde editor-/DOM-referenties.",
+    "Alle vijf volledige-layoutreferenties exact. Alle vijf compacte varianten werpen. Alle vijf lege-fragmentvarianten geven stil afwijkend resultaat:pagina-1,breedtenull,paginanavigatie zonder selectie,geen regelnavigatie en spellingsbereiknull. Dit is bewijs tegen deze twee beperkte omschakelingen,geen algemene onmogelijkheid van compacte rendering.",
+    "Productaanroepen bevestigd:meetLiniaal gebruikt paginaMetPositie,breedteBijCursor gebruikt tekstbreedteOpPagina,Golflijnen gebruikt bereikInBeeld en lintbediening gebruikt gaNaarPagina. Ook tabelgrepen/opdrachten lezen fragmenten;die extra functies zijn niet nieuw functioneel beproefd.",
+    "Een nulbreedte-/sectieterugval is geen equivalente oplossing:breedteBijCursor valt bij onbekende pagina terug op laatste sectie,en bij meerdere secties kan dat de verkeerde breedte kiezen. Geen daadwerkelijke gebruikersdocumentbewerking uitgevoerd.",
+    "Bestaande Worker-client layoutJson is asynchroon en revisiegebonden met stale-resultaat. Daarmee kan een synchrone fragmentgetter niet zonder API-/planningswijziging volledig worden hersteld. Eén volledige JSON-terugvraag per nieuwe actieve layout zou de bedoelde besparing weer ongedaan kunnen maken;dat laatste is een ontwerprisico,geen gemeten kostenresultaat.",
+    "Vier bestaande testsuites74/74groen. De eerste private probescriptversie had een fixture-syntaxfout en voerde geen test uit;na herstel bovenstaande proef groen. Geen productfout of regressie uit die syntaxfout afgeleid."
+  ],
+  "niet_gecontroleerd": [
+    "Geen nieuwe native fysieke invoer/selectie/bewaarproef of beelden;geen snelheidsmeting,nieuwe ELF/Wasm/bouw of platform-/releaseacceptatie. Vorige native bevindingen blijven afzonderlijk gelden.",
+    "Geen volledige SDK/React/GUI/alle-documentdekking of volledige frontend/Python/TypeScript-productsuite/CI;geen getPageContent-productaanroep gevonden in src,wel directe getLayout-fragmentafnemers.",
+    "Geen compacte-editorimplementatie of asynchrone fragmentmigratie;geen stabiliteits-/geheugenfout opgelost of issue gesloten."
+  ],
+  "vervolg": "Laat volledige editorfragmenten en bestaand syncgedrag voorlopig intact;geen verdere meta-vlagproef of lege-fragmentterugval. Onderzoek op de bestaande kandidaat het afzonderlijke werk in layout-regiopass versus volledige retainedJSON-serialisatie,met exacte uitvoer/veld- en geheugenbindingen vóór een gerichte wijziging. Bekijk eerst bestaande diepe klokbewijzen om dubbele algemene profiel-/ABBA-ronden te vermijden. Alleen optimaliseren met behoud van volledige fragmenten,bron/vector/env/fonts/previews/generaties;R(k)-correctie blijft apart. Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-fragmentafnemers.tar.gz",
+    "sha256": "3400a29a9103e43db527379ea3d454baf133de8a4b78372396d0fedc412fda72",
+    "bytes": 18773,
+    "bestanden": 7,
+    "alle_leden_byteexact_gecontroleerd": true
+  },
+  "afhankelijkheid": {
+    "pad": "docs/tests/2026-11-13-writer-werkeruitvoering.tar.gz",
+    "sha256": "bca9df7e52a3fc03247f7a85c2b62c7629428e31a6656c7766a59c3e5df10b7d"
+  }
+}
