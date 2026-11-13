@@ -1,0 +1,2110 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "3badc83e",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+  "besluit": "Diagnose: het lange save-venster ligt voornamelijk binnen de Worker, niet tussen SDK-call en berichtverzending of bij antwoordadoptie. Geen productwijziging of oplossing van de invoervertraging.",
+  "metingen": {
+    "opname": {
+      "geslaagd": true,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31246.000000000004,
+        "begin_tot_bron_ms": 9282,
+        "laatste_keyup_tot_bron_ms": 351.99999999999636,
+        "laatste_keyup_tot_frame_ms": 4549.999999999996,
+        "begin_tot_frame_ms": 13480,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13490,
+        "wall_verzonden_tot_frame_ms": 11756,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": [
+        {
+          "soort": "geregistreerd.bewaren.begin",
+          "begin": 30883,
+          "einde": 30883,
+          "id": 1,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.save.begin",
+          "begin": 31201,
+          "einde": 31201,
+          "id": 2,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31250,
+          "einde": 31250,
+          "id": 3,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31250,
+          "einde": 31598,
+          "id": 3,
+          "fout": false,
+          "duur_ms": 348
+        },
+        {
+          "soort": "api.save.einde",
+          "begin": 31201,
+          "einde": 34195,
+          "id": 2,
+          "fout": false,
+          "duur_ms": 2994
+        },
+        {
+          "soort": "geregistreerd.bewaren.einde",
+          "begin": 30883,
+          "einde": 34963,
+          "id": 1,
+          "fout": false,
+          "duur_ms": 4080
+        }
+      ],
+      "probe": {
+        "bewaarfuncties": 1,
+        "faserefs": 75,
+        "fasemethoden": [
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ]
+        ],
+        "oorspronkelijke_ref_nog_actueel": false,
+        "aantal_nieuwe_refs": 74,
+        "refgrens": 128,
+        "leesgroepgrens": 64,
+        "aanroepergrens_per_label": 4,
+        "overgeslagen": 0,
+        "grens": 8192,
+        "hersteld": true,
+        "geen_extra_enginelezingen": true
+      },
+      "tellingen": {
+        "readStories": 54,
+        "rAF": 453,
+        "keydown": 1083,
+        "keyup": 1083,
+        "onUpdate": 65,
+        "applyLocalUpdate": 65,
+        "setSelection": 66,
+        "tablePayload": 325,
+        "geregistreerd.bewaren.begin": 1,
+        "api.save.begin": 1,
+        "api.flushPendingInput.begin": 1,
+        "api.flushPendingInput.einde": 1,
+        "readParagraphs": 770,
+        "api.save.einde": 1,
+        "geregistreerd.bewaren.einde": 1
+      },
+      "docx": {
+        "sha256": "e9e1064ee9bc0484add4719b6ad2eb9bdcd15f86d4d9e0e8b25c2ea842953449",
+        "tabellen": 128,
+        "tekens_utf16": 91423
+      },
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "werkerparen": [
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 31323,
+            "id": 140,
+            "type": "save"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 34192,
+            "id": 140,
+            "ok": true,
+            "bewaarbytes": 55011,
+            "updates": 1
+          },
+          "verstreken_ms": 2869
+        },
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 34968,
+            "id": 144,
+            "type": "sync"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 35321,
+            "id": 144,
+            "ok": true,
+            "updates": 0,
+            "caret": true
+          },
+          "verstreken_ms": 353
+        }
+      ],
+      "werkermeting": {
+        "overgeslagen": 0,
+        "hersteld": true,
+        "werkers": 2,
+        "grens": 4096,
+        "werkergrens": 8,
+        "geen_extra_aanvragen": true
+      },
+      "fout": null,
+      "binnenparen": [],
+      "binnen_start": [],
+      "binnen_eind": []
+    },
+    "opname-binnen": {
+      "geslaagd": false,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31798,
+        "begin_tot_bron_ms": 9451,
+        "laatste_keyup_tot_bron_ms": 336,
+        "laatste_keyup_tot_frame_ms": 4331,
+        "begin_tot_frame_ms": 13446,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13459,
+        "wall_verzonden_tot_frame_ms": 11701,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": [
+        {
+          "soort": "geregistreerd.bewaren.begin",
+          "begin": 30894.000000000004,
+          "einde": 30894.000000000004,
+          "id": 1,
+          "duur_ms": 0.0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31074,
+          "einde": 31074,
+          "id": 2,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31074,
+          "einde": 31255,
+          "id": 2,
+          "fout": false,
+          "duur_ms": 181
+        },
+        {
+          "soort": "api.save.begin",
+          "begin": 31255,
+          "einde": 31255,
+          "id": 3,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31812,
+          "einde": 31812,
+          "id": 4,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31812,
+          "einde": 32134,
+          "id": 4,
+          "fout": false,
+          "duur_ms": 322
+        },
+        {
+          "soort": "api.save.einde",
+          "begin": 31255,
+          "einde": 34480.00000000001,
+          "id": 3,
+          "fout": false,
+          "duur_ms": 3225.0000000000073
+        },
+        {
+          "soort": "geregistreerd.bewaren.einde",
+          "begin": 30894.000000000004,
+          "einde": 35266,
+          "id": 1,
+          "fout": false,
+          "duur_ms": 4371.999999999996
+        }
+      ],
+      "probe": {
+        "bewaarfuncties": 1,
+        "faserefs": 78,
+        "fasemethoden": [
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ]
+        ],
+        "oorspronkelijke_ref_nog_actueel": false,
+        "aantal_nieuwe_refs": 77,
+        "refgrens": 128,
+        "leesgroepgrens": 64,
+        "aanroepergrens_per_label": 4,
+        "overgeslagen": 0,
+        "grens": 8192,
+        "hersteld": true,
+        "geen_extra_enginelezingen": true
+      },
+      "tellingen": {
+        "readStories": 61,
+        "rAF": 456,
+        "keydown": 1083,
+        "keyup": 1083,
+        "onUpdate": 67,
+        "applyLocalUpdate": 67,
+        "setSelection": 68,
+        "tablePayload": 335,
+        "geregistreerd.bewaren.begin": 1,
+        "api.flushPendingInput.begin": 2,
+        "api.flushPendingInput.einde": 2,
+        "api.save.begin": 1,
+        "readParagraphs": 770,
+        "api.save.einde": 1,
+        "geregistreerd.bewaren.einde": 1
+      },
+      "docx": {
+        "sha256": "ffdd1f9dd5088e3e98ff28ee7d828a2fa01f189125fb131c9de737389a3bf77f",
+        "tabellen": 128,
+        "tekens_utf16": 91423
+      },
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen"
+      ],
+      "werkerparen": [
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 31435.000000000004,
+            "id": 138,
+            "type": "save"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 34478,
+            "id": 138,
+            "ok": true,
+            "bewaarbytes": 55011,
+            "updates": 1
+          },
+          "verstreken_ms": 3042.9999999999964
+        },
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 35272,
+            "id": 148,
+            "type": "sync"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 35629,
+            "id": 148,
+            "ok": true,
+            "updates": 0,
+            "caret": true
+          },
+          "verstreken_ms": 357
+        }
+      ],
+      "werkermeting": {
+        "overgeslagen": 0,
+        "hersteld": true,
+        "werkers": 2,
+        "grens": 4096,
+        "werkergrens": 8,
+        "geen_extra_aanvragen": true
+      },
+      "fout": "RuntimeError('Error: Geen nieuw document')",
+      "binnenparen": [
+        {
+          "werker": "betteroffice-docx-worker",
+          "ontvangst": {
+            "richting": "ontvangst",
+            "tijd": 18243.000000000004,
+            "type": "save",
+            "id": 138
+          },
+          "verzending": {
+            "richting": "verzending",
+            "tijd": 21268,
+            "id": 138,
+            "bewaarbytes": 55011
+          },
+          "verstreken_ms": 3024.9999999999964
+        }
+      ],
+      "binnen_start": [
+        {
+          "naam": "betteroffice-docx-worker",
+          "geplaatst": {
+            "geplaatst": true
+          }
+        },
+        {
+          "naam": "spelling",
+          "geplaatst": {
+            "geplaatst": true
+          }
+        }
+      ],
+      "binnen_eind": [
+        {
+          "naam": "betteroffice-docx-worker",
+          "overgeslagen": 0,
+          "hersteld": true,
+          "grens": 4096,
+          "aantal_regels": 210
+        },
+        {
+          "naam": "spelling",
+          "overgeslagen": 0,
+          "hersteld": true,
+          "grens": 4096,
+          "aantal_regels": 2
+        }
+      ]
+    },
+    "opname-binnen-herhaling": {
+      "geslaagd": false,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31341,
+        "begin_tot_bron_ms": 8913,
+        "laatste_keyup_tot_bron_ms": 325,
+        "laatste_keyup_tot_frame_ms": 4745,
+        "begin_tot_frame_ms": 13333,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13344,
+        "wall_verzonden_tot_frame_ms": 11594,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": [
+        {
+          "soort": "geregistreerd.bewaren.begin",
+          "begin": 30902,
+          "einde": 30902,
+          "id": 1,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31101,
+          "einde": 31101,
+          "id": 2,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31101,
+          "einde": 31293,
+          "id": 2,
+          "fout": false,
+          "duur_ms": 192
+        },
+        {
+          "soort": "api.save.begin",
+          "begin": 31293,
+          "einde": 31293,
+          "id": 3,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.save.einde",
+          "begin": 31293,
+          "einde": 34494,
+          "id": 3,
+          "fout": false,
+          "duur_ms": 3201
+        },
+        {
+          "soort": "geregistreerd.bewaren.einde",
+          "begin": 30902,
+          "einde": 35205,
+          "id": 1,
+          "fout": false,
+          "duur_ms": 4303
+        }
+      ],
+      "probe": {
+        "bewaarfuncties": 1,
+        "faserefs": 75,
+        "fasemethoden": [
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ]
+        ],
+        "oorspronkelijke_ref_nog_actueel": false,
+        "aantal_nieuwe_refs": 74,
+        "refgrens": 128,
+        "leesgroepgrens": 64,
+        "aanroepergrens_per_label": 4,
+        "overgeslagen": 0,
+        "grens": 8192,
+        "hersteld": true,
+        "geen_extra_enginelezingen": true
+      },
+      "tellingen": {
+        "rAF": 466,
+        "readStories": 62,
+        "keydown": 1083,
+        "keyup": 1083,
+        "onUpdate": 64,
+        "applyLocalUpdate": 64,
+        "setSelection": 65,
+        "tablePayload": 320,
+        "geregistreerd.bewaren.begin": 1,
+        "api.flushPendingInput.begin": 1,
+        "api.flushPendingInput.einde": 1,
+        "api.save.begin": 1,
+        "readParagraphs": 770,
+        "api.save.einde": 1,
+        "geregistreerd.bewaren.einde": 1
+      },
+      "docx": {
+        "sha256": "40200e485e182bc7a5e4706a25e9673998280162a3b18746290c82cb2c009d62",
+        "tabellen": 128,
+        "tekens_utf16": 91423
+      },
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen"
+      ],
+      "werkerparen": [
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 31414,
+            "id": 138,
+            "type": "save"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 34491,
+            "id": 138,
+            "ok": true,
+            "bewaarbytes": 55011,
+            "updates": 1
+          },
+          "verstreken_ms": 3077
+        },
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 35210,
+            "id": 142,
+            "type": "sync"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 35580,
+            "id": 142,
+            "ok": true,
+            "updates": 0,
+            "caret": true
+          },
+          "verstreken_ms": 370
+        }
+      ],
+      "werkermeting": {
+        "overgeslagen": 0,
+        "hersteld": true,
+        "werkers": 2,
+        "grens": 4096,
+        "werkergrens": 8,
+        "geen_extra_aanvragen": true
+      },
+      "fout": "RuntimeError('Error: Geen nieuw document')",
+      "binnenparen": [
+        {
+          "werker": "betteroffice-docx-worker",
+          "ontvangst": {
+            "richting": "ontvangst",
+            "tijd": 18175,
+            "type": "save",
+            "id": 138
+          },
+          "verzending": {
+            "richting": "verzending",
+            "tijd": 21240.000000000004,
+            "id": 138,
+            "bewaarbytes": 55011
+          },
+          "verstreken_ms": 3065.0000000000036
+        }
+      ],
+      "binnen_start": [
+        {
+          "naam": "betteroffice-docx-worker",
+          "geplaatst": {
+            "geplaatst": true
+          }
+        },
+        {
+          "naam": "spelling",
+          "geplaatst": {
+            "geplaatst": true
+          }
+        }
+      ],
+      "binnen_eind": [
+        {
+          "naam": "betteroffice-docx-worker",
+          "overgeslagen": 0,
+          "hersteld": true,
+          "grens": 4096,
+          "aantal_regels": 201
+        },
+        {
+          "naam": "spelling",
+          "overgeslagen": 0,
+          "hersteld": true,
+          "grens": 4096,
+          "aantal_regels": 2
+        }
+      ]
+    },
+    "opname-binnen-afgemeld": {
+      "geslaagd": true,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 31961.000000000004,
+        "begin_tot_bron_ms": 9494.000000000004,
+        "laatste_keyup_tot_bron_ms": 282,
+        "laatste_keyup_tot_frame_ms": 4244.999999999996,
+        "begin_tot_frame_ms": 13457,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13699,
+        "wall_verzonden_tot_frame_ms": 11896,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "fases": [
+        {
+          "soort": "geregistreerd.bewaren.begin",
+          "begin": 30908,
+          "einde": 30908,
+          "id": 1,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31090,
+          "einde": 31090,
+          "id": 2,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31090,
+          "einde": 31278.000000000004,
+          "id": 2,
+          "fout": false,
+          "duur_ms": 188.00000000000364
+        },
+        {
+          "soort": "api.save.begin",
+          "begin": 31278.000000000004,
+          "einde": 31278.000000000004,
+          "id": 3,
+          "duur_ms": 0.0
+        },
+        {
+          "soort": "api.flushPendingInput.begin",
+          "begin": 31966,
+          "einde": 31966,
+          "id": 4,
+          "duur_ms": 0
+        },
+        {
+          "soort": "api.flushPendingInput.einde",
+          "begin": 31966,
+          "einde": 32243.000000000004,
+          "id": 4,
+          "fout": false,
+          "duur_ms": 277.00000000000364
+        },
+        {
+          "soort": "api.save.einde",
+          "begin": 31278.000000000004,
+          "einde": 34541.00000000001,
+          "id": 3,
+          "fout": false,
+          "duur_ms": 3263.0000000000036
+        },
+        {
+          "soort": "geregistreerd.bewaren.einde",
+          "begin": 30908,
+          "einde": 35339,
+          "id": 1,
+          "fout": false,
+          "duur_ms": 4431
+        }
+      ],
+      "probe": {
+        "bewaarfuncties": 1,
+        "faserefs": 78,
+        "fasemethoden": [
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ],
+          [
+            "save",
+            "flushPendingInput"
+          ]
+        ],
+        "oorspronkelijke_ref_nog_actueel": false,
+        "aantal_nieuwe_refs": 77,
+        "refgrens": 128,
+        "leesgroepgrens": 64,
+        "aanroepergrens_per_label": 4,
+        "overgeslagen": 0,
+        "grens": 8192,
+        "hersteld": true,
+        "geen_extra_enginelezingen": true
+      },
+      "tellingen": {
+        "rAF": 458,
+        "readStories": 57,
+        "keydown": 1083,
+        "keyup": 1083,
+        "onUpdate": 67,
+        "applyLocalUpdate": 67,
+        "setSelection": 68,
+        "tablePayload": 335,
+        "geregistreerd.bewaren.begin": 1,
+        "api.flushPendingInput.begin": 2,
+        "api.flushPendingInput.einde": 2,
+        "api.save.begin": 1,
+        "readParagraphs": 770,
+        "api.save.einde": 1,
+        "geregistreerd.bewaren.einde": 1
+      },
+      "docx": {
+        "sha256": "761c890a2960bc6c2097496577b0952a1ac56d2766e2c3d875a361e04a8ac0b4",
+        "tabellen": 128,
+        "tekens_utf16": 91423
+      },
+      "stappen": [
+        "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "werkerparen": [
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 31445,
+            "id": 136,
+            "type": "save"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 34539,
+            "id": 136,
+            "ok": true,
+            "bewaarbytes": 55012,
+            "updates": 1
+          },
+          "verstreken_ms": 3094
+        },
+        {
+          "verzending": {
+            "richting": "verzending",
+            "werker": 1,
+            "tijd": 35344,
+            "id": 148,
+            "type": "sync"
+          },
+          "ontvangst": {
+            "richting": "ontvangst",
+            "werker": 1,
+            "tijd": 35701,
+            "id": 148,
+            "ok": true,
+            "updates": 0,
+            "caret": true
+          },
+          "verstreken_ms": 357
+        }
+      ],
+      "werkermeting": {
+        "overgeslagen": 0,
+        "hersteld": true,
+        "werkers": 2,
+        "grens": 4096,
+        "werkergrens": 8,
+        "geen_extra_aanvragen": true
+      },
+      "fout": null,
+      "binnenparen": [
+        {
+          "werker": "betteroffice-docx-worker",
+          "ontvangst": {
+            "richting": "ontvangst",
+            "tijd": 18111,
+            "type": "save",
+            "id": 136
+          },
+          "verzending": {
+            "richting": "verzending",
+            "tijd": 21193,
+            "id": 136,
+            "bewaarbytes": 55012
+          },
+          "verstreken_ms": 3082
+        }
+      ],
+      "binnen_start": [
+        {
+          "naam": "betteroffice-docx-worker",
+          "geplaatst": {
+            "geplaatst": true
+          }
+        },
+        {
+          "naam": "spelling",
+          "geplaatst": {
+            "geplaatst": true
+          }
+        }
+      ],
+      "binnen_eind": [
+        {
+          "naam": "betteroffice-docx-worker",
+          "overgeslagen": 0,
+          "hersteld": true,
+          "grens": 4096,
+          "aantal_regels": 211
+        },
+        {
+          "naam": "spelling",
+          "overgeslagen": 0,
+          "hersteld": true,
+          "grens": 4096,
+          "aantal_regels": 2
+        }
+      ]
+    }
+  },
+  "laatste_uitsplitsing_ms": {
+    "geregistreerd_totaal": 4431,
+    "sdk_save": 3263,
+    "sdk_begin_tot_worker_verzending": 167,
+    "worker_rondgang": 3094,
+    "worker_ontvangst_tot_verzending": 3082,
+    "rondgang_min_binnen": 12,
+    "antwoordontvangst_tot_sdk_einde": 2,
+    "sdk_einde_tot_geregistreerd_einde": 798,
+    "eerste_flush": 188,
+    "test_flush_overlapt_sdk": 277,
+    "worker_sync_na_bewaren": 357
+  },
+  "tests": {
+    "faseprobe": 18,
+    "transportprobe": 4,
+    "binnenprobe": 3,
+    "alle_groen": true
+  },
+  "native": {
+    "volledig_geslaagd": [
+      "opname",
+      "opname-binnen-afgemeld"
+    ],
+    "afgekeurd": [
+      "opname-binnen",
+      "opname-binnen-herhaling"
+    ],
+    "afkeuring": "Beide oorspronkelijke binnenmetingen slagen op invoer/UndoRedo/selectie/bewaren maar falen daarna op dezelfde30sec nieuw-documentgrens; consoleleeg. Worker-debugger bleef actief. Alleen diagnose aangepast: Worker.disable na export en vóór nieuwe werkers. Daarna volledige ronde groen. Dit ondersteunt meetverstoring, maar is geen onafhankelijke interne protocoloorzaak- of appstabiliteitsfix. Geen timeout of functionele assertie versoepeld."
+  },
+  "docx_verschillen": {
+    "opname": [],
+    "opname-binnen": [
+      "docProps/core.xml"
+    ],
+    "opname-binnen-herhaling": [
+      "docProps/core.xml"
+    ],
+    "opname-binnen-afgemeld": [
+      "docProps/core.xml"
+    ]
+  },
+  "behoud": {
+    "referenties": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding": "c88c5d82f1b0b44bf1279645a6b3e930dc8f302e5e3f7bec57605b8d2df42c59",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-desktop/open-office-studio-4c13723b-journaal": "16f35e7f811654d5c7bdffa5d3071b96851c2582badd7a581257e4674cb898fc",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-profiel/open-office-studio-tabelpagina": "7afdfb82ac07c31ef1e086598e4573c9695d1e6d4b72a91ec822c30bd128aa8f",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/open-office-studio-integratie-56aa1fec": "c8e22ebd5501bcbf03a50682919715daf03b0b237ba7a19674129352caf86fee",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-telling/open-office-studio-status-telling": "d9ae4803d2ae7085d6d530a35631277460b1c73df2232cd67fe65541907c9157",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/open-office-studio-status-plugin": "277b6d0562f67b6473f2ea604015cdc3cc37ed2be4c483523e32f8d597ea6971",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-observatie/open-office-studio-ci-afgekeurd": "cec0e887fb1b88dde31b323420439611c4317eccc50450891fcd7d278199f3af",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaarprojectie-ci/open-office-studio-ci-statusfout": "8d67e9e495008f7dd7542082214410b0f5322c459bfcf297eccd8d31fa76f567",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabelrust/open-office-studio-tabelrust": "24a6a728bb8cd810f19ec91b6432ec92a180d55f1a29bb87c6dbf7ab1f00ef91",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectieprojectie/open-office-studio-selectieprojectie": "338561007b05b3564f67f171b3817ca88868d6a9bbc6552ceaac04642cb6b8d7",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectiecache/open-office-studio-selectiecache": "d0657a3ef77c5c60180bd11896134f7a55940d922ef30990d02245bad6851c4d",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/waardecache/open-office-studio-waardecache": "57377138f6c721bd7bbed02e04988212c188d6cf0e62006d974813f3fd19268c",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaar-groepen/open-office-studio-bewaar-groepen": "b6162e59e9c2dfdfcb98eb85d1b731ba52d2d4ee97f3a6429b6106a6127c3421"
+    },
+    "standaardbundel_exact": 529,
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "geen_productwijziging": true
+  },
+  "grenzen": [
+    "Vier eigen rijke schema-2-Linuxdiagnoses op dezelfdeELF, geen onbeïnvloede ABBA-snelheidsvergelijking en geen platform/releaseacceptatie.",
+    "De binnenmeting begint bij ontvangen message-event en eindigt vóór postMessage. Zij omvat interne wachtrij, verwerking en async-wachten; geen exclusieve CPU- of uitsluitend ZIP/serialisatietijd.",
+    "Binnen- en hoofdthread hebben verschillende klokorigines; alleen afzonderlijke duurverschillen vergeleken, geen absolute tijdstempels direct afgetrokken.",
+    "Eerste transportmeting: Worker2869ms binnen SDK2994ms. Drie binnenmetingen:3025/3065/3082ms; eerste twee functioneel afgekeurd blijven apart zichtbaar.",
+    "Geen extra enginelezingen of Worker-verzoeken. Alleen bestaande verzendingen/ontvangsten met type/id/byteaantal geklokt, geen tekst/bytes gekopieerd door probes. Begrensd4096regels/8werkers; alle wrappers/luisteraars hersteld, geen overschrijding.",
+    "De faseprobe volgt refs perrAF; een kortlevende eerste flush kan ontbreken. SDK-save en geregistreerd save zijn wel begrensd gemeten. Extra Promise-observers/debugger kunnen uitvoering beïnvloeden.",
+    "Alle vier opgeslagen DOCX onafhankelijk SHA/ZIP/CRC/XML:128tabellen/91423UTF16. Pakketverschillen uitsluitendcore.xml. Laatste bewaarbeeld bekeken, geen volledige65pagina-/pixelacceptatie.",
+    "Geen frontend/TS/Python/build/CI opnieuw voor private diagnose en bewijsdocs. Productbron ongewijzigd; eerdere normale3OS-CI blijft afzonderlijk gelden. Bestaande geheugenfouten niet opgelost."
+  ],
+  "vervolg": "Op acb770 de interne Worker-save verder splitsen: eventwachtrij→taakstart, session.save/saveDocument, pakket-/ZIP-uitvoer en update-encoding. Gebruik begrensde Worker-profielen of een aparte bronexacte diagnostische kopie; SDK-hardlinks/productbundel niet in-place wijzigen. Worker-debugger na export uitschakelen vóór nieuw-documentproeven. Behoud herstelkopieën en bewaking; pas na oorzaakbewijs een gerichte wijziging met vaste korte/rijke ABBA-ronden. Tien migratiegebieden open; Database laatst.",
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-bewaarwerker.tar.gz",
+    "sha256": "e4602ab4e1097f6b7efe215a03a51761ac8f46ae53f08636c9f39d29c5b34230",
+    "bytes": 10008301,
+    "reguliere_leden": 78,
+    "alle_leden_byteexact_gecontroleerd": true
+  }
+}
