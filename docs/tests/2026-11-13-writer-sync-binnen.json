@@ -1,0 +1,780 @@
+{
+  "datum": "2026-11-13",
+  "basis_integratie": "c74d42b7",
+  "basis_productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Grote sync-kosten verder afgebakend: Ea omvat circa64–66procent,frame plus extras25–26procent,antwoord9–10procent. Ea is nog een samengestelde fase,geen bewijs dat uitsluitend indeling domineert. Geen productfix of veilige sync-weglating bewezen.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 120.11380470200675,
+    "minimum_vrije_bytes": 13958529024,
+    "start_vrije_bytes": 14067896320,
+    "gecompileerde_crates": [
+      "open-office-studio"
+    ],
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "startgrens_gib": 3.1,
+    "stopgrens_gib": 3,
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/open-office-studio-sync-binnen",
+    "programma_sha256": "5c42839678ee6ebabebb5cd7f360f847dab74d7d2c57d4d4c428c9b144d42b89",
+    "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+  },
+  "variant": {
+    "basis": "replica-kosten/dist,ELFfaf0e96d",
+    "nieuwe_20e_ELF": "5c42839678ee6ebabebb5cd7f360f847dab74d7d2c57d4d4c428c9b144d42b89",
+    "wasm": "Bestaande7f7877f1-cachemeetmodule,geen nieuwe Rust-/Wasm-bouw.",
+    "wijziging": "Uitsluitend vier exacte kloktoevoegingen in één private Worker-JS-kopie: sync.fg, sync.ea, sync.frame, sync.reply. SDK/productbron ongewijzigd; vóór/na-gzip en exacte vervangingen in archief. Retourwaarden/throw/async-await via try/finally behouden.",
+    "controle": {
+      "vier_vervangingen_exact": true,
+      "voor_sha256": "1c3bca5a4eb5104a07ea2b0698269e1e6c4940cb248ed42699bfc1352207dd67",
+      "na_sha256": "4f5ffd628ffd7b6bf5a75731f8df95d29e454b30564c8bc08eedc57abe1da751",
+      "geen_verdere_js_verandering": true
+    },
+    "platform": "Linux x86_64,release2026.45.52,writer-bronjournaal,schema2; eigen X11/DBus/XDG-profielen en eigen fixture. Andere varianten apart,nu niet gecontroleerd."
+  },
+  "native_ronden": [
+    {
+      "naam": "opname",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 75.27742657400086,
+      "programma_sha256": "5c42839678ee6ebabebb5cd7f360f847dab74d7d2c57d4d4c428c9b144d42b89",
+      "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/native-proef.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/open-office-studio-sync-binnen",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/opname"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33564,
+        "begin_tot_bron_ms": 10454,
+        "laatste_keyup_tot_bron_ms": 250,
+        "laatste_keyup_tot_frame_ms": 3029,
+        "begin_tot_frame_ms": 13233,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13242,
+        "wall_verzonden_tot_frame_ms": 11343,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      }
+    },
+    {
+      "naam": "herhaling",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 79.34606099200028,
+      "programma_sha256": "5c42839678ee6ebabebb5cd7f360f847dab74d7d2c57d4d4c428c9b144d42b89",
+      "helper_sha256": "5f275e4a02e3d221abe1b3f2a130bc9a9676233b10c35f0d6bc723fa9459b43e",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/native-proef.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/open-office-studio-sync-binnen",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/herhaling"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 38009,
+        "begin_tot_bron_ms": 12666,
+        "laatste_keyup_tot_bron_ms": 235,
+        "laatste_keyup_tot_frame_ms": 1265,
+        "begin_tot_frame_ms": 13696,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 14062,
+        "wall_verzonden_tot_frame_ms": 11895,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      }
+    }
+  ],
+  "fasen": {
+    "opname": {
+      "geslaagd": true,
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      },
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33564,
+        "begin_tot_bron_ms": 10454,
+        "laatste_keyup_tot_bron_ms": 250,
+        "laatste_keyup_tot_frame_ms": 3029,
+        "begin_tot_frame_ms": 13233,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13242,
+        "wall_verzonden_tot_frame_ms": 11343,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "sommen": {
+        "taak/applyUpdate": {
+          "aantal": 68,
+          "som_ms": 678.99999999998,
+          "mediaan_ms": 9.0,
+          "min_ms": 0,
+          "max_ms": 33
+        },
+        "font/font": {
+          "aantal": 67,
+          "som_ms": 1228.0000000000036,
+          "mediaan_ms": 16,
+          "min_ms": 12.999999999998181,
+          "max_ms": 116
+        },
+        "taak/fontRequirements": {
+          "aantal": 67,
+          "som_ms": 1247.000000000011,
+          "mediaan_ms": 16,
+          "min_ms": 13,
+          "max_ms": 116
+        },
+        "sync.fg/sync": {
+          "aantal": 16,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0,
+          "deel_sync_procent": 0.0
+        },
+        "sync.ea/sync": {
+          "aantal": 16,
+          "som_ms": 3842.000000000002,
+          "mediaan_ms": 233.0,
+          "min_ms": 204,
+          "max_ms": 352,
+          "deel_sync_procent": 64.14023372287149
+        },
+        "sync.frame/sync": {
+          "aantal": 16,
+          "som_ms": 1547.9999999999982,
+          "mediaan_ms": 89.5,
+          "min_ms": 77,
+          "max_ms": 139,
+          "deel_sync_procent": 25.84307178631049
+        },
+        "sync.reply/sync": {
+          "aantal": 16,
+          "som_ms": 596.0000000000018,
+          "mediaan_ms": 37.0,
+          "min_ms": 13,
+          "max_ms": 71,
+          "deel_sync_procent": 9.949916527545941
+        },
+        "taak/sync": {
+          "aantal": 16,
+          "som_ms": 5990.0,
+          "mediaan_ms": 361.9999999999991,
+          "min_ms": 318,
+          "max_ms": 536
+        },
+        "projectie/resident": {
+          "aantal": 1,
+          "som_ms": 830.9999999999964,
+          "mediaan_ms": 830.9999999999964,
+          "min_ms": 830.9999999999964,
+          "max_ms": 830.9999999999964
+        },
+        "pakket/resident": {
+          "aantal": 1,
+          "som_ms": 1967,
+          "mediaan_ms": 1967,
+          "min_ms": 1967,
+          "max_ms": 1967
+        },
+        "resident/resident": {
+          "aantal": 1,
+          "som_ms": 3201,
+          "mediaan_ms": 3201,
+          "min_ms": 3201,
+          "max_ms": 3201
+        },
+        "save/save": {
+          "aantal": 1,
+          "som_ms": 3218,
+          "mediaan_ms": 3218,
+          "min_ms": 3218,
+          "max_ms": 3218
+        },
+        "updatecode/save": {
+          "aantal": 1,
+          "som_ms": 2,
+          "mediaan_ms": 2,
+          "min_ms": 2,
+          "max_ms": 2
+        },
+        "taak/save": {
+          "aantal": 1,
+          "som_ms": 3221,
+          "mediaan_ms": 3221,
+          "min_ms": 3221,
+          "max_ms": 3221
+        },
+        "taak/buildPages": {
+          "aantal": 1,
+          "som_ms": 91,
+          "mediaan_ms": 91,
+          "min_ms": 91,
+          "max_ms": 91
+        }
+      },
+      "residu_som_ms": 3.999999999998181,
+      "kindfasen_eenmaal_binnen_sync_en_zonder_overlap": true,
+      "geen_logverlies": true,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "runtime_wasm": {
+        "bytes": 24367937,
+        "sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995"
+      },
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 38009,
+        "begin_tot_bron_ms": 12666,
+        "laatste_keyup_tot_bron_ms": 235,
+        "laatste_keyup_tot_frame_ms": 1265,
+        "begin_tot_frame_ms": 13696,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 14062,
+        "wall_verzonden_tot_frame_ms": 11895,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "sommen": {
+        "taak/applyUpdate": {
+          "aantal": 73,
+          "som_ms": 742.9999999999945,
+          "mediaan_ms": 9.000000000003638,
+          "min_ms": 1,
+          "max_ms": 24
+        },
+        "font/font": {
+          "aantal": 72,
+          "som_ms": 1379.0000000000073,
+          "mediaan_ms": 16.99999999999909,
+          "min_ms": 13,
+          "max_ms": 113
+        },
+        "taak/fontRequirements": {
+          "aantal": 72,
+          "som_ms": 1396.0,
+          "mediaan_ms": 17.0,
+          "min_ms": 13.999999999996362,
+          "max_ms": 113
+        },
+        "sync.fg/sync": {
+          "aantal": 15,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "min_ms": 0,
+          "max_ms": 0,
+          "deel_sync_procent": 0.0
+        },
+        "sync.ea/sync": {
+          "aantal": 15,
+          "som_ms": 3948.999999999998,
+          "mediaan_ms": 253,
+          "min_ms": 223.00000000000182,
+          "max_ms": 353.0000000000018,
+          "deel_sync_procent": 65.80569905015827
+        },
+        "sync.frame/sync": {
+          "aantal": 15,
+          "som_ms": 1503.9999999999964,
+          "mediaan_ms": 96,
+          "min_ms": 81,
+          "max_ms": 143.99999999999818,
+          "deel_sync_procent": 25.062489585069088
+        },
+        "sync.reply/sync": {
+          "aantal": 15,
+          "som_ms": 548.0000000000073,
+          "mediaan_ms": 36.00000000000364,
+          "min_ms": 13,
+          "max_ms": 68,
+          "deel_sync_procent": 9.131811364772656
+        },
+        "taak/sync": {
+          "aantal": 15,
+          "som_ms": 6001.000000000002,
+          "mediaan_ms": 380.99999999999636,
+          "min_ms": 354.0000000000018,
+          "max_ms": 565
+        },
+        "projectie/resident": {
+          "aantal": 1,
+          "som_ms": 836.0000000000036,
+          "mediaan_ms": 836.0000000000036,
+          "min_ms": 836.0000000000036,
+          "max_ms": 836.0000000000036
+        },
+        "pakket/resident": {
+          "aantal": 1,
+          "som_ms": 2207.9999999999964,
+          "mediaan_ms": 2207.9999999999964,
+          "min_ms": 2207.9999999999964,
+          "max_ms": 2207.9999999999964
+        },
+        "resident/resident": {
+          "aantal": 1,
+          "som_ms": 3433,
+          "mediaan_ms": 3433,
+          "min_ms": 3433,
+          "max_ms": 3433
+        },
+        "save/save": {
+          "aantal": 1,
+          "som_ms": 3484,
+          "mediaan_ms": 3484,
+          "min_ms": 3484,
+          "max_ms": 3484
+        },
+        "updatecode/save": {
+          "aantal": 1,
+          "som_ms": 2,
+          "mediaan_ms": 2,
+          "min_ms": 2,
+          "max_ms": 2
+        },
+        "taak/save": {
+          "aantal": 1,
+          "som_ms": 3486,
+          "mediaan_ms": 3486,
+          "min_ms": 3486,
+          "max_ms": 3486
+        },
+        "taak/buildPages": {
+          "aantal": 1,
+          "som_ms": 87.99999999999636,
+          "mediaan_ms": 87.99999999999636,
+          "min_ms": 87.99999999999636,
+          "max_ms": 87.99999999999636
+        }
+      },
+      "residu_som_ms": 0.0,
+      "kindfasen_eenmaal_binnen_sync_en_zonder_overlap": true,
+      "geen_logverlies": true,
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  },
+  "interpretatie": [
+    "Opname16syncs,5.990ms totaal: Ea3.842ms,frame1.548ms,antwoord596ms,extern fg0ms. Herhaling15syncs,6.001ms: Ea3.949ms,frame1.504ms,antwoord548ms,extern fg0ms. Punten zijn duizendtallen.",
+    "Per sync alle vier kindfasen eenmaal en binnen de ouderfase,zónder onderlinge overlap. Residu samen4/0ms. Geen loggerverlies. Tijden zijn verstreken Worker-tijd,geen exclusieve CPU. Bovenliggende taak en kindfasen niet optellen.",
+    "Fg is de buitenste fontbasiscontrole.0ms betekent onder de waargenomen klokresolutie,niet nulCPU-werk. Ea bevat ook eigen interne fg.",
+    "Ea bevat hydratatie/loadState,media/nootscheiders,fontregistratie,Ro-inputbewerking,bodyblokken/metingen,indelings-API en selectie. De3,8–3,9s mag niet uitsluitend aan layout of één kernfunctie worden toegeschreven.",
+    "Frameklok omvat Oa(extras) plus buildDisplayListFrame. Reply omvat await xr;geen uitsluitende transport-/paintclaim.",
+    "Dit zijn geïnstrumenteerde ronden;geen nieuwe onbeïnvloede desktop-ABBA of snelheidsacceptatie. Bestaande cachevarianten blijven afgewezen."
+  ],
+  "broncontext": {
+    "werker_bestand": "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+    "werker_sha256": "4f5ffd628ffd7b6bf5a75731f8df95d29e454b30564c8bc08eedc57abe1da751",
+    "ea_context": "function Ea(e,t,r=!0,n=!0,i,a,o,s=!0){if(!N)throw new Error(\"Document worker is not initialized\");if(fg(e),Yi=!1,Po(),bt=null,gn(),nr=null,n&&!e.workerAuthoritative&&(Pn(),rt=null,N.loadState(e.state)),N.setPartialDocument(e.partialDocument===!0),Ht=e.partialDocument===!0?0:null,e.workerAuthoritative||(N.loadMediaSources(e.mediaSources??\"\"),N.loadNoteSeparators(e.noteSeparators??new Uint8Array(0))),e.fontsRevision!==dn){if(e.fontsBaseRevision===void 0){N.clearFonts(),tr=null;for(let f of or)_t.add(f);Ur.clear()}if(dn=-1,o){let f=ng(N,e.fonts),h=typeof o.fontRegistrationSlots==\"object\"?o.fontRegistrationSlots.fontChains:void 0;e.layoutInput=f.remap(e.layoutInput,h),o.layoutInput=e.layoutInput,o.extras=f.remap(o.extras,h),o.fontRegistrationSlots=void 0,o.fonts=[]}else for(let f of e.fonts)f instanceof Uint8Array?N.registerFont(f):N.registerSubstituteFont(f.substituteOf,f.family);dn=e.fontsRevision}e.layoutInput=Ro(N,e.layoutInput,!0);for(let{story:f,env:h}of e.renderInputs)N.yrsBlocksForStory(f,h);for(let f of e.measureInputs)N.measureParagraphJson(f);if(!s)return Le=e.layoutRevision,Zi=e.layoutWithRegions,yt=null,We=[],{layoutJson:null,provisional:!1};let l=null,d,u=!1,c=null;if(e.layoutWithRegions&&t!==void 0){l=N.layoutDocumentWithRegionsPrefixRetainedJson(e.layoutInput,t);let f=JSON.parse(l);u=f.provisional===!0,c=f.layout.pages.length}else e.layoutWithRegions&&!r?N.layoutDocumentWithRegionsRetained(e.layoutInput):e.layoutWithRegions&&i===\"meta\"?(d=N.layoutDocumentWithRegionsRetainedMeta(e.layoutInput),u=d.provisional,c=d.pageCount):e.layoutWithRegions?(l=N.layoutDocumentWithRegionsRetainedJson(e.layoutInput),e.partialDocument===!0&&(c=JSON.parse(l).layout.pages.length)):N.layoutDocumentJson(e.layoutInput);return!e.workerAuthoritative&&e.selection&&N.setSelection(e.selection.anchor,e.selection.head),Le=e.layoutRevision,Zi=e.layoutWithRegions,yt=N.proposalEngine.version(),Yi=!0,We=[],Ht=yS(e.partialDocument,u,t,c),ir=u&&e.partialDocument!==!0?t??null:null,{layoutJson:l,...d?{layoutMeta:XS(d,a)}:{},provisional:u}}",
+    "rust_bestand": ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs",
+    "rust_sha256": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+    "load_context": "    pub fn load(&self, update: &[u8]) -> Result<(), JsValue> {\n        let session_id = self.engine.doc().session_id();\n        let written = self.awaiting_comment_baseline.get().then(|| {\n            self.engine\n                .doc()\n                .source_metadata()\n                .map(|source| source.read().comment_writes.snapshot())\n                .unwrap_or_default()\n        });\n        self.engine.doc().load_state_v1(update).map_err(js_err)?;\n        if self.engine.doc().session_id() != session_id {\n            self.engine.set_relayout_trigger(RelayoutTrigger::Open);\n        }\n        if let Some(written) = written {\n            self.engine.doc().rebase_comment_writes(written);\n            self.awaiting_comment_baseline.set(false);\n        }\n        self.engine.doc().rotate_version(js_entropy());\n        Ok(())\n    }\n\n",
+    "duiding": "Ea omvat ook hydratatie/media/fontregistratie/bodyvoorbereiding en selectie,naast layout. Buitenste Ea-klok bewijst geen exclusieve layout-CPU. Load roteert bewust versie. Afzonderlijke modelproef gebruikt expliciete duplicaatupdate;geen bewijs dat echte sync-state redundant is."
+  },
+  "model_dubbele_hydratatie": {
+    "ronden": {
+      "dubbele-basis": {
+        "geslaagd": true,
+        "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+        "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+        "grens": "Modelproef met expliciet reeds toegepaste update;geen bewijs dat echte Worker-sync-pakketten redundant zijn. Load is een hydratatiegrens met bewust andere versie;geen voorstel die grens globaal te verwijderen. Enkelvoudige klokmetingen,geen desktopacceptatie.",
+        "font_na_invoeging_ms": 102.47818499999994,
+        "fontprofiel_voor": {},
+        "dubbele_load_ms": 0.4074919999998201,
+        "envelop_verschillen": [
+          "version"
+        ],
+        "alineas_voor_sha256": "ca270c3f8388d844785d21bee9e21e080060b241442475640a6d37569606045b",
+        "alineas_na_sha256": "ca270c3f8388d844785d21bee9e21e080060b241442475640a6d37569606045b",
+        "font_na_dubbele_load_ms": 10.591995000000225,
+        "fontprofiel_na": {},
+        "update_bytes": 2326,
+        "volledige_crdt_staat_exact": true,
+        "vector_exact": true,
+        "alineaprojectie_exact": true,
+        "fontjson_exact": true,
+        "versie_voor": "6e5ca70e77c6e240-3",
+        "versie_na": "1632c5005877ea77-3",
+        "staat_sha256": "eb316986e20b052b4f37476dafed576e219fa91927a4cb305038173bf9749bcd",
+        "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a"
+      },
+      "dubbele-cache": {
+        "geslaagd": true,
+        "wasm_sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995",
+        "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+        "grens": "Modelproef met expliciet reeds toegepaste update;geen bewijs dat echte Worker-sync-pakketten redundant zijn. Load is een hydratatiegrens met bewust andere versie;geen voorstel die grens globaal te verwijderen. Enkelvoudige klokmetingen,geen desktopacceptatie.",
+        "font_na_invoeging_ms": 13.098117000000002,
+        "fontprofiel_voor": [
+          [
+            "begin",
+            2293.415574
+          ],
+          [
+            "parse",
+            2293.426054
+          ],
+          [
+            "collector_begin",
+            2293.427954
+          ],
+          [
+            "measured_gereed",
+            2293.428664
+          ],
+          [
+            "story_begin",
+            2293.435914
+          ],
+          [
+            "story_gereed",
+            2294.346369
+          ],
+          [
+            "route_overige_patch",
+            2294.347339
+          ],
+          [
+            "collect_gereed",
+            2306.438481
+          ],
+          [
+            "finish",
+            2306.454721
+          ],
+          [
+            "json",
+            2306.462581
+          ]
+        ],
+        "dubbele_load_ms": 0.43379300000015064,
+        "envelop_verschillen": [
+          "version"
+        ],
+        "alineas_voor_sha256": "ca270c3f8388d844785d21bee9e21e080060b241442475640a6d37569606045b",
+        "alineas_na_sha256": "ca270c3f8388d844785d21bee9e21e080060b241442475640a6d37569606045b",
+        "font_na_dubbele_load_ms": 10.650994999999966,
+        "fontprofiel_na": [
+          [
+            "begin",
+            2407.743062
+          ],
+          [
+            "parse",
+            2407.753633
+          ],
+          [
+            "collector_begin",
+            2407.756813
+          ],
+          [
+            "measured_gereed",
+            2407.757493
+          ],
+          [
+            "story_begin",
+            2407.765613
+          ],
+          [
+            "story_gereed",
+            2407.771873
+          ],
+          [
+            "route_cache_hit",
+            2407.772182
+          ],
+          [
+            "collect_gereed",
+            2418.304337
+          ],
+          [
+            "finish",
+            2418.320027
+          ],
+          [
+            "json",
+            2418.329957
+          ]
+        ],
+        "update_bytes": 2326,
+        "volledige_crdt_staat_exact": true,
+        "vector_exact": true,
+        "alineaprojectie_exact": true,
+        "fontjson_exact": true,
+        "versie_voor": "bb1b884f52006268-3",
+        "versie_na": "066f33891954364d-3",
+        "staat_sha256": "120a82a530be1477bc485ee8c71bcb150fe4a29bd856671c8c26591996bf90bc",
+        "font_sha256": "85f81bb149947dbd8658035aa47233f7c840bc0101878a6597ecca6983ffce9a"
+      }
+    },
+    "afgekeurde_eerste_proef": "Beide eerste modelronden faalden op bytevergelijking van de volledige alinealees-envelop,omdat load bewust het version-veld wijzigt. Oude scripts,afwijzingen en logs volledig bewaard in hydratatie-eerste-afkeuring. Definitieve proeven vergelijken de volledige paragraph-array,volledigeCRDT-staat,vector enfontJSON en registreren de enige envelopwijziging:version.",
+    "bevinding": "Expliciet reeds toegepaste update nogmaals load: beide kernen behouden CRDT/vector/alineas/fonts exact,maar wijzigen versie. Cachemodule blijft daarna op font-route_cache_hit. Enkele getimede load-aanroepen circa0,4ms;geen aanwijzing dat deze modelhydratatie volledige fontlowering opnieuw afdwingt.",
+    "grens": "Geen bewijs dat echte native sync-state pakketten duplicaten zijn,of dat hydratatie/versiegrens veilig kan verdwijnen. Geen algemene snelheidsclaim uit deze enkelvoudige Node-metingen."
+  },
+  "functioneel": {
+    "beide_volledige_ronden_groen": true,
+    "checks": "Fysieke1052tekens,Undo/Redo,bronexacteShift-selectie/vervangen,bewaren vóór vastgehouden antwoord,verwerpen,nieuw document en laat antwoord;geen GUI/engine/consolefouten.",
+    "documenten": {
+      "opname": {
+        "sha256": "d7e3d11412d1add0c858fe024a27d3eeb0aaa28a43aa4dfec363e8f35353f940",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "a2a8a2f3875b1b39587c1fc0a4bc3f4dceb1aab0eb7939d3f56a8cd029ab95fe",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_opname": []
+      },
+      "herhaling": {
+        "sha256": "145bb334e113a4452431004781233ff1df6fa113ee50e1c6b6cbcda91e8afd8e",
+        "tabellen": 128,
+        "utf16": 91423,
+        "pakketdelen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "34eac5127e53130b220ebac852852fbd3465f745c491c4c8ab0236c79f3e318c",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "verschillende_pakketdelen_vs_opname": [
+          "docProps/core.xml"
+        ]
+      }
+    },
+    "docx": "Twee DOCX onafhankelijk SHA/ZIP/CRC/alleXML en relaties;128tabellen/91423UTF16. Pakketdelen onderling alleen core.xml verschillend.",
+    "beelden": {
+      "paren": [
+        {
+          "referentie": "sync-binnen/opname/invoer-redo.png",
+          "vergeleken": "sync-binnen/herhaling/invoer-redo.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "sync-binnen/opname/snel-getypt-bewaard.png",
+          "vergeleken": "sync-binnen/herhaling/snel-getypt-bewaard.png",
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "sync-binnen/opname/nieuw-na-laat-antwoord.png",
+          "vergeleken": "sync-binnen/herhaling/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "replica-kosten/native-b-een/invoer-redo.png",
+          "vergeleken": "sync-binnen/opname/invoer-redo.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "replica-kosten/native-b-een/snel-getypt-bewaard.png",
+          "vergeleken": "sync-binnen/opname/snel-getypt-bewaard.png",
+          "bbox": [
+            1050,
+            940,
+            1052,
+            955
+          ],
+          "verschillende_pixels": 30
+        },
+        {
+          "referentie": "replica-kosten/native-b-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "sync-binnen/opname/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "replica-kosten/native-b-een/invoer-redo.png",
+          "vergeleken": "sync-binnen/herhaling/invoer-redo.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "replica-kosten/native-b-een/snel-getypt-bewaard.png",
+          "vergeleken": "sync-binnen/herhaling/snel-getypt-bewaard.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        },
+        {
+          "referentie": "replica-kosten/native-b-een/nieuw-na-laat-antwoord.png",
+          "vergeleken": "sync-binnen/herhaling/nieuw-na-laat-antwoord.png",
+          "bbox": null,
+          "verschillende_pixels": 0
+        }
+      ],
+      "exact": 7,
+      "grens": "Gehele beelden zonder maskers;drie vaste momenten,geen volledige visuele acceptatie."
+    },
+    "bekeken": [
+      "herhaling/snel-getypt-bewaard.png"
+    ],
+    "waarneming": "Bekeken bewaarbeeld behoudt verwachte tekst/opmaak en65pagina’s zonder zichtbare overlap. Negen hele-beeldparen,zeven exact;overige twee30pixels in2px-brede bbox. Geen maskers of volledige visuele acceptatie."
+  },
+  "behoud": {
+    "elf_referenties_exact": 20,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "sdk_vendor_npm_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431"
+    },
+    "private_rust_bron_exact_ongewijzigd": {
+      "engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      "wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      "mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      "lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+    },
+    "scriptcontroles": [
+      {
+        "pad": "analyse.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "beelden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "bewijs.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "bouwen-native.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "controle-wijziging.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "eindcontrole.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "native-proef.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "ronden.py",
+        "controle": "Python AST",
+        "code": 0
+      },
+      {
+        "pad": "dubbele-hydratatie.mjs",
+        "controle": "node --check",
+        "code": 0
+      },
+      {
+        "pad": "dist/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+        "controle": "node --check",
+        "code": 0,
+        "sha256": "4f5ffd628ffd7b6bf5a75731f8df95d29e454b30564c8bc08eedc57abe1da751"
+      }
+    ]
+  },
+  "niet_gecontroleerd": [
+    "Geen productcode/SDK/vendor/privateRust-bron gewijzigd,geen productievariant gemaakt. Alleen private klokkopie,modelproef en documentatie.",
+    "Geen nieuwe volledige frontend/TypeScript/Python-suite,product-CI,Windows/macOS-,installer- of andere feature/schema-/releaseacceptatie.",
+    "Geen volledige IME/accessibility/allemutaties/stories/previews/glyphdekking. Bestaande geheugen-/RefCell-fouten en migratiegebieden blijven open;geen issue gesloten.",
+    "Ea-internen nog niet afzonderlijk gemeten en echte sync-state redundantie niet bewezen. Geen veilige skip/coalescing-regel geaccepteerd."
+  ],
+  "vervolg": "Splits eerst Ea-klok in loadState/hydratatie,media/fonts,Ro+yrsBlocks/measureInputs en concrete retained-layout-API plusselectie. Behoud echtefont-/bron-/env-/preview-/header-/versiegrenzen. Onderzoek hoofdthread-aanvraagplanning op aantoonbaar achterhaalde renderverzoeken,zonder muterende sync blind over te slaan. Nieuwe kandidaat pas na negatieve en functionele dekking,gewone korte/rijke nativeABBA en beelden. Database laatst.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-13-writer-replicacache.tar.gz",
+      "sha256": "2e1faca1577ef3c215a95b2bd3633107dee55c937e3db785e5ae1718dd0ca216"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-synchronisatiefasen.tar.gz",
+      "sha256": "1e41233b29574a279f205208de8237d9cab3f01ab54a47f238051ac37c48d3dc"
+    }
+  ],
+  "bewijs": {
+    "pad": "docs/tests/2026-11-13-writer-sync-binnen.tar.gz",
+    "sha256": "26f1a38b1b7111edb26009bd45aee42c917ba214fb85e91ec3788b6777fa2309",
+    "bytes": 5623522,
+    "bestanden": 65,
+    "alle_leden_byteexact_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/dist of heleRust-boom. Wel volledige klok-JSvoor/na-gzip,vervangingen,broncontext,proefscripts,afkeuringen,profielen,DOCX,PNG enlogs. Alle20ELF-referenties privé behouden en vastgepind."
+  }
+}
