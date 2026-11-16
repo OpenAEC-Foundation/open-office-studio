@@ -218,6 +218,7 @@ try {
   assert.equal(ownedApplicationPids().length, 0, "No pre-existing test app");
   const packageBytes = await readFile(packagePath);
   report.package = { path: packagePath, sha256: hash(packageBytes) };
+  assert.equal(report.package.sha256,process.env.OFFICE_NATIVE_EXPECTED_SHA256,"Exact canonical G DEB receipt before installation or native operation");
   if (process.env.OFFICE_NATIVE_ARTIFACT_RECHECK === "true") {
     const origin = JSON.parse(
       await readFile(".local/native-recheck-origin.json", "utf8"),

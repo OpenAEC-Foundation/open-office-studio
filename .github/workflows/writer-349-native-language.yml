@@ -45,6 +45,7 @@ jobs:
       - name: Native edit, Ctrl+S and full process reopen on unchanged package
         env:
           OFFICE_NATIVE_ARTIFACT_RECHECK: "true"
+          OFFICE_NATIVE_EXPECTED_SHA256: 6b254885cb8ba65c8e3cd75f29f132a473b0a32652b035ae4f2d5ee9719e67b9
           # #355: same CI-only graphics path as the packaged Linux smoke test.
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
         run: |
