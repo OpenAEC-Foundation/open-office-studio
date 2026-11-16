@@ -15,7 +15,7 @@ H=subprocess.check_output(["git","-C",str(base.parent),"rev-parse","HEAD"],text=
 sha=lambda b: hashlib.sha256(b).hexdigest()
 report={"applicationCommit":APP_SOURCE,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
 report["host"]={"macOS":platform.mac_ver()[0],"machine":platform.machine(),"platform":platform.platform(),"runnerOS":os.environ.get("RUNNER_OS")}
-report["keyboardProtocol"]={"documentStart":"Cmd+Up","documentEnd":"Cmd+Down","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z","arrowIntervalMs":50,"caretProof":"native prefix copy via Cmd+Shift+Up and Cmd+C"}
+report["keyboardProtocol"]={"documentStart":"Cmd+Up","documentEnd":"Cmd+Down","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z","arrowIntervalMs":50,"caretProof":"single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"}
 program=None;mount=out/"mounted";mounted=False;helper=out/"writer349-ax";pid=None;serial=0
 processes=runpy.run_path("scripts/proef-macos-openen.py")["processen"]
 def save_report(): (out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
@@ -81,7 +81,16 @@ def boundary(name,left):
     keyboard("\n".join("key code 124\ndelay 0.05" for _ in range(left)))
     language(name+" left","Dutch");key(124);language(name+" right","English")
     if name=='original boundary':
-        copied_prefix(name+' right verified','Nederlands ')
+        original=['Nederlands English','Bonjour','Nogmaals Nederlands']
+        expected=['Nederlands QEnglish','Bonjour','Nogmaals Nederlands']
+        type_text('Q');time.sleep(1.2);keyboard('keystroke "s" using {command down}')
+        wait(lambda:paragraphs(A)==expected,'Native caret probe did not save Q at exact offset11 in active A')
+        assert sha(B.read_bytes())==bhash,'Caret probe must edit A only'
+        proof={'step':name+' right verified','method':'native Q edit and CmdS; independent DOCX position','expectedOffset':11,'actualParagraphs':paragraphs(A),'savedProbeSha256':sha(A.read_bytes())}
+        report.setdefault('caretEvidence',[]).append(proof);save_report()
+        keyboard('keystroke "z" using {command down}');time.sleep(1.2);keyboard('keystroke "s" using {command down}')
+        wait(lambda:paragraphs(A)==original,'Native Undo and CmdS must restore the untouched fixture after caret proof')
+        proof['restoredParagraphs']=paragraphs(A);proof['restoredSha256']=sha(A.read_bytes());save_report()
         capture('boundary-right-verified.png')
 def paragraphs(path):
     with zipfile.ZipFile(path) as z: root=ET.fromstring(z.read("word/document.xml"))
