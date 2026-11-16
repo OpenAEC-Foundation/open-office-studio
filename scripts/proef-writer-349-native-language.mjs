@@ -36,7 +36,7 @@ const report = {
     encoding: "utf8",
   }).trim(),
   platform: "Linux x64 / Xvfb / installed Tauri WebKitGTK",
-  scope: "PR349 native language boundaries, typing, Undo/Redo, tab isolation and full-process save/reopen on fixed F DEB",
+  scope: "PR349 native language boundaries, typing, Undo/Redo, tab isolation and full-process save/reopen on fixed combined G DEB",
   status: "running",
   checks: [],
   limits: [

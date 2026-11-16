@@ -1,6 +1,11 @@
 name: Writer 349 native macOS acceptance
 on:
   workflow_dispatch:
+    inputs:
+      build_run:
+        description: Desktop CI run on the fixed combined G application point
+        required: true
+        type: string
 permissions:
   contents: read
   actions: read
@@ -11,14 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: e1f84f84f4d72e5ce8ab967e376a6f38344edf39
+          ref: 9e0ad565402815082e8edf11a4c23943455fb6ce
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           path: .local/349-harness
-      - name: Verify original F artifact and package bytes
+      - name: Verify fixed combined G artifact and package bytes
         env:
           GH_TOKEN: ${{ github.token }}
+          NATIVE_BUILD_RUN: ${{ inputs.build_run }}
         run: python3 .local/349-harness/scripts/haal-writer-349-macos.py
       - name: Actual native AX language, keyboard, save and process reopen
         run: python3 .local/349-harness/scripts/proef-writer-349-macos.py

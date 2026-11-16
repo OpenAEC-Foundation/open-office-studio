@@ -1,19 +1,19 @@
-"""Native F Writer language/keyboard/save acceptance on disposable macOS CI."""
+"""Native combined G Writer acceptance on disposable macOS CI."""
 import hashlib, io, json, os, platform, plistlib, runpy, signal, subprocess, sys, time, zipfile
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
 assert sys.platform=="darwin" and os.environ.get("GITHUB_ACTIONS")=="true"
-F="e1f84f84f4d72e5ce8ab967e376a6f38344edf39"
-assert subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()==F
+APP_SOURCE="9e0ad565402815082e8edf11a4c23943455fb6ce"
+assert subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()==APP_SOURCE
 base=Path(__file__).resolve().parent
 out=Path(".local/writer349-native-macos").resolve();out.mkdir(parents=True,exist_ok=True)
 package=Path(".local/writer349-macos-package")
 origin=json.loads((package/"origin.json").read_text())
-assert origin["applicationCommit"]==F
+assert origin["applicationCommit"]==APP_SOURCE
 H=subprocess.check_output(["git","-C",str(base.parent),"rev-parse","HEAD"],text=True).strip()
 sha=lambda b: hashlib.sha256(b).hexdigest()
-report={"applicationCommit":F,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
+report={"applicationCommit":APP_SOURCE,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
 report["host"]={"macOS":platform.mac_ver()[0],"machine":platform.machine(),"platform":platform.platform(),"runnerOS":os.environ.get("RUNNER_OS")}
 program=None;mount=out/"mounted";mounted=False;helper=out/"writer349-ax";pid=None;serial=0
 processes=runpy.run_path("scripts/proef-macos-openen.py")["processen"]

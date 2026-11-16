@@ -1,12 +1,17 @@
 name: Writer 349 native language acceptance
 on:
   workflow_dispatch:
+    inputs:
+      build_run:
+        description: Desktop CI run on the fixed combined G application point
+        required: true
+        type: string
 permissions:
   contents: read
   actions: read
 env:
-  NATIVE_BUILD_RUN: "43838167666"
-  NATIVE_APP_COMMIT: e1f84f84f4d72e5ce8ab967e376a6f38344edf39
+  NATIVE_BUILD_RUN: ${{ inputs.build_run }}
+  NATIVE_APP_COMMIT: 9e0ad565402815082e8edf11a4c23943455fb6ce
 jobs:
   native:
     runs-on: ubuntu-22.04
