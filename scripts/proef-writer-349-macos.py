@@ -154,7 +154,7 @@ try:
     report['savedSha256']=sha(A.read_bytes());report['exactSavedParagraphs']=paragraphs(A);capture('saved.png')
     tab(B.name);focus();key(115,'command down');language('independent B','German');key(125,'option down');language('B second paragraph','Italian')
     for i in range(2):
-        tab(A.name);focus();boundary(f'A tab {i}',10)
+        tab(A.name);language(f'A tab retained {i}','English');focus();boundary(f'A tab {i}',10)
         tab(B.name);language(f'B tab retained {i}','Italian');focus();key(115,'command down');language(f'B tab reset {i}','German');key(125,'option down');language(f'B tab second {i}','Italian')
     assert sha(B.read_bytes())==bhash and sha(A.read_bytes())==report['savedSha256']
     capture('tabs.png');close_app(True);report['firstProcessClosed']=True;report['firstCloseMethod']='native CmdQ'
@@ -162,7 +162,10 @@ try:
     tab(A.name);focus();key(115,'command down');language('reopened A','Dutch');boundary('reopened boundary',10)
     key(125,'option down');language('reopened second paragraph','French')
     assert sha(A.read_bytes())==report['savedSha256'] and sha(B.read_bytes())==bhash
-    capture('reopened.png');report['status']='passed'
+    capture('reopened.png')
+    tab(B.name);focus();key(115,'command down');language('reopened independent B','German')
+    assert sha(A.read_bytes())==report['savedSha256'] and sha(B.read_bytes())==bhash
+    report['status']='passed'
 except (PermissionError,subprocess.TimeoutExpired) as e:
     report.update(status='blocked',reason=str(e))
 except subprocess.CalledProcessError as e:
