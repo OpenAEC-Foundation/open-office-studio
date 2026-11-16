@@ -26,6 +26,10 @@ jobs:
         if: always()
         with:
           name: writer349-native-language-macOS
-          path: .local/writer349-native-macos/
+          path: |
+            .local/writer349-native-macos/*.json
+            .local/writer349-native-macos/*.png
+            .local/writer349-native-macos/*.docx
+            .local/writer349-native-macos/app-manifest.txt
           include-hidden-files: true
           if-no-files-found: warn
