@@ -94,10 +94,14 @@ def boundary(name,left):
         wait(lambda:paragraphs(A)==expected,'Native caret probe did not save Q at exact offset11 in active A')
         assert sha(B.read_bytes())==bhash,'Caret probe must edit A only'
         proof={'step':name+' right verified','method':'native Q edit and CmdS; independent DOCX position','expectedOffset':11,'actualParagraphs':paragraphs(A),'savedProbeSha256':sha(A.read_bytes())}
+        proof['savedProbeFile']='caret-offset11-saved.docx'
+        (out/proof['savedProbeFile']).write_bytes(A.read_bytes())
         report.setdefault('caretEvidence',[]).append(proof);save_report()
         keyboard('keystroke "z" using {command down}');time.sleep(1.2);keyboard('keystroke "s" using {command down}')
         wait(lambda:paragraphs(A)==original,'Native Undo and CmdS must restore the untouched fixture after caret proof')
         proof['restoredParagraphs']=paragraphs(A);proof['restoredSha256']=sha(A.read_bytes());save_report()
+        proof['restoredFile']='caret-offset11-restored.docx'
+        (out/proof['restoredFile']).write_bytes(A.read_bytes());save_report()
         capture('boundary-right-verified.png')
 def paragraphs(path):
     with zipfile.ZipFile(path) as z: root=ET.fromstring(z.read("word/document.xml"))
@@ -108,7 +112,10 @@ def saved_checkpoint(name,expected,path=None):
     keyboard('keystroke "s" using {command down}')
     try: wait(lambda:paragraphs(path)==expected,name+': actual saved paragraphs do not match intended cursor position',15)
     finally:
-        report.setdefault('savedCheckpoints',[]).append({'name':name,'file':path.name,'expected':expected,'actual':paragraphs(path),'sha256':sha(path.read_bytes())})
+        checkpoints=report.setdefault('savedCheckpoints',[])
+        snapshot=f'checkpoint-{len(checkpoints)+1:02d}.docx'
+        (out/snapshot).write_bytes(path.read_bytes())
+        checkpoints.append({'name':name,'file':path.name,'snapshot':snapshot,'expected':expected,'actual':paragraphs(path),'sha256':sha(path.read_bytes())})
         save_report()
 def close_app(graceful=False):
     global pid
@@ -182,6 +189,7 @@ try:
     report['wrappedInputParagraphs']=wrapped_text
     A=out/'358 native language A.docx';B=out/'358 native language B.docx';C=out/'358 wrapped C.docx'
     C.write_bytes(fixture(False,True));chash=sha(C.read_bytes())
+    (out/'wrapped-input.docx').write_bytes(C.read_bytes())
     A.write_bytes(fixture(False));B.write_bytes(fixture(True));bhash=sha(B.read_bytes())
     report['inputSha256']={'A':sha(A.read_bytes()),'B':bhash,'C':chash}
     run(['xcrun','swiftc',str(base/'writer-358-macos-ax.swift'),'-o',str(helper)],capture_output=True,timeout=120)
@@ -257,6 +265,7 @@ try:
     wait(lambda:'~D~' in paragraphs(C)[0],'Plain Down must stay inside the wrapped first paragraph')
     actual=paragraphs(C);offset=actual[0].index('~D~')
     report['wrappedPlainDown']={'offsetBefore':8,'offsetAfter':offset,'actual':actual,'sha256':sha(C.read_bytes())}
+    (out/'wrapped-plain-down.docx').write_bytes(C.read_bytes())
     save_report()
     assert 8<offset<len(wrapped_text[0]) and actual[0].replace('~D~','')==wrapped_text[0] and actual[1:]==wrapped_text[1:]
     keyboard('keystroke "z" using {command down}');time.sleep(1.2)
