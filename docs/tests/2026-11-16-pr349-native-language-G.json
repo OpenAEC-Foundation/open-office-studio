@@ -1,0 +1,858 @@
+{
+  "application": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+  "tree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+  "linux": {
+    "run": 43858722629,
+    "visualInspection": "original saved/tabs/reopened PNGs readable; EN/IT/FR status",
+    "artifact": {
+      "run": "43858722629",
+      "artifactId": 14222162568,
+      "name": "writer349-native-language-linux",
+      "sha256": "6a35076d431c88317fb9b09356ea74e3cdaa2c3975af168339cb23ed0e9bb5f9",
+      "bytes": 364079,
+      "githubDigestMatched": true
+    },
+    "centralComparison": {
+      "status": "passed",
+      "samePayload": true,
+      "run": 43856368812,
+      "artifact": {
+        "run": "43856368812",
+        "artifactId": 14222116423,
+        "name": "native-linux-writer-roundtrip",
+        "sha256": "b8d27093f88054b43fbdcbd9e8975b5a25ce562627dbb2d2cef67c211e534738",
+        "bytes": 243436,
+        "githubDigestMatched": true
+      },
+      "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+      "payload": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d"
+    },
+    "audit": {
+      "report": {
+        "sourceCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+        "harnessCommit": "736f6b08861d6c8325a2a34dd96cd6c286d61fe8",
+        "harnessSha256": "bb15f8466a7606ebe4788182a0f3ddaf48773c8cefcdb05b739e87944f087b5a",
+        "sourceTree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+        "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+        "scope": "PR349 native language boundaries, typing, Undo/Redo, tab isolation and full-process save/reopen on fixed combined G DEB",
+        "status": "passed",
+        "checks": [
+          "Two real startup DOCX files open through native production backend",
+          {
+            "name": "initial A",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "original boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "original boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "next paragraph A",
+            "expected": "French",
+            "actual": "French (France) Â· 1 spelling error"
+          },
+          {
+            "name": "after typing and quiet",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "inserted character boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 2 spelling errors"
+          },
+          {
+            "name": "inserted character boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 2 spelling errors"
+          },
+          {
+            "name": "Undo boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "Undo boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "Redo boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 2 spelling errors"
+          },
+          {
+            "name": "Redo boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 2 spelling errors"
+          },
+          {
+            "name": "restored after Undo left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "restored after Undo right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          "Native Ctrl+S preserves exact three paragraphs after typing and Undo/Redo",
+          {
+            "name": "B same text different language",
+            "expected": "German",
+            "actual": "German (Germany) Â· 2 spelling errors"
+          },
+          {
+            "name": "B second paragraph",
+            "expected": "Italian",
+            "actual": "Italian (Italy) Â· 2 spelling errors"
+          },
+          {
+            "name": "A tab caret retained 0",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 0 left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 0 right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "B tab caret retained 0",
+            "expected": "Italian",
+            "actual": "Italian (Italy) Â· 2 spelling errors"
+          },
+          {
+            "name": "B tab reset 0",
+            "expected": "German",
+            "actual": "German (Germany) Â· 2 spelling errors"
+          },
+          {
+            "name": "B tab second 0",
+            "expected": "Italian",
+            "actual": "Italian (Italy) Â· 2 spelling errors"
+          },
+          {
+            "name": "A tab caret retained 1",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 1 left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 1 right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "B tab caret retained 1",
+            "expected": "Italian",
+            "actual": "Italian (Italy) Â· 2 spelling errors"
+          },
+          {
+            "name": "B tab reset 1",
+            "expected": "German",
+            "actual": "German (Germany) Â· 2 spelling errors"
+          },
+          {
+            "name": "B tab second 1",
+            "expected": "Italian",
+            "actual": "Italian (Italy) Â· 2 spelling errors"
+          },
+          "Application process fully exits after saving",
+          {
+            "name": "reopened A",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "reopened boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) Â· 1 spelling error"
+          },
+          {
+            "name": "reopened boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "name": "reopened second paragraph",
+            "expected": "French",
+            "actual": "French (France) Â· 1 spelling error"
+          },
+          "Fresh native process reopens exact saved bytes and preserves mixed-language boundaries",
+          {
+            "name": "reopened independent B",
+            "expected": "German",
+            "actual": "German (Germany) Â· 2 spelling errors"
+          }
+        ],
+        "limits": [
+          "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+          "Virtual X11 display and software graphics, not physical hardware",
+          "DEB only; AppImage native operation is not certified"
+        ],
+        "package": {
+          "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+          "sha256": "6b254885cb8ba65c8e3cd75f29f132a473b0a32652b035ae4f2d5ee9719e67b9"
+        },
+        "artifactOrigin": {
+          "run": 43856368812,
+          "sourceCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "artifacts": [
+            {
+              "id": 14221851734,
+              "name": "open-office-studio-Linux",
+              "zipSha256": "3925b646da482ed8a2a6afd0acac553fb07ec5cd66fb01207b7ac226b21cfed3",
+              "bytes": 811729102
+            },
+            {
+              "id": 14222026568,
+              "name": "pakketcontrole-Linux",
+              "zipSha256": "330f69a2901bcba683f7379acace587ed26e8573bc3a1beae92ac059f568ff53",
+              "bytes": 674
+            }
+          ]
+        },
+        "packagedExecutableSha256": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d",
+        "rawBuildExecutableSha256": null,
+        "executableSha256": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d",
+        "runtime": {
+          "node": "v22.23.4",
+          "graphics": {
+            "GDK_BACKEND": "x11",
+            "LIBGL_ALWAYS_SOFTWARE": "1",
+            "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+            "WEBKIT_DISABLE_COMPOSITING_MODE": null
+          },
+          "driver": "tauri-driver v2.1.0:",
+          "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+          "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+          "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+        },
+        "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+        "otherInputSha256": "24bc1baee3f9565fc2f9665b2d32d6f7ac270093e11c540b3ea69860b80286d0",
+        "inputSha256": "5b61162377e93b108dd33b82a55d4c1ed4dfc7ef5eedec01f3ee52899bdb9fc4",
+        "firstPids": [
+          "4445"
+        ],
+        "beforeSave": {
+          "saveDisabled": false,
+          "keyboard": [
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ArrowDown",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "ArrowDown",
+              "meta": false
+            },
+            {
+              "code": "ArrowDown",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "ArrowDown",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "End",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "End",
+              "meta": false
+            },
+            {
+              "code": "End",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "End",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyS",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "s",
+              "meta": false
+            },
+            {
+              "code": "KeyS",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "s",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyY",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "y",
+              "meta": false
+            },
+            {
+              "code": "KeyY",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "y",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            }
+          ],
+          "focused": "TEXTAREA"
+        },
+        "savedSha256": "4108aa0ecc466370c7add1a4639471cc76781aca410f2fb301b0dad598aa4a38",
+        "exactSavedParagraphs": [
+          "Nederlands English",
+          "Bonjour",
+          "Nogmaals Nederlands slot"
+        ],
+        "captures": [
+          {
+            "file": "saved.png",
+            "settleMs": 615,
+            "language": "English (United Kingdom) Â· 1 spelling error"
+          },
+          {
+            "file": "tabs.png",
+            "settleMs": 634,
+            "language": "Italian (Italy) Â· 2 spelling errors"
+          },
+          {
+            "file": "reopened.png",
+            "settleMs": 579,
+            "language": "French (France) Â· 1 spelling error"
+          }
+        ],
+        "secondPids": [
+          "4536"
+        ],
+        "ownedApplicationClosed": true
+      },
+      "independentSavedRuns": [
+        [
+          {
+            "text": "Nederlands ",
+            "language": "nl-NL"
+          },
+          {
+            "text": "English",
+            "language": "en-GB"
+          }
+        ],
+        [
+          {
+            "text": "Bonjour",
+            "language": "fr-FR"
+          }
+        ],
+        [
+          {
+            "text": "Nogmaals Nederlands slot",
+            "language": "nl-NL"
+          }
+        ]
+      ],
+      "independentOtherRuns": [
+        [
+          {
+            "text": "Nederlands ",
+            "language": "de-DE"
+          },
+          {
+            "text": "English",
+            "language": "en-GB"
+          }
+        ],
+        [
+          {
+            "text": "Bonjour",
+            "language": "it-IT"
+          }
+        ],
+        [
+          {
+            "text": "Nogmaals Nederlands",
+            "language": "en-US"
+          }
+        ]
+      ],
+      "images": [
+        {
+          "name": "reopened.png",
+          "sha256": "325b472bc90d3227bd5ab252c8c356b9b176d865b7db7c6cc0083b821c262fef"
+        },
+        {
+          "name": "saved.png",
+          "sha256": "9196952c6819443b3d72e5be29ac2c6586b96f841aee07d1e3378676936c5657"
+        },
+        {
+          "name": "tabs.png",
+          "sha256": "78e73a99ab2fa2e86b1d00f0d48790b5b9e3e5d5677a88cda37b6b2ea15b879a"
+        }
+      ],
+      "languageAssertions": 32
+    }
+  },
+  "macOS": {
+    "application": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+    "status": "awaiting verified G installer",
+    "acceptance": "not executed; no F relabeling"
+  }
+}
