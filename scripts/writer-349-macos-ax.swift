@@ -1,4 +1,4 @@
-// Bounded native AX observer/actions for the immutable F Writer package.
+// Bounded native AX observer/actions for the immutable G Writer package.
 // Based on the bounds of runtime-macos-ax.swift at 9a9bfe39; independent helper.
 // No JS, TCC change, entitlements change, or document textarea value read.
 import ApplicationServices
@@ -44,19 +44,21 @@ if !AXIsProcessTrusted() {
     report["status"] = "waiting"
     report["reason"] = "Native app window has not appeared yet"
 } else if action == "document-start" || action == "document-end" {
-    let code: CGKeyCode = action == "document-start" ? 126 : 125
+    // Alternate protocol: the pinned SDK explicitly supports Ctrl+Home/End.
+    // Standard macOS Command+Up/Down is separately blocked by issue #358.
+    let code: CGKeyCode = action == "document-start" ? 115 : 119
     func postKey(_ key: CGKeyCode, _ down: Bool, _ flags: CGEventFlags) {
         let event = CGEvent(keyboardEventSource: nil, virtualKey: key, keyDown: down)
         event?.flags = flags
         event?.post(tap: .cghidEventTap)
     }
-    postKey(55, true, .maskCommand)
-    postKey(code, true, .maskCommand)
-    postKey(code, false, .maskCommand)
-    postKey(55, false, [])
+    postKey(59, true, .maskControl)
+    postKey(code, true, .maskControl)
+    postKey(code, false, .maskControl)
+    postKey(59, false, [])
     report["status"] = "ok"
     report["performed"] = true
-    report["method"] = "native CG Command down / arrow down-up / Command up"
+    report["method"] = "alternate native CG Control down / Home-or-End down-up / Control up"
     report["virtualKey"] = code
 } else {
     var queue: [(AXUIElement, Int)] = windows.map { ($0, 0) }

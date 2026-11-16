@@ -15,7 +15,8 @@ H=subprocess.check_output(["git","-C",str(base.parent),"rev-parse","HEAD"],text=
 sha=lambda b: hashlib.sha256(b).hexdigest()
 report={"applicationCommit":APP_SOURCE,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
 report["host"]={"macOS":platform.mac_ver()[0],"machine":platform.machine(),"platform":platform.platform(),"runnerOS":os.environ.get("RUNNER_OS")}
-report["keyboardProtocol"]={"documentStart":"Cmd+Up","documentEnd":"Cmd+Down","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z","arrowIntervalMs":50,"caretProof":"single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"}
+report["keyboardProtocol"]={"documentStart":"Ctrl+Home (alternate protocol)","documentEnd":"Ctrl+End (alternate protocol)","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z","arrowIntervalMs":50,"caretProof":"single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"}
+report["alternateNavigation"]={"reason":"Standard macOS Command+Up/Down blocked by #358; integration-authorized single alternate trial","sdkVersion":"@betteroffice/docx-react 0.5.1","guardedInputSha256":"d17b7a630163623e99d73b8c4b3678397ec0598e332237df1e4737767799e58d","sourceSupport":"Home/End passes metaKey || ctrlKey into whole-document navigation; ArrowUp/Down passes false","limits":"Does not accept standard Cmd navigation or clear initial page paint limitation"}
 program=None;mount=out/"mounted";mounted=False;helper=out/"writer349-ax";pid=None;serial=0
 processes=runpy.run_path("scripts/proef-macos-openen.py")["processen"]
 def save_report(): (out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
@@ -40,10 +41,10 @@ def keyboard(body):
     result=run(["osascript","-e",script],text=True,capture_output=True,timeout=15)
     return result.stdout
 def key(code,mod=""):
-    if code in [125,126] and mod=='command down':
+    if code in [115,119] and mod=='control down':
         keyboard('delay 0.02')
-        state=inspect('document-start' if code==126 else 'document-end')
-        assert state.get('performed'),'Explicit native Command-arrow event sequence unavailable'
+        state=inspect('document-start' if code==115 else 'document-end')
+        assert state.get('performed'),'Alternate native Control-Home/End event sequence unavailable'
         report.setdefault('navigationEvents',[]).append({'action':state['action'],'method':state.get('method'),'virtualKey':state.get('virtualKey')})
         time.sleep(.1)
         return
@@ -84,7 +85,7 @@ def language(name,expected):
         raise
     report["checks"].append({"name":name,"expected":expected,"actual":state["languages"]});save_report()
 def boundary(name,left):
-    key(126,"command down")
+    key(115,"control down")
     keyboard("\n".join("key code 124\ndelay 0.05" for _ in range(left)))
     language(name+" left","Dutch");key(124);language(name+" right","English")
     if name=='original boundary':
@@ -182,11 +183,11 @@ try:
     run(['xcrun','swiftc',str(base/'writer-349-macos-ax.swift'),'-o',str(helper)],capture_output=True,timeout=120)
     report['axBinarySha256']=sha(helper.read_bytes())
     launch(app,[A,B]);report['firstPid']=pid
-    tab(A.name);focus();key(126,'command down');language('initial A','Dutch')
+    tab(A.name);focus();key(115,'control down');language('initial A','Dutch')
     boundary('original boundary',10);key(125);language('next paragraph A','French')
-    key(125,'command down');type_text(' slot');time.sleep(1.2);language('after typing','Dutch')
+    key(119,'control down');type_text(' slot');time.sleep(1.2);language('after typing','Dutch')
     saved_checkpoint('document end after slot',['Nederlands English','Bonjour','Nogmaals Nederlands slot'])
-    key(126,'command down');type_text('x');time.sleep(1.2)
+    key(115,'control down');type_text('x');time.sleep(1.2)
     saved_checkpoint('document start after x',['xNederlands English','Bonjour','Nogmaals Nederlands slot'])
     boundary('inserted boundary',11)
     keyboard('keystroke "z" using {command down}');time.sleep(1.2);boundary('Undo boundary',10)
@@ -206,18 +207,18 @@ try:
     expected=['Nederlands English','Bonjour','Nogmaals Nederlands slot']
     wait(lambda:paragraphs(A)==expected,'Native CmdS did not preserve exact edited text',60)
     report['savedSha256']=sha(A.read_bytes());report['exactSavedParagraphs']=paragraphs(A);capture('saved.png')
-    tab(B.name);focus();key(126,'command down');language('independent B','German');key(125);language('B second paragraph','Italian')
+    tab(B.name);focus();key(115,'control down');language('independent B','German');key(125);language('B second paragraph','Italian')
     for i in range(2):
         tab(A.name);language(f'A tab retained {i}','English');focus();boundary(f'A tab {i}',10)
-        tab(B.name);language(f'B tab retained {i}','Italian');focus();key(126,'command down');language(f'B tab reset {i}','German');key(125);language(f'B tab second {i}','Italian')
+        tab(B.name);language(f'B tab retained {i}','Italian');focus();key(115,'control down');language(f'B tab reset {i}','German');key(125);language(f'B tab second {i}','Italian')
     assert sha(B.read_bytes())==bhash and sha(A.read_bytes())==report['savedSha256']
     capture('tabs.png');close_app(True);report['firstProcessClosed']=True;report['firstCloseMethod']='native CmdQ'
     launch(app,[A,B]);report['secondPid']=pid;assert pid!=report['firstPid']
-    tab(A.name);focus();key(126,'command down');language('reopened A','Dutch');boundary('reopened boundary',10)
+    tab(A.name);focus();key(115,'control down');language('reopened A','Dutch');boundary('reopened boundary',10)
     key(125);language('reopened second paragraph','French')
     assert sha(A.read_bytes())==report['savedSha256'] and sha(B.read_bytes())==bhash
     capture('reopened.png')
-    tab(B.name);focus();key(126,'command down');language('reopened independent B','German')
+    tab(B.name);focus();key(115,'control down');language('reopened independent B','German')
     assert sha(A.read_bytes())==report['savedSha256'] and sha(B.read_bytes())==bhash
     report['status']='passed'
 except (PermissionError,subprocess.TimeoutExpired) as e:
