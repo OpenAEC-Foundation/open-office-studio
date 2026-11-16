@@ -1,0 +1,207 @@
+{
+  "datum": "2026-11-16",
+  "basis_integratie": "42bcaad2",
+  "basis_hoofdbranch": "9ffb460d",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Private begrensde fontvoorvlucht-wachtrij componentmatig getoetst. Honderd overlappende gecontroleerde passes leveren met de bestaande passguard hetzelfde laatste resultaat bij twee uitgevoerde taken in plaats van honderd. Geen volledige hookintegratie, echte Worker/Wasm-pariteit, native snelheid of productfix bewezen.",
+  "ontwerp": {
+    "scope": "Uitsluitend toekomstige layoutvoorvluchten van één hookinstantie; afzonderlijke fontgebruikers/readLayoutRequest mogen niet globaal via deze rij worden vervangen. Nog nergens geïntegreerd.",
+    "regels": [
+      "Eén actieve taak plus één wachtende taak zolang oudere wachtende passes aantoonbaar achterhaald zijn. Actieve Worker-taak nooit afbreken.",
+      "Alleen de wachtende taak vervangen nadat de aangeleverde bestaande pass-/sessiecontrole achterhaaldheid bevestigt. Zelfde layoutInput is geen cacheguard.",
+      "Geen bewijs van achterhaaldheid: niet annuleren; directe terugval. De grens van één actieve taak geldt dus alleen binnen de bewezen vervangbare passreeks, niet wereldwijd.",
+      "Nieuwste taak voert zijn eigen callback en volledige invoer uit; geen hergebruik van een oud fontantwoord of overslaan van applyUpdates. Echte mutatieroute nog niet gekoppeld/getoetst.",
+      "Directe null/undefined/throw en identiteit van de eerste Promise behouden. Uitgestelde taken hebben noodzakelijk een eigen Promise.",
+      "Stoppen annuleert wachtend werk; late actieve antwoorden worden door de bestaande pass-/sessieguard verworpen. Volledige React-unmount nog niet uitgevoerd."
+    ]
+  },
+  "primaire_bronproef": {
+    "geslaagd": true,
+    "bron_sha256": "df863d3c0a86b38c8ca02b8098189ef32cbdd1cc5620a9aa01dbfecfd994bd5f",
+    "fragment_sha256": "c61fcf6543241a2cecf36bdc8e5162911eecb3afaa7fa25c285d2c250c1243e6",
+    "vergelijk": [
+      {
+        "begrensd": false,
+        "aanvragen": 100,
+        "resultaten": [
+          {
+            "pass": 100,
+            "value": "{\"versie\":100,\"input\":\"omgeving-1\"}"
+          }
+        ],
+        "rij": {
+          "gestart": 0,
+          "vervangen": 0,
+          "terugval": 0,
+          "actief": false,
+          "wachtend": false,
+          "gestopt": false
+        }
+      },
+      {
+        "begrensd": true,
+        "aanvragen": 2,
+        "resultaten": [
+          {
+            "pass": 100,
+            "value": "{\"versie\":100,\"input\":\"omgeving-1\"}"
+          }
+        ],
+        "rij": {
+          "gestart": 2,
+          "vervangen": 98,
+          "terugval": 0,
+          "actief": false,
+          "wachtend": false,
+          "gestopt": false
+        }
+      }
+    ],
+    "proeven": [
+      "100 opeenvolgende versies en drie verschillende volledige inputstrings; alleen laatste resultaat identiek",
+      "Huidige fout behouden; oude fout niet gepubliceerd",
+      "Sessieovergang/unmount en laat antwoord leveren geen publicatie",
+      "Geen bewezen achterhaaldheid: andere gebruiker niet annuleren"
+    ],
+    "grens": "Exacte bestaande Promise-/passguard uit primaire TS-bron uitgevoerd in gecontroleerde VM, geen volledige React-hook, Worker, echte Wasm of native desktop. Geen bron/env- of mutatiepariteit bewezen en geen snelheidsclaim. Private rij nog niet in hook of product geïntegreerd."
+  },
+  "native_bundelcontrole": {
+    "geslaagd": true,
+    "bundel_sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "fragment_sha256": "0d9a4b2ce6af430d7f68dfb01b40751b4a76e3c26f5804847370659dca4bcba7",
+    "resultaten": [
+      {
+        "guard": false,
+        "begrensd": false,
+        "aanvragen": 100,
+        "publicaties": 1,
+        "rij": {
+          "gestart": 0,
+          "vervangen": 0,
+          "terugval": 0,
+          "actief": false,
+          "wachtend": false,
+          "gestopt": false
+        }
+      },
+      {
+        "guard": false,
+        "begrensd": true,
+        "aanvragen": 2,
+        "publicaties": 1,
+        "rij": {
+          "gestart": 2,
+          "vervangen": 98,
+          "terugval": 0,
+          "actief": false,
+          "wachtend": false,
+          "gestopt": false
+        }
+      },
+      {
+        "guard": true,
+        "begrensd": false,
+        "aanvragen": 100,
+        "publicaties": 1,
+        "rij": {
+          "gestart": 0,
+          "vervangen": 0,
+          "terugval": 0,
+          "actief": false,
+          "wachtend": false,
+          "gestopt": false
+        }
+      },
+      {
+        "guard": true,
+        "begrensd": true,
+        "aanvragen": 2,
+        "publicaties": 1,
+        "rij": {
+          "gestart": 2,
+          "vervangen": 98,
+          "terugval": 0,
+          "actief": false,
+          "wachtend": false,
+          "gestopt": false
+        }
+      }
+    ],
+    "bronversiewijziging_zonder_nieuwe_pass": "Geen publicatie; bestaande native bronversieguard herplant en voltooit epoch1.",
+    "fouten": "Oude fout genegeerd,huidige fout exact behouden;epoch2 voltooid.",
+    "sessiewissel": "Wachtende taak geannuleerd;laat antwoord niet gepubliceerd.",
+    "grens": "Exacte voorvlucht-/pass-/bronversieguard uit ee89c80e-bundel in VM; geen volledige React-hook, Worker, Wasm, native invoer of mutatiepariteit. Wachtrij nog niet in bundel geïntegreerd."
+  },
+  "afkeuringen": [
+    {
+      "geslaagd": true,
+      "afkeuring": "Eerste rij maakte null/undefined onterecht asynchroon. Afgekeurde module behouden; directe route gecorrigeerd.",
+      "controles": [
+        "null/undefined blijven direct",
+        "Synchrone foutidentiteit en throw behouden",
+        "Eerste Promise blijft identiek",
+        "Wachtende callback die null teruggeeft voltooit en maakt rij vrij"
+      ]
+    },
+    {
+      "reden": "Eerste VM-aanroep van letterlijk TS-fragment geeft SyntaxError op error: unknown. Precies die ene typeannotatie verwijderd vóór evaluatie; overige TS-fragmenttekst ongewijzigd. Het aparte native-bundelfragment is ongewijzigde JS en vraagt deze omzetting niet."
+    }
+  ],
+  "controles": [
+    {
+      "script": "grensproef.mjs",
+      "code": 0
+    },
+    {
+      "script": "proef.mjs",
+      "code": 0
+    },
+    {
+      "script": "bundelproef.mjs",
+      "code": 0
+    }
+  ],
+  "behoud": {
+    "referenties27_exact": true,
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "sdk_vendor_canonieke_bron_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+    },
+    "private_geprofileerde_bron_exact": true,
+    "python_syntaxis": [
+      "behoudcontrole.py"
+    ],
+    "vrije_bytes_na": 3314933760,
+    "productbron": "41e7000198f89d992e1059e9715636a44b39d21a"
+  },
+  "grenzen": [
+    "De honderd overlappende passes zijn gecontroleerde scenario’s; niet de werkelijke 65/64 native aanvragen van de vorige ronde. Geen bewezen native passvervanging of causale tijdwinst.",
+    "Alleen geselecteerde voorvlucht-/Promise-/pass-/bronversiebranches uitgevoerd. Geen volledige React-hook, layoutcoördinator of schildering; geen volledige font/env/bron/replica-/Worker-overdrachtpariteit.",
+    "Omgevingsstrings/preview-fontvelden zijn controlewaarden, geen echte layout/Wasm-output of norm-/formatendekking.",
+    "Geen nieuwe native bouw, GUI, DOCX-/beeldvergelijking, korte/rijke ABBA, volledige productsuites/CI, geheugenfoutfix, ander platform/edition/schema/release of issue-/migratievoltooiing.",
+    "Bewaaraanvrager blijft onbekend; afgewezen API-objectprobe niet herhaald en automatisch herstel ongewijzigd.",
+    "Geen canonieke bron, SDK/vendor, bestaande bundel of ELF gewijzigd."
+  ],
+  "vervolg": "Integreer deze rij eerst in een afzonderlijke private kopie van de volledige daadwerkelijke useLayoutPipeline,uitsluitend rond de layout-fontvoorvlucht en met een levensduurvaste ref per hookinstantie. Behoud directe nullroute en bestaande versie-/passguards;readLayoutRequest en andere fontgebruikers erbuiten. Test de volledige hook/coördinator op meerdere bursts,bronversieverandering zonder nieuw passnummer,preview/font/env-wissels,hostfallback,onHost,errors,unmount en sessie/Worker-overdracht. Controleer echte Wasm/font-/layout-/mutatiepariteit;annuleer nooit updates of bewaarwerk. Daarna aparte kandidaat met voldoende ruimte (onder3,1GiB geen nieuwe ELF) en gewone korte/rijke native ABBA plus functie/DOCX/beelden. Zonder die bewijzen niet overnemen. Geen nieuwe algemene profiler;Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-16-writer-font-voorvlucht.tar.gz",
+    "sha256": "40543bb05b039d13609016ea99d1431502b694a4433c03a27f7494ec3a532560",
+    "bytes": 9232,
+    "bestanden": 16,
+    "ieder_manifestbestand_geverifieerd": true
+  }
+}
