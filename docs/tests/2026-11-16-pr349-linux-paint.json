@@ -1,0 +1,5234 @@
+{
+  "date": "2026-11-16",
+  "scope": "Native Writer page pixels under Linux CI/Xvfb; no production code fix or native issue327 sign-off",
+  "runs": [
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "3a66aecb056ab563db86c252d4b9b7045851ecc9",
+      "harnessSha256": "fdb391977d8e0de810384f1e05d69459f6022b3613f296d364eec932608f18c6",
+      "graphicsMode": "baseline",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": null,
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "passed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker",
+        "Application process fully exits after saving",
+        "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+      ],
+      "error": null,
+      "ownedApplicationClosed": true,
+      "savedSha256": "e866533a78e592f5a56e91c791262c17f232aa9c92c1f1cd671462fd0c7ece34",
+      "run": "43845558754",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43845558754",
+      "artifact": {
+        "run": "43845558754",
+        "artifactId": 14214737564,
+        "name": "writer349-linux-paint-baseline",
+        "sha256": "0c9ef91127dc397787431cfc187a8fb1cd9449db7e40544da4a75f26e060a8d5",
+        "bytes": 4187668,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 23
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 4,
+              "captureTimingMs": {
+                "webdriverAtMs": 4,
+                "x11AtMs": 173,
+                "webdriverAfterX11AtMs": 385
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 17,
+                  "dominant": [
+                    [
+                      [
+                        26,
+                        26,
+                        26
+                      ],
+                      6550
+                    ],
+                    [
+                      [
+                        77,
+                        77,
+                        77
+                      ],
+                      609
+                    ],
+                    [
+                      [
+                        128,
+                        128,
+                        128
+                      ],
+                      572
+                    ]
+                  ],
+                  "dark": 7185,
+                  "bright": 334,
+                  "kind": "webdriver",
+                  "sha256": "a436ab6d0310ab95c428beba96c6ea6850f35eb535667275d4196730aa4b99a8",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 17,
+                  "dominant": [
+                    [
+                      [
+                        26,
+                        26,
+                        26
+                      ],
+                      6550
+                    ],
+                    [
+                      [
+                        77,
+                        77,
+                        77
+                      ],
+                      609
+                    ],
+                    [
+                      [
+                        128,
+                        128,
+                        128
+                      ],
+                      572
+                    ]
+                  ],
+                  "dark": 7185,
+                  "bright": 334,
+                  "kind": "x11",
+                  "sha256": "9f051fc13bc6cb1dd8066ea7129eddac53ec57e0ecfd3a78e266ee428b029ae3",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 17,
+                  "dominant": [
+                    [
+                      [
+                        26,
+                        26,
+                        26
+                      ],
+                      6550
+                    ],
+                    [
+                      [
+                        77,
+                        77,
+                        77
+                      ],
+                      609
+                    ],
+                    [
+                      [
+                        128,
+                        128,
+                        128
+                      ],
+                      572
+                    ]
+                  ],
+                  "dark": 7185,
+                  "bright": 334,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "a436ab6d0310ab95c428beba96c6ea6850f35eb535667275d4196730aa4b99a8",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 16806,
+              "captureTimingMs": {
+                "webdriverAtMs": 16806,
+                "x11AtMs": 16904,
+                "webdriverAfterX11AtMs": 17050
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 18,
+                  "dominant": [
+                    [
+                      [
+                        26,
+                        26,
+                        26
+                      ],
+                      6529
+                    ],
+                    [
+                      [
+                        77,
+                        77,
+                        77
+                      ],
+                      605
+                    ],
+                    [
+                      [
+                        128,
+                        128,
+                        128
+                      ],
+                      568
+                    ]
+                  ],
+                  "dark": 7160,
+                  "bright": 368,
+                  "kind": "webdriver",
+                  "sha256": "8ef42918f59fae09819fdf96ffef00d92e7db0ad105a531b42d058012ab0d500",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 18,
+                  "dominant": [
+                    [
+                      [
+                        26,
+                        26,
+                        26
+                      ],
+                      6529
+                    ],
+                    [
+                      [
+                        77,
+                        77,
+                        77
+                      ],
+                      605
+                    ],
+                    [
+                      [
+                        128,
+                        128,
+                        128
+                      ],
+                      568
+                    ]
+                  ],
+                  "dark": 7160,
+                  "bright": 368,
+                  "kind": "x11",
+                  "sha256": "3d8b4cd4d5a6f954eca25968bf36cac251ff5d5c8b27778cfc3490605ddccae0",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 17,
+                  "dominant": [
+                    [
+                      [
+                        26,
+                        26,
+                        26
+                      ],
+                      6550
+                    ],
+                    [
+                      [
+                        77,
+                        77,
+                        77
+                      ],
+                      609
+                    ],
+                    [
+                      [
+                        128,
+                        128,
+                        128
+                      ],
+                      572
+                    ]
+                  ],
+                  "dark": 7185,
+                  "bright": 334,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "7d0e511dc226a788b4583079871a329c8e976aa8db7e5eae36feb3b4bfef3b32",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": {
+            "changedAndRestored": true
+          }
+        },
+        {
+          "name": "reopened",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 19
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "reopened-immediate",
+              "elapsedMs": 1,
+              "captureTimingMs": {
+                "webdriverAtMs": 1,
+                "x11AtMs": 142,
+                "webdriverAfterX11AtMs": 290
+              },
+              "captures": [
+                {
+                  "file": "reopened-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriver",
+                  "sha256": "ad0ee9caf0eeea878b8e231af5f9fffae7be5dae3743bedefd4f789d29ef994c",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11",
+                  "sha256": "d4b67fd32620e66796baed8527ff36c6d6c8de7c7542fb8742291d6447d73f85",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "8e972ca89df3688d9359cb598d1edbc0487bcfc9a2fb34df5f701b478eed6809",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "reopened-wait15",
+              "elapsedMs": 16621,
+              "captureTimingMs": {
+                "webdriverAtMs": 16621,
+                "x11AtMs": 16721,
+                "webdriverAfterX11AtMs": 16844
+              },
+              "captures": [
+                {
+                  "file": "reopened-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriver",
+                  "sha256": "8d53f01170e101484101af743136517209574fe119ad432864efec046fca5708",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11",
+                  "sha256": "0cc6ad40ef6909cb207e6caf779ba9009bc2be5c6e6c20c54560c5106e0c1ace",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "8d53f01170e101484101af743136517209574fe119ad432864efec046fca5708",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": {
+            "changedAndRestored": true
+          }
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "3a66aecb056ab563db86c252d4b9b7045851ecc9",
+      "harnessSha256": "fdb391977d8e0de810384f1e05d69459f6022b3613f296d364eec932608f18c6",
+      "graphicsMode": "disable-dmabuf",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "failed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker"
+      ],
+      "error": "Error: Owned application did not exit before reopening\n    at waitFor (file:///home/runner/work/open-office-studio/open-office-studio/.local/native-harness/scripts/proef-native-linux-paint-349.mjs:97:9)\n    at async closeSession (file:///home/runner/work/open-office-studio/open-office-studio/.local/native-harness/scripts/proef-native-linux-paint-349.mjs:175:3)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/native-harness/scripts/proef-native-linux-paint-349.mjs:324:3",
+      "ownedApplicationClosed": true,
+      "savedSha256": "5501ead6e0f76f08cd9d4dec428bd9b6ed49d8248b52c27d05b08095f3237a33",
+      "run": "43846600054",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43846600054",
+      "artifact": {
+        "run": "43846600054",
+        "artifactId": 14216410007,
+        "name": "writer349-linux-paint-disable-dmabuf",
+        "sha256": "21eee5d993a77c1db4b39de012d8689ba3538959205797eb5e7b400583df5930",
+        "bytes": 1619812,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 22
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 1,
+              "captureTimingMs": {
+                "webdriverAtMs": 1,
+                "x11AtMs": 364,
+                "webdriverAfterX11AtMs": 607
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 365,
+                  "kind": "webdriver",
+                  "sha256": "f2abae0f02bc4b30c4571b4714d993c68917ba23273171143d02875003b4c83c",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "x11",
+                  "sha256": "290f41976b98ce7f1d513d7a3c5609390d92b109342ff087d87fff7f782ad616",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      106
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "96ce5a05babdc79afec130cbc56067563ede7cf5fd3a88bba8445a1ded7fc730",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 18004,
+              "captureTimingMs": {
+                "webdriverAtMs": 18004,
+                "x11AtMs": 18357,
+                "webdriverAfterX11AtMs": 18473
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "webdriver",
+                  "sha256": "8e8df0b1fe437d90bdd310cb2fba57cdca5e90cdca9bfd061bc79c7e990316d0",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 365,
+                  "kind": "x11",
+                  "sha256": "e81cc399c785120e911d151281d5f54ebd072f7f5faccc0359358aeee7409dc6",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      106
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "2ecf0d3a0151132b16a69b7f781a6ec17a3efffb7f959f37e37b981ac85e6221",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": {
+            "error": "TimeoutError: The operation was aborted due to timeout"
+          }
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "3a66aecb056ab563db86c252d4b9b7045851ecc9",
+      "harnessSha256": "fdb391977d8e0de810384f1e05d69459f6022b3613f296d364eec932608f18c6",
+      "graphicsMode": "disable-compositing",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": null,
+        "WEBKIT_DISABLE_COMPOSITING_MODE": "1"
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "failed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker"
+      ],
+      "error": "Error: Owned application did not exit before reopening\n    at waitFor (file:///home/runner/work/open-office-studio/open-office-studio/.local/native-harness/scripts/proef-native-linux-paint-349.mjs:97:9)\n    at async closeSession (file:///home/runner/work/open-office-studio/open-office-studio/.local/native-harness/scripts/proef-native-linux-paint-349.mjs:175:3)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/native-harness/scripts/proef-native-linux-paint-349.mjs:324:3",
+      "ownedApplicationClosed": true,
+      "savedSha256": "902e801547c1862ba39b097fbee5938907822f6c3f3811e19e7d48cda2ae2fd8",
+      "run": "43846640690",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43846640690",
+      "artifact": {
+        "run": "43846640690",
+        "artifactId": 14215074111,
+        "name": "writer349-linux-paint-disable-compositing",
+        "sha256": "096a34bef1e9ea30a5d3b536ccd12c8f5bf3dba98fd41713d1efb9cccea9b114",
+        "bytes": 1618844,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 26
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 1,
+              "captureTimingMs": {
+                "webdriverAtMs": 1,
+                "x11AtMs": 67,
+                "webdriverAfterX11AtMs": 374
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "webdriver",
+                  "sha256": "ac5d44f0bb6df46c118ed0bcde01c6b65529cd7e005fb440f5f76ff899b04129",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "x11",
+                  "sha256": "6077ea618751d4c464f9a262f7ea600c1fba7cf169b435f08e5a934e5e3515c0",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "88e6ea0c2c9f6871fd7a7d8c974334e0114786bada746e20161801cd74b963b8",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 17853,
+              "captureTimingMs": {
+                "webdriverAtMs": 17853,
+                "x11AtMs": 17914,
+                "webdriverAfterX11AtMs": 18030
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7195,
+                  "bright": 363,
+                  "kind": "webdriver",
+                  "sha256": "30fbe83d09067fe8b9e8571790409de2738b7d2cb05ee295d14cb3d28e63dfab",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "x11",
+                  "sha256": "605b9f32118ac788b88139f6a527bc6c68e4700f92b26306a3881b44d74b73ba",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 365,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "2009b922b502c34b2561049e5f468b98f7684267299963f2d071e46c46e6568c",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": {
+            "error": "TimeoutError: The operation was aborted due to timeout"
+          }
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "678e06e06c4a993263a39d7c214292c9bb96ad1e",
+      "harnessSha256": "75880635147ba341e1d64a1ae82a78c9c25dbc155cb693064d85abb4492d2297",
+      "graphicsMode": "baseline",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": null,
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "passed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker",
+        "Application process fully exits after saving",
+        "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+      ],
+      "error": null,
+      "ownedApplicationClosed": true,
+      "savedSha256": "ec77ce49b7a6e844eae65301926d26158b8d51521d671e9f711e9253bd6fdbaa",
+      "run": "43847299219",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43847299219",
+      "artifact": {
+        "run": "43847299219",
+        "artifactId": 14216705176,
+        "name": "writer349-linux-paint-baseline",
+        "sha256": "8f6cd621402f2b8373fd1b7a99c9e1d04c8b7d4b2ff0a5f903bfaaa1ec5763fc",
+        "bytes": 3638550,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 26
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 241,
+                "x11AtMs": 337,
+                "webdriverAfterX11AtMs": 465
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11First",
+                  "sha256": "9329610502a8ed156258488252c06d9874cf0e83aa41867a4bd76a8bac18be9d",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriver",
+                  "sha256": "2bfd0856e853cb3e7a6a0c1eaca21c9104fee732d0ba4257341b5864bd0cd300",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11",
+                  "sha256": "edf623130d7322cf5bbc7bdccb868ae7ea4296dec61fafb621ca034b1b1ee7b6",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 2,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8574
+                    ],
+                    [
+                      [
+                        232,
+                        232,
+                        232
+                      ],
+                      36
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "0f562cd27eb54591d7769c6e7086d6d1c181525981dd2886cfee2652d8970e2b",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 17282,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 17282,
+                "webdriverAtMs": 17392,
+                "x11AtMs": 17510,
+                "webdriverAfterX11AtMs": 17683
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11First",
+                  "sha256": "5a0245e9d96c695b08323517ae2b97a1875710e14bd4e66157b76418e2794bc6",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriver",
+                  "sha256": "66f8609eda00b1c56b345e30a9a6ccef7980b714e3506cb14c76a7f27f4677dc",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11",
+                  "sha256": "5a0245e9d96c695b08323517ae2b97a1875710e14bd4e66157b76418e2794bc6",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 2,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8574
+                    ],
+                    [
+                      [
+                        232,
+                        232,
+                        232
+                      ],
+                      36
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "3fa465e0b9ee53c271f6f45fa66d45907d412b0f1999b68663079f4cde860602",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        },
+        {
+          "name": "reopened",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 18
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "reopened-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 150,
+                "x11AtMs": 291,
+                "webdriverAfterX11AtMs": 434
+              },
+              "captures": [
+                {
+                  "file": "reopened-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11First",
+                  "sha256": "db5cb261fcf4dd9d84c9d381d5ce7131099e5752fc164591cc2215fd9eb0c723",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriver",
+                  "sha256": "f6a3eac860c574a4373f7d149b0d778f9befe13eed7361ab05b1b840124a7e57",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11",
+                  "sha256": "0bcf4369288c193d8d1e4e01959ae06e70a30d40e003ca22f90fea6bc15989e8",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "3bbc483c839ce7429f0d7de06582d5693107116952cc553c4c5ad6dad82b5585",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "reopened-wait15",
+              "elapsedMs": 17088,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 17088,
+                "webdriverAtMs": 17209,
+                "x11AtMs": 17306,
+                "webdriverAfterX11AtMs": 17423
+              },
+              "captures": [
+                {
+                  "file": "reopened-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11First",
+                  "sha256": "af4a868c3f51a9fcfbdbfd41aa3ca967b031bf2d95912e62b493385edc638e1d",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriver",
+                  "sha256": "bb17c7877766a1eca151827fbd6992baab534c133ce512d9b8e789a25e52d038",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11",
+                  "sha256": "af4a868c3f51a9fcfbdbfd41aa3ca967b031bf2d95912e62b493385edc638e1d",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "bb17c7877766a1eca151827fbd6992baab534c133ce512d9b8e789a25e52d038",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "678e06e06c4a993263a39d7c214292c9bb96ad1e",
+      "harnessSha256": "75880635147ba341e1d64a1ae82a78c9c25dbc155cb693064d85abb4492d2297",
+      "graphicsMode": "disable-dmabuf",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "passed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker",
+        "Application process fully exits after saving",
+        "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+      ],
+      "error": null,
+      "ownedApplicationClosed": true,
+      "savedSha256": "374a9451499c07510d1b28525eec41a5a92cf516d2176d14312f374d9c74557d",
+      "run": "43847314987",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43847314987",
+      "artifact": {
+        "run": "43847314987",
+        "artifactId": 14216880248,
+        "name": "writer349-linux-paint-disable-dmabuf",
+        "sha256": "fe0e200f3815dd9d72cd895ac7781fb8628cd3ccb17ad8dfda3c3904cddd73d5",
+        "bytes": 3976718,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 18
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 311,
+                "x11AtMs": 431,
+                "webdriverAfterX11AtMs": 548
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "x11First",
+                  "sha256": "fe9c5d8e08838fa52ce4cb172480c2d6e3c801486f43aa5b21e640e44b567d8a",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "webdriver",
+                  "sha256": "24b939e797cf566546a1a19a9882c98085661c8fcd17306ac47723aecbfa2a08",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "x11",
+                  "sha256": "d0a04e8da7b94dcc4f3409692d27bcd121af901a944380ada9ea5ad2f594ff86",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7193,
+                  "bright": 364,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "73c3fda53770780da249776480c23eca2ba8119c6b5ebb5c3092be7fa33fa4c8",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 18130,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 18130,
+                "webdriverAtMs": 18245,
+                "x11AtMs": 18741,
+                "webdriverAfterX11AtMs": 18861
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      106
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "x11First",
+                  "sha256": "d2701b53a9a78730d9b64c98974475e20a4f83a1ae7e24709f7b0ea778c1184e",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 365,
+                  "kind": "webdriver",
+                  "sha256": "2142c9b500d8432fd56bdb2dd10700192b1f9477a80fca0be20d1f3cfde73e49",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 374,
+                  "kind": "x11",
+                  "sha256": "5353621e555257288e7e7cd051e50bb333d30d97f523a882cf5b3b09372b8004",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      106
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "2ecf0d3a0151132b16a69b7f781a6ec17a3efffb7f959f37e37b981ac85e6221",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        },
+        {
+          "name": "reopened",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 27
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "reopened-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 126,
+                "x11AtMs": 354,
+                "webdriverAfterX11AtMs": 479
+              },
+              "captures": [
+                {
+                  "file": "reopened-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11First",
+                  "sha256": "c9a494d369111eaac9ac405abd7fe79744d48d8d160bf20ee33aa9a5694a4c9a",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriver",
+                  "sha256": "7834ebe7d9cae88ec68383dbf2e2044f017d1bee1a8978db283d2cd1b2856701",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11",
+                  "sha256": "bd78b9260ab1ef40c58dbe495a76e6ef006a48f35c4e7bb296b4d63ef6d5dbd7",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "5243cd55cc0c7865a3033eb9097307e94ca46fb51628fe221f816bb75859da97",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "reopened-wait15",
+              "elapsedMs": 19008,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 19008,
+                "webdriverAtMs": 19129,
+                "x11AtMs": 19485,
+                "webdriverAfterX11AtMs": 19608
+              },
+              "captures": [
+                {
+                  "file": "reopened-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11First",
+                  "sha256": "4f82bdf1f4100c0e511b03f5aacf80a530064bc30fc02e87608838b9073952aa",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriver",
+                  "sha256": "2be27cac364953f95f6f278d84b89477fbe0aeb90155e23881808b9b8e6f1da5",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11",
+                  "sha256": "7b098d85fa250fbd00311b9b186312a2b84144a636c0ce279e31c9d75c060cf6",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "426a62f7dce34fbaf659d2a00df4165a8f223fd0eaa2d8fe309f03ded80f7cc9",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "678e06e06c4a993263a39d7c214292c9bb96ad1e",
+      "harnessSha256": "75880635147ba341e1d64a1ae82a78c9c25dbc155cb693064d85abb4492d2297",
+      "graphicsMode": "disable-compositing",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": null,
+        "WEBKIT_DISABLE_COMPOSITING_MODE": "1"
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "passed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker",
+        "Application process fully exits after saving",
+        "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+      ],
+      "error": null,
+      "ownedApplicationClosed": true,
+      "savedSha256": "2df32f887ad76b5907317e6e820107ef79f7f7e7bed8307f25d582c699bf4efa",
+      "run": "43847320011",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43847320011",
+      "artifact": {
+        "run": "43847320011",
+        "artifactId": 14216700570,
+        "name": "writer349-linux-paint-disable-compositing",
+        "sha256": "ec661daa4d65a82374ea6c65e53c06e08776606ee0c03320338c0150c14dd091",
+        "bytes": 3976560,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 32
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 1,
+                "webdriverAtMs": 269,
+                "x11AtMs": 531,
+                "webdriverAfterX11AtMs": 644
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "x11First",
+                  "sha256": "fe9c5d8e08838fa52ce4cb172480c2d6e3c801486f43aa5b21e640e44b567d8a",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "webdriver",
+                  "sha256": "24b939e797cf566546a1a19a9882c98085661c8fcd17306ac47723aecbfa2a08",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "x11",
+                  "sha256": "d0a04e8da7b94dcc4f3409692d27bcd121af901a944380ada9ea5ad2f594ff86",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      106
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "96ce5a05babdc79afec130cbc56067563ede7cf5fd3a88bba8445a1ded7fc730",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 18475,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 18475,
+                "webdriverAtMs": 18586,
+                "x11AtMs": 18679,
+                "webdriverAfterX11AtMs": 18797
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "x11First",
+                  "sha256": "605b9f32118ac788b88139f6a527bc6c68e4700f92b26306a3881b44d74b73ba",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 365,
+                  "kind": "webdriver",
+                  "sha256": "2142c9b500d8432fd56bdb2dd10700192b1f9477a80fca0be20d1f3cfde73e49",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "x11",
+                  "sha256": "dbb6ec56910f5f080568255627c0f3970598fafafd4ae0fb91d6a0a94cfc38eb",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "fa0ae45b2cbdb985022147f125bbd6730d04019c09c3f014d16040360378840e",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        },
+        {
+          "name": "reopened",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 16
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "reopened-immediate",
+              "elapsedMs": 1,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 1,
+                "webdriverAtMs": 130,
+                "x11AtMs": 365,
+                "webdriverAfterX11AtMs": 489
+              },
+              "captures": [
+                {
+                  "file": "reopened-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11First",
+                  "sha256": "0ced2156bf422e6890bd9910b1f7a57651791c7391f17a4347b5893a96c177d1",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriver",
+                  "sha256": "1bb9dc4175fe9479f58b808c33bef970e72245154f7c8c5f4ba22ca058f42b57",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11",
+                  "sha256": "77efb65b7af4f9db9aa3e9feb3018129484a2c4c237bfb73cb7aef89051fbdf9",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "739db6d02a2df972eb98305176909f3030121ebb558655161d62af2b3b9a6a1d",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "reopened-wait15",
+              "elapsedMs": 19080,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 19080,
+                "webdriverAtMs": 19198,
+                "x11AtMs": 19514,
+                "webdriverAfterX11AtMs": 19631
+              },
+              "captures": [
+                {
+                  "file": "reopened-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11First",
+                  "sha256": "4f82bdf1f4100c0e511b03f5aacf80a530064bc30fc02e87608838b9073952aa",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriver",
+                  "sha256": "2be27cac364953f95f6f278d84b89477fbe0aeb90155e23881808b9b8e6f1da5",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11",
+                  "sha256": "7b098d85fa250fbd00311b9b186312a2b84144a636c0ce279e31c9d75c060cf6",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "426a62f7dce34fbaf659d2a00df4165a8f223fd0eaa2d8fe309f03ded80f7cc9",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "678e06e06c4a993263a39d7c214292c9bb96ad1e",
+      "harnessSha256": "75880635147ba341e1d64a1ae82a78c9c25dbc155cb693064d85abb4492d2297",
+      "graphicsMode": "baseline",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": null,
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "passed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker",
+        "Application process fully exits after saving",
+        "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+      ],
+      "error": null,
+      "ownedApplicationClosed": true,
+      "savedSha256": "9f0deb224ece4b35b333ff221377e0cfd516aa55d8b8f906782732cf88199109",
+      "run": "43847848206",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43847848206",
+      "artifact": {
+        "run": "43847848206",
+        "artifactId": 14214824873,
+        "name": "writer349-linux-paint-baseline",
+        "sha256": "b088125eefa9a9efbb97b5150c15cb50fc1329903ec4b647fe0d9d899d444e86",
+        "bytes": 3817026,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 32.00000000000091
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 1,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 1,
+                "webdriverAtMs": 129,
+                "x11AtMs": 251,
+                "webdriverAfterX11AtMs": 347
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 2,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8574
+                    ],
+                    [
+                      [
+                        232,
+                        232,
+                        232
+                      ],
+                      36
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11First",
+                  "sha256": "69635dd020d0465528e1aa78c0d0b64054e1df258e606eafdc31ce38dc93d370",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 2,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8574
+                    ],
+                    [
+                      [
+                        232,
+                        232,
+                        232
+                      ],
+                      36
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriver",
+                  "sha256": "c4c2d6e8eeeefdb0ec2dc90cce337e16c2e64b5ccfc02fb4eb82fa657c1d41f8",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 2,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8574
+                    ],
+                    [
+                      [
+                        232,
+                        232,
+                        232
+                      ],
+                      36
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11",
+                  "sha256": "bf4a3b4b905355dd512e70780b36c98f0d64395abfd4ca75fbd2d6d6ee0bf37e",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "e829bc541fcd404ff02955fd62b6716c9b36f57637529f4b89f6d5f3344d03b1",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 16573,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 16573,
+                "webdriverAtMs": 16634,
+                "x11AtMs": 16691,
+                "webdriverAfterX11AtMs": 16764
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11First",
+                  "sha256": "5a0245e9d96c695b08323517ae2b97a1875710e14bd4e66157b76418e2794bc6",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriver",
+                  "sha256": "66f8609eda00b1c56b345e30a9a6ccef7980b714e3506cb14c76a7f27f4677dc",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11",
+                  "sha256": "5a0245e9d96c695b08323517ae2b97a1875710e14bd4e66157b76418e2794bc6",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 2,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8574
+                    ],
+                    [
+                      [
+                        230,
+                        230,
+                        230
+                      ],
+                      36
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "1deeae97d17441498ae6b414c5ea385f526d7dfe71fd0529af4881c6836d4b88",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        },
+        {
+          "name": "reopened",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 49
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "reopened-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 103,
+                "x11AtMs": 213,
+                "webdriverAfterX11AtMs": 310
+              },
+              "captures": [
+                {
+                  "file": "reopened-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 1,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      8610
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 8610,
+                  "kind": "x11First",
+                  "sha256": "902ad31264db72202010cc49210fd3f361d08aa199c3e154d28307e409e15bde",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriver",
+                  "sha256": "8a476d11d57693b94c2594f8ad838596a639e7bdbb56fd4f526e681c67e99716",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11",
+                  "sha256": "70be643369631bdd7b31fd763858c7ce65126ddc8d94bd7c0c2c9fef6433e697",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "3e507fe4d0021f15ea4fbe319a4fbe4803cb1d26aeedb88f0a47ab2fb7f6ce83",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "reopened-wait15",
+              "elapsedMs": 16594,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 16594,
+                "webdriverAtMs": 16659,
+                "x11AtMs": 16719,
+                "webdriverAfterX11AtMs": 16784
+              },
+              "captures": [
+                {
+                  "file": "reopened-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11First",
+                  "sha256": "0735c134f139e96260732f4c774bf20b3423446471803071a4289cf415e15f6d",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriver",
+                  "sha256": "75aef6ae409f52d2ec8efa611c49c5941c8331669c47b1ee02011d1d2c07b672",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "x11",
+                  "sha256": "0735c134f139e96260732f4c774bf20b3423446471803071a4289cf415e15f6d",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 5,
+                  "dominant": [
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      4938
+                    ],
+                    [
+                      [
+                        241,
+                        222,
+                        162
+                      ],
+                      3660
+                    ],
+                    [
+                      [
+                        233,
+                        226,
+                        203
+                      ],
+                      4
+                    ]
+                  ],
+                  "dark": 0,
+                  "bright": 4942,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "75aef6ae409f52d2ec8efa611c49c5941c8331669c47b1ee02011d1d2c07b672",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        }
+      ]
+    },
+    {
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+      "harnessCommit": "678e06e06c4a993263a39d7c214292c9bb96ad1e",
+      "harnessSha256": "75880635147ba341e1d64a1ae82a78c9c25dbc155cb693064d85abb4492d2297",
+      "graphicsMode": "disable-dmabuf",
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+        "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+      },
+      "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+      "runtime": {
+        "node": "v22.23.4",
+        "driver": "tauri-driver v2.1.0:",
+        "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+        "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+        "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+      },
+      "status": "passed",
+      "checks": [
+        "Real installed DEB opens a native Writer document",
+        "Actual keyboard edit and Ctrl+S persist exactly one marker",
+        "Application process fully exits after saving",
+        "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+      ],
+      "error": null,
+      "ownedApplicationClosed": true,
+      "savedSha256": "21db03e752faea63cffa5e9e4a5520d2bb8b230aaa1c133bc7c503e3a75f0fd9",
+      "run": "43847853040",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43847853040",
+      "artifact": {
+        "run": "43847853040",
+        "artifactId": 14215144055,
+        "name": "writer349-linux-paint-disable-dmabuf",
+        "sha256": "f18a2e874ce195f5c24a50003b5beba726895fa33c1f16178429542fccbb6e14",
+        "bytes": 3976799,
+        "githubDigestMatched": true
+      },
+      "independentExactDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+      "scenes": [
+        {
+          "name": "saved",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 19.999999999996362
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "saved-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 214,
+                "x11AtMs": 294,
+                "webdriverAfterX11AtMs": 410
+              },
+              "captures": [
+                {
+                  "file": "saved-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7195,
+                  "bright": 363,
+                  "kind": "x11First",
+                  "sha256": "b0234232c1c4bda4130b5aa280b944df1c3f8df73de36229c7cd45beb658ac3f",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "webdriver",
+                  "sha256": "28a28f125a4016c028a76ec1af4d542a866fe993c42248c8f89dc621f713642a",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6161
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7197,
+                  "bright": 363,
+                  "kind": "x11",
+                  "sha256": "6077ea618751d4c464f9a262f7ea600c1fba7cf169b435f08e5a934e5e3515c0",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "3807d6a666e1243ddffef252c7a40150b5248072e23c2238e182ea46b881456e",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "saved-wait15",
+              "elapsedMs": 17952,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 17952,
+                "webdriverAtMs": 18065,
+                "x11AtMs": 18516,
+                "webdriverAfterX11AtMs": 18630
+              },
+              "captures": [
+                {
+                  "file": "saved-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7195,
+                  "bright": 363,
+                  "kind": "x11First",
+                  "sha256": "def757db20a1b4e6fb63370f0e23b4cb3c8e75ae333f3fe52285431d41771817",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 205,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      104
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 365,
+                  "kind": "webdriver",
+                  "sha256": "2142c9b500d8432fd56bdb2dd10700192b1f9477a80fca0be20d1f3cfde73e49",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 206,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      103
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 374,
+                  "kind": "x11",
+                  "sha256": "5353621e555257288e7e7cd051e50bb333d30d97f523a882cf5b3b09372b8004",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "saved-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 207,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      6141
+                    ],
+                    [
+                      [
+                        76,
+                        76,
+                        76
+                      ],
+                      160
+                    ],
+                    [
+                      [
+                        229,
+                        229,
+                        229
+                      ],
+                      106
+                    ]
+                  ],
+                  "dark": 7172,
+                  "bright": 395,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "2ecf0d3a0151132b16a69b7f781a6ec17a3efffb7f959f37e37b981ac85e6221",
+                  "roi": [
+                    441,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        },
+        {
+          "name": "reopened",
+          "fontWait": {
+            "status": "loaded",
+            "ready": true,
+            "elapsedMs": 21
+          },
+          "fileUnchanged": true,
+          "samples": [
+            {
+              "label": "reopened-immediate",
+              "elapsedMs": 0,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 0,
+                "webdriverAtMs": 128,
+                "x11AtMs": 354,
+                "webdriverAfterX11AtMs": 479
+              },
+              "captures": [
+                {
+                  "file": "reopened-immediate-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11First",
+                  "sha256": "b5ca72ca06fcb2c3fcbfa637687c56aef992c61b259bf2a9d3af0321ad79904f",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriver",
+                  "sha256": "4adcb484cf2272aaa7f182ca2c4a3106467fd179518a5edfdf6c852bb9edd094",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11",
+                  "sha256": "b64c525dda44a17797501c52d1abde23a608183faaca9a6b45b82eb2f2fe4e49",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-immediate-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "27d1538b6562854bf735d4e1e85a47249b9a64da2f7327743c46ac6c96dcc882",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "reopened-wait15",
+              "elapsedMs": 19791,
+              "captureTimingMs": {
+                "x11BeforeWebdriverAtMs": 19791,
+                "webdriverAtMs": 19914,
+                "x11AtMs": 20263,
+                "webdriverAfterX11AtMs": 20385
+              },
+              "captures": [
+                {
+                  "file": "reopened-wait15-x11-first.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11First",
+                  "sha256": "7b098d85fa250fbd00311b9b186312a2b84144a636c0ce279e31c9d75c060cf6",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriver",
+                  "sha256": "426a62f7dce34fbaf659d2a00df4165a8f223fd0eaa2d8fe309f03ded80f7cc9",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-x11.png",
+                  "size": [
+                    1280,
+                    1024
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "x11",
+                  "sha256": "4f82bdf1f4100c0e511b03f5aacf80a530064bc30fc02e87608838b9073952aa",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                },
+                {
+                  "file": "reopened-wait15-webdriver-after-x11.png",
+                  "size": [
+                    1440,
+                    950
+                  ],
+                  "colors": 315,
+                  "dominant": [
+                    [
+                      [
+                        25,
+                        25,
+                        25
+                      ],
+                      3799
+                    ],
+                    [
+                      [
+                        128,
+                        109,
+                        49
+                      ],
+                      2350
+                    ],
+                    [
+                      [
+                        156,
+                        137,
+                        77
+                      ],
+                      95
+                    ]
+                  ],
+                  "dark": 4297,
+                  "bright": 169,
+                  "kind": "webdriverAfterX11",
+                  "sha256": "2be27cac364953f95f6f278d84b89477fbe0aeb90155e23881808b9b8e6f1da5",
+                  "roi": [
+                    609,
+                    326,
+                    410,
+                    21
+                  ]
+                }
+              ]
+            }
+          ],
+          "viewToggle": null
+        }
+      ]
+    }
+  ]
+}
