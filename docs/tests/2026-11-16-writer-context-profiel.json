@@ -1,0 +1,203 @@
+{
+  "datum": "2026-11-16",
+  "basis_integratie": "97507c82",
+  "basis_hoofdbranch": "c3313b65",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Nieuwe native ScriptProfiler-opname op bestaande gecorrigeerde contextkandidaat geslaagd. Concrete projectie-/digest- en fontRequirements-routes gekoppeld; daarnaast documentprojectie/bewaarvoorbereiding aanwezig. Geen nieuwe snelheidsfix of acceptatie.",
+  "programma": {
+    "sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+    "versie": "2026.45.52",
+    "platform": "Linux x86_64 release",
+    "feature": "writer-bronjournaal",
+    "schema": 2,
+    "geen_nieuwe_ELF": true
+  },
+  "native_functieronde": {
+    "geslaagd": true,
+    "stappen": [
+      "Lange fysieke tekstinvoer zonder antwoordvertraging, renderframe en bronexacte Undo/Redo-groepen",
+      "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+      "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+    ],
+    "invoer": {
+      "tekens": 1052,
+      "interval_ms": 2,
+      "laatste_keyup_ms": 38140,
+      "begin_tot_bron_ms": 12887,
+      "laatste_keyup_tot_bron_ms": 303,
+      "laatste_keyup_tot_frame_ms": 3007,
+      "begin_tot_frame_ms": 15591,
+      "paginas": 65,
+      "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+      "wall_begin_tot_frame_ms": 15605,
+      "wall_verzonden_tot_frame_ms": 13813,
+      "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+    },
+    "fouten": {
+      "gui": [],
+      "engine": [],
+      "console": []
+    },
+    "grens": "Eigen fixture in virtuele X11; geen kunstmatige antwoordvertraging tijdens lange invoer. Daarna aparte vasthoudproeven. ScriptProfiler en bestaande fetch/selectie-/invoerdiagnose beïnvloeden de meting; geen gewone ABBA of snelheidsvergelijking."
+  },
+  "profielen": [
+    {
+      "context": "hoofdthread",
+      "samples": 8636,
+      "nultijdstempels": 8636
+    },
+    {
+      "context": "worker:0.3",
+      "samples": 10597,
+      "nultijdstempels": 10390
+    },
+    {
+      "context": "worker:0.2",
+      "samples": 1,
+      "nultijdstempels": 0
+    }
+  ],
+  "stack_kalibratie": {
+    "leaf_eerst": true,
+    "aantal": 89,
+    "voorbeelden": [
+      [
+        "profielOnder",
+        "profielMidden",
+        "profielBoven",
+        "",
+        "(program)",
+        "evaluateWithScopeExtension",
+        "",
+        "_wrapCall"
+      ],
+      [
+        "now",
+        "profielOnder",
+        "profielMidden",
+        "profielBoven",
+        "",
+        "(program)",
+        "evaluateWithScopeExtension",
+        "",
+        "_wrapCall"
+      ]
+    ]
+  },
+  "routes": {
+    "hoofdthread": "buildStory → bron.segments → storySegmentUnitDigests; in de grootste functienaam-stack 957 digest-samples. Geïdentificeerde positieaanroep loopt via lY/Dn/At/Ft na invoer. Functienaam-stacks kunnen meerdere expressielocaties omvatten; alle locaties apart bewaard.",
+    "documentwerker": "6852 samples bevatten layout_font_requirements_json, aangeroepen via gg. 6850 delen dezelfde exacte expressiestack: Fc-vertakking e.type===fontRequirements, gg(N,e.layoutInput), cache op eigenaar/versie/ruwe input en daarna Ro-normalisatie. Dit is een concrete fontRequirements-aanvraagroute, geen bewijs van 6852 aanvragen of 65% CPU.",
+    "bewaren": "947 Worker-samples bevatten paragraphSavePlan via Dt/Xt/saveResidentDocument; 776 bevatten storyToBlocks. Hoofdthread storyToBlocks 343: een stack met getDocument koppelt aan volgStijlen en de 1000ms-timer. Geen bewijs dat alle document-/bewaarwerk overbodig is. Async stack stopt bij saveResidentDocument: aanvrager niet uit deze opname vastgesteld.",
+    "uitlezen": "714 hoofdthread-samples bevatten readParagraphs. Bij 690 ontbreekt een oudere aanroepframe in de functienaam-stack; 23 tonen leesCursorAlinea/cursor/corrigeerNaInvoer. De 690 niet toeschrijven aan één product- of testaanvrager zonder aanvullend bewijs.",
+    "spelling": "Slechts één spellingworker-sample; dit bewijst geen afwezigheid van overige kosten."
+  },
+  "bronbinding": {
+    "dist": "Bewaarde private projectie-context/dist van ee89c80e; gekoppelde geminificeerde bronbestanden afzonderlijk gehasht. Geen runtimebronfetch, geen oorspronkelijke sourcemap of Wasm-symbolisering.",
+    "codefragmenten": "1-based gemelde functie-/expressieposities; buildStory, segments, gg en fontRequirements-vertakking inhoudelijk nagekeken.",
+    "geen_debugger": true
+  },
+  "documentcontrole": {
+    "docx_sha256": "f89d837c14c92f79d37223f86537327ed964d36fa956b0e3c3fa7b9fd6ff4b11",
+    "tabellen": 128,
+    "utf16": 91423,
+    "zip_crc_xml_relaties_groen": true,
+    "pakketverschil_met_eerdere_context_kandidaat": [
+      "docProps/core.xml"
+    ],
+    "part_hashes": {
+      "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+      "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+      "docProps/core.xml": "35cc69ec85599d5ea976edf7eac68d111e7bc6a2f870d7e671a595dfa9d3faf9",
+      "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+      "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+      "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+      "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+      "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+      "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+      "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+      "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+      "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+      "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+      "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+    },
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 40,
+        "bbox": [
+          11,
+          4,
+          1132,
+          999
+        ]
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      }
+    ],
+    "grens": "Drie vaste beelden tegenover eerdere ongeinstrumenteerde contextkandidaat; geen volledige visuele/platformacceptatie."
+  },
+  "visueel": "snel-getypt-bewaard.png bekeken: ingevoerde eindtekst en tabelopmaak zichtbaar, 91.423 tekens in statusbalk, geen foutdialoog op dit beeld. Drie hele-beeldparen 40/0/36 pixels verschillend; geen volledige visuele acceptatie.",
+  "behoud": {
+    "referenties27_exact": true,
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "sdk_vendor_canonieke_bron_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+    },
+    "private_geprofileerde_bron_exact": true,
+    "python_syntaxis": [
+      "aanroepplaatsen.py",
+      "analyseren.py",
+      "behoudcontrole.py",
+      "documentcontrole.py",
+      "native-profiel.py",
+      "voorbereiden.py"
+    ],
+    "vrije_bytes_na": 3286716416,
+    "productbron": "41e7000198f89d992e1059e9715636a44b39d21a"
+  },
+  "afgebroken_hulpanalyse": "Eerste uitsluitend lokale aanroepplaatsen-analyse gestopt wegens herhaald inlezen van bundelbestanden; met memoïsatie opnieuw geslaagd. Native proef zelf niet afgebroken.",
+  "grenzen": [
+    "Stackvolgorde afzonderlijk leaf-first gekalibreerd; aantallen zijn samples, geen aanroepen of CPU-milliseconden.",
+    "Inclusieve stacklidmaatschappen overlappen; niet optellen.",
+    "Hoofdthread heeft uitsluitend nul-tijdstempels; geen fase- of staarttijdlijn afleidbaar. Workers hebben eigen klokken en meestal nul-tijdstempels.",
+    "Bronkoppeling aan bewaarde private dist van ee89c80e; runtimebronnen niet opnieuw opgehaald. Minified bron rond gemelde 1-based functiestart, geen oorspronkelijke sourcemap of Wasm-symbolisering.",
+    "Geen causale fase-/staartverdeling, CPU-ms, aanvraagfrequentie of oorzaak van crossdagvariatie vastgesteld.",
+    "Geen productcode overgenomen; geen nieuwe volledige productsuites/CI, geheugenfoutacceptatie, andere schemas/edities/platforms/releases of issue-/migratievoltooiing.",
+    "Eerdere afgewezen cache/warm-varianten blijven afgewezen. Geen nieuwe algemene cache of guardversoepeling gerechtvaardigd."
+  ],
+  "vervolg": "Volg de nu exact gelokaliseerde fontRequirements-aanvraag terug naar hoofdthread-planning en bron/versie/layoutInput; stel werkelijk aantal en herkomst vast met beperkte verliesloze aanvraagmetadata. Onderscheid dit pad van Ea/sync en de reeds private R(k)-warmvoorbereiding. Stel ook de eigenaar van saveResidentDocument tijdens invoer vast voordat bewaarwerk wordt uitgesteld. Behoud mutaties, compatibiliteit, fonts/env/bron/generatie/previews en bewaarbegrenzing. Eerst concrete veilige wijziging en componentpariteit, daarna eigen native korte/rijke ABBA en functie-/beeldbewijs. Geen nieuwe algemene klokronde of blind warmen/overslaan. Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-16-writer-context-profiel.tar.gz",
+    "sha256": "933200a01b037863c0b5f6cb0a510117f67e47917fa7a5d1a21019ceec7baeb9",
+    "bytes": 1222444,
+    "bestanden": 23,
+    "manifest_ieder_bestand_geverifieerd": true
+  }
+}
