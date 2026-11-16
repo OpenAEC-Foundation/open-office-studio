@@ -83,8 +83,8 @@ capture. The final test waits for the reopened document to enable Save As and
 stores the receipt beside the actual proof. Earlier artifacts remain historical;
 they are not relabeled as unobstructed reopen proofs.
 
-Native Linux is now tested separately on the same fixed application point;
-Windows and macOS remain pending. No native platform pass or completed issue is
-inferred from the browser/unit results. Native phases can select individual
-platforms so integration G's Mac checks take precedence without changing the
-application point or repeating the valid browser proof.
+Linux DEB/AppImage, installed Windows NSIS and macOS ARM DMG native EPUB tests
+have now passed on that same fixed application point. See the complete
+[platform receipt](2026-11-16-platforms.md) for immutable source, package hashes,
+driver/run references, actual native interaction scope and remaining integration
+limits. No parent #30 closure is inferred from this bounded EPUB fix.
