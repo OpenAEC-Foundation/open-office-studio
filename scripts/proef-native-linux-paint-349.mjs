@@ -319,8 +319,8 @@ try {
   report.checks.push(
     "Actual keyboard edit and Ctrl+S persist exactly one marker",
   );
-  await screenshot("saved.png");
   await paintProbe.inspect("saved");
+  await screenshot("saved.png");
   await closeSession();
   report.checks.push("Application process fully exits after saving");
   await startDocument();
@@ -357,8 +357,8 @@ try {
   report.checks.push(
     "Fresh native process reopens unchanged saved DOCX and Find returns the marker",
   );
-  await screenshot("reopened-find.png");
   await paintProbe.inspect("reopened");
+  await screenshot("reopened-find.png");
   await closeSession();
   report.status = "passed";
 } catch (error) {
