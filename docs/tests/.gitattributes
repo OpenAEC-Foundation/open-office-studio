@@ -1,3 +1,7 @@
 # Preserve the exact executed bytes and recognise Windows line endings in these two proof scripts.
 2026-11-16-writer-language-acceptance-probe.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 2026-11-16-writer-language-acceptance-runner.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Byte-exact production and CPU8 proof scripts.
+2026-11-16-pr349-production-language.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+2026-11-16-pr349-cpu8-runner.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

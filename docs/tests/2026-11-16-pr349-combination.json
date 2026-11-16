@@ -1,0 +1,4750 @@
+{
+  "collectedAt": "2026-11-16T09:11:58.324Z",
+  "pr": 349,
+  "base": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+  "head": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+  "tree": "225268c334e93b8c890d9e98171b4c5c6c63b58a",
+  "backup": {
+    "branch": "codex/archive/pr349-2026-11-16-8bf19ef6",
+    "head": "8bf19ef697569c45b42ddd13fd7f513ba9da763a"
+  },
+  "scope": "Unchanged original 327 patch plus 16 November evidence/probes on main93; no former release/admin documents or pivot helper correction",
+  "status": "Available combination checks passed at the frozen head; suitable for central integration validation, subject to native/final-combination acceptance. Draft and issue327 remain open; no main merge or release.",
+  "exactHeadCI": {
+    "desktop": {
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "headSha": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "jobs": [
+        {
+          "completedAt": "2026-11-16T09:07:01Z",
+          "conclusion": "success",
+          "databaseId": 133185479729,
+          "name": "desktop (macos-latest)",
+          "startedAt": "2026-11-16T08:45:43Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-16T08:45:47Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-16T08:45:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:52Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-16T08:45:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:53Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-16T08:45:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:54Z",
+              "conclusion": "success",
+              "name": "Run pnpm/action-setup@v4",
+              "number": 4,
+              "startedAt": "2026-11-16T08:45:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:04Z",
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 5,
+              "startedAt": "2026-11-16T08:45:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:04Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 6,
+              "startedAt": "2026-11-16T08:46:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:04Z",
+              "conclusion": "skipped",
+              "name": "Linux-bouwafhankelijkheden",
+              "number": 7,
+              "startedAt": "2026-11-16T08:46:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:04Z",
+              "conclusion": "skipped",
+              "name": "Conversieruntime installeren",
+              "number": 8,
+              "startedAt": "2026-11-16T08:46:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:11Z",
+              "conclusion": "success",
+              "name": "Run pnpm install --frozen-lockfile",
+              "number": 9,
+              "startedAt": "2026-11-16T08:46:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:14Z",
+              "conclusion": "success",
+              "name": "Lettertypencache",
+              "number": 10,
+              "startedAt": "2026-11-16T08:46:11Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:14Z",
+              "conclusion": "success",
+              "name": "Run node scripts/haal-lettertypen.mjs",
+              "number": 11,
+              "startedAt": "2026-11-16T08:46:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:15Z",
+              "conclusion": "success",
+              "name": "Woordenboekencache",
+              "number": 12,
+              "startedAt": "2026-11-16T08:46:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:16Z",
+              "conclusion": "success",
+              "name": "Run node scripts/haal-woordenboeken.mjs",
+              "number": 13,
+              "startedAt": "2026-11-16T08:46:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:21Z",
+              "conclusion": "success",
+              "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+              "number": 14,
+              "startedAt": "2026-11-16T08:46:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:28Z",
+              "conclusion": "success",
+              "name": "Run node scripts/bouw-spelling-wasm.mjs",
+              "number": 15,
+              "startedAt": "2026-11-16T08:46:21Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:28Z",
+              "conclusion": "success",
+              "name": "Run pnpm versie:check",
+              "number": 16,
+              "startedAt": "2026-11-16T08:46:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:29Z",
+              "conclusion": "success",
+              "name": "Vastgelegde versleutelde proefbestanden ophalen",
+              "number": 17,
+              "startedAt": "2026-11-16T08:46:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:59Z",
+              "conclusion": "success",
+              "name": "Run pnpm test",
+              "number": 18,
+              "startedAt": "2026-11-16T08:46:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:01Z",
+              "conclusion": "success",
+              "name": "Run python -m unittest discover -s tests -v",
+              "number": 19,
+              "startedAt": "2026-11-16T08:49:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:02Z",
+              "conclusion": "success",
+              "name": "Run node scripts/test-kantoor-engines.mjs",
+              "number": 20,
+              "startedAt": "2026-11-16T08:50:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:12Z",
+              "conclusion": "success",
+              "name": "Run pnpm test:opdrachten",
+              "number": 21,
+              "startedAt": "2026-11-16T08:50:02Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:13Z",
+              "conclusion": "success",
+              "name": "Experimenteel IFCX-bewaarvoorstel controleren",
+              "number": 22,
+              "startedAt": "2026-11-16T08:50:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:13Z",
+              "conclusion": "skipped",
+              "name": "Windows-loader voorbereiden",
+              "number": 23,
+              "startedAt": "2026-11-16T08:50:13Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:47Z",
+              "conclusion": "success",
+              "name": "Run pnpm build",
+              "number": 24,
+              "startedAt": "2026-11-16T08:50:13Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:47Z",
+              "conclusion": "skipped",
+              "name": "Chromium voor offline Writer-opslag",
+              "number": 25,
+              "startedAt": "2026-11-16T08:51:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:47Z",
+              "conclusion": "skipped",
+              "name": "Writer werkelijk offline bewerken, opslaan en heropenen",
+              "number": 26,
+              "startedAt": "2026-11-16T08:51:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:15Z",
+              "conclusion": "success",
+              "name": "Native document-link path regressions",
+              "number": 27,
+              "startedAt": "2026-11-16T08:51:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:15Z",
+              "conclusion": "skipped",
+              "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+              "number": 28,
+              "startedAt": "2026-11-16T08:54:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:15Z",
+              "conclusion": "skipped",
+              "name": "Gebouwde databaseparser controleren",
+              "number": 29,
+              "startedAt": "2026-11-16T08:54:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:35Z",
+              "conclusion": "success",
+              "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+              "number": 30,
+              "startedAt": "2026-11-16T08:54:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:35Z",
+              "conclusion": "skipped",
+              "name": "ODF, oudere formaten en PDF werkelijk converteren",
+              "number": 31,
+              "startedAt": "2026-11-16T08:54:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:35Z",
+              "conclusion": "skipped",
+              "name": "Geconverteerde inhoud onafhankelijk controleren",
+              "number": 32,
+              "startedAt": "2026-11-16T08:54:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:35Z",
+              "conclusion": "skipped",
+              "name": "Linux-pakket bouwen",
+              "number": 33,
+              "startedAt": "2026-11-16T08:54:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:35Z",
+              "conclusion": "skipped",
+              "name": "Windows-pakket bouwen",
+              "number": 34,
+              "startedAt": "2026-11-16T08:54:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:23Z",
+              "conclusion": "success",
+              "name": "macOS-pakket bouwen",
+              "number": 35,
+              "startedAt": "2026-11-16T08:54:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:24Z",
+              "conclusion": "success",
+              "name": "Bestandskoppelingen in de gebouwde macOS-app controleren",
+              "number": 36,
+              "startedAt": "2026-11-16T09:06:23Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:45Z",
+              "conclusion": "success",
+              "name": "Bestanden native via macOS openen bij starten en in de draaiende app",
+              "number": 37,
+              "startedAt": "2026-11-16T09:06:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:45Z",
+              "conclusion": "skipped",
+              "name": "Linux-installers werkelijk uitpakken en controleren",
+              "number": 38,
+              "startedAt": "2026-11-16T09:06:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:45Z",
+              "conclusion": "skipped",
+              "name": "Windows-installer werkelijk uitpakken en controleren",
+              "number": 39,
+              "startedAt": "2026-11-16T09:06:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:51Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 40,
+              "startedAt": "2026-11-16T09:06:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:53Z",
+              "conclusion": "success",
+              "name": "Pakketrapport bewaren",
+              "number": 41,
+              "startedAt": "2026-11-16T09:06:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:53Z",
+              "conclusion": "success",
+              "name": "Post Woordenboekencache",
+              "number": 77,
+              "startedAt": "2026-11-16T09:06:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:54Z",
+              "conclusion": "success",
+              "name": "Post Lettertypencache",
+              "number": 78,
+              "startedAt": "2026-11-16T09:06:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:54Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 79,
+              "startedAt": "2026-11-16T09:06:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:54Z",
+              "conclusion": "success",
+              "name": "Post Run pnpm/action-setup@v4",
+              "number": 80,
+              "startedAt": "2026-11-16T09:06:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:55Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 81,
+              "startedAt": "2026-11-16T09:06:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:55Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 82,
+              "startedAt": "2026-11-16T09:06:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:06:59Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 83,
+              "startedAt": "2026-11-16T09:06:55Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833855766/job/133185479729"
+        },
+        {
+          "completedAt": "2026-11-16T09:01:50Z",
+          "conclusion": "success",
+          "databaseId": 133185480088,
+          "name": "desktop (ubuntu-22.04)",
+          "startedAt": "2026-11-16T08:45:41Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-16T08:45:44Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-16T08:45:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:50Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-16T08:45:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:53Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-16T08:45:50Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:54Z",
+              "conclusion": "success",
+              "name": "Run pnpm/action-setup@v4",
+              "number": 4,
+              "startedAt": "2026-11-16T08:45:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:07Z",
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 5,
+              "startedAt": "2026-11-16T08:45:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:07Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 6,
+              "startedAt": "2026-11-16T08:46:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:59Z",
+              "conclusion": "success",
+              "name": "Linux-bouwafhankelijkheden",
+              "number": 7,
+              "startedAt": "2026-11-16T08:46:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:59Z",
+              "conclusion": "skipped",
+              "name": "Conversieruntime installeren",
+              "number": 8,
+              "startedAt": "2026-11-16T08:46:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:03Z",
+              "conclusion": "success",
+              "name": "Run pnpm install --frozen-lockfile",
+              "number": 9,
+              "startedAt": "2026-11-16T08:46:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:04Z",
+              "conclusion": "success",
+              "name": "Lettertypencache",
+              "number": 10,
+              "startedAt": "2026-11-16T08:47:03Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:04Z",
+              "conclusion": "success",
+              "name": "Run node scripts/haal-lettertypen.mjs",
+              "number": 11,
+              "startedAt": "2026-11-16T08:47:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:05Z",
+              "conclusion": "success",
+              "name": "Woordenboekencache",
+              "number": 12,
+              "startedAt": "2026-11-16T08:47:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:06Z",
+              "conclusion": "success",
+              "name": "Run node scripts/haal-woordenboeken.mjs",
+              "number": 13,
+              "startedAt": "2026-11-16T08:47:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:07Z",
+              "conclusion": "success",
+              "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+              "number": 14,
+              "startedAt": "2026-11-16T08:47:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:12Z",
+              "conclusion": "success",
+              "name": "Run node scripts/bouw-spelling-wasm.mjs",
+              "number": 15,
+              "startedAt": "2026-11-16T08:47:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:12Z",
+              "conclusion": "success",
+              "name": "Run pnpm versie:check",
+              "number": 16,
+              "startedAt": "2026-11-16T08:47:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:13Z",
+              "conclusion": "success",
+              "name": "Vastgelegde versleutelde proefbestanden ophalen",
+              "number": 17,
+              "startedAt": "2026-11-16T08:47:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:17Z",
+              "conclusion": "success",
+              "name": "Run pnpm test",
+              "number": 18,
+              "startedAt": "2026-11-16T08:47:13Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:18Z",
+              "conclusion": "success",
+              "name": "Run python -m unittest discover -s tests -v",
+              "number": 19,
+              "startedAt": "2026-11-16T08:50:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:19Z",
+              "conclusion": "success",
+              "name": "Run node scripts/test-kantoor-engines.mjs",
+              "number": 20,
+              "startedAt": "2026-11-16T08:50:18Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:25Z",
+              "conclusion": "success",
+              "name": "Run pnpm test:opdrachten",
+              "number": 21,
+              "startedAt": "2026-11-16T08:50:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:25Z",
+              "conclusion": "success",
+              "name": "Experimenteel IFCX-bewaarvoorstel controleren",
+              "number": 22,
+              "startedAt": "2026-11-16T08:50:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:25Z",
+              "conclusion": "skipped",
+              "name": "Windows-loader voorbereiden",
+              "number": 23,
+              "startedAt": "2026-11-16T08:50:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:15Z",
+              "conclusion": "success",
+              "name": "Run pnpm build",
+              "number": 24,
+              "startedAt": "2026-11-16T08:50:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:30Z",
+              "conclusion": "success",
+              "name": "Chromium voor offline Writer-opslag",
+              "number": 25,
+              "startedAt": "2026-11-16T08:51:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:37Z",
+              "conclusion": "success",
+              "name": "Writer werkelijk offline bewerken, opslaan en heropenen",
+              "number": 26,
+              "startedAt": "2026-11-16T08:51:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:53:35Z",
+              "conclusion": "success",
+              "name": "Native document-link path regressions",
+              "number": 27,
+              "startedAt": "2026-11-16T08:51:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:53:36Z",
+              "conclusion": "success",
+              "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+              "number": 28,
+              "startedAt": "2026-11-16T08:53:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:53:37Z",
+              "conclusion": "success",
+              "name": "Gebouwde databaseparser controleren",
+              "number": 29,
+              "startedAt": "2026-11-16T08:53:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:53:46Z",
+              "conclusion": "success",
+              "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+              "number": 30,
+              "startedAt": "2026-11-16T08:53:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:53:46Z",
+              "conclusion": "skipped",
+              "name": "ODF, oudere formaten en PDF werkelijk converteren",
+              "number": 31,
+              "startedAt": "2026-11-16T08:53:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:53:46Z",
+              "conclusion": "skipped",
+              "name": "Geconverteerde inhoud onafhankelijk controleren",
+              "number": 32,
+              "startedAt": "2026-11-16T08:53:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:36Z",
+              "conclusion": "success",
+              "name": "Linux-pakket bouwen",
+              "number": 33,
+              "startedAt": "2026-11-16T08:53:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:36Z",
+              "conclusion": "skipped",
+              "name": "Windows-pakket bouwen",
+              "number": 34,
+              "startedAt": "2026-11-16T09:01:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:36Z",
+              "conclusion": "skipped",
+              "name": "macOS-pakket bouwen",
+              "number": 35,
+              "startedAt": "2026-11-16T09:01:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:36Z",
+              "conclusion": "skipped",
+              "name": "Bestandskoppelingen in de gebouwde macOS-app controleren",
+              "number": 36,
+              "startedAt": "2026-11-16T09:01:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:36Z",
+              "conclusion": "skipped",
+              "name": "Bestanden native via macOS openen bij starten en in de draaiende app",
+              "number": 37,
+              "startedAt": "2026-11-16T09:01:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:37Z",
+              "conclusion": "success",
+              "name": "Linux-installers werkelijk uitpakken en controleren",
+              "number": 38,
+              "startedAt": "2026-11-16T09:01:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:37Z",
+              "conclusion": "skipped",
+              "name": "Windows-installer werkelijk uitpakken en controleren",
+              "number": 39,
+              "startedAt": "2026-11-16T09:01:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:45Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 40,
+              "startedAt": "2026-11-16T09:01:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:46Z",
+              "conclusion": "success",
+              "name": "Pakketrapport bewaren",
+              "number": 41,
+              "startedAt": "2026-11-16T09:01:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:46Z",
+              "conclusion": "success",
+              "name": "Post Woordenboekencache",
+              "number": 77,
+              "startedAt": "2026-11-16T09:01:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:46Z",
+              "conclusion": "success",
+              "name": "Post Lettertypencache",
+              "number": 78,
+              "startedAt": "2026-11-16T09:01:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:46Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 79,
+              "startedAt": "2026-11-16T09:01:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:46Z",
+              "conclusion": "success",
+              "name": "Post Run pnpm/action-setup@v4",
+              "number": 80,
+              "startedAt": "2026-11-16T09:01:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:46Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 81,
+              "startedAt": "2026-11-16T09:01:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:47Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 82,
+              "startedAt": "2026-11-16T09:01:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:01:47Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 83,
+              "startedAt": "2026-11-16T09:01:47Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833855766/job/133185480088"
+        },
+        {
+          "completedAt": "2026-11-16T09:03:09Z",
+          "conclusion": "success",
+          "databaseId": 133185480252,
+          "name": "desktop (windows-latest)",
+          "startedAt": "2026-11-16T08:45:41Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-16T08:45:44Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-16T08:45:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:52Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-16T08:45:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:57Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-16T08:45:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:59Z",
+              "conclusion": "success",
+              "name": "Run pnpm/action-setup@v4",
+              "number": 4,
+              "startedAt": "2026-11-16T08:45:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:20Z",
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 5,
+              "startedAt": "2026-11-16T08:45:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:20Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 6,
+              "startedAt": "2026-11-16T08:46:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:20Z",
+              "conclusion": "skipped",
+              "name": "Linux-bouwafhankelijkheden",
+              "number": 7,
+              "startedAt": "2026-11-16T08:46:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:20Z",
+              "conclusion": "skipped",
+              "name": "Conversieruntime installeren",
+              "number": 8,
+              "startedAt": "2026-11-16T08:46:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:27Z",
+              "conclusion": "success",
+              "name": "Run pnpm install --frozen-lockfile",
+              "number": 9,
+              "startedAt": "2026-11-16T08:46:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:29Z",
+              "conclusion": "success",
+              "name": "Lettertypencache",
+              "number": 10,
+              "startedAt": "2026-11-16T08:46:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:29Z",
+              "conclusion": "success",
+              "name": "Run node scripts/haal-lettertypen.mjs",
+              "number": 11,
+              "startedAt": "2026-11-16T08:46:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:30Z",
+              "conclusion": "success",
+              "name": "Woordenboekencache",
+              "number": 12,
+              "startedAt": "2026-11-16T08:46:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:31Z",
+              "conclusion": "success",
+              "name": "Run node scripts/haal-woordenboeken.mjs",
+              "number": 13,
+              "startedAt": "2026-11-16T08:46:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:37Z",
+              "conclusion": "success",
+              "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+              "number": 14,
+              "startedAt": "2026-11-16T08:46:31Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:44Z",
+              "conclusion": "success",
+              "name": "Run node scripts/bouw-spelling-wasm.mjs",
+              "number": 15,
+              "startedAt": "2026-11-16T08:46:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:45Z",
+              "conclusion": "success",
+              "name": "Run pnpm versie:check",
+              "number": 16,
+              "startedAt": "2026-11-16T08:46:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:46Z",
+              "conclusion": "success",
+              "name": "Vastgelegde versleutelde proefbestanden ophalen",
+              "number": 17,
+              "startedAt": "2026-11-16T08:46:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:30Z",
+              "conclusion": "success",
+              "name": "Run pnpm test",
+              "number": 18,
+              "startedAt": "2026-11-16T08:46:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:33Z",
+              "conclusion": "success",
+              "name": "Run python -m unittest discover -s tests -v",
+              "number": 19,
+              "startedAt": "2026-11-16T08:50:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:34Z",
+              "conclusion": "success",
+              "name": "Run node scripts/test-kantoor-engines.mjs",
+              "number": 20,
+              "startedAt": "2026-11-16T08:50:33Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:41Z",
+              "conclusion": "success",
+              "name": "Run pnpm test:opdrachten",
+              "number": 21,
+              "startedAt": "2026-11-16T08:50:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:41Z",
+              "conclusion": "success",
+              "name": "Experimenteel IFCX-bewaarvoorstel controleren",
+              "number": 22,
+              "startedAt": "2026-11-16T08:50:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:08Z",
+              "conclusion": "success",
+              "name": "Windows-loader voorbereiden",
+              "number": 23,
+              "startedAt": "2026-11-16T08:50:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:05Z",
+              "conclusion": "success",
+              "name": "Run pnpm build",
+              "number": 24,
+              "startedAt": "2026-11-16T08:51:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:05Z",
+              "conclusion": "skipped",
+              "name": "Chromium voor offline Writer-opslag",
+              "number": 25,
+              "startedAt": "2026-11-16T08:52:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:05Z",
+              "conclusion": "skipped",
+              "name": "Writer werkelijk offline bewerken, opslaan en heropenen",
+              "number": 26,
+              "startedAt": "2026-11-16T08:52:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:44Z",
+              "conclusion": "success",
+              "name": "Native document-link path regressions",
+              "number": 27,
+              "startedAt": "2026-11-16T08:52:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:44Z",
+              "conclusion": "skipped",
+              "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+              "number": 28,
+              "startedAt": "2026-11-16T08:54:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:44Z",
+              "conclusion": "skipped",
+              "name": "Gebouwde databaseparser controleren",
+              "number": 29,
+              "startedAt": "2026-11-16T08:54:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:49Z",
+              "conclusion": "success",
+              "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+              "number": 30,
+              "startedAt": "2026-11-16T08:54:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:49Z",
+              "conclusion": "skipped",
+              "name": "ODF, oudere formaten en PDF werkelijk converteren",
+              "number": 31,
+              "startedAt": "2026-11-16T08:54:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:49Z",
+              "conclusion": "skipped",
+              "name": "Geconverteerde inhoud onafhankelijk controleren",
+              "number": 32,
+              "startedAt": "2026-11-16T08:54:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:54:49Z",
+              "conclusion": "skipped",
+              "name": "Linux-pakket bouwen",
+              "number": 33,
+              "startedAt": "2026-11-16T08:54:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:02:56Z",
+              "conclusion": "success",
+              "name": "Windows-pakket bouwen",
+              "number": 34,
+              "startedAt": "2026-11-16T08:54:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:02:56Z",
+              "conclusion": "skipped",
+              "name": "macOS-pakket bouwen",
+              "number": 35,
+              "startedAt": "2026-11-16T09:02:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:02:56Z",
+              "conclusion": "skipped",
+              "name": "Bestandskoppelingen in de gebouwde macOS-app controleren",
+              "number": 36,
+              "startedAt": "2026-11-16T09:02:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:02:56Z",
+              "conclusion": "skipped",
+              "name": "Bestanden native via macOS openen bij starten en in de draaiende app",
+              "number": 37,
+              "startedAt": "2026-11-16T09:02:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:02:56Z",
+              "conclusion": "skipped",
+              "name": "Linux-installers werkelijk uitpakken en controleren",
+              "number": 38,
+              "startedAt": "2026-11-16T09:02:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:00Z",
+              "conclusion": "success",
+              "name": "Windows-installer werkelijk uitpakken en controleren",
+              "number": 39,
+              "startedAt": "2026-11-16T09:02:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:03Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 40,
+              "startedAt": "2026-11-16T09:03:00Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:05Z",
+              "conclusion": "success",
+              "name": "Pakketrapport bewaren",
+              "number": 41,
+              "startedAt": "2026-11-16T09:03:03Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:05Z",
+              "conclusion": "success",
+              "name": "Post Woordenboekencache",
+              "number": 77,
+              "startedAt": "2026-11-16T09:03:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:05Z",
+              "conclusion": "success",
+              "name": "Post Lettertypencache",
+              "number": 78,
+              "startedAt": "2026-11-16T09:03:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:05Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 79,
+              "startedAt": "2026-11-16T09:03:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:05Z",
+              "conclusion": "success",
+              "name": "Post Run pnpm/action-setup@v4",
+              "number": 80,
+              "startedAt": "2026-11-16T09:03:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:05Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 81,
+              "startedAt": "2026-11-16T09:03:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:07Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 82,
+              "startedAt": "2026-11-16T09:03:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T09:03:07Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 83,
+              "startedAt": "2026-11-16T09:03:07Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833855766/job/133185480252"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833855766"
+    },
+    "browser": {
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "headSha": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "jobs": [
+        {
+          "completedAt": "2026-11-16T08:49:28Z",
+          "conclusion": "success",
+          "databaseId": 133185493510,
+          "name": "browser (ubuntu-22.04)",
+          "startedAt": "2026-11-16T08:45:42Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-16T08:45:44Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-16T08:45:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:48Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-16T08:45:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:50Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-16T08:45:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:51Z",
+              "conclusion": "success",
+              "name": "Run pnpm/action-setup@v4",
+              "number": 4,
+              "startedAt": "2026-11-16T08:45:50Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:55Z",
+              "conclusion": "success",
+              "name": "Run pnpm install --frozen-lockfile --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-16T08:45:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:20Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec playwright install --with-deps chromium",
+              "number": 6,
+              "startedAt": "2026-11-16T08:45:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:44Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec tsc --noEmit",
+              "number": 7,
+              "startedAt": "2026-11-16T08:46:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:47Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec vitest run src/useTabSneltoetsen.test.ts src/tabbladen.test.ts src/lint/sneltoetsen.test.ts",
+              "number": 8,
+              "startedAt": "2026-11-16T08:46:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:47:35Z",
+              "conclusion": "success",
+              "name": "Production frontend and document-tab regression",
+              "number": 9,
+              "startedAt": "2026-11-16T08:46:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:48:37Z",
+              "conclusion": "success",
+              "name": "Presentation and Writer production regressions",
+              "number": 10,
+              "startedAt": "2026-11-16T08:47:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:25Z",
+              "conclusion": "success",
+              "name": "Standalone hosted browser route",
+              "number": 11,
+              "startedAt": "2026-11-16T08:48:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:26Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "startedAt": "2026-11-16T08:49:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:26Z",
+              "conclusion": "success",
+              "name": "Post Run pnpm/action-setup@v4",
+              "number": 22,
+              "startedAt": "2026-11-16T08:49:26Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:27Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 23,
+              "startedAt": "2026-11-16T08:49:26Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:27Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 24,
+              "startedAt": "2026-11-16T08:49:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:27Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 25,
+              "startedAt": "2026-11-16T08:49:27Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833860197/job/133185493510"
+        },
+        {
+          "completedAt": "2026-11-16T08:52:28Z",
+          "conclusion": "success",
+          "databaseId": 133185493979,
+          "name": "browser (windows-latest)",
+          "startedAt": "2026-11-16T08:45:42Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-16T08:45:44Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-16T08:45:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:53Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-16T08:45:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:45:58Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-16T08:45:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:00Z",
+              "conclusion": "success",
+              "name": "Run pnpm/action-setup@v4",
+              "number": 4,
+              "startedAt": "2026-11-16T08:45:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:46:11Z",
+              "conclusion": "success",
+              "name": "Run pnpm install --frozen-lockfile --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-16T08:46:00Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:49:27Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec playwright install --with-deps chromium",
+              "number": 6,
+              "startedAt": "2026-11-16T08:46:11Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:01Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec tsc --noEmit",
+              "number": 7,
+              "startedAt": "2026-11-16T08:49:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:50:05Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec vitest run src/useTabSneltoetsen.test.ts src/tabbladen.test.ts src/lint/sneltoetsen.test.ts",
+              "number": 8,
+              "startedAt": "2026-11-16T08:50:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:16Z",
+              "conclusion": "success",
+              "name": "Production frontend and document-tab regression",
+              "number": 9,
+              "startedAt": "2026-11-16T08:50:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:51:16Z",
+              "conclusion": "skipped",
+              "name": "Presentation and Writer production regressions",
+              "number": 10,
+              "startedAt": "2026-11-16T08:51:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:23Z",
+              "conclusion": "success",
+              "name": "Standalone hosted browser route",
+              "number": 11,
+              "startedAt": "2026-11-16T08:51:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:24Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "startedAt": "2026-11-16T08:52:23Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:24Z",
+              "conclusion": "success",
+              "name": "Post Run pnpm/action-setup@v4",
+              "number": 22,
+              "startedAt": "2026-11-16T08:52:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:24Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 23,
+              "startedAt": "2026-11-16T08:52:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:27Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 24,
+              "startedAt": "2026-11-16T08:52:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:52:27Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 25,
+              "startedAt": "2026-11-16T08:52:27Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833860197/job/133185493979"
+        },
+        {
+          "completedAt": "2026-11-16T08:59:15Z",
+          "conclusion": "success",
+          "databaseId": 133185494045,
+          "name": "browser (macos-latest)",
+          "startedAt": "2026-11-16T08:56:51Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-16T08:56:52Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-16T08:56:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:56:57Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-16T08:56:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:56:58Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-16T08:56:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:57:00Z",
+              "conclusion": "success",
+              "name": "Run pnpm/action-setup@v4",
+              "number": 4,
+              "startedAt": "2026-11-16T08:56:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:57:06Z",
+              "conclusion": "success",
+              "name": "Run pnpm install --frozen-lockfile --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-16T08:57:00Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:57:14Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec playwright install --with-deps chromium",
+              "number": 6,
+              "startedAt": "2026-11-16T08:57:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:57:37Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec tsc --noEmit",
+              "number": 7,
+              "startedAt": "2026-11-16T08:57:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:57:39Z",
+              "conclusion": "success",
+              "name": "Run pnpm exec vitest run src/useTabSneltoetsen.test.ts src/tabbladen.test.ts src/lint/sneltoetsen.test.ts",
+              "number": 8,
+              "startedAt": "2026-11-16T08:57:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:58:22Z",
+              "conclusion": "success",
+              "name": "Production frontend and document-tab regression",
+              "number": 9,
+              "startedAt": "2026-11-16T08:57:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:58:22Z",
+              "conclusion": "skipped",
+              "name": "Presentation and Writer production regressions",
+              "number": 10,
+              "startedAt": "2026-11-16T08:58:22Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:59:09Z",
+              "conclusion": "success",
+              "name": "Standalone hosted browser route",
+              "number": 11,
+              "startedAt": "2026-11-16T08:58:22Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:59:10Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "startedAt": "2026-11-16T08:59:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:59:11Z",
+              "conclusion": "success",
+              "name": "Post Run pnpm/action-setup@v4",
+              "number": 22,
+              "startedAt": "2026-11-16T08:59:10Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:59:11Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 23,
+              "startedAt": "2026-11-16T08:59:11Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:59:11Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 24,
+              "startedAt": "2026-11-16T08:59:11Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-16T08:59:12Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 25,
+              "startedAt": "2026-11-16T08:59:11Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833860197/job/133185494045"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833860197"
+    }
+  },
+  "automaticPR": {
+    "base": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+    "draft": true,
+    "head": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+    "merge": "93f6e443a6e53b72df9592e54448b36294d725df",
+    "syntheticMergeTree": "225268c334e93b8c890d9e98171b4c5c6c63b58a",
+    "headTree": "225268c334e93b8c890d9e98171b4c5c6c63b58a"
+  },
+  "automaticPRChecks": [
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657726/job/133184818097",
+      "name": "database (macos-latest)",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657352/job/133184816975",
+      "name": "desktop (ubuntu-22.04)",
+      "state": "SUCCESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657264/job/133184816193",
+      "name": "voorbeeld",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandig kantoorvoorbeeld controleren"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657726/job/133184817632",
+      "name": "database (ubuntu-22.04)",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657352/job/133184817224",
+      "name": "desktop (windows-latest)",
+      "state": "SUCCESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657726/job/133184818016",
+      "name": "database (windows-latest)",
+      "state": "SUCCESS",
+      "workflow": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657352/job/133184816503",
+      "name": "desktop (macos-latest)",
+      "state": "SUCCESS",
+      "workflow": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "link": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43833657188/job/133184816078",
+      "name": "writer",
+      "state": "SUCCESS",
+      "workflow": "Writer format round trips"
+    }
+  ],
+  "platforms": {
+    "Windows": {
+      "vitest": {
+        "passed": 3480,
+        "skipped": 3
+      },
+      "pythonPassed": 58,
+      "rust": {
+        "passed": 113,
+        "ignored": 5
+      },
+      "packages": {
+        "platform": "windows",
+        "programma": "open-office-studio",
+        "versie": "2026.46.2",
+        "pakketten": [
+          {
+            "naam": "Open Office Studio_2026.46.2_x64-setup.exe",
+            "bytes": 73539153,
+            "sha256": "2ca3b6494bb04c7d7026f4b7b1a151e10d8809d95cf24641d9f966e7be59c6d1",
+            "controles": [
+              "NSIS-archief leesbaar",
+              "programma en WebView2-loader x64",
+              "WebView2-bootstrapper aanwezig",
+              "installer- en programma-iconen bytegelijk aan goedgekeurde bron"
+            ]
+          }
+        ],
+        "installatie_en_native_bediening": "niet_gecontroleerd"
+      },
+      "browserRoutes": {
+        "tab-focus": {
+          "codepoint": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "eea6a76dcb97a53d0deba6b2b3babeac61bedf024e3b3cbf420e19937ce82b3b",
+            "src/TabBalk.tsx": "ce01ac4e8ab22b0232696cdc6cdd483e56ed83796384f5b87c3f7f4df00ebeb8",
+            "src/export/koppeling.ts": "483524678891a212e616b40e5b7aae9d54a128cf83149292aae6e2ce853610ec",
+            "src/export/editorKoppeling.ts": "edfd7b0b86abd5360d5fcf7c6f2a5e872d63bc71ee190ce3e0d3d92e1132838a"
+          },
+          "platform": "win32",
+          "browser": "151.0.7922.34",
+          "route": "/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        },
+        "tab-focus-hosted": {
+          "codepoint": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "eea6a76dcb97a53d0deba6b2b3babeac61bedf024e3b3cbf420e19937ce82b3b",
+            "src/TabBalk.tsx": "ce01ac4e8ab22b0232696cdc6cdd483e56ed83796384f5b87c3f7f4df00ebeb8",
+            "src/export/koppeling.ts": "483524678891a212e616b40e5b7aae9d54a128cf83149292aae6e2ce853610ec",
+            "src/export/editorKoppeling.ts": "edfd7b0b86abd5360d5fcf7c6f2a5e872d63bc71ee190ce3e0d3d92e1132838a"
+          },
+          "platform": "win32",
+          "browser": "151.0.7922.34",
+          "route": "/office/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      "log": {
+        "platform": "Windows",
+        "job": 133185480252,
+        "conclusion": "success",
+        "sourceHeadPresent": true,
+        "sha256": "055edf0520781d5aea252c98de5c70e9067245fddd6c790d2939298ea40d695c",
+        "summaries": [
+          "2026-11-16T08:46:37.1031397Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "2026-11-16T08:50:29.8782740Z  Test Files  325 passed (325)",
+          "2026-11-16T08:50:29.8783661Z       Tests  3480 passed | 3 skipped (3483)",
+          "2026-11-16T08:50:33.1623062Z Ran 58 tests in 0.408s",
+          "2026-11-16T08:54:44.3484453Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 116 filtered out; finished in 0.01s",
+          "2026-11-16T08:54:49.5026166Z test result: ok. 113 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 4.32s"
+        ]
+      }
+    },
+    "Linux": {
+      "vitest": {
+        "passed": 3480,
+        "skipped": 3
+      },
+      "pythonPassed": 58,
+      "rust": {
+        "passed": 113,
+        "ignored": 6
+      },
+      "packages": {
+        "platform": "linux",
+        "programma": "open-office-studio",
+        "versie": "2026.46.2",
+        "pakketten": [
+          {
+            "naam": "Open Office Studio_2026.46.2_amd64.deb",
+            "bytes": 76275194,
+            "sha256": "dd2165065771a5f326a4fbf8e11c66c0e0e496a1082901dbb942c5d4af44a687",
+            "controles": [
+              "DEB-versie en architectuur",
+              "runtime-afhankelijkheden opgegeven",
+              "ELF x64 en bibliotheken gevonden",
+              "snelkoppeling en pictogram aanwezig",
+              "bestandskoppelingen (MimeType, Exec %F, MIME-pakket)"
+            ]
+          },
+          {
+            "naam": "Open Office Studio_2026.46.2_amd64.AppImage",
+            "bytes": 153848312,
+            "sha256": "0fe21929e431a8c067a72eeed35fb51d966b9a81bf7aa660d430dd67c1c3dafa",
+            "controles": [
+              "AppImage type 2",
+              "SquashFS volledig uitgepakt",
+              "AppRun uitvoerbaar",
+              "ELF x64 en bibliotheken gevonden",
+              "snelkoppeling en pictogram aanwezig"
+            ]
+          }
+        ],
+        "installatie_en_native_bediening": "niet_gecontroleerd"
+      },
+      "browserRoutes": {
+        "tab-focus": {
+          "codepoint": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "linux",
+          "browser": "151.0.7922.34",
+          "route": "/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        },
+        "tab-focus-hosted": {
+          "codepoint": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "linux",
+          "browser": "151.0.7922.34",
+          "route": "/office/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      "log": {
+        "platform": "Linux",
+        "job": 133185480088,
+        "conclusion": "success",
+        "sourceHeadPresent": true,
+        "sha256": "c31ed27850d06c49e067b511b938375c267841d1d8a64a67584e57ecd7b122cc",
+        "summaries": [
+          "2026-11-16T08:47:07.6534837Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "2026-11-16T08:50:16.9140421Z  Test Files  325 passed (325)",
+          "2026-11-16T08:50:16.9158216Z       Tests  3480 passed | 3 skipped (3483)",
+          "2026-11-16T08:50:18.6566978Z Ran 58 tests in 0.195s",
+          "2026-11-16T08:53:35.8782930Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s",
+          "2026-11-16T08:53:46.9829301Z test result: ok. 113 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 0.24s"
+        ]
+      }
+    },
+    "macOS": {
+      "vitest": {
+        "passed": 3480,
+        "skipped": 3
+      },
+      "pythonPassed": 58,
+      "rust": {
+        "passed": 113,
+        "ignored": 5
+      },
+      "packages": {
+        "identifier": "org.openaec.office-studio",
+        "extensies": [
+          "accdb",
+          "doc",
+          "docm",
+          "docx",
+          "dot",
+          "dotm",
+          "dotx",
+          "ifcx",
+          "mdb",
+          "odp",
+          "ods",
+          "odt",
+          "otp",
+          "ots",
+          "ott",
+          "pot",
+          "potm",
+          "potx",
+          "pps",
+          "ppsx",
+          "ppt",
+          "pptm",
+          "pptx",
+          "rtf",
+          "xls",
+          "xlsb",
+          "xlsm",
+          "xlsx",
+          "xlt",
+          "xltm",
+          "xltx"
+        ],
+        "aantal": 31,
+        "plistSha256": "4fd716292636b71c8c56c1c8ce3b903c4fa1a25e0f28ab0dfc4aeba44364fe6f"
+      },
+      "browserRoutes": {
+        "tab-focus": {
+          "codepoint": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "darwin",
+          "browser": "151.0.7922.34",
+          "route": "/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        },
+        "tab-focus-hosted": {
+          "codepoint": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "darwin",
+          "browser": "151.0.7922.34",
+          "route": "/office/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      "log": {
+        "platform": "macOS",
+        "job": 133185479729,
+        "conclusion": "success",
+        "sourceHeadPresent": true,
+        "sha256": "5ce94c255737d47f66c6450c1ec7a2fc178554dc95aa848b89b922efff83f3a0",
+        "summaries": [
+          "2026-11-16T08:46:21.8768780Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "2026-11-16T08:49:59.5450590Z  Test Files  325 passed (325)",
+          "2026-11-16T08:49:59.5494120Z       Tests  3480 passed | 3 skipped (3483)",
+          "2026-11-16T08:50:01.2353160Z Ran 58 tests in 0.296s",
+          "2026-11-16T08:54:15.2272150Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 116 filtered out; finished in 0.01s",
+          "2026-11-16T08:54:35.4597110Z test result: ok. 113 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 2.76s"
+        ]
+      },
+      "nativeOpening": {
+        "stappen": [
+          {
+            "naam": "Rekenblad met spaties %.xlsx",
+            "sha256": "0f3ba70a70215b2814959b2b70e651a63f4b497c66b7eedbf9fb2ead2f2ee544",
+            "viaLaunchServicesVerwerkt": true,
+            "eenAppProces": true,
+            "bronOngewijzigd": true
+          },
+          {
+            "naam": "Tweede document.docx",
+            "sha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+            "viaLaunchServicesVerwerkt": true,
+            "eenAppProces": true,
+            "bronOngewijzigd": true
+          }
+        ],
+        "eigenAppAfgesloten": true
+      }
+    }
+  },
+  "local": {
+    "typescript": true,
+    "normalFrontendBuild": true,
+    "hostedFrontendBuild": true,
+    "hostedStaticValidation": true,
+    "measurementBuild": true,
+    "diagnosticScan": {
+      "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "results": [
+        {
+          "dir": ".local/349-production",
+          "jsFiles": 336,
+          "leaks": []
+        },
+        {
+          "dir": ".local/349-hosted",
+          "jsFiles": 336,
+          "leaks": []
+        }
+      ]
+    },
+    "normalLanguage": {
+      "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "outDir": ".local/349-production",
+      "route": "/",
+      "platform": "win32",
+      "browser": "151.0.7922.34",
+      "cpuRate": 4,
+      "production": true,
+      "noBridge": true,
+      "checks": [
+        {
+          "name": "open",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "oorspronkelijke taalgrens links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "oorspronkelijke taalgrens rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "volgende alinea",
+          "expected": "French",
+          "actual": "French (France) · 1 spelling error"
+        },
+        {
+          "name": "na invoer en rust",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "ingevoegd teken links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 2 spelling errors"
+        },
+        {
+          "name": "ingevoegd teken rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 2 spelling errors"
+        },
+        {
+          "name": "Undo links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "Undo rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "Redo links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 2 spelling errors"
+        },
+        {
+          "name": "Redo rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 2 spelling errors"
+        },
+        {
+          "name": "hersteld na Undo links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "hersteld na Undo rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "heropend",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "heropende taalgrens links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "heropende taalgrens rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "heropende tweede alinea",
+          "expected": "French",
+          "actual": "French (France) · 1 spelling error"
+        },
+        {
+          "name": "ander document zelfde tekst/paraids",
+          "expected": "German",
+          "actual": "German (Germany) · 2 spelling errors"
+        },
+        {
+          "name": "ander document tweede alinea",
+          "expected": "Italian",
+          "actual": "Italian (Italy) · 2 spelling errors"
+        },
+        {
+          "name": "eerste tab 0 links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "eerste tab 0 rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "derde tab 0",
+          "expected": "German",
+          "actual": "German (Germany) · 2 spelling errors"
+        },
+        {
+          "name": "eerste tab 1 links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "eerste tab 1 rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "derde tab 1",
+          "expected": "German",
+          "actual": "German (Germany) · 2 spelling errors"
+        }
+      ],
+      "textExact": true,
+      "errors": []
+    },
+    "hostedLanguage": {
+      "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "outDir": ".local/349-hosted",
+      "route": "/office/",
+      "platform": "win32",
+      "browser": "151.0.7922.34",
+      "cpuRate": 4,
+      "production": true,
+      "noBridge": true,
+      "checks": [
+        {
+          "name": "open",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "oorspronkelijke taalgrens links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "oorspronkelijke taalgrens rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "volgende alinea",
+          "expected": "French",
+          "actual": "French (France) · 1 spelling error"
+        },
+        {
+          "name": "na invoer en rust",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "ingevoegd teken links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 2 spelling errors"
+        },
+        {
+          "name": "ingevoegd teken rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 2 spelling errors"
+        },
+        {
+          "name": "Undo links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "Undo rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "Redo links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 2 spelling errors"
+        },
+        {
+          "name": "Redo rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 2 spelling errors"
+        },
+        {
+          "name": "hersteld na Undo links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "hersteld na Undo rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "heropend",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "heropende taalgrens links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "heropende taalgrens rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "heropende tweede alinea",
+          "expected": "French",
+          "actual": "French (France) · 1 spelling error"
+        },
+        {
+          "name": "ander document zelfde tekst/paraids",
+          "expected": "German",
+          "actual": "German (Germany) · 2 spelling errors"
+        },
+        {
+          "name": "ander document tweede alinea",
+          "expected": "Italian",
+          "actual": "Italian (Italy) · 2 spelling errors"
+        },
+        {
+          "name": "eerste tab 0 links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "eerste tab 0 rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "derde tab 0",
+          "expected": "German",
+          "actual": "German (Germany) · 2 spelling errors"
+        },
+        {
+          "name": "eerste tab 1 links",
+          "expected": "Dutch",
+          "actual": "Dutch (Netherlands) · 1 spelling error"
+        },
+        {
+          "name": "eerste tab 1 rechts",
+          "expected": "English",
+          "actual": "English (United Kingdom) · 1 spelling error"
+        },
+        {
+          "name": "derde tab 1",
+          "expected": "German",
+          "actual": "German (Germany) · 2 spelling errors"
+        }
+      ],
+      "textExact": true,
+      "errors": []
+    },
+    "normal600": {
+      "platform": "win32",
+      "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "outDir": ".local/349-production",
+      "browser": "151.0.7922.34",
+      "checks": [
+        "600-alinea-document geopend met spelling",
+        "invoer, scrollen en vensterwijziging",
+        "productie-Ctrl+S / Opslaan als-download: alle 600 teksten exact",
+        "gedownloade DOCX heropend met spelling"
+      ],
+      "contentExact": true,
+      "errors": []
+    }
+  },
+  "cpu8": {
+    "createdAt": "2026-11-16T08:53:30.697Z",
+    "host": {
+      "platform": "win32",
+      "release": "10.0.26200",
+      "cpu": "Intel(R) Core(TM) i7-14650HX",
+      "logicalCpus": 24,
+      "totalMemory": 16869744640,
+      "node": "v24.22.1"
+    },
+    "sourcePoints": {
+      "A": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+      "B": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82"
+    },
+    "instrumentation": {
+      "scripts/meet-writer.mjs": "55f814b250340b08dacfeac7ccc7cffaf1d3bb2ed5432dfdf39a8a2010126b9d",
+      "scripts/writer-performance.config.ts": "5ddf2ee35889505e7a8339b0da30b066516a743db402447b44ed2ef4997b3e21",
+      "scripts/app-performance.config.ts": "09e9d9bd106f1572cf4f4ef01e4ce8d5cfbaa737c46a24838ddaa0f9e7e1a251",
+      "vite.config.ts": "4bdfaa76411fcd43bdc44eea2666dc50d186aa76998c837212459728e17e5294",
+      "pnpm-lock.yaml": "b66e55210de0b3fbd8821e346a0d5e73c465ab7c4cc8bfaa068deee133fb0ea1",
+      ".local/acceptance-meet.mjs": "1126ed5b1303908c3b79363d35809b5f0232796200d5b74e39a736dc827913ab",
+      ".local/performance-600.docx": "8b0d47eb96911c6b414646612b018cff3d827d68527461f6fdca5dc7211a9336"
+    },
+    "runs": [
+      {
+        "label": "349_20261116_cpu8_A1",
+        "variant": "A",
+        "source": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+        "tree": "3a932e559fd519763f70d0d2e00582f3133625d6",
+        "startedAt": "2026-11-16T08:53:40.830Z",
+        "endedAt": "2026-11-16T08:56:13.167Z",
+        "exit": 0,
+        "hostBusyPercent": 10.974818875988424,
+        "freeBefore": 5470314496,
+        "freeAfter": 3495903232,
+        "sourceCleanAfter": true,
+        "result": {
+          "label": "349_20261116_cpu8_A1",
+          "browserVersion": "151.0.7922.34",
+          "driver": "327-acceptance-subphases-v1",
+          "rate": 8,
+          "diagnostic": true,
+          "nativeDiagnostic": true,
+          "profileScroll": false,
+          "languageStatusChecks": true,
+          "rangeCacheChecks": true,
+          "pages": 79,
+          "paragraphs": 600,
+          "spelling": {
+            "errors": 2400,
+            "enabled": true,
+            "overlay": "38"
+          },
+          "phases": [
+            {
+              "name": "typing",
+              "wallMs": 7747.977399999996,
+              "subphaseMs": {
+                "input": 4295.998800000001,
+                "flushAndTwoFrames": 1966.2497000000003,
+                "fixedQuiet": 1214.4094999999943,
+                "plannerTail": 271.3194000000003
+              },
+              "longTasks": 49,
+              "longTaskMs": 7331,
+              "maxFrameMs": 800,
+              "p95FrameMs": 700,
+              "keyPaintSamples": 23,
+              "p95KeyPaintMs": 762.9000000059605,
+              "calls": {
+                "selection": {
+                  "count": 90,
+                  "ms": 4.400000035762787
+                },
+                "getEditorRef": {
+                  "count": 111,
+                  "ms": 6.699999988079071
+                },
+                "getYrsSession": {
+                  "count": 111,
+                  "ms": 0.5000000298023224
+                },
+                "version": {
+                  "count": 88,
+                  "ms": 5.100000023841858
+                },
+                "paragraphSpans": {
+                  "count": 8,
+                  "ms": 159.80000007152557
+                },
+                "native.paragraphSpans": {
+                  "count": 8,
+                  "ms": 159.80000007152557
+                },
+                "spellingViewport": {
+                  "count": 5
+                },
+                "spellingProjection": {
+                  "count": 9,
+                  "geometries": {
+                    "1": 1,
+                    "2": 1,
+                    "3": 1,
+                    "4": 1,
+                    "5": 1,
+                    "6": 2,
+                    "7": 2
+                  },
+                  "layouts": {
+                    "layout-5": 2,
+                    "layout-6": 2,
+                    "layout-7": 1,
+                    "layout-8": 4
+                  }
+                },
+                "spellingRanges": {
+                  "count": 318
+                },
+                "spellingRects": {
+                  "count": 246,
+                  "ms": 416.9000001549721
+                },
+                "yrsBlocksForStory": {
+                  "count": 2,
+                  "ms": 171.69999998807907
+                },
+                "selectionContext": {
+                  "count": 2,
+                  "ms": 3.699999988079071
+                },
+                "native.storySegmentUnits": {
+                  "count": 4,
+                  "ms": 9.999999970197678
+                },
+                "getDocument": {
+                  "count": 8,
+                  "ms": 619.8999999463558
+                },
+                "storySegments": {
+                  "count": 4,
+                  "ms": 258.09999999403954
+                },
+                "native.selectionText": {
+                  "count": 4,
+                  "ms": 47.00000002980232
+                },
+                "getSelectionInfo": {
+                  "count": 4,
+                  "ms": 49.10000002384186
+                },
+                "languageStatus.selectie": {
+                  "count": 3,
+                  "ms": 61.79999998211861
+                },
+                "languageStatus.inhoud": {
+                  "count": 1,
+                  "ms": 16.80000001192093
+                },
+                "readParagraphs": {
+                  "count": 1,
+                  "ms": 0
+                }
+              },
+              "heapBefore": {
+                "usedSize": 70318908,
+                "totalSize": 129896448,
+                "embedderHeapUsedSize": 160605952,
+                "backingStorageSize": 58993167
+              },
+              "heapAfter": {
+                "usedSize": 73908400,
+                "totalSize": 128212992,
+                "embedderHeapUsedSize": 138108112,
+                "backingStorageSize": 53202821
+              },
+              "rangeCache": {
+                "bereiken": 38,
+                "rechthoeken": 38
+              }
+            },
+            {
+              "name": "caret",
+              "wallMs": 5410.2383000000045,
+              "subphaseMs": {
+                "input": 3920.5593999999983,
+                "flushAndTwoFrames": 219.01160000000527,
+                "fixedQuiet": 1214.4282999999996,
+                "plannerTail": 56.2390000000014
+              },
+              "longTasks": 67,
+              "longTaskMs": 5075,
+              "maxFrameMs": 649.9000000000015,
+              "p95FrameMs": 183.3000000000029,
+              "keyPaintSamples": 0,
+              "p95KeyPaintMs": null,
+              "calls": {
+                "selection": {
+                  "count": 142,
+                  "ms": 1.7000000178813934
+                },
+                "native.storySegmentUnits": {
+                  "count": 30,
+                  "ms": 29.299999922513962
+                },
+                "getEditorRef": {
+                  "count": 56,
+                  "ms": 2.599999964237213
+                },
+                "getYrsSession": {
+                  "count": 56,
+                  "ms": 0.20000001788139343
+                },
+                "version": {
+                  "count": 47,
+                  "ms": 2.3000000417232513
+                },
+                "native.selectionText": {
+                  "count": 1,
+                  "ms": 12.700000017881393
+                },
+                "getSelectionInfo": {
+                  "count": 1,
+                  "ms": 13.900000005960464
+                },
+                "getDocument": {
+                  "count": 1,
+                  "ms": 16.5
+                },
+                "languageStatus.selectie": {
+                  "count": 1,
+                  "ms": 16.899999976158142
+                },
+                "yrsBlocksForStory": {
+                  "count": 1,
+                  "ms": 90.39999997615814
+                },
+                "selectionContext": {
+                  "count": 1,
+                  "ms": 1.0999999940395355
+                },
+                "spellingViewport": {
+                  "count": 1
+                },
+                "spellingProjection": {
+                  "count": 2,
+                  "geometries": {
+                    "8": 1,
+                    "9": 1
+                  },
+                  "layouts": {
+                    "layout-9": 2
+                  }
+                },
+                "spellingRanges": {
+                  "count": 76
+                },
+                "spellingRects": {
+                  "count": 76,
+                  "ms": 65.79999992251396
+                }
+              },
+              "heapBefore": {
+                "usedSize": 78569104,
+                "totalSize": 128212992,
+                "embedderHeapUsedSize": 151460304,
+                "backingStorageSize": 53749000
+              },
+              "heapAfter": {
+                "usedSize": 85270252,
+                "totalSize": 128999424,
+                "embedderHeapUsedSize": 229112056,
+                "backingStorageSize": 56792226
+              },
+              "rangeCache": {
+                "bereiken": 38,
+                "rechthoeken": 38
+              }
+            },
+            {
+              "name": "scroll",
+              "wallMs": 11904.284200000002,
+              "subphaseMs": {
+                "input": 9360.561200000004,
+                "flushAndTwoFrames": 1327.5305999999982,
+                "fixedQuiet": 1204.5936000000002,
+                "plannerTail": 11.598799999999756
+              },
+              "longTasks": 62,
+              "longTaskMs": 10901,
+              "maxFrameMs": 1033.2999999999956,
+              "p95FrameMs": 733.3000000000029,
+              "keyPaintSamples": 0,
+              "p95KeyPaintMs": null,
+              "calls": {
+                "getEditorRef": {
+                  "count": 130,
+                  "ms": 14.799999922513962
+                },
+                "getYrsSession": {
+                  "count": 130,
+                  "ms": 0.5999999940395355
+                },
+                "selection": {
+                  "count": 104,
+                  "ms": 1
+                },
+                "version": {
+                  "count": 63,
+                  "ms": 5.8000001311302185
+                },
+                "spellingProjection": {
+                  "count": 12,
+                  "geometries": {
+                    "10": 9,
+                    "11": 1,
+                    "12": 2
+                  },
+                  "layouts": {
+                    "layout-10": 9,
+                    "layout-11": 3
+                  }
+                },
+                "spellingRanges": {
+                  "count": 842
+                },
+                "spellingRects": {
+                  "count": 314,
+                  "ms": 957.1999998092651
+                },
+                "spellingViewport": {
+                  "count": 21
+                }
+              },
+              "heapBefore": {
+                "usedSize": 69111468,
+                "totalSize": 128999424,
+                "embedderHeapUsedSize": 237557200,
+                "backingStorageSize": 57318036
+              },
+              "heapAfter": {
+                "usedSize": 59229604,
+                "totalSize": 133169152,
+                "embedderHeapUsedSize": 85627648,
+                "backingStorageSize": 52587122
+              },
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            }
+          ],
+          "errors": [],
+          "caret": {
+            "before": {
+              "anchor": {
+                "offset": 403,
+                "paraId": "body:p599",
+                "story": "body"
+              },
+              "head": {
+                "offset": 403,
+                "paraId": "body:p599",
+                "story": "body"
+              }
+            },
+            "after": {
+              "anchor": {
+                "offset": 373,
+                "paraId": "body:p599",
+                "story": "body"
+              },
+              "head": {
+                "offset": 373,
+                "paraId": "body:p599",
+                "story": "body"
+              }
+            },
+            "expected": {
+              "offset": 373,
+              "paraId": "body:p599",
+              "story": "body"
+            },
+            "equal": true
+          },
+          "contentExact": true,
+          "overlay": {
+            "expected": 92,
+            "actual": 92,
+            "afwijkingen": [],
+            "equal": true
+          },
+          "viewportChecks": [
+            {
+              "naam": "documentbegin",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 3454.8266000000003,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0.5",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 967.4833999999973,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1362.9839000000065,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1.5",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1251.4455999999918,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 2",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 820.3614000000089,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1.5",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1130.2667000000074,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 794.6585999999952,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0.5",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 769.2988000000041,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 10",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8185.6161999999895,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 20",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8732.322700000004,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 40",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 9305.156900000002,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 60",
+              "expected": 92,
+              "actual": 92,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8119.484599999996,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 40",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 6774.883699999991,
+              "rangeCache": {
+                "bereiken": 154,
+                "rechthoeken": 154
+              }
+            },
+            {
+              "naam": "cache scroll pagina 20",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 7150.259699999995,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 10",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 3242.689299999998,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1811.5486000000092,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "voor cachebewerking",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 635.1272999999928,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "na cachebewerking",
+              "expected": 32,
+              "actual": 32,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 656.021699999983,
+              "rangeCache": {
+                "bereiken": 32,
+                "rechthoeken": 32
+              }
+            },
+            {
+              "naam": "cache Undo",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 710.289300000004,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "cache Redo",
+              "expected": 32,
+              "actual": 32,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 675.2761000000173,
+              "rangeCache": {
+                "bereiken": 32,
+                "rechthoeken": 32
+              }
+            },
+            {
+              "naam": "cache hersteld na Undo",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 636.7115000000049,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "verschoven venster",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 668.8313000000198,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "editorhoogte zonder window.resize",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 631.3555999999808,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "herstelde editorhoogte",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 644.2744999999995,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "zoom 75 procent",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 640.8768999999738,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "browservenster",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 682.3312000000151,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "verborgen vlak",
+              "actual": 0,
+              "equal": true,
+              "rangeCache": {
+                "bereiken": 0,
+                "rechthoeken": 0
+              }
+            },
+            {
+              "naam": "opnieuw zichtbaar",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 642.8022000000055,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "heropend document",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 650.6303999999946,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            }
+          ],
+          "offlineSaveAfterWarmup": true,
+          "savedExact": true,
+          "reopenedOverlay": {
+            "expected": 31,
+            "actual": 31,
+            "afwijkingen": [],
+            "equal": true
+          }
+        },
+        "resultFile": "A/.local/perf-349_20261116_cpu8_A1.json"
+      },
+      {
+        "label": "349_20261116_cpu8_B1",
+        "variant": "B",
+        "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+        "tree": "225268c334e93b8c890d9e98171b4c5c6c63b58a",
+        "startedAt": "2026-11-16T08:56:23.360Z",
+        "endedAt": "2026-11-16T08:59:34.505Z",
+        "exit": 0,
+        "hostBusyPercent": 13.655379003082203,
+        "freeBefore": 5474091008,
+        "freeAfter": 4966342656,
+        "sourceCleanAfter": true,
+        "result": {
+          "label": "349_20261116_cpu8_B1",
+          "browserVersion": "151.0.7922.34",
+          "driver": "327-acceptance-subphases-v1",
+          "rate": 8,
+          "diagnostic": true,
+          "nativeDiagnostic": true,
+          "profileScroll": false,
+          "languageStatusChecks": true,
+          "rangeCacheChecks": true,
+          "pages": 79,
+          "paragraphs": 600,
+          "spelling": {
+            "errors": 2400,
+            "enabled": true,
+            "overlay": "38"
+          },
+          "phases": [
+            {
+              "name": "typing",
+              "wallMs": 8167.271399999998,
+              "subphaseMs": {
+                "input": 4899.189200000001,
+                "flushAndTwoFrames": 1934.8283999999985,
+                "fixedQuiet": 1206.3799,
+                "plannerTail": 126.87389999999868
+              },
+              "longTasks": 51,
+              "longTaskMs": 7712,
+              "maxFrameMs": 1083.2999999999993,
+              "p95FrameMs": 633.4000000000015,
+              "keyPaintSamples": 23,
+              "p95KeyPaintMs": 584.8000000119209,
+              "calls": {
+                "selection": {
+                  "count": 125,
+                  "ms": 0.8999999761581421
+                },
+                "getEditorRef": {
+                  "count": 162,
+                  "ms": 5.799999862909317
+                },
+                "getYrsSession": {
+                  "count": 162,
+                  "ms": 2
+                },
+                "version": {
+                  "count": 127,
+                  "ms": 7.299999952316284
+                },
+                "paragraphSpans": {
+                  "count": 12,
+                  "ms": 206.4000000357628
+                },
+                "native.paragraphSpans": {
+                  "count": 12,
+                  "ms": 207.40000000596046
+                },
+                "spellingViewport": {
+                  "count": 7
+                },
+                "spellingProjection": {
+                  "count": 12,
+                  "geometries": {
+                    "1": 1,
+                    "2": 1,
+                    "3": 1,
+                    "4": 1,
+                    "5": 1,
+                    "6": 1,
+                    "7": 1,
+                    "8": 1,
+                    "9": 1,
+                    "10": 1,
+                    "11": 2
+                  },
+                  "layouts": {
+                    "layout-5": 2,
+                    "layout-6": 2,
+                    "layout-7": 2,
+                    "layout-8": 2,
+                    "layout-9": 1,
+                    "layout-10": 3
+                  }
+                },
+                "spellingRanges": {
+                  "count": 416
+                },
+                "spellingRects": {
+                  "count": 382,
+                  "ms": 503.69999998807907
+                },
+                "yrsBlocksForStory": {
+                  "count": 2,
+                  "ms": 159.7000000178814
+                },
+                "selectionContext": {
+                  "count": 2,
+                  "ms": 3.2999999821186066
+                },
+                "native.storySegmentUnits": {
+                  "count": 6,
+                  "ms": 13.800000011920929
+                },
+                "getDocument": {
+                  "count": 5,
+                  "ms": 444.10000002384186
+                },
+                "storySegments": {
+                  "count": 5,
+                  "ms": 279.30000004172325
+                },
+                "native.selectionText": {
+                  "count": 3,
+                  "ms": 36.19999998807907
+                },
+                "getSelectionInfo": {
+                  "count": 3,
+                  "ms": 38.59999996423721
+                },
+                "languageStatus.inhoud": {
+                  "count": 2,
+                  "ms": 3.5
+                },
+                "readParagraphs": {
+                  "count": 2,
+                  "ms": 0
+                },
+                "languageStatus.selectie": {
+                  "count": 1,
+                  "ms": 22.599999994039536
+                }
+              },
+              "heapBefore": {
+                "usedSize": 69927480,
+                "totalSize": 129372160,
+                "embedderHeapUsedSize": 157922544,
+                "backingStorageSize": 58993613
+              },
+              "heapAfter": {
+                "usedSize": 82530224,
+                "totalSize": 141885440,
+                "embedderHeapUsedSize": 173630264,
+                "backingStorageSize": 67708643
+              },
+              "rangeCache": {
+                "bereiken": 38,
+                "rechthoeken": 38
+              }
+            },
+            {
+              "name": "caret",
+              "wallMs": 5570.478599999995,
+              "subphaseMs": {
+                "input": 3856.9779999999955,
+                "flushAndTwoFrames": 193.38840000000346,
+                "fixedQuiet": 1207.3162000000011,
+                "plannerTail": 312.7959999999948
+              },
+              "longTasks": 55,
+              "longTaskMs": 5215,
+              "maxFrameMs": 599.9000000000015,
+              "p95FrameMs": 583.3000000000029,
+              "keyPaintSamples": 0,
+              "p95KeyPaintMs": null,
+              "calls": {
+                "selection": {
+                  "count": 129,
+                  "ms": 0.9000000059604645
+                },
+                "native.storySegmentUnits": {
+                  "count": 30,
+                  "ms": 25.40000009536743
+                },
+                "getEditorRef": {
+                  "count": 47,
+                  "ms": 2.7999999821186066
+                },
+                "getYrsSession": {
+                  "count": 47,
+                  "ms": 0
+                },
+                "version": {
+                  "count": 35,
+                  "ms": 1.8999999463558197
+                },
+                "yrsBlocksForStory": {
+                  "count": 1,
+                  "ms": 74.5
+                },
+                "selectionContext": {
+                  "count": 1,
+                  "ms": 0.800000011920929
+                },
+                "native.selectionText": {
+                  "count": 1,
+                  "ms": 11
+                },
+                "getSelectionInfo": {
+                  "count": 1,
+                  "ms": 11.600000023841858
+                },
+                "getDocument": {
+                  "count": 1,
+                  "ms": 18.19999998807907
+                },
+                "languageStatus.selectie": {
+                  "count": 1,
+                  "ms": 18.599999994039536
+                }
+              },
+              "heapBefore": {
+                "usedSize": 82560740,
+                "totalSize": 141885440,
+                "embedderHeapUsedSize": 171551792,
+                "backingStorageSize": 67708643
+              },
+              "heapAfter": {
+                "usedSize": 58785204,
+                "totalSize": 132096000,
+                "embedderHeapUsedSize": 99410304,
+                "backingStorageSize": 56911091
+              },
+              "rangeCache": {
+                "bereiken": 38,
+                "rechthoeken": 38
+              }
+            },
+            {
+              "name": "scroll",
+              "wallMs": 12052.782099999997,
+              "subphaseMs": {
+                "input": 9276.952699999994,
+                "flushAndTwoFrames": 1209.2712000000029,
+                "fixedQuiet": 1200.741900000001,
+                "plannerTail": 365.8162999999986
+              },
+              "longTasks": 72,
+              "longTaskMs": 11286,
+              "maxFrameMs": 1100,
+              "p95FrameMs": 733.2999999999956,
+              "keyPaintSamples": 0,
+              "p95KeyPaintMs": null,
+              "calls": {
+                "getEditorRef": {
+                  "count": 168,
+                  "ms": 5.799999982118607
+                },
+                "getYrsSession": {
+                  "count": 168,
+                  "ms": 0.5
+                },
+                "selection": {
+                  "count": 140,
+                  "ms": 1.899999976158142
+                },
+                "version": {
+                  "count": 102,
+                  "ms": 8.100000023841858
+                },
+                "spellingViewport": {
+                  "count": 24
+                },
+                "spellingProjection": {
+                  "count": 17,
+                  "geometries": {
+                    "11": 4,
+                    "12": 1,
+                    "13": 3,
+                    "14": 2,
+                    "15": 2,
+                    "16": 1,
+                    "17": 2,
+                    "18": 1,
+                    "19": 1
+                  },
+                  "layouts": {
+                    "layout-10": 4,
+                    "layout-11": 4,
+                    "layout-12": 4,
+                    "layout-13": 3,
+                    "layout-14": 2
+                  }
+                },
+                "spellingRanges": {
+                  "count": 1265
+                },
+                "spellingRects": {
+                  "count": 737,
+                  "ms": 1195.2000007331371
+                }
+              },
+              "heapBefore": {
+                "usedSize": 58811988,
+                "totalSize": 132096000,
+                "embedderHeapUsedSize": 99538992,
+                "backingStorageSize": 56911091
+              },
+              "heapAfter": {
+                "usedSize": 73856596,
+                "totalSize": 138027008,
+                "embedderHeapUsedSize": 195485568,
+                "backingStorageSize": 55067552
+              },
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            }
+          ],
+          "errors": [],
+          "caret": {
+            "before": {
+              "anchor": {
+                "offset": 403,
+                "paraId": "body:p599",
+                "story": "body"
+              },
+              "head": {
+                "offset": 403,
+                "paraId": "body:p599",
+                "story": "body"
+              }
+            },
+            "after": {
+              "anchor": {
+                "offset": 373,
+                "paraId": "body:p599",
+                "story": "body"
+              },
+              "head": {
+                "offset": 373,
+                "paraId": "body:p599",
+                "story": "body"
+              }
+            },
+            "expected": {
+              "offset": 373,
+              "paraId": "body:p599",
+              "story": "body"
+            },
+            "equal": true
+          },
+          "contentExact": true,
+          "overlay": {
+            "expected": 92,
+            "actual": 92,
+            "afwijkingen": [],
+            "equal": true
+          },
+          "viewportChecks": [
+            {
+              "naam": "documentbegin",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1433.5826000000015,
+              "rangeCache": {
+                "bereiken": 154,
+                "rechthoeken": 154
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0.5",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 853.9135999999999,
+              "rangeCache": {
+                "bereiken": 154,
+                "rechthoeken": 154
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 747.9516000000003,
+              "rangeCache": {
+                "bereiken": 154,
+                "rechthoeken": 154
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1.5",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1156.552800000005,
+              "rangeCache": {
+                "bereiken": 184,
+                "rechthoeken": 184
+              }
+            },
+            {
+              "naam": "cache scroll pagina 2",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 723.1089999999967,
+              "rangeCache": {
+                "bereiken": 184,
+                "rechthoeken": 184
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1.5",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 762.7212,
+              "rangeCache": {
+                "bereiken": 184,
+                "rechthoeken": 184
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 728.4582999999984,
+              "rangeCache": {
+                "bereiken": 184,
+                "rechthoeken": 184
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0.5",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 786.0154000000039,
+              "rangeCache": {
+                "bereiken": 184,
+                "rechthoeken": 184
+              }
+            },
+            {
+              "naam": "cache scroll pagina 10",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 7244.222399999999,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 20",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 7686.789000000004,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 40",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 9071.905400000003,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 60",
+              "expected": 92,
+              "actual": 92,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8038.619399999996,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 40",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 7360.369900000005,
+              "rangeCache": {
+                "bereiken": 154,
+                "rechthoeken": 154
+              }
+            },
+            {
+              "naam": "cache scroll pagina 20",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 6473.167300000001,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 10",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 7538.368399999992,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 6289.044500000004,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "voor cachebewerking",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 728.0976000000082,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "na cachebewerking",
+              "expected": 32,
+              "actual": 32,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1248.9321000000054,
+              "rangeCache": {
+                "bereiken": 32,
+                "rechthoeken": 32
+              }
+            },
+            {
+              "naam": "cache Undo",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 991.9892999999865,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "cache Redo",
+              "expected": 32,
+              "actual": 32,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1222.2180999999982,
+              "rangeCache": {
+                "bereiken": 32,
+                "rechthoeken": 32
+              }
+            },
+            {
+              "naam": "cache hersteld na Undo",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 871.3369999999995,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "verschoven venster",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 847.0357000000076,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "editorhoogte zonder window.resize",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 767.9893000000156,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "herstelde editorhoogte",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 812.795299999998,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "zoom 75 procent",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 812.790399999998,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "browservenster",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1897.666900000011,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "verborgen vlak",
+              "actual": 0,
+              "equal": true,
+              "rangeCache": {
+                "bereiken": 0,
+                "rechthoeken": 0
+              }
+            },
+            {
+              "naam": "opnieuw zichtbaar",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 2109.1368000000075,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "heropend document",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 884.2526000000071,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            }
+          ],
+          "offlineSaveAfterWarmup": true,
+          "savedExact": true,
+          "reopenedOverlay": {
+            "expected": 31,
+            "actual": 31,
+            "afwijkingen": [],
+            "equal": true
+          }
+        },
+        "resultFile": "B/.local/perf-349_20261116_cpu8_B1.json"
+      },
+      {
+        "label": "349_20261116_cpu8_A2",
+        "variant": "A",
+        "source": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+        "tree": "3a932e559fd519763f70d0d2e00582f3133625d6",
+        "startedAt": "2026-11-16T08:59:44.656Z",
+        "endedAt": "2026-11-16T09:03:12.253Z",
+        "exit": 0,
+        "hostBusyPercent": 16.920636743822836,
+        "freeBefore": 5442732032,
+        "freeAfter": 3419451392,
+        "sourceCleanAfter": true,
+        "result": {
+          "label": "349_20261116_cpu8_A2",
+          "browserVersion": "151.0.7922.34",
+          "driver": "327-acceptance-subphases-v1",
+          "rate": 8,
+          "diagnostic": true,
+          "nativeDiagnostic": true,
+          "profileScroll": false,
+          "languageStatusChecks": true,
+          "rangeCacheChecks": true,
+          "pages": 79,
+          "paragraphs": 600,
+          "spelling": {
+            "errors": 2400,
+            "enabled": true,
+            "overlay": "38"
+          },
+          "phases": [
+            {
+              "name": "typing",
+              "wallMs": 10510.581699999999,
+              "subphaseMs": {
+                "input": 4804.2268,
+                "flushAndTwoFrames": 2496.4729000000007,
+                "fixedQuiet": 1215.4107000000004,
+                "plannerTail": 1994.4712999999974
+              },
+              "longTasks": 46,
+              "longTaskMs": 8994,
+              "maxFrameMs": 883.2999999999956,
+              "p95FrameMs": 733.4000000000015,
+              "keyPaintSamples": 23,
+              "p95KeyPaintMs": 594.5999999940395,
+              "calls": {
+                "selection": {
+                  "count": 216,
+                  "ms": 4.999999970197678
+                },
+                "getEditorRef": {
+                  "count": 268,
+                  "ms": 6.299999952316284
+                },
+                "getYrsSession": {
+                  "count": 268,
+                  "ms": 0.5
+                },
+                "version": {
+                  "count": 209,
+                  "ms": 7.699999839067459
+                },
+                "paragraphSpans": {
+                  "count": 24,
+                  "ms": 267.20000007748604
+                },
+                "native.paragraphSpans": {
+                  "count": 24,
+                  "ms": 268.4000000357628
+                },
+                "spellingViewport": {
+                  "count": 13
+                },
+                "spellingProjection": {
+                  "count": 23,
+                  "geometries": {
+                    "1": 1,
+                    "2": 1,
+                    "3": 1,
+                    "4": 1,
+                    "5": 1,
+                    "6": 1,
+                    "7": 1,
+                    "8": 1,
+                    "9": 1,
+                    "10": 1,
+                    "11": 1,
+                    "12": 1,
+                    "13": 1,
+                    "14": 1,
+                    "15": 1,
+                    "16": 1,
+                    "17": 1,
+                    "18": 1,
+                    "19": 1,
+                    "20": 1,
+                    "21": 1,
+                    "22": 2
+                  },
+                  "layouts": {
+                    "layout-5": 2,
+                    "layout-6": 2,
+                    "layout-7": 2,
+                    "layout-8": 2,
+                    "layout-9": 2,
+                    "layout-10": 2,
+                    "layout-11": 2,
+                    "layout-12": 1,
+                    "layout-13": 2,
+                    "layout-14": 2,
+                    "layout-15": 1,
+                    "layout-16": 3
+                  }
+                },
+                "spellingRanges": {
+                  "count": 790
+                },
+                "spellingRects": {
+                  "count": 752,
+                  "ms": 501.0000001490116
+                },
+                "yrsBlocksForStory": {
+                  "count": 2,
+                  "ms": 226.59999999403954
+                },
+                "selectionContext": {
+                  "count": 2,
+                  "ms": 0.4000000059604645
+                },
+                "native.storySegmentUnits": {
+                  "count": 12,
+                  "ms": 13.300000041723251
+                },
+                "getDocument": {
+                  "count": 14,
+                  "ms": 1125.1000000834465
+                },
+                "storySegments": {
+                  "count": 10,
+                  "ms": 466
+                },
+                "native.selectionText": {
+                  "count": 10,
+                  "ms": 116.99999997019768
+                },
+                "getSelectionInfo": {
+                  "count": 10,
+                  "ms": 121.09999999403954
+                },
+                "languageStatus.inhoud": {
+                  "count": 2,
+                  "ms": 41.80000001192093
+                },
+                "languageStatus.selectie": {
+                  "count": 8,
+                  "ms": 862.5000000298023
+                },
+                "readParagraphs": {
+                  "count": 2,
+                  "ms": 0.5
+                }
+              },
+              "heapBefore": {
+                "usedSize": 70561200,
+                "totalSize": 128585728,
+                "embedderHeapUsedSize": 162489800,
+                "backingStorageSize": 58993017
+              },
+              "heapAfter": {
+                "usedSize": 94911984,
+                "totalSize": 147173376,
+                "embedderHeapUsedSize": 202342464,
+                "backingStorageSize": 75781148
+              },
+              "rangeCache": {
+                "bereiken": 38,
+                "rechthoeken": 38
+              }
+            },
+            {
+              "name": "caret",
+              "wallMs": 6693.0268,
+              "subphaseMs": {
+                "input": 4881.930499999995,
+                "flushAndTwoFrames": 278.965200000006,
+                "fixedQuiet": 1207.4631999999983,
+                "plannerTail": 324.6679000000004
+              },
+              "longTasks": 69,
+              "longTaskMs": 6201,
+              "maxFrameMs": 616.7000000000044,
+              "p95FrameMs": 233.29999999999563,
+              "keyPaintSamples": 0,
+              "p95KeyPaintMs": null,
+              "calls": {
+                "selection": {
+                  "count": 144,
+                  "ms": 1.4999999403953552
+                },
+                "native.storySegmentUnits": {
+                  "count": 30,
+                  "ms": 30.19999986886978
+                },
+                "getEditorRef": {
+                  "count": 60,
+                  "ms": 4.89999994635582
+                },
+                "getYrsSession": {
+                  "count": 60,
+                  "ms": 0.09999999403953552
+                },
+                "version": {
+                  "count": 47,
+                  "ms": 3.399999976158142
+                },
+                "native.selectionText": {
+                  "count": 1,
+                  "ms": 9.799999982118607
+                },
+                "getSelectionInfo": {
+                  "count": 1,
+                  "ms": 10.5
+                },
+                "getDocument": {
+                  "count": 1,
+                  "ms": 23.19999998807907
+                },
+                "languageStatus.selectie": {
+                  "count": 1,
+                  "ms": 23.600000023841858
+                },
+                "yrsBlocksForStory": {
+                  "count": 1,
+                  "ms": 119.40000000596046
+                },
+                "selectionContext": {
+                  "count": 1,
+                  "ms": 2
+                },
+                "spellingViewport": {
+                  "count": 1
+                },
+                "spellingProjection": {
+                  "count": 2,
+                  "geometries": {
+                    "23": 1,
+                    "24": 1
+                  },
+                  "layouts": {
+                    "layout-17": 2
+                  }
+                },
+                "spellingRanges": {
+                  "count": 76
+                },
+                "spellingRects": {
+                  "count": 76,
+                  "ms": 72.10000005364418
+                }
+              },
+              "heapBefore": {
+                "usedSize": 94932304,
+                "totalSize": 147173376,
+                "embedderHeapUsedSize": 202342464,
+                "backingStorageSize": 75781148
+              },
+              "heapAfter": {
+                "usedSize": 73262520,
+                "totalSize": 135766016,
+                "embedderHeapUsedSize": 114361272,
+                "backingStorageSize": 52073962
+              },
+              "rangeCache": {
+                "bereiken": 38,
+                "rechthoeken": 38
+              }
+            },
+            {
+              "name": "scroll",
+              "wallMs": 12308.004700000005,
+              "subphaseMs": {
+                "input": 9475.725900000005,
+                "flushAndTwoFrames": 1232.8186999999962,
+                "fixedQuiet": 1214.1886999999988,
+                "plannerTail": 385.2714000000051
+              },
+              "longTasks": 64,
+              "longTaskMs": 11260,
+              "maxFrameMs": 1183.3999999999942,
+              "p95FrameMs": 766.5,
+              "keyPaintSamples": 0,
+              "p95KeyPaintMs": null,
+              "calls": {
+                "getEditorRef": {
+                  "count": 149,
+                  "ms": 5.399999916553497
+                },
+                "getYrsSession": {
+                  "count": 149,
+                  "ms": 0.5000000298023224
+                },
+                "selection": {
+                  "count": 119,
+                  "ms": 1.7999999821186066
+                },
+                "version": {
+                  "count": 77,
+                  "ms": 4.699999988079071
+                },
+                "spellingProjection": {
+                  "count": 14,
+                  "geometries": {
+                    "25": 9,
+                    "26": 1,
+                    "27": 2,
+                    "28": 1,
+                    "29": 1
+                  },
+                  "layouts": {
+                    "layout-18": 9,
+                    "layout-19": 3,
+                    "layout-20": 2
+                  }
+                },
+                "spellingRanges": {
+                  "count": 1026
+                },
+                "spellingRects": {
+                  "count": 498,
+                  "ms": 999.8999998569489
+                },
+                "spellingViewport": {
+                  "count": 22
+                }
+              },
+              "heapBefore": {
+                "usedSize": 73319520,
+                "totalSize": 135766016,
+                "embedderHeapUsedSize": 114357272,
+                "backingStorageSize": 52075826
+              },
+              "heapAfter": {
+                "usedSize": 74876564,
+                "totalSize": 142921728,
+                "embedderHeapUsedSize": 172918120,
+                "backingStorageSize": 55578056
+              },
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            }
+          ],
+          "errors": [],
+          "caret": {
+            "before": {
+              "anchor": {
+                "offset": 403,
+                "paraId": "body:p599",
+                "story": "body"
+              },
+              "head": {
+                "offset": 403,
+                "paraId": "body:p599",
+                "story": "body"
+              }
+            },
+            "after": {
+              "anchor": {
+                "offset": 373,
+                "paraId": "body:p599",
+                "story": "body"
+              },
+              "head": {
+                "offset": 373,
+                "paraId": "body:p599",
+                "story": "body"
+              }
+            },
+            "expected": {
+              "offset": 373,
+              "paraId": "body:p599",
+              "story": "body"
+            },
+            "equal": true
+          },
+          "contentExact": true,
+          "overlay": {
+            "expected": 92,
+            "actual": 92,
+            "afwijkingen": [],
+            "equal": true
+          },
+          "viewportChecks": [
+            {
+              "naam": "documentbegin",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 4652.9202000000005,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0.5",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 905.1851000000024,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 898.5154999999941,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1.5",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 687.1863000000012,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 2",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1013.1270999999979,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1.5",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 842.6970000000001,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 1",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 909.6805000000022,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0.5",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 923.1898999999976,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 10",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 13908.829800000007,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 20",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 10906.646299999993,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 40",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 10249.373699999996,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 60",
+              "expected": 92,
+              "actual": 92,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 10540.852199999994,
+              "rangeCache": {
+                "bereiken": 92,
+                "rechthoeken": 92
+              }
+            },
+            {
+              "naam": "cache scroll pagina 40",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8200.363700000002,
+              "rangeCache": {
+                "bereiken": 154,
+                "rechthoeken": 154
+              }
+            },
+            {
+              "naam": "cache scroll pagina 20",
+              "expected": 61,
+              "actual": 61,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8848.560900000011,
+              "rangeCache": {
+                "bereiken": 61,
+                "rechthoeken": 61
+              }
+            },
+            {
+              "naam": "cache scroll pagina 10",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 8894.777900000016,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "cache scroll pagina 0",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 7818.953199999989,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "voor cachebewerking",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 764.1996999999974,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "na cachebewerking",
+              "expected": 32,
+              "actual": 32,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1477.1867999999959,
+              "rangeCache": {
+                "bereiken": 32,
+                "rechthoeken": 32
+              }
+            },
+            {
+              "naam": "cache Undo",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 873.6922999999952,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "cache Redo",
+              "expected": 32,
+              "actual": 32,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 748.0152999999991,
+              "rangeCache": {
+                "bereiken": 32,
+                "rechthoeken": 32
+              }
+            },
+            {
+              "naam": "cache hersteld na Undo",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 753.9931999999972,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "verschoven venster",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 958.7608999999939,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "editorhoogte zonder window.resize",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 848.2697000000044,
+              "rangeCache": {
+                "bereiken": 31,
+                "rechthoeken": 31
+              }
+            },
+            {
+              "naam": "herstelde editorhoogte",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 818.0652000000118,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "zoom 75 procent",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 782.6502000000037,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "browservenster",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 921.1205999999947,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "verborgen vlak",
+              "actual": 0,
+              "equal": true,
+              "rangeCache": {
+                "bereiken": 0,
+                "rechthoeken": 0
+              }
+            },
+            {
+              "naam": "opnieuw zichtbaar",
+              "expected": 62,
+              "actual": 62,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1571.6218999999983,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            },
+            {
+              "naam": "heropend document",
+              "expected": 31,
+              "actual": 31,
+              "afwijkingen": [],
+              "equal": true,
+              "settledMs": 1000.323699999979,
+              "rangeCache": {
+                "bereiken": 62,
+                "rechthoeken": 62
+              }
+            }
+          ],
+          "offlineSaveAfterWarmup": true,
+          "savedExact": true,
+          "reopenedOverlay": {
+            "expected": 31,
+            "actual": 31,
+            "afwijkingen": [],
+            "equal": true
+          }
+        },
+        "resultFile": "A/.local/perf-349_20261116_cpu8_A2.json"
+      }
+    ]
+  },
+  "measurementDistribution": "95e9d7af725da21f3049593f6f5be39dbfa868ca372580a1091cd898ff74f879",
+  "scripts": {
+    "productionSHA256": "7ca878b7e1cd6f0894916c79b7f0f4eadfb19a14a7bee18c20f2a89f1432da5a",
+    "cpu8RunnerSHA256": "acb6d63d430642108998964be91e3f4b8863419b2258e4dc67b2b622cc3cf3da",
+    "measurementProbeSHA256": "1126ed5b1303908c3b79363d35809b5f0232796200d5b74e39a736dc827913ab"
+  },
+  "limits": [
+    "CPU8 candidate typing 8167 ms is between controls 7748/10511 ms; no overall speed/RAM claim",
+    "CPU4 evidence belongs to earlier isolated e5 source; not relabelled as a cb99 run",
+    "Native Writer language editing/keyboard/save interaction not performed on Windows/Linux/macOS at this head",
+    "macOS LaunchServices startup/running-file open is limited native coverage, not interactive editing",
+    "Windows/Linux packages were extracted/checked, not installed or interactively operated",
+    "Physical low-end hardware and whole-process RAM not verified",
+    "Central Linux native control and the future final integrated candidate are outside this PR; validate that final codepoint separately"
+  ]
+}
