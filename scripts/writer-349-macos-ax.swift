@@ -25,9 +25,12 @@ func string(_ e: AXUIElement, _ name: String) -> String {
 var report: [String: Any] = ["trusted": AXIsProcessTrusted(), "performed": false, "action": action]
 let windows = attribute(app, kAXWindowsAttribute) as? [AXUIElement] ?? []
 report["windowTitles"] = windows.map { string($0, kAXTitleAttribute) }
-if windows.isEmpty || !AXIsProcessTrusted() {
+if !AXIsProcessTrusted() {
     report["status"] = "blocked"
-    report["reason"] = "Native AX windows unavailable or host did not grant Accessibility trust"
+    report["reason"] = "Host did not grant native Accessibility trust"
+} else if windows.isEmpty {
+    report["status"] = "waiting"
+    report["reason"] = "Native app window has not appeared yet"
 } else {
     var queue: [(AXUIElement, Int)] = windows.map { ($0, 0) }
     var nodes: [[String: Any]] = []

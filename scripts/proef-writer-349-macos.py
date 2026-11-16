@@ -78,6 +78,7 @@ def launch(app,paths):
     run(["open","-a",str(app),*[str(p) for p in paths]],timeout=20)
     found=wait(lambda:own_pids() if len(own_pids())==1 else None,"Exactly one installed app process required",90)
     pid=found[0]
+    wait(lambda:inspect().get('windowTitles'),"Native app window did not appear",90)
     # Keep the entire app on the actual 1024px CI desktop before tab clicks.
     viewport=keyboard('set position of front window to {0, 25}\nset size of front window to {1024, 650}\nreturn {position of front window, size of front window}')
     report.setdefault('nativeWindowViewports',[]).append(viewport.strip())
