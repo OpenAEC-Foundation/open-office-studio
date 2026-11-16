@@ -29,6 +29,8 @@ jobs:
           run-id: 43867748532
           github-token: ${{ github.token }}
       - run: python scripts/proef-writer359-paint.py
+        env:
+          OOS359_THEME_COMPARISON: '1'
       - uses: actions/upload-artifact@v4
         if: always()
         with:

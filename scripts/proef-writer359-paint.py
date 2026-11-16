@@ -34,6 +34,8 @@ def main():
               "documentSha256": before, "host": run(["sw_vers"]).stdout,
               "phases": [], "visualAcceptance": "pending independent image review",
               "physicalMacObservation": "unavailable", "fontReadyTiming": "not observable outside WKWebView"}
+    theme_comparison = os.environ.get("OOS359_THEME_COMPARISON") == "1"
+    report["themeComparison"] = theme_comparison
     process_list = runpy.run_path("scripts/proef-macos-openen.py")["processen"]
     labels = output / "labels.json"
     labels.write_text(json.dumps({"source": [], "saveAs": ["Save as", "Opslaan als"]}), encoding="utf-8")
@@ -55,6 +57,8 @@ def main():
         program = app / "Contents/MacOS" / info["CFBundleExecutable"]
         assert not process_list(program)
         previous_pid = None
+        preferences = Path.home() / "Library/Application Support" / info["CFBundleIdentifier"] / "voorkeuren.json"
+        preferences_before = preferences.read_bytes() if preferences.exists() else None
 
         def close():
             for pid in process_list(program):
@@ -67,8 +71,17 @@ def main():
             assert not process_list(program)
 
         try:
-            for name in ["initial", "fresh-process-reopen"]:
+            phases = [("control-default", None, None), ("forge-paper", "forge", "papier"), ("light-paper", "light", "papier")] if theme_comparison else [("initial", None, None), ("fresh-process-reopen", None, None)]
+            for name, theme, document_view in phases:
                 phase = {"name": name, "captures": []}
+                if theme is not None:
+                    # Only this disposable runner's normal application preferences.
+                    # No document colours, renderer flags, or app code are changed.
+                    preferences.parent.mkdir(parents=True, exist_ok=True)
+                    preferences.write_text(json.dumps({"taal": "en", "thema": theme, "tekst": {"documentWeergave": document_view}, "updates": {"automatisch": False}}), encoding="utf-8")
+                    phase["preferenceChange"] = {"theme": theme, "documentView": document_view, "sha256": hashlib.sha256(preferences.read_bytes()).hexdigest()}
+                else:
+                    phase["preferenceChange"] = None
                 report["phases"].append(phase)
                 start = time.monotonic()
                 run(["open", "-a", str(app), str(document)])
@@ -111,9 +124,10 @@ def main():
                 snapshot("ready")
                 time.sleep(8)
                 snapshot("wait8")
-                phase["ordinaryResize"] = script(pid, 'set size of front window to {980, 650}\nreturn {position of front window, size of front window}')
-                time.sleep(1)
-                snapshot("resize")
+                if not theme_comparison:
+                    phase["ordinaryResize"] = script(pid, 'set size of front window to {980, 650}\nreturn {position of front window, size of front window}')
+                    time.sleep(1)
+                    snapshot("resize")
                 close()
                 phase["ownedAppClosed"] = True
                 phase["originalUnchanged"] = hashlib.sha256(document.read_bytes()).hexdigest() == before
@@ -121,6 +135,11 @@ def main():
             report["status"] = "collected-not-visual-pass"
         finally:
             close()
+            if preferences_before is None:
+                preferences.unlink(missing_ok=True)
+            else:
+                preferences.write_bytes(preferences_before)
+            report["ownedPreferenceFileRestored"] = (preferences.read_bytes() if preferences.exists() else None) == preferences_before
             report["ownedAppClosed"] = not process_list(program)
             report["originalUnchanged"] = hashlib.sha256(document.read_bytes()).hexdigest() == before
             (output / "result.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
