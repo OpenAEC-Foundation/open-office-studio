@@ -1,0 +1,151 @@
+{
+  "datum": "2026-11-16",
+  "basis_integratie": "2007f329",
+  "basis_hoofdbranch": "239add06",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Drie gewone JS-meetpunten voorbereid en componentmatig getoetst. Native meetbouw door eigen ruimtebewaking gestopt; geen nieuwe ELF of werkelijk uitgevoerde native cachetellingen. Productbron en bestaande referenties behouden.",
+  "implementatie": "Alleen editors-JS van private ee89c80e-contextkandidaat: waarneming bij huidige hit, extra hergebruik en constructie. Telt geldige storyvragen na oorspronkelijke sessie/hasStory-afwijzing. Geen voorwaarden/retours/invalidaties veranderd. Alleen constructiemetingen lezen version() aanvullend; snelle hits en hergebruik niet. Verliesloze groepering begrensd op4096. Geen hoofdthread-Debugger.",
+  "bundel": {
+    "uitsluitend_vervangen": [
+      "assets/editors-bODdYQ4o.js"
+    ],
+    "voor_sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "na_sha256": "4240d2c10edb120daebb115a7e24b8e5ef88686e00b5f6137ee3ee880972b45a",
+    "node_syntaxis": 0,
+    "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "grens": "Drie normale meetuitdrukkingen bij fast/reuse/build;alleen build leest versie aanvullend. Geen gedrag-/Debugger-/Rust-/Wasm-wijziging of snelheidsproef."
+  },
+  "collector": {
+    "geslaagd": true,
+    "herhaalde_hits": 100000,
+    "verliesloos": true,
+    "stop_getoetst": true,
+    "negatieve_overloop": 1
+  },
+  "volledige_projectie_orakel": {
+    "geslaagd": true,
+    "bouw": 7,
+    "extra_versielezingen": 7,
+    "tellingen": {
+      "build": 7,
+      "fast": 5000,
+      "reuse": 3
+    },
+    "controles": {
+      "locs": 477455,
+      "targets": 481305,
+      "nodes": 481305
+    },
+    "grens": "Echte volledige projecties, vijf contextreeksen met1000herhaaldehits;extra version()-lezing uitsluitend per build. Geen browser/Worker-snelheidsproef."
+  },
+  "native_bouw": {
+    "code": -15,
+    "reden": "Onverwachte afhankelijkheid, minder dan3GiB of20min",
+    "seconden": 126.31034829298733,
+    "minimum_vrije_bytes": 2998657024,
+    "start_vrije_bytes": 7626166272,
+    "gecompileerde_crates": [
+      "open-office-studio"
+    ],
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "startgrens_gib": 3.1,
+    "stopgrens_gib": 3
+  },
+  "herstel": {
+    "status": "native_bouw_afgewezen",
+    "resultaat": {
+      "code": -15,
+      "reden": "Onverwachte afhankelijkheid, minder dan3GiB of20min",
+      "seconden": 126.31034829298733,
+      "minimum_vrije_bytes": 2998657024,
+      "start_vrije_bytes": 7626166272,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3
+    },
+    "standaarddist_hersteld": true
+  },
+  "behoud": {
+    "referenties26_exact": true,
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "sdk_vendor_canonieke_bron_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+    },
+    "script_syntaxis": [
+      "native-proef.py",
+      "bouwen-native.py",
+      "voorbereiden.py",
+      "analyse.py",
+      "collector-proef.mjs",
+      "native-orakel.mjs",
+      "callback-na.js",
+      "callback-voor.js"
+    ],
+    "vrije_bytes_na": 2040778752,
+    "nieuwe_ELF": false,
+    "grens": "Geen grote eigen recente bouwresten gevonden;ongeveer1MBrecent in eigen target. Geen bestaande caches/referenties/gebruikersdata verwijderd. Niet vastgesteld waardoor overige schijfruimte afnam."
+  },
+  "grenzen": [
+    "Collectorproef bewaart100000herhaalde hits exact, stopt correct en signaleert opzettelijke overloop bij4097unieke groepen.",
+    "De echte voor/na-callbacks op geaccepteerde Rust/Wasm geven dezelfde volledige projectie in vijf contextreeksen met elk1000huidigehits. Zeven constructies en drie extra hergebruikshits;477455locatie- en481305node/targetcontroles exact. Zeven extra versielezingen, exact één per constructie. Gecontroleerde adapter en idleplanner; geen native/browserprestatieproef.",
+    "Cargo compileerde uitsluitend de eigen appcrate. Start7626166272vrije bytes, gemeten minimum2998657024bytes; bewaking stopt bij minder dan3GiB. Standaardbundel byte/mode/mtime hersteld. Geen nieuwe uitvoerbare referentie geaccepteerd.",
+    "Na afloop circa2GiBvrij. Ongeveer1MBrecent in eigen target aangetroffen; geen grote eigen afgebroken resten gevonden. Geen bestaande caches/referenties/gebruikersbestanden verwijderd. Oorzaak overige ruimteafname niet vastgesteld.",
+    "Geen native functie-/beeld-/DOCX-/snelheidscontrole voor deze meetkopie uitgevoerd. Geen daadwerkelijke fast/reuse/build-aanroepaantallen op de desktop beschikbaar. Analyse- en nativeproefscript zijn voorbereid en syntactisch gecontroleerd, nog niet tegen deze meet-ELF uitgevoerd."
+  ],
+  "niet_gecontroleerd": [
+    "Geen volledige frontend/TypeScript/Python-suite of product-CI; geen Windows/macOS/installer/andere editie/feature/schema/releaseacceptatie.",
+    "Geen productwijziging, geheugen-/RefCell-foutfix of issue-/migratievoltooiing."
+  ],
+  "vervolg": "Controleer eerst vrije schijfruimte en actieve schrijvers. Onder3,1GiB geen nieuwe native bouw starten en bij ongewijzigde ruimte stil blijven. Zodra voldoende ruimte beschikbaar is, bewaar deze afgebroken poging ongewijzigd en gebruik een apart uitvoer-/logpad voor de nieuwe meetbouw; behoud stopvloer3GiB en alle26referenties/529standaardbestanden. Voer daarna native-proef.py op de nieuwe meet-ELF uit met eigen bron/profiel en analyse.py op het rapport. Bevestig verliesloze fast/reuse/build-tellingen en afwijzingsredenen vóór enige nieuwe cache-/uitstelwijziging. Geen hoofdthread-Debugger. R(k) apart; Database laatst.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-16-writer-projectie-context.tar.gz",
+      "sha256": "de728348c73486b9c383265cec6a13312c2a69c790b14a6d9e63720e83b2d849"
+    }
+  ],
+  "bewijs": {
+    "pad": "docs/tests/2026-11-16-writer-projectieteller-bouwruimte.tar.gz",
+    "sha256": "a4728843fddc5a0be95c12b4fd675a8b4eb1a9a9f3e75d853c8861f9f59522b0",
+    "bytes": 1157311,
+    "bestanden": 25,
+    "alle_leden_byteexact_gecontroleerd": true,
+    "uitsluiting": "Geen dist/ELF/Wasm. Wel callbackvoor/na,editor-JSgzip,collector/orakel/voorbereider/bouw/native/analyse-scripts,logs,bouwafkeuring/herstel en referentie-/bronpinnen."
+  }
+}
