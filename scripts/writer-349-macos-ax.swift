@@ -43,6 +43,21 @@ if !AXIsProcessTrusted() {
 } else if windows.isEmpty {
     report["status"] = "waiting"
     report["reason"] = "Native app window has not appeared yet"
+} else if action == "document-start" || action == "document-end" {
+    let code: CGKeyCode = action == "document-start" ? 126 : 125
+    func postKey(_ key: CGKeyCode, _ down: Bool, _ flags: CGEventFlags) {
+        let event = CGEvent(keyboardEventSource: nil, virtualKey: key, keyDown: down)
+        event?.flags = flags
+        event?.post(tap: .cghidEventTap)
+    }
+    postKey(55, true, .maskCommand)
+    postKey(code, true, .maskCommand)
+    postKey(code, false, .maskCommand)
+    postKey(55, false, [])
+    report["status"] = "ok"
+    report["performed"] = true
+    report["method"] = "native CG Command down / arrow down-up / Command up"
+    report["virtualKey"] = code
 } else {
     var queue: [(AXUIElement, Int)] = windows.map { ($0, 0) }
     var nodes: [[String: Any]] = []

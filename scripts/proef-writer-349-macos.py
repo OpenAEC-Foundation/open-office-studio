@@ -40,6 +40,13 @@ def keyboard(body):
     result=run(["osascript","-e",script],text=True,capture_output=True,timeout=15)
     return result.stdout
 def key(code,mod=""):
+    if code in [125,126] and mod=='command down':
+        keyboard('delay 0.02')
+        state=inspect('document-start' if code==126 else 'document-end')
+        assert state.get('performed'),'Explicit native Command-arrow event sequence unavailable'
+        report.setdefault('navigationEvents',[]).append({'action':state['action'],'method':state.get('method'),'virtualKey':state.get('virtualKey')})
+        time.sleep(.1)
+        return
     suffix=f" using {{{mod}}}" if mod else ""
     keyboard(f"key code {code}{suffix}")
 def type_text(text): keyboard("keystroke "+json.dumps(text))
@@ -96,6 +103,12 @@ def paragraphs(path):
     with zipfile.ZipFile(path) as z: root=ET.fromstring(z.read("word/document.xml"))
     ns={"w":"http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
     return [''.join(t.text or '' for t in p.findall('.//w:t',ns)) for p in root.findall('.//w:body/w:p',ns)]
+def saved_checkpoint(name,expected):
+    keyboard('keystroke "s" using {command down}')
+    try: wait(lambda:paragraphs(A)==expected,name+': actual saved paragraphs do not match intended cursor position',15)
+    finally:
+        report.setdefault('savedCheckpoints',[]).append({'name':name,'expected':expected,'actual':paragraphs(A),'sha256':sha(A.read_bytes())})
+        save_report()
 def close_app(graceful=False):
     global pid
     if graceful and own_pids():
@@ -172,7 +185,10 @@ try:
     tab(A.name);focus();key(126,'command down');language('initial A','Dutch')
     boundary('original boundary',10);key(125);language('next paragraph A','French')
     key(125,'command down');type_text(' slot');time.sleep(1.2);language('after typing','Dutch')
-    key(126,'command down');type_text('x');time.sleep(1.2);boundary('inserted boundary',11)
+    saved_checkpoint('document end after slot',['Nederlands English','Bonjour','Nogmaals Nederlands slot'])
+    key(126,'command down');type_text('x');time.sleep(1.2)
+    saved_checkpoint('document start after x',['xNederlands English','Bonjour','Nogmaals Nederlands slot'])
+    boundary('inserted boundary',11)
     keyboard('keystroke "z" using {command down}');time.sleep(1.2);boundary('Undo boundary',10)
     keyboard('keystroke "z" using {command down, shift down}');time.sleep(1.2);boundary('Redo boundary',11)
     keyboard('keystroke "z" using {command down}');time.sleep(1.2);boundary('restored after Undo',10)
