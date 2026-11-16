@@ -1,5 +1,5 @@
 """Native F Writer language/keyboard/save acceptance on disposable macOS CI."""
-import hashlib, io, json, os, plistlib, runpy, signal, subprocess, sys, time, zipfile
+import hashlib, io, json, os, platform, plistlib, runpy, signal, subprocess, sys, time, zipfile
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
@@ -14,6 +14,7 @@ assert origin["applicationCommit"]==F
 H=subprocess.check_output(["git","-C",str(base.parent),"rev-parse","HEAD"],text=True).strip()
 sha=lambda b: hashlib.sha256(b).hexdigest()
 report={"applicationCommit":F,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
+report["host"]={"macOS":platform.mac_ver()[0],"machine":platform.machine(),"platform":platform.platform(),"runnerOS":os.environ.get("RUNNER_OS")}
 program=None;mount=out/"mounted";mounted=False;helper=out/"writer349-ax";pid=None;serial=0
 processes=runpy.run_path("scripts/proef-macos-openen.py")["processen"]
 def save_report(): (out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
@@ -58,8 +59,13 @@ def paragraphs(path):
     with zipfile.ZipFile(path) as z: root=ET.fromstring(z.read("word/document.xml"))
     ns={"w":"http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
     return [''.join(t.text or '' for t in p.findall('.//w:t',ns)) for p in root.findall('.//w:body/w:p',ns)]
-def close_app():
+def close_app(graceful=False):
     global pid
+    if graceful and own_pids():
+        keyboard('keystroke "q" using {command down}')
+        wait(lambda:not own_pids(),"Native CmdQ did not fully exit the owned app",15)
+        pid=None
+        return
     for p in own_pids(): os.kill(p,signal.SIGTERM)
     deadline=time.monotonic()+10
     while own_pids() and time.monotonic()<deadline: time.sleep(.25)
@@ -71,7 +77,11 @@ def launch(app,paths):
     run(["open","-a",str(app),*[str(p) for p in paths]],timeout=20)
     found=wait(lambda:own_pids() if len(own_pids())==1 else None,"Exactly one installed app process required",90)
     pid=found[0]
-    wait(lambda:inspect().get("languages"),"Native language status did not appear",90)
+    def ready():
+        s=inspect()
+        save=any(n.get("role")=="AXButton" and n.get("enabled") and any(t=="Save" or t.startswith("Save ·") for t in [n.get("title",""),n.get("description","")]) for n in s.get("nodes",[]))
+        return s if s.get("languages") and save else None
+    wait(ready,"Native language status and enabled Save control did not appear",90)
 def capture(name):
     run(["screencapture","-x",str(out/name)],capture_output=True,timeout=10)
 try:
@@ -142,7 +152,7 @@ try:
         tab(A.name);focus();boundary(f'A tab {i}',10)
         tab(B.name);language(f'B tab retained {i}','Italian');focus();key(115,'command down');language(f'B tab reset {i}','German');key(125,'option down');language(f'B tab second {i}','Italian')
     assert sha(B.read_bytes())==bhash and sha(A.read_bytes())==report['savedSha256']
-    capture('tabs.png');close_app();report['firstProcessClosed']=True
+    capture('tabs.png');close_app(True);report['firstProcessClosed']=True;report['firstCloseMethod']='native CmdQ'
     launch(app,[A,B]);report['secondPid']=pid;assert pid!=report['firstPid']
     tab(A.name);focus();key(115,'command down');language('reopened A','Dutch');boundary('reopened boundary',10)
     key(125,'option down');language('reopened second paragraph','French')
@@ -150,14 +160,21 @@ try:
     capture('reopened.png');report['status']='passed'
 except (PermissionError,subprocess.TimeoutExpired) as e:
     report.update(status='blocked',reason=str(e))
+except subprocess.CalledProcessError as e:
+    report.update(status='failed',error=repr(e),commandDetails={'command':e.cmd,'stdout':str(e.stdout or '')[-8000:],'stderr':str(e.stderr or '')[-8000:]})
 except Exception as e:
     report.update(status='failed',error=repr(e))
 finally:
     if own_pids():
         try: capture('final-state.png')
         except Exception as e: report['finalCaptureError']=str(e)
-    try: close_app()
-    except Exception as e: report['cleanupError']=str(e)
+    try:
+        close_app(report['status']=='passed')
+        report['cleanupMethod']='native CmdQ' if report['status']=='passed' else 'owned-process termination after incomplete test'
+    except Exception as e:
+        report.update(status='failed',cleanupError=str(e))
+        try: close_app()
+        except Exception as forced: report['forcedCleanupError']=str(forced)
     report['ownedAppClosed']=not own_pids()
     if mounted:
         try: run(['hdiutil','detach',str(mount)],capture_output=True,timeout=30);mounted=False
