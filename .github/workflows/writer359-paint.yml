@@ -1,0 +1,38 @@
+name: Writer 359 unchanged G paint investigation
+on:
+  push:
+    branches: [codex/writer-359-initial-paint]
+    paths-ignore: ["docs/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  capture:
+    runs-on: macos-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: runtime317-installers-macOS
+          path: .local/installers
+          run-id: 43857127197
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: runtime317-native-recheck-macOS
+          path: .local/previous
+          run-id: 43867748532
+          github-token: ${{ github.token }}
+      - run: python scripts/proef-writer359-paint.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer359-unchanged-G-native-pixels
+          path: .local/writer359
+          include-hidden-files: true
+          if-no-files-found: warn
