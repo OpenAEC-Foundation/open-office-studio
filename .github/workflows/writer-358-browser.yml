@@ -13,6 +13,11 @@ on:
         required: true
         default: '["ubuntu-22.04","windows-latest","macos-latest"]'
         type: string
+      routes:
+        description: normal, hosted, or normal,hosted; preserve valid route results
+        required: true
+        default: normal,hosted
+        type: string
 permissions:
   contents: read
 jobs:
@@ -47,12 +52,16 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm exec vitest run scripts/tekstnavigatie-compatibiliteit.test.ts scripts/tekstnavigatie-macos.test.ts src/tekst/gedeeld/navigatieAlineaTekst.test.ts
       - run: pnpm build
+        if: contains(inputs.routes || 'normal,hosted', 'normal')
       - name: Supported production browser route
+        if: contains(inputs.routes || 'normal,hosted', 'normal')
         run: node .local/358-harness/scripts/proef-writer-358-browser.mjs
         env:
           WRITER358_OUT: .local/358-browser/normal
       - run: pnpm build:hosted
+        if: contains(inputs.routes || 'normal,hosted', 'hosted')
       - name: Supported standalone hosted browser route
+        if: contains(inputs.routes || 'normal,hosted', 'hosted')
         run: node .local/358-harness/scripts/proef-writer-358-browser.mjs
         env:
           WRITER358_DIST: dist-hosted
