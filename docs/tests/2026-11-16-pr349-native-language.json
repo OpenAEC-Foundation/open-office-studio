@@ -1646,9 +1646,175 @@
   ],
   "application": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
   "macOS": {
-    "nativeAcceptance": "not executed",
-    "harness": "6774cac88e159f84ddbac6ee58f37af5c1e6ba7f",
-    "run": 43852074084,
-    "status": "queued"
+    "attempts": [
+      {
+        "harness": "6774cac88e159f84ddbac6ee58f37af5c1e6ba7f",
+        "hostLabel": "macos-latest",
+        "nativeAcceptance": "no runner assigned; never executed",
+        "status": "cancelled",
+        "run": 43852074084
+      },
+      {
+        "harness": "ac2dbd39fc7db974b4f1990078bed5cdd7f0cb59",
+        "hostLabel": "macos-15",
+        "nativeAcceptance": "incomplete; expected document A not active before first language assertion",
+        "status": "failed",
+        "run": 43853798844
+      }
+    ],
+    "sourceAudit": {
+      "interpretation": "Native language acceptance incomplete: AX tab operation did not leave expected document A active; do not infer an issue327 cause or pass. Corrected pointer/viewport/activation checks are prepared but not validated on F.",
+      "images": [
+        {
+          "name": "final-state.png",
+          "sha256": "a4772904ca00cbb3658183fa932e70d82cf9df7d0fc39cd10c88d8afa54a7408"
+        }
+      ],
+      "report": {
+        "applicationCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+        "harnessCommit": "ac2dbd39fc7db974b4f1990078bed5cdd7f0cb59",
+        "harnessSha256": "67d5d7ac0c714aa6bbf8df61b16f3cdb1cc746b20e21e8d5f1ce1311a62740d5",
+        "axSourceSha256": "e58e71f8ba1c7b57563649463a2c7eca7e16871ad316116c2839b10cf00e8ab9",
+        "origin": {
+          "applicationCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+          "run": "43838167666",
+          "artifacts": [
+            {
+              "name": "open-office-studio-macOS",
+              "id": 14212893733,
+              "zipSha256": "3fa471425d94c79866b6de10be775c888e90b1eefbaeb2d34a92ac546b1feee3",
+              "bytes": 75580668
+            },
+            {
+              "name": "pakketcontrole-macOS",
+              "id": 14213985282,
+              "zipSha256": "4e1db49af79b436a606f99c3950be07235ce8ae9de95584654fc3c8ae45c07ad",
+              "bytes": 819
+            }
+          ]
+        },
+        "status": "failed",
+        "checks": [],
+        "limits": [
+          "Writer only, bounded synthetic fixture",
+          "Disposable macOS CI host; no physical low-end performance claim",
+          "No TCC, entitlements, signing or security changes"
+        ],
+        "host": {
+          "macOS": "15.8.2",
+          "machine": "arm64",
+          "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+          "runnerOS": "macOS"
+        },
+        "dmg": {
+          "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+          "sha256": "b0ecb4b02d902f4005c74c766db112112f1cc476dc47cc9ff48c63668fbf0a4c",
+          "bytes": 75684968
+        },
+        "packageControl": {
+          "identifier": "org.openaec.office-studio",
+          "extensies": [
+            "accdb",
+            "doc",
+            "docm",
+            "docx",
+            "dot",
+            "dotm",
+            "dotx",
+            "ifcx",
+            "mdb",
+            "odp",
+            "ods",
+            "odt",
+            "otp",
+            "ots",
+            "ott",
+            "pot",
+            "potm",
+            "potx",
+            "pps",
+            "ppsx",
+            "ppt",
+            "pptm",
+            "pptx",
+            "rtf",
+            "xls",
+            "xlsb",
+            "xlsm",
+            "xlsx",
+            "xlt",
+            "xltm",
+            "xltx"
+          ],
+          "aantal": 31,
+          "plistSha256": "4fd716292636b71c8c56c1c8ce3b903c4fa1a25e0f28ab0dfc4aeba44364fe6f"
+        },
+        "app": {
+          "version": "2026.46.2",
+          "executableSha256": "e1497df5a0f71be7ef4d826fb9f73d296e85e2d503f994284b50032bc2c6a73c",
+          "plistSha256": "4fd716292636b71c8c56c1c8ce3b903c4fa1a25e0f28ab0dfc4aeba44364fe6f",
+          "treeSha256": "aa3c9f110849a0b2b3521baa5384834ef954f03ea5542e482e4741973321b18a",
+          "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+        },
+        "inputSha256": {
+          "A": "155f9764240a0166532455aa255e72b78a6d3d24dc539377623b11214ceb8022",
+          "B": "45d97f942bfac4b21a22276096cd074fe6029e6003cc9e87ef57943b429fadde"
+        },
+        "axBinarySha256": "e75e0c5b5e942eabc7142d4c16102d46780648a1ce01b10e35ed51dae4e0e479",
+        "firstPid": 1309,
+        "error": "AssertionError('initial A: expected Dutch')",
+        "cleanupMethod": "owned-process termination after incomplete test",
+        "ownedAppClosed": true,
+        "ownMountDetached": true
+      },
+      "artifact": {
+        "run": "43853798844",
+        "artifactId": 14221465862,
+        "name": "writer349-native-language-macOS",
+        "sha256": "e1e6240faa14c1402778765ba4113746a6af37e4cde10ce218b2787718f23bed",
+        "bytes": 75345896,
+        "githubDigestMatched": true
+      },
+      "lastState": {
+        "languages": [
+          "Language: German (Germany), 2 spelling errors. Choose language",
+          "Language: German (Germany), 2 spelling errors. Choose language"
+        ],
+        "window": [
+          "349 native language B.docx — Open Office Studio (Text)"
+        ],
+        "tabs": [
+          {
+            "title": "349 native language B.docx Close 349 native language B.docx"
+          }
+        ]
+      },
+      "press": {
+        "trusted": true,
+        "performed": true,
+        "role": "AXRadioButton",
+        "title": "349 native language A.docx Close 349 native language A.docx"
+      },
+      "independentInputsUnchanged": [
+        {
+          "name": "A",
+          "sha256": "155f9764240a0166532455aa255e72b78a6d3d24dc539377623b11214ceb8022",
+          "paragraphs": [
+            "Nederlands English",
+            "Bonjour",
+            "Nogmaals Nederlands"
+          ]
+        },
+        {
+          "name": "B",
+          "sha256": "45d97f942bfac4b21a22276096cd074fe6029e6003cc9e87ef57943b429fadde",
+          "paragraphs": [
+            "Nederlands English",
+            "Bonjour",
+            "Nogmaals Nederlands"
+          ]
+        }
+      ]
+    }
   }
 }

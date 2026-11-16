@@ -43,8 +43,9 @@ def key(code,mod=""):
     keyboard(f"key code {code}{suffix}")
 def type_text(text): keyboard("keystroke "+json.dumps(text))
 def tab(name):
-    state=inspect("press",name)
+    state=inspect("tab",name)
     if not state.get("performed"): raise PermissionError("Native AX tab action unavailable: "+name)
+    wait(lambda:any(name in t for t in inspect().get("windowTitles",[])),"Native tab did not activate the expected document: "+name,20)
 def focus():
     state=inspect("focus-editor")
     if not state.get("performed"): raise PermissionError("Native AX editor focus unavailable")
@@ -77,6 +78,9 @@ def launch(app,paths):
     run(["open","-a",str(app),*[str(p) for p in paths]],timeout=20)
     found=wait(lambda:own_pids() if len(own_pids())==1 else None,"Exactly one installed app process required",90)
     pid=found[0]
+    # Keep the entire app on the actual 1024px CI desktop before tab clicks.
+    viewport=keyboard('set position of front window to {0, 25}\nset size of front window to {1024, 720}\nreturn {position of front window, size of front window}')
+    report.setdefault('nativeWindowViewports',[]).append(viewport.strip())
     def ready():
         s=inspect()
         save=any(n.get("role")=="AXButton" and n.get("enabled") and any(t=="Save" or t.startswith("Save ·") for t in [n.get("title",""),n.get("description","")]) for n in s.get("nodes",[]))

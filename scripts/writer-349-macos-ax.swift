@@ -55,6 +55,29 @@ if windows.isEmpty || !AXIsProcessTrusted() {
         if role == "AXButton" {
             languages += [title, description].filter { $0.hasPrefix("Language:") }
         }
+        // AXPress on a WKWebView radio-tab containing a nested Close button
+        // returned success without retaining/activating A in the first probe.
+        // Use a real mouse event inside the filename portion, then the caller
+        // verifies the actual active document/window title before any typing.
+        if action == "tab", role == "AXRadioButton", enabled,
+           [title, description].contains(where: { $0.hasPrefix(target) }) {
+            if let pv = attribute(e, kAXPositionAttribute), let sv = attribute(e, kAXSizeAttribute),
+               CFGetTypeID(pv) == AXValueGetTypeID(), CFGetTypeID(sv) == AXValueGetTypeID() {
+                var p = CGPoint.zero; var size = CGSize.zero
+                if AXValueGetValue(pv as! AXValue, .cgPoint, &p), AXValueGetValue(sv as! AXValue, .cgSize, &size), size.width > 30, size.height > 5 {
+                    let point = CGPoint(x: p.x + min(size.width / 3, 65), y: p.y + size.height / 2)
+                    if point.x >= 0 && point.y >= 0 {
+                        CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: point, mouseButton: .left)?.post(tap: .cghidEventTap)
+                        CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: point, mouseButton: .left)?.post(tap: .cghidEventTap)
+                        CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)?.post(tap: .cghidEventTap)
+                        report["performed"] = true
+                        report["method"] = "native mouse inside AX tab filename bounds"
+                        report["point"] = ["x": point.x, "y": point.y]
+                        break
+                    }
+                }
+            }
+        }
         if action == "press", !target.isEmpty,
            [title, description].contains(where: { $0.contains(target) }),
            ["AXButton", "AXRadioButton", "AXTab", "AXLink"].contains(role), enabled {

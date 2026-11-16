@@ -1,12 +1,5 @@
 name: Writer 349 native macOS acceptance
 on:
-  push:
-    branches: [codex/writer-349-native-language-2026-11-16]
-    paths:
-      - scripts/haal-writer-349-macos.py
-      - scripts/proef-writer-349-macos.py
-      - scripts/writer-349-macos-ax.swift
-      - .github/workflows/writer-349-native-macos.yml
   workflow_dispatch:
 permissions:
   contents: read
