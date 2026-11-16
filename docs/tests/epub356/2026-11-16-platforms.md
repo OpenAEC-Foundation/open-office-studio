@@ -92,3 +92,11 @@ and input; this readable EPUB capture establishes no cause or fix for #359.
 No main merge, release, signing/notarization certification or extra native
 architecture certification is claimed. No local app, printer, security setting
 or capture session was started; CI closed its own app processes.
+
+The older product branch's regular desktop Linux job
+[43861156830](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43861156830)
+is red: its workflow references `scripts/proef-native-linux-basis.mjs`, which is
+absent from that older branch (`MODULE_NOT_FOUND`). The central integration
+tree already owns that script/workflow. This does not invalidate the separate
+fresh-package EPUB proofs above, but it is not an all-green regular PR check
+claim; the integrator must use the complete combined tree and its checks.
