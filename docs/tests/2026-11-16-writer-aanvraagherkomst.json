@@ -1,0 +1,266 @@
+{
+  "datum": "2026-11-16",
+  "basis_integratie": "9e075e0e",
+  "basis_hoofdbranch": "ea4da6f3",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Fontvoorbereiding wordt bij lange native invoer herhaald aangevraagd op opeenvolgende bronversies:65/64 fontRequirements tegenover elk2syncs. Ruwe fontinput is exact gelijk; dit is geen bewijs voor veilig fontresultaathergebruik omdat de documentbron verandert. Geen productwijziging of snelheidsfix.",
+  "programma": {
+    "sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+    "versie": "2026.45.52",
+    "platform": "Linux x86_64 release",
+    "feature": "writer-bronjournaal",
+    "schema": 2,
+    "nieuwe_ELF": false
+  },
+  "ronden": [
+    {
+      "ronde": "native-twee",
+      "functie_geslaagd": true,
+      "aantallen": {
+        "applyUpdate": 66,
+        "fontRequirements": 65,
+        "sync": 2,
+        "save": 1,
+        "zonder-type": 1,
+        "buildPages": 1
+      },
+      "font": {
+        "aantal": 65,
+        "unieke_hoofdthread_bronversies": 65,
+        "unieke_input": 1,
+        "input_sha256": [
+          "aff9e766488771c00d86362106a19f4f7ccc35e9970c03e48ec9f7ebca6c3968"
+        ],
+        "alle_antwoorden_ok": true,
+        "met_latere_update_voor_antwoord": 63
+      },
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 34706,
+        "begin_tot_bron_ms": 10420,
+        "laatste_keyup_tot_bron_ms": 413,
+        "laatste_keyup_tot_frame_ms": 4492,
+        "begin_tot_frame_ms": 14499,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 14521,
+        "wall_verzonden_tot_frame_ms": 12637,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "documentcontrole": {
+        "docx_sha256": "1f42b1575e234e5b5bd9f683aba7ff1f66caecd9b33977e7e00da1e6be9f2543",
+        "tabellen": 128,
+        "utf16": 91423,
+        "zip_crc_xml_relaties_groen": true,
+        "pakketverschil_met_eerdere_context_kandidaat": [
+          "docProps/core.xml"
+        ],
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "7d6847913c7f9c81360c086756b74a8a279a1e035e1a4a108a60d62c291b759c",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "beelden": [
+          {
+            "bestand": "invoer-redo.png",
+            "verschillende_pixels": 28,
+            "bbox": [
+              11,
+              4,
+              1120,
+              997
+            ]
+          },
+          {
+            "bestand": "snel-getypt-bewaard.png",
+            "verschillende_pixels": 0,
+            "bbox": null
+          },
+          {
+            "bestand": "nieuw-na-laat-antwoord.png",
+            "verschillende_pixels": 0,
+            "bbox": null
+          }
+        ],
+        "grens": "Drie vaste beelden tegenover eerdere ongeinstrumenteerde contextkandidaat; geen volledige visuele/platformacceptatie."
+      }
+    },
+    {
+      "ronde": "native-api",
+      "functie_geslaagd": true,
+      "aantallen": {
+        "applyUpdate": 65,
+        "fontRequirements": 64,
+        "sync": 2,
+        "save": 1,
+        "zonder-type": 1,
+        "buildPages": 1
+      },
+      "font": {
+        "aantal": 64,
+        "unieke_hoofdthread_bronversies": 64,
+        "unieke_input": 1,
+        "input_sha256": [
+          "aff9e766488771c00d86362106a19f4f7ccc35e9970c03e48ec9f7ebca6c3968"
+        ],
+        "alle_antwoorden_ok": true,
+        "met_latere_update_voor_antwoord": 62
+      },
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 35134,
+        "begin_tot_bron_ms": 11286,
+        "laatste_keyup_tot_bron_ms": 1088,
+        "laatste_keyup_tot_frame_ms": 3966,
+        "begin_tot_frame_ms": 14164,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 14406,
+        "wall_verzonden_tot_frame_ms": 12586,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "documentcontrole": {
+        "docx_sha256": "3c74be06d9ee383bea090b232bb2067e0fa90fa12ee45e66ea61c2e4a4572ee9",
+        "tabellen": 128,
+        "utf16": 91423,
+        "zip_crc_xml_relaties_groen": true,
+        "pakketverschil_met_eerdere_context_kandidaat": [
+          "docProps/core.xml"
+        ],
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "6516a86091fb5769182910250d4ac2a1d67fa3ca518eafc1340912587e4fea34",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        },
+        "beelden": [
+          {
+            "bestand": "invoer-redo.png",
+            "verschillende_pixels": 0,
+            "bbox": null
+          },
+          {
+            "bestand": "snel-getypt-bewaard.png",
+            "verschillende_pixels": 30,
+            "bbox": [
+              1050,
+              940,
+              1052,
+              955
+            ]
+          },
+          {
+            "bestand": "nieuw-na-laat-antwoord.png",
+            "verschillende_pixels": 0,
+            "bbox": null
+          }
+        ],
+        "grens": "Drie vaste beelden tegenover eerdere ongeinstrumenteerde contextkandidaat; geen volledige visuele/platformacceptatie."
+      }
+    }
+  ],
+  "afkeuringen": [
+    {
+      "ronde": "native",
+      "reden": "Voorbereidingsscript verwijderde naast de profielkalibratie ook het vastleggen van _getypt en stoppen van de bestaande invoermeting. Lange invoer en aanvraagregistratie gereed, maar Redo-controle geeft ReferenceError. Niet als geslaagde functieronde tellen. Helper/log/rapport/beeld behouden; herstel in apart native-twee-uitvoerpad.",
+      "tellingen_alleen_diagnose": {
+        "applyUpdate": 69,
+        "fontRequirements": 68,
+        "sync": 2,
+        "save": 1,
+        "zonder-type": 1,
+        "buildPages": 1
+      }
+    },
+    {
+      "ronde": "native-api",
+      "reden": "Twee publieke API-descriptoren omhuld en hersteld, maar nul ingangsgebeurtenissen, ook bij expliciete flushPendingInput in het harnas. Deze probe mist een positieve native controle en is afgewezen als herkomstbewijs. Geen conclusie dat save/flush niet is aangeroepen. API-refwisseling of andere toegang is nog niet bewezen; geen vierde algemene ronde gestart. De afzonderlijke postMessage-opname en volledige functieronde zijn wel geslaagd."
+    }
+  ],
+  "concrete_routes": {
+    "font": "Alle65/64 fontantwoorden ontvangen en ok. Elk op een andere hoofdthread-bronversie; bij63/62 lag een later verzonden applyUpdate vóór het antwoord. Aanvraagstack via Workerclient.fontRequirements en useDisplayList.requestOpenedWorker. Asyncgrens verbergt de hoogste layoutaanvrager. Region-layoutpipeline kent worker-fontpreflight en leest daarnaast afzonderlijk een layoutrequest; beide bronpaden vastgelegd, niet zonder runtimebewijs één oorzaak kiezen.",
+    "sync": "Elk2syncs; snapshot bevat eigen layoutInput, renderInputs/measureInputs, fontrevisies en bronstate. Aanvraagmetadata bewaard. Niet de vele fontpreflights met evenveel full-layoutsyncs verwarren.",
+    "save": "Elk1save met antwoord ok, stack via workerOpenSave en createWorkerSaveQueue/FSe. Hoogste aanvrager nog niet bewezen. Hersteltimer kijkt iedere30000ms en registreerde export roept ref.save aan: bronmatig mogelijke route en timing passend, uitsluitend hypothese. Automatisch herstel behouden.",
+    "transport": "Worker.postMessage-wrapper behoudt this/argumentidentiteit/transferlijst/retour/fout. Responslistener zonder antwoordwijziging. Geen overflow/probefouten en descriptoren hersteld; dit geldt voor de waargenomen omhulde route.",
+    "bron": "Exacte geminificeerde bundelfragmenten gehasht en bekeken. Aanvullende primaire TS-bronketen gehasht; deze upstream-private bron niet als bytegelijke herkomst van alle latere bundelaanpassingen voorstellen."
+  },
+  "controles": {
+    "collector": "Node-proef met aparte workers, antwoordmatching, transportfout, transferargumenten, origineel retour en descriptorherstel groen. API-modelproef this/argumenten/Promise-identiteit/fout/herstel groen; onvoldoende native API-dekking expliciet afgekeurd.",
+    "python": "Alle nieuwe scripts syntactisch gecontroleerd.",
+    "documenten": "Beide volledige ronden ZIP/CRC/XML/relaties/SHA,128tabellen/91423UTF16 onafhankelijk exact; alleen core.xml wijkt af van eerdere contextkandidaat.",
+    "beelden": "Zes hele-beeldparen:28/0/0 en0/30/0 pixelverschillen. Pixelgelijk bewaarbeeld uit native-twee bekeken: eindtekst, tabelopmaak en status91423 zichtbaar;geen foutdialoog op dat beeld. Geen volledige visuele acceptatie.",
+    "behoud": {
+      "referenties27_exact": true,
+      "standaarddist529_byte_mode_mtime_exact": true,
+      "sdk_vendor_canonieke_bron_exact": {
+        "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+        "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+        "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+        "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+        ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+        ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+      },
+      "private_geprofileerde_bron_exact": true,
+      "python_syntaxis": [
+        "analyse.py",
+        "behoudcontrole.py",
+        "documentcontrole.py",
+        "native-aanvragen-afgekeurd.py",
+        "native-aanvragen-twee.py",
+        "native-aanvragen.py",
+        "voorbereiden.py"
+      ],
+      "vrije_bytes_na": 3264270336,
+      "productbron": "41e7000198f89d992e1059e9715636a44b39d21a"
+    }
+  },
+  "grenzen": [
+    "Exacte ruwe fontinput gelijk, maar bronversies verschillen: geen bewijs voor veilig hergebruik.",
+    "Rondreizen omvatten wachtrij/Worker/transport/eventloop, geen CPU-ms of ABBA-winst.",
+    "Hoofdthread-bronversie bij verzenden is geen rechtstreekse Worker-versiemeting.",
+    "PostMessage-stacks verliezen initiator na async bewaarserialisatierij en requestOpenedWorker; geen naam van hoogste aanvrager bewezen.",
+    "Geen overflow/fouten op de omhulde bestaande postMessage-route; geen bewijs over eventueel elders omzeilde transportmethoden.",
+    "De twee ronden zijn geïnstrumenteerd; geen gewone korte/rijke ABBA, causaliteit of snelheidseffect bewezen.",
+    "Geen productwijziging, volledige productsuites/CI, geheugen-/RefCell-foutfix, andere schemas/edities/platforms/releases of issue-/migratievoltooiing."
+  ],
+  "vervolg": "Gebruik de concrete65/64fontpreflights tegenover2syncs om eerst de bestaande fontpreflightplanning in de private kandidaat gericht te toetsen:behoud alle applyUpdates en afzonderlijke fontgebruikers,stel vast welke preflightpass werkelijk door een nieuwere pass wordt vervangen. Ontwerp daarna hooguit een begrensde single-flight/laatste-aanvraag-proef met volledige bron/versie/env/fonts/generatie/preview/UndoRedo/bewaargrenzen;geen cache op alleen gelijke layoutInput. Geen algemene nieuwe profiler. Bevestig de hoogste save-aanvrager met een levensduurvaste registratie/positieve native controle vóór enige wijziging aan automatisch herstel;deze API-objectprobe niet herhalen zonder herstelde positieve controle. Bestaande R(k)/fontcachekandidaten blijven apart en ongeaccepteerd;schijfruimte bewaken,geen nieuwe ELF onder3,1GiB. Daarna gewone korte/rijke native ABBA en functioneel/visueel bewijs;Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-16-writer-aanvraagherkomst.tar.gz",
+    "sha256": "e10ea7d567697140cd1894f261015e7437f727802e925f15ee7c3bb871c4d2f8",
+    "bytes": 1539181,
+    "bestanden": 39,
+    "ieder_manifestbestand_geverifieerd": true
+  }
+}
