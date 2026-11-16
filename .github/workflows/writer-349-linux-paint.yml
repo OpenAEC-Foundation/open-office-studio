@@ -1,0 +1,67 @@
+name: Writer 349 native Linux paint diagnosis
+on:
+  push:
+    branches: [codex/writer-349-linux-paint-2026-11-16]
+    paths:
+      - scripts/proef-native-linux-paint-349.mjs
+      - scripts/native-linux-paint-349-capture.mjs
+      - .github/workflows/writer-349-linux-paint.yml
+  workflow_dispatch:
+    inputs:
+      graphics_mode:
+        type: choice
+        options: [baseline, disable-dmabuf, disable-compositing]
+        default: baseline
+permissions:
+  contents: read
+  actions: read
+env:
+  NATIVE_BUILD_RUN: "43838167666"
+  NATIVE_APP_COMMIT: e1f84f84f4d72e5ce8ab967e376a6f38344edf39
+jobs:
+  paint:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.NATIVE_APP_COMMIT }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/native-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install identical native runtime and capture tools
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 imagemagick x11-utils fontconfig
+          pnpm install --frozen-lockfile --ignore-scripts
+          cargo install tauri-driver --version 2.1.0 --locked
+      - name: Verify original F package and source-bound artifact digests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .local/native-harness/scripts/haal-native-linux-ci.py
+      - name: Capture both routes before readback on installed unchanged package
+        env:
+          OFFICE_NATIVE_ARTIFACT_RECHECK: "true"
+          OFFICE_PAINT_GRAPHICS: ${{ inputs.graphics_mode || 'baseline' }}
+        run: |
+          package=$(find .local/native-recheck-package -maxdepth 1 -name '*.deb' -print -quit)
+          test -n "$package"
+          dbus-run-session -- xvfb-run -a node .local/native-harness/scripts/proef-native-linux-paint-349.mjs "$package"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer349-linux-paint-${{ inputs.graphics_mode || 'baseline' }}
+          path: |
+            .local/native-linux-paint349/
+            .local/native-recheck-origin.json
+          include-hidden-files: true
+          if-no-files-found: warn
