@@ -1,11 +1,15 @@
 // Independent native window capture for isolated CI; no app/DOM injection.
 import Foundation
+import AppKit
 import ScreenCaptureKit
 import ImageIO
 import UniformTypeIdentifiers
 
 @main struct Capture {
-    static func main() async throws {
+    @MainActor static func main() async throws {
+        // A command-line SCK client must initialize its own AppKit/CGS client.
+        // It never activates or opens a helper window.
+        NSApplication.shared.setActivationPolicy(.prohibited)
         let pid = pid_t(CommandLine.arguments[1])!
         let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
         let candidates = content.windows.filter { $0.owningApplication?.processID == pid && $0.windowLayer == 0 && $0.frame.width >= 800 }
