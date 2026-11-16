@@ -8,6 +8,11 @@ on:
         description: Exact application SHA for every platform and both browser routes
         required: true
         type: string
+      platforms:
+        description: JSON runner list; rerun only missing or failed platforms
+        required: true
+        default: '["ubuntu-22.04","windows-latest","macos-latest"]'
+        type: string
 permissions:
   contents: read
 jobs:
@@ -16,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-latest, macos-latest]
+        os: ${{ fromJSON(inputs.platforms || '["ubuntu-22.04","windows-latest","macos-latest"]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     env:

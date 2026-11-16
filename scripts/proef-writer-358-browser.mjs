@@ -31,7 +31,13 @@ try{
  const platform=await page.evaluate(()=>navigator.platform);const mac=/Mac|iPod|iPhone|iPad/.test(platform);report.navigatorPlatform=platform;report.browser=browser.version();
  const mod=mac?'Meta':'Control',start=mac?'Meta+ArrowUp':'Control+Home',end=mac?'Meta+ArrowDown':'Control+End';
  const focus=async()=>{await page.locator('.office-tabpaneel:not([hidden]) .canvas-page canvas:visible').first().click({position:{x:125,y:104}});};
- const open=async(name)=>{await page.locator('input[type=file]').first().setInputFiles({name,mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',buffer:input});await focus();await page.evaluate(()=>document.fonts.ready);};
+ const open=async(name)=>{
+  await page.locator('input[type=file]').first().setInputFiles({name,mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',buffer:input});
+  // Panels stay mounted when hidden. Wait for the new active tab before
+  // resolving a canvas, otherwise an old canvas handle can become hidden.
+  await page.waitForFunction(name=>document.querySelector('.office-tabbalk [aria-selected=true]')?.textContent.includes(name),name);
+  await page.evaluate(()=>document.fonts.ready);await focus();
+ };
  const keys=async(k,n=1)=>{for(let i=0;i<n;i++)await page.keyboard.press(k);};
  let serial=0;
  const save=async(name,expected)=>{
