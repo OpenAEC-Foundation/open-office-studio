@@ -79,7 +79,7 @@ def launch(app,paths):
     found=wait(lambda:own_pids() if len(own_pids())==1 else None,"Exactly one installed app process required",90)
     pid=found[0]
     # Keep the entire app on the actual 1024px CI desktop before tab clicks.
-    viewport=keyboard('set position of front window to {0, 25}\nset size of front window to {1024, 720}\nreturn {position of front window, size of front window}')
+    viewport=keyboard('set position of front window to {0, 25}\nset size of front window to {1024, 650}\nreturn {position of front window, size of front window}')
     report.setdefault('nativeWindowViewports',[]).append(viewport.strip())
     def ready():
         s=inspect()
@@ -87,6 +87,7 @@ def launch(app,paths):
         return s if s.get("languages") and save else None
     wait(ready,"Native language status and enabled Save control did not appear",90)
 def capture(name):
+    time.sleep(.25)
     run(["screencapture","-x",str(out/name)],capture_output=True,timeout=10)
 try:
     dmgs=list(package.glob("*.dmg"));assert len(dmgs)==1;dmg=dmgs[0]

@@ -2,6 +2,7 @@
 // Based on the bounds of runtime-macos-ax.swift at 9a9bfe39; independent helper.
 // No JS, TCC change, entitlements change, or document textarea value read.
 import ApplicationServices
+import CoreGraphics
 import Foundation
 
 let pid = pid_t(CommandLine.arguments[1])!
