@@ -1,0 +1,38 @@
+name: Writer 349 native macOS acceptance
+on:
+  push:
+    branches: [codex/writer-349-native-language-2026-11-16]
+    paths:
+      - scripts/haal-writer-349-macos.py
+      - scripts/proef-writer-349-macos.py
+      - scripts/writer-349-macos-ax.swift
+      - .github/workflows/writer-349-native-macos.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e1f84f84f4d72e5ce8ab967e376a6f38344edf39
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/349-harness
+      - name: Verify original F artifact and package bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .local/349-harness/scripts/haal-writer-349-macos.py
+      - name: Actual native AX language, keyboard, save and process reopen
+        run: python3 .local/349-harness/scripts/proef-writer-349-macos.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer349-native-language-macOS
+          path: .local/writer349-native-macos/
+          include-hidden-files: true
+          if-no-files-found: warn
