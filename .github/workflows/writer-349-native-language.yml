@@ -41,7 +41,7 @@ jobs:
       - name: Verify and fetch the original checked DEB and package report
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 .local/native-harness/scripts/haal-native-linux-ci.py
+        run: python3 .local/native-harness/scripts/haal-writer-349-linux.py
       - name: Native edit, Ctrl+S and full process reopen on unchanged package
         env:
           OFFICE_NATIVE_ARTIFACT_RECHECK: "true"
