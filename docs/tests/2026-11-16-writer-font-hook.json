@@ -1,0 +1,230 @@
+{
+  "datum": "2026-11-16",
+  "basis_integratie": "5743b455",
+  "basis_hoofdbranch": "d8796c33",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Volledige bestaande SDK-useLayoutPipeline in echte React/Chromium met gecontroleerde sessie/font-/layoutcallbacks getoetst. Private wachtrij per hookinstantie uitsluitend rond de layoutfontvoorvlucht geïntegreerd. Elf scenario’s per variant groen; bursts plus vervolgaanvraag101naar3uitvoeringen met gelijke laatste layoutaanvraag. Nog geen echte Worker/Wasm/native snelheidsfix of productacceptatie.",
+  "bron": {
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "hook_voor_sha256": "693be9beff8963801488975c9e7db7db090732b43319efd3aadf058afac4505b",
+    "hook_na_sha256": "8dbd333a5a48ddaad167c2ace3f3440fcc4002cb90d9024cb8456ff794840f9a",
+    "hook_gewijzigd_alleen_ref_en_voorvluchtaanroep": true
+  },
+  "wijziging": {
+    "baseline": "Kopie van vastgepinde bestaande SDK-index, alleen extra export van Af als proefHook. Ondersteunende SDK-modules via verwijzingen naar bestaande bestanden. Geen canonieke bron of geïnstalleerde SDK veranderd.",
+    "kandidaat": "Zelfde module plus eigen rijref per sessie/hook, effectcleanup en vervanging van uitsluitend de layoutvoorvluchtaanroep. Callbackidentiteit/invoer bij aanvraag vastgelegd;readLayoutRequest blijft direct.",
+    "levensduur": "Nieuwe sessie stopt oude rij; cleanup annuleert uitsluitend wachtend werk. Nieuwe annuleerWachtend-methode sluit de rij niet permanent, zodat StrictMode-setup/cleanup/setup bruikbaar blijft. Actieve taak nooit afgebroken.",
+    "grens": "Af is de volledige werkelijke SDK-hook, geen VM-branchkopie. Omringende sessie en callbacks blijven gecontroleerde testdubbels; geen volledige editor/replica/Worker-overdracht."
+  },
+  "browserproef": {
+    "geslaagd": true,
+    "baseline": {
+      "geslaagd": true,
+      "cases": [
+        {
+          "naam": "burst-en-hergebruik",
+          "strict": false,
+          "fontaanvragen": 101,
+          "layouts": 2,
+          "laatste_request": "{\"bodyStory\":\"body\",\"options\":{\"pageGap\":24},\"regions\":{\"sections\":[{\"properties\":{}}]},\"notes\":{\"contents\":[]},\"renderEnv\":{\"showHiddenText\":false,\"tocStyleIds\":[]},\"measurement\":{\"fontChains\":{},\"defaults\":{\"fontSize\":11,\"fontFamily\":\"test\"},\"compat\":{},\"authoritativeShaping\":true},\"cachedPageTotals\":true}"
+        },
+        {
+          "naam": "burst-en-hergebruik",
+          "strict": true,
+          "fontaanvragen": 101,
+          "layouts": 2,
+          "laatste_request": "{\"bodyStory\":\"body\",\"options\":{\"pageGap\":24},\"regions\":{\"sections\":[{\"properties\":{}}]},\"notes\":{\"contents\":[]},\"renderEnv\":{\"showHiddenText\":false,\"tocStyleIds\":[]},\"measurement\":{\"fontChains\":{},\"defaults\":{\"fontSize\":11,\"fontFamily\":\"test\"},\"compat\":{},\"authoritativeShaping\":true},\"cachedPageTotals\":true}"
+        },
+        {
+          "naam": "afzonderlijke-lezer",
+          "fontaanvragen": 3,
+          "layouts": 1
+        },
+        {
+          "naam": "bronwijziging-zonder-nieuwe-pass",
+          "fontaanvragen": 2,
+          "layouts": 1
+        },
+        {
+          "naam": "fouten",
+          "fouten": [
+            "Error: huidige fout"
+          ]
+        },
+        {
+          "naam": "strict-unmount",
+          "fontaanvragen": 2,
+          "layouts": 0
+        },
+        {
+          "naam": "sessiewissel",
+          "fontaanvragen": 3,
+          "layouts": 1
+        },
+        {
+          "naam": "direct-null",
+          "fonts": 0,
+          "layouts": 1
+        },
+        {
+          "naam": "onHost",
+          "fonts": 0,
+          "lokale_layouts": 1
+        },
+        {
+          "naam": "uitstel-hervatten",
+          "fonts": 1,
+          "layouts": 1
+        },
+        {
+          "naam": "omgeving-font-zoom",
+          "request": "{\"bodyStory\":\"body\",\"options\":{\"pageGap\":24},\"regions\":{\"sections\":[{\"properties\":{}}]},\"notes\":{\"contents\":[]},\"renderEnv\":{\"showHiddenText\":true,\"defaultParagraphStyleId\":\"Nieuw\",\"themeColors\":{\"accent1\":\"123456\"},\"tocStyleIds\":[]},\"measurement\":{\"fontChains\":{\"nieuw\":[7]},\"defaults\":{\"fontSize\":17,\"fontFamily\":\"nieuw\"},\"compat\":{},\"authoritativeShaping\":true},\"cachedPageTotals\":true}"
+        }
+      ]
+    },
+    "kandidaat": {
+      "geslaagd": true,
+      "cases": [
+        {
+          "naam": "burst-en-hergebruik",
+          "strict": false,
+          "fontaanvragen": 3,
+          "layouts": 2,
+          "laatste_request": "{\"bodyStory\":\"body\",\"options\":{\"pageGap\":24},\"regions\":{\"sections\":[{\"properties\":{}}]},\"notes\":{\"contents\":[]},\"renderEnv\":{\"showHiddenText\":false,\"tocStyleIds\":[]},\"measurement\":{\"fontChains\":{},\"defaults\":{\"fontSize\":11,\"fontFamily\":\"test\"},\"compat\":{},\"authoritativeShaping\":true},\"cachedPageTotals\":true}"
+        },
+        {
+          "naam": "burst-en-hergebruik",
+          "strict": true,
+          "fontaanvragen": 3,
+          "layouts": 2,
+          "laatste_request": "{\"bodyStory\":\"body\",\"options\":{\"pageGap\":24},\"regions\":{\"sections\":[{\"properties\":{}}]},\"notes\":{\"contents\":[]},\"renderEnv\":{\"showHiddenText\":false,\"tocStyleIds\":[]},\"measurement\":{\"fontChains\":{},\"defaults\":{\"fontSize\":11,\"fontFamily\":\"test\"},\"compat\":{},\"authoritativeShaping\":true},\"cachedPageTotals\":true}"
+        },
+        {
+          "naam": "afzonderlijke-lezer",
+          "fontaanvragen": 3,
+          "layouts": 1
+        },
+        {
+          "naam": "bronwijziging-zonder-nieuwe-pass",
+          "fontaanvragen": 2,
+          "layouts": 1
+        },
+        {
+          "naam": "fouten",
+          "fouten": [
+            "Error: huidige fout"
+          ]
+        },
+        {
+          "naam": "strict-unmount",
+          "fontaanvragen": 1,
+          "layouts": 0
+        },
+        {
+          "naam": "sessiewissel",
+          "fontaanvragen": 2,
+          "layouts": 1
+        },
+        {
+          "naam": "direct-null",
+          "fonts": 0,
+          "layouts": 1
+        },
+        {
+          "naam": "onHost",
+          "fonts": 0,
+          "lokale_layouts": 1
+        },
+        {
+          "naam": "uitstel-hervatten",
+          "fonts": 1,
+          "layouts": 1
+        },
+        {
+          "naam": "omgeving-font-zoom",
+          "request": "{\"bodyStory\":\"body\",\"options\":{\"pageGap\":24},\"regions\":{\"sections\":[{\"properties\":{}}]},\"notes\":{\"contents\":[]},\"renderEnv\":{\"showHiddenText\":true,\"defaultParagraphStyleId\":\"Nieuw\",\"themeColors\":{\"accent1\":\"123456\"},\"tocStyleIds\":[]},\"measurement\":{\"fontChains\":{\"nieuw\":[7]},\"defaults\":{\"fontSize\":17,\"fontFamily\":\"nieuw\"},\"compat\":{},\"authoritativeShaping\":true},\"cachedPageTotals\":true}"
+        }
+      ]
+    },
+    "browser": "151.0.7922.34",
+    "fouten": []
+  },
+  "onafhankelijke_vergelijking": {
+    "geslaagd": true,
+    "scenario_per_variant": 11,
+    "totaal": 22,
+    "aanvragen_en_foutresultaten_exact": true,
+    "referentie_burst_plus_vervolg": [
+      101,
+      101
+    ],
+    "kandidaat_burst_plus_vervolg": [
+      3,
+      3
+    ],
+    "geen_native_snelheidsclaim": true
+  },
+  "afkeuringen": [
+    {
+      "bestand": "afgekeurd-resolutie.json",
+      "reden": "Eerste private SDK-kopie kon sonner niet vanaf zijn nieuwe locatie vinden. Browser niet gereed; geen geslaagde hookproef. Opgelost door bare imports met oorspronkelijke SDK-resolutiebasis te laten verwerken."
+    },
+    {
+      "bestand": "afgekeurd-cjs.json",
+      "reden": "Met dependency discovery uit ontbrak de browser-CJS-omzetting van React. Browser niet gereed; geen geslaagde hookproef. Normale Vite dependency discovery hersteld. Daarna pilot en uitgebreide proeven groen."
+    }
+  ],
+  "getoetst": [
+    "Burst100passaanvragen+vervolgaanvraag,normaalenStrictMode;laatstevolledigelayoutrequestexact",
+    "Afzonderlijke readLayoutRequest-lezer niet geblokkeerd of geannuleerd",
+    "Bronversiewijziging zonder nieuw passnummer herplant",
+    "Oude fout niet gepubliceerd,huidige fout behouden",
+    "StrictMode-unmount en late antwoorden zonder layoutpublicatie",
+    "Sessieovergang publiceert alleen nieuwe gecontroleerde sessie",
+    "Directe nullroute en expliciete onHost-layout",
+    "Uitstel en hervatten zonder vroege fontaanvraag",
+    "Omgeving/fontmeetconfiguratie/zoom veranderen;nieuwe volledige request exact"
+  ],
+  "behoud": {
+    "referenties27_exact": true,
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "sdk_vendor_canonieke_bron_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+    },
+    "private_geprofileerde_bron_exact": true,
+    "python_syntaxis": [
+      "behoudcontrole.py"
+    ],
+    "vrije_bytes_na": 4396363776,
+    "productbron": "41e7000198f89d992e1059e9715636a44b39d21a"
+  },
+  "grenzen": [
+    "Geen echte Wasm/fontberekening/CRDT-mutaties,documentimport/export,voorstelpreview of echte Worker-overdracht;callbacks geven gecontroleerde lege layouts/fonts.",
+    "Geen native GUI/invoer/IME/UndoRedo/bewaren/DOCX/beelden of gewone korte/rijke ABBA deze ronde;geen snelheid of volledige visuele functieacceptatie uit requestaantallen.",
+    "Geen nieuwe native bouw of ELF;geen volledige productsuites/CI,geheugenfoutfix,andere platformen/edities/schema/release- of issue-/migratievoltooiing.",
+    "SDK-hook is gebruikt uit vastgepinde bron;private ee89c80e-positiecontextcorrectie is geen onderdeel van deze losse SDK-testkopie. Bij native kandidaat dezelfde gecorrigeerde basis behouden.",
+    "Hoogste bewaar-aanvrager nog onbekend;automatisch herstel niet gewijzigd."
+  ],
+  "vervolg": "Koppel de private volledige-hookkandidaat nu aan echte Wasm/font/layout- en CRDT-mutatiepariteit met de bestaande eigen corpusgrenzen. Toets echte voorstelpreview,replica/Worker-overdracht en bewaren waar gecontroleerde callbacks nu tekortschieten. Breng daarna uitsluitend dezelfde rij-/voorvluchtwijziging aan op de gecorrigeerde ee89c80e-private native bundel;behoud bestaande positiecontextcorrectie en alle font/bron/versie/env/generatieguards. Voldoende ruimte nu circa4GiB;bij bouw begin>=3,1GiB en stopvloer3GiB,27referenties en standaarddist behouden. Pas na passende pariteit een aparte native kandidaat en gewone korte/rijke ABBA plus invoer/selectie/UndoRedo/bewaren/DOCX/beelden. Zonder die bewijzen geen productovername of issuevoltooiing. Geen nieuwe algemene profiler;Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-16-writer-font-hook.tar.gz",
+    "sha256": "0c1016b991973ee16c960b0d1415e9c96a8ddbe51076f8f86055729ee51ef11b",
+    "bytes": 155292,
+    "bestanden": 17,
+    "ieder_manifestbestand_geverifieerd": true
+  }
+}
