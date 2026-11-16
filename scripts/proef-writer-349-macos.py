@@ -15,7 +15,7 @@ H=subprocess.check_output(["git","-C",str(base.parent),"rev-parse","HEAD"],text=
 sha=lambda b: hashlib.sha256(b).hexdigest()
 report={"applicationCommit":APP_SOURCE,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
 report["host"]={"macOS":platform.mac_ver()[0],"machine":platform.machine(),"platform":platform.platform(),"runnerOS":os.environ.get("RUNNER_OS")}
-report["keyboardProtocol"]={"documentStart":"Cmd+Up","documentEnd":"Cmd+Down","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z"}
+report["keyboardProtocol"]={"documentStart":"Cmd+Up","documentEnd":"Cmd+Down","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z","arrowIntervalMs":50,"caretProof":"native prefix copy via Cmd+Shift+Up and Cmd+C"}
 program=None;mount=out/"mounted";mounted=False;helper=out/"writer349-ax";pid=None;serial=0
 processes=runpy.run_path("scripts/proef-macos-openen.py")["processen"]
 def save_report(): (out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
@@ -50,13 +50,39 @@ def tab(name):
 def focus():
     state=inspect("focus-editor")
     if not state.get("performed"): raise PermissionError("Native AX editor focus unavailable")
+    report.setdefault('focusOperations',[]).append({k:state.get(k) for k in ['method','point','pageFrame','windowFrame','textareas']})
+    if len(report['focusOperations'])==1: capture('after-body-focus.png')
+def copied_prefix(name,expected=None):
+    run(['pbcopy'],input='',text=True,capture_output=True,timeout=5)
+    keyboard('key code 126 using {command down, shift down}')
+    keyboard('keystroke "c" using {command down}')
+    value='';started=time.monotonic();deadline=started+5
+    while time.monotonic()<deadline:
+        value=run(['pbpaste'],text=True,capture_output=True,timeout=5).stdout
+        if (expected is None and (value or time.monotonic()-started>1)) or (expected is not None and value==expected): break
+        time.sleep(.1)
+    report.setdefault('caretEvidence',[]).append({'step':name,'expected':expected,'actualPrefix':value[:120],'length':len(value),'method':'native selection to document start + native clipboard'})
+    save_report()
+    key(124)
+    if expected is not None: assert value==expected,'Actual native caret prefix does not match the intended 11-character position'
+    return value
 def language(name,expected):
-    state=wait(lambda: (lambda s:s if any(expected in t for t in s.get("languages",[])) else None)(inspect()),name+": expected "+expected)
+    try:
+        state=wait(lambda: (lambda s:s if any(expected in t for t in s.get("languages",[])) else None)(inspect()),name+": expected "+expected)
+    except AssertionError:
+        if name=='original boundary right':
+            capture('boundary-failed-before-copy.png')
+            try: copied_prefix(name+' failure diagnosis')
+            except Exception as e: report['caretDiagnosticError']=str(e)
+        raise
     report["checks"].append({"name":name,"expected":expected,"actual":state["languages"]});save_report()
 def boundary(name,left):
     key(126,"command down")
-    keyboard("\n".join("key code 124" for _ in range(left)))
+    keyboard("\n".join("key code 124\ndelay 0.05" for _ in range(left)))
     language(name+" left","Dutch");key(124);language(name+" right","English")
+    if name=='original boundary':
+        copied_prefix(name+' right verified','Nederlands ')
+        capture('boundary-right-verified.png')
 def paragraphs(path):
     with zipfile.ZipFile(path) as z: root=ET.fromstring(z.read("word/document.xml"))
     ns={"w":"http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
@@ -94,6 +120,7 @@ def capture(name):
 try:
     dmgs=list(package.glob("*.dmg"));assert len(dmgs)==1;dmg=dmgs[0]
     report["dmg"]={"name":dmg.name,"sha256":sha(dmg.read_bytes()),"bytes":dmg.stat().st_size}
+    assert report['dmg']['sha256']=='9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6','Pin the exact canonical G DMG derived from the verified archive before mounting or operation'
     report["packageControl"]=json.loads((package/"pakketcontrole-macOS.json").read_text())
     mount.mkdir(exist_ok=True)
     run(["hdiutil","attach","-readonly","-nobrowse","-mountpoint",str(mount),str(dmg.resolve())],capture_output=True,timeout=60);mounted=True
@@ -150,7 +177,7 @@ try:
     capture('save-as-modal.png');key(53)
     wait(lambda:not save_modal(),'Native Save As cancellation did not dismiss modal',20)
     report['checks'].append('Native Save As modal and correct filename inspected, then cancelled')
-    focus();keyboard('keystroke "s" using {command down}')
+    keyboard('keystroke "s" using {command down}')
     expected=['Nederlands English','Bonjour','Nogmaals Nederlands slot']
     wait(lambda:paragraphs(A)==expected,'Native CmdS did not preserve exact edited text',60)
     report['savedSha256']=sha(A.read_bytes());report['exactSavedParagraphs']=paragraphs(A);capture('saved.png')
