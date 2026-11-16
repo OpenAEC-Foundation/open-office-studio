@@ -15,6 +15,7 @@ H=subprocess.check_output(["git","-C",str(base.parent),"rev-parse","HEAD"],text=
 sha=lambda b: hashlib.sha256(b).hexdigest()
 report={"applicationCommit":APP_SOURCE,"harnessCommit":H,"harnessSha256":sha(Path(__file__).read_bytes()),"axSourceSha256":sha((base/"writer-349-macos-ax.swift").read_bytes()),"origin":origin,"status":"running","checks":[],"limits":["Writer only, bounded synthetic fixture","Disposable macOS CI host; no physical low-end performance claim","No TCC, entitlements, signing or security changes"]}
 report["host"]={"macOS":platform.mac_ver()[0],"machine":platform.machine(),"platform":platform.platform(),"runnerOS":os.environ.get("RUNNER_OS")}
+report["keyboardProtocol"]={"documentStart":"Cmd+Up","documentEnd":"Cmd+Down","nextSingleLineParagraph":"Down","undo":"Cmd+Z","redo":"Cmd+Shift+Z"}
 program=None;mount=out/"mounted";mounted=False;helper=out/"writer349-ax";pid=None;serial=0
 processes=runpy.run_path("scripts/proef-macos-openen.py")["processen"]
 def save_report(): (out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
@@ -53,7 +54,7 @@ def language(name,expected):
     state=wait(lambda: (lambda s:s if any(expected in t for t in s.get("languages",[])) else None)(inspect()),name+": expected "+expected)
     report["checks"].append({"name":name,"expected":expected,"actual":state["languages"]});save_report()
 def boundary(name,left):
-    key(115,"command down")
+    key(126,"command down")
     keyboard("\n".join("key code 124" for _ in range(left)))
     language(name+" left","Dutch");key(124);language(name+" right","English")
 def paragraphs(path):
@@ -132,10 +133,10 @@ try:
     run(['xcrun','swiftc',str(base/'writer-349-macos-ax.swift'),'-o',str(helper)],capture_output=True,timeout=120)
     report['axBinarySha256']=sha(helper.read_bytes())
     launch(app,[A,B]);report['firstPid']=pid
-    tab(A.name);focus();key(115,'command down');language('initial A','Dutch')
-    boundary('original boundary',10);key(125,'option down');language('next paragraph A','French')
-    key(119,'command down');type_text(' slot');time.sleep(1.2);language('after typing','Dutch')
-    key(115,'command down');type_text('x');time.sleep(1.2);boundary('inserted boundary',11)
+    tab(A.name);focus();key(126,'command down');language('initial A','Dutch')
+    boundary('original boundary',10);key(125);language('next paragraph A','French')
+    key(125,'command down');type_text(' slot');time.sleep(1.2);language('after typing','Dutch')
+    key(126,'command down');type_text('x');time.sleep(1.2);boundary('inserted boundary',11)
     keyboard('keystroke "z" using {command down}');time.sleep(1.2);boundary('Undo boundary',10)
     keyboard('keystroke "z" using {command down, shift down}');time.sleep(1.2);boundary('Redo boundary',11)
     keyboard('keystroke "z" using {command down}');time.sleep(1.2);boundary('restored after Undo',10)
@@ -153,18 +154,18 @@ try:
     expected=['Nederlands English','Bonjour','Nogmaals Nederlands slot']
     wait(lambda:paragraphs(A)==expected,'Native CmdS did not preserve exact edited text',60)
     report['savedSha256']=sha(A.read_bytes());report['exactSavedParagraphs']=paragraphs(A);capture('saved.png')
-    tab(B.name);focus();key(115,'command down');language('independent B','German');key(125,'option down');language('B second paragraph','Italian')
+    tab(B.name);focus();key(126,'command down');language('independent B','German');key(125);language('B second paragraph','Italian')
     for i in range(2):
         tab(A.name);language(f'A tab retained {i}','English');focus();boundary(f'A tab {i}',10)
-        tab(B.name);language(f'B tab retained {i}','Italian');focus();key(115,'command down');language(f'B tab reset {i}','German');key(125,'option down');language(f'B tab second {i}','Italian')
+        tab(B.name);language(f'B tab retained {i}','Italian');focus();key(126,'command down');language(f'B tab reset {i}','German');key(125);language(f'B tab second {i}','Italian')
     assert sha(B.read_bytes())==bhash and sha(A.read_bytes())==report['savedSha256']
     capture('tabs.png');close_app(True);report['firstProcessClosed']=True;report['firstCloseMethod']='native CmdQ'
     launch(app,[A,B]);report['secondPid']=pid;assert pid!=report['firstPid']
-    tab(A.name);focus();key(115,'command down');language('reopened A','Dutch');boundary('reopened boundary',10)
-    key(125,'option down');language('reopened second paragraph','French')
+    tab(A.name);focus();key(126,'command down');language('reopened A','Dutch');boundary('reopened boundary',10)
+    key(125);language('reopened second paragraph','French')
     assert sha(A.read_bytes())==report['savedSha256'] and sha(B.read_bytes())==bhash
     capture('reopened.png')
-    tab(B.name);focus();key(115,'command down');language('reopened independent B','German')
+    tab(B.name);focus();key(126,'command down');language('reopened independent B','German')
     assert sha(A.read_bytes())==report['savedSha256'] and sha(B.read_bytes())==bhash
     report['status']='passed'
 except (PermissionError,subprocess.TimeoutExpired) as e:

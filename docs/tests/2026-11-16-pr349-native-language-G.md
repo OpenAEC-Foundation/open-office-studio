@@ -33,6 +33,8 @@ De [JSON-receipt](2026-11-16-pr349-native-language-G.json) bewaart het volledige
 
 De eigen Mac-driver is voorbereid voor G en handmatige uitvoering op macOS 15 ARM64. Native vensterbegrenzing, een echte muisklik binnen de AX-tabnaamgrenzen en verificatie van de daadwerkelijke actieve venstertitel vervangen de onbewezen AXPress-activatie uit de [mislukte F-bronproef](2026-11-16-pr349-native-language.md). De correctie is nog niet native gevalideerd. Voor G worden uitsluitend bron-/digest-gecontroleerde pakketten gebruikt; er is geen extra F-poging gestart. Het standaard macOS-buildpakket is bij dit checkpoint nog niet beschikbaar.
 
+De G-Mac-driver gebruikt Cmd+Up/Down voor documentbegin/einde, overeenkomstig [de gedocumenteerde macOS-tekstbediening](https://support.apple.com/en-us/102650). De volgende alinea bestaat in deze kleine fixture uit één regel en wordt met gewone Down bereikt. Daarmee wordt een afwijkende Option+Down-betekenis niet met een taalfout verward. Undo/Redo gebruikt Cmd+Z/Cmd+Shift+Z; de 32 taalasserties blijven inhoudelijk behouden. De exacte native toetsen worden in het rapport geregistreerd.
+
 MacOS 15-bediening zal afzonderlijk van de macOS 26-bouwomgeving worden gelabeld. Geen TCC-, entitlements-, signing- of beveiligingswijziging, geen volledige textarea-value lezen en geen lokale Windows-GUI/opname. De eigen Mac-app en DMG-mount van de afgesloten F-poging zijn opgeruimd.
 
 Deze Linux-proef betreft de geïnstalleerde DEB op Xvfb; geen fysieke zwakke computer, Wayland, AppImage-bediening of algemene prestatie-/RAM-vrijgave. Windows-native, macOS-native, ondersteunde browserroute en de volledige G-combinatie blijven afzonderlijke platformcontroles bij de integratiechat; eerdere F-bewijzen krijgen geen G-label.
