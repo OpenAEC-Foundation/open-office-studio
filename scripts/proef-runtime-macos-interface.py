@@ -12,6 +12,13 @@ import sys
 import time
 
 
+def temporary_ax_failure(snapshot, pid, owned_pids):
+    """Retry only a trusted CannotComplete response from our still-live app."""
+    return (snapshot.get("status") == "blocked" and snapshot.get("trusted") is True
+            and set(snapshot.get("errors", {})) == {"-25204"}
+            and owned_pids == [pid])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("resources", type=Path)
@@ -59,9 +66,10 @@ def main():
         return snapshot
 
     try:
+        operation_deadline = time.monotonic() + 180
         started = True
         subprocess.run(["open", "-a", str(app), str(document)], check=True, timeout=20)
-        deadline = time.monotonic() + 90
+        deadline = min(time.monotonic() + 90, operation_deadline)
         pid = None
         while time.monotonic() < deadline:
             owned = processes(program)
@@ -79,11 +87,63 @@ def main():
             time.sleep(.5)
         else:
             raise RuntimeError("The converted ODT did not appear in the packaged app window title")
-        applescript(pid, 'set frontmost to true')
-        deadline = time.monotonic() + 90
+        activation = applescript(pid, 'set frontmost to true')
+        report["activation"] = {"exitCode": activation.returncode, "stderr": activation.stderr.strip()}
+        deadline = min(time.monotonic() + 90, operation_deadline)
+        positioned = False
+        state = {}
+        report["transientAXRetries"] = 0
+        while time.monotonic() < deadline:
+            state = inspect(pid, "inspect")
+            if state["status"] == "blocked":
+                if temporary_ax_failure(state, pid, processes(program)):
+                    report["transientAXRetries"] += 1
+                    time.sleep(.5)
+                    continue
+                report.update(status="blocked", reason=state["reason"])
+                return
+            if not positioned:
+                display = state.get("displayBounds", {})
+                width = min(1440, int(display.get("width", 0)) - 24)
+                height = min(950, int(display.get("height", 0)) - 100)
+                if width < 800 or height < 600:
+                    report.update(status="blocked", reason="CI display is smaller than the application's minimum window size")
+                    return
+                x, y = int(display.get("x", 0)) + 12, int(display.get("y", 0)) + 30
+                geometry = applescript(pid, f'set position of front window to {{{x}, {y}}}\n'
+                                           f'set size of front window to {{{width}, {height}}}\n'
+                                           'return {position of front window, size of front window}')
+                report["windowFit"] = {"display": display, "requested": [x, y, width, height],
+                                       "exitCode": geometry.returncode, "actual": geometry.stdout.strip(),
+                                       "stderr": geometry.stderr.strip()}
+                if geometry.returncode:
+                    report.update(status="blocked", reason="The owned native window could not be fitted to the CI display")
+                    return
+                positioned = True
+                time.sleep(.5)
+                continue
+            ready = any(button.get("enabled") and any(
+                text == label or text.startswith(label + " ·")
+                for text in [button.get("title", ""), button.get("description", "")]
+                for label in labels["saveAs"]
+            ) for button in state.get("buttons", []))
+            if ready:
+                subprocess.run(["screencapture", "-x", str(options.report.with_name("native-interface-ready.png"))],
+                               check=True, capture_output=True, timeout=10)
+                report["readyBeforeSaveAs"] = True
+                break
+            time.sleep(.5)
+        else:
+            report.update(status="blocked", reason="Native window/readiness did not become available within the bounded deadline")
+            return
+        deadline = min(time.monotonic() + 45, operation_deadline)
         while time.monotonic() < deadline:
             state = inspect(pid, "press")
             if state["status"] == "blocked":
+                if temporary_ax_failure(state, pid, processes(program)):
+                    report["transientAXRetries"] += 1
+                    time.sleep(.5)
+                    continue
                 report.update(status="blocked", reason=state["reason"])
                 return
             if state["pressed"]:
@@ -91,10 +151,14 @@ def main():
             time.sleep(.5)
         else:
             raise RuntimeError("Converted Writer document did not enable the native Save As button")
-        deadline = time.monotonic() + 45
+        deadline = min(time.monotonic() + 45, operation_deadline)
         while time.monotonic() < deadline:
             state = inspect(pid, "inspect")
             if state["status"] == "blocked":
+                if temporary_ax_failure(state, pid, processes(program)):
+                    report["transientAXRetries"] += 1
+                    time.sleep(.5)
+                    continue
                 report.update(status="blocked", reason=state["reason"])
                 return
             if any(label in text for label in labels["source"] for text in state.get("texts", [])):
