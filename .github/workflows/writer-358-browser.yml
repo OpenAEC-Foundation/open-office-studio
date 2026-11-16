@@ -1,0 +1,62 @@
+name: Writer 358 browser navigation
+on:
+  push:
+    branches: [codex/writer-358-native-harness-2026-11-16]
+  workflow_dispatch:
+    inputs:
+      application_commit:
+        description: Exact application SHA for every platform and both browser routes
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  browser:
+    if: github.event_name == 'workflow_dispatch'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    env:
+      APPLICATION_COMMIT: ${{ inputs.application_commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.application_commit }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/358-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec vitest run scripts/tekstnavigatie-compatibiliteit.test.ts scripts/tekstnavigatie-macos.test.ts src/tekst/gedeeld/navigatieAlineaTekst.test.ts
+      - run: pnpm build
+      - name: Supported production browser route
+        run: node .local/358-harness/scripts/proef-writer-358-browser.mjs
+        env:
+          WRITER358_OUT: .local/358-browser/normal
+      - run: pnpm build:hosted
+      - name: Supported standalone hosted browser route
+        run: node .local/358-harness/scripts/proef-writer-358-browser.mjs
+        env:
+          WRITER358_DIST: dist-hosted
+          WRITER358_ROUTE: /office/
+          WRITER358_OUT: .local/358-browser/hosted
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer358-browser-${{ runner.os }}
+          path: .local/358-browser/
+          include-hidden-files: true
+          if-no-files-found: warn

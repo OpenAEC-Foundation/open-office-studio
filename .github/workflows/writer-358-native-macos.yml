@@ -1,0 +1,70 @@
+name: Writer 358 native macOS navigation
+on:
+  push:
+    branches: [codex/writer-358-native-harness-2026-11-16]
+  workflow_dispatch:
+    inputs:
+      application_commit:
+        description: Exact application SHA shared by all platform checks
+        required: true
+        type: string
+      build_run:
+        description: Canonical desktop build on that exact application SHA
+        required: true
+        type: string
+      installer_id:
+        description: Fixed macOS installer artifact ID
+        required: true
+        type: string
+      installer_sha256:
+        description: Fixed macOS installer ZIP SHA256
+        required: true
+        type: string
+      control_id:
+        description: Fixed macOS package-control artifact ID
+        required: true
+        type: string
+      control_sha256:
+        description: Fixed macOS package-control ZIP SHA256
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      APPLICATION_COMMIT: ${{ inputs.application_commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.application_commit }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/358-harness
+      - name: Verify fixed application, archive and package identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NATIVE_BUILD_RUN: ${{ inputs.build_run }}
+          INSTALLER_ID: ${{ inputs.installer_id }}
+          INSTALLER_ZIP_SHA256: ${{ inputs.installer_sha256 }}
+          CONTROL_ID: ${{ inputs.control_id }}
+          CONTROL_ZIP_SHA256: ${{ inputs.control_sha256 }}
+        run: python3 .local/358-harness/scripts/haal-writer-358-macos.py
+      - name: Native Command boundaries, Shift selection, wrapped text and language
+        run: python3 .local/358-harness/scripts/proef-writer-358-macos.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer358-native-macOS
+          path: |
+            .local/writer358-native-macos/*.json
+            .local/writer358-native-macos/*.png
+            .local/writer358-native-macos/*.docx
+            .local/writer358-native-macos/app-manifest.txt
+          include-hidden-files: true
+          if-no-files-found: warn
