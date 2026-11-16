@@ -89,8 +89,14 @@ async function waitFor(check, message, timeout = 60_000) {
   throw new Error(`${message}${last ? `; ${last}` : ""}`);
 }
 async function screenshot(name) {
+  // DOM language assertions may finish before WebKit composites the caret and
+  // footer. Capture a settled frame; preserve the earlier run's raw artifacts.
+  const started=Date.now();
+  await request("POST", `/session/${session}/execute/async`, {script:"const done=arguments[arguments.length-1];requestAnimationFrame(()=>requestAnimationFrame(()=>done(true)))",args:[]});
+  await delay(250);
   const data = await request("GET", `/session/${session}/screenshot`);
   await writeFile(join(out, name), Buffer.from(data, "base64"));
+  (report.captures??=[]).push({file:name,settleMs:Date.now()-started,language:await evaluate("return document.querySelector('.statusbalk-taal')?.textContent??''")});
 }
 async function keys(actions) {
   await request("POST", `/session/${session}/actions`, {
