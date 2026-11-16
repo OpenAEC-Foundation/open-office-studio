@@ -22,7 +22,10 @@ func attribute(_ element: AXUIElement, _ name: String) -> CFTypeRef? {
 func string(_ element: AXUIElement, _ name: String) -> String {
     String((attribute(element, name) as? String ?? "").prefix(1500))
 }
-var report: [String: Any] = ["trusted": AXIsProcessTrusted(), "pressed": false]
+let display = CGDisplayBounds(CGMainDisplayID())
+var report: [String: Any] = ["trusted": AXIsProcessTrusted(), "pressed": false,
+    "displayBounds": ["x": Double(display.origin.x), "y": Double(display.origin.y),
+        "width": Double(display.width), "height": Double(display.height)]]
 let windows = attribute(app, kAXWindowsAttribute) as? [AXUIElement] ?? []
 if windows.isEmpty {
     report["status"] = "blocked"

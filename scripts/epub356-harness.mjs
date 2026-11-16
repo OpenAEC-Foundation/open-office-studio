@@ -41,34 +41,6 @@ assert.equal(mac.split("odtNativeWindow=True").length, 2);
 mac = mac
   .replace("odtNativeWindow=True", 'epubNativeWindow=True, inputFormat="epub"')
   .replace("The converted ODT", "The EPUB document");
-const beforePress = "        applescript(pid, 'set frontmost to true')\n";
-assert.equal(mac.split(beforePress).length, 2);
-mac = mac.replace(
-  beforePress,
-  beforePress +
-    `
-        # Capture the loaded book before Save As blurs the document behind it.
-        deadline = time.monotonic() + 90
-        while time.monotonic() < deadline:
-            state = inspect(pid, "inspect")
-            if state["status"] == "blocked":
-                report.update(status="blocked", reason=state["reason"])
-                return
-            ready = any(button.get("enabled") and any(
-                text == label or text.startswith(label + " ·")
-                for text in [button.get("title", ""), button.get("description", "")]
-                for label in labels["saveAs"]
-            ) for button in state.get("buttons", []))
-            if ready:
-                subprocess.run(["screencapture", "-x", str(options.report.with_name("epub-interface-ready.png"))],
-                               check=True, capture_output=True, timeout=10)
-                report["epubInputReadyBeforeSaveAs"] = True
-                break
-            time.sleep(.5)
-        else:
-            raise RuntimeError("The EPUB book did not enable Save As before its unobstructed capture")
-`,
-);
 await writeFile(macPath, mac);
 await copyFile(
   fileURLToPath(new URL("proef-epub356-hosted.mjs", import.meta.url)),
