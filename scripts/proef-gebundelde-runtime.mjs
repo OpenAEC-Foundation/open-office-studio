@@ -22,6 +22,8 @@ const python =
   (process.platform === "win32" ? "python" : "python3");
 const output = resolve(".local/gebundelde-runtime-proef");
 const interfaceOnly = process.argv.includes("--interface-only");
+const convertersOnly = process.argv.includes("--converters-only");
+assert(!(interfaceOnly && convertersOnly), "Choose one probe scope");
 await mkdir(output, { recursive: true });
 const root = resolve(process.argv[2] || "src-tauri/target/release/bundle");
 const packages = [];
@@ -199,18 +201,16 @@ for (const packageFile of packages) {
         ),
       );
     }
-    const nativeInterface = await proefInterface(
-      payload,
-      nativeOutput,
-      reportRoot,
-      temporary,
-    );
+    const nativeInterface = convertersOnly
+      ? { status: "not-run", reason: "Converter-only job; native UI runs on a separate fresh host" }
+      : await proefInterface(payload, nativeOutput, reportRoot, temporary);
     await writeFile(
       join(reportRoot, "native-interface.json"),
       JSON.stringify(nativeInterface, null, 2) + "\n",
     );
     results.push({
-      status: nativeInterface.status,
+      status: convertersOnly ? "passed" : nativeInterface.status,
+      scope: convertersOnly ? "converter-only" : "native-ui-and-converter-proof",
       package: payload.package,
       packageBytes: payload.packageBytes,
       packageSha256: payload.packageSha256,

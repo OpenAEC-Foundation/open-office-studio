@@ -134,14 +134,14 @@ jobs:
       - name: Linux WebKit driver
         if: runner.os == 'Linux'
         run: cargo install tauri-driver --version 2.1.0 --locked
-      - name: Native converter and installed UI acceptance
+      - name: Fresh native converter, macro, content and legacy proof
         if: runner.os != 'Linux'
-        run: node scripts/proef-gebundelde-runtime.mjs
-      - name: Native DEB and AppImage acceptance
+        run: node scripts/proef-gebundelde-runtime.mjs src-tauri/target/release/bundle --converters-only
+      - name: Fresh DEB and AppImage converter, macro, content and legacy proof
         if: runner.os == 'Linux'
         env:
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
-        run: xvfb-run -a node scripts/proef-gebundelde-runtime.mjs
+        run: node scripts/proef-gebundelde-runtime.mjs src-tauri/target/release/bundle --converters-only
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -152,8 +152,10 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
   recheck-native:
-    needs: candidate
-    if: needs.candidate.outputs.run != ''
+    needs: [candidate, build-and-check]
+    # A fresh host keeps converter crash alerts separate from native UI proof.
+    # Reuse still requires exact bytes and complete fresh converter evidence.
+    if: always() && needs.candidate.result == 'success' && (needs.candidate.outputs.run != '' || needs.build-and-check.result == 'success')
     strategy:
       fail-fast: false
       matrix:
@@ -188,13 +190,13 @@ jobs:
         with:
           name: runtime317-installers-${{ runner.os }}
           path: .local/runtime317-installers
-          run-id: ${{ needs.candidate.outputs.run }}
+          run-id: ${{ needs.candidate.outputs.run || github.run_id }}
           github-token: ${{ github.token }}
       - uses: actions/download-artifact@v4
         with:
           name: runtime317-proof-${{ runner.os }}
           path: .local
-          run-id: ${{ needs.candidate.outputs.run }}
+          run-id: ${{ needs.candidate.outputs.run || github.run_id }}
           github-token: ${{ github.token }}
       - name: Verify immutable source and package bytes before execution
         run: node scripts/runtime317-artifacts.mjs verify .local/runtime317-installers ${{ needs.candidate.outputs.commit }}
