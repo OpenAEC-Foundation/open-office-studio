@@ -1,0 +1,1899 @@
+{
+  "datum": "2026-11-16",
+  "basis_integratie": "cac82c4d",
+  "basis_hoofdbranch": "2da1986c",
+  "productbron": "41e7000198f89d992e1059e9715636a44b39d21a",
+  "besluit": "Private contextcorrectie slaagt functioneel en behoudt snelle hits tijdens openen/preview. Geen overtuigende native prestatiewinst: niet in product overgenomen. Ook de bewaarde vorige kandidaat reproduceert de eerdere circa9,3s niet; geen causaal nadeel aan alleen de correctie toegeschreven.",
+  "implementatie": "Huidige cachehit vergelijkt opgeslagen opening, previewing en workerroute met actuele waarden in plaats van hits tijdens openen/preview steeds te blokkeren. Het extra hergebruik na invalidatie blijft uitgesloten als oude of huidige context opent/previewt of niet de workerroute gebruikt. Sessie/generatie/gereedheid/segmentbron/bronversievoorwaarden en uitgebreide hookafhankelijkheden behouden. Alleen private editors-JS op acb770-basis; geen warm/R(k)/Wasm/productwijziging.",
+  "variant": {
+    "desktop": {
+      "code": 0,
+      "reden": null,
+      "seconden": 145.14526423602365,
+      "minimum_vrije_bytes": 12556939264,
+      "start_vrije_bytes": 12766814208,
+      "gecompileerde_crates": [
+        "open-office-studio"
+      ],
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "startgrens_gib": 3.1,
+      "stopgrens_gib": 3,
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/open-office-studio-projectie-context",
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "cargo_cache_app_verplaatst_zonder_dubbele_ELF": true
+    },
+    "bundel": {
+      "basis": "lint-invoer/dist",
+      "uitsluitend_vervangen": [
+        "assets/editors-bODdYQ4o.js"
+      ],
+      "voor_sha256": "4ec7dcee2304c018f60ff49f1f76d272aef13495b523d60da00c995f9656f04b",
+      "na_sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+      "node_syntaxis": 0,
+      "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "grens": "Private hergebruikskandidaat op geaccepteerde acb770-basis;geen warm-route/R(k)-wijziging of productbronwijziging."
+    },
+    "bronpinnen": {
+      "bestanden": {
+        "packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+        "packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+        "packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+        "packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+        "packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+      },
+      "idle": "Gecontroleerde planner;registreert geen echte browseridlewerkzaamheden. Overige vier modules uit ongewijzigde bron getranspileerd."
+    },
+    "diff": {
+      "status": "Private bronkandidaat; geen canonieke bron/productpatch. Volledige SDK-typecheck niet uitgevoerd.",
+      "voor_sha256": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32",
+      "na_sha256": "6769df54a90817f088c2f409de5ca7e07d252181925637f35eb0a1e38034774a",
+      "react": "Echte React19-browserproef met gecontroleerde sessie/projectiefactory; kern/projectie apart echt. Native bundel bevat dezelfde uitgebreide hookafhankelijkheden."
+    },
+    "sdk_contextcontract": {
+      "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "echt_retouranker": "return {session:R$1,sessionGeneration:Y,replicaReady:!j$1||A,requestReplica:Ut,workerProposalsReady:te,replicaReadyRef:j$1?ne:void 0,experimentalWorkerOpen:!!j$1,previewing:tt,handoffFrom:Ee,opening:tt||Ee!==null,notifyFramePresented:Ye,failOpening:Ft,storyBlocks:Dt,bodyBlocks:cr,inputPositionMap:Xt,displayPositionToLoc:Yn,locToDisplayPosition:rr,documentFromYrs:on,publishDirectInput:ce,scheduleCompatibilityWarm:Cn,cancelCompatibilityWarm:wn}",
+      "betekenis": "opening en previewing zijn echte booleans; generatie en workerroute staan in dezelfde hookretour. Geen runtimewaarden gemeten."
+    },
+    "platform": "Linux x86_64 release2026.45.52, writer-bronjournaal, runtimeschema2; eigen X11/DBus/XDG-profielen en eigen fixtures."
+  },
+  "volledige_projectie": {
+    "geslaagd": true,
+    "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "fixture_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+    "rich": [
+      {
+        "naam": "basis",
+        "size": 96258,
+        "tabellen": 128,
+        "referentie_bouw": 2,
+        "kandidaat_bouw": 1,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " test",
+        "size": 96263,
+        "tabellen": 128,
+        "referentie_bouw": 4,
+        "kandidaat_bouw": 2,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " Ω",
+        "size": 96265,
+        "tabellen": 128,
+        "referentie_bouw": 6,
+        "kandidaat_bouw": 3,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " العربية",
+        "size": 96273,
+        "tabellen": 128,
+        "referentie_bouw": 8,
+        "kandidaat_bouw": 4,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " 漢字",
+        "size": 96276,
+        "tabellen": 128,
+        "referentie_bouw": 10,
+        "kandidaat_bouw": 5,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " 🙂",
+        "size": 96279,
+        "tabellen": 128,
+        "referentie_bouw": 12,
+        "kandidaat_bouw": 6,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " á",
+        "size": 96282,
+        "tabellen": 128,
+        "referentie_bouw": 14,
+        "kandidaat_bouw": 7,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "\u000b",
+        "size": 96283,
+        "tabellen": 128,
+        "referentie_bouw": 16,
+        "kandidaat_bouw": 8,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": " einde",
+        "size": 96289,
+        "tabellen": 128,
+        "referentie_bouw": 18,
+        "kandidaat_bouw": 9,
+        "bron_versie_projectie_exact": true
+      }
+    ],
+    "grenzen": [
+      {
+        "naam": "generatiewissel",
+        "herbouw": true
+      },
+      {
+        "naam": "replica-niet-gereed",
+        "herbouw": true
+      },
+      {
+        "naam": "overdracht-open",
+        "herbouw": true
+      },
+      {
+        "naam": "preview",
+        "herbouw": true
+      },
+      {
+        "naam": "geen-experimentele-route",
+        "herbouw": true
+      },
+      {
+        "naam": "onbekende-generatie",
+        "herbouw": true
+      },
+      {
+        "naam": "segmentbron-vervangen",
+        "herbouw": true
+      },
+      {
+        "naam": "sessie-identiteit",
+        "herbouw": true
+      },
+      {
+        "naam": "headerroot-niet-hergebruiken",
+        "herbouw": true
+      },
+      {
+        "naam": "ontbrekend-verhaal",
+        "null": true
+      }
+    ],
+    "corpus": [
+      {
+        "kind": "latin",
+        "stappen": [
+          {
+            "naam": "latin",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "unicode",
+        "stappen": [
+          {
+            "naam": "unicode",
+            "size": 96274,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "leeg-tekst",
+        "stappen": [
+          {
+            "naam": "leeg-tekst",
+            "size": 96258,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 1,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "herhaling",
+        "stappen": [
+          {
+            "naam": "herhaling",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "herhaling",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 6,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "andere-font",
+        "stappen": [
+          {
+            "naam": "andere-font",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "andere-uitlijning",
+        "stappen": [
+          {
+            "naam": "andere-uitlijning",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "andere-delete",
+        "stappen": [
+          {
+            "naam": "andere-delete",
+            "size": 96263,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "andere-split",
+        "stappen": [
+          {
+            "naam": "andere-split",
+            "size": 96266,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "marges",
+        "stappen": [
+          {
+            "naam": "marges",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "documentmetadata",
+        "stappen": [
+          {
+            "naam": "documentmetadata",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "commentaar",
+        "stappen": [
+          {
+            "naam": "commentaar",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "nieuwe-story",
+        "stappen": [
+          {
+            "naam": "nieuwe-story",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "headertekst",
+        "stappen": [
+          {
+            "naam": "headertekst",
+            "size": 96258,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "twee-posities",
+        "stappen": [
+          {
+            "naam": "twee-posities",
+            "size": 96271,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "te-groot",
+        "stappen": [
+          {
+            "naam": "te-groot",
+            "size": 100355,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "zelfde-opmaak",
+        "stappen": [
+          {
+            "naam": "zelfde-opmaak",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "pending",
+        "stappen": [
+          {
+            "naam": "pending",
+            "size": 96258,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 1,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "pending",
+            "size": 96272,
+            "tabellen": 128,
+            "referentie_bouw": 6,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "pending",
+            "size": 96272,
+            "tabellen": 128,
+            "referentie_bouw": 8,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "fout-na-goed",
+        "stappen": [
+          {
+            "naam": "fout-na-goed",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "fout-na-goed",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 6,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": true
+          }
+        ]
+      },
+      {
+        "kind": "alleen-delete",
+        "stappen": [
+          {
+            "naam": "alleen-delete",
+            "size": 96033,
+            "tabellen": 127,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "alleen-opmaak",
+        "stappen": [
+          {
+            "naam": "alleen-opmaak",
+            "size": 96258,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "twee-auteurs",
+        "stappen": [
+          {
+            "naam": "twee-auteurs",
+            "size": 96271,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "lege-update",
+        "stappen": [
+          {
+            "naam": "lege-update",
+            "size": 96258,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 1,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "wijzigingsvoorstel",
+        "stappen": [
+          {
+            "naam": "wijzigingsvoorstel",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "acht-opeenvolgend",
+        "stappen": [
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96262,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96267,
+            "tabellen": 128,
+            "referentie_bouw": 6,
+            "kandidaat_bouw": 3,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96269,
+            "tabellen": 128,
+            "referentie_bouw": 8,
+            "kandidaat_bouw": 4,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96277,
+            "tabellen": 128,
+            "referentie_bouw": 10,
+            "kandidaat_bouw": 5,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96280,
+            "tabellen": 128,
+            "referentie_bouw": 12,
+            "kandidaat_bouw": 6,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96283,
+            "tabellen": 128,
+            "referentie_bouw": 14,
+            "kandidaat_bouw": 7,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96289,
+            "tabellen": 128,
+            "referentie_bouw": 16,
+            "kandidaat_bouw": 8,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "acht-opeenvolgend",
+            "size": 96294,
+            "tabellen": 128,
+            "referentie_bouw": 18,
+            "kandidaat_bouw": 9,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "opmaak-vet",
+        "stappen": [
+          {
+            "naam": "opmaak-vet",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "opmaak-lettertype",
+        "stappen": [
+          {
+            "naam": "opmaak-lettertype",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "opmaak-hyperlink",
+        "stappen": [
+          {
+            "naam": "opmaak-hyperlink",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "positief-gemengd-positief",
+        "stappen": [
+          {
+            "naam": "positief-gemengd-positief",
+            "size": 96262,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "positief-gemengd-positief",
+            "size": 96270,
+            "tabellen": 128,
+            "referentie_bouw": 6,
+            "kandidaat_bouw": 3,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          },
+          {
+            "naam": "positief-gemengd-positief",
+            "size": 96276,
+            "tabellen": 128,
+            "referentie_bouw": 8,
+            "kandidaat_bouw": 4,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "begin-alinea",
+        "stappen": [
+          {
+            "naam": "begin-alinea",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      },
+      {
+        "kind": "midden-alinea",
+        "stappen": [
+          {
+            "naam": "midden-alinea",
+            "size": 96264,
+            "tabellen": 128,
+            "referentie_bouw": 4,
+            "kandidaat_bouw": 2,
+            "bron_versie_projectie_exact": true,
+            "fout_zoals_verwacht": false
+          }
+        ]
+      }
+    ],
+    "controles": {
+      "locs": 16434026,
+      "targets": 2478610,
+      "nodes": 16565940
+    },
+    "modelgrens": "Werkelijke PagedEditor-callback en volledige projectie/segmentcache uit bron. Adapter voor echte Wasm leest segments/spans;storiesChangedSince invalideert gecontroleerd alle stories bij versiewijziging. Idleplanner gecontroleerd uitgeschakeld. Geen volledige React/SDK/GUI-proef.",
+    "geen_versielezing_op_1000_huidige_hits": true
+  },
+  "snelle_huidige_hits": {
+    "geslaagd": true,
+    "gevallen": [
+      {
+        "toestand": "normaal",
+        "vragen_per_fase": 17,
+        "bouw_eerste_fase": 1,
+        "extra_bouw_na_invalidatie": 0,
+        "geen_versielezing_op_huidige_hits": true
+      },
+      {
+        "toestand": "openen",
+        "vragen_per_fase": 17,
+        "bouw_eerste_fase": 1,
+        "extra_bouw_na_invalidatie": 1,
+        "geen_versielezing_op_huidige_hits": true
+      },
+      {
+        "toestand": "preview",
+        "vragen_per_fase": 17,
+        "bouw_eerste_fase": 1,
+        "extra_bouw_na_invalidatie": 1,
+        "geen_versielezing_op_huidige_hits": true
+      },
+      {
+        "toestand": "geen-worker",
+        "vragen_per_fase": 17,
+        "bouw_eerste_fase": 1,
+        "extra_bouw_na_invalidatie": 1,
+        "geen_versielezing_op_huidige_hits": true
+      },
+      {
+        "toestand": "niet-gereed",
+        "vragen_per_fase": 17,
+        "bouw_eerste_fase": 1,
+        "extra_bouw_na_invalidatie": 1,
+        "geen_versielezing_op_huidige_hits": true
+      },
+      {
+        "toestand": "onbekende-generatie",
+        "vragen_per_fase": 17,
+        "bouw_eerste_fase": 1,
+        "extra_bouw_na_invalidatie": 1,
+        "geen_versielezing_op_huidige_hits": true
+      }
+    ],
+    "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "grens": "Werkelijke PagedEditor-callback en volledige projectie/segmentcache uit bron. Adapter voor echte Wasm leest segments/spans;storiesChangedSince invalideert gecontroleerd alle stories bij versiewijziging. Idleplanner gecontroleerd uitgeschakeld. Geen volledige React/SDK/GUI-proef."
+  },
+  "react_hook": {
+    "geslaagd": true,
+    "browser": "151.0.7922.34",
+    "positief": {
+      "geslaagd": true,
+      "gevallen": [
+        "verse core met nieuwe generatie",
+        {
+          "patch": {
+            "opening": true
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": false
+        },
+        {
+          "patch": {
+            "opening": false
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": true
+        },
+        {
+          "patch": {
+            "previewing": true
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": false
+        },
+        {
+          "patch": {
+            "previewing": false
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": true
+        },
+        {
+          "patch": {
+            "experimentalWorkerOpen": false
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": false
+        },
+        {
+          "patch": {
+            "experimentalWorkerOpen": true
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": true
+        },
+        {
+          "patch": {
+            "replicaReady": false,
+            "replicaReadyRef": {
+              "current": false
+            }
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": false
+        },
+        {
+          "patch": {
+            "replicaReady": true,
+            "replicaReadyRef": {
+              "current": true
+            }
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": true
+        },
+        {
+          "patch": {},
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": false
+        },
+        {
+          "patch": {
+            "sessionGeneration": 3
+          },
+          "huidige_hits": 16,
+          "hergebruik_na_invalidatie": true
+        },
+        "nieuwe bronversie",
+        "nieuwe segmentbron"
+      ],
+      "builds": 19,
+      "versionReads": 25,
+      "grens": "Werkelijke React19/createRoot/useCallback in Chromium; echte callback, gecontroleerde sessie/projectiefactory. Geen native WebKit/volledige editor/replicaoverdracht."
+    },
+    "negatief": {
+      "negatieve_controle": true,
+      "verouderde_callback": true,
+      "verouderde_projectie": true,
+      "bouw": 1
+    },
+    "fouten": []
+  },
+  "structuur_en_sessie": {
+    "geslaagd": true,
+    "stappen": [
+      {
+        "naam": "begin",
+        "size": 96258,
+        "tabellen": 128,
+        "referentie_bouw": 2,
+        "kandidaat_bouw": 1,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "cel-splitsen",
+        "size": 96262,
+        "tabellen": 128,
+        "referentie_bouw": 4,
+        "kandidaat_bouw": 2,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "splits-undo",
+        "size": 96258,
+        "tabellen": 128,
+        "referentie_bouw": 6,
+        "kandidaat_bouw": 3,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "splits-redo",
+        "size": 96262,
+        "tabellen": 128,
+        "referentie_bouw": 8,
+        "kandidaat_bouw": 4,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "cellen-samenvoegen",
+        "size": 96260,
+        "tabellen": 128,
+        "referentie_bouw": 10,
+        "kandidaat_bouw": 5,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "geneste-tabel",
+        "size": 96282,
+        "tabellen": 129,
+        "referentie_bouw": 12,
+        "kandidaat_bouw": 6,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "nest-undo",
+        "size": 96260,
+        "tabellen": 128,
+        "referentie_bouw": 14,
+        "kandidaat_bouw": 7,
+        "bron_versie_projectie_exact": true
+      },
+      {
+        "naam": "nest-redo",
+        "size": 96282,
+        "tabellen": 129,
+        "referentie_bouw": 16,
+        "kandidaat_bouw": 8,
+        "bron_versie_projectie_exact": true
+      }
+    ],
+    "overdracht": [
+      "nieuwe echte Wasm-sessie, snapshotgeladen, opening/niet-gereed,16huidigehits",
+      "gereed:verseprojectie,daarna hergebruik bij tweede invalidatie"
+    ],
+    "grens": "Werkelijke PagedEditor-callback en volledige projectie/segmentcache uit bron. Adapter voor echte Wasm leest segments/spans;storiesChangedSince invalideert gecontroleerd alle stories bij versiewijziging. Idleplanner gecontroleerd uitgeschakeld. Geen volledige React/SDK/GUI-proef.",
+    "controles": {
+      "locs": 1718958,
+      "targets": 1732866,
+      "nodes": 1732866
+    }
+  },
+  "native_abba": [
+    {
+      "naam": "native-klein-a-een",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 44.49795633397298,
+      "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-klein-a-een"
+      ],
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16565,
+        "begin_tot_bron_ms": 1308,
+        "laatste_keyup_tot_bron_ms": 41,
+        "laatste_keyup_tot_frame_ms": 326,
+        "begin_tot_frame_ms": 1593,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1730,
+        "wall_verzonden_tot_frame_ms": 549,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-klein-b-een",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 44.843822479015216,
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/open-office-studio-projectie-context",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-klein-b-een"
+      ],
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16684,
+        "begin_tot_bron_ms": 1360,
+        "laatste_keyup_tot_bron_ms": 41,
+        "laatste_keyup_tot_frame_ms": 453,
+        "begin_tot_frame_ms": 1772,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1881,
+        "wall_verzonden_tot_frame_ms": 727,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-klein-b-twee",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 44.04025494598318,
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/open-office-studio-projectie-context",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-klein-b-twee"
+      ],
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16635,
+        "begin_tot_bron_ms": 1504.0000000000036,
+        "laatste_keyup_tot_bron_ms": 44.00000000000364,
+        "laatste_keyup_tot_frame_ms": 282,
+        "begin_tot_frame_ms": 1742,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1882,
+        "wall_verzonden_tot_frame_ms": 741,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-klein-a-twee",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 44.782327384979,
+      "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "helper_sha256": "10125e81291e6341dc321098c5eeae2873d33a88636e63770f7ba3f403c5cbea",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-klein.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-klein-a-twee"
+      ],
+      "invoer": {
+        "tekens": 27,
+        "interval_ms": 80,
+        "laatste_keyup_ms": 16561,
+        "begin_tot_bron_ms": 1325,
+        "laatste_keyup_tot_bron_ms": 29,
+        "laatste_keyup_tot_frame_ms": 258,
+        "begin_tot_frame_ms": 1554,
+        "paginas": 1,
+        "laatste_frame_tekst": "materialen die lang meegaan en opnieuw bruikbaar zijn.VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. Een korte zin. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 1679,
+        "wall_verzonden_tot_frame_ms": 530,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-rijk-a-een",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 71.28191242797766,
+      "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-rijk-a-een"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 34038.00000000001,
+        "begin_tot_bron_ms": 9730,
+        "laatste_keyup_tot_bron_ms": 288.9999999999927,
+        "laatste_keyup_tot_frame_ms": 4326,
+        "begin_tot_frame_ms": 13767.000000000007,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13954,
+        "wall_verzonden_tot_frame_ms": 12108,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-rijk-b-een",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 68.94298330298625,
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/open-office-studio-projectie-context",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-rijk-b-een"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 32933,
+        "begin_tot_bron_ms": 9070.000000000007,
+        "laatste_keyup_tot_bron_ms": 300.0000000000073,
+        "laatste_keyup_tot_frame_ms": 4397,
+        "begin_tot_frame_ms": 13167,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13180,
+        "wall_verzonden_tot_frame_ms": 11354,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-rijk-b-twee",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 70.00592194800265,
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/open-office-studio-projectie-context",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-rijk-b-twee"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33506,
+        "begin_tot_bron_ms": 9491,
+        "laatste_keyup_tot_bron_ms": 277,
+        "laatste_keyup_tot_frame_ms": 4675,
+        "begin_tot_frame_ms": 13889,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 14099,
+        "wall_verzonden_tot_frame_ms": 12281,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-rijk-a-twee",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 69.25945493200561,
+      "programma_sha256": "acb77036935feed425b7c81a5dbd2ef796ffcb4307db96c9845aa6dd8b70c958",
+      "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-rijk-a-twee"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33281,
+        "begin_tot_bron_ms": 9502,
+        "laatste_keyup_tot_bron_ms": 387,
+        "laatste_keyup_tot_frame_ms": 4257.000000000007,
+        "begin_tot_frame_ms": 13372.000000000007,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13633,
+        "wall_verzonden_tot_frame_ms": 11785,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    }
+  ],
+  "extra_vorige_kandidaat": [
+    {
+      "naam": "native-rijk-oud-een",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 69.34485470503569,
+      "programma_sha256": "075b5a98c668a29a6456c4a258e353ac62a9af5fa542ace98426f419db800eda",
+      "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-hergebruik/open-office-studio-projectie-hergebruik",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-rijk-oud-een"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33639,
+        "begin_tot_bron_ms": 9912,
+        "laatste_keyup_tot_bron_ms": 259,
+        "laatste_keyup_tot_frame_ms": 3960.0000000000073,
+        "begin_tot_frame_ms": 13613.000000000007,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13624,
+        "wall_verzonden_tot_frame_ms": 11825,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "naam": "native-rijk-oud-twee",
+      "code": 0,
+      "geslaagd": true,
+      "fout": null,
+      "seconden": 69.46301638300065,
+      "programma_sha256": "075b5a98c668a29a6456c4a258e353ac62a9af5fa542ace98426f419db800eda",
+      "helper_sha256": "7c1b651bccfff827dbeb10e6b4795ee4505b898a21176f3c12bbc2d5b324b5d9",
+      "opdracht": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/proef-rijk.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-hergebruik/open-office-studio-projectie-hergebruik",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/native-rijk-oud-twee"
+      ],
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 33535.00000000001,
+        "begin_tot_bron_ms": 9411.000000000007,
+        "laatste_keyup_tot_bron_ms": 250,
+        "laatste_keyup_tot_frame_ms": 4253,
+        "begin_tot_frame_ms": 13414.000000000007,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 13424,
+        "wall_verzonden_tot_frame_ms": 11596,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    }
+  ],
+  "metingen": {
+    "klein": [
+      {
+        "naam": "native-klein-a-een",
+        "wall_ms": 1730,
+        "keyup_frame_ms": 326
+      },
+      {
+        "naam": "native-klein-b-een",
+        "wall_ms": 1881,
+        "keyup_frame_ms": 453
+      },
+      {
+        "naam": "native-klein-b-twee",
+        "wall_ms": 1882,
+        "keyup_frame_ms": 282
+      },
+      {
+        "naam": "native-klein-a-twee",
+        "wall_ms": 1679,
+        "keyup_frame_ms": 258
+      }
+    ],
+    "rijk": [
+      {
+        "naam": "native-rijk-a-een",
+        "wall_ms": 13954,
+        "keyup_frame_ms": 4326
+      },
+      {
+        "naam": "native-rijk-b-een",
+        "wall_ms": 13180,
+        "keyup_frame_ms": 4397
+      },
+      {
+        "naam": "native-rijk-b-twee",
+        "wall_ms": 14099,
+        "keyup_frame_ms": 4675
+      },
+      {
+        "naam": "native-rijk-a-twee",
+        "wall_ms": 13633,
+        "keyup_frame_ms": 4257.000000000007
+      },
+      {
+        "naam": "native-rijk-oud-een",
+        "wall_ms": 13624,
+        "keyup_frame_ms": 3960.0000000000073
+      },
+      {
+        "naam": "native-rijk-oud-twee",
+        "wall_ms": 13424,
+        "keyup_frame_ms": 4253
+      }
+    ]
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "native-klein-a-een": {
+        "sha256": "63a5949612dd687245157db97fd1ab0a88f1fa1c9436ddb6957efdf1266ec394",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "195bc8b3a0015952fdbebeaf5d3f81efc0aca1eb3259a45af612bc1a6943d98c",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-klein-a-twee": {
+        "sha256": "acc9d2987bddbcff8da3b3f73a82528efa8c050659814060befed9fee1478c74",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "f0c256e9b2e35e448102ae33507e4bf4c221132bf3885e9e45f8292a8161282b",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-klein-b-een": {
+        "sha256": "71dff111e93a4ce5db08867ebf9fd4bbac12e4423ef5198fa41b0451a1584898",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "cbd8dd93e03545d79ebc71148133f9dbb910ec3a801de5f2b55cb3f322c2268e",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-klein-b-twee": {
+        "sha256": "8720050a4403ebb4bc20f96ba4878bab9084545b1c58ba18a8c69fe3f05e80d0",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "6d70fa0c422cd3ec25c74b82d6b276fc09c430f479824a1b306e7cf2c0b3bf9b",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-a-een": {
+        "sha256": "f9647e7489b867bc1b120f68ed7803dc5d5e5b596b87eaeb92b1cc3bd694bfb3",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "1257e702f7464163d2bfa3f6506374f7ab8b94f465a236365b28db85a6c09b03",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-a-twee": {
+        "sha256": "d576930b622b3ed8accdc338eeb86b2db8eee0288575289b606872e78a3041b8",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "2cf9e9ad6f97e81bcaed4dc6713ebacfe81516fee748a5c4624c578088c9f89e",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-b-een": {
+        "sha256": "f5d0cb260c0e0476b90841866cfab8251b3f278d07ff448f6de020b22cf9f25c",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "3123ea6794351170adc900b9872860919de2193e9cbd3a475a13441db60d736c",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-b-twee": {
+        "sha256": "bbb5a1fab319c76752ed10ed9fc57286577e31182fc85aff4af5902aabce93c3",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "0c7cb1475e5dd7cfd6dede019d6537c410c05dda338fb8c62e1c54a85e3049fd",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-oud-een": {
+        "sha256": "8e28737a0c6905cc1be80831ec33da9abcf1321154bff7d42255875384b22fa6",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "b657ffeb320ffaa2d34cd156aa77dfd2aee852c88202dd9b435eaf268c1833e5",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-oud-twee": {
+        "sha256": "90a56a21f6f4b5eec81c9667ab3e038fcc385e791a3d4bd10c48ef30aef650bc",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "cd1aa305c333131e9efa9301db2df28ad5e4db0734ad009c8a1faea5deb2e468",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "beelden": [
+      {
+        "referentie": "native-klein-a-een/invoer-redo.png",
+        "vergeleken": "native-klein-b-een/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-klein-b-een/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-klein-b-een/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/invoer-redo.png",
+        "vergeleken": "native-klein-b-twee/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-klein-b-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-klein-b-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/invoer-redo.png",
+        "vergeleken": "native-klein-a-twee/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-klein-a-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-klein-a-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/invoer-redo.png",
+        "vergeleken": "native-rijk-b-een/invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-rijk-b-een/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-rijk-b-een/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/invoer-redo.png",
+        "vergeleken": "native-rijk-b-twee/invoer-redo.png",
+        "verschillende_pixels": 58,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-rijk-b-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-rijk-b-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/invoer-redo.png",
+        "vergeleken": "native-rijk-a-twee/invoer-redo.png",
+        "verschillende_pixels": 58,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-rijk-a-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-rijk-a-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "gehele_beelden_exact": 14,
+    "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+  },
+  "pakketvergelijking": {
+    "native-klein-a-een": [],
+    "native-klein-a-twee": [
+      "docProps/core.xml"
+    ],
+    "native-klein-b-een": [
+      "docProps/core.xml"
+    ],
+    "native-klein-b-twee": [
+      "docProps/core.xml"
+    ],
+    "native-rijk-a-een": [],
+    "native-rijk-a-twee": [
+      "docProps/core.xml"
+    ],
+    "native-rijk-b-een": [
+      "docProps/core.xml"
+    ],
+    "native-rijk-b-twee": [
+      "docProps/core.xml"
+    ],
+    "native-rijk-oud-een": [
+      "docProps/core.xml"
+    ],
+    "native-rijk-oud-twee": [
+      "docProps/core.xml"
+    ]
+  },
+  "beeldbeoordeling": {
+    "bekeken": [
+      "native-rijk-b-twee/snel-getypt-bewaard.png",
+      "native-klein-b-twee/invoer-redo.png"
+    ],
+    "bevinding": "Zichtbare tekst, tabelopmaak, invoereinde en status behouden. Beide geselecteerde beelden pixelgelijk aan respectieve A1. Alle afwijkingen blijven ongewijzigd gerapporteerd.",
+    "pixelparen": 18,
+    "pixelgelijk": 14,
+    "grens": "Twee geselecteerde beelden bekeken, niet alle paginas; geen volledige visuele/glyph/paintacceptatie."
+  },
+  "behoud": {
+    "eerdere_25_ELFs_exact": true,
+    "referenties_inclusief_kandidaat": 26,
+    "standaarddist_529_byte_mode_mtime_exact": true,
+    "sdk_vendor_npm_en_canonieke_bron_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+    },
+    "productbron_ongewijzigd": true
+  },
+  "scriptcontroles": [
+    {
+      "pad": "bouwen-native.py",
+      "soort": "Python syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "documenten-beelden.py",
+      "soort": "Python syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "native-ronden.py",
+      "soort": "Python syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "native-vorige.py",
+      "soort": "Python syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "afgekeurd-celnaam-aanname.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "afgekeurd-zonder-undo-tracking.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "bundel.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "contextmatrix.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "proef.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "react-proef.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "structuur-overdracht.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "structuur-verkenning.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "voorbereiden.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "modules/inputPositionMap.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "modules/pageBuildScheduler.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "modules/sessionInternals.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "modules/yrsPositionProjection.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "modules/yrsStorySegmentCache.mjs",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "callback-native-voor.js",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "callback-native.js",
+      "soort": "Node syntax",
+      "geslaagd": true
+    },
+    {
+      "pad": "browser/main.js",
+      "soort": "Node syntax",
+      "geslaagd": true
+    }
+  ],
+  "afkeuringen": [
+    "De onderbroken eerste voorbereider van13november sloeg contextvelden nog niet op; geen eindrapport of geslaagde proef. Oude callbacks en lege runlog behouden. Voor hervatte uitvoering is de voorbereider gecorrigeerd.",
+    "Eerste extra structuurharness vergat raw.track_undo(); undo gaf false voordat tracking begon. Na expliciet starten van tracking slagen echte split/undo/redo.",
+    "Tweede structuurharness nam ten onrechte storyprefix cell: aan. Na lezen van de echte eerste tabelcelstory slagen nest/undo/redo en sessieoverdracht. Beide afkeuringen ongewijzigd bewaard; geen productregressie hieruit geclaimd."
+  ],
+  "grenzen": [
+    "Werkelijke volledige projectie en segmentcache uit vastgepinde bron op echte geaccepteerde Wasm. Gecontroleerde adapter invalideert alle stories bij versiewijziging; idle/digestplanner uitgeschakeld. Geen volledige SDK-/React-editorprojectie in componentproef.",
+    "Negen rijke toestanden, tien contextgrenzen, dertig corpusgevallen met43 echte updates behouden node/locatie/target/blockBoundary/tabellen en staat/versie. Targets in corpus elke31 en aanwezige nodes; rijke toestanden alle posities. Hoofdproef heeft16434026locatie-,2478610target- en16565940nodecontroles.",
+    "Zes contexttoestanden: normaal/openen/preview/geenworker/nietgereed/onbekendegeneratie. Elke toestand houdt16herhaalde huidige hits zonder nieuwe constructie of version()-lezing. Na invalidatie alleen normaal hergebruik; overige toestanden een verse constructie, daarna weer hits.",
+    "Werkelijke React19/createRoot/useCallback in Chromium151 met verse coreobjecten en contextovergangen. De echte callback gebruikt hier een gecontroleerde sessie/projectiefactory; geen native WebKit/full-editor-overdracht. Negatieve afhankelijkhedencontrole houdt onterecht oude callback/projectie bij generatiewissel.",
+    "Acht extra echte Wasm-toestanden: basis,cel splitsen,undo,redo,samenvoegen,nest,undo,redo. Twee aanvullende sessiefasen laden dezelfde bron in een andere echte Wasm-sessie,opening/nietgereed en gereed.1718958locatie- en1732866node/targetcontroles exact; geen echte Worker-timing/handoffprotocol of native tabel-GUI-acceptatie.",
+    "ABBA zonder gelijktijdige bouw/componentproeven/profielopname. Twee extra vorige-kandidaatronden volgen erna; geen tweede volledige gerandomiseerde driewegvergelijking. Andere meetdag is geen bewijs voor een specifieke machineoorzaak.",
+    "Wandklok vanaf fysieke verzending omvat wachten voor keyupontvangst; renderlijst+twee rAFs is geen fysieke schermpaint. Geen algemene causaliteit of snelheidswinst uit slechts minder gemodelleerde constructies.",
+    "Tien DOCX onafhankelijk SHA/ZIP/CRC/XML/relaties/tabellen/UTF16 gecontroleerd:klein1tabel736UTF16,rijk128tabellen91423UTF16. Binnen corpus alleen core.xmlverschil.14/18 vaste ABBA-beeldparen pixelgelijk,twee geselecteerde beelden bekeken; geen volledige visuele acceptatie."
+  ],
+  "niet_gecontroleerd": [
+    "Geen productiepatch/SDK/vendorwijziging, volledige frontend/TypeScript/Python-productsuite, volledige SDK-typecheck of product-CI. Private Linux-featurebouw en genoemde gerichte proeven wel uitgevoerd.",
+    "Geen Windows/macOS, installers, andere edities/features/schema/releasevarianten, volledige IME/accessibility/alle documenten/visuele dekking.",
+    "Bestaande geheugen-/RefCell-fouten en migratiegebieden blijven open. Geen issue gesloten."
+  ],
+  "vervolg": "Tel op de gecorrigeerde ee89c80e-kandidaat begrensd de werkelijk uitgevoerde huidige cachehits, extra hergebruikshits en constructies/afwijzingsredenen, gekoppeld aan sessie/generatie/replicaReady/opening/preview/segmentbron en bron-/projectieversie. Gebruik normale JS-meetexpressies met verliesloze groepering, geen hoofdthread-Debugger. Verifieer eerst of de native route werkelijk hergebruikt voordat een nieuwe cache-/uitstelwijziging of productovername volgt. Behoud huidige contextcorrectie en volledige projecties. Vergelijk daarna dezelfde bron op vaste normale native ronden; geen prestatiewinst op13november als blijvend aannemen. R(k) apart, Database laatst.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-13-writer-projectie-hergebruik.tar.gz",
+      "sha256": "9de4f41b4ade2e1b207d479e59b5bb192a47098fd1300a916305d62c3db3fc44"
+    }
+  ],
+  "bewijs": {
+    "pad": "docs/tests/2026-11-16-writer-projectie-context.tar.gz",
+    "sha256": "de728348c73486b9c383265cec6a13312c2a69c790b14a6d9e63720e83b2d849",
+    "bytes": 11667854,
+    "bestanden": 205,
+    "alle_leden_byteexact_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/dist. Wel callbacks/diff/modules/gecontroleerde planner,React-browserproef,component/corpusupdates/structuurproeven,alle afkeuringen,10nativefunctierapporten,DOCX/PNG/logs en bron/bouw/referentiepinnen."
+  }
+}
