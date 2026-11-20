@@ -1,0 +1,43 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "desktopRun": 44715026752,
+  "harnessAttempt": "3",
+  "harnessCommit": "bb0523185bd66fd5004470875b0ff6495650902f",
+  "artifact": {
+    "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "desktopRun": 44715026752,
+    "platform": "Linux",
+    "artifactId": 14620765849,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "190268d6b876931e06b52a915ca0af4082238ea1f7110d3d35461b1629692699",
+    "packages": [
+      {
+        "path": "appimage/Open Office Studio_2026.46.2_amd64.AppImage",
+        "kind": "appimage",
+        "sha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964"
+      },
+      {
+        "path": "deb/Open Office Studio_2026.46.2_amd64.deb",
+        "kind": "deb",
+        "sha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247"
+      }
+    ]
+  },
+  "platform": "Linux",
+  "visualAcceptance": "pending independent original image review",
+  "nativeInvalidInput": "not run; separate exact-source browser/unit checks",
+  "results": [
+    {
+      "kind": "appimage",
+      "packageSha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964",
+      "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+      "status": "failed",
+      "error": "Error: Command failed: python3 scripts/epub356-final-linux-save.py --pid 5181 --save /home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/saved/leesvolgorde.docx --report /home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/native-os-save.json --portal /home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/native-portal.json",
+      "temporaryDisposed": false,
+      "temporaryRetainedOnFailure": "/tmp/oos-epub356-final-i45Kpg"
+    }
+  ],
+  "status": "failed",
+  "error": "Error: Command failed: python3 scripts/epub356-final-linux-save.py --pid 5181 --save /home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/saved/leesvolgorde.docx --report /home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/native-os-save.json --portal /home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/native-portal.json",
+  "originalUnchanged": true
+}
