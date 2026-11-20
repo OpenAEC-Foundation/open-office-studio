@@ -427,49 +427,8 @@ try {
   await clickCanvas();
   await chord("\uE011");
   await check("baseline", 3, 3, expected);
-  for (const side of ["Left", "Right"]) {
-    if (side === "Right") await clickElement(await named("tab", "Home"));
-    await clickElement(await named("tab", "Table Design"));
-    const tabFocus = await state();
-    assert.equal(
-      tabFocus.focus.role,
-      "tab",
-      "Native mouse tab selection must own focus before insert",
-    );
-    report.checks.push({ name: `${side} ribbon focus`, ...tabFocus });
-    await clickButton(`Insert Column ${side}`);
-    await check(`${side} inserted`, 4);
-    // Crucial: no focus(), body click, or canvas input between insert and Undo.
-    await chord("z");
-    await check(`${side} immediate Undo`, 3, 3, expected);
-    await chord("y");
-    await check(`${side} Redo`, 4);
-    await chord("z");
-    await check(`${side} final Undo`, 3, 3, expected);
-  }
-  report.undoScreenshotSha256 = await screenshot("column-undo");
-  await clickCanvas(600, 180);
-  await press("\uE004");
-  await type("newrow");
-  const added = await check("last-cell Tab and typing", 3, 4, [
-    ...expected,
-    "newrow",
-    "",
-    "",
-  ]);
-  assert.equal(added.tables[0].cells[9], "newrow");
-  await chord("z");
-  await chord("z");
-  await check("Tab row Undo", 3, 3, expected);
-  await clickCanvas();
-  await press("\uE011");
-  await type("X");
-  await check("ordinary typing", 3, 3, ["Xalpha", ...expected.slice(1)]);
-  await chord("z");
-  await check("typing Undo", 3, 3, expected);
-  await chord("y");
-  await check("typing Redo", 3, 3, ["Xalpha", ...expected.slice(1)]);
-  await chord("z");
+  // Keep this investigation isolated from unrelated row/typing scenarios.
+  // The complete earlier acceptance results remain unchanged in their original receipts.
   await clickElement(await named("tab", "Table Design"));
   await clickButton("Insert Column Right");
   await check("before Find", 4);
@@ -501,6 +460,13 @@ try {
       else execFileSync('xdotool',['key','--clearmodifiers','ctrl+z'],{env});
       await delay(200);
       await sample(`${method} ${field} after one Undo`);
+      // Separate engine/history control, after the original shortcut result is preserved.
+      const undo=await evaluate("return document.execCommand('undo')");
+      report.checks.push({name:`${method} ${field} explicit native undo control`,commandReturned:undo});
+      await sample(`${method} ${field} after explicit native undo`);
+      const redo=await evaluate("return document.execCommand('redo')");
+      report.checks.push({name:`${method} ${field} explicit native redo control`,commandReturned:redo});
+      await sample(`${method} ${field} after explicit native redo`);
     }
   }
   // Independent plain HTML controls diagnose the engine; they are not Writer acceptance.
@@ -512,6 +478,9 @@ try {
       await sample(`${method} plain ${kind} typed`);
       if(method==='webdriver')await chord('z');else execFileSync('xdotool',['key','--clearmodifiers','ctrl+z'],{env});
       await delay(200);await sample(`${method} plain ${kind} after one Undo`);
+      const undo=await evaluate("return document.execCommand('undo')");
+      report.checks.push({name:`${method} plain ${kind} explicit native undo control`,commandReturned:undo});
+      await sample(`${method} plain ${kind} after explicit native undo`);
       await evaluate("document.querySelector('[aria-label=\"Diagnostic plain '+arguments[0]+'\"]').remove()",[kind]);
     }
   }
