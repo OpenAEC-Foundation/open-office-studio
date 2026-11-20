@@ -513,7 +513,7 @@ try {
         const entry={method,field,stage,value:sampleValue.value,trace:sampleValue.trace};
         if(field==='Find what') {
           entry.searchStatus=await evaluate("return document.querySelector('.tw-zoek-telling')?.textContent.trim()");
-          assert.equal(entry.searchStatus,expectedValue?'No results':'',stage+' controlled search state');
+          assert.equal(entry.searchStatus,expectedValue?'No results.':'',stage+' controlled search state');
         }
         report.compatibilityProbe.checks.push(entry);
       }
