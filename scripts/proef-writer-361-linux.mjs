@@ -30,6 +30,7 @@ import {
 } from "./writer361-native-remaining.mjs";
 import {
   selectedDocumentReadyScript,
+  selectedDocumentAnatomyScript,
   selectedCanvasPointScript,
   twoReadOnlyFramesScript,
 } from "./writer361-native-ready.mjs";
@@ -268,29 +269,37 @@ async function waitSelectedDocumentReady(name, columns, cells) {
   const started = Date.now();
   let attempts = 0,
     initiallyReady;
-  const ready = await waitFor(
-    async () => {
-      const before = await evaluate(selectedDocumentReadyScript, [
-        name,
-        columns,
-        cells,
-      ]);
-      attempts++;
-      initiallyReady ??= Boolean(before);
-      if (!before) return null;
-      const frame = await evaluate(twoReadOnlyFramesScript);
-      const after = await evaluate(selectedDocumentReadyScript, [
-        name,
-        columns,
-        cells,
-      ]);
-      return after && before.panelId === after.panelId
-        ? { ...after, frame }
-        : null;
-    },
-    `Selected ${name} panel/canvas/grid/fonts did not settle`,
-    90000,
-  );
+  let ready;
+  try {
+    ready = await waitFor(
+      async () => {
+        const before = await evaluate(selectedDocumentReadyScript, [
+          name,
+          columns,
+          cells,
+        ]);
+        attempts++;
+        initiallyReady ??= Boolean(before);
+        if (!before) return null;
+        const frame = await evaluate(twoReadOnlyFramesScript);
+        const after = await evaluate(selectedDocumentReadyScript, [
+          name,
+          columns,
+          cells,
+        ]);
+        return after && before.panelId === after.panelId
+          ? { ...after, frame }
+          : null;
+      },
+      `Selected ${name} panel/canvas/grid/fonts did not settle`,
+      90000,
+    );
+  } catch (error) {
+    report.readinessFailureAnatomy = await evaluate(
+      selectedDocumentAnatomyScript,
+    ).catch((e) => ({ error: String(e) }));
+    throw error;
+  }
   report.documentReadiness ??= [];
   report.documentReadiness.push({
     elapsedMs: Date.now() - started,

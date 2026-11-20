@@ -39,6 +39,7 @@ function fixture() {
   const document = {
     fonts: { status: "loaded" },
     querySelectorAll: (n) => {
+      if (n === "[data-testid=yrs-input]") return [input];
       assert.equal(
         n,
         ".office-tab[role=tab][aria-selected=true]",
@@ -117,4 +118,12 @@ test("pointer resolves selected pane only and rejects hidden/out-of-canvas targe
     inspect(f, () => inspectSelectedCanvasPoint(145, 110)),
     null,
   );
+});
+
+test("BODY-portaled input is observed without requiring false panel ancestry", () => {
+  const f = fixture();
+  f.panel.querySelector = () => null;
+  const r = inspect(f);
+  assert.equal(r.globalInputPortals, 1);
+  assert.match(r.inputOwnership, /not input ancestry/);
 });

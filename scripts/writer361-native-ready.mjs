@@ -15,10 +15,14 @@ export function inspectSelectedDocumentReady(name, columns, expectedCells) {
   const canvas = [...panel.querySelectorAll(".canvas-page canvas")].find(
     (e) => e.getClientRects().length && e.width > 0 && e.height > 0,
   );
-  const input = panel.querySelector("[data-testid=yrs-input]");
+  // The SDK deliberately portals input proxies to document.body, not the pane.
+  // Count them only as global observations; never claim an owner from ancestry.
+  const inputPortals = [
+    ...document.querySelectorAll("[data-testid=yrs-input]"),
+  ].filter((e) => e.getClientRects().length);
   if (
     !canvas ||
-    !input?.getClientRects().length ||
+    inputPortals.length === 0 ||
     document.fonts.status !== "loaded"
   )
     return null;
@@ -45,6 +49,9 @@ export function inspectSelectedDocumentReady(name, columns, expectedCells) {
     rows: 3,
     cells,
     fonts: document.fonts.status,
+    globalInputPortals: inputPortals.length,
+    inputOwnership:
+      "Global BODY portal; selected document ownership is established by tab/panel/grid/canvas, not input ancestry",
     canvas: { x: r.x, y: r.y, width: r.width, height: r.height },
   };
 }
@@ -73,3 +80,40 @@ export function inspectSelectedCanvasPoint(x, y) {
   };
 }
 export const selectedCanvasPointScript = `return (${inspectSelectedCanvasPoint.toString()})(...arguments)`;
+
+export function inspectSelectedDocumentAnatomy() {
+  const rect = (e) => {
+    const r = e.getBoundingClientRect();
+    return { x: r.x, y: r.y, width: r.width, height: r.height };
+  };
+  return {
+    fonts: document.fonts.status,
+    tabs: [...document.querySelectorAll(".office-tab[role=tab]")].map((e) => ({
+      name: e.textContent.trim(),
+      selected: e.getAttribute("aria-selected"),
+      controls: e.getAttribute("aria-controls"),
+    })),
+    panels: [...document.querySelectorAll(".office-tabpaneel")].map((p) => ({
+      id: p.id,
+      blocked: Boolean(p.closest("[hidden],[inert]")),
+      tables: [...p.querySelectorAll("[role=table]")].map((t) => ({
+        rows: t.getAttribute("aria-rowcount"),
+        columns: t.getAttribute("aria-colcount"),
+      })),
+      canvases: [...p.querySelectorAll(".canvas-page canvas")].map((c) => ({
+        width: c.width,
+        height: c.height,
+        rect: rect(c),
+      })),
+    })),
+    inputPortals: [...document.querySelectorAll("[data-testid=yrs-input]")].map(
+      (e) => ({
+        tag: e.tagName,
+        parent: e.parentElement?.tagName,
+        panel: e.closest("[role=tabpanel]")?.id ?? null,
+        rect: rect(e),
+      }),
+    ),
+  };
+}
+export const selectedDocumentAnatomyScript = `return (${inspectSelectedDocumentAnatomy.toString()})()`;
