@@ -29,6 +29,7 @@ export async function runNative(plan, platform, artifactRoot, output) {
   const root = resolve(output);
   await mkdir(root, { recursive: true });
   const report = { applicationCommit: plan.applicationCommit, desktopRun: plan.desktopRun,
+    harnessAttempt: process.env.OOS_EPUB356_ATTEMPT,
     harnessCommit: process.env.OOS_RUNTIME_HARNESS_COMMIT, artifact: receipt, platform,
     visualAcceptance: "pending independent original image review", nativeInvalidInput: "not run; separate exact-source browser/unit checks", results: [] };
   const python = process.env.OOS_RUNTIME_PYTHON || (process.platform === "win32" ? "python" : "python3");

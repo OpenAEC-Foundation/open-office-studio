@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, writeFile, rm, realpath } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, dirname, basename } from "node:path";
 import { createHash } from "node:crypto";
-import { validatePlan, verifyMetadata, verifyPackages, installerKind } from "./epub356-final-artifacts.mjs";
+import { validatePlan, verifyMetadata, verifyPackages, installerKind, validateAttempt } from "./epub356-final-artifacts.mjs";
 const digest = value => createHash("sha256").update(value).digest("hex");
 const plan = () => ({ schemaVersion: 1, frozen: true, applicationCommit: "a".repeat(40), desktopRun: 123,
   artifacts: {
@@ -17,6 +17,20 @@ test("final plan must be explicitly frozen and map exactly all four supported in
   validatePlan(plan());
   for (const change of [p => p.frozen = false, p => p.applicationCommit = "old", p => p.artifacts.Linux.packages.pop(), p => p.artifacts.macOS.name = "runtime317-installers-macOS", p => p.artifacts.Windows.packages[0].path = "../escape-setup.exe", p => p.artifacts.macOS.packages[0].path = "macos/app.dmg", p => p.artifacts.Windows.packages[0].path = "macos/ancillary-setup.exe"])
     { const p = plan(); change(p); assert.throws(() => validatePlan(p)); }
+});
+
+test("retry selection maps only explicit unique supported platforms, independently of canonical plan", () => {
+  const original = plan(), before = JSON.stringify(original);
+  assert.deepEqual(validateAttempt({ schemaVersion: 1, attempt: 2, platforms: ["macOS"] }).runners, ["macos-latest"]);
+  assert.deepEqual(validateAttempt({ schemaVersion: 1, attempt: 2, platforms: ["Linux", "Windows", "macOS"] }).runners, ["ubuntu-22.04", "windows-latest", "macos-latest"]);
+  for (const config of [
+    { schemaVersion: 1, attempt: 0, platforms: ["Linux"] },
+    { schemaVersion: 1, attempt: 2, platforms: [] },
+    { schemaVersion: 1, attempt: 2, platforms: ["Linux", "Linux"] },
+    { schemaVersion: 1, attempt: 2, platforms: ["self-hosted"] },
+    { schemaVersion: 1, attempt: 2, platforms: ["Linux"], applicationCommit: "changed" },
+  ]) assert.throws(() => validateAttempt(config));
+  assert.equal(JSON.stringify(original), before);
 });
 
 test("metadata binds exact canonical run/source/artifact digest, never an old converter proof", () => {

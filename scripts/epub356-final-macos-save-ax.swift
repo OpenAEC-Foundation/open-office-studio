@@ -31,17 +31,21 @@ func children(_ e: AXUIElement) -> [AXUIElement] {
 }
 
 var report: [String: Any] = ["pid": pid, "trusted": AXIsProcessTrusted(), "status": "blocked", "action": action]
-var queue: [(AXUIElement, Int)] = (attribute(app, kAXWindowsAttribute) as? [AXUIElement] ?? []).map { ($0, 0) }
+var queue: [(AXUIElement, Int, [AXUIElement])] = (attribute(app, kAXWindowsAttribute) as? [AXUIElement] ?? []).map { ($0, 0, []) }
 var metadata: [[String: Any]] = []
 var filenameFields: [AXUIElement] = [], saveButtons: [AXUIElement] = [], goButtons: [AXUIElement] = []
+var nativeFields: [(element: AXUIElement, sheets: [AXUIElement])] = []
 var index = 0
 while index < queue.count && index < 600 && Date() < deadline {
-    let (e, depth) = queue[index]; index += 1
+    let (e, depth, ancestorSheets) = queue[index]; index += 1
     let role = string(e, kAXRoleAttribute)
     if role == "AXWebArea" || role == "AXTextArea" { continue }
+    let sheets = role == "AXSheet" ? ancestorSheets + [e] : ancestorSheets
     let title = string(e, kAXTitleAttribute), description = string(e, kAXDescriptionAttribute)
     let enabled = attribute(e, kAXEnabledAttribute) as? Bool ?? false
-    metadata.append(["role": role, "title": title, "description": description, "enabled": enabled])
+    metadata.append(["role": role, "title": title, "description": description, "enabled": enabled,
+                     "nativeSheetDepth": sheets.count])
+    if ["AXTextField", "AXComboBox"].contains(role) { nativeFields.append((e, sheets)) }
     if role == "AXTextField" {
         let value = string(e, kAXValueAttribute)
         if value == expectedName || value == (expectedName as NSString).deletingPathExtension { filenameFields.append(e) }
@@ -52,7 +56,7 @@ while index < queue.count && index < 600 && Date() < deadline {
         // native panel first so setting its path can enable that same button.
         if ["Go", "Ga"].contains(title) || ["Go", "Ga"].contains(description) { goButtons.append(e) }
     }
-    if depth < 14 { queue.append(contentsOf: children(e).map { ($0, depth + 1) }) }
+    if depth < 14 { queue.append(contentsOf: children(e).map { ($0, depth + 1, sheets) }) }
 }
 report["nodes"] = metadata
 report["visited"] = index
@@ -68,22 +72,43 @@ if !AXIsProcessTrusted() {
         report["status"] = "ready"
     } else { report["reason"] = "A unique native filename field and Save button are required outside WKWebView" }
 } else if action == "go" {
-    // The focused path field must be on the owned app's native Go-to-Folder
-    // panel with its unique Go button; never type into a web/editor field.
-    if goButtons.count == 1, let focused = attribute(app, kAXFocusedUIElementAttribute), CFGetTypeID(focused) == AXUIElementGetTypeID() {
+    // macOS 26's real Go-to-Folder sheet has no Go button. Require a focused
+    // native field in an additional sheet inside the same identified Save
+    // sheet, distinct from its filename field. Never use title-only ownership
+    // or accept a field reached through WKWebView/document text.
+    if filenameFields.count == 1 && goButtons.count <= 1,
+       let focused = attribute(app, kAXFocusedUIElementAttribute), CFGetTypeID(focused) == AXUIElementGetTypeID() {
         let e = focused as! AXUIElement
         let role = string(e, kAXRoleAttribute)
-        if ["AXTextField", "AXComboBox"].contains(role) && folder.hasPrefix("/") {
+        var focusedPid: pid_t = 0
+        let pidError = AXUIElementGetPid(e, &focusedPid)
+        let field = nativeFields.first { CFEqual($0.element, e) }
+        let filename = nativeFields.first { CFEqual($0.element, filenameFields[0]) }
+        let sameSaveSheet = field != nil && filename != nil && !filename!.sheets.isEmpty
+            && field!.sheets.count > filename!.sheets.count
+            && zip(filename!.sheets, field!.sheets).allSatisfy { CFEqual($0.0, $0.1) }
+        report["focusedRole"] = role
+        report["focusedPid"] = focusedPid
+        report["focusedPidError"] = pidError.rawValue
+        report["focusedNativeSheetDepth"] = field?.sheets.count ?? 0
+        report["filenameNativeSheetDepth"] = filename?.sheets.count ?? 0
+        report["sameOwnedSaveSheet"] = sameSaveSheet
+        if ["AXTextField", "AXComboBox"].contains(role) && folder.hasPrefix("/")
+            && pidError == .success && focusedPid == pid && sameSaveSheet && !CFEqual(e, filenameFields[0]) {
             let result = AXUIElementSetAttributeValue(e, kAXValueAttribute as CFString, folder as CFString)
             report["setPathError"] = result.rawValue
-            if result == .success {
-                if attribute(goButtons[0], kAXEnabledAttribute) as? Bool == true {
+            let readback = string(e, kAXValueAttribute)
+            report["pathReadbackMatches"] = readback == folder
+            if result == .success && readback == folder {
+                if goButtons.isEmpty {
+                    report["status"] = "path-entered-awaiting-native-return"
+                } else if attribute(goButtons[0], kAXEnabledAttribute) as? Bool == true {
                     let press = AXUIElementPerformAction(goButtons[0], kAXPressAction as CFString)
                     report["pressError"] = press.rawValue
                     if press == .success { report["status"] = "acted" }
                 } else { report["reason"] = "The native Go button is not enabled after path entry" }
             }
-        } else { report["reason"] = "The owned native folder path field is not focused" }
+        } else { report["reason"] = "The focused native path field is not in the owned nested Save sheet" }
     } else { report["reason"] = "The owned native Go-to-Folder panel is unavailable or ambiguous" }
 } else if action == "save" {
     if filenameFields.count == 1 && saveButtons.count == 1 && goButtons.isEmpty {

@@ -2,7 +2,7 @@ name: EPUB 356 frozen canonical native acceptance
 on:
   push:
     branches: [codex/formats-356-final-acceptance-2026-11-20]
-    paths: [.github/epub356-final-candidate.json]
+    paths: [.github/epub356-final-candidate.json, .github/epub356-final-attempt.json]
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       source: ${{ steps.plan.outputs.source }}
+      runners: ${{ steps.plan.outputs.runners }}
+      attempt: ${{ steps.plan.outputs.attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,20 +26,22 @@ jobs:
         run: |
           node --input-type=module -e '
             import {readFileSync,appendFileSync} from "node:fs";
-            import {validatePlan} from "./scripts/epub356-final-artifacts.mjs";
+            import {validatePlan,validateAttempt} from "./scripts/epub356-final-artifacts.mjs";
             const plan=validatePlan(JSON.parse(readFileSync(".github/epub356-final-candidate.json","utf8")));
-            appendFileSync(process.env.GITHUB_OUTPUT,`source=${plan.applicationCommit}\n`);
+            const attempt=validateAttempt(JSON.parse(readFileSync(".github/epub356-final-attempt.json","utf8")));
+            appendFileSync(process.env.GITHUB_OUTPUT,`source=${plan.applicationCommit}\nrunners=${JSON.stringify(attempt.runners)}\nattempt=${attempt.attempt}\n`);
           '
   native:
     needs: plan
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-latest, macos-latest]
+        os: ${{ fromJSON(needs.plan.outputs.runners) }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     env:
       OOS_RUNTIME_HARNESS_COMMIT: ${{ github.sha }}
+      OOS_EPUB356_ATTEMPT: ${{ needs.plan.outputs.attempt }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -77,7 +81,7 @@ jobs:
         if: runner.os == 'Linux'
         env:
           WEBKIT_DISABLE_DMABUF_RENDERER: '1'
-        run: dbus-run-session -- xvfb-run -a node .local/harness/scripts/epub356-final-native.mjs .local/harness/.github/epub356-final-candidate.json Linux .local/epub356-final-installers .local/epub356-final-native
+        run: xvfb-run -a dbus-run-session -- node .local/harness/scripts/epub356-final-native.mjs .local/harness/.github/epub356-final-candidate.json Linux .local/epub356-final-installers .local/epub356-final-native
       - uses: actions/upload-artifact@v4
         if: always()
         with:

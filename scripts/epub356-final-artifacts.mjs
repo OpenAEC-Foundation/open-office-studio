@@ -19,6 +19,18 @@ const INSTALLERS = {
 const INSTALLER_ROOTS = new Set(Object.values(INSTALLERS).flat().map(rule => rule.root));
 const INSTALLER_EXTENSION = /\.(?:exe|dmg|deb|AppImage)$/i;
 
+/** Test-only retry selection; never changes the canonical source/package plan. */
+export function validateAttempt(attempt) {
+  assert.deepEqual(Object.keys(attempt).sort(), ["attempt", "platforms", "schemaVersion"]);
+  assert.equal(attempt.schemaVersion, 1);
+  assert(Number.isSafeInteger(attempt.attempt) && attempt.attempt > 0);
+  assert(Array.isArray(attempt.platforms) && attempt.platforms.length > 0 && attempt.platforms.length <= 3);
+  assert.equal(new Set(attempt.platforms).size, attempt.platforms.length);
+  const runners = { Windows: "windows-latest", macOS: "macos-latest", Linux: "ubuntu-22.04" };
+  assert(attempt.platforms.every(platform => Object.hasOwn(runners, platform)), "Retry platform must be explicitly allowlisted");
+  return { ...attempt, runners: attempt.platforms.map(platform => runners[platform]) };
+}
+
 /** Only direct canonical installer-root files are executable package candidates. */
 export function installerKind(platform, path) {
   assert(Object.hasOwn(INSTALLERS, platform), "Unknown installer platform");

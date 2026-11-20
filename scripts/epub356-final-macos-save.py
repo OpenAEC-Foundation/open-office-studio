@@ -78,6 +78,17 @@ def main():
             state = snapshot("go")
             if state.get("status") == "acted":
                 break
+            if state.get("status") == "path-entered-awaiting-native-return":
+                # The actual macOS 26 sheet has a path field and Close but no
+                # Go button. Swift has verified owned PID, native nested-sheet
+                # ancestry, focused field and exact absolute-path readback.
+                # Confirm through ordinary OS keyboard input to that same app;
+                # this does not invoke or substitute the application's save.
+                confirm = ('tell application "System Events"\ntell (first application process whose unix id is '
+                           + str(args.pid) + ')\nkey code 36\nend tell\nend tell')
+                subprocess.run(["osascript", "-e", confirm], check=True, capture_output=True, text=True, timeout=15)
+                report["folderConfirmation"] = "owned-native-path-field-return"
+                break
             time.sleep(.3)
         else:
             raise CapabilityBlocked("Native Go-to-Folder path field/button is unavailable")

@@ -62,6 +62,11 @@ After root releases the frozen manifest and artifacts, update that manifest on
 the harness branch and push, or explicitly dispatch this workflow on its ref.
 No other commit or dependency update should trigger an app test. The read-only
 GitHub token is supplied only to the artifact-download step, never the app step.
+After an evidenced harness failure, `.github/epub356-final-attempt.json` selects
+only reviewed retry platforms with an incremented attempt number. It has exactly
+`schemaVersion`, `attempt`, and unique allowlisted `platforms` (Linux/Windows/macOS),
+and never changes the root source/artifact manifest. Pushes touching only that
+own selector can trigger a narrow retry; helper/docs commits use `[skip ci]`.
 
 Native CWD is a checkout of `applicationCommit`; harness is checked out
 separately at `.local/harness`. Package/config/version-dependent extraction
@@ -155,7 +160,7 @@ python scripts/epub356-final-oracle_test.py -v
 node --test scripts/proef-epub356-hosted-startup.node-test.mjs
 ```
 
-Seven native/source artifact Node contracts, nine independent-oracle Python tests,
+Eight native/source artifact Node contracts, nine independent-oracle Python tests,
 and seven headless frontend failure gates passed. Own Node contracts use
 `.node-test.mjs` to avoid Vitest collecting them as empty Vitest suites. Locally,
 `OOS_RUNTIME_PYTHON` can identify the installed Python executable, and the
