@@ -9,7 +9,7 @@ on:
     inputs:
       profile:
         type: choice
-        options: [compile-only, linux, macos, browser-only-mac]
+        options: [compile-only, linux, macos, browser-only-mac, browser-only-mac-361-diagnostic]
         default: compile-only
       execute_native:
         type: boolean
@@ -227,5 +227,48 @@ jobs:
             app/.local/dist-writer361-I2-mac-normal.build.json
             app/.local/dist-writer361-I2-mac-hosted.build.json
             harness/.github/writer361-mac-browser-I2.json
+          include-hidden-files: true
+          if-no-files-found: warn
+
+  browser-macos-I3-361-diagnostic:
+    # Exactly one normal-route diagnostic on frozen I3, explicit dispatch only.
+    if: github.event_name == 'workflow_dispatch' && inputs.profile == 'browser-only-mac-361-diagnostic' && inputs.execute_browser
+    runs-on: macos-latest
+    timeout-minutes: 25
+    env:
+      WRITER361_DIAGNOSTIC_REQUEST_SHA256: 162c2d0c23b5d53e7259c310b49a538dea3d422d00b456dee8b87cacdbda683e
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: harness
+      - uses: actions/checkout@v4
+        with:
+          ref: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+          path: app
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Locked I3 frontend dependencies and actual macOS Chromium
+        run: |
+          pnpm --dir app install --frozen-lockfile --ignore-scripts
+          pnpm --dir app exec playwright install --with-deps chromium
+      - name: One normal-route 361 keyboard and delayed-grid diagnostic, no input replay
+        run: node harness/scripts/writer361-i3-mac-diagnostic.mjs app harness
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer361-I3-mac-diagnostic-${{ github.sha }}
+          path: |
+            app/.local/writer361-I3-mac-diagnostic-trial-*/
+            app/.local/writer361-I3-mac-diagnostic-summary.json
+            app/.local/writer361-I3-mac-diagnostic.build.json
+            harness/.github/writer361-mac-I3-diagnostic.json
           include-hidden-files: true
           if-no-files-found: warn
