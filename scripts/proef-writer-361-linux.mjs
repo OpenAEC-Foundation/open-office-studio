@@ -349,6 +349,12 @@ try {
       report.installedExecutableSha256,
       report.packagedExecutableSha256,
     );
+    if (origin.executableSha256)
+      assert.equal(
+        report.installedExecutableSha256,
+        origin.executableSha256,
+        "Installed ELF differs from integration's packaged executable hash",
+      );
   } finally {
     await rm(extracted, { recursive: true, force: true });
   }

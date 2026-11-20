@@ -106,6 +106,14 @@ def main():
         wait(lambda: not owned(), "Native CmdQ did not fully quit the owned process", 15)
 
     try:
+        helper_source = Path(__file__).with_name("writer-361-macos-ax.swift")
+        helper_sha = hashlib.sha256(helper_source.read_bytes()).hexdigest()
+        helper = out / ("writer361-ax-" + helper_sha[:12])
+        with (out / "swift-compile.log").open("wb") as log:
+            subprocess.run(["xcrun", "swiftc", str(helper_source), "-o", str(helper)], stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
+        report["newSwiftHelperCompiledBeforeAppLaunch"] = True
+        report["helperSourceSha256"] = helper_sha
+        report["helperBinarySha256"] = hashlib.sha256(helper.read_bytes()).hexdigest()
         package = Path(identity["packagePath"]).resolve(strict=True)
         if hashlib.sha256(package.read_bytes()).hexdigest() != identity["packageSha256"]:
             raise RuntimeError("Canonical DMG SHA256 differs")
@@ -115,6 +123,17 @@ def main():
         apps = list(mount.glob("*.app"))
         if len(apps) != 1:
             raise RuntimeError("Canonical DMG must expose one application")
+        payload_info = plistlib.loads((apps[0] / "Contents/Info.plist").read_bytes())
+        payload_program = apps[0] / "Contents/MacOS" / payload_info["CFBundleExecutable"]
+        payload_sha = hashlib.sha256(payload_program.read_bytes()).hexdigest()
+        if identity.get("executableSha256") is not None:
+            if payload_sha != identity["executableSha256"]:
+                raise RuntimeError("Read-only canonical DMG program differs from pinned executable hash")
+        elif identity.get("deriveExecutableFromVerifiedDmg") is True:
+            identity["executableSha256"] = payload_sha
+            report["executableHashOrigin"] = "Computed from read-only verified canonical DMG payload before launch, copied program must match"
+        else:
+            raise RuntimeError("No approved executable identity derivation")
         app = out / apps[0].name
         shutil.copytree(apps[0], app, symlinks=True)
         subprocess.run(["hdiutil", "detach", str(mount)], check=True, timeout=30, capture_output=True)
@@ -190,6 +209,9 @@ def main():
         report["status"] = "core-passed"
     except PermissionError as error:
         report.update(status="blocked", reason=str(error))
+        if pid is not None and len(owned()) == 1 and "optionalMac362363" not in report:
+            collector = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))["collect_mac_ribbon_observations"]
+            report["optionalMac362363"] = collector(action, out / "ribbon-observations", identity, pid)
         raise
     except Exception as error:
         report.update(status="failed", error=str(error))

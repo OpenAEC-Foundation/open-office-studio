@@ -37,8 +37,11 @@ def validate(value, profile):
         raise ValueError("Unexpected native package type")
     if value.get("executionApproved") is not True:
         raise ValueError("Frozen integration execution approval required")
-    if profile == "macos" and not re.fullmatch("[a-f0-9]{64}", value.get("executableSha256", "")):
-        raise ValueError("Canonical macOS executable hash required")
+    executable_sha = value.get("executableSha256")
+    if executable_sha is not None and not re.fullmatch("[a-f0-9]{64}", executable_sha):
+        raise ValueError("Invalid canonical executable hash")
+    if profile == "macos" and executable_sha is None and value.get("deriveExecutableFromVerifiedDmg") is not True:
+        raise ValueError("Canonical macOS executable hash or explicit verified-DMG derivation required")
     for field in ["ribbonHarness", "stylesHarness"]:
         module = value.get(field)
         if module is not None:
