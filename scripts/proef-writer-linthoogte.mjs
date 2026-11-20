@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { preview } from "vite";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
@@ -26,6 +28,23 @@ parts["word/document.xml"] = strToU8(
   xml.replace(/(<w:body>)[\s\S]*?(<w:sectPr)/, `$1${table}$2`),
 );
 const fixture = Buffer.from(zipSync(parts));
+const harnessPath = fileURLToPath(import.meta.url);
+const harnessCommit =
+  process.env.OFFICE_TEST_HARNESS_COMMIT ??
+  execFileSync("git", ["-C", dirname(harnessPath), "rev-parse", "HEAD"], {
+    encoding: "utf8",
+  }).trim();
+assert.match(harnessCommit, /^[a-f0-9]{40}$/);
+const harnessBytes = fs.readFileSync(harnessPath);
+const harnessGitBlob = execFileSync("git", [
+  "show",
+  `${harnessCommit}:scripts/proef-writer-linthoogte.mjs`,
+]);
+assert.equal(
+  harnessBytes.toString().replaceAll("\r\n", "\n"),
+  harnessGitBlob.toString().replaceAll("\r\n", "\n"),
+  "Executed harness must match its recorded commit",
+);
 const report = {
   source: execFileSync("git", ["rev-parse", "HEAD"], {
     encoding: "utf8",
@@ -43,6 +62,15 @@ const report = {
       createHash("sha256").update(fs.readFileSync(p)).digest("hex"),
     ]),
   ),
+  sourceTree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], {
+    encoding: "utf8",
+  }).trim(),
+  harness: {
+    commit: harnessCommit,
+    path: harnessPath,
+    sha256: createHash("sha256").update(harnessBytes).digest("hex"),
+    gitBlobSha256: createHash("sha256").update(harnessGitBlob).digest("hex"),
+  },
   baseline,
   acceptance: false,
   smoke,
@@ -58,6 +86,7 @@ const report = {
   limits: [
     "Rendered browser geometry, not native Windows/Linux/macOS UI acceptance",
     "DOM-disabled styling checks do not prove engine-disabled command behavior",
+    "#362 acceptance checks vertical clipping. Horizontal group-trigger clipping is recorded separately; the existing narrow horizontal scroll route is outside this issue's scope.",
   ],
 };
 let server, browser;
@@ -72,7 +101,10 @@ try {
       process.env.OFFICE_TEST_BUILD_RECEIPT,
       "A pinned build receipt is required",
     );
-    const { verifyBuildReceipt } = await import("./writer-proefbuild.mjs");
+    // The app source/build remain in cwd when this committed probe is external.
+    const { verifyBuildReceipt } = await import(
+      pathToFileURL(resolve("scripts/writer-proefbuild.mjs")).href
+    );
     report.buildReceipt = await verifyBuildReceipt({
       outDir,
       route,
@@ -219,18 +251,22 @@ try {
                 };
                 clip.bottom = clip.top + parent.clientHeight;
                 clip.right = clip.left + parent.clientWidth;
+                const clippedY =
+                  clipY &&
+                  (outline.top < clip.top - 0.5 ||
+                    outline.bottom > clip.bottom + 0.5);
+                const clippedX =
+                  clipX &&
+                  (outline.left < clip.left - 0.5 ||
+                    outline.right > clip.right + 0.5);
                 clippingAncestors.push({
                   className: parent.className,
                   clip,
                   clipX,
                   clipY,
-                  clipped:
-                    (clipY &&
-                      (outline.top < clip.top - 0.5 ||
-                        outline.bottom > clip.bottom + 0.5)) ||
-                    (clipX &&
-                      (outline.left < clip.left - 0.5 ||
-                        outline.right > clip.right + 0.5)),
+                  clippedX,
+                  clippedY,
+                  clipped: clippedX || clippedY,
                 });
               }
               return {
@@ -239,6 +275,8 @@ try {
                 ring,
                 outline,
                 clippingAncestors,
+                clippedX: clippingAncestors.some((a) => a.clippedX),
+                clippedY: clippingAncestors.some((a) => a.clippedY),
                 clipped: clippingAncestors.some((a) => a.clipped),
               };
             });
@@ -274,9 +312,9 @@ try {
             });
             if (!baseline)
               assert.equal(
-                data.clipped,
+                data.clippedY,
                 false,
-                `${theme}/${width}/${groupName}: collapsed group focus exceeds clipping ancestor`,
+                `${theme}/${width}/${groupName}: collapsed group focus vertically exceeds clipping ancestor`,
               );
           }
           if (collapsed) {
@@ -554,6 +592,12 @@ console.log(
     acceptance: report.acceptance,
     cases: report.cases.length,
     groupButtonCases: report.groupButtonCases.length,
+    verticallyClippedGroupButtons: report.groupButtonCases.filter(
+      (c) => c.clippedY,
+    ).length,
+    horizontallyClippedGroupButtons: report.groupButtonCases.filter(
+      (c) => c.clippedX,
+    ).length,
     clippedGroupButtons: report.groupButtonCases.filter((c) => c.clipped)
       .length,
     clipped: report.cases.reduce(
