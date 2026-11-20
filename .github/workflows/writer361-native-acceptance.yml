@@ -208,6 +208,9 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
       - name: Locked application frontend dependencies and real macOS Chromium
         run: |
           pnpm --dir app install --frozen-lockfile --ignore-scripts
