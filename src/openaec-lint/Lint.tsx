@@ -18,7 +18,13 @@ import {
   type Niveau,
 } from "./inklappen";
 import { kenToetstips, zoekToetstip } from "./toetstips";
-import { focusbare, houdtPijltjes, naamVan, volgendeIndex } from "./focus";
+import {
+  focusbare,
+  focusViaToets,
+  houdtPijltjes,
+  naamVan,
+  volgendeIndex,
+} from "./focus";
 import "./lint.css";
 
 /** Elk icooncomponent met `size` en `strokeWidth`, zoals lucide-react. */
@@ -311,7 +317,7 @@ export function Lint({
       if (ingeklapt) setIngeklapt(false);
       event.preventDefault();
       requestAnimationFrame(() => {
-        if (baan.current) focusbare(baan.current)[0]?.focus();
+        if (baan.current) focusViaToets(focusbare(baan.current)[0]);
       });
       return;
     }
@@ -324,7 +330,7 @@ export function Lint({
     if (volgende === null) return;
     event.preventDefault();
     kies(tabs[volgende].id);
-    tabElement(tabs[volgende].id)?.focus();
+    focusViaToets(tabElement(tabs[volgende].id));
   }
 
   /** Toolbarnavigatie: pijltjes over alle bereikbare knoppen, ook ingeklapte groepen. */
@@ -339,7 +345,7 @@ export function Lint({
     if (houdtPijltjes(doel) || event.altKey || event.ctrlKey || event.metaKey) return;
     if (event.key === "ArrowUp") {
       event.preventDefault();
-      tabElement(actief.id)?.focus();
+      focusViaToets(tabElement(actief.id));
       return;
     }
     const lijst = focusbare(baan.current!).filter(
@@ -348,7 +354,7 @@ export function Lint({
     const volgende = volgendeIndex(event.key, lijst.indexOf(doel), lijst.length);
     if (volgende === null) return;
     event.preventDefault();
-    lijst[volgende].focus();
+    focusViaToets(lijst[volgende]);
   }
 
   // Alt (los ingedrukt) of F10 schakelt de toetstips; Ctrl+F1 het lint.
@@ -369,7 +375,7 @@ export function Lint({
       setGetypt("");
       setTips({ laag: "tabs" });
       const tab = wortel.current?.querySelector<HTMLElement>("[role='tab'][aria-selected='true']");
-      tab?.focus({ preventScroll: true });
+      focusViaToets(tab, { preventScroll: true });
     };
     const omlaag = (e: KeyboardEvent) => {
       altAlleen =
@@ -483,7 +489,7 @@ export function Lint({
           setTips({ laag: "paneel", binnen: null });
         } else if (tips.laag === "paneel") {
           setTips({ laag: "tabs" });
-          tabElement(actief.id)?.focus();
+          focusViaToets(tabElement(actief.id));
         } else {
           setTips(null);
           verlaat();
@@ -512,7 +518,7 @@ export function Lint({
       if (tips.laag === "tabs") {
         if (element.getAttribute("role") === "tab") {
           element.click();
-          element.focus();
+          focusViaToets(element);
           setTips({ laag: "paneel", binnen: null });
         } else {
           setTips(null);
@@ -530,7 +536,7 @@ export function Lint({
       if (element instanceof HTMLButtonElement) {
         element.click();
         if (wortel.current?.contains(document.activeElement)) verlaat();
-      } else element.focus();
+      } else focusViaToets(element);
     };
     window.addEventListener("keydown", toets, true);
     return () => window.removeEventListener("keydown", toets, true);
@@ -706,7 +712,7 @@ export function LintGroep({
     vak.replaceChildren(...(svg ? [svg.cloneNode(true)] : []));
   });
 
-  const sluiten = useCallback((focusNaarKnop: boolean) => {
+  const sluiten = useCallback((focusNaarKnop: boolean, viaToets = false) => {
     const p = paneel.current;
     if (!p || !("open" in p.dataset)) return;
     try {
@@ -720,7 +726,10 @@ export function LintGroep({
     p.style.removeProperty("top");
     setOpen(false);
     groep.current?.dispatchEvent(new Event(GESLOTEN, { bubbles: true }));
-    if (focusNaarKnop) knop.current?.focus();
+    if (focusNaarKnop) {
+      if (viaToets) focusViaToets(knop.current);
+      else knop.current?.focus();
+    }
   }, []);
 
   function openen(focusEerste: boolean) {
@@ -739,7 +748,7 @@ export function LintGroep({
     p.style.left = `${Math.max(8, Math.min(rand.left, innerWidth - breedte - 8))}px`;
     p.style.top = `${rand.bottom + 2}px`;
     setOpen(true);
-    if (focusEerste) requestAnimationFrame(() => focusbare(p)[0]?.focus());
+    if (focusEerste) requestAnimationFrame(() => focusViaToets(focusbare(p)[0]));
   }
 
   useEffect(() => {
@@ -773,7 +782,7 @@ export function LintGroep({
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
-      sluiten(true);
+      sluiten(true, true);
       return;
     }
     const doel = event.target as HTMLElement;
@@ -785,7 +794,7 @@ export function LintGroep({
     if (volgende === null) return;
     event.preventDefault();
     event.stopPropagation();
-    lijst[volgende].focus();
+    focusViaToets(lijst[volgende]);
   }
 
   return (
@@ -803,7 +812,9 @@ export function LintGroep({
         aria-expanded={open}
         aria-controls={paneelId}
         title={naam}
-        onClick={(event) => (open ? sluiten(true) : openen(event.detail === 0))}
+        onClick={(event) =>
+          open ? sluiten(true, event.detail === 0) : openen(event.detail === 0)
+        }
         onKeyDown={(event) => {
           if (event.key === "ArrowDown" && !open) {
             event.preventDefault();
@@ -824,10 +835,14 @@ export function LintGroep({
           // Na een opdracht sluit het paneel, zoals in gangbare kantoorsuites.
           const knopje = (event.target as Element).closest("button");
           if (!open || !knopje || knopje.getAttribute("aria-haspopup")) return;
+          const viaToets = event.detail === 0;
           setTimeout(() => {
             const binnen = paneel.current?.contains(document.activeElement);
             sluiten(false);
-            if (binnen) knop.current?.focus();
+            if (binnen) {
+              if (viaToets) focusViaToets(knop.current);
+              else knop.current?.focus();
+            }
           });
         }}
         onBlur={(event) => {

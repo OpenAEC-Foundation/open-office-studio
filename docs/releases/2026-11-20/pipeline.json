@@ -1,0 +1,700 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-20T13:55:08.256443+00:00",
+  "scope": "Read-only release preparation audit; only own ignored.local Markdown/JSON written; no workflow, tag, release, main, product, GUI or binary download changes.",
+  "identity": {
+    "audited_integration": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+    "tested_app_source": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "tested_app_tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "release_source": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "release_version": "2026.47.1",
+    "release_workflow_blob": "3c22538974c15f3f089ff36bacdcb69b95bbe9ee",
+    "changed_files_from_integration": [
+      "apps/database-studio/src-tauri/Cargo.lock",
+      "apps/database-studio/src-tauri/Cargo.toml",
+      "apps/database-studio/src-tauri/tauri.conf.json",
+      "package.json",
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/tauri.conf.json",
+      "versie.json"
+    ]
+  },
+  "apps": [
+    {
+      "key": "office",
+      "name": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "module": null
+    },
+    {
+      "key": "writer",
+      "name": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "module": "docx"
+    },
+    {
+      "key": "spreadsheet",
+      "name": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "module": "xlsx"
+    },
+    {
+      "key": "presentation",
+      "name": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "module": "pptx"
+    },
+    {
+      "key": "email",
+      "name": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "module": "email"
+    },
+    {
+      "key": "notition",
+      "name": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "module": "notities"
+    },
+    {
+      "key": "database",
+      "name": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "module": "database"
+    }
+  ],
+  "platforms": [
+    {
+      "platform": "Windows",
+      "architecture": "x64",
+      "runner": "windows-latest",
+      "installer_suffixes": [
+        "x64-setup.exe"
+      ]
+    },
+    {
+      "platform": "macOS",
+      "architecture": "ARM64 / Apple Silicon",
+      "runner": "macos-latest",
+      "installer_suffixes": [
+        "aarch64.dmg"
+      ]
+    },
+    {
+      "platform": "Linux",
+      "architecture": "x64",
+      "runner": "ubuntu-22.04",
+      "installer_suffixes": [
+        "amd64.deb",
+        "amd64.AppImage"
+      ]
+    },
+    {
+      "platform": "browser",
+      "architecture": "supported browser route",
+      "runner": "separate functional acceptance required",
+      "installer_suffixes": []
+    }
+  ],
+  "expected_installer_count": 28,
+  "expected_package_report_count": 14,
+  "previous_release_metadata_validation": {
+    "tag": "v2026.46.2",
+    "source": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+    "expected_names": [
+      "Open.Office.Studio_2026.46.2_x64-setup.exe",
+      "Open.Office.Studio_2026.46.2_aarch64.dmg",
+      "Open.Office.Studio_2026.46.2_amd64.deb",
+      "Open.Office.Studio_2026.46.2_amd64.AppImage",
+      "Open.Writer.Studio_2026.46.2_x64-setup.exe",
+      "Open.Writer.Studio_2026.46.2_aarch64.dmg",
+      "Open.Writer.Studio_2026.46.2_amd64.deb",
+      "Open.Writer.Studio_2026.46.2_amd64.AppImage",
+      "Open.Spreadsheet.Studio_2026.46.2_x64-setup.exe",
+      "Open.Spreadsheet.Studio_2026.46.2_aarch64.dmg",
+      "Open.Spreadsheet.Studio_2026.46.2_amd64.deb",
+      "Open.Spreadsheet.Studio_2026.46.2_amd64.AppImage",
+      "Open.Presentation.Studio_2026.46.2_x64-setup.exe",
+      "Open.Presentation.Studio_2026.46.2_aarch64.dmg",
+      "Open.Presentation.Studio_2026.46.2_amd64.deb",
+      "Open.Presentation.Studio_2026.46.2_amd64.AppImage",
+      "Open.Email.Studio_2026.46.2_x64-setup.exe",
+      "Open.Email.Studio_2026.46.2_aarch64.dmg",
+      "Open.Email.Studio_2026.46.2_amd64.deb",
+      "Open.Email.Studio_2026.46.2_amd64.AppImage",
+      "Open.Notition.Studio_2026.46.2_x64-setup.exe",
+      "Open.Notition.Studio_2026.46.2_aarch64.dmg",
+      "Open.Notition.Studio_2026.46.2_amd64.deb",
+      "Open.Notition.Studio_2026.46.2_amd64.AppImage",
+      "Open.Database.Studio_2026.46.2_x64-setup.exe",
+      "Open.Database.Studio_2026.46.2_aarch64.dmg",
+      "Open.Database.Studio_2026.46.2_amd64.deb",
+      "Open.Database.Studio_2026.46.2_amd64.AppImage"
+    ],
+    "missing": [],
+    "all_expected_sizes_over_1MB": true,
+    "github_digest_present": true,
+    "independently_downloaded_or_hashed": false
+  },
+  "secret_names_only": {
+    "Windows Azure": [
+      "AZURE_CLIENT_ID",
+      "AZURE_TENANT_ID",
+      "AZURE_CLIENT_SECRET",
+      "AZURE_ENDPOINT",
+      "AZURE_TRUSTED_SIGNING_ACCOUNT_NAME",
+      "AZURE_CERTIFICATE_PROFILE_NAME"
+    ],
+    "macOS Apple": [
+      "APPLE_CERTIFICATE",
+      "APPLE_CERTIFICATE_PASSWORD",
+      "APPLE_SIGNING_IDENTITY",
+      "APPLE_API_KEY",
+      "APPLE_API_ISSUER",
+      "APPLE_API_KEY_CONTENT",
+      "APPLE_TEAM_ID"
+    ],
+    "Linux/checksums OpenPGP": [
+      "OPENAEC_GPG_PRIVATE_KEY",
+      "OPENAEC_GPG_PASSPHRASE"
+    ],
+    "Optional Tauri updater": [
+      "TAURI_SIGNING_PRIVATE_KEY",
+      "TAURI_SIGNING_PRIVATE_KEY_PASSWORD"
+    ]
+  },
+  "secret_availability": {
+    "repository_count": 0,
+    "organization_metadata": "403 unknown; not proof of absence",
+    "current_actual_signed_build": "pending at snapshot",
+    "optional_fields_note": "Certificate password may legitimately be empty for an unprotected certificate; Apple team applicability depends on signing configuration. Key passwords depend on encryption. Do not declare all listed fields individually mandatory."
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "type": "observed",
+      "scope": "Version and source identity",
+      "result": "Integration771 is still2026.46.2, already published fromcf65. Version-only commit e92 is2026.47.1 (8 files), same release workflow blob3c22538974c15f3f089ff36bacdcb69b95bbe9ee. Next tag and release returned404 at13:48:50UTC. Build and verify final artifacts from immutable e92 or replacement explicitly approved point; old I3 executable is not final installer proof.",
+      "sources": [
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/scripts/weekversie.mjs#L25",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/versie.json#L2"
+      ]
+    },
+    {
+      "id": "R2",
+      "type": "observed configuration; current availability partly unknown",
+      "scope": "Signing preflight",
+      "result": "Repository secret metadata count0; organization secret names unavailable403. Current preflight success permits an unsigned manual build when publiceren=false; signed build and verification steps remain pending at13:53UTC. Historical signed gates succeeded but do not prove current credentials.",
+      "candidate_patch_advice": "For a future focused workflow change, check all applicable Azure credential/profile fields before building; include applicable Apple API key content/issuer/certificate fields and validate OpenPGP availability before a publishing run. Never display secret values. No patch applied.",
+      "sources": [
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L69",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L78",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L168",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L417"
+      ]
+    },
+    {
+      "id": "R3",
+      "type": "static parity gap; not a reproduced build failure",
+      "scope": "Preparation before release tests",
+      "result": "Release workflow runs pnpm test and Cargo tests without the explicit office runtime preparation and pretest spelling WASM preparation found in desktop.yml. Later native build preparation is not evidence that earlier tests had those inputs. Current build result still pending.",
+      "candidate_patch_advice": "If addressed later, reuse the desktop runtime preparation before Rust tests and the spelling Rust/WASM checks before Vitest. Root owns workflow changes; no modification made and no assertion that current build must fail.",
+      "sources": [
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L148",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L158",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/desktop.yml#L57",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/desktop.yml#L73",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/desktop.yml#L75"
+      ]
+    },
+    {
+      "id": "R4",
+      "type": "observed configuration",
+      "scope": "Publication permission and duplicate runs",
+      "result": "publiceren job runs only on a tag or publiceren=true, grants contents:write, and creates a draft prerelease targetingGITHUB_SHA. Creating that draft may create a missing tag. Current false dispatch is a build only. Branch and tag concurrency groups differ, so do not dispatch duplicate attempts for the same version. No main merge/tag/release action performed.",
+      "candidate_patch_advice": "Record one final source commit and reuse its artifacts; obtain explicit human approval for intended main/tag/release writes. No automatic stable release claim.",
+      "sources": [
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L381",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L447"
+      ]
+    },
+    {
+      "id": "R5",
+      "type": "observed configuration",
+      "scope": "Updater not enabled",
+      "result": "Office public updater key and endpoints are empty; focused variants explicitly disable updater artifacts and clear configuration. Office latest.json is optional and skipped without signature files. Codesigning success alone does not enable auto-updates.",
+      "candidate_patch_advice": "State manual installation for this release. A later updater rollout requires a matching public/private pair and correctly configured endpoint; treat separately.",
+      "sources": [
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/src-tauri/tauri.conf.json#L1",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/scripts/studio-config.mjs#L114",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/scripts/maak-latest-json.mjs#L1",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L107"
+      ]
+    },
+    {
+      "id": "R6",
+      "type": "coverage boundary",
+      "scope": "Seven packages versus functional acceptance",
+      "result": "Workflow targets7 apps and28 installers, with14 Windows/Linux package reports; Office bundled runtime probes do not demonstrate native GUI acceptance of every app. A successful build, signature check, or old package metadata is not a functional pass for final installers. Linux/macOS Writer limitations remain with integration; browser route needs its own exact-point result.",
+      "candidate_patch_advice": "Keep build, package integrity, native functional checks and supported browser checks separate per exact source point; reuse valid earlier logical results only where version-only changes do not invalidate them.",
+      "sources": [
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/assets/studios.json#L1",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/scripts/controleer-uitgave.mjs#L14",
+        "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml#L351"
+      ]
+    }
+  ],
+  "historical_runs": [
+    {
+      "run": 43329143298,
+      "head_sha": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+      "event": "workflow_dispatch",
+      "created_at": "2026-11-12T23:28:25Z",
+      "updated_at": "2026-11-13T00:18:41Z",
+      "total_seconds": 3016,
+      "jobs": [
+        {
+          "name": "versie",
+          "conclusion": "success",
+          "seconds": 8
+        },
+        {
+          "name": "Bouwen â€“ Linux",
+          "conclusion": "success",
+          "seconds": 2369
+        },
+        {
+          "name": "Bouwen â€“ Windows",
+          "conclusion": "success",
+          "seconds": 2880
+        },
+        {
+          "name": "Bouwen â€“ macOS",
+          "conclusion": "success",
+          "seconds": 2372
+        },
+        {
+          "name": "publiceren",
+          "conclusion": "success",
+          "seconds": 120
+        }
+      ]
+    },
+    {
+      "run": 43030810271,
+      "head_sha": "de584578f91698ec051d345a335a7c3f19011a94",
+      "event": "push",
+      "created_at": "2026-11-11T13:37:30Z",
+      "updated_at": "2026-11-11T14:32:04Z",
+      "total_seconds": 3274,
+      "jobs": [
+        {
+          "name": "versie",
+          "conclusion": "success",
+          "seconds": 13
+        },
+        {
+          "name": "Bouwen â€“ Linux",
+          "conclusion": "success",
+          "seconds": 1645
+        },
+        {
+          "name": "Bouwen â€“ macOS",
+          "conclusion": "success",
+          "seconds": 2618
+        },
+        {
+          "name": "Bouwen â€“ Windows",
+          "conclusion": "success",
+          "seconds": 3132
+        },
+        {
+          "name": "publiceren",
+          "conclusion": "success",
+          "seconds": 122
+        }
+      ]
+    },
+    {
+      "run": 43021548128,
+      "head_sha": "de584578f91698ec051d345a335a7c3f19011a94",
+      "event": "workflow_dispatch",
+      "created_at": "2026-11-11T12:34:45Z",
+      "updated_at": "2026-11-11T13:28:48Z",
+      "total_seconds": 3243,
+      "jobs": [
+        {
+          "name": "versie",
+          "conclusion": "success",
+          "seconds": 9
+        },
+        {
+          "name": "Bouwen â€“ Linux",
+          "conclusion": "success",
+          "seconds": 2628
+        },
+        {
+          "name": "Bouwen â€“ macOS",
+          "conclusion": "success",
+          "seconds": 2461
+        },
+        {
+          "name": "Bouwen â€“ Windows",
+          "conclusion": "success",
+          "seconds": 2488
+        },
+        {
+          "name": "publiceren",
+          "conclusion": "success",
+          "seconds": 243
+        }
+      ]
+    },
+    {
+      "run": 42270333483,
+      "head_sha": "be1c6c8c3ac3b3e2cadcb25c2f64367e1e48d543",
+      "event": "push",
+      "created_at": "2026-11-06T18:23:55Z",
+      "updated_at": "2026-11-06T19:34:15Z",
+      "total_seconds": 4220,
+      "jobs": [
+        {
+          "name": "versie",
+          "conclusion": "success",
+          "seconds": 14
+        },
+        {
+          "name": "Bouwen â€“ Windows",
+          "conclusion": "success",
+          "seconds": 2800
+        },
+        {
+          "name": "Bouwen â€“ Linux",
+          "conclusion": "success",
+          "seconds": 4127
+        },
+        {
+          "name": "Bouwen â€“ macOS",
+          "conclusion": "success",
+          "seconds": 1213
+        },
+        {
+          "name": "publiceren",
+          "conclusion": "success",
+          "seconds": 71
+        }
+      ]
+    },
+    {
+      "run": 42262956453,
+      "head_sha": "be1c6c8c3ac3b3e2cadcb25c2f64367e1e48d543",
+      "event": "workflow_dispatch",
+      "created_at": "2026-11-06T17:34:59Z",
+      "updated_at": "2026-11-06T18:14:26Z",
+      "total_seconds": 2367,
+      "jobs": [
+        {
+          "name": "versie",
+          "conclusion": "success",
+          "seconds": 8
+        },
+        {
+          "name": "Bouwen â€“ Windows",
+          "conclusion": "success",
+          "seconds": 2274
+        },
+        {
+          "name": "Bouwen â€“ macOS",
+          "conclusion": "success",
+          "seconds": 2128
+        },
+        {
+          "name": "Bouwen â€“ Linux",
+          "conclusion": "success",
+          "seconds": 1604
+        },
+        {
+          "name": "publiceren",
+          "conclusion": "success",
+          "seconds": 75
+        }
+      ]
+    }
+  ],
+  "current_run_snapshot": {
+    "observed_at_utc": "2026-11-20T13:53:07.904938+00:00",
+    "run": {
+      "id": 44747669364,
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+      "head_sha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+      "head_branch": "codex/release-prep-2026-11-20",
+      "event": "workflow_dispatch",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-11-20T13:49:14Z",
+      "updated_at": "2026-11-20T13:49:34Z",
+      "run_started_at": "2026-11-20T13:49:14Z"
+    },
+    "jobs": [
+      {
+        "id": 136327076012,
+        "name": "versie",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-20T13:49:17Z",
+        "completed_at": "2026-11-20T13:49:31Z",
+        "relevant_steps": []
+      },
+      {
+        "id": 136327207259,
+        "name": "Bouwen – Linux",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-11-20T13:49:32Z",
+        "completed_at": null,
+        "relevant_steps": [
+          {
+            "name": "Ondertekening beschikbaar",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-11-20T13:49:39Z",
+            "completed_at": "2026-11-20T13:49:39Z"
+          },
+          {
+            "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+            "status": "in_progress",
+            "conclusion": null,
+            "started_at": "2026-11-20T13:52:39Z",
+            "completed_at": null
+          },
+          {
+            "name": "Authenticode voorbereiden",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (onondertekend)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (Windows, ondertekend)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Authenticode controleren (installer, programma en uninstaller)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Handtekening en notarisatie controleren (macOS)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "id": 136327207416,
+        "name": "Bouwen – Windows",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-11-20T13:49:33Z",
+        "completed_at": null,
+        "relevant_steps": [
+          {
+            "name": "Ondertekening beschikbaar",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-11-20T13:49:46Z",
+            "completed_at": "2026-11-20T13:49:46Z"
+          },
+          {
+            "name": "Run pnpm test",
+            "status": "in_progress",
+            "conclusion": null,
+            "started_at": "2026-11-20T13:50:35Z",
+            "completed_at": null
+          },
+          {
+            "name": "Authenticode voorbereiden",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (onondertekend)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (Windows, ondertekend)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Authenticode controleren (installer, programma en uninstaller)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Handtekening en notarisatie controleren (macOS)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "id": 136327207611,
+        "name": "Bouwen – macOS",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-11-20T13:49:34Z",
+        "completed_at": null,
+        "relevant_steps": [
+          {
+            "name": "Ondertekening beschikbaar",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-11-20T13:49:45Z",
+            "completed_at": "2026-11-20T13:49:45Z"
+          },
+          {
+            "name": "Run pnpm test",
+            "status": "in_progress",
+            "conclusion": null,
+            "started_at": "2026-11-20T13:50:14Z",
+            "completed_at": null
+          },
+          {
+            "name": "Authenticode voorbereiden",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (onondertekend)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (Windows, ondertekend)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Authenticode controleren (installer, programma en uninstaller)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Handtekening en notarisatie controleren (macOS)",
+            "status": "pending",
+            "conclusion": null,
+            "started_at": null,
+            "completed_at": null
+          }
+        ]
+      }
+    ],
+    "preflight_log_access": [
+      {
+        "job_id": 136327207259,
+        "exit_code": 1,
+        "known_messages": [],
+        "log_saved": false,
+        "byte_length": 215
+      },
+      {
+        "job_id": 136327207416,
+        "exit_code": 1,
+        "known_messages": [],
+        "log_saved": false,
+        "byte_length": 215
+      },
+      {
+        "job_id": 136327207611,
+        "exit_code": 1,
+        "known_messages": [],
+        "log_saved": false,
+        "byte_length": 215
+      }
+    ],
+    "interpretation": "Signing preflight step success with publiceren=false does not establish available credentials or signed artifacts. In-progress logs may be unavailable. No secrets or raw logs retained."
+  },
+  "required_before_publication": [
+    "Freeze final approved version/source commit and preserve source-to-artifact mapping.",
+    "All3 platform builds must finish; confirm selected signed Windows and signed/notarized Mac build branches and actual verification gates, not only availability steps.",
+    "Verify all28 final installers and14 package reports from the same final commit; check actual hashes and package validation records.",
+    "Verify Linux detached signatures and signed SHA256SUMS against public fingerprint13F6D414ADEE4ED4CD09AC60601D86C93C504D29; publication=false skips that publication job.",
+    "Perform installation/start/primary document flow for applicable native packages; distinguish Office runtime probes from7-app GUI acceptance.",
+    "Retain outstanding Linux/macOS Writer limits and browser-route results explicitly; do not relabel blocked/unperformed checks as pass.",
+    "Obtain explicit human approval for intended publication/tag/main actions."
+  ],
+  "timing_note": "Five earlier successful runs took39m27s to70m20s end-to-end, three recent50m16s/54m34s/54m03s. Larger current runtime payload can increase time. Run started14:49CET;15:50CET leaves61 minutes including packaging/manual checks and no assured retry margin.",
+  "official_docs": [
+    "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+    "https://v2.tauri.app/plugin/updater/",
+    "https://v2.tauri.app/distribute/sign/macos/"
+  ],
+  "evidence_files": [
+    "release-pipeline-audit-2026-11-20/sources.json",
+    "release-pipeline-audit-2026-11-20/api-evidence.json",
+    "release-pipeline-audit-2026-11-20/current-run-preflight.json"
+  ]
+}

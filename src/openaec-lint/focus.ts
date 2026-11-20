@@ -3,6 +3,20 @@
 const FOCUSBAAR =
   'button, select, input, textarea, a[href], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
 
+/** Toetsnavigatie moet ook na een muisklik een zichtbare focus houden. */
+export function focusViaToets(
+  element: HTMLElement | null | undefined,
+  options?: FocusOptions,
+) {
+  // WebKitGTK 2.50 houdt anders de eerdere klikmodaliteit vast (WebKit #315486).
+  // Oudere browsers mogen deze standaardoptie negeren en hun eigen heuristiek gebruiken.
+  const opties: FocusOptions & { focusVisible: boolean } = {
+    ...options,
+    focusVisible: true,
+  };
+  element?.focus(opties);
+}
+
 /** Zichtbare, bruikbare bedieningselementen binnen `wortel`, in DOM-volgorde. */
 export function focusbare(wortel: HTMLElement): HTMLElement[] {
   return [...wortel.querySelectorAll<HTMLElement>(FOCUSBAAR)].filter(

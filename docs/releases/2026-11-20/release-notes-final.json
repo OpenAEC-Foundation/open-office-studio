@@ -1,0 +1,2195 @@
+{
+  "schemaVersion": 1,
+  "kind": "draft release notes and final-installer/download checklist only",
+  "createdAt": "2026-11-20T13:49:43.377181+00:00",
+  "ownerChat": "01a1bf84-6f92-7452-93a5-c0aed5bd5173",
+  "integrationCoordinator": "01a1bf9c-9635-7733-aa46-eb3bd68262aa",
+  "integrationCommit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+  "testedApplicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "testedApplicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "testedVersion": "2026.46.2",
+  "proposedReleaseVersion": "2026.47.1",
+  "proposedVersionSource": "Integration froze intake15:25; commit/tree/version and all5 source blobs independently matched delivered corrections; new native packages not accepted",
+  "finalReleaseVersion": null,
+  "finalReleaseCommit": null,
+  "finalReleaseTag": null,
+  "finalBuildRun": null,
+  "publicationStatus": "not-published-by-this-task",
+  "readinessAtIntegrationPoint": {
+    "readyForMain": false,
+    "blockers": [
+      "Native Linux362 original ArrowDown focus-visible failure retained; alternative Tab route only partial (six focused Text commands, then screenshot timeout), no full native matrix",
+      "Native Linux Find input Undo fails in this driver setup and oldG control; no I3 regression cause established",
+      "Native macOS361/362 table-targeting/body route remains unavailable; no359 fix claimed"
+    ],
+    "pending": [],
+    "noProductionChangesAfterTestedI3Expected": true,
+    "completedSupplementaryLinuxTab": {
+      "run": 44744186201,
+      "status": "failed; partial route-specific geometry evidence",
+      "normalCases": 1,
+      "focusCases": 6,
+      "groupCases": 0,
+      "retryAllowed": false
+    }
+  },
+  "scopePermissions": {
+    "ownLocalFilesOnly": true,
+    "mainMerge": false,
+    "mainPush": false,
+    "tag": false,
+    "dispatch": false,
+    "publishRelease": false,
+    "guiOrCapture": false,
+    "productPatch": false,
+    "newIssue": false
+  },
+  "fourFixes": [
+    {
+      "issue": 356,
+      "scope": "EPUB content preservation and bounded browser/native open/save/reopen; no blanket native-editing/format certification"
+    },
+    {
+      "issue": 361,
+      "scope": "Focus restoration after table column command; platform-native limitations retained"
+    },
+    {
+      "issue": 362,
+      "scope": "Vertical ribbon/control and focus-ring space; partial native coverage and horizontal observations retained"
+    },
+    {
+      "issue": 363,
+      "scope": "Readable style-management labels/hints and style-name interpolation; accepted in bounded scope"
+    }
+  ],
+  "earlierVerifiedIntegrations": [
+    {
+      "issue": 358,
+      "integrationMerge": "f1085923653bd6e59982807e16a09c5fa3e3d74e",
+      "verifiedAncestorOfIntegration": true,
+      "claim": "Existing macOS Command+Up/Down navigation fix, not a new change this round"
+    },
+    {
+      "pr": 349,
+      "boundedSource": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "verifiedAncestorOfIntegration": true,
+      "claim": "Previously integrated work; no new general speedup/hardware guarantee"
+    }
+  ],
+  "knownLimits": [
+    "Native Linux362 original ArrowDown focus-visible failure retained; alternative Tab route only partial (six focused Text commands, then screenshot timeout), no full native matrix",
+    "Native Linux Find input Undo fails in this driver setup and oldG control; no I3 regression cause established",
+    "Native macOS361/362 table-targeting/body route remains unavailable; no359 fix claimed"
+  ],
+  "deferred366": {
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/366",
+    "title": "Writer: page counter remains stale for minutes after repeated document doubling",
+    "stateObserved": "OPEN",
+    "bodySha256": "3f5ad26b1e8b331fb553e667035dab20c01c2f947678c55cb6a890610f4dec94",
+    "evidenceKind": "user report; not independently reproduced",
+    "reportedWaitSecondsAtLeast": 120,
+    "reportedCounter": "10 of10",
+    "userExpectedPages": 15,
+    "expectedFinalLayoutIndependentlyVerified": false,
+    "fixedInThisRound": false,
+    "newImplementationClaim": false
+  },
+  "platforms": [
+    {
+      "key": "windows-nsis",
+      "os": "Windows10/11",
+      "arch": "x64",
+      "suffix": "x64-setup.exe",
+      "signature": "Authenticode with trusted timestamp on installer, installed executable and uninstaller"
+    },
+    {
+      "key": "macos-dmg",
+      "os": "macOS",
+      "arch": "aarch64 / AppleSilicon",
+      "suffix": "aarch64.dmg",
+      "signature": "DeveloperID codesign, Gatekeeper assessment and stapled notarization"
+    },
+    {
+      "key": "linux-deb",
+      "os": "Linux",
+      "arch": "amd64 / x64",
+      "suffix": "amd64.deb",
+      "signature": "Detached OpenPGP signature"
+    },
+    {
+      "key": "linux-appimage",
+      "os": "Linux",
+      "arch": "amd64 / x64",
+      "suffix": "amd64.AppImage",
+      "signature": "Detached OpenPGP signature"
+    }
+  ],
+  "apps": [
+    {
+      "sleutel": "office",
+      "naam": "Open Office Studio",
+      "programma": "open-office-studio",
+      "identifier": "org.openaec.office-studio"
+    },
+    {
+      "sleutel": "writer",
+      "naam": "Open Writer Studio",
+      "programma": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio"
+    },
+    {
+      "sleutel": "spreadsheet",
+      "naam": "Open Spreadsheet Studio",
+      "programma": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio"
+    },
+    {
+      "sleutel": "presentation",
+      "naam": "Open Presentation Studio",
+      "programma": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio"
+    },
+    {
+      "sleutel": "email",
+      "naam": "Open Email Studio",
+      "programma": "open-email-studio",
+      "identifier": "org.openaec.email-studio"
+    },
+    {
+      "sleutel": "notition",
+      "naam": "Open Notition Studio",
+      "programma": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio"
+    },
+    {
+      "sleutel": "database",
+      "naam": "Open Database Studio",
+      "programma": "open-database-studio",
+      "identifier": "org.openaec.database-studio"
+    }
+  ],
+  "installerCountExpected": 28,
+  "installers": [
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Office.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Office.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Office.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Office.Studio_2026.47.1_amd64.AppImage"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Writer.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Writer.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Writer.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Writer.Studio_2026.47.1_amd64.AppImage"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Spreadsheet.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Spreadsheet.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Spreadsheet.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Spreadsheet.Studio_2026.47.1_amd64.AppImage"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Presentation.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Presentation.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Presentation.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Presentation.Studio_2026.47.1_amd64.AppImage"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Email.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Email.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Email.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Email.Studio_2026.47.1_amd64.AppImage"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Notition.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Notition.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Notition.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Notition.Studio_2026.47.1_amd64.AppImage"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Database.Studio_2026.47.1_x64-setup.exe"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Database.Studio_2026.47.1_aarch64.dmg"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Database.Studio_2026.47.1_amd64.deb"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product",
+      "candidateSourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "candidateVersion": "2026.47.1",
+      "candidateFilename": "Open.Database.Studio_2026.47.1_amd64.AppImage"
+    }
+  ],
+  "packageReportCountExpected": 14,
+  "packageReports": [
+    {
+      "app": "office",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-Windows.json",
+      "publicFilename": "package-verification-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "office",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-Linux.json",
+      "publicFilename": "package-verification-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "writer",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-writer-Windows.json",
+      "publicFilename": "package-verification-writer-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "writer",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-writer-Linux.json",
+      "publicFilename": "package-verification-writer-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "spreadsheet",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-spreadsheet-Windows.json",
+      "publicFilename": "package-verification-spreadsheet-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "spreadsheet",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-spreadsheet-Linux.json",
+      "publicFilename": "package-verification-spreadsheet-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "presentation",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-presentation-Windows.json",
+      "publicFilename": "package-verification-presentation-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "presentation",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-presentation-Linux.json",
+      "publicFilename": "package-verification-presentation-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "email",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-email-Windows.json",
+      "publicFilename": "package-verification-email-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "email",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-email-Linux.json",
+      "publicFilename": "package-verification-email-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "notition",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-notition-Windows.json",
+      "publicFilename": "package-verification-notition-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "notition",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-notition-Linux.json",
+      "publicFilename": "package-verification-notition-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "database",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-Database-Windows.json",
+      "publicFilename": "package-verification-database-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "database",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-Database-Linux.json",
+      "publicFilename": "package-verification-database-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    }
+  ],
+  "extraVerificationAssets": [
+    "SHA256SUMS",
+    "SHA256SUMS.asc",
+    "openaec-signing-public-key.asc",
+    "openaec-signing-fingerprint.txt",
+    "14 Linux package .asc signatures"
+  ],
+  "unsupportedPackageClaimsExcluded": [
+    "RPM",
+    "Intel macOS",
+    "Windows ARM64"
+  ],
+  "browserScope": "Actual / and /office/ CI routes; not installer or universal browser-engine coverage",
+  "updaterAtIntegrationPoint": {
+    "pubkeyConfigured": false,
+    "endpoints": [],
+    "automaticUpdatesPromised": false,
+    "dedicatedApps": "Manual installer updates; no suite updater"
+  },
+  "finalChecks": [
+    {
+      "id": "freeze-version-source",
+      "requiredEvidence": "Coordinator closes intake and freezes one exact source/tree/version per round; later discoveries/fixes separate unless explicit corrected point plus necessary retests; validate versions; avoid already-published2026.46.2",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "signed-product-build",
+      "requiredEvidence": "Record exact build checkout/run and all three completed OS jobs; green unsigned build does not prove signing",
+      "status": "New420 seven-app signed release build and acceptance pending; oldE92 Windows failure kept separately",
+      "performedByThisTask": false
+    },
+    {
+      "id": "windows-signatures",
+      "requiredEvidence": "Verify all seven installers, installed executables and uninstallers with timestamps, WebView2 loader and app identity",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "macos-signatures",
+      "requiredEvidence": "Verify apps from all seven DMGs with codesign/spctl/stapler",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "linux-signatures",
+      "requiredEvidence": "Verify all fourteen DEB/AppImage detached signatures and signed SHA256SUMS against trusted fingerprint",
+      "status": "No new420 signing receipt; oldE92 build-only run skipped publication/GPG stage",
+      "performedByThisTask": false
+    },
+    {
+      "id": "inventory-package-reports",
+      "requiredEvidence": "Validate28 unique installers and14 exact app/version/byte/hash reports, accounting for public report renaming",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "final-byte-manifest",
+      "requiredEvidence": "Hash actual post-signing/notarization normalized filenames; final product hashes stay separate from development artifacts",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "download-roundtrip",
+      "requiredEvidence": "Retrieve every final asset from its real downloadURL into empty directory; compare full name/length/hash/signature set without ignore-missing",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "native-final-products",
+      "requiredEvidence": "Start per platform on own verified package and free tester; brief actual document/input/focus, Ctrl/Command, save/reopen preflight before broad tests. Distinguish driver/product errors without weakening criteria; no local operator overlap; preserve source point and exact package form.",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "updater-conditional",
+      "requiredEvidence": "Only evaluate updater if truly configured and signed; dedicated apps use manual installer updates",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "final-decision",
+      "requiredEvidence": "Root/user reviews receipts, remaining native blockers and notes before any separately authorized publication/main/tag",
+      "status": "no publication/main/tag today; remaining risks not accepted; integration handoff for21November",
+      "performedByThisTask": false
+    }
+  ],
+  "pipelineAudit": {
+    "owner": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+    "receipt": [
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "71f623f44f45addb268f280889ad1ba84f4b42eccd04f2089731232684cb46d3"
+      },
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "a1d0a8e49c7afb8bdfb98bc00c45ee1af5d07b31686a9c2791682dd8c60d6d11"
+      }
+    ],
+    "status": "Owner final MD/JSON audit independently SHA256 verified; current artifacts/signatures still pending",
+    "designVerified": "7apps/28installers/14reports, signature gates; not final-product execution",
+    "organizationSecretsAvailability": "unknown403 per pipeline owner; not classified missing",
+    "existing2026_46_2": "Already publicly released on other source, per750b API audit; do not reuse as unique new release",
+    "candidate2026_47_1": "No existing tag/release at750b API check; ROOT proposal e92b93a6; no tag created by this task",
+    "buildOnlyPublicationGates": "publiceren=false skips publishing job, aggregate release gathering/verification, Linux OpenPGP and signed SHA256SUMS"
+  },
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "54b2b508eab9bbec5c5da80c5087c0543d34a51f230960b6a3ec648a03f8d9dc",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/AGENTS.md"
+    },
+    {
+      "path": "assets/studios.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "5f15ccf38443a92e8e48db40a68d233dff89c7852549611f74d64f4f28d76528",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/assets/studios.json"
+    },
+    {
+      "path": "docs/studios.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "2603aa83eb988dde707a226603868fd1322263713c5ddaf11bcf0a05ebb03a67",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/studios.md"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml"
+    },
+    {
+      "path": "scripts/controleer-uitgave.mjs",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "6c70f2c15a5b788b820a98509407113915018a843c262ae8b71567ab6f5d4657",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/scripts/controleer-uitgave.mjs"
+    },
+    {
+      "path": "src-tauri/tauri.conf.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "1f9c29b6aa89f4c5f105b1bf2fe2d3e405fbfc9a7abba0adb9e8f7587b83c8ce",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/src-tauri/tauri.conf.json"
+    },
+    {
+      "path": "docs/updates.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "2ece11e63e3ad47e513b4714b5603fb800286105a7bf5376459cd96289c06000",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/updates.md"
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "8895b3b014c88a6185cc25c6e5c9138437a5af09461f62bc637a934063c8d708",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/tests/integratie-2026-11-16.md"
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "2b2c5ba7403e5637e4d22362e8697d922330cafd69b858566a42a94cf4033864",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/tests/integratie-2026-11-16.json"
+    },
+    {
+      "path": "README.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "c1846635c572bc08f831e42da77bc143bc1a873df0dfdef8f542cb9783b3b067",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/README.md"
+    },
+    {
+      "path": "package.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "7bd92f3b5aa2ce316fb8ffc2065e90c0301f7e6c153cf3e307f8afc72bb02916",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/package.json"
+    }
+  ],
+  "notesFile": {
+    "path": "[private local path omitted; original retained by owner]",
+    "sha256": "125bff6e0dcef43812920a6c9d996f2366911ef88ec0c38a6a40a65996dd8bc5"
+  },
+  "handoffDeadlineLocal": "2026-11-20T15:43:00+01:00",
+  "hardStopLocal": "2026-11-20T15:50:00+01:00",
+  "executionSummary": {
+    "newBuilds": 0,
+    "newInstallations": 0,
+    "guiSessions": 0,
+    "publications": 0,
+    "mainChanges": 0,
+    "sourceEdits": 0,
+    "newInstallerDownloads": 0,
+    "newCandidateTestsRerunByThisChat": 0,
+    "verifiedInputReuse": true
+  },
+  "proposedReleaseCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+  "proposedReleaseTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+  "proposedReleaseBranch": "codex/release-prep-2026-11-20",
+  "proposalDelta": {
+    "base": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "sourcePaths": [
+      "src/openaec-lint/Lint.tsx",
+      "src/openaec-lint/focus.ts",
+      "src/tekst/zoeken/ZoekPaneel.tsx",
+      "src/tekst/zoeken/linux-invoer-undo.test.ts",
+      "src/tekst/zoeken/linux-invoer-undo.ts"
+    ],
+    "sourcePathCount": 5,
+    "sourceBlobSha256": {
+      "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+      "src/tekst/zoeken/linux-invoer-undo.ts": "e52730cab65ba61e501ed520f008a7fe57ad9fd99bdd9472a7c306f081731b20",
+      "src/tekst/zoeken/linux-invoer-undo.test.ts": "5c09c6c949454b6c880d4ceedd8a2ba510b44a15873e2e34bff378ecf7ca477b",
+      "src/openaec-lint/Lint.tsx": "2f0b62a1fc33a37f863f3aeb74eadcf3632695ff98990d61cca148e3a7982226",
+      "src/openaec-lint/focus.ts": "a5fe46fd5887500fafc62e5105120d7aa1e947a0bc182f091c3a627cca9a8e41"
+    },
+    "includesOneUnitTestFile": true,
+    "rootIntakes": {
+      "368": {
+        "original": "74fd030c7d733f49131178be58d75634f47b9cd5",
+        "intake": "ce20d15d"
+      },
+      "369": {
+        "original": "49ea8576222af1824628502b5b59243c0a297e9d",
+        "intake": "420af640c10ab9ada6c66c844c0098caea87c493"
+      }
+    },
+    "intakeClosed": "2026-11-20T15:25:00+01:00",
+    "oldReleaseRunDoesNotContainCorrections": true
+  },
+  "candidateBuild": {
+    "sourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+    "sourceTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+    "version": "2026.47.1",
+    "fullSevenAppReleaseRun": null,
+    "fullSignedReleaseAcceptance": false,
+    "nativeFixedPackageAcceptance": false,
+    "coreAndBrowserCI": [
+      {
+        "name": "Desktop",
+        "run": 44753496663,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "in_progress",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496663",
+        "observedAt": "2026-11-20T14:43:02.434961+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "desktop (ubuntu-22.04)",
+            "databaseId": 136347096154,
+            "status": "in_progress",
+            "conclusion": "",
+            "failedSteps": []
+          },
+          {
+            "name": "desktop (macos-latest)",
+            "databaseId": 136347096394,
+            "status": "in_progress",
+            "conclusion": "",
+            "failedSteps": []
+          },
+          {
+            "name": "desktop (windows-latest)",
+            "databaseId": 136347096445,
+            "status": "completed",
+            "conclusion": "failure",
+            "failedSteps": [
+              {
+                "name": "Run node scripts/voorbereiden-kantoorruntime.mjs",
+                "completedAt": "2026-11-20T14:29:23Z"
+              }
+            ]
+          }
+        ],
+        "actualCheckoutWitness": "pending central log/checkout verification"
+      },
+      {
+        "name": "Database",
+        "run": 44753496748,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "in_progress",
+        "conclusion": "",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496748",
+        "observedAt": "2026-11-20T14:43:02.213455+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "database (ubuntu-22.04)",
+            "databaseId": 136347095897,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "database (macos-latest)",
+            "databaseId": 136347096413,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "database (windows-latest)",
+            "databaseId": 136347096713,
+            "status": "in_progress",
+            "conclusion": "",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "pending central log/checkout verification"
+      },
+      {
+        "name": "Example",
+        "run": 44753496637,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496637",
+        "observedAt": "2026-11-20T14:43:02.266550+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "voorbeeld",
+            "databaseId": 136347096586,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "PR merge a578; full tree c133 identical to420, different commit metadata"
+      },
+      {
+        "name": "Writer formats",
+        "run": 44753496701,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496701",
+        "observedAt": "2026-11-20T14:43:02.193082+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "writer",
+            "databaseId": 136347097296,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "PR merge a578; full tree c133 identical to420, different commit metadata"
+      },
+      {
+        "name": "Document matrix",
+        "run": 44753496566,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496566",
+        "observedAt": "2026-11-20T14:43:03.442816+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "matrix",
+            "databaseId": 136347095708,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "PR merge a578; full tree c133 identical to420, different commit metadata"
+      },
+      {
+        "name": "Spreadsheet matrix",
+        "run": 44753496662,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496662",
+        "observedAt": "2026-11-20T14:43:03.567221+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "matrix",
+            "databaseId": 136347095993,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "PR merge a578; full tree c133 identical to420, different commit metadata"
+      },
+      {
+        "name": "Presentation ODF",
+        "run": 44753496653,
+        "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496653",
+        "observedAt": "2026-11-20T14:43:03.690040+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "presentation (Linux)",
+            "databaseId": 136347095550,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "presentation (Windows)",
+            "databaseId": 136347095889,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "presentation (macOS)",
+            "databaseId": 136347096053,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "Exactly420 application commit verified in completed log"
+      },
+      {
+        "name": "Browser QA",
+        "run": 44753552773,
+        "headSha": "c49336c7d21794f0f8207a527f782b2794a656af",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753552773",
+        "observedAt": "2026-11-20T14:43:03.852208+00:00",
+        "metadataHeadVerified": true,
+        "jobs": [
+          {
+            "name": "browser (macos-latest)",
+            "databaseId": 136347301327,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "browser (windows-latest)",
+            "databaseId": 136347301603,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "browser (ubuntu-22.04)",
+            "databaseId": 136347301645,
+            "status": "completed",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ],
+        "actualCheckoutWitness": "Central six source/tree receipts independently audited against exact APP420/treec133"
+      }
+    ],
+    "browserAppRef": "420af640c10ab9ada6c66c844c0098caea87c493",
+    "browserAppTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+    "browserExternalQaHead": "c49336c7d21794f0f8207a527f782b2794a656af",
+    "browserAcceptedInReportedScope": true
+  },
+  "updatedAt": "2026-11-20T14:43:03.866734+00:00",
+  "previousNotesVersions": [
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "8a9b7e856f890ad3bd8872aff7bffe6eb738859bce7e476356a817b34fb3c5f4"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "3813b2ed2eebdeb29ef20d6ef2ee8eb2af067070ee5c567bd20165a3e5dfbcc2"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "9f7b14002d42cfb6f280966e915df7ed6a7e37684cb47881a84137c1a672aba2"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "6d78e060b36568eebbd340c8e881da3640adf03701ff7f531cc4d9a6dafd3abd"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "d0a291f226362990dbb8f0663f3d2e0e40b6ba647a72e85df7df5b5cf02056c9"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "9acc21899e1055f8af9f17bbfd1d898c277874a58912ee01762248bde7bca141"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "0de51bc3da065863a3a709e983aa2842f1b2435b969bc358abbba7ec2db9a479"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "b34a848d1a78d8835a0497a611b1d0a548c07e99aba27bb24411c87ff4f34e10"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "2483e8ccac56ed720bc556ff673d94c0b70ae785caa3fa2bbaed63e2d4f5a3e1"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "565ae63285074d17211de46bf1f7bbd3f244e2de01107f55d84a052af92dd3d9"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "bb8b28e7fd74e802eb57c671320fbed321fa404d8eaf147274b82785f3ba5244"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "5d2491aff7937a210ae30ebc48cebda3edfc5485f8b0e61fd3369bea1e33c682"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "0c9b36618be366fd6ef1b5e3fd8e68c1d34dc0160ad37d16637fe7f72db04e26"
+    },
+    {
+      "path": "[private local path omitted; original retained by owner]",
+      "sha256": "0941a7271c0b67684ae78cb303b6d801778af0106015773888eeb5db6d17dd0a"
+    }
+  ],
+  "buildStatusSnapshots": [
+    {
+      "observedAt": "2026-11-20T14:00:53.986034+00:00",
+      "run": 44747669364,
+      "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+      "status": "in_progress",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+      "jobs": [
+        {
+          "name": "versie",
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Linux",
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (onondertekend)"
+          ]
+        },
+        {
+          "name": "Bouwen \u2013 Windows",
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked"
+          ]
+        },
+        {
+          "name": "Bouwen \u2013 macOS",
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (macOS, ondertekend en genotariseerd)"
+          ]
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-11-20T14:08:29.694296+00:00",
+      "run": 44747669364,
+      "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+      "status": "in_progress",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+      "jobs": [
+        {
+          "name": "versie",
+          "databaseId": 136327076012,
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": [],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Linux",
+          "databaseId": 136327207259,
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (onondertekend)"
+          ],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Windows",
+          "databaseId": 136327207416,
+          "status": "completed",
+          "conclusion": "failure",
+          "currentSteps": [],
+          "failedSteps": [
+            {
+              "name": "Pakket bouwen (Windows, ondertekend)",
+              "completedAt": "2026-11-20T14:06:38Z"
+            }
+          ]
+        },
+        {
+          "name": "Bouwen \u2013 macOS",
+          "databaseId": 136327207611,
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (macOS, ondertekend en genotariseerd)"
+          ],
+          "failedSteps": []
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-11-20T14:18:50.883859+00:00",
+      "run": 44747669364,
+      "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+      "status": "in_progress",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+      "jobs": [
+        {
+          "name": "versie",
+          "databaseId": 136327076012,
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": [],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Linux",
+          "databaseId": 136327207259,
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (onondertekend)"
+          ],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Windows",
+          "databaseId": 136327207416,
+          "status": "completed",
+          "conclusion": "failure",
+          "currentSteps": [],
+          "failedSteps": [
+            {
+              "name": "Pakket bouwen (Windows, ondertekend)",
+              "completedAt": "2026-11-20T14:06:38Z"
+            }
+          ]
+        },
+        {
+          "name": "Bouwen \u2013 macOS",
+          "databaseId": 136327207611,
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (macOS, ondertekend en genotariseerd)"
+          ],
+          "failedSteps": []
+        }
+      ]
+    },
+    {
+      "name": "Old release",
+      "run": 44747669364,
+      "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+      "status": "in_progress",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+      "observedAt": "2026-11-20T14:33:55.519437+00:00",
+      "metadataHeadVerified": true,
+      "actualCheckoutWitness": "pending central review",
+      "jobs": [
+        {
+          "name": "versie",
+          "databaseId": 136327076012,
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": [],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Linux",
+          "databaseId": 136327207259,
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": [],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Windows",
+          "databaseId": 136327207416,
+          "status": "completed",
+          "conclusion": "failure",
+          "currentSteps": [],
+          "failedSteps": [
+            {
+              "name": "Pakket bouwen (Windows, ondertekend)",
+              "completedAt": "2026-11-20T14:06:38Z"
+            }
+          ]
+        },
+        {
+          "name": "Bouwen \u2013 macOS",
+          "databaseId": 136327207611,
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (macOS, ondertekend en genotariseerd)"
+          ],
+          "failedSteps": []
+        }
+      ]
+    }
+  ],
+  "finalAuditOwner": "Integration ROOT01a1bf9c-9635-7733-aa46-eb3bd68262aa; no parallel downloads/GUI by this chat",
+  "publicationDecision": {
+    "asOfDate": "2026-11-20",
+    "source": "Explicit user steering relayed by integration coordinator",
+    "todayPublicationAllowed": false,
+    "mainAllowed": false,
+    "tagAllowed": false,
+    "remainingLinuxMacRisksAccepted": false,
+    "handoffForDate": "2026-11-21",
+    "automaticResume": false
+  },
+  "candidateScopeGuard": "Any later product fix gets its own exact source/test/build binding; run44747669364 remains evidence only for e92b93a6 and is never relabelled as a new candidate",
+  "monitoring": {
+    "run": 44747669364,
+    "resumedAt": "2026-11-20T14:23:22.430199+00:00",
+    "authorization": "New direct user instruction: verified release handoff updates until15:50; no publication/tag/main",
+    "readOnly": true,
+    "ownMonitorEndsBeforeUTC": "2026-11-20T14:47:00Z",
+    "notesHardStopLocal": "2026-11-20T15:50:00+01:00",
+    "sharedRunCancellationAllowed": false,
+    "automaticResumeAfterStop": false,
+    "ownMonitorEnded": true,
+    "ownMonitorExitCode": 1,
+    "ownMonitorStoppedAtUTC": "2026-11-20T14:28:55Z",
+    "stopReason": "Only own read-only watcher interrupted after new frozen candidate; coordinator asked15:40 handoff without waiting for extra CI",
+    "sharedRunCancelledByThisChat": false
+  },
+  "latestUserWorkflowPreferences": {
+    "receivedDate": "2026-11-20",
+    "perPlatformStart": "After own source/version/package identity verification and tester availability, without waiting for unrelated platform builds/downloads",
+    "nativePreflight": "Verify right document/input/focus, platform Ctrl/Command, actual save/reopen before broad input tests; reuse valid checks",
+    "integrationFreeze": "Coordinator closes intake and fixes one candidate per round; later work separate unless explicitly corrected with new point and necessary retests",
+    "noSharedLocalOperatorOverlap": true,
+    "changesStopTimeOrScope": false
+  },
+  "handoffAt": "2026-11-20T14:43:03.866734+00:00",
+  "ownNotesTaskStatus": "Final420-only CI addition complete; handoff content confirmed complete by coordinator; no further research/build/monitoring",
+  "fullReleaseReady": false,
+  "monitoringHistory": [
+    {
+      "run": 44747669364,
+      "readOnly": true,
+      "noSharedBuildCancellation": true,
+      "ownMonitorEndsBeforeUTC": "2026-11-20T14:18:00Z",
+      "notesHardStopLocal": "2026-11-20T15:20:00+01:00",
+      "ownMonitorEnded": true,
+      "ownMonitorStoppedAtUTC": "2026-11-20T14:18:00.003899Z",
+      "ownMonitorExitCode": 0,
+      "sharedRunCancelledByThisChat": false,
+      "automaticResume": false
+    }
+  ],
+  "handoffHistory": [
+    {
+      "handoffAt": "2026-11-20T14:18:50.883859+00:00",
+      "status": "Updated and handed to integration before15:20; remaining build/artifact audit belongs to ROOT; no automatic continuation",
+      "receiptArchive": "[private local path omitted; original retained by owner]",
+      "receiptSha256": "b34a848d1a78d8835a0497a611b1d0a548c07e99aba27bb24411c87ff4f34e10"
+    }
+  ],
+  "initialHandoffDeadlineLocal": "2026-11-20T15:05:00+01:00",
+  "versionOnlyDelta": {
+    "base": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+    "changedFiles": [
+      "apps/database-studio/src-tauri/Cargo.lock",
+      "apps/database-studio/src-tauri/Cargo.toml",
+      "apps/database-studio/src-tauri/tauri.conf.json",
+      "package.json",
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/tauri.conf.json",
+      "versie.json"
+    ],
+    "fileCount": 8,
+    "allOtherTrackedEntriesEqualCoordinatorReportedCount": 3423,
+    "independentlyVerifiedChangedFilenameSet": true,
+    "versionTestsCoordinatorReportedPassed": 9,
+    "appMatrixWorkflowAndValidatorUnchanged": true
+  },
+  "historicalVersionOnlyBuild": {
+    "run": 44747669364,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+    "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "statusAtReview": "in_progress",
+    "observedAt": "2026-11-20T14:33:55.519437+00:00",
+    "publicationInput": false,
+    "isFinalProductAcceptance": false,
+    "runStartedByThisChat": false,
+    "conclusionAtReview": "",
+    "sourceCommit": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "contains368or369": false,
+    "latestSnapshot": {
+      "name": "Old release",
+      "run": 44747669364,
+      "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+      "status": "in_progress",
+      "conclusion": "",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+      "observedAt": "2026-11-20T14:33:55.519437+00:00",
+      "metadataHeadVerified": true,
+      "actualCheckoutWitness": "pending central review",
+      "jobs": [
+        {
+          "name": "versie",
+          "databaseId": 136327076012,
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": [],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Linux",
+          "databaseId": 136327207259,
+          "status": "completed",
+          "conclusion": "success",
+          "currentSteps": [],
+          "failedSteps": []
+        },
+        {
+          "name": "Bouwen \u2013 Windows",
+          "databaseId": 136327207416,
+          "status": "completed",
+          "conclusion": "failure",
+          "currentSteps": [],
+          "failedSteps": [
+            {
+              "name": "Pakket bouwen (Windows, ondertekend)",
+              "completedAt": "2026-11-20T14:06:38Z"
+            }
+          ]
+        },
+        {
+          "name": "Bouwen \u2013 macOS",
+          "databaseId": 136327207611,
+          "status": "in_progress",
+          "conclusion": "",
+          "currentSteps": [
+            "Pakket bouwen (macOS, ondertekend en genotariseerd)"
+          ],
+          "failedSteps": []
+        }
+      ]
+    }
+  },
+  "newCandidateEvidenceInputs": [
+    {
+      "sourcePath": "[private local path omitted; original retained by owner]",
+      "sha256": "239d103fe5971299e323f345bdaf37f7b9215583811de84def1e31b1a4285da4",
+      "bytes": 1228,
+      "snapshotBase64": "ew0KICAiYXBwbGljYXRpb25Db21taXQiOiAiNDIwYWY2NDBjMTBhYjlhZGE2YzY2Yzg0NGMwMDk4Y2FlYTg3YzQ5MyIsDQogICJhcHBsaWNhdGlvblRyZWUiOiAiYzEzMzRjOGY0ZDkyOTE0ZTlkMjExNGQ1NmU0NjdlZjExZWFiOTY0NiIsDQogICJ2ZXJzaW9uIjogIjIwMjYuNDcuMSIsDQogICJ2ZXJzaW9uT25seUJhc2VsaW5lIjogImU5MmI5M2E2MDdjMWJjNmIyZTM3YjU2MjczY2NjNTA0NzQ5OGY5ZTYiLA0KICAiaW50ZWdyYXRpb25CYXNlbGluZSI6ICI3NzFmZDY2ZTBlNGJkNjEyZGJhNGY3YjZlMzRiNTE3ZjM5ZDUyZTg2IiwNCiAgImFjY2VwdGVkUHJvZHVjdENvcnJlY3Rpb25zIjogew0KICAgICIzNjgiOiB7DQogICAgICAib3JpZ2luYWwiOiAiNzRmZDAzMGM3ZDczM2Y0OTEzMTE3OGJlNThkNzU2MzRmNDdiOWNkNSIsDQogICAgICAiaW50YWtlIjogImNlMjBkMTVkIg0KICAgIH0sDQogICAgIjM2OSI6IHsNCiAgICAgICJvcmlnaW5hbCI6ICI0OWVhODU3NjIyMmFmMTgyNDYyODUwMmI1YjU5MjQzYzBhMjk3ZTlkIiwNCiAgICAgICJpbnRha2UiOiAiNDIwYWY2NDBjMTBhYjlhZGE2YzY2Yzg0NGMwMDk4Y2FlYTg3YzQ5MyINCiAgICB9DQogIH0sDQogICJjaGFuZ2VkQXBwbGljYXRpb25QYXRocyI6IFsNCiAgICAic3JjL29wZW5hZWMtbGludC9MaW50LnRzeCIsDQogICAgInNyYy9vcGVuYWVjLWxpbnQvZm9jdXMudHMiLA0KICAgICJzcmMvdGVrc3Qvem9la2VuL1pvZWtQYW5lZWwudHN4IiwNCiAgICAic3JjL3Rla3N0L3pvZWtlbi9saW51eC1pbnZvZXItdW5kby50ZXN0LnRzIiwNCiAgICAic3JjL3Rla3N0L3pvZWtlbi9saW51eC1pbnZvZXItdW5kby50cyINCiAgXSwNCiAgInRhcmdldGVkVGVzdHMiOiB7DQogICAgInBhc3NlZCI6IDM3LA0KICAgICJmYWlsZWQiOiAwLA0KICAgICJyZXBvcnRTaGEyNTYiOiAiOTJhZmY3MTM3NDQ4MDE2ODgwZGQ1OTY3YmFmNmE1NDYwMWQyYTdlNzUwYWE5MzZlOWRjN2Q5MmYxOWYxYmJmZiINCiAgfSwNCiAgIm5hdGl2ZUZpeGVkUGFja2FnZUFjY2VwdGFuY2UiOiBmYWxzZSwNCiAgInNvdXJjZUJvdW5kQnJvYWRDSSI6ICJ0byBzdGFydCBhZnRlciBsb2NhbCB0eXBlY2hlY2siLA0KICAiTWFjUHJvZHVjdENvcnJlY3Rpb25JbmNsdWRlZCI6IGZhbHNlLA0KICAicHVibGljYXRpb25Ub2RheUZvcmJpZGRlbiI6IHRydWUsDQogICJpbnRha2VDbG9zZWQiOiAiMjAyNi0xMS0yMFQxNToyNTowMCswMTowMCINCn0NCg==",
+      "observedAt": "2026-11-20T14:33:53.605751+00:00"
+    },
+    {
+      "sourcePath": "[private local path omitted; original retained by owner]",
+      "sha256": "92aff7137448016880dd5967baf6a54601d2a7e750aa936e9dc7d92f19f1bbff",
+      "bytes": 11870,
+      "snapshotBase64": "eyJudW1Ub3RhbFRlc3RTdWl0ZXMiOjExLCJudW1QYXNzZWRUZXN0U3VpdGVzIjoxMSwibnVtRmFpbGVkVGVzdFN1aXRlcyI6MCwibnVtUGVuZGluZ1Rlc3RTdWl0ZXMiOjAsIm51bVRvdGFsVGVzdHMiOjM3LCJudW1QYXNzZWRUZXN0cyI6MzcsIm51bUZhaWxlZFRlc3RzIjowLCJudW1QZW5kaW5nVGVzdHMiOjAsIm51bVRvZG9UZXN0cyI6MCwic25hcHNob3QiOnsiYWRkZWQiOjAsImZhaWx1cmUiOmZhbHNlLCJmaWxlc0FkZGVkIjowLCJmaWxlc1JlbW92ZWQiOjAsImZpbGVzUmVtb3ZlZExpc3QiOltdLCJmaWxlc1VubWF0Y2hlZCI6MCwiZmlsZXNVcGRhdGVkIjowLCJtYXRjaGVkIjowLCJ0b3RhbCI6MCwidW5jaGVja2VkIjowLCJ1bmNoZWNrZWRLZXlzQnlGaWxlIjpbXSwidW5tYXRjaGVkIjowLCJ1cGRhdGVkIjowLCJkaWRVcGRhdGUiOmZhbHNlfSwic3RhcnRUaW1lIjoxNzk1MTg0NjcwMDk1LCJzdWNjZXNzIjp0cnVlLCJ0ZXN0UmVzdWx0cyI6W3siYXNzZXJ0aW9uUmVzdWx0cyI6W3siYW5jZXN0b3JUaXRsZXMiOlsibGludG5hdmlnYXRpZSJdLCJmdWxsTmFtZSI6ImxpbnRuYXZpZ2F0aWUgbG9vcHQgcm9uZCBtZXQgcGlqbHRqZXMgZW4gc3ByaW5ndCBtZXQgSG9tZSBlbiBFbmQiLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6Imxvb3B0IHJvbmQgbWV0IHBpamx0amVzIGVuIHNwcmluZ3QgbWV0IEhvbWUgZW4gRW5kIiwiZHVyYXRpb24iOjAuOTEzNDAwMDAwMDAwMDI0MiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319XSwic3RhcnRUaW1lIjoxNzk1MTg0NjcyNTM1LCJlbmRUaW1lIjoxNzk1MTg0NjcyNTM1LjkxMzMsInN0YXR1cyI6InBhc3NlZCIsIm1lc3NhZ2UiOiIiLCJuYW1lIjoiQzovVXNlcnMvYWxwZXIvRGVza3RvcC9Eb2N1bWVudHMvQ2hhdEdQVC9jb2RlIHNsYWFmamVzL3dvcmsvb29zLXJlbGVhc2UtcHJlcC0yMDI2LTExLTIwLTk2MzUvc3JjL29wZW5hZWMtbGludC9mb2N1cy50ZXN0LnRzIn0seyJhc3NlcnRpb25SZXN1bHRzIjpbeyJhbmNlc3RvclRpdGxlcyI6WyJpbmtsYXBwZW4iXSwiZnVsbE5hbWUiOiJpbmtsYXBwZW4gbGFhdCBhbGxlcyB2b2xsZWRpZyBhbHMgaGV0IHBhc3QiLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6ImxhYXQgYWxsZXMgdm9sbGVkaWcgYWxzIGhldCBwYXN0IiwiZHVyYXRpb24iOjEuNTk1Mjk5OTk5OTk5OTUyLCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJpbmtsYXBwZW4iXSwiZnVsbE5hbWUiOiJpbmtsYXBwZW4gbWFha3QgZWVyc3QgcmVjaHRzIGNvbXBhY3QsIGRhYXJuYSBwYXMgZ3JvZXBlbiB0b3Qgw6nDqW4ga25vcCIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoibWFha3QgZWVyc3QgcmVjaHRzIGNvbXBhY3QsIGRhYXJuYSBwYXMgZ3JvZXBlbiB0b3Qgw6nDqW4ga25vcCIsImR1cmF0aW9uIjowLjM0ODc5OTk5OTk5OTk4MjksImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbImlua2xhcHBlbiJdLCJmdWxsTmFtZSI6Imlua2xhcHBlbiBtZWxkdCBvdmVybG9vcCBhbHMgemVsZnMgYWxsZXMgaW5nZWtsYXB0IG5pZXQgcGFzdCIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoibWVsZHQgb3Zlcmxvb3AgYWxzIHplbGZzIGFsbGVzIGluZ2VrbGFwdCBuaWV0IHBhc3QiLCJkdXJhdGlvbiI6MC4yMDY1MDAwMDAwMDAwMDU0NiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsiaW5rbGFwcGVuIl0sImZ1bGxOYW1lIjoiaW5rbGFwcGVuIGhvdWR0IGdyb2VwZW4gbWV0IHByaW9yaXRlaXQgbGFuZ2VyIHZvbGxlZGlnIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJob3VkdCBncm9lcGVuIG1ldCBwcmlvcml0ZWl0IGxhbmdlciB2b2xsZWRpZyIsImR1cmF0aW9uIjowLjIwODMwMDAwMDAwMDAwODM3LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJpbmtsYXBwZW4iXSwiZnVsbE5hbWUiOiJpbmtsYXBwZW4gZHdpbmd0IGVlbiBtaW5pbXVtbml2ZWF1IGFmIGVuIHRlbHQgdmFzdGUgcnVpbXRlIG1lZSIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiZHdpbmd0IGVlbiBtaW5pbXVtbml2ZWF1IGFmIGVuIHRlbHQgdmFzdGUgcnVpbXRlIG1lZSIsImR1cmF0aW9uIjowLjEzNzI5OTk5OTk5OTk4MiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsiaW5rbGFwcGVuIl0sImZ1bGxOYW1lIjoiaW5rbGFwcGVuIHRvb250IHNjcm9sbGtub3BwZW4gYWxsZWVuIGJpaiBlY2h0ZSBvdmVybG9vcCIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoidG9vbnQgc2Nyb2xsa25vcHBlbiBhbGxlZW4gYmlqIGVjaHRlIG92ZXJsb29wIiwiZHVyYXRpb24iOjAuMTY4MDAwMDAwMDAwMDA2MzcsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbImlua2xhcHBlbiJdLCJmdWxsTmFtZSI6Imlua2xhcHBlbiB6ZXQgaGV0IG11aXN3aWVsIG9tIG5hYXIgaG9yaXpvbnRhYWwgc2Nyb2xsZW4iLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6InpldCBoZXQgbXVpc3dpZWwgb20gbmFhciBob3Jpem9udGFhbCBzY3JvbGxlbiIsImR1cmF0aW9uIjowLjE3NzA5OTk5OTk5OTk5NTgyLCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX1dLCJzdGFydFRpbWUiOjE3OTUxODQ2NzE5MTcsImVuZFRpbWUiOjE3OTUxODQ2NzE5MjAuMTc3LCJzdGF0dXMiOiJwYXNzZWQiLCJtZXNzYWdlIjoiIiwibmFtZSI6IkM6L1VzZXJzL2FscGVyL0Rlc2t0b3AvRG9jdW1lbnRzL0NoYXRHUFQvY29kZSBzbGFhZmplcy93b3JrL29vcy1yZWxlYXNlLXByZXAtMjAyNi0xMS0yMC05NjM1L3NyYy9vcGVuYWVjLWxpbnQvaW5rbGFwcGVuLnRlc3QudHMifSx7ImFzc2VydGlvblJlc3VsdHMiOlt7ImFuY2VzdG9yVGl0bGVzIjpbImxpbnQ6IGJlZ2ludGFiIl0sImZ1bGxOYW1lIjoibGludDogYmVnaW50YWIgYmVnaW50IG9wIGRlIGdldnJhYWdkZSB0YWIgKGJpanZvb3JiZWVsZCBuYSBvcG5pZXV3IG1vdW50ZW4pIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJiZWdpbnQgb3AgZGUgZ2V2cmFhZ2RlIHRhYiAoYmlqdm9vcmJlZWxkIG5hIG9wbmlldXcgbW91bnRlbikiLCJkdXJhdGlvbiI6Mi4yNzQxMDAwMDAwMDAwODk1LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJsaW50OiBiZWdpbnRhYiJdLCJmdWxsTmFtZSI6ImxpbnQ6IGJlZ2ludGFiIHZhbHQgdGVydWcgb3AgZGUgZWVyc3RlIHRhYiBhbHMgZGllIHRhYiBlciBuaWV0IChtZWVyKSBpcyIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoidmFsdCB0ZXJ1ZyBvcCBkZSBlZXJzdGUgdGFiIGFscyBkaWUgdGFiIGVyIG5pZXQgKG1lZXIpIGlzIiwiZHVyYXRpb24iOjEuNzE1NTk5OTk5OTk5OTk1LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJsaW50OiBBUklBLXN0cnVjdHV1ciJdLCJmdWxsTmFtZSI6ImxpbnQ6IEFSSUEtc3RydWN0dXVyIGlzIGVlbiB0YWJsaXN0IG1ldCDDqcOpbiBnZXNlbGVjdGVlcmRlLCB0YWJiYXJlIHRhYiIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiaXMgZWVuIHRhYmxpc3QgbWV0IMOpw6luIGdlc2VsZWN0ZWVyZGUsIHRhYmJhcmUgdGFiIiwiZHVyYXRpb24iOjAuOTA4OTAwMDAwMDAwMDE2OSwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsibGludDogQVJJQS1zdHJ1Y3R1dXIiXSwiZnVsbE5hbWUiOiJsaW50OiBBUklBLXN0cnVjdHV1ciBrb3BwZWx0IHRhYiwgdGFicGFuZWwgZW4gdG9vbGJhciIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoia29wcGVsdCB0YWIsIHRhYnBhbmVsIGVuIHRvb2xiYXIiLCJkdXJhdGlvbiI6MC4yNTA5MDAwMDAwMDAwMDE0NiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsibGludDogQVJJQS1zdHJ1Y3R1dXIiXSwiZnVsbE5hbWUiOiJsaW50OiBBUklBLXN0cnVjdHV1ciBnZWVmdCBncm9lcGVuIGVuIGtub3BwZW4gZWVuIHRvZWdhbmtlbGlqa2UgbmFhbSIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiZ2VlZnQgZ3JvZXBlbiBlbiBrbm9wcGVuIGVlbiB0b2VnYW5rZWxpamtlIG5hYW0iLCJkdXJhdGlvbiI6MC4zMDgwMDAwMDAwMDAxMDY0LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJsaW50OiBBUklBLXN0cnVjdHV1ciJdLCJmdWxsTmFtZSI6ImxpbnQ6IEFSSUEtc3RydWN0dXVyIHZlcmJlcmd0IGRlY29yYXRpZSBlbiBzY3JvbGxrbm9wcGVuIHZvb3Igc2NoZXJtbGV6ZXJzIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJ2ZXJiZXJndCBkZWNvcmF0aWUgZW4gc2Nyb2xsa25vcHBlbiB2b29yIHNjaGVybWxlemVycyIsImR1cmF0aW9uIjowLjE0MjEwMDAwMDAwMDAyNzY1LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX1dLCJzdGFydFRpbWUiOjE3OTUxODQ2NzIwMDksImVuZFRpbWUiOjE3OTUxODQ2NzIwMTUuMzA4LCJzdGF0dXMiOiJwYXNzZWQiLCJtZXNzYWdlIjoiIiwibmFtZSI6IkM6L1VzZXJzL2FscGVyL0Rlc2t0b3AvRG9jdW1lbnRzL0NoYXRHUFQvY29kZSBzbGFhZmplcy93b3JrL29vcy1yZWxlYXNlLXByZXAtMjAyNi0xMS0yMC05NjM1L3NyYy9vcGVuYWVjLWxpbnQvTGludC50ZXN0LnRzeCJ9LHsiYXNzZXJ0aW9uUmVzdWx0cyI6W3siYW5jZXN0b3JUaXRsZXMiOlsidG9ldHN0aXBzIl0sImZ1bGxOYW1lIjoidG9ldHN0aXBzIGhhYWx0IGxldHRlcnMgem9uZGVyIGFjY2VudGVuIG9wIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJoYWFsdCBsZXR0ZXJzIHpvbmRlciBhY2NlbnRlbiBvcCIsImR1cmF0aW9uIjozLjYxMDMwMDAwMDAwMDA1MiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsidG9ldHN0aXBzIl0sImZ1bGxOYW1lIjoidG9ldHN0aXBzIGdlZWZ0IGxpZWZzdCBkZSBiZWdpbmxldHRlciBlbiByZXNwZWN0ZWVydCB2YXN0ZSBjb2RlcyIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiZ2VlZnQgbGllZnN0IGRlIGJlZ2lubGV0dGVyIGVuIHJlc3BlY3RlZXJ0IHZhc3RlIGNvZGVzIiwiZHVyYXRpb24iOjAuNTQzNDAwMDAwMDAwMDE5NiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsidG9ldHN0aXBzIl0sImZ1bGxOYW1lIjoidG9ldHN0aXBzIGJsaWpmdCB1bmllayBlbiBwcmVmaXh2cmlqIGJpaiB2ZWVsIGtub3BwZW4iLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6ImJsaWpmdCB1bmllayBlbiBwcmVmaXh2cmlqIGJpaiB2ZWVsIGtub3BwZW4iLCJkdXJhdGlvbiI6MS41MjA0OTk5OTk5OTk4NTYzLCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJ0b2V0c3RpcHMiXSwiZnVsbE5hbWUiOiJ0b2V0c3RpcHMgZ2VlZnQgbmFtZW4gem9uZGVyIGxldHRlcnMgdG9jaCBlZW4gY29kZSIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiZ2VlZnQgbmFtZW4gem9uZGVyIGxldHRlcnMgdG9jaCBlZW4gY29kZSIsImR1cmF0aW9uIjowLjIwNzQwMDAwMDAwMDAwNjksImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbInRvZXRzdGlwcyJdLCJmdWxsTmFtZSI6InRvZXRzdGlwcyB6b2VrdCB2b2xsZWRpZ2UgY29kZXMgZW4gdm9vcnZvZWdzZWxzIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJ6b2VrdCB2b2xsZWRpZ2UgY29kZXMgZW4gdm9vcnZvZWdzZWxzIiwiZHVyYXRpb24iOjAuMjYwODk5OTk5OTk5OTkyMzYsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fV0sInN0YXJ0VGltZSI6MTc5NTE4NDY3MTIxNiwiZW5kVGltZSI6MTc5NTE4NDY3MTIyMi4yNjEsInN0YXR1cyI6InBhc3NlZCIsIm1lc3NhZ2UiOiIiLCJuYW1lIjoiQzovVXNlcnMvYWxwZXIvRGVza3RvcC9Eb2N1bWVudHMvQ2hhdEdQVC9jb2RlIHNsYWFmamVzL3dvcmsvb29zLXJlbGVhc2UtcHJlcC0yMDI2LTExLTIwLTk2MzUvc3JjL29wZW5hZWMtbGludC90b2V0c3RpcHMudGVzdC50cyJ9LHsiYXNzZXJ0aW9uUmVzdWx0cyI6W3siYW5jZXN0b3JUaXRsZXMiOlsiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkiXSwiZnVsbE5hbWUiOiJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSBtYXBzIEN0cmx6K2ZhbHNlIHRvIG5hdGl2ZSB1bmRvIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJtYXBzIEN0cmx6K2ZhbHNlIHRvIG5hdGl2ZSB1bmRvIiwiZHVyYXRpb24iOjMuNTA4MTAwMDAwMDAwMDEzLCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IG1hcHMgQ3RybForZmFsc2UgdG8gbmF0aXZlIHVuZG8iLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6Im1hcHMgQ3RybForZmFsc2UgdG8gbmF0aXZlIHVuZG8iLCJkdXJhdGlvbiI6MC41MzY2OTk5OTk5OTk4ODI1LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IG1hcHMgQ3RybHordHJ1ZSB0byBuYXRpdmUgcmVkbyIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoibWFwcyBDdHJseit0cnVlIHRvIG5hdGl2ZSByZWRvIiwiZHVyYXRpb24iOjAuMzI1MTk5OTk5OTk5OTk1MjcsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbIkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5Il0sImZ1bGxOYW1lIjoiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkgbWFwcyBDdHJseStmYWxzZSB0byBuYXRpdmUgcmVkbyIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoibWFwcyBDdHJseStmYWxzZSB0byBuYXRpdmUgcmVkbyIsImR1cmF0aW9uIjowLjMzNzk5OTk5OTk5OTk2NTQ0LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IHByZXNlcnZlcyBwbGF0Zm9ybSBoaXN0b3J5IG9uIFdpbjMyIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJwcmVzZXJ2ZXMgcGxhdGZvcm0gaGlzdG9yeSBvbiBXaW4zMiIsImR1cmF0aW9uIjowLjMzNjkwMDAwMDAwMDAxNDIsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbIkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5Il0sImZ1bGxOYW1lIjoiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkgcHJlc2VydmVzIHBsYXRmb3JtIGhpc3Rvcnkgb24gTWFjSW50ZWwiLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6InByZXNlcnZlcyBwbGF0Zm9ybSBoaXN0b3J5IG9uIE1hY0ludGVsIiwiZHVyYXRpb24iOjAuMjAyNzAwMDAwMDAwMDQ5ODQsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbIkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5Il0sImZ1bGxOYW1lIjoiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkgcHJlc2VydmVzIHRoZSBzdXBwb3J0ZWQgTGludXggYnJvd3NlcidzIG93biBzaG9ydGN1dCBoYW5kbGluZyIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoicHJlc2VydmVzIHRoZSBzdXBwb3J0ZWQgTGludXggYnJvd3NlcidzIG93biBzaG9ydGN1dCBoYW5kbGluZyIsImR1cmF0aW9uIjowLjIwNDUwMDAwMDAwMDA1Mjc1LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IGRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBoYW5kbGVkIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogaGFuZGxlZCIsImR1cmF0aW9uIjowLjI2OTI5OTk5OTk5OTkzMDE1LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IGRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBuby1jdHJsIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogbm8tY3RybCIsImR1cmF0aW9uIjowLjIxNDMwMDAwMDAwMDA5Mzg2LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IGRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBtZXRhIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogbWV0YSIsImR1cmF0aW9uIjowLjIyMzE5OTk5OTk5OTkwNjE0LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IGRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBhbHQiLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6ImRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBhbHQiLCJkdXJhdGlvbiI6MC4xNjk5MDAwMDAwMDAwOTc4NiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkiXSwiZnVsbE5hbWUiOiJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSBkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogY29tcG9zaW5nIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogY29tcG9zaW5nIiwiZHVyYXRpb24iOjAuMTM3OTk5OTk5OTk5OTE5OTYsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbIkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5Il0sImZ1bGxOYW1lIjoiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkgZG9lcyBub3QgY29uc3VtZSBoaXN0b3J5IG91dHNpZGUgdGhlIGZvY3VzZWQgZWRpdGFibGUgaW5wdXQ6IHJlYWRvbmx5Iiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogcmVhZG9ubHkiLCJkdXJhdGlvbiI6MC4xMTg4OTk5OTk5OTk5Mzk2MSwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkiXSwiZnVsbE5hbWUiOiJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSBkb2VzIG5vdCBjb25zdW1lIGhpc3Rvcnkgb3V0c2lkZSB0aGUgZm9jdXNlZCBlZGl0YWJsZSBpbnB1dDogZGlzYWJsZWQiLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6ImRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBkaXNhYmxlZCIsImR1cmF0aW9uIjowLjEyNDQ5OTk5OTk5OTg5ODE0LCJmYWlsdXJlTWVzc2FnZXMiOltdLCJtZXRhIjp7fX0seyJhbmNlc3RvclRpdGxlcyI6WyJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSJdLCJmdWxsTmFtZSI6IkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5IGRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBvdGhlci1mb2N1cyIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiZG9lcyBub3QgY29uc3VtZSBoaXN0b3J5IG91dHNpZGUgdGhlIGZvY3VzZWQgZWRpdGFibGUgaW5wdXQ6IG90aGVyLWZvY3VzIiwiZHVyYXRpb24iOjAuMTIzNDk5OTk5OTk5OTIxNzgsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbIkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5Il0sImZ1bGxOYW1lIjoiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkgZG9lcyBub3QgY29uc3VtZSBoaXN0b3J5IG91dHNpZGUgdGhlIGZvY3VzZWQgZWRpdGFibGUgaW5wdXQ6IG90aGVyLWtleSIsInN0YXR1cyI6InBhc3NlZCIsInRpdGxlIjoiZG9lcyBub3QgY29uc3VtZSBoaXN0b3J5IG91dHNpZGUgdGhlIGZvY3VzZWQgZWRpdGFibGUgaW5wdXQ6IG90aGVyLWtleSIsImR1cmF0aW9uIjowLjE0MTAwMDAwMDAwMDA3NjQsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fSx7ImFuY2VzdG9yVGl0bGVzIjpbIkxpbnV4IEZpbmQvUmVwbGFjZSBpbnB1dCBoaXN0b3J5Il0sImZ1bGxOYW1lIjoiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkgZG9lcyBub3QgY29uc3VtZSBoaXN0b3J5IG91dHNpZGUgdGhlIGZvY3VzZWQgZWRpdGFibGUgaW5wdXQ6IHNoaWZ0LXkiLCJzdGF0dXMiOiJwYXNzZWQiLCJ0aXRsZSI6ImRvZXMgbm90IGNvbnN1bWUgaGlzdG9yeSBvdXRzaWRlIHRoZSBmb2N1c2VkIGVkaXRhYmxlIGlucHV0OiBzaGlmdC15IiwiZHVyYXRpb24iOjAuMTM2ODAwMDAwMDAwMjIxMiwiZmFpbHVyZU1lc3NhZ2VzIjpbXSwibWV0YSI6e319LHsiYW5jZXN0b3JUaXRsZXMiOlsiTGludXggRmluZC9SZXBsYWNlIGlucHV0IGhpc3RvcnkiXSwiZnVsbE5hbWUiOiJMaW51eCBGaW5kL1JlcGxhY2UgaW5wdXQgaGlzdG9yeSBsZWF2ZXMgYW4gdW5hdmFpbGFibGUgbmF0aXZlIGhpc3RvcnkgY29tbWFuZCB1bmNvbnN1bWVkIiwic3RhdHVzIjoicGFzc2VkIiwidGl0bGUiOiJsZWF2ZXMgYW4gdW5hdmFpbGFibGUgbmF0aXZlIGhpc3RvcnkgY29tbWFuZCB1bmNvbnN1bWVkIiwiZHVyYXRpb24iOjAuMTc4Nzk5OTk5OTk5OTEwMTQsImZhaWx1cmVNZXNzYWdlcyI6W10sIm1ldGEiOnt9fV0sInN0YXJ0VGltZSI6MTc5NTE4NDY3MTIxMywiZW5kVGltZSI6MTc5NTE4NDY3MTIyMC4xNzg3LCJzdGF0dXMiOiJwYXNzZWQiLCJtZXNzYWdlIjoiIiwibmFtZSI6IkM6L1VzZXJzL2FscGVyL0Rlc2t0b3AvRG9jdW1lbnRzL0NoYXRHUFQvY29kZSBzbGFhZmplcy93b3JrL29vcy1yZWxlYXNlLXByZXAtMjAyNi0xMS0yMC05NjM1L3NyYy90ZWtzdC96b2VrZW4vbGludXgtaW52b2VyLXVuZG8udGVzdC50cyJ9XX0=",
+      "observedAt": "2026-11-20T14:33:53.605751+00:00"
+    },
+    {
+      "sourcePath": "[private local path omitted; original retained by owner]",
+      "sha256": "e0f267e9661f5c030209e5f63c8a13e9e7007974c5bdd64bbd702baa5f63628a",
+      "bytes": 7071,
+      "snapshotBase64": "ew0KICAic2NoZW1hVmVyc2lvbiI6IDEsDQogICJjcmVhdGVkQXRVVEMiOiAiMjAyNi0xMS0yMFQxNDoxNjo1OC43MDAzNTkrMDA6MDAiLA0KICAiaXNzdWUiOiAzNjgsDQogICJpc3N1ZVVSTCI6ICJodHRwczovL2dpdGh1Yi5jb20vT3BlbkFFQy1Gb3VuZGF0aW9uL29wZW4tb2ZmaWNlLXN0dWRpby9pc3N1ZXMvMzY4IiwNCiAgIm93bmVyIjogIkV4aXN0aW5nIFdpbmRvd3MgdGVzdGVyIGNoYXQsIGNvb3JkaW5hdGVkIHdpdGggaW50ZWdyYXRpb245NjM1IiwNCiAgImJyYW5jaCI6ICJjb2RleC9saW51eC1maW5kLXVuZG8tMzYxLTIwMjYxMTIwIiwNCiAgInByb2R1Y3RDb21taXQiOiAiNzRmZDAzMGM3ZDczM2Y0OTEzMTE3OGJlNThkNzU2MzRmNDdiOWNkNSIsDQogICJxYUhlYWQiOiAiOWE3OWI0YzdhNGI5NGI2OWE5NWY3NDZhNDc3N2NhMzYwOWQyY2ExYiIsDQogICJpbnRlZ3JhdGlvbkJhc2UiOiAiZTkyYjkzYTYwN2MxYmM2YjJlMzdiNTYyNzNjY2M1MDQ3NDk4ZjllNiIsDQogICJwcm9kdWN0RmlsZXMiOiB7DQogICAgInNyYy90ZWtzdC96b2VrZW4vWm9la1BhbmVlbC50c3giOiAiY2JlOWFkZjNjNDUzMmJkNmMwNWEyMjJlOGY2ZDFkZTQwYmQxYjI1YmUxNDM1NWM0NjJiMDlkMmUxNjhlYzFjMCIsDQogICAgInNyYy90ZWtzdC96b2VrZW4vbGludXgtaW52b2VyLXVuZG8udHMiOiAiZTUyNzMwY2FiNjViYTYxZTUwMWVkNTIwZjAwOGE3ZmU1N2FkOWZkOTliZGQ5NDcyYTdjMzA2ZjA4MTczMWIyMCIsDQogICAgInNyYy90ZWtzdC96b2VrZW4vbGludXgtaW52b2VyLXVuZG8udGVzdC50cyI6ICI1YzA5YzZjOTQ5NDU0YjZjODgwZDRjZWVkZDhhMmJhNTEwYjQ0YTE1ODczZTJlMzRiZmYzNzhlY2Y3Y2E0NzdiIg0KICB9LA0KICAicHJvZHVjdENvbW1pdENoYW5nZXMiOiAiT25seTMgcHJvZHVjdC90ZXN0ZmlsZXM7OTUgYWRkZWQgbGluZXMgaW5jbHVkaW5nNjYgdW5pdC10ZXN0IGxpbmVzLiBDaGVycnktcGljayBwcm9kdWN0IGNvbW1pdCBvbmx5OyBRQSB3b3JrZmxvdy9zY3JpcHQvbWFuaWZlc3QgYXJlIHNlcGFyYXRlIHBhcmVudC9mb2xsb3d1cCBjb21taXRzLiIsDQogICJpbXBsZW1lbnRlZCI6ICJNYXAgQ3RybFovQ3RybFNoaWZ0Wi9DdHJsWSB0byBuYXRpdmUgaW5wdXQgaGlzdG9yeSBvbmx5IGluIGZvY3VzZWQgZWRpdGFibGUgV3JpdGVyIEZpbmQvUmVwbGFjZSBmaWVsZHMgb24gVGF1cmkgTGludXguIFByZXNlcnZlIGNvbXBvc2l0aW9uLCBoYW5kbGVkIGV2ZW50cywgb3RoZXIgcGxhdGZvcm1zL2Jyb3dzZXIsIGZvY3VzIGFuZCBkb2N1bWVudCBlZGl0b3IgaGlzdG9yeS4gTm8gZGVwZW5kZW5jeSB1cGdyYWRlIG9yIGN1c3RvbSBoaXN0b3J5IHN0YWNrLiIsDQogICJ1bml0VGVzdHMiOiB7DQogICAgImNvbW1hbmQiOiAibm9kZSBub2RlX21vZHVsZXMvdml0ZXN0L3ZpdGVzdC5tanMgcnVuIHNyYy90ZWtzdC96b2VrZW4vbGludXgtaW52b2VyLXVuZG8udGVzdC50cyIsDQogICAgInJlc3VsdCI6ICIxOCBwYXNzZWQiLA0KICAgICJwbGF0Zm9ybSI6ICJXaW5kb3dzIGV4ZWN1dGlvbiwgd2l0aCBleHBsaWNpdCBwbGF0Zm9ybS9icm93c2VyL2d1YXJkIHN0dWJzOyBub3QgbmF0aXZlIExpbnV4IEdVSSBhY2NlcHRhbmNlIg0KICB9LA0KICAidHlwZWNoZWNrIjogew0KICAgICJjb21tYW5kIjogIm5vZGUgbm9kZV9tb2R1bGVzL3R5cGVzY3JpcHQvYmluL3RzYyAtLW5vRW1pdCIsDQogICAgImV4aXRDb2RlIjogMA0KICB9LA0KICAibmF0aXZlTWVjaGFuaXNtIjogew0KICAgICJydW4iOiA0NDc1MTA3NjQyNCwNCiAgICAiYXJ0aWZhY3QiOiAxNDYzNjQ0MDE3NywNCiAgICAiaGFybmVzc0NvbW1pdCI6ICI5YTc5YjRjN2E0Yjk0YjY5YTk1Zjc0NmE0Nzc3Y2EzNjA5ZDJjYTFiIiwNCiAgICAibmF0aXZlQXBwbGljYXRpb25Tb3VyY2UiOiAiN2YxMjZmNGI4ZTUyNjlhNTQzODhjZjc4YzQ4Yzc4ZDJhY2MwZGFhMSIsDQogICAgIm5hdGl2ZUFwcGxpY2F0aW9uVHJlZSI6ICI4YmM2MDg0ODg3NjBlNDg5MTlkN2ZiNGU3MmE0MjU2OTE3NWI1MmE0IiwNCiAgICAicGFja2FnZVZlcnNpb24iOiAiMjAyNi40Ni4yIiwNCiAgICAicGFja2FnZVNIQTI1NiI6ICI3MWEwOGM0MDNkZmI2YjAyY2M0OWNlYjQ1YzVkYTM3MzRhODg4NjU3ODUzZWE1OGVhNTg1ZWYxZTY2Yzg4MjQ3IiwNCiAgICAiZXhlY3V0YWJsZVNIQTI1NiI6ICJiN2U4NDY1Y2U2MjczYTA5ZmQ1OWU4YWEyNTRlODhmNjZiNDM5ZTMwNTcwMTIxNjRjZTEzZDE5MDhlNDRmMTU2IiwNCiAgICAicnVudGltZSI6IHsNCiAgICAgICJkcml2ZXJWZXJzaW9uIjogInRhdXJpLWRyaXZlciB2Mi4xLjA6IiwNCiAgICAgICJkcml2ZXJQYXRoIjogIi9ob21lL3J1bm5lci8uY2FyZ28vYmluL3RhdXJpLWRyaXZlciIsDQogICAgICAiZHJpdmVyU2hhMjU2IjogImE3MWIyNDdjYTUxOWYzZWQwMmEzNjRjZDg2OTJkNzFkMzgxZmZlODEyNzljOTRjNmVkNjVlYzMwMGQyMTc4NjgiLA0KICAgICAgIndlYmtpdFBhY2thZ2VzIjogImxpYndlYmtpdDJndGstNC4xLTA6YW1kNjRcdDIuNTAuNC0wdWJ1bnR1MC4yMi4wNC4xXG53ZWJraXQyZ3RrLWRyaXZlclx0Mi41MC40LTB1YnVudHUwLjIyLjA0LjEiLA0KICAgICAgImRpc3BsYXkiOiAiOjk5IiwNCiAgICAgICJncmFwaGljcyI6IHsNCiAgICAgICAgIkdES19CQUNLRU5EIjogIngxMSIsDQogICAgICAgICJMSUJHTF9BTFdBWVNfU09GVFdBUkUiOiAiMSIsDQogICAgICAgICJXRUJLSVRfRElTQUJMRV9ETUFCVUZfUkVOREVSRVIiOiAiMSINCiAgICAgIH0NCiAgICB9LA0KICAgICJtb2RlIjogIkV4YWN0IG5ldyBoZWxwZXIgdHJhbnNwaWxlZCBmcm9tIGNvbW1pdHRlZCBzb3VyY2UgYW5kIGF0dGFjaGVkIGFzIGEgbmF0aXZlIGlucHV0IGxpc3RlbmVyIGluIHVuY2hhbmdlZCBjYW5vbmljYWwgSTMgYXBwLiBSZWFjdCBrZXlib2FyZC1ldmVudCBmaWVsZHMgYXJlIGFkYXB0ZWQgZnJvbSBhY3R1YWwgbmF0aXZlIGV2ZW50LiBUaGlzIHRlc3RzIHRoZSBoZWxwZXIgYW5kIGFjdHVhbCBjb250cm9sbGVkIGZpZWxkcywgTk9UIGNvbXBpbGVkIFJlYWN0IHdpcmluZyBvciBhIG5ldyBmaXhlZCBpbnN0YWxsZXIuIiwNCiAgICAiY2hlY2tzUGFzc2VkIjogMzIsDQogICAgImRvY3VtZW50VW5kb1JlZG9DaGVja3NQYXNzZWQiOiA4LA0KICAgICJyb3V0ZXMiOiBbDQogICAgICAiV2ViRHJpdmVyIGFjdGlvbnMiLA0KICAgICAgIk9TIFhUZXN0IHZpYSB4ZG90b29sIg0KICAgIF0sDQogICAgImZpZWxkcyI6IFsNCiAgICAgICJGaW5kIHdoYXQiLA0KICAgICAgIlJlcGxhY2Ugd2l0aCINCiAgICBdLA0KICAgICJjaGVja3MiOiBbDQogICAgICAiZW1wdHkgaW5wdXQgVW5kbyIsDQogICAgICAidHlwZWFiYyIsDQogICAgICAib25lIEN0cmxaIGNsZWFyc2lucHV0IiwNCiAgICAgICJDdHJsU2hpZnRaIHJlZG8iLA0KICAgICAgInNlY29uZCBDdHJsWiIsDQogICAgICAiQ3RybFkgcmVkbyIsDQogICAgICAibmV4dCBDdHJsWiIsDQogICAgICAic3Vic2VxdWVudHF0eXBpbmciLA0KICAgICAgIlJlYWN0IGxpdmUgc2VhcmNoIHN0YXR1cyBtYXRjaGVzIGVtcHR5L25vbmVtcHR5IHZhbHVlIiwNCiAgICAgICJkb2N1bWVudCByZW1haW5zNGNvbHVtbnMvYWxsY2VsbHN1bmNoYW5nZWQgdGhyb3VnaCBpbnB1dCBoaXN0b3J5IiwNCiAgICAgICJjbG9zZXBhbmUgcmVzdG9yZXMgZG9jdW1lbnQgZm9jdXM7IG9uZSBkb2N1bWVudEN0cmxaIHJlc3RvcmVzM2NvbHVtbnM7IEN0cmxZIHJlc3RvcmVzNCINCiAgICBdDQogIH0sDQogICJiYXNlbGluZUV2aWRlbmNlIjogew0KICAgICJydW4iOiA0NDc0OTg5NTI2MywNCiAgICAiYXJ0aWZhY3QiOiAxNDYzNTU2MDEyOCwNCiAgICAiaGFybmVzc0NvbW1pdCI6ICJiZDgwNGRmMGNiZmZhZDNlMDIyOTNlZjEwZTNmZDkyMmY4NmUwMzUwIiwNCiAgICAiaW5kZXBlbmRlbnRGYWlsdXJlcyI6IDgsDQogICAgInJlc3VsdCI6ICJGaW5kL1JlcGxhY2UvcGxhaW50ZXh0L3BsYWluc2VhcmNoIMOXIFdlYkRyaXZlci9YVGVzdCBlYWNocmV0YWluYWJjIGFmdGVyb25lQ3RybFo7IGV4cGxpY2l0IG5hdGl2ZSBVbmRvIGNsZWFycyBhbmQgUmVkbyByZXN0b3Jlcy4gT3JpZ2luYWwgcmF3IG91dGNvbWVzIHByZXNlcnZlZDsgQVBJY29udHJvbGlzbm90YWNjZXB0YW5jZS4iLA0KICAgICJ0cmFjZUxpbWl0YXRpb24iOiAiQ2FwdHVyZS1waGFzZSBxdWV1ZWQgb2JzZXJ2YXRpb25zIGRvIG5vdCBlc3RhYmxpc2ggZmluYWwgZGVmYXVsdFByZXZlbnRlZCBhZnRlciBhbGwgdGFyZ2V0L2J1YmJsZSBsaXN0ZW5lcnMuIElzc3VlIHdvcmRpbmcgY29ycmVjdGVkOyBubyBmaW5hbCBwcmV2ZW50aW9uIGNsYWltLiINCiAgfSwNCiAgImVhcmxpZXJSdW4iOiB7DQogICAgInJ1biI6IDQ0NzQ5MzEwMzU3LA0KICAgICJhcnRpZmFjdCI6IDE0NjM0OTcxMTQxLA0KICAgICJyZXN1bHQiOiAiQnJvYWRlciBpbmhlcml0ZWQgaGFybmVzcyBzdG9wcGVkIGF0IFRhYi1yb3ctVW5kbyBiZWZvcmUgcmVhY2hpbmdGaW5kLjEyZWFybGllciBjaGVja3M7IG93bmFwcGNsb3NlZC4gUmV0YWluZWQgdW5jaGFuZ2VkOyBvdXRzaWRlIGFzc2lnbmVkIHNjb3BlIGFuZCBub3QgcHJlc2VudGVkIGFzIHRoZSBGaW5kIGZhaWx1cmUuIg0KICB9LA0KICAiY2FuY2VsbGVkUnVuIjogew0KICAgICJydW4iOiA0NDc1MDk4OTQxMCwNCiAgICAicmVzdWx0IjogIkNhbmNlbGxlZCBvd24gc2V0dXAgcnVuIGFmdGVyIGRldGVjdGluZyBhIGRpYWdub3N0aWMgZXhwZWN0ZWQtc3RhdHVzIHB1bmN0dWF0aW9uIG1pc21hdGNoIGJlZm9yZSBpdHMgcmVzdWx0OyBjb3JyZWN0ZWQgdG8gZXhhY3QgRW5nbGlzaE5vcmVzdWx0cy4gTm8gcHJvZHVjdCBjaGFuZ2UuIg0KICB9LA0KICAicmF3UmVwb3J0cyI6IFsNCiAgICB7DQogICAgICAicnVuIjogNDQ3NDkzMTAzNTcsDQogICAgICAicGF0aCI6ICJDOlxcVXNlcnNcXGFscGVyXFxEZXNrdG9wXFxEb2N1bWVudHNcXENoYXRHUFRcXGNvZGUgc2xhYWZqZXNcXHdvcmtcXG9vcy1saW51eC1maW5kLXVuZG8tMzYxLTIwMjYxMTIwXFwubG9jYWxcXGRpYWdub3Npcy00NDc0OTMxMDM1N1xcZmluZC1kaWFnbm9zaXNcXHJlcG9ydC5qc29uIiwNCiAgICAgICJzaGEyNTYiOiAiOTA5MjRiMWQyZjIxYmQyN2IzYTYzYzNmZGQ4NDBhZDNmM2RkYWJlODhkY2MxZjRlYmI1NmZkNjcyMWI4YmRiMiINCiAgICB9LA0KICAgIHsNCiAgICAgICJydW4iOiA0NDc0OTg5NTI2MywNCiAgICAgICJwYXRoIjogIkM6XFxVc2Vyc1xcYWxwZXJcXERlc2t0b3BcXERvY3VtZW50c1xcQ2hhdEdQVFxcY29kZSBzbGFhZmplc1xcd29ya1xcb29zLWxpbnV4LWZpbmQtdW5kby0zNjEtMjAyNjExMjBcXC5sb2NhbFxcZGlhZ25vc2lzLTQ0NzQ5ODk1MjYzXFxmaW5kLWRpYWdub3Npc1xccmVwb3J0Lmpzb24iLA0KICAgICAgInNoYTI1NiI6ICIzYmIwN2NmZjRiODVjMDBjMGIyNjk4OWVhZDYyZWU0MzhiOWViOWRjMjI0MGE1OTFjZjdhMmEyNTdjMzVlMTUyIg0KICAgIH0sDQogICAgew0KICAgICAgInJ1biI6IDQ0NzUxMDc2NDI0LA0KICAgICAgInBhdGgiOiAiQzpcXFVzZXJzXFxhbHBlclxcRGVza3RvcFxcRG9jdW1lbnRzXFxDaGF0R1BUXFxjb2RlIHNsYWFmamVzXFx3b3JrXFxvb3MtbGludXgtZmluZC11bmRvLTM2MS0yMDI2MTEyMFxcLmxvY2FsXFxkaWFnbm9zaXMtNDQ3NTEwNzY0MjRcXGZpbmQtZGlhZ25vc2lzXFxyZXBvcnQuanNvbiIsDQogICAgICAic2hhMjU2IjogIjU1OWJkODc0MjVmY2FlNDQ3OGFiNmViNmU1YWI0Y2I3NTE4MzI2ODM2OWQ2ZTk4ZGJiYzY0M2FmNjVlODYxMDUiDQogICAgfQ0KICBdLA0KICAicGxhdGZvcm1zIjogew0KICAgICJMaW51eCI6IHsNCiAgICAgICJuYXRpdmVIZWxwZXJNZWNoYW5pc20iOiAicGFzc2VkMzIrOCBpbiBhY3R1YWwgaGVhZGVkIFgxMSBXZWJLaXRHVEsyLjUwLjQiLA0KICAgICAgIm5ld0ZpeGVkUGFja2FnZUJ1aWxkIjogIm5vdCBydW4iLA0KICAgICAgIm5ld0ZpeGVkUGFja2FnZU5hdGl2ZUFjY2VwdGFuY2UiOiAicGVuZGluZyIsDQogICAgICAicGh5c2ljYWxEZXNrdG9wQW5kQXBwSW1hZ2UiOiAibm90IGNlcnRpZmllZCINCiAgICB9LA0KICAgICJXaW5kb3dzIjogew0KICAgICAgImhlbHBlckd1YXJkVW5pdCI6ICJwYXNzZWQiLA0KICAgICAgIm5ld0ZpeGVkUGFja2FnZUJ1aWxkIjogInBlbmRpbmciLA0KICAgICAgIm5ld0ZpeGVkTmF0aXZlQXBwIjogIm5vdCBydW47IG9sZGVyIEkzIHBoeXNpY2FsIEN0cmxIIHBhc3MgcmV0YWluZWQgb25seSBmb3IgaXRzIG93biBzb3VyY2UiDQogICAgfSwNCiAgICAibWFjT1MiOiB7DQogICAgICAiaGVscGVyR3VhcmRVbml0IjogInBhc3NlZCIsDQogICAgICAibmV3Rml4ZWRQYWNrYWdlQnVpbGQiOiAicGVuZGluZyIsDQogICAgICAibmV3Rml4ZWROYXRpdmVBcHAiOiAibm90IHJ1bjsgTWFjLWJvZHkvdGFibGUgYmxvY2tlciBiZWxvbmdzIHRvIHNlcGFyYXRlIG93bmVyIg0KICAgIH0sDQogICAgImJyb3dzZXIiOiB7DQogICAgICAiaGVscGVyR3VhcmRVbml0IjogInBhc3NlZDsgTGludXggYnJvd3NlciByZXRhaW5zIG93biBiZWhhdmlvciIsDQogICAgICAiYWN0dWFsU3VwcG9ydGVkQnJvd3NlclJvdXRlT25OZXdDb2RlcG9pbnQiOiAicGVuZGluZyINCiAgICB9DQogIH0sDQogICJyZW1haW5pbmciOiAiSW50ZWdyYXRpb24gbXVzdCBmcmVlemUgbmV3IGNvbWJpbmVkIHNvdXJjZSBwb2ludCBhbmQgYnVpbGQvdGVzdCBpdHMgYWN0dWFsIHBhY2thZ2VzIGFuZCBzdXBwb3J0ZWQgYnJvd3NlciByb3V0ZS4gTmVpdGhlciBvbGQgSTMgbm9yIEU5MiBhcnRpZmFjdHMgY29udGFpbiB0aGlzIGZpeC4gS2VlcCBpc3N1ZSBvcGVuIHBlbmRpbmcgaW50ZWdyYXRpb24vcGFja2FnZSB2YWxpZGF0aW9uLiBObyBtYWluL3RhZy9yZWxlYXNlL3B1YmxpY2F0aW9uIHBlcmZvcm1lZC4iLA0KICAiY2xlYW51cCI6IHsNCiAgICAiYWxsQ29tcGxldGVkTmF0aXZlUnVuc093bmVkQXBwQ2xvc2VkIjogdHJ1ZSwNCiAgICAibG9jYWxHVUlPckNhcHR1cmVTdGFydGVkIjogZmFsc2UsDQogICAgInVzZXJXaW5kb3dzQXBwVG91Y2hlZCI6IGZhbHNlLA0KICAgICJ3b3JraW5nVHJlZUNsZWFuIjogdHJ1ZQ0KICB9DQp9",
+      "observedAt": "2026-11-20T14:33:53.605751+00:00"
+    },
+    {
+      "sourcePath": "[private local path omitted; original retained by owner]",
+      "sha256": "88f7afcd28f21a4588bb76918606c5409e1102801cae09c3c251a944f2ad043b",
+      "bytes": 9757,
+      "snapshotBase64": "ewogICJpc3N1ZSI6IDM2OSwKICAib3JpZ2luYXRpbmdBY2NlcHRhbmNlR2FwIjogMzYyLAogICJjcmVhdGVkQXQiOiAiMjAyNi0xMS0yMFQxNDoyODoxNy4wMTdaIiwKICAiYnJhbmNoIjogImNvZGV4L3dyaXRlci0zNjItbGludXgtcmVsZWFzZS0yMDI2LTExLTIwIiwKICAiYmFzZUFwcGxpY2F0aW9uIjogImU5MmI5M2E2MDdjMWJjNmIyZTM3YjU2MjczY2NjNTA0NzQ5OGY5ZTYiLAogICJwcm9kdWN0Q29tbWl0IjogIjQ5ZWE4NTc2MjIyYWYxODI0NjI4NTAyYjViNTkyNDNjMGEyOTdlOWQiLAogICJwcm9kdWN0RmlsZXMiOiB7CiAgICAic3JjL29wZW5hZWMtbGludC9MaW50LnRzeCI6ICIyZjBiNjJhMWZjMzNhMzdmODYzZjNhZWI3NGVhZGNmMzYzMjY5NWZmOTg5OTBkNjFjY2ExNDhlM2E3OTgyMjI2IiwKICAgICJzcmMvb3BlbmFlYy1saW50L2ZvY3VzLnRzIjogImE1ZmU0NmZkNTg4NzUwMGZhZmM2MmU1MTA1MTIwZDdhYTFlOTQ3YTBiYzE4MmYwOTFjM2E2MjdjY2E5YThlNDEiCiAgfSwKICAicHJvZHVjdENoYW5nZXMiOiAiU3RhbmRhcmQgRm9jdXNPcHRpb25zIGZvY3VzVmlzaWJsZTp0cnVlIG9ubHkgYWxvbmcgZXhpc3Rpbmcga2V5Ym9hcmQgbmF2aWdhdGlvbiwgS2V5VGlwcyBhbmQga2V5Ym9hcmQgcG9wdXAgcmV0dXJucy4gUG9pbnRlci1vbmx5IHBhdGhzIHJldGFpbiBvcmRpbmFyeSBmb2N1cygpLiBObyBDU1MsIG5hdGl2ZS1kcml2ZXIgZm9jdXMgaW5qZWN0aW9uLCBjb21tYW5kIG9yIGRvY3VtZW50LW1vZGVsIGNoYW5nZS4iLAogICJndGtEaWFnbm9zdGljIjogewogICAgInJ1biI6IDQ0NzUxMDY3MjYzLAogICAgImhhcm5lc3NDb21taXQiOiAiYjE0MWU1Yzc3MjBjYWM3NTE2Yjg1OWFkNGMzNzMxZGViMTg3MzdiMyIsCiAgICAiYXJ0aWZhY3RJZCI6IDE0NjM0Mzg0NTUwLAogICAgInppcFNoYTI1NiI6ICI1NDg3ZTFiNDdkNjdmZTM4ZTRjNWJlZjEwMzczNmFlNjFiODQ2ZDkxN2M4NTNkMDBkMDBjMmRiNTRiYTg1MTZhIiwKICAgICJkb3dubG9hZGVkQW5kRGlnZXN0Q2hlY2tlZCI6IHRydWUsCiAgICAicGFja2FnZXMiOiAibGlid2Via2l0Mmd0ay00LjEtMCAyLjUwLjQtMHVidW50dTAuMjIuMDQuMVxud2Via2l0Mmd0ay1kcml2ZXIgMi41MC40LTB1YnVudHUwLjIyLjA0LjFcbiIsCiAgICAicGlkIjogMzA4NywKICAgICJ4aWQiOiAiMjA5NzE1NSIsCiAgICAib3duZWRWaWV3YWJsZVdpbmRvd1ZlcmlmaWVkIjogdHJ1ZSwKICAgICJyZXN1bHRzIjogWwogICAgICB7CiAgICAgICAgInJvdXRlIjogImFycm93LWRvd24iLAogICAgICAgICJzdGF0ZXMiOiAyLAogICAgICAgICJmb2N1c1Zpc2libGUiOiBbCiAgICAgICAgICBmYWxzZSwKICAgICAgICAgIGZhbHNlCiAgICAgICAgXSwKICAgICAgICAib3V0bGluZSI6IFsKICAgICAgICAgIFsKICAgICAgICAgICAgIjBweCIsCiAgICAgICAgICAgICIwcHgiCiAgICAgICAgICBdLAogICAgICAgICAgWwogICAgICAgICAgICAiMHB4IiwKICAgICAgICAgICAgIjBweCIKICAgICAgICAgIF0KICAgICAgICBdLAogICAgICAgICJ0cnVzdGVkS2V5c09ubHkiOiB0cnVlLAogICAgICAgICJkb2N1bWVudEZvY3VzZWRBbmRWaXNpYmxlIjogdHJ1ZQogICAgICB9LAogICAgICB7CiAgICAgICAgInJvdXRlIjogInRhYiIsCiAgICAgICAgInN0YXRlcyI6IDMsCiAgICAgICAgImZvY3VzVmlzaWJsZSI6IFsKICAgICAgICAgIHRydWUsCiAgICAgICAgICB0cnVlLAogICAgICAgICAgdHJ1ZQogICAgICAgIF0sCiAgICAgICAgIm91dGxpbmUiOiBbCiAgICAgICAgICBbCiAgICAgICAgICAgICIycHgiLAogICAgICAgICAgICAiMnB4IgogICAgICAgICAgXSwKICAgICAgICAgIFsKICAgICAgICAgICAgIjJweCIsCiAgICAgICAgICAgICIycHgiCiAgICAgICAgICBdLAogICAgICAgICAgWwogICAgICAgICAgICAiMnB4IiwKICAgICAgICAgICAgIjJweCIKICAgICAgICAgIF0KICAgICAgICBdLAogICAgICAgICJ0cnVzdGVkS2V5c09ubHkiOiB0cnVlLAogICAgICAgICJkb2N1bWVudEZvY3VzZWRBbmRWaXNpYmxlIjogdHJ1ZQogICAgICB9LAogICAgICB7CiAgICAgICAgInJvdXRlIjogImFycm93LWRvd24tZXhwbGljaXQta2V5Ym9hcmQtb3B0aW9uIiwKICAgICAgICAic3RhdGVzIjogMiwKICAgICAgICAiZm9jdXNWaXNpYmxlIjogWwogICAgICAgICAgdHJ1ZSwKICAgICAgICAgIHRydWUKICAgICAgICBdLAogICAgICAgICJvdXRsaW5lIjogWwogICAgICAgICAgWwogICAgICAgICAgICAiMnB4IiwKICAgICAgICAgICAgIjJweCIKICAgICAgICAgIF0sCiAgICAgICAgICBbCiAgICAgICAgICAgICIycHgiLAogICAgICAgICAgICAiMnB4IgogICAgICAgICAgXQogICAgICAgIF0sCiAgICAgICAgInRydXN0ZWRLZXlzT25seSI6IHRydWUsCiAgICAgICAgImRvY3VtZW50Rm9jdXNlZEFuZFZpc2libGUiOiB0cnVlCiAgICAgIH0KICAgIF0sCiAgICAiY2xlYW51cCI6IHsKICAgICAgIm93bldpbmRvd0Rlc3Ryb3llZCI6IHRydWUKICAgIH0sCiAgICAidmlzdWFsUmV2aWV3IjogIlRocmVlIG9yaWdpbmFsIFgxMSBjYXB0dXJlcyB2aWV3ZWQgc2VyaWFsbHk6IGJhc2VsaW5lIGhhcyBubyBpbmRpY2F0b3IuIFRhYiBhbmQgZXhwbGljaXQtb3B0aW9uIGNhcHR1cmVzIHNob3cgdGhlIHByZWNlZGluZyBQYWdlIEJyZWFrIHBhaW50IGZyYW1lLCBub3QgdGhlIGZpbmFsIFRhYmxlIGZvY3VzLiBET00gcmVzdWx0cyBjb3ZlciBib3RoIHRhcmdldHM7IG5vIGZpbmFsLXRhcmdldCBwaXhlbCBvciBmdWxsIE9mZmljZSBwYXNzIGNsYWltZWQuIgogIH0sCiAgImNvbXBvbmVudEJyb3dzZXIiOiB7CiAgICAic291cmNlIjogIjViZDVlMzJkNTYzODgyNTM3NTE2NTAxNjFkMzNkM2UwYTliZGE0M2IiLAogICAgInByb2R1Y3RGaWxlSGFzaGVzTWF0Y2hQcm9kdWN0Q29tbWl0IjogdHJ1ZSwKICAgICJoYXJuZXNzQ29tbWl0IjogIjZhYmEyZTJkMWEzNTYyMWJkYWYxZmFjOGRlMzMxYmM1YjVjYzdlZjUiLAogICAgImhhcm5lc3NMZlNoYTI1NiI6ICIwNDc4YjcyMGQ2NTZiODNjZDdhNDMxY2MzNzFiY2JhMjg0NGYwMjQyNjNkYzQ3ZDk2MGM2OTRkNTFhNjIyNDkzIiwKICAgICJjYXNlcyI6IDE2LAogICAgInN0YXR1cyI6ICJwYXNzZWQgYm91bmRlZCBjb21wb25lbnQga2V5Ym9hcmQgcm91dGVzIiwKICAgICJlcnJvcnMiOiBbXSwKICAgICJ2aWV3cG9ydCI6ICI5MjN4OTUyOyBtaW5pbWFsIGFjdHVhbCBSZWFjdCBMaW50IGNvbXBvbmVudCwgdHdvIHRoZW1lIGF0dHJpYnV0ZXMiLAogICAgImNsZWFudXAiOiBbCiAgICAgICJvd24gYnJvd3NlciBjbG9zZWQiLAogICAgICAib3duIFZpdGUgc2VydmVyIGNsb3NlZCIKICAgIF0sCiAgICAidmlzdWFsUmV2aWV3IjogIkJvdGggZmluYWwgb3JpZ2luYWwgaW1hZ2VzIHNlcmlhbGx5IHJldmlld2VkOyBzYW1lIGJ5dGVzIGFzIHByaW9yIHJldmlldyByZXVzZWQgb25seSB3aGVuIGhhc2hlcyBtYXRjaC4gVGhpcyBmaXh0dXJlIHVzZXMgcGFydGlhbCBhcHBsaWNhdGlvbiBzdHlsaW5nL2Jyb3dzZXItZGVmYXVsdCBvdXRsaW5lczsgbm8gT2ZmaWNlIDRweCByaW5nLCBmdWxsIHRoZW1lLCB2ZXJ0aWNhbC1jbGlwcGluZyBvciBuYXRpdmUtYXBwIGFjY2VwdGFuY2UuIgogIH0sCiAgInRhcmdldGVkQ2hlY2tzIjogWwogICAgewogICAgICAiY29tbWFuZCI6ICJub2RlIG5vZGVfbW9kdWxlcy92aXRlc3Qvdml0ZXN0Lm1qcyBydW4gc3JjL29wZW5hZWMtbGludCAtLWNvbmZpZ0xvYWRlciBydW5uZXIgLS1jYWNoZT1mYWxzZSIsCiAgICAgICJzb3VyY2UiOiAiNWJkNWUzMmQ7IHByb2R1Y3QgZmlsZXMgaWRlbnRpY2FsIHRvNDllYSIsCiAgICAgICJwYXNzZWQiOiAxOSwKICAgICAgImZpbGVzIjogNCwKICAgICAgImV4aXRDb2RlIjogMCwKICAgICAgInByaXZhdGVMb2dTaGEyNTYiOiAiMTRhM2Q4ODcxOTIyYmY2YmI3MTU1NDYwYzM3NTg3NjNiNDFhZmZkNzliMjM4MzYwMzMyNmFiZDFmMGMzM2UzZCIKICAgIH0sCiAgICB7CiAgICAgICJjb21tYW5kIjogIm5vZGUgbm9kZV9tb2R1bGVzL3R5cGVzY3JpcHQvYmluL3RzYyAtLW5vRW1pdCAtLWluY3JlbWVudGFsIGZhbHNlIiwKICAgICAgInNvdXJjZSI6ICI1YmQ1ZTMyZDsgcHJvZHVjdCBmaWxlcyBpZGVudGljYWwgdG80OWVhIiwKICAgICAgImV4aXRDb2RlIjogMAogICAgfSwKICAgIHsKICAgICAgImNvbW1hbmQiOiAibm9kZSAtLWNoZWNrIHNjcmlwdHMvcHJvZWYtd3JpdGVyMzY5LWtleWJvYXJkLWJyb3dzZXIubWpzIiwKICAgICAgImV4aXRDb2RlIjogMAogICAgfSwKICAgIHsKICAgICAgImNvbW1hbmQiOiAiUHJldHRpZXIgZm9jdXMudHMgYW5kIGNvbXBvbmVudCBRQSBzY3JpcHQ7IGdpdCBkaWZmIC0tY2hlY2siLAogICAgICAiZXhpdENvZGUiOiAwLAogICAgICAibm90ZSI6ICJMaW50LnRzeCBhbHJlYWR5IGZhaWxlZCBmdWxsLWZpbGUgUHJldHRpZXIgYmVmb3JlIHRoaXMgcGF0Y2g7IG5vIGJyb2FkIGZvcm1hdHRpbmcgYXBwbGllZC4iCiAgICB9CiAgXSwKICAicmV0YWluZWRGYWlsdXJlcyI6IFsKICAgIHsKICAgICAgInJ1biI6IDQ0NzQ5MjYwMjQ1LAogICAgICAiaGFybmVzcyI6ICI2OTFlYmY4OTg4ODBhNDJiOTljOTkwZmY2OWNhY2VmZjI5MTIxM2RiIiwKICAgICAgImNhc2VzIjogMCwKICAgICAgInN0YXR1cyI6ICJjYW5jZWxsZWQgZHVyaW5nIGRlcGVuZGVuY3kgaW5zdGFsbCIsCiAgICAgICJjYXVzZUV2aWRlbmNlIjogIlJ1bm5lciBtaXJyb3IrZmlsZSBsaXN0cyBieXBhc3NlZCBleGlzdGluZyBoZWxwZXIgc2NhbjsgQXp1cmUgZG93bmxvYWRzIHJlbWFpbmVkIHNsb3cuIEV4YWN0IGpvYiBsb2cgcHJlc2VydmVkIHByaXZhdGVseS4iLAogICAgICAicHJpdmF0ZUxvZ1NoYTI1NiI6ICJjY2I2NjE3MGRkMTRjMTE3YmE5ZTMwYzQwOWI3ZDJhZjMzMzg1ZTZlOTcyY2I5YjE1ODVkZTc5NTdhNDY4ZjNhIgogICAgfSwKICAgIHsKICAgICAgInJ1biI6IDQ0NzUwNzY2ODM0LAogICAgICAiaGFybmVzcyI6ICI0YWJmMjI4M2Y4NDVmNTIwMDIxY2Q3ZjgzMDY4NmJmOTFkZWI1ZjIzIiwKICAgICAgImFydGlmYWN0SWQiOiAxNDYzNTU3MDgxOCwKICAgICAgInppcFNoYTI1NiI6ICIwMjgxZWIyMjU0NzRlYjQwZDRhMmRiNGI0ZjcwYzRjODVmNjM4OWFkY2VkNjAxYjQ0Y2NiODlhNzYwZGExNzY5IiwKICAgICAgImRvd25sb2FkZWRBbmREaWdlc3RDaGVja2VkIjogdHJ1ZSwKICAgICAgImNhc2VzIjogMCwKICAgICAgInN0YXR1cyI6ICJHVEsgc3RhcnR1cCBmYWlsdXJlOiBYX1NldElucHV0Rm9jdXMgQmFkTWF0Y2ggYmVmb3JlIHZpZXdhYmxlIHdpbmRvdyIsCiAgICAgICJjb3JyZWN0aW9uIjogIlBvbGwgZXhhY3Qgb3duZWQgdmlzaWJsZSBYSUQgd2hpbGUgcHVtcGluZyBHVEsgZXZlbnRzLCB0aGVuIG9uZSBvd25lZCBhY3RpdmF0aW9uOyBubyBwcm9kdWN0IG9yIGZvY3VzLWdhdGUgcmVsYXhhdGlvbi4iCiAgICB9LAogICAgewogICAgICAiZmlsZSI6ICJjb21wb25lbnQtcG9pbnRlci1wcmVjb25kaXRpb24tZmFpbHVyZS5qc29uIiwKICAgICAgInBhc3NlZENhc2VzIjogOCwKICAgICAgImNhdXNlIjogIlNlY29uZCB0aGVtZSBjbGlja2VkIGFscmVhZHkga2V5Ym9hcmQtZm9jdXNlZCBJbnNlcnQ7IGluY29ycmVjdCBmcmVzaCBwb2ludGVyLWVudHJ5IGFzc3VtcHRpb24uIEZpbmFsIHRlc3QgdXNlcyBhY3R1YWwgT3RoZXLihpJJbnNlcnQgcG9pbnRlciBuYXZpZ2F0aW9uLiIKICAgIH0sCiAgICB7CiAgICAgICJmaWxlIjogImNvbXBvbmVudC1jb2xkLWxvYWQtZmFpbHVyZS5qc29uIiwKICAgICAgInBhc3NlZENhc2VzIjogMCwKICAgICAgImNhdXNlIjogIlNob3J0IGxvYWQtZXZlbnQgZGVhZGxpbmUgYmVmb3JlIGNvbXBvbmVudCByZWFkaW5lc3M7IGZpbmFsIHN0YXJ0dXAgd2FpdHMgRE9NQ29udGVudExvYWRlZCBhbmQgYWN0dWFsIHRhYiByZWFkaW5lc3MsIG5vIHRpbWluZy9wZXJmb3JtYW5jZSBjbGFpbS4iCiAgICB9LAogICAgewogICAgICAiZmlsZSI6ICJjb21wb25lbnQtcG9wdXAtY29udGV4dC11bmF2YWlsYWJsZS5qc29uIiwKICAgICAgInBhc3NlZENhc2VzIjogOCwKICAgICAgImNhdXNlIjogIkV4cGVyaW1lbnRhbCBtaW5pbWFsIGZpeHR1cmUgZGlkIG5vdCBjb2xsYXBzZSBEZWxldGUgYXQyNDBweC4gTm8gcG9wdXAgcGFzcyBvciBPZmZpY2UgZGVmZWN0IGluZmVycmVkOyBmdWxsLWFwcCBwb3B1cCBhY2NlcHRhbmNlIHJlbWFpbnMgcGVuZGluZy4iCiAgICB9CiAgXSwKICAiZmlsZXMiOiBbCiAgICB7CiAgICAgICJmaWxlIjogImd0ay1yZXBvcnQuanNvbiIsCiAgICAgICJzaGEyNTYiOiAiZTQ1NzY3NjVkZWQ5M2YxMzIzNDVmODY2ZTliYmZhN2U0YjlmNmZjNmRmZGEzMjJkMDY3MDQ2MmI3ZWZhNTc2MiIsCiAgICAgICJieXRlcyI6IDM5MzMKICAgIH0sCiAgICB7CiAgICAgICJmaWxlIjogImd0ay1hcnJvdy1kb3duLnBuZyIsCiAgICAgICJzaGEyNTYiOiAiZDUyZDg0ZGZhNzE1NGFiYWQ4MDc5OWZmOGVlMjNiYTE0YjI5NWRlMGNmZTZiNjg3NGZjNmU3NzI3MzZiMjQ5NyIsCiAgICAgICJieXRlcyI6IDY0MDAKICAgIH0sCiAgICB7CiAgICAgICJmaWxlIjogImd0ay10YWIucG5nIiwKICAgICAgInNoYTI1NiI6ICIyMzAzOGEyNGFkZTU5OGVjYjZmYjJjMWYzNzNkNzJhMTFiMzQ3MzA4NWFiZjFkYjdkMTJkYzVlMzkwZDkzYTRlIiwKICAgICAgImJ5dGVzIjogNjQ3MwogICAgfSwKICAgIHsKICAgICAgImZpbGUiOiAiZ3RrLWFycm93LWRvd24tZXhwbGljaXQta2V5Ym9hcmQtb3B0aW9uLnBuZyIsCiAgICAgICJzaGEyNTYiOiAiMjMwMzhhMjRhZGU1OThlY2I2ZmIyYzFmMzczZDcyYTExYjM0NzMwODVhYmYxZGI3ZDEyZGM1ZTM5MGQ5M2E0ZSIsCiAgICAgICJieXRlcyI6IDY0NzMKICAgIH0sCiAgICB7CiAgICAgICJmaWxlIjogImd0ay1zdGFydHVwLWZhaWx1cmUuanNvbiIsCiAgICAgICJzaGEyNTYiOiAiYmNlMzMyODlmODk1MWMwZmZkNmU0Y2FkOTdkMmM2NWM3NTIzNmZlOTczMjVjYzFmOGY0YzA5MTY3ZTYzNDBiOCIsCiAgICAgICJieXRlcyI6IDUyOQogICAgfSwKICAgIHsKICAgICAgImZpbGUiOiAiY29tcG9uZW50LXBvaW50ZXItcHJlY29uZGl0aW9uLWZhaWx1cmUuanNvbiIsCiAgICAgICJzaGEyNTYiOiAiY2QyNTg0MmQ4YWFkNjQ1MDUyYTM1YTMzYzE1MWY0MTRhNmViNzlmY2QyMjYwZjNhYmFlNTljYzhmMmZlNDA4MyIsCiAgICAgICJieXRlcyI6IDE4NjQKICAgIH0sCiAgICB7CiAgICAgICJmaWxlIjogImNvbXBvbmVudC1jb2xkLWxvYWQtZmFpbHVyZS5qc29uIiwKICAgICAgInNoYTI1NiI6ICJiZjJjNmFlZjQ4ZmE1ZGEzY2RlYWQzOTcyYzM5ZDg4MWE1NWY0MTZkYWM3YzY1MTM3MDVjMmFhZWFlNTIxNTljIiwKICAgICAgImJ5dGVzIjogNzkwCiAgICB9LAogICAgewogICAgICAiZmlsZSI6ICJjb21wb25lbnQtcG9wdXAtY29udGV4dC11bmF2YWlsYWJsZS5qc29uIiwKICAgICAgInNoYTI1NiI6ICJkMThkZDQyMTM4NmFiMWVjNWY0OTlhMjU4NDVjZTAwYzdmOWYzMmI0ZTkzYWFkY2MzZjY3OGVlZDM4YzY5YmYxIiwKICAgICAgImJ5dGVzIjogMTk1MQogICAgfSwKICAgIHsKICAgICAgImZpbGUiOiAiY29tcG9uZW50LXJlcG9ydC5qc29uIiwKICAgICAgInNoYTI1NiI6ICI1ZmUxMWVmOTEyOWY0NzZmZTE0MWY2OTNjNjUyYzI4YTAzMGMyMDY1ZTEwNDA3MTI2YWQwYTM3YmU3NDNkYTIyIiwKICAgICAgImJ5dGVzIjogMzE3MAogICAgfSwKICAgIHsKICAgICAgImZpbGUiOiAiY29tcG9uZW50LWxpZ2h0LnBuZyIsCiAgICAgICJzaGEyNTYiOiAiOGMxZDY0NWYyZTFhN2VjMmI0YTYzODJmZTI4Y2M1YTU2MWJlNjFmYTdhMWQ3NzliYTk3MmVlMmJhZGU0ZjEyZiIsCiAgICAgICJieXRlcyI6IDkxODMKICAgIH0sCiAgICB7CiAgICAgICJmaWxlIjogImNvbXBvbmVudC1mb3JnZS5wbmciLAogICAgICAic2hhMjU2IjogImZjMTQ0MmE0NzE1NWFhNjRiYmEyYTM3YjJkY2Y3OGY3NzcyYzRkNDczNDQxMDUzZmUzYTQyZGQ1ZjVkY2Q0YzciLAogICAgICAiYnl0ZXMiOiA5MzAxCiAgICB9CiAgXSwKICAidXBzdHJlYW1Tb3VyY2VzIjogWwogICAgImh0dHBzOi8vZ2l0aHViLmNvbS9XZWJLaXQvV2ViS2l0L2NvbW1pdC8wYTU5N2RmYWI3NzM5NWQzMGIwMzg4N2QxNzAxMTViMDFiODY2Njk4IiwKICAgICJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vV2ViS2l0L1dlYktpdC93ZWJraXRndGstMi41MC40L1NvdXJjZS9XZWJDb3JlL2RvbS9Gb2N1c09wdGlvbnMuaWRsIiwKICAgICJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vV2ViS2l0L1dlYktpdC93ZWJraXRndGstMi41MC40L1NvdXJjZS9XZWJDb3JlL2RvbS9FbGVtZW50LmNwcCIsCiAgICAiaHR0cHM6Ly9naXRodWIuY29tL3dlYi1wbGF0Zm9ybS10ZXN0cy93cHQvYmxvYi9tYXN0ZXIvY3NzL3NlbGVjdG9ycy9mb2N1cy12aXNpYmxlLTAyOC5odG1sIgogIF0sCiAgInJlbWFpbmluZyI6IFsKICAgICJObyBmdWxsIE9mZmljZSBicm93c2VyL25hdGl2ZSBtYXRyaXggb24gdGhlIHByb2R1Y3QgZml4IGhhcyBydW4uIEV4YWN0IG5ldyBjb21iaW5lZCBzb3VyY2UvcGFja2FnZXMgYXJlIHJlcXVpcmVkOyBlOTIgcmVsZWFzZSBidWlsZDQ0NzQ3NjY5MzY0IGNhbm5vdCBjZXJ0aWZ5NDllYS4iLAogICAgIkxpbnV4IG5hdGl2ZTkyMyBjb2xsYXBzZWQgRGVsZXRlLCBib3RoIHRoZW1lcywgRG93bi9FbmQvRW50ZXIvRXNjYXBlIGFuZCBzdHJpY3Q0cHgvWS1nZW9tZXRyeSBzdGlsbCByZXF1aXJlIHJlYWwgcGFja2FnZWQgYXBwIGNoZWNrcy4gR2VudWluZSBkaXNhYmxlZCBEZWxldGUgcmVtYWlucyB1bmF2YWlsYWJsZS4iLAogICAgIk9yaWdpbmFsIFczQyBhbmQgWFRlc3QgQXJyb3dEb3duIGZhaWx1cmVzIHJlbWFpbiBmYWlsZWQuIEVhcmxpZXIgVGFiMSs2IGdlb21ldHJ5IHdpdGggc2NyZWVuc2hvdCB0aW1lb3V0IHJlbWFpbnMgcGFydGlhbCwgbm90IHJlbGFiZWxsZWQuIiwKICAgICJTY3JlZW5zaG90LXRpbWVvdXQgY2F1c2UgaW4gdGhlIE9mZmljZSBXZWJEcml2ZXIgcm91dGUgcmVtYWlucyB1bnJlc29sdmVkLiBTdGFuZGFsb25lIFgxMSBjYXB0dXJlcyBhcmUgbm90IGEgcmVwbGFjZW1lbnQgT2ZmaWNlIG1hdHJpeC4iLAogICAgIldpbmRvd3MvbWFjT1MgdGFyZ2V0ZWQgY2hlY2tzIG9uIG5ldyBjb21iaW5lZCBzb3VyY2UgcmVtYWluIHBlbmRpbmc7IG9sZCBJMyBldmlkZW5jZSBrZWVwcyBpdHMgb3JpZ2luYWwgc291cmNlIGJpbmRpbmcuIiwKICAgICJSb290IGNvbnRyb2xzIGludGVncmF0aW9uL25ldy1zb3VyY2UgYnVpbGQgYW5kIGFjY2VwdGFuY2U7IG5vIG1haW4vdGFnL3B1YmxpY2F0aW9uIG9yIGlzc3VlIGNsb3N1cmUuIFVzZXIgd2l0aGRyZXcgdG9kYXkgcHVibGljYXRpb247MzY2IHJlbWFpbnMgZGVmZXJyZWQuIgogIF0sCiAgImNsZWFudXAiOiB7CiAgICAic3RhcnRlZE5vTG9jYWxHdWlPckNhcHR1cmUiOiB0cnVlLAogICAgImFsbE93bmVkSGVhZGxlc3NCcm93c2Vyc0FuZFZpdGVTZXJ2ZXJzQ2xvc2VkIjogdHJ1ZSwKICAgICJub09mZmljZUFwcE9yQ2FsbGVyU2Vzc2lvbkNyZWF0ZWRPckRlbGV0ZWQiOiB0cnVlLAogICAgIm5vU2hhcmVkU291cmNlU0RLT3JXb3JrZmxvd0VkaXRzIjogdHJ1ZSwKICAgICJyZW1vdGVHdGtXaW5kb3dEZXN0cm95ZWQiOiB0cnVlCiAgfSwKICAic3RhdGUiOiAiQ2F1c2UgcmVwcm9kdWNlZCBhbmQgcmV2aWV3YWJsZSBwcm9kdWN0IHBhdGNoIGRlbGl2ZXJlZDsgY3Jvc3MtcGxhdGZvcm0vZnVsbCBuYXRpdmUgYWNjZXB0YW5jZSByZW1haW5zIG9wZW4uIgp9Cg==",
+      "observedAt": "2026-11-20T14:33:53.605751+00:00"
+    }
+  ],
+  "newCandidateTests": {
+    "combinedUnits": {
+      "passed": 37,
+      "failed": 0,
+      "source": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "reportSha256": "92aff7137448016880dd5967baf6a54601d2a7e750aa936e9dc7d92f19f1bbff",
+      "independentlyRead": true
+    },
+    "typecheck": {
+      "result": "passed",
+      "command": "tsc --noEmit --incremental false",
+      "evidenceKind": "direct coordinator report; not rerun by this notes chat"
+    },
+    "sourceProductHashesMatched": true
+  },
+  "linuxCorrections": [
+    {
+      "issue": 368,
+      "intake": "ce20d15d57a3cd34c6619a7dda8a6edbbb901381",
+      "originalProduct": "74fd030c7d733f49131178be58d75634f47b9cd5",
+      "implemented": "Map CtrlZ/CtrlShiftZ/CtrlY to native input history only in focused editable Writer Find/Replace fields on Tauri Linux. Preserve composition, handled events, other platforms/browser, focus and document editor history. No dependency upgrade or custom history stack.",
+      "mechanismEvidence": {
+        "source": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+        "run": 44751076424,
+        "checksPassed": 32,
+        "documentUndoRedoPassed": 8,
+        "mode": "Exact new helper transpiled from committed source and attached as a native input listener in unchanged canonical I3 app. React keyboard-event fields are adapted from actual native event. This tests the helper and actual controlled fields, NOT compiled React wiring or a new fixed installer.",
+        "newCompiledPackagePass": false
+      },
+      "receiptSha256": "e0f267e9661f5c030209e5f63c8a13e9e7007974c5bdd64bbd702baa5f63628a",
+      "remaining": "Integration must freeze new combined source point and build/test its actual packages and supported browser route. Neither old I3 nor E92 artifacts contain this fix. Keep issue open pending integration/package validation. No main/tag/release/publication performed."
+    },
+    {
+      "issue": 369,
+      "intake": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "originalProduct": "49ea8576222af1824628502b5b59243c0a297e9d",
+      "implemented": "Standard FocusOptions focusVisible:true only along existing keyboard navigation, KeyTips and keyboard popup returns. Pointer-only paths retain ordinary focus(). No CSS, native-driver focus injection, command or document-model change.",
+      "mechanismEvidence": {
+        "gtkMiniStates": 7,
+        "baselineArrowCasesWithoutRing": 2,
+        "tabCasesWithRing": 3,
+        "explicitOptionCasesWithRing": 2,
+        "componentBrowserCasesPassed": 16,
+        "fullOfficeMatrixPassed": false,
+        "newCompiledPackagePass": false
+      },
+      "receiptSha256": "88f7afcd28f21a4588bb76918606c5409e1102801cae09c3c251a944f2ad043b",
+      "remaining": [
+        "No full Office browser/native matrix on the product fix has run. Exact new combined source/packages are required; e92 release build44747669364 cannot certify49ea.",
+        "Linux native923 collapsed Delete, both themes, Down/End/Enter/Escape and strict4px/Y-geometry still require real packaged app checks. Genuine disabled Delete remains unavailable.",
+        "Original W3C and XTest ArrowDown failures remain failed. Earlier Tab1+6 geometry with screenshot timeout remains partial, not relabelled.",
+        "Screenshot-timeout cause in the Office WebDriver route remains unresolved. Standalone X11 captures are not a replacement Office matrix.",
+        "Windows/macOS targeted checks on new combined source remain pending; old I3 evidence keeps its original source binding.",
+        "Root controls integration/new-source build and acceptance; no main/tag/publication or issue closure. User withdrew today publication;366 remains deferred."
+      ]
+    }
+  ],
+  "macDiagnostic": {
+    "evidenceCommit": "55a16e07e969152632b241ce1a29bbb165659581",
+    "documentPath": "docs/tests/2026-11-20-mac-native-body-diagnostic.md",
+    "documentSha256": "84a9565f8e4580132c183f91858e655f71376699367737b08d271b1506301803",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/55a16e07e969152632b241ce1a29bbb165659581/docs/tests/2026-11-20-mac-native-body-diagnostic.md",
+    "productFixIncluded": false,
+    "result": "No cause or correction established; six body fixture variants blank, saved EPUB control readable. Evidence-only, not a new420 native acceptance.",
+    "ownerCleanupReported": "All nine own PIDs across four completed runs closed; no local Windows GUI/capture",
+    "newVisualReviewByThisChat": false,
+    "sourceApplication": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1"
+  },
+  "currentReadiness": {
+    "fullReleaseReady": false,
+    "nativeNewPackagesAccepted": false,
+    "broadCiAndBrowser": "Browser six routes/threeOS centrally verified; first four auxiliary workflows use identical-tree PR checkout, fifth PresentationODF checkout exactly420; Desktop/Database not fully accepted; no native new-package pass",
+    "MacBodyFixIncluded": false,
+    "finalSevenAppInstallersVerified": false,
+    "riskAcceptance": false,
+    "publicationAllowed": false,
+    "mainAllowed": false,
+    "tagAllowed": false
+  },
+  "currentSourceContext": "I3 functional results remain attributed to7f; version-only E92 run excludes368/369; new420 candidate requires its own combined tests/packages and signing/download audit",
+  "candidateCiHistory": [
+    {
+      "observedBeforeThisUpdate": [
+        {
+          "name": "Desktop",
+          "run": 44753496663,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "in_progress",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496663",
+          "observedAt": "2026-11-20T14:33:55.200815+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "desktop (ubuntu-22.04)",
+              "databaseId": 136347096154,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "Run pnpm build"
+              ],
+              "failedSteps": []
+            },
+            {
+              "name": "desktop (macos-latest)",
+              "databaseId": 136347096394,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "macOS-pakket bouwen"
+              ],
+              "failedSteps": []
+            },
+            {
+              "name": "desktop (windows-latest)",
+              "databaseId": 136347096445,
+              "status": "completed",
+              "conclusion": "failure",
+              "currentSteps": [],
+              "failedSteps": [
+                {
+                  "name": "Run node scripts/voorbereiden-kantoorruntime.mjs",
+                  "completedAt": "2026-11-20T14:29:23Z"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Database",
+          "run": 44753496748,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "in_progress",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496748",
+          "observedAt": "2026-11-20T14:33:55.226951+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "database (ubuntu-22.04)",
+              "databaseId": 136347095897,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "Linux-pakketten bouwen"
+              ],
+              "failedSteps": []
+            },
+            {
+              "name": "database (macos-latest)",
+              "databaseId": 136347096413,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "macOS-pakket bouwen"
+              ],
+              "failedSteps": []
+            },
+            {
+              "name": "database (windows-latest)",
+              "databaseId": 136347096713,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "Windows-loader voorbereiden"
+              ],
+              "failedSteps": []
+            }
+          ]
+        },
+        {
+          "name": "Example",
+          "run": 44753496637,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496637",
+          "observedAt": "2026-11-20T14:33:55.263872+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "voorbeeld",
+              "databaseId": 136347096586,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            }
+          ]
+        },
+        {
+          "name": "Writer formats",
+          "run": 44753496701,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496701",
+          "observedAt": "2026-11-20T14:33:56.590372+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "writer",
+              "databaseId": 136347097296,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            }
+          ]
+        },
+        {
+          "name": "Document matrix",
+          "run": 44753496566,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496566",
+          "observedAt": "2026-11-20T14:33:56.613814+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "matrix",
+              "databaseId": 136347095708,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            }
+          ]
+        },
+        {
+          "name": "Spreadsheet matrix",
+          "run": 44753496662,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496662",
+          "observedAt": "2026-11-20T14:33:56.605221+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "matrix",
+              "databaseId": 136347095993,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            }
+          ]
+        },
+        {
+          "name": "Presentation ODF",
+          "run": 44753496653,
+          "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "status": "in_progress",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753496653",
+          "observedAt": "2026-11-20T14:33:56.803042+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "presentation (Linux)",
+              "databaseId": 136347095550,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            },
+            {
+              "name": "presentation (Windows)",
+              "databaseId": 136347095889,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "ODP, OTP and FODP native round trips with production corrections"
+              ],
+              "failedSteps": []
+            },
+            {
+              "name": "presentation (macOS)",
+              "databaseId": 136347096053,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            }
+          ]
+        },
+        {
+          "name": "Browser QA",
+          "run": 44753552773,
+          "headSha": "c49336c7d21794f0f8207a527f782b2794a656af",
+          "status": "in_progress",
+          "conclusion": "",
+          "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44753552773",
+          "observedAt": "2026-11-20T14:33:57.797118+00:00",
+          "metadataHeadVerified": true,
+          "actualCheckoutWitness": "pending central review",
+          "jobs": [
+            {
+              "name": "browser (macos-latest)",
+              "databaseId": 136347301327,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            },
+            {
+              "name": "browser (windows-latest)",
+              "databaseId": 136347301603,
+              "status": "in_progress",
+              "conclusion": "",
+              "currentSteps": [
+                "Hosted source-bound application and full combination"
+              ],
+              "failedSteps": []
+            },
+            {
+              "name": "browser (ubuntu-22.04)",
+              "databaseId": 136347301645,
+              "status": "completed",
+              "conclusion": "success",
+              "currentSteps": [],
+              "failedSteps": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "newVerified420CiAddition": {
+    "observedAt": "2026-11-20T14:43:00.174089+00:00",
+    "browserAudit": {
+      "sourcePath": "[private local path omitted; original retained by owner]",
+      "publicPath": "[private local path omitted; original retained by owner]",
+      "sha256": "fb7b0ffe84ef0d514b01e25561b76de8577b6158139fdf9aa8bb936502cf6d95",
+      "snapshotBase64": "ew0KICAicnVuIjogNDQ3NTM1NTI3NzMsDQogICJhcHBsaWNhdGlvbkNvbW1pdCI6ICI0MjBhZjY0MGMxMGFiOWFkYTZjNjZjODQ0YzAwOThjYWVhODdjNDkzIiwNCiAgImFwcGxpY2F0aW9uVHJlZSI6ICJjMTMzNGM4ZjRkOTI5MTRlOWQyMTE0ZDU2ZTQ2N2VmMTFlYWI5NjQ2IiwNCiAgImhhcm5lc3NDb21taXQiOiAiYzQ5MzM2YzdkMjE3OTRmMGY4MjA3YTUyN2Y3ODJiMjc5NGE2NTZhZiIsDQogICJwbGF0Zm9ybXNBbmRSb3V0ZXMiOiBbDQogICAgew0KICAgICAgInBsYXRmb3JtIjogIkxpbnV4IiwNCiAgICAgICJyb3V0ZSI6ICIvIiwNCiAgICAgICJhcnRpZmFjdElkIjogMTQ2MzY3MTcxNzMsDQogICAgICAiYXJjaGl2ZVNoYTI1NiI6ICJlNDM0YTA1MGJmNTE2ZGU5N2MxZmI3MmZlNDBmMzFmMDM1NDk2NjVhNjM3ZGRiN2VkYzlmZTI5Y2YwMDgzNDdmIiwNCiAgICAgICJhc3NldEVudHJpZXNJblJlY2VpcHQiOiA3MjcsDQogICAgICAiaXNzdWVzUGFzc2VkIjogWw0KICAgICAgICAzNjEsDQogICAgICAgIDM2MiwNCiAgICAgICAgMzYzLA0KICAgICAgICAzNTYNCiAgICAgIF0sDQogICAgICAiT2ZmaWNlQ2FzZXNQYXNzZWQiOiA5LA0KICAgICAgInNhdmVkRE9DWEluZGVwZW5kZW50bHlDaGVja2VkIjogdHJ1ZQ0KICAgIH0sDQogICAgew0KICAgICAgInBsYXRmb3JtIjogIkxpbnV4IiwNCiAgICAgICJyb3V0ZSI6ICIvb2ZmaWNlLyIsDQogICAgICAiYXJ0aWZhY3RJZCI6IDE0NjM2NzE3MTczLA0KICAgICAgImFyY2hpdmVTaGEyNTYiOiAiZTQzNGEwNTBiZjUxNmRlOTdjMWZiNzJmZTQwZjMxZjAzNTQ5NjY1YTYzN2RkYjdlZGM5ZmUyOWNmMDA4MzQ3ZiIsDQogICAgICAiYXNzZXRFbnRyaWVzSW5SZWNlaXB0IjogNzI3LA0KICAgICAgImlzc3Vlc1Bhc3NlZCI6IFsNCiAgICAgICAgMzYxLA0KICAgICAgICAzNjIsDQogICAgICAgIDM2MywNCiAgICAgICAgMzU2DQogICAgICBdLA0KICAgICAgIk9mZmljZUNhc2VzUGFzc2VkIjogOSwNCiAgICAgICJzYXZlZERPQ1hJbmRlcGVuZGVudGx5Q2hlY2tlZCI6IHRydWUNCiAgICB9LA0KICAgIHsNCiAgICAgICJwbGF0Zm9ybSI6ICJtYWNPUyIsDQogICAgICAicm91dGUiOiAiLyIsDQogICAgICAiYXJ0aWZhY3RJZCI6IDE0NjM2MDA4OTcxLA0KICAgICAgImFyY2hpdmVTaGEyNTYiOiAiNjU0NDZlOGYxN2UyZGM1YWU3NGI2NzIzYjk4NDg0MWZlZWQzY2E4MTkzYjY1YWNlNTkxNzI0ZTNiYzdjMjY1YSIsDQogICAgICAiYXNzZXRFbnRyaWVzSW5SZWNlaXB0IjogNzI3LA0KICAgICAgImlzc3Vlc1Bhc3NlZCI6IFsNCiAgICAgICAgMzYxLA0KICAgICAgICAzNjIsDQogICAgICAgIDM2MywNCiAgICAgICAgMzU2DQogICAgICBdLA0KICAgICAgIk9mZmljZUNhc2VzUGFzc2VkIjogOSwNCiAgICAgICJzYXZlZERPQ1hJbmRlcGVuZGVudGx5Q2hlY2tlZCI6IHRydWUNCiAgICB9LA0KICAgIHsNCiAgICAgICJwbGF0Zm9ybSI6ICJtYWNPUyIsDQogICAgICAicm91dGUiOiAiL29mZmljZS8iLA0KICAgICAgImFydGlmYWN0SWQiOiAxNDYzNjAwODk3MSwNCiAgICAgICJhcmNoaXZlU2hhMjU2IjogIjY1NDQ2ZThmMTdlMmRjNWFlNzRiNjcyM2I5ODQ4NDFmZWVkM2NhODE5M2I2NWFjZTU5MTcyNGUzYmM3YzI2NWEiLA0KICAgICAgImFzc2V0RW50cmllc0luUmVjZWlwdCI6IDcyNywNCiAgICAgICJpc3N1ZXNQYXNzZWQiOiBbDQogICAgICAgIDM2MSwNCiAgICAgICAgMzYyLA0KICAgICAgICAzNjMsDQogICAgICAgIDM1Ng0KICAgICAgXSwNCiAgICAgICJPZmZpY2VDYXNlc1Bhc3NlZCI6IDksDQogICAgICAic2F2ZWRET0NYSW5kZXBlbmRlbnRseUNoZWNrZWQiOiB0cnVlDQogICAgfSwNCiAgICB7DQogICAgICAicGxhdGZvcm0iOiAiV2luZG93cyIsDQogICAgICAicm91dGUiOiAiLyIsDQogICAgICAiYXJ0aWZhY3RJZCI6IDE0NjM2NjAzNDI1LA0KICAgICAgImFyY2hpdmVTaGEyNTYiOiAiNDk4ODRjYmZjOWM3YTA0ZWViM2RlNWFkMGE4ODk3ZDEzZDIzNDJjYjdiNGM1ZDJjZDRiOGI1Y2Q2NTg1YmM4OCIsDQogICAgICAiYXNzZXRFbnRyaWVzSW5SZWNlaXB0IjogNzI3LA0KICAgICAgImlzc3Vlc1Bhc3NlZCI6IFsNCiAgICAgICAgMzYxLA0KICAgICAgICAzNjIsDQogICAgICAgIDM2MywNCiAgICAgICAgMzU2DQogICAgICBdLA0KICAgICAgIk9mZmljZUNhc2VzUGFzc2VkIjogOSwNCiAgICAgICJzYXZlZERPQ1hJbmRlcGVuZGVudGx5Q2hlY2tlZCI6IHRydWUNCiAgICB9LA0KICAgIHsNCiAgICAgICJwbGF0Zm9ybSI6ICJXaW5kb3dzIiwNCiAgICAgICJyb3V0ZSI6ICIvb2ZmaWNlLyIsDQogICAgICAiYXJ0aWZhY3RJZCI6IDE0NjM2NjAzNDI1LA0KICAgICAgImFyY2hpdmVTaGEyNTYiOiAiNDk4ODRjYmZjOWM3YTA0ZWViM2RlNWFkMGE4ODk3ZDEzZDIzNDJjYjdiNGM1ZDJjZDRiOGI1Y2Q2NTg1YmM4OCIsDQogICAgICAiYXNzZXRFbnRyaWVzSW5SZWNlaXB0IjogNzI3LA0KICAgICAgImlzc3Vlc1Bhc3NlZCI6IFsNCiAgICAgICAgMzYxLA0KICAgICAgICAzNjIsDQogICAgICAgIDM2MywNCiAgICAgICAgMzU2DQogICAgICBdLA0KICAgICAgIk9mZmljZUNhc2VzUGFzc2VkIjogOSwNCiAgICAgICJzYXZlZERPQ1hJbmRlcGVuZGVudGx5Q2hlY2tlZCI6IHRydWUNCiAgICB9DQogIF0sDQogICJhbGxTaXhQYXNzZWQiOiB0cnVlLA0KICAibmF0aXZlUGFja2FnZUFjY2VwdGFuY2UiOiBmYWxzZSwNCiAgIkNJQXNzZXRCeXRlUmVoYXNoQnlSb290IjogZmFsc2UsDQogICJhc3NldExpbWl0IjogIkFsbCBidWlsZC1yZWNlaXB0L2lzc3VlIHJlcG9ydCBieXRlcyBhbmQgc2F2ZWQgRE9DWCBjb250ZW50IGluZGVwZW5kZW50bHkgY2hlY2tlZC4gQnVpbGQgYXNzZXQgZGlyZWN0b3JpZXMgYXJlIG5vdCBpbiB0aGUgYXJ0aWZhY3Q7IHNvdXJjZS1ib3VuZCBwcm9iZXMgY2hlY2tlZCB0aGVtLCByb290IGRpZCBub3QgaW5kZXBlbmRlbnRseSByZWhhc2ggYWJzZW50IENJIGFzc2V0IGJ5dGVzLiIsDQogICJNYWNJbml0aWFsUGFpbnRMaW1pdCI6ICJCcm93c2VyIHByb2JlcyB1c2UgZG9jdW1lbnQgYWN0aW9ucyBiZWZvcmUgdGhlaXIgYWNjZXB0YW5jZSBpbWFnZXM7IHRoaXMgaXMgbm8gbmF0aXZlIG9yIHVuaXZlcnNhbCB1bnRvdWNoZWQtaW5pdGlhbC1wYWludCBjZXJ0aWZpY2F0aW9uLiINCn0NCg==",
+      "sixOsRoutesPassed": true,
+      "archiveCount": 3,
+      "issueReports": 24,
+      "OfficeReports": 6,
+      "OfficeCasesPerReport": 9,
+      "independentlyCheckedSavedDocx": 6,
+      "ciAssetByteRehashClaimed": false,
+      "nativeOrUntouchedInitialPaintClaimed": false
+    },
+    "auxiliaryCheckoutProofs": [
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "b7a2b6214d39ca1f1b1010dba2ae262e4850abb06e439c0b1beb01a2d5cbd5ef",
+        "snapshot": {
+          "run": 44753496637,
+          "status": "completed",
+          "conclusion": "success",
+          "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "actualCheckoutLogWitnesses": [
+            "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+          ],
+          "logSha256": "4ad35faae670f6ac0457b083f15a7eee24363877a8385730642013570d840c00",
+          "allCheckoutsExactlyApplicationSource": false
+        },
+        "logPath": "[private local path omitted; original retained by owner]"
+      },
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "c4b25313fd6b7fa4f61c8b29802e8e1e6b09b22bec5c6d2f0a5dc948fa454095",
+        "snapshot": {
+          "run": 44753496701,
+          "status": "completed",
+          "conclusion": "success",
+          "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "actualCheckoutLogWitnesses": [
+            "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+          ],
+          "logSha256": "775e8d45a5d1d9283257e57fcfa244c0787bdc6b16e470580f0dac30f09ce3de",
+          "allCheckoutsExactlyApplicationSource": false
+        },
+        "logPath": "[private local path omitted; original retained by owner]"
+      },
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "8bb36cd926a71b329a7e3fadc507423b76b16cd40faaced96f947e9111edd89d",
+        "snapshot": {
+          "run": 44753496566,
+          "status": "completed",
+          "conclusion": "success",
+          "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "actualCheckoutLogWitnesses": [
+            "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+          ],
+          "logSha256": "eabb45ffd5a27582ecac88fc45e5f73f51ef3835d04eb70def704047d7a3a63a",
+          "allCheckoutsExactlyApplicationSource": false
+        },
+        "logPath": "[private local path omitted; original retained by owner]"
+      },
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "81ad504384984accad8daf7df7350ebdd0ccae2aec813e7c0791b0e620416ed8",
+        "snapshot": {
+          "run": 44753496662,
+          "status": "completed",
+          "conclusion": "success",
+          "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "actualCheckoutLogWitnesses": [
+            "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+          ],
+          "logSha256": "7c039ffa068b605cbd58428e26c66384de107f701448778957694152079a0ca9",
+          "allCheckoutsExactlyApplicationSource": false
+        },
+        "logPath": "[private local path omitted; original retained by owner]"
+      },
+      {
+        "path": "[private local path omitted; original retained by owner]",
+        "sha256": "3e1b3a356c835d7b15c32222ad70143731f8025434489dd5102bd8bf7ed0ceca",
+        "snapshot": {
+          "run": 44753496653,
+          "status": "completed",
+          "conclusion": "success",
+          "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+          "actualCheckoutLogWitnesses": [
+            "420af640c10ab9ada6c66c844c0098caea87c493"
+          ],
+          "logSha256": "ff59a1038c93dfa22e50a0703a4a029699a277dfab7c2015eb0173be1c5a5ad8",
+          "allCheckoutsExactlyApplicationSource": true
+        },
+        "logPath": "[private local path omitted; original retained by owner]"
+      }
+    ],
+    "mergeTreeEquivalence": {
+      "expectedApplicationCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "actualAuxiliaryCheckout": "a57837f03705b34c8b191b76a6cb48271f1e39a6",
+      "fullGitTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+      "parents": [
+        "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+        "420af640c10ab9ada6c66c844c0098caea87c493"
+      ],
+      "verifiedThrough": "GitHub commitAPI and reused hash-verified complete checkout logs",
+      "sameCommitMetadata": false,
+      "identicalCompleteTree": true,
+      "appliesToRuns": [
+        44753496637,
+        44753496701,
+        44753496566,
+        44753496662
+      ]
+    },
+    "noOldE92ResultsRefreshed": true,
+    "exactCheckoutPresentationOdf": {
+      "run": 44753496653,
+      "actualCheckout": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "proofSha256": "3e1b3a356c835d7b15c32222ad70143731f8025434489dd5102bd8bf7ed0ceca"
+    }
+  },
+  "handoffCompleteness": {
+    "coordinatorThread": "01a1bf9c-9635-7733-aa46-eb3bd68262aa",
+    "contentCompleteForTomorrow": true,
+    "evidenceKind": "Direct coordinator confirmation plus verified central receipts",
+    "centralFinalizationRemaining": "ROOT adds current-handoff.json, remoteCI status, cleanup pointers and push proof",
+    "releaseReady": false,
+    "pendingTestsAreExplicitNotHidden": true,
+    "automaticResumeTomorrow": false
+  },
+  "originalOwnerReceiptSha256": "f05afed9bf03bad0d5c596914e1765c7c89ea57cdb8481f2334148e8393724be",
+  "publicDerivedCopy": "Only private absolute paths omitted; original local receipt retained."
+}

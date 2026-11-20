@@ -20,6 +20,7 @@ import { gaNaar, vervang, zoek, type Resultaat, type ZoekIndex } from "./zoeken"
 import { heeftOpmaak, type Opmaakfilter, type ZoekOpties } from "./logica";
 import { doelen, huidigNummer, leesNummer, type Doel, type Doelsoort } from "./ganaar";
 import { formatGetal } from "../../i18n/opmaak";
+import { linuxInvoerUndo } from "./linux-invoer-undo";
 
 /** Speciale tekens: code, sleutel onder `writer:find.special` en of het alleen bij vervangen hoort. */
 const SPECIAAL: [string, string, boolean?][] = [
@@ -337,6 +338,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
           onFocus={(e) => (laatsteVeld.current = e.currentTarget)}
           onChange={(e) => setZoekTekst(e.target.value)}
           onKeyDown={(e) => {
+            if (linuxInvoerUndo(e)) return;
             if (e.key === "Enter") {
               e.preventDefault();
               if (e.shiftKey) vorige();
@@ -362,6 +364,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
             onFocus={(e) => (laatsteVeld.current = e.currentTarget)}
             onChange={(e) => setVervangTekst(e.target.value)}
             onKeyDown={(e) => {
+              if (linuxInvoerUndo(e)) return;
               if (e.key === "Enter") {
                 e.preventDefault();
                 void vervangEen();

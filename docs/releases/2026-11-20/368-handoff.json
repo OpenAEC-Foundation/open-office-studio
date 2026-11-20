@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-20T14:16:58.700359+00:00",
+  "issue": 368,
+  "issueURL": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/368",
+  "owner": "Existing Windows tester chat, coordinated with integration9635",
+  "branch": "codex/linux-find-undo-361-20261120",
+  "productCommit": "74fd030c7d733f49131178be58d75634f47b9cd5",
+  "qaHead": "9a79b4c7a4b94b69a95f746a4777ca3609d2ca1b",
+  "integrationBase": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+  "productFiles": {
+    "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+    "src/tekst/zoeken/linux-invoer-undo.ts": "e52730cab65ba61e501ed520f008a7fe57ad9fd99bdd9472a7c306f081731b20",
+    "src/tekst/zoeken/linux-invoer-undo.test.ts": "5c09c6c949454b6c880d4ceedd8a2ba510b44a15873e2e34bff378ecf7ca477b"
+  },
+  "productCommitChanges": "Only3 product/testfiles;95 added lines including66 unit-test lines. Cherry-pick product commit only; QA workflow/script/manifest are separate parent/followup commits.",
+  "implemented": "Map CtrlZ/CtrlShiftZ/CtrlY to native input history only in focused editable Writer Find/Replace fields on Tauri Linux. Preserve composition, handled events, other platforms/browser, focus and document editor history. No dependency upgrade or custom history stack.",
+  "unitTests": {
+    "command": "node node_modules/vitest/vitest.mjs run src/tekst/zoeken/linux-invoer-undo.test.ts",
+    "result": "18 passed",
+    "platform": "Windows execution, with explicit platform/browser/guard stubs; not native Linux GUI acceptance"
+  },
+  "typecheck": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "exitCode": 0
+  },
+  "nativeMechanism": {
+    "run": 44751076424,
+    "artifact": 14636440177,
+    "harnessCommit": "9a79b4c7a4b94b69a95f746a4777ca3609d2ca1b",
+    "nativeApplicationSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "nativeApplicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "packageVersion": "2026.46.2",
+    "packageSHA256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "executableSHA256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+    "runtime": {
+      "driverVersion": "tauri-driver v2.1.0:",
+      "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+      "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+      "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1",
+      "display": ":99",
+      "graphics": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+      }
+    },
+    "mode": "Exact new helper transpiled from committed source and attached as a native input listener in unchanged canonical I3 app. React keyboard-event fields are adapted from actual native event. This tests the helper and actual controlled fields, NOT compiled React wiring or a new fixed installer.",
+    "checksPassed": 32,
+    "documentUndoRedoChecksPassed": 8,
+    "routes": [
+      "WebDriver actions",
+      "OS XTest via xdotool"
+    ],
+    "fields": [
+      "Find what",
+      "Replace with"
+    ],
+    "checks": [
+      "empty input Undo",
+      "typeabc",
+      "one CtrlZ clearsinput",
+      "CtrlShiftZ redo",
+      "second CtrlZ",
+      "CtrlY redo",
+      "next CtrlZ",
+      "subsequentqtyping",
+      "React live search status matches empty/nonempty value",
+      "document remains4columns/allcellsunchanged through input history",
+      "closepane restores document focus; one documentCtrlZ restores3columns; CtrlY restores4"
+    ]
+  },
+  "baselineEvidence": {
+    "run": 44749895263,
+    "artifact": 14635560128,
+    "harnessCommit": "bd804df0cbffad3e02293ef10e3fd922f86e0350",
+    "independentFailures": 8,
+    "result": "Find/Replace/plaintext/plainsearch \u00d7 WebDriver/XTest eachretainabc afteroneCtrlZ; explicit native Undo clears and Redo restores. Original raw outcomes preserved; APIcontrolisnotacceptance.",
+    "traceLimitation": "Capture-phase queued observations do not establish final defaultPrevented after all target/bubble listeners. Issue wording corrected; no final prevention claim."
+  },
+  "earlierRun": {
+    "run": 44749310357,
+    "artifact": 14634971141,
+    "result": "Broader inherited harness stopped at Tab-row-Undo before reachingFind.12earlier checks; ownappclosed. Retained unchanged; outside assigned scope and not presented as the Find failure."
+  },
+  "cancelledRun": {
+    "run": 44750989410,
+    "result": "Cancelled own setup run after detecting a diagnostic expected-status punctuation mismatch before its result; corrected to exact EnglishNoresults. No product change."
+  },
+  "platforms": {
+    "Linux": {
+      "nativeHelperMechanism": "passed32+8 in actual headed X11 WebKitGTK2.50.4",
+      "newFixedPackageBuild": "not run",
+      "newFixedPackageNativeAcceptance": "pending",
+      "physicalDesktopAndAppImage": "not certified"
+    },
+    "Windows": {
+      "helperGuardUnit": "passed",
+      "newFixedPackageBuild": "pending",
+      "newFixedNativeApp": "not run; older I3 physical CtrlH pass retained only for its own source"
+    },
+    "macOS": {
+      "helperGuardUnit": "passed",
+      "newFixedPackageBuild": "pending",
+      "newFixedNativeApp": "not run; Mac-body/table blocker belongs to separate owner"
+    },
+    "browser": {
+      "helperGuardUnit": "passed; Linux browser retains own behavior",
+      "actualSupportedBrowserRouteOnNewCodepoint": "pending"
+    }
+  },
+  "remaining": "Integration must freeze new combined source point and build/test its actual packages and supported browser route. Neither old I3 nor E92 artifacts contain this fix. Keep issue open pending integration/package validation. No main/tag/release/publication performed.",
+  "cleanup": {
+    "allCompletedNativeRunsOwnedAppClosed": true,
+    "localGUIOrCaptureStarted": false,
+    "userWindowsAppTouched": false,
+    "workingTreeClean": true
+  },
+  "rawReceiptSha256": "e0f267e9661f5c030209e5f63c8a13e9e7007974c5bdd64bbd702baa5f63628a",
+  "kind": "Derived copy: private absolute evidence paths omitted; original retained locally.",
+  "rawReports": [
+    {
+      "run": 44749310357,
+      "file": "368-run44749310357-report.json",
+      "sha256": "90924b1d2f21bd27b3a63c3fdd840ad3f3ddabe88dcc1f4ebb56fd6721b8bdb2"
+    },
+    {
+      "run": 44749895263,
+      "file": "368-run44749895263-report.json",
+      "sha256": "3bb07cff4b85c00c0b26989ead62ee438b9eb9dc2240a591cf7a2a257c35e152"
+    },
+    {
+      "run": 44751076424,
+      "file": "368-run44751076424-report.json",
+      "sha256": "559bd87425fcae4478ab6eb6e5ab4cb75183268369d6e98dbbc643af65e86105"
+    }
+  ]
+}

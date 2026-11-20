@@ -1,0 +1,962 @@
+{
+  "schemaVersion": 1,
+  "kind": "draft release notes and final-installer/download checklist only",
+  "createdAt": "2026-11-20T13:49:43.377181+00:00",
+  "ownerChat": "01a1bf84-6f92-7452-93a5-c0aed5bd5173",
+  "integrationCoordinator": "01a1bf9c-9635-7733-aa46-eb3bd68262aa",
+  "integrationCommit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+  "testedApplicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "testedApplicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "testedVersion": "2026.46.2",
+  "proposedReleaseVersion": "2026.47.1",
+  "proposedVersionSource": "ROOT explicit final proposal received; commit/tree/package version and eight-file delta independently checked",
+  "finalReleaseVersion": null,
+  "finalReleaseCommit": null,
+  "finalReleaseTag": null,
+  "finalBuildRun": null,
+  "publicationStatus": "not-published-by-this-task",
+  "readinessAtIntegrationPoint": {
+    "readyForMain": false,
+    "blockers": [
+      "Native Linux362 original ArrowDown focus-visible failure retained; alternative Tab route only partial (six focused Text commands, then screenshot timeout), no full native matrix",
+      "Native Linux Find input Undo fails in this driver setup and oldG control; no I3 regression cause established",
+      "Native macOS361/362 table-targeting/body route remains unavailable; no359 fix claimed"
+    ],
+    "pending": [],
+    "noProductionChangesAfterTestedI3Expected": true,
+    "completedSupplementaryLinuxTab": {
+      "run": 44744186201,
+      "status": "failed; partial route-specific geometry evidence",
+      "normalCases": 1,
+      "focusCases": 6,
+      "groupCases": 0,
+      "retryAllowed": false
+    }
+  },
+  "scopePermissions": {
+    "ownLocalFilesOnly": true,
+    "mainMerge": false,
+    "mainPush": false,
+    "tag": false,
+    "dispatch": false,
+    "publishRelease": false,
+    "guiOrCapture": false,
+    "productPatch": false,
+    "newIssue": false
+  },
+  "fourFixes": [
+    {
+      "issue": 356,
+      "scope": "EPUB content preservation and bounded browser/native open/save/reopen; no blanket native-editing/format certification"
+    },
+    {
+      "issue": 361,
+      "scope": "Focus restoration after table column command; platform-native limitations retained"
+    },
+    {
+      "issue": 362,
+      "scope": "Vertical ribbon/control and focus-ring space; partial native coverage and horizontal observations retained"
+    },
+    {
+      "issue": 363,
+      "scope": "Readable style-management labels/hints and style-name interpolation; accepted in bounded scope"
+    }
+  ],
+  "earlierVerifiedIntegrations": [
+    {
+      "issue": 358,
+      "integrationMerge": "f1085923653bd6e59982807e16a09c5fa3e3d74e",
+      "verifiedAncestorOfIntegration": true,
+      "claim": "Existing macOS Command+Up/Down navigation fix, not a new change this round"
+    },
+    {
+      "pr": 349,
+      "boundedSource": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+      "verifiedAncestorOfIntegration": true,
+      "claim": "Previously integrated work; no new general speedup/hardware guarantee"
+    }
+  ],
+  "knownLimits": [
+    "Native Linux362 original ArrowDown focus-visible failure retained; alternative Tab route only partial (six focused Text commands, then screenshot timeout), no full native matrix",
+    "Native Linux Find input Undo fails in this driver setup and oldG control; no I3 regression cause established",
+    "Native macOS361/362 table-targeting/body route remains unavailable; no359 fix claimed"
+  ],
+  "deferred366": {
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/366",
+    "title": "Writer: page counter remains stale for minutes after repeated document doubling",
+    "stateObserved": "OPEN",
+    "bodySha256": "3f5ad26b1e8b331fb553e667035dab20c01c2f947678c55cb6a890610f4dec94",
+    "evidenceKind": "user report; not independently reproduced",
+    "reportedWaitSecondsAtLeast": 120,
+    "reportedCounter": "10 of10",
+    "userExpectedPages": 15,
+    "expectedFinalLayoutIndependentlyVerified": false,
+    "fixedInThisRound": false,
+    "newImplementationClaim": false
+  },
+  "platforms": [
+    {
+      "key": "windows-nsis",
+      "os": "Windows10/11",
+      "arch": "x64",
+      "suffix": "x64-setup.exe",
+      "signature": "Authenticode with trusted timestamp on installer, installed executable and uninstaller"
+    },
+    {
+      "key": "macos-dmg",
+      "os": "macOS",
+      "arch": "aarch64 / AppleSilicon",
+      "suffix": "aarch64.dmg",
+      "signature": "DeveloperID codesign, Gatekeeper assessment and stapled notarization"
+    },
+    {
+      "key": "linux-deb",
+      "os": "Linux",
+      "arch": "amd64 / x64",
+      "suffix": "amd64.deb",
+      "signature": "Detached OpenPGP signature"
+    },
+    {
+      "key": "linux-appimage",
+      "os": "Linux",
+      "arch": "amd64 / x64",
+      "suffix": "amd64.AppImage",
+      "signature": "Detached OpenPGP signature"
+    }
+  ],
+  "apps": [
+    {
+      "sleutel": "office",
+      "naam": "Open Office Studio",
+      "programma": "open-office-studio",
+      "identifier": "org.openaec.office-studio"
+    },
+    {
+      "sleutel": "writer",
+      "naam": "Open Writer Studio",
+      "programma": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio"
+    },
+    {
+      "sleutel": "spreadsheet",
+      "naam": "Open Spreadsheet Studio",
+      "programma": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio"
+    },
+    {
+      "sleutel": "presentation",
+      "naam": "Open Presentation Studio",
+      "programma": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio"
+    },
+    {
+      "sleutel": "email",
+      "naam": "Open Email Studio",
+      "programma": "open-email-studio",
+      "identifier": "org.openaec.email-studio"
+    },
+    {
+      "sleutel": "notition",
+      "naam": "Open Notition Studio",
+      "programma": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio"
+    },
+    {
+      "sleutel": "database",
+      "naam": "Open Database Studio",
+      "programma": "open-database-studio",
+      "identifier": "org.openaec.database-studio"
+    }
+  ],
+  "installerCountExpected": 28,
+  "installers": [
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "office",
+      "productName": "Open Office Studio",
+      "program": "open-office-studio",
+      "identifier": "org.openaec.office-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Office.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "writer",
+      "productName": "Open Writer Studio",
+      "program": "open-writer-studio",
+      "identifier": "org.openaec.writer-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Writer.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "spreadsheet",
+      "productName": "Open Spreadsheet Studio",
+      "program": "open-spreadsheet-studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Spreadsheet.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "presentation",
+      "productName": "Open Presentation Studio",
+      "program": "open-presentation-studio",
+      "identifier": "org.openaec.presentation-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Presentation.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "email",
+      "productName": "Open Email Studio",
+      "program": "open-email-studio",
+      "identifier": "org.openaec.email-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Email.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "notition",
+      "productName": "Open Notition Studio",
+      "program": "open-notition-studio",
+      "identifier": "org.openaec.notition-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Notition.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "windows-nsis",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_x64-setup.exe",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "macos-dmg",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_aarch64.dmg",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "linux-deb",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_amd64.deb",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    },
+    {
+      "app": "database",
+      "productName": "Open Database Studio",
+      "program": "open-database-studio",
+      "identifier": "org.openaec.database-studio",
+      "platform": "linux-appimage",
+      "filenameTemplate": "Open.Database.Studio_${VERSION}_amd64.AppImage",
+      "finalVersion": null,
+      "releaseSourceCommit": null,
+      "buildRun": null,
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "signatureStatus": "not-verified-on-final-product",
+      "nativeStatus": "not-run-on-final-product"
+    }
+  ],
+  "packageReportCountExpected": 14,
+  "packageReports": [
+    {
+      "app": "office",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-Windows.json",
+      "publicFilename": "package-verification-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "office",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-Linux.json",
+      "publicFilename": "package-verification-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "writer",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-writer-Windows.json",
+      "publicFilename": "package-verification-writer-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "writer",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-writer-Linux.json",
+      "publicFilename": "package-verification-writer-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "spreadsheet",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-spreadsheet-Windows.json",
+      "publicFilename": "package-verification-spreadsheet-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "spreadsheet",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-spreadsheet-Linux.json",
+      "publicFilename": "package-verification-spreadsheet-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "presentation",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-presentation-Windows.json",
+      "publicFilename": "package-verification-presentation-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "presentation",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-presentation-Linux.json",
+      "publicFilename": "package-verification-presentation-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "email",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-email-Windows.json",
+      "publicFilename": "package-verification-email-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "email",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-email-Linux.json",
+      "publicFilename": "package-verification-email-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "notition",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-notition-Windows.json",
+      "publicFilename": "package-verification-notition-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "notition",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-notition-Linux.json",
+      "publicFilename": "package-verification-notition-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "database",
+      "os": "Windows",
+      "internalFilename": "pakketcontrole-Database-Windows.json",
+      "publicFilename": "package-verification-database-Windows.json",
+      "expectedPackageCount": 1,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    },
+    {
+      "app": "database",
+      "os": "Linux",
+      "internalFilename": "pakketcontrole-Database-Linux.json",
+      "publicFilename": "package-verification-database-Linux.json",
+      "expectedPackageCount": 2,
+      "finalSha256": null,
+      "status": "not-produced-by-this-task"
+    }
+  ],
+  "extraVerificationAssets": [
+    "SHA256SUMS",
+    "SHA256SUMS.asc",
+    "openaec-signing-public-key.asc",
+    "openaec-signing-fingerprint.txt",
+    "14 Linux package .asc signatures"
+  ],
+  "unsupportedPackageClaimsExcluded": [
+    "RPM",
+    "Intel macOS",
+    "Windows ARM64"
+  ],
+  "browserScope": "Actual / and /office/ CI routes; not installer or universal browser-engine coverage",
+  "updaterAtIntegrationPoint": {
+    "pubkeyConfigured": false,
+    "endpoints": [],
+    "automaticUpdatesPromised": false,
+    "dedicatedApps": "Manual installer updates; no suite updater"
+  },
+  "finalChecks": [
+    {
+      "id": "freeze-version-source",
+      "requiredEvidence": "Record final source/tree/version/tag and all deltas from I3; run version consistency checks; avoid already-published2026.46.2",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "signed-product-build",
+      "requiredEvidence": "Record exact build checkout/run and all three completed OS jobs; green unsigned build does not prove signing",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "windows-signatures",
+      "requiredEvidence": "Verify all seven installers, installed executables and uninstallers with timestamps, WebView2 loader and app identity",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "macos-signatures",
+      "requiredEvidence": "Verify apps from all seven DMGs with codesign/spctl/stapler",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "linux-signatures",
+      "requiredEvidence": "Verify all fourteen DEB/AppImage detached signatures and signed SHA256SUMS against trusted fingerprint",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "inventory-package-reports",
+      "requiredEvidence": "Validate28 unique installers and14 exact app/version/byte/hash reports, accounting for public report renaming",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "final-byte-manifest",
+      "requiredEvidence": "Hash actual post-signing/notarization normalized filenames; final product hashes stay separate from development artifacts",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "download-roundtrip",
+      "requiredEvidence": "Retrieve every final asset from its real downloadURL into empty directory; compare full name/length/hash/signature set without ignore-missing",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "native-final-products",
+      "requiredEvidence": "Install/open correct workspace/version/profile and perform applicable save/reopen/quit checks using final four package forms; relevant regression checks in Office/Writer; explicitly report blocked cases",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "updater-conditional",
+      "requiredEvidence": "Only evaluate updater if truly configured and signed; dedicated apps use manual installer updates",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    },
+    {
+      "id": "final-decision",
+      "requiredEvidence": "Root/user reviews receipts, remaining native blockers and notes before any separately authorized publication/main/tag",
+      "status": "pending-final-product-or-explicit-decision",
+      "performedByThisTask": false
+    }
+  ],
+  "pipelineAudit": {
+    "owner": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+    "receipt": null,
+    "status": "Targeted interim findings received; full pipeline audit is separate owner delivery to ROOT, not blocking this notes handoff",
+    "designVerified": "7apps/28installers/14reports, signature gates; not final-product execution",
+    "organizationSecretsAvailability": "unknown403 per pipeline owner; not classified missing",
+    "existing2026_46_2": "Already publicly released on other source, per750b API audit; do not reuse as unique new release",
+    "candidate2026_47_1": "No existing tag/release at750b API check; ROOT proposal e92b93a6; no tag created by this task"
+  },
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "54b2b508eab9bbec5c5da80c5087c0543d34a51f230960b6a3ec648a03f8d9dc",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/AGENTS.md"
+    },
+    {
+      "path": "assets/studios.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "5f15ccf38443a92e8e48db40a68d233dff89c7852549611f74d64f4f28d76528",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/assets/studios.json"
+    },
+    {
+      "path": "docs/studios.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "2603aa83eb988dde707a226603868fd1322263713c5ddaf11bcf0a05ebb03a67",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/studios.md"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/.github/workflows/release.yml"
+    },
+    {
+      "path": "scripts/controleer-uitgave.mjs",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "6c70f2c15a5b788b820a98509407113915018a843c262ae8b71567ab6f5d4657",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/scripts/controleer-uitgave.mjs"
+    },
+    {
+      "path": "src-tauri/tauri.conf.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "1f9c29b6aa89f4c5f105b1bf2fe2d3e405fbfc9a7abba0adb9e8f7587b83c8ce",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/src-tauri/tauri.conf.json"
+    },
+    {
+      "path": "docs/updates.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "2ece11e63e3ad47e513b4714b5603fb800286105a7bf5376459cd96289c06000",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/updates.md"
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "8895b3b014c88a6185cc25c6e5c9138437a5af09461f62bc637a934063c8d708",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/tests/integratie-2026-11-16.md"
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "2b2c5ba7403e5637e4d22362e8697d922330cafd69b858566a42a94cf4033864",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/docs/tests/integratie-2026-11-16.json"
+    },
+    {
+      "path": "README.md",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "c1846635c572bc08f831e42da77bc143bc1a873df0dfdef8f542cb9783b3b067",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/README.md"
+    },
+    {
+      "path": "package.json",
+      "commit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+      "sha256": "7bd92f3b5aa2ce316fb8ffc2065e90c0301f7e6c153cf3e307f8afc72bb02916",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/771fd66e0e4bd612dba4f7b6e34b517f39d52e86/package.json"
+    }
+  ],
+  "notesFile": {
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-writer-363-macos-native-6f92\\.local\\release-notes-2026-11-20.md",
+    "sha256": "8a9b7e856f890ad3bd8872aff7bffe6eb738859bce7e476356a817b34fb3c5f4"
+  },
+  "handoffDeadlineLocal": "2026-11-20T15:05:00+01:00",
+  "hardStopLocal": "2026-11-20T15:20:00+01:00",
+  "executionSummary": {
+    "newBuilds": 0,
+    "newInstallations": 0,
+    "guiSessions": 0,
+    "publications": 0,
+    "mainChanges": 0,
+    "sourceEdits": 0,
+    "newInstallerDownloads": 0
+  },
+  "proposedReleaseCommit": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+  "proposedReleaseTree": "2d9f2d74d26f685b83941da0ffb1c607b29ae10a",
+  "proposedReleaseBranch": "codex/release-prep-2026-11-20",
+  "proposalDelta": {
+    "base": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+    "changedFiles": [
+      "apps/database-studio/src-tauri/Cargo.lock",
+      "apps/database-studio/src-tauri/Cargo.toml",
+      "apps/database-studio/src-tauri/tauri.conf.json",
+      "package.json",
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/tauri.conf.json",
+      "versie.json"
+    ],
+    "fileCount": 8,
+    "allOtherTrackedEntriesEqualCoordinatorReportedCount": 3423,
+    "independentlyVerifiedChangedFilenameSet": true,
+    "versionTestsCoordinatorReportedPassed": 9,
+    "appMatrixWorkflowAndValidatorUnchanged": true
+  },
+  "candidateBuild": {
+    "run": 44747669364,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/44747669364",
+    "headSha": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "statusAtReview": "in_progress",
+    "observedAt": "2026-11-20T13:53:07.711538+00:00",
+    "publicationInput": false,
+    "isFinalProductAcceptance": false,
+    "runStartedByThisChat": false
+  },
+  "updatedAt": "2026-11-20T13:53:07.718540+00:00"
+}

@@ -1,0 +1,391 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-11-20T13:47:30.574Z",
+  "integrationCommit": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "method": "Eenmalige read-only gereedheidsaudit van centrale vastgelegde resultaten en benodigde bestaande audits; geen nieuwe tests, builds, GUI, onderzoek, CI, issues of publicatie.",
+  "sourceBinding": {
+    "centralEquivalenceHead": "d76fd1ee20a3d688efd09abe7dcbffac70f005ab",
+    "unchangedTrackedInputs": 3230,
+    "changesToPinnedIntegration": 200,
+    "changesOutsideCentralEvidence": [],
+    "interpretation": "771 bevat na de bestaande equivalentieverklaring alleen centrale bewijsdocumenten; pakketten/tests blijven toegeschreven aan APP7f, geen groene CI voor771 verzonnen."
+  },
+  "inputs": [
+    {
+      "path": "docs/tests/integratie-2026-11-16.md",
+      "sha256": "276ba6ffc895bc084e969e65e84010c44832b139d73c9a1e1eb36b3507905e89",
+      "bytes": 66243
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16.json",
+      "sha256": "2d30b60d22c7838dc4360f237b70b22bdc1c9ec4c9d74ee8b5cb5d76bd622e04",
+      "bytes": 185761
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/production-equivalence.json",
+      "sha256": "124a996793323ef053b8ff1a395064e30e4b64628fa457feec055be4c9805b44",
+      "bytes": 1214
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/browser/audit.json",
+      "sha256": "0ad98c0273c48b9388b9db55a3c1200cc8ce86e69982d63f02ebd367cd76407f",
+      "bytes": 8624
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/native/canonical-candidate.json",
+      "sha256": "2c37f17474b06072a2b8b5fe47be864619d92d5b4c7ab1bff5c02a5880d8ae60",
+      "bytes": 1567
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/native/Windows-CtrlH/audit.json",
+      "sha256": "91325ece22ef7216f6009291501f0947aee434f2ae593f079d4ba9b18d3c9488",
+      "bytes": 9465
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/native/Linux-remaining/audit.json",
+      "sha256": "0cd85f3ed130c19ca387d3f63c86d43074a0dca0238b85777d81cb390b746678",
+      "bytes": 4056
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/native/macOS-blocked-maximize/audit.json",
+      "sha256": "64f3499874c295358458072060a5d9460092f34566ca90b299d7ae22950f6b60",
+      "bytes": 3510
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/native/Linux362-XTest-Tab-partial/audit.json",
+      "sha256": "a50a3168281a1191073dfb29abb02e3dd08b94d5d9f2ef76bd6d3fd15fe6a0f1",
+      "bytes": 2214
+    },
+    {
+      "path": "docs/tests/integratie-2026-11-16/2026-11-20-I3/owner-reviews/root-363-acceptance.json",
+      "sha256": "a0beac35861eed9e6e20144ec7e98db0623e8634b8655c5ac5e84097bb53d82a",
+      "bytes": 2117
+    }
+  ],
+  "coreWorkflows": [
+    {
+      "run": 44715026752,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715031277,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715040713,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715045434,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715050185,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715054368,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715058586,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715063201,
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "browser": {
+    "platforms": [
+      "Windows",
+      "Linux",
+      "macOS"
+    ],
+    "routes": [
+      "/",
+      "/office/"
+    ],
+    "status": "passed all four scoped fixes and Office regressions",
+    "totals": {
+      "361checks": 162,
+      "362contentCases": 720,
+      "362groupFocusCases": 192,
+      "362horizontalObservations": 24,
+      "363languageCases": 18,
+      "356routes": 6,
+      "officeCases": 54
+    },
+    "originalFailedRun": 44715036293,
+    "originalMac361CauseProven": false,
+    "Mac361DiagnosticRun": 44718383490,
+    "Mac361DiagnosticPassedCases": 18,
+    "horizontalClippingAcceptedAsAbsent": false,
+    "genuineDisabledDeletePassed": false
+  },
+  "canonicalManifest": {
+    "file": "integratie-2026-11-16/2026-11-20-I3/native/canonical-candidate.json",
+    "originalByteSha256": "2c37f17474b06072a2b8b5fe47be864619d92d5b4c7ab1bff5c02a5880d8ae60",
+    "allThreeArchiveAndFourInnerPackageBytesIndependentlyChecked": true
+  },
+  "issues": [
+    {
+      "issue": 356,
+      "fix": "EPUB via bestaande veilige HTML/DOCX-import; behoud leesvolgorde en gerefereerde media.",
+      "commits": [
+        "c1226e1964287fcb69aea0e7660055fac642a367"
+      ],
+      "browser": "6 routes op 3 OS; import, offline edit, save/reopen en invalid-input tabbehoud.",
+      "native": "Windows NSIS, Linux DEB/AppImage, macOS DMG: echte save, onafhankelijke XML/PNG-oracle en nieuw-PID-heropenen.",
+      "limits": "Native EPUB-editing niet getest; afwijkende Windows-savebestemming onverklaard, werkelijk opgeslagen bestand wel gecontroleerd."
+    },
+    {
+      "issue": 361,
+      "fix": "Documentinvoerfocus herstellen na Insert Column zodat direct Undo/Redo werkt.",
+      "commits": [
+        "d8654bd9458959059252cca7058c979807e29b0e"
+      ],
+      "browser": "162 combinatiechecks; 3 OS en beide routes. Oorspronkelijke Mac tweede-Undo-fout bewaard; combinatie en 18 diagnosechecks slagen.",
+      "native": "Windows historie/save/reopen en aparte Ctrl+H → Find abc → precies één Ctrl+Z → leeg, exact grid gelijk. Linux 17 kern- en 16 vervolgrecords, maar Find-input Undo faalt. Mac tabelroute geblokkeerd.",
+      "limits": "Geen volledige native platformacceptatie. OudG toont hetzelfde Linux Find-symptoom met afwijkende openingsroute; dit bewijst geen oorzaak en wist I3-fout niet."
+    },
+    {
+      "issue": 362,
+      "fix": "Writer-linthoogte/compacte stapels en verticale ruimte rond collapsed groepsfocus.",
+      "commits": [
+        "882932d4400349796bfa14bf0d1beb318af67cfb",
+        "88b47a35d1cf510f03fc89f02b08703c66aaec46"
+      ],
+      "browser": "720 content + 192 groepsfocuscases; 3 OS, beide routes, verticale acceptatie. 24 horizontale waarnemingen blijven expliciet.",
+      "native": "Windows afgebakende brede staten en collapsed Delete bij923/Forge+Light, Down/End/Enter/Escape. Linux aparte Tab-route 1 normaal +6 focuscases/42 clipvrije buttonmetingen; daarna screenshot-timeout, nativePass=false. ArrowDown focus-visible-fouten blijven. Mac Table Design niet betrouwbaar bereikbaar.",
+      "limits": "Geen complete native groepen/breedtes/themas/statenmatrix; echte disabled Delete niet gepasseerd. Synthetische browser-disabled CSS geen native engine-disabled bewijs."
+    },
+    {
+      "issue": 363,
+      "fix": "Vijf stijlbeheeracties via bestaande vertalingen en correcte stijlnaaminterpolatie.",
+      "commits": [
+        "2e6446faaa1e077aa683d3e590dbec1fd5f6a8d4"
+      ],
+      "browser": "18 EN/NL/Lao-fallbackcases; 3 OS en beide routes.",
+      "native": "Windows EN/NL vijf namen/hints; Linux beperkte EN/Normal; macOS echte Settings EN → NL → EN, AX-namen/hints/Normal, normale cleanup.",
+      "limits": "Afgebakend centraal geaccepteerd; geen native Linux NL/fallback/custom/no-current/hover/hardwarematrix."
+    }
+  ],
+  "releaseDecision": {
+    "preparationReady": true,
+    "unconditionalReleaseReady": false,
+    "readyForMain": false,
+    "advice": "Releasevoorbereiding kan doorgaan. Publicatie en main blijven geblokkeerd; stabiele release is nu niet verantwoord onder de afgesproken acceptatie. Geen Linux/Mac-risico als geaccepteerd behandelen. Alleen366 is expliciet uitgesteld. Eventueel later prereleasebesluit behoort aan gebruiker/coördinator en is geen huidige vrijgave.",
+    "permissions": {
+      "main": false,
+      "tag": false,
+      "releasePublication": false
+    },
+    "releaseVersionAndWorkflow": "Door integratiecoördinator te beheren; niet beoordeeld of gewijzigd in deze scope.",
+    "verdict": "GEBLOKKEERD VOOR PUBLICATIE",
+    "stableRelease": "Niet gereed: native Linux/Mac-blokkades zijn niet geaccepteerd.",
+    "prerelease": "Geen publicatieadvies binnen huidige opdracht. Alleen voorbereiden; prerelease-label vervangt ontbrekende risicoacceptatie of publicatietoestemming niet.",
+    "riskAcceptance": {
+      "onlyExplicitlyDeferredIssue": 366,
+      "linuxFindAccepted": false,
+      "linuxRibbonAccepted": false,
+      "macNativeTableAccepted": false
+    }
+  },
+  "blockers": [
+    {
+      "scope": "Linux Find-input Undo (#361)",
+      "fact": "abc blijft na één Ctrl+Z staan; documentgrid onveranderd. Ook oudG onder gematchte driver/WebKit vertoont dit symptoom; oorzaak onbekend.",
+      "advice": "Blokkeer een claim van complete native Undo-vrijgave. Alleen leveren met expliciet geaccepteerd bekend functioneel risico; geen regressievrij- of automation-oorzaakclaim."
+    },
+    {
+      "scope": "Native verticale lintacceptatie (#362)",
+      "fact": "Linux ArrowDown mist focus-visible; Tab-route bewijst zes zichtbare 4px-focusringen bij light/1600 maar stopt op screenshot-timeout. Geen collapsed groep/narrow/Forge-matrix. Mac route ontbreekt.",
+      "advice": "Blokkeer volledige native #362-acceptatie. Voor release vereist dit expliciete acceptatie van ontbrekende native dekking en bewaarde failures; geen extra retry of productfix in deze ronde."
+    },
+    {
+      "scope": "macOS-native tabelbediening (#361/#362)",
+      "fact": "Body bleef leeg en unieke celgeometrie ontbrak na gewone maximize. Geen native Undo of lintpassing geaccepteerd; geen bewezen #359-oorzaak.",
+      "advice": "Blokkeer volledige macOS-tabel-/focusvrijgave. Een release kan dit alleen als expliciet geaccepteerde platformbeperking meenemen."
+    }
+  ],
+  "explicitKnownRisks": [
+    {
+      "issue": 366,
+      "status": "Expliciet uitgesteld door gebruiker",
+      "fact": "Gebruikersmelding: paginateller blijft minstens2min op10van10 terwijl gebruiker15 verwacht.",
+      "action": "Uitsluitend bekend probleem vermelden; geen zelfstandige reproductie, fix, oorzaak of acceptatie geclaimd."
+    },
+    {
+      "scope": "Browser horizontale ribbon bij800",
+      "status": "Buiten verticale #362-acceptatie",
+      "fact": "24 ruwe X/combined-randwaarnemingen bewaard; Y-acceptatie blijft strikt."
+    },
+    {
+      "scope": "Beperkte native staten en omgevingen",
+      "status": "Expliciet benoemen",
+      "fact": "Echte disabled Delete ontbreekt; Linux #363 NL/fallback en fysieke hardware/Wayland ontbreken. CI-builds vervangen geen bediening."
+    },
+    {
+      "scope": "Overige bewaarde waarnemingen",
+      "status": "Afgebakend bekend risico",
+      "fact": "Eerste Mac browser-Undo-fout oorzaak onbekend ondanks geslaagde vervanging/diagnose; Windows EPUB-savebestemming onverklaard. Geen uitbreiding naar #359, Tab-zonder-typen of andere issues."
+    }
+  ],
+  "cleanup": {
+    "auditStartedNoAppOrCapture": true,
+    "existingCleanup": {
+      "ownedAppClosed": true,
+      "finalOfficeProcesses": [],
+      "preferencesRestored": true,
+      "ownKernelResetConfirmed": true,
+      "kernelResetUTC": "2026-11-20T11:11:22Z",
+      "borderVisuallyConfirmedGone": false,
+      "allHelpersIndependentlyConfirmedClosed": false,
+      "originalRoundOnly": true,
+      "supplementaryWindowsCleanupPending": false,
+      "supplementaryWindows": {
+        "searchPaneClosed": true,
+        "ownDocumentChangesDiscarded": true,
+        "ownAppClosedNormally": true,
+        "finalOfficeProcesses": [],
+        "fixtureByteUnchanged": true,
+        "windowSizeThemeLanguageUnchanged": true,
+        "ownNodeRuntimeResetConfirmed": true,
+        "captureRestartedToInspectBorder": false,
+        "limit": "Runtime reset does not independently prove all helper resources or the yellow capture border disappeared; no extra capture was made."
+      }
+    },
+    "limit": "Bestaande kernelreset bewijst niet zelfstandig dat gele rand of alle helpers verdwenen zijn."
+  },
+  "stop": "Geen automatische hervatting, extra tests of focusonderzoek; overdracht uiterlijk15:05 CET, issuechat hardstop15:20.",
+  "completeness": {
+    "checkedAt": "2026-11-20T13:49:52.660Z",
+    "window": "2026-11-06 tot2026-11-20; gerichte bestaande overzichten, Git-voorouders en actuele GitHub PR/release-metadata",
+    "publicStable": {
+      "tag": "v2026.46.2",
+      "commit": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+      "publishedAt": "2026-11-13T00:20:54Z",
+      "draft": false,
+      "prerelease": false,
+      "inCandidate": true,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/tag/v2026.46.2",
+      "alreadyIncludedExamples": [
+        "PR248 integratie afgeronde Officefixes",
+        "PR347 W46.1",
+        "PR348 vervolgbundel; geen nieuwe intake voor deze reeds vrijgegeven bron"
+      ]
+    },
+    "currentMain": {
+      "commit": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+      "inCandidate": true,
+      "firstParentMergesAfterPublicTag": [
+        {
+          "pr": 351,
+          "commit": "c246fd7f468221e6a86cf961aecaa3b89cc42bcc",
+          "scope": "W46.2 release metadata merge"
+        },
+        {
+          "pr": 350,
+          "commit": "0826862c281412c9a699744c50b438f556ff1f78",
+          "scope": "Writer list/table/TOC edge cases; Spreadsheet import warnings"
+        },
+        {
+          "pr": 352,
+          "commit": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+          "scope": "Writer crop boundaries; Spreadsheet HTML paste comments"
+        }
+      ],
+      "conclusion": "771 behoudt volledige vooroudergeschiedenis van huidige main en publieke v2026.46.2; geen van die geïntegreerde commits ontbreekt."
+    },
+    "addedAboveMain": [
+      {
+        "issue": 327,
+        "pr": 349,
+        "commit": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+        "scope": "Begrensde Writer taalstatusoplossing; PR blijft draft maar exacte head is al voorouder van771."
+      },
+      {
+        "issue": 30,
+        "pr": 354,
+        "commit": "b2a17d5b813893928b4e5740c599078667197a74",
+        "scope": "Private Office-runtimevervolg; PR MERGED naar integratie, head aanwezig."
+      },
+      {
+        "issue": 358,
+        "pr": 360,
+        "commit": "7632c090651515ab3e0aad44dfe293aa340badcf",
+        "scope": "Mac Command-arrow documentnavigatie; PR MERGED naar integratie, head aanwezig."
+      },
+      {
+        "issues": [
+          356,
+          361,
+          362,
+          363
+        ],
+        "scope": "Vier huidige fixes; afzonderlijke commits en gericht bewijs in issues-array."
+      },
+      {
+        "issue": 355,
+        "commit": "d73539b10d6a0a96956050766b0d850474b55910",
+        "scope": "Alleen CI DMABUF-workaround; geen productlauncherwijziging of algemene native paintacceptatie."
+      }
+    ],
+    "knownOutsideCandidate": [
+      {
+        "owner": "8020, volgens coördinator",
+        "branch": "codex/formats-30-sylk-coverage-2026-11-20",
+        "commit": "720f7429e1be043cdbbb3e8a3a9d9ed3b2ca1679",
+        "inCandidate": false,
+        "comparison": {
+          "status": "diverged",
+          "aheadBy": 4,
+          "behindBy": 4,
+          "changedFiles": 112,
+          "productionPathChanges": 0
+        },
+        "scope": "Afgeronde afzonderlijke SYLK bewijs-/harness-/catalogusdocumentatie voor bestaande slk/sylk-route op APP7f. Geen productiebron of catalogusentry gewijzigd. Canonical private runtimes en productie-TS/WASM-route gecontroleerd; native RustIPC/GUI niet uitgevoerd.",
+        "decision": "Niet stilzwijgend opgenomen. Apart gereed bewijs buiten771 benoemen; geen ontbrekende SYLK-productfix voorstellen.",
+        "source": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/720f7429e1be043cdbbb3e8a3a9d9ed3b2ca1679/docs/tests/formatendekking/2026-11-20-sylk-route.md"
+      },
+      {
+        "pr": 317,
+        "head": "7e48cf5834a8c7a115f9eb9fcdc0ca8c50c4e0f7",
+        "inCandidate": false,
+        "status": "Draft historische runtimebranch, door geïntegreerde PR354 opgevolgd; geen tweede opname."
+      },
+      {
+        "pr": 116,
+        "head": "e5f8292bdf5c6cc3214c27c2601bf476b3867646",
+        "inCandidate": false,
+        "status": "Brede Rust-migratie WIP/draft; geen bewijs van afgeronde vrij te geven gehele head, geen automatische intake."
+      }
+    ],
+    "unfinishedOrPartial": [
+      "Linux Find-input Undo #361 blijft falen; oudG-tegenvoorbeeld diagnostisch.",
+      "Linux #362 native lintmatrix onvolledig en ArrowDown focus-visible failure behouden.",
+      "macOS #361/#362 body/tabletargeting geblokkeerd; geen #359-oplossing.",
+      "#30 overige16 positieve invoerfixtures ontbreken; geen16 bewezen bugs of volledige formatacceptatie.",
+      "Afzonderlijke Tab-zonder-typen/horizontale lintwaarnemingen blijven buiten deze fixscope.",
+      "#366 uitsluitend door gebruiker uitgesteld; geen zelfstandige reproductie/fix."
+    ],
+    "coverageLimit": "Dit is bewijs van behoud van alle reeds geïntegreerde main/releasecommits plus controle van de benoemde leveringen. Geen exhaustieve inventaris van iedere lokale branch, iedere chat of al het werk van twee weken; dus geen ongekwalificeerde alles-is-mee-claim.",
+    "metadataSources": [
+      "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/commits/main",
+      "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/releases/tags/v2026.46.2",
+      "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/pulls?state=open",
+      "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/compare/771fd66e0e4bd612dba4f7b6e34b517f39d52e86...720f7429e1be043cdbbb3e8a3a9d9ed3b2ca1679"
+    ]
+  }
+}

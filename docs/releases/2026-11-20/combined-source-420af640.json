@@ -1,0 +1,39 @@
+{
+  "applicationCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+  "applicationTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+  "version": "2026.47.1",
+  "versionOnlyBaseline": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+  "integrationBaseline": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+  "acceptedProductCorrections": {
+    "368": {
+      "original": "74fd030c7d733f49131178be58d75634f47b9cd5",
+      "intake": "ce20d15d"
+    },
+    "369": {
+      "original": "49ea8576222af1824628502b5b59243c0a297e9d",
+      "intake": "420af640c10ab9ada6c66c844c0098caea87c493"
+    }
+  },
+  "changedApplicationPaths": [
+    "src/openaec-lint/Lint.tsx",
+    "src/openaec-lint/focus.ts",
+    "src/tekst/zoeken/ZoekPaneel.tsx",
+    "src/tekst/zoeken/linux-invoer-undo.test.ts",
+    "src/tekst/zoeken/linux-invoer-undo.ts"
+  ],
+  "targetedTests": {
+    "passed": 37,
+    "failed": 0,
+    "reportSha256": "92aff7137448016880dd5967baf6a54601d2a7e750aa936e9dc7d92f19f1bbff"
+  },
+  "nativeFixedPackageAcceptance": false,
+  "sourceBoundBroadCI": "to start after local typecheck",
+  "MacProductCorrectionIncluded": false,
+  "publicationTodayForbidden": true,
+  "intakeClosed": "2026-11-20T15:25:00+01:00",
+  "typecheck": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit --incremental false",
+    "exitCode": 0,
+    "scope": "exact combined APP420 on local Windows; not native package acceptance"
+  }
+}

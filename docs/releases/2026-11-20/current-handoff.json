@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "asOfUTC": "2026-11-20T14:43:52.267909+00:00",
+  "status": "Safely saved release candidate; stable release still blocked; no main/tag/publication today.",
+  "resumeDate": "2026-11-23",
+  "resumeRequiresNewUserInstruction": true,
+  "applicationCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+  "applicationTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+  "version": "2026.47.1",
+  "branch": "codex/release-prep-2026-11-20",
+  "PR": 367,
+  "PRbase": "codex/integratie-2026-11-16",
+  "oldIntegration": {
+    "head": "771fd66e0e4bd612dba4f7b6e34b517f39d52e86",
+    "branch": "codex/integratie-2026-11-16",
+    "PR": 353
+  },
+  "mainVerifiedUnchanged": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+  "intakeClosedLocal": "2026-11-20T15:25:00+01:00",
+  "originalFourFixesPreserved": [
+    356,
+    361,
+    362,
+    363
+  ],
+  "newCorrections": {
+    "368": {
+      "originalProduct": "74fd030c7d733f49131178be58d75634f47b9cd5",
+      "intake": "ce20d15d",
+      "nativeMechanismPassed": true,
+      "newFixedPackageAccepted": false
+    },
+    "369": {
+      "originalProduct": "49ea8576222af1824628502b5b59243c0a297e9d",
+      "intake": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "GTKMechanismAndBoundedComponentPassed": true,
+      "newFixedOfficePackageAccepted": false
+    }
+  },
+  "localCombinedChecks": {
+    "targetedPassed": 37,
+    "failed": 0,
+    "typecheckExit": 0
+  },
+  "browser": {
+    "run": 44753552773,
+    "status": "completed",
+    "conclusion": "success",
+    "platforms": [
+      "Windows",
+      "Linux",
+      "macOS"
+    ],
+    "routes": [
+      "/",
+      "/office/"
+    ],
+    "rootAudit": "browser-420-root-audit.json",
+    "rootAuditSha256": "fb7b0ffe84ef0d514b01e25561b76de8577b6158139fdf9aa8bb936502cf6d95",
+    "rawArchiveAndReportHashesVerified": true,
+    "savedDOCXZIPXMLAndImageChecks": 6,
+    "nativeOrInitialPaintPass": false
+  },
+  "coreRuns": [
+    {
+      "conclusion": "success",
+      "databaseId": 44753496637,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "completed",
+      "workflowName": "Zelfstandig kantoorvoorbeeld controleren"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 44753496748,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "in_progress",
+      "workflowName": "Zelfstandige databasebrowser controleren en bouwen"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 44753496663,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "in_progress",
+      "workflowName": "Kantooromgeving controleren en bouwen"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 44753496566,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "completed",
+      "workflowName": "Documentmatrix op de productiekern controleren"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 44753496701,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "completed",
+      "workflowName": "Writer format round trips"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 44753496662,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "completed",
+      "workflowName": "Rekenbladmatrix onafhankelijk controleren"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 44753496653,
+      "headSha": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "status": "completed",
+      "workflowName": "Preserve presentation ODF data"
+    }
+  ],
+  "checkoutWitnesses": [
+    {
+      "run": 44753496637,
+      "status": "completed",
+      "conclusion": "success",
+      "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "actualCheckoutLogWitnesses": [
+        "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+      ],
+      "logSha256": "4ad35faae670f6ac0457b083f15a7eee24363877a8385730642013570d840c00",
+      "allCheckoutsExactlyApplicationSource": false,
+      "actualCheckoutTreeVerified": "c1334c8f4d92914e9d2114d56e467ef11eab9646"
+    },
+    {
+      "run": 44753496566,
+      "status": "completed",
+      "conclusion": "success",
+      "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "actualCheckoutLogWitnesses": [
+        "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+      ],
+      "logSha256": "eabb45ffd5a27582ecac88fc45e5f73f51ef3835d04eb70def704047d7a3a63a",
+      "allCheckoutsExactlyApplicationSource": false,
+      "actualCheckoutTreeVerified": "c1334c8f4d92914e9d2114d56e467ef11eab9646"
+    },
+    {
+      "run": 44753496701,
+      "status": "completed",
+      "conclusion": "success",
+      "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "actualCheckoutLogWitnesses": [
+        "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+      ],
+      "logSha256": "775e8d45a5d1d9283257e57fcfa244c0787bdc6b16e470580f0dac30f09ce3de",
+      "allCheckoutsExactlyApplicationSource": false,
+      "actualCheckoutTreeVerified": "c1334c8f4d92914e9d2114d56e467ef11eab9646"
+    },
+    {
+      "run": 44753496662,
+      "status": "completed",
+      "conclusion": "success",
+      "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "actualCheckoutLogWitnesses": [
+        "a57837f03705b34c8b191b76a6cb48271f1e39a6"
+      ],
+      "logSha256": "7c039ffa068b605cbd58428e26c66384de107f701448778957694152079a0ca9",
+      "allCheckoutsExactlyApplicationSource": false,
+      "actualCheckoutTreeVerified": "c1334c8f4d92914e9d2114d56e467ef11eab9646"
+    },
+    {
+      "run": 44753496653,
+      "status": "completed",
+      "conclusion": "success",
+      "eventHead": "420af640c10ab9ada6c66c844c0098caea87c493",
+      "actualCheckoutLogWitnesses": [
+        "420af640c10ab9ada6c66c844c0098caea87c493"
+      ],
+      "logSha256": "ff59a1038c93dfa22e50a0703a4a029699a277dfab7c2015eb0173be1c5a5ad8",
+      "allCheckoutsExactlyApplicationSource": true,
+      "actualCheckoutTreeVerified": "c1334c8f4d92914e9d2114d56e467ef11eab9646"
+    }
+  ],
+  "PRmergeContentEquivalence": {
+    "actualAuxCheckout": "a57837f03705b34c8b191b76a6cb48271f1e39a6",
+    "applicationCheckout": "420af640c10ab9ada6c66c844c0098caea87c493",
+    "fullGitTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+    "verifiedThroughGitHubCommitAPI": true,
+    "limits": "First four auxiliary jobs actually checked out the PR merge commit; do not label their checkout SHA as420. Their complete tracked tree is identical. Presentation ODF checked out420. Desktop and remaining checkouts need their own completed witnesses."
+  },
+  "currentNativeArtifactMetadata": [],
+  "currentNativeArtifactBytesIndependentlyVerified": false,
+  "oldVersionOnlyReleaseBuild": {
+    "run": 44747669364,
+    "source": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "status": "in_progress",
+    "conclusion": null,
+    "jobs": [
+      {
+        "id": 136327076012,
+        "name": "versie",
+        "status": "completed",
+        "conclusion": "success",
+        "failedSteps": []
+      },
+      {
+        "id": 136327207259,
+        "name": "Bouwen \u2013 Linux",
+        "status": "completed",
+        "conclusion": "success",
+        "failedSteps": []
+      },
+      {
+        "id": 136327207416,
+        "name": "Bouwen \u2013 Windows",
+        "status": "completed",
+        "conclusion": "failure",
+        "failedSteps": [
+          "Pakket bouwen (Windows, ondertekend)"
+        ]
+      },
+      {
+        "id": 136327207611,
+        "name": "Bouwen \u2013 macOS",
+        "status": "in_progress",
+        "conclusion": null,
+        "failedSteps": []
+      }
+    ],
+    "artifactMetadata": [
+      {
+        "id": 14637055234,
+        "name": "uitgave-Linux",
+        "size_in_bytes": 4444665887,
+        "digest": "sha256:f9f7d3c124bf086cf703a1bd9189c2ebab40b0b4f5abeca23b0bd2f9e2134867",
+        "expires_at": "2027-02-18T13:49:15Z",
+        "expired": false
+      },
+      {
+        "id": 14636811420,
+        "name": "gebundelde-runtime-uitgave-Linux",
+        "size_in_bytes": 2673878,
+        "digest": "sha256:d9090b24bec0350f708e6c42fcb628a6b8cee41a73fd4198448d71e6fcfb87bd",
+        "expires_at": "2027-02-18T13:49:15Z",
+        "expired": false
+      }
+    ],
+    "contains368or369": false,
+    "inputPubliceren": false,
+    "packageBytesDownloadedByRoot": false,
+    "WindowsFailureCause": "Signed build step failed; only exit1 annotation available while full run remains active. Retrieve completed logs after run ends; do not infer credential or product cause."
+  },
+  "MacBlocker": {
+    "issue": 359,
+    "evidenceBranch": "codex/mac-native-body-blocker-20261120",
+    "evidenceHead": "55a16e07e969152632b241ce1a29bbb165659581",
+    "applicationSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "productFixIncluded": false,
+    "stillBlocked": true,
+    "rootReview": "Mac-root-review.json",
+    "remaining": "Observed document-dependent blank native body. Activation and tested font/structure variants did not establish cause; EPUB control remains readable. Browser pre-action checks do not certify untouched initial paint."
+  },
+  "deferred366": "User reported stale10of10 for>=2min while expecting15. Explicitly deferred; no independent reproduction or fix.",
+  "notIncludedCompletedWork": [
+    {
+      "branch": "codex/formats-30-sylk-coverage-2026-11-20",
+      "head": "720f7429e1be043cdbbb3e8a3a9d9ed3b2ca1679",
+      "kind": "Separate proof/harness/docs delivery for existing routes; no missing product-source fix established."
+    }
+  ],
+  "readyForStableRelease": false,
+  "blockers": [
+    "Current420 Windows desktop job failed at runtime preparation; exact cause awaits completed logs. Separate from oldE92 signed-build failure.",
+    "Mac native document/table route remains unresolved",
+    "New combined fixed packages and their native controls remain unaccepted",
+    "Seven-app final release/signature/download checks pending; historical E92 Windows signed build failed"
+  ],
+  "permissionsToday": {
+    "mainMerge": false,
+    "mainPush": false,
+    "tag": false,
+    "releaseCreate": false,
+    "publish": false
+  },
+  "cleanup": {
+    "rootStartedLocalGUIOrCapture": false,
+    "rootLocalTargetedTestsAndTypecheckCompleted": true,
+    "LinuxFindOwnerOwnedRemoteAppsClosed": true,
+    "LinuxRibbonOwnerBrowserServersClosedAndPortReleased": true,
+    "MacOwnerNineRemoteProcessesClosedAndContainersRemoved": true,
+    "notesOwnerLocalWatcherStopped": true,
+    "userWindowsAppOrDocumentsClosed": false,
+    "remoteCIAllowedToContinueWithoutCodex": true,
+    "noNewCaptureToCheckBorder": true
+  },
+  "tomorrowSteps": [
+    "Resume Monday23November only on new instruction. Recheck week-version/tags before publication;2026.47.1 remains the frozen test candidate. Any version change needs matching package evidence.",
+    "Resume Monday23November only on new instruction. Before publishing, recheck week-version/tag availability;2026.47.1 remains the frozen test candidate and any new version needs matching package evidence.",
+    "Read this handoff and verify current branch/PR heads; do not rerun stale version-only source proof or older I3 statewriters.",
+    "Inspect job136347096445/current420 Windows runtime-preparation failure and its complete log once available; distinguish it from oldE92 job136327207416 signed-build failure before making a corrective change.",
+    "Fetch statuses/logs/artifactmetadata of the recorded runs. Download from exact run IDs and validate source/version/hash before app tests; artifact expiry timestamps are recorded when available.",
+    "Finish native Windows/Linux/macOS checks and both supported browser routes at one frozen application point; reuse valid evidence with the stated source/tree limits. Each platform starts independently when its own package/tester is ready.",
+    "Investigate Mac initial body rendering from the bounded contrast evidence; do not repeat ruled-out activation/font/structure variants without a new question.",
+    "Diagnose the E92 signed Windows release-build failure from completed logs; keep its source separate from420.",
+    "Only after relevant acceptance, prepare/review final seven-app28installer14report release, signatures and real download-byte checks; never treat old E92 artifacts as containing the fixes.",
+    "Obtain explicit approval for the exact main merge before main writes, then follow the separately authorized release/tag/publication steps. No automatic resume or publication."
+  ],
+  "currentPlatformJobs": {
+    "Desktop420": [
+      {
+        "id": 136347096154,
+        "name": "desktop (ubuntu-22.04)",
+        "status": "in_progress",
+        "conclusion": null,
+        "failedSteps": []
+      },
+      {
+        "id": 136347096394,
+        "name": "desktop (macos-latest)",
+        "status": "in_progress",
+        "conclusion": null,
+        "failedSteps": []
+      },
+      {
+        "id": 136347096445,
+        "name": "desktop (windows-latest)",
+        "status": "completed",
+        "conclusion": "failure",
+        "failedSteps": [
+          "Run node scripts/voorbereiden-kantoorruntime.mjs"
+        ]
+      }
+    ],
+    "Database420": [
+      {
+        "id": 136347095897,
+        "name": "database (ubuntu-22.04)",
+        "status": "completed",
+        "conclusion": "success",
+        "failedSteps": []
+      },
+      {
+        "id": 136347096413,
+        "name": "database (macos-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "failedSteps": []
+      },
+      {
+        "id": 136347096713,
+        "name": "database (windows-latest)",
+        "status": "in_progress",
+        "conclusion": null,
+        "failedSteps": []
+      }
+    ]
+  },
+  "planningUpdate": "User postponed to Monday23November; no new tasks/tests or automatic weekend resume/publication."
+}
