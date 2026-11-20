@@ -1,0 +1,59 @@
+name: Writer 363 native macOS labels
+on:
+  push:
+    branches: [codex/writer-363-macos-native-2026-11-20]
+    paths:
+      - .github/workflows/writer363-native-macos.yml
+      - .github/writer363-native-macos-request.json
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: writer363-native-macos-only
+  cancel-in-progress: false
+jobs:
+  labels:
+    if: contains(github.event.head_commit.message, '[writer363-native-macos]')
+    runs-on: macos-latest
+    timeout-minutes: 20
+    env:
+      EXECUTE_NATIVE: "true"
+      OOS_363_EXECUTE: "1"
+      GH_TOKEN: ${{ github.token }}
+      WRITER363_REQUEST_SHA256: 01855fa7840cbd3adbc20927c01ef66a16c3902ca10b0290a821286d51ca315a
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: harness
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify scoped request, source files and deadline before native work
+        run: python harness/scripts/writer363-native-request.py harness/.github/writer363-native-macos-request.json
+      - name: Check selector and failure-path contracts without application
+        run: python harness/scripts/test_writer363_macos.py
+      - uses: actions/checkout@v4
+        with:
+          ref: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+          path: app
+      - name: Fetch and verify canonical I3 DMG; do not build the application
+        working-directory: app
+        run: python ../harness/scripts/writer361-native-manifest.py fetch macos .local/writer363-manifest.json
+      - name: Compile native helper, inspect UI capabilities and verify EN NL restore
+        working-directory: app
+        run: python ../harness/scripts/proef-writer363-macos.py .local/input/identity.json .local/writer363-native-macos --phase ui-language
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer363-native-macOS-I3-${{ github.sha }}
+          path: |
+            app/.local/writer363-native-macos/
+            app/.local/writer363-manifest.json
+            app/.local/input/identity.json
+            app/.local/input/artifact-origin.json
+            app/.local/input/root-frozen-candidate.json
+            harness/.github/writer363-native-macos-request.json
+            harness/scripts/writer363-macos-ax.swift
+          include-hidden-files: true
+          if-no-files-found: warn
