@@ -9,6 +9,7 @@ trap {
     if ($dialogInfo) { $failure.dialog = $dialogInfo }
     if ($filenameInventory) { $failure.filenameInventory = $filenameInventory }
     if ($focusedFieldInfo) { $failure.focusedField = $focusedFieldInfo }
+    if ($nativeFieldInfo) { $failure.nativeField = $nativeFieldInfo }
     $failure | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $ReportPath -Encoding utf8
     exit 2
 }
@@ -79,10 +80,76 @@ if ($focused -and $focused.accepted) {
     }
     if ($accepted.Count -eq 1) { $filename = $accepted[0] }
 }
-if (-not $filename) { throw 'BLOCKED: focused/unique synthetic filename field is not attributable to owned native dialog' }
-$value = $filename.pattern
-$value.SetValue($SavePath)
-if ($value.Current.Value -ne $SavePath) { throw 'BLOCKED: native filename path readback does not match requested target' }
+function Test-OwnedNativeFilenameFacts($facts, $expectedPid, $expectedDialog, $names) {
+    return $facts.focused -and $facts.enabled -and $facts.handle -gt 0 -and
+        $facts.pid -eq $expectedPid -and $facts.className -ceq 'Edit' -and $facts.controlId -eq 1001 -and
+        $facts.dialogHandle -eq $expectedDialog -and $facts.dialogClass -ceq '#32770' -and
+        $facts.allAncestorsOwned -and $facts.fileNameHost -and $names -ccontains $facts.text
+}
+if ($filename) {
+    $value = $filename.pattern
+    $value.SetValue($SavePath)
+    if ($value.Current.Value -ne $SavePath) { throw 'BLOCKED: native filename path readback does not match requested target' }
+} else {
+    # The actual Windows CI chooser exposes its standard Edit HWND as UIA Pane
+    # without ValuePattern. Address that exact focused native control, never a
+    # window title or editor/web field. WM_SETTEXT only edits the OS filename;
+    # the actual native Save button below still performs the filesystem write.
+    Add-Type -TypeDefinition @'
+using System;
+using System.Text;
+using System.Runtime.InteropServices;
+public static class Epub356NativeField {
+ [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h, out uint pid);
+ [DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr h, uint flags);
+ [DllImport("user32.dll", CharSet=CharSet.Unicode)] public static extern int GetClassName(IntPtr h, StringBuilder text, int count);
+ [DllImport("user32.dll")] public static extern int GetDlgCtrlID(IntPtr h);
+ [DllImport("user32.dll")] public static extern bool IsWindowEnabled(IntPtr h);
+ [DllImport("user32.dll", EntryPoint="SendMessageTimeoutW", CharSet=CharSet.Unicode)]
+ public static extern IntPtr ReadText(IntPtr h, uint msg, UIntPtr count, StringBuilder text, uint flags, uint timeout, out UIntPtr result);
+ [DllImport("user32.dll", EntryPoint="SendMessageTimeoutW", CharSet=CharSet.Unicode)]
+ public static extern IntPtr SetText(IntPtr h, uint msg, UIntPtr count, string text, uint flags, uint timeout, out UIntPtr result);
+}
+'@
+    $nativeHandle = [IntPtr]$automation::FocusedElement.Current.NativeWindowHandle
+    function Read-OwnedNativeFieldFacts($handle) {
+        $facts = @{handle=$handle.ToInt64(); focused=($automation::FocusedElement.Current.NativeWindowHandle -eq $handle.ToInt64()); enabled=[Epub356NativeField]::IsWindowEnabled($handle); allAncestorsOwned=$true; fileNameHost=$false; ancestry=@()}
+        $ancestor=$handle
+        for ($depth=0; $depth -lt 32 -and $ancestor -ne [IntPtr]::Zero; $depth++) {
+            [uint32]$ancestorPid=0
+            $null=[Epub356NativeField]::GetWindowThreadProcessId($ancestor,[ref]$ancestorPid)
+            $class=[System.Text.StringBuilder]::new(256)
+            $null=[Epub356NativeField]::GetClassName($ancestor,$class,$class.Capacity)
+            $facts.ancestry += @{handle=$ancestor.ToInt64();pid=$ancestorPid;className=$class.ToString()}
+            if ($depth -eq 0) { $facts.pid=$ancestorPid; $facts.className=$class.ToString(); $facts.controlId=[Epub356NativeField]::GetDlgCtrlID($ancestor) }
+            if ($ancestorPid -ne $OwnedPid) { $facts.allAncestorsOwned=$false; break }
+            if ($class.ToString() -ceq 'AppControlHost' -and @($focusedFieldInfo.ancestry | Where-Object {
+                $_.automationId -ceq 'FileNameControlHost' -and $_.windowHandle -eq $ancestor.ToInt64() -and $_.ownedPid -eq $OwnedPid
+            }).Count -eq 1) { $facts.fileNameHost=$true }
+            if ($ancestor.ToInt64() -eq $dialogInfo.windowHandle) { $facts.dialogHandle=$ancestor.ToInt64(); $facts.dialogClass=$class.ToString(); break }
+            $ancestor=[Epub356NativeField]::GetAncestor($ancestor,1)
+        }
+        if (-not $facts.focused -or -not $facts.enabled -or $facts.pid -ne $OwnedPid -or $facts.className -cne 'Edit' -or
+            $facts.controlId -ne 1001 -or -not $facts.fileNameHost -or -not $facts.allAncestorsOwned -or
+            $facts.dialogHandle -ne $dialogInfo.windowHandle -or $facts.dialogClass -cne '#32770') {
+            throw 'BLOCKED: native filename identity changed before WM_GETTEXT'
+        }
+        $text=[System.Text.StringBuilder]::new(32768)
+        [UIntPtr]$messageResult=[UIntPtr]::Zero
+        if ([Epub356NativeField]::ReadText($handle,13,[UIntPtr]::new([uint64]$text.Capacity),$text,2,2000,[ref]$messageResult) -eq [IntPtr]::Zero) { throw 'BLOCKED: owned native filename WM_GETTEXT timed out' }
+        $facts.text=$text.ToString()
+        return $facts
+    }
+    $nativeFieldInfo=Read-OwnedNativeFieldFacts $nativeHandle
+    if (-not (Test-OwnedNativeFilenameFacts $nativeFieldInfo $OwnedPid $dialogInfo.windowHandle $expectedNames)) { throw 'BLOCKED: focused native filename HWND/process/class/ancestor/value is not attributable' }
+    [UIntPtr]$setResult=[UIntPtr]::Zero
+    if ([Epub356NativeField]::SetText($nativeHandle,12,[UIntPtr]::Zero,$SavePath,2,2000,[ref]$setResult) -eq [IntPtr]::Zero -or $setResult.ToUInt64() -ne 1) { throw 'BLOCKED: owned native filename WM_SETTEXT failed' }
+    $readback=Read-OwnedNativeFieldFacts $nativeHandle
+    if (-not (Test-OwnedNativeFilenameFacts $readback $OwnedPid $dialogInfo.windowHandle @($SavePath))) { throw 'BLOCKED: owned native filename exact path/ownership readback failed' }
+    $nativeFieldInfo.Remove('text')
+    $nativeFieldInfo.pathReadbackMatches=$true
+    $filename=@{metadata=@{method='owned-native-Edit-WM_SETTEXT';nativeField=$nativeFieldInfo}}
+}
 $buttons = $dialog.FindAll($tree::Descendants, [System.Windows.Automation.PropertyCondition]::new($automation::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button))
 $save = @($buttons | Where-Object { $_.Current.AutomationId -eq '1' -and $_.Current.Name -match '^(Save|Opslaan)$' -and $_.Current.IsEnabled })
 if ($save.Count -ne 1) { throw 'BLOCKED: owned native Save button is not unique' }

@@ -71,7 +71,7 @@ export async function prepareFinalDrivers(destination) {
   const original = await Promise.all(["proef-runtime-interface.mjs", "proef-runtime-macos-interface.py", "runtime-macos-ax.swift"].map(n => readFile(new URL(n, import.meta.url), "utf8")));
   for (const [name, source] of Object.entries(generateNativeSources(...original)))
     await writeFile(resolve(destination, name), source);
-  for (const name of ["epub356-final-os-save.mjs", "epub356-final-windows-save.ps1", "epub356-final-linux-save.py", "epub356-final-macos-save.py", "epub356-final-macos-save-ax.swift"])
+  for (const name of ["epub356-final-os-save.mjs", "epub356-final-windows-save.ps1", "epub356-final-linux-save.py", "epub356-final-linux-portal.py", "epub356-final-macos-save.py", "epub356-final-macos-save-ax.swift"])
     await copyFile(new URL(name, import.meta.url), resolve(destination, name));
 }
 

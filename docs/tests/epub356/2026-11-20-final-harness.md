@@ -157,16 +157,20 @@ Preparation checks only (no native or browser app run):
 ```text
 node --test scripts/epub356-final-artifacts.node-test.mjs scripts/epub356-final-prepare.node-test.mjs
 python scripts/epub356-final-oracle_test.py -v
+python scripts/epub356-final-linux-portal_test.py -v
+pwsh -NoProfile -File scripts/epub356-final-windows-save-contract.ps1
 node --test scripts/proef-epub356-hosted-startup.node-test.mjs
 ```
 
-Eight native/source artifact Node contracts, nine independent-oracle Python tests,
-and seven headless frontend failure gates passed. Own Node contracts use
+Nine native/source artifact Node contracts, nine independent-oracle Python tests,
+ten synthetic portal-protocol checks, fourteen pure Windows ownership/readback
+cases with C# declaration compilation, and seven headless frontend failure gates
+passed. These local checks do not invoke UIA, Win32 methods or a native app. Own Node contracts use
 `.node-test.mjs` to avoid Vitest collecting them as empty Vitest suites. Locally,
 `OOS_RUNTIME_PYTHON` can identify the installed Python executable, and the
 frontend headless test may use `EPUB356_TEST_SHARED_HELPER` to read the COMPLETE
 shared verifier from its owning checkout. Neither test copies a partial helper
 or modifies shared dependencies. Python AST, Node source/generated-driver syntax
-and PowerShell parse checks passed. Swift compilation, native OS dialog shape,
-actual platform operations and shared-route UI acceptance await root freeze and
-the exact canonical installer artifacts. No new native pass is claimed here.
+and PowerShell parse checks passed. Actual platform operation receipts and their
+remaining limitations are recorded separately in `2026-11-20-status.md`.
+Preparation checks do not establish native OS dialog or visual acceptance.

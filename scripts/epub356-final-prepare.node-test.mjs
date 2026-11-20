@@ -2,11 +2,34 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { generateNativeSources } from "./epub356-final-prepare.mjs";
+import { mkdtemp, readFile, readdir, realpath, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, dirname, basename } from "node:path";
+import { generateNativeSources, prepareFinalDrivers } from "./epub356-final-prepare.mjs";
 import { completeNativeSave } from "./epub356-final-os-save.mjs";
 import { runNative } from "./epub356-final-native.mjs";
 
 const input = ["proef-runtime-interface.mjs", "proef-runtime-macos-interface.py", "runtime-macos-ax.swift"].map(n => readFileSync(new URL(n, import.meta.url), "utf8"));
+
+test("native overlay carries the actual portal observer dependency without copying unrelated application files", async () => {
+  const temporaryBase = await realpath(tmpdir());
+  const root = await mkdtemp(join(temporaryBase, "epub356-prepare-"));
+  try {
+    await prepareFinalDrivers(root);
+    const files = await readdir(root);
+    assert.equal(files.length, 9);
+    assert(files.every(name => name.startsWith("epub356-final-")));
+    assert.deepEqual(await readFile(join(root, "epub356-final-linux-portal.py")),
+      await readFile(new URL("epub356-final-linux-portal.py", import.meta.url)));
+    assert.equal(files.includes("proef-epub356-hosted.mjs"), false);
+    assert.equal(files.includes("writer-proefbuild.mjs"), false);
+  } finally {
+    const resolved = await realpath(root);
+    assert.equal(dirname(resolved), temporaryBase);
+    assert(basename(resolved).startsWith("epub356-prepare-"));
+    await rm(resolved, { recursive: true, force: true });
+  }
+});
 
 test("reviewed backend hashes fail closed instead of patching an unknown UI driver", () => {
   for (let i = 0; i < input.length; i++) {
