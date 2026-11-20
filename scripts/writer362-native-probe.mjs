@@ -36,6 +36,7 @@ const keys = {
   escape: "\uE00C",
   control: "\uE009",
   home: "\uE011",
+  end: "\uE010",
 };
 
 /** Deliberately cannot create/delete sessions, navigate URLs or invoke native IPC. */
@@ -202,6 +203,74 @@ function geometry(groupName) {
   };
 }
 
+/** Serializable read-only DOM measurement; also tested independently of a host. */
+export function writer362GroupTriggerGeometry(groupName) {
+  const group = [
+    ...document.querySelectorAll('.ribbon-groep[role="group"]'),
+  ].find(
+    (e) =>
+      e.getAttribute("aria-label") === groupName && e.getClientRects().length,
+  );
+  const button = group?.querySelector(":scope > .ribbon-groep-knop");
+  if (!button?.getClientRects().length) return null;
+  const rect = button.getBoundingClientRect(),
+    css = getComputedStyle(button);
+  const focusVisible = button.matches(":focus-visible");
+  const ring =
+    focusVisible && css.outlineStyle !== "none"
+      ? Math.max(
+          0,
+          parseFloat(css.outlineWidth) + parseFloat(css.outlineOffset),
+        )
+      : 0;
+  const outline = {
+    top: rect.top - ring,
+    bottom: rect.bottom + ring,
+    left: rect.left - ring,
+    right: rect.right + ring,
+  };
+  const clippingAncestors = [];
+  for (
+    let parent = button.parentElement;
+    parent;
+    parent = parent.parentElement
+  ) {
+    const style = getComputedStyle(parent),
+      bounds = parent.getBoundingClientRect();
+    const clipX = ["auto", "scroll", "hidden", "clip"].includes(
+        style.overflowX,
+      ),
+      clipY = ["auto", "scroll", "hidden", "clip"].includes(style.overflowY);
+    if (!clipX && !clipY) continue;
+    const clip = {
+      top: bounds.top + parent.clientTop,
+      left: bounds.left + parent.clientLeft,
+    };
+    clip.bottom = clip.top + parent.clientHeight;
+    clip.right = clip.left + parent.clientWidth;
+    clippingAncestors.push({
+      className: parent.className,
+      clip,
+      clipX,
+      clipY,
+      clipped:
+        (clipY &&
+          (outline.top < clip.top - 0.5 ||
+            outline.bottom > clip.bottom + 0.5)) ||
+        (clipX &&
+          (outline.left < clip.left - 0.5 || outline.right > clip.right + 0.5)),
+    });
+  }
+  return {
+    focused: document.activeElement === button,
+    focusVisible,
+    ring,
+    outline,
+    clippingAncestors,
+    clipped: clippingAncestors.some((a) => a.clipped),
+  };
+}
+
 /**
  * Requires a disposable profile and the supplied fixture already open in English.
  * source hashes must come from the caller's verified installed-package binding.
@@ -249,6 +318,7 @@ export async function runWriter362NativeProbe({
     nativePass: false,
     startedAt: new Date().toISOString(),
     cases: [],
+    groupButtonCases: [],
     unavailable: [],
     cleanup: [],
     limits: [
@@ -378,7 +448,7 @@ export async function runWriter362NativeProbe({
     );
     for (const theme of ["light", "forge"]) {
       await setTheme(theme);
-      for (const width of [1600, 800]) {
+      for (const width of [1600, 923, 800]) {
         await command("POST", "/window/rect", { width, height: 1000 });
         await delay(150, undefined, { signal: runSignal });
         const viewport = await evaluate(() => ({
@@ -386,7 +456,7 @@ export async function runWriter362NativeProbe({
           height: innerHeight,
           dpr: devicePixelRatio,
         }));
-        if (width === 800 && viewport.width > 1000) {
+        if (width <= 923 && viewport.width > 1000) {
           report.unavailable.push({
             theme,
             requestedWidth: width,
@@ -414,6 +484,7 @@ export async function runWriter362NativeProbe({
                 ),
               "Selected tab did not finish moving focus into the toolbar",
             );
+            if (collapsed && groupName === "Delete") await press(keys.end);
             let reached = false;
             for (let step = 0; step < 100; step++) {
               reached = await evaluate(
@@ -431,7 +502,50 @@ export async function runWriter362NativeProbe({
               await press(keys.right);
             }
             assert.ok(reached, `${groupName}: keyboard route`);
-            if (collapsed) await press(keys.enter);
+            const measureGroupTrigger = async (phase) => {
+              const data = await evaluate(
+                writer362GroupTriggerGeometry,
+                groupName,
+              );
+              assert.ok(data, `${groupName}: collapsed group trigger exists`);
+              report.groupButtonCases.push({
+                theme,
+                requestedWidth: width,
+                tab,
+                group: groupName,
+                phase,
+                navigation:
+                  groupName === "Delete"
+                    ? "ArrowDown → End"
+                    : "ArrowDown → ArrowRight",
+                ...data,
+              });
+              await screenshot(`${theme}-${width}-${groupName}-${phase}`);
+              assert.ok(
+                data.focused && data.focusVisible,
+                `${groupName}: actual keyboard focus`,
+              );
+              assert.equal(
+                data.ring,
+                4,
+                `${groupName}: full outline plus offset`,
+              );
+              assert.ok(
+                data.clippingAncestors.some((a) =>
+                  String(a.className).includes("ribbon-baan"),
+                ),
+                "Actual clipping track measured",
+              );
+              assert.equal(
+                data.clipped,
+                false,
+                `${groupName}: group trigger focus must fit all clipping ancestors`,
+              );
+            };
+            if (collapsed) {
+              await measureGroupTrigger("keyboard-group-focus");
+              await press(keys.enter);
+            }
             await waitFor(
               () => evaluate(geometry, groupName),
               `${groupName}: content unavailable`,
@@ -579,6 +693,7 @@ export async function runWriter362NativeProbe({
                 ),
                 "Escape restores group-button focus",
               );
+              await measureGroupTrigger("keyboard-group-after-escape");
             }
           }
         }

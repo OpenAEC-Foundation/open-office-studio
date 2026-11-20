@@ -4,12 +4,89 @@ import { test } from "node:test";
 import { createServer } from "node:http";
 import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
+import { runInNewContext } from "node:vm";
 import { unzipSync, zipSync, strToU8, strFromU8 } from "fflate";
 import {
   createWriter362Fixture,
   createWriter362Transport,
   runWriter362NativeProbe,
+  writer362GroupTriggerGeometry,
 } from "./writer362-native-probe.mjs";
+
+// Exercise the serialized read-only WebDriver script, not the product's height
+// calculation. Deliberately use a 5px computed outline instead of its 4px CSS.
+function triggerMeasurement({ top = 15, bottom = 95, outerClip = false } = {}) {
+  const node = (className, bounds, style, parentElement = null) => ({
+    className,
+    parentElement,
+    style,
+    clientTop: 0,
+    clientLeft: 0,
+    clientWidth: bounds.right - bounds.left,
+    clientHeight: bounds.bottom - bounds.top,
+    getBoundingClientRect: () => bounds,
+    getClientRects: () => [bounds],
+  });
+  const outer = node(
+    "outer",
+    { top: 0, bottom: 200, left: 50, right: 200 },
+    { overflowX: outerClip ? "clip" : "visible", overflowY: "visible" },
+  );
+  const track = node(
+    "ribbon-baan",
+    { top: 8, bottom: 102, left: 18, right: 202 },
+    { overflowX: "auto", overflowY: "hidden" },
+    outer,
+  );
+  // The clipping padding box excludes the actual border, not the outer rect.
+  track.clientTop = 2;
+  track.clientLeft = 2;
+  track.clientHeight = 90;
+  track.clientWidth = 180;
+  const group = node(
+    "ribbon-groep",
+    { top: 10, bottom: 100, left: 30, right: 100 },
+    { overflowX: "visible", overflowY: "visible" },
+    track,
+  );
+  const button = node(
+    "ribbon-groep-knop",
+    { top, bottom, left: 40, right: 90 },
+    { outlineStyle: "solid", outlineWidth: "1.5px", outlineOffset: "3.5px" },
+    group,
+  );
+  button.matches = () => true;
+  group.getAttribute = () => "Delete";
+  group.querySelector = () => button;
+  return runInNewContext(
+    `(${writer362GroupTriggerGeometry.toString()})("Delete")`,
+    {
+      document: { querySelectorAll: () => [group], activeElement: button },
+      getComputedStyle: (e) => e.style,
+    },
+  );
+}
+
+test("serialized native measurement detects an outline beyond the clipping padding box", () => {
+  const overflow = triggerMeasurement({ top: 10, bottom: 100 });
+  assert.equal(overflow.ring, 5);
+  assert.equal(overflow.clipped, true);
+  assert.equal(overflow.clippingAncestors[0].clip.top, 10);
+  assert.equal(overflow.clippingAncestors[0].clip.bottom, 100);
+  const fit = triggerMeasurement();
+  assert.equal(fit.focusVisible, true);
+  assert.equal(fit.clipped, false);
+  assert.equal(fit.outline.top, 10);
+  assert.equal(fit.outline.bottom, 100);
+});
+
+test("serialized native measurement includes additional clipping ancestors", () => {
+  const data = triggerMeasurement({ outerClip: true });
+  assert.equal(data.clippingAncestors.length, 2);
+  assert.equal(data.clippingAncestors[0].clipped, false);
+  assert.equal(data.clippingAncestors[1].clipped, true);
+  assert.equal(data.clipped, true);
+});
 
 test("transport scopes W3C requests to caller session and rejects lifecycle commands", async () => {
   const requests = [];
