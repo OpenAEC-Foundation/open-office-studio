@@ -2,14 +2,19 @@ name: Writer 361 isolated native acceptance
 on:
   push:
     branches: [codex/writer-361-native-acceptance-20261120]
-    paths: [.github/workflows/writer361-native-acceptance.yml]
+    paths:
+      - .github/workflows/writer361-native-acceptance.yml
+      - .github/writer361-mac-browser-I2.json
   workflow_dispatch:
     inputs:
       profile:
         type: choice
-        options: [compile-only, linux, macos]
+        options: [compile-only, linux, macos, browser-only-mac]
         default: compile-only
       execute_native:
+        type: boolean
+        default: false
+      execute_browser:
         type: boolean
         default: false
       frozen_manifest:
@@ -65,7 +70,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
   plan:
-    if: github.event_name == 'workflow_dispatch' && inputs.profile != 'compile-only'
+    if: github.event_name == 'workflow_dispatch' && (inputs.profile == 'linux' || inputs.profile == 'macos')
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     outputs:
@@ -167,5 +172,57 @@ jobs:
             .local/writer361-manifest.json
             .local/input/identity.json
             .local/input/artifact-origin.json
+          include-hidden-files: true
+          if-no-files-found: warn
+  browser-macos-I2:
+    # One approved request push, independent of default-branch dispatch registration.
+    if: (github.event_name == 'push' && contains(github.event.head_commit.message, '[writer361-mac-browser-I2]')) || (github.event_name == 'workflow_dispatch' && inputs.profile == 'browser-only-mac' && inputs.execute_browser)
+    runs-on: macos-latest
+    timeout-minutes: 35
+    env:
+      WRITER361_BROWSER_REQUEST_SHA256: 8b715cf8a1c1f5916dd6609983274926318fb5937731a1089e7979f0c4688bd6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: harness
+      - name: Verify immutable browser-only I2 request before any app build
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          raw=pathlib.Path('harness/.github/writer361-mac-browser-I2.json').read_bytes()
+          assert hashlib.sha256(raw).hexdigest()==os.environ['WRITER361_BROWSER_REQUEST_SHA256']
+          c=json.loads(raw)
+          assert c['profile']=='browser-only-mac' and c['executionApproved'] is True
+          assert c['sourceCommit']=='5acab18c516e1fb07118cb41f807a3c0e05182bf' and c['sourceTree']=='f857aabbca465d3135f38d9a95b8ad0863ea76b1'
+          assert c['nativeAppExecutionAllowed'] is False and c['installerBuildAllowed'] is False
+          assert hashlib.sha256(pathlib.Path('harness/scripts/proef-writer-kolom-undo.mjs').read_bytes()).hexdigest()==c['correctedProbeSha256']
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: 5acab18c516e1fb07118cb41f807a3c0e05182bf
+          path: app
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Locked application frontend dependencies and real macOS Chromium
+        run: |
+          pnpm --dir app install --frozen-lockfile --ignore-scripts
+          pnpm --dir app exec playwright install --with-deps chromium
+      - name: Canonical I2 normal and hosted builds, corrected 361 and existing other probes
+        run: node harness/scripts/writer361-i2-mac-browser.mjs app harness
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer361-I2-real-mac-browser-${{ github.sha }}
+          path: |
+            app/.local/writer361-I2-mac-*/
+            app/.local/writer361-I2-mac-browser-summary.json
+            app/.local/dist-writer361-I2-mac-normal.build.json
+            app/.local/dist-writer361-I2-mac-hosted.build.json
+            harness/.github/writer361-mac-browser-I2.json
           include-hidden-files: true
           if-no-files-found: warn
