@@ -1,0 +1,593 @@
+{
+  "issue": 356,
+  "auditScope": "Read-only existing Chromium browser CI evidence; no app/preview/native/new CI execution",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "qaRun": 44716499924,
+  "qaHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+  "applicationConsumerGitBlobSha256": "f4f82bdda3f8b0891869e32ca6651c4368ce03be9b0ad8ef6f2cb59bdbbea77b",
+  "workflowSha256": "b1107137cc32522e633b4cd0d8c17d0e7498507edfb721b25eb3bc6e6396a5b4",
+  "aggregatorSha256": "d81105061f7610fe5aa1a73f969007e5641d9550d27a19020b231c764f42e280",
+  "binding": "QA workflow checks out I3 as app; QA aggregator launches app scripts/proef-epub356-hosted.mjs from app CWD. Receipts/probe reports bind I3 source/tree/exact route. Distinct QA head is verified by run API and each aggregate summary.",
+  "artifacts": [
+    {
+      "platform": "Linux",
+      "artifactId": 14620835246,
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\artifact.zip",
+      "bytes": 2921996,
+      "sha256": "f5ea0a77ee18ae920d0b0bde3770a8cfb11932fdce8fe5648775cb89f6c4805e"
+    },
+    {
+      "platform": "macOS",
+      "artifactId": 14619952771,
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\artifact.zip",
+      "bytes": 3432713,
+      "sha256": "656a8d960e36342d9760e767582ff45685090ee221442b58f835246e9939f490"
+    },
+    {
+      "platform": "Windows",
+      "artifactId": 14619853892,
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\artifact.zip",
+      "bytes": 3289937,
+      "sha256": "2434aa14edf85c4bd21866e8e405d9e9a3b30e2ac6e50208936ea0a0d189a43c"
+    }
+  ],
+  "originalSubsetMatchedZipBytes": true,
+  "routes": [
+    {
+      "platform": "Linux",
+      "route": "/",
+      "status": "passed-browser-data-and-readable-content-with-recorded-limits",
+      "report": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\report.json",
+        "bytes": 746,
+        "sha256": "9dbb1e411a09c8e1700ed5b1339e54782b0758c6f43b47a61d6a3b91ed66315a"
+      },
+      "receipt": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\dist-I3-QA-normal.build.json",
+        "bytes": 78646,
+        "sha256": "d94e126f9c97e5245ebcd0b84bdc765de93208d390af4cd2cf95f10b89b51308"
+      },
+      "receiptSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "receiptTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "receiptRoute": "/",
+      "receiptAssetBase": "/",
+      "receiptFileCount": 727,
+      "summary": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal\\summary.json",
+        "bytes": 1869,
+        "sha256": "a5d2cef160319c9dc26db413cd0d536ba801545384c5619905f74d8cb13250f7"
+      },
+      "summaryHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "own356Summary": {
+        "issue": 356,
+        "passed": true,
+        "exitCode": 0,
+        "signal": null,
+        "output": ".local/writer-I3-QA-normal-356",
+        "reportSha256": "9dbb1e411a09c8e1700ed5b1339e54782b0758c6f43b47a61d6a3b91ed66315a"
+      },
+      "saved": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\saved.docx",
+        "bytes": 7471,
+        "sha256": "e54d67d6c685b715653f31da810d3edea2bdaa067c12e47c75e769e4492412d8"
+      },
+      "independentOracle": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-formats-356-final-harness\\.local\\epub356-I3-browser-CI-audit-44716499924-20261120\\Linux-normal-oracle.json",
+        "bytes": 538,
+        "sha256": "8dcfd8ce4b87b8e32fd3355e35117e464040365c3f3b6a1913397b886e90622d"
+      },
+      "oracleResult": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "e54d67d6c685b715653f31da810d3edea2bdaa067c12e47c75e769e4492412d8",
+        "savedBytes": 7471,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "fullEditMarkerInSavedXml": true,
+      "markerParagraphs": [
+        "EPUB356 EDIT EPUB EERSTE HOOFDSTUK"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\imported.png",
+          "bytes": 118419,
+          "sha256": "ef5ed2043c552b3e797cc52145b1ec38cc9298ddd21cea001a6e401d58f47149",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\imported.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\reopened.png",
+          "bytes": 96555,
+          "sha256": "b2a3730dae76fddfe50cb392db4f606e87ee86fee718422c36ab75a1d1a948a1",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\reopened.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png",
+          "bytes": 112042,
+          "sha256": "3630a4f79a8491f9ae5db269190a0f18c06dc5c9c90591655b827e40fbacba55",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png"
+        }
+      ],
+      "cleanupReportedPassed": true,
+      "artifactRequest": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\harness\\.github\\office-writer-I3-qa.json",
+        "bytes": 509,
+        "sha256": "d67cb0f8cfa81069332f13fcb687352a230066b3e8c81d3128dc3675607bb78f"
+      }
+    },
+    {
+      "platform": "Linux",
+      "route": "/office/",
+      "status": "passed-browser-data-and-readable-content-with-recorded-limits",
+      "report": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\report.json",
+        "bytes": 753,
+        "sha256": "7679b3745717880299285abdc3037be95fc45e804c61f9e9ba5a970582bd7165"
+      },
+      "receipt": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\dist-I3-QA-hosted.build.json",
+        "bytes": 78654,
+        "sha256": "d082ca040aab75b4be9694cdd23ecaf828fd0442f8de82d073cb84dd205845d3"
+      },
+      "receiptSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "receiptTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "receiptRoute": "/office/",
+      "receiptAssetBase": "./",
+      "receiptFileCount": 727,
+      "summary": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted\\summary.json",
+        "bytes": 1876,
+        "sha256": "eb36aa8f9913e6af5fa1f61f4f67d3d3124d488898816f23fc4a9bc245dcf4c1"
+      },
+      "summaryHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "own356Summary": {
+        "issue": 356,
+        "passed": true,
+        "exitCode": 0,
+        "signal": null,
+        "output": ".local/writer-I3-QA-hosted-356",
+        "reportSha256": "7679b3745717880299285abdc3037be95fc45e804c61f9e9ba5a970582bd7165"
+      },
+      "saved": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\saved.docx",
+        "bytes": 7472,
+        "sha256": "bde337cc29f198c8ef76edeada30ff6c9fa3f1b69cbf9e11a8d2773227cad823"
+      },
+      "independentOracle": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-formats-356-final-harness\\.local\\epub356-I3-browser-CI-audit-44716499924-20261120\\Linux-hosted-oracle.json",
+        "bytes": 538,
+        "sha256": "cfd42953e0b6567e125c17d23b35741f818513c5999a11284ac9ce7bb6288a4a"
+      },
+      "oracleResult": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "bde337cc29f198c8ef76edeada30ff6c9fa3f1b69cbf9e11a8d2773227cad823",
+        "savedBytes": 7472,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "fullEditMarkerInSavedXml": true,
+      "markerParagraphs": [
+        "EPUB356 EDIT EPUB EERSTE HOOFDSTUK"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\imported.png",
+          "bytes": 118419,
+          "sha256": "ef5ed2043c552b3e797cc52145b1ec38cc9298ddd21cea001a6e401d58f47149",
+          "review": "exact-byte prior image from this audit reused",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-normal-356\\imported.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\reopened.png",
+          "bytes": 104760,
+          "sha256": "b82e01fe47ffbcc6e706f0940f290c25d12443d825a1fda86e583f42fa24d5a5",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\reopened.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\reopened-invalid-preserved.png",
+          "bytes": 112321,
+          "sha256": "c4368cf2cb4f9d30d4af69b044eaac24498a90c7d82f3be4513a28da7b58ac4a",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\app\\.local\\writer-I3-QA-hosted-356\\reopened-invalid-preserved.png"
+        }
+      ],
+      "cleanupReportedPassed": true,
+      "artifactRequest": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Linux\\harness\\.github\\office-writer-I3-qa.json",
+        "bytes": 509,
+        "sha256": "d67cb0f8cfa81069332f13fcb687352a230066b3e8c81d3128dc3675607bb78f"
+      }
+    },
+    {
+      "platform": "macOS",
+      "route": "/",
+      "status": "passed-browser-data-and-readable-content-with-recorded-limits",
+      "report": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\report.json",
+        "bytes": 746,
+        "sha256": "9dbb1e411a09c8e1700ed5b1339e54782b0758c6f43b47a61d6a3b91ed66315a"
+      },
+      "receipt": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\dist-I3-QA-normal.build.json",
+        "bytes": 78646,
+        "sha256": "00f6be983afaee257f23a4a5f79b6795f24be52c360712af826cc2ada7589cc1"
+      },
+      "receiptSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "receiptTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "receiptRoute": "/",
+      "receiptAssetBase": "/",
+      "receiptFileCount": 727,
+      "summary": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal\\summary.json",
+        "bytes": 1870,
+        "sha256": "edc37cc1bd58905213ebc3baf43077850bb90627780c8bd5b9b311f52be9f48a"
+      },
+      "summaryHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "own356Summary": {
+        "issue": 356,
+        "passed": true,
+        "exitCode": 0,
+        "signal": null,
+        "output": ".local/writer-I3-QA-normal-356",
+        "reportSha256": "9dbb1e411a09c8e1700ed5b1339e54782b0758c6f43b47a61d6a3b91ed66315a"
+      },
+      "saved": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\saved.docx",
+        "bytes": 7472,
+        "sha256": "be46c8fab5898f26c8f69a3ced05965cafca17cf71ec3d907494b7df2939d51b"
+      },
+      "independentOracle": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-formats-356-final-harness\\.local\\epub356-I3-browser-CI-audit-44716499924-20261120\\macOS-normal-oracle.json",
+        "bytes": 538,
+        "sha256": "e9bce94fc9613802bda91456908b8afadd171308a11fa9d0d34d3ebcc269d88c"
+      },
+      "oracleResult": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "be46c8fab5898f26c8f69a3ced05965cafca17cf71ec3d907494b7df2939d51b",
+        "savedBytes": 7472,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "fullEditMarkerInSavedXml": true,
+      "markerParagraphs": [
+        "EPUB356 EDIT EPUB EERSTE HOOFDSTUK"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\imported.png",
+          "bytes": 137493,
+          "sha256": "20f06d83ccab8622d8733be0d4c8a8537bf9d002d4f3a138342cac683b952f86",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\imported.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\reopened.png",
+          "bytes": 110860,
+          "sha256": "9f1b7c1dfb78b1067903b53edc9e8f0b4fee992e0907ca82f2a61091aa91062d",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\reopened.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png",
+          "bytes": 128829,
+          "sha256": "e488668ba45450f65091adaac29c87c6806aea9878a3bd08b0bdb0dcaaac3e56",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png"
+        }
+      ],
+      "cleanupReportedPassed": true,
+      "artifactRequest": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\harness\\.github\\office-writer-I3-qa.json",
+        "bytes": 509,
+        "sha256": "d67cb0f8cfa81069332f13fcb687352a230066b3e8c81d3128dc3675607bb78f"
+      }
+    },
+    {
+      "platform": "macOS",
+      "route": "/office/",
+      "status": "passed-browser-data-and-readable-content-with-recorded-limits",
+      "report": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\report.json",
+        "bytes": 753,
+        "sha256": "7679b3745717880299285abdc3037be95fc45e804c61f9e9ba5a970582bd7165"
+      },
+      "receipt": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\dist-I3-QA-hosted.build.json",
+        "bytes": 78654,
+        "sha256": "49f940cbd2a39d06255d09f4eff7331208362bb8d63d735c4858f7c18e556c77"
+      },
+      "receiptSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "receiptTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "receiptRoute": "/office/",
+      "receiptAssetBase": "./",
+      "receiptFileCount": 727,
+      "summary": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted\\summary.json",
+        "bytes": 1877,
+        "sha256": "bd2ca8bdb14bf033a2112b9080bc1be4443c2987c53d9107b78ba8094135d769"
+      },
+      "summaryHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "own356Summary": {
+        "issue": 356,
+        "passed": true,
+        "exitCode": 0,
+        "signal": null,
+        "output": ".local/writer-I3-QA-hosted-356",
+        "reportSha256": "7679b3745717880299285abdc3037be95fc45e804c61f9e9ba5a970582bd7165"
+      },
+      "saved": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\saved.docx",
+        "bytes": 7472,
+        "sha256": "bab636b26c5bcfedd613470360910fcae81643acabe898c03d747cef8c88e6c8"
+      },
+      "independentOracle": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-formats-356-final-harness\\.local\\epub356-I3-browser-CI-audit-44716499924-20261120\\macOS-hosted-oracle.json",
+        "bytes": 538,
+        "sha256": "0d55e6d8ff710facb5fb6d2d4e1751b53d1d8bf24500e59ed4b49a85bc1f17c8"
+      },
+      "oracleResult": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "bab636b26c5bcfedd613470360910fcae81643acabe898c03d747cef8c88e6c8",
+        "savedBytes": 7472,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "fullEditMarkerInSavedXml": true,
+      "markerParagraphs": [
+        "EPUB356 EDIT EPUB EERSTE HOOFDSTUK"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\imported.png",
+          "bytes": 137493,
+          "sha256": "20f06d83ccab8622d8733be0d4c8a8537bf9d002d4f3a138342cac683b952f86",
+          "review": "exact-byte prior image from this audit reused",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-normal-356\\imported.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\reopened.png",
+          "bytes": 120062,
+          "sha256": "13fcc3dae1e44aed8be611396ada870f16934e1c6db31e174212f82d00db40c2",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\reopened.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\reopened-invalid-preserved.png",
+          "bytes": 128816,
+          "sha256": "94fd52cdb2ffd1e7cacdb29b2f820daeda63cea0b497f60e2dc2b2e92a14ba83",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\app\\.local\\writer-I3-QA-hosted-356\\reopened-invalid-preserved.png"
+        }
+      ],
+      "cleanupReportedPassed": true,
+      "artifactRequest": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-macOS\\harness\\.github\\office-writer-I3-qa.json",
+        "bytes": 509,
+        "sha256": "d67cb0f8cfa81069332f13fcb687352a230066b3e8c81d3128dc3675607bb78f"
+      }
+    },
+    {
+      "platform": "Windows",
+      "route": "/",
+      "status": "passed-browser-data-and-readable-content-with-recorded-limits",
+      "report": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\report.json",
+        "bytes": 746,
+        "sha256": "9dbb1e411a09c8e1700ed5b1339e54782b0758c6f43b47a61d6a3b91ed66315a"
+      },
+      "receipt": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\dist-I3-QA-normal.build.json",
+        "bytes": 78646,
+        "sha256": "527e02560464a7e9f0eb4c8719a37fac2973fb73d628a76ff7b99a4c89c4ae05"
+      },
+      "receiptSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "receiptTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "receiptRoute": "/",
+      "receiptAssetBase": "/",
+      "receiptFileCount": 727,
+      "summary": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal\\summary.json",
+        "bytes": 1869,
+        "sha256": "364d9236ff173e0b8aac51078141b60e5b96678946ec9ddd3a652fb3faf2e6db"
+      },
+      "summaryHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "own356Summary": {
+        "issue": 356,
+        "passed": true,
+        "exitCode": 0,
+        "signal": null,
+        "output": ".local/writer-I3-QA-normal-356",
+        "reportSha256": "9dbb1e411a09c8e1700ed5b1339e54782b0758c6f43b47a61d6a3b91ed66315a"
+      },
+      "saved": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\saved.docx",
+        "bytes": 7472,
+        "sha256": "b99d7ca04d99623d04f091966b63c21a897cfb180ae677f50fe5986a1ae7a2b8"
+      },
+      "independentOracle": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-formats-356-final-harness\\.local\\epub356-I3-browser-CI-audit-44716499924-20261120\\Windows-normal-oracle.json",
+        "bytes": 538,
+        "sha256": "62a8159d58ddf4c5f631dde1af215aaf99c6549cd9437ff9f0fd7843db1ff5b7"
+      },
+      "oracleResult": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "b99d7ca04d99623d04f091966b63c21a897cfb180ae677f50fe5986a1ae7a2b8",
+        "savedBytes": 7472,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "fullEditMarkerInSavedXml": true,
+      "markerParagraphs": [
+        "EPUB356 EDIT EPUB EERSTE HOOFDSTUK"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\imported.png",
+          "bytes": 130716,
+          "sha256": "a96891acf437bf8d1efbc1085d01907b6d84e6f0984b1064e056682ee21dfebb",
+          "review": "parent serial I3 local review reused by exact-byte identity",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-I3-356-normal\\imported.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\reopened.png",
+          "bytes": 116711,
+          "sha256": "5b8dc90cc7902ed4a2d4bd0ab100677696428b91dbba93596d6fad3dcd69d822",
+          "review": "parent serial I3 local review reused by exact-byte identity",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-I3-356-normal\\reopened.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png",
+          "bytes": 123295,
+          "sha256": "90bc417728e427d0b5da3c48c38e7f442fa88570df5e0504ac446309d68c9b13",
+          "review": "original viewed serially in this audit",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png"
+        }
+      ],
+      "cleanupReportedPassed": true,
+      "artifactRequest": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\harness\\.github\\office-writer-I3-qa.json",
+        "bytes": 518,
+        "sha256": "058111d07fd4815ea23f12b52b7a7495c25786d38b60fbefafc644d7b99356ce"
+      }
+    },
+    {
+      "platform": "Windows",
+      "route": "/office/",
+      "status": "passed-browser-data-and-readable-content-with-recorded-limits",
+      "report": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-hosted-356\\report.json",
+        "bytes": 753,
+        "sha256": "7679b3745717880299285abdc3037be95fc45e804c61f9e9ba5a970582bd7165"
+      },
+      "receipt": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\dist-I3-QA-hosted.build.json",
+        "bytes": 78654,
+        "sha256": "b26c9fbe578abfe8565942d9de8a644c4518952eae6fdc32c9b62dacb14fcb58"
+      },
+      "receiptSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "receiptTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "receiptRoute": "/office/",
+      "receiptAssetBase": "./",
+      "receiptFileCount": 727,
+      "summary": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-hosted\\summary.json",
+        "bytes": 1876,
+        "sha256": "95f111a2d77e56a3bb65714f5ce10da5f1822d2a0cb9f24e9bce3e8ae83ed5d5"
+      },
+      "summaryHarnessCommit": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "own356Summary": {
+        "issue": 356,
+        "passed": true,
+        "exitCode": 0,
+        "signal": null,
+        "output": ".local/writer-I3-QA-hosted-356",
+        "reportSha256": "7679b3745717880299285abdc3037be95fc45e804c61f9e9ba5a970582bd7165"
+      },
+      "saved": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-hosted-356\\saved.docx",
+        "bytes": 7472,
+        "sha256": "14e45224c44087345a2c0392dad58f3235aafa0c7f7c5ea906542b87aeb94e04"
+      },
+      "independentOracle": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-formats-356-final-harness\\.local\\epub356-I3-browser-CI-audit-44716499924-20261120\\Windows-hosted-oracle.json",
+        "bytes": 538,
+        "sha256": "9c31d6ed8da56245629c79baae9b3610bf42c37b83f4848dc00a208c89065035"
+      },
+      "oracleResult": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "14e45224c44087345a2c0392dad58f3235aafa0c7f7c5ea906542b87aeb94e04",
+        "savedBytes": 7472,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "fullEditMarkerInSavedXml": true,
+      "markerParagraphs": [
+        "EPUB356 EDIT EPUB EERSTE HOOFDSTUK"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-hosted-356\\imported.png",
+          "bytes": 130716,
+          "sha256": "a96891acf437bf8d1efbc1085d01907b6d84e6f0984b1064e056682ee21dfebb",
+          "review": "parent serial I3 local review reused by exact-byte identity",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-I3-356-normal\\imported.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-hosted-356\\reopened.png",
+          "bytes": 116711,
+          "sha256": "5b8dc90cc7902ed4a2d4bd0ab100677696428b91dbba93596d6fad3dcd69d822",
+          "review": "parent serial I3 local review reused by exact-byte identity",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-I3-356-normal\\reopened.png"
+        },
+        {
+          "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-hosted-356\\reopened-invalid-preserved.png",
+          "bytes": 123295,
+          "sha256": "90bc417728e427d0b5da3c48c38e7f442fa88570df5e0504ac446309d68c9b13",
+          "review": "exact-byte prior image from this audit reused",
+          "reviewOriginal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\app\\.local\\writer-I3-QA-normal-356\\reopened-invalid-preserved.png"
+        }
+      ],
+      "cleanupReportedPassed": true,
+      "artifactRequest": {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-integratie-2026-11-16-9635\\.local\\nov20-ci\\44716499924\\writer-I3-browser-QA-Windows\\harness\\.github\\office-writer-I3-qa.json",
+        "bytes": 518,
+        "sha256": "058111d07fd4815ea23f12b52b7a7495c25786d38b60fbefafc644d7b99356ce"
+      }
+    }
+  ],
+  "imageReview": {
+    "originalsViewedSeriallyThisAudit": 11,
+    "reviewReusedOnlyByExactSha256": true,
+    "parentSource": "Actual original I3 local import/reopen bytes match parent supplied serial-review hashes.",
+    "observations": "Both chapter headings, accented body/bold/italic, list, image and Hout/42 table are readable. All newly reviewed reopened originals show the complete edit marker. Invalid-input originals retain document/tabs and show a fading error toast.",
+    "limitations": [
+      "Early reopened captures may show Stijlen laden..., disabled ribbon/font UI, missing ruler or vertical layout settling. No wait or image edit added.",
+      "Font replacement and EPUB-copy warnings visible; error toast may be fading/low contrast.",
+      "Complete EPUB356 EDIT independently confirmed from every actual saved DOCX XML.",
+      "No #359, native-platform, PDF/reflow-fidelity or full interaction-readiness acceptance inferred."
+    ]
+  },
+  "cleanup": "Only bounded file/oracle/GitHub-read subprocesses started; all returned. CI cleanupPassed reports inspected. No browser/capture/preview/native session started by audit.",
+  "sourceOrCiMutation": false,
+  "nativeGo": false
+}

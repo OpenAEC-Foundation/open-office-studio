@@ -1,0 +1,69 @@
+name: Frozen I3 Writer browser acceptance
+on:
+  push:
+    branches: [codex/integratie-I3-browser-harness-2026-11-20]
+    paths: [".github/office-writer-I3-qa.json"]
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: JSON array of runner labels; rerun only missing platforms
+        required: false
+        default: '["ubuntu-22.04","windows-latest","macos-latest"]'
+permissions:
+  contents: read
+jobs:
+  browser:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(inputs.platforms || '["ubuntu-22.04","windows-latest","macos-latest"]') }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: harness
+      - uses: actions/checkout@v4
+        with:
+          path: app
+          ref: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Install application and external probe dependencies
+        shell: bash
+        run: |
+          pnpm --dir app install --frozen-lockfile --ignore-scripts
+          pnpm --dir harness install --frozen-lockfile --ignore-scripts
+      - name: Install headless browser
+        working-directory: app
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Normal source-bound application and full combination
+        working-directory: app
+        run: |
+          node scripts/writer-proefbuild.mjs build .local/dist-I3-QA-normal /
+          node ../harness/scripts/office-writer-I3-qa.mjs .local/dist-I3-QA-normal /
+        env:
+          OFFICE_TEST_SOURCE: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+      - name: Hosted source-bound application and full combination
+        working-directory: app
+        run: |
+          node scripts/writer-proefbuild.mjs build .local/dist-I3-QA-hosted /office/
+          node ../harness/scripts/office-writer-I3-qa.mjs .local/dist-I3-QA-hosted /office/
+        env:
+          OFFICE_TEST_SOURCE: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer-I3-browser-QA-${{ runner.os }}
+          include-hidden-files: true
+          path: |
+            app/.local/writer-I3-QA-*/
+            app/.local/dist-I3-QA-*.build.json
+            harness/.github/office-writer-I3-qa.json
