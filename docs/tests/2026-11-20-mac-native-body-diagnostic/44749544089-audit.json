@@ -1,0 +1,28 @@
+{
+  "run": 44749544089,
+  "artifactId": 14634996185,
+  "archiveSha256": "891f7d80b07d1df5566681c2fd8a66421f7f3aec81c2f731e62d18a99ade6583",
+  "archiveVerified": true,
+  "harnessCommit": "a73c125df4cba398b298b32dd319035c892e0c58",
+  "sourceCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "sourceTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "diagnosticOnly": true,
+  "productModified": false,
+  "classification": "Driver startup readiness block; body/capture comparison did not execute",
+  "observation": "Native PID2573 was already active/frontmost. Next trusted AX snapshot failed CannotComplete (-25204).",
+  "bodyAcceptance": false,
+  "cleanup": {
+    "ownedAppClosed": true,
+    "ownedAppContainerRemoved": true,
+    "forcedTerminationRequired": true,
+    "screenCaptureStarted": false
+  },
+  "files": {
+    "input/artifact-origin.json": "bcb3cc3d6ab0b24f010dcb35e05e79f35209d1919a54b78c2de20275d87835e2",
+    "input/root-frozen-candidate.json": "2c37f17474b06072a2b8b5fe47be864619d92d5b4c7ab1bff5c02a5880d8ae60",
+    "mac-body-diagnostic/action-001.json": "13d9ddfe4ad8a2369a4e5b1ab54bee6444f1389b3391aa21f94ca0c5e8ddfac4",
+    "mac-body-diagnostic/action-002.json": "d6a694615c94f25f31d675860d38c15822bc88257885119e40f3c7f2f5f30659",
+    "mac-body-diagnostic/report.json": "752253e06d0f47b0c9135a2c1380b024217a449dea16ab36bd7455270cc152c1",
+    "mac-body-diagnostic/swift-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
