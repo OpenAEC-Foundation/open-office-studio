@@ -484,6 +484,58 @@ try {
       await evaluate("document.querySelector('[aria-label=\"Diagnostic plain '+arguments[0]+'\"]').remove()",[kind]);
     }
   }
+
+  // Mechanism check only: run the exact new helper inside the unchanged native app.
+  // This does NOT claim that the old I3 binary contains the fix or certify a new package.
+  const ts=(await import('typescript')).default;
+  const helperPath=new URL('../src/tekst/zoeken/linux-invoer-undo.ts',import.meta.url);
+  const helperSource=await readFile(helperPath,'utf8');
+  const compiled=ts.transpileModule(helperSource,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText;
+  report.compatibilityProbe={kind:'exact source helper attached for isolated mechanism check; not packaged acceptance',sourceSha256:hash(helperSource),platform:await evaluate('return navigator.platform'),checks:[]};
+  const baseline4=(await state()).tables;
+  async function compatKey(method,key,shift=false) {
+    if(method==='xdotool')execFileSync('xdotool',['key','--clearmodifiers',`ctrl+${shift?'shift+':''}${key}`],{env});
+    else if(shift)await keys([keyDown('\uE009'),keyDown('\uE008'),keyDown(key),keyUp(key),keyUp('\uE008'),keyUp('\uE009')]);
+    else await chord(key);
+  }
+  for(const method of ['webdriver','xdotool']) {
+    for(const field of ['Find what','Replace with']) {
+      await openFind();
+      await evaluate(`const exports={};${compiled};const handle=exports.linuxInvoerUndo;for(const input of document.querySelectorAll('[role=search] input[aria-label]')){if(!['Find what','Replace with'].includes(input.getAttribute('aria-label')))continue;input.addEventListener('keydown',event=>handle({key:event.key,ctrlKey:event.ctrlKey,metaKey:event.metaKey,altKey:event.altKey,shiftKey:event.shiftKey,get defaultPrevented(){return event.defaultPrevented},nativeEvent:event,currentTarget:event.currentTarget,preventDefault:()=>event.preventDefault(),stopPropagation:()=>event.stopPropagation()}));}`);
+      const el=await evaluate("return [...document.querySelectorAll('[role=search] input')].find(e=>e.getAttribute('aria-label')===arguments[0])",[field]);
+      await clickElement(el);
+      async function verify(stage,expectedValue) {
+        await delay(400);
+        const sampleValue=await sample(`compat ${method} ${field} ${stage}`);
+        assert.equal(sampleValue.value,expectedValue,stage);
+        assert.equal(sampleValue.active,field,stage+' focus');
+        assert.deepEqual((await state()).tables,baseline4,stage+' document isolation');
+        const entry={method,field,stage,value:sampleValue.value,trace:sampleValue.trace};
+        if(field==='Find what') {
+          entry.searchStatus=await evaluate("return document.querySelector('.tw-zoek-telling')?.textContent.trim()");
+          assert.equal(entry.searchStatus,expectedValue?'No results':'',stage+' controlled search state');
+        }
+        report.compatibilityProbe.checks.push(entry);
+      }
+      await compatKey(method,'z');await verify('empty input Undo','');
+      if(method==='webdriver')await type('abc');else execFileSync('xdotool',['type','--clearmodifiers','--delay','30','abc'],{env});
+      await verify('typed','abc');
+      await compatKey(method,'z');await verify('one Undo','');
+      await compatKey(method,'z',true);await verify('CtrlShiftZ Redo','abc');
+      await compatKey(method,'z');await verify('second Undo','');
+      await compatKey(method,'y');await verify('CtrlY Redo','abc');
+      await compatKey(method,'z');await verify('before subsequent typing','');
+      if(method==='webdriver')await type('q');else execFileSync('xdotool',['type','--clearmodifiers','--delay','30','q'],{env});
+      await verify('subsequent typing','q');
+      await clickElement(await evaluate("return document.querySelector('[role=search] button[aria-label=Close]')"));
+      await waitFor(()=>evaluate("return document.activeElement?.matches('.paged-editor__yrs-input')"),'Find close restores document focus');
+      await chord('z');await check(`compat ${method} ${field} document Undo`,3,3,expected);
+      await chord('y');await check(`compat ${method} ${field} restore column`,4);
+      assert.deepEqual((await state()).tables,baseline4);
+    }
+  }
+  report.compatibilityProbe.status='passed mechanism checks; fixed package still required';
+
   report.status='diagnostic-complete';
   report.acceptance='not established: diagnostic outcomes recorded independently';
   await closeSession();
