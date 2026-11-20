@@ -11,6 +11,8 @@ const outDir = process.argv[2] ?? ".local/ribbon-build";
 const label = process.argv[3] ?? "ribbon-height";
 assert.match(label, /^[a-zA-Z0-9_-]+$/);
 const baseline = process.argv.includes("--baseline");
+// Preparation only: an old build may exercise the harness, never certify source.
+const smoke = process.argv.includes("--harness-smoke");
 const route = process.env.OFFICE_TEST_BASE ?? "/";
 const dir = `.local/${label}`;
 fs.mkdirSync(dir, { recursive: true });
@@ -41,23 +43,50 @@ const report = {
     ]),
   ),
   baseline,
+  acceptance: false,
+  smoke,
+  status: "running",
+  startedAt: new Date().toISOString(),
   route,
   platform: process.platform,
   browser: null,
   cases: [],
   errors: [],
+  limits: [
+    "Rendered browser geometry, not native Windows/Linux/macOS UI acceptance",
+    "DOM-disabled styling checks do not prove engine-disabled command behavior",
+  ],
 };
-const server = await preview({
-  configFile: false,
-  base: route,
-  build: { outDir },
-  preview: { host: "127.0.0.1", port: 0 },
-});
-const browser = await chromium.launch({ headless: true });
-report.browser = browser.version();
+let server, browser;
+const deadline = setTimeout(() => {
+  report.errors.push("Whole probe exceeded its 240s deadline");
+  void browser?.close().catch((error) => report.errors.push(String(error)));
+  void server?.close().catch((error) => report.errors.push(String(error)));
+}, 240_000);
 try {
-  for (const theme of ["light", "forge"]) {
-    for (const width of [1600, 1280, 800]) {
+  if (!smoke) {
+    assert.ok(
+      process.env.OFFICE_TEST_BUILD_RECEIPT,
+      "A pinned build receipt is required",
+    );
+    const { verifyBuildReceipt } = await import("./writer-proefbuild.mjs");
+    report.buildReceipt = await verifyBuildReceipt({
+      outDir,
+      route,
+      receiptPath: process.env.OFFICE_TEST_BUILD_RECEIPT,
+    });
+  }
+  server = await preview({
+    configFile: false,
+    base: route,
+    build: { outDir },
+    preview: { host: "127.0.0.1", port: 0 },
+  });
+  report.serverUrl = server.resolvedUrls.local[0];
+  browser = await chromium.launch({ headless: true, timeout: 30_000 });
+  report.browser = browser.version();
+  for (const theme of smoke ? ["light"] : ["light", "forge"]) {
+    for (const width of smoke ? [1600, 800] : [1600, 1280, 800]) {
       const context = await browser.newContext({
         viewport: { width, height: 1000 },
       });
@@ -74,7 +103,8 @@ try {
         theme,
       );
       const page = await context.newPage();
-      page.setDefaultTimeout(60000);
+      page.setDefaultTimeout(15_000);
+      page.setDefaultNavigationTimeout(30_000);
       page.on("pageerror", (e) => report.errors.push(e.message));
       await page.goto(server.resolvedUrls.local[0]);
       await page.locator("input[type=file]").first().setInputFiles({
@@ -102,6 +132,30 @@ try {
         });
         const groups =
           tab === "Insert" ? ["Text"] : ["Alignment", "Data", "Delete"];
+        const tabButton = page.getByRole("tab", { name: tab, exact: true });
+        // Enter at the selected tab, then use real toolbar arrow navigation.
+        async function walkKeyboardTo(target, expectedNames = []) {
+          const visited = new Set();
+          for (let step = 0; step < 100; step++) {
+            visited.add(
+              await page.evaluate(() =>
+                document.activeElement?.getAttribute("aria-label"),
+              ),
+            );
+            if (
+              (await target.evaluate((e) => document.activeElement === e)) &&
+              expectedNames.every((name) => visited.has(name))
+            )
+              return [...visited].filter(Boolean);
+            await page.keyboard.press("ArrowRight");
+          }
+          assert.fail("Ribbon command is not reachable with toolbar keys");
+        }
+        async function keyboardTo(target, expectedNames = []) {
+          await tabButton.focus();
+          await tabButton.press("ArrowDown");
+          return walkKeyboardTo(target, expectedNames);
+        }
         for (const groupName of groups) {
           const group = page.getByRole("group", {
             name: groupName,
@@ -111,7 +165,7 @@ try {
           const collapsed = (await group.getAttribute("data-niveau")) === "2";
           const groupButton = group.locator(":scope > .ribbon-groep-knop");
           if (collapsed) {
-            await groupButton.focus();
+            await keyboardTo(groupButton);
             await groupButton.press("Enter");
           }
           async function measure(phase) {
@@ -142,6 +196,19 @@ try {
                   .map((b) => {
                     const r = b.getBoundingClientRect(),
                       css = getComputedStyle(b);
+                    const label = b.querySelector("span"),
+                      icon = b.querySelector("svg");
+                    const insideButton = (e) => {
+                      if (!visible(e)) return false;
+                      const child = e.getBoundingClientRect();
+                      return (
+                        child.top >= r.top - 0.5 &&
+                        child.bottom <= r.bottom + 0.5 &&
+                        child.left >= r.left - 0.5 &&
+                        child.right <= r.right + 0.5 &&
+                        e.scrollWidth <= e.clientWidth + 1
+                      );
+                    };
                     const focusVisible = b.matches(":focus-visible"),
                       ring =
                         focusVisible && css.outlineStyle !== "none"
@@ -161,8 +228,13 @@ try {
                       disabled: b.disabled,
                       active: b.getAttribute("aria-pressed") === "true",
                       focusVisible,
+                      hovered: b.matches(":hover"),
+                      borderColor: css.borderColor,
+                      borderWidth: css.borderWidth,
                       focusOutside: ring,
-                      labelVisible: visible(b.querySelector("span")),
+                      labelVisible: visible(label),
+                      labelFits: insideButton(label),
+                      iconFits: insideButton(icon),
                       clipped:
                         r.top - ring < bounds.top - 0.5 ||
                         r.bottom + ring > bounds.bottom + 0.5 ||
@@ -190,13 +262,24 @@ try {
               data.buttons.length,
               `${groupName}: all commands must remain reachable`,
             );
+            if (!baseline)
+              assert.ok(
+                data.buttons.every((b) => b.iconFits),
+                `${groupName}: icons fit inside their controls`,
+              );
+            if (!collapsed && !baseline)
+              assert.ok(
+                data.content.bottom <= data.caption.top + 0.5,
+                `${groupName}: keep caption outside control region`,
+              );
             if (!baseline && groupName === "Delete")
               for (const name of ["Delete Row", "Delete Column"])
-                assert.equal(
-                  data.buttons.find((b) => b.name === name)?.labelVisible,
-                  true,
-                  `${name}: label must remain visible`,
-                );
+                for (const key of ["labelVisible", "labelFits", "iconFits"])
+                  assert.equal(
+                    data.buttons.find((b) => b.name === name)?.[key],
+                    true,
+                    `${name}: ${key} must remain true without a tooltip`,
+                  );
             return data;
           }
           const normal = await measure("normal");
@@ -240,6 +323,13 @@ try {
             name: focusName,
             exact: true,
           });
+          await target.hover();
+          const hovered = await measure("hover");
+          assert.equal(
+            hovered.buttons.find((b) => b.name === focusName)?.hovered,
+            true,
+          );
+          await page.mouse.move(0, 0);
           if (groupName === "Alignment" || groupName === "Data") {
             // The real DOCX fixture imports bottom alignment and repeated
             // header rows. Measure their actual active state without changing
@@ -253,9 +343,18 @@ try {
               true,
             );
           }
-          if (!collapsed) await page.keyboard.press("Tab");
-          await target.focus();
+          const enabledCommands = normal.buttons
+            .filter((b) => !b.disabled)
+            .map((b) => b.name);
+          const keyboardVisited = collapsed
+            ? await walkKeyboardTo(target, enabledCommands)
+            : await keyboardTo(target, enabledCommands);
+          assert.equal(
+            await target.evaluate((e) => document.activeElement === e),
+            true,
+          );
           const focused = await measure("keyboard-focus");
+          report.cases.at(-1).keyboardVisited = keyboardVisited;
           assert.equal(
             focused.buttons.find((b) => b.name === focusName)?.focusVisible,
             true,
@@ -269,6 +368,39 @@ try {
           ).screenshot({
             path: `${dir}/${theme}-${width}-${groupName}.png`,
           });
+          if (groupName === "Delete") {
+            // Explicitly limited CSS state coverage: the imported table's real
+            // commands are enabled. Never represent this as engine acceptance.
+            const controls = group.locator("button.ribbon-actie");
+            const disabledBefore = await controls.evaluateAll((buttons) => {
+              const states = buttons.map((b) => b.disabled);
+              buttons.forEach((b) => {
+                b.blur();
+                b.disabled = true;
+              });
+              return states;
+            });
+            try {
+              const disabled = await measure("dom-disabled-styling");
+              report.cases.at(-1).syntheticState = true;
+              assert.ok(disabled.buttons.every((b) => b.disabled));
+              await (
+                collapsed
+                  ? group.locator(":scope > .ribbon-groep-inhoud")
+                  : group
+              ).screenshot({
+                path: `${dir}/${theme}-${width}-${groupName}-disabled-styling.png`,
+              });
+            } finally {
+              await controls.evaluateAll((buttons, states) => {
+                buttons.forEach((b, i) => {
+                  b.disabled = states[i];
+                });
+              }, disabledBefore);
+              // Restore the pre-check keyboard position before testing Escape.
+              await target.focus();
+            }
+          }
           if (collapsed) {
             await page.keyboard.press("Escape");
             assert.equal(
@@ -283,14 +415,26 @@ try {
     }
   }
   assert.deepEqual(report.errors, []);
+  report.status = "passed";
+  report.acceptance = !smoke && !baseline;
+} catch (error) {
+  report.status = "failed";
+  report.failure = String(error.stack ?? error);
+  throw error;
 } finally {
+  clearTimeout(deadline);
+  const cleanup = await Promise.allSettled([browser?.close(), server?.close()]);
+  report.cleanup = cleanup.map((r) => ({
+    status: r.status,
+    error: r.status === "rejected" ? String(r.reason) : undefined,
+  }));
+  report.completedAt = new Date().toISOString();
   fs.writeFileSync(`${dir}/report.json`, JSON.stringify(report, null, 2));
-  await browser.close();
-  await server.close();
 }
 console.log(
   JSON.stringify({
     source: report.source,
+    acceptance: report.acceptance,
     cases: report.cases.length,
     clipped: report.cases.reduce(
       (n, c) => n + c.buttons.filter((b) => b.clipped).length,
