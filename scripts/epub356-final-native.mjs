@@ -71,8 +71,9 @@ export async function runNative(plan, platform, artifactRoot, output) {
         const savedHash = hash(await readFile(saved));
         assert.equal(result.savedOracle.savedSha256, savedHash);
         // The first backend has completed its own PID/driver/installer cleanup.
-        // A new process now opens the filesystem DOCX. Windows/Linux additionally
-        // use distinct temporary profiles; Mac retains the same own CI profile.
+        // A new process opens the filesystem DOCX. Windows uses another WebView2
+        // data directory (native preferences may be shared); Linux uses distinct
+        // XDG data/config/cache roots; Mac keeps its own normal CI app profile.
         result.reopened = await proefInterface(payload, reopen, reopen, secondTemp, { input: saved, inputKind: "docx" });
         assert.equal(result.reopened.status, "passed", JSON.stringify(result.reopened));
         result.reopenedPid = await ownedPid(reopen, result.reopened);

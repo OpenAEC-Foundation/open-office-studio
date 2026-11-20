@@ -83,9 +83,12 @@ For each canonical NSIS, DMG, DEB and AppImage:
    elements/external relationships.
 5. Existing backend cleanup completes app/driver/installer handling; a new
    process opens the saved DOCX and its PID must differ from the initial PID.
-   Windows/Linux additionally use distinct temporary profiles; Mac keeps the
-   same normal app-data profile on this own disposable CI host, with no running
-   app allowed to intercept either launch. Preserve its raw initial
+   Windows uses a distinct WebView2 user-data directory (native app preferences
+   may remain in the same CI user's app-data directory). Linux uses distinct
+   XDG_DATA_HOME/CONFIG_HOME/CACHE_HOME directories. Mac keeps the same normal
+   app-data profile on this own disposable CI host. In all cases the owned
+   executable and PID identify the launch, with no running app allowed to
+   intercept either opening. Preserve its raw initial
    reopened image before Save As/readback. Check saved and original file hashes
    unchanged, then close the second owned app and dispose temporary package data.
 
