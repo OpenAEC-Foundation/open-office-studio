@@ -26,6 +26,9 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
       packageSha256: "4".repeat(64),
     },
     remaining: true,
+    only362: false,
+    invoked362: false,
+    completedRequestedScope: Symbol("completed"),
     session: undefined,
     currentPhase: "setup",
     AbortSignal,
@@ -79,6 +82,25 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
   assert.match(report.optional362.error, /native362 unavailable/);
   assert.equal(report.optional363.result.status, "passed");
   assert.equal(report.optionalQaSessionsIndependent, true);
+  // Same actual caller block, now stop after its362 session and cleanup.
+  events.length = 0;
+  context.only362 = true;
+  context.session = undefined;
+  await assert.rejects(
+    vm.runInContext("(async()=>{" + src.slice(a, b) + "})()", context),
+    (e) => e === context.completedRequestedScope,
+  );
+  assert.deepEqual(
+    events.filter((e) => typeof e === "object" && e.start).map((e) => e.start),
+    ["independent-362"],
+  );
+  assert.equal(
+    events.filter((e) => typeof e === "object" && e.closed).length,
+    1,
+  );
+  assert.equal(report.scopeExecution.writer361, "not-executed");
+  assert.equal(report.scopeExecution.writer363, "not-executed");
+  assert.equal(report.writer361Status, "failed");
   const first = events.find((e) => e.start);
   assert.equal(first.options.rows, 2);
   assert.equal(first.options.cells.length, 6);

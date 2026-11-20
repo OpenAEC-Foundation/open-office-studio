@@ -67,6 +67,9 @@ def validate(value, profile):
         if module is not None:
             if profile != "linux" or not isinstance(module, dict) or not re.fullmatch("[a-f0-9]{40}", module.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", module.get("sha256", "")):
                 raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
+    scope = value.get("qaScope")
+    if scope is not None and (profile != "linux" or scope != "362-only" or value.get("remainingCoverage") is None or value.get("ribbonHarness") is None or value.get("stylesHarness") is not None):
+        raise ValueError("362-only needs Linux, inherited failure, a362 pin and no363 pin")
     viewport = value.get("macViewportSetup")
     if viewport is not None and (profile != "macos" or viewport != {"mode": "native-maximize-once", "executionApproved": True}):
         raise ValueError("One native Mac viewport setup requires its own exact release")

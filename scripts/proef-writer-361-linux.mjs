@@ -71,6 +71,13 @@ assert.equal(
 const { unzipSync, zipSync, strFromU8, strToU8 } = await import("fflate");
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const remaining = verifyPreviousCoverage(origin);
+const only362 = origin.qaScope === "362-only";
+const completedRequestedScope = Symbol("completed-requested-scope");
+let invoked362 = false;
+assert(
+  !only362 || (remaining && origin.ribbonHarness && !origin.stylesHarness),
+  "362-only needs prior failure provenance, a362 pin and no363 pin",
+);
 const out = resolve(outputDirectory);
 await mkdir(out, { recursive: true });
 assert.deepEqual(
@@ -512,6 +519,7 @@ try {
         columns: 3,
         cells: ["Alpha", "Beta", "Gamma", "One", "Two", "Three"],
       });
+      invoked362 = true;
       return {
         moduleCommit,
         moduleSha256,
@@ -534,6 +542,16 @@ try {
     });
   }
   if (session) await closeSession();
+  if (only362) {
+    report.scopeExecution = {
+      writer362: invoked362 ? "executed" : "not-executed",
+      writer361: "not-executed",
+      writer363: "not-executed",
+    };
+    report.remainingCoverageStatus = "not-executed";
+    report.completedRequestedScope = "362-only";
+    throw completedRequestedScope; // Final cleanup still runs; inherited Find failure stays failed.
+  }
   if (optionalModules[363]) {
     currentPhase = "independent-363";
     await collectOptionalNativeQa(report, 363, async () => {
@@ -730,10 +748,12 @@ try {
   if (remaining || report.optionalQaFailures?.length) process.exitCode = 1;
 } catch (error) {
   report.status = "failed";
-  report.error = String(error.stack || error);
-  if (session) {
-    report.failureState = await state().catch(() => null);
-    await screenshot("failure").catch(() => {});
+  if (error !== completedRequestedScope) {
+    report.error = String(error.stack || error);
+    if (session) {
+      report.failureState = await state().catch(() => null);
+      await screenshot("failure").catch(() => {});
+    }
   }
   process.exitCode = 1;
 } finally {
