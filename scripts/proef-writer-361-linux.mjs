@@ -267,8 +267,14 @@ async function clickCanvas(x = 145, y = 110) {
     ],
   });
 }
-async function openNativeFindInput() {
-  await chord("h");
+async function openNativeFindInput(route = "ctrl-h") {
+  if (route === "home-replace") {
+    await clickElement(await named("tab", "Home"));
+    await clickButton("Replace");
+  } else {
+    assert.equal(route, "ctrl-h");
+    await chord("h");
+  }
   const search = await waitFor(
     () =>
       evaluate(
@@ -555,7 +561,10 @@ try {
     await clickElement(await named("tab", "Table Design"));
     await clickButton("Insert Column Right");
     const gridBefore = await check("G diagnostic four-column context", 4);
-    await openNativeFindInput();
+    report.findOpenRoute = origin.findOpenRoute ?? "ctrl-h";
+    report.findOpenBefore = await state();
+    await openNativeFindInput(report.findOpenRoute);
+    report.findOpenAfter = await state();
     await type("abc");
     const observe = async () => ({
       at: Date.now(),

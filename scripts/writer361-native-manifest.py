@@ -84,6 +84,8 @@ def validate(value, profile):
             raise ValueError("G Find baseline is diagnostic only, with I3 failure retained and no acceptance/module reuse")
     elif scope is not None and (profile != "linux" or scope != "362-only" or value.get("remainingCoverage") is None or value.get("ribbonHarness") is None or value.get("stylesHarness") is not None):
         raise ValueError("362-only needs Linux, inherited failure, a362 pin and no363 pin")
+    if value.get("findOpenRoute") is not None and (scope != "find-baseline-only" or value["findOpenRoute"] != "home-replace"):
+        raise ValueError("Alternate ordinary Find UI route is only for the diagnostic G control")
     viewport = value.get("macViewportSetup")
     if viewport is not None and (profile != "macos" or viewport != {"mode": "native-maximize-once", "executionApproved": True}):
         raise ValueError("One native Mac viewport setup requires its own exact release")

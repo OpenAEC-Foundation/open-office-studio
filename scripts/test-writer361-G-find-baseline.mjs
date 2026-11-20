@@ -82,3 +82,38 @@ test("actual G branch sends one inputUndo and only observes, retaining I3 failur
     assert.equal(report.scopeExecution.writer363, "not-executed");
   }
 });
+
+test("Find opener keeps CtrlH default and allows only ordinary Home/Replace control", async () => {
+  const src = readFileSync("scripts/proef-writer-361-linux.mjs", "utf8"),
+    a = src.indexOf("async function openNativeFindInput("),
+    b = src.indexOf("async function state()", a);
+  for (const route of [undefined, "home-replace"]) {
+    const events = [],
+      input = { input: true };
+    const c = {
+      assert,
+      chord: async (k) => events.push(["key", k]),
+      named: async (role, name) => ({ role, name }),
+      clickElement: async (e) => events.push(["click", e]),
+      clickButton: async (name) => events.push(["button", name]),
+      waitFor: async (f) => f(),
+      evaluate: async () => input,
+    };
+    vm.createContext(c);
+    vm.runInContext(src.slice(a, b), c);
+    assert.equal(await c.openNativeFindInput(route), input);
+    assert.deepEqual(
+      events,
+      route === "home-replace"
+        ? [
+            ["click", { role: "tab", name: "Home" }],
+            ["button", "Replace"],
+            ["click", input],
+          ]
+        : [
+            ["key", "h"],
+            ["click", input],
+          ],
+    );
+  }
+});
