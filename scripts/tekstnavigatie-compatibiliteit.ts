@@ -6,6 +6,10 @@ import type { Plugin } from "vite";
 const BRON = "d17b7a630163623e99d73b8c4b3678397ec0598e332237df1e4737767799e58d";
 const OUD =
   'let Fn=at.paragraphs[Mn],_n=u.paragraphs(vn)[Mn]?.text??"",kn=Wt;if(h==="home")';
+const VERTICAAL_OUD =
+  'h.key==="ArrowUp"||h.key==="ArrowDown"?(h.preventDefault(),Ct(h.key==="ArrowUp"?"up":"down",h.shiftKey,false))';
+const APPLE_PLATFORM =
+  'function iv(){return typeof navigator<"u"&&/Mac|iPod|iPhone|iPad/.test(navigator.platform)}';
 
 /** Alleen horizontale navigatie gebruikt tekst; Home/End gebruiken de lengtes. */
 export function herstelAlineaNavigatie(bron: string): string {
@@ -13,12 +17,27 @@ export function herstelAlineaNavigatie(bron: string): string {
     throw new Error(
       "De tekstengine is gewijzigd; controleer eerst de alineatekst bij cursornavigatie.",
     );
+  if (
+    bron.split(VERTICAAL_OUD).length !== 2 ||
+    bron.split(APPLE_PLATFORM).length !== 2
+  )
+    throw new Error(
+      "De tekstengine is gewijzigd; controleer eerst de macOS-documentnavigatie.",
+    );
   return (
     'import { navigatieAlineaTekst as oosNavigatieAlineaTekst } from "openaec-tekst-navigatiealinea";\n' +
-    bron.replace(
-      OUD,
-      'let Fn=at.paragraphs[Mn],_n=(h==="left"&&Wt.offset>0)||(h==="right"&&Wt.offset<Fn.length)?at.paragraphs.length===1?(u.paragraphs(vn)[Mn]?.text??""):oosNavigatieAlineaTekst(u,vn,Wt.paraId,Mn):"",kn=Wt;if(h==="home")',
-    )
+    bron
+      .replace(
+        OUD,
+        'let Fn=at.paragraphs[Mn],_n=(h==="left"&&Wt.offset>0)||(h==="right"&&Wt.offset<Fn.length)?at.paragraphs.length===1?(u.paragraphs(vn)[Mn]?.text??""):oosNavigatieAlineaTekst(u,vn,Wt.paraId,Mn):"",kn=Wt;if(h==="home")',
+      )
+      .replace(
+        VERTICAAL_OUD,
+        // Gebruik de bestaande SDK-Home/End-route inclusief Shiftanker. Alleen
+        // Command zonder Control/Option op Apple krijgt documentnavigatie;
+        // gewone pijlen en de andere platformen houden hun verticale route.
+        'h.key==="ArrowUp"||h.key==="ArrowDown"?(h.preventDefault(),h.metaKey&&!h.ctrlKey&&!h.altKey&&iv()?Ct(h.key==="ArrowUp"?"home":"end",h.shiftKey,true):Ct(h.key==="ArrowUp"?"up":"down",h.shiftKey,false))',
+      )
   );
 }
 

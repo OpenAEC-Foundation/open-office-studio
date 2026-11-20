@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-16",
+  "issue": 363,
+  "status": "Fix implemented and locally validated; separate next-intake branch, cross-platform/native acceptance pending",
+  "applicationCommit": "489c4e3ce10a51e14bfd5791860e5fe3e843a544",
+  "base": "f1085923653bd6e59982807e16a09c5fa3e3d74e",
+  "productionFixCommit": "2e6446faaa1e077aa683d3e590dbec1fd5f6a8d4",
+  "branch": "codex/writer-363-style-labels-2026-11-16",
+  "gitBlobSha256": {
+    "src/tekst/stijlen/StijlGalerij.tsx": "1bcf2505d60c1c0af85f30e2765265e320d683540450101995aed099869f285a",
+    "src/tekst/stijlen/StijlBeheerGroep.test.tsx": "c37f7a6e2bb5432a7caa0d857fbf771a624c428dd37c728bfd36864a6f2ef053",
+    "scripts/proef-writer-363-labels.mjs": "f66ecfab21b6ea64f49c7ff6fcd0ffc11fbe6dc91141e2645eb5217d4f45cd1f"
+  },
+  "host": "Windows-11-10.0.26200-SP0",
+  "node": "v24.22.1",
+  "tests": {
+    "before": {
+      "renderCasesFailed": 9
+    },
+    "after": {
+      "passed": 18,
+      "files": 3,
+      "offeredLanguages": 9,
+      "statesPerRenderedLanguage": 2
+    },
+    "typeScript": "passed",
+    "writerI18n": {
+      "languages": 9,
+      "namespaces": 1,
+      "sourceKeys": 1669,
+      "errors": 0,
+      "existingWarnings": 23
+    },
+    "normalBuild": "passed at489; generated assets reused after earlier full preparation",
+    "hostedBuild": "passed at489 including hosted path/source validation"
+  },
+  "browser": [
+    {
+      "route": "normal",
+      "report": {
+        "source": "489c4e3ce10a51e14bfd5791860e5fe3e843a544",
+        "host": "win32",
+        "route": "/",
+        "dist": "dist",
+        "browser": "151.0.7922.34",
+        "status": "passed",
+        "results": [
+          {
+            "language": "en",
+            "expectedFallback": null,
+            "group": "Styles",
+            "buttons": [
+              {
+                "text": "Styles pane",
+                "name": "Styles pane",
+                "title": "Styles pane · Ctrl+Alt+Shift+S",
+                "disabled": false
+              },
+              {
+                "text": "New Style…",
+                "name": "New Style…",
+                "title": "New Style from Selection…",
+                "disabled": false
+              },
+              {
+                "text": "Update Normal",
+                "name": "Update Normal",
+                "title": "Update Normal to Match Selection",
+                "disabled": false
+              },
+              {
+                "text": "Modify Style: Normal",
+                "name": "Modify Style: Normal",
+                "title": "Modify Style: Normal",
+                "disabled": false
+              },
+              {
+                "text": "Style Set…",
+                "name": "Style Set…",
+                "title": "Style Set and Theme Fonts",
+                "disabled": false
+              }
+            ],
+            "errors": [],
+            "screenshot": {
+              "name": "en.png",
+              "sha256": "94094ccfefe911de445238584b6482ce9342a7ac5591afc46a98c7610fc89c1c"
+            }
+          },
+          {
+            "language": "nl",
+            "expectedFallback": null,
+            "group": "Stijlen",
+            "buttons": [
+              {
+                "text": "Stijlenvenster",
+                "name": "Stijlenvenster",
+                "title": "Stijlenvenster · Ctrl+Alt+Shift+S",
+                "disabled": false
+              },
+              {
+                "text": "Nieuwe stijl…",
+                "name": "Nieuwe stijl…",
+                "title": "Nieuwe stijl op basis van de selectie…",
+                "disabled": false
+              },
+              {
+                "text": "Standaard bijwerken",
+                "name": "Standaard bijwerken",
+                "title": "Standaard bijwerken zodat deze overeenkomt met de selectie",
+                "disabled": false
+              },
+              {
+                "text": "Stijl wijzigen: Standaard",
+                "name": "Stijl wijzigen: Standaard",
+                "title": "Stijl wijzigen: Standaard",
+                "disabled": false
+              },
+              {
+                "text": "Stijlset…",
+                "name": "Stijlset…",
+                "title": "Stijlset en thema-lettertypen",
+                "disabled": false
+              }
+            ],
+            "errors": [],
+            "screenshot": {
+              "name": "nl.png",
+              "sha256": "a73272b24452432709f4f8f69ed7740da4045fa97412a8494d8f57b74ffb3f73"
+            }
+          },
+          {
+            "language": "lo",
+            "expectedFallback": "en",
+            "group": "Styles",
+            "buttons": [
+              {
+                "text": "Styles pane",
+                "name": "Styles pane",
+                "title": "Styles pane · Ctrl+Alt+Shift+S",
+                "disabled": false
+              },
+              {
+                "text": "New Style…",
+                "name": "New Style…",
+                "title": "New Style from Selection…",
+                "disabled": false
+              },
+              {
+                "text": "Update Normal",
+                "name": "Update Normal",
+                "title": "Update Normal to Match Selection",
+                "disabled": false
+              },
+              {
+                "text": "Modify Style: Normal",
+                "name": "Modify Style: Normal",
+                "title": "Modify Style: Normal",
+                "disabled": false
+              },
+              {
+                "text": "Style Set…",
+                "name": "Style Set…",
+                "title": "Style Set and Theme Fonts",
+                "disabled": false
+              }
+            ],
+            "errors": [],
+            "screenshot": {
+              "name": "lo.png",
+              "sha256": "22cf808079592be9567ff72f0772068c8ce52f1f1d251abb9f69850b37061433"
+            }
+          }
+        ],
+        "documentNotEdited": true,
+        "browserClosed": true,
+        "serverClosed": true,
+        "limits": [
+          "Local production browser only; no native Windows/Linux/macOS claim",
+          "No ribbon clipping/CSS or style-command behavior change"
+        ]
+      },
+      "originalScreenshotsViewed": true
+    },
+    {
+      "route": "hosted",
+      "report": {
+        "source": "489c4e3ce10a51e14bfd5791860e5fe3e843a544",
+        "host": "win32",
+        "route": "/office/",
+        "dist": "dist-hosted",
+        "browser": "151.0.7922.34",
+        "status": "passed",
+        "results": [
+          {
+            "language": "en",
+            "expectedFallback": null,
+            "group": "Styles",
+            "buttons": [
+              {
+                "text": "Styles pane",
+                "name": "Styles pane",
+                "title": "Styles pane · Ctrl+Alt+Shift+S",
+                "disabled": false
+              },
+              {
+                "text": "New Style…",
+                "name": "New Style…",
+                "title": "New Style from Selection…",
+                "disabled": false
+              },
+              {
+                "text": "Update Normal",
+                "name": "Update Normal",
+                "title": "Update Normal to Match Selection",
+                "disabled": false
+              },
+              {
+                "text": "Modify Style: Normal",
+                "name": "Modify Style: Normal",
+                "title": "Modify Style: Normal",
+                "disabled": false
+              },
+              {
+                "text": "Style Set…",
+                "name": "Style Set…",
+                "title": "Style Set and Theme Fonts",
+                "disabled": false
+              }
+            ],
+            "errors": [],
+            "screenshot": {
+              "name": "en.png",
+              "sha256": "94094ccfefe911de445238584b6482ce9342a7ac5591afc46a98c7610fc89c1c"
+            }
+          },
+          {
+            "language": "nl",
+            "expectedFallback": null,
+            "group": "Stijlen",
+            "buttons": [
+              {
+                "text": "Stijlenvenster",
+                "name": "Stijlenvenster",
+                "title": "Stijlenvenster · Ctrl+Alt+Shift+S",
+                "disabled": false
+              },
+              {
+                "text": "Nieuwe stijl…",
+                "name": "Nieuwe stijl…",
+                "title": "Nieuwe stijl op basis van de selectie…",
+                "disabled": false
+              },
+              {
+                "text": "Standaard bijwerken",
+                "name": "Standaard bijwerken",
+                "title": "Standaard bijwerken zodat deze overeenkomt met de selectie",
+                "disabled": false
+              },
+              {
+                "text": "Stijl wijzigen: Standaard",
+                "name": "Stijl wijzigen: Standaard",
+                "title": "Stijl wijzigen: Standaard",
+                "disabled": false
+              },
+              {
+                "text": "Stijlset…",
+                "name": "Stijlset…",
+                "title": "Stijlset en thema-lettertypen",
+                "disabled": false
+              }
+            ],
+            "errors": [],
+            "screenshot": {
+              "name": "nl.png",
+              "sha256": "90cf70dbdb2eb1ea2f552b4718d6ef02600efe2265b015824422cb83abefbd50"
+            }
+          },
+          {
+            "language": "lo",
+            "expectedFallback": "en",
+            "group": "Styles",
+            "buttons": [
+              {
+                "text": "Styles pane",
+                "name": "Styles pane",
+                "title": "Styles pane · Ctrl+Alt+Shift+S",
+                "disabled": false
+              },
+              {
+                "text": "New Style…",
+                "name": "New Style…",
+                "title": "New Style from Selection…",
+                "disabled": false
+              },
+              {
+                "text": "Update Normal",
+                "name": "Update Normal",
+                "title": "Update Normal to Match Selection",
+                "disabled": false
+              },
+              {
+                "text": "Modify Style: Normal",
+                "name": "Modify Style: Normal",
+                "title": "Modify Style: Normal",
+                "disabled": false
+              },
+              {
+                "text": "Style Set…",
+                "name": "Style Set…",
+                "title": "Style Set and Theme Fonts",
+                "disabled": false
+              }
+            ],
+            "errors": [],
+            "screenshot": {
+              "name": "lo.png",
+              "sha256": "6669afb832a35467cffc99848375c602b0015845d9aa343fa65389e8de287c3e"
+            }
+          }
+        ],
+        "documentNotEdited": true,
+        "browserClosed": true,
+        "serverClosed": true,
+        "limits": [
+          "Local production browser only; no native Windows/Linux/macOS claim",
+          "No ribbon clipping/CSS or style-command behavior change"
+        ]
+      },
+      "originalScreenshotsViewed": true
+    }
+  ],
+  "logs": {
+    "363-before.log": {
+      "sha256": "1095196ed0dfb49eeac1d04b036ccb8b41675994eed7e19ac270cc2a284adc24",
+      "bytes": 18733
+    },
+    "363-targeted-final.log": {
+      "sha256": "2014b7629a0c7586febee49524cf3ada66778f83681a02ae4daa5cfff05b5597",
+      "bytes": 487
+    },
+    "363-i18n-final.log": {
+      "sha256": "d7cc320e29c3cf780a372759754274030353da09744c23051e50a3898dc4222e",
+      "bytes": 1455
+    },
+    "363-typescript.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "363-build-final.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "363-hosted-build.log": {
+      "sha256": "d92869c31b434b9b0fd616cd594af98504a9dfbe06e2b8cd4df9abf834f1b661",
+      "bytes": 59163
+    }
+  },
+  "limits": [
+    "No new Linux/macOS host controls on489",
+    "No new native Windows GUI/package check",
+    "No new long CI matrix or PR-triggered full matrix before deadline",
+    "No #362 CSS/clipping or #359 renderer acceptance",
+    "No style-command mutation exercised; handlers/conditions unchanged in source",
+    "No merge to integration or main, no issue closure or automatic resumption"
+  ],
+  "cleanup": {
+    "browserAndServerClosed": true,
+    "localComputerUseOrScreenRecordingStarted": false
+  },
+  "finalReadOnlyReview": {
+    "date": "2026-11-16",
+    "reviewedApplicationCommit": "489c4e3ce10a51e14bfd5791860e5fe3e843a544",
+    "reviewedReceiptCommit": "9ce8e75851d4cb287d7cf9f2e787892dd5ca0e76",
+    "verification": {
+      "threeSourceGitBlobDigestsMatch": true,
+      "productionSourceTestDriverUnchangedSince489": true,
+      "originalUtf8ReportsStillEqual": true,
+      "sixOriginalScreenshotDigestsMatch": true,
+      "productionDeltaOnlyNineLabelHintPropLines": true,
+      "commandHandlersAndAvailabilityPredicatesUnchanged": true,
+      "noNewAppOrPlatformTests": true
+    },
+    "findings": [
+      {
+        "scope": "Test coverage gap",
+        "observation": "The mock sets kanHerladen equal to huidigeStijl. The18 render states cover style+editable and no-style+unavailable, not independently editable-without-current-style or named-style-readonly.",
+        "nextIntake": "Separate both state axes before claiming complete availability-state coverage. No observed production predicate change."
+      },
+      {
+        "scope": "Browser test-driver startup cleanup",
+        "observation": "preview(), chromium.launch() and fixture readFile precede the enclosing try/finally. Browser-launch or fixture-read failure can bypass cleanup.",
+        "nextIntake": "Put resource creation and fixture loading under guarded cleanup before reusing the driver in CI; exercise the failure paths. All six existing successful contexts/browsers/servers were closed."
+      },
+      {
+        "scope": "Build provenance limitation",
+        "observation": "The browser report source is git HEAD of the running worktree. The driver does not itself bind dist assets to that SHA. Existing runs used freshly built489 assets in the documented commands.",
+        "nextIntake": "Record/enforce application build SHA and bundle/manifest identity independently of harness HEAD before automated integration validation."
+      },
+      {
+        "scope": "Observed group naming",
+        "observation": "Gallery and management both reuse styles.gallery.group and therefore share Styles/Stijlen group/collapsed-control names. The screenshots show both captions; labels resolve but names are not distinct.",
+        "nextIntake": "Assess distinct management naming/accessibility in the intake; no unique-name criterion was asserted by the existing363 tests. No CSS/layout acceptance or new issue claim."
+      }
+    ],
+    "integrationHandoff": "Keep489 source separate from documentation and from the current integration candidate. Apply full base-to489 delta or all three source/test commits; do not use2e alone as the final corrected browser driver. Retain open platform/native limits and validate the resulting combination before acceptance.",
+    "productFilesChangedDuringReview": false,
+    "nativeAcceptanceAdded": false,
+    "mainMergeAuthorizedOrPerformed": false
+  }
+}

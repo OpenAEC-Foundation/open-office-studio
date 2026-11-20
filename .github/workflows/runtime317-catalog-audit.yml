@@ -1,0 +1,52 @@
+name: Runtime 317 catalog acceptance audit
+on:
+  push:
+    branches: [codex/formats-30-native-acceptance]
+    paths:
+      - scripts/runtime317-catalog-audit.mjs
+      - scripts/runtime317-epub-audit.py
+      - .github/workflows/runtime317-catalog-audit.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  OOS_RUNTIME_APPLICATION_COMMIT: c0fbbcb843f0fd44e0e7e9d54a7989d017e39812
+  OOS_RUNTIME_HARNESS_COMMIT: ${{ github.sha }}
+jobs:
+  catalog-audit:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.OOS_RUNTIME_APPLICATION_COMMIT }}
+      - uses: actions/checkout@v4
+        with:
+          path: .local/audit-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Native library dependencies
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 libnss3 libcups2 libxinerama1 fontconfig
+      - uses: actions/download-artifact@v4
+        with:
+          name: runtime317-installers-Linux
+          path: .local/runtime317-installers
+          run-id: 43833977445
+          github-token: ${{ github.token }}
+      - name: Actual EPUB export and import on the immutable private runtime
+        run: node .local/audit-harness/scripts/runtime317-catalog-audit.mjs .local/runtime317-installers
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime317-catalog-audit
+          path: .local/runtime317-catalog-audit
+          include-hidden-files: true
+          if-no-files-found: warn

@@ -278,9 +278,9 @@ export function StijlBeheerGroep() {
   const huidig = staat.alineastijl;
   const stijl = staat.stijlen?.styles.find((s) => s.styleId === huidig);
   return (
-    <Groep naam={t("styles.manage.group")}>
+    <Groep naam={t("styles.gallery.group")}>
       <Actie
-        naam={t("styles.manage.pane")}
+        naam={t("styles.shortcutPane")}
         icoon={ListTree}
         groot
         title={t("styles.gallery.paneHint", { shortcut: "Ctrl+Alt+Shift+S" })}
@@ -288,20 +288,20 @@ export function StijlBeheerGroep() {
         onClick={() => staat.open({ soort: "venster" })}
       />
       <Actie
-        naam={t("styles.manage.newStyle")}
+        naam={t("styles.pane.newStyle")}
         icoon={FilePlus2}
         groot
         disabled={!staat.kanHerladen}
-        title={t("styles.manage.newStyleHint")}
+        title={t("styles.menu.newFromSelection")}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => staat.open({ soort: "nieuw", uitSelectie: true })}
       />
       <div className="ribbon-stapel">
         <Actie
-          naam={stijl ? t("styles.update.title", { name: stijlNaam(stijl) }) : t("styles.manage.updateStyle")}
+          naam={stijl ? t("styles.update.title", { name: stijlNaam(stijl) }) : t("styles.update.confirm")}
           icoon={RefreshCw}
           disabled={!staat.kanHerladen || !stijl}
-          title={t("styles.manage.updateHint")}
+          title={stijl ? t("styles.menu.updateToMatch", { name: stijlNaam(stijl) }) : t("styles.update.confirm")}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() =>
             stijl &&
@@ -311,17 +311,17 @@ export function StijlBeheerGroep() {
           }
         />
         <Actie
-          naam={stijl ? t("styles.manage.modifyNamed", { name: stijlNaam(stijl) }) : t("styles.manage.modifyStyle")}
+          naam={stijl ? t("styles.editor.modifyTitle", { name: stijlNaam(stijl) }) : t("styles.editor.modify")}
           icoon={PencilLine}
           disabled={!staat.kanHerladen || !stijl}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => stijl && staat.open({ soort: "wijzig", styleId: stijl.styleId })}
         />
         <Actie
-          naam={t("styles.manage.styleSet")}
+          naam={t("styles.pane.styleSet")}
           icoon={Palette}
           disabled={!staat.kanHerladen}
-          title={t("styles.manage.styleSetHint")}
+          title={t("styles.sets.title")}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => staat.open({ soort: "sets" })}
         />

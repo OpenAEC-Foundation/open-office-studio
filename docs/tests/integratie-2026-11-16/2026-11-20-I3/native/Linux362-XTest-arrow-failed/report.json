@@ -1,0 +1,2137 @@
+{
+  "issue": 362,
+  "source": {
+    "commit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+    "pid": 4536
+  },
+  "fixture": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/.local/writer361-native/362-fixture/writer362-table.docx",
+    "sha256": "bb9e541fda543870b725794b017dc4f8144926392c875960a6906913caf4a7b8",
+    "protectedDocument": false
+  },
+  "harnessSha256": "8ddec4417d547b64550ed088316d2e8a68318103792fc15e9c18124f458e2596",
+  "platform": "Linux installed Tauri / WebKitGTK",
+  "inputBackend": "x11-xtest",
+  "status": "failed",
+  "nativePass": false,
+  "startedAt": "2026-11-20T12:58:56.667Z",
+  "cases": [
+    {
+      "theme": "light",
+      "requestedWidth": 1600,
+      "tab": "Insert",
+      "group": "Text",
+      "phase": "normal",
+      "bounds": {
+        "left": 1106.25,
+        "width": 307.8125,
+        "right": 1414.0625,
+        "top": 65,
+        "height": 89,
+        "bottom": 154
+      },
+      "caption": {
+        "left": 1106.25,
+        "width": 307.8125,
+        "right": 1414.0625,
+        "top": 154,
+        "height": 16,
+        "bottom": 170
+      },
+      "buttons": [
+        {
+          "clipped": false,
+          "left": 1106.25,
+          "width": 103,
+          "active": false,
+          "top": 76,
+          "height": 67,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1209.25,
+          "labelVisible": true,
+          "name": "Special Character",
+          "borderWidth": "1px",
+          "bottom": 143,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1211.25,
+          "width": 57.90625,
+          "active": false,
+          "top": 69.5,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1269.15625,
+          "labelVisible": true,
+          "name": "Date",
+          "borderWidth": "1px",
+          "bottom": 95.5,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1211.25,
+          "width": 60,
+          "active": false,
+          "top": 96.5,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1271.25,
+          "labelVisible": true,
+          "name": "Time",
+          "borderWidth": "1px",
+          "bottom": 122.5,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1211.25,
+          "width": 96.90625,
+          "active": false,
+          "top": 123.5,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1308.15625,
+          "labelVisible": true,
+          "name": "Date & Time",
+          "borderWidth": "1px",
+          "bottom": 149.5,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1310.15625,
+          "width": 100.171875,
+          "active": false,
+          "top": 83,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1410.328125,
+          "labelVisible": true,
+          "name": "Insert field…",
+          "borderWidth": "1px",
+          "bottom": 109,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1310.15625,
+          "width": 103.90625,
+          "active": false,
+          "top": 110,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1414.0625,
+          "labelVisible": true,
+          "name": "Update fields",
+          "borderWidth": "1px",
+          "bottom": 136,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "level": "0",
+      "viewport": {
+        "dpr": 1,
+        "height": 1000,
+        "width": 1600
+      }
+    }
+  ],
+  "groupButtonCases": [],
+  "unavailable": [],
+  "cleanup": [
+    {
+      "label": "release own input actions",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore original theme and tab",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore window rectangle",
+      "status": "fulfilled"
+    },
+    {
+      "label": "fixture remains byte-identical",
+      "status": "fulfilled"
+    }
+  ],
+  "limits": [
+    "Caller owns and verifies installed package/source binding",
+    "Virtual X11 evidence does not certify physical hardware or Windows/macOS",
+    "No synthesized disabled/active attributes and no command mutation",
+    "#362 group-trigger acceptance checks vertical clipping only. Raw horizontal and combined clipping remain recorded; the existing narrow horizontal scroll route is outside this issue's scope.",
+    "XTest opt-in is distinct native input evidence; any earlier W3C focus-visible failure remains unexplained and is not relabelled as passed."
+  ],
+  "runtime": {
+    "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/60.5 Safari/605.1.15",
+    "native": true,
+    "bridge": false,
+    "preference": "{\"gebruiker\":{\"naam\":\"\",\"initialen\":\"\"},\"taal\":\"en\",\"thema\":\"forge\",\"opslagformaat\":{\"docx\":\"docx\",\"xlsx\":\"xlsx\",\"pptx\":\"pptx\"},\"lint\":{\"compact\":false,\"ingeklapt\":false},\"statusbalk\":{\"zoom\":true,\"tekst\":true,\"rekenblad\":true,\"presentatie\":true,\"database\":true,\"taal\":true,\"bijhouden\":true,\"weergave\":true},\"rekenbladStatistiek\":{\"gemiddelde\":true,\"aantal\":true,\"som\":true,\"minimum\":false,\"maximum\":false},\"emailExterneInhoud\":\"account\",\"spelling\":{\"controleren\":true,\"autocorrectie\":true,\"hoofdletterwoordenNegeren\":true,\"cijferwoordenNegeren\":true},\"tekst\":{\"sneltoetsprofiel\":\"standaard\",\"miniWerkbalk\":true,\"documentWeergave\":\"thema\"},\"updates\":{\"automatisch\":false,\"kanaal\":\"ontwikkel\"}}",
+    "tab": "Home",
+    "theme": "forge"
+  },
+  "x11Input": {
+    "backend": "x11-xtest",
+    "pid": 4536,
+    "display": ":99",
+    "activationPerformed": true,
+    "checks": [
+      {
+        "stage": "foreground postcondition",
+        "at": "2026-11-20T12:58:57.059Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /actions",
+        "at": "2026-11-20T12:58:57.102Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      },
+      {
+        "stage": "before XTest ctrl+Home",
+        "at": "2026-11-20T12:58:57.337Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      },
+      {
+        "stage": "after XTest ctrl+Home",
+        "at": "2026-11-20T12:58:57.388Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /element/node-C1FEF6FE-95D5-43CD-AC65-C6C444F171BE/click",
+        "at": "2026-11-20T12:58:57.491Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /window/rect",
+        "at": "2026-11-20T12:58:57.676Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "office-iconknop office-themaknop",
+            "focusVisible": false,
+            "role": null,
+            "label": "Forge theme",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /element/node-4DD6BF00-1461-4D2D-99B8-9C393414F5EF/click",
+        "at": "2026-11-20T12:58:57.933Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "office-iconknop office-themaknop",
+            "focusVisible": false,
+            "role": null,
+            "label": "Forge theme",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /element/node-4DD6BF00-1461-4D2D-99B8-9C393414F5EF/click",
+        "at": "2026-11-20T12:58:58.066Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "",
+            "focusVisible": false,
+            "role": "tab",
+            "label": null,
+            "id": "_r_1_-invoegen",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Down",
+        "at": "2026-11-20T12:58:58.124Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "",
+            "focusVisible": false,
+            "role": "tab",
+            "label": null,
+            "id": "_r_1_-invoegen",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Down",
+        "at": "2026-11-20T12:58:58.195Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Page Break",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:58.293Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Page Break",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:58.362Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Table",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:58.417Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Table",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:58.489Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Text to Table",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:58.549Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Text to Table",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:58.622Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Picture",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:58.678Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Picture",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:58.750Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Equation",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:58.807Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Equation",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:58.878Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Insert shape",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:58.935Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Insert shape",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.006Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Edit shapes",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.061Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Edit shapes",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.133Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Chart",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.188Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Chart",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.259Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Edit chart",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.313Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Edit chart",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.385Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "All charts",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.439Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "All charts",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.508Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Link",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.562Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Link",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.631Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot pagina-keuzeknop",
+            "focusVisible": false,
+            "role": null,
+            "label": "Page Number",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.688Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot pagina-keuzeknop",
+            "focusVisible": false,
+            "role": null,
+            "label": "Page Number",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.755Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Header",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.808Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Header",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.876Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Footer",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:58:59.928Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie  ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Footer",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:58:59.997Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Mail merge",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:59:00.051Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Mail merge",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:59:00.119Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Comment",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before XTest Right",
+        "at": "2026-11-20T12:59:00.174Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Comment",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "after XTest Right",
+        "at": "2026-11-20T12:59:00.243Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Special Character",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /element/node-C1FEF6FE-95D5-43CD-AC65-C6C444F171BE/click",
+        "at": "2026-11-20T12:59:06.769Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "ribbon-actie ribbon-groot ",
+            "focusVisible": false,
+            "role": null,
+            "label": "Special Character",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /element/node-9255F5D2-3FB7-44AB-8CE2-7A862FE1C70A/click",
+        "at": "2026-11-20T12:59:07.054Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "office-iconknop office-themaknop",
+            "focusVisible": false,
+            "role": null,
+            "label": "Light theme",
+            "id": "",
+            "tag": "BUTTON"
+          }
+        }
+      },
+      {
+        "stage": "before W3C /window/rect",
+        "at": "2026-11-20T12:59:07.134Z",
+        "process": {
+          "pid": 4536,
+          "startTime": "50457",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97947:99898216:1795169717000"
+        },
+        "windowFocus": "2097155",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "",
+            "focusVisible": false,
+            "role": "tab",
+            "label": null,
+            "id": "_r_1_-start",
+            "tag": "BUTTON"
+          }
+        }
+      }
+    ],
+    "keys": [
+      {
+        "chord": "ctrl+Home",
+        "at": "2026-11-20T12:58:57.337Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "ctrl+Home"
+        ],
+        "post": {
+          "stage": "after XTest ctrl+Home",
+          "at": "2026-11-20T12:58:57.388Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Down",
+        "at": "2026-11-20T12:58:58.124Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Down"
+        ],
+        "post": {
+          "stage": "after XTest Down",
+          "at": "2026-11-20T12:58:58.195Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Page Break",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:58.293Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:58.362Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Table",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:58.417Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:58.489Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie  ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Text to Table",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:58.549Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:58.622Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Picture",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:58.678Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:58.750Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Equation",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:58.807Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:58.878Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Insert shape",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:58.935Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.006Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie  ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Edit shapes",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.061Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.133Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Chart",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.188Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.259Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie  ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Edit chart",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.313Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.385Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie  ",
+              "focusVisible": false,
+              "role": null,
+              "label": "All charts",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.439Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.508Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Link",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.562Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.631Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot pagina-keuzeknop",
+              "focusVisible": false,
+              "role": null,
+              "label": "Page Number",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.688Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.755Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie  ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Header",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.808Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.876Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie  ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Footer",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:58:59.928Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:58:59.997Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Mail merge",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:59:00.051Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:59:00.119Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Comment",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      },
+      {
+        "chord": "Right",
+        "at": "2026-11-20T12:59:00.174Z",
+        "args": [
+          "key",
+          "--clearmodifiers",
+          "Right"
+        ],
+        "post": {
+          "stage": "after XTest Right",
+          "at": "2026-11-20T12:59:00.243Z",
+          "process": {
+            "pid": 4536,
+            "startTime": "50457",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97947:99898216:1795169717000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "ribbon-actie ribbon-groot ",
+              "focusVisible": false,
+              "role": null,
+              "label": "Special Character",
+              "id": "",
+              "tag": "BUTTON"
+            }
+          }
+        }
+      }
+    ],
+    "binding": {
+      "pid": 4536,
+      "startTime": "50457",
+      "executable": "/usr/bin/open-office-studio",
+      "identity": "66305:97947:99898216:1795169717000",
+      "sha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156"
+    },
+    "xid": "2097155",
+    "pre": {
+      "windowFocus": null,
+      "windowFocusError": "Error: Command failed: xdotool getwindowfocus\nXGetInputFocus returned the focused window of 1. This is likely a bug in the X server.\nX Error of failed request:  BadWindow (invalid Window parameter)\n  Major opcode of failed request:  20 (X_GetProperty)\n  Resource id in failed request:  0x1\n  Serial number of failed request:  20\n  Current serial number in output stream:  20\n",
+      "dom": {
+        "hasFocus": true,
+        "visibilityState": "visible",
+        "hidden": false,
+        "activeElement": {
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "focusVisible": true,
+          "role": null,
+          "label": "Document input",
+          "id": "",
+          "tag": "TEXTAREA"
+        }
+      }
+    },
+    "post": {
+      "stage": "foreground postcondition",
+      "at": "2026-11-20T12:58:57.059Z",
+      "process": {
+        "pid": 4536,
+        "startTime": "50457",
+        "executable": "/usr/bin/open-office-studio",
+        "identity": "66305:97947:99898216:1795169717000"
+      },
+      "windowFocus": "2097155",
+      "dom": {
+        "hasFocus": true,
+        "visibilityState": "visible",
+        "hidden": false,
+        "activeElement": {
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "focusVisible": true,
+          "role": null,
+          "label": "Document input",
+          "id": "",
+          "tag": "TEXTAREA"
+        }
+      }
+    }
+  },
+  "pointerTargets": [
+    {
+      "at": "2026-11-20T12:58:57.075Z",
+      "offset": {
+        "x": 145,
+        "y": 110
+      },
+      "panelId": "office-tabpaneel-1",
+      "canvas": {
+        "x": 401,
+        "height": 1056,
+        "width": 816,
+        "y": 252
+      },
+      "point": {
+        "x": 546,
+        "y": 362
+      }
+    }
+  ],
+  "firstKeyboardFocus": {
+    "theme": "light",
+    "width": 1600,
+    "group": "Text",
+    "inputBackend": "x11-xtest",
+    "name": "Special Character",
+    "focused": false,
+    "document": {
+      "hasFocus": true,
+      "visibilityState": "visible",
+      "hidden": false,
+      "activeElement": {
+        "className": "ribbon-actie ribbon-groot ",
+        "focusVisible": false,
+        "role": null,
+        "label": "Special Character",
+        "id": "",
+        "tag": "BUTTON"
+      }
+    }
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Special Character: keyboard focus visible\n    at Module.runWriter362NativeProbe (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer362-harness/scripts/writer362-native-probe.mjs:1103:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:527:17\n    at async collectOptionalNativeQa (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/writer361-native-modules.mjs:45:21)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:509:5",
+  "failureAnatomy": {
+    "hasFocus": true,
+    "visibilityState": "visible",
+    "viewport": {
+      "dpr": 1,
+      "height": 1000,
+      "width": 1600
+    },
+    "fonts": "loaded",
+    "hidden": false,
+    "ribbonTabs": [
+      {
+        "selected": "false",
+        "rawText": "Home",
+        "visible": true,
+        "trimmedText": "Home"
+      },
+      {
+        "selected": "true",
+        "rawText": "Insert",
+        "visible": true,
+        "trimmedText": "Insert"
+      },
+      {
+        "selected": "false",
+        "rawText": "Format",
+        "visible": true,
+        "trimmedText": "Format"
+      },
+      {
+        "selected": "false",
+        "rawText": "Header & Footer",
+        "visible": true,
+        "trimmedText": "Header & Footer"
+      },
+      {
+        "selected": "false",
+        "rawText": "References",
+        "visible": true,
+        "trimmedText": "References"
+      },
+      {
+        "selected": "false",
+        "rawText": "Styles",
+        "visible": true,
+        "trimmedText": "Styles"
+      },
+      {
+        "selected": "false",
+        "rawText": "Layout",
+        "visible": true,
+        "trimmedText": "Layout"
+      },
+      {
+        "selected": "false",
+        "rawText": "Review",
+        "visible": true,
+        "trimmedText": "Review"
+      },
+      {
+        "selected": "false",
+        "rawText": "View",
+        "visible": true,
+        "trimmedText": "View"
+      },
+      {
+        "selected": "false",
+        "rawText": "Tools",
+        "visible": true,
+        "trimmedText": "Tools"
+      },
+      {
+        "selected": "false",
+        "rawText": "Table Design",
+        "visible": true,
+        "trimmedText": "Table Design"
+      }
+    ],
+    "inputPortals": [
+      {
+        "panel": null,
+        "rect": {
+          "x": 521,
+          "height": 18.328125,
+          "width": 1,
+          "y": 346.53125
+        },
+        "parent": "BODY",
+        "tag": "TEXTAREA"
+      }
+    ],
+    "panels": [
+      {
+        "tables": [
+          {
+            "columns": "3",
+            "rows": "2",
+            "cells": [
+              "Alpha",
+              "Beta",
+              "Gamma",
+              "One",
+              "Two",
+              "Three"
+            ]
+          }
+        ],
+        "canvases": [
+          {
+            "height": 1056,
+            "rect": {
+              "x": 401,
+              "height": 1056,
+              "width": 816,
+              "y": 252
+            },
+            "width": 816
+          }
+        ],
+        "id": "office-tabpaneel-1",
+        "blocked": false
+      },
+      {
+        "tables": [],
+        "canvases": [],
+        "id": "office-tabpaneel-start",
+        "blocked": true
+      }
+    ],
+    "focus": {
+      "label": "Special Character",
+      "className": "ribbon-actie ribbon-groot ",
+      "id": "",
+      "role": null,
+      "tag": "BUTTON"
+    },
+    "documentTabs": [
+      {
+        "selected": "false",
+        "controls": "office-tabpaneel-start",
+        "rawText": "Start",
+        "trimmedText": "Start"
+      },
+      {
+        "selected": "true",
+        "controls": "office-tabpaneel-1",
+        "rawText": "writer362-table.docx",
+        "trimmedText": "writer362-table.docx"
+      }
+    ]
+  },
+  "failureScreenshotError": "TimeoutError: The operation was aborted due to timeout",
+  "completedAt": "2026-11-20T12:59:07.136Z"
+}

@@ -283,5 +283,13 @@
     "integrity": "The IFCX source checksum or byte count does not match. The file is damaged or has been modified.",
     "size": "The IFCX file is too large (maximum 100 MB, including at most 70 MB of embedded sources).",
     "historyPassword": "This IFCX file contains earlier unencrypted sources. Save a DOCX, XLSX or PPTX copy, close and reopen that copy, then create a new password-protected IFCX file."
+  },
+  "epub": {
+    "invalid": "This EPUB is damaged or has an invalid book structure.",
+    "tooLarge": "This EPUB is too large to import (maximum 100 MB unpacked and 32 MB per part).",
+    "encrypted": "This EPUB is protected with DRM or unsupported encryption. Open an unprotected copy.",
+    "unsupportedChapter": "This EPUB contains a chapter format that the app cannot import. Export a reflowable EPUB with XHTML chapters from the original app.",
+    "imported": "Imported book text in reading order, with basic formatting, lists, tables and embedded PNG/JPEG/GIF images. Book stylesheets, fonts, fixed page layout, internal navigation, scripts, audio, video and SVG are not retained. Save the editable copy as DOCX.",
+    "resources": "Images that could not be embedded: {{count}}. Missing, external and unsupported image resources are not loaded."
   }
 }

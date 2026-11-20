@@ -1,0 +1,189 @@
+{
+  "applicationSource": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+  "applicationTree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+  "version": "2026.46.2",
+  "scope": "Manual native Windows Writer table route only; no application/CI source changes",
+  "checks": [
+    {
+      "name": "Insert3columns2rows through native ribbon",
+      "status": "pass"
+    },
+    {
+      "name": "Type alpha, Tab to existing second cell and type beta",
+      "status": "pass"
+    },
+    {
+      "name": "Last-cell Tab adds one3cellrow; delta typed in new first cell",
+      "status": "pass"
+    },
+    {
+      "name": "CtrlZ text and row separately; CtrlY restores both",
+      "status": "pass"
+    },
+    {
+      "name": "ShiftTab from new first cell returns to preceding row final cell",
+      "status": "pass"
+    },
+    {
+      "name": "Insert Column Left",
+      "status": "pass for structural insertion"
+    },
+    {
+      "name": "CtrlZ immediately after left-column ribbon route",
+      "status": "fail repeated twice;4columns retained after extra observation; issue361"
+    },
+    {
+      "name": "Document click then CtrlZ, or Home Undo control",
+      "status": "pass;3columns restored and text retained"
+    },
+    {
+      "name": "Insert Column Right then CtrlZ comparison",
+      "status": "pass in this session"
+    },
+    {
+      "name": "Native CtrlS, SaveAsDOCX, full exit zeroPIDs, newPID sameEXE, Recent reopen",
+      "status": "pass for text and3x3structure; no pixel-identical formatting claim"
+    },
+    {
+      "name": "Saved ZIP XML parses; one table, three grid columns, exact9celltexts; hash unchanged after reopen",
+      "status": "pass"
+    }
+  ],
+  "issue": {
+    "number": 361,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/361",
+    "labels": ["tekst", "bug", "ui"],
+    "labelWorkflow": 43872127396,
+    "labelWorkflowConclusion": "success",
+    "duplicateDescriptionsRead": [19, 48, 128, 136, 138, 139, 188, 340, 16],
+    "cause": "unknown; no productfix claim"
+  },
+  "processRestart": {
+    "FirstPid": 20640,
+    "ZeroOwnPidsBeforeRestart": true,
+    "RestartPid": 4716
+  },
+  "cleanup": {
+    "ownDocumentTabsClosed": true,
+    "remainingOwnApplicationPids": [],
+    "processCheck": {
+      "RemainingOwnPids": [null],
+      "Count": 0,
+      "AtUtc": "2026-11-16T13:04:10.3786691Z"
+    },
+    "ownNodeReplKernelResetConfirmed": true,
+    "resetResult": "js kernel reset",
+    "newCaptureAfterReset": false,
+    "preferencesChanged": false,
+    "otherChatProcessesTouched": false,
+    "yellowBorderDisappearanceVerified": false,
+    "helperResourceClosureIndependentlyProven": false,
+    "laterUserReopenReported": true
+  },
+  "limits": [
+    "Only one synthetic Writer table, not full Writer acceptance",
+    "No #327 language acceptance performed; its preparedA was only opened/closed unchanged",
+    "No browser/nativeLinux/nativeMac reproduction of issue361 performed; existingGCI is separate coordinator evidence",
+    "No signing/security/privacy/printer changes; no main/branch/source changes; no user documents touched"
+  ],
+  "untriagedObservations": [
+    {
+      "kind": "screenshot observation only",
+      "detail": "Table row height looks larger after saved-DOCX reopen than in live newly inserted table; same3x3structure and exacttext verified. Separate investigation not performed; not combined with361 or claimed independently reproduced formatting bug."
+    }
+  ],
+  "completedAtUtc": "2026-11-16T13:05:01.460786+00:00",
+  "provenance": {
+    "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+    "run": 43856368812,
+    "artifact": 14223362239,
+    "zipSha256": "c15cb5e1950d0f73566401aa96e34157f91a81687bf00e31c0e79a9be3d466ef",
+    "installerSha256": "33fd74a2a17e648b8302c9ff12359af7589c03ca5c7fc90c4dc8e96ccafd32ca",
+    "installerBytes": 384538478,
+    "installerFile": "Open Office Studio_2026.46.2_x64-setup.exe"
+  },
+  "installedExe": {
+    "Bytes": 88171520,
+    "Version": "2026.46.2",
+    "Sha256": "4d070f3674ff4febaba4b57c4ccc998a78411fad40e0501433227e30ca856f07",
+    "InstallerExit": 0,
+    "isolatedInstall": "2026-11-16-integration-9e0ad565/open-office-studio.exe"
+  },
+  "embeddedExeSeparatelyExtractedAndCompared": false,
+  "provenanceLimit": "Canonical source/run/ZIP/installer and isolated install exit verified; actual started path/PID and installed EXE hash verified. No separate NSIS extraction/embedded EXE comparison; local 7z unavailable.",
+  "output": {
+    "sha256": "645ef61571f22392e29c7c2f0626c407ba4d85927384dae341774578a004cc24",
+    "bytes": 36883,
+    "tables": 1,
+    "rows": [
+      ["alpha", "beta", ""],
+      ["", "", "omega"],
+      ["delta", "", ""]
+    ],
+    "gridColumns": [
+      {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "2880"
+      },
+      {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "2880"
+      },
+      {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "2880"
+      }
+    ],
+    "allPackageXmlParses": true,
+    "file": "writer-table-G-16nov.docx"
+  },
+  "screenshots": [
+    {
+      "label": "column-left-ctrlz-unchanged",
+      "sha256": "d38e0ca556cde1d5c751fd737b0989bdd1933be0a23f8b494e1992dd279626c0",
+      "bytes": 85849,
+      "time": "2026-11-16T13:00:14.841Z",
+      "file": "column-left-ctrlz-unchanged.png"
+    },
+    {
+      "label": "control-ribbon-undo-three-columns",
+      "sha256": "28b8150fb30ad8697aa98f06706d8ef1437c402b01dd363ade6a296d539cf845",
+      "bytes": 87816,
+      "time": "2026-11-16T13:00:55.206Z",
+      "file": "control-ribbon-undo-three-columns.png"
+    },
+    {
+      "label": "saved-table-three-by-three",
+      "sha256": "501782ce683bb41087b2159084443cc18ad221e60e19b4e42d86d6d8311df3b3",
+      "bytes": 96275,
+      "time": "2026-11-16T13:01:56.541Z",
+      "file": "saved-table-three-by-three.png"
+    },
+    {
+      "label": "reopened-table-three-by-three",
+      "sha256": "3249a3e1fd24ef3bdc03805e1405c3ee1e6ffe4e9bdb6a93b5125a3f8fdd90ec",
+      "bytes": 95210,
+      "time": "2026-11-16T13:03:49.682Z",
+      "file": "reopened-table-three-by-three.png"
+    }
+  ],
+  "independentRootVerification": {
+    "installerShaMatchesCanonical": true,
+    "installedExeShaMatchesOwner": true,
+    "allPackageXmlParses": true,
+    "exact3x3CellText": [
+      ["alpha", "beta", ""],
+      ["", "", "omega"],
+      ["delta", "", ""]
+    ],
+    "all4ScreenshotHashesMatch": true,
+    "ownedGProcessCountReadOnlyChecked": 0,
+    "embeddedPayloadComparisonCompleted": false,
+    "yellowBorderOrAllHelperClosureProven": false,
+    "localCopy": ".local/nov16-g-native-windows-final",
+    "processCheckScope": "At completed operator handoff, before a later user report about reopening G; no current global process-closure claim"
+  },
+  "host": {
+    "caption": "Microsoft Windows11Home",
+    "version": "10.0.26200",
+    "build": "26200",
+    "architecture": "64bit"
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "run": "43848943684",
+  "workflowHead": "d73539b10d6a0a96956050766b0d850474b55910",
+  "applicationSource": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+  "harnessGitBlobSha256": {
+    "scripts/proef-native-linux-basis.mjs": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+    ".github/workflows/native-linux-353.yml": "5bd9dc187cd9aeafbe4347d526cfa87fe24fd7fa3c21d89f2812100c25b2bb3b",
+    ".github/workflows/desktop.yml": "d4cf9b7e45220ee83eff89d83dcca1ad59c6996c50a7661f4a2008c5845ab1b4"
+  },
+  "report": {
+    "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+    "harnessCommit": "d73539b10d6a0a96956050766b0d850474b55910",
+    "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+    "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+    "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+    "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+    "status": "passed",
+    "checks": [
+      "Real installed DEB opens a native Writer document",
+      "Actual keyboard edit and Ctrl+S persist exactly one marker",
+      "Application process fully exits after saving",
+      "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+    ],
+    "limits": [
+      "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+      "Virtual X11 display and software graphics, not physical hardware",
+      "DEB only; AppImage native operation is not certified"
+    ],
+    "package": {
+      "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+      "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+    },
+    "artifactOrigin": {
+      "run": 43838167666,
+      "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+      "artifacts": [
+        {
+          "id": 14212707843,
+          "name": "open-office-studio-Linux",
+          "zipSha256": "bf849f5c39130045aad9d8df604499c62021d3f500fd4d3fe3a88c8e31cd5089"
+        },
+        {
+          "id": 14212947201,
+          "name": "pakketcontrole-Linux",
+          "zipSha256": "4cb8849430cb2319bf03bdc6a582f35446a7d9ce4ed25deef1037bc1374ca541"
+        }
+      ]
+    },
+    "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+    "rawBuildExecutableSha256": null,
+    "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+    "runtime": {
+      "node": "v22.23.4",
+      "graphics": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+        "WEBKIT_DISABLE_COMPOSITING_MODE": null
+      },
+      "driver": "tauri-driver v2.1.0:",
+      "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+      "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+      "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+    },
+    "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+    "inputSha256": "edd6fc6f52d5f0e605976d99e069143e20db2553c711590004b23b81789b08b2",
+    "beforeSave": {
+      "saveDisabled": false,
+      "keyboard": [
+        {
+          "code": "ControlLeft",
+          "prevented": false,
+          "ctrl": true,
+          "shift": false,
+          "target": "TEXTAREA",
+          "type": "keydown",
+          "key": "Control",
+          "meta": false
+        },
+        {
+          "code": "Home",
+          "prevented": false,
+          "ctrl": true,
+          "shift": false,
+          "target": "TEXTAREA",
+          "type": "keydown",
+          "key": "Home",
+          "meta": false
+        },
+        {
+          "code": "Home",
+          "prevented": false,
+          "ctrl": true,
+          "shift": false,
+          "target": "TEXTAREA",
+          "type": "keyup",
+          "key": "Home",
+          "meta": false
+        },
+        {
+          "code": "ControlLeft",
+          "prevented": false,
+          "ctrl": false,
+          "shift": false,
+          "target": "TEXTAREA",
+          "type": "keyup",
+          "key": "Control",
+          "meta": false
+        },
+        {
+          "code": "KeyS",
+          "prevented": false,
+          "ctrl": false,
+          "shift": false,
+          "target": "TEXTAREA",
+          "type": "keydown",
+          "key": "S",
+          "meta": false
+        },
+        {
+          "code": "KeyS",
+          "prevented": false,
+          "ctrl": false,
+          "shift": false,
+          "target": "TEXTAREA",
+          "type": "keyup",
+          "key": "S",
+          "meta": false
+        }
+      ],
+      "focused": "TEXTAREA"
+    },
+    "savedSha256": "c0c2e12474b411dfec61033b42081d07c90b3229e3a64bce81fd0830a4889c3a",
+    "ownedApplicationClosed": true
+  },
+  "origin": {
+    "run": 43838167666,
+    "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+    "artifacts": [
+      {
+        "id": 14212707843,
+        "name": "open-office-studio-Linux",
+        "zipSha256": "bf849f5c39130045aad9d8df604499c62021d3f500fd4d3fe3a88c8e31cd5089"
+      },
+      {
+        "id": 14212947201,
+        "name": "pakketcontrole-Linux",
+        "zipSha256": "4cb8849430cb2319bf03bdc6a582f35446a7d9ce4ed25deef1037bc1374ca541"
+      }
+    ]
+  },
+  "exactIndependentSavedDocxText": "NATIVE_LINUX_SAVED_MARKER Synthetic native Linux document.",
+  "images": [
+    {
+      "file": "saved.png",
+      "sha256": "d21cb3c664a5a906a724f95eca27759df1ce750e3e9e94b99465e88543d678b4",
+      "size": [
+        1440,
+        950
+      ],
+      "roi": [
+        441,
+        326,
+        410,
+        21
+      ],
+      "colors": 206,
+      "dominant": [
+        [
+          [
+            25,
+            25,
+            25
+          ],
+          6141
+        ],
+        [
+          [
+            76,
+            76,
+            76
+          ],
+          160
+        ],
+        [
+          [
+            229,
+            229,
+            229
+          ],
+          103
+        ]
+      ],
+      "dark": 7172,
+      "bright": 395
+    },
+    {
+      "file": "reopened-find.png",
+      "sha256": "4aff1171f1f20097551169368ab595084c3967ab8d69d7776dcf61a1fd818f35",
+      "size": [
+        1440,
+        950
+      ],
+      "roi": [
+        609,
+        326,
+        410,
+        21
+      ],
+      "colors": 315,
+      "dominant": [
+        [
+          [
+            25,
+            25,
+            25
+          ],
+          3799
+        ],
+        [
+          [
+            128,
+            109,
+            49
+          ],
+          2350
+        ],
+        [
+          [
+            156,
+            137,
+            77
+          ],
+          95
+        ]
+      ],
+      "dark": 4297,
+      "bright": 169
+    }
+  ],
+  "visualAcceptance": "Passed for saved/reopened original PNG inspection plus supporting pixel metrics; bounded general native Writer roundtrip only",
+  "limits": [
+    "General Writer native roundtrip; not full issue327 language-status acceptance",
+    "CI/Xvfb software route, not physical Linux/Wayland",
+    "No AppImage interaction; Windows/macOS and browser keep their own evidence"
+  ],
+  "resultArtifact": {
+    "run": "43848943684",
+    "artifactId": 14216636794,
+    "name": "native-linux-writer-recheck",
+    "sha256": "d1bfa990cb3c9eec09a5608aa1ca2effea8f12b86f4071f0fc42c75b3a65bee6",
+    "bytes": 241392,
+    "githubDigestMatched": true
+  }
+}

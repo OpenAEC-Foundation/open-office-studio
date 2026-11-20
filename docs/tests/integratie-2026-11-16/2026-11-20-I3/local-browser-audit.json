@@ -1,0 +1,89 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "scope": "Root independent local raw-data/hash audit; original-image visual reviews performed separately by issue owners and parents.",
+  "issues": {
+    "356": {
+      "handoffSha256": "64d231d696d942c597b53309bfb79978863e9fed682818ca266c9be83d70d7ef",
+      "routes": [
+        {
+          "route": "/",
+          "report": ".local\\nov20-I3-356-normal\\report.json",
+          "reportSha256": "da24ffaf26516c9e1a6b8a64410118291aacff27682ad3c4eaa0ba8658b46322",
+          "receiptSha256": "8f1f4ac5bea1ee075935561c5c97e41f081380ee2371ebf2d1fe912d262b6b27",
+          "status": "passed-scoped-browser"
+        },
+        {
+          "route": "/office/",
+          "report": ".local\\nov20-I3-356-hosted\\report.json",
+          "reportSha256": "c351040495b3cedfce22ca8d40751437c285838632f0c039c6c8621c062055df",
+          "receiptSha256": "51f84eebb1963332f5272df61120ea9a3dadd45f5e7785bc329cd325ba571d63",
+          "status": "passed-scoped-browser"
+        }
+      ]
+    },
+    "361": {
+      "handoffSha256": "fc958972b51aa258867496508c72fdb3bff030d94b0d69f9215c04e8c8ce62bf",
+      "routes": [
+        {
+          "route": "/",
+          "report": ".local\\nov20-I3-361-normal\\report.json",
+          "reportSha256": "f9beb5fb1c8b99af709db37468da41fbee570c6d617cb597b6078e5b050d75e4",
+          "receiptSha256": "8f1f4ac5bea1ee075935561c5c97e41f081380ee2371ebf2d1fe912d262b6b27",
+          "status": "passed-scoped-browser"
+        },
+        {
+          "route": "/office/",
+          "report": ".local\\nov20-I3-361-hosted\\report.json",
+          "reportSha256": "7346fc7ba6499a23cef278d7ea9417e3743e94d24229ec9a5acf242cb6f79e34",
+          "receiptSha256": "51f84eebb1963332f5272df61120ea9a3dadd45f5e7785bc329cd325ba571d63",
+          "status": "passed-scoped-browser"
+        }
+      ]
+    },
+    "362": {
+      "handoffSha256": "095c4da86a78474435ed1b142d33ccfaf793973434abaac6a9aa98de8fe2d03d",
+      "routes": [
+        {
+          "route": "/",
+          "report": ".local\\nov20-I3-362-normal-vertical\\report.json",
+          "reportSha256": "a7a03e360ef5192d5ba1e8cf63bed4e093b9cf744f1b31645e531f6397bd08ad",
+          "receiptSha256": "8f1f4ac5bea1ee075935561c5c97e41f081380ee2371ebf2d1fe912d262b6b27",
+          "status": "passed-scoped-browser"
+        },
+        {
+          "route": "/office/",
+          "report": ".local\\nov20-I3-362-hosted-vertical\\report.json",
+          "reportSha256": "d77683f8aec4e37ab19fef7a41ec83aacaa1fedfeac5b9491f8c6c7824d8f120",
+          "receiptSha256": "51f84eebb1963332f5272df61120ea9a3dadd45f5e7785bc329cd325ba571d63",
+          "status": "passed-scoped-browser"
+        }
+      ]
+    },
+    "363": {
+      "handoffSha256": "04c8dab7857a5ffcfc6f7682b15aba514dae41d0d4fc763c085bbf42a515fd2e",
+      "routes": [
+        {
+          "route": "/",
+          "report": ".local\\nov20-I3-363-normal\\report.json",
+          "reportSha256": "491583e08a529251aaca6a7a1af76a46f1282b97e618e9fb1e0a2718bd74fbbf",
+          "receiptSha256": "8f1f4ac5bea1ee075935561c5c97e41f081380ee2371ebf2d1fe912d262b6b27",
+          "status": "passed-scoped-browser"
+        },
+        {
+          "route": "/office/",
+          "report": ".local\\nov20-I3-363-hosted\\report.json",
+          "reportSha256": "d3a427a33f4c1b21ded86a59932ff8f414dc6009f7663e5872d1da49835e44fd",
+          "receiptSha256": "51f84eebb1963332f5272df61120ea9a3dadd45f5e7785bc329cd325ba571d63",
+          "status": "passed-scoped-browser"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Windows headless Chromium only; no native/other-OS acceptance.",
+    "362 acceptance is vertical. Four horizontal group-focus observations per route remain unaccepted/outside this scope.",
+    "Synthetic disabled CSS is not engine-disabled Delete behavior.",
+    "356 early reopened gallery/marker visibility and toast-transition limits preserved."
+  ]
+}

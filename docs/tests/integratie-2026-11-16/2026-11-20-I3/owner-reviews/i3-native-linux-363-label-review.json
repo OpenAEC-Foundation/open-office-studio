@@ -1,0 +1,111 @@
+{
+  "derivedFromOriginalSha256": "282710ad1c529b57aa4fd102936a1db84984a3304abc12864436907091402fd8",
+  "redaction": "Personal workspace/user-profile prefixes replaced; factual values and original hashes retained.",
+  "review": {
+    "schemaVersion": 1,
+    "issue": 363,
+    "ciRun": "44729688383",
+    "applicationSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "qaWorkflowHead": "322abb24a8284669d99fdb3073c0a4d20f1b502d",
+    "externalModuleCommit": "2e46022bc2bdd8d1cf810c2130f00fa74ac333ba",
+    "externalModuleSha256": "ea0bc507853eff831aaf91d2c5c9bbe6f4ab8dd3d48bd4302321f9f8345f3614",
+    "identityAttribution": "APP/tree/module identities are read from the bounded label report; QA head and native PID supplied by parent. Parent separately audits workflow API, package/ELF/executable hashes, PID ownership and PNG integrity.",
+    "artifactRoot": "[private-workspace]/work/oos-integratie-2026-11-16-9635/.local/nov20-ci/44729688383/writer361-native-Linux-7f126f4b8e5269a54388cf78c48c78d2acc0daa1/writer361-native/363-proof",
+    "reviewedFiles": [
+      "writer363-native-labels.png",
+      "writer363-native-labels.json"
+    ],
+    "status": "bounded_English_native_label_evidence_reviewed",
+    "moduleStatusAsRead": "passed",
+    "callerOverallStatusAsReported": "failed",
+    "overallNativePass": false,
+    "overallNativePassChanged": false,
+    "overallStatusBoundary": "Caller failure/nativePass:false remains due to separate #361 Find and #362 readiness checks. This review neither investigates those failures nor classifies them as #363 label failures or general application acceptance.",
+    "nativeContextAsRead": {
+      "host": "linux",
+      "browserOnly": false,
+      "nativePidAsReportedByParent": 4756,
+      "nativeGate": {
+        "ownedProfile": true,
+        "linuxHost": true,
+        "tauriObject": true,
+        "tauriInvoke": "function",
+        "noDiagnostics": true,
+        "writerVisible": true
+      },
+      "language": "en",
+      "group": "Styles",
+      "groupVisible": true,
+      "styleName": "Normal",
+      "packageAndExecutableProvenance": "Caller-provided delegated provenance; this module/review does not independently check the installed OS executable"
+    },
+    "controlsAsRead": [
+      {
+        "name": "Styles pane",
+        "title": "Styles pane \u00b7 Ctrl+Alt+Shift+S",
+        "text": "Styles pane",
+        "visible": true,
+        "disabled": false
+      },
+      {
+        "name": "New Style\u2026",
+        "title": "New Style from Selection\u2026",
+        "text": "New Style\u2026",
+        "visible": true,
+        "disabled": false
+      },
+      {
+        "name": "Update Normal",
+        "title": "Update Normal to Match Selection",
+        "text": "Update Normal",
+        "visible": true,
+        "disabled": false
+      },
+      {
+        "name": "Modify Style: Normal",
+        "title": "Modify Style: Normal",
+        "text": "Modify Style: Normal",
+        "visible": true,
+        "disabled": false
+      },
+      {
+        "name": "Style Set\u2026",
+        "title": "Style Set and Theme Fonts",
+        "text": "Style Set\u2026",
+        "visible": true,
+        "disabled": false
+      }
+    ],
+    "visualAndReportFinding": "The original PNG shows readable English glyphs for the management controls; Update Normal and Modify Style: Normal agree with the full report names/text/title and Normal interpolation. All five reported controls and their group are visible; names/text/title are nonempty and contain no raw style keys or unresolved placeholders. No visible management raw keys in the PNG. Ordinary width ellipsis remains for new-style/style-set, and gallery/management captions both read Styles.",
+    "screenshotSha256AsReported": "a09a3b2ccf6109ef3cde893f3168630baddb7fda0271f283b3ab0a8f8ed56793",
+    "cleanupAsReadOrParentReported": {
+      "previousTab": "Home",
+      "tabRestoreNeeded": true,
+      "tabRestored": true,
+      "actionsReleased": true,
+      "callerOwnedApplicationClosedAsReportedByParent": true,
+      "moduleOwnershipBoundary": "Caller owns the application/session and its closure; module restores tab/releases actions only",
+      "newReviewResourcesCreated": false
+    },
+    "acceptanceScope": "Positive evidence for the five current English native Linux style-management names/text/title and Normal interpolation at this one viewport, with successful module tab/action cleanup. This is separate from the unsuccessful overall native caller result.",
+    "limits": [
+      "Current English UI only; no native Dutch or fallback-language acceptance",
+      "HTML title strings are recorded; no complete visible native hover-tooltip matrix",
+      "Reported disabled:false values are one observation, not full disabled-state or keyboard/focus coverage",
+      "No narrow-window/viewport matrix or unique-group-caption claim",
+      "No document-body, table rendering, missing-text-renderer, save/reopen or full application acceptance",
+      "Source/package/PID/ELF binding and raw report/PNG digests remain the separate parent audit",
+      "No historical I2 evidence is relabelled as I3"
+    ],
+    "ownership": {
+      "newTestsBuildsAppsSessionsOrCaptures": false,
+      "cuaBrowserGuiOrRecordingRuntimeStarted": false,
+      "rootWrites": false,
+      "ciStarted": false,
+      "committedOrPushed": false,
+      "changes": "Only this ignored JSON in the agent worktree",
+      "furtherWorkStarted": false
+    }
+  }
+}

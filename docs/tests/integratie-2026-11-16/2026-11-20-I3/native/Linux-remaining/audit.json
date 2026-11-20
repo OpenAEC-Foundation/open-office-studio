@@ -1,0 +1,147 @@
+{
+  "run": 44729688383,
+  "artifactId": 14626136747,
+  "zipSha256": "63a915298b5bc048f92bdc9b06fb63c1a48fcacf38849aa48dd3037a4ebaf29b",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "harnessCommit": "322abb24a8284669d99fdb3073c0a4d20f1b502d",
+  "canonicalRun": 44715026752,
+  "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+  "installedExecutableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+  "independentSessions": [
+    {
+      "phase": "independent-362",
+      "pid": 4645,
+      "ready": false
+    },
+    {
+      "phase": "independent-363",
+      "pid": 4756,
+      "ready": true
+    },
+    {
+      "phase": "361-remaining",
+      "pid": 4832,
+      "ready": true
+    },
+    {
+      "phase": "361-remaining",
+      "pid": 4923,
+      "ready": true
+    }
+  ],
+  "writer361": {
+    "overallStatus": "failed",
+    "reusedChecks": 17,
+    "newRemainingChecks": 16,
+    "remainingCoverageStatus": "passed",
+    "retainedFailure": "Find input Undo: abc remained; cause unproven, not retried here",
+    "savedDocxSha256": "677076dc7081eb5aea829397c6b5fa1a36de8f7312f8803f03770b558fcc4eb4",
+    "exactSavedRows": [
+      [
+        "SAVED361 alpha",
+        "",
+        "beta",
+        ""
+      ],
+      [
+        "",
+        "",
+        "",
+        "omega"
+      ],
+      [
+        "delta",
+        "",
+        "",
+        ""
+      ]
+    ],
+    "fullExitAndDifferentReopenPID": true
+  },
+  "writer363": {
+    "status": "passed English five names/hints and Normal; owner visual review separate",
+    "screenshotSha256": "a09a3b2ccf6109ef3cde893f3168630baddb7fda0271f283b3ab0a8f8ed56793",
+    "actionsReleasedAndTabRestored": true
+  },
+  "writer362": {
+    "status": "not executed: caller readiness rejected header-only fixture",
+    "fixtureHeaders": 2,
+    "fixtureCellTexts": [
+      "Alpha",
+      "Beta",
+      "Gamma",
+      "One",
+      "Two",
+      "Three"
+    ],
+    "rawReadinessAnatomy": {
+      "inputPortals": [
+        {
+          "panel": null,
+          "rect": {
+            "x": 521,
+            "height": 18.328125,
+            "width": 1,
+            "y": 411.984375
+          },
+          "parent": "BODY",
+          "tag": "TEXTAREA"
+        }
+      ],
+      "tabs": [
+        {
+          "name": "Start",
+          "selected": "false",
+          "controls": "office-tabpaneel-start"
+        },
+        {
+          "name": "writer362-table.docx",
+          "selected": "true",
+          "controls": "office-tabpaneel-1"
+        }
+      ],
+      "fonts": "loaded",
+      "panels": [
+        {
+          "tables": [
+            {
+              "columns": "3",
+              "rows": "2"
+            }
+          ],
+          "canvases": [
+            {
+              "height": 1056,
+              "rect": {
+                "x": 401,
+                "height": 1056,
+                "width": 816,
+                "y": 252
+              },
+              "width": 816
+            }
+          ],
+          "id": "office-tabpaneel-1",
+          "blocked": false
+        },
+        {
+          "tables": [],
+          "canvases": [],
+          "id": "office-tabpaneel-start",
+          "blocked": true
+        }
+      ]
+    },
+    "causeEvidence": "SDK maps isHeader to role=columnheader; caller only read role=cell. No362 product failure established."
+  },
+  "cleanup": {
+    "ownedApplicationClosed": true
+  },
+  "visualReview": {
+    "rootOriginalSeriallyViewed": "reopened.png",
+    "sha256": "72823654e0d4d1433aea618c4a695b9ab2a7f07829b6f49499af6125c5ac372f",
+    "observed": "Complete SAVED361 alpha/beta/omega/delta visible after new process reopen; font-substitution notice outside body. XML independently establishes full3x4 including empty cells.",
+    "owner363Review": "separate; not implied by root saved-document image review"
+  }
+}

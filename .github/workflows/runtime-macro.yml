@@ -1,0 +1,44 @@
+name: Private runtime macro fixture control
+on:
+  pull_request:
+    paths:
+      - .github/workflows/runtime-macro.yml
+      - assets/kantoorruntime.json
+      - scripts/controleer-macroproef.py
+      - scripts/maak-runtime-macroproef.mjs
+      - scripts/voorbereiden-kantoorruntime.mjs
+      - src-tauri/src/conversieprofiel.xcu
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  macro-fixture:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json') }}
+      - run: node scripts/voorbereiden-kantoorruntime.mjs
+      - run: python -m pip install psutil==7.0.0
+      - run: node scripts/maak-runtime-macroproef.mjs .local/runtime-macro
+      - name: Generated harmless on-load macro must actually execute in the positive control
+        run: python scripts/controleer-macroproef.py src-tauri/resources/kantoorruntime/program/soffice.com .local/runtime-macro/macro-guard.odt .local/runtime-macro/macro-was-executed.txt .local/runtime-macro/positive.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-macro-control
+          path: .local/runtime-macro
+          include-hidden-files: true
+          if-no-files-found: warn

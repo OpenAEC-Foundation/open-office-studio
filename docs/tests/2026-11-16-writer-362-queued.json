@@ -1,0 +1,438 @@
+{
+  "Issue": 362,
+  "Branch": "codex/writer-ribbon-clipping-362",
+  "Commit": "882932d4400349796bfa14bf0d1beb318af67cfb",
+  "Base": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+  "ChangedFiles": [
+    "src/lint/tekst.tsx",
+    "src/stijl/openaec-office.css",
+    "scripts/proef-writer-linthoogte.mjs"
+  ],
+  "ProductChanges": "Writer-only114px ribbon; Text date/time and field stacks side-by-side; Delete Row/Column normal labeled buttons with compact label retention",
+  "Proofs": [
+    {
+      "Label": "ribbon-baseline",
+      "Sha256": "75908267d4a7900fdfd1f4df4cff24544bfdeeccab35669e9a10db77d78e2481",
+      "Source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+      "Dirty": null,
+      "Route": null,
+      "Cases": 24,
+      "Clipped": 36,
+      "File": "ribbon-baseline/report.json"
+    },
+    {
+      "Label": "ribbon-final-normal",
+      "Sha256": "c434b529edf6ee28ff3d0030b9bc5842448e41533237d4995d056823cc95dca4",
+      "Source": "882932d4400349796bfa14bf0d1beb318af67cfb",
+      "Dirty": "",
+      "Route": "/",
+      "Cases": 60,
+      "Clipped": 0,
+      "File": "ribbon-final-normal/report.json"
+    },
+    {
+      "Label": "ribbon-final-hosted",
+      "Sha256": "289303acfd9fed6e16ddbed30a1cea1fbee57b8ee0a4229c585cae0582481f5b",
+      "Source": "882932d4400349796bfa14bf0d1beb318af67cfb",
+      "Dirty": "",
+      "Route": "/office/",
+      "Cases": 60,
+      "Clipped": 0,
+      "File": "ribbon-final-hosted/report.json"
+    }
+  ],
+  "Images": [
+    {
+      "Bytes": 2534,
+      "Sha256": "fe96df84b855e8282d5f97be64fc0d4c58e11b5fbcfbe8979a5069330ebb8b0f",
+      "File": "ribbon-baseline/forge-1280-Alignment.png"
+    },
+    {
+      "Bytes": 1391,
+      "Sha256": "27fc977004115361c1fbf92092ed1a87fdb545d0deff22b64103260a38ff6ab7",
+      "File": "ribbon-baseline/forge-1280-Data.png"
+    },
+    {
+      "Bytes": 1466,
+      "Sha256": "0a005ee67023ce3caf1b747df9255efd70e6f296d030e72b5d7d0ad26b0f9b31",
+      "File": "ribbon-baseline/forge-1280-Delete.png"
+    },
+    {
+      "Bytes": 4116,
+      "Sha256": "d2780487168c6e4fd9431a18e014601547067afb7c850624f74232a00db5ae76",
+      "File": "ribbon-baseline/forge-1280-Text.png"
+    },
+    {
+      "Bytes": 2611,
+      "Sha256": "eaa80f51d31774bf11a7791514cdfe82de96a7926f422f502f252bf362f5ca2a",
+      "File": "ribbon-baseline/forge-1600-Alignment.png"
+    },
+    {
+      "Bytes": 3299,
+      "Sha256": "964e35af0580215c410678d0457a8eb073ee623f621c73547e349c322a7a18c8",
+      "File": "ribbon-baseline/forge-1600-Data.png"
+    },
+    {
+      "Bytes": 3138,
+      "Sha256": "a84041560ae11a55ae30fa6f3e2132d1fb10f7c24810648cd573ed6f89d26012",
+      "File": "ribbon-baseline/forge-1600-Delete.png"
+    },
+    {
+      "Bytes": 5928,
+      "Sha256": "68db4cd9cf1e25c1c0d0034a1dd1aec0bdd6e46d21781d13a0926b3ea4c1288a",
+      "File": "ribbon-baseline/forge-1600-Text.png"
+    },
+    {
+      "Bytes": 2626,
+      "Sha256": "03c28dff54999f7530e43e3f9ecab31ed2caf4b111b86370ea6282871e93f572",
+      "File": "ribbon-baseline/forge-800-Alignment.png"
+    },
+    {
+      "Bytes": 1383,
+      "Sha256": "a57eb587bb3133b0f6571214cb1c9b4b6ad5923eb8efbbc40e1108787c9cbe5e",
+      "File": "ribbon-baseline/forge-800-Data.png"
+    },
+    {
+      "Bytes": 1360,
+      "Sha256": "e728326f6ea76c6bd7964bbb113772372ccdd86ca96f349c00c3935f6258a23c",
+      "File": "ribbon-baseline/forge-800-Delete.png"
+    },
+    {
+      "Bytes": 1509,
+      "Sha256": "0ea101651f95fb7da9f2338907bd8e8bddac056369c4ccf540be0933699ca712",
+      "File": "ribbon-baseline/forge-800-Text.png"
+    },
+    {
+      "Bytes": 2489,
+      "Sha256": "57b2f284e2939228f268cab2375f295c7b2c87d858f9c83899baa6ab9695d340",
+      "File": "ribbon-baseline/light-1280-Alignment.png"
+    },
+    {
+      "Bytes": 1375,
+      "Sha256": "c9ddf98dfcc363935154ba8794d3af58914a3c692bcaee11ca8e79dcf0ee7594",
+      "File": "ribbon-baseline/light-1280-Data.png"
+    },
+    {
+      "Bytes": 1426,
+      "Sha256": "af99cac2e11694fef8e18d91ce8030b3eb03e16ebdb24a65d44ce5f08f1da192",
+      "File": "ribbon-baseline/light-1280-Delete.png"
+    },
+    {
+      "Bytes": 4075,
+      "Sha256": "c93c29f8f3f1e655b920f2cb17096891fca98147cc179a9826f1882fa594ef2a",
+      "File": "ribbon-baseline/light-1280-Text.png"
+    },
+    {
+      "Bytes": 2529,
+      "Sha256": "f3cdc4c089daa5bec73f6095ca2e989f5e842c55b59978419144730e2957e8d7",
+      "File": "ribbon-baseline/light-1600-Alignment.png"
+    },
+    {
+      "Bytes": 3290,
+      "Sha256": "746f7552d0b89afd8c25f34ac845bffd6db7cf2cd7f3bb4a89ae58c879584df2",
+      "File": "ribbon-baseline/light-1600-Data.png"
+    },
+    {
+      "Bytes": 3194,
+      "Sha256": "8b4f28689d84ddc4dec0c14a163d2bbedce1860f2e142190356fb6223ab85ffb",
+      "File": "ribbon-baseline/light-1600-Delete.png"
+    },
+    {
+      "Bytes": 5872,
+      "Sha256": "1924f87163b22c6b39ae9e609750465dc671c93c81a8341112649669fc86a525",
+      "File": "ribbon-baseline/light-1600-Text.png"
+    },
+    {
+      "Bytes": 2539,
+      "Sha256": "fd367d9c0692297cb11dae28023608aa059ccac8bfc392e199407874ed8c2b8b",
+      "File": "ribbon-baseline/light-800-Alignment.png"
+    },
+    {
+      "Bytes": 1378,
+      "Sha256": "f7fa7df437df6f1e094be02c78f538aa60d2855e8e75efd913e5f90b87fe50dd",
+      "File": "ribbon-baseline/light-800-Data.png"
+    },
+    {
+      "Bytes": 1343,
+      "Sha256": "2cd91d454b4d9b8d47c86e93e5720bfcd213b20055eb74684266d4096f5bcc5c",
+      "File": "ribbon-baseline/light-800-Delete.png"
+    },
+    {
+      "Bytes": 1518,
+      "Sha256": "7ea26353a3a8e245f6d4787c08cd4a18cfa10e1449f4c17b09d95834ed1e7750",
+      "File": "ribbon-baseline/light-800-Text.png"
+    },
+    {
+      "Bytes": 3145,
+      "Sha256": "dd3bcad077d26f42d5138279a6188777c1af1ccf39d9db615f822db48023f54f",
+      "File": "ribbon-final-normal/forge-1280-Alignment.png"
+    },
+    {
+      "Bytes": 7436,
+      "Sha256": "b31b47761144d310553873f9a2a8d70351ef5676cf50d0b052ec259082d359de",
+      "File": "ribbon-final-normal/forge-1280-Data.png"
+    },
+    {
+      "Bytes": 4231,
+      "Sha256": "f41ef88eee97c059d6e81bb6b32cd47b83999893b1b10e0188484192e5ac8d6e",
+      "File": "ribbon-final-normal/forge-1280-Delete.png"
+    },
+    {
+      "Bytes": 5305,
+      "Sha256": "35bf2a5659dd9e5f46cee620c183ce2e6d5bb23892ecea08930c12bbc254a6e1",
+      "File": "ribbon-final-normal/forge-1280-Text.png"
+    },
+    {
+      "Bytes": 3227,
+      "Sha256": "2d8a58ebedd686656e69796b2b75227a937db35ca36737d9b682328e2e1b5eee",
+      "File": "ribbon-final-normal/forge-1600-Alignment.png"
+    },
+    {
+      "Bytes": 4068,
+      "Sha256": "efe1d33c31ad9c66b82fe2c9f9646802b60615c3843c691940b72e8e1a605525",
+      "File": "ribbon-final-normal/forge-1600-Data.png"
+    },
+    {
+      "Bytes": 4247,
+      "Sha256": "2e8905ae0678f7fc02a3b0e2fa031b5b7c68a542af564f7c4cb14a3814100e4f",
+      "File": "ribbon-final-normal/forge-1600-Delete.png"
+    },
+    {
+      "Bytes": 8260,
+      "Sha256": "15bd57f33852a82a4617a53f72adbae3b9b590f7ee0c36dd367f898d8e3a4b8d",
+      "File": "ribbon-final-normal/forge-1600-Text.png"
+    },
+    {
+      "Bytes": 3246,
+      "Sha256": "6e8cda46f0a7ded2ff33bd43149a952ec324981cd8ab65aa2bd22d04b64b500f",
+      "File": "ribbon-final-normal/forge-800-Alignment.png"
+    },
+    {
+      "Bytes": 7435,
+      "Sha256": "78cd893810a392d174197c181b4a678d72427c0239261f9f3e140fe8599acf3d",
+      "File": "ribbon-final-normal/forge-800-Data.png"
+    },
+    {
+      "Bytes": 4244,
+      "Sha256": "715013e5d55e30a6f7b7939e81f1b065224343a697bf301363beca9a1c89300e",
+      "File": "ribbon-final-normal/forge-800-Delete.png"
+    },
+    {
+      "Bytes": 8107,
+      "Sha256": "c0a44265ad975c8031873376f8bb6988d4897670bae74070239b221f49a8187e",
+      "File": "ribbon-final-normal/forge-800-Text.png"
+    },
+    {
+      "Bytes": 3102,
+      "Sha256": "ff27cca57f9e1c5c3d06a28368566f66e86947eb2ca7f3f347b4876c986edd4b",
+      "File": "ribbon-final-normal/light-1280-Alignment.png"
+    },
+    {
+      "Bytes": 7287,
+      "Sha256": "4eb9381db7f56091d59f99b3047b9e9391754419e4eaac59b08b3423604fd48d",
+      "File": "ribbon-final-normal/light-1280-Data.png"
+    },
+    {
+      "Bytes": 4065,
+      "Sha256": "8a72651b994ae012241c4602eec0fd25457f235143ec41247890ac34c480c98d",
+      "File": "ribbon-final-normal/light-1280-Delete.png"
+    },
+    {
+      "Bytes": 5289,
+      "Sha256": "f1f01ffbef7cee0ba360aed5f12cc761b155bd64ffd950600db77ba7aa89b3b6",
+      "File": "ribbon-final-normal/light-1280-Text.png"
+    },
+    {
+      "Bytes": 3163,
+      "Sha256": "b927fe05586a6616800fc36e796c98e3a0a3f28d289295c654c27b7a976f9a64",
+      "File": "ribbon-final-normal/light-1600-Alignment.png"
+    },
+    {
+      "Bytes": 4048,
+      "Sha256": "0b81ea5013fd44e9ebfd82d79d5472ce5027ff722e219daeb4ad756af276e25d",
+      "File": "ribbon-final-normal/light-1600-Data.png"
+    },
+    {
+      "Bytes": 4159,
+      "Sha256": "0f610110932af7e34a7e16f168dc09413a18e5e0a7a538793ffc5e0581df1bc2",
+      "File": "ribbon-final-normal/light-1600-Delete.png"
+    },
+    {
+      "Bytes": 8233,
+      "Sha256": "1ab253da6aa986f9e3a21cfe6c9e2a758b7d16047c1ed7d1fd4258a9a787469f",
+      "File": "ribbon-final-normal/light-1600-Text.png"
+    },
+    {
+      "Bytes": 3183,
+      "Sha256": "0a9d2aa7df69fc3a0bacde34d68a8072bc21fa82b2c463517f1b9be6337c72d7",
+      "File": "ribbon-final-normal/light-800-Alignment.png"
+    },
+    {
+      "Bytes": 7290,
+      "Sha256": "996d31d56a541baafa7259d2303ac4c49dfa4c493ddc16b70324d86648a2a953",
+      "File": "ribbon-final-normal/light-800-Data.png"
+    },
+    {
+      "Bytes": 4071,
+      "Sha256": "131b386f650b40c9e719ce3fd41a3d257cdf9d3e689df5810f72e43f3856beb7",
+      "File": "ribbon-final-normal/light-800-Delete.png"
+    },
+    {
+      "Bytes": 7988,
+      "Sha256": "9ce0b181b1b444c27b0204a9b8f8f6c96bfc91a2c3a5a9d7f1e755f125ba1423",
+      "File": "ribbon-final-normal/light-800-Text.png"
+    },
+    {
+      "Bytes": 3145,
+      "Sha256": "dd3bcad077d26f42d5138279a6188777c1af1ccf39d9db615f822db48023f54f",
+      "File": "ribbon-final-hosted/forge-1280-Alignment.png"
+    },
+    {
+      "Bytes": 7436,
+      "Sha256": "b31b47761144d310553873f9a2a8d70351ef5676cf50d0b052ec259082d359de",
+      "File": "ribbon-final-hosted/forge-1280-Data.png"
+    },
+    {
+      "Bytes": 4231,
+      "Sha256": "f41ef88eee97c059d6e81bb6b32cd47b83999893b1b10e0188484192e5ac8d6e",
+      "File": "ribbon-final-hosted/forge-1280-Delete.png"
+    },
+    {
+      "Bytes": 5305,
+      "Sha256": "35bf2a5659dd9e5f46cee620c183ce2e6d5bb23892ecea08930c12bbc254a6e1",
+      "File": "ribbon-final-hosted/forge-1280-Text.png"
+    },
+    {
+      "Bytes": 3227,
+      "Sha256": "2d8a58ebedd686656e69796b2b75227a937db35ca36737d9b682328e2e1b5eee",
+      "File": "ribbon-final-hosted/forge-1600-Alignment.png"
+    },
+    {
+      "Bytes": 4068,
+      "Sha256": "efe1d33c31ad9c66b82fe2c9f9646802b60615c3843c691940b72e8e1a605525",
+      "File": "ribbon-final-hosted/forge-1600-Data.png"
+    },
+    {
+      "Bytes": 4247,
+      "Sha256": "2e8905ae0678f7fc02a3b0e2fa031b5b7c68a542af564f7c4cb14a3814100e4f",
+      "File": "ribbon-final-hosted/forge-1600-Delete.png"
+    },
+    {
+      "Bytes": 8260,
+      "Sha256": "15bd57f33852a82a4617a53f72adbae3b9b590f7ee0c36dd367f898d8e3a4b8d",
+      "File": "ribbon-final-hosted/forge-1600-Text.png"
+    },
+    {
+      "Bytes": 3246,
+      "Sha256": "6e8cda46f0a7ded2ff33bd43149a952ec324981cd8ab65aa2bd22d04b64b500f",
+      "File": "ribbon-final-hosted/forge-800-Alignment.png"
+    },
+    {
+      "Bytes": 7435,
+      "Sha256": "78cd893810a392d174197c181b4a678d72427c0239261f9f3e140fe8599acf3d",
+      "File": "ribbon-final-hosted/forge-800-Data.png"
+    },
+    {
+      "Bytes": 4244,
+      "Sha256": "715013e5d55e30a6f7b7939e81f1b065224343a697bf301363beca9a1c89300e",
+      "File": "ribbon-final-hosted/forge-800-Delete.png"
+    },
+    {
+      "Bytes": 8107,
+      "Sha256": "c0a44265ad975c8031873376f8bb6988d4897670bae74070239b221f49a8187e",
+      "File": "ribbon-final-hosted/forge-800-Text.png"
+    },
+    {
+      "Bytes": 3102,
+      "Sha256": "ff27cca57f9e1c5c3d06a28368566f66e86947eb2ca7f3f347b4876c986edd4b",
+      "File": "ribbon-final-hosted/light-1280-Alignment.png"
+    },
+    {
+      "Bytes": 7287,
+      "Sha256": "4eb9381db7f56091d59f99b3047b9e9391754419e4eaac59b08b3423604fd48d",
+      "File": "ribbon-final-hosted/light-1280-Data.png"
+    },
+    {
+      "Bytes": 4065,
+      "Sha256": "8a72651b994ae012241c4602eec0fd25457f235143ec41247890ac34c480c98d",
+      "File": "ribbon-final-hosted/light-1280-Delete.png"
+    },
+    {
+      "Bytes": 5289,
+      "Sha256": "f1f01ffbef7cee0ba360aed5f12cc761b155bd64ffd950600db77ba7aa89b3b6",
+      "File": "ribbon-final-hosted/light-1280-Text.png"
+    },
+    {
+      "Bytes": 3163,
+      "Sha256": "b927fe05586a6616800fc36e796c98e3a0a3f28d289295c654c27b7a976f9a64",
+      "File": "ribbon-final-hosted/light-1600-Alignment.png"
+    },
+    {
+      "Bytes": 4048,
+      "Sha256": "0b81ea5013fd44e9ebfd82d79d5472ce5027ff722e219daeb4ad756af276e25d",
+      "File": "ribbon-final-hosted/light-1600-Data.png"
+    },
+    {
+      "Bytes": 4159,
+      "Sha256": "0f610110932af7e34a7e16f168dc09413a18e5e0a7a538793ffc5e0581df1bc2",
+      "File": "ribbon-final-hosted/light-1600-Delete.png"
+    },
+    {
+      "Bytes": 8233,
+      "Sha256": "1ab253da6aa986f9e3a21cfe6c9e2a758b7d16047c1ed7d1fd4258a9a787469f",
+      "File": "ribbon-final-hosted/light-1600-Text.png"
+    },
+    {
+      "Bytes": 3183,
+      "Sha256": "0a9d2aa7df69fc3a0bacde34d68a8072bc21fa82b2c463517f1b9be6337c72d7",
+      "File": "ribbon-final-hosted/light-800-Alignment.png"
+    },
+    {
+      "Bytes": 7290,
+      "Sha256": "996d31d56a541baafa7259d2303ac4c49dfa4c493ddc16b70324d86648a2a953",
+      "File": "ribbon-final-hosted/light-800-Data.png"
+    },
+    {
+      "Bytes": 4071,
+      "Sha256": "131b386f650b40c9e719ce3fd41a3d257cdf9d3e689df5810f72e43f3856beb7",
+      "File": "ribbon-final-hosted/light-800-Delete.png"
+    },
+    {
+      "Bytes": 7988,
+      "Sha256": "9ce0b181b1b444c27b0204a9b8f8f6c96bfc91a2c3a5a9d7f1e755f125ba1423",
+      "File": "ribbon-final-hosted/light-800-Text.png"
+    }
+  ],
+  "Checks": {
+    "Vitest": "327files pass,3486passed7skipped in full run;4skipped encryption fixtures subsequently downloaded by pinned SHA and exact14-testfile passes0skip; final distinctcoverage3490passes3existing skips, no fullsuite rerun claimed",
+    "Python": "58tests,57pass1skip",
+    "Types": "tsc noEmit passes in both normal and hosted build",
+    "NormalBuild": "pass40.68s",
+    "HostedBuild": "pass59.27s,strict relative/noexternalresources pass",
+    "Geometry": "60measurements each normal / and actual /office/,light+forge1600/1280/800,normal/importedactive/4pxkeyboardfocus andkeyboardcollapsedmenu,0clipped0JSerrors",
+    "Formatting": "Prettier probe and git diff check pass"
+  },
+  "Limits": [
+    "No native Windows/Linux/macOS fixed-package GUI acceptance; only Windows Chromium151.0.7922.34 rendered browser measurements",
+    "No new platform CI matrix started; central integration owns combined checks",
+    "No separate native package build locally; cargo unavailable; normal/hosted prebuild reuses exact-source spelling cache663989181ec0cd4b",
+    "Active state matrix uses actual imported headerrows/bottom-aligned DOCX, not functional repeated-header-command acceptance across widths",
+    "No local Computer Use session/capture started; user devbuild untouched",
+    "No Styles363 or Undo361 fix included; no main merge/push"
+  ],
+  "SupersededAttempts": [
+    "Initialfixedselector tekst corrected to actual docx after geometry caught unchanged69px content",
+    "Earlier geometry harness used sequential table mutation clicks; narrowed to real imported active states and fresh contexts; incomplete outputs retained under.local"
+  ],
+  "Pushed": true,
+  "PrCreated": false,
+  "CompletedAtUtc": "2026-11-16T13:36:19.7573719Z",
+  "CoordinatorAudit": {
+    "allProducerReportAndImageHashesVerified": true,
+    "privateCopiesSaved": true,
+    "remoteBranchHeadVerified": true,
+    "notIntegrated": true,
+    "notSamePointAsH": true,
+    "nativePlatformMatrixMissing": true
+  }
+}

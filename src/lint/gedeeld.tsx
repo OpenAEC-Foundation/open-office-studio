@@ -17,6 +17,7 @@ import {
   type PptxSelectCommandId,
 } from "@betteroffice/pptx-react";
 import { Undo2, Redo2, ZoomIn, type LucideIcon } from "lucide-react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { formatProcent } from "../i18n/opmaak";
 import { LettertypeKeuze } from "../lettertypen/LettertypeKeuze";
@@ -27,7 +28,12 @@ import {
   voorbereidPresentatie,
   voorbereidRekenblad,
 } from "../lettertypen/koppeling";
-import { useEditorApi } from "./editorApi";
+import {
+  useEditorApi,
+  useEditorZichtbaar,
+  zichtbaarElement,
+} from "./editorApi";
+import { kolomMetDocumentfocus } from "./tekst-kolomfocus";
 import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
 import {
   Groep,
@@ -43,7 +49,28 @@ export function W<K extends DocxCommandId>({
   ...props
 }: Knop & { id: K; args?: DocxCommandArgs[K] }) {
   const opdracht = useHerhaalbaar(id, useDocxCommand(id, args), args);
-  return <OpdrachtKnop {...props} opdracht={opdracht} />;
+  const editor = useEditorApi().tekst;
+  const zichtbaar = useEditorZichtbaar();
+  const recent = useRef({ editor, zichtbaar });
+  recent.current = { editor, zichtbaar };
+  const kolom =
+    id === "tableAction" &&
+    (args === "addColumnLeft" || args === "addColumnRight");
+  const metFocus = kolom
+    ? {
+        ...opdracht,
+        execute: (waarde?: never) =>
+          kolomMetDocumentfocus(() => opdracht.execute(waarde), {
+            editor: () => recent.current.editor(),
+            eigenaar: () => recent.current.editor,
+            zichtbaar: () => recent.current.zichtbaar,
+            actief: () => document.activeElement,
+            dialoogOpen: () =>
+              !!zichtbaarElement("[role='dialog'], dialog[open]"),
+          }),
+      }
+    : opdracht;
+  return <OpdrachtKnop {...props} opdracht={metFocus} />;
 }
 export function C<K extends XlsxCommandId>({
   id,

@@ -1,4 +1,6 @@
 use serde_json::{json, Value};
+#[path = "kantoorruntime.rs"]
+mod kantoorruntime;
 use std::{
     collections::HashMap,
     fs,
@@ -202,6 +204,7 @@ fn filterspecificatie(doel: &str, naam: &str, standaard: &str, opties: &Opties) 
 pub enum Bron {
     Omgeving,
     Instelling,
+    Meegeleverd,
     Automatisch,
 }
 impl Bron {
@@ -209,6 +212,7 @@ impl Bron {
         match self {
             Bron::Omgeving => "omgeving",
             Bron::Instelling => "instelling",
+            Bron::Meegeleverd => "meegeleverd",
             Bron::Automatisch => "automatisch",
         }
     }
@@ -299,11 +303,19 @@ pub fn controleer_keuze(pad: &Path) -> Result<PathBuf, String> {
 
 /// Omgeving gaat voor; daarna de keuze in de app; daarna automatisch zoeken.
 pub fn vind_programma(instelling: Option<&Path>) -> Option<(PathBuf, Bron)> {
+    vind_programma_met_bundel(instelling, None)
+}
+
+/// Expliciete keuzes blijven voorgaan; de standaardinstallatie gebruikt haar eigen runtime.
+pub fn vind_programma_met_bundel(instelling: Option<&Path>, resources: Option<&Path>) -> Option<(PathBuf, Bron)> {
     if let Some(pad) = uit_omgeving(PROGRAMMA_VARIABELE) {
         return Some((pad, Bron::Omgeving));
     }
     if let Some(pad) = instelling.and_then(|pad| controleer_keuze(pad).ok()) {
         return Some((pad, Bron::Instelling));
+    }
+    if let Some(pad) = resources.and_then(kantoorruntime::vind) {
+        return Some((pad, Bron::Meegeleverd));
     }
     bekende_paden()
         .into_iter()
@@ -322,6 +334,11 @@ pub fn lees_instelling(app: &tauri::AppHandle) -> Option<PathBuf> {
     let tekst = fs::read_to_string(instellingenbestand(app)?).ok()?;
     let waarde: Value = serde_json::from_str(&tekst).ok()?;
     waarde["programma"].as_str().map(PathBuf::from)
+}
+
+pub fn appresources(app: &tauri::AppHandle) -> Option<PathBuf> {
+    use tauri::Manager;
+    app.path().resource_dir().ok()
 }
 fn bewaar_instelling(app: &tauri::AppHandle, pad: Option<&Path>) -> Result<(), String> {
     let bestand = instellingenbestand(app).ok_or_else(|| crate::taal::t("errors.conversion.appDataDirUnavailable"))?;
@@ -470,12 +487,16 @@ pub fn versie(programma: &Path) -> Option<String> {
 }
 
 pub fn status(instelling: Option<&Path>) -> Value {
+    status_met_bundel(instelling, None)
+}
+
+pub fn status_met_bundel(instelling: Option<&Path>, resources: Option<&Path>) -> Value {
     let profiel = if uit_omgeving(PROFIEL_VARIABELE).is_some() {
         "eigen"
     } else {
         "veilig"
     };
-    match vind_programma(instelling) {
+    match vind_programma_met_bundel(instelling, resources) {
         Some((pad, bron)) => json!({
             "gevonden": true,
             "pad": pad.to_string_lossy(),
@@ -516,11 +537,18 @@ pub fn converteer_met(
     opties: &Opties,
     instelling: Option<&Path>,
 ) -> Result<Vec<u8>, String> {
+    converteer_met_bundel(bytes, bron, doel, module, opties, instelling, None)
+}
+
+pub fn converteer_met_bundel(
+    bytes: &[u8], bron: &str, doel: &str, module: &str, opties: &Opties,
+    instelling: Option<&Path>, resources: Option<&Path>,
+) -> Result<Vec<u8>, String> {
     if bytes.is_empty() || bytes.len() as u64 > MAX_BYTES {
         return Err(crate::taal::t("errors.conversion.inputSize"));
     }
     let (naam, standaard) = filter(bron, doel, module)?;
-    let (programma, _) = vind_programma(instelling).ok_or_else(|| crate::taal::t("errors.conversion.runtimeMissing"))?;
+    let (programma, _) = vind_programma_met_bundel(instelling, resources).ok_or_else(|| crate::taal::t("errors.conversion.runtimeMissing"))?;
     let map = werkmap(&programma)?;
     let invoer = map.path().join(format!("invoer.{bron}"));
     let uit = map.path().join("uit");
@@ -577,7 +605,8 @@ pub fn converteer_met(
 #[tauri::command]
 pub async fn conversie_status(app: tauri::AppHandle) -> Result<Value, String> {
     let instelling = lees_instelling(&app);
-    tauri::async_runtime::spawn_blocking(move || status(instelling.as_deref()))
+    let resources = appresources(&app);
+    tauri::async_runtime::spawn_blocking(move || status_met_bundel(instelling.as_deref(), resources.as_deref()))
         .await
         .map_err(|e| e.to_string())
 }
@@ -594,7 +623,8 @@ pub async fn kies_conversieprogramma(app: tauri::AppHandle) -> Result<Option<Val
     };
     let pad = controleer_keuze(bestand.path())?;
     bewaar_instelling(&app, Some(&pad))?;
-    tauri::async_runtime::spawn_blocking(move || Some(status(Some(&pad))))
+    let resources = appresources(&app);
+    tauri::async_runtime::spawn_blocking(move || Some(status_met_bundel(Some(&pad), resources.as_deref())))
         .await
         .map_err(|e| e.to_string())
 }
@@ -603,7 +633,8 @@ pub async fn kies_conversieprogramma(app: tauri::AppHandle) -> Result<Option<Val
 #[tauri::command]
 pub async fn wis_conversieprogramma(app: tauri::AppHandle) -> Result<Value, String> {
     bewaar_instelling(&app, None)?;
-    tauri::async_runtime::spawn_blocking(|| status(None))
+    let resources = appresources(&app);
+    tauri::async_runtime::spawn_blocking(move || status_met_bundel(None, resources.as_deref()))
         .await
         .map_err(|e| e.to_string())
 }
@@ -749,6 +780,46 @@ mod tests {
                 pad.display()
             );
         }
+    }
+
+    #[test]
+    #[ignore = "Vereist de uitgepakte standaardinstaller met meegeleverde runtime"]
+    fn gebundelde_runtime_werkt_zonder_externe_installatie() {
+        assert!(std::env::var_os(PROGRAMMA_VARIABELE).is_none(), "No converter override is allowed in this probe");
+        assert!(std::env::var_os(PROFIEL_VARIABELE).is_none(), "The standard safe profile must be used");
+        let resources = PathBuf::from(std::env::var_os("OFFICE_BUNDLE_TEST_RESOURCES").expect("Set the extracted application's resource directory"));
+        let (program, source) = vind_programma_met_bundel(None, Some(&resources)).expect("No bundled runtime in the extracted package");
+        assert_eq!(source, Bron::Meegeleverd);
+        let runtime_status = status_met_bundel(None, Some(&resources));
+        assert_eq!(runtime_status["bron"], "meegeleverd");
+        assert_eq!(runtime_status["profiel"], "veilig");
+        eprintln!("Bundled runtime: {} / {:?}", program.display(), runtime_status["versie"]);
+        let output = PathBuf::from(std::env::var_os("OFFICE_BUNDLE_TEST_OUTPUT").expect("Set the probe output directory"));
+        fs::create_dir_all(&output).unwrap();
+        let mut timings = Vec::new();
+        for (module, name, formats) in [("docx", "Ontwerpnotitie", ["odt", "doc", "pdf"]), ("xlsx", "Materiaaloverzicht", ["ods", "xls", "pdf"]), ("pptx", "Ontwerpvisie", ["odp", "ppt", "pdf"])] {
+            let original = fs::read(Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("../docs/voorbeelden/{name}.{module}"))).unwrap();
+            for format in formats {
+                let started = Instant::now();
+                let exported = converteer_met_bundel(&original, module, format, module, &Opties::default(), None, Some(&resources)).unwrap();
+                if format == "pdf" { assert!(exported.starts_with(b"%PDF-")); }
+                else {
+                    let reopened = converteer_met_bundel(&exported, format, module, module, &Opties::default(), None, Some(&resources)).unwrap();
+                    assert!(reopened.starts_with(b"PK"));
+                    fs::write(output.join(format!("{name}-via-{format}.{module}")), reopened).unwrap();
+                }
+                fs::write(output.join(format!("{name}.{format}")), exported).unwrap();
+                timings.push(json!({"module":module,"format":format,"roundTripMs":started.elapsed().as_millis()}));
+            }
+        }
+        let macro_file = PathBuf::from(std::env::var_os("OFFICE_BUNDLE_MACRO_FIXTURE").expect("Set the harmless macro test fixture"));
+        let macro_marker = PathBuf::from(std::env::var_os("OFFICE_BUNDLE_MACRO_MARKER").expect("Set the harmless marker path"));
+        assert!(!macro_marker.exists());
+        let source = fs::read(macro_file).unwrap();
+        let converted = converteer_met_bundel(&source, "odt", "docx", "docx", &Opties::default(), None, Some(&resources)).unwrap();
+        assert!(converted.starts_with(b"PK"));
+        assert!(!macro_marker.exists(), "An on-load Basic macro must never execute during conversion");
+        fs::write(output.join("native-result.json"), serde_json::to_vec_pretty(&json!({"status":runtime_status,"timings":timings,"macrosDisabled":true})).unwrap()).unwrap();
     }
 
     fn proefproces() -> Command {

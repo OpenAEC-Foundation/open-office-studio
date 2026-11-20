@@ -1,0 +1,173 @@
+{
+  "derivedFromOriginalSha256": "6fb7649dcf8d458822b3fb1bd7b88e1a5d5ff9aac00837867f9269c35e83373d",
+  "redaction": "Personal workspace/user-profile prefixes replaced; factual values and original hashes retained.",
+  "review": {
+    "issue": 363,
+    "status": "Separate native Linux English label module passed and artifacts verified; general nativePass stays false",
+    "applicationSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "callerHarnessCommit": "322abb24a8284669d99fdb3073c0a4d20f1b502d",
+    "moduleCommit": "2e46022bc2bdd8d1cf810c2130f00fa74ac333ba",
+    "moduleSha256": "ea0bc507853eff831aaf91d2c5c9bbe6f4ab8dd3d48bd4302321f9f8345f3614",
+    "run": 44729688383,
+    "proofArtifactId": 14626136747,
+    "officialProofDigest": "63a915298b5bc048f92bdc9b06fb63c1a48fcacf38849aa48dd3037a4ebaf29b",
+    "canonicalArtifactId": 14620765849,
+    "canonicalRun": 44715026752,
+    "canonicalArchiveSha256": "190268d6b876931e06b52a915ca0af4082238ea1f7110d3d35461b1629692699",
+    "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+    "session": {
+      "ready": true,
+      "phase": "independent-363",
+      "document": "361-table.docx",
+      "sessionId": "22eb4c18-4a3e-4780-9ad4-4ae7dd9559b7",
+      "pid": 4756,
+      "executable": "/usr/bin/open-office-studio",
+      "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156"
+    },
+    "scopedResult": {
+      "schemaVersion": 1,
+      "issue": 363,
+      "status": "passed",
+      "browserOnly": false,
+      "harnessCommit": "2e46022bc2bdd8d1cf810c2130f00fa74ac333ba",
+      "harnessSha256": "ea0bc507853eff831aaf91d2c5c9bbe6f4ab8dd3d48bd4302321f9f8345f3614",
+      "host": "linux",
+      "scope": "Existing installed Linux Tauri session; Styles-tab pointer and read-only labels only",
+      "delegatedProvenance": {
+        "commit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+        "tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+        "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+        "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+        "ownedProfile": true,
+        "verification": "Caller-provided; package, PID and installed executable are not independently checked by this module"
+      },
+      "cleanup": {
+        "tabRestoreNeeded": true,
+        "tabRestored": true,
+        "actionsReleased": true
+      },
+      "limits": [
+        "EN/NL UI only; no language injection",
+        "No style action or document edit",
+        "No app/session ownership; caller must close its resources"
+      ],
+      "nativeGate": {
+        "ownedProfile": true,
+        "linuxHost": true,
+        "tauriObject": true,
+        "tauriInvoke": "function",
+        "noDiagnostics": true,
+        "writerVisible": true
+      },
+      "language": "en",
+      "previousTab": {
+        "name": "Home",
+        "selected": true,
+        "visible": true,
+        "id": "_r_1_-start"
+      },
+      "group": {
+        "name": "Styles",
+        "buttons": [
+          {
+            "title": "Styles pane \u00b7 Ctrl+Alt+Shift+S",
+            "name": "Styles pane",
+            "disabled": false,
+            "visible": true,
+            "text": "Styles pane"
+          },
+          {
+            "title": "New Style from Selection\u2026",
+            "name": "New Style\u2026",
+            "disabled": false,
+            "visible": true,
+            "text": "New Style\u2026"
+          },
+          {
+            "title": "Update Normal to Match Selection",
+            "name": "Update Normal",
+            "disabled": false,
+            "visible": true,
+            "text": "Update Normal"
+          },
+          {
+            "title": "Modify Style: Normal",
+            "name": "Modify Style: Normal",
+            "disabled": false,
+            "visible": true,
+            "text": "Modify Style: Normal"
+          },
+          {
+            "title": "Style Set and Theme Fonts",
+            "name": "Style Set\u2026",
+            "disabled": false,
+            "visible": true,
+            "text": "Style Set\u2026"
+          }
+        ],
+        "visible": true
+      },
+      "styleName": "Normal",
+      "screenshot": {
+        "name": "writer363-native-labels.png",
+        "sha256": "a09a3b2ccf6109ef3cde893f3168630baddb7fda0271f283b3ab0a8f8ed56793"
+      },
+      "existingSessionRead": true
+    },
+    "generalNativePass": false,
+    "generalCallerStatus": "failed",
+    "preservedPriorFailure": {
+      "run": 44722019216,
+      "sha256": "ddbbde1cd4b64217d67c618daaa646abfc2b49b87cf2e66e1e0bda81a6f08d1d",
+      "status": "failed",
+      "source": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1"
+    },
+    "runtime": {
+      "driverVersion": "tauri-driver v2.1.0:",
+      "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+      "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+      "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1",
+      "display": ":99",
+      "graphics": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+      }
+    },
+    "cleanup": {
+      "module": {
+        "tabRestoreNeeded": true,
+        "tabRestored": true,
+        "actionsReleased": true
+      },
+      "caller": {
+        "ownedApplicationClosed": true
+      }
+    },
+    "evidence": {
+      "callerReportSha256": "bffce6e14943a08662112b197fe75f299eb5a09cd69dfe05f1f5b8f3ac1904fe",
+      "moduleReportSha256": "de19102b0d72f332b84abce352cbca555e070a425ebf4c1ceee8ce1908310583",
+      "screenshot": {
+        "sha256": "a09a3b2ccf6109ef3cde893f3168630baddb7fda0271f283b3ab0a8f8ed56793",
+        "width": 1600,
+        "height": 1000,
+        "format": "PNG",
+        "original": true
+      },
+      "visual": {
+        "path": ".local/i3-native-linux-363-label-review.json",
+        "sha256": "282710ad1c529b57aa4fd102936a1db84984a3304abc12864436907091402fd8"
+      }
+    },
+    "limits": [
+      "Current English UI on installed DEB/WebKitGTK in virtual X11/software graphics only; no native NL/fallback, AppImage or physical hardware acceptance",
+      "Labels/titles/current Normal interpolation and real Styles-tab pointer only; no hover-tooltip, full focus/disabled, style-command or body-renderer matrix",
+      "Module provenance is explicitly delegated to caller; this audit cross-compares recorded package/live PID/executable identities and official GitHub metadata, no local package extraction",
+      "Caller Find failure and 362 readiness failure remain; no full-app or other issue acceptance inferred",
+      "Original native probe own session closed by caller, tab/actions restored; audit started no new app/session/capture/GUI/CUA",
+      "Known ellipsis and equal Styles group captions remain; native JS console errors were not independently observed"
+    ]
+  }
+}

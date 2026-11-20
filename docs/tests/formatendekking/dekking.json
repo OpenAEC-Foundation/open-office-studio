@@ -207,11 +207,16 @@
       "modules": [
         "docx"
       ],
-      "route": "runtime",
-      "status": "no-fixture",
+      "route": "import",
+      "status": "unit",
       "sources": [],
-      "evidence": [],
-      "note": "Geen onafhankelijk EPUB-importvoorbeeld in deze suite; de bestaande EPUB-exportproef bewijst geen import."
+      "evidence": [
+        "src/import/epubbestand.test.ts",
+        "docs/tests/epub356/README.md",
+        "docs/tests/epub356/leesvolgorde.epub",
+        "docs/tests/epub356/runtime-export.epub"
+      ],
+      "note": "Eigen EPUB 2/3-invoer met echte projectbestanden: OPF-leesvolgorde, basisstructuur en ingesloten rasterbeelden gecontroleerd, inclusief editorbewaren en heropenen. De oorspronkelijke c0-runtimeweigering is behouden. CSS, fonts, vaste paginaopmaak, interne navigatie, scripts, audio/video en SVG blijven niet behouden; DRM en onleesbare hoofdstukformaten worden expliciet geweigerd. Native bediening en hosted-route op het nieuwe apppunt zijn nog niet uitgevoerd."
     },
     {
       "ext": "et",

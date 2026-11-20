@@ -13,6 +13,7 @@ import {
   uitvoerformaat,
 } from "../formaten";
 import { LIEVER_RUNTIME, TEKSTFORMATEN, zetTekstOm } from "./tekstimport";
+import { zetEpubOm } from "./epubbestand";
 import {
   csvNaarXlsx,
   herkenInstellingen,
@@ -286,7 +287,7 @@ async function bereidOnversleuteld(
 
   // Eenvoudige tekstformaten zet de app zelf om; RTF en HTML liever via de
   // runtime als die er is, met de eigen lezer als terugval.
-  if (soort === "docx" && TEKSTFORMATEN.has(ext)) {
+  if (soort === "docx" && (TEKSTFORMATEN.has(ext) || ext === "epub")) {
     let fout: unknown = null;
     if (runtime && LIEVER_RUNTIME.has(ext)) {
       try {
@@ -295,7 +296,8 @@ async function bereidOnversleuteld(
         fout = e;
       }
     }
-    const { bytes: docx, regels } = zetTekstOm(ext, bytes);
+    const { bytes: docx, regels } =
+      ext === "epub" ? zetEpubOm(bytes) : zetTekstOm(ext, bytes);
     if (fout)
       regels.unshift({
         onderdeel: i18next.t("import:report.parts.officeRuntime"),
@@ -315,9 +317,10 @@ async function bereidOnversleuteld(
         bronformaat: ext,
         extra: [...bronregels, ...regels],
       }),
-      exportFormaat: voorstel(
-        ext === "markdown" ? "md" : ext === "htm" ? "html" : ext,
-      ),
+      exportFormaat:
+        ext === "epub"
+          ? undefined
+          : voorstel(ext === "markdown" ? "md" : ext === "htm" ? "html" : ext),
     };
   }
 

@@ -1,11 +1,12 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import type { Document } from "@betteroffice/docx/types/document";
 
 export type EditorWijziging = "selectie" | "inhoud";
 
 /** Publieke refs wisselen bij projecties; hun luisteraars horen bij de sessie. */
 export function volgEditorWijzigingen(
   api: () => DocxEditorRef | null,
-  meld: (soort: EditorWijziging) => void,
+  meld: (soort: EditorWijziging, document?: Document) => void,
   interval = 600,
 ): () => void {
   let actief = true;
@@ -36,15 +37,27 @@ export function volgEditorWijzigingen(
     gekoppeld = eigenaar;
     laatsteSelectie = positie;
     if (!ref) return;
-    const wijziging = (soort: EditorWijziging) => {
+    const wijziging = (soort: EditorWijziging, document?: Document) => {
       if (actief && beurt === nummer) {
         laatsteSelectie = selectie();
-        meld(soort);
+        if (document) meld(soort, document);
+        else meld(soort);
       }
     };
+    const publiceer = (soort: EditorWijziging, document?: Document) => {
+      if (!actief || beurt !== nummer) return;
+      const nu = api();
+      const bronNu = nu?.getEditorRef()?.getYrsSession();
+      if ((bronNu ?? nu) !== eigenaar) {
+        // Een oude payload mag ook vóór de volgende poll geen nieuwe sessie raken.
+        koppel();
+        return;
+      }
+      wijziging(soort, document);
+    };
     opruimen = [
-      ref.onSelectionChange(() => wijziging("selectie")),
-      ref.onContentChange(() => wijziging("inhoud")),
+      ref.onSelectionChange(() => publiceer("selectie")),
+      ref.onContentChange((document) => publiceer("inhoud", document)),
     ];
     wijziging("selectie");
   };

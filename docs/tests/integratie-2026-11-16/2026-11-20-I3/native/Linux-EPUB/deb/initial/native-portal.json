@@ -1,0 +1,58 @@
+{
+  "status": "attributed",
+  "ownedPid": 6009,
+  "busId": "17d4e149162f8141405e57a06b0026b0",
+  "privateBusAddress": "unix:abstract=/tmp/dbus-kFGHcJ6BwG,guid=97300234810c3ce45d45d0a86b0026b0",
+  "display": ":99",
+  "calls": [
+    {
+      "sender": ":1.196",
+      "destination": "org.freedesktop.portal.Desktop",
+      "serial": 16,
+      "interface": "org.freedesktop.portal.FileChooser",
+      "token": "ashpd_G6PjWeLxqE",
+      "currentName": "leesvolgorde.docx",
+      "handle": null
+    },
+    {
+      "sender": ":1.2",
+      "destination": ":1.9",
+      "serial": 132,
+      "interface": "org.freedesktop.impl.portal.FileChooser",
+      "token": null,
+      "currentName": "leesvolgorde.docx",
+      "handle": "/org/freedesktop/portal/desktop/request/1_196/ashpd_G6PjWeLxqE"
+    }
+  ],
+  "readyBeforeSave": true,
+  "observerPid": 6095,
+  "ownedProcessGroup": 6095,
+  "monitorPid": 6101,
+  "correlation": {
+    "ownedPid": 6009,
+    "requestHandle": "/org/freedesktop/portal/desktop/request/1_196/ashpd_G6PjWeLxqE",
+    "frontend": {
+      "sender": ":1.196",
+      "destination": "org.freedesktop.portal.Desktop",
+      "serial": 16,
+      "interface": "org.freedesktop.portal.FileChooser",
+      "token": "ashpd_G6PjWeLxqE",
+      "currentName": "leesvolgorde.docx",
+      "handle": null
+    },
+    "backend": {
+      "sender": ":1.2",
+      "destination": ":1.9",
+      "serial": 132,
+      "interface": "org.freedesktop.impl.portal.FileChooser",
+      "token": null,
+      "currentName": "leesvolgorde.docx",
+      "handle": "/org/freedesktop/portal/desktop/request/1_196/ashpd_G6PjWeLxqE"
+    },
+    "brokerUniqueName": ":1.2",
+    "backendUniqueName": ":1.9",
+    "backendPid": 5179
+  },
+  "backendExecutable": "/usr/libexec/xdg-desktop-portal-gtk",
+  "monitorClosed": true
+}

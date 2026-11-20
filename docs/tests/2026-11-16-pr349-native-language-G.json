@@ -1,0 +1,2978 @@
+{
+  "application": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+  "tree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+  "linux": {
+    "run": 43858722629,
+    "visualInspection": "original saved/tabs/reopened PNGs readable; EN/IT/FR status",
+    "artifact": {
+      "run": "43858722629",
+      "artifactId": 14222162568,
+      "name": "writer349-native-language-linux",
+      "sha256": "6a35076d431c88317fb9b09356ea74e3cdaa2c3975af168339cb23ed0e9bb5f9",
+      "bytes": 364079,
+      "githubDigestMatched": true
+    },
+    "centralComparison": {
+      "status": "passed",
+      "samePayload": true,
+      "run": 43856368812,
+      "artifact": {
+        "run": "43856368812",
+        "artifactId": 14222116423,
+        "name": "native-linux-writer-roundtrip",
+        "sha256": "b8d27093f88054b43fbdcbd9e8975b5a25ce562627dbb2d2cef67c211e534738",
+        "bytes": 243436,
+        "githubDigestMatched": true
+      },
+      "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+      "payload": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d"
+    },
+    "audit": {
+      "report": {
+        "sourceCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+        "harnessCommit": "736f6b08861d6c8325a2a34dd96cd6c286d61fe8",
+        "harnessSha256": "bb15f8466a7606ebe4788182a0f3ddaf48773c8cefcdb05b739e87944f087b5a",
+        "sourceTree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+        "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+        "scope": "PR349 native language boundaries, typing, Undo/Redo, tab isolation and full-process save/reopen on fixed combined G DEB",
+        "status": "passed",
+        "checks": [
+          "Two real startup DOCX files open through native production backend",
+          {
+            "name": "initial A",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "original boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "original boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "next paragraph A",
+            "expected": "French",
+            "actual": "French (France) · 1 spelling error"
+          },
+          {
+            "name": "after typing and quiet",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "inserted character boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 2 spelling errors"
+          },
+          {
+            "name": "inserted character boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 2 spelling errors"
+          },
+          {
+            "name": "Undo boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "Undo boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "Redo boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 2 spelling errors"
+          },
+          {
+            "name": "Redo boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 2 spelling errors"
+          },
+          {
+            "name": "restored after Undo left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "restored after Undo right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          "Native Ctrl+S preserves exact three paragraphs after typing and Undo/Redo",
+          {
+            "name": "B same text different language",
+            "expected": "German",
+            "actual": "German (Germany) · 2 spelling errors"
+          },
+          {
+            "name": "B second paragraph",
+            "expected": "Italian",
+            "actual": "Italian (Italy) · 2 spelling errors"
+          },
+          {
+            "name": "A tab caret retained 0",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 0 left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 0 right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "B tab caret retained 0",
+            "expected": "Italian",
+            "actual": "Italian (Italy) · 2 spelling errors"
+          },
+          {
+            "name": "B tab reset 0",
+            "expected": "German",
+            "actual": "German (Germany) · 2 spelling errors"
+          },
+          {
+            "name": "B tab second 0",
+            "expected": "Italian",
+            "actual": "Italian (Italy) · 2 spelling errors"
+          },
+          {
+            "name": "A tab caret retained 1",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 1 left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "A tab boundary 1 right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "B tab caret retained 1",
+            "expected": "Italian",
+            "actual": "Italian (Italy) · 2 spelling errors"
+          },
+          {
+            "name": "B tab reset 1",
+            "expected": "German",
+            "actual": "German (Germany) · 2 spelling errors"
+          },
+          {
+            "name": "B tab second 1",
+            "expected": "Italian",
+            "actual": "Italian (Italy) · 2 spelling errors"
+          },
+          "Application process fully exits after saving",
+          {
+            "name": "reopened A",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "reopened boundary left",
+            "expected": "Dutch",
+            "actual": "Dutch (Netherlands) · 1 spelling error"
+          },
+          {
+            "name": "reopened boundary right",
+            "expected": "English",
+            "actual": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "name": "reopened second paragraph",
+            "expected": "French",
+            "actual": "French (France) · 1 spelling error"
+          },
+          "Fresh native process reopens exact saved bytes and preserves mixed-language boundaries",
+          {
+            "name": "reopened independent B",
+            "expected": "German",
+            "actual": "German (Germany) · 2 spelling errors"
+          }
+        ],
+        "limits": [
+          "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+          "Virtual X11 display and software graphics, not physical hardware",
+          "DEB only; AppImage native operation is not certified"
+        ],
+        "package": {
+          "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+          "sha256": "6b254885cb8ba65c8e3cd75f29f132a473b0a32652b035ae4f2d5ee9719e67b9"
+        },
+        "artifactOrigin": {
+          "run": 43856368812,
+          "sourceCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "artifacts": [
+            {
+              "id": 14221851734,
+              "name": "open-office-studio-Linux",
+              "zipSha256": "3925b646da482ed8a2a6afd0acac553fb07ec5cd66fb01207b7ac226b21cfed3",
+              "bytes": 811729102
+            },
+            {
+              "id": 14222026568,
+              "name": "pakketcontrole-Linux",
+              "zipSha256": "330f69a2901bcba683f7379acace587ed26e8573bc3a1beae92ac059f568ff53",
+              "bytes": 674
+            }
+          ]
+        },
+        "packagedExecutableSha256": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d",
+        "rawBuildExecutableSha256": null,
+        "executableSha256": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d",
+        "runtime": {
+          "node": "v22.23.4",
+          "graphics": {
+            "GDK_BACKEND": "x11",
+            "LIBGL_ALWAYS_SOFTWARE": "1",
+            "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+            "WEBKIT_DISABLE_COMPOSITING_MODE": null
+          },
+          "driver": "tauri-driver v2.1.0:",
+          "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+          "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+          "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+        },
+        "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+        "otherInputSha256": "24bc1baee3f9565fc2f9665b2d32d6f7ac270093e11c540b3ea69860b80286d0",
+        "inputSha256": "5b61162377e93b108dd33b82a55d4c1ed4dfc7ef5eedec01f3ee52899bdb9fc4",
+        "firstPids": ["4445"],
+        "beforeSave": {
+          "saveDisabled": false,
+          "keyboard": [
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ArrowDown",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "ArrowDown",
+              "meta": false
+            },
+            {
+              "code": "ArrowDown",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "ArrowDown",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "End",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "End",
+              "meta": false
+            },
+            {
+              "code": "End",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "End",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyS",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "s",
+              "meta": false
+            },
+            {
+              "code": "KeyS",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "s",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyY",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "y",
+              "meta": false
+            },
+            {
+              "code": "KeyY",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "y",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "KeyZ",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "z",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Control",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keydown",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "Home",
+              "prevented": false,
+              "ctrl": true,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Home",
+              "meta": false
+            },
+            {
+              "code": "ControlLeft",
+              "prevented": false,
+              "ctrl": false,
+              "shift": false,
+              "target": "TEXTAREA",
+              "type": "keyup",
+              "key": "Control",
+              "meta": false
+            }
+          ],
+          "focused": "TEXTAREA"
+        },
+        "savedSha256": "4108aa0ecc466370c7add1a4639471cc76781aca410f2fb301b0dad598aa4a38",
+        "exactSavedParagraphs": [
+          "Nederlands English",
+          "Bonjour",
+          "Nogmaals Nederlands slot"
+        ],
+        "captures": [
+          {
+            "file": "saved.png",
+            "settleMs": 615,
+            "language": "English (United Kingdom) · 1 spelling error"
+          },
+          {
+            "file": "tabs.png",
+            "settleMs": 634,
+            "language": "Italian (Italy) · 2 spelling errors"
+          },
+          {
+            "file": "reopened.png",
+            "settleMs": 579,
+            "language": "French (France) · 1 spelling error"
+          }
+        ],
+        "secondPids": ["4536"],
+        "ownedApplicationClosed": true
+      },
+      "independentSavedRuns": [
+        [
+          {
+            "text": "Nederlands ",
+            "language": "nl-NL"
+          },
+          {
+            "text": "English",
+            "language": "en-GB"
+          }
+        ],
+        [
+          {
+            "text": "Bonjour",
+            "language": "fr-FR"
+          }
+        ],
+        [
+          {
+            "text": "Nogmaals Nederlands slot",
+            "language": "nl-NL"
+          }
+        ]
+      ],
+      "independentOtherRuns": [
+        [
+          {
+            "text": "Nederlands ",
+            "language": "de-DE"
+          },
+          {
+            "text": "English",
+            "language": "en-GB"
+          }
+        ],
+        [
+          {
+            "text": "Bonjour",
+            "language": "it-IT"
+          }
+        ],
+        [
+          {
+            "text": "Nogmaals Nederlands",
+            "language": "en-US"
+          }
+        ]
+      ],
+      "images": [
+        {
+          "name": "reopened.png",
+          "sha256": "325b472bc90d3227bd5ab252c8c356b9b176d865b7db7c6cc0083b821c262fef"
+        },
+        {
+          "name": "saved.png",
+          "sha256": "9196952c6819443b3d72e5be29ac2c6586b96f841aee07d1e3378676936c5657"
+        },
+        {
+          "name": "tabs.png",
+          "sha256": "78e73a99ab2fa2e86b1d00f0d48790b5b9e3e5d5677a88cda37b6b2ea15b879a"
+        }
+      ],
+      "languageAssertions": 32
+    }
+  },
+  "macOS": {
+    "application": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+    "status": "Scoped language acceptance passed under alternate Ctrl+Home/End protocol; full native acceptance blocked",
+    "buildRun": 43856368812,
+    "buildHost": "macOS 26 ARM64 (packaging only)",
+    "nativeHost": "macOS 15.8.2 ARM64",
+    "navigationIssue": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/358",
+    "acceptance": "All 32 language assertions, saved caret checkpoints, Undo/Redo, tab retention, native save and process reopen passed in run 43869351009. Preserve four failed prior attempts. Standard Cmd navigation remains blocked by #358. Initial and reopened A page glyphs remain visually unaccepted; root owns separate investigation registration. No more key variants or renderer changes.",
+    "attempts": [
+      {
+        "run": 43862834105,
+        "artifact": {
+          "run": "43862834105",
+          "artifactId": 14224512112,
+          "name": "writer349-native-language-macOS",
+          "sha256": "888e97a38e1df50bced644b55148b1aafa2df65fac7ec54b4218fdb9545c5f11",
+          "bytes": 1253410,
+          "githubDigestMatched": true
+        },
+        "report": {
+          "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "harnessCommit": "3933729fe3da0f11dea953f4315696a121614758",
+          "harnessSha256": "a12a8efd0c9ba739d573c65446340f6e368a8707f6a3ac6e5a1d400f251a3b4c",
+          "axSourceSha256": "a175ec1074882513b2fd1fefdd7be522bd8478c2b9ceb309e61fc33cf36987aa",
+          "origin": {
+            "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "run": "43856368812",
+            "artifacts": [
+              {
+                "name": "open-office-studio-macOS",
+                "id": 14224840906,
+                "zipSha256": "857547ea62ea9a5b29e3b07943e4a9f39c8dee52c6b7a2ea485044fd8d53a2d4",
+                "bytes": 373689984
+              },
+              {
+                "name": "pakketcontrole-macOS",
+                "id": 14224925527,
+                "zipSha256": "7fec1c11df425c75dcb1ac53bf5c243b08ea248c343c562962ca8b03deab26af",
+                "bytes": 820
+              }
+            ]
+          },
+          "status": "failed",
+          "checks": [
+            {
+              "name": "initial A",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            }
+          ],
+          "limits": [
+            "Writer only, bounded synthetic fixture",
+            "Disposable macOS CI host; no physical low-end performance claim",
+            "No TCC, entitlements, signing or security changes"
+          ],
+          "host": {
+            "macOS": "15.8.2",
+            "machine": "arm64",
+            "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+            "runnerOS": "macOS"
+          },
+          "keyboardProtocol": {
+            "documentStart": "Cmd+Up",
+            "documentEnd": "Cmd+Down",
+            "nextSingleLineParagraph": "Down",
+            "undo": "Cmd+Z",
+            "redo": "Cmd+Shift+Z"
+          },
+          "dmg": {
+            "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+            "sha256": "9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6",
+            "bytes": 373702917
+          },
+          "packageControl": {
+            "identifier": "org.openaec.office-studio",
+            "extensies": [
+              "accdb",
+              "doc",
+              "docm",
+              "docx",
+              "dot",
+              "dotm",
+              "dotx",
+              "ifcx",
+              "mdb",
+              "odp",
+              "ods",
+              "odt",
+              "otp",
+              "ots",
+              "ott",
+              "pot",
+              "potm",
+              "potx",
+              "pps",
+              "ppsx",
+              "ppt",
+              "pptm",
+              "pptx",
+              "rtf",
+              "xls",
+              "xlsb",
+              "xlsm",
+              "xlsx",
+              "xlt",
+              "xltm",
+              "xltx"
+            ],
+            "aantal": 31,
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda"
+          },
+          "app": {
+            "version": "2026.46.2",
+            "executableSha256": "fc73826cd8fc8e6cedbf64c0b94c06a33fe8550a9b13eacd0aa06d9639650814",
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda",
+            "treeSha256": "6a59d8fd600859e427ecd28077e9d06d0bf6204eb38c7fed452034fb0554388c",
+            "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+          },
+          "inputSha256": {
+            "A": "f21321f989d04245ed7c81f625432f8e0bcf29e046ac58dd305973ad43468ec6",
+            "B": "36d3f6f5b5024df34d58239c8dc87285df4350e367dba015b52f5a545e33ffc0"
+          },
+          "axBinarySha256": "689a3e270a1ce786875c44ce7ddf280bbe3b257e1110d916464b28c387c1e8ec",
+          "nativeWindowViewports": ["0, 25, 1024, 650"],
+          "firstPid": 2348,
+          "error": "AssertionError('original boundary right: expected English')",
+          "cleanupMethod": "owned-process termination after incomplete test",
+          "ownedAppClosed": true,
+          "ownMountDetached": true
+        },
+        "independentAudit": {
+          "A": {
+            "sha256": "f21321f989d04245ed7c81f625432f8e0bcf29e046ac58dd305973ad43468ec6",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "nl-NL"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "fr-FR"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "nl-NL"
+                }
+              ]
+            ]
+          },
+          "B": {
+            "sha256": "36d3f6f5b5024df34d58239c8dc87285df4350e367dba015b52f5a545e33ffc0",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "de-DE"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "it-IT"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "en-US"
+                }
+              ]
+            ]
+          },
+          "BByteUnchanged": true,
+          "manifestDigestMatches": true,
+          "languageAssertions": 2,
+          "screenshots": [
+            {
+              "name": "final-state.png",
+              "sha256": "440f226b869bef8b920f604ccb89c573a081791cfa090ba9ec3b56ef2450142e"
+            }
+          ],
+          "visualInspection": "Blank page glyphs; Dutch footer; boundary right did not become English."
+        }
+      },
+      {
+        "run": 43865097119,
+        "artifact": {
+          "run": "43865097119",
+          "artifactId": 14224344137,
+          "name": "writer349-native-language-macOS",
+          "sha256": "7e0c7e6c661ecae31a27e7a1e4f686eda356efa10d7ff7e45e3e1c925a4747ba",
+          "bytes": 1125459,
+          "githubDigestMatched": true
+        },
+        "report": {
+          "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "harnessCommit": "00f8685269c11e1d51ecf55e7612ddfc05901ad4",
+          "harnessSha256": "646a590129319cbf42406ca4e1a603c5de5ea84f217758eb914bc962e31fcba7",
+          "axSourceSha256": "fb3d234189d0ee9c901c5412a80b088c8a8a76dba416ff9b27f01957ccd2130f",
+          "origin": {
+            "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "run": "43856368812",
+            "artifacts": [
+              {
+                "name": "open-office-studio-macOS",
+                "id": 14224840906,
+                "zipSha256": "857547ea62ea9a5b29e3b07943e4a9f39c8dee52c6b7a2ea485044fd8d53a2d4",
+                "bytes": 373689984
+              },
+              {
+                "name": "pakketcontrole-macOS",
+                "id": 14224925527,
+                "zipSha256": "7fec1c11df425c75dcb1ac53bf5c243b08ea248c343c562962ca8b03deab26af",
+                "bytes": 820
+              }
+            ]
+          },
+          "status": "failed",
+          "checks": [
+            {
+              "name": "initial A",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            }
+          ],
+          "limits": [
+            "Writer only, bounded synthetic fixture",
+            "Disposable macOS CI host; no physical low-end performance claim",
+            "No TCC, entitlements, signing or security changes"
+          ],
+          "host": {
+            "macOS": "15.8.2",
+            "machine": "arm64",
+            "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+            "runnerOS": "macOS"
+          },
+          "keyboardProtocol": {
+            "documentStart": "Cmd+Up",
+            "documentEnd": "Cmd+Down",
+            "nextSingleLineParagraph": "Down",
+            "undo": "Cmd+Z",
+            "redo": "Cmd+Shift+Z",
+            "arrowIntervalMs": 50,
+            "caretProof": "native prefix copy via Cmd+Shift+Up and Cmd+C"
+          },
+          "dmg": {
+            "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+            "sha256": "9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6",
+            "bytes": 373702917
+          },
+          "packageControl": {
+            "identifier": "org.openaec.office-studio",
+            "extensies": [
+              "accdb",
+              "doc",
+              "docm",
+              "docx",
+              "dot",
+              "dotm",
+              "dotx",
+              "ifcx",
+              "mdb",
+              "odp",
+              "ods",
+              "odt",
+              "otp",
+              "ots",
+              "ott",
+              "pot",
+              "potm",
+              "potx",
+              "pps",
+              "ppsx",
+              "ppt",
+              "pptm",
+              "pptx",
+              "rtf",
+              "xls",
+              "xlsb",
+              "xlsm",
+              "xlsx",
+              "xlt",
+              "xltm",
+              "xltx"
+            ],
+            "aantal": 31,
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda"
+          },
+          "app": {
+            "version": "2026.46.2",
+            "executableSha256": "fc73826cd8fc8e6cedbf64c0b94c06a33fe8550a9b13eacd0aa06d9639650814",
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda",
+            "treeSha256": "6a59d8fd600859e427ecd28077e9d06d0bf6204eb38c7fed452034fb0554388c",
+            "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+          },
+          "inputSha256": {
+            "A": "e6493ec9fc9e0fdd25005709d2574b58e4451fa8540b0e4b615ded4705424018",
+            "B": "1eb2e814ae40fa99a5b53d2dee63e2b1155e15ff8fa4e121f310c1e32890cc9e"
+          },
+          "axBinarySha256": "658447e34337b144b119912130a185a715feeadee93b3a3f02e6b90d0669bd13",
+          "nativeWindowViewports": ["0, 25, 1024, 650"],
+          "firstPid": 2190,
+          "focusOperations": [
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 327
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            }
+          ],
+          "caretEvidence": [
+            {
+              "step": "original boundary right verified",
+              "expected": "Nederlands ",
+              "actualPrefix": "",
+              "length": 0,
+              "method": "native selection to document start + native clipboard"
+            }
+          ],
+          "error": "AssertionError('Actual native caret prefix does not match the intended 11-character position')",
+          "cleanupMethod": "owned-process termination after incomplete test",
+          "ownedAppClosed": true,
+          "ownMountDetached": true
+        },
+        "independentAudit": {
+          "A": {
+            "sha256": "e6493ec9fc9e0fdd25005709d2574b58e4451fa8540b0e4b615ded4705424018",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "nl-NL"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "fr-FR"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "nl-NL"
+                }
+              ]
+            ]
+          },
+          "B": {
+            "sha256": "1eb2e814ae40fa99a5b53d2dee63e2b1155e15ff8fa4e121f310c1e32890cc9e",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "de-DE"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "it-IT"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "en-US"
+                }
+              ]
+            ]
+          },
+          "BByteUnchanged": true,
+          "manifestDigestMatches": true,
+          "languageAssertions": 3,
+          "screenshots": [
+            {
+              "name": "after-body-focus.png",
+              "sha256": "f634709fa37700b668025b586a5989336ededf630ae6baf794d08b69ff81f6a9"
+            },
+            {
+              "name": "final-state.png",
+              "sha256": "e0e2e6f75576e53bb882e27a6e870331245239c0d9dd25018379b7e7149eaeea"
+            }
+          ],
+          "visualInspection": "Initial and final page glyphs blank; English footer at boundary right. Clipboard-prefix diagnostic failed."
+        }
+      },
+      {
+        "run": 43866052742,
+        "artifact": {
+          "run": "43866052742",
+          "artifactId": 14226390810,
+          "name": "writer349-native-language-macOS",
+          "sha256": "86ffc67725a3ca391f5fe906efb8b4f58ec6f206ea3b85f44385049351ce29af",
+          "bytes": 1574984,
+          "githubDigestMatched": true
+        },
+        "report": {
+          "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "harnessCommit": "d680447c6e9f7785adb175cf90b52f01c1a769fc",
+          "harnessSha256": "c08cfd8709680ae2b82334723f8d19a283f1709ca461f95f067325863085890b",
+          "axSourceSha256": "fb3d234189d0ee9c901c5412a80b088c8a8a76dba416ff9b27f01957ccd2130f",
+          "origin": {
+            "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "run": "43856368812",
+            "artifacts": [
+              {
+                "name": "open-office-studio-macOS",
+                "id": 14224840906,
+                "zipSha256": "857547ea62ea9a5b29e3b07943e4a9f39c8dee52c6b7a2ea485044fd8d53a2d4",
+                "bytes": 373689984
+              },
+              {
+                "name": "pakketcontrole-macOS",
+                "id": 14224925527,
+                "zipSha256": "7fec1c11df425c75dcb1ac53bf5c243b08ea248c343c562962ca8b03deab26af",
+                "bytes": 820
+              }
+            ]
+          },
+          "status": "failed",
+          "checks": [
+            {
+              "name": "initial A",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "next paragraph A",
+              "expected": "French",
+              "actual": [
+                "Language: French (France), 1 spelling error. Choose language",
+                "Language: French (France), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "after typing",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language",
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language"
+              ]
+            }
+          ],
+          "limits": [
+            "Writer only, bounded synthetic fixture",
+            "Disposable macOS CI host; no physical low-end performance claim",
+            "No TCC, entitlements, signing or security changes"
+          ],
+          "host": {
+            "macOS": "15.8.2",
+            "machine": "arm64",
+            "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+            "runnerOS": "macOS"
+          },
+          "keyboardProtocol": {
+            "documentStart": "Cmd+Up",
+            "documentEnd": "Cmd+Down",
+            "nextSingleLineParagraph": "Down",
+            "undo": "Cmd+Z",
+            "redo": "Cmd+Shift+Z",
+            "arrowIntervalMs": 50,
+            "caretProof": "single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"
+          },
+          "dmg": {
+            "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+            "sha256": "9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6",
+            "bytes": 373702917
+          },
+          "packageControl": {
+            "identifier": "org.openaec.office-studio",
+            "extensies": [
+              "accdb",
+              "doc",
+              "docm",
+              "docx",
+              "dot",
+              "dotm",
+              "dotx",
+              "ifcx",
+              "mdb",
+              "odp",
+              "ods",
+              "odt",
+              "otp",
+              "ots",
+              "ott",
+              "pot",
+              "potm",
+              "potx",
+              "pps",
+              "ppsx",
+              "ppt",
+              "pptm",
+              "pptx",
+              "rtf",
+              "xls",
+              "xlsb",
+              "xlsm",
+              "xlsx",
+              "xlt",
+              "xltm",
+              "xltx"
+            ],
+            "aantal": 31,
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda"
+          },
+          "app": {
+            "version": "2026.46.2",
+            "executableSha256": "fc73826cd8fc8e6cedbf64c0b94c06a33fe8550a9b13eacd0aa06d9639650814",
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda",
+            "treeSha256": "6a59d8fd600859e427ecd28077e9d06d0bf6204eb38c7fed452034fb0554388c",
+            "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+          },
+          "inputSha256": {
+            "A": "79cb8c16e5582c6f1dd87798794946c1db0924b5c1c5443b0fc4748be45ea5aa",
+            "B": "3a5d4e91c510080d769988bc41a0dd29e845ec7af62247ac2b565bea40e5a047"
+          },
+          "axBinarySha256": "658447e34337b144b119912130a185a715feeadee93b3a3f02e6b90d0669bd13",
+          "nativeWindowViewports": ["0, 25, 1024, 650"],
+          "firstPid": 1966,
+          "focusOperations": [
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 327
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            }
+          ],
+          "caretEvidence": [
+            {
+              "step": "original boundary right verified",
+              "method": "native Q edit and CmdS; independent DOCX position",
+              "expectedOffset": 11,
+              "actualParagraphs": [
+                "Nederlands QEnglish",
+                "Bonjour",
+                "Nogmaals Nederlands"
+              ],
+              "savedProbeSha256": "0f74fdc3fc8bc68225e549d45c23584d8760a47103b7580fc529ed4b834a0add",
+              "restoredParagraphs": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands"
+              ],
+              "restoredSha256": "96788100b9d98328cf43d613684716c40c00e00f2a05fe8d9f1422aedbc85b29"
+            }
+          ],
+          "error": "AssertionError('inserted boundary left: expected Dutch')",
+          "cleanupMethod": "owned-process termination after incomplete test",
+          "ownedAppClosed": true,
+          "ownMountDetached": true
+        },
+        "independentAudit": {
+          "A": {
+            "sha256": "96788100b9d98328cf43d613684716c40c00e00f2a05fe8d9f1422aedbc85b29",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "nl-NL"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "fr-FR"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "nl-NL"
+                }
+              ]
+            ]
+          },
+          "B": {
+            "sha256": "3a5d4e91c510080d769988bc41a0dd29e845ec7af62247ac2b565bea40e5a047",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "de-DE"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "it-IT"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "en-US"
+                }
+              ]
+            ]
+          },
+          "BByteUnchanged": true,
+          "manifestDigestMatches": true,
+          "languageAssertions": 5,
+          "screenshots": [
+            {
+              "name": "after-body-focus.png",
+              "sha256": "4cb6729e1602c735c1ca06e93a0a367b6dd0bd335b349db685fe314254132590"
+            },
+            {
+              "name": "boundary-right-verified.png",
+              "sha256": "88f01268d307dad1c805938e1504c014c5ec2882d1a4b41f76518d1a4cde6c29"
+            },
+            {
+              "name": "final-state.png",
+              "sha256": "2e93b77d0ed044edf7954de467d38d43f52d8bea27eae52f45574cf0419aa3a7"
+            }
+          ],
+          "visualInspection": "Initial glyphs blank; after Q/save/Undo glyphs readable. Final screenshot shows Bonjourx and Nogmaals N slotederlands; those edits not independently saved."
+        }
+      },
+      {
+        "run": 43867278004,
+        "artifact": {
+          "run": "43867278004",
+          "artifactId": 14226861049,
+          "name": "writer349-native-language-macOS",
+          "sha256": "479dde625b00477c3af4fb1fb4d2a51bea7367c9793370fb3ecfcbe79f08921d",
+          "bytes": 1290837,
+          "githubDigestMatched": true
+        },
+        "report": {
+          "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "harnessCommit": "7830f5de599d83ae45921fda13b641ad1541143a",
+          "harnessSha256": "7cd277815baed7e3f80155e39b6023f1280fb75c20ac85c6f588da3b4613432c",
+          "axSourceSha256": "21ffe8087cd60054db12fa7905f87395ff624df5b1a0933c20f34dede83e86ef",
+          "origin": {
+            "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "run": "43856368812",
+            "artifacts": [
+              {
+                "name": "open-office-studio-macOS",
+                "id": 14224840906,
+                "zipSha256": "857547ea62ea9a5b29e3b07943e4a9f39c8dee52c6b7a2ea485044fd8d53a2d4",
+                "bytes": 373689984
+              },
+              {
+                "name": "pakketcontrole-macOS",
+                "id": 14224925527,
+                "zipSha256": "7fec1c11df425c75dcb1ac53bf5c243b08ea248c343c562962ca8b03deab26af",
+                "bytes": 820
+              }
+            ]
+          },
+          "status": "failed",
+          "checks": [
+            {
+              "name": "initial A",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "next paragraph A",
+              "expected": "French",
+              "actual": [
+                "Language: French (France), 1 spelling error. Choose language",
+                "Language: French (France), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "after typing",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language",
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language"
+              ]
+            }
+          ],
+          "limits": [
+            "Writer only, bounded synthetic fixture",
+            "Disposable macOS CI host; no physical low-end performance claim",
+            "No TCC, entitlements, signing or security changes"
+          ],
+          "host": {
+            "macOS": "15.8.2",
+            "machine": "arm64",
+            "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+            "runnerOS": "macOS"
+          },
+          "keyboardProtocol": {
+            "documentStart": "Cmd+Up",
+            "documentEnd": "Cmd+Down",
+            "nextSingleLineParagraph": "Down",
+            "undo": "Cmd+Z",
+            "redo": "Cmd+Shift+Z",
+            "arrowIntervalMs": 50,
+            "caretProof": "single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"
+          },
+          "dmg": {
+            "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+            "sha256": "9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6",
+            "bytes": 373702917
+          },
+          "packageControl": {
+            "identifier": "org.openaec.office-studio",
+            "extensies": [
+              "accdb",
+              "doc",
+              "docm",
+              "docx",
+              "dot",
+              "dotm",
+              "dotx",
+              "ifcx",
+              "mdb",
+              "odp",
+              "ods",
+              "odt",
+              "otp",
+              "ots",
+              "ott",
+              "pot",
+              "potm",
+              "potx",
+              "pps",
+              "ppsx",
+              "ppt",
+              "pptm",
+              "pptx",
+              "rtf",
+              "xls",
+              "xlsb",
+              "xlsm",
+              "xlsx",
+              "xlt",
+              "xltm",
+              "xltx"
+            ],
+            "aantal": 31,
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda"
+          },
+          "app": {
+            "version": "2026.46.2",
+            "executableSha256": "fc73826cd8fc8e6cedbf64c0b94c06a33fe8550a9b13eacd0aa06d9639650814",
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda",
+            "treeSha256": "6a59d8fd600859e427ecd28077e9d06d0bf6204eb38c7fed452034fb0554388c",
+            "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+          },
+          "inputSha256": {
+            "A": "575786a2463d7012063bfd3f575e208c21dd99398bf4caa07383daf1e7af4622",
+            "B": "10086e67a500e24ca45ec69ef7f3632e70c1300c6839b023414ef6398a8d4f2a"
+          },
+          "axBinarySha256": "12454ab097a0f1b7c033b349439676e3fa02cde6b98e6b1bebd6d18545999cab",
+          "nativeWindowViewports": ["0, 25, 1024, 650"],
+          "firstPid": 1922,
+          "focusOperations": [
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 327
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            }
+          ],
+          "navigationEvents": [
+            {
+              "action": "document-start",
+              "method": "native CG Command down / arrow down-up / Command up",
+              "virtualKey": 126
+            },
+            {
+              "action": "document-start",
+              "method": "native CG Command down / arrow down-up / Command up",
+              "virtualKey": 126
+            },
+            {
+              "action": "document-end",
+              "method": "native CG Command down / arrow down-up / Command up",
+              "virtualKey": 125
+            }
+          ],
+          "caretEvidence": [
+            {
+              "step": "original boundary right verified",
+              "method": "native Q edit and CmdS; independent DOCX position",
+              "expectedOffset": 11,
+              "actualParagraphs": [
+                "Nederlands QEnglish",
+                "Bonjour",
+                "Nogmaals Nederlands"
+              ],
+              "savedProbeSha256": "e4fd397a68561c3e4e4bde5b681a9be62890152d44a85699cf2975511c742ce5",
+              "restoredParagraphs": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands"
+              ],
+              "restoredSha256": "902e00abaf4fd38e7e4d7caecf2dc647abcd9853c2c2cebd754c20a897f6d24a"
+            }
+          ],
+          "savedCheckpoints": [
+            {
+              "name": "document end after slot",
+              "expected": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands slot"
+              ],
+              "actual": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals N slotederlands"
+              ],
+              "sha256": "45d833aa39f1f28bd219e2034a1741a54ab7a4d21ddebb222842ae246bf89727"
+            }
+          ],
+          "error": "AssertionError('document end after slot: actual saved paragraphs do not match intended cursor position')",
+          "cleanupMethod": "owned-process termination after incomplete test",
+          "ownedAppClosed": true,
+          "ownMountDetached": true
+        },
+        "independentAudit": {
+          "A": {
+            "sha256": "45d833aa39f1f28bd219e2034a1741a54ab7a4d21ddebb222842ae246bf89727",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals N slotederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "nl-NL"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "fr-FR"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals N slotederlands",
+                  "language": "nl-NL"
+                }
+              ]
+            ]
+          },
+          "B": {
+            "sha256": "10086e67a500e24ca45ec69ef7f3632e70c1300c6839b023414ef6398a8d4f2a",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "de-DE"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "it-IT"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "en-US"
+                }
+              ]
+            ]
+          },
+          "BByteUnchanged": true,
+          "manifestDigestMatches": true,
+          "languageAssertions": 5,
+          "screenshots": [
+            {
+              "name": "after-body-focus.png",
+              "sha256": "9deafb497153b832cb574028ec6146e7efdc18b3829323ec06583f369edda2a2"
+            },
+            {
+              "name": "boundary-right-verified.png",
+              "sha256": "9a66325f00c871c6ef21a5b2e05747a3ec6e3a4d4d7d99888d582b2e588fd0d8"
+            },
+            {
+              "name": "final-state.png",
+              "sha256": "9c7ff33ab4611f341445a46f3f839a3950015716ffe866cebfd71c420bd92d3a"
+            }
+          ],
+          "visualInspection": "Initial glyphs blank; after Q/save/Undo glyphs readable. Final screenshot and saved DOCX both show Nogmaals N slotederlands."
+        }
+      },
+      {
+        "run": 43869351009,
+        "artifact": {
+          "run": "43869351009",
+          "artifactId": 14226578771,
+          "name": "writer349-native-language-macOS",
+          "sha256": "06384b091264789acb196d8e123f872475c7cd1a044db763037f92314b258e93",
+          "bytes": 2127574,
+          "githubDigestMatched": true
+        },
+        "report": {
+          "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "harnessCommit": "8c19fe83ff1a4c7d32d4534894891f8575d5214a",
+          "harnessSha256": "0b7a9d506f1b0af08c9853a8a2a47936525a28ae00aa57a428d95ad159524ff5",
+          "axSourceSha256": "48c011ffaaf4f0fc04a5d9eae4e3f9312f0896ade0410c5e343267c751decbf4",
+          "origin": {
+            "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "run": "43856368812",
+            "artifacts": [
+              {
+                "name": "open-office-studio-macOS",
+                "id": 14224840906,
+                "zipSha256": "857547ea62ea9a5b29e3b07943e4a9f39c8dee52c6b7a2ea485044fd8d53a2d4",
+                "bytes": 373689984
+              },
+              {
+                "name": "pakketcontrole-macOS",
+                "id": 14224925527,
+                "zipSha256": "7fec1c11df425c75dcb1ac53bf5c243b08ea248c343c562962ca8b03deab26af",
+                "bytes": 820
+              }
+            ]
+          },
+          "status": "passed",
+          "checks": [
+            {
+              "name": "initial A",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "original boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "next paragraph A",
+              "expected": "French",
+              "actual": [
+                "Language: French (France), 1 spelling error. Choose language",
+                "Language: French (France), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "after typing",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "inserted boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language",
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "inserted boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 2 spelling errors. Choose language",
+                "Language: English (UK), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "Undo boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "Undo boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "Redo boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language",
+                "Language: Dutch (Netherlands), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "Redo boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 2 spelling errors. Choose language",
+                "Language: English (UK), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "restored after Undo left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "restored after Undo right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            "Native Save As modal and correct filename inspected, then cancelled",
+            {
+              "name": "independent B",
+              "expected": "German",
+              "actual": [
+                "Language: German (Germany), 2 spelling errors. Choose language",
+                "Language: German (Germany), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "B second paragraph",
+              "expected": "Italian",
+              "actual": [
+                "Language: Italian (Italy), 2 spelling errors. Choose language",
+                "Language: Italian (Italy), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "A tab retained 0",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "A tab 0 left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "A tab 0 right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "B tab retained 0",
+              "expected": "Italian",
+              "actual": [
+                "Language: Italian (Italy), 2 spelling errors. Choose language",
+                "Language: Italian (Italy), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "B tab reset 0",
+              "expected": "German",
+              "actual": [
+                "Language: German (Germany), 2 spelling errors. Choose language",
+                "Language: German (Germany), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "B tab second 0",
+              "expected": "Italian",
+              "actual": [
+                "Language: Italian (Italy), 2 spelling errors. Choose language",
+                "Language: Italian (Italy), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "A tab retained 1",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "A tab 1 left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "A tab 1 right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "B tab retained 1",
+              "expected": "Italian",
+              "actual": [
+                "Language: Italian (Italy), 2 spelling errors. Choose language",
+                "Language: Italian (Italy), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "B tab reset 1",
+              "expected": "German",
+              "actual": [
+                "Language: German (Germany), 2 spelling errors. Choose language",
+                "Language: German (Germany), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "B tab second 1",
+              "expected": "Italian",
+              "actual": [
+                "Language: Italian (Italy), 2 spelling errors. Choose language",
+                "Language: Italian (Italy), 2 spelling errors. Choose language"
+              ]
+            },
+            {
+              "name": "reopened A",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "reopened boundary left",
+              "expected": "Dutch",
+              "actual": [
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language",
+                "Language: Dutch (Netherlands), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "reopened boundary right",
+              "expected": "English",
+              "actual": [
+                "Language: English (UK), 1 spelling error. Choose language",
+                "Language: English (UK), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "reopened second paragraph",
+              "expected": "French",
+              "actual": [
+                "Language: French (France), 1 spelling error. Choose language",
+                "Language: French (France), 1 spelling error. Choose language"
+              ]
+            },
+            {
+              "name": "reopened independent B",
+              "expected": "German",
+              "actual": [
+                "Language: German (Germany), 2 spelling errors. Choose language",
+                "Language: German (Germany), 2 spelling errors. Choose language"
+              ]
+            }
+          ],
+          "limits": [
+            "Writer only, bounded synthetic fixture",
+            "Disposable macOS CI host; no physical low-end performance claim",
+            "No TCC, entitlements, signing or security changes"
+          ],
+          "host": {
+            "macOS": "15.8.2",
+            "machine": "arm64",
+            "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+            "runnerOS": "macOS"
+          },
+          "keyboardProtocol": {
+            "documentStart": "Ctrl+Home (alternate protocol)",
+            "documentEnd": "Ctrl+End (alternate protocol)",
+            "nextSingleLineParagraph": "Down",
+            "undo": "Cmd+Z",
+            "redo": "Cmd+Shift+Z",
+            "arrowIntervalMs": 50,
+            "caretProof": "single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"
+          },
+          "alternateNavigation": {
+            "reason": "Standard macOS Command+Up/Down blocked by #358; integration-authorized single alternate trial",
+            "sdkVersion": "@betteroffice/docx-react 0.5.1",
+            "guardedInputSha256": "d17b7a630163623e99d73b8c4b3678397ec0598e332237df1e4737767799e58d",
+            "sourceSupport": "Home/End passes metaKey || ctrlKey into whole-document navigation; ArrowUp/Down passes false",
+            "limits": "Does not accept standard Cmd navigation or clear initial page paint limitation"
+          },
+          "dmg": {
+            "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+            "sha256": "9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6",
+            "bytes": 373702917
+          },
+          "packageControl": {
+            "identifier": "org.openaec.office-studio",
+            "extensies": [
+              "accdb",
+              "doc",
+              "docm",
+              "docx",
+              "dot",
+              "dotm",
+              "dotx",
+              "ifcx",
+              "mdb",
+              "odp",
+              "ods",
+              "odt",
+              "otp",
+              "ots",
+              "ott",
+              "pot",
+              "potm",
+              "potx",
+              "pps",
+              "ppsx",
+              "ppt",
+              "pptm",
+              "pptx",
+              "rtf",
+              "xls",
+              "xlsb",
+              "xlsm",
+              "xlsx",
+              "xlt",
+              "xltm",
+              "xltx"
+            ],
+            "aantal": 31,
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda"
+          },
+          "app": {
+            "version": "2026.46.2",
+            "executableSha256": "fc73826cd8fc8e6cedbf64c0b94c06a33fe8550a9b13eacd0aa06d9639650814",
+            "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda",
+            "treeSha256": "6a59d8fd600859e427ecd28077e9d06d0bf6204eb38c7fed452034fb0554388c",
+            "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+          },
+          "inputSha256": {
+            "A": "ee0824408a9a07d3fedc409c05bc5f54ba6164766dd773cf3035b998c6cfe9c1",
+            "B": "da3dd05939d59ea417091188e6092a2930bb7589fbdc4202258bf0903c8eff61"
+          },
+          "axBinarySha256": "114babf1bed22bfefe43a3e16ce508281975663ac800e6e00c167e953d78e536",
+          "nativeWindowViewports": ["0, 25, 1024, 650", "0, 25, 1024, 650"],
+          "firstPid": 2087,
+          "focusOperations": [
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 327
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 2,
+                    "x": 305,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 2,
+                    "x": 305,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 384
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 2,
+                    "x": 305,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 384
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 2,
+                    "x": 305,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 384
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 2,
+                    "x": 305,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 384
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 327
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            },
+            {
+              "method": "native body click in active AX Page 1 bounds",
+              "point": {
+                "x": 238,
+                "y": 361
+              },
+              "pageFrame": {
+                "height": 1056,
+                "width": 816,
+                "x": 113,
+                "y": 257
+              },
+              "windowFrame": null,
+              "textareas": [
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 2,
+                    "x": 281,
+                    "y": 384
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                },
+                {
+                  "description": "Document input",
+                  "frame": {
+                    "height": 19,
+                    "width": 1,
+                    "x": 233,
+                    "y": 351
+                  },
+                  "selectedRange": {
+                    "length": 0,
+                    "location": 0
+                  },
+                  "title": "Document input"
+                }
+              ]
+            }
+          ],
+          "navigationEvents": [
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-end",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 119
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            },
+            {
+              "action": "document-start",
+              "method": "alternate native CG Control down / Home-or-End down-up / Control up",
+              "virtualKey": 115
+            }
+          ],
+          "caretEvidence": [
+            {
+              "step": "original boundary right verified",
+              "method": "native Q edit and CmdS; independent DOCX position",
+              "expectedOffset": 11,
+              "actualParagraphs": [
+                "Nederlands QEnglish",
+                "Bonjour",
+                "Nogmaals Nederlands"
+              ],
+              "savedProbeSha256": "971bf2896ee44bb3931a15c0669d8e3f8a2865cade86da26655502da1af20820",
+              "restoredParagraphs": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands"
+              ],
+              "restoredSha256": "baccf94ced6c694add16468726fbf7042e715c5f2f29014120a84705ed6603cb"
+            }
+          ],
+          "savedCheckpoints": [
+            {
+              "name": "document end after slot",
+              "expected": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands slot"
+              ],
+              "actual": [
+                "Nederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands slot"
+              ],
+              "sha256": "61273872b9f170db6e36769dc961ec9cf055eb8a9b341ba7d4cd256082e3b6c0"
+            },
+            {
+              "name": "document start after x",
+              "expected": [
+                "xNederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands slot"
+              ],
+              "actual": [
+                "xNederlands English",
+                "Bonjour",
+                "Nogmaals Nederlands slot"
+              ],
+              "sha256": "a0168efd4411a925e8fed4e14eb3b7072eae3fc3bd10097431eb9782c70daa34"
+            }
+          ],
+          "savedSha256": "768e79aedee0a531bdaae06e0e1954e5b082790d80e5b23a000ab433e42f7c5b",
+          "exactSavedParagraphs": [
+            "Nederlands English",
+            "Bonjour",
+            "Nogmaals Nederlands slot"
+          ],
+          "firstProcessClosed": true,
+          "firstCloseMethod": "native CmdQ",
+          "secondPid": 3072,
+          "cleanupMethod": "native CmdQ",
+          "ownedAppClosed": true,
+          "ownMountDetached": true
+        },
+        "independentAudit": {
+          "A": {
+            "sha256": "768e79aedee0a531bdaae06e0e1954e5b082790d80e5b23a000ab433e42f7c5b",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands slot"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "nl-NL"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "fr-FR"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands slot",
+                  "language": "nl-NL"
+                }
+              ]
+            ]
+          },
+          "B": {
+            "sha256": "da3dd05939d59ea417091188e6092a2930bb7589fbdc4202258bf0903c8eff61",
+            "paragraphs": [
+              "Nederlands English",
+              "Bonjour",
+              "Nogmaals Nederlands"
+            ],
+            "runs": [
+              [
+                {
+                  "text": "Nederlands ",
+                  "language": "de-DE"
+                },
+                {
+                  "text": "English",
+                  "language": "en-GB"
+                }
+              ],
+              [
+                {
+                  "text": "Bonjour",
+                  "language": "it-IT"
+                }
+              ],
+              [
+                {
+                  "text": "Nogmaals Nederlands",
+                  "language": "en-US"
+                }
+              ]
+            ]
+          },
+          "BByteUnchanged": true,
+          "manifestDigestMatches": true,
+          "languageAssertions": 32,
+          "screenshots": [
+            {
+              "name": "after-body-focus.png",
+              "sha256": "74933a2bf4a6764ac2f4a159a8458120e94ff4d3b239da0549e9b51fe0c569de"
+            },
+            {
+              "name": "boundary-right-verified.png",
+              "sha256": "f91bc768f085e19a70141a1679b8f29ea6be7c6386a7abb01e9ea91134183dd2"
+            },
+            {
+              "name": "final-state.png",
+              "sha256": "2ac7cf942a04cd6d2773d29a604f01f7c9e528661e77a848667db380502d1b81"
+            },
+            {
+              "name": "reopened.png",
+              "sha256": "133d6b0e3feb850905cf2b1cf36ffc9a1c43887de80ef5897d2923ca4c013427"
+            },
+            {
+              "name": "save-as-modal.png",
+              "sha256": "d7a51cf64b7365ebdab19ec70887244df20feef7663d5c4d7d91e652a909777e"
+            },
+            {
+              "name": "saved.png",
+              "sha256": "f2bf803198e2e936e35db7aeca286c79e3d1e647f6bb8f47c8c377ad3bbc2ffe"
+            },
+            {
+              "name": "tabs.png",
+              "sha256": "b861b50b4b91ff5d5ac1a38f776e50116efc100567faf8621c43277502f4c839"
+            }
+          ],
+          "visualInspection": "All seven original PNGs visually inspected. after-body-focus.png: page glyphs invisible, spelling line visible. boundary-right-verified.png, saved.png: readable correct A; tabs.png: readable B with Italian status; save-as-modal.png: actual filename and Cancel/Save controls readable. reopened.png: A glyphs invisible again, French status correct; final-state.png: B readable with German status. No full native visual pass."
+        }
+      }
+    ]
+  },
+  "intake": {
+    "sourceEvidenceCommit": "a5ce27f06470d8b9074a2f2b669de0172c9fd3b8",
+    "earlierLinuxSourceEvidence": "2d26ebe3ed22fcddc61c7f6cafb8cba0fb04fb44",
+    "earlierRootUtf8Correction": "d333fe4b3f69c80e89525cf6546905b940ffea40",
+    "rawLinuxAndFiveMacReportsMatchVerifiedUtf8Artifacts": true
+  }
+}

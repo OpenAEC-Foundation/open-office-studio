@@ -1,0 +1,4037 @@
+{
+  "schemaVersion": 4,
+  "asOf": "2026-11-20T13:34:28.703355+00:00",
+  "currentRound": "I3, 20 November 2026",
+  "status": "I3 evidence checkpoint: four code fixes integrated; core and cross-platform browser passed; native limits explicitly retained; no main",
+  "checkpoint": {
+    "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "branch": "codex/integratie-2026-11-16",
+    "pr": 353,
+    "desktopRun": 44715026752,
+    "externalBrowserHarness": "61d277d64798d9e765ba04a2205ca576944d70aa",
+    "externalBrowserRun": 44716499924,
+    "applicationSourceIsDistinctFromEvidenceHead": true,
+    "integrationCodeAndTestHead": "d76fd1ee20a3d688efd09abe7dcbffac70f005ab",
+    "productionEquivalence": "integratie-2026-11-16/2026-11-20-I3/production-equivalence.json"
+  },
+  "permission": {
+    "mainMergeAllowed": false,
+    "directMainPushAllowed": false,
+    "officialReleaseAllowed": false,
+    "issueAutoClosureAllowed": false,
+    "mainVerifiedUnchanged": {
+      "sha": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+      "checkedAt": "2026-11-20T13:14:39.817533+00:00"
+    }
+  },
+  "deadline": {
+    "hardStop": "2026-11-20T15:45:00+01:00",
+    "issueChatsHardStop": "2026-11-20T15:20:00+01:00",
+    "automaticResume": false
+  },
+  "coreWorkflows": [
+    {
+      "run": 44715026752,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715031277,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715040713,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715045434,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715050185,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715054368,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715058586,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "run": 44715063201,
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "browser": {
+    "platforms": [
+      "Windows",
+      "Linux",
+      "macOS"
+    ],
+    "routes": [
+      "/",
+      "/office/"
+    ],
+    "status": "passed all four scoped fixes and Office regressions",
+    "totals": {
+      "361checks": 162,
+      "362contentCases": 720,
+      "362groupFocusCases": 192,
+      "362horizontalObservations": 24,
+      "363languageCases": 18,
+      "356routes": 6,
+      "officeCases": 54
+    },
+    "originalFailedRun": 44715036293,
+    "originalMac361CauseProven": false,
+    "Mac361DiagnosticRun": 44718383490,
+    "Mac361DiagnosticPassedCases": 18,
+    "horizontalClippingAcceptedAsAbsent": false,
+    "genuineDisabledDeletePassed": false
+  },
+  "issues": {
+    "356": {
+      "codeIntegrated": true,
+      "browser": "passed all three platforms/both routes",
+      "nativeWindows": "passed open/actual OS save/oracle/newPID reopen; unexpected save location unclassified",
+      "nativeLinux": "AppImage and DEB passed open/actual OS save/oracle/newPID reopen",
+      "nativeMacOS": "DMG passed open/actual OS save/oracle/newPID reopen",
+      "nativeEditingClaimed": false,
+      "issueClosed": false
+    },
+    "361": {
+      "codeIntegrated": true,
+      "browser": "passed all three platforms/both routes; original macOS second-Undo failure preserved with cause unknown",
+      "nativeWindows": "passed scoped functional/history/save/reopen routes; additional real CtrlH/Replace input abc -> exactly one CtrlZ -> empty, exact3x4 grid unchanged, no Save; independent root28file audit",
+      "nativeLinux": "17 core records and16 remaining records passed (four repeated setup records). Original Find-input Undo failed; matched oldG Home\u2192Replace also retained abc with input focus/exact3x4. Different open route explicit, cause not established; originalI3 failure not erased.",
+      "nativeMacOS": "blocked; blank body/unreliable table-cell geometry after ordinary maximize",
+      "fullyAcceptedAcrossPlatforms": false,
+      "issueClosed": false
+    },
+    "362": {
+      "codeIntegrated": true,
+      "browser": "passed vertical content and group-focus cases all platforms/both routes; horizontal observations retained",
+      "nativeWindows": "bounded full Delete focus/menu/Escape at923x952 and selected wider states passed",
+      "nativeLinux": "W3C and foreground-verified XTest ArrowDown routes retain focus-visible failure. Separate exact Tab,Tab entry reached all six Text commands with focusVisible/ring4 and no clipping: one normal plus six focus cases, light1600 only. Subsequent screenshot timed out; zero group cases; native matrix remains failed; no further retry.",
+      "nativeMacOS": "unavailable; table-targeting blocker",
+      "genuineDisabledDeletePassed": false,
+      "fullNativeMatrixClaimed": false,
+      "fullyAcceptedAcrossPlatforms": false,
+      "issueClosed": false
+    },
+    "363": {
+      "codeIntegrated": true,
+      "browser": "18 EN/NL/Lao-fallback cases passed all platforms/both routes",
+      "nativeWindows": "five EN/NL names/hints and Normal/Standaard passed",
+      "nativeLinux": "Passed bounded native English labels/hints/Normal; original and raw data independently owner-reviewed; tab/actions restored, own app closed.",
+      "nativeMacOS": "Passed normal native Settings EN\u2192NL\u2192EN, five AXTitle/Description/Help names, group captions and Normal/Standaard/Normal; Home/EN restored, normal CmdQ, no persistent recording.",
+      "issueClosed": false,
+      "nativeReviewCompleteWithinReportedScope": true,
+      "acceptedInBoundedScope": true,
+      "centralAcceptance": "integratie-2026-11-16/2026-11-20-I3/owner-reviews/root-363-acceptance.json"
+    }
+  },
+  "nativeManifest": {
+    "file": "integratie-2026-11-16/2026-11-20-I3/native/canonical-candidate.json",
+    "originalByteSha256": "2c37f17474b06072a2b8b5fe47be864619d92d5b4c7ab1bff5c02a5880d8ae60",
+    "allThreeArchiveAndFourInnerPackageBytesIndependentlyChecked": true
+  },
+  "nativeAudits": {
+    "Windows": "integratie-2026-11-16/2026-11-20-I3/native/Windows/audit.json",
+    "LinuxEPUB": "integratie-2026-11-16/2026-11-20-I3/native/Linux-EPUB/audit.json",
+    "macOSEPUB": "integratie-2026-11-16/2026-11-20-I3/native/macOS-EPUB/audit.json",
+    "Linux361RemainingAnd363": "integratie-2026-11-16/2026-11-20-I3/native/Linux-remaining/audit.json",
+    "macOSBlockedMaximize": "integratie-2026-11-16/2026-11-20-I3/native/macOS-blocked-maximize/audit.json",
+    "macOS363": "integratie-2026-11-16/2026-11-20-I3/native/macOS363/audit.json",
+    "Linux362Tab": "integratie-2026-11-16/2026-11-20-I3/native/Linux362-XTest-Tab-partial/audit.json",
+    "WindowsCtrlH": "integratie-2026-11-16/2026-11-20-I3/native/Windows-CtrlH/audit.json"
+  },
+  "evidenceIndex": "integratie-2026-11-16/2026-11-20-I3/index.json",
+  "readiness": {
+    "readyForMain": false,
+    "blockers": [
+      "Native Linux362 original ArrowDown focus-visible failure retained; alternative Tab route only partial (six focused Text commands, then screenshot timeout), no full native matrix",
+      "Native Linux Find input Undo fails in this driver setup and oldG control; no I3 regression cause established",
+      "Native macOS361/362 table-targeting/body route remains unavailable; no359 fix claimed"
+    ],
+    "pending": [],
+    "noProductionChangesAfterTestedI3Expected": true,
+    "completedSupplementaryLinuxTab": {
+      "run": 44744186201,
+      "status": "failed; partial route-specific geometry evidence",
+      "normalCases": 1,
+      "focusCases": 6,
+      "groupCases": 0,
+      "retryAllowed": false
+    }
+  },
+  "otherWork": {
+    "359": "research outside four fixes; no proven cause/product fix",
+    "30": "16 missing positive fixtures are not16 proven bugs; separate SYLK work not automatically included",
+    "TabWithoutTyping": "separate row repaint observation retained",
+    "horizontalRibbon": "24 observations retained outside vertical362 acceptance"
+  },
+  "cleanup": {
+    "ownedAppClosed": true,
+    "finalOfficeProcesses": [],
+    "preferencesRestored": true,
+    "ownKernelResetConfirmed": true,
+    "kernelResetUTC": "2026-11-20T11:11:22Z",
+    "borderVisuallyConfirmedGone": false,
+    "allHelpersIndependentlyConfirmedClosed": false,
+    "originalRoundOnly": true,
+    "supplementaryWindowsCleanupPending": false,
+    "supplementaryWindows": {
+      "searchPaneClosed": true,
+      "ownDocumentChangesDiscarded": true,
+      "ownAppClosedNormally": true,
+      "finalOfficeProcesses": [],
+      "fixtureByteUnchanged": true,
+      "windowSizeThemeLanguageUnchanged": true,
+      "ownNodeRuntimeResetConfirmed": true,
+      "captureRestartedToInspectBorder": false,
+      "limit": "Runtime reset does not independently prove all helper resources or the yellow capture border disappeared; no extra capture was made."
+    }
+  },
+  "historicalRounds": {
+    "H_and_prior_as_published_16Nov": {
+      "schemaVersion": 3,
+      "asOf": "2026-11-16T14:16:20.079521+00:00",
+      "currentRound": "H: timed Mac-navigation/WindowsUndo follow-up",
+      "status": "Timed work safely closed; acceptedH and allseparateworkbranches pushed; candidateCI resumable remotely; main unchanged",
+      "deadline": {
+        "hardStop": "2026-11-16T15:25:00+01:00",
+        "wrapStart": "2026-11-16T15:10:00+01:00",
+        "resume": "Wednesday18Nov onlynewuserrequest",
+        "automaticResume": false
+      },
+      "checkpoint": {
+        "applicationCommit": "7632c090651515ab3e0aad44dfe293aa340badcf",
+        "integrationMerge": "f1085923653bd6e59982807e16a09c5fa3e3d74e",
+        "previousGDocumentationHead": "46513b81621eecc4e340d66161c84807afca8f02",
+        "branch": "codex/integratie-2026-11-16",
+        "pr": 353,
+        "nonDocumentationGitTreeSha256": "63727fc847f879e03f6e42dd19d3dd8b691e597671b4fc8f6e70f8936ae9715f",
+        "allNonDocumentationInputsEqualTested7632": true
+      },
+      "permission": {
+        "mainMergeAllowed": false,
+        "directMainPushAllowed": false,
+        "officialReleaseAllowed": false,
+        "issueAutoClosureAllowed": false
+      },
+      "intake": {
+        "358": {
+          "pr": 360,
+          "source": "7632c090651515ab3e0aad44dfe293aa340badcf",
+          "files": [
+            "scripts/tekstnavigatie-compatibiliteit.ts",
+            "scripts/tekstnavigatie-macos.test.ts"
+          ],
+          "evidence": "fe3e04659ab735a2978361b244c915889be3e81b",
+          "accepted": true
+        },
+        "359": {
+          "researchSource": "cc23c8dc75589109aab28ad223cb2577f743db12",
+          "docsOnly": true,
+          "productFixAccepted": false,
+          "probedApplication": "9e0ad565402815082e8edf11a4c23943455fb6ce"
+        },
+        "361": {
+          "accepted": false,
+          "status": "Pushed clean358+361 work candidate;19focused checks, both productionroutes27states each, types/builds pass. NativeWindows/Linux/macOS acceptance missing; candidate CI separate from acceptedH.",
+          "branch": "codex/writer-table-undo-361",
+          "fix": "d8654bd9458959059252cca7058c979807e29b0e",
+          "combinedCandidate": "91af2c0570c04ce50d3189d07887598951af7043",
+          "pr": 364,
+          "evidence": "docs/tests/2026-11-16-writer-361-candidate.json"
+        },
+        "362": {
+          "accepted": false,
+          "source": "882932d4400349796bfa14bf0d1beb318af67cfb",
+          "branch": "codex/writer-ribbon-clipping-362",
+          "outsideCurrentMacUndoScope": true,
+          "nativePlatformMatrixMissing": true,
+          "pushed": true,
+          "evidence": "docs/tests/2026-11-16-writer-362-queued.json",
+          "rootVerifiedReportAndImageHashes": true
+        },
+        "363": {
+          "accepted": false,
+          "owner": "6f92 after750bexplicitclaimrelease",
+          "branch": "codex/writer-363-style-labels-2026-11-16",
+          "separateNewUserTask": true,
+          "source": "489c4e3ce10a51e14bfd5791860e5fe3e843a544",
+          "evidence": "9ce8e75851d4cb287d7cf9f2e787892dd5ca0e76",
+          "pushed": true,
+          "tests": "18targetedtests,9languages1669keys,types/normal+hostedbuilds,6WindowsChromiumUIcasesEN/NL/lofallback,0pageerrors;6originalPNGsreviewed byproducer",
+          "limits": "No nativeWindows/package/Linux/macOS/newfullplatformacceptance; no363productintake",
+          "receiptOnOwnBranch": "docs/tests/2026-11-16-writer-363-style-labels.json",
+          "cleanup": "producer confirms headlessbrowsers/servers closed,no own363nodeprocesses,no CUA/capture; no newwork/automaticresume",
+          "finalReview": "b22240ec428ca720ad58cd2990e92320e5b8c07b",
+          "reviewLimits": [
+            "Render mock couples currentstyle andeditable; editablewithoutstyle/namedreadonly notindependentlycovered.",
+            "Preview/browser/template startup precedestry/finally; startup failure cleanup untested, successful6runsclosed.",
+            "report.source isGitHEAD notindependent distbinding; futurebuildmanifest/bundledigest needed, actual489runsusedfreshbuilds.",
+            "Gallery/managebothStyles/Stijlen: readablebutnotdistinct, assessa11ycaption atintake."
+          ],
+          "fullIntakeDiff": "f1085923..489c4e3c; all3source/testcommits2e6446fa/7a512f9c/489c4e3c, notonlyfirstfix",
+          "reviewDocumentation": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/b22240ec428ca720ad58cd2990e92320e5b8c07b/docs/tests/2026-11-16-writer-363-style-labels.md"
+        },
+        "356": {
+          "accepted": false,
+          "pr": 357,
+          "source": "cf64b9c0d9183f68a0963a42b5c19f65d42956f3",
+          "app": "2b100ada38e39d58dab42369bf4c0d3659f70834",
+          "evidence": "e41665fc",
+          "limit": "ownfull/nativeproofs green; regularoldPRLinux43861156830 red MODULE_NOT_FOUND reservedhelper. Do not relabel2b asG/H."
+        }
+      },
+      "validation": {
+        "applicationCommit": "7632c090651515ab3e0aad44dfe293aa340badcf",
+        "desktop": {
+          "run": 43871354511,
+          "jobs": [
+            {
+              "id": 133313080798,
+              "name": "desktop (windows-latest)",
+              "conclusion": "success"
+            },
+            {
+              "id": 133313081154,
+              "name": "desktop (macos-latest)",
+              "conclusion": "success"
+            },
+            {
+              "id": 133313081227,
+              "name": "desktop (ubuntu-22.04)",
+              "conclusion": "success"
+            }
+          ],
+          "js": 3499,
+          "skips": 3,
+          "files": 328,
+          "python": 58,
+          "rust": {
+            "Windows": {
+              "pass": 116,
+              "ignored": 6
+            },
+            "Linux": {
+              "pass": 117,
+              "ignored": 7
+            },
+            "macOS": {
+              "pass": 117,
+              "ignored": 6
+            }
+          },
+          "packages": "all3platformchecks passed; completed logs independently saved"
+        },
+        "database": {
+          "run": 43871354515,
+          "status": "all3OSsuccess"
+        },
+        "example": {
+          "run": 43871354501,
+          "status": "success"
+        },
+        "browserRoot": {
+          "run": 43877140121,
+          "status": "all3OSsuccess",
+          "reports": 6,
+          "cases": 54,
+          "actualRoutes": [
+            "/",
+            "/office/"
+          ],
+          "exactSourceAndClean": true,
+          "zipDigestVerified": true
+        },
+        "browserOwner": {
+          "source": "7632c090651515ab3e0aad44dfe293aa340badcf",
+          "cases": 90,
+          "details": "15cases perOS/route, onlypassing routesfrompreservedfailed-firstattempt reused; data/ZIP audits in358receipt",
+          "limits": "Windows-hosted finalCJKfonttoast440bytesvs4533028, untriaged; nofontfix/causalclaim"
+        },
+        "nativeMac": {
+          "run": 43875473969,
+          "artifact": 14229571828,
+          "zipSha256": "6834f4340bcbb9f8aa41f41afd95ec96f53f7e3024f03d3e33c607907419abdd",
+          "rawReportEqualsImportedUtf8": true,
+          "nativeHost": "macOS15.8.2ARM64",
+          "buildHost": "macOS26.7.2ARM64",
+          "standardCmdAndShiftCmd": true,
+          "languageAssertions": 32,
+          "savedBoundarySelectionUndoCheckpoints": 15,
+          "wrappedPlainDownUpOffsets": [
+            8,
+            100,
+            8
+          ],
+          "fullProcessRestartPids": [
+            2008,
+            3140
+          ],
+          "ownedAppClosed": true,
+          "ownMountDetached": true,
+          "visual": "Initial/reopenedA glyphs absent; post-editA andB/C readable;359unresolved, nofullMacvisualpass"
+        },
+        "nativeLinux": "4data/process/Findchecks andreadableoriginalscreens onexact7632desktop verifiedbyproducer",
+        "notClaimed": [
+          "No newnativeWindows-keyboard acceptance onH",
+          "No Mac26native-keyboardprofile",
+          "Gprivateconverter/macro proofs retained atG andnot relabelledH; backend/configinputsunchanged",
+          "No physicalMac initialpaint acceptance"
+        ]
+      },
+      "research359": {
+        "originalGPoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+        "runs": [
+          43877574402,
+          43878165715
+        ],
+        "result": "SCKwindow andnativeDisplay capturesbothlack initial/reopenedglyphs after8s andnormalresize; notonlyscreencapturecommand, sharedcompositor/appcausalityunknown",
+        "firstHelperAssertion": "CGSinitialization oftesthelper, notappcrash; laterAppKitinitializationfixed",
+        "cleanup": "ownedPID/mount/tempclosed; no localGUI/server/capture",
+        "openGaps": [
+          "font/layout/frame timeline",
+          "independentlivephysicalMac"
+        ],
+        "resumedEvidence": "cc23c8dc75589109aab28ad223cb2577f743db12",
+        "themeProbe": {
+          "run": 43880142119,
+          "artifact": 14231399902,
+          "zipSha256": "beed9fc846fb4682e9bfa10ba952aa93e32e021e4bb3bd86d5c164791ffd2887",
+          "rawReportIndependentlyVerified": true,
+          "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "cases": [
+            "default Forge/dark",
+            "Forge/paper",
+            "light/paper"
+          ],
+          "result": "All12 original SCKwindow/display images lack glyphs at ready and8s; producer serial review. Theme changes not a fix. No cause proved.",
+          "cleanup": "3 owned app PIDs closed, original document unchanged, preferences restored, mount/temp disposed; no active CI/local GUI/server/recording"
+        },
+        "observerPreparation": {
+          "branch": "codex/writer-359-observer-preparation",
+          "commit": "625167fa3205cd0f08c5a8028b977978da594da0",
+          "basedOn": "cc23c8dc75589109aab28ad223cb2577f743db12",
+          "scope": "4newfiles,explicit opt-in isolateddiagnosticfactory/runtime/tests/doc; not pluggedintoVite/product",
+          "tests": "7producerNodecontracttests pass with exact4SDK0.5.1sourceguards, syntax, inertdefault, bounds, payload/workertransportcleanup/timeout",
+          "limits": "No diagnosticnativebuild, native readouttransport, runtimeprobe, pixelpass, causefix orproductintake",
+          "cleanup": "producer confirms cleanpushedhead, no owncommands/server/app/GUI/capture/CUA/mount/workerclient,0newbranchCIruns; oldrunscompleted",
+          "documentation": "https://github.com/OpenAEC-Foundation/open-office-studio/blob/625167fa3205cd0f08c5a8028b977978da594da0/docs/tests/writer359/2026-11-16-observer-preparation.md"
+        }
+      },
+      "safety": {
+        "rootLocalGuiStarted": false,
+        "rootLocalTestServersStarted": false,
+        "coordinatedStopConfirmations": "358/359/361/362/363 finalsafehandoffsreceived; no ownlocaltestwork remaining",
+        "userReopenedGApp": "unrelateduserapp is not closed/touched",
+        "mainUnchanged": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+        "receipts": {
+          "750b361and362": "Delivered safely; headlessbrowsers/previewservers closed in finally, allowncommandscompleted, no newnativeGUI/CUA/capture; userGappuntouched",
+          "6f92_358and363": "Finalread-onlyreview b22240ec safelypushed; app/testpoint489 unchanged; cleanworktree,no own363processes/servers,Cua/capture; stoppedbefore15:20,no automaticresume",
+          "8020_359": "Both same-Gresearch and newobserverpreparation safelyclosed/pushed. No active ownCI/localGUI/server/CUA/capture/workerclient; nextnativeprobe notstarted."
+        },
+        "rootOwnLocalExecutionSessionsActive": false,
+        "externalCIIndependentOfCodex": true,
+        "closingYellowBorderClaim": "No new rootCUA/capture; executors report no new recording for these rounds. Prior nativekernelreset and later user-ownedGapp remainseparate; no fresh visualborderabsence or globalhelperclosure claim.",
+        "rootWorkStopped": true,
+        "rootLocalProcessCleanup": "No localGUI/previewserver/headlessbrowser/CUA/recording started byroot; all root CLI invocations completed before finalresponse. No shared/user processes terminated."
+      },
+      "openIssues": [
+        359,
+        361,
+        362,
+        363,
+        356,
+        30
+      ],
+      "previousRoundG": {
+        "schemaVersion": 2,
+        "asOf": "2026-11-16T13:19:32.436993+00:00",
+        "status": "PR354 source intake and combined G validation round completed with explicit acceptance limitations:9standard workflows pass; native runtime controls pass across3OS; Linux32/Mac32alternate language data and WindowsTable save/reopen pass. Mac first/reopen painting359, standardCommand navigation358 and WindowsInsertColumnLeftUndo361 remain open. No main/release.",
+        "checkpoint": {
+          "commit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "tree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+          "base": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+          "branch": "codex/integratie-2026-11-16",
+          "pr": 353
+        },
+        "permission": {
+          "mainWriteAllowed": false,
+          "officialReleaseAllowed": false,
+          "mainVerifiedUnchanged": "93fcc6194904f70fa12d0a3546c23dac9c673ee5"
+        },
+        "intake": {
+          "alreadyInBase": [
+            337,
+            346,
+            341,
+            343,
+            344,
+            342
+          ],
+          "writer327": {
+            "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+            "evidenceSource": "4f88c4f75dca3cba1c61628d7a5655ba983327e8",
+            "mergedOnce": true,
+            "issueOpen": true,
+            "sourcePRDraft": true,
+            "releaseScope": "joint/native integration tests only"
+          },
+          "runtime354": {
+            "included": true,
+            "head": "b2a17d5b813893928b4e5740c599078667197a74",
+            "merge": "586dfec9fd3aaa82247aa8323c5a611dc6203f08",
+            "standardCiPreparation": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "mergeConflicts": false,
+            "supersedes": 317,
+            "issue30Complete": false,
+            "excludedWip": {
+              "issue": 356,
+              "pr": 357
+            }
+          },
+          "ci355": {
+            "included": true,
+            "origin": "d73539b10d6a0a96956050766b0d850474b55910",
+            "productSettingChanged": false,
+            "scope": "WEBKIT_DISABLE_DMABUF_RENDERER=1 only Linux CI native test execution; compositing unset"
+          }
+        },
+        "local": {
+          "focusedVitest": {
+            "runner": "vitest",
+            "passed": 26,
+            "files": 3,
+            "log": ".local/nov16-pr354-focused-vitest.log"
+          },
+          "hostedStrictCheck": "passed",
+          "languageNormal": {
+            "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "outDir": "dist",
+            "route": "/",
+            "platform": "win32",
+            "browser": "151.0.7922.34",
+            "cpuRate": 4,
+            "production": true,
+            "noBridge": true,
+            "checks": [
+              {
+                "name": "open",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 checking spelling\u2026"
+              },
+              {
+                "name": "oorspronkelijke taalgrens links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "oorspronkelijke taalgrens rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "volgende alinea",
+                "expected": "French",
+                "actual": "French (France) \u00b7 1 spelling error"
+              },
+              {
+                "name": "na invoer en rust",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "ingevoegd teken links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "ingevoegd teken rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "Undo links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "Undo rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "Redo links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "Redo rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "hersteld na Undo links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "hersteld na Undo rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropend",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropende taalgrens links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropende taalgrens rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropende tweede alinea",
+                "expected": "French",
+                "actual": "French (France) \u00b7 1 spelling error"
+              },
+              {
+                "name": "ander document zelfde tekst/paraids",
+                "expected": "German",
+                "actual": "German (Germany) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "ander document tweede alinea",
+                "expected": "Italian",
+                "actual": "Italian (Italy) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "eerste tab 0 links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "eerste tab 0 rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "derde tab 0",
+                "expected": "German",
+                "actual": "German (Germany) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "eerste tab 1 links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "eerste tab 1 rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "derde tab 1",
+                "expected": "German",
+                "actual": "German (Germany) \u00b7 2 spelling errors"
+              }
+            ],
+            "textExact": true,
+            "errors": []
+          },
+          "languageHosted": {
+            "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "outDir": "dist-hosted",
+            "route": "/office/",
+            "platform": "win32",
+            "browser": "151.0.7922.34",
+            "cpuRate": 4,
+            "production": true,
+            "noBridge": true,
+            "checks": [
+              {
+                "name": "open",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 checking spelling\u2026"
+              },
+              {
+                "name": "oorspronkelijke taalgrens links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "oorspronkelijke taalgrens rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "volgende alinea",
+                "expected": "French",
+                "actual": "French (France) \u00b7 1 spelling error"
+              },
+              {
+                "name": "na invoer en rust",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "ingevoegd teken links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "ingevoegd teken rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "Undo links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "Undo rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "Redo links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "Redo rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "hersteld na Undo links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "hersteld na Undo rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropend",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropende taalgrens links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropende taalgrens rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "heropende tweede alinea",
+                "expected": "French",
+                "actual": "French (France) \u00b7 1 spelling error"
+              },
+              {
+                "name": "ander document zelfde tekst/paraids",
+                "expected": "German",
+                "actual": "German (Germany) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "ander document tweede alinea",
+                "expected": "Italian",
+                "actual": "Italian (Italy) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "eerste tab 0 links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "eerste tab 0 rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "derde tab 0",
+                "expected": "German",
+                "actual": "German (Germany) \u00b7 2 spelling errors"
+              },
+              {
+                "name": "eerste tab 1 links",
+                "expected": "Dutch",
+                "actual": "Dutch (Netherlands) \u00b7 1 spelling error"
+              },
+              {
+                "name": "eerste tab 1 rechts",
+                "expected": "English",
+                "actual": "English (United Kingdom) \u00b7 1 spelling error"
+              },
+              {
+                "name": "derde tab 1",
+                "expected": "German",
+                "actual": "German (Germany) \u00b7 2 spelling errors"
+              }
+            ],
+            "textExact": true,
+            "errors": []
+          },
+          "writer600": {
+            "platform": "win32",
+            "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "outDir": "dist",
+            "browser": "151.0.7922.34",
+            "checks": [
+              "600-alinea-document geopend met spelling",
+              "invoer, scrollen en vensterwijziging",
+              "productie-Ctrl+S / Opslaan als-download: alle 600 teksten exact",
+              "gedownloade DOCX heropend met spelling"
+            ],
+            "contentExact": true,
+            "errors": []
+          },
+          "dist": {
+            "dist": {
+              "treeSha256": "70674de172328e84ba4053131033b8044db7bc3d58e0449e475ffb4ba5433bf7",
+              "fileCount": 727
+            },
+            "dist-hosted": {
+              "treeSha256": "9308698db821d15fd0d3a7c178385ecc48e30afe54fc7a3d40317f16322e7bcc",
+              "fileCount": 727
+            }
+          },
+          "localNativeGuiOrCaptureStarted": false,
+          "normalBuildViteSeconds": 39.01,
+          "hostedBuildViteSeconds": 35.71
+        },
+        "ci": {
+          "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+          "asOf": "2026-11-16T12:01:39.450839+00:00",
+          "runs": {
+            "desktop": {
+              "run": 43856368812,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368812",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261556088,
+                  "name": "desktop (macos-latest)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261556431,
+                  "name": "desktop (windows-latest)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261557496,
+                  "name": "desktop (ubuntu-22.04)",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "database": {
+              "run": 43856368799,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368799",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261556030,
+                  "name": "database (windows-latest)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261556404,
+                  "name": "database (ubuntu-22.04)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261556571,
+                  "name": "database (macos-latest)",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "browser": {
+              "run": 43856360288,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856360288",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261531904,
+                  "name": "browser (macos-latest)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261532240,
+                  "name": "browser (ubuntu-22.04)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261532299,
+                  "name": "browser (windows-latest)",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "example": {
+              "run": 43856368791,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368791",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261555727,
+                  "name": "voorbeeld",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "writer": {
+              "run": 43856368801,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368801",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261555928,
+                  "name": "writer",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "legacy": {
+              "run": 43856368922,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368922",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261556701,
+                  "name": "legacy",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "strictOdf": {
+              "run": 43856368798,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368798",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261556234,
+                  "name": "odf",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "macro": {
+              "run": 43856368796,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368796",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261555673,
+                  "name": "macro-fixture",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            "presentation": {
+              "run": 43856368935,
+              "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43856368935",
+              "status": "completed",
+              "conclusion": "success",
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "jobs": [
+                {
+                  "id": 133261556426,
+                  "name": "presentation (macOS)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261556671,
+                  "name": "presentation (Windows)",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "id": 133261556810,
+                  "name": "presentation (Linux)",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            }
+          }
+        },
+        "native": {
+          "runtime": {
+            "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "run": 43857127197,
+            "harness": "3d3b847ffa6650c0a919a275f5be4b12b76e9803",
+            "overallConclusion": "Initial43857127197 remains red for MacAX. Same-G/same-byte Mac-only43867748532 passes native AX/source controls. Retain original Windows/Linux/converter/hosted results. Mac ready document pixels still unaccepted359; no overall Mac painting pass.",
+            "converters": {
+              "windows": {
+                "codePoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+                "harnessPoint": "3d3b847ffa6650c0a919a275f5be4b12b76e9803",
+                "run": 43857127197,
+                "artifact": 14224202257,
+                "zipSha256": "3d01838a95769099cb48328de75e2db4a0cf51208f4c18ca3ee2b2f09407a830",
+                "packages": [
+                  {
+                    "package": "Open Office Studio_2026.46.2_x64-setup.exe",
+                    "packageSha256": "00a7836ffb387d03917ce5b2a73f3620274f49b568fcbbd1f2af09556732ad5f",
+                    "packageBytes": 384522997,
+                    "scope": "converter-only",
+                    "macrosDisabled": true,
+                    "independentContent": true,
+                    "legacyFixtures": 32,
+                    "nativeInterface": {
+                      "status": "not-run",
+                      "reason": "Converter-only job; native UI runs on a separate fresh host"
+                    }
+                  }
+                ]
+              },
+              "linux": {
+                "codePoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+                "harnessPoint": "3d3b847ffa6650c0a919a275f5be4b12b76e9803",
+                "run": 43857127197,
+                "artifact": 14223150446,
+                "zipSha256": "7d46c6288b0b78edb1044098988be85ea3a3ba509f80cfd875babb59bf67ba9f",
+                "packages": [
+                  {
+                    "package": "Open Office Studio_2026.46.2_amd64.AppImage",
+                    "packageSha256": "866044e566dfb1e9933edc666671e0ebe9bea37cc6eae41ed66c678985a8a347",
+                    "packageBytes": 429812216,
+                    "scope": "converter-only",
+                    "macrosDisabled": true,
+                    "independentContent": true,
+                    "legacyFixtures": 32,
+                    "nativeInterface": {
+                      "status": "not-run",
+                      "reason": "Converter-only job; native UI runs on a separate fresh host"
+                    }
+                  },
+                  {
+                    "package": "Open Office Studio_2026.46.2_amd64.deb",
+                    "packageSha256": "6634cc1750e8073e57487af664a67ccbe769bbe85645d18e9c8a8d9950443c38",
+                    "packageBytes": 383783890,
+                    "scope": "converter-only",
+                    "macrosDisabled": true,
+                    "independentContent": true,
+                    "legacyFixtures": 32,
+                    "nativeInterface": {
+                      "status": "not-run",
+                      "reason": "Converter-only job; native UI runs on a separate fresh host"
+                    }
+                  }
+                ]
+              },
+              "macos": {
+                "codePoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+                "harnessPoint": "3d3b847ffa6650c0a919a275f5be4b12b76e9803",
+                "run": 43857127197,
+                "artifact": 14224913540,
+                "zipSha256": "sha256:cd4f4e06c4aed06a70435ee72f198a500f377db3a33121c169e89c24e65b49f6",
+                "packages": [
+                  {
+                    "package": "Open Office Studio_2026.46.2_aarch64.dmg",
+                    "packageSha256": "af83cdd95ff21fafa4c1757cc9cd2a0abb47afb794dd53c6e1014c9b15ee612b",
+                    "packageBytes": 373703908,
+                    "scope": "converter-only",
+                    "macrosDisabled": true,
+                    "independentContent": true,
+                    "legacyFixtures": 32,
+                    "nativeInterface": {
+                      "status": "not-run",
+                      "reason": "Converter-only job; native UI runs on a separate fresh host"
+                    }
+                  }
+                ]
+              }
+            },
+            "native": {
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "harness": "3d3b847ffa6650c0a919a275f5be4b12b76e9803",
+              "run": 43857127197,
+              "platforms": {
+                "Linux": {
+                  "artifact": 14224947379,
+                  "zipSha256": "sha256:fcba3151c0f3ef4b1bdb8eb00c5422b543c8ecac91fba9bb37fcd4ddf6d20037",
+                  "packages": [
+                    {
+                      "package": "Open Office Studio_2026.46.2_amd64.AppImage",
+                      "sha256": "866044e566dfb1e9933edc666671e0ebe9bea37cc6eae41ed66c678985a8a347",
+                      "status": "passed",
+                      "nativeInterface": {
+                        "status": "passed",
+                        "packagedApp": true,
+                        "defaultBundledStatus": true,
+                        "odtLoadedInWriter": true,
+                        "saveAsShowsBundledRuntime": true,
+                        "interaction": "enabled-save-as-native-pointer",
+                        "entryPoint": "appimage-runtime",
+                        "originalUnchanged": true
+                      }
+                    },
+                    {
+                      "package": "Open Office Studio_2026.46.2_amd64.deb",
+                      "sha256": "6634cc1750e8073e57487af664a67ccbe769bbe85645d18e9c8a8d9950443c38",
+                      "status": "passed",
+                      "nativeInterface": {
+                        "status": "passed",
+                        "packagedApp": true,
+                        "defaultBundledStatus": true,
+                        "odtLoadedInWriter": true,
+                        "saveAsShowsBundledRuntime": true,
+                        "interaction": "enabled-save-as-native-pointer",
+                        "entryPoint": "installed-app",
+                        "originalUnchanged": true
+                      }
+                    }
+                  ]
+                },
+                "Windows": {
+                  "artifact": 14226085730,
+                  "zipSha256": "sha256:e2bc2ecf8f3f3584100264a16b46ee7bd9f30ea43a054f721011ddcea06cce09",
+                  "packages": [
+                    {
+                      "package": "Open Office Studio_2026.46.2_x64-setup.exe",
+                      "sha256": "00a7836ffb387d03917ce5b2a73f3620274f49b568fcbbd1f2af09556732ad5f",
+                      "status": "passed",
+                      "nativeInterface": {
+                        "status": "passed",
+                        "packagedApp": true,
+                        "defaultBundledStatus": true,
+                        "odtLoadedInWriter": true,
+                        "saveAsShowsBundledRuntime": true,
+                        "interaction": "enabled-save-as-native-pointer",
+                        "entryPoint": "installed-app",
+                        "originalUnchanged": true
+                      }
+                    }
+                  ]
+                },
+                "macOS": {
+                  "artifact": 14224324502,
+                  "zipSha256": "sha256:530e2c037116be68cfa4af1741b994301909199556d01a0e4ec1fdfdfc0e5486",
+                  "packages": [
+                    {
+                      "package": "Open Office Studio_2026.46.2_aarch64.dmg",
+                      "sha256": "af83cdd95ff21fafa4c1757cc9cd2a0abb47afb794dd53c6e1014c9b15ee612b",
+                      "status": "blocked",
+                      "nativeInterface": {
+                        "status": "blocked",
+                        "packagedApp": "/private/var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/oos-bundle-probe-LFTkzB/payload/Open Office Studio.app",
+                        "originalSha256": "3040060e17a4290a253c33bb7525c52269a401f12daa7383f001102528565588",
+                        "snapshots": [
+                          {
+                            "errors": {
+                              "-25204": 1
+                            },
+                            "pressed": false,
+                            "reason": "Native AX window inspection failed",
+                            "status": "blocked",
+                            "trusted": true
+                          }
+                        ],
+                        "windowTitle": "Ontwerpnotitie.docx \u2022 \u2014 Open Office Studio (Text)",
+                        "reason": "Native AX window inspection failed",
+                        "runtimeCrashEvidence": {
+                          "applicable": true,
+                          "newReports": [],
+                          "systemAlerts": {
+                            "status": "read",
+                            "windowTitles": "",
+                            "error": ""
+                          }
+                        },
+                        "ownedAppClosed": true,
+                        "originalUnchanged": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "visualInspection": {
+                "Windows": "Original native ready/dialog PNGs independently viewed: readable document and bundled-runtime/safe-profile/macros-off label",
+                "LinuxAppImage": "Original X11 ready capture independently viewed: readable document",
+                "LinuxDEB": "Original X11 PNG independently rehashed against ZIP and viewed serially: readable, byte-identical to AppImage (168997bytes, SHA2565724e59f4ee8ec9b66af4800071132e708aeb4ee66ec5a11d190eee796da5a98). Earlier black parallel viewer result was not in the source artifact; no Linux retest needed.",
+                "macOS": "Original capture partly outside viewport, document glyphs unreadable; AX inspection blocked (-25204). No native or visual pass."
+              }
+            },
+            "freshHostIsolation": true,
+            "historicalC0EvidenceRelabelled": false,
+            "followup": "Evidence delivery complete; no further native-runtime tests/rebuilds authorized by this round.359 registered as investigation only, no renderer work started.",
+            "macRetry": {
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "harness": "8c4576e535a78b1d6e3feff3eff6a874c8bb9229",
+              "run": 43867748532,
+              "artifact": 14226083730,
+              "zipSha256": "478635240215636ed76737f2fed6276ffb1d3818aaabab74112aa837a1201ee8",
+              "package": "Open Office Studio_2026.46.2_aarch64.dmg",
+              "packageSha256": "af83cdd95ff21fafa4c1757cc9cd2a0abb47afb794dd53c6e1014c9b15ee612b",
+              "host": "macOS26.7.2 ARM64 (completed job log verified)",
+              "nativeControlStatus": "passed",
+              "visualDocumentStatus": "not accepted: ready document canvas has no readable glyphs; Save As dialog and bundled-source label readable; original images viewed serially",
+              "native": {
+                "status": "passed",
+                "originalSha256": "3040060e17a4290a253c33bb7525c52269a401f12daa7383f001102528565588",
+                "windowTitle": "Ontwerpnotitie.docx \u2022 \u2014 Open Office Studio (Text)",
+                "activation": {
+                  "exitCode": 0,
+                  "stderr": ""
+                },
+                "transientAXRetries": 0,
+                "windowFit": {
+                  "display": {
+                    "height": 768,
+                    "width": 1024,
+                    "x": 0,
+                    "y": 0
+                  },
+                  "requested": [
+                    12,
+                    30,
+                    1000,
+                    668
+                  ],
+                  "exitCode": 0,
+                  "actual": "12, 31, 1000, 668",
+                  "stderr": ""
+                },
+                "readyBeforeSaveAs": true,
+                "odtNativeWindow": true,
+                "saveAsShowsBundledRuntime": true,
+                "interaction": "enabled-save-as-native-AXPress",
+                "runtimeCrashEvidence": {
+                  "applicable": true,
+                  "newReports": [],
+                  "systemAlerts": {
+                    "status": "read",
+                    "windowTitles": "",
+                    "error": ""
+                  }
+                },
+                "ownedAppClosed": true,
+                "originalUnchanged": true
+              },
+              "snapshots": [
+                {
+                  "status": "ok",
+                  "bounded": false,
+                  "visited": 2,
+                  "errors": {
+                    "-25205": 3,
+                    "-25212": 1
+                  }
+                },
+                {
+                  "status": "ok",
+                  "bounded": true,
+                  "visited": 800,
+                  "errors": {
+                    "-25205": 6,
+                    "-25212": 6
+                  }
+                },
+                {
+                  "status": "ok",
+                  "bounded": false,
+                  "visited": 61,
+                  "errors": {
+                    "-25205": 3,
+                    "-25212": 2
+                  }
+                },
+                {
+                  "status": "ok",
+                  "bounded": false,
+                  "visited": 23,
+                  "errors": {
+                    "-25205": 6,
+                    "-25212": 7
+                  }
+                }
+              ],
+              "postUiMacroDiagnostic": {
+                "positiveControl": true,
+                "fixtureSha256": "1e737ab29d1ab3868f47c2952de8de8768638550b8f8f6658c628034daaca72a",
+                "markerResetForSafeProfile": true,
+                "timing": {
+                  "ms": 3871,
+                  "mode": "headless-open-positive-control"
+                },
+                "cleanup": [
+                  {
+                    "pid": 2791,
+                    "action": "kill"
+                  }
+                ],
+                "exitCode": -9,
+                "crashEvidence": {
+                  "applicable": true,
+                  "newReports": [],
+                  "systemAlerts": {
+                    "status": "read",
+                    "windowTitles": "",
+                    "error": ""
+                  }
+                }
+              },
+              "images": [
+                {
+                  "member": "Open_Office_Studio_2026.46.2_aarch64.dmg/native-interface-ready.png",
+                  "bytes": 142072,
+                  "sha256": "07cfe27a4fd2b45ca08a2e9c8991289ce518d71a38ca3bbc347667a8afb4de7f"
+                },
+                {
+                  "member": "Open_Office_Studio_2026.46.2_aarch64.dmg/native-interface.png",
+                  "bytes": 239082,
+                  "sha256": "78bc9e8c4e433238e96d7d97ba606639a0fdb58e565093bb794d9ed3fa4bc44e"
+                },
+                {
+                  "member": "macos-macro-diagnostic/after-macro-control.png",
+                  "bytes": 80423,
+                  "sha256": "2265c9930d7cfd5d6ff7cc27e84f9d7aec915bf3d22d0429f9b2d0fa193e463b"
+                }
+              ],
+              "earlierBlockedRunPreserved": 43857127197
+            },
+            "legacyOutcomes": {
+              "Linux": [
+                {
+                  "package": "Open_Office_Studio_2026.46.2_amd64.AppImage",
+                  "outcomes": {
+                    "opened-saved-reopened": 31,
+                    "rejected-with-alternative": 1
+                  }
+                },
+                {
+                  "package": "Open_Office_Studio_2026.46.2_amd64.deb",
+                  "outcomes": {
+                    "opened-saved-reopened": 31,
+                    "rejected-with-alternative": 1
+                  }
+                }
+              ],
+              "Windows": [
+                {
+                  "package": "Open_Office_Studio_2026.46.2_x64-setup.exe",
+                  "outcomes": {
+                    "opened-saved-reopened": 31,
+                    "rejected-with-alternative": 1
+                  }
+                }
+              ],
+              "macOS": [
+                {
+                  "package": "Open_Office_Studio_2026.46.2_aarch64.dmg",
+                  "outcomes": {
+                    "opened-saved-reopened": 31,
+                    "rejected-with-alternative": 1
+                  }
+                }
+              ]
+            }
+          },
+          "standardLinux": {
+            "run": 43856368812,
+            "job": 133261557496,
+            "artifact": 14222116423,
+            "zipSha256": "b8d27093f88054b43fbdcbd9e8975b5a25ce562627dbb2d2cef67c211e534738",
+            "report": {
+              "sourceCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "harnessCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+              "sourceTree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+              "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+              "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+              "status": "passed",
+              "checks": [
+                "Real installed DEB opens a native Writer document",
+                "Actual keyboard edit and Ctrl+S persist exactly one marker",
+                "Application process fully exits after saving",
+                "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+              ],
+              "limits": [
+                "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+                "Virtual X11 display and software graphics, not physical hardware",
+                "DEB only; AppImage native operation is not certified"
+              ],
+              "package": {
+                "path": "/home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.46.2_amd64.deb",
+                "sha256": "6b254885cb8ba65c8e3cd75f29f132a473b0a32652b035ae4f2d5ee9719e67b9"
+              },
+              "packagedExecutableSha256": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d",
+              "rawBuildExecutableSha256": "fdeb3404e2c01aecec9fabac088d856dd56304d9023689c317d003e5e7e66c49",
+              "executableSha256": "38fddbfdd4a550b86f13256b1dad83364f2cdb4cf29c37d69df5b00ab9b5e76d",
+              "runtime": {
+                "node": "v22.23.4",
+                "graphics": {
+                  "GDK_BACKEND": "x11",
+                  "LIBGL_ALWAYS_SOFTWARE": "1",
+                  "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+                  "WEBKIT_DISABLE_COMPOSITING_MODE": null
+                },
+                "driver": "tauri-driver v2.1.0:",
+                "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+                "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+                "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+              },
+              "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+              "inputSha256": "a7aab0de1f05d461052a13a54c00a0e4f4b0df946afe1ddc7a56b304dc0fbb21",
+              "beforeSave": {
+                "saveDisabled": false,
+                "keyboard": [
+                  {
+                    "code": "ControlLeft",
+                    "prevented": false,
+                    "ctrl": true,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keydown",
+                    "key": "Control",
+                    "meta": false
+                  },
+                  {
+                    "code": "Home",
+                    "prevented": false,
+                    "ctrl": true,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keydown",
+                    "key": "Home",
+                    "meta": false
+                  },
+                  {
+                    "code": "Home",
+                    "prevented": false,
+                    "ctrl": true,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keyup",
+                    "key": "Home",
+                    "meta": false
+                  },
+                  {
+                    "code": "ControlLeft",
+                    "prevented": false,
+                    "ctrl": false,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keyup",
+                    "key": "Control",
+                    "meta": false
+                  },
+                  {
+                    "code": "KeyS",
+                    "prevented": false,
+                    "ctrl": false,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keydown",
+                    "key": "S",
+                    "meta": false
+                  },
+                  {
+                    "code": "KeyS",
+                    "prevented": false,
+                    "ctrl": false,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keyup",
+                    "key": "S",
+                    "meta": false
+                  }
+                ],
+                "focused": "TEXTAREA"
+              },
+              "savedSha256": "9f0be74ac13dcdae26350735371aa82ffdb66ebc80a9bc349a6fbf99df528385",
+              "ownedApplicationClosed": true
+            },
+            "independentSavedXmlExactChars": 58,
+            "independentSavedReopenedImagesReadable": true
+          },
+          "writer349Linux": {
+            "evidence": "docs/tests/2026-11-16-pr349-native-language-G.json",
+            "independentRootVerification": {
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "run": 43858722629,
+              "checks": 32,
+              "samePayloadAsCentralNative": true,
+              "savedAndOtherXmlRunsExact": true,
+              "otherDocumentByteUnchanged": true,
+              "cleanExitAndNewPid": true,
+              "ownedApplicationClosed": true,
+              "images": "three original PNGs independently viewed; readable English/Italian/French statuses",
+              "packageSha256": "6b254885cb8ba65c8e3cd75f29f132a473b0a32652b035ae4f2d5ee9719e67b9",
+              "savedSha256": "4108aa0ecc466370c7add1a4639471cc76781aca410f2fb301b0dad598aa4a38"
+            }
+          },
+          "writer349Mac": {
+            "status": "scoped language/data passed using explicit alternate nativeCtrlHomeEnd; standardMacnavigation358 and visual359 unaccepted",
+            "buildHost": "macOS26.7.2 ARM64",
+            "nativeHost": "macOS15.8.2 ARM64",
+            "independentRootVerification": {
+              "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "harness": "8c19fe83ff1a4c7d32d4534894891f8575d5214a",
+              "run": 43869351009,
+              "artifact": 14226578771,
+              "zipSha256": "06384b091264789acb196d8e123f872475c7cd1a044db763037f92314b258e93",
+              "status": "scoped-language/data passed under explicitly alternate navigation; incomplete visual/native standard-key acceptance",
+              "languageAssertions": 32,
+              "keyboardProtocol": {
+                "documentStart": "Ctrl+Home (alternate protocol)",
+                "documentEnd": "Ctrl+End (alternate protocol)",
+                "nextSingleLineParagraph": "Down",
+                "undo": "Cmd+Z",
+                "redo": "Cmd+Shift+Z",
+                "arrowIntervalMs": 50,
+                "caretProof": "single Q edit + native CmdS, independent XML offset11, native Undo + CmdS restores"
+              },
+              "alternateNavigation": {
+                "reason": "Standard macOS Command+Up/Down blocked by #358; integration-authorized single alternate trial",
+                "sdkVersion": "@betteroffice/docx-react 0.5.1",
+                "guardedInputSha256": "d17b7a630163623e99d73b8c4b3678397ec0598e332237df1e4737767799e58d",
+                "sourceSupport": "Home/End passes metaKey || ctrlKey into whole-document navigation; ArrowUp/Down passes false",
+                "limits": "Does not accept standard Cmd navigation or clear initial page paint limitation"
+              },
+              "dmg": {
+                "name": "Open Office Studio_2026.46.2_aarch64.dmg",
+                "sha256": "9b90dbf2845ab12887b52168f986f3cbd85dfe3d17fc9886223f99595d904dc6",
+                "bytes": 373702917
+              },
+              "app": {
+                "version": "2026.46.2",
+                "executableSha256": "fc73826cd8fc8e6cedbf64c0b94c06a33fe8550a9b13eacd0aa06d9639650814",
+                "plistSha256": "5644059abdb0769f40320a31437149d047082e4584b1bcd5e944eecdd9283bda",
+                "treeSha256": "6a59d8fd600859e427ecd28077e9d06d0bf6204eb38c7fed452034fb0554388c",
+                "treeAlgorithm": "Unicode sorted POSIX path TAB sha256 TAB size NEWLINE; symlinks path TAB link TAB target NEWLINE"
+              },
+              "host": {
+                "macOS": "15.8.2",
+                "machine": "arm64",
+                "platform": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+                "runnerOS": "macOS"
+              },
+              "savedSha256": "768e79aedee0a531bdaae06e0e1954e5b082790d80e5b23a000ab433e42f7c5b",
+              "savedAndOtherLanguageRunsIndependentlyExact": true,
+              "otherDocumentByteUnchanged": true,
+              "firstPid": 2087,
+              "secondPid": 3072,
+              "firstProcessClosed": true,
+              "ownedAppClosed": true,
+              "ownMountDetached": true,
+              "caretEvidence": [
+                {
+                  "step": "original boundary right verified",
+                  "method": "native Q edit and CmdS; independent DOCX position",
+                  "expectedOffset": 11,
+                  "actualParagraphs": [
+                    "Nederlands QEnglish",
+                    "Bonjour",
+                    "Nogmaals Nederlands"
+                  ],
+                  "savedProbeSha256": "971bf2896ee44bb3931a15c0669d8e3f8a2865cade86da26655502da1af20820",
+                  "restoredParagraphs": [
+                    "Nederlands English",
+                    "Bonjour",
+                    "Nogmaals Nederlands"
+                  ],
+                  "restoredSha256": "baccf94ced6c694add16468726fbf7042e715c5f2f29014120a84705ed6603cb"
+                }
+              ],
+              "savedCheckpoints": [
+                {
+                  "name": "document end after slot",
+                  "expected": [
+                    "Nederlands English",
+                    "Bonjour",
+                    "Nogmaals Nederlands slot"
+                  ],
+                  "actual": [
+                    "Nederlands English",
+                    "Bonjour",
+                    "Nogmaals Nederlands slot"
+                  ],
+                  "sha256": "61273872b9f170db6e36769dc961ec9cf055eb8a9b341ba7d4cd256082e3b6c0"
+                },
+                {
+                  "name": "document start after x",
+                  "expected": [
+                    "xNederlands English",
+                    "Bonjour",
+                    "Nogmaals Nederlands slot"
+                  ],
+                  "actual": [
+                    "xNederlands English",
+                    "Bonjour",
+                    "Nogmaals Nederlands slot"
+                  ],
+                  "sha256": "a0168efd4411a925e8fed4e14eb3b7072eae3fc3bd10097431eb9782c70daa34"
+                }
+              ],
+              "images": [
+                {
+                  "name": "after-body-focus.png",
+                  "bytes": 153581,
+                  "sha256": "74933a2bf4a6764ac2f4a159a8458120e94ff4d3b239da0549e9b51fe0c569de"
+                },
+                {
+                  "name": "boundary-right-verified.png",
+                  "bytes": 157874,
+                  "sha256": "f91bc768f085e19a70141a1679b8f29ea6be7c6386a7abb01e9ea91134183dd2"
+                },
+                {
+                  "name": "final-state.png",
+                  "bytes": 160553,
+                  "sha256": "2ac7cf942a04cd6d2773d29a604f01f7c9e528661e77a848667db380502d1b81"
+                },
+                {
+                  "name": "reopened.png",
+                  "bytes": 153009,
+                  "sha256": "133d6b0e3feb850905cf2b1cf36ffc9a1c43887de80ef5897d2923ca4c013427"
+                },
+                {
+                  "name": "save-as-modal.png",
+                  "bytes": 236443,
+                  "sha256": "d7a51cf64b7365ebdab19ec70887244df20feef7663d5c4d7d91e652a909777e"
+                },
+                {
+                  "name": "saved.png",
+                  "bytes": 158487,
+                  "sha256": "f2bf803198e2e936e35db7aeca286c79e3d1e647f6bb8f47c8c377ad3bbc2ffe"
+                },
+                {
+                  "name": "tabs.png",
+                  "bytes": 159766,
+                  "sha256": "b861b50b4b91ff5d5ac1a38f776e50116efc100567faf8621c43277502f4c839"
+                }
+              ],
+              "remainingIssues": [
+                358,
+                359
+              ]
+            },
+            "attempts": [
+              {
+                "run": 43862834105,
+                "artifact": {
+                  "run": "43862834105",
+                  "artifactId": 14224512112,
+                  "name": "writer349-native-language-macOS",
+                  "sha256": "888e97a38e1df50bced644b55148b1aafa2df65fac7ec54b4218fdb9545c5f11",
+                  "bytes": 1253410,
+                  "githubDigestMatched": true
+                },
+                "harness": "3933729fe3da0f11dea953f4315696a121614758",
+                "status": "failed",
+                "passedLanguageAssertions": 2,
+                "error": "AssertionError('original boundary right: expected English')",
+                "ownedAppClosed": true,
+                "ownMountDetached": true
+              },
+              {
+                "run": 43865097119,
+                "artifact": {
+                  "run": "43865097119",
+                  "artifactId": 14224344137,
+                  "name": "writer349-native-language-macOS",
+                  "sha256": "7e0c7e6c661ecae31a27e7a1e4f686eda356efa10d7ff7e45e3e1c925a4747ba",
+                  "bytes": 1125459,
+                  "githubDigestMatched": true
+                },
+                "harness": "00f8685269c11e1d51ecf55e7612ddfc05901ad4",
+                "status": "failed",
+                "passedLanguageAssertions": 3,
+                "error": "AssertionError('Actual native caret prefix does not match the intended 11-character position')",
+                "ownedAppClosed": true,
+                "ownMountDetached": true
+              },
+              {
+                "run": 43866052742,
+                "artifact": {
+                  "run": "43866052742",
+                  "artifactId": 14226390810,
+                  "name": "writer349-native-language-macOS",
+                  "sha256": "86ffc67725a3ca391f5fe906efb8b4f58ec6f206ea3b85f44385049351ce29af",
+                  "bytes": 1574984,
+                  "githubDigestMatched": true
+                },
+                "harness": "d680447c6e9f7785adb175cf90b52f01c1a769fc",
+                "status": "failed",
+                "passedLanguageAssertions": 5,
+                "error": "AssertionError('inserted boundary left: expected Dutch')",
+                "ownedAppClosed": true,
+                "ownMountDetached": true
+              },
+              {
+                "run": 43867278004,
+                "artifact": {
+                  "run": "43867278004",
+                  "artifactId": 14226861049,
+                  "name": "writer349-native-language-macOS",
+                  "sha256": "479dde625b00477c3af4fb1fb4d2a51bea7367c9793370fb3ecfcbe79f08921d",
+                  "bytes": 1290837,
+                  "githubDigestMatched": true
+                },
+                "harness": "7830f5de599d83ae45921fda13b641ad1541143a",
+                "status": "failed",
+                "passedLanguageAssertions": 5,
+                "error": "AssertionError('document end after slot: actual saved paragraphs do not match intended cursor position')",
+                "ownedAppClosed": true,
+                "ownMountDetached": true
+              },
+              {
+                "run": 43869351009,
+                "artifact": {
+                  "run": "43869351009",
+                  "artifactId": 14226578771,
+                  "name": "writer349-native-language-macOS",
+                  "sha256": "06384b091264789acb196d8e123f872475c7cd1a044db763037f92314b258e93",
+                  "bytes": 2127574,
+                  "githubDigestMatched": true
+                },
+                "harness": "8c19fe83ff1a4c7d32d4534894891f8575d5214a",
+                "status": "passed",
+                "passedLanguageAssertions": 32,
+                "error": null,
+                "ownedAppClosed": true,
+                "ownMountDetached": true
+              }
+            ],
+            "originalInitialAndReopenedCapturesViewedSerially": "A initial/reopened glyphs absent; post-edit/save A and finalB readable; no complete document visual pass",
+            "evidence": "docs/tests/2026-11-16-pr349-native-language-G.json"
+          },
+          "separateLocalWindowsTask": {
+            "owner": "01a1a170-0fc9-70f1-8384-c1f199db750b",
+            "authorization": "User explicitly resumed newest-devbuild testing in own chat after earlier cleanup-only stop",
+            "status": "completed bounded table data/save/process-reopen route; InsertColumnLeftCtrlZ361fails; no327language claim",
+            "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "evidence": [
+              "docs/tests/2026-11-16-native-windows-g.md",
+              "docs/tests/2026-11-16-native-windows-g.json"
+            ],
+            "receipt": {
+              "applicationSource": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+              "applicationTree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+              "version": "2026.46.2",
+              "scope": "Manual native Windows Writer table route only; no application/CI source changes",
+              "checks": [
+                {
+                  "name": "Insert3columns2rows through native ribbon",
+                  "status": "pass"
+                },
+                {
+                  "name": "Type alpha, Tab to existing second cell and type beta",
+                  "status": "pass"
+                },
+                {
+                  "name": "Last-cell Tab adds one3cellrow; delta typed in new first cell",
+                  "status": "pass"
+                },
+                {
+                  "name": "CtrlZ text and row separately; CtrlY restores both",
+                  "status": "pass"
+                },
+                {
+                  "name": "ShiftTab from new first cell returns to preceding row final cell",
+                  "status": "pass"
+                },
+                {
+                  "name": "Insert Column Left",
+                  "status": "pass for structural insertion"
+                },
+                {
+                  "name": "CtrlZ immediately after left-column ribbon route",
+                  "status": "fail repeated twice;4columns retained after extra observation; issue361"
+                },
+                {
+                  "name": "Document click then CtrlZ, or Home Undo control",
+                  "status": "pass;3columns restored and text retained"
+                },
+                {
+                  "name": "Insert Column Right then CtrlZ comparison",
+                  "status": "pass in this session"
+                },
+                {
+                  "name": "Native CtrlS, SaveAsDOCX, full exit zeroPIDs, newPID sameEXE, Recent reopen",
+                  "status": "pass for text and3x3structure; no pixel-identical formatting claim"
+                },
+                {
+                  "name": "Saved ZIP XML parses; one table, three grid columns, exact9celltexts; hash unchanged after reopen",
+                  "status": "pass"
+                }
+              ],
+              "issue": {
+                "number": 361,
+                "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/361",
+                "labels": [
+                  "tekst",
+                  "bug",
+                  "ui"
+                ],
+                "labelWorkflow": 43872127396,
+                "labelWorkflowConclusion": "success",
+                "duplicateDescriptionsRead": [
+                  19,
+                  48,
+                  128,
+                  136,
+                  138,
+                  139,
+                  188,
+                  340,
+                  16
+                ],
+                "cause": "unknown; no productfix claim"
+              },
+              "processRestart": {
+                "FirstPid": 20640,
+                "ZeroOwnPidsBeforeRestart": true,
+                "RestartPid": 4716
+              },
+              "cleanup": {
+                "ownDocumentTabsClosed": true,
+                "remainingOwnApplicationPids": [],
+                "processCheck": {
+                  "RemainingOwnPids": [
+                    null
+                  ],
+                  "Count": 0,
+                  "AtUtc": "2026-11-16T13:04:10.3786691Z"
+                },
+                "ownNodeReplKernelResetConfirmed": true,
+                "resetResult": "js kernel reset",
+                "newCaptureAfterReset": false,
+                "preferencesChanged": false,
+                "otherChatProcessesTouched": false,
+                "yellowBorderDisappearanceVerified": false,
+                "helperResourceClosureIndependentlyProven": false,
+                "laterUserReopenReported": true
+              },
+              "limits": [
+                "Only one synthetic Writer table, not full Writer acceptance",
+                "No #327 language acceptance performed; its preparedA was only opened/closed unchanged",
+                "No browser/nativeLinux/nativeMac reproduction of issue361 performed; existingGCI is separate coordinator evidence",
+                "No signing/security/privacy/printer changes; no main/branch/source changes; no user documents touched"
+              ],
+              "untriagedObservations": [
+                {
+                  "kind": "screenshot observation only",
+                  "detail": "Table row height looks larger after saved-DOCX reopen than in live newly inserted table; same3x3structure and exacttext verified. Separate investigation not performed; not combined with361 or claimed independently reproduced formatting bug."
+                }
+              ],
+              "completedAtUtc": "2026-11-16T13:05:01.460786+00:00",
+              "provenance": {
+                "source": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+                "run": 43856368812,
+                "artifact": 14223362239,
+                "zipSha256": "c15cb5e1950d0f73566401aa96e34157f91a81687bf00e31c0e79a9be3d466ef",
+                "installerSha256": "33fd74a2a17e648b8302c9ff12359af7589c03ca5c7fc90c4dc8e96ccafd32ca",
+                "installerBytes": 384538478,
+                "installerFile": "Open Office Studio_2026.46.2_x64-setup.exe"
+              },
+              "installedExe": {
+                "Bytes": 88171520,
+                "Version": "2026.46.2",
+                "Sha256": "4d070f3674ff4febaba4b57c4ccc998a78411fad40e0501433227e30ca856f07",
+                "InstallerExit": 0,
+                "isolatedInstall": "2026-11-16-integration-9e0ad565/open-office-studio.exe"
+              },
+              "embeddedExeSeparatelyExtractedAndCompared": false,
+              "provenanceLimit": "Canonical source/run/ZIP/installer and isolated install exit verified; actual started path/PID and installed EXE hash verified. No separate NSIS extraction/embedded EXE comparison; local 7z unavailable.",
+              "output": {
+                "sha256": "645ef61571f22392e29c7c2f0626c407ba4d85927384dae341774578a004cc24",
+                "bytes": 36883,
+                "tables": 1,
+                "rows": [
+                  [
+                    "alpha",
+                    "beta",
+                    ""
+                  ],
+                  [
+                    "",
+                    "",
+                    "omega"
+                  ],
+                  [
+                    "delta",
+                    "",
+                    ""
+                  ]
+                ],
+                "gridColumns": [
+                  {
+                    "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "2880"
+                  },
+                  {
+                    "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "2880"
+                  },
+                  {
+                    "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "2880"
+                  }
+                ],
+                "allPackageXmlParses": true,
+                "file": "writer-table-G-16nov.docx"
+              },
+              "screenshots": [
+                {
+                  "label": "column-left-ctrlz-unchanged",
+                  "sha256": "d38e0ca556cde1d5c751fd737b0989bdd1933be0a23f8b494e1992dd279626c0",
+                  "bytes": 85849,
+                  "time": "2026-11-16T13:00:14.841Z",
+                  "file": "column-left-ctrlz-unchanged.png"
+                },
+                {
+                  "label": "control-ribbon-undo-three-columns",
+                  "sha256": "28b8150fb30ad8697aa98f06706d8ef1437c402b01dd363ade6a296d539cf845",
+                  "bytes": 87816,
+                  "time": "2026-11-16T13:00:55.206Z",
+                  "file": "control-ribbon-undo-three-columns.png"
+                },
+                {
+                  "label": "saved-table-three-by-three",
+                  "sha256": "501782ce683bb41087b2159084443cc18ad221e60e19b4e42d86d6d8311df3b3",
+                  "bytes": 96275,
+                  "time": "2026-11-16T13:01:56.541Z",
+                  "file": "saved-table-three-by-three.png"
+                },
+                {
+                  "label": "reopened-table-three-by-three",
+                  "sha256": "3249a3e1fd24ef3bdc03805e1405c3ee1e6ffe4e9bdb6a93b5125a3f8fdd90ec",
+                  "bytes": 95210,
+                  "time": "2026-11-16T13:03:49.682Z",
+                  "file": "reopened-table-three-by-three.png"
+                }
+              ],
+              "independentRootVerification": {
+                "installerShaMatchesCanonical": true,
+                "installedExeShaMatchesOwner": true,
+                "allPackageXmlParses": true,
+                "exact3x3CellText": [
+                  [
+                    "alpha",
+                    "beta",
+                    ""
+                  ],
+                  [
+                    "",
+                    "",
+                    "omega"
+                  ],
+                  [
+                    "delta",
+                    "",
+                    ""
+                  ]
+                ],
+                "all4ScreenshotHashesMatch": true,
+                "ownedGProcessCountReadOnlyChecked": 0,
+                "embeddedPayloadComparisonCompleted": false,
+                "yellowBorderOrAllHelperClosureProven": false,
+                "localCopy": ".local/nov16-g-native-windows-final",
+                "processCheckScope": "At completed operator handoff, before a later user report about reopening G; no current global process-closure claim"
+              },
+              "host": {
+                "caption": "Microsoft Windows11Home",
+                "version": "10.0.26200",
+                "build": "26200",
+                "architecture": "64bit"
+              }
+            }
+          }
+        },
+        "remaining": [
+          "359: nativeMac initial/reopened document glyphs absent in original captures. Bounded AX/runtime controls and32language/data assertions do not establish document-visual acceptance.",
+          "358: standardMacCommandUpDown navigates lines, not document boundaries. New user-authorized fix is separate/queued; native language32 success uses documented alternateCtrlHomeEnd, not a fix for358.",
+          "30: literal catalog input acceptance incomplete;356/PR357 excluded and17extensions lack input fixture evidence.32legacy checks per installer mean31open/save/reopen plus1expected invalid-input rejection.",
+          "361: nativeWindowsCtrlZ afterInsertColumnLeft fails twice while refocus+CtrlZ/HomeUndo restores history. LocalGTable data/save/new-process-reopen passes, but this edge remains uncorrected. Larger reopened row-height screenshot observation is separate and untriaged.",
+          "PhysicalLinux/Wayland and a separate full WindowsG-native349language profile not certified. CI Windows private-runtime UI and local boundedTable data route pass; embedded installed-exe versus installer-payload comparison missing.",
+          "SourceG native-runtime test configurations/drivers are on external test-only refcodex/formats-30-g-acceptance (3d3/8c4576). Root historical candidateJSON remains c0: do not dispatch it assumingG. Preserve explicit applicationCommit/artifactRun/package/proof guards.",
+          "No general performance/RAM claim, no release, no automatic issue closure or main merge/direct push. Future product changes need a new pinned intake/test point.",
+          "Own Windows G app closed and kernel reset confirmed; no new capture after reset. New yellow-border disappearance/all-helper closure not independently confirmed; no global safe-to-close assertion for other active user-owned chats."
+        ],
+        "historicalPreviousRound": {
+          "schemaVersion": 1,
+          "asOf": "2026-11-16T10:56:41.723973+00:00",
+          "status": "CI-only355 workaround completed and pushed; repeated/native/pixel and required Windows/Linux/macOS CI checks pass; unrelated native349/#30 closeout remains separately scoped",
+          "checkpoint": {
+            "commit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+            "tree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+            "base": "93fcc6194904f70fa12d0a3546c23dac9c673ee5",
+            "branch": "codex/integratie-2026-11-16",
+            "pr": 353,
+            "applicationInputsEqualReleased327": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82"
+          },
+          "intake": {
+            "alreadyInBase": [
+              337,
+              346,
+              341,
+              343,
+              344,
+              342
+            ],
+            "writer327": {
+              "source": "cb99e79ed2e1c9468f24bf69903572b6dc29ad82",
+              "evidenceSource": "4f88c4f75dca3cba1c61628d7a5655ba983327e8",
+              "mergedOnce": true,
+              "issueOpen": true,
+              "sourcePRDraft": true,
+              "releaseScope": "joint/native integration tests only"
+            },
+            "runtime317": {
+              "included": false,
+              "replacementPR": 354,
+              "head": "70841b98c9cda34b070e7b33f6d511a0bcac46d0",
+              "testedApplication": "c0fbbcb843f0fd44e0e7e9d54a7989d017e39812",
+              "reason": "queued for next source intake, supersedes historical317; independent evidence not transferred to this candidate",
+              "previousHead": "ae0813a4f21b8862b0b5270ceb16c303587d7143",
+              "closeoutStatus": "owner separately repeating c0 Linux/Mac CI and investigating Macsoffice alert and catalog coverage; EPUBmetadata is not a failed import reproduction or completed30acceptance"
+            }
+          },
+          "permission": {
+            "mainWriteAllowed": false,
+            "officialReleaseAllowed": false
+          },
+          "local": {
+            "normalBuildSeconds": 42.11,
+            "hostedBuildSeconds": 33.05,
+            "hostedStrictCheck": "passed",
+            "languageNormal": {
+              "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+              "outDir": "dist",
+              "route": "/",
+              "platform": "win32",
+              "browser": "151.0.7922.34",
+              "cpuRate": 4,
+              "production": true,
+              "noBridge": true,
+              "checks": [
+                {
+                  "name": "open",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "oorspronkelijke taalgrens links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "oorspronkelijke taalgrens rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "volgende alinea",
+                  "expected": "French",
+                  "actual": "French (France) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "na invoer en rust",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "ingevoegd teken links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "ingevoegd teken rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "Undo links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "Undo rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "Redo links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "Redo rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "hersteld na Undo links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "hersteld na Undo rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropend",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropende taalgrens links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropende taalgrens rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropende tweede alinea",
+                  "expected": "French",
+                  "actual": "French (France) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "ander document zelfde tekst/paraids",
+                  "expected": "German",
+                  "actual": "German (Germany) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "ander document tweede alinea",
+                  "expected": "Italian",
+                  "actual": "Italian (Italy) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "eerste tab 0 links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "eerste tab 0 rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "derde tab 0",
+                  "expected": "German",
+                  "actual": "German (Germany) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "eerste tab 1 links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "eerste tab 1 rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "derde tab 1",
+                  "expected": "German",
+                  "actual": "German (Germany) \u00c2\u00b7 2 spelling errors"
+                }
+              ],
+              "textExact": true,
+              "errors": []
+            },
+            "languageHosted": {
+              "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+              "outDir": "dist-hosted",
+              "route": "/office/",
+              "platform": "win32",
+              "browser": "151.0.7922.34",
+              "cpuRate": 4,
+              "production": true,
+              "noBridge": true,
+              "checks": [
+                {
+                  "name": "open",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 checking spelling\u00e2\u20ac\u00a6"
+                },
+                {
+                  "name": "oorspronkelijke taalgrens links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "oorspronkelijke taalgrens rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "volgende alinea",
+                  "expected": "French",
+                  "actual": "French (France) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "na invoer en rust",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "ingevoegd teken links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "ingevoegd teken rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "Undo links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "Undo rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "Redo links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "Redo rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "hersteld na Undo links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "hersteld na Undo rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropend",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropende taalgrens links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropende taalgrens rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "heropende tweede alinea",
+                  "expected": "French",
+                  "actual": "French (France) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "ander document zelfde tekst/paraids",
+                  "expected": "German",
+                  "actual": "German (Germany) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "ander document tweede alinea",
+                  "expected": "Italian",
+                  "actual": "Italian (Italy) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "eerste tab 0 links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "eerste tab 0 rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "derde tab 0",
+                  "expected": "German",
+                  "actual": "German (Germany) \u00c2\u00b7 2 spelling errors"
+                },
+                {
+                  "name": "eerste tab 1 links",
+                  "expected": "Dutch",
+                  "actual": "Dutch (Netherlands) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "eerste tab 1 rechts",
+                  "expected": "English",
+                  "actual": "English (United Kingdom) \u00c2\u00b7 1 spelling error"
+                },
+                {
+                  "name": "derde tab 1",
+                  "expected": "German",
+                  "actual": "German (Germany) \u00c2\u00b7 2 spelling errors"
+                }
+              ],
+              "textExact": true,
+              "errors": []
+            },
+            "writer600": {
+              "platform": "win32",
+              "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+              "outDir": "dist",
+              "browser": "151.0.7922.34",
+              "checks": [
+                "600-alinea-document geopend met spelling",
+                "invoer, scrollen en vensterwijziging",
+                "productie-Ctrl+S / Opslaan als-download: alle 600 teksten exact",
+                "gedownloade DOCX heropend met spelling"
+              ],
+              "contentExact": true,
+              "errors": []
+            },
+            "dist": {
+              "dist": {
+                "treeSha256": "825ee7a0c54227209d6776e3bbe42d24674ed7a524a76330757450b3710d8233",
+                "fileCount": 727
+              },
+              "dist-hosted": {
+                "treeSha256": "20311112e57cb567d9bc902710d8208bb6ce5d57a57ccfbcdb7ad72a49fd9772",
+                "fileCount": 727
+              }
+            }
+          },
+          "productionProbe": {
+            "origin": "docs/tests/2026-11-16-pr349-production-language.mjs",
+            "originSha256": "7ca878b7e1cd6f0894916c79b7f0f4eadfb19a14a7bee18c20f2a89f1432da5a",
+            "derivedSha256": "a57a6d1923df9d5e145fcbbcd6ee0e9cc90781af7a16bae4275bf7f5d3d99b20",
+            "adaptation": "Pin expected HEAD to the frozen integration point; all product assertions retained"
+          },
+          "ci": {
+            "desktop": {
+              "run": 43838167666,
+              "status": "Windows/macOS passed; Linux native CtrlS failed; tests/packages all three passed",
+              "jobs": {
+                "Windows": 133199897971,
+                "Linux": 133199898435,
+                "macOS": 133199898562
+              }
+            },
+            "browser": {
+              "run": 43838158506,
+              "status": "passed",
+              "cases": 54,
+              "sixReportsExpectedSourceAndCleanVerified": true,
+              "artifacts": [
+                {
+                  "artifact": "office-tab-focus-Linux",
+                  "zipSha256": "7f7d4b1182db52b5598872063ae7ae188850558ef3269a71c467a839805cbc3e",
+                  "reports": [
+                    {
+                      "file": "tab-focus/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": false,
+                      "route": "/",
+                      "cases": 9,
+                      "errors": []
+                    },
+                    {
+                      "file": "tab-focus-hosted/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": false,
+                      "route": "/office/",
+                      "cases": 9,
+                      "errors": []
+                    },
+                    {
+                      "file": "presentatie-media-pauze/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": null,
+                      "route": null,
+                      "cases": 0,
+                      "errors": []
+                    },
+                    {
+                      "file": "presentatie-poster-capture/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": null,
+                      "route": null,
+                      "cases": 4,
+                      "errors": []
+                    },
+                    {
+                      "file": "presentation-truncation-fixed/report.json",
+                      "source": null,
+                      "dirty": null,
+                      "route": null,
+                      "cases": 4,
+                      "errors": []
+                    },
+                    {
+                      "file": "writer-pdf-interne-links/report.json",
+                      "source": null,
+                      "dirty": null,
+                      "route": null,
+                      "cases": 4,
+                      "errors": []
+                    }
+                  ]
+                },
+                {
+                  "artifact": "office-tab-focus-macOS",
+                  "zipSha256": "79a70634dc63fd283e76fb8154e2c53cd563a5c5a03e95045d35074464455351",
+                  "reports": [
+                    {
+                      "file": "tab-focus/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": false,
+                      "route": "/",
+                      "cases": 9,
+                      "errors": []
+                    },
+                    {
+                      "file": "tab-focus-hosted/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": false,
+                      "route": "/office/",
+                      "cases": 9,
+                      "errors": []
+                    }
+                  ]
+                },
+                {
+                  "artifact": "office-tab-focus-Windows",
+                  "zipSha256": "4749fa8a9aac976e13d992571f69fbe77ca1be01814a5a357ee2d2f1e42a2cfb",
+                  "reports": [
+                    {
+                      "file": "tab-focus/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": false,
+                      "route": "/",
+                      "cases": 9,
+                      "errors": []
+                    },
+                    {
+                      "file": "tab-focus-hosted/report.json",
+                      "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                      "dirty": false,
+                      "route": "/office/",
+                      "cases": 9,
+                      "errors": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "database": {
+              "run": 43838167470,
+              "status": "all three passed"
+            },
+            "example": {
+              "run": 43838167506,
+              "status": "passed"
+            },
+            "writerFormats": {
+              "run": 43838167534,
+              "status": "passed"
+            },
+            "harnessHead": {
+              "commit": "e6765c56d1d07e0a44d5901f9e7dabc5a43e38f3",
+              "desktop": 43842910043,
+              "database": 43842910068,
+              "writerFormats": 43842910064,
+              "example": 43842910029,
+              "status": "all required runs passed",
+              "platformSummary": [
+                {
+                  "platform": "Windows",
+                  "job": 133215766230,
+                  "status": "passed",
+                  "summary": [
+                    "2026-11-16T09:48:28.9551459Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                    "2026-11-16T09:53:43.4466323Z  Test Files  325 passed (325)",
+                    "2026-11-16T09:53:43.4467702Z       Tests  3480 passed | 3 skipped (3483)",
+                    "2026-11-16T09:53:47.4488623Z Ran 58 tests in 0.576s",
+                    "2026-11-16T09:59:19.4252222Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 116 filtered out; finished in 0.01s",
+                    "2026-11-16T09:59:25.3677192Z test result: ok. 113 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 4.75s"
+                  ]
+                },
+                {
+                  "platform": "Linux",
+                  "job": 133215766585,
+                  "status": "passed",
+                  "summary": [
+                    "2026-11-16T09:48:40.1463312Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                    "2026-11-16T09:52:38.6089893Z  Test Files  325 passed (325)",
+                    "2026-11-16T09:52:38.6107688Z       Tests  3480 passed | 3 skipped (3483)",
+                    "2026-11-16T09:52:39.5288889Z Ran 58 tests in 0.282s",
+                    "2026-11-16T09:56:53.2507073Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s",
+                    "2026-11-16T09:57:05.2644702Z test result: ok. 113 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 0.25s"
+                  ]
+                },
+                {
+                  "platform": "macOS",
+                  "job": 133215766725,
+                  "status": "passed",
+                  "summary": [
+                    "2026-11-16T09:50:28.1714840Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                    "2026-11-16T09:53:14.1102630Z  Test Files  325 passed (325)",
+                    "2026-11-16T09:53:14.1124950Z       Tests  3480 passed | 3 skipped (3483)",
+                    "2026-11-16T09:53:14.9912470Z Ran 58 tests in 0.147s",
+                    "2026-11-16T09:57:17.4937310Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 116 filtered out; finished in 0.01s",
+                    "2026-11-16T09:57:35.4601440Z test result: ok. 113 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 2.54s"
+                  ]
+                }
+              ],
+              "nativeLinux": {
+                "status": "strict data/process roundtrip passed",
+                "artifact": 14215465768,
+                "zipSha256": "f70450aa907487569263ded33fc2db58ac65f592125e5e707171b9116e40f0c6",
+                "report": {
+                  "sourceCommit": "e6765c56d1d07e0a44d5901f9e7dabc5a43e38f3",
+                  "harnessCommit": "e6765c56d1d07e0a44d5901f9e7dabc5a43e38f3",
+                  "harnessSha256": "fbe5c202806ceb1430bc8b335cdfecfda748fc3c7a44b7357f47213d11f37fab",
+                  "sourceTree": "c6b358a52919ba67834c5fa4a8ccf526ff455d71",
+                  "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+                  "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+                  "status": "passed",
+                  "checks": [
+                    "Real installed DEB opens a native Writer document",
+                    "Actual keyboard edit and Ctrl+S persist exactly one marker",
+                    "Application process fully exits after saving",
+                    "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+                  ],
+                  "limits": [
+                    "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+                    "Virtual X11 display and software graphics, not physical hardware",
+                    "DEB only; AppImage native operation is not certified"
+                  ],
+                  "package": {
+                    "path": "/home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.46.2_amd64.deb",
+                    "sha256": "aa2b433a4054d59684766807cd13a9917d02d1ee24ceb895fb3bb00a5d939aee"
+                  },
+                  "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                  "rawBuildExecutableSha256": "98fc6818e76975086b66b395f6b6681984582842cd4c01605d45b036064f45a8",
+                  "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                  "runtime": {
+                    "node": "v22.23.4",
+                    "driver": "tauri-driver v2.1.0:",
+                    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+                    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+                    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+                  },
+                  "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+                  "inputSha256": "43208bab8210f5c87660a5f4f20e180f6c2e771f9a1f30305f0a1c423c8a9c19",
+                  "beforeSave": {
+                    "saveDisabled": false,
+                    "keyboard": [
+                      {
+                        "code": "ControlLeft",
+                        "prevented": false,
+                        "ctrl": true,
+                        "shift": false,
+                        "target": "TEXTAREA",
+                        "type": "keydown",
+                        "key": "Control",
+                        "meta": false
+                      },
+                      {
+                        "code": "Home",
+                        "prevented": false,
+                        "ctrl": true,
+                        "shift": false,
+                        "target": "TEXTAREA",
+                        "type": "keydown",
+                        "key": "Home",
+                        "meta": false
+                      },
+                      {
+                        "code": "Home",
+                        "prevented": false,
+                        "ctrl": true,
+                        "shift": false,
+                        "target": "TEXTAREA",
+                        "type": "keyup",
+                        "key": "Home",
+                        "meta": false
+                      },
+                      {
+                        "code": "ControlLeft",
+                        "prevented": false,
+                        "ctrl": false,
+                        "shift": false,
+                        "target": "TEXTAREA",
+                        "type": "keyup",
+                        "key": "Control",
+                        "meta": false
+                      },
+                      {
+                        "code": "KeyS",
+                        "prevented": false,
+                        "ctrl": false,
+                        "shift": false,
+                        "target": "TEXTAREA",
+                        "type": "keydown",
+                        "key": "S",
+                        "meta": false
+                      },
+                      {
+                        "code": "KeyS",
+                        "prevented": false,
+                        "ctrl": false,
+                        "shift": false,
+                        "target": "TEXTAREA",
+                        "type": "keyup",
+                        "key": "S",
+                        "meta": false
+                      }
+                    ],
+                    "focused": "TEXTAREA"
+                  },
+                  "savedSha256": "b1a0fe415b66192b0745990088d0b60b262ca2a35ccb03550cfbf5a812a3a443",
+                  "ownedApplicationClosed": true
+                },
+                "visualObservation": "page glyphs again not readable in reopened capture; Find result correct; not full visual acceptance"
+              }
+            }
+          },
+          "performance": {
+            "cpu8ABAms": [
+              7747.98,
+              8167.27,
+              10510.58
+            ],
+            "cpu8Conclusion": "candidate between controls; no general speed gain",
+            "earlierAdverseResultsRetained": true,
+            "newFunctionalPerformanceFix": false
+          },
+          "native": {
+            "Windows": {
+              "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+              "tree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+              "run": 43838167666,
+              "job": 133199897971,
+              "artifact": 14212519250,
+              "artifactApiDigest": "9033cffe4cc3ea09f7d4810bc6b6d9488984639f483b2aa75db9303692c0ffea",
+              "installerSha256": "2993245b1f168b8793a6f2530aa860b7c0a8fca6b052841841cdd268ffe20e25",
+              "installerIndependentlyHashed": true,
+              "zipDownloadedByCoordinator": true,
+              "exeSha256": "87821a86fe4aa3c8b18ff69b0fb63278d40c297c2ad181aa05709d7645e3a0ad",
+              "exeBytes": 88094208,
+              "version": "2026.46.2",
+              "installerExit": 0,
+              "fullNativeAcceptance": false,
+              "nativeChecks": [
+                {
+                  "module": "Writer",
+                  "result": "pass within bounded scope",
+                  "passed": [
+                    "Native DOCX open, edit, CtrlS, full app exit/restart, reopen saved output",
+                    "Dutch to English paragraph boundary via CtrlDown; refreshed language status correct",
+                    "Typing, CtrlZ removes insertion, CtrlY restores",
+                    "Mouse document-tab switch from Spreadsheet back to Writer preserves English caret and language",
+                    "Crop top handle dragged beyond bottom: clamps at 65% top with 30% bottom, retaining 5% visible",
+                    "Crop apply, CtrlZ and CtrlY visibly restore original and boundary crop",
+                    "Saved XML has top65000/bottom30000, extent3048000x152400; image bytes unchanged",
+                    "All original paragraphs and run languages retained except intended English insertion"
+                  ],
+                  "packageEvidence": {
+                    "sha256": "5fbc6b1e163a05d98336493086c73e189a2959130eaa15c827b89037a7d43c45",
+                    "texts": [
+                      "Nederlandse taalcontrole.",
+                      "English language control. Native16 saved.",
+                      "Native edit-save-reopen control.",
+                      "",
+                      "End of native control."
+                    ],
+                    "languages": [
+                      "nl-NL",
+                      "en-US",
+                      "nl-NL",
+                      "en-US"
+                    ],
+                    "crop": [
+                      {
+                        "t": "65000",
+                        "b": "30000"
+                      }
+                    ],
+                    "extent": [
+                      {
+                        "cx": "3048000",
+                        "cy": "152400"
+                      }
+                    ],
+                    "mediaSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33"
+                  },
+                  "limits": "One small synthetic DOCX; not a complete Writer feature acceptance; keyboard crop handles not tested"
+                },
+                {
+                  "module": "Spreadsheet",
+                  "result": "pass within bounded scope",
+                  "passed": [
+                    "Native XLSX open, B2 edit2-to6, CtrlS, full app exit/restart, reopen saved output",
+                    "Blue header with white bold text and banded rows retained visibly after reopen",
+                    "Actual XLSX confirms only B2 value changed; table XML and styles XML byte-identical"
+                  ],
+                  "packageEvidence": {
+                    "sha256": "68bb5942cd6673355d02934502a3a191990526308f67d1ec21e8d1514441a242",
+                    "sourceSha256": "40b516dc70c91f441721e4083c1939f13c487296da756d56c08834beebf426c0",
+                    "values": {
+                      "A1": "Item",
+                      "B1": "Amount",
+                      "A2": "First",
+                      "B2": "6",
+                      "A3": "Second",
+                      "B3": "3",
+                      "A4": "Third",
+                      "B4": "4",
+                      "A5": "Fourth",
+                      "B5": "5"
+                    },
+                    "onlyB2ValueChanged": true,
+                    "tableXmlByteIdentical": true,
+                    "stylesXmlByteIdentical": true
+                  },
+                  "observations": [
+                    "Existing unsupported write/document/workbook protection warning displayed"
+                  ],
+                  "limits": "One small Medium2 table fixture, explicit default style0; not a complete spreadsheet acceptance"
+                },
+                {
+                  "module": "Presentation",
+                  "result": "pass within bounded scope",
+                  "passed": [
+                    "Native PPTX open, Find-and-replace with whole words and case-insensitive kat-to-hond, precisely5 replacements across2slides",
+                    "Close Find dialog, CtrlS, full app exit/restart, reopen saved output",
+                    "Both slides visually checked after reopen; expected texts persisted",
+                    "Non-text slide XML canonical-identical"
+                  ],
+                  "packageEvidence": {
+                    "sha256": "841a1b9f5fba6a1e040d6be5bd8b0a2a5c736f4a5ed0fec58f54497c97fe6655",
+                    "texts": [
+                      "\ud83e\uddf1 hond katten hond katapult _kat kat_ kat2 \u00e9kat kat\u00e9 kat\u0301 \ud801\udc00kat kat\ud801\udc00 (hond)",
+                      "hond hond"
+                    ],
+                    "expectedFiveReplacements": true,
+                    "nonTextSlideXmlIdentical": true
+                  },
+                  "limits": "One small2slide fixture; no full presentation feature acceptance"
+                }
+              ],
+              "interrupted": false,
+              "stopReason": null,
+              "cleanFinish": true,
+              "preferencesChanged": false,
+              "remainingCleanup": null,
+              "completedAtUtc": "2026-11-16T09:58:15.756056+00:00",
+              "interruptionHistory": [
+                {
+                  "reason": "Computer Use reported physical Escape user stop; no further UI input issued",
+                  "resolvedBy": "Explicit user resume; remaining checks completed"
+                }
+              ],
+              "boundedWindowsChecksComplete": true,
+              "remainingDevbuildWindows": 0,
+              "allOwnDocumentTabsClosed": true,
+              "newReproducedBugs": [],
+              "platformLimits": {
+                "windows": "Bounded native routes passed on exact installed e1 package",
+                "linux": "No local native host; coordinator owns CI/native follow-up; not certified by this receipt",
+                "macos": "No local native host; coordinator owns CI/native follow-up; not certified by this receipt",
+                "browser": "Separate coordinator validation; not run in this native session"
+              },
+              "sourceFixturesUnchanged": true,
+              "outputHashesXmlAndMediaIndependentlyChecked": true,
+              "ownDevbuildProcessCountIndependentlyChecked": 0
+            },
+            "Linux": {
+              "status": "passed bounded CI/Xvfb roundtrip plus readable saved/reopened glyphs with CI-only DMABUF workaround",
+              "source": "d73539b10d6a0a96956050766b0d850474b55910",
+              "harness": "d73539b10d6a0a96956050766b0d850474b55910",
+              "run": 43848953431,
+              "artifact": 14217703521,
+              "archiveSha256": "605e9b2b0eb164a68cd8b48762368212aa32dcfa8bad1ac621ba7495eba91be3",
+              "report": {
+                "sourceCommit": "d73539b10d6a0a96956050766b0d850474b55910",
+                "harnessCommit": "d73539b10d6a0a96956050766b0d850474b55910",
+                "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+                "sourceTree": "f865e53ef5bc13cf3bcee22a79de2da7e61257f0",
+                "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+                "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+                "status": "passed",
+                "checks": [
+                  "Real installed DEB opens a native Writer document",
+                  "Actual keyboard edit and Ctrl+S persist exactly one marker",
+                  "Application process fully exits after saving",
+                  "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+                ],
+                "limits": [
+                  "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+                  "Virtual X11 display and software graphics, not physical hardware",
+                  "DEB only; AppImage native operation is not certified"
+                ],
+                "package": {
+                  "path": "/home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.46.2_amd64.deb",
+                  "sha256": "54e6a0e852e530d0720c322262d02e32f2992e65ef2d2bee52814c1265c96c8b"
+                },
+                "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                "rawBuildExecutableSha256": "98fc6818e76975086b66b395f6b6681984582842cd4c01605d45b036064f45a8",
+                "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                "runtime": {
+                  "node": "v22.23.4",
+                  "graphics": {
+                    "GDK_BACKEND": "x11",
+                    "LIBGL_ALWAYS_SOFTWARE": "1",
+                    "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+                    "WEBKIT_DISABLE_COMPOSITING_MODE": null
+                  },
+                  "driver": "tauri-driver v2.1.0:",
+                  "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+                  "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+                  "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+                },
+                "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+                "inputSha256": "721827b610f9548765978f4a3da17120818bbfd066bb0a8e3d5abeec3251777c",
+                "beforeSave": {
+                  "saveDisabled": false,
+                  "keyboard": [
+                    {
+                      "code": "ControlLeft",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "Control",
+                      "meta": false
+                    },
+                    {
+                      "code": "Home",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "Home",
+                      "meta": false
+                    },
+                    {
+                      "code": "Home",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "Home",
+                      "meta": false
+                    },
+                    {
+                      "code": "ControlLeft",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "Control",
+                      "meta": false
+                    },
+                    {
+                      "code": "KeyS",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "S",
+                      "meta": false
+                    },
+                    {
+                      "code": "KeyS",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "S",
+                      "meta": false
+                    }
+                  ],
+                  "focused": "TEXTAREA"
+                },
+                "savedSha256": "52ef1d4c7f0dc8bd35e5823c0977dcedfc1859c47a291a5f2d62b497ade9885c",
+                "ownedApplicationClosed": true
+              },
+              "savedAndReopenedOriginalPngsIndependentlyViewedReadable": true,
+              "limits": [
+                "CI Xvfb/software graphics only",
+                "No physical Linux/Wayland/AppImage certification",
+                "No full native language/UndoRedo/tab acceptance or other modules"
+              ],
+              "centralArtifactRecheckSource": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39"
+            },
+            "macOS": {
+              "status": "build/package/associations/LaunchServices startup-and-running-file-open passed; full native language/edit/save/reopen not proven",
+              "source": "d73539b10d6a0a96956050766b0d850474b55910",
+              "run": 43848953431,
+              "job": 133236228161,
+              "scope": "native startup/file-open smoke only; separate F-native349 language probe is queued, not a pass"
+            },
+            "LinuxBeforeCiWorkaround": {
+              "status": "strict data/process roundtrip passed; visual acceptance incomplete",
+              "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+              "harness": "e6765c56d1d07e0a44d5901f9e7dabc5a43e38f3",
+              "run": 43842027746,
+              "artifact": 14213083673,
+              "artifactZipSha256": "9eee80eb234b3672a1654423d1ed6361671caf854171086ac32ecb2170051b53",
+              "report": {
+                "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                "harnessCommit": "e6765c56d1d07e0a44d5901f9e7dabc5a43e38f3",
+                "harnessSha256": "fbe5c202806ceb1430bc8b335cdfecfda748fc3c7a44b7357f47213d11f37fab",
+                "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+                "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+                "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+                "status": "passed",
+                "checks": [
+                  "Real installed DEB opens a native Writer document",
+                  "Actual keyboard edit and Ctrl+S persist exactly one marker",
+                  "Application process fully exits after saving",
+                  "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+                ],
+                "limits": [
+                  "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+                  "Virtual X11 display and software graphics, not physical hardware",
+                  "DEB only; AppImage native operation is not certified"
+                ],
+                "package": {
+                  "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+                  "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+                },
+                "artifactOrigin": {
+                  "run": 43838167666,
+                  "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                  "artifacts": [
+                    {
+                      "id": 14212707843,
+                      "name": "open-office-studio-Linux",
+                      "zipSha256": "bf849f5c39130045aad9d8df604499c62021d3f500fd4d3fe3a88c8e31cd5089"
+                    },
+                    {
+                      "id": 14212947201,
+                      "name": "pakketcontrole-Linux",
+                      "zipSha256": "4cb8849430cb2319bf03bdc6a582f35446a7d9ce4ed25deef1037bc1374ca541"
+                    }
+                  ]
+                },
+                "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                "rawBuildExecutableSha256": null,
+                "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                "runtime": {
+                  "node": "v22.23.4",
+                  "driver": "tauri-driver v2.1.0:",
+                  "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+                  "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+                  "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+                },
+                "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+                "inputSha256": "027614c6a9aeb7cac8a9694b73f8deb24e79ba853ba3450563309c53bffcc71f",
+                "beforeSave": {
+                  "saveDisabled": false,
+                  "keyboard": [
+                    {
+                      "code": "ControlLeft",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "Control",
+                      "meta": false
+                    },
+                    {
+                      "code": "Home",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "Home",
+                      "meta": false
+                    },
+                    {
+                      "code": "Home",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "Home",
+                      "meta": false
+                    },
+                    {
+                      "code": "ControlLeft",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "Control",
+                      "meta": false
+                    },
+                    {
+                      "code": "KeyS",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "S",
+                      "meta": false
+                    },
+                    {
+                      "code": "KeyS",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "S",
+                      "meta": false
+                    }
+                  ],
+                  "focused": "TEXTAREA"
+                },
+                "savedSha256": "51c763956dacb5f610724ec97bfc0aca1defdae1817a77a0b4d70fae6d9cbf46",
+                "ownedApplicationClosed": true
+              },
+              "visualObservation": "later saved/reopened images show no readable document glyphs, though Find result and highlight exist; first failed attempt had readable text",
+              "causeProven": false
+            }
+          },
+          "historicalHarnessFailures": [
+            {
+              "prHead": "6ae70072",
+              "run": 43833517488,
+              "job": 133184357037,
+              "phase": "before UI",
+              "reason": "Compared installed DEB payload to subsequently bundled loose Cargo executable",
+              "nativePass": false
+            },
+            {
+              "prHead": "8d95b0dc",
+              "run": 43835714722,
+              "job": 133191725975,
+              "phase": "before UI",
+              "reason": "tauri-driver2.1.0 does not support --version; installed payload hash equality did pass",
+              "nativePass": false,
+              "obsoleteRemainingJobsCancelled": true
+            }
+          ],
+          "remaining": [
+            "macOS current native edit/save/reopen/language operation not proven",
+            "Evaluate354 only in next bounded intake; no main/release/issue closure",
+            "No further local Windows GUI after user cleanup-only instruction; all own documents/app already closed",
+            "CI-only355 visual smoke passed; physical Linux/Wayland/AppImage and broader native module coverage not certified"
+          ],
+          "integrationHead": "d73539b10d6a0a96956050766b0d850474b55910",
+          "paintResearch": {
+            "owner": "01a1bf84-6f92-7452-93a5-c0aed5bd5173",
+            "source": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+            "packageSha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5",
+            "scope": "remote Linux capture/font/paint investigation; no proven cause or product patch yet",
+            "duplicateResearchPrevented": true,
+            "outcome": "X11-first repeated comparison complete; CI-only DMABUF fallback validated with actual central helper; no global product fix"
+          },
+          "captureCleanup": {
+            "owner": "750b",
+            "ownKernelResetConfirmed": true,
+            "noNewCaptureAfterReset": true,
+            "separateDisposeAvailable": "not documented in available sky API",
+            "userConfirmedYellowBorderAbsent": true,
+            "userReply": "Nee, de rand is weg",
+            "allHelperResourcesIndependentlyVerifiedClosed": false,
+            "otherSessionsOrSharedProcessesTerminated": false
+          },
+          "ciOnlyWorkaround355": {
+            "commit": "d73539b10d6a0a96956050766b0d850474b55910",
+            "scope": "native Linux CI/Xvfb execution steps only; no build/launcher/product settings",
+            "variable": {
+              "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+            },
+            "compositingOverride": null,
+            "evidenceSource": "93fb2c83ae0322d6ec55abe62140393b62bdecb5",
+            "diagnosticHarness": "678e06e06c4a993263a39d7c214292c9bb96ad1e",
+            "baselineRuns": [
+              43847299219,
+              43847848206
+            ],
+            "dmabufRuns": [
+              43847314987,
+              43847853040
+            ],
+            "supportingCompositingRun": 43847320011,
+            "centralRun": 43848943684,
+            "centralArtifact": 14216636794,
+            "centralZipSha256": "d1bfa990cb3c9eec09a5608aa1ca2effea8f12b86f4071f0fc42c75b3a65bee6",
+            "centralReport": {
+              "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+              "harnessCommit": "d73539b10d6a0a96956050766b0d850474b55910",
+              "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+              "sourceTree": "2e6123201cd3a357ac3b2df8126fa15760fce865",
+              "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+              "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+              "status": "passed",
+              "checks": [
+                "Real installed DEB opens a native Writer document",
+                "Actual keyboard edit and Ctrl+S persist exactly one marker",
+                "Application process fully exits after saving",
+                "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+              ],
+              "limits": [
+                "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+                "Virtual X11 display and software graphics, not physical hardware",
+                "DEB only; AppImage native operation is not certified"
+              ],
+              "package": {
+                "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.46.2_amd64.deb",
+                "sha256": "14d588cdfcebc6e50607033a324c3e6c37a77f440a5aebd36b5a6356d4ea3eb5"
+              },
+              "artifactOrigin": {
+                "run": 43838167666,
+                "sourceCommit": "e1f84f84f4d72e5ce8ab967e376a6f38344edf39",
+                "artifacts": [
+                  {
+                    "id": 14212707843,
+                    "name": "open-office-studio-Linux",
+                    "zipSha256": "bf849f5c39130045aad9d8df604499c62021d3f500fd4d3fe3a88c8e31cd5089"
+                  },
+                  {
+                    "id": 14212947201,
+                    "name": "pakketcontrole-Linux",
+                    "zipSha256": "4cb8849430cb2319bf03bdc6a582f35446a7d9ce4ed25deef1037bc1374ca541"
+                  }
+                ]
+              },
+              "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+              "rawBuildExecutableSha256": null,
+              "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+              "runtime": {
+                "node": "v22.23.4",
+                "graphics": {
+                  "GDK_BACKEND": "x11",
+                  "LIBGL_ALWAYS_SOFTWARE": "1",
+                  "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+                  "WEBKIT_DISABLE_COMPOSITING_MODE": null
+                },
+                "driver": "tauri-driver v2.1.0:",
+                "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+                "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+                "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+              },
+              "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+              "inputSha256": "edd6fc6f52d5f0e605976d99e069143e20db2553c711590004b23b81789b08b2",
+              "beforeSave": {
+                "saveDisabled": false,
+                "keyboard": [
+                  {
+                    "code": "ControlLeft",
+                    "prevented": false,
+                    "ctrl": true,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keydown",
+                    "key": "Control",
+                    "meta": false
+                  },
+                  {
+                    "code": "Home",
+                    "prevented": false,
+                    "ctrl": true,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keydown",
+                    "key": "Home",
+                    "meta": false
+                  },
+                  {
+                    "code": "Home",
+                    "prevented": false,
+                    "ctrl": true,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keyup",
+                    "key": "Home",
+                    "meta": false
+                  },
+                  {
+                    "code": "ControlLeft",
+                    "prevented": false,
+                    "ctrl": false,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keyup",
+                    "key": "Control",
+                    "meta": false
+                  },
+                  {
+                    "code": "KeyS",
+                    "prevented": false,
+                    "ctrl": false,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keydown",
+                    "key": "S",
+                    "meta": false
+                  },
+                  {
+                    "code": "KeyS",
+                    "prevented": false,
+                    "ctrl": false,
+                    "shift": false,
+                    "target": "TEXTAREA",
+                    "type": "keyup",
+                    "key": "S",
+                    "meta": false
+                  }
+                ],
+                "focused": "TEXTAREA"
+              },
+              "savedSha256": "c0c2e12474b411dfec61033b42081d07c90b3229e3a64bce81fd0830a4889c3a",
+              "ownedApplicationClosed": true
+            },
+            "savedAndReopenedOriginalPngsIndependentlyViewedReadable": true,
+            "actualHelperBlobAndDocxHashContentIndependentlyVerified": true,
+            "standardCI": {
+              "desktop": 43848953431,
+              "database": 43848953412,
+              "writer": 43848953254,
+              "example": 43848953200,
+              "status": "all passed at d73539b10d6a0a96956050766b0d850474b55910",
+              "platformSummary": [
+                {
+                  "platform": "Windows",
+                  "job": 133236227841,
+                  "summary": [
+                    "2026-11-16T10:28:13.0217933Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                    "2026-11-16T10:32:12.1387486Z  Test Files  325 passed (325)",
+                    "2026-11-16T10:32:12.1390522Z       Tests  3480 passed | 3 skipped (3483)",
+                    "2026-11-16T10:32:16.7706945Z Ran 58 tests in 0.667s",
+                    "2026-11-16T10:36:23.4370443Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 116 filtered out; finished in 0.01s",
+                    "2026-11-16T10:36:28.5172825Z test result: ok. 113 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 4.23s"
+                  ]
+                },
+                {
+                  "platform": "Linux",
+                  "job": 133236228426,
+                  "summary": [
+                    "2026-11-16T10:28:20.1173740Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                    "2026-11-16T10:32:45.9825585Z  Test Files  325 passed (325)",
+                    "2026-11-16T10:32:45.9856747Z       Tests  3480 passed | 3 skipped (3483)",
+                    "2026-11-16T10:32:48.3159365Z Ran 58 tests in 0.251s",
+                    "2026-11-16T10:37:39.9461135Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s",
+                    "2026-11-16T10:37:56.8873233Z test result: ok. 113 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 0.26s"
+                  ]
+                },
+                {
+                  "platform": "macOS",
+                  "job": 133236228161,
+                  "summary": [
+                    "2026-11-16T10:28:53.1103750Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                    "2026-11-16T10:33:44.4499580Z  Test Files  325 passed (325)",
+                    "2026-11-16T10:33:44.4601840Z       Tests  3480 passed | 3 skipped (3483)",
+                    "2026-11-16T10:33:46.5902470Z Ran 58 tests in 0.321s",
+                    "2026-11-16T10:39:22.7434330Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 116 filtered out; finished in 0.01s",
+                    "2026-11-16T10:39:47.8333830Z test result: ok. 113 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 3.36s"
+                  ]
+                }
+              ],
+              "artifacts": [
+                {
+                  "id": 14219510292,
+                  "name": "pakketcontrole-macOS",
+                  "digest": "sha256:0559e5579717270c4d28f44707cab9f191928913d6d73d7ca1c4ae57a8a05d99",
+                  "size_in_bytes": 819
+                },
+                {
+                  "id": 14219270388,
+                  "name": "open-office-studio-macOS",
+                  "digest": "sha256:c780847cd28787400b25f53cc9f22e5a52f4aead2897b0c234f836e7336de9bc",
+                  "size_in_bytes": 75580664
+                },
+                {
+                  "id": 14218796660,
+                  "name": "open-office-studio-Linux",
+                  "digest": "sha256:71a3bffafe765c8b14b7772a6986a79b115be41559dcadfd772532ba3250d1c2",
+                  "size_in_bytes": 229395098
+                },
+                {
+                  "id": 14218460558,
+                  "name": "open-office-studio-Windows",
+                  "digest": "sha256:802ae18c74403d7980db2cb365e5aa24970517495d966eb7b03df7f00a616fc9",
+                  "size_in_bytes": 73541604
+                },
+                {
+                  "id": 14218180989,
+                  "name": "pakketcontrole-Windows",
+                  "digest": "sha256:81f2cdc1b343898afc9b7123f722c47856b963e56eaa2df79d750a5480276afa",
+                  "size_in_bytes": 522
+                },
+                {
+                  "id": 14218157012,
+                  "name": "pakketcontrole-Linux",
+                  "digest": "sha256:7db30aa9e4ad5b228247f5921144ccdaa88b90e6214ba8c12ab21a5ca586a954",
+                  "size_in_bytes": 671
+                },
+                {
+                  "id": 14217703521,
+                  "name": "native-linux-writer-roundtrip",
+                  "digest": "sha256:605e9b2b0eb164a68cd8b48762368212aa32dcfa8bad1ac621ba7495eba91be3",
+                  "size_in_bytes": 240217
+                }
+              ],
+              "nativeLinuxReport": {
+                "sourceCommit": "d73539b10d6a0a96956050766b0d850474b55910",
+                "harnessCommit": "d73539b10d6a0a96956050766b0d850474b55910",
+                "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+                "sourceTree": "f865e53ef5bc13cf3bcee22a79de2da7e61257f0",
+                "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+                "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+                "status": "passed",
+                "checks": [
+                  "Real installed DEB opens a native Writer document",
+                  "Actual keyboard edit and Ctrl+S persist exactly one marker",
+                  "Application process fully exits after saving",
+                  "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+                ],
+                "limits": [
+                  "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+                  "Virtual X11 display and software graphics, not physical hardware",
+                  "DEB only; AppImage native operation is not certified"
+                ],
+                "package": {
+                  "path": "/home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.46.2_amd64.deb",
+                  "sha256": "54e6a0e852e530d0720c322262d02e32f2992e65ef2d2bee52814c1265c96c8b"
+                },
+                "packagedExecutableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                "rawBuildExecutableSha256": "98fc6818e76975086b66b395f6b6681984582842cd4c01605d45b036064f45a8",
+                "executableSha256": "170a7caaf7a9e44ef8616becc5a3492bace4d78d14f0ac081d2e011a9b6e8b85",
+                "runtime": {
+                  "node": "v22.23.4",
+                  "graphics": {
+                    "GDK_BACKEND": "x11",
+                    "LIBGL_ALWAYS_SOFTWARE": "1",
+                    "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+                    "WEBKIT_DISABLE_COMPOSITING_MODE": null
+                  },
+                  "driver": "tauri-driver v2.1.0:",
+                  "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+                  "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+                  "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+                },
+                "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+                "inputSha256": "721827b610f9548765978f4a3da17120818bbfd066bb0a8e3d5abeec3251777c",
+                "beforeSave": {
+                  "saveDisabled": false,
+                  "keyboard": [
+                    {
+                      "code": "ControlLeft",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "Control",
+                      "meta": false
+                    },
+                    {
+                      "code": "Home",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "Home",
+                      "meta": false
+                    },
+                    {
+                      "code": "Home",
+                      "prevented": false,
+                      "ctrl": true,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "Home",
+                      "meta": false
+                    },
+                    {
+                      "code": "ControlLeft",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "Control",
+                      "meta": false
+                    },
+                    {
+                      "code": "KeyS",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keydown",
+                      "key": "S",
+                      "meta": false
+                    },
+                    {
+                      "code": "KeyS",
+                      "prevented": false,
+                      "ctrl": false,
+                      "shift": false,
+                      "target": "TEXTAREA",
+                      "type": "keyup",
+                      "key": "S",
+                      "meta": false
+                    }
+                  ],
+                  "focused": "TEXTAREA"
+                },
+                "savedSha256": "52ef1d4c7f0dc8bd35e5823c0977dcedfc1859c47a291a5f2d62b497ade9885c",
+                "ownedApplicationClosed": true
+              },
+              "nativeLinuxOriginalSavedAndReopenedPngsViewedReadable": true,
+              "verifiedPackageReportArchives": {
+                "pakketcontrole-Linux": [
+                  {
+                    "name": "pakketcontrole-Linux.json",
+                    "report": {
+                      "platform": "linux",
+                      "programma": "open-office-studio",
+                      "versie": "2026.46.2",
+                      "pakketten": [
+                        {
+                          "naam": "Open Office Studio_2026.46.2_amd64.deb",
+                          "bytes": 76275178,
+                          "sha256": "54e6a0e852e530d0720c322262d02e32f2992e65ef2d2bee52814c1265c96c8b",
+                          "controles": [
+                            "DEB-versie en architectuur",
+                            "runtime-afhankelijkheden opgegeven",
+                            "ELF x64 en bibliotheken gevonden",
+                            "snelkoppeling en pictogram aanwezig",
+                            "bestandskoppelingen (MimeType, Exec %F, MIME-pakket)"
+                          ]
+                        },
+                        {
+                          "naam": "Open Office Studio_2026.46.2_amd64.AppImage",
+                          "bytes": 153848312,
+                          "sha256": "613b246083dfd362470545539c6e52b5839f22340e4097c120ab4e35e6220b23",
+                          "controles": [
+                            "AppImage type 2",
+                            "SquashFS volledig uitgepakt",
+                            "AppRun uitvoerbaar",
+                            "ELF x64 en bibliotheken gevonden",
+                            "snelkoppeling en pictogram aanwezig"
+                          ]
+                        }
+                      ],
+                      "installatie_en_native_bediening": "niet_gecontroleerd"
+                    }
+                  }
+                ],
+                "pakketcontrole-macOS": [
+                  {
+                    "name": "pakketcontrole-macOS-openen.json",
+                    "report": {
+                      "stappen": [
+                        {
+                          "naam": "Rekenblad met spaties %.xlsx",
+                          "sha256": "0f3ba70a70215b2814959b2b70e651a63f4b497c66b7eedbf9fb2ead2f2ee544",
+                          "viaLaunchServicesVerwerkt": true,
+                          "eenAppProces": true,
+                          "bronOngewijzigd": true
+                        },
+                        {
+                          "naam": "Tweede document.docx",
+                          "sha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+                          "viaLaunchServicesVerwerkt": true,
+                          "eenAppProces": true,
+                          "bronOngewijzigd": true
+                        }
+                      ],
+                      "eigenAppAfgesloten": true
+                    }
+                  },
+                  {
+                    "name": "pakketcontrole-macOS.json",
+                    "report": {
+                      "identifier": "org.openaec.office-studio",
+                      "extensies": [
+                        "accdb",
+                        "doc",
+                        "docm",
+                        "docx",
+                        "dot",
+                        "dotm",
+                        "dotx",
+                        "ifcx",
+                        "mdb",
+                        "odp",
+                        "ods",
+                        "odt",
+                        "otp",
+                        "ots",
+                        "ott",
+                        "pot",
+                        "potm",
+                        "potx",
+                        "pps",
+                        "ppsx",
+                        "ppt",
+                        "pptm",
+                        "pptx",
+                        "rtf",
+                        "xls",
+                        "xlsb",
+                        "xlsm",
+                        "xlsx",
+                        "xlt",
+                        "xltm",
+                        "xltx"
+                      ],
+                      "aantal": 31,
+                      "plistSha256": "4fd716292636b71c8c56c1c8ce3b903c4fa1a25e0f28ab0dfc4aeba44364fe6f"
+                    }
+                  }
+                ],
+                "pakketcontrole-Windows": [
+                  {
+                    "name": "pakketcontrole-Windows.json",
+                    "report": {
+                      "platform": "windows",
+                      "programma": "open-office-studio",
+                      "versie": "2026.46.2",
+                      "pakketten": [
+                        {
+                          "naam": "Open Office Studio_2026.46.2_x64-setup.exe",
+                          "bytes": 73535523,
+                          "sha256": "eaeda04f43f88b4f013fd6b60b303e27dc1d53ffedb9c7e6d71c0230db93753b",
+                          "controles": [
+                            "NSIS-archief leesbaar",
+                            "programma en WebView2-loader x64",
+                            "WebView2-bootstrapper aanwezig",
+                            "installer- en programma-iconen bytegelijk aan goedgekeurde bron"
+                          ]
+                        }
+                      ],
+                      "installatie_en_native_bediening": "niet_gecontroleerd"
+                    }
+                  }
+                ]
+              }
+            },
+            "productionInputsUnchanged": true,
+            "issue355Closed": false,
+            "independentReceiptSource": "ae8a7613d79719daeff4ca9fbfdba23c09aeb0df",
+            "independentReceiptPath": "2026-11-16-pr349-central-native-linux.json"
+          }
+        },
+        "captureCleanup": {
+          "historicalF": {
+            "owner": "750b",
+            "ownKernelResetConfirmed": true,
+            "noNewCaptureAfterReset": true,
+            "separateDisposeAvailable": "not documented in available sky API",
+            "userConfirmedYellowBorderAbsent": true,
+            "userReply": "Nee, de rand is weg",
+            "allHelperResourcesIndependentlyVerifiedClosed": false,
+            "otherSessionsOrSharedProcessesTerminated": false
+          },
+          "integrationChatStartedNewLocalGuiOrRecording": false,
+          "separateUserResumedWindowsSession": {
+            "owner": "750b",
+            "ownAppAndTabsClosedAtTestHandoff": true,
+            "ownGProcessCountAtHandoffIndependentlyConfirmed": 0,
+            "ownKernelResetToolConfirmed": true,
+            "newCaptureAfterReset": false,
+            "yellowBorderAbsenceVisuallyConfirmed": false,
+            "allHelperResourceClosureIndependentlyProven": false,
+            "laterUserReopenReported": true
+          },
+          "allChatsSafeToClose": "not globally asserted; later user reopenedG and separate user-owned358/356 programming tasks continue; currentG evidence and completed operator app/kernel cleanup saved"
+        },
+        "browserVerified": [
+          {
+            "platform": "linux",
+            "route": "/",
+            "codepoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "dirty": false,
+            "errors": [],
+            "passedCases": 9
+          },
+          {
+            "platform": "linux",
+            "route": "/office/",
+            "codepoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "dirty": false,
+            "errors": [],
+            "passedCases": 9
+          },
+          {
+            "platform": "darwin",
+            "route": "/",
+            "codepoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "dirty": false,
+            "errors": [],
+            "passedCases": 9
+          },
+          {
+            "platform": "darwin",
+            "route": "/office/",
+            "codepoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "dirty": false,
+            "errors": [],
+            "passedCases": 9
+          },
+          {
+            "platform": "win32",
+            "route": "/",
+            "codepoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "dirty": false,
+            "errors": [],
+            "passedCases": 9
+          },
+          {
+            "platform": "win32",
+            "route": "/office/",
+            "codepoint": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+            "dirty": false,
+            "errors": [],
+            "passedCases": 9
+          }
+        ],
+        "applicationAndRootHarnessInputsUnchangedSinceFreeze": true,
+        "evidenceIntake": {
+          "runtimeCommit": "6d2aa53586f43fba27da661bcda0a6583098b437",
+          "runtimeDoc": "docs/tests/2026-11-16-runtime30-integration-g.md",
+          "writerCommit": "a5ce27f06470d8b9074a2f2b669de0172c9fd3b8",
+          "writerDocs": [
+            "docs/tests/2026-11-16-pr349-native-language-G.md",
+            "docs/tests/2026-11-16-pr349-native-language-G.json"
+          ],
+          "allRawLinuxAnd5MacReportsVerifiedUtf8Exact": true
+        },
+        "followups": {
+          "358": {
+            "kind": "bug",
+            "scope": "NativeMacCommandUpDown mapping, separate from327cache",
+            "owner": "6f92 under a new explicit user task",
+            "base": "2a4e08756889688b67d093f245b3cef6db71f408",
+            "status": "future scoped fix delivery; not included in frozenG",
+            "pr": 360,
+            "branch": "codex/writer-358-macos-navigation-2026-11-16"
+          },
+          "359": {
+            "kind": "onderzoek",
+            "scope": "Missing initial/reopened nativeMacWriter glyphs; app versuscapture/readiness unknown",
+            "owner": "central registration only; no implementation/research executor started",
+            "status": "open",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/359"
+          },
+          "356": {
+            "pr": 357,
+            "scope": "EPUB importer",
+            "owner": "8020",
+            "status": "separate work, not partG"
+          },
+          "361": {
+            "kind": "bug",
+            "scope": "NativeWindowsCtrlZ afterInsertColumnLeft; focus workaround restores history",
+            "owner": "750b registration only, no productfixclaim",
+            "status": "open; no fix includedG",
+            "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/361"
+          },
+          "newWindowsRibbonReports": {
+            "origin": "new user screenshots after reopeningG, via750b",
+            "scope": "Styles rawtranslationkeys and possible verticalribbonclip; duplicate/scope triage ongoing",
+            "owner": "750b coordinates362agent and363separateclaim",
+            "independentRootReproduction": false,
+            "includedAsFix": false,
+            "status": "Registered separately as362and363; sourceGallery/engineen/nl/config unchanged between93andG, no354introduction claimed"
+          },
+          "362": {
+            "kind": "bug",
+            "scope": "Writerverticalribbonfit, user screenshots1/3/4; fixed94pxband and stackedcontrols",
+            "owner": "750b user-authorized subagentwriter_ribbon_362",
+            "branch": "codex/writer-ribbon-clipping-362",
+            "worktree": "work/oos-writer-ribbon-362-tester",
+            "claimedFiles": [
+              "src/lint/tekst.tsx",
+              "src/stijl/openaec-office.css"
+            ],
+            "status": "future scoped fix, not partG"
+          },
+          "363": {
+            "kind": "bug",
+            "scope": "Styles rawtranslationkeys; English/Dutch key mismatch",
+            "owner": "750b reserved separate executor after362; no parallel reassignment",
+            "status": "registered, future scoped fix, not partG"
+          }
+        }
+      },
+      "workCandidate361": {
+        "source": "91af2c0570c04ce50d3189d07887598951af7043",
+        "pr": 364,
+        "baseBranch": "codex/integratie-2026-11-16",
+        "acceptedIntegration": false,
+        "rootSourceReportImageHashesVerified": true,
+        "sourceReceipt": "docs/tests/2026-11-16-writer-361-candidate.json",
+        "nativeFunctionalGaps": [
+          "Windows table columnCtrlZ with unchangedribbonfocus",
+          "Linux correspondingnative inputfocus",
+          "macOS correspondingnative CommandUndo/Redo"
+        ],
+        "externalRuns": [
+          {
+            "id": 43881730576,
+            "name": "Kantooromgeving controleren en bouwen",
+            "head_sha": "91af2c0570c04ce50d3189d07887598951af7043",
+            "event": "pull_request",
+            "status": "in_progress",
+            "conclusion": null,
+            "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730576"
+          },
+          {
+            "id": 43881730560,
+            "name": "Zelfstandige databasebrowser controleren en bouwen",
+            "head_sha": "91af2c0570c04ce50d3189d07887598951af7043",
+            "event": "pull_request",
+            "status": "in_progress",
+            "conclusion": null,
+            "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730560"
+          },
+          {
+            "id": 43881730561,
+            "name": "Zelfstandig kantoorvoorbeeld controleren",
+            "head_sha": "91af2c0570c04ce50d3189d07887598951af7043",
+            "event": "pull_request",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730561"
+          },
+          {
+            "id": 43881776385,
+            "name": "Office browser regressions",
+            "head_sha": "91af2c0570c04ce50d3189d07887598951af7043",
+            "event": "workflow_dispatch",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881776385"
+          }
+        ],
+        "browserAudit": {
+          "run": 43881776385,
+          "source": "91af2c0570c04ce50d3189d07887598951af7043",
+          "status": "all3OSsuccess",
+          "cases": 54,
+          "cleanReports": 6,
+          "routes": [
+            "/",
+            "/office/"
+          ],
+          "zipAndReportSourceHashesIndependentlyVerified": true,
+          "WindowsLineEndings": "RawCRLFhashes preserved and verified against LF-to-CRLFcheckouttransform",
+          "notNativeColumnUndoAcceptance": true,
+          "rawAudit": "docs/tests/2026-11-16-writer-361-candidate.json"
+        },
+        "platformSnapshot": {
+          "asOf": "2026-11-16T14:14:41.855786+00:00",
+          "source": "91af2c0570c04ce50d3189d07887598951af7043",
+          "workCandidateNotAccepted": true,
+          "results": [
+            {
+              "run": 43881730576,
+              "status": "in_progress",
+              "conclusion": null,
+              "headSha": "91af2c0570c04ce50d3189d07887598951af7043",
+              "jobs": [
+                {
+                  "id": 133349070669,
+                  "name": "desktop (ubuntu-22.04)",
+                  "status": "in_progress",
+                  "conclusion": null,
+                  "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730576/job/133349070669",
+                  "currentStep": "Linux-pakket bouwen"
+                },
+                {
+                  "id": 133349071272,
+                  "name": "desktop (macos-latest)",
+                  "status": "in_progress",
+                  "conclusion": null,
+                  "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730576/job/133349071272",
+                  "currentStep": "macOS-pakket bouwen"
+                },
+                {
+                  "id": 133349071710,
+                  "name": "desktop (windows-latest)",
+                  "status": "in_progress",
+                  "conclusion": null,
+                  "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730576/job/133349071710",
+                  "currentStep": "Windows-pakket bouwen"
+                }
+              ]
+            },
+            {
+              "run": 43881730560,
+              "status": "in_progress",
+              "conclusion": null,
+              "headSha": "91af2c0570c04ce50d3189d07887598951af7043",
+              "jobs": [
+                {
+                  "id": 133349069993,
+                  "name": "database (macos-latest)",
+                  "status": "in_progress",
+                  "conclusion": null,
+                  "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730560/job/133349069993",
+                  "currentStep": "macOS-pakket bouwen"
+                },
+                {
+                  "id": 133349070563,
+                  "name": "database (windows-latest)",
+                  "status": "in_progress",
+                  "conclusion": null,
+                  "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730560/job/133349070563",
+                  "currentStep": "Windows-pakket bouwen"
+                },
+                {
+                  "id": 133349070626,
+                  "name": "database (ubuntu-22.04)",
+                  "status": "in_progress",
+                  "conclusion": null,
+                  "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/43881730560/job/133349070626",
+                  "currentStep": "Linux-pakketten bouwen"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "nextSession": {
+        "date": "2026-11-18",
+        "requiresNewUserInstruction": true,
+        "steps": [
+          "Read this canonical handoff and verify clean remote/local heads; do not rerun obsoleteGstate scripts.",
+          "Read latest363reviewlimitations and observer359preparedcode guards; do not confuse tests/preparedinstrumentation with nativeacceptance.",
+          "Assess PR364 exact91af externalCI, preserve any failures and perform missingnative keyboard controls; builds are not nativeUndo acceptance. Do not promote without relevant results.",
+          "Consider next independent deliveries362,363,356 only after review/platform gates at a pinned combinedpoint; they are not in acceptedH.",
+          "359 remainsresearch: preserve uninstrumented initialcaptures before diagnosticfont/worker/frameobservations; preparedcode is not a native result or productfix. PhysicalMac/WKboundary missing.",
+          "Keep main/release/automaticissueclose forbidden unless explicit new permission. No automatic resume."
+        ]
+      },
+      "userDecision": "16Nov: main work deferred byuser untilWednesday18Nov afterremainingchecks; no mainwriteperformed orautomaticresume"
+    }
+  },
+  "finalDiagnosticAndNativeResults": {
+    "LinuxXTestArrow": {
+      "run": 44739164950,
+      "artifactId": 14629619042,
+      "archiveSha256": "0ccc71926262f8eb1346b13ee19e14c0f64c10a0e2b0b4beda4bb1a075ab997f",
+      "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "harnessCommit": "c5df95ffaa4f348f845ad7a9bce0111232826ce6",
+      "moduleCommit": "6f73b9b6a8d45690c0ad0631e265c4d25bd031e6",
+      "moduleSha256": "8ddec4417d547b64550ed088316d2e8a68318103792fc15e9c18124f458e2596",
+      "PID": 4536,
+      "XID": "2097155",
+      "inputBackend": "x11-xtest",
+      "activationPerformedOnce": true,
+      "postForegroundAndVisibleDocumentVerified": true,
+      "keysActuallyMovedFocusAcrossControls": [
+        "Document input",
+        "Page Break",
+        "Table",
+        "Text to Table",
+        "Picture",
+        "Equation",
+        "Insert shape",
+        "Edit shapes",
+        "Chart",
+        "Edit chart",
+        "All charts",
+        "Link",
+        "Page Number",
+        "Header",
+        "Footer",
+        "Mail merge",
+        "Comment",
+        "Special Character"
+      ],
+      "normalTextCasesPassed": 1,
+      "normalTextControlsUnclipped": 6,
+      "keyboardOrGroupMatrixPassed": false,
+      "remainingFailure": "Special Character is active but :focus-visible false, despite native XTest keys and verified foreground. Cause remains unproven; no renderer/app/CSS fix or pass inferred.",
+      "cleanup": [
+        {
+          "label": "release own input actions",
+          "status": "fulfilled"
+        },
+        {
+          "label": "restore original theme and tab",
+          "status": "fulfilled"
+        },
+        {
+          "label": "restore window rectangle",
+          "status": "fulfilled"
+        },
+        {
+          "label": "fixture remains byte-identical",
+          "status": "fulfilled"
+        }
+      ],
+      "callerOwnedAppClosed": true,
+      "originalFindAndOverall361FailedRetained": true
+    },
+    "Mac363": {
+      "status": "accepted bounded labels/hints scope",
+      "run": 44739228278,
+      "rootAuditSha256": "8f4c96e51d4f7817cbdb07547e3703cab431f31324ae12e14dc3bcaf9b25ec08",
+      "centralAcceptanceSha256": "a0beac35861eed9e6e20144ec7e98db0623e8634b8655c5ac5e84097bb53d82a"
+    },
+    "GFindControl": {
+      "run": 44736631893,
+      "sourceCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+      "diagnosticOnly": true,
+      "outcome": "same abc-retained symptom under matched driver/WebKit; UI open route differs; no cause proved"
+    },
+    "LinuxXTestTab": {
+      "run": 44744186201,
+      "artifactId": 14631039998,
+      "archiveSha256": "f87c37604a200b60b320d2126784c1dbba0e55744be39c7f4ac07b6ca95ee79a",
+      "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "harnessCommit": "cd423ab2ef232d3bf38ad03770f9c3ac46bbbc80",
+      "module": {
+        "moduleCommit": "2cba4b113e03c0411614a04af63a66c36d9b57dd",
+        "moduleSha256": "2acdd2f0a32797a3b0149c425c301b1698612541d366f3958ece92e229c16c83"
+      },
+      "pid": 4731,
+      "x11Window": "2097155",
+      "status": "partial; native matrix failed",
+      "entry": "Exactly Tab, Tab; real XTest, own verified foreground window. Different route from prior ArrowDown failures.",
+      "normalCases": 1,
+      "focusCases": 6,
+      "focusedNames": [
+        "Special Character",
+        "Date",
+        "Time",
+        "Date & Time",
+        "Insert field\u2026",
+        "Update fields"
+      ],
+      "allRecordedGeometryPassed": true,
+      "groupCases": 0,
+      "stop": "Screenshot request timed out after six successful focus measurements; failure screenshot also timed out. No later matrix/menu/theme/width cases executed. Cause unknown; no retry.",
+      "originalArrowFailurePreserved": true,
+      "inheritedFindFailurePreserved": true,
+      "nativePass": false,
+      "cleanup": {
+        "module": [
+          {
+            "label": "release own input actions",
+            "status": "fulfilled"
+          },
+          {
+            "label": "restore original theme and tab",
+            "status": "fulfilled"
+          },
+          {
+            "label": "restore window rectangle",
+            "status": "fulfilled"
+          },
+          {
+            "label": "fixture remains byte-identical",
+            "status": "fulfilled"
+          }
+        ],
+        "caller": {
+          "ownedApplicationClosed": true
+        }
+      },
+      "rootOriginalImageReview": "Serially reviewed original 1600x1000 normal image: readable Text group and six fixture words, whole Special Character outline visible. No separate original image for remaining five focused states; raw metrics only.",
+      "rawReportSha256": "85b6931abe62af5205221231bb519857a099baac8a22ba352c58e639d43ec3da",
+      "moduleReportSha256": "acf8dacca9dfa9d1869ca48388ee5230142846c4fcdb07519b166c0b54819057"
+    },
+    "WindowsCtrlH": {
+      "status": "passed bounded native input Undo case",
+      "PID": 27196,
+      "rawReceiptSha256": "674995a3e08653e36520c16fec55a6a3653aabe602c7901c51d3f4ff2d939ba4",
+      "rootAuditSha256": "91325ece22ef7216f6009291501f0947aee434f2ae593f079d4ba9b18d3c9488",
+      "filesVerified": 28,
+      "cleanup": {
+        "searchPaneClosed": true,
+        "ownDocumentChangesDiscarded": true,
+        "ownAppClosedNormally": true,
+        "finalOfficeProcesses": [],
+        "fixtureByteUnchanged": true,
+        "windowSizeThemeLanguageUnchanged": true,
+        "ownNodeRuntimeResetConfirmed": true,
+        "captureRestartedToInspectBorder": false,
+        "limit": "Runtime reset does not independently prove all helper resources or the yellow capture border disappeared; no extra capture was made."
+      }
+    }
+  }
+}

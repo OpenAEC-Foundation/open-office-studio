@@ -22,6 +22,11 @@ function voerUit(script, args = []) {
   if (resultaat.status !== 0) process.exit(resultaat.status ?? 1);
 }
 if (frontend) {
+  // Alleen de native Tauri-hook krijgt deze doelplatformvariabelen mee.
+  // Een losse webbuild blijft zonder native runtime; crossbuilds gebruiken
+  // de doelarchitectuur van Tauri in plaats van die van de bouwmachine.
+  if (process.env.TAURI_ENV_PLATFORM && sleutel !== "notition")
+    voerUit("scripts/voorbereiden-kantoorruntime.mjs");
   voerUit("scripts/kopieer-assets.mjs");
   voerUit("node_modules/typescript/bin/tsc", ["--noEmit"]);
   voerUit("node_modules/vite/bin/vite.js", [

@@ -1,0 +1,159 @@
+{
+  "derivedFromOriginalSha256": "d73ee47647f058b918cf6153d0ae1266580c6af6f118dc4d1a5b9626c44ca439",
+  "redaction": "Personal workspace/user-profile prefixes replaced; factual values and original hashes retained.",
+  "review": {
+    "schemaVersion": 1,
+    "issue": 363,
+    "applicationSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "canonicalDesktopRun": "44715026752",
+    "applicationIdentityAttribution": "Read from native-writer-I3-receipt.json application; parent owns the 160-item evidence index, package/executable provenance and digest audit",
+    "parentSuppliedReceiptSha256": "80ee08d6d2b247ba717f16b9a669f8b177f900a0f0c3484220a5fc6a7bf59c5c",
+    "operatorHarness": {
+      "kind": "Existing CUA-operated Windows native evidence supplied for read-only review",
+      "commit": "Not asserted by this review; application I3 is not inferred to be the CUA operator/harness source",
+      "reviewRuntime": "No CUA, application or capture runtime started by reviewer"
+    },
+    "artifactRoot": "[private-workspace]/work/oos-writer-table-undo-361-tester/.local/nov20-I3-native-windows",
+    "status": "bounded_two_language_native_label_evidence_reviewed",
+    "scope": "Three existing original PNGs viewed individually and serially; targeted styles groups and five button name/Description lines extracted from each large snapshot.tree UIA string",
+    "receiptWriter363StatusAsRead": "passed-English-and-Dutch-native-labels-and-hints",
+    "languagesActuallyExercisedAsReported": [
+      "Automatic (English)",
+      "Nederlands"
+    ],
+    "englishControls": [
+      {
+        "name": "Styles pane",
+        "Description": "Styles pane \u00b7 Ctrl+Alt+Shift+S"
+      },
+      {
+        "name": "New Style\u2026",
+        "Description": "New Style from Selection\u2026"
+      },
+      {
+        "name": "Update Normal",
+        "Description": "Update Normal to Match Selection"
+      },
+      {
+        "name": "Modify Style: Normal",
+        "Description": "Modify Style: Normal"
+      },
+      {
+        "name": "Style Set\u2026",
+        "Description": "Style Set and Theme Fonts"
+      }
+    ],
+    "dutchControls": [
+      {
+        "name": "Stijlenvenster",
+        "Description": "Stijlenvenster \u00b7 Ctrl+Alt+Shift+S"
+      },
+      {
+        "name": "Nieuwe stijl\u2026",
+        "Description": "Nieuwe stijl op basis van de selectie\u2026"
+      },
+      {
+        "name": "Standaard bijwerken",
+        "Description": "Standaard bijwerken zodat deze overeenkomt met de selectie"
+      },
+      {
+        "name": "Stijl wijzigen: Standaard",
+        "Description": "Stijl wijzigen: Standaard"
+      },
+      {
+        "name": "Stijlset\u2026",
+        "Description": "Stijlset en thema-lettertypen"
+      }
+    ],
+    "observations": [
+      {
+        "settingAsReported": "Automatic (English)",
+        "snapshot": "L363-English-styles-labels-and-hints.json",
+        "png": "L363-English-styles-labels-and-hints-0.png",
+        "capturedAt": "2026-11-20T11:06:50.114Z",
+        "windowId": 3606496,
+        "fiveControlNodeIds": [
+          401,
+          403,
+          405,
+          407,
+          409
+        ],
+        "managementGroupNodeId": 399,
+        "managementGroup": "Styles",
+        "controls": "englishControls",
+        "visual": "Readable English glyphs and correct Normal interpolation; ordinary narrow-label ellipsis; no visible raw keys in management region",
+        "uia": "Five full names and Description hints present; no raw keys/placeholders in these selected names/hints"
+      },
+      {
+        "settingAsReported": "Nederlands",
+        "snapshot": "L363-Dutch-styles-labels-and-hints.json",
+        "png": "L363-Dutch-styles-labels-and-hints-0.png",
+        "capturedAt": "2026-11-20T11:07:14.123Z",
+        "windowId": 3606496,
+        "fiveControlNodeIds": [
+          559,
+          561,
+          563,
+          565,
+          567
+        ],
+        "managementGroupNodeId": 557,
+        "managementGroup": "Stijlen",
+        "controls": "dutchControls",
+        "visual": "Readable Dutch glyphs and correct Standaard interpolation; ordinary narrow-label ellipsis; no visible raw keys in management region",
+        "uia": "Five full names and Description hints present; no raw keys/placeholders in these selected names/hints"
+      },
+      {
+        "settingAsReported": "Restored original Automatic (English)",
+        "snapshot": "L363-language-restored-original-Automatic-English.json",
+        "png": "L363-language-restored-original-Automatic-English-0.png",
+        "capturedAt": "2026-11-20T11:07:40.808Z",
+        "windowId": 3606496,
+        "fiveControlNodeIds": [
+          852,
+          854,
+          856,
+          858,
+          860
+        ],
+        "managementGroupNodeId": 850,
+        "managementGroup": "Styles",
+        "controls": "englishControls",
+        "visual": "English labels and Normal interpolation restored and readable; no visible management raw keys",
+        "uia": "The same five full English names and Description hints are restored"
+      }
+    ],
+    "languageRestoration": {
+      "receiptOriginalLanguageRestoredAndSaved": true,
+      "visibleAndUiaEnglishRestorationObserved": true,
+      "settingsPersistenceAudit": "Parent-owned; no new preference access or language manipulation by reviewer"
+    },
+    "acceptanceScope": "Evidence supports five readable native Windows English and Dutch style-management names with Description hints and Normal/Standaard interpolation, plus restoration to original Automatic (English). No broader native behavior acceptance is inferred.",
+    "limits": [
+      "No complete native hover-tooltip matrix; UIA Description hints are recorded separately from a visually displayed hover tooltip",
+      "No native fallback-language, full disabled-state or keyboard/focus matrix claim",
+      "No document-body/text-renderer, table behavior or save/reopen acceptance from these screenshots",
+      "Existing ellipsis and two equal Styles/Stijlen gallery/management captions remain",
+      "Screenshot appearance does not independently measure actual monitor DPI or CSS viewport",
+      "Source/package/executable binding and image/index hashes rely on the separate parent provenance audit",
+      "Other issue evidence and cleanup addenda are outside this review"
+    ],
+    "cleanupAsReportedByParent": {
+      "officeProcessesAfterFinalAudit": 0,
+      "applicationClosedNormally": true,
+      "kernelResetConfirmedAt": "2026-11-20T11:11:22Z",
+      "captureIndicatorAndAllHelperReleaseVisuallyProved": false,
+      "newCaptureToCheckIndicatorStarted": false,
+      "bounds": "Confirmed kernel reset is not itself proof that every helper resource released or the capture border disappeared"
+    },
+    "ownership": {
+      "newUiAppsTestsCapturesOrProbes": false,
+      "cuaBrowserOrRecordingRuntimeStarted": false,
+      "rootWrites": false,
+      "committedOrPushed": false,
+      "changes": "Only this ignored JSON in the agent worktree"
+    }
+  }
+}

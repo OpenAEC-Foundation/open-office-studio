@@ -491,21 +491,19 @@ export function TekstRibbon({
             />
           </Groep>
           <TabelIndeling />
-          <Groep naam={t("writer.groups.delete")}>
+          <Groep naam={t("writer.groups.delete")} className="ribbon-tabel-posities">
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="deleteRow"
                 naam={t("writer.commands.deleteRow")}
                 icoon={Trash2}
-                groot
               />
               <W
                 id="tableAction"
                 args="deleteColumn"
                 naam={t("writer.commands.deleteColumn")}
                 icoon={Trash2}
-                groot
               />
             </div>
             <W
@@ -653,8 +651,8 @@ export function TekstRibbon({
                       onClick={() => opdrachten.voegIn(tijdTekst(new Date()))}
                     />
                     <DatumTijdKnop />
-                    <VeldKnoppen />
                   </div>
+                  <VeldKnoppen />
                 </Groep>
               </>
             ),

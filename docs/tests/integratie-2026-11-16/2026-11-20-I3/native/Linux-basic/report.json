@@ -1,0 +1,110 @@
+{
+  "sourceCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "harnessCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+  "sourceTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+  "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+  "status": "passed",
+  "checks": [
+    "Real installed DEB opens a native Writer document",
+    "Actual keyboard edit and Ctrl+S persist exactly one marker",
+    "Application process fully exits after saving",
+    "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+  ],
+  "limits": [
+    "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+    "Virtual X11 display and software graphics, not physical hardware",
+    "DEB only; AppImage native operation is not certified"
+  ],
+  "package": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.46.2_amd64.deb",
+    "sha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247"
+  },
+  "packagedExecutableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+  "rawBuildExecutableSha256": "ae7cbee22a1ef5d341d53e412b28b4e54d02a50104e6c1e2f73f242caabbca0c",
+  "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+  "runtime": {
+    "node": "v22.23.4",
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+      "WEBKIT_DISABLE_COMPOSITING_MODE": null
+    },
+    "driver": "tauri-driver v2.1.0:",
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+  },
+  "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+  "inputSha256": "fbfb50b551c21355c27bfd7449b2405182eab6a741a7b5e62415d2eeb38f3e3d",
+  "beforeSave": {
+    "saveDisabled": false,
+    "keyboard": [
+      {
+        "code": "ControlLeft",
+        "prevented": false,
+        "ctrl": true,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keydown",
+        "key": "Control",
+        "meta": false
+      },
+      {
+        "code": "Home",
+        "prevented": false,
+        "ctrl": true,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keydown",
+        "key": "Home",
+        "meta": false
+      },
+      {
+        "code": "Home",
+        "prevented": false,
+        "ctrl": true,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keyup",
+        "key": "Home",
+        "meta": false
+      },
+      {
+        "code": "ControlLeft",
+        "prevented": false,
+        "ctrl": false,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keyup",
+        "key": "Control",
+        "meta": false
+      },
+      {
+        "code": "KeyS",
+        "prevented": false,
+        "ctrl": false,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keydown",
+        "key": "S",
+        "meta": false
+      },
+      {
+        "code": "KeyS",
+        "prevented": false,
+        "ctrl": false,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keyup",
+        "key": "S",
+        "meta": false
+      }
+    ],
+    "focused": "TEXTAREA"
+  },
+  "savedSha256": "a39da30fb21d38ac9ac504a91e72cfe678c6c3bbafe5bb476b7e8470d6af71e6",
+  "ownedApplicationClosed": true
+}

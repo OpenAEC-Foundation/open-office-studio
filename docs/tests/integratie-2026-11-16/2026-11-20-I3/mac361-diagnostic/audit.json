@@ -1,0 +1,43 @@
+{
+  "run": 44718383490,
+  "artifactId": 14620004424,
+  "archiveSha256": "034a005ec4bb1692d7aa0e69d3284f790abdaca030b540779b21989b8b46ee0e",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "harnessCommit": "cdecfb5349f7daae144c63bf7317b1ddfa768998",
+  "probeCommit": "860067b445b5d557edac2ef841a62185fb1b6614",
+  "probeSha256": "915286fc076dbcc62aecb61ef765d4b02344819053ae88d8e2f83a2b6911a0a6",
+  "trials": [
+    {
+      "index": 1,
+      "reportSha256": "1e95828c7a37fd3f0f0cda4f4dd5caf1d339d1d26f15a1bbfc3027e012e44cf4",
+      "checks": 6,
+      "secondUndoFirstObservedMs": 260,
+      "latePollRan": false,
+      "trustedEvents": 18
+    },
+    {
+      "index": 2,
+      "reportSha256": "ae3a798ddd6e3d158fe694d099809667d69829dead8fdb20949b734479ae072a",
+      "checks": 6,
+      "secondUndoFirstObservedMs": 256,
+      "latePollRan": false,
+      "trustedEvents": 18
+    },
+    {
+      "index": 3,
+      "reportSha256": "580c1b57cd3b4c39ca2919bc6e9952ed1677c9879231e8dd33e85858ad278e80",
+      "checks": 6,
+      "secondUndoFirstObservedMs": 372,
+      "latePollRan": false,
+      "trustedEvents": 18
+    }
+  ],
+  "classification": "No original failure reproduced in three fresh-document core trials; no evidence establishing the earlier failure cause.",
+  "limits": [
+    "Not a product fix, timing-stability proof or native application acceptance.",
+    "defaultPrevented=false at the observer checkpoint is not proof of shortcut handler execution.",
+    "Original44715036293 failedsecondUndo receipt preserved; firstdiagnostic44717723401 hadzero cases due receiptpath infrastructure.",
+    "Original PNG reviews are by owner/parent; this root audit checks exact data/provenance."
+  ]
+}

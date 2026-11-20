@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 2,
+  "date": "2026-11-20",
+  "issue": 363,
+  "status": "Three review gaps closed locally; central cross-platform/native combination acceptance pending",
+  "source": "23394dc88f2b4d35a4af5d55a71b89ba7cd6a171",
+  "tree": "aa95a4e562daed96ab2df526f40847141cae5fb3",
+  "harnessCommit": "23394dc88f2b4d35a4af5d55a71b89ba7cd6a171",
+  "branch": "codex/writer-363-agent-2026-11-20",
+  "originalValidatedSource": "489c4e3ce10a51e14bfd5791860e5fe3e843a544",
+  "sourceChange": "No production changes beyond the existing #363 label fix; StijlGalerij.tsx remains byte-identical to 489",
+  "sharedDependencies": [
+    {
+      "upstream": "c89ec334c169c1aba113e14cd5c22f40bb459a60",
+      "local": "2bc21f64515f6c108dabf471fb2621ba000ad649"
+    },
+    {
+      "upstream": "d51d7be766e5b86721bb9e40c82e643041bbf897",
+      "local": "835e570c5fd99d4a6e53e04ac5a972d9c0713703"
+    }
+  ],
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "arch": "x64",
+    "node": "v24.22.1"
+  },
+  "tests": {
+    "passed": 72,
+    "files": 4,
+    "render": 36,
+    "lifecycle": 9,
+    "consumer": 20,
+    "sharedVerifier": 7,
+    "typeScript": "passed",
+    "writerI18n": {
+      "languages": 9,
+      "namespaces": 1,
+      "sourceKeys": 1669,
+      "errors": 0,
+      "existingWarnings": 23
+    }
+  },
+  "browser": [
+    {
+      "route": "/",
+      "source": "23394dc88f2b4d35a4af5d55a71b89ba7cd6a171",
+      "harnessCommit": "23394dc88f2b4d35a4af5d55a71b89ba7cd6a171",
+      "browser": "151.0.7922.34",
+      "report": "docs/tests/bewijs/writer-363-2026-11-20/normal/report.json",
+      "receipt": "docs/tests/bewijs/writer-363-2026-11-20/normal/build.json",
+      "status": "passed",
+      "buildVerifiedAfter": true,
+      "files": 727,
+      "cleanup": {
+        "fixtureLoaded": true,
+        "serverStarted": true,
+        "browserStarted": true,
+        "serverClosed": true,
+        "browserClosed": true
+      },
+      "screenshots": [
+        "docs/tests/beelden/writer-363-2026-11-20/normal/en.png",
+        "docs/tests/beelden/writer-363-2026-11-20/normal/nl.png",
+        "docs/tests/beelden/writer-363-2026-11-20/normal/lo.png"
+      ],
+      "visualReview": "All three original screenshots inspected; labels readable; existing ellipsis and equal group captions remain"
+    },
+    {
+      "route": "/office/",
+      "source": "23394dc88f2b4d35a4af5d55a71b89ba7cd6a171",
+      "harnessCommit": "23394dc88f2b4d35a4af5d55a71b89ba7cd6a171",
+      "browser": "151.0.7922.34",
+      "report": "docs/tests/bewijs/writer-363-2026-11-20/hosted/report.json",
+      "receipt": "docs/tests/bewijs/writer-363-2026-11-20/hosted/build.json",
+      "status": "passed",
+      "buildVerifiedAfter": true,
+      "files": 727,
+      "cleanup": {
+        "fixtureLoaded": true,
+        "serverStarted": true,
+        "browserStarted": true,
+        "serverClosed": true,
+        "browserClosed": true
+      },
+      "screenshots": [
+        "docs/tests/beelden/writer-363-2026-11-20/hosted/en.png",
+        "docs/tests/beelden/writer-363-2026-11-20/hosted/nl.png",
+        "docs/tests/beelden/writer-363-2026-11-20/hosted/lo.png"
+      ],
+      "visualReview": "All three original screenshots inspected; labels readable; existing ellipsis and equal group captions remain"
+    }
+  ],
+  "actualCliFailure": {
+    "scenario": "OFFICE_TEST_BUILD_RECEIPT missing",
+    "expectedExitCode": 1,
+    "status": "failed",
+    "report": "docs/tests/bewijs/writer-363-2026-11-20/missing-receipt/report.json",
+    "cleanup": {
+      "fixtureLoaded": false,
+      "serverStarted": false,
+      "browserStarted": false,
+      "serverClosed": null,
+      "browserClosed": null
+    }
+  },
+  "independentReview": "Coordinator independently checked both reports, all six PNG digests, both receipt digests/source/tree, normal EN and hosted NL images, plus the factual missing-receipt failure; no blocker found",
+  "limitations": [
+    "No fresh native Windows/Linux/macOS package or interactive acceptance performed by this agent",
+    "Browser validation ran on Windows Chromium only; Linux/macOS browser validation remains central",
+    "Existing equal Styles/Stijlen group captions and narrow-label ellipsis are not changed",
+    "Empty built-in template is intentional and supplies no #359 text renderer evidence",
+    "Build receipts bind this exact source/tree and local builder bytes; a later proof commit is not a new tested application source"
+  ],
+  "cleanup": "Own browser contexts, browsers and Vite preview servers closed successfully for both real routes. No CUA, native GUI or recording session was started. Failed disposal unit cases deliberately record false, never successful cleanup.",
+  "logs": {
+    "tests": "docs/tests/bewijs/writer-363-2026-11-20/logs/tests.txt",
+    "typeScript": "docs/tests/bewijs/writer-363-2026-11-20/logs/typeScript.txt",
+    "writerI18n": "docs/tests/bewijs/writer-363-2026-11-20/logs/writerI18n.txt",
+    "buildNormal": "docs/tests/bewijs/writer-363-2026-11-20/logs/buildNormal.txt",
+    "buildHosted": "docs/tests/bewijs/writer-363-2026-11-20/logs/buildHosted.txt",
+    "browserNormal": "docs/tests/bewijs/writer-363-2026-11-20/logs/browserNormal.txt",
+    "browserHosted": "docs/tests/bewijs/writer-363-2026-11-20/logs/browserHosted.txt",
+    "cliMissingReceipt": "docs/tests/bewijs/writer-363-2026-11-20/logs/cliMissingReceipt.txt"
+  },
+  "files": {
+    "docs/tests/beelden/writer-363-2026-11-20/normal/en.png": {
+      "sha256": "94094ccfefe911de445238584b6482ce9342a7ac5591afc46a98c7610fc89c1c",
+      "bytes": 81604
+    },
+    "docs/tests/beelden/writer-363-2026-11-20/normal/nl.png": {
+      "sha256": "90cf70dbdb2eb1ea2f552b4718d6ef02600efe2265b015824422cb83abefbd50",
+      "bytes": 84950
+    },
+    "docs/tests/beelden/writer-363-2026-11-20/normal/lo.png": {
+      "sha256": "6669afb832a35467cffc99848375c602b0015845d9aa343fa65389e8de287c3e",
+      "bytes": 81738
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/normal/report.json": {
+      "sha256": "ae854662fd207a4ccf4d16f1e748483cc7fc0e3245e9e299ab992113dc290783",
+      "bytes": 84659
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/normal/build.json": {
+      "sha256": "c234482c94238a50905c8038b4c42589fff061837dd3ae6ba3e98a3e0cd2a2da",
+      "bytes": 78660
+    },
+    "docs/tests/beelden/writer-363-2026-11-20/hosted/en.png": {
+      "sha256": "eed12c48affda6b578ad4852527db2a97af3fee37470d6a8d8d8991cf11da538",
+      "bytes": 82564
+    },
+    "docs/tests/beelden/writer-363-2026-11-20/hosted/nl.png": {
+      "sha256": "90cf70dbdb2eb1ea2f552b4718d6ef02600efe2265b015824422cb83abefbd50",
+      "bytes": 84950
+    },
+    "docs/tests/beelden/writer-363-2026-11-20/hosted/lo.png": {
+      "sha256": "6669afb832a35467cffc99848375c602b0015845d9aa343fa65389e8de287c3e",
+      "bytes": 81738
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/hosted/report.json": {
+      "sha256": "638bc02a1606c13e28f366a8c8c692bf0ff911ffaf8856dfb3e30069473c98ae",
+      "bytes": 84674
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/hosted/build.json": {
+      "sha256": "73c6df8b6e4d8e6db298472ecaef7cc7549480975b278d59be380916a6dad881",
+      "bytes": 78668
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/missing-receipt/report.json": {
+      "sha256": "b005835e41c4c9ffd7b26938243f43f02e87761ac27045a446f0b6c44c389da5",
+      "bytes": 689
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/tests.txt": {
+      "sha256": "9ae493f51363db506cc89c674c85084ee7cef40b3b3df023ef28a302a16bc439",
+      "bytes": 4463
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/typeScript.txt": {
+      "sha256": "e05222033cd2c7b46b6fad5ec87b44b62f844dbb6f004476498f71d0e3c9875b",
+      "bytes": 12
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/writerI18n.txt": {
+      "sha256": "b931fb1fc93dfda7afaebb4ad7f884366e2c40375910e3c94bfc55d353617866",
+      "bytes": 1455
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/buildNormal.txt": {
+      "sha256": "ebb21bfaa59350f5d75c93b0a07eb1e51a0f85234bd55754374fe9dbceaa1f29",
+      "bytes": 410
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/buildHosted.txt": {
+      "sha256": "2470db4a2e96f4d2057f76b426bd7c444b6621847dc6ef8f1cf0919e908060e6",
+      "bytes": 514
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/browserNormal.txt": {
+      "sha256": "7ff375c9f3564e58a48eb7b325d23671de9c52958737bf782a74b79f80269cc0",
+      "bytes": 272
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/browserHosted.txt": {
+      "sha256": "834f7437d89be65ce33f30f8b39870e99203c07dc9309436097aa3118fb572ba",
+      "bytes": 279
+    },
+    "docs/tests/bewijs/writer-363-2026-11-20/logs/cliMissingReceipt.txt": {
+      "sha256": "c26c0ce29c95f5ee90e5ab2ab88c5ba06f272667e5bab17b34918979cf8630c7",
+      "bytes": 321
+    }
+  }
+}

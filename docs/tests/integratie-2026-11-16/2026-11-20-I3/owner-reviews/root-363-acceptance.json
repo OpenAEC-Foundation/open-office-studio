@@ -1,0 +1,28 @@
+{
+  "issue": 363,
+  "decision": "accepted within bounded labels/hints scope on I3",
+  "decidedAt": "2026-11-20T13:07:17.404796+00:00",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "integrationCodeAndTestHead": "d76fd1ee20a3d688efd09abe7dcbffac70f005ab",
+  "browser": "18 unique three-OS/two-route EN/NL/Lao-fallback cases passed; translation/core checks source-bound I3",
+  "nativeWindows": "Five EN/NL names/hints, Normal/Standaard and language restore; receipt80ee08 retained",
+  "nativeLinux": "Five English labels/titles/Normal and restoration, independent PID4756 session; no nativeNL claim",
+  "nativeMacOS": "Five EN/NL/EN AXTitle/Description/Help and group captions, Normal/Standaard/Normal, normalUI language switch/restore and CmdQ; run44739228278",
+  "acceptanceMapping": "Readable lookups/fallback and no raw keys verified; command IDs/bindings unchanged by label-only production diff. Named current Normal/Standaard observed. Native custom/no-current/fallback/hover/hardware matrix not forced or claimed. These are coverage boundaries, not additional all-combination gates in this bounded issue.",
+  "remainingLimits": [
+    "No physical Mac host or broad macOS hardware matrix",
+    "Hints observed as native AXHelp; no cursor-hover tooltip demonstration",
+    "No native custom-style/no-current-style/fallback-locale matrix forced",
+    "Linux native NL not added by this Mac-only caller",
+    "No #359 text-rendering or #361/body/undo acceptance",
+    "No main merge or push; no app source or shared helper changed"
+  ],
+  "centralMacAudit": "native/macOS363/audit.json",
+  "centralMacAuditSha256": "8f4c96e51d4f7817cbdb07547e3703cab431f31324ae12e14dc3bcaf9b25ec08",
+  "centralOverview": "docs/tests/integratie-2026-11-16.md and .json",
+  "publicationAtDecision": "Receipt exists locally; central overview/evidence consolidation pending end of current integration round.",
+  "mainMergeAllowed": false,
+  "otherIssuesOrWholeApplicationAccepted": false,
+  "issueStatusChanged": false
+}

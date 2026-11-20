@@ -1,0 +1,188 @@
+{
+  "derivedFromOriginalSha256": "7bb7b4e14fdd302db1a113cd0a3513b149f67a54faf731a23881d732bb9cc0f4",
+  "redaction": "Personal workspace/user-profile prefixes replaced; factual values and original hashes retained.",
+  "review": {
+    "schemaVersion": 1,
+    "issue": 363,
+    "ciRun": "44722023173",
+    "applicationSource": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "qaWorkflowHead": "bdae7647a2417b7668976db7b9f44305c67ecc32",
+    "sourceAttribution": "Parent supplies separate APP/QA identities and owns workflow API, package/executable identity and PNG/AX digest audit",
+    "scope": "Read-only review of one existing native-window PNG and the five English style-management controls in report.sections.363 and 363-raw-ax.json",
+    "artifactRoot": "[private-workspace]/work/oos-integratie-2026-11-16-9635/.local/nov20-ci/44722023173/writer361-native-macOS-7f126f4b8e5269a54388cf78c48c78d2acc0daa1/writer361-native/ribbon-observations",
+    "reviewedFiles": [
+      "363-actual-window.png",
+      "report.json: sections.363/fiveManagementControls and restoration/capture metadata",
+      "363-raw-ax.json: five matching AXButton nodes"
+    ],
+    "status": "bounded_English_label_observation",
+    "nativePass": false,
+    "nativePassChanged": false,
+    "overallNativeLimit": "Original nativePass:false and the parent-reported general #361 alpha-target block remain; this review grants no general native acceptance",
+    "nativeWindowAsReported": {
+      "pid": 2006,
+      "windowId": 33,
+      "x": -208,
+      "y": 31,
+      "width": 1440,
+      "height": 950
+    },
+    "originalPng": {
+      "width": 1486,
+      "height": 996,
+      "unalteredAsReported": true,
+      "viewedVia": "view_image",
+      "newCaptureCreated": false
+    },
+    "visualObservation": "English pane/update/modify labels and glyphs are readable; Update Normal and Modify Style: Normal interpolate the displayed style correctly. New Style\u2026 and Style Set\u2026 use ordinary width ellipsis. No visible raw translation keys. Both gallery and management captions read Styles. Document body appears blank; no body/text-renderer conclusion is drawn.",
+    "axSnapshot": {
+      "rawNodeCountAsReported": 363,
+      "bounded": false,
+      "childListsTruncated": true,
+      "depthBoundReached": false,
+      "wholeTreeComplete": false,
+      "selectedTabAsReported": "Styles",
+      "fiveControlMatches": 5,
+      "reportAndRawAgreement": "Each expected name matches one AXButton at indices 153\u2013157, parent 62; description/title/help/position/size agree between report and raw nodes",
+      "commonAttributeStatus": {
+        "AXDescription": {
+          "status": "available",
+          "truncated": false
+        },
+        "AXTitle": {
+          "status": "available",
+          "truncated": false
+        },
+        "AXHelp": {
+          "status": "available",
+          "truncated": false
+        },
+        "AXPosition": {
+          "status": "available"
+        },
+        "AXSize": {
+          "status": "available"
+        },
+        "AXRole": {
+          "status": "available",
+          "value": "AXButton",
+          "truncated": false
+        },
+        "AXIdentifier": {
+          "status": "unavailable",
+          "axError": -25212
+        },
+        "AXEnabled": {
+          "status": "available",
+          "value": true,
+          "scope": "This observed state only"
+        }
+      },
+      "controls": [
+        {
+          "index": 153,
+          "parent": 62,
+          "AXDescription": "Styles pane",
+          "AXTitle": "Styles pane",
+          "AXHelp": "Styles pane \u00b7 Ctrl+Alt+Shift+S",
+          "AXPosition": {
+            "x": 410,
+            "y": 109
+          },
+          "AXSize": {
+            "width": 73,
+            "height": 63
+          }
+        },
+        {
+          "index": 154,
+          "parent": 62,
+          "AXDescription": "New Style\u2026",
+          "AXTitle": "New Style\u2026",
+          "AXHelp": "New Style from Selection\u2026",
+          "AXPosition": {
+            "x": 485,
+            "y": 109
+          },
+          "AXSize": {
+            "width": 75,
+            "height": 63
+          }
+        },
+        {
+          "index": 155,
+          "parent": 62,
+          "AXDescription": "Update Normal",
+          "AXTitle": "Update Normal",
+          "AXHelp": "Update Normal to Match Selection",
+          "AXPosition": {
+            "x": 561,
+            "y": 100
+          },
+          "AXSize": {
+            "width": 114,
+            "height": 27
+          }
+        },
+        {
+          "index": 156,
+          "parent": 62,
+          "AXDescription": "Modify Style: Normal",
+          "AXTitle": "Modify Style: Normal",
+          "AXHelp": "Modify Style: Normal",
+          "AXPosition": {
+            "x": 561,
+            "y": 127
+          },
+          "AXSize": {
+            "width": 144,
+            "height": 27
+          }
+        },
+        {
+          "index": 157,
+          "parent": 62,
+          "AXDescription": "Style Set\u2026",
+          "AXTitle": "Style Set\u2026",
+          "AXHelp": "Style Set and Theme Fonts",
+          "AXPosition": {
+            "x": 561,
+            "y": 154
+          },
+          "AXSize": {
+            "width": 91,
+            "height": 27
+          }
+        }
+      ]
+    },
+    "restorationAndCaptureAsReported": {
+      "tabRestoration": "confirmed",
+      "resizeSetterCalled": false,
+      "resizingAttempted": false,
+      "verifiedResizeSetterImplemented": false,
+      "finalNativeBounds": "Unchanged 1440\u00d7950 at x=-208, y=31",
+      "captureProcessExited": true,
+      "captureCleanup": "One-shot screencapture processes only; no persistent recording session created"
+    },
+    "acceptanceScope": "Positive observation of five readable English labels, complete available AX label/help strings and matching position/size at this one actual native-window size; parent provenance integration remains separate",
+    "limits": [
+      "Observed English UI only; no Dutch, Lao/fallback or language-switch acceptance",
+      "AX child lists are truncated; no complete-tree claim despite complete strings on these five nodes",
+      "AXIdentifier is unavailable and is not treated as an empty or successful value",
+      "Reported AX position/size are recorded as returned; no resize, narrow-window or viewport matrix was executed",
+      "No style-action execution, full disabled-state matrix, keyboard/focus matrix or save/reopen acceptance",
+      "No document-body or #359 missing-text-renderer claim",
+      "Existing visual ellipsis and equal Styles captions remain",
+      "No general nativePass change; the original unsuccessful native result remains unsuccessful"
+    ],
+    "ownership": {
+      "testsBuildsAppsProbesOrCiStarted": false,
+      "newCaptureGuiCuaBrowserOrRecordingStarted": false,
+      "rootWrites": false,
+      "committedOrPushed": false,
+      "changes": "Only this ignored JSON in the agent worktree"
+    }
+  }
+}

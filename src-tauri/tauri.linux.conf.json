@@ -221,6 +221,27 @@
         "role": "Editor",
         "mimeType": "application/x-openaec-office-ifcx"
       }
-    ]
+    ],
+    "resources": {
+      "resources/kantoorruntime/": null,
+      "resources/kantoorruntime/meta/": "kantoorruntime/meta/"
+    },
+    "linux": {
+      "deb": {
+        "files": {
+          "/usr/libexec/Open Office Studio/kantoorruntime": "resources/kantoorruntime"
+        }
+      },
+      "rpm": {
+        "files": {
+          "/usr/libexec/Open Office Studio/kantoorruntime": "resources/kantoorruntime"
+        }
+      },
+      "appimage": {
+        "files": {
+          "/usr/libexec/Open Office Studio/kantoorruntime": "resources/kantoorruntime"
+        }
+      }
+    }
   }
 }

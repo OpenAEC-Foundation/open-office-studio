@@ -5,6 +5,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { useDocxCommand, type DocxEditorRef } from "@betteroffice/docx-react";
+import type { Document } from "@betteroffice/docx/types/document";
 import { useEditorApi, useEditorZichtbaar } from "../../lint/editorApi";
 import { useOpmaak } from "../../i18n/opmaak";
 import { InfoVenster } from "./InfoVenster";
@@ -13,7 +14,7 @@ import { Leesmodus } from "./Leesmodus";
 import { noteerActiviteit } from "./opslaan";
 import { TaalVenster } from "./TaalVenster";
 import { taalNaam, taalOpCursor } from "./taal";
-import { volgEditorWijzigingen } from "../gedeeld/editorvolgen";
+import { volgTaalWijzigingen } from "./taalvolgen";
 import {
   meldVerdwenen,
   meldZichtbaar,
@@ -27,10 +28,16 @@ import "./info.css";
 export type InfoDialoog = "info" | "inspecteren" | "taal" | null;
 
 /** Volgt selectie en inhoud van de (steeds opnieuw gemounte) editor. */
-function useEditorVolgen(api: () => DocxEditorRef | null, opWijziging: (soort: "selectie" | "inhoud") => void) {
-  const recent = useRef(opWijziging);
-  recent.current = opWijziging;
-  useEffect(() => volgEditorWijzigingen(api, (soort) => recent.current(soort)), [api]);
+function useEditorVolgen(api: () => DocxEditorRef | null, opWijziging: (soort: "selectie" | "inhoud", document?: Document) => void) {
+  const recent = useRef({ api, opWijziging });
+  recent.current = { api, opWijziging };
+  useEffect(() => {
+    const volger = volgTaalWijzigingen(api, (soort, document) => {
+      // Een render kan de API al vervangen vóór de oude effectopruiming.
+      if (recent.current.api === api) recent.current.opWijziging(soort, document);
+    });
+    return volger.stop;
+  }, [api]);
 }
 
 export function TekstInfo() {
@@ -51,12 +58,12 @@ export function TekstInfo() {
   // Vanuit Bestand › Info: na herladen terug naar het document.
   const [terug, setTerug] = useState<(() => void) | undefined>(undefined);
 
-  useEditorVolgen(api, (soort) => {
+  useEditorVolgen(api, (soort, document) => {
     const ref = api();
     if (!ref) return;
     if (soort === "inhoud" && herlaad) noteerActiviteit(herlaad);
     const info = ref.getSelectionInfo();
-    setTaal(taalOpCursor(ref.getDocument(), info?.paraId, info?.before.length ?? 0));
+    setTaal(taalOpCursor(document ?? ref.getDocument(), info?.paraId, info?.before.length ?? 0));
   });
 
   // Bestand › Info opent voor het laatst zichtbare tekstdocument.

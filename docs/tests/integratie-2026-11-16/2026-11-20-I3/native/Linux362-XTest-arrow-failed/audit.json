@@ -1,0 +1,59 @@
+{
+  "run": 44739164950,
+  "artifactId": 14629619042,
+  "archiveSha256": "0ccc71926262f8eb1346b13ee19e14c0f64c10a0e2b0b4beda4bb1a075ab997f",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "harnessCommit": "c5df95ffaa4f348f845ad7a9bce0111232826ce6",
+  "moduleCommit": "6f73b9b6a8d45690c0ad0631e265c4d25bd031e6",
+  "moduleSha256": "8ddec4417d547b64550ed088316d2e8a68318103792fc15e9c18124f458e2596",
+  "PID": 4536,
+  "XID": "2097155",
+  "inputBackend": "x11-xtest",
+  "activationPerformedOnce": true,
+  "postForegroundAndVisibleDocumentVerified": true,
+  "keysActuallyMovedFocusAcrossControls": [
+    "Document input",
+    "Page Break",
+    "Table",
+    "Text to Table",
+    "Picture",
+    "Equation",
+    "Insert shape",
+    "Edit shapes",
+    "Chart",
+    "Edit chart",
+    "All charts",
+    "Link",
+    "Page Number",
+    "Header",
+    "Footer",
+    "Mail merge",
+    "Comment",
+    "Special Character"
+  ],
+  "normalTextCasesPassed": 1,
+  "normalTextControlsUnclipped": 6,
+  "keyboardOrGroupMatrixPassed": false,
+  "remainingFailure": "Special Character is active but :focus-visible false, despite native XTest keys and verified foreground. Cause remains unproven; no renderer/app/CSS fix or pass inferred.",
+  "cleanup": [
+    {
+      "label": "release own input actions",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore original theme and tab",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore window rectangle",
+      "status": "fulfilled"
+    },
+    {
+      "label": "fixture remains byte-identical",
+      "status": "fulfilled"
+    }
+  ],
+  "callerOwnedAppClosed": true,
+  "originalFindAndOverall361FailedRetained": true
+}

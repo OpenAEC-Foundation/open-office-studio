@@ -15,6 +15,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Each platform must package the same recorded candidate commit.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -32,7 +35,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
-          sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils webkit2gtk-driver xvfb dbus-x11
       # De conversieruntime staat niet in deze repository: zet de Actions-variabelen
       # CONVERSIE_APT_PAKKETTEN en CONVERSIE_PROGRAMMA om de echte conversieproeven te draaien.
       - name: Conversieruntime installeren
@@ -41,6 +44,17 @@ jobs:
           PAKKETTEN: ${{ vars.CONVERSIE_APT_PAKKETTEN }}
         run: sudo apt-get install -y --no-install-recommends $PAKKETTEN
       - run: pnpm install --frozen-lockfile
+      - name: Cache van de vastgepinde kantoorruntime
+        uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json') }}
+          restore-keys: |
+            kantoorruntime-${{ runner.os }}-${{ runner.arch }}-
+            runtime317-assets-${{ runner.os }}-${{ runner.arch }}-
+      # Native resource mappings must exist before Rust checks and packaging.
+      # The preparer validates the pinned archive/receipt hashes on every host.
+      - run: node scripts/voorbereiden-kantoorruntime.mjs
       # Extra open lettertypen (assets/lettertypen.json): bewaard per manifestversie,
       # zodat een build zonder netwerk naar GitHub ook werkt.
       - name: Lettertypencache
@@ -138,3 +152,23 @@ jobs:
           path: .local/pakketcontrole-*.json
           include-hidden-files: true
           if-no-files-found: error
+      # Keep the exact checked packages even when the subsequent native UI gate
+      # fails, so a harness correction can be diagnosed against the same bytes.
+      - name: Native Linux Writer edit, save and full application reopen
+        if: runner.os == 'Linux'
+        env:
+          # #355: tested fallback for this Xvfb/software-graphics runner only.
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+        run: |
+          cargo install tauri-driver --version 2.1.0 --locked
+          package=$(find src-tauri/target/release/bundle/deb -maxdepth 1 -name '*.deb' -print -quit)
+          test -n "$package"
+          dbus-run-session -- xvfb-run -a node scripts/proef-native-linux-basis.mjs "$package"
+      - name: Preserve actual native Linux roundtrip proof
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-linux-writer-roundtrip
+          path: .local/native-linux-basis
+          include-hidden-files: true
+          if-no-files-found: warn

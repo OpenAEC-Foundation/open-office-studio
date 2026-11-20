@@ -1,0 +1,129 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "canonicalRun": 44715026752,
+  "manifestSha256": "2c37f17474b06072a2b8b5fe47be864619d92d5b4c7ab1bff5c02a5880d8ae60",
+  "nsisSha256": "80bcea9e0c6812d7816b6f889e1947458c7bedf17650adbb8cf9f93f38a95b10",
+  "installedExecutableSha256": "8bf8779b752addd9f368debfcc3fada0a51ce530e8bc2fc3aaaee826a704362f",
+  "receiptSha256": "80ee08d6d2b247ba717f16b9a669f8b177f900a0f0c3484220a5fc6a7bf59c5c",
+  "archiveAddendumSha256": "3ca63e18a7a70db7c5fcbbcb69f5b27237f1caa844c4fe57f461cf09bde4bd43",
+  "evidenceFilesIndependentlyHashed": 160,
+  "recordedChecks": 39,
+  "processLifecycle": {
+    "initialPID": 30516,
+    "firstFullExitVerifiedZeroOfficeProcesses": true,
+    "writerReopenPID": 29192,
+    "secondFullExitVerifiedZeroOfficeProcesses": true,
+    "epubSavedReopenPID": 33684,
+    "finalOfficeProcesses": []
+  },
+  "writer361": {
+    "status": "passed-scoped-functional-cases",
+    "savedDocxSha256": "8286c8fbf0fd5b92986cffda6acc9636981d6a18628e1906736e019ae7bc8d42",
+    "exactSavedRows": [
+      [
+        "SAVED361 alpha",
+        "",
+        "beta",
+        ""
+      ],
+      [
+        "",
+        "",
+        "",
+        "omega"
+      ],
+      [
+        "delta",
+        "",
+        "",
+        ""
+      ]
+    ],
+    "limits": [
+      "Tab alone initially left 3 visible/UIA rows and caret below; planned typing then exposed fourth row. Only Tab+typing functionality is passed; immediate standalone Tab paint remains an observation, not a pass.",
+      "UIA focused_element reports RootWebArea; real coordinate clicks, visible caret and resulting key behavior used. No DOM focus proof claimed.",
+      "Native file dialog first open attempt used mixed path separators and was rejected; corrected to all Windows backslashes. This was test input, not a product finding.",
+      "N08-document-B-open-baseline captures loading, not readiness; N08-document-B-ready is the actual baseline."
+    ]
+  },
+  "writer362": {
+    "status": "passed-observed-fix-with-remaining-coverage",
+    "observed": [
+      "No stray glyphs below full Insert Text group, Forge and Light at1442\u00d7952.",
+      "Bottom alignment and Repeat Header active outlines fit full table ribbon in both themes.",
+      "Collapsed Delete keyboard focus full perimeter at923\u00d7952 in Forge and Light; Return opens Delete Row menu with complete label/outline; Escape returns complete trigger focus.",
+      "Disabled Merge Cells and Split Table actually observed at full-width Light; Delete Row/Column enabled."
+    ],
+    "notCovered": [
+      "Genuine disabled Delete Row state not reachable in this ordinary fixture; no disabled-Delete acceptance claimed.",
+      "No complete every-control \u00d7 every-state \u00d7 every-width native matrix.",
+      "Collapsed Data trigger keyboard outline was not separately exercised; collapsed Delete was."
+    ],
+    "limits": [
+      "Repeat Header changes native UIA grid accessible names while canvas content remains unchanged; discarded metadata tests, no data-corruption claim.",
+      "Control+Z from the Table Design tab itself did not restore metadata; cleanup after body refocus succeeded. This is not relabelled as the immediate post-command #361 case."
+    ]
+  },
+  "writer363": {
+    "status": "passed-English-and-Dutch-native-labels-and-hints",
+    "languages": [
+      "Automatic (English)",
+      "Nederlands"
+    ],
+    "fiveNamesEachVerified": true,
+    "NormalStandaardInterpolationVerified": true,
+    "originalLanguageRestoredAndSaved": true,
+    "notClaimed": "full native hover-tooltip matrix"
+  },
+  "format356": {
+    "status": "passed-file-oracle-and-native-open-save-full-reopen",
+    "savedDocxSha256": "1eec0cc93f1cf50345126e597777cf7aa8209da1ddf76467ee78f990d65aeb26",
+    "sourceEpubUnchanged": true,
+    "independentContentOracle": "passed chapter/text/list/same-row Hout42/actually referenced PNG/no macro/external relationships",
+    "nativeEditingProved": false,
+    "unexpectedSaveLocation": "Requested UIA filename path differed from actual repository fixture directory; cause unclassified. Actual file was tested without rename/reconstruction and byte-identically archived only after tests/closure.",
+    "slotTextObservation": "Source EPUB has h1,p,table; the literal slottext is BEFORE the table in source and in saved XML/visible output. No paragraph-order regression established."
+  },
+  "originalImagesRootSeriallyViewed": {
+    "E356-untouched-ready-before-any-document-input-0.png": "ee28cbba894a9a4c57aeb830b485cecc24c57b053c3c35c05586593f25cfc177",
+    "E356-new-PID-reopen-untouched-ready-0.png": "c500bc9e41b8c7ad006d690eab53029600cab92429c8a47601f1d0563a8041f2",
+    "R362-forge-923-delete-group-keyboard-focus-0.png": "a2fab27d57a034527fa3fb392c05cfc2c18f8dfba3c16dc4760f4828a6ef2efd",
+    "R362-light-923-delete-group-keyboard-focus-0.png": "177ebb8def745e61b0f5e120a83483fad8d88030357cc00a02aece641acccdac"
+  },
+  "environment": {
+    "os": "Windows 11 Home 10.0.26200 x64",
+    "configuredDPI": 120,
+    "configuredScalePercent": 125,
+    "actualPerMonitorDPIOrCSSViewportIndependentlyMeasured": false,
+    "captureFrames": [
+      [
+        1442,
+        952
+      ],
+      [
+        923,
+        952
+      ]
+    ],
+    "originalAndRestoredTheme": "Forge",
+    "originalAndRestoredLanguage": "Automatic (English)",
+    "nameAndInitials": "untouched"
+  },
+  "cleanup": {
+    "ownDocumentsClosed": true,
+    "temporaryBAndExtraRibbonMetadataDiscarded": true,
+    "ownAppClosedNormally": true,
+    "finalProcessAudit": "final-process-and-file-audit.json",
+    "ownNodeReplKernelResetConfirmed": true,
+    "kernelResetAtUTC": "2026-11-20T11:11:22Z",
+    "captureRestartedToCheckBorder": false,
+    "limitation": "Kernel reset does not independently prove all helper resources released or yellow capture border disappeared; not visually rechecked."
+  },
+  "limits": [
+    "Native Windows scoped checks only; no blanket platform acceptance.",
+    "Configured125% scale/DPI120 is reported; per-monitor DPI and CSSviewport were not independently measured.",
+    "Original receipt/160 raw files retained privately; this public-safe derived audit omits personal absolute paths.",
+    "Kernel reset is confirmed; all helper resources/yellow border visual absence are not independently confirmed."
+  ]
+}

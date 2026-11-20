@@ -1,0 +1,141 @@
+{
+  "derivedFromOriginalSha256": "6e55c332fc2d52000095e844a1beca230509870aee16fe8c258cee82c979a5f2",
+  "redaction": "Personal workspace/user-profile prefixes replaced; factual values and original hashes retained.",
+  "review": {
+    "schemaVersion": 1,
+    "issue": 363,
+    "status": "Targeted I3 label review and handoff complete within the recorded platform/language scopes; no general native or main release",
+    "application": {
+      "commit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+      "branch": "codex/integratie-2026-11-16",
+      "canonicalDesktopRun": 44715026752
+    },
+    "deliveredHarness": {
+      "branch": "codex/writer-363-agent-2026-11-20",
+      "commit": "2e46022bc2bdd8d1cf810c2130f00fa74ac333ba",
+      "sha256": "ea0bc507853eff831aaf91d2c5c9bbe6f4ab8dd3d48bd4302321f9f8345f3614"
+    },
+    "browser": {
+      "acceptedCases": 18,
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "routes": [
+        "/",
+        "/office/"
+      ],
+      "languages": [
+        "en",
+        "nl",
+        "lo (English fallback)"
+      ],
+      "normalRun": 44715036293,
+      "hostedQaRun": 44716499924,
+      "hostedQaHead": "61d277d64798d9e765ba04a2205ca576944d70aa",
+      "scope": "Readable five names/titles and Normal/Standaard interpolation, no raw keys or page errors; receipts, image bytes, post-UI verification and closure audited"
+    },
+    "nativeLabels": {
+      "Windows": {
+        "scope": "Five actual names and UIA Description hints in Automatic/English and Nederlands; English restoration corroborated",
+        "receiptSha256": "80ee08d6d2b247ba717f16b9a669f8b177f900a0f0c3484220a5fc6a7bf59c5c",
+        "installedExeSha256": "8bf8779b752addd9f368debfcc3fada0a51ce530e8bc2fc3aaaee826a704362f",
+        "evidenceFilesVerified": 160,
+        "fullHoverOrFallbackMatrix": false
+      },
+      "Linux": {
+        "scope": "Independent installed DEB/WebKitGTK current-English label/title/pointer module passed",
+        "run": 44729688383,
+        "qaHead": "322abb24a8284669d99fdb3073c0a4d20f1b502d",
+        "moduleCommit": "2e46022bc2bdd8d1cf810c2130f00fa74ac333ba",
+        "pid": 4756,
+        "moduleStatus": "passed",
+        "wholeCallerStatus": "failed",
+        "wholeNativePass": false
+      },
+      "macOS": {
+        "scope": "Bounded current-English five native AX Title/Description/Help values and original glyph observation verified",
+        "run": 44722023173,
+        "qaHead": "bdae7647a2417b7668976db7b9f44305c67ecc32",
+        "pid": 2006,
+        "wholeNativePass": false,
+        "fullAxTree": false
+      }
+    },
+    "references": {
+      "browser": {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-363-browser-acceptance.json",
+        "sha256": "476237d9d3d359f997fa2207f0b1de15500a3a4c734650c6b6f184fe8ce4218d"
+      },
+      "windows": {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-native-windows-363-artifact-audit.json",
+        "sha256": "0ebbd40d4395f6a81eec978f32ddd974e3f5ef11ff94942aab0583109e9ee210"
+      },
+      "macOS": {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-native-macos-363-artifact-audit.json",
+        "sha256": "0ad5034ff4d505d1decca1dcf2c6df82bb6925d5e8fda3ad2bdcd834814ebb57"
+      },
+      "linux": {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-native-linux-363-artifact-audit.json",
+        "sha256": "6fb7649dcf8d458822b3fb1bd7b88e1a5d5ff9aac00837867f9269c35e83373d"
+      }
+    },
+    "visual": [
+      {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-native-windows-363-label-review.json",
+        "sha256": "d73ee47647f058b918cf6153d0ae1266580c6af6f118dc4d1a5b9626c44ca439"
+      },
+      {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-native-macos-363-label-review.json",
+        "sha256": "7bb7b4e14fdd302db1a113cd0a3513b149f67a54faf731a23881d732bb9cc0f4"
+      },
+      {
+        "path": "[private-workspace]\\work\\oos-writer-363-agent-6f92\\.local\\i3-native-linux-363-label-review.json",
+        "sha256": "282710ad1c529b57aa4fd102936a1db84984a3304abc12864436907091402fd8"
+      }
+    ],
+    "preservedLimitations": [
+      "General Linux Find-Undo failure and 362 readiness failure remain; the separate 363 module result does not resolve them",
+      "General macOS 361/body rendering limitation and nativePass=false remain; observed English controls do not certify body/359 or all native behavior",
+      "Mac AX child lists are truncated and window partly offscreen; only five complete control attributes/readable glyphs at the captured size are verified",
+      "No native NL/fallback claim on Linux/macOS, full hover-tooltip matrix, full focus/disabled matrix, style-command execution, narrow-window or physical hardware certification",
+      "Existing Styles/Stijlen duplicate captions and normal width ellipsis remain",
+      "Windows original image filenames end .png but bytes are JPEG; originals preserved and format/dimensions checked",
+      "Windows configured DPI/scale is not independently measured CSS viewport; kernel reset does not prove all capture helpers/indicator visually disappeared",
+      "CI assets and native package/executable provenance are verified by original probes/callers; this review independently cross-checks preserved reports, identities and artifact/image bytes with official metadata",
+      "Old 233/I/I2 results remain separate; application, external QA/module commits and later documentation heads must not be relabelled"
+    ],
+    "cleanup": {
+      "ownBrowserAndPreviewServersClosed": true,
+      "readLeasesReleased": true,
+      "noOwnGuiCuaRecordingStarted": true,
+      "windowsCaller": {
+        "appClosedNormally": true,
+        "finalAuditRecordedOfficeProcesses": 0,
+        "kernelResetConfirmed": true,
+        "indicatorVisuallyRechecked": false
+      },
+      "linuxCaller": {
+        "ownedApplicationClosed": true,
+        "tabRestored": true,
+        "actionsReleased": true
+      },
+      "macCaller": {
+        "tabRestored": true,
+        "appContainerRemoved": true,
+        "forcedTerminationRequired": true,
+        "oneShotCaptureExited": true
+      }
+    },
+    "workState": {
+      "trackedChangesFromThisValidation": false,
+      "sourceOrRootStateOverviewWritten": false,
+      "additionalUnrequestedTestsOrBuildsStarted": false,
+      "mainMergedOrPushed": false,
+      "noNewIssueClaimed": true,
+      "stopDeadline": "2026-11-20 15:20 Europe/Amsterdam"
+    }
+  }
+}

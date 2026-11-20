@@ -1,0 +1,642 @@
+{
+  "issue": 361,
+  "status": "failed",
+  "origin": {
+    "archiveSha256": "190268d6b876931e06b52a915ca0af4082238ea1f7110d3d35461b1629692699",
+    "artifactId": 14620765849,
+    "artifactRun": 44715026752,
+    "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+    "executionApproved": true,
+    "packageMember": "deb/Open Office Studio_2026.46.2_amd64.deb",
+    "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "platform": "Linux",
+    "qaScope": "362-only",
+    "remainingCoverage": {
+      "executionApproved": true,
+      "harnessCommit": "bdae7647a2417b7668976db7b9f44305c67ecc32",
+      "reportBase64": "ewogICJpc3N1ZSI6IDM2MSwKICAic3RhdHVzIjogImZhaWxlZCIsCiAgIm9yaWdpbiI6IHsKICAgICJhcmNoaXZlU2hhMjU2IjogIjE5MDI2OGQ2Yjg3NjkzMWUwNmI1MmE5MTVjYTBhZjQwODIyMzhlYTFmNzExMGQzZDM1NDYxYjE2Mjk2OTI2OTkiLAogICAgImFydGlmYWN0SWQiOiAxNDYyMDc2NTg0OSwKICAgICJhcnRpZmFjdFJ1biI6IDQ0NzE1MDI2NzUyLAogICAgImV4ZWN1dGFibGVTaGEyNTYiOiAiYjdlODQ2NWNlNjI3M2EwOWZkNTllOGFhMjU0ZTg4ZjY2YjQzOWUzMDU3MDEyMTY0Y2UxM2QxOTA4ZTQ0ZjE1NiIsCiAgICAiZXhlY3V0aW9uQXBwcm92ZWQiOiB0cnVlLAogICAgInBhY2thZ2VNZW1iZXIiOiAiZGViL09wZW4gT2ZmaWNlIFN0dWRpb18yMDI2LjQ2LjJfYW1kNjQuZGViIiwKICAgICJwYWNrYWdlU2hhMjU2IjogIjcxYTA4YzQwM2RmYjZiMDJjYzQ5Y2ViNDVjNWRhMzczNGE4ODg2NTc4NTNlYTU4ZWE1ODVlZjFlNjZjODgyNDciLAogICAgInBsYXRmb3JtIjogIkxpbnV4IiwKICAgICJyaWJib25IYXJuZXNzIjogewogICAgICAiY29tbWl0IjogIjZmNTRmMDc1ZGZjMjBkMTE5NGRmMjljNzhmNjhhYWFjOTJjNDJiYzMiLAogICAgICAic2hhMjU2IjogImZjYzg1Yjk0MWUyODFkODNkNjk1Y2UxZGE2MmE5ODNkMWQwMzkzM2E2ZDE3M2I1MWRlMTBlOTkxOWE1ZDI1ZDkiCiAgICB9LAogICAgInJvb3RGcm96ZW5DYW5kaWRhdGVCYXNlNjQiOiAiZXcwS0lDQWljMk5vWlcxaFZtVnljMmx2YmlJNklERXNEUW9nSUNKbWNtOTZaVzRpT2lCMGNuVmxMQTBLSUNBaVlYQndiR2xqWVhScGIyNURiMjF0YVhRaU9pQWlOMll4TWpabU5HSTRaVFV5TmpsaE5UUXpPRGhqWmpjNFl6UTRZemM0WkRKaFkyTXdaR0ZoTVNJc0RRb2dJQ0prWlhOcmRHOXdVblZ1SWpvZ05EUTNNVFV3TWpZM05USXNEUW9nSUNKaGNuUnBabUZqZEhNaU9pQjdEUW9nSUNBZ0lsZHBibVJ2ZDNNaU9pQjdEUW9nSUNBZ0lDQWlibUZ0WlNJNklDSnZjR1Z1TFc5bVptbGpaUzF6ZEhWa2FXOHRWMmx1Wkc5M2N5SXNEUW9nSUNBZ0lDQWlZWEpqYUdsMlpWTm9ZVEkxTmlJNklDSTBaVFEyT1RSaVpEQmlaR1kzWTJOaU4ySmtaRFZrTjJNeVpUQTJNalU0TVROallUZGtNemt5TXpobU9EbG1ZVGt5WkRWa1pEWTRNbVl3TWprd056Z3dJaXdOQ2lBZ0lDQWdJQ0p3WVdOcllXZGxjeUk2SUZzTkNpQWdJQ0FnSUNBZ2V3MEtJQ0FnSUNBZ0lDQWdJQ0p3WVhSb0lqb2dJbTV6YVhNdlQzQmxiaUJQWm1acFkyVWdVM1IxWkdsdlh6SXdNall1TkRZdU1sOTROalF0YzJWMGRYQXVaWGhsSWl3TkNpQWdJQ0FnSUNBZ0lDQWlhMmx1WkNJNklDSnVjMmx6SWl3TkNpQWdJQ0FnSUNBZ0lDQWljMmhoTWpVMklqb2dJamd3WW1ObFlUbGxNR00yT0RFeVpEYzRNVFppTm1ZNE9EbGxNVGswTnpRMU9HTTNZbVZrWmpFM05qVXdZV1JpWWpoalpqbG1PVE5tTXpoaE9UVmlNVEFpRFFvZ0lDQWdJQ0FnSUgwTkNpQWdJQ0FnSUYwTkNpQWdJQ0I5TEEwS0lDQWdJQ0p0WVdOUFV5STZJSHNOQ2lBZ0lDQWdJQ0p1WVcxbElqb2dJbTl3Wlc0dGIyWm1hV05sTFhOMGRXUnBieTF0WVdOUFV5SXNEUW9nSUNBZ0lDQWlZWEpqYUdsMlpWTm9ZVEkxTmlJNklDSTVNRGcwTURreE1ETTROMlZqTVdabVpEWmhNbVE1TXpVM05XUXlaV0V3WkRnNVl6ZzJZalkwT0RGaU1tWmxPR1pqTVRFeU0yTTNabU5pTVRBM1pUVTBJaXdOQ2lBZ0lDQWdJQ0p3WVdOcllXZGxjeUk2SUZzTkNpQWdJQ0FnSUNBZ2V3MEtJQ0FnSUNBZ0lDQWdJQ0p3WVhSb0lqb2dJbVJ0Wnk5UGNHVnVJRTltWm1salpTQlRkSFZrYVc5Zk1qQXlOaTQwTmk0eVgyRmhjbU5vTmpRdVpHMW5JaXdOQ2lBZ0lDQWdJQ0FnSUNBaWEybHVaQ0k2SUNKa2JXY2lMQTBLSUNBZ0lDQWdJQ0FnSUNKemFHRXlOVFlpT2lBaU9EQm1NVEEyTXpSa1lUQmhaamt4T1RsaE9HRTNZelUyTVdFMU9XRXlNekZpTnpaa09UYzROMkUwTUdReE1UQmtPVGd4WlRCa01XSXpaR0k0TW1SbU1DSU5DaUFnSUNBZ0lDQWdmUTBLSUNBZ0lDQWdYUTBLSUNBZ0lIMHNEUW9nSUNBZ0lreHBiblY0SWpvZ2V3MEtJQ0FnSUNBZ0ltNWhiV1VpT2lBaWIzQmxiaTF2Wm1acFkyVXRjM1IxWkdsdkxVeHBiblY0SWl3TkNpQWdJQ0FnSUNKaGNtTm9hWFpsVTJoaE1qVTJJam9nSWpFNU1ESTJPR1EyWWpnM05qa3pNV1V3Tm1JMU1tRTVNVFZqWVRCaFpqUXdPREl5TXpobFlURm1OekV4TUdRelpETTFORFl4WWpFMk1qazJPVEkyT1RraUxBMEtJQ0FnSUNBZ0luQmhZMnRoWjJWeklqb2dXdzBLSUNBZ0lDQWdJQ0I3RFFvZ0lDQWdJQ0FnSUNBZ0luQmhkR2dpT2lBaVlYQndhVzFoWjJVdlQzQmxiaUJQWm1acFkyVWdVM1IxWkdsdlh6SXdNall1TkRZdU1sOWhiV1EyTkM1QmNIQkpiV0ZuWlNJc0RRb2dJQ0FnSUNBZ0lDQWdJbXRwYm1RaU9pQWlZWEJ3YVcxaFoyVWlMQTBLSUNBZ0lDQWdJQ0FnSUNKemFHRXlOVFlpT2lBaU1qTTBORFE0TURRNVpHWmlNekV3WTJVeU5Ea3hNemczWWpoa1pEZ3hOek14TTJOa09UY3lORFprTW1NME5HRmpOVFU1T1RjNE9USTNaakppTnprMk5DSU5DaUFnSUNBZ0lDQWdmU3dOQ2lBZ0lDQWdJQ0FnZXcwS0lDQWdJQ0FnSUNBZ0lDSndZWFJvSWpvZ0ltUmxZaTlQY0dWdUlFOW1abWxqWlNCVGRIVmthVzlmTWpBeU5pNDBOaTR5WDJGdFpEWTBMbVJsWWlJc0RRb2dJQ0FnSUNBZ0lDQWdJbXRwYm1RaU9pQWlaR1ZpSWl3TkNpQWdJQ0FnSUNBZ0lDQWljMmhoTWpVMklqb2dJamN4WVRBNFl6UXdNMlJtWWpaaU1ESmpZelE1WTJWaU5EVmpOV1JoTXpjek5HRTRPRGcyTlRjNE5UTmxZVFU0WldFMU9EVmxaakZsTmpaak9EZ3lORGNpRFFvZ0lDQWdJQ0FnSUgwTkNpQWdJQ0FnSUYwTkNpQWdJQ0I5RFFvZ0lIME5DbjBOQ2c9PSIsCiAgICAicm9vdEZyb3plbkNhbmRpZGF0ZVNoYTI1NiI6ICIyYzM3ZjE3NDc0YjA2MDcyYTJiOGI1ZmU0N2JlODY0NjE5ZDkyZDViNGM3YWIxYmZmNWMwMmE1ODgwZDhhZTYwIiwKICAgICJyb290UHJvdmVuYW5jZVNoYTI1NiI6ICIwMWYyOTgzYmJhNTRlNDI1ZGU5ZWVlMzNmNmEyYTAwYzk2YmQ5ZmIyNTgzMDRhODNlNGZmMDA0NWQzZDQ4MDAxIiwKICAgICJzb3VyY2VDb21taXQiOiAiN2YxMjZmNGI4ZTUyNjlhNTQzODhjZjc4YzQ4Yzc4ZDJhY2MwZGFhMSIsCiAgICAic291cmNlVHJlZSI6ICI4YmM2MDg0ODg3NjBlNDg5MTlkN2ZiNGU3MmE0MjU2OTE3NWI1MmE0IiwKICAgICJzdHlsZXNIYXJuZXNzIjogewogICAgICAiY29tbWl0IjogIjJlNDYwMjJiYzJiZGQ4ZDFjZjgxMGMyMTMwZjAwZmE3NGFjMzMzYmEiLAogICAgICAic2hhMjU2IjogImVhMGJjNTA3ODUzZWZmODMxYWFmOTFkMmM1YzliYmU2ZjRhYjhkZDNkNDhiZDQzMDIzMjFmOWY4MzQ1ZjM2MTQiCiAgICB9LAogICAgInBhY2thZ2VQYXRoIjogIi9ob21lL3J1bm5lci93b3JrL29wZW4tb2ZmaWNlLXN0dWRpby9vcGVuLW9mZmljZS1zdHVkaW8vLmxvY2FsL2lucHV0L09wZW4gT2ZmaWNlIFN0dWRpb18yMDI2LjQ2LjJfYW1kNjQuZGViIgogIH0sCiAgImhhcm5lc3NDb21taXQiOiAiYmRhZTc2NDdhMjQxN2I3NjY4OTc2ZGI3YjlmNDQzMDVjNjdlY2MzMiIsCiAgImhhcm5lc3NTaGEyNTYiOiAiMmY3MjlkNDAwNGMyMzg0ZTQ2YzI4OGQxNDk1Zjg2YjFlMzhhZmY2NzhiODJkZDE5OTEwY2UwMDJhNDQzODIwZSIsCiAgInBsYXRmb3JtIjogIkxpbnV4IC8gaW5zdGFsbGVkIERFQiAvIFdlYktpdEdUSyAvIGhlYWRlZCBYMTEiLAogICJsaW1pdHMiOiBbCiAgICAiVmlydHVhbCBYMTEvc29mdHdhcmUgZ3JhcGhpY3M7IHBoeXNpY2FsIGRlc2t0b3AgYW5kIEFwcEltYWdlIG5vdCBjZXJ0aWZpZWQiLAogICAgIlRoaXMgaXMgIzM2MSBhY2NlcHRhbmNlLCBub3QgZ2VuZXJhbCBXcml0ZXIgYWNjZXB0YW5jZSIsCiAgICAiRnVsbCBwcm9jZXNzIGV4aXQgdXNlcyBXZWJEcml2ZXIgREVMRVRFIHNlc3Npb24sIG5vdCB0aGUgYXBwbGljYXRpb24gbWVudSBRdWl0IGNvbW1hbmQiCiAgXSwKICAiY2hlY2tzIjogWwogICAgewogICAgICAibmFtZSI6ICJiYXNlbGluZSIsCiAgICAgICJhdCI6ICIyMDI2LTExLTIwVDEwOjQ4OjE0Ljc2MFoiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogMywKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgImFscGhhIiwKICAgICAgICAgICAgImJldGEiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAib21lZ2EiLAogICAgICAgICAgICAiZGVsdGEiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJmb2N1cyI6IHsKICAgICAgICAibGFiZWwiOiAiRG9jdW1lbnQgaW5wdXQiLAogICAgICAgICJjbGFzc05hbWUiOiAicGFnZWQtZWRpdG9yX195cnMtaW5wdXQgcGFnZWQtZWRpdG9yX19oaWRkZW4tcG0gUHJvc2VNaXJyb3IgUHJvc2VNaXJyb3ItZm9jdXNlZCIsCiAgICAgICAgInJvbGUiOiBudWxsLAogICAgICAgICJ0YWciOiAiVEVYVEFSRUEiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIkxlZnQgcmliYm9uIGZvY3VzIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogbnVsbCwKICAgICAgICAiY2xhc3NOYW1lIjogIiIsCiAgICAgICAgInJvbGUiOiAidGFiIiwKICAgICAgICAidGFnIjogIkJVVFRPTiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAiTGVmdCBpbnNlcnRlZCIsCiAgICAgICJhdCI6ICIyMDI2LTExLTIwVDEwOjQ4OjE1LjQ3OFoiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogNCwKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJvbWVnYSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiZGVsdGEiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJmb2N1cyI6IHsKICAgICAgICAibGFiZWwiOiAiRG9jdW1lbnQgaW5wdXQiLAogICAgICAgICJjbGFzc05hbWUiOiAicGFnZWQtZWRpdG9yX195cnMtaW5wdXQgcGFnZWQtZWRpdG9yX19oaWRkZW4tcG0gUHJvc2VNaXJyb3IgUHJvc2VNaXJyb3ItZm9jdXNlZCIsCiAgICAgICAgInJvbGUiOiBudWxsLAogICAgICAgICJ0YWciOiAiVEVYVEFSRUEiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIkxlZnQgaW1tZWRpYXRlIFVuZG8iLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxNS44MzJaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJMZWZ0IFJlZG8iLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxNi4xNDJaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDQsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiYWxwaGEiLAogICAgICAgICAgICAiYmV0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAib21lZ2EiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJMZWZ0IGZpbmFsIFVuZG8iLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxNi40NDZaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJSaWdodCByaWJib24gZm9jdXMiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogMywKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgImFscGhhIiwKICAgICAgICAgICAgImJldGEiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAib21lZ2EiLAogICAgICAgICAgICAiZGVsdGEiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJmb2N1cyI6IHsKICAgICAgICAibGFiZWwiOiBudWxsLAogICAgICAgICJjbGFzc05hbWUiOiAiIiwKICAgICAgICAicm9sZSI6ICJ0YWIiLAogICAgICAgICJ0YWciOiAiQlVUVE9OIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJSaWdodCBpbnNlcnRlZCIsCiAgICAgICJhdCI6ICIyMDI2LTExLTIwVDEwOjQ4OjE2LjkxOVoiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogNCwKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgImFscGhhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJvbWVnYSIsCiAgICAgICAgICAgICJkZWx0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJmb2N1cyI6IHsKICAgICAgICAibGFiZWwiOiAiRG9jdW1lbnQgaW5wdXQiLAogICAgICAgICJjbGFzc05hbWUiOiAicGFnZWQtZWRpdG9yX195cnMtaW5wdXQgcGFnZWQtZWRpdG9yX19oaWRkZW4tcG0gUHJvc2VNaXJyb3IgUHJvc2VNaXJyb3ItZm9jdXNlZCIsCiAgICAgICAgInJvbGUiOiBudWxsLAogICAgICAgICJ0YWciOiAiVEVYVEFSRUEiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIlJpZ2h0IGltbWVkaWF0ZSBVbmRvIiwKICAgICAgImF0IjogIjIwMjYtMTEtMjBUMTA6NDg6MTcuMjExWiIsCiAgICAgICJ0YWJsZXMiOiBbCiAgICAgICAgewogICAgICAgICAgImNvbHVtbnMiOiAzLAogICAgICAgICAgInJvd3MiOiAzLAogICAgICAgICAgImNlbGxzIjogWwogICAgICAgICAgICAiYWxwaGEiLAogICAgICAgICAgICAiYmV0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJvbWVnYSIsCiAgICAgICAgICAgICJkZWx0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgXSwKICAgICAgImZvY3VzIjogewogICAgICAgICJsYWJlbCI6ICJEb2N1bWVudCBpbnB1dCIsCiAgICAgICAgImNsYXNzTmFtZSI6ICJwYWdlZC1lZGl0b3JfX3lycy1pbnB1dCBwYWdlZC1lZGl0b3JfX2hpZGRlbi1wbSBQcm9zZU1pcnJvciBQcm9zZU1pcnJvci1mb2N1c2VkIiwKICAgICAgICAicm9sZSI6IG51bGwsCiAgICAgICAgInRhZyI6ICJURVhUQVJFQSIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAiUmlnaHQgUmVkbyIsCiAgICAgICJhdCI6ICIyMDI2LTExLTIwVDEwOjQ4OjE3LjQ0MloiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogNCwKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgImFscGhhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJvbWVnYSIsCiAgICAgICAgICAgICJkZWx0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJmb2N1cyI6IHsKICAgICAgICAibGFiZWwiOiAiRG9jdW1lbnQgaW5wdXQiLAogICAgICAgICJjbGFzc05hbWUiOiAicGFnZWQtZWRpdG9yX195cnMtaW5wdXQgcGFnZWQtZWRpdG9yX19oaWRkZW4tcG0gUHJvc2VNaXJyb3IgUHJvc2VNaXJyb3ItZm9jdXNlZCIsCiAgICAgICAgInJvbGUiOiBudWxsLAogICAgICAgICJ0YWciOiAiVEVYVEFSRUEiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIlJpZ2h0IGZpbmFsIFVuZG8iLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxNy43MjhaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJsYXN0LWNlbGwgVGFiIGFuZCB0eXBpbmciLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxOS4wOTlaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDQsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAibmV3cm93IiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJUYWIgcm93IFVuZG8iLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxOS41NzlaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvcmRpbmFyeSB0eXBpbmciLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoxOS45ODVaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJYYWxwaGEiLAogICAgICAgICAgICAiYmV0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJvbWVnYSIsCiAgICAgICAgICAgICJkZWx0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgXSwKICAgICAgImZvY3VzIjogewogICAgICAgICJsYWJlbCI6ICJEb2N1bWVudCBpbnB1dCIsCiAgICAgICAgImNsYXNzTmFtZSI6ICJwYWdlZC1lZGl0b3JfX3lycy1pbnB1dCBwYWdlZC1lZGl0b3JfX2hpZGRlbi1wbSBQcm9zZU1pcnJvciBQcm9zZU1pcnJvci1mb2N1c2VkIiwKICAgICAgICAicm9sZSI6IG51bGwsCiAgICAgICAgInRhZyI6ICJURVhUQVJFQSIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAidHlwaW5nIFVuZG8iLAogICAgICAiYXQiOiAiMjAyNi0xMS0yMFQxMDo0ODoyMC4yMDNaIiwKICAgICAgInRhYmxlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiY29sdW1ucyI6IDMsCiAgICAgICAgICAicm93cyI6IDMsCiAgICAgICAgICAiY2VsbHMiOiBbCiAgICAgICAgICAgICJhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJ0eXBpbmcgUmVkbyIsCiAgICAgICJhdCI6ICIyMDI2LTExLTIwVDEwOjQ4OjIwLjQxOFoiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogMywKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgIlhhbHBoYSIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIm9tZWdhIiwKICAgICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAiZm9jdXMiOiB7CiAgICAgICAgImxhYmVsIjogIkRvY3VtZW50IGlucHV0IiwKICAgICAgICAiY2xhc3NOYW1lIjogInBhZ2VkLWVkaXRvcl9feXJzLWlucHV0IHBhZ2VkLWVkaXRvcl9faGlkZGVuLXBtIFByb3NlTWlycm9yIFByb3NlTWlycm9yLWZvY3VzZWQiLAogICAgICAgICJyb2xlIjogbnVsbCwKICAgICAgICAidGFnIjogIlRFWFRBUkVBIgogICAgICB9CiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJiZWZvcmUgRmluZCIsCiAgICAgICJhdCI6ICIyMDI2LTExLTIwVDEwOjQ4OjIwLjk1OFoiLAogICAgICAidGFibGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJjb2x1bW5zIjogNCwKICAgICAgICAgICJyb3dzIjogMywKICAgICAgICAgICJjZWxscyI6IFsKICAgICAgICAgICAgImFscGhhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJiZXRhIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIsCiAgICAgICAgICAgICJvbWVnYSIsCiAgICAgICAgICAgICJkZWx0YSIsCiAgICAgICAgICAgICIiLAogICAgICAgICAgICAiIiwKICAgICAgICAgICAgIiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJmb2N1cyI6IHsKICAgICAgICAibGFiZWwiOiAiRG9jdW1lbnQgaW5wdXQiLAogICAgICAgICJjbGFzc05hbWUiOiAicGFnZWQtZWRpdG9yX195cnMtaW5wdXQgcGFnZWQtZWRpdG9yX19oaWRkZW4tcG0gUHJvc2VNaXJyb3IgUHJvc2VNaXJyb3ItZm9jdXNlZCIsCiAgICAgICAgInJvbGUiOiBudWxsLAogICAgICAgICJ0YWciOiAiVEVYVEFSRUEiCiAgICAgIH0KICAgIH0KICBdLAogICJjbGVhbnVwIjogewogICAgIm93bmVkQXBwbGljYXRpb25DbG9zZWQiOiB0cnVlCiAgfSwKICAibW9kdWxlUGlucyI6IHsKICAgICIzNjIiOiB7CiAgICAgICJtb2R1bGVDb21taXQiOiAiNmY1NGYwNzVkZmMyMGQxMTk0ZGYyOWM3OGY2OGFhYWM5MmM0MmJjMyIsCiAgICAgICJtb2R1bGVTaGEyNTYiOiAiZmNjODViOTQxZTI4MWQ4M2Q2OTVjZTFkYTYyYTk4M2QxZDAzOTMzYTZkMTczYjUxZGUxMGU5OTE5YTVkMjVkOSIKICAgIH0sCiAgICAiMzYzIjogewogICAgICAibW9kdWxlQ29tbWl0IjogIjJlNDYwMjJiYzJiZGQ4ZDFjZjgxMGMyMTMwZjAwZmE3NGFjMzMzYmEiLAogICAgICAibW9kdWxlU2hhMjU2IjogImVhMGJjNTA3ODUzZWZmODMxYWFmOTFkMmM1YzliYmU2ZjRhYjhkZDNkNDhiZDQzMDIzMjFmOWY4MzQ1ZjM2MTQiCiAgICB9CiAgfSwKICAicnVudGltZSI6IHsKICAgICJkcml2ZXJWZXJzaW9uIjogInRhdXJpLWRyaXZlciB2Mi4xLjA6IiwKICAgICJkcml2ZXJQYXRoIjogIi9ob21lL3J1bm5lci8uY2FyZ28vYmluL3RhdXJpLWRyaXZlciIsCiAgICAiZHJpdmVyU2hhMjU2IjogImE3MWIyNDdjYTUxOWYzZWQwMmEzNjRjZDg2OTJkNzFkMzgxZmZlODEyNzljOTRjNmVkNjVlYzMwMGQyMTc4NjgiLAogICAgIndlYmtpdFBhY2thZ2VzIjogImxpYndlYmtpdDJndGstNC4xLTA6YW1kNjRcdDIuNTAuNC0wdWJ1bnR1MC4yMi4wNC4xXG53ZWJraXQyZ3RrLWRyaXZlclx0Mi41MC40LTB1YnVudHUwLjIyLjA0LjEiLAogICAgImRpc3BsYXkiOiAiOjk5IiwKICAgICJncmFwaGljcyI6IHsKICAgICAgIkdES19CQUNLRU5EIjogIngxMSIsCiAgICAgICJMSUJHTF9BTFdBWVNfU09GVFdBUkUiOiAiMSIsCiAgICAgICJXRUJLSVRfRElTQUJMRV9ETUFCVUZfUkVOREVSRVIiOiAiMSIKICAgIH0KICB9LAogICJwYWNrYWdlZEV4ZWN1dGFibGVTaGEyNTYiOiAiYjdlODQ2NWNlNjI3M2EwOWZkNTllOGFhMjU0ZTg4ZjY2YjQzOWUzMDU3MDEyMTY0Y2UxM2QxOTA4ZTQ0ZjE1NiIsCiAgImluc3RhbGxlZEV4ZWN1dGFibGVTaGEyNTYiOiAiYjdlODQ2NWNlNjI3M2EwOWZkNTllOGFhMjU0ZTg4ZjY2YjQzOWUzMDU3MDEyMTY0Y2UxM2QxOTA4ZTQ0ZjE1NiIsCiAgImZpeHR1cmVTaGEyNTYiOiAiM2E1MTc1YzNhM2NiMzgyNzIzNGM5NzA1NzIxMTUwMDYzYWRhYTdlZmRjMzAxNDBiYTFkMmM4YzgwNzZhZGY2ZiIsCiAgInN0YXJ0dXBzIjogWwogICAgewogICAgICAiZWxhcHNlZE1zIjogNDQ4LAogICAgICAiY29sdW1ucyI6IDMsCiAgICAgICJyb3dzIjogMywKICAgICAgImNhbnZhcyI6IHsKICAgICAgICAieCI6IDQwMSwKICAgICAgICAiaGVpZ2h0IjogMTA1NiwKICAgICAgICAid2lkdGgiOiA4MTYsCiAgICAgICAgInkiOiAyMjgKICAgICAgfSwKICAgICAgImZvbnRzIjogImxvYWRlZCIKICAgIH0KICBdLAogICJ1bmRvU2NyZWVuc2hvdFNoYTI1NiI6ICJhMWM2MGZkYjMwNmVlZTA1OGUyMTZkMzY5YTFlZTg5YTNmOTEzZjA3ZjA2ZWI1YmVjZTJhOThkYzhiZThmNWYyIiwKICAiZXJyb3IiOiAiQXNzZXJ0aW9uRXJyb3IgW0VSUl9BU1NFUlRJT05dOiBFeHBlY3RlZCB2YWx1ZXMgdG8gYmUgc3RyaWN0bHkgZXF1YWw6XG5cbidhYmMnICE9PSAnJ1xuXG4gICAgYXQgZmlsZTovLy9ob21lL3J1bm5lci93b3JrL29wZW4tb2ZmaWNlLXN0dWRpby9vcGVuLW9mZmljZS1zdHVkaW8vLmxvY2FsL3dyaXRlcjM2MS1oYXJuZXNzL3NjcmlwdHMvcHJvZWYtd3JpdGVyLTM2MS1saW51eC5tanM6NDg3OjEwXG4gICAgYXQgcHJvY2Vzcy5wcm9jZXNzVGlja3NBbmRSZWplY3Rpb25zIChub2RlOmludGVybmFsL3Byb2Nlc3MvdGFza19xdWV1ZXM6MTAzOjUpIiwKICAiZmFpbHVyZVN0YXRlIjogewogICAgInRhYmxlcyI6IFsKICAgICAgewogICAgICAgICJjb2x1bW5zIjogNCwKICAgICAgICAicm93cyI6IDMsCiAgICAgICAgImNlbGxzIjogWwogICAgICAgICAgImFscGhhIiwKICAgICAgICAgICIiLAogICAgICAgICAgImJldGEiLAogICAgICAgICAgIiIsCiAgICAgICAgICAiIiwKICAgICAgICAgICIiLAogICAgICAgICAgIiIsCiAgICAgICAgICAib21lZ2EiLAogICAgICAgICAgImRlbHRhIiwKICAgICAgICAgICIiLAogICAgICAgICAgIiIsCiAgICAgICAgICAiIgogICAgICAgIF0KICAgICAgfQogICAgXSwKICAgICJmb2N1cyI6IHsKICAgICAgImxhYmVsIjogIkZpbmQgd2hhdCIsCiAgICAgICJjbGFzc05hbWUiOiAiIiwKICAgICAgInJvbGUiOiBudWxsLAogICAgICAidGFnIjogIklOUFVUIgogICAgfQogIH0KfQ==",
+      "reportSha256": "ddbbde1cd4b64217d67c618daaa646abfc2b49b87cf2e66e1e0bda81a6f08d1d",
+      "run": 44722019216
+    },
+    "ribbonHarness": {
+      "commit": "cd82636fdc52a45efb1fca2fa72ead4b86d241b2",
+      "sha256": "70b346fd01fd57b779231c637ca358eff9b02434a00b4c5a80da939d691f0566"
+    },
+    "rootFrozenCandidateBase64": "ew0KICAic2NoZW1hVmVyc2lvbiI6IDEsDQogICJmcm96ZW4iOiB0cnVlLA0KICAiYXBwbGljYXRpb25Db21taXQiOiAiN2YxMjZmNGI4ZTUyNjlhNTQzODhjZjc4YzQ4Yzc4ZDJhY2MwZGFhMSIsDQogICJkZXNrdG9wUnVuIjogNDQ3MTUwMjY3NTIsDQogICJhcnRpZmFjdHMiOiB7DQogICAgIldpbmRvd3MiOiB7DQogICAgICAibmFtZSI6ICJvcGVuLW9mZmljZS1zdHVkaW8tV2luZG93cyIsDQogICAgICAiYXJjaGl2ZVNoYTI1NiI6ICI0ZTQ2OTRiZDBiZGY3Y2NiN2JkZDVkN2MyZTA2MjU4MTNjYTdkMzkyMzhmODlmYTkyZDVkZDY4MmYwMjkwNzgwIiwNCiAgICAgICJwYWNrYWdlcyI6IFsNCiAgICAgICAgew0KICAgICAgICAgICJwYXRoIjogIm5zaXMvT3BlbiBPZmZpY2UgU3R1ZGlvXzIwMjYuNDYuMl94NjQtc2V0dXAuZXhlIiwNCiAgICAgICAgICAia2luZCI6ICJuc2lzIiwNCiAgICAgICAgICAic2hhMjU2IjogIjgwYmNlYTllMGM2ODEyZDc4MTZiNmY4ODllMTk0NzQ1OGM3YmVkZjE3NjUwYWRiYjhjZjlmOTNmMzhhOTViMTAiDQogICAgICAgIH0NCiAgICAgIF0NCiAgICB9LA0KICAgICJtYWNPUyI6IHsNCiAgICAgICJuYW1lIjogIm9wZW4tb2ZmaWNlLXN0dWRpby1tYWNPUyIsDQogICAgICAiYXJjaGl2ZVNoYTI1NiI6ICI5MDg0MDkxMDM4N2VjMWZmZDZhMmQ5MzU3NWQyZWEwZDg5Yzg2YjY0ODFiMmZlOGZjMTEyM2M3ZmNiMTA3ZTU0IiwNCiAgICAgICJwYWNrYWdlcyI6IFsNCiAgICAgICAgew0KICAgICAgICAgICJwYXRoIjogImRtZy9PcGVuIE9mZmljZSBTdHVkaW9fMjAyNi40Ni4yX2FhcmNoNjQuZG1nIiwNCiAgICAgICAgICAia2luZCI6ICJkbWciLA0KICAgICAgICAgICJzaGEyNTYiOiAiODBmMTA2MzRkYTBhZjkxOTlhOGE3YzU2MWE1OWEyMzFiNzZkOTc4N2E0MGQxMTBkOTgxZTBkMWIzZGI4MmRmMCINCiAgICAgICAgfQ0KICAgICAgXQ0KICAgIH0sDQogICAgIkxpbnV4Ijogew0KICAgICAgIm5hbWUiOiAib3Blbi1vZmZpY2Utc3R1ZGlvLUxpbnV4IiwNCiAgICAgICJhcmNoaXZlU2hhMjU2IjogIjE5MDI2OGQ2Yjg3NjkzMWUwNmI1MmE5MTVjYTBhZjQwODIyMzhlYTFmNzExMGQzZDM1NDYxYjE2Mjk2OTI2OTkiLA0KICAgICAgInBhY2thZ2VzIjogWw0KICAgICAgICB7DQogICAgICAgICAgInBhdGgiOiAiYXBwaW1hZ2UvT3BlbiBPZmZpY2UgU3R1ZGlvXzIwMjYuNDYuMl9hbWQ2NC5BcHBJbWFnZSIsDQogICAgICAgICAgImtpbmQiOiAiYXBwaW1hZ2UiLA0KICAgICAgICAgICJzaGEyNTYiOiAiMjM0NDQ4MDQ5ZGZiMzEwY2UyNDkxMzg3YjhkZDgxNzMxM2NkOTcyNDZkMmM0NGFjNTU5OTc4OTI3ZjJiNzk2NCINCiAgICAgICAgfSwNCiAgICAgICAgew0KICAgICAgICAgICJwYXRoIjogImRlYi9PcGVuIE9mZmljZSBTdHVkaW9fMjAyNi40Ni4yX2FtZDY0LmRlYiIsDQogICAgICAgICAgImtpbmQiOiAiZGViIiwNCiAgICAgICAgICAic2hhMjU2IjogIjcxYTA4YzQwM2RmYjZiMDJjYzQ5Y2ViNDVjNWRhMzczNGE4ODg2NTc4NTNlYTU4ZWE1ODVlZjFlNjZjODgyNDciDQogICAgICAgIH0NCiAgICAgIF0NCiAgICB9DQogIH0NCn0NCg==",
+    "rootFrozenCandidateSha256": "2c37f17474b06072a2b8b5fe47be864619d92d5b4c7ab1bff5c02a5880d8ae60",
+    "rootProvenanceSha256": "01f2983bba54e425de9eee33f6a2a00c96bd9fb258304a83e4ff0045d3d48001",
+    "sourceCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "sourceTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/input/Open Office Studio_2026.46.2_amd64.deb"
+  },
+  "harnessCommit": "4711c4603e0272d178ff25ff1cbd4306cf750b24",
+  "harnessSha256": "57809176e2c8e0b3be49985100ae240efee6db3f08fbe2ccfbef649d1761cd50",
+  "platform": "Linux / installed DEB / WebKitGTK / headed X11",
+  "limits": [
+    "Virtual X11/software graphics; physical desktop and AppImage not certified",
+    "This is #361 acceptance, not general Writer acceptance",
+    "Full process exit uses WebDriver DELETE session, not the application menu Quit command",
+    "Remaining coverage only: prior17pass reused on exact same app/package/ELF; original Find-Undo failure retained, not retried or marked passed",
+    "Previous run did not persist /proc PID-exe hash; reused evidence is limited to exact source/package/installedELF plus driverlog PID. New sessions record actual /proc executable identity."
+  ],
+  "checks": [],
+  "cleanup": {
+    "ownedApplicationClosed": true
+  },
+  "reusedChecks": {
+    "executedInThisSession": false,
+    "fromRun": 44722019216,
+    "reportSha256": "ddbbde1cd4b64217d67c618daaa646abfc2b49b87cf2e66e1e0bda81a6f08d1d",
+    "checks": [
+      {
+        "name": "baseline",
+        "at": "2026-11-20T10:48:14.760Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Left ribbon focus",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": null,
+          "className": "",
+          "role": "tab",
+          "tag": "BUTTON"
+        }
+      },
+      {
+        "name": "Left inserted",
+        "at": "2026-11-20T10:48:15.478Z",
+        "tables": [
+          {
+            "columns": 4,
+            "rows": 3,
+            "cells": [
+              "",
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "",
+              "omega",
+              "",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Left immediate Undo",
+        "at": "2026-11-20T10:48:15.832Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Left Redo",
+        "at": "2026-11-20T10:48:16.142Z",
+        "tables": [
+          {
+            "columns": 4,
+            "rows": 3,
+            "cells": [
+              "",
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "",
+              "omega",
+              "",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Left final Undo",
+        "at": "2026-11-20T10:48:16.446Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Right ribbon focus",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": null,
+          "className": "",
+          "role": "tab",
+          "tag": "BUTTON"
+        }
+      },
+      {
+        "name": "Right inserted",
+        "at": "2026-11-20T10:48:16.919Z",
+        "tables": [
+          {
+            "columns": 4,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "",
+              "beta",
+              "",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Right immediate Undo",
+        "at": "2026-11-20T10:48:17.211Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Right Redo",
+        "at": "2026-11-20T10:48:17.442Z",
+        "tables": [
+          {
+            "columns": 4,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "",
+              "beta",
+              "",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Right final Undo",
+        "at": "2026-11-20T10:48:17.728Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "last-cell Tab and typing",
+        "at": "2026-11-20T10:48:19.099Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 4,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              "",
+              "newrow",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "Tab row Undo",
+        "at": "2026-11-20T10:48:19.579Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "ordinary typing",
+        "at": "2026-11-20T10:48:19.985Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "Xalpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "typing Undo",
+        "at": "2026-11-20T10:48:20.203Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "typing Redo",
+        "at": "2026-11-20T10:48:20.418Z",
+        "tables": [
+          {
+            "columns": 3,
+            "rows": 3,
+            "cells": [
+              "Xalpha",
+              "beta",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      },
+      {
+        "name": "before Find",
+        "at": "2026-11-20T10:48:20.958Z",
+        "tables": [
+          {
+            "columns": 4,
+            "rows": 3,
+            "cells": [
+              "alpha",
+              "",
+              "beta",
+              "",
+              "",
+              "",
+              "",
+              "omega",
+              "delta",
+              "",
+              "",
+              ""
+            ]
+          }
+        ],
+        "focus": {
+          "label": "Document input",
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "role": null,
+          "tag": "TEXTAREA"
+        }
+      }
+    ]
+  },
+  "failures": [
+    {
+      "name": "Find input owns Undo",
+      "status": "failed",
+      "expected": "",
+      "actual": "abc",
+      "executedInThisSession": false,
+      "fromRun": 44722019216,
+      "reportSha256": "ddbbde1cd4b64217d67c618daaa646abfc2b49b87cf2e66e1e0bda81a6f08d1d",
+      "focus": {
+        "label": "Find what",
+        "className": "",
+        "role": null,
+        "tag": "INPUT"
+      },
+      "tables": [
+        {
+          "columns": 4,
+          "rows": 3,
+          "cells": [
+            "alpha",
+            "",
+            "beta",
+            "",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            "",
+            ""
+          ]
+        }
+      ]
+    }
+  ],
+  "writer361Status": "failed",
+  "nativePass": false,
+  "remainingCoverageSetup": "Fresh independent fixture; only baseline3 + InsertColumnRight4 + Find open/UI close recreated. Failed prior Find input CtrlZ is retained, not retried.",
+  "modulePins": {
+    "362": {
+      "moduleCommit": "cd82636fdc52a45efb1fca2fa72ead4b86d241b2",
+      "moduleSha256": "70b346fd01fd57b779231c637ca358eff9b02434a00b4c5a80da939d691f0566"
+    }
+  },
+  "runtime": {
+    "driverVersion": "tauri-driver v2.1.0:",
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1",
+    "display": ":99",
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    }
+  },
+  "packagedExecutableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+  "installedExecutableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+  "fixtureSha256": "dc3cc62cc611b7ff09619c1783f192511886f4f8fc7906e7a54e0b3908af039d",
+  "sessions": [
+    {
+      "ready": true,
+      "phase": "independent-362",
+      "document": "writer362-table.docx",
+      "sessionId": "2c952c4c-7427-4bf2-ba3a-4735bfcd2f18",
+      "pid": 4470,
+      "executable": "/usr/bin/open-office-studio",
+      "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156"
+    }
+  ],
+  "documentReadiness": [
+    {
+      "elapsedMs": 1018,
+      "attempts": 3,
+      "initiallyReady": false,
+      "inputOwnership": "Global BODY portal; selected document ownership is established by tab/panel/grid/canvas, not input ancestry",
+      "globalInputPortals": 1,
+      "rows": 2,
+      "fonts": "loaded",
+      "name": "writer362-table.docx",
+      "columns": 3,
+      "panelId": "office-tabpaneel-1",
+      "canvas": {
+        "x": 401,
+        "height": 1056,
+        "width": 816,
+        "y": 252
+      },
+      "cells": [
+        "Alpha",
+        "Beta",
+        "Gamma",
+        "One",
+        "Two",
+        "Three"
+      ],
+      "frame": 3071
+    }
+  ],
+  "optional362": {
+    "error": "Error: Fixture table context unavailable\n    at waitFor (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer362-harness/scripts/writer362-native-probe.mjs:438:11)\n    at async Module.runWriter362NativeProbe (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer362-harness/scripts/writer362-native-probe.mjs:496:5)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:527:17\n    at async collectOptionalNativeQa (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/writer361-native-modules.mjs:45:21)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:509:5"
+  },
+  "optionalQaFailures": [
+    362
+  ],
+  "scopeExecution": {
+    "writer362": "executed",
+    "writer361": "not-executed",
+    "writer363": "not-executed"
+  },
+  "remainingCoverageStatus": "not-executed",
+  "completedRequestedScope": "362-only"
+}

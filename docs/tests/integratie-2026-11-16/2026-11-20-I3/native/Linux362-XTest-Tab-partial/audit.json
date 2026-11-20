@@ -1,0 +1,58 @@
+{
+  "run": 44744186201,
+  "artifactId": 14631039998,
+  "archiveSha256": "f87c37604a200b60b320d2126784c1dbba0e55744be39c7f4ac07b6ca95ee79a",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "harnessCommit": "cd423ab2ef232d3bf38ad03770f9c3ac46bbbc80",
+  "module": {
+    "moduleCommit": "2cba4b113e03c0411614a04af63a66c36d9b57dd",
+    "moduleSha256": "2acdd2f0a32797a3b0149c425c301b1698612541d366f3958ece92e229c16c83"
+  },
+  "pid": 4731,
+  "x11Window": "2097155",
+  "status": "partial; native matrix failed",
+  "entry": "Exactly Tab, Tab; real XTest, own verified foreground window. Different route from prior ArrowDown failures.",
+  "normalCases": 1,
+  "focusCases": 6,
+  "focusedNames": [
+    "Special Character",
+    "Date",
+    "Time",
+    "Date & Time",
+    "Insert field\u2026",
+    "Update fields"
+  ],
+  "allRecordedGeometryPassed": true,
+  "groupCases": 0,
+  "stop": "Screenshot request timed out after six successful focus measurements; failure screenshot also timed out. No later matrix/menu/theme/width cases executed. Cause unknown; no retry.",
+  "originalArrowFailurePreserved": true,
+  "inheritedFindFailurePreserved": true,
+  "nativePass": false,
+  "cleanup": {
+    "module": [
+      {
+        "label": "release own input actions",
+        "status": "fulfilled"
+      },
+      {
+        "label": "restore original theme and tab",
+        "status": "fulfilled"
+      },
+      {
+        "label": "restore window rectangle",
+        "status": "fulfilled"
+      },
+      {
+        "label": "fixture remains byte-identical",
+        "status": "fulfilled"
+      }
+    ],
+    "caller": {
+      "ownedApplicationClosed": true
+    }
+  },
+  "rootOriginalImageReview": "Serially reviewed original 1600x1000 normal image: readable Text group and six fixture words, whole Special Character outline visible. No separate original image for remaining five focused states; raw metrics only.",
+  "rawReportSha256": "85b6931abe62af5205221231bb519857a099baac8a22ba352c58e639d43ec3da",
+  "moduleReportSha256": "acf8dacca9dfa9d1869ca48388ee5230142846c4fcdb07519b166c0b54819057"
+}

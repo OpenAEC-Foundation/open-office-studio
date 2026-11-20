@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "issue": 363,
+  "status": "passed",
+  "browserOnly": false,
+  "harnessCommit": "2e46022bc2bdd8d1cf810c2130f00fa74ac333ba",
+  "harnessSha256": "ea0bc507853eff831aaf91d2c5c9bbe6f4ab8dd3d48bd4302321f9f8345f3614",
+  "host": "linux",
+  "scope": "Existing installed Linux Tauri session; Styles-tab pointer and read-only labels only",
+  "delegatedProvenance": {
+    "commit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+    "ownedProfile": true,
+    "verification": "Caller-provided; package, PID and installed executable are not independently checked by this module"
+  },
+  "cleanup": {
+    "tabRestoreNeeded": true,
+    "tabRestored": true,
+    "actionsReleased": true
+  },
+  "limits": [
+    "EN/NL UI only; no language injection",
+    "No style action or document edit",
+    "No app/session ownership; caller must close its resources"
+  ],
+  "nativeGate": {
+    "ownedProfile": true,
+    "linuxHost": true,
+    "tauriObject": true,
+    "tauriInvoke": "function",
+    "noDiagnostics": true,
+    "writerVisible": true
+  },
+  "language": "en",
+  "previousTab": {
+    "name": "Home",
+    "selected": true,
+    "visible": true,
+    "id": "_r_1_-start"
+  },
+  "group": {
+    "name": "Styles",
+    "buttons": [
+      {
+        "title": "Styles pane · Ctrl+Alt+Shift+S",
+        "name": "Styles pane",
+        "disabled": false,
+        "visible": true,
+        "text": "Styles pane"
+      },
+      {
+        "title": "New Style from Selection…",
+        "name": "New Style…",
+        "disabled": false,
+        "visible": true,
+        "text": "New Style…"
+      },
+      {
+        "title": "Update Normal to Match Selection",
+        "name": "Update Normal",
+        "disabled": false,
+        "visible": true,
+        "text": "Update Normal"
+      },
+      {
+        "title": "Modify Style: Normal",
+        "name": "Modify Style: Normal",
+        "disabled": false,
+        "visible": true,
+        "text": "Modify Style: Normal"
+      },
+      {
+        "title": "Style Set and Theme Fonts",
+        "name": "Style Set…",
+        "disabled": false,
+        "visible": true,
+        "text": "Style Set…"
+      }
+    ],
+    "visible": true
+  },
+  "styleName": "Normal",
+  "screenshot": {
+    "name": "writer363-native-labels.png",
+    "sha256": "a09a3b2ccf6109ef3cde893f3168630baddb7fda0271f283b3ab0a8f8ed56793"
+  },
+  "existingSessionRead": true
+}

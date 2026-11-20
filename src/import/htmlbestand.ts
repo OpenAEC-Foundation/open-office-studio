@@ -450,7 +450,10 @@ export interface HtmlImport {
 }
 
 /** Zet een HTML-boom om naar het tekstmodel. */
-export function htmlNaarModel(html: string): HtmlImport {
+export function htmlNaarModel(
+  html: string,
+  afbeelding?: (src: string) => Uint8Array | null,
+): HtmlImport {
   const boom = ontleedHtml(html);
   const telling = { nietIngesloten: 0, formulieren: 0 };
   const titel = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(html)?.[1];
@@ -517,7 +520,8 @@ export function htmlNaarModel(html: string): HtmlImport {
         return inline(e.kinderen, kleur ? { ...o, kleur } : o, pre);
       }
       case "img": {
-        const data = dataUrlAfbeelding(e.attributen.src ?? "");
+        const src = e.attributen.src ?? "";
+        const data = dataUrlAfbeelding(src) ?? afbeelding?.(src) ?? null;
         const type = data ? afbeeldingstype(data) : null;
         const breedte = Number(e.attributen.width) || undefined;
         const hoogte = Number(e.attributen.height) || undefined;

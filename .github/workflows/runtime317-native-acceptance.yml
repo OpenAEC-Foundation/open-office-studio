@@ -1,0 +1,296 @@
+name: Runtime 317 native acceptance
+on:
+  push:
+    branches: [codex/formats-30-native-acceptance]
+    paths-ignore: ["docs/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: runtime317-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  candidate:
+    runs-on: ubuntu-22.04
+    outputs:
+      commit: ${{ steps.plan.outputs.commit }}
+      run: ${{ steps.plan.outputs.run }}
+      platforms: ${{ steps.plan.outputs.platforms }}
+      hosted: ${{ steps.plan.outputs.hosted }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: plan
+        run: |
+          node --input-type=module -e '
+            import {readFileSync,appendFileSync} from "node:fs";
+            import assert from "node:assert/strict";
+            const c=JSON.parse(readFileSync(".github/runtime317-candidate.json","utf8"));
+            assert.match(c.applicationCommit,/^[a-f0-9]{40}$/);
+            assert(c.artifactRun===null || (Number.isSafeInteger(c.artifactRun) && c.artifactRun>0));
+            const platforms=c.platforms ?? ["ubuntu-22.04","windows-latest","macos-latest"];
+            assert(Array.isArray(platforms) && platforms.length>0 && new Set(platforms).size===platforms.length);
+            assert(platforms.every(p=>["ubuntu-22.04","windows-latest","macos-latest"].includes(p)));
+            const hosted=c.hostedBrowser ?? true;
+            assert.equal(typeof hosted,"boolean");
+            appendFileSync(process.env.GITHUB_OUTPUT,`commit=${c.applicationCommit}\nrun=${c.artifactRun ?? ""}\nplatforms=${JSON.stringify(platforms)}\nhosted=${hosted}\n`);
+          '
+  build-and-check:
+    needs: candidate
+    if: needs.candidate.outputs.run == ''
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 100
+    env:
+      OOS_RUNTIME_APPLICATION_COMMIT: ${{ needs.candidate.outputs.commit }}
+      OOS_RUNTIME_HARNESS_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.candidate.outputs.commit }}
+      - uses: actions/checkout@v4
+        with:
+          path: .local/harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            src-tauri -> target
+            src/spelling/rust -> target
+          shared-key: runtime317
+          cache-on-failure: true
+      - name: Linux dependencies on the isolated host
+        if: runner.os == 'Linux'
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils webkit2gtk-driver xvfb imagemagick
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .local/kantoorruntime-cache
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: runtime317-assets-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json', 'assets/lettertypen.json', 'assets/woordenboeken.json') }}
+      - run: node scripts/haal-lettertypen.mjs
+      - run: node scripts/haal-woordenboeken.mjs
+      - run: node scripts/voorbereiden-kantoorruntime.mjs
+      - run: cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib
+      - run: node scripts/bouw-spelling-wasm.mjs
+      - run: pnpm versie:check
+      - run: node scripts/corpus-download.mjs docs/tests/versleuteling-manifest.json
+      - run: pnpm test
+      - run: python -m unittest discover -s tests -v
+      - run: node scripts/test-kantoor-engines.mjs
+      - run: pnpm test:opdrachten
+      - run: node experiments/ifcx-office/proef.mjs
+      - name: Windows loader
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/voorbereiden-windows.ps1
+      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked
+      - name: Linux package build
+        if: runner.os == 'Linux'
+        run: pnpm desktop:build --verbose --bundles deb,appimage
+      - name: Windows package build
+        if: runner.os == 'Windows'
+        run: pnpm desktop:build --bundles nsis
+      - name: macOS package build
+        if: runner.os == 'macOS'
+        run: pnpm desktop:build --bundles app,dmg
+      - name: Freeze package identity and install the test driver
+        run: |
+          node .local/harness/scripts/runtime317-harness.mjs
+          node scripts/runtime317-artifacts.mjs write src-tauri/target/release/bundle ${{ needs.candidate.outputs.commit }}
+      - run: pnpm exec vitest run scripts/runtime317-harness.test.mjs --maxWorkers=1
+      # Keep the exact installer even when the subsequent UI gate fails.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: runtime317-installers-${{ runner.os }}
+          path: |
+            src-tauri/target/release/bundle/**/*.deb
+            src-tauri/target/release/bundle/**/*.AppImage
+            src-tauri/target/release/bundle/**/*.exe
+            src-tauri/target/release/bundle/**/*.dmg
+            src-tauri/target/release/bundle/runtime317-packages.json
+          if-no-files-found: error
+      - name: macOS associations and actual LaunchServices route
+        if: runner.os == 'macOS'
+        run: |
+          python scripts/controleer-macos-koppelingen.py --rapport .local/pakketcontrole-macOS.json
+          python scripts/proef-macos-openen.py --rapport .local/pakketcontrole-macOS-openen.json
+      - name: Actual supported browser route at the same application point
+        if: runner.os == 'Linux'
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          node scripts/proef-writer-offline.mjs dist
+          node scripts/proef-formaatbeperking-browser.mjs dist
+      - run: python -m pip install -r scripts/requirements-runtime-probe.txt
+      - name: Linux WebKit driver
+        if: runner.os == 'Linux'
+        run: cargo install tauri-driver --version 2.1.0 --locked
+      - name: Native converter and installed UI acceptance
+        if: runner.os != 'Linux'
+        run: node scripts/proef-gebundelde-runtime.mjs
+      - name: Native DEB and AppImage acceptance
+        if: runner.os == 'Linux'
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+        run: xvfb-run -a node scripts/proef-gebundelde-runtime.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime317-proof-${{ runner.os }}
+          path: |
+            .local/gebundelde-runtime-proef
+            .local/pakketcontrole-*.json
+          include-hidden-files: true
+          if-no-files-found: warn
+  recheck-native:
+    needs: candidate
+    if: needs.candidate.outputs.run != ''
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(needs.candidate.outputs.platforms) }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    env:
+      OOS_RUNTIME_APPLICATION_COMMIT: ${{ needs.candidate.outputs.commit }}
+      OOS_RUNTIME_HARNESS_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: dtolnay/rust-toolchain@stable
+        if: runner.os == 'Linux'
+      - name: Linux native dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev squashfs-tools webkit2gtk-driver xvfb imagemagick
+          cargo install tauri-driver --version 2.1.0 --locked
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: runtime317-installers-${{ runner.os }}
+          path: .local/runtime317-installers
+          run-id: ${{ needs.candidate.outputs.run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: runtime317-proof-${{ runner.os }}
+          path: .local
+          run-id: ${{ needs.candidate.outputs.run }}
+          github-token: ${{ github.token }}
+      - name: Verify immutable source and package bytes before execution
+        run: node scripts/runtime317-artifacts.mjs verify .local/runtime317-installers ${{ needs.candidate.outputs.commit }}
+      - name: Real native UI on the same already checked installer
+        if: runner.os != 'Linux'
+        run: node scripts/proef-gebundelde-runtime.mjs .local/runtime317-installers --interface-only
+      - name: Real DEB and AppImage UI on the same already checked installers
+        if: runner.os == 'Linux'
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+        run: xvfb-run -a node scripts/proef-gebundelde-runtime.mjs .local/runtime317-installers --interface-only
+      - name: Isolate historical macOS macro-control teardown after clean UI proof
+        if: runner.os == 'macOS'
+        run: |
+          python -m pip install psutil==7.0.0
+          node scripts/runtime317-macos-macro-diagnose.mjs .local/runtime317-installers
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime317-native-recheck-${{ runner.os }}
+          path: .local/gebundelde-runtime-proef
+          include-hidden-files: true
+          if-no-files-found: warn
+  hosted-browser:
+    needs: candidate
+    if: needs.candidate.outputs.hosted == 'true'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      OOS_RUNTIME_APPLICATION_COMMIT: ${{ needs.candidate.outputs.commit }}
+      OOS_RUNTIME_HARNESS_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.candidate.outputs.commit }}
+      - uses: actions/checkout@v4
+        with:
+          path: .local/harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: runtime317-browser-assets-${{ hashFiles('assets/lettertypen.json', 'assets/woordenboeken.json') }}
+      - run: node scripts/haal-lettertypen.mjs
+      - run: node scripts/haal-woordenboeken.mjs
+      - run: node scripts/kopieer-assets.mjs
+      - run: pnpm build:hosted
+      - run: node .local/harness/scripts/runtime317-harness.mjs
+      - name: Real hosted Writer, Spreadsheet and Presentation operation
+        run: node scripts/proef-hosted-platforms.mjs
+      - name: Explicit conversion limits preserve the existing hosted document
+        env:
+          OOS_TEST_ROUTE: /office/
+        run: node scripts/proef-formaatbeperking-browser.mjs dist-hosted
+      - name: Record exact browser application and driver points
+        run: |
+          node --input-type=module -e '
+            import {writeFileSync} from "node:fs";
+            writeFileSync(".local/hosted-platforms/source.json",JSON.stringify({
+              codePoint:process.env.OOS_RUNTIME_APPLICATION_COMMIT,
+              harnessPoint:process.env.OOS_RUNTIME_HARNESS_COMMIT,
+              route:"/office/", status:"passed", nativeBridge:false,
+              writer:true, spreadsheet:true, presentation:true, conversionLimits:true
+            },null,2));
+          '
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime317-hosted-browser
+          path: |
+            .local/hosted-platforms
+            .local/formaatfouten-browser
+          include-hidden-files: true
+          if-no-files-found: warn

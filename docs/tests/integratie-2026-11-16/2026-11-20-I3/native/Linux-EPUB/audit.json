@@ -1,0 +1,121 @@
+{
+  "run": 44722706478,
+  "artifactId": 14623265643,
+  "archiveSha256": "2929a5524de744e3eb4b2f6fa50832bee79a9fb67bb3878108d339fe6599039b",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "canonicalRun": 44715026752,
+  "harnessCommit": "75ca3dfe836f58a54c0bde5c1006a24b85b5ec3d",
+  "status": "root-verified bounded nativeLinux AppImage+DEB realSave/oracle/newPIDreopen",
+  "results": [
+    {
+      "kind": "appimage",
+      "packageSha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964",
+      "PIDs": [
+        5150,
+        5834
+      ],
+      "savedDocxSha256": "7f0292d9984cf8a9a9dbc02122e477b1cb2d2d03866f8e7d65e72b6dcc0b128e",
+      "independentXmlOracle": "passed chapter/text/list/same-row Hout42/actually referenced PNG/no macro or external resources",
+      "nativePortalOwnership": {
+        "method": "credential-bound-portal-request",
+        "backendPid": 5179,
+        "requestHandle": "/org/freedesktop/portal/desktop/request/1_18/ashpd_0u59hoa0Hf"
+      },
+      "cleanup": {
+        "apps": [
+          {
+            "phase": "initial",
+            "pid": 5150,
+            "closed": true,
+            "terminatedFlag": true,
+            "reportedFields": [
+              "pid",
+              "executable",
+              "appImageArchive",
+              "terminated",
+              "closed"
+            ]
+          },
+          {
+            "phase": "reopened",
+            "pid": 5834,
+            "closed": true,
+            "terminatedFlag": true,
+            "reportedFields": [
+              "pid",
+              "executable",
+              "appImageArchive",
+              "terminated",
+              "closed"
+            ]
+          }
+        ],
+        "observerMonitorGroupsClosed": true,
+        "forcedObserverCleanup": false,
+        "temporaryDisposed": true
+      },
+      "originalImagesSeriallyReviewedOrExactHashReused": {
+        "initial/native-interface-ready.png": "8edf8e80d0d46e3c4ff7c8c342bbd3875bc88ef56a7c9b8667f6f169b2a9afdf",
+        "reopened/native-interface-ready.png": "6f06d525e519ef7e6b3342316bfa034968fac3757b53237538aa143d4f54d6a2",
+        "initial/native-os-save-before-input.png": "0f2ee765ef5414ac81d37df97513b683334305bb4e7729759f245a7c6d40290d",
+        "initial/native-os-save-after-input.png": "51667b19fd177f23bf09f2ad43a24babac1a12760084920c62ebddac73816a01"
+      }
+    },
+    {
+      "kind": "deb",
+      "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+      "PIDs": [
+        6009,
+        6483
+      ],
+      "savedDocxSha256": "0299d2e4ef8bbd4a118ffeefe28077769e9b204aab517af218a4b4ab3303ebe4",
+      "independentXmlOracle": "passed chapter/text/list/same-row Hout42/actually referenced PNG/no macro or external resources",
+      "nativePortalOwnership": {
+        "method": "credential-bound-portal-request",
+        "backendPid": 5179,
+        "requestHandle": "/org/freedesktop/portal/desktop/request/1_196/ashpd_G6PjWeLxqE"
+      },
+      "cleanup": {
+        "apps": [
+          {
+            "phase": "initial",
+            "pid": 6009,
+            "closed": true,
+            "terminatedFlag": null,
+            "reportedFields": [
+              "pid",
+              "executable",
+              "closed"
+            ]
+          },
+          {
+            "phase": "reopened",
+            "pid": 6483,
+            "closed": true,
+            "terminatedFlag": null,
+            "reportedFields": [
+              "pid",
+              "executable",
+              "closed"
+            ]
+          }
+        ],
+        "observerMonitorGroupsClosed": true,
+        "forcedObserverCleanup": false,
+        "temporaryDisposed": true
+      },
+      "originalImagesSeriallyReviewedOrExactHashReused": {
+        "initial/native-interface-ready.png": "8feb768b517c53b7c1f0239a0c9e1457ff46c03352ade1e59676e9bd3a7c410a",
+        "reopened/native-interface-ready.png": "6f06d525e519ef7e6b3342316bfa034968fac3757b53237538aa143d4f54d6a2",
+        "initial/native-os-save-before-input.png": "680b2441ecbd96fa6525b2e0d846ab7ed1da906faa81b7095f18af9bc69071ee",
+        "initial/native-os-save-after-input.png": "51667b19fd177f23bf09f2ad43a24babac1a12760084920c62ebddac73816a01"
+      }
+    }
+  ],
+  "visual": "Both formats initial/reopened chapter headings/body/list/PNG/Hout42 readable; some early style-gallery loading/disabled ribbon/font substitution/ruler-layout differences. Actual GTKSave images show name selection; no full targetpath readback claim from image.",
+  "limits": [
+    "Virtual X11/software rendering only; not physical Linux desktop.",
+    "Native EPUB editing/malformed-input and broad pagination/glyph/#359 acceptance not certified.",
+    "356 reports bind canonical package and launchpath/PID, not independent live executable bytes; DEB executable separately verified by source-pinned native baseline."
+  ]
+}

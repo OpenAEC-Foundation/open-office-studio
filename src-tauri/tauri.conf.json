@@ -6,7 +6,7 @@
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://127.0.0.1:1420",
-    "beforeBuildCommand": "pnpm build",
+    "beforeBuildCommand": "node scripts/voorbereiden-kantoorruntime.mjs && pnpm build",
     "frontendDist": "../dist"
   },
   "app": {
@@ -33,6 +33,9 @@
     "publisher": "OpenAEC Foundation",
     "copyright": "© 2026 OpenAEC Foundation",
     "shortDescription": "Local OpenAEC office environment",
+    "resources": {
+      "resources/kantoorruntime/": "kantoorruntime/"
+    },
     "icon": [
       "icons/office/32x32.png",
       "icons/office/128x128.png",

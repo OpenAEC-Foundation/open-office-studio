@@ -137,6 +137,15 @@ if (!alleenDatabase) {
       `${uitvoermap}/rekenbladengine-${bestand}.txt`,
     );
 }
+if (!alleenDatabase && !alleenVoorbeeld && process.env.VITE_STUDIO_VARIANT !== "notition") {
+  // Desktopbundels bevatten ook de oorspronkelijke volledige runtime-licenties.
+  // Deze verwijzing maakt hun herkomst en de bijbehorende broncode vindbaar
+  // via het bestaande licentieoverzicht in de app.
+  try {
+    const bron = await readFile("src-tauri/resources/kantoorruntime/meta/SOURCE-NOTICE.txt", "utf8");
+    onderdelen.push(`LibreOffice (desktop conversion runtime)\n\n${bron}`);
+  } catch (e) { if (e.code !== "ENOENT") throw e; }
+}
 await writeFile(
   `${uitvoermap}/npm.txt`,
   onderdelen.sort().join("\n\n" + "=".repeat(78) + "\n\n"),

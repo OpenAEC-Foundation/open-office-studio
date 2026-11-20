@@ -1,0 +1,74 @@
+{
+  "run": 44736631893,
+  "artifactId": 14629241125,
+  "archiveSha256": "a97e0528972dce36ea20d07338cc820e2f7e913b709ce6471edc5da5cbe74644",
+  "applicationCommit": "9e0ad565402815082e8edf11a4c23943455fb6ce",
+  "applicationTree": "b79ec077abb3a7a3b199c05a45f2fb6908dc2ace",
+  "harnessCommit": "e180cceaa4e8465a2cbc501a568e7b27bfd7cd27",
+  "PID": 4543,
+  "proofSha256": "4ff5ed43ef01f5d1f1bb308f86e28add95ee6b374af36a48b3ae51b72226b601",
+  "diagnosticOnly": true,
+  "I3FindFailurePreserved": true,
+  "observation": {
+    "status": "Same abc-retained/input-focused/exact3x4 symptom observed on oldG under matched driver and WebKit",
+    "openRoute": "Normal Home\u2192Replace; distinct from original I3 CtrlH route. Source binds both to same pane; route difference remains explicit.",
+    "samples": [
+      {
+        "elapsedMs": 1,
+        "value": "abc",
+        "focus": {
+          "label": "Find what",
+          "className": "",
+          "role": null,
+          "tag": "INPUT"
+        }
+      },
+      {
+        "elapsedMs": 250,
+        "value": "abc",
+        "focus": {
+          "label": "Find what",
+          "className": "",
+          "role": null,
+          "tag": "INPUT"
+        }
+      },
+      {
+        "elapsedMs": 1000,
+        "value": "abc",
+        "focus": {
+          "label": "Find what",
+          "className": "",
+          "role": null,
+          "tag": "INPUT"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "columns": 4,
+        "rows": 3,
+        "cells": [
+          "alpha",
+          "",
+          "beta",
+          "",
+          "",
+          "",
+          "",
+          "omega",
+          "delta",
+          "",
+          "",
+          ""
+        ]
+      }
+    ],
+    "cleanup": {
+      "ownedApplicationClosed": true
+    },
+    "rootOriginalImageSeriallyReviewed": "Active abc input and table text visible; empty cell structure established by raw grid, not inferred from pixels.",
+    "cause": "App versus WebKit versus automation/window-focus cause remains unproven; no I3 acceptance pass or failure erasure."
+  },
+  "rawReportSha256": "0b15f9e00bb71ae84c6be4e626e41204dc3e193cf0b6a8375fa7a8831a43475d"
+}

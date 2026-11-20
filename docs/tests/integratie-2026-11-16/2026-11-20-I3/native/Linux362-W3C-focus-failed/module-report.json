@@ -1,0 +1,228 @@
+{
+  "issue": 362,
+  "source": {
+    "commit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156"
+  },
+  "fixture": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/.local/writer361-native/362-fixture/writer362-table.docx",
+    "sha256": "a7db27881ae3085bd1482b525410c672cc1dbc5782cdf51cc11174e2ae35f291",
+    "protectedDocument": false
+  },
+  "harnessSha256": "e31451701b6378e06648fbbfd5d251cdfae8815c13f08a26c84740c977694f18",
+  "platform": "Linux installed Tauri / WebKitGTK",
+  "status": "failed",
+  "nativePass": false,
+  "startedAt": "2026-11-20T12:24:27.155Z",
+  "cases": [
+    {
+      "theme": "light",
+      "requestedWidth": 1600,
+      "tab": "Insert",
+      "group": "Text",
+      "phase": "normal",
+      "bounds": {
+        "left": 1106.25,
+        "width": 307.8125,
+        "right": 1414.0625,
+        "top": 65,
+        "height": 89,
+        "bottom": 154
+      },
+      "caption": {
+        "left": 1106.25,
+        "width": 307.8125,
+        "right": 1414.0625,
+        "top": 154,
+        "height": 16,
+        "bottom": 170
+      },
+      "buttons": [
+        {
+          "clipped": false,
+          "left": 1106.25,
+          "width": 103,
+          "active": false,
+          "top": 76,
+          "height": 67,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1209.25,
+          "labelVisible": true,
+          "name": "Special Character",
+          "borderWidth": "1px",
+          "bottom": 143,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1211.25,
+          "width": 57.90625,
+          "active": false,
+          "top": 69.5,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1269.15625,
+          "labelVisible": true,
+          "name": "Date",
+          "borderWidth": "1px",
+          "bottom": 95.5,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1211.25,
+          "width": 60,
+          "active": false,
+          "top": 96.5,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1271.25,
+          "labelVisible": true,
+          "name": "Time",
+          "borderWidth": "1px",
+          "bottom": 122.5,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1211.25,
+          "width": 96.90625,
+          "active": false,
+          "top": 123.5,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1308.15625,
+          "labelVisible": true,
+          "name": "Date & Time",
+          "borderWidth": "1px",
+          "bottom": 149.5,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1310.15625,
+          "width": 100.171875,
+          "active": false,
+          "top": 83,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1410.328125,
+          "labelVisible": true,
+          "name": "Insert field…",
+          "borderWidth": "1px",
+          "bottom": 109,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "clipped": false,
+          "left": 1310.15625,
+          "width": 103.90625,
+          "active": false,
+          "top": 110,
+          "height": 26,
+          "ring": 0,
+          "hovered": false,
+          "disabled": false,
+          "iconFits": true,
+          "labelFits": true,
+          "focusVisible": false,
+          "right": 1414.0625,
+          "labelVisible": true,
+          "name": "Update fields",
+          "borderWidth": "1px",
+          "bottom": 136,
+          "borderColor": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "level": "0",
+      "viewport": {
+        "dpr": 1,
+        "height": 1000,
+        "width": 1600
+      }
+    }
+  ],
+  "groupButtonCases": [],
+  "unavailable": [],
+  "cleanup": [
+    {
+      "label": "release own input actions",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore original theme and tab",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore window rectangle",
+      "status": "fulfilled"
+    },
+    {
+      "label": "fixture remains byte-identical",
+      "status": "fulfilled"
+    }
+  ],
+  "limits": [
+    "Caller owns and verifies installed package/source binding",
+    "Virtual X11 evidence does not certify physical hardware or Windows/macOS",
+    "No synthesized disabled/active attributes and no command mutation",
+    "#362 group-trigger acceptance checks vertical clipping only. Raw horizontal and combined clipping remain recorded; the existing narrow horizontal scroll route is outside this issue's scope."
+  ],
+  "runtime": {
+    "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/60.5 Safari/605.1.15",
+    "native": true,
+    "bridge": false,
+    "preference": "{\"gebruiker\":{\"naam\":\"\",\"initialen\":\"\"},\"taal\":\"en\",\"thema\":\"forge\",\"opslagformaat\":{\"docx\":\"docx\",\"xlsx\":\"xlsx\",\"pptx\":\"pptx\"},\"lint\":{\"compact\":false,\"ingeklapt\":false},\"statusbalk\":{\"zoom\":true,\"tekst\":true,\"rekenblad\":true,\"presentatie\":true,\"database\":true,\"taal\":true,\"bijhouden\":true,\"weergave\":true},\"rekenbladStatistiek\":{\"gemiddelde\":true,\"aantal\":true,\"som\":true,\"minimum\":false,\"maximum\":false},\"emailExterneInhoud\":\"account\",\"spelling\":{\"controleren\":true,\"autocorrectie\":true,\"hoofdletterwoordenNegeren\":true,\"cijferwoordenNegeren\":true},\"tekst\":{\"sneltoetsprofiel\":\"standaard\",\"miniWerkbalk\":true,\"documentWeergave\":\"thema\"},\"updates\":{\"automatisch\":false,\"kanaal\":\"ontwikkel\"}}",
+    "tab": "Home",
+    "theme": "forge"
+  },
+  "pointerTargets": [
+    {
+      "at": "2026-11-20T12:24:27.220Z",
+      "offset": {
+        "x": 145,
+        "y": 110
+      },
+      "panelId": "office-tabpaneel-1",
+      "canvas": {
+        "x": 401,
+        "height": 1056,
+        "width": 816,
+        "y": 252
+      },
+      "point": {
+        "x": 546,
+        "y": 362
+      }
+    }
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Special Character: keyboard focus visible\n    at Module.runWriter362NativeProbe (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer362-harness/scripts/writer362-native-probe.mjs:811:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:527:17\n    at async collectOptionalNativeQa (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/writer361-native-modules.mjs:45:21)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:509:5",
+  "completedAt": "2026-11-20T12:24:46.322Z"
+}

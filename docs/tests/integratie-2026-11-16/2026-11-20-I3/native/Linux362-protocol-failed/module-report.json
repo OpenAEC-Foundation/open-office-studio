@@ -1,0 +1,57 @@
+{
+  "issue": 362,
+  "source": {
+    "commit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "tree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+    "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "executableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156"
+  },
+  "fixture": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/.local/writer361-native/362-fixture/writer362-table.docx",
+    "sha256": "cecff3ecf6f3abdf463aee78ec19fd30ca9d8d0f19a122a8378101bbd888a39d",
+    "protectedDocument": false
+  },
+  "harnessSha256": "ea4e28490e790551d1643bf2739af2b656ffd69aff989e5b0c0f8992ccd3ccc1",
+  "platform": "Linux installed Tauri / WebKitGTK",
+  "status": "failed",
+  "nativePass": false,
+  "startedAt": "2026-11-20T12:04:30.449Z",
+  "cases": [],
+  "groupButtonCases": [],
+  "unavailable": [],
+  "cleanup": [
+    {
+      "label": "release own input actions",
+      "status": "fulfilled"
+    },
+    {
+      "label": "restore original theme and tab",
+      "status": "rejected",
+      "error": "Error: {\"error\":\"invalid argument\",\"message\":\"Invalid JSON in request body\",\"stacktrace\":\"\"}"
+    },
+    {
+      "label": "restore window rectangle",
+      "status": "fulfilled"
+    },
+    {
+      "label": "fixture remains byte-identical",
+      "status": "fulfilled"
+    }
+  ],
+  "limits": [
+    "Caller owns and verifies installed package/source binding",
+    "Virtual X11 evidence does not certify physical hardware or Windows/macOS",
+    "No synthesized disabled/active attributes and no command mutation",
+    "#362 group-trigger acceptance checks vertical clipping only. Raw horizontal and combined clipping remain recorded; the existing narrow horizontal scroll route is outside this issue's scope."
+  ],
+  "runtime": {
+    "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/60.5 Safari/605.1.15",
+    "native": true,
+    "bridge": false,
+    "preference": "{\"gebruiker\":{\"naam\":\"\",\"initialen\":\"\"},\"taal\":\"en\",\"thema\":\"forge\",\"opslagformaat\":{\"docx\":\"docx\",\"xlsx\":\"xlsx\",\"pptx\":\"pptx\"},\"lint\":{\"compact\":false,\"ingeklapt\":false},\"statusbalk\":{\"zoom\":true,\"tekst\":true,\"rekenblad\":true,\"presentatie\":true,\"database\":true,\"taal\":true,\"bijhouden\":true,\"weergave\":true},\"rekenbladStatistiek\":{\"gemiddelde\":true,\"aantal\":true,\"som\":true,\"minimum\":false,\"maximum\":false},\"emailExterneInhoud\":\"account\",\"spelling\":{\"controleren\":true,\"autocorrectie\":true,\"hoofdletterwoordenNegeren\":true,\"cijferwoordenNegeren\":true},\"tekst\":{\"sneltoetsprofiel\":\"standaard\",\"miniWerkbalk\":true,\"documentWeergave\":\"thema\"},\"updates\":{\"automatisch\":false,\"kanaal\":\"ontwikkel\"}}",
+    "tab": "Home",
+    "theme": "forge"
+  },
+  "error": "Error: {\"error\":\"invalid argument\",\"message\":\"Invalid JSON in request body\",\"stacktrace\":\"\"}\n    at command (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer362-harness/scripts/writer362-native-probe.mjs:135:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async Module.runWriter362NativeProbe (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer362-harness/scripts/writer362-native-probe.mjs:491:5)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:527:17\n    at async collectOptionalNativeQa (file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/writer361-native-modules.mjs:45:21)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/writer361-harness/scripts/proef-writer-361-linux.mjs:509:5",
+  "completedAt": "2026-11-20T12:04:30.794Z"
+}

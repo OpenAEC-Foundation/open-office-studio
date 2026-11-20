@@ -263,5 +263,13 @@
     "integrity": "IFCX 源文件的校验和或字节数不匹配。文件已损坏或被修改。",
     "size": "IFCX 文件过大（最大 100 MB，其中嵌入式源文件最多 70 MB）。",
     "historyPassword": "此 IFCX 文件包含较早的未加密源文件。请保存一份 DOCX、XLSX 或 PPTX 副本，关闭并重新打开该副本，然后创建新的受密码保护的 IFCX 文件。"
+  },
+  "epub": {
+    "invalid": "此 EPUB 已损坏或书籍结构无效。",
+    "tooLarge": "此 EPUB 太大，无法导入（解压后最大 100 MB，每个部分最大 32 MB）。",
+    "encrypted": "此 EPUB 使用 DRM 或不支持的加密保护。请打开未受保护的副本。",
+    "unsupportedChapter": "此 EPUB 包含应用不支持的章节格式。请在原应用中导出包含 XHTML 章节的可重排 EPUB。",
+    "imported": "已按阅读顺序导入书籍文本，保留基本格式、列表、表格及内嵌 PNG/JPEG/GIF 图像。不保留书籍样式表、字体、固定版式、内部导航、脚本、音频、视频和 SVG。请将可编辑副本另存为 DOCX。",
+    "resources": "{{count}} 张图像无法嵌入。不会加载缺失、外部或不支持的图像资源。"
   }
 }

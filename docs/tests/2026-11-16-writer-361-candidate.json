@@ -1,0 +1,544 @@
+{
+  "issue": 361,
+  "branch": "codex/writer-table-undo-361",
+  "fixCommit": "d8654bd9458959059252cca7058c979807e29b0e",
+  "base": "46513b81621eecc4e340d66161c84807afca8f02",
+  "validated358MergeParent": "f1085923653bd6e59982807e16a09c5fa3e3d74e",
+  "candidateCommit": "91af2c0570c04ce50d3189d07887598951af7043",
+  "tree": "45c6967e9d5bd3d258d2238da215e57ba66e4e4b",
+  "worktreeClean": true,
+  "files": {
+    "src/lint/gedeeld.tsx": "832565e47a27970cbe7762cb0a52e7324be63cdfcdb9f2388073efaee1929a86",
+    "src/lint/tekst-kolomfocus.ts": "2f75f897b6756f0a13fab941233e6661e3f5dade26fcdb78b5f2a5ff5fb9cd88",
+    "src/lint/tekst-kolomfocus.test.ts": "07ad861a67832c195811d0698373a4bfa9272178e978702de7ac787a290c0580",
+    "scripts/proef-writer-kolom-undo.mjs": "4ecdd5c12c2f8263ff21ba37af9193ba82ca3b2f5b99d51d1bd43cab07add731"
+  },
+  "diagnosis": "Mouse-selected ribbon tab retains focus; column actions prevent mousedown focus transfer. Undo key never reaches document input. SDK imperative ref changes on edit, so stable document getter owns focus restoration.",
+  "productScope": "Only Writer addColumnLeft/addColumnRight execution completion restores unchanged non-input ribbon focus; same visible document owner, no modal; latest SDK ref. No global keyboard handler.",
+  "checks": {
+    "initialFocused": "36 passed across focus/shortcut files (10focus+26shortcut)",
+    "combinedFocused": "19 passed on clean91af2c (10focus+9Mac navigation)",
+    "normalBuild": "pass with TypeScript",
+    "hostedBuild": "pass with TypeScript and strict external/absolute-source validation",
+    "productionBrowser": "clean91af2c normal and actual/office/ each27recorded states, allassertionspass,0pageerrors; left/rightUndoRedo,Tabnewrow+Undo,ordinarytypingUndoRedo,searchinputlocalUndo,2documenthistoryisolation",
+    "fullVitest": "328files pass;3496pass/7skips. Started before358 merge; filesmergedwhile running, so this is supporting evidence, not claimed a clean91af fullsuite. Four encryption corpus fixtures absent;3existingdatabase corpus skips. NewMac9 andfocus10 separatelypassed on clean91af.",
+    "pythonRustNative": "not rerun in this bounded361scope; root platform candidate validation pending"
+  },
+  "platforms": {
+    "browserWindowsChromium": "normal+hosted actual productionroutes on91af pass",
+    "windowsNative": "not tested on new fix binary; user-reopenedG app untouched",
+    "linuxNative": "not tested on91af",
+    "macosNative": "not tested on91af; Macmappingunit9passes, notnativeclaim",
+    "platformBuildCI": "not started by this chat; coordinator owns next candidate/gates"
+  },
+  "failedAttempts": "Initial SDK-ref identity guard correctly blocked own browser probe; diagnostic proves refs replaced on edits. Probe corrections: CtrlHome starts before table, inputrole search vs textbox, asynchronous Find-close focus. Failures preserved; no extra product bugs inferred.",
+  "cleanup": {
+    "headlessBrowsersAndPreviewServers": "closed in each finally; successful commands exit0",
+    "nativeWindowsAppOperated": false,
+    "newComputerUseCaptureStarted": false,
+    "ownComputerUseKernel": "already reset in previous native test; not reinitialized here",
+    "userReopenedAppClosed": false,
+    "otherChatProcessesTouched": false,
+    "noFurtherLongWork": true
+  },
+  "acceptance": "Reviewable pushed work candidate only. Not accepted integration, no main/release.",
+  "asOfUtc": "2026-11-16T14:00:08.226276+00:00",
+  "proofs": [
+    {
+      "label": "361-baseline",
+      "sha256": "6049743da7456566b9ba64805bfd2a951e912c46006b323c312a527f72537a70",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": null,
+      "states": 4,
+      "route": null,
+      "error": null,
+      "pageErrors": []
+    },
+    {
+      "label": "361-fixed",
+      "sha256": "412bdf0d6ee4dfe4d2dab87da06e530036698057da3f7d75ab4940e08cd0e335",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": null,
+      "states": 3,
+      "route": null,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 3\n",
+      "pageErrors": []
+    },
+    {
+      "label": "361-diagnostic-correct-build",
+      "sha256": "6a9f81d53d828cfec6a5b4e3878d893b5a818f8ee3b2fbbbf9d12471dad6eade",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": null,
+      "states": 3,
+      "route": null,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 3\n",
+      "pageErrors": []
+    },
+    {
+      "label": "361-controls",
+      "sha256": "28624ca04f3446cf8e828aefa3411e16d999dec54bea52c1a78be465490631a2",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": "M src/lint/gedeeld.tsx\n?? scripts/proef-writer-kolom-undo.mjs\n?? src/lint/tekst-kolomfocus.test.ts\n?? src/lint/tekst-kolomfocus.ts",
+      "states": 12,
+      "route": "/",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'alpha' !== 'Xalpha'\n",
+      "pageErrors": []
+    },
+    {
+      "label": "361-controls2",
+      "sha256": "d329b4c144108b4ec50bf2e30e4ec315a0dc363cc03b50bb5c74855ec024e131",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": "M src/lint/gedeeld.tsx\n?? scripts/proef-writer-kolom-undo.mjs\n?? src/lint/tekst-kolomfocus.test.ts\n?? src/lint/tekst-kolomfocus.ts",
+      "states": 15,
+      "route": "/",
+      "error": "TimeoutError: locator.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Find what', exact: true })\u001b[22m\n",
+      "pageErrors": []
+    },
+    {
+      "label": "361-controls3",
+      "sha256": "dfef4a910b82fd188d972d1bf0ba719ee112a2d8c97b380f7ca7ce51b58f1b7e",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": "M src/lint/gedeeld.tsx\n?? scripts/proef-writer-kolom-undo.mjs\n?? src/lint/tekst-kolomfocus.test.ts\n?? src/lint/tekst-kolomfocus.ts",
+      "states": 17,
+      "route": "/",
+      "error": "AssertionError [ERR_ASSERTION]: search close and document Undo\n\n4 !== 3\n",
+      "pageErrors": []
+    },
+    {
+      "label": "361-controls4",
+      "sha256": "4cfcf08e4641acdf5db367aa6a58b3304e52166010ff04a6876c5e21ea0083de",
+      "source": "46513b81621eecc4e340d66161c84807afca8f02",
+      "dirty": "M src/lint/gedeeld.tsx\n?? scripts/proef-writer-kolom-undo.mjs\n?? src/lint/tekst-kolomfocus.test.ts\n?? src/lint/tekst-kolomfocus.ts",
+      "states": 27,
+      "route": "/",
+      "error": null,
+      "pageErrors": []
+    },
+    {
+      "label": "361-combined-normal",
+      "sha256": "6571ac703362c630b9440080607c69d6897777b70a40fa60f12f4e5ca8b2f979",
+      "source": "91af2c0570c04ce50d3189d07887598951af7043",
+      "dirty": "",
+      "states": 27,
+      "route": "/",
+      "error": null,
+      "pageErrors": []
+    },
+    {
+      "label": "361-combined-hosted",
+      "sha256": "5051f2b49f080eb99ce57c216243e27b68c31a4219f95fd95f0655256b73be11",
+      "source": "91af2c0570c04ce50d3189d07887598951af7043",
+      "dirty": "",
+      "states": 27,
+      "route": "/office/",
+      "error": null,
+      "pageErrors": []
+    }
+  ],
+  "images": [
+    {
+      "file": "361-baseline/after-control.png",
+      "sha256": "e8ccb08db7880671cd144722c0f3351b11f73dfaaf443a40fab1bf08230aa9c1",
+      "bytes": 89693
+    },
+    {
+      "file": "361-baseline/after-undo.png",
+      "sha256": "90d014407bf08809bb904161853f63875d1c172f61b762a448e2778862e271ac",
+      "bytes": 93168
+    },
+    {
+      "file": "361-combined-normal/after-control.png",
+      "sha256": "2a651c40a439139408d8f02b4d421bc699ef1b282a979a9f92f5a9a3798a15d5",
+      "bytes": 77748
+    },
+    {
+      "file": "361-combined-normal/after-undo.png",
+      "sha256": "253b4cd07d849c467c3eb868689f747e7f9e6cc3d539f0475b1f478390ebee01",
+      "bytes": 92142
+    },
+    {
+      "file": "361-combined-hosted/after-control.png",
+      "sha256": "f6a770f150cdb102e447a8f1f368f02e0e5e7c6c2bb8c461f5152152954fa0c8",
+      "bytes": 77747
+    },
+    {
+      "file": "361-combined-hosted/after-undo.png",
+      "sha256": "253b4cd07d849c467c3eb868689f747e7f9e6cc3d539f0475b1f478390ebee01",
+      "bytes": 92142
+    }
+  ],
+  "coordinatorAudit": {
+    "all4GitSourceFileHashesMatchCandidate": true,
+    "allReportAndImageHashesVerified": true,
+    "privateEvidenceCopiesSaved": true,
+    "finalBothRoutesSourceCleanAnd27States": true,
+    "draftPr": 364,
+    "notAcceptedIntegration": true,
+    "ciRuns": {
+      "desktop": 43881730576,
+      "database": 43881730560,
+      "example": 43881730561,
+      "browser": 43881776385
+    }
+  },
+  "coordinatorCandidateBrowserAudit": {
+    "applicationCommit": "91af2c0570c04ce50d3189d07887598951af7043",
+    "browserRun": 43881776385,
+    "browserReports": [
+      {
+        "file": "office-tab-focus-Linux/tab-focus/report.json",
+        "sha256": "93899e2d321671bfe31ffe309bbcb181f0371bd24d7e6676edba62d58da8c6c1",
+        "raw": {
+          "codepoint": "91af2c0570c04ce50d3189d07887598951af7043",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "linux",
+          "browser": "151.0.7922.34",
+          "route": "/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      {
+        "file": "office-tab-focus-Linux/tab-focus-hosted/report.json",
+        "sha256": "7cb04d8bec7312f46507fefd4fba13f372cac9ffad121db1a7304e7d8b4ece74",
+        "raw": {
+          "codepoint": "91af2c0570c04ce50d3189d07887598951af7043",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "linux",
+          "browser": "151.0.7922.34",
+          "route": "/office/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      {
+        "file": "office-tab-focus-macOS/tab-focus/report.json",
+        "sha256": "c5cc1f01a48bdd9d63501d1d00152d5e139b67597a00e5cff3eb5112fd2e5243",
+        "raw": {
+          "codepoint": "91af2c0570c04ce50d3189d07887598951af7043",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "darwin",
+          "browser": "151.0.7922.34",
+          "route": "/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      {
+        "file": "office-tab-focus-macOS/tab-focus-hosted/report.json",
+        "sha256": "2fd631df53445a8a0b6e8f4dfa4487ff9849071648cb54b6eb316876f56da7ef",
+        "raw": {
+          "codepoint": "91af2c0570c04ce50d3189d07887598951af7043",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "c91736b8864dc7e150af2c060b4b6aad7a0a95b3201cf440274e4b4cfe80f6c1",
+            "src/TabBalk.tsx": "4b0dd0ea33801207dd0b688461a47175e3354dcf85b706cb2a05ce2cee1fa4c0",
+            "src/export/koppeling.ts": "590d6faad8017cd982629b2b63207b833ed0d219c9e7c489e2b2e59f7a724ae6",
+            "src/export/editorKoppeling.ts": "8125f620ab52642e416a60ff1a06660a6ae87cb22cea79361dcab3d73470486c"
+          },
+          "platform": "darwin",
+          "browser": "151.0.7922.34",
+          "route": "/office/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      {
+        "file": "office-tab-focus-Windows/tab-focus/report.json",
+        "sha256": "fa7af4374ee2794004d1e42e9c401df447a051c17afe26e45e4a8189fed5fdca",
+        "raw": {
+          "codepoint": "91af2c0570c04ce50d3189d07887598951af7043",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "eea6a76dcb97a53d0deba6b2b3babeac61bedf024e3b3cbf420e19937ce82b3b",
+            "src/TabBalk.tsx": "ce01ac4e8ab22b0232696cdc6cdd483e56ed83796384f5b87c3f7f4df00ebeb8",
+            "src/export/koppeling.ts": "483524678891a212e616b40e5b7aae9d54a128cf83149292aae6e2ce853610ec",
+            "src/export/editorKoppeling.ts": "edfd7b0b86abd5360d5fcf7c6f2a5e872d63bc71ee190ce3e0d3d92e1132838a"
+          },
+          "platform": "win32",
+          "browser": "151.0.7922.34",
+          "route": "/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      },
+      {
+        "file": "office-tab-focus-Windows/tab-focus-hosted/report.json",
+        "sha256": "fa6da35c9147cf5c06be545acb7d77ae51a400b46f77747cb5f46f4b74be147a",
+        "raw": {
+          "codepoint": "91af2c0570c04ce50d3189d07887598951af7043",
+          "dirty": false,
+          "sourceHashes": {
+            "src/OfficeStudio.tsx": "eea6a76dcb97a53d0deba6b2b3babeac61bedf024e3b3cbf420e19937ce82b3b",
+            "src/TabBalk.tsx": "ce01ac4e8ab22b0232696cdc6cdd483e56ed83796384f5b87c3f7f4df00ebeb8",
+            "src/export/koppeling.ts": "483524678891a212e616b40e5b7aae9d54a128cf83149292aae6e2ce853610ec",
+            "src/export/editorKoppeling.ts": "edfd7b0b86abd5360d5fcf7c6f2a5e872d63bc71ee190ce3e0d3d92e1132838a"
+          },
+          "platform": "win32",
+          "browser": "151.0.7922.34",
+          "route": "/office/",
+          "cases": [
+            {
+              "name": "Writer: mouse tab → Undo/Redo, same active tab, independent histories",
+              "passed": true
+            },
+            {
+              "name": "Writer controls: keyboard activation, ribbon Undo and canvas focus",
+              "passed": true
+            },
+            {
+              "name": "Spreadsheet: mouse activation preserves cell history",
+              "passed": true
+            },
+            {
+              "name": "Writer: tab switches preserve the caret and do not create history",
+              "passed": true
+            },
+            {
+              "name": "Search input retains focus and local Undo after a mouse tab switch",
+              "passed": true
+            },
+            {
+              "name": "Formula input keeps its existing Undo behavior and committed cell",
+              "passed": true
+            },
+            {
+              "name": "Presentation: ribbon slide insertion then mouse activation and notes-local Undo",
+              "passed": true
+            },
+            {
+              "name": "Modal input keeps local Undo; document history remains untouched",
+              "passed": true
+            },
+            {
+              "name": "Ctrl+Tab, Shift+Tab and F6 retain document focus; arrows retain tab focus",
+              "passed": true
+            }
+          ],
+          "errors": []
+        }
+      }
+    ],
+    "artifactZipDigestsVerified": true,
+    "cases": 54,
+    "errors": 0,
+    "sourceHashVerification": "All reported files match pinned Git blobs; Windows checked-out CRLF bytes verified against exact LF-to-CRLF transform. Original hashes retained. First LF-only comparison rejected Windows correctly; verifier then accounted for checkout line endings.",
+    "workCandidateOnly": true,
+    "doesNotReplaceNativeColumnUndoAcceptance": true,
+    "prMergeCheckout": {
+      "commit": "6aea25b4b75ca15848f51a3f77a33f1a2a674c27",
+      "allNonDocumentationInputsEqualCandidate": true,
+      "exampleCompletedCheckoutLogVerified": true,
+      "checkoutLogWitness": [
+        "2026-11-16T14:03:05.0889312Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6aea25b4b75ca15848f51a3f77a33f1a2a674c27:refs/remotes/pull/364/merge",
+        "2026-11-16T14:03:08.8009053Z  * [new ref]         6aea25b4b75ca15848f51a3f77a33f1a2a674c27 -> pull/364/merge",
+        "2026-11-16T14:03:09.3571771Z HEAD is now at 6aea25b Merge 91af2c0570c04ce50d3189d07887598951af7043 into 4c27ce26e7c302ed80b9b9565570adbb5862d76a",
+        "2026-11-16T14:03:09.3662129Z 6aea25b4b75ca15848f51a3f77a33f1a2a674c27"
+      ],
+      "databaseCheckoutLogStillToVerify": true
+    }
+  }
+}

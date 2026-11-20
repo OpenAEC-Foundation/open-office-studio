@@ -1,5 +1,9 @@
 # Integratieronde 2 — 10 november 2026
 
+Historisch rapport. De gebruiker heeft het werk op 16 november hervat;
+de [actuele integratie en resterende controles](integratie-2026-11-16.md)
+houden rekening met de inmiddels samengevoegde PR #248 en vervolgfixes.
+
 De tweede ronde bevat **21 nieuwe vrijgegeven leveringen**: totaal **89 bron-PR's / 99 leveringen**, plus17 eerdere PR's in bundels. Bronintake sloot **13:15 Europe/Amsterdam**; veilige overdracht uiterlijk **15:30**. Geen toestemming voor `main`, officiële releases of issue-sluiting. Concept-PR: [#248](https://github.com/OpenAEC-Foundation/open-office-studio/pull/248).
 
 ## Vast codepunt

@@ -1,0 +1,294 @@
+{
+  "status": "passed",
+  "scope": "One additional actual Windows Ctrl+H Find what in Replace check, after final integration handoff",
+  "completedAtUTC": "2026-11-20T13:32:41.561817+00:00",
+  "integrationEvidenceHEAD": "fffe19284c03327470120f3ee3a8bf04ffeccdf9",
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "canonicalRun": 44715026752,
+  "canonicalWindowsArtifact": 14620029011,
+  "installerSHA256": "80bcea9e0c6812d7816b6f889e1947458c7bedf17650adbb8cf9f93f38a95b10",
+  "executableSHA256": "8bf8779b752addd9f368debfcc3fada0a51ce530e8bc2fc3aaaee826a704362f",
+  "successfulSessionPID": 27196,
+  "windowId": 29755932,
+  "originalFrameAndFinalFrame": [
+    1442,
+    952
+  ],
+  "originalTheme": "Forge",
+  "originalUILanguage": "Automatic (English)",
+  "namesInitialsAndPreferencesChanged": false,
+  "newInstallerOrAppBuild": false,
+  "prior39ChecksReusedFromReceiptSHA256": "80ee08d6d2b247ba717f16b9a669f8b177f900a0f0c3484220a5fc6a7bf59c5c",
+  "fixtureSHA256BeforeAndAfter": "645ef61571f22392e29c7c2f0626c407ba4d85927384dae341774578a004cc24",
+  "inputSequence": [
+    "Real canvas mouse click in alpha",
+    "Real Table Design tab mouse click",
+    "Real Insert Column Right mouse click",
+    "Ctrl+H once",
+    "Real click in observed Find what input in Find and Replace pane",
+    "sky.type_text literal abc",
+    "Ctrl+Z exactly once"
+  ],
+  "beforeUndoInput": "abc",
+  "afterUndoInput": "empty",
+  "documentGridBeforeAndAfter": {
+    "rows": 3,
+    "columns": 4,
+    "exactCells": [
+      "alpha",
+      "",
+      "beta",
+      "",
+      "",
+      "",
+      "",
+      "omega",
+      "delta",
+      "",
+      "",
+      ""
+    ]
+  },
+  "additionalUndoOrFocusRetryAfterCtrlH": false,
+  "documentSaveCount": 0,
+  "initialInterruptedAttempt": {
+    "PID": 27860,
+    "observation": "Unsaved G appeared outside table before any agent app input; original XML had empty final paragraph",
+    "classification": "Possible external input; cause not established and not filed as product bug",
+    "evidence": "W01-initial-observed.json",
+    "runtimeResetWhileAwaitingUser": true,
+    "previousPIDAbsentAtResume": true,
+    "userExplicitlyConfirmedPCFree": true,
+    "oldAttemptNotIncludedInPass": true
+  },
+  "cleanup": {
+    "searchPaneClosed": true,
+    "ownDocumentChangesDiscarded": true,
+    "ownAppClosedNormally": true,
+    "finalOfficeProcesses": [],
+    "fixtureByteUnchanged": true,
+    "windowSizeThemeLanguageUnchanged": true,
+    "ownNodeRuntimeResetConfirmed": true,
+    "captureRestartedToInspectBorder": false,
+    "limit": "Runtime reset does not independently prove all helper resources or the yellow capture border disappeared; no extra capture was made."
+  },
+  "kind": "Derived independent root audit; personal absolute paths omitted. Original receipt and all28 raw files retained privately.",
+  "rawReceiptSha256": "674995a3e08653e36520c16fec55a6a3653aabe602c7901c51d3f4ff2d939ba4",
+  "all28ReferencedBytesIndependentlyVerified": true,
+  "rootExecutableBytesVerified": true,
+  "rootUIAFindLines": {
+    "before": [
+      "416 text field (edit) (settable, string) Find what Description: Search document Value: abc"
+    ],
+    "after": [
+      "416 text field (edit) (settable, string) Find what Description: Search document"
+    ]
+  },
+  "rootRawGrid": [
+    {
+      "row": 0,
+      "column": 0,
+      "text": "alpha"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "text": ""
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "text": "beta"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "text": ""
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "text": ""
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "text": ""
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "text": ""
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "text": "omega"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "text": "delta"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "text": ""
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "text": ""
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "text": ""
+    }
+  ],
+  "rootSerialOriginalImageReview": "Both originals independently viewed in sequence: abc before, empty input after, same readable four-column table.",
+  "rawEvidence": [
+    {
+      "file": "final-audit.json",
+      "bytes": 252,
+      "sha256": "5f39997ca71a50cc6de1b4663388f74a21c38faaa1496831394600904324b149"
+    },
+    {
+      "file": "initial-input-observation.json",
+      "bytes": 593,
+      "sha256": "b843a7fc38480426cda3ac6204353b44e61aca68bb778ecf46e52df36775ab0a"
+    },
+    {
+      "file": "launch.json",
+      "bytes": 484,
+      "sha256": "961870087329ebb957768a269751905fc7deb19400f27be06bedf06031698de9"
+    },
+    {
+      "file": "preparation.json",
+      "bytes": 2449,
+      "sha256": "2c0a489718e2bcdb11f80c6d9296702fd9da21c4405d9d07d7b2f7bd02b0fb8e"
+    },
+    {
+      "file": "resume-launch.json",
+      "bytes": 291,
+      "sha256": "703406f03613aa6e2deacf1016602df140d0b399d85dc09ce920e0c421443dac"
+    },
+    {
+      "file": "W01-initial-observed-0.png",
+      "bytes": 96780,
+      "sha256": "62b76619efbdbc7c34970f45c1702fc9b423b45954b30dbc14992ddef2aa79d9"
+    },
+    {
+      "file": "W01-initial-observed.json",
+      "bytes": 18025,
+      "sha256": "0042b6a3c6ba1052891d0a8ba1bfccaf4f5c4781b6acf54dcfe8f64084dc99bd"
+    },
+    {
+      "file": "W02-clean-baseline-0.png",
+      "bytes": 96086,
+      "sha256": "2fd6f98e1c89cb3fdb994fb6a1671061c0c48f2cd3fb4272c28083ad273460d4"
+    },
+    {
+      "file": "W02-clean-baseline.json",
+      "bytes": 21268,
+      "sha256": "1b006d9a4fecde61e38be1f257ba5846f03c2fd24971d5714429d145ad34acd8"
+    },
+    {
+      "file": "W03-table-design-real-mouse-focus-0.png",
+      "bytes": 93180,
+      "sha256": "b9dbac41549f1d776b018c4f48707e5f9ffe310818a33f88f836e5e10a638a3a"
+    },
+    {
+      "file": "W03-table-design-real-mouse-focus.json",
+      "bytes": 19426,
+      "sha256": "cf92fa1a02ae879aa1c0996a1da59ab18087f4158b80b9a14b78f94998d62d72"
+    },
+    {
+      "file": "W04-insert-right-four-columns-0.png",
+      "bytes": 94118,
+      "sha256": "1f3267166976abf397286131efb81f6a9dcbdbd23ad5e38d788b52b345523846"
+    },
+    {
+      "file": "W04-insert-right-four-columns.json",
+      "bytes": 20511,
+      "sha256": "1595617460d3cdd7db0c350b788a800a494e21f359a4470e8f5e3c1dcd50410c"
+    },
+    {
+      "file": "W05-ctrlh-replace-open-0.png",
+      "bytes": 107469,
+      "sha256": "13ae791b0f35df83b52a88d48918fe40aa70c0f1a036517b193893eb7adaf776"
+    },
+    {
+      "file": "W05-ctrlh-replace-open.json",
+      "bytes": 22008,
+      "sha256": "740b224b0c2dfc61b03fe400486f5830bc76c085cf5bf844d6f8530ecaf8bf9b"
+    },
+    {
+      "file": "W06-findwhat-real-input-click-empty-0.png",
+      "bytes": 107258,
+      "sha256": "86aa05e6122ed1bc749bafccbac14fa801d2b2734560a503c313c664e5f91cd8"
+    },
+    {
+      "file": "W06-findwhat-real-input-click-empty.json",
+      "bytes": 22034,
+      "sha256": "f3970b4472527e1361bd02b08d7a3ba0332a944fc786130875977122934c2938"
+    },
+    {
+      "file": "W07-findwhat-abc-before-undo-0.png",
+      "bytes": 107222,
+      "sha256": "88c4781bfd6e7efdf2ee9ea0030d9defd2be8d4041a184b843850b6a91468a9d"
+    },
+    {
+      "file": "W07-findwhat-abc-before-undo.json",
+      "bytes": 22077,
+      "sha256": "af9e985b4fa4440d4a4f7f48dd32f0f554e6f370c07e3d207030447cfa18cd30"
+    },
+    {
+      "file": "W08-after-exactly-one-ctrlz-0.png",
+      "bytes": 107214,
+      "sha256": "ff6acb054520837b81ad467fff45f561583af3b170f296ea8832e4ca7e20fe5c"
+    },
+    {
+      "file": "W08-after-exactly-one-ctrlz.json",
+      "bytes": 22018,
+      "sha256": "d4e349b77ff869cddfc6d2199800b4349c38540ff1222acc02d9af2e7724f263"
+    },
+    {
+      "file": "W09-find-pane-closed-cleanup-0.png",
+      "bytes": 94261,
+      "sha256": "89d26c91ebd1f86c420593d8eefc2a1ecb9bb0fb1e5fd44b7e07d581b3203f52"
+    },
+    {
+      "file": "W09-find-pane-closed-cleanup.json",
+      "bytes": 20509,
+      "sha256": "02b83a937c7fcc8b106fdd2e3f45d22cac2780ae2af89b3baa59535939681e24"
+    },
+    {
+      "file": "W10-own-document-discard-dialog-0.png",
+      "bytes": 52253,
+      "sha256": "b7d60e93a22f76005f7fff7838c19a37d09062902baf63106b286b54da69f1b8"
+    },
+    {
+      "file": "W10-own-document-discard-dialog.json",
+      "bytes": 2385,
+      "sha256": "05769fa33b29ea7b957c83c23398c376c62b449e5f03366db7afdca3283ce075"
+    },
+    {
+      "file": "W11-own-document-discarded-0.png",
+      "bytes": 132513,
+      "sha256": "e466c46671bbfa05640a87ebdc08bd5e60193f0a74c23e2aa2860a7c5cf428f3"
+    },
+    {
+      "file": "W11-own-document-discarded.json",
+      "bytes": 22848,
+      "sha256": "412625fae629d786e784f9d68c4ac10949df02ee692d80135ac8fe4b8acdf9d1"
+    },
+    {
+      "file": "writer-ctrlh-check.docx",
+      "bytes": 36883,
+      "sha256": "645ef61571f22392e29c7c2f0626c407ba4d85927384dae341774578a004cc24"
+    }
+  ],
+  "sourceLimits": "UIA reports RootWebArea focus, not proof of DOM input focus. Actual click/one key sequence reported by sole operator and field/grid observed. Linux/G and macOS limitations unchanged."
+}
