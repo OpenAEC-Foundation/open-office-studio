@@ -407,6 +407,13 @@ export async function runWriter362NativeProbe({
             );
             await click(tabSelector);
             await press(keys.down);
+            await waitFor(
+              () =>
+                evaluate(() =>
+                  Boolean(document.activeElement?.closest(".ribbon-baan")),
+                ),
+              "Selected tab did not finish moving focus into the toolbar",
+            );
             let reached = false;
             for (let step = 0; step < 100; step++) {
               reached = await evaluate(

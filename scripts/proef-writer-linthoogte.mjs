@@ -154,6 +154,11 @@ try {
         async function keyboardTo(target, expectedNames = []) {
           await tabButton.focus();
           await tabButton.press("ArrowDown");
+          // Lint enters the toolbar on its next animation frame. Until then
+          // ArrowRight still belongs to the tab row and switches tabs.
+          await page.waitForFunction(() =>
+            Boolean(document.activeElement?.closest(".ribbon-baan")),
+          );
           return walkKeyboardTo(target, expectedNames);
         }
         for (const groupName of groups) {
