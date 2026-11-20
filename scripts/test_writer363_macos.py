@@ -24,6 +24,16 @@ def snapshot(language="en"):
                          *[node(i+10, label, x=650 if i < 2 else 780, y=95+i*25, width=200) for i, label in enumerate(M.NAMES[language])]]}
 
 
+def language_menu():
+    state = snapshot()
+    state["ownedScreenWindows"][0]["bounds"] = dict(X=0, Y=31, Width=1024, Height=677)
+    state["rawNodes"].extend([
+        node(22, "Language", "AXList", x=543, y=247, width=218, height=201),
+        node(51, "Nederlands Dutch", "AXStaticText", parent=22, x=271, y=27, width=473, height=271),
+        node(52, "English English", "AXStaticText", parent=22, x=271, y=52, width=473, height=271, selected=True)])
+    return state
+
+
 class Selectors(unittest.TestCase):
     def test_styles_tab_role_excludes_same_caption_collapsed_button(self):
         result = M.style_tab(snapshot(), "en")
@@ -168,6 +178,63 @@ class Selectors(unittest.TestCase):
             probe.open_settings("en")
         self.assertEqual(calls, ["settings-native-press", "original-raw-and-capture", "trigger-readiness"])
         self.assertTrue(probe.report["settingsCapabilities"][0]["capture"]["unaltered"])
+
+    def test_actual_static_text_option_is_bound_to_list_and_current_selection(self):
+        control = M.language_option(language_menu(), "en", "nl")
+        self.assertEqual(control["node"]["index"], 51)
+        self.assertEqual(control["role"], "AXStaticText")
+        self.assertEqual(control["label"], "Nederlands Dutch")
+        self.assertEqual({key: control[key] for key in ("x", "y", "width", "height")}, dict(x=271, y=27, width=473, height=271))
+        self.assertEqual(control["geometryPolicy"], "partial-bound-native-language-option-AXPress-only")
+        self.assertEqual(control["languageBinding"]["currentSelectedName"], "English English")
+
+    def test_static_text_option_outside_direct_language_list_is_unavailable(self):
+        state = language_menu()
+        state["rawNodes"][-2]["parent"] = 99
+        with self.assertRaises(PermissionError):
+            M.language_option(state, "en", "nl")
+
+    def test_language_option_requires_unique_list_and_unique_target(self):
+        for duplicate in ("list", "target"):
+            with self.subTest(duplicate=duplicate):
+                state = language_menu()
+                state["rawNodes"].append(node(100, "Language", "AXList", x=300, y=300) if duplicate == "list" else
+                                         node(100, "Nederlands", "AXStaticText", parent=22, x=550, y=275))
+                with self.assertRaises(PermissionError):
+                    M.language_option(state, "en", "nl")
+
+    def test_language_option_rejects_missing_action_offscreen_and_disabled(self):
+        for problem in ("no-action", "action-error", "offscreen", "disabled", "list-partial"):
+            with self.subTest(problem=problem):
+                state = language_menu()
+                target = state["rawNodes"][-2]
+                if problem == "no-action":
+                    target["attributes"]["actions"]["value"] = []
+                if problem == "action-error":
+                    target["attributes"]["actions"]["axError"] = -25212
+                if problem == "offscreen":
+                    target["attributes"]["AXPosition"]["value"]["x"] = -800
+                if problem == "disabled":
+                    target["attributes"]["AXEnabled"]["value"] = False
+                if problem == "list-partial":
+                    state["rawNodes"][-3]["attributes"]["AXPosition"]["value"]["y"] = 0
+                with self.assertRaises(PermissionError):
+                    M.language_option(state, "en", "nl")
+
+    def test_language_option_rejects_current_selection_mismatch_or_ambiguity(self):
+        for problem in ("wrong-language", "no-selected", "two-selected"):
+            with self.subTest(problem=problem):
+                state = language_menu()
+                selected = state["rawNodes"][-1]
+                if problem == "wrong-language":
+                    selected["attributes"]["AXTitle"]["value"] = "Deutsch German"
+                    selected["attributes"]["AXDescription"]["value"] = "Deutsch German"
+                if problem == "no-selected":
+                    selected["attributes"]["AXSelected"]["value"] = False
+                if problem == "two-selected":
+                    state["rawNodes"][-2]["attributes"]["AXSelected"]["value"] = True
+                with self.assertRaises(PermissionError):
+                    M.language_option(state, "en", "nl")
 
 
 class Cleanup(unittest.TestCase):

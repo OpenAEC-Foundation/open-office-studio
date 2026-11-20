@@ -69,19 +69,44 @@ func permitted(_ kind: String, _ role: String, _ label: String) -> Bool {
     case "settings-save": return role == "AXButton" && ["Save", "Opslaan"].contains(label)
     case "settings-cancel": return role == "AXButton" && ["Cancel", "Annuleren"].contains(label)
     case "language-trigger": return ["AXButton", "AXPopUpButton"].contains(role) && ["Language: English", "Taal: English", "Language: Nederlands", "Taal: Nederlands"].contains(label)
-    case "language-option": return ["AXMenuItem", "AXButton", "AXRow"].contains(role) && ["Nederlands", "Nederlands Dutch", "Nederlands Nederlands", "English", "English English", "English Engels"].contains(label)
+    case "language-option": return role == "AXStaticText" && ["Nederlands", "Nederlands Dutch", "Nederlands Nederlands", "English", "English English", "English Engels"].contains(label)
     default: return false
     }
 }
 func contained(_ p: CGPoint, _ s: CGSize, _ wp: CGPoint, _ ws: CGSize) -> Bool {
     p.x >= wp.x && p.y >= wp.y && p.x+s.width <= wp.x+ws.width+1 && p.y+s.height <= wp.y+ws.height+1
 }
-func allowedGeometry(_ p: CGPoint, _ s: CGSize, _ wp: CGPoint, _ ws: CGSize, _ kind: String, _ role: String, _ label: String) -> Bool {
+func allowedGeometry(_ p: CGPoint, _ s: CGSize, _ wp: CGPoint, _ ws: CGSize, _ kind: String, _ role: String, _ label: String, _ boundOption: Bool = false) -> Bool {
     if contained(p, s, wp, ws) { return true }
     // AXPopUpButton can report the popup's union frame above the actual window.
     // This exact native language trigger is pressed with AXPress, never XY input.
-    return kind == "language-trigger" && role == "AXPopUpButton" && permitted(kind, role, label)
+    return ((kind == "language-trigger" && role == "AXPopUpButton") || (boundOption && kind == "language-option" && role == "AXStaticText")) && permitted(kind, role, label)
         && p.x < wp.x+ws.width && p.y < wp.y+ws.height && p.x+s.width > wp.x && p.y+s.height > wp.y
+}
+func optionNames(_ language: String) -> [String] {
+    language == "en" ? ["English", "English English", "English Engels"] : language == "nl" ? ["Nederlands", "Nederlands Dutch", "Nederlands Nederlands"] : []
+}
+func hasLabel(_ e: AXUIElement, _ labels: [String]) -> Bool {
+    labels.contains(string(e,kAXTitleAttribute)) || labels.contains(string(e,kAXDescriptionAttribute))
+}
+func boundLanguageOption(_ rows: [(AXUIElement, Int, Int)], _ spec: [String: Any], _ role: String, _ label: String, _ wp: CGPoint, _ ws: CGSize) -> Bool {
+    guard role == "AXStaticText", let binding = spec["languageBinding"] as? [String: Any],
+          let current = binding["currentLanguage"] as? String, let target = binding["targetLanguage"] as? String,
+          current != target, !optionNames(current).isEmpty, optionNames(target).contains(label) else { return false }
+    let listLabel = current == "en" ? "Language" : "Taal"
+    let lists = rows.indices.filter { i in
+        let e = rows[i].0
+        guard string(e,kAXRoleAttribute) == "AXList", hasLabel(e,[listLabel]), let (p,s) = box(e) else { return false }
+        return contained(p,s,wp,ws)
+    }
+    guard lists.count == 1 else { return false }
+    let children = rows.indices.filter { rows[$0].2 == lists[0] }
+    let selected = children.filter { (attr(rows[$0].0,kAXSelectedAttribute) as? Bool) == true }
+    guard selected.count == 1, string(rows[selected[0]].0,kAXRoleAttribute) == "AXStaticText",
+          (attr(rows[selected[0]].0,kAXEnabledAttribute) as? Bool) == true, hasLabel(rows[selected[0]].0,optionNames(current)) else { return false }
+    let targets = children.filter { string(rows[$0].0,kAXRoleAttribute) == "AXStaticText" && hasLabel(rows[$0].0,optionNames(target)) }
+    guard targets.count == 1, hasLabel(rows[targets[0]].0,[label]) else { return false }
+    return true
 }
 let cgWindows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
 let owned = cgWindows.filter { ($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value == pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue == 0 }
@@ -117,14 +142,18 @@ else if let windows = attr(app, kAXWindowsAttribute) as? [AXUIElement], windows.
            let kind = spec["kind"] as? String, let role = spec["role"] as? String, let label = spec["label"] as? String,
            let x = spec["x"] as? Double, let y = spec["y"] as? Double, let width = spec["width"] as? Double, let height = spec["height"] as? Double,
            permitted(kind, role, label) {
+            let boundOption: Bool
+            if kind == "language-option", let (wp,ws) = box(windows[0]) {
+                boundOption = boundLanguageOption(Array(queue.prefix(index)), spec, role, label, wp, ws)
+            } else { boundOption = false }
             let matches = queue.prefix(index).filter { item in
                 let e = item.0
                 guard string(e, kAXRoleAttribute) == role, [string(e, kAXTitleAttribute), string(e, kAXDescriptionAttribute)].contains(label),
                       (attr(e, kAXEnabledAttribute) as? Bool) == true, let (p,s) = box(e) else { return false }
                 return abs(p.x-x) < 2 && abs(p.y-y) < 2 && abs(s.width-width) < 2 && abs(s.height-height) < 2
             }
-            if matches.count == 1, let (p,s) = box(matches[0].0), let (wp,ws) = box(windows[0]),
-               allowedGeometry(p, s, wp, ws, kind, role, label) {
+            if (kind != "language-option" || boundOption), matches.count == 1, let (p,s) = box(matches[0].0), let (wp,ws) = box(windows[0]),
+               allowedGeometry(p, s, wp, ws, kind, role, label, boundOption) {
                 let eligible = queue.prefix(index).filter { item in
                     guard kind == "language-trigger", role == "AXPopUpButton" else { return false }
                     let e = item.0
@@ -139,7 +168,7 @@ else if let windows = attr(app, kAXWindowsAttribute) as? [AXUIElement], windows.
                     let result = AXUIElementPerformAction(matches[0].0, kAXPressAction as CFString)
                     report["pressError"] = result.rawValue
                     report["pressed"] = spec
-                    report["actualGeometryPolicy"] = contained(p,s,wp,ws) ? "fully-contained-native-control" : "partial-native-language-popup-AXPress-only"
+                    report["actualGeometryPolicy"] = contained(p,s,wp,ws) ? "fully-contained-native-control" : boundOption ? "partial-bound-native-language-option-AXPress-only" : "partial-native-language-popup-AXPress-only"
                     report["status"] = result == .success ? "input-sent" : "blocked"
                 } else { report["status"] = "blocked"; report["reason"] = "Unique actual control has no AXPress" }
             } else { report["status"] = "blocked"; report["reason"] = "Role/name/native geometry no longer uniquely match" }

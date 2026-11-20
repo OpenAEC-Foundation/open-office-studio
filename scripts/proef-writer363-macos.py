@@ -28,6 +28,8 @@ PINNED = {"sourceCommit": APP, "sourceTree": TREE, "artifactRun": 44715026752,
 NAMES = {"en": ["Styles pane", "New Style…", "Update Normal", "Modify Style: Normal", "Style Set…"],
          "nl": ["Stijlenvenster", "Nieuwe stijl…", "Standaard bijwerken", "Stijl wijzigen: Standaard", "Stijlset…"]}
 TABS = {"Home", "Start", "Insert", "Invoegen", "Format", "Opmaak", "Header & Footer", "Kop- en voettekst", "References", "Verwijzingen", "Styles", "Stijlen", "Layout", "Indeling", "Review", "Controleren", "View", "Beeld", "Tools", "Extra"}
+LANGUAGE_OPTIONS = {"en": ["English", "English English", "English Engels"],
+                    "nl": ["Nederlands", "Nederlands Dutch", "Nederlands Nederlands"]}
 
 
 def sha(path):
@@ -49,7 +51,7 @@ def actual_window(snapshot):
     return windows[0]
 
 
-def geometry(node, snapshot, zone=None, kind=None):
+def geometry(node, snapshot, zone=None, kind=None, bound_language_option=False):
     p, s = value(node, "AXPosition"), value(node, "AXSize")
     if not isinstance(p, dict) or not isinstance(s, dict):
         return None
@@ -65,14 +67,18 @@ def geometry(node, snapshot, zone=None, kind=None):
     partial_popup = (not contained and intersects and kind == "language-trigger" and value(node, "AXRole") == "AXPopUpButton"
                      and any(label in (value(node, "AXTitle"), value(node, "AXDescription"))
                              for label in ("Language: English", "Taal: English", "Language: Nederlands", "Taal: Nederlands")))
-    if not contained and not partial_popup:
+    partial_option = (not contained and intersects and bound_language_option and kind == "language-option"
+                      and value(node, "AXRole") == "AXStaticText"
+                      and any(label in (value(node, "AXTitle"), value(node, "AXDescription"))
+                              for labels in LANGUAGE_OPTIONS.values() for label in labels))
+    if not contained and not partial_popup and not partial_option:
         return None
     if zone == "ribbon" and y+height/2 > w["Y"]+w["Height"]*.28:
         return None
-    if zone == "dialog" and not partial_popup and y+height/2 < w["Y"]+w["Height"]*.2:
+    if zone == "dialog" and not partial_popup and not partial_option and y+height/2 < w["Y"]+w["Height"]*.2:
         return None
     return dict(x=x, y=y, width=width, height=height,
-                geometryPolicy="partial-native-language-popup-AXPress-only" if partial_popup else "fully-contained-native-control")
+                geometryPolicy="partial-bound-native-language-option-AXPress-only" if partial_option else "partial-native-language-popup-AXPress-only" if partial_popup else "fully-contained-native-control")
 
 
 def select_control(snapshot, labels, roles, zone=None, kind=None):
@@ -92,6 +98,35 @@ def style_tab(snapshot, language):
     if language not in NAMES:
         raise PermissionError("Unsupported UI language; no forced fallback state")
     return select_control(snapshot, ["Styles" if language == "en" else "Stijlen"], {"AXRadioButton", "AXTab"}, "ribbon")
+
+
+def language_option(snapshot, current, target):
+    if current not in LANGUAGE_OPTIONS or target not in LANGUAGE_OPTIONS or current == target:
+        raise PermissionError("Only the current native EN↔NL language route is supported")
+    list_label = "Language" if current == "en" else "Taal"
+    lists = [n for n in snapshot.get("rawNodes", []) if value(n, "AXRole") == "AXList"
+             and list_label in (value(n, "AXTitle"), value(n, "AXDescription")) and geometry(n, snapshot, "dialog")]
+    if len(lists) != 1:
+        raise PermissionError("One visible fully contained native language AXList required")
+    children = [n for n in snapshot.get("rawNodes", []) if n.get("parent") == lists[0]["index"]]
+    selected = [n for n in children if value(n, "AXSelected") is True]
+    if (len(selected) != 1 or value(selected[0], "AXRole") != "AXStaticText" or value(selected[0], "AXEnabled") is not True
+            or not any(label in (value(selected[0], "AXTitle"), value(selected[0], "AXDescription")) for label in LANGUAGE_OPTIONS[current])):
+        raise PermissionError("Current native selected language does not match this route")
+    targets = [n for n in children if value(n, "AXRole") == "AXStaticText"
+               and any(label in (value(n, "AXTitle"), value(n, "AXDescription")) for label in LANGUAGE_OPTIONS[target])]
+    if len(targets) != 1:
+        raise PermissionError("Native language option is missing or ambiguous in the bound list")
+    node = targets[0]
+    box = geometry(node, snapshot, "dialog", "language-option", bound_language_option=True)
+    actions = node.get("attributes", {}).get("actions", {})
+    if not box or value(node, "AXEnabled") is not True or actions.get("axError") != 0 or "AXPress" not in actions.get("value", []):
+        raise PermissionError("Bound native language option lacks intersecting geometry or actual AXPress")
+    label = next(label for label in LANGUAGE_OPTIONS[target] if label in (value(node, "AXTitle"), value(node, "AXDescription")))
+    return {"node": node, "label": label, "role": "AXStaticText", **box,
+            "languageBinding": {"currentLanguage": current, "targetLanguage": target,
+                                "listLabel": list_label, "listIndex": lists[0]["index"],
+                                "currentSelectedName": value(selected[0], "AXTitle") or value(selected[0], "AXDescription")}}
 
 
 def selected_tab(snapshot):
@@ -235,6 +270,8 @@ class Probe:
         selected = selector(snapshot)
         spec = {"kind": kind, **{k: selected[k] for k in ("label", "role", "x", "y", "width", "height")}}
         spec["geometryPolicy"] = selected["geometryPolicy"]
+        if "languageBinding" in selected:
+            spec["languageBinding"] = selected["languageBinding"]
         self.action("press", spec, cleanup)
 
     def capture(self, label, snapshot):
@@ -313,9 +350,8 @@ class Probe:
         self.press("language-trigger", lambda s: select_control(s, [trigger], {"AXButton", "AXPopUpButton"}, "dialog", "language-trigger"), cleanup)
         if not cleanup:
             self.evidence("language-menu-"+current+"-to-"+target)
-        options = ["Nederlands", "Nederlands Dutch", "Nederlands Nederlands"] if target == "nl" else ["English", "English English", "English Engels"]
         self.language_may_have_changed = True
-        self.press("language-option", lambda s: select_control(s, options, {"AXMenuItem", "AXButton", "AXRow"}, "dialog"), cleanup)
+        self.press("language-option", lambda s: language_option(s, current, target), cleanup)
         self.wait(lambda: self.language_trigger(target, cleanup), "Native UI preview language change not observed", cleanup=cleanup)
         self.press("settings-save", lambda s: select_control(s, ["Opslaan" if target == "nl" else "Save"], {"AXButton"}, "dialog"), cleanup)
         self.dialog_open = False
