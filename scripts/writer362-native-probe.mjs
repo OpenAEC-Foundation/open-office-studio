@@ -38,6 +38,7 @@ const keys = {
   control: "\uE009",
   home: "\uE011",
   end: "\uE010",
+  tab: "\uE004",
 };
 const execFileAsync = promisify(execFile);
 
@@ -50,6 +51,7 @@ export function writer362XTestChord(values) {
     [keys.control, "ctrl"],
     [keys.home, "Home"],
     [keys.end, "End"],
+    [keys.tab, "Tab"],
   ]);
   assert.ok(values.length > 0, "At least one native key required");
   return values
@@ -58,6 +60,15 @@ export function writer362XTestChord(values) {
       return names.get(value);
     })
     .join("+");
+}
+
+export function writer362KeyboardEntryKeys(entry) {
+  assert.ok(
+    ["arrow-down", "tab"].includes(entry),
+    "Unsupported ribbon keyboard entry",
+  );
+  // DOM order: selected ribbon tab → .ribbon-inklap → first toolbar control.
+  return entry === "tab" ? [keys.tab, keys.tab] : [keys.down];
 }
 
 export function writer362DocumentFocus() {
@@ -697,6 +708,7 @@ export async function runWriter362NativeProbe({
   ownedProfile,
   signal,
   inputBackend = "w3c",
+  keyboardEntry = "arrow-down",
 }) {
   assert.equal(
     process.platform,
@@ -708,6 +720,7 @@ export async function runWriter362NativeProbe({
     ["w3c", "x11-xtest"].includes(inputBackend),
     "Unsupported native input backend",
   );
+  const entryKeys = writer362KeyboardEntryKeys(keyboardEntry);
   for (const field of ["commit", "tree"])
     assert.match(source?.[field] ?? "", /^[a-f0-9]{40}$/);
   for (const field of ["packageSha256", "executableSha256"])
@@ -731,11 +744,13 @@ export async function runWriter362NativeProbe({
     harnessSha256: hash(await readFile(fileURLToPath(import.meta.url))),
     platform: "Linux installed Tauri / WebKitGTK",
     inputBackend,
+    keyboardEntry,
     status: "running",
     nativePass: false,
     startedAt: new Date().toISOString(),
     cases: [],
     groupButtonCases: [],
+    keyboardEntries: [],
     unavailable: [],
     cleanup: [],
     limits: [
@@ -744,6 +759,7 @@ export async function runWriter362NativeProbe({
       "No synthesized disabled/active attributes and no command mutation",
       "#362 group-trigger acceptance checks vertical clipping only. Raw horizontal and combined clipping remain recorded; the existing narrow horizontal scroll route is outside this issue's scope.",
       "XTest opt-in is distinct native input evidence; any earlier W3C focus-visible failure remains unexplained and is not relabelled as passed.",
+      "Optional Tab entry certifies only its recorded native Tab route. Prior ArrowDown :focus-visible failures remain unexplained; no general native-focus verdict is implied.",
     ],
   };
   const runSignal = signal
@@ -954,7 +970,21 @@ export async function runWriter362NativeProbe({
               selector,
             );
             await click(tabSelector);
-            await press(keys.down);
+            const entry = {
+              theme,
+              requestedWidth: width,
+              tab,
+              group: groupName,
+              inputBackend,
+              keyboardEntry,
+              keys: entryKeys.map((k) =>
+                k === keys.tab ? "Tab" : "ArrowDown",
+              ),
+              pre: await evaluate(writer362DocumentFocus),
+              traversalRightKeys: 0,
+            };
+            report.keyboardEntries.push(entry);
+            for (const key of entryKeys) await press(key);
             await waitFor(
               () =>
                 evaluate(() =>
@@ -962,6 +992,13 @@ export async function runWriter362NativeProbe({
                 ),
               "Selected tab did not finish moving focus into the toolbar",
             );
+            entry.post = await evaluate(writer362DocumentFocus);
+            if (keyboardEntry === "tab")
+              assert.equal(
+                entry.post.activeElement.focusVisible,
+                true,
+                "Tab entry: keyboard focus visible",
+              );
             if (collapsed && groupName === "Delete") await press(keys.end);
             let reached = false;
             for (let step = 0; step < 100; step++) {
@@ -978,6 +1015,7 @@ export async function runWriter362NativeProbe({
               );
               if (reached) break;
               await press(keys.right);
+              entry.traversalRightKeys++;
             }
             assert.ok(reached, `${groupName}: keyboard route`);
             const measureGroupTrigger = async (phase) => {
@@ -992,10 +1030,11 @@ export async function runWriter362NativeProbe({
                 tab,
                 group: groupName,
                 phase,
+                keyboardEntry,
                 navigation:
                   groupName === "Delete"
-                    ? "ArrowDown → End"
-                    : "ArrowDown → ArrowRight",
+                    ? `${entry.keys.join(" → ")} → End`
+                    : `${entry.keys.join(" → ")} → ArrowRight`,
                 ...data,
               });
               await screenshot(`${theme}-${width}-${groupName}-${phase}`);
@@ -1097,6 +1136,7 @@ export async function runWriter362NativeProbe({
                   width,
                   group: groupName,
                   inputBackend,
+                  keyboardEntry,
                   ...active,
                   document: await evaluate(writer362DocumentFocus),
                 };

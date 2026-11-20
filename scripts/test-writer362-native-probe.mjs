@@ -18,6 +18,7 @@ import {
   writer362XTestChord,
   createWriter362XTestInput,
   writer362ProcStartTime,
+  writer362KeyboardEntryKeys,
 } from "./writer362-native-probe.mjs";
 
 function fakeXTest(options = {}) {
@@ -80,7 +81,7 @@ function fakeXTest(options = {}) {
   };
 }
 
-test("XTest maps only the seven existing W3C keys and their native chords", () => {
+test("XTest maps the eight supported W3C keys and their native chords", () => {
   for (const [value, name] of [
     ["\uE015", "Down"],
     ["\uE014", "Right"],
@@ -89,11 +90,32 @@ test("XTest maps only the seven existing W3C keys and their native chords", () =
     ["\uE009", "ctrl"],
     ["\uE011", "Home"],
     ["\uE010", "End"],
+    ["\uE004", "Tab"],
   ])
     assert.equal(writer362XTestChord([value]), name);
   assert.equal(writer362XTestChord(["\uE009", "\uE011"]), "ctrl+Home");
   assert.throws(() => writer362XTestChord(["x"]), /Unsupported XTest key/);
   assert.throws(() => writer362XTestChord([]), /At least one/);
+});
+
+test("alternative native Tab entry uses only the two source-defined focus stops", async () => {
+  assert.deepEqual(writer362KeyboardEntryKeys("arrow-down"), ["\uE015"]);
+  assert.deepEqual(writer362KeyboardEntryKeys("tab"), ["\uE004", "\uE004"]);
+  assert.throws(
+    () => writer362KeyboardEntryKeys("retry"),
+    /Unsupported ribbon keyboard entry/,
+  );
+  const f = fakeXTest();
+  await f.input.initialize();
+  for (const key of writer362KeyboardEntryKeys("tab"))
+    await f.input.press([key]);
+  assert.deepEqual(
+    f.commands.filter((c) => c[0] === "key"),
+    [
+      ["key", "--clearmodifiers", "Tab"],
+      ["key", "--clearmodifiers", "Tab"],
+    ],
+  );
 });
 
 test("process binding reads field22 despite spaces/parentheses and validates PID", () => {
