@@ -9,6 +9,7 @@ import time
 import gi
 
 gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
 gi.require_version("GdkX11", "3.0")
 gi.require_version("WebKit2", "4.1")
 from gi.repository import Gdk, GdkX11, GLib, Gtk, WebKit2
@@ -25,11 +26,13 @@ window.show_all()
 
 def pump_until(predicate, seconds=8):
     end = time.monotonic() + seconds
-    while not predicate():
-        if time.monotonic() > end:
-            raise TimeoutError("Bounded GTK callback wait")
+    while True:
         while Gtk.events_pending():
             Gtk.main_iteration_do(False)
+        if predicate():
+            return
+        if time.monotonic() > end:
+            raise TimeoutError("Bounded GTK callback wait")
         time.sleep(0.005)
 
 
@@ -68,6 +71,13 @@ try:
     xid = str(GdkX11.X11Window.get_xid(window.get_window()))
     report["xid"] = xid
     assert int(xdo("getwindowpid", xid)) == os.getpid()
+    def visible_owned_window():
+        try:
+            return xid in xdo("search", "--onlyvisible", "--pid", os.getpid()).splitlines()
+        except subprocess.CalledProcessError:
+            return False
+    pump_until(visible_owned_window)
+    report["exactOwnedXidViewableBeforeActivation"] = True
     xdo("windowfocus", "--sync", xid)
     own_window()
     for route, explicit in [("arrow-down", False), ("tab", False), ("arrow-down-explicit-keyboard-option", True)]:
