@@ -119,6 +119,9 @@ export function createWriter362Transport({
     assert.ok(allowed, `Unsupported session command: ${method} ${suffix}`);
     if (method === "POST" && suffix === "/execute/sync")
       assertReadOnlyObservation(body?.script);
+    // WebKitGTK requires a JSON object even for parameterless element clicks.
+    if (method === "POST" && suffix.endsWith("/click") && body === undefined)
+      body = {};
     const response = await fetch(
       `${url.href.replace(/\/$/, "")}/session/${sessionId}${suffix}`,
       {

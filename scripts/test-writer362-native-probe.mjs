@@ -228,6 +228,64 @@ test("native protocol blocks scripted focus and DOM mutations before transmissio
   }
 });
 
+test("element clicks send POST JSON objects for WebKitGTK, including cleanup", async () => {
+  const requests = [];
+  const server = createServer(async (request, response) => {
+    let body = "";
+    for await (const chunk of request) body += chunk;
+    requests.push({
+      method: request.method,
+      path: request.url,
+      contentType: request.headers["content-type"],
+      body,
+    });
+    response.setHeader("content-type", "application/json");
+    if (!body) {
+      response.statusCode = 400;
+      response.end(
+        JSON.stringify({
+          value: {
+            error: "invalid argument",
+            message: "Invalid JSON in request body",
+          },
+        }),
+      );
+      return;
+    }
+    response.end(JSON.stringify({ value: null }));
+  });
+  await new Promise((done) => server.listen(0, "127.0.0.1", done));
+  try {
+    const options = {
+      endpoint: `http://127.0.0.1:${server.address().port}`,
+      sessionId: "owned-session",
+    };
+    const command = createWriter362Transport(options),
+      cleanupCommand = createWriter362Transport({
+        ...options,
+        timeoutMs: 5000,
+      });
+    await command("POST", "/element/canvas-id/click");
+    await cleanupCommand("POST", "/element/original-tab-id/click");
+    assert.deepEqual(requests, [
+      {
+        method: "POST",
+        path: "/session/owned-session/element/canvas-id/click",
+        contentType: "application/json",
+        body: "{}",
+      },
+      {
+        method: "POST",
+        path: "/session/owned-session/element/original-tab-id/click",
+        contentType: "application/json",
+        body: "{}",
+      },
+    ]);
+  } finally {
+    await new Promise((done) => server.close(done));
+  }
+});
+
 test("transport preserves W3C command failures", async () => {
   const server = createServer((_request, response) => {
     response.writeHead(404, { "content-type": "application/json" });
