@@ -84,8 +84,13 @@ try {
   const page = await browser.newPage({ viewport: { width: 923, height: 952 } });
   page.setDefaultTimeout(10_000);
   page.on("pageerror", (e) => report.errors.push(String(e)));
-  await page.goto(`http://127.0.0.1:${port}/__writer369`);
-  await page.getByRole("tab", { name: "Insert", exact: true }).waitFor();
+  await page.goto(`http://127.0.0.1:${port}/__writer369`, {
+    waitUntil: "domcontentloaded",
+    timeout: 30_000,
+  });
+  await page
+    .getByRole("tab", { name: "Insert", exact: true })
+    .waitFor({ timeout: 30_000 });
   const measure = async (phase, expected, visible) => {
     await page.waitForFunction(
       ({ expected, visible }) => {
