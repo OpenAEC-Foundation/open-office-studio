@@ -1,0 +1,248 @@
+{
+  "issue": 369,
+  "originatingAcceptanceGap": 362,
+  "createdAt": "2026-11-20T14:28:17.017Z",
+  "branch": "codex/writer-362-linux-release-2026-11-20",
+  "baseApplication": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+  "productCommit": "49ea8576222af1824628502b5b59243c0a297e9d",
+  "productFiles": {
+    "src/openaec-lint/Lint.tsx": "2f0b62a1fc33a37f863f3aeb74eadcf3632695ff98990d61cca148e3a7982226",
+    "src/openaec-lint/focus.ts": "a5fe46fd5887500fafc62e5105120d7aa1e947a0bc182f091c3a627cca9a8e41"
+  },
+  "productChanges": "Standard FocusOptions focusVisible:true only along existing keyboard navigation, KeyTips and keyboard popup returns. Pointer-only paths retain ordinary focus(). No CSS, native-driver focus injection, command or document-model change.",
+  "gtkDiagnostic": {
+    "run": 44751067263,
+    "harnessCommit": "b141e5c7720cac7516b859ad4c3731deb18737b3",
+    "artifactId": 14634384550,
+    "zipSha256": "5487e1b47d67fe38e4c5bef103736ae61b846d917c853d00d00c2db54ba8516a",
+    "downloadedAndDigestChecked": true,
+    "packages": "libwebkit2gtk-4.1-0 2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver 2.50.4-0ubuntu0.22.04.1\n",
+    "pid": 3087,
+    "xid": "2097155",
+    "ownedViewableWindowVerified": true,
+    "results": [
+      {
+        "route": "arrow-down",
+        "states": 2,
+        "focusVisible": [
+          false,
+          false
+        ],
+        "outline": [
+          [
+            "0px",
+            "0px"
+          ],
+          [
+            "0px",
+            "0px"
+          ]
+        ],
+        "trustedKeysOnly": true,
+        "documentFocusedAndVisible": true
+      },
+      {
+        "route": "tab",
+        "states": 3,
+        "focusVisible": [
+          true,
+          true,
+          true
+        ],
+        "outline": [
+          [
+            "2px",
+            "2px"
+          ],
+          [
+            "2px",
+            "2px"
+          ],
+          [
+            "2px",
+            "2px"
+          ]
+        ],
+        "trustedKeysOnly": true,
+        "documentFocusedAndVisible": true
+      },
+      {
+        "route": "arrow-down-explicit-keyboard-option",
+        "states": 2,
+        "focusVisible": [
+          true,
+          true
+        ],
+        "outline": [
+          [
+            "2px",
+            "2px"
+          ],
+          [
+            "2px",
+            "2px"
+          ]
+        ],
+        "trustedKeysOnly": true,
+        "documentFocusedAndVisible": true
+      }
+    ],
+    "cleanup": {
+      "ownWindowDestroyed": true
+    },
+    "visualReview": "Three original X11 captures viewed serially: baseline has no indicator. Tab and explicit-option captures show the preceding Page Break paint frame, not the final Table focus. DOM results cover both targets; no final-target pixel or full Office pass claimed."
+  },
+  "componentBrowser": {
+    "source": "5bd5e32d56388253751650161d33d3e0a9bda43b",
+    "productFileHashesMatchProductCommit": true,
+    "harnessCommit": "6aba2e2d1a35621bdaf1fac8de331bc5b5cc7ef5",
+    "harnessLfSha256": "0478b720d656b83cd7a431cc371bcba2844f024263dc47d960c694d51a622493",
+    "cases": 16,
+    "status": "passed bounded component keyboard routes",
+    "errors": [],
+    "viewport": "923x952; minimal actual React Lint component, two theme attributes",
+    "cleanup": [
+      "own browser closed",
+      "own Vite server closed"
+    ],
+    "visualReview": "Both final original images serially reviewed; same bytes as prior review reused only when hashes match. This fixture uses partial application styling/browser-default outlines; no Office 4px ring, full theme, vertical-clipping or native-app acceptance."
+  },
+  "targetedChecks": [
+    {
+      "command": "node node_modules/vitest/vitest.mjs run src/openaec-lint --configLoader runner --cache=false",
+      "source": "5bd5e32d; product files identical to49ea",
+      "passed": 19,
+      "files": 4,
+      "exitCode": 0,
+      "privateLogSha256": "14a3d8871922bf6bb7155460c3758763b41affd79b2383603326abd1f0c33e3d"
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit --incremental false",
+      "source": "5bd5e32d; product files identical to49ea",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check scripts/proef-writer369-keyboard-browser.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "Prettier focus.ts and component QA script; git diff --check",
+      "exitCode": 0,
+      "note": "Lint.tsx already failed full-file Prettier before this patch; no broad formatting applied."
+    }
+  ],
+  "retainedFailures": [
+    {
+      "run": 44749260245,
+      "harness": "691ebf898880a42b99c990ff69caceff291213db",
+      "cases": 0,
+      "status": "cancelled during dependency install",
+      "causeEvidence": "Runner mirror+file lists bypassed existing helper scan; Azure downloads remained slow. Exact job log preserved privately.",
+      "privateLogSha256": "ccb66170dd14c117ba9e30c409b7d2af33385e6e972cb9b1585de7957a468f3a"
+    },
+    {
+      "run": 44750766834,
+      "harness": "4abf2283f845f520021cd7f830686bf91deb5f23",
+      "artifactId": 14635570818,
+      "zipSha256": "0281eb225474eb40d4a2db4b4f70c4c85f6389adced601b44ccb89a760da1769",
+      "downloadedAndDigestChecked": true,
+      "cases": 0,
+      "status": "GTK startup failure: X_SetInputFocus BadMatch before viewable window",
+      "correction": "Poll exact owned visible XID while pumping GTK events, then one owned activation; no product or focus-gate relaxation."
+    },
+    {
+      "file": "component-pointer-precondition-failure.json",
+      "passedCases": 8,
+      "cause": "Second theme clicked already keyboard-focused Insert; incorrect fresh pointer-entry assumption. Final test uses actual Other→Insert pointer navigation."
+    },
+    {
+      "file": "component-cold-load-failure.json",
+      "passedCases": 0,
+      "cause": "Short load-event deadline before component readiness; final startup waits DOMContentLoaded and actual tab readiness, no timing/performance claim."
+    },
+    {
+      "file": "component-popup-context-unavailable.json",
+      "passedCases": 8,
+      "cause": "Experimental minimal fixture did not collapse Delete at240px. No popup pass or Office defect inferred; full-app popup acceptance remains pending."
+    }
+  ],
+  "files": [
+    {
+      "file": "gtk-report.json",
+      "sha256": "e4576765ded93f132345f866e9bbfa7e4b9f6fc6dfda322d0670462b7efa5762",
+      "bytes": 3933
+    },
+    {
+      "file": "gtk-arrow-down.png",
+      "sha256": "d52d84dfa7154abad80799ff8ee23ba14b295de0cfe6b6874fc6e772736b2497",
+      "bytes": 6400
+    },
+    {
+      "file": "gtk-tab.png",
+      "sha256": "23038a24ade598ecb6fb2c1f373d72a11b3473085abf1db7d12dc5e390d93a4e",
+      "bytes": 6473
+    },
+    {
+      "file": "gtk-arrow-down-explicit-keyboard-option.png",
+      "sha256": "23038a24ade598ecb6fb2c1f373d72a11b3473085abf1db7d12dc5e390d93a4e",
+      "bytes": 6473
+    },
+    {
+      "file": "gtk-startup-failure.json",
+      "sha256": "bce33289f8951c0ffd6e4cad97d2c65c75236fe97325cc1f8f4c09167e6340b8",
+      "bytes": 529
+    },
+    {
+      "file": "component-pointer-precondition-failure.json",
+      "sha256": "cd25842d8aad645052a35a33c151f414a6eb79fcd2260f3abae59cc8f2fe4083",
+      "bytes": 1864
+    },
+    {
+      "file": "component-cold-load-failure.json",
+      "sha256": "bf2c6aef48fa5da3cdead3972c39d881a55f416dac7c6513705c2aaeae52159c",
+      "bytes": 790
+    },
+    {
+      "file": "component-popup-context-unavailable.json",
+      "sha256": "d18dd421386ab1ec5f499a25845ce00c7f9f32b4e93aadcc3f678eed38c69bf1",
+      "bytes": 1951
+    },
+    {
+      "file": "component-report.json",
+      "sha256": "5fe11ef9129f476fe141f693c652c28a030c2065e10407126ad0a37be743da22",
+      "bytes": 3170
+    },
+    {
+      "file": "component-light.png",
+      "sha256": "8c1d645f2e1a7ec2b4a6382fe28cc5a561be61fa7a1d779ba972ee2bade4f12f",
+      "bytes": 9183
+    },
+    {
+      "file": "component-forge.png",
+      "sha256": "fc1442a47155aa64bba2a37b2dcf78f7772c4d473441053fe3a42dd5f5dcd4c7",
+      "bytes": 9301
+    }
+  ],
+  "upstreamSources": [
+    "https://github.com/WebKit/WebKit/commit/0a597dfab77395d30b03887d170115b01b866698",
+    "https://raw.githubusercontent.com/WebKit/WebKit/webkitgtk-2.50.4/Source/WebCore/dom/FocusOptions.idl",
+    "https://raw.githubusercontent.com/WebKit/WebKit/webkitgtk-2.50.4/Source/WebCore/dom/Element.cpp",
+    "https://github.com/web-platform-tests/wpt/blob/master/css/selectors/focus-visible-028.html"
+  ],
+  "remaining": [
+    "No full Office browser/native matrix on the product fix has run. Exact new combined source/packages are required; e92 release build44747669364 cannot certify49ea.",
+    "Linux native923 collapsed Delete, both themes, Down/End/Enter/Escape and strict4px/Y-geometry still require real packaged app checks. Genuine disabled Delete remains unavailable.",
+    "Original W3C and XTest ArrowDown failures remain failed. Earlier Tab1+6 geometry with screenshot timeout remains partial, not relabelled.",
+    "Screenshot-timeout cause in the Office WebDriver route remains unresolved. Standalone X11 captures are not a replacement Office matrix.",
+    "Windows/macOS targeted checks on new combined source remain pending; old I3 evidence keeps its original source binding.",
+    "Root controls integration/new-source build and acceptance; no main/tag/publication or issue closure. User withdrew today publication;366 remains deferred."
+  ],
+  "cleanup": {
+    "startedNoLocalGuiOrCapture": true,
+    "allOwnedHeadlessBrowsersAndViteServersClosed": true,
+    "noOfficeAppOrCallerSessionCreatedOrDeleted": true,
+    "noSharedSourceSDKOrWorkflowEdits": true,
+    "remoteGtkWindowDestroyed": true
+  },
+  "state": "Cause reproduced and reviewable product patch delivered; cross-platform/full native acceptance remains open."
+}

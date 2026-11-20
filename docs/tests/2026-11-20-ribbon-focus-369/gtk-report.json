@@ -1,0 +1,161 @@
+{
+  "kind": "standalone GTK cause diagnostic; not Office acceptance",
+  "pid": 3087,
+  "harnessCommit": "b141e5c7720cac7516b859ad4c3731deb18737b3",
+  "applicationSourceCompared": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+  "cases": [
+    {
+      "route": "arrow-down",
+      "standardFocusVisibleOption": false,
+      "states": [
+        {
+          "id": "a",
+          "focusVisible": false,
+          "outlineWidth": "0px",
+          "outlineOffset": "0px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "ArrowDown",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Down"
+        },
+        {
+          "id": "b",
+          "focusVisible": false,
+          "outlineWidth": "0px",
+          "outlineOffset": "0px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "ArrowDown",
+              "trusted": true
+            },
+            {
+              "key": "ArrowRight",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Right"
+        }
+      ]
+    },
+    {
+      "route": "tab",
+      "standardFocusVisibleOption": false,
+      "states": [
+        {
+          "id": "collapse",
+          "focusVisible": true,
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "Tab",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Tab"
+        },
+        {
+          "id": "a",
+          "focusVisible": true,
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "Tab",
+              "trusted": true
+            },
+            {
+              "key": "Tab",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Tab"
+        },
+        {
+          "id": "b",
+          "focusVisible": true,
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "Tab",
+              "trusted": true
+            },
+            {
+              "key": "Tab",
+              "trusted": true
+            },
+            {
+              "key": "ArrowRight",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Right"
+        }
+      ]
+    },
+    {
+      "route": "arrow-down-explicit-keyboard-option",
+      "standardFocusVisibleOption": true,
+      "states": [
+        {
+          "id": "a",
+          "focusVisible": true,
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "ArrowDown",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Down"
+        },
+        {
+          "id": "b",
+          "focusVisible": true,
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "hasFocus": true,
+          "visibility": "visible",
+          "events": [
+            {
+              "key": "ArrowDown",
+              "trusted": true
+            },
+            {
+              "key": "ArrowRight",
+              "trusted": true
+            }
+          ],
+          "nativeKey": "Right"
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "ownWindowDestroyed": true
+  },
+  "webkitPackages": "libwebkit2gtk-4.1-0 2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver 2.50.4-0ubuntu0.22.04.1\n",
+  "xid": "2097155",
+  "exactOwnedXidViewableBeforeActivation": true,
+  "baselineArrowVisible": false,
+  "nativeTabVisible": true,
+  "explicitKeyboardOptionVisible": true,
+  "status": "diagnostic completed"
+}
