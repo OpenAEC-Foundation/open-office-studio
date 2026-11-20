@@ -1,0 +1,418 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "desktopRun": 44715026752,
+  "harnessCommit": "75ca3dfe836f58a54c0bde5c1006a24b85b5ec3d",
+  "nativeRun": 44722706478,
+  "platform": "Linux",
+  "status": "passed-data-native-save-reopen",
+  "visualAcceptance": "pending independent original image review",
+  "noNativeInvalidInputClaim": true,
+  "artifactId": 14623265643,
+  "artifactDigest": "2929a5524de744e3eb4b2f6fa50832bee79a9fb67bb3878108d339fe6599039b",
+  "summary": [
+    {
+      "kind": "appimage",
+      "status": "passed-data-native-save-reopen",
+      "initialPid": 5150,
+      "reopenedPid": 5834,
+      "savedSha256": "7f0292d9984cf8a9a9dbc02122e477b1cb2d2d03866f8e7d65e72b6dcc0b128e",
+      "sourceUnchanged": true,
+      "temporaryDisposed": true,
+      "nativeSaveTarget": "/home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/saved/leesvolgorde.docx",
+      "nativeSaveInvoked": true,
+      "ownership": {
+        "method": "credential-bound-portal-request",
+        "windowPid": 5179,
+        "correlation": {
+          "ownedPid": 5150,
+          "requestHandle": "/org/freedesktop/portal/desktop/request/1_18/ashpd_0u59hoa0Hf",
+          "frontend": {
+            "sender": ":1.18",
+            "destination": "org.freedesktop.portal.Desktop",
+            "serial": 16,
+            "interface": "org.freedesktop.portal.FileChooser",
+            "token": "ashpd_0u59hoa0Hf",
+            "currentName": "leesvolgorde.docx",
+            "handle": null
+          },
+          "backend": {
+            "sender": ":1.2",
+            "destination": ":1.9",
+            "serial": 110,
+            "interface": "org.freedesktop.impl.portal.FileChooser",
+            "token": null,
+            "currentName": "leesvolgorde.docx",
+            "handle": "/org/freedesktop/portal/desktop/request/1_18/ashpd_0u59hoa0Hf"
+          },
+          "brokerUniqueName": ":1.2",
+          "backendUniqueName": ":1.9",
+          "backendPid": 5179
+        }
+      },
+      "portalMonitorClosed": true,
+      "portalProcess": {
+        "code": 0,
+        "signal": null,
+        "closed": true,
+        "ownedObserverPid": 5272,
+        "ownedProcessGroup": 5272,
+        "forcedGroupCleanup": false,
+        "ownedGroupClosed": true,
+        "stderr": ""
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "ownedApp": {
+            "pid": 5150,
+            "executable": "/tmp/oos-epub356-final-nilnWa/initial/appimage_extracted_581fcb1f6771cd396562e9b896c8b3c7/usr/bin/open-office-studio",
+            "appImageArchive": "/home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-installers/packages/appimage/Open Office Studio_2026.46.2_amd64.AppImage",
+            "terminated": true,
+            "closed": true
+          },
+          "driver": {
+            "program": "tauri-driver",
+            "args": [
+              "--port",
+              "45931",
+              "--native-port",
+              "36767"
+            ],
+            "pid": 5142,
+            "stdout": "",
+            "stderr": "\n(open-office-studio:5150): dbind-WARNING **: 10:53:44.912: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n",
+            "exit": {
+              "code": 0,
+              "signal": null
+            }
+          }
+        },
+        {
+          "phase": "reopened",
+          "ownedApp": {
+            "pid": 5834,
+            "executable": "/tmp/oos-epub356-final-nilnWa/reopened/appimage_extracted_581fcb1f6771cd396562e9b896c8b3c7/usr/bin/open-office-studio",
+            "appImageArchive": "/home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-installers/packages/appimage/Open Office Studio_2026.46.2_amd64.AppImage",
+            "terminated": true,
+            "closed": true
+          },
+          "driver": {
+            "program": "tauri-driver",
+            "args": [
+              "--port",
+              "34517",
+              "--native-port",
+              "41469"
+            ],
+            "pid": 5825,
+            "stdout": "Error serving connection: hyper::Error(User(Service), client error (Connect)\n\nCaused by:\n    0: tcp connect error\n    1: Connection refused (os error 111))\n",
+            "stderr": "\n(open-office-studio:5834): dbind-WARNING **: 10:54:03.301: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n",
+            "exit": {
+              "code": 0,
+              "signal": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "deb",
+      "status": "passed-data-native-save-reopen",
+      "initialPid": 6009,
+      "reopenedPid": 6483,
+      "savedSha256": "0299d2e4ef8bbd4a118ffeefe28077769e9b204aab517af218a4b4ab3303ebe4",
+      "sourceUnchanged": true,
+      "temporaryDisposed": true,
+      "nativeSaveTarget": "/home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/deb/initial/saved/leesvolgorde.docx",
+      "nativeSaveInvoked": true,
+      "ownership": {
+        "method": "credential-bound-portal-request",
+        "windowPid": 5179,
+        "correlation": {
+          "ownedPid": 6009,
+          "requestHandle": "/org/freedesktop/portal/desktop/request/1_196/ashpd_G6PjWeLxqE",
+          "frontend": {
+            "sender": ":1.196",
+            "destination": "org.freedesktop.portal.Desktop",
+            "serial": 16,
+            "interface": "org.freedesktop.portal.FileChooser",
+            "token": "ashpd_G6PjWeLxqE",
+            "currentName": "leesvolgorde.docx",
+            "handle": null
+          },
+          "backend": {
+            "sender": ":1.2",
+            "destination": ":1.9",
+            "serial": 132,
+            "interface": "org.freedesktop.impl.portal.FileChooser",
+            "token": null,
+            "currentName": "leesvolgorde.docx",
+            "handle": "/org/freedesktop/portal/desktop/request/1_196/ashpd_G6PjWeLxqE"
+          },
+          "brokerUniqueName": ":1.2",
+          "backendUniqueName": ":1.9",
+          "backendPid": 5179
+        }
+      },
+      "portalMonitorClosed": true,
+      "portalProcess": {
+        "code": 0,
+        "signal": null,
+        "closed": true,
+        "ownedObserverPid": 6095,
+        "ownedProcessGroup": 6095,
+        "forcedGroupCleanup": false,
+        "ownedGroupClosed": true,
+        "stderr": ""
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "ownedApp": {
+            "pid": 6009,
+            "executable": "/usr/bin/open-office-studio",
+            "closed": true
+          },
+          "driver": {
+            "program": "tauri-driver",
+            "args": [
+              "--port",
+              "43201",
+              "--native-port",
+              "39845"
+            ],
+            "pid": 6006,
+            "stdout": "Error serving connection: hyper::Error(User(Service), client error (Connect)\n\nCaused by:\n    0: tcp connect error\n    1: Connection refused (os error 111))\n",
+            "stderr": "\n(open-office-studio:6009): dbind-WARNING **: 10:54:23.896: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n",
+            "exit": {
+              "code": 0,
+              "signal": null
+            }
+          }
+        },
+        {
+          "phase": "reopened",
+          "ownedApp": {
+            "pid": 6483,
+            "executable": "/usr/bin/open-office-studio",
+            "closed": true
+          },
+          "driver": {
+            "program": "tauri-driver",
+            "args": [
+              "--port",
+              "46381",
+              "--native-port",
+              "39819"
+            ],
+            "pid": 6480,
+            "stdout": "Error serving connection: hyper::Error(User(Service), client error (Connect)\n\nCaused by:\n    0: tcp connect error\n    1: Connection refused (os error 111))\n",
+            "stderr": "\n(open-office-studio:6483): dbind-WARNING **: 10:54:41.458: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n",
+            "exit": {
+              "code": 0,
+              "signal": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-diagnostics.json",
+      "bytes": 4823,
+      "sha256": "4e74cb5f725a70175ecf4f36c65ef6c8ed53ef8e945d761fd94792bba101876d"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-interface-ready-x11.png",
+      "bytes": 117921,
+      "sha256": "d1c88982a62338ea62578d1a66a1f7c789a6289ef07e0edf2f6172e7ebc475c0"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-interface-ready.png",
+      "bytes": 124799,
+      "sha256": "8edf8e80d0d46e3c4ff7c8c342bbd3875bc88ef56a7c9b8667f6f169b2a9afdf"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-interface.png",
+      "bytes": 173175,
+      "sha256": "f64fc8f985e1eec73c343a6050cc71266d79f2819534db027beac2fa4dd07ecb"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-os-save-after-input.png",
+      "bytes": 81065,
+      "sha256": "51667b19fd177f23bf09f2ad43a24babac1a12760084920c62ebddac73816a01"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-os-save-before-input.png",
+      "bytes": 81587,
+      "sha256": "0f2ee765ef5414ac81d37df97513b683334305bb4e7729759f245a7c6d40290d"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-os-save.json",
+      "bytes": 1162,
+      "sha256": "3eab2b333257b6a4e379c0e1db5918046cc4a0d1954d7e8e3fabae513172a36a"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-portal-process.json",
+      "bytes": 183,
+      "sha256": "2cc39e4f8a626808b9bbefa6c5c451d69881e7bfae9ccd50dd260056e2511d9f"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-portal-ready.json",
+      "bytes": 114,
+      "sha256": "62886d308e894e7bbb14ce9b895bbb4af7f3846daab7559d260f784664b247f1"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-portal.dbus.txt",
+      "bytes": 2203,
+      "sha256": "c7a2ec3c8e762f695b11f2551090eca9debabdc99f41e1d5ebd1cc215625a2bd"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-portal.json",
+      "bytes": 1783,
+      "sha256": "3c6c5f32a36b2bad9ebe5c51c7d3cc67e3a3188cdecb9a9f2bf9c00dc9433824"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/native-portal.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/initial/saved/leesvolgorde.docx",
+      "bytes": 7480,
+      "sha256": "7f0292d9984cf8a9a9dbc02122e477b1cb2d2d03866f8e7d65e72b6dcc0b128e"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/package.json",
+      "bytes": 915,
+      "sha256": "29cb8cdc0f80d47d6bef322f06e2d19bb5a8b96a0f6803714c9f8f332206e1e8"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/reopened/native-diagnostics.json",
+      "bytes": 4735,
+      "sha256": "9ff40c18f48c10e010046306333a9f408dd169ab4c17b0ef2d08ff061a137489"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/reopened/native-interface-ready-x11.png",
+      "bytes": 93837,
+      "sha256": "39b8b776ae3300a6726edf4217fb677dc978df4efc651820a8b791f6a225cd04"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/reopened/native-interface-ready.png",
+      "bytes": 102531,
+      "sha256": "6f06d525e519ef7e6b3342316bfa034968fac3757b53237538aa143d4f54d6a2"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/reopened/native-interface.png",
+      "bytes": 163819,
+      "sha256": "9934739034453501ccce2b2814a84f67ce42a9f97f5238f7f33a374242412ff2"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/appimage/saved-oracle.json",
+      "bytes": 525,
+      "sha256": "276e347b11632262b99dbe8bbef979f371f6a1ec784f371e6da972fd42a40b60"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-diagnostics.json",
+      "bytes": 4601,
+      "sha256": "02a2bbe447912338a60beef0101822c40ff3f11e205f0cd2e8796650a7c6b786"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-interface-ready-x11.png",
+      "bytes": 117812,
+      "sha256": "930c443cac8bdd3b7adb6715938955a5fad74afab6d96c5634c7499ca879124c"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-interface-ready.png",
+      "bytes": 132127,
+      "sha256": "8feb768b517c53b7c1f0239a0c9e1457ff46c03352ade1e59676e9bd3a7c410a"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-interface.png",
+      "bytes": 173175,
+      "sha256": "f64fc8f985e1eec73c343a6050cc71266d79f2819534db027beac2fa4dd07ecb"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-os-save-after-input.png",
+      "bytes": 81065,
+      "sha256": "51667b19fd177f23bf09f2ad43a24babac1a12760084920c62ebddac73816a01"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-os-save-before-input.png",
+      "bytes": 81337,
+      "sha256": "680b2441ecbd96fa6525b2e0d846ab7ed1da906faa81b7095f18af9bc69071ee"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-os-save.json",
+      "bytes": 1160,
+      "sha256": "9bc7522ae2ef7459beb59c379e5f7c28e531c89109ff2733dae64e2cc24e42e0"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-portal-process.json",
+      "bytes": 183,
+      "sha256": "3a65332ba6b5d7459630574629086e9230577efaab1e4cd9a4601533161587a3"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-portal-ready.json",
+      "bytes": 114,
+      "sha256": "e932d3338c3a8f7b9e882be4b7516b971a7ea244ca175cde78076a6f452c9589"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-portal.dbus.txt",
+      "bytes": 2210,
+      "sha256": "53e40b2640ceeae45a7fd4b1721565d89ecb351e7b189767f5c8d26a2b9a5c50"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-portal.json",
+      "bytes": 1788,
+      "sha256": "1e3dca4c2fe3ba0144601b4cd2af1a36276244037cbc095f0c8ea89619c325e3"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/native-portal.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/initial/saved/leesvolgorde.docx",
+      "bytes": 7480,
+      "sha256": "0299d2e4ef8bbd4a118ffeefe28077769e9b204aab517af218a4b4ab3303ebe4"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/package.json",
+      "bytes": 910,
+      "sha256": "34cd29ecae97c30675fcb94f184bc65795acfca4133dc01245d97203a4d94f4c"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/reopened/native-diagnostics.json",
+      "bytes": 4355,
+      "sha256": "4a85775c98e477a96b81f0f75bc5fdf93de7e6f92ef215695e7c9027481d5b01"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/reopened/native-interface-ready-x11.png",
+      "bytes": 93837,
+      "sha256": "39b8b776ae3300a6726edf4217fb677dc978df4efc651820a8b791f6a225cd04"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/reopened/native-interface-ready.png",
+      "bytes": 102531,
+      "sha256": "6f06d525e519ef7e6b3342316bfa034968fac3757b53237538aa143d4f54d6a2"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/reopened/native-interface.png",
+      "bytes": 163828,
+      "sha256": "205310560e6336de54766e853fd0136a311a9324484076ab53248bb4f1071fc5"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/deb/saved-oracle.json",
+      "bytes": 525,
+      "sha256": "9c27966949208cc6fd2f8dc4228216371d362141232e3b8470cff5949715f991"
+    },
+    {
+      "path": ".local/epub356-final-attempt-44722706478-Linux/result.json",
+      "bytes": 5866,
+      "sha256": "4d5b36767e41e5213731e3bdce0a2af9bf3fa93b5df3241d49fa351afdc7cf98"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "desktopRun": 44715026752,
+  "harnessAttempt": "4",
+  "harnessCommit": "75ca3dfe836f58a54c0bde5c1006a24b85b5ec3d",
+  "artifact": {
+    "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "desktopRun": 44715026752,
+    "platform": "Linux",
+    "artifactId": 14620765849,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "190268d6b876931e06b52a915ca0af4082238ea1f7110d3d35461b1629692699",
+    "packages": [
+      {
+        "path": "appimage/Open Office Studio_2026.46.2_amd64.AppImage",
+        "kind": "appimage",
+        "sha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964"
+      },
+      {
+        "path": "deb/Open Office Studio_2026.46.2_amd64.deb",
+        "kind": "deb",
+        "sha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247"
+      }
+    ]
+  },
+  "platform": "Linux",
+  "visualAcceptance": "pending independent original image review",
+  "nativeInvalidInput": "not run; separate exact-source browser/unit checks",
+  "results": [
+    {
+      "kind": "appimage",
+      "packageSha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964",
+      "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+      "status": "passed-data-native-save-reopen",
+      "initial": {
+        "status": "passed",
+        "packagedApp": true,
+        "defaultBundledStatus": true,
+        "inputFormat": "epub",
+        "epubLoadedInWriter": true,
+        "freshProcessReopen": false,
+        "nativeSave": {
+          "nativeSaveDialog": true,
+          "savedPath": "/home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/appimage/initial/saved/leesvolgorde.docx",
+          "savedBytes": 7480,
+          "independentContent": "pending oracle"
+        },
+        "visualAcceptance": "pending original image review",
+        "saveAsShowsBundledRuntime": true,
+        "interaction": "enabled-save-as-native-pointer",
+        "entryPoint": "appimage-runtime",
+        "originalUnchanged": true
+      },
+      "initialPid": 5150,
+      "savedOracle": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "7f0292d9984cf8a9a9dbc02122e477b1cb2d2d03866f8e7d65e72b6dcc0b128e",
+        "savedBytes": 7480,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "reopened": {
+        "status": "passed",
+        "packagedApp": true,
+        "defaultBundledStatus": true,
+        "inputFormat": "docx",
+        "epubLoadedInWriter": false,
+        "freshProcessReopen": true,
+        "nativeSave": null,
+        "visualAcceptance": "pending original image review",
+        "saveAsShowsBundledRuntime": true,
+        "interaction": "enabled-save-as-native-pointer",
+        "entryPoint": "appimage-runtime",
+        "originalUnchanged": true
+      },
+      "reopenedPid": 5834,
+      "savedSha256": "7f0292d9984cf8a9a9dbc02122e477b1cb2d2d03866f8e7d65e72b6dcc0b128e",
+      "originalUnchanged": true,
+      "temporaryDisposed": true
+    },
+    {
+      "kind": "deb",
+      "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+      "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+      "status": "passed-data-native-save-reopen",
+      "initial": {
+        "status": "passed",
+        "packagedApp": true,
+        "defaultBundledStatus": true,
+        "inputFormat": "epub",
+        "epubLoadedInWriter": true,
+        "freshProcessReopen": false,
+        "nativeSave": {
+          "nativeSaveDialog": true,
+          "savedPath": "/home/runner/work/open-office-studio/open-office-studio/.local/epub356-final-native/deb/initial/saved/leesvolgorde.docx",
+          "savedBytes": 7480,
+          "independentContent": "pending oracle"
+        },
+        "visualAcceptance": "pending original image review",
+        "saveAsShowsBundledRuntime": true,
+        "interaction": "enabled-save-as-native-pointer",
+        "entryPoint": "installed-app",
+        "originalUnchanged": true
+      },
+      "initialPid": 6009,
+      "savedOracle": {
+        "status": "passed",
+        "scope": "independent saved-file content, not native visual acceptance",
+        "sourceSha256": "8e48dc46db4058f4539cece9564f090e2385ebb006454b51bcb261b6dcf73bae",
+        "savedSha256": "0299d2e4ef8bbd4a118ffeefe28077769e9b204aab517af218a4b4ab3303ebe4",
+        "savedBytes": 7480,
+        "chapterOrder": true,
+        "textMarkers": true,
+        "tableCells": true,
+        "referencedImageSha256": "f132d26c2c3b6ccd9beb0583a4fbf360ae0461c0a4c0b9f3a973fe3dd247ce33",
+        "noMacrosOrExternalResources": true,
+        "originalUnchanged": true
+      },
+      "reopened": {
+        "status": "passed",
+        "packagedApp": true,
+        "defaultBundledStatus": true,
+        "inputFormat": "docx",
+        "epubLoadedInWriter": false,
+        "freshProcessReopen": true,
+        "nativeSave": null,
+        "visualAcceptance": "pending original image review",
+        "saveAsShowsBundledRuntime": true,
+        "interaction": "enabled-save-as-native-pointer",
+        "entryPoint": "installed-app",
+        "originalUnchanged": true
+      },
+      "reopenedPid": 6483,
+      "savedSha256": "0299d2e4ef8bbd4a118ffeefe28077769e9b204aab517af218a4b4ab3303ebe4",
+      "originalUnchanged": true,
+      "temporaryDisposed": true
+    }
+  ],
+  "status": "passed-data-native-save-reopen",
+  "originalUnchanged": true
+}

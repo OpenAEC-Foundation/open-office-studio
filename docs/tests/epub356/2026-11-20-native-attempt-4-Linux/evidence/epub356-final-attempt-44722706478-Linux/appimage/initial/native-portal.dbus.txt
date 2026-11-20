@@ -1,0 +1,58 @@
+signal time=1795172031.593413 sender=org.freedesktop.DBus -> destination=:1.16 serial=2 path=/org/freedesktop/DBus; interface=org.freedesktop.DBus; member=NameAcquired
+   string ":1.16"
+signal time=1795172031.593429 sender=org.freedesktop.DBus -> destination=:1.16 serial=4 path=/org/freedesktop/DBus; interface=org.freedesktop.DBus; member=NameLost
+   string ":1.16"
+signal time=1795172031.897744 sender=:1.17 -> destination=(null destination) serial=2 path=/org/openaec/epub356; interface=org.openaec.epub356; member=Ready
+   string "epub356_90abd1b69fe94f46b63e1bc12c31843e"
+method call time=1795172032.567891 sender=:1.18 -> destination=org.freedesktop.portal.Desktop serial=16 path=/org/freedesktop/portal/desktop; interface=org.freedesktop.portal.FileChooser; member=SaveFile
+   string ""
+   string "Save as"
+   array [
+      dict entry(
+         string "handle_token"
+         variant             string "ashpd_0u59hoa0Hf"
+      )
+      dict entry(
+         string "current_name"
+         variant             string "leesvolgorde.docx"
+      )
+      dict entry(
+         string "filters"
+         variant             array [
+               struct {
+                  string "Office file"
+                  array [
+                     struct {
+                        uint32 0
+                        string "*.docx"
+                     }
+                  ]
+               }
+            ]
+      )
+   ]
+method call time=1795172032.568996 sender=:1.2 -> destination=:1.9 serial=110 path=/org/freedesktop/portal/desktop; interface=org.freedesktop.impl.portal.FileChooser; member=SaveFile
+   object path "/org/freedesktop/portal/desktop/request/1_18/ashpd_0u59hoa0Hf"
+   string ""
+   string ""
+   string "Save as"
+   array [
+      dict entry(
+         string "filters"
+         variant             array [
+               struct {
+                  string "Office file"
+                  array [
+                     struct {
+                        uint32 0
+                        string "*.docx"
+                     }
+                  ]
+               }
+            ]
+      )
+      dict entry(
+         string "current_name"
+         variant             string "leesvolgorde.docx"
+      )
+   ]
