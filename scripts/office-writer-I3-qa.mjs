@@ -1,4 +1,4 @@
-/** All four fixes on unchanged APP_I3, with a separately pinned 362 harness. */
+/** All four fixes and Linux compatibility corrections on a frozen release candidate, with a separately pinned 362 harness. */
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -31,7 +31,7 @@ const outDir = process.argv[2],
   route = process.argv[3];
 assert(["/", "/office/"].includes(route));
 const key = route === "/" ? "normal" : "hosted";
-const label = `writer-I3-QA-${key}`;
+const label = `writer-471-QA-${key}`;
 const output = `.local/${label}`;
 const receiptPath = `${outDir}.build.json`;
 await mkdir(output, { recursive: true });
