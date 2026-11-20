@@ -1,0 +1,161 @@
+name: Writer 361 isolated native acceptance
+on:
+  push:
+    branches: [codex/writer-361-native-acceptance-20261120]
+    paths: [.github/workflows/writer361-native-acceptance.yml]
+  workflow_dispatch:
+    inputs:
+      profile:
+        type: choice
+        options: [compile-only, linux, macos]
+        default: compile-only
+      execute_native:
+        type: boolean
+        default: false
+      frozen_manifest:
+        description: Immutable platform artifact manifest JSON, supplied by integration
+        type: string
+        default: ""
+      frozen_manifest_sha256:
+        description: SHA256 of sorted compact UTF-8 manifest JSON
+        type: string
+        default: ""
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: writer361-native-${{ github.ref }}-${{ inputs.profile || 'compile-only' }}
+  cancel-in-progress: false
+jobs:
+  compile-macos:
+    if: github.event_name == 'push' || inputs.profile == 'compile-only'
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile driver and check protocol syntax; no application or GUI
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .local/writer361-compile
+          xcrun swiftc scripts/writer-361-macos-ax.swift -o .local/writer361-compile/writer361-ax >.local/writer361-compile/swift.log 2>&1
+          node --check scripts/proef-writer-361-linux.mjs
+          python -m py_compile scripts/proef-writer-361-macos.py scripts/writer361-native-manifest.py scripts/proef-writer-361-macos-session.py
+          python scripts/proef-writer-361-macos.py --help >.local/writer361-compile/protocol-help.txt
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          paths=['scripts/writer-361-macos-ax.swift','scripts/proef-writer-361-macos.py','scripts/proef-writer-361-linux.mjs','.local/writer361-compile/writer361-ax']
+          report={'harnessCommit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'scope':'Swift compile and Python/Node protocol syntax only','nativeApplicationStarted':False,'nativeAcceptance':'not executed','files':{p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths},'swiftVersion':subprocess.check_output(['xcrun','swift','--version'],text=True).strip()}
+          pathlib.Path('.local/writer361-compile/report.json').write_text(json.dumps(report,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer361-compile-${{ github.sha }}
+          path: .local/writer361-compile/
+          include-hidden-files: true
+          if-no-files-found: error
+  plan:
+    if: github.event_name == 'workflow_dispatch' && inputs.profile != 'compile-only'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    outputs:
+      source_commit: ${{ steps.manifest.outputs.source_commit }}
+      runner: ${{ steps.manifest.outputs.runner }}
+      ribbon_commit: ${{ steps.manifest.outputs.ribbon_commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - id: manifest
+        env:
+          EXECUTE_NATIVE: ${{ inputs.execute_native }}
+          FROZEN_MANIFEST: ${{ inputs.frozen_manifest }}
+          FROZEN_MANIFEST_SHA256: ${{ inputs.frozen_manifest_sha256 }}
+          NATIVE_PROFILE: ${{ inputs.profile }}
+        run: python3 scripts/writer361-native-manifest.py plan "$NATIVE_PROFILE" .local/writer361-manifest.json
+  native:
+    needs: plan
+    if: github.event_name == 'workflow_dispatch' && inputs.execute_native && needs.plan.result == 'success'
+    runs-on: ${{ needs.plan.outputs.runner }}
+    timeout-minutes: 30
+    env:
+      EXECUTE_NATIVE: ${{ inputs.execute_native }}
+      FROZEN_MANIFEST: ${{ inputs.frozen_manifest }}
+      FROZEN_MANIFEST_SHA256: ${{ inputs.frozen_manifest_sha256 }}
+      NATIVE_PROFILE: ${{ inputs.profile }}
+      GH_TOKEN: ${{ github.token }}
+      OOS_361_EXECUTE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.plan.outputs.source_commit }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/writer361-harness
+      - uses: actions/checkout@v4
+        if: runner.os == 'Linux' && needs.plan.outputs.ribbon_commit != ''
+        with:
+          ref: ${{ needs.plan.outputs.ribbon_commit }}
+          path: .local/writer362-harness
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch and verify only the frozen canonical artifact; no build
+        run: python .local/writer361-harness/scripts/writer361-native-manifest.py fetch "$NATIVE_PROFILE" .local/writer361-manifest.json
+      - uses: actions/setup-node@v4
+        if: runner.os == 'Linux'
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        if: runner.os == 'Linux'
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        if: runner.os == 'Linux'
+      - name: Existing Linux native runtime/driver dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm --dir .local/writer361-harness install --frozen-lockfile --ignore-scripts
+      - name: Linux native 361 and optional separately pinned 362 module
+        if: runner.os == 'Linux'
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+        run: |
+          python - <<'PY'
+          import json,os,pathlib,subprocess
+          identity=json.loads(pathlib.Path('.local/input/identity.json').read_text())
+          env=dict(os.environ)
+          ribbon=identity.get('ribbonHarness')
+          if ribbon:
+            pathlib.Path('.local/writer362-harness/node_modules').symlink_to(pathlib.Path('.local/writer361-harness/node_modules').resolve(),target_is_directory=True)
+            env.update(OOS_362_NATIVE_MODULE=str(pathlib.Path('.local/writer362-harness/scripts/writer362-native-probe.mjs').resolve()),OOS_362_NATIVE_MODULE_SHA256=ribbon['sha256'],OOS_362_NATIVE_COMMIT=ribbon['commit'])
+          subprocess.run(['dbus-run-session','--','xvfb-run','-a','node','.local/writer361-harness/scripts/proef-writer-361-linux.mjs','.local/input/identity.json','.local/writer361-native'],env=env,check=True)
+          PY
+      - name: macOS native bounded core route on the same canonical artifact
+        if: runner.os == 'macOS'
+        run: python .local/writer361-harness/scripts/proef-writer-361-macos-session.py .local/input/identity.json .local/writer361-native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer361-native-${{ runner.os }}-${{ needs.plan.outputs.source_commit }}
+          path: |
+            .local/writer361-native/
+            .local/writer361-manifest.json
+            .local/input/identity.json
+            .local/input/artifact-origin.json
+          include-hidden-files: true
+          if-no-files-found: warn

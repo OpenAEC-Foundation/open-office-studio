@@ -15,8 +15,8 @@ import {
 } from "node:fs/promises";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 
 const [identityFile, outputDirectory] = process.argv.slice(2);
@@ -508,6 +508,58 @@ try {
   await check("fresh native process reopened saved table", 4, 3, savedCells);
   assert.equal(hash(await readFile(documentPath)), report.savedSha256);
   report.reopenedScreenshotSha256 = await screenshot("reopened");
+  report.writer361Status = "passed";
+  if (process.env.OOS_362_NATIVE_MODULE) {
+    const modulePath = resolve(process.env.OOS_362_NATIVE_MODULE);
+    const moduleSha256 = process.env.OOS_362_NATIVE_MODULE_SHA256;
+    const moduleCommit = process.env.OOS_362_NATIVE_COMMIT;
+    assert.match(moduleSha256 ?? "", /^[a-f0-9]{64}$/);
+    assert.match(moduleCommit ?? "", /^[a-f0-9]{40}$/);
+    assert.equal(hash(await readFile(modulePath)), moduleSha256);
+    assert.equal(
+      execFileSync("git", ["-C", dirname(modulePath), "rev-parse", "HEAD"], {
+        encoding: "utf8",
+      }).trim(),
+      moduleCommit,
+    );
+    const module = await import(pathToFileURL(modulePath).href);
+    const fixture362 = await module.createWriter362Fixture({
+      templatePath: resolve("public/templates/nieuw.docx"),
+      outDir: join(out, "362-fixture"),
+      protectedDocument: false,
+    });
+    execFileSync(application, [fixture362.path], {
+      env,
+      stdio: "ignore",
+      timeout: 15000,
+    });
+    await clickElement(await named("tab", "writer362-table.docx"));
+    report.optional362 = {
+      moduleCommit,
+      moduleSha256,
+      fixture: fixture362,
+      result: await module.runWriter362NativeProbe({
+        endpoint: `http://127.0.0.1:${driverPort}`,
+        sessionId: session,
+        outDir: join(out, "362-proof"),
+        source: {
+          commit: origin.sourceCommit,
+          tree: origin.sourceTree,
+          packageSha256: origin.packageSha256,
+          executableSha256: report.installedExecutableSha256,
+        },
+        fixture: fixture362,
+        ownedProfile: true,
+        signal: AbortSignal.timeout(210000),
+      }),
+    };
+  } else {
+    assert.ok(
+      !process.env.OOS_362_NATIVE_MODULE_SHA256 &&
+        !process.env.OOS_362_NATIVE_COMMIT,
+      "Partial optional 362 pin is not allowed",
+    );
+  }
   await closeSession();
   report.status = "passed";
 } catch (error) {

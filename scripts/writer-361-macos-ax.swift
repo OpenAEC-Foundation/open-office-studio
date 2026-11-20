@@ -56,6 +56,8 @@ if !AXIsProcessTrusted() {
         let title = text(element, kAXTitleAttribute); let label = text(element, kAXDescriptionAttribute)
         if action == "click-label" && (title == target || label == target) &&
            ["AXButton", "AXRadioButton", "AXTab"].contains(role) { matches.append(element) }
+        if action == "click-cell" && ["AXStaticText", "AXCell"].contains(role) &&
+           text(element, kAXValueAttribute).trimmingCharacters(in: .whitespacesAndNewlines) == target { matches.append(element) }
         if role == "AXTable" {
             let rows = attr(element, kAXRowsAttribute) as? [AXUIElement]
             let columns = attr(element, kAXColumnsAttribute) as? [AXUIElement]
@@ -68,7 +70,7 @@ if !AXIsProcessTrusted() {
     report["tables"] = tables; report["visited"] = index
     report["bounded"] = Date() >= deadline || index >= 1000
     report["status"] = "observed"
-    if action == "click-label" {
+    if action == "click-label" || action == "click-cell" {
         if matches.count == 1, let (p, s) = pointAndSize(matches[0]),
            let application = NSRunningApplication(processIdentifier: pid) {
             application.activate(options: [])
@@ -82,7 +84,7 @@ if !AXIsProcessTrusted() {
     } else if action == "chord" {
         let mappings: [String: (CGKeyCode, CGEventFlags)] = [
             "cmd-z": (6, .maskCommand), "cmd-shift-z": (6, [.maskCommand, .maskShift]),
-            "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand)]
+            "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand), "cmd-q": (12, .maskCommand)]
         if let (code, flags) = mappings[target] {
             for down in [true, false] {
                 let event = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down)

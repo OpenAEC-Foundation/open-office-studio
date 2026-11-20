@@ -23,7 +23,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("identity", type=Path)
     parser.add_argument("pid", type=int)
-    parser.add_argument("action", choices=["snapshot", "click-label", "chord"])
+    parser.add_argument("action", choices=["snapshot", "click-label", "click-cell", "chord"])
     parser.add_argument("report", type=Path)
     parser.add_argument("--target", default="")
     options = parser.parse_args()
