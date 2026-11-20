@@ -103,6 +103,13 @@ def main():
         state, timing = wait_for_native_grid(lambda: action("snapshot"), columns, 90 if readiness else 15)
         report["checks"].append({"name": label, "native": state, "readiness": timing})
 
+    def collect_additional():
+        # Independent QA must survive a later unavailable canvas-cell mouse target.
+        if "optionalMac362363" not in report:
+            collector = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))["collect_mac_ribbon_observations"]
+            report["optionalMac362363"] = collector(action, out / "ribbon-observations", identity, pid)
+            report["optionalMac362363"]["phase"] = "before-core-cell-target" if not report.get("coreUndoRedoPersistRestartPassed") else "after-core"
+
     def launch():
         nonlocal pid, started
         if owned():
@@ -179,6 +186,7 @@ def main():
                 output.writestr(name, value)
         launch()
         grid("native baseline", 3, readiness=True)
+        collect_additional()
         action("click-cell", "alpha")
         for side in ["Left", "Right"]:
             action("click-label", "Table Design")
@@ -216,15 +224,13 @@ def main():
             raise AssertionError("Reopen changed saved bytes")
         report["coreUndoRedoPersistRestartPassed"] = True
         # No document edits here: same verified reopened native app, separate QA.
-        collector = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))["collect_mac_ribbon_observations"]
-        report["optionalMac362363"] = collector(action, out / "ribbon-observations", identity, pid)
+        collect_additional()
         quit_app()
         report["status"] = "core-passed"
     except PermissionError as error:
         report.update(status="blocked", reason=str(error))
         if pid is not None and len(owned()) == 1 and "optionalMac362363" not in report:
-            collector = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))["collect_mac_ribbon_observations"]
-            report["optionalMac362363"] = collector(action, out / "ribbon-observations", identity, pid)
+            collect_additional()
         raise
     except Exception as error:
         report.update(status="failed", error=str(error))
