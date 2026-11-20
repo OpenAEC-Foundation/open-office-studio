@@ -67,6 +67,12 @@ def validate(value, profile):
         if module is not None:
             if profile != "linux" or not isinstance(module, dict) or not re.fullmatch("[a-f0-9]{40}", module.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", module.get("sha256", "")):
                 raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
+    remaining = value.get("remainingCoverage")
+    if remaining is not None:
+        if profile != "linux" or not isinstance(remaining, dict) or remaining.get("executionApproved") is not True:
+            raise ValueError("Remaining Linux coverage requires its own explicit execution release")
+        if type(remaining.get("run")) is not int or remaining["run"] <= 0 or not re.fullmatch("[a-f0-9]{64}", remaining.get("reportSha256", "")) or not re.fullmatch("[a-f0-9]{40}", remaining.get("harnessCommit", "")) or not isinstance(remaining.get("reportBase64"), str):
+            raise ValueError("Remaining coverage needs an immutable previous report identity")
     verify_root_candidate(value)
     return value
 

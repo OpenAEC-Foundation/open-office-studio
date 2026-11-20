@@ -64,6 +64,15 @@ class ManifestTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'execution approval'):
             VALIDATE(value, 'linux')
 
+    def test_remaining_linux_requires_separate_release(self):
+        value, _ = candidate()
+        value['remainingCoverage'] = {'executionApproved': False}
+        with self.assertRaisesRegex(ValueError, 'own explicit execution release'):
+            VALIDATE(value, 'linux')
+        value['remainingCoverage']['executionApproved'] = True
+        with self.assertRaisesRegex(ValueError, 'immutable previous report identity'):
+            VALIDATE(value, 'linux')
+
 
 if __name__ == '__main__':
     unittest.main()

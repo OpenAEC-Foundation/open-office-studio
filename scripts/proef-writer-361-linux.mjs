@@ -10,6 +10,7 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rm,
   writeFile,
 } from "node:fs/promises";
@@ -22,6 +23,11 @@ import {
   collectOptionalNativeQa,
   loadPinnedNativeModule,
 } from "./writer361-native-modules.mjs";
+
+import {
+  verifyPreviousCoverage,
+  retainPreviousFailure,
+} from "./writer361-native-remaining.mjs";
 
 const [identityFile, outputDirectory] = process.argv.slice(2);
 assert(
@@ -58,6 +64,7 @@ assert.equal(
 );
 const { unzipSync, zipSync, strFromU8, strToU8 } = await import("fflate");
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const remaining = verifyPreviousCoverage(origin);
 const out = resolve(outputDirectory);
 await mkdir(out, { recursive: true });
 assert.deepEqual(
@@ -84,6 +91,9 @@ const report = {
   checks: [],
   cleanup: {},
 };
+retainPreviousFailure(report, remaining);
+if (remaining)
+  await writeFile(join(out, "previous-linux-report.json"), remaining.raw);
 const application = "/usr/bin/open-office-studio";
 const expected = ["alpha", "beta", "", "", "", "omega", "delta", "", ""];
 const documentPath = join(out, "361-table.docx");
@@ -294,7 +304,19 @@ async function startDocument(columns = 3) {
     false,
     "No diagnostic editor bridge",
   );
-  assert.equal(pids().length, 1, "Exactly one owned application process");
+  const nativePids = pids();
+  assert.equal(nativePids.length, 1, "Exactly one owned application process");
+  const proc = `/proc/${nativePids[0]}/exe`;
+  assert.equal(await realpath(proc), await realpath(application));
+  const executableSha256 = hash(await readFile(proc));
+  assert.equal(executableSha256, report.installedExecutableSha256);
+  report.sessions ??= [];
+  report.sessions.push({
+    sessionId: session,
+    pid: Number(nativePids[0]),
+    executable: await realpath(proc),
+    executableSha256,
+  });
 }
 async function closeSession() {
   if (!session) return;
@@ -426,53 +448,60 @@ try {
   const initialPid = pids()[0];
   await clickCanvas();
   await chord("\uE011");
-  await check("baseline", 3, 3, expected);
-  for (const side of ["Left", "Right"]) {
-    if (side === "Right") await clickElement(await named("tab", "Home"));
+  if (remaining) {
+    await check("remaining fresh baseline", 3, 3, expected);
     await clickElement(await named("tab", "Table Design"));
-    const tabFocus = await state();
-    assert.equal(
-      tabFocus.focus.role,
-      "tab",
-      "Native mouse tab selection must own focus before insert",
-    );
-    report.checks.push({ name: `${side} ribbon focus`, ...tabFocus });
-    await clickButton(`Insert Column ${side}`);
-    await check(`${side} inserted`, 4);
-    // Crucial: no focus(), body click, or canvas input between insert and Undo.
+    await clickButton("Insert Column Right");
+    await check("remaining four-column setup", 4);
+  } else {
+    await check("baseline", 3, 3, expected);
+    for (const side of ["Left", "Right"]) {
+      if (side === "Right") await clickElement(await named("tab", "Home"));
+      await clickElement(await named("tab", "Table Design"));
+      const tabFocus = await state();
+      assert.equal(
+        tabFocus.focus.role,
+        "tab",
+        "Native mouse tab selection must own focus before insert",
+      );
+      report.checks.push({ name: `${side} ribbon focus`, ...tabFocus });
+      await clickButton(`Insert Column ${side}`);
+      await check(`${side} inserted`, 4);
+      // Crucial: no focus(), body click, or canvas input between insert and Undo.
+      await chord("z");
+      await check(`${side} immediate Undo`, 3, 3, expected);
+      await chord("y");
+      await check(`${side} Redo`, 4);
+      await chord("z");
+      await check(`${side} final Undo`, 3, 3, expected);
+    }
+    report.undoScreenshotSha256 = await screenshot("column-undo");
+    await clickCanvas(600, 180);
+    await press("\uE004");
+    await type("newrow");
+    const added = await check("last-cell Tab and typing", 3, 4, [
+      ...expected,
+      "newrow",
+      "",
+      "",
+    ]);
+    assert.equal(added.tables[0].cells[9], "newrow");
     await chord("z");
-    await check(`${side} immediate Undo`, 3, 3, expected);
+    await chord("z");
+    await check("Tab row Undo", 3, 3, expected);
+    await clickCanvas();
+    await press("\uE011");
+    await type("X");
+    await check("ordinary typing", 3, 3, ["Xalpha", ...expected.slice(1)]);
+    await chord("z");
+    await check("typing Undo", 3, 3, expected);
     await chord("y");
-    await check(`${side} Redo`, 4);
+    await check("typing Redo", 3, 3, ["Xalpha", ...expected.slice(1)]);
     await chord("z");
-    await check(`${side} final Undo`, 3, 3, expected);
+    await clickElement(await named("tab", "Table Design"));
+    await clickButton("Insert Column Right");
+    await check("before Find", 4);
   }
-  report.undoScreenshotSha256 = await screenshot("column-undo");
-  await clickCanvas(600, 180);
-  await press("\uE004");
-  await type("newrow");
-  const added = await check("last-cell Tab and typing", 3, 4, [
-    ...expected,
-    "newrow",
-    "",
-    "",
-  ]);
-  assert.equal(added.tables[0].cells[9], "newrow");
-  await chord("z");
-  await chord("z");
-  await check("Tab row Undo", 3, 3, expected);
-  await clickCanvas();
-  await press("\uE011");
-  await type("X");
-  await check("ordinary typing", 3, 3, ["Xalpha", ...expected.slice(1)]);
-  await chord("z");
-  await check("typing Undo", 3, 3, expected);
-  await chord("y");
-  await check("typing Redo", 3, 3, ["Xalpha", ...expected.slice(1)]);
-  await chord("z");
-  await clickElement(await named("tab", "Table Design"));
-  await clickButton("Insert Column Right");
-  await check("before Find", 4);
   await chord("h");
   const search = await waitFor(
     () =>
@@ -482,10 +511,20 @@ try {
     "Find input",
   );
   await clickElement(search);
-  await type("abc");
-  await chord("z");
-  assert.equal(await evaluate("return document.activeElement?.value"), "");
-  await check("Find input owns Undo", 4);
+  if (!remaining) {
+    await type("abc");
+    await chord("z");
+    assert.equal(await evaluate("return document.activeElement?.value"), "");
+    await check("Find input owns Undo", 4);
+  } else {
+    assert.equal(
+      await evaluate(
+        "return document.activeElement?.getAttribute('aria-label')",
+      ),
+      "Find what",
+    );
+    await check("remaining Find opened; previous Undo failure retained", 4);
+  }
   const close = await evaluate(
     "return document.querySelector('[role=search] button[aria-label=Close]')",
   );
@@ -562,7 +601,8 @@ try {
   await check("fresh native process reopened saved table", 4, 3, savedCells);
   assert.equal(hash(await readFile(documentPath)), report.savedSha256);
   report.reopenedScreenshotSha256 = await screenshot("reopened");
-  report.writer361Status = "passed";
+  report.writer361Status = remaining ? "failed" : "passed";
+  if (remaining) report.remainingCoverageStatus = "passed";
   if (optionalModules[362]) {
     await collectOptionalNativeQa(report, 362, async () => {
       const { moduleCommit, moduleSha256, module } = optionalModules[362];
@@ -621,8 +661,12 @@ try {
     });
   }
   await closeSession();
-  report.status = report.optionalQaFailures?.length ? "partial" : "passed";
-  if (report.optionalQaFailures?.length) process.exitCode = 1;
+  report.status = remaining
+    ? "failed"
+    : report.optionalQaFailures?.length
+      ? "partial"
+      : "passed";
+  if (remaining || report.optionalQaFailures?.length) process.exitCode = 1;
 } catch (error) {
   report.status = "failed";
   report.error = String(error.stack || error);
