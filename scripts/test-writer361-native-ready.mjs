@@ -140,3 +140,41 @@ test("fresh362 fixture can require its real2x3 grid and exact six header cells",
   assert.equal(r.rows, 2);
   assert.deepEqual(r.cells, six);
 });
+
+test("actual362 all-header fixture requires all six columnheader texts inDOM order", () => {
+  const f = fixture();
+  const six = ["Alpha", "Beta", "Gamma", "One", "Two", "Three"];
+  f.table.getAttribute = (n) =>
+    n === "aria-rowcount" ? "2" : n === "aria-colcount" ? "3" : null;
+  f.table.querySelectorAll = (selector) =>
+    selector === "[role=cell]"
+      ? []
+      : selector === "[role=columnheader],[role=rowheader],[role=cell]"
+        ? six.map((textContent) => ({ textContent }))
+        : [];
+  const r = inspect(f, () =>
+    inspectSelectedDocumentReady("361-other.docx", 3, six, 2),
+  );
+  assert(r);
+  assert.deepEqual(r.cells, six);
+  assert.equal(
+    inspect(f, () =>
+      inspectSelectedDocumentReady("361-other.docx", 3, [...six].reverse(), 2),
+    ),
+    null,
+  );
+});
+test("mixed columnheader/rowheader/cell selector preserves DOM order instead of role grouping", () => {
+  const f = fixture();
+  const ordered = [
+    { role: "columnheader", textContent: "alpha" },
+    { role: "cell", textContent: "beta" },
+    { role: "rowheader", textContent: "" },
+    ...cells.slice(3).map((textContent) => ({ role: "cell", textContent })),
+  ];
+  f.table.querySelectorAll = (selector) =>
+    ordered.filter((n) => selector.includes("[role=" + n.role + "]"));
+  const r = inspect(f);
+  assert(r);
+  assert.deepEqual(r.cells, cells);
+});

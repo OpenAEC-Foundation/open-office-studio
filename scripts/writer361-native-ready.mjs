@@ -40,9 +40,11 @@ export function inspectSelectedDocumentReady(
     Number(tables[0].getAttribute("aria-colcount")) !== columns
   )
     return null;
-  const cells = [...tables[0].querySelectorAll("[role=cell]")].map(
-    (c) => c.textContent,
-  );
+  const cells = [
+    ...tables[0].querySelectorAll(
+      "[role=columnheader],[role=rowheader],[role=cell]",
+    ),
+  ].map((c) => c.textContent);
   if (expectedCells && JSON.stringify(cells) !== JSON.stringify(expectedCells))
     return null;
   const r = canvas.getBoundingClientRect();
@@ -104,6 +106,11 @@ export function inspectSelectedDocumentAnatomy() {
       tables: [...p.querySelectorAll("[role=table]")].map((t) => ({
         rows: t.getAttribute("aria-rowcount"),
         columns: t.getAttribute("aria-colcount"),
+        cells: [
+          ...t.querySelectorAll(
+            "[role=columnheader],[role=rowheader],[role=cell]",
+          ),
+        ].map((c) => ({ role: c.getAttribute("role"), text: c.textContent })),
       })),
       canvases: [...p.querySelectorAll(".canvas-page canvas")].map((c) => ({
         width: c.width,
