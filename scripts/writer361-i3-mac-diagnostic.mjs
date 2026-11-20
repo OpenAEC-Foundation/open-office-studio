@@ -40,7 +40,7 @@ const { verifyBuildReceipt } = await import(
 );
 const name = "writer361-I3-mac-diagnostic",
   outDir = ".local/dist-" + name,
-  receiptPath = ".local/" + name + ".build.json";
+  receiptPath = outDir + ".build.json";
 const env = {
   ...process.env,
   OFFICE_TEST_APP_CWD: app,
