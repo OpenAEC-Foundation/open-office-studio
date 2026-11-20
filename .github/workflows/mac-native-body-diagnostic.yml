@@ -1,0 +1,53 @@
+name: Mac native body activation diagnostic
+on:
+  push:
+    branches: [codex/mac-native-body-blocker-20261120]
+    paths: [.github/workflows/mac-native-body-diagnostic.yml, .github/mac-native-body-diagnostic.json]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnostic:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    env:
+      EXECUTE_NATIVE: 'true'
+      OOS_361_EXECUTE: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/mac-body-harness
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify frozen old candidate and fetch canonical DMG; no build
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,subprocess
+          manifest=pathlib.Path('.local/mac-body-harness/.github/mac-native-body-diagnostic.json').read_bytes()
+          value=json.loads(manifest)
+          assert value['sourceCommit']=='7f126f4b8e5269a54388cf78c48c78d2acc0daa1'
+          assert value['sourceTree']=='8bc608488760e48919d7fb4e72a42569175b52a4'
+          assert value['packageSha256']=='80f10634da0af9199a8a7c561a59a231b76d9787a40d110d981e0d1b3db82df0'
+          env=dict(os.environ,FROZEN_MANIFEST=manifest.decode(),FROZEN_MANIFEST_SHA256=hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest())
+          subprocess.run(['python','.local/mac-body-harness/scripts/writer361-native-manifest.py','fetch','macos','.local/body-manifest.json'],env=env,check=True)
+          PY
+      - name: Observe initial body before and after explicit native activation
+        run: python .local/mac-body-harness/scripts/mac-native-body-diagnostic.py .local/input/identity.json .local/mac-body-diagnostic
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac-native-body-activation-${{ github.sha }}
+          path: |
+            .local/mac-body-diagnostic/
+            .local/body-manifest.json
+            .local/input/identity.json
+            .local/input/artifact-origin.json
+            .local/input/root-frozen-candidate.json
+          include-hidden-files: true
+          if-no-files-found: error
