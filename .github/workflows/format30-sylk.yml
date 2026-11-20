@@ -1,0 +1,87 @@
+name: Format 30 bounded SYLK alias proof
+on:
+  push:
+    branches: [codex/formats-30-sylk-coverage-2026-11-20]
+    paths: [.github/format30-sylk-candidate.json, .github/format30-sylk-attempt.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: format30-sylk-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-22.04
+    outputs:
+      runners: ${{ steps.plan.outputs.runners }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: 5f940820e8f74cd42fe0cee454340481064b6cd3
+          path: .local/artifact-verifier
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: plan
+        run: |
+          node --input-type=module -e '
+            import {readFileSync,appendFileSync} from "node:fs";
+            import {validatePlan,validateAttempt} from "./.local/artifact-verifier/scripts/epub356-final-artifacts.mjs";
+            const plan=validatePlan(JSON.parse(readFileSync(".github/format30-sylk-candidate.json","utf8")));
+            if(plan.applicationCommit!=="7f126f4b8e5269a54388cf78c48c78d2acc0daa1"||plan.desktopRun!==44715026752) throw Error("Wrong I3 source/run");
+            const attempt=validateAttempt(JSON.parse(readFileSync(".github/format30-sylk-attempt.json","utf8")));
+            appendFileSync(process.env.GITHUB_OUTPUT,`runners=${JSON.stringify(attempt.runners)}\n`);
+          '
+  prove:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(needs.plan.outputs.runners) }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    env:
+      OOS_FORMAT30_HARNESS: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+      - uses: actions/checkout@v4
+        with:
+          path: .local/sylk-harness
+      - uses: actions/checkout@v4
+        with:
+          ref: 5f940820e8f74cd42fe0cee454340481064b6cd3
+          path: .local/artifact-verifier
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Isolated Linux extraction and runtime dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev squashfs-tools
+      - run: pnpm install --frozen-lockfile
+      - name: Verify exact canonical I3 archives and installer hashes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node .local/artifact-verifier/scripts/epub356-final-artifacts.mjs .local/sylk-harness/.github/format30-sylk-candidate.json ${{ runner.os }} .local/format30-sylk-installers
+      - name: Copy only two new test files, without application mutation
+        run: node --input-type=module -e "import {copyFileSync} from 'node:fs'; for(const name of ['proef-format30-sylk.mjs','format30-sylk-oracle.py']) copyFileSync('.local/sylk-harness/scripts/'+name,'scripts/'+name);"
+      - name: Real private runtime, production input/engine route and independent cell oracle
+        run: node scripts/proef-format30-sylk.mjs .local/sylk-harness/.github/format30-sylk-candidate.json ${{ runner.os }} .local/format30-sylk-installers .local/format30-sylk-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: format30-sylk-${{ runner.os }}
+          path: .local/format30-sylk-proof
+          include-hidden-files: true
+          if-no-files-found: warn
