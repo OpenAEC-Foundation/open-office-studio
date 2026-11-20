@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { preview } from "vite";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
@@ -27,6 +28,21 @@ p["word/document.xml"] = strToU8(
 );
 const fixture = Buffer.from(zipSync(p));
 const report = {
+  harness: {
+    commit: execFileSync(
+      "git",
+      [
+        "-C",
+        fileURLToPath(new URL("../", import.meta.url)),
+        "rev-parse",
+        "HEAD",
+      ],
+      { encoding: "utf8" },
+    ).trim(),
+    sha256: createHash("sha256")
+      .update(fs.readFileSync(fileURLToPath(import.meta.url)))
+      .digest("hex"),
+  },
   source: execFileSync("git", ["rev-parse", "HEAD"], {
     encoding: "utf8",
   }).trim(),
@@ -91,6 +107,22 @@ try {
   page.setDefaultTimeout(20000);
   page.on("pageerror", (e) => report.errors.push(e.message));
   await page.goto(server.resolvedUrls.local[0]);
+  const browserPlatform = await page.evaluate(() => navigator.platform);
+  const apple = /Mac|iPod|iPhone|iPad/.test(browserPlatform);
+  const keys = {
+    undo: apple ? "Meta+z" : "Control+z",
+    redo: apple ? "Meta+Shift+z" : "Control+y",
+    documentHome: apple ? "Meta+ArrowUp" : "Control+Home",
+    // Home is the SDK's explicit line-start key on both platforms.
+    lineHome: "Home",
+    findReplace: apple ? "Meta+h" : "Control+h",
+  };
+  report.keyboardContext = {
+    hostPlatform: process.platform,
+    browserPlatform,
+    synthetic: apple !== (process.platform === "darwin"),
+    keys,
+  };
   await page.locator("input[type=file]").first().setInputFiles({
     name: "table-undo.docx",
     mimeType:
@@ -101,7 +133,7 @@ try {
   await canvas.waitFor();
   await page.evaluate(() => document.fonts.ready);
   await canvas.click({ position: { x: 150, y: 110 } });
-  await page.keyboard.press("Control+Home");
+  await page.keyboard.press(keys.documentHome);
   await page.getByRole("tab", { name: "Table Design", exact: true }).waitFor();
   const state = async () =>
     page.evaluate(() => ({
@@ -135,15 +167,15 @@ try {
     .click();
   await page.waitForTimeout(500);
   report.checks.push({ name: "after insert", ...(await state()) });
-  await page.keyboard.press("Control+z");
+  await page.keyboard.press(keys.undo);
   await page.waitForTimeout(500);
   report.checks.push({ name: "after immediate undo", ...(await state()) });
   assert.equal(report.checks.at(-1).tables[0].columns, fixed ? 3 : 4);
   await page.screenshot({ path: output + "/after-undo.png" });
   if (fixed) {
-    await page.keyboard.press("Control+y");
+    await page.keyboard.press(keys.redo);
     await check("left Redo", 4);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await check("left second Undo", 3);
     await page.getByRole("tab", { name: "Home", exact: true }).click();
     await page.getByRole("tab", { name: "Table Design", exact: true }).click();
@@ -151,11 +183,11 @@ try {
       .getByRole("button", { name: "Insert Column Right", exact: true })
       .click();
     await check("right insert", 4);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await check("right Undo", 3);
-    await page.keyboard.press("Control+y");
+    await page.keyboard.press(keys.redo);
     await check("right Redo", 4);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await check("right reset", 3);
     await canvas.click({ position: { x: 600, y: 180 } });
     await page.keyboard.press("Tab");
@@ -163,32 +195,32 @@ try {
     const added = await check("last-cell Tab and typing", 3);
     assert.equal(added.tables[0].rows, 4);
     assert.equal(added.tables[0].text[9], "newrow");
-    await page.keyboard.press("Control+z");
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
+    await page.keyboard.press(keys.undo);
     const rowUndo = await check("Tab row Undo", 3);
     assert.equal(rowUndo.tables[0].rows, 3);
     await canvas.click({ position: { x: 145, y: 110 } });
-    await page.keyboard.press("Home");
+    await page.keyboard.press(keys.lineHome);
     await page.keyboard.type("X");
     assert.equal(
       (await check("ordinary typing", 3)).tables[0].text[0],
       "Xalpha",
     );
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     assert.equal((await check("typing Undo", 3)).tables[0].text[0], "alpha");
-    await page.keyboard.press("Control+y");
+    await page.keyboard.press(keys.redo);
     assert.equal((await check("typing Redo", 3)).tables[0].text[0], "Xalpha");
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await page.getByRole("tab", { name: "Table Design", exact: true }).click();
     await page
       .getByRole("button", { name: "Insert Column Right", exact: true })
       .click();
     await check("before search input", 4);
-    await page.keyboard.press("Control+h");
+    await page.keyboard.press(keys.findReplace);
     const search = page.getByLabel("Find what", { exact: true });
     await search.click();
     await page.keyboard.type("abc");
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     assert.equal(await search.inputValue(), "");
     await check("search input owns Undo", 4);
     await page
@@ -198,7 +230,7 @@ try {
     await page.waitForFunction(() =>
       document.activeElement?.matches(".paged-editor__yrs-input"),
     );
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     assert.deepEqual(
       (await check("search close and document Undo", 3)).tables[0].text,
       rows.flat(),
@@ -212,31 +244,31 @@ try {
     const otherCanvas = page.locator(".canvas-page canvas:visible").first();
     await otherCanvas.waitFor();
     await otherCanvas.click({ position: { x: 150, y: 110 } });
-    await page.keyboard.press("Control+Home");
+    await page.keyboard.press(keys.documentHome);
     await page.getByRole("tab", { name: "Table Design", exact: true }).click();
     await page
       .getByRole("button", { name: "Insert Column Right", exact: true })
       .click();
     await check("other document insert", 4);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await check("other document Undo", 3);
     await page.getByRole("tab", { name: /^table-undo\.docx/ }).click();
     await check("original tab isolated", 3);
-    await page.keyboard.press("Control+y");
+    await page.keyboard.press(keys.redo);
     await check("original tab Redo", 4);
     await page.getByRole("tab", { name: /^table-other\.docx/ }).click();
     await check("other tab still isolated", 3);
-    await page.keyboard.press("Control+y");
+    await page.keyboard.press(keys.redo);
     await check("other tab Redo", 4);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await check("other tab reset", 3);
     await page.getByRole("tab", { name: /^table-undo\.docx/ }).click();
     await check("original tab retains its own edit", 4);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await check("original tab final reset", 3);
   } else {
     await canvas.click({ position: { x: 150, y: 110 } });
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(keys.undo);
     await page.waitForTimeout(500);
   }
   report.checks.push({
@@ -246,7 +278,7 @@ try {
   await page.screenshot({ path: output + "/after-control.png" });
   assert.deepEqual(report.errors, []);
   report.status = "passed";
-  report.acceptance = fixed;
+  report.acceptance = fixed && !report.keyboardContext.synthetic;
 } catch (e) {
   report.status = "failed";
   report.error = String(e);
