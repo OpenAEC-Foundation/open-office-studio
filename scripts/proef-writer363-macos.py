@@ -49,7 +49,7 @@ def actual_window(snapshot):
     return windows[0]
 
 
-def geometry(node, snapshot, zone=None):
+def geometry(node, snapshot, zone=None, kind=None):
     p, s = value(node, "AXPosition"), value(node, "AXSize")
     if not isinstance(p, dict) or not isinstance(s, dict):
         return None
@@ -58,20 +58,28 @@ def geometry(node, snapshot, zone=None):
         return None
     x, y, width, height = numbers
     w = actual_window(snapshot)["bounds"]
-    if width <= 8 or height < 12 or x < w["X"] or y < w["Y"] or x+width > w["X"]+w["Width"]+1 or y+height > w["Y"]+w["Height"]+1:
+    if width <= 8 or height < 12:
+        return None
+    contained = x >= w["X"] and y >= w["Y"] and x+width <= w["X"]+w["Width"]+1 and y+height <= w["Y"]+w["Height"]+1
+    intersects = x < w["X"]+w["Width"] and y < w["Y"]+w["Height"] and x+width > w["X"] and y+height > w["Y"]
+    partial_popup = (not contained and intersects and kind == "language-trigger" and value(node, "AXRole") == "AXPopUpButton"
+                     and any(label in (value(node, "AXTitle"), value(node, "AXDescription"))
+                             for label in ("Language: English", "Taal: English", "Language: Nederlands", "Taal: Nederlands")))
+    if not contained and not partial_popup:
         return None
     if zone == "ribbon" and y+height/2 > w["Y"]+w["Height"]*.28:
         return None
-    if zone == "dialog" and y+height/2 < w["Y"]+w["Height"]*.2:
+    if zone == "dialog" and not partial_popup and y+height/2 < w["Y"]+w["Height"]*.2:
         return None
-    return dict(x=x, y=y, width=width, height=height)
+    return dict(x=x, y=y, width=width, height=height,
+                geometryPolicy="partial-native-language-popup-AXPress-only" if partial_popup else "fully-contained-native-control")
 
 
-def select_control(snapshot, labels, roles, zone=None):
+def select_control(snapshot, labels, roles, zone=None, kind=None):
     candidates = []
     for node in snapshot.get("rawNodes", []):
         label = next((label for label in labels if label in (value(node, "AXTitle"), value(node, "AXDescription"))), None)
-        box = geometry(node, snapshot, zone)
+        box = geometry(node, snapshot, zone, kind)
         if (label and box and value(node, "AXRole") in roles and value(node, "AXEnabled") is True
                 and "AXPress" in node.get("attributes", {}).get("actions", {}).get("value", [])):
             candidates.append({"node": node, "label": label, "role": value(node, "AXRole"), **box})
@@ -226,6 +234,7 @@ class Probe:
         snapshot = self.action(cleanup=cleanup)
         selected = selector(snapshot)
         spec = {"kind": kind, **{k: selected[k] for k in ("label", "role", "x", "y", "width", "height")}}
+        spec["geometryPolicy"] = selected["geometryPolicy"]
         self.action("press", spec, cleanup)
 
     def capture(self, label, snapshot):
@@ -274,12 +283,15 @@ class Probe:
     def open_settings(self, language, cleanup=False):
         self.dialog_open = True
         self.press("settings-open", lambda s: select_control(s, ["Settings" if language == "en" else "Instellingen"], {"AXButton"}, "ribbon"), cleanup)
+        if not cleanup:
+            _, capture = self.evidence(f"Settings-before-trigger-{language}-{self.counter:03d}")
+            self.report.setdefault("settingsCapabilities", []).append({"stage": "Before language-trigger readiness wait", "capture": capture})
         self.wait(lambda: self.language_trigger(language, cleanup), "Actual native Settings language control unavailable", cleanup=cleanup)
 
     def language_trigger(self, language, cleanup=False):
         try:
             label = "Language: English" if language == "en" else "Taal: Nederlands"
-            return select_control(self.action(cleanup=cleanup), [label], {"AXButton", "AXPopUpButton"}, "dialog")
+            return select_control(self.action(cleanup=cleanup), [label], {"AXButton", "AXPopUpButton"}, "dialog", "language-trigger")
         except PermissionError:
             return None
 
@@ -297,11 +309,8 @@ class Probe:
 
     def change_language(self, current, target, cleanup=False):
         self.open_settings(current, cleanup)
-        if not cleanup:
-            _, capture = self.evidence("settings-"+current+"-to-"+target)
-            self.report.setdefault("settingsCapabilities", []).append(capture)
         trigger = "Language: English" if current == "en" else "Taal: Nederlands"
-        self.press("language-trigger", lambda s: select_control(s, [trigger], {"AXButton", "AXPopUpButton"}, "dialog"), cleanup)
+        self.press("language-trigger", lambda s: select_control(s, [trigger], {"AXButton", "AXPopUpButton"}, "dialog", "language-trigger"), cleanup)
         if not cleanup:
             self.evidence("language-menu-"+current+"-to-"+target)
         options = ["Nederlands", "Nederlands Dutch", "Nederlands Nederlands"] if target == "nl" else ["English", "English English", "English Engels"]
@@ -366,7 +375,7 @@ class Probe:
         if self.phase == "capability":
             self.open_settings("en")
             self.evidence("Settings-language-capability")
-            self.press("language-trigger", lambda s: select_control(s, ["Language: English"], {"AXButton", "AXPopUpButton"}, "dialog"))
+            self.press("language-trigger", lambda s: select_control(s, ["Language: English"], {"AXButton", "AXPopUpButton"}, "dialog", "language-trigger"))
             self.evidence("Settings-language-options-capability")
             self.cancel_settings()
         else:

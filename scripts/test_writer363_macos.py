@@ -106,6 +106,69 @@ class Selectors(unittest.TestCase):
         with self.assertRaises(PermissionError):
             M.select_control(state, ["Language: English"], {"AXButton", "AXPopUpButton"}, "dialog")
 
+    def test_actual_partially_intersecting_language_popup_frame_is_preserved(self):
+        state = snapshot()
+        popup = node(100, "Language: English", "AXPopUpButton", x=269, y=-55, width=493, height=270)
+        state["rawNodes"].append(popup)
+        control = M.select_control(state, ["Language: English"], {"AXPopUpButton"}, "dialog", "language-trigger")
+        self.assertEqual({key: control[key] for key in ("x", "y", "width", "height")}, dict(x=269, y=-55, width=493, height=270))
+        self.assertEqual(control["geometryPolicy"], "partial-native-language-popup-AXPress-only")
+        self.assertEqual(M.value(popup, "AXPosition"), dict(x=269, y=-55))
+
+    def test_partial_frame_exception_requires_exact_kind_role_and_label(self):
+        for role, label, kind in [("AXButton", "Language: English", "language-trigger"),
+                                   ("AXPopUpButton", "Other popup", "language-trigger"),
+                                   ("AXPopUpButton", "Language: English", "settings-open"),
+                                   ("AXPopUpButton", "Language: English", None),
+                                   ("AXButton", "Save", "settings-save")]:
+            with self.subTest(role=role, label=label, kind=kind):
+                state = snapshot()
+                state["rawNodes"].append(node(100, label, role, x=269, y=-55, width=493, height=270))
+                with self.assertRaises(PermissionError):
+                    M.select_control(state, [label], {role}, "dialog", kind)
+
+    def test_fully_offscreen_or_nonfinite_language_popup_stays_unavailable(self):
+        for x, y in [(269, -400), (-800, 100), (float("nan"), 100)]:
+            with self.subTest(x=x, y=y):
+                state = snapshot()
+                state["rawNodes"].append(node(100, "Language: English", "AXPopUpButton", x=x, y=y, width=493, height=270))
+                with self.assertRaises(PermissionError):
+                    M.select_control(state, ["Language: English"], {"AXPopUpButton"}, "dialog", "language-trigger")
+
+    def test_partial_popup_still_requires_strict_uniqueness_enabled_and_press(self):
+        for problem in ("duplicate", "disabled", "missing-press"):
+            with self.subTest(problem=problem):
+                state = snapshot()
+                popup = node(100, "Language: English", "AXPopUpButton", x=269, y=-55, width=493, height=270)
+                state["rawNodes"].append(popup)
+                if problem == "duplicate":
+                    state["rawNodes"].append(node(101, "Language: English", "AXPopUpButton", x=279, y=-55, width=493, height=270))
+                if problem == "disabled":
+                    popup["attributes"]["AXEnabled"]["value"] = False
+                if problem == "missing-press":
+                    popup["attributes"]["actions"]["value"] = []
+                with self.assertRaises(PermissionError):
+                    M.select_control(state, ["Language: English"], {"AXPopUpButton"}, "dialog", "language-trigger")
+
+    def test_settings_original_evidence_precedes_trigger_readiness_failure(self):
+        probe = M.Probe.__new__(M.Probe)
+        probe.counter = 15
+        probe.report = {}
+        calls = []
+        probe.press = lambda *args: calls.append("settings-native-press")
+        def evidence(label):
+            calls.append("original-raw-and-capture")
+            return {}, {"path": label+".png", "unaltered": True}
+        probe.evidence = evidence
+        def wait(*args, **kwargs):
+            calls.append("trigger-readiness")
+            raise PermissionError("trigger unavailable")
+        probe.wait = wait
+        with self.assertRaises(PermissionError):
+            probe.open_settings("en")
+        self.assertEqual(calls, ["settings-native-press", "original-raw-and-capture", "trigger-readiness"])
+        self.assertTrue(probe.report["settingsCapabilities"][0]["capture"]["unaltered"])
+
 
 class Cleanup(unittest.TestCase):
     def test_returns_only_after_all_cleanup(self):

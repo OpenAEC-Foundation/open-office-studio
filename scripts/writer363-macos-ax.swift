@@ -73,6 +73,16 @@ func permitted(_ kind: String, _ role: String, _ label: String) -> Bool {
     default: return false
     }
 }
+func contained(_ p: CGPoint, _ s: CGSize, _ wp: CGPoint, _ ws: CGSize) -> Bool {
+    p.x >= wp.x && p.y >= wp.y && p.x+s.width <= wp.x+ws.width+1 && p.y+s.height <= wp.y+ws.height+1
+}
+func allowedGeometry(_ p: CGPoint, _ s: CGSize, _ wp: CGPoint, _ ws: CGSize, _ kind: String, _ role: String, _ label: String) -> Bool {
+    if contained(p, s, wp, ws) { return true }
+    // AXPopUpButton can report the popup's union frame above the actual window.
+    // This exact native language trigger is pressed with AXPress, never XY input.
+    return kind == "language-trigger" && role == "AXPopUpButton" && permitted(kind, role, label)
+        && p.x < wp.x+ws.width && p.y < wp.y+ws.height && p.x+s.width > wp.x && p.y+s.height > wp.y
+}
 let cgWindows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
 let owned = cgWindows.filter { ($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value == pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue == 0 }
 report["ownedScreenWindows"] = owned.map { w in ["id": w[kCGWindowNumber as String] ?? NSNull(), "bounds": w[kCGWindowBounds as String] ?? NSNull(), "title": w[kCGWindowName as String] ?? NSNull(), "pid": pid] as [String: Any] }
@@ -114,14 +124,22 @@ else if let windows = attr(app, kAXWindowsAttribute) as? [AXUIElement], windows.
                 return abs(p.x-x) < 2 && abs(p.y-y) < 2 && abs(s.width-width) < 2 && abs(s.height-height) < 2
             }
             if matches.count == 1, let (p,s) = box(matches[0].0), let (wp,ws) = box(windows[0]),
-               p.x >= wp.x, p.y >= wp.y, p.x+s.width <= wp.x+ws.width+1, p.y+s.height <= wp.y+ws.height+1 {
+               allowedGeometry(p, s, wp, ws, kind, role, label) {
+                let eligible = queue.prefix(index).filter { item in
+                    guard kind == "language-trigger", role == "AXPopUpButton" else { return false }
+                    let e = item.0
+                    guard string(e, kAXRoleAttribute) == role, [string(e, kAXTitleAttribute), string(e, kAXDescriptionAttribute)].contains(label),
+                          (attr(e, kAXEnabledAttribute) as? Bool) == true, let (ep,es) = box(e) else { return false }
+                    return allowedGeometry(ep, es, wp, ws, kind, role, label)
+                }
                 var names: CFArray?
                 let error = AXUIElementCopyActionNames(matches[0].0, &names)
-                if error == .success, (names as? [String] ?? []).contains(kAXPressAction) {
+                if (kind != "language-trigger" || role != "AXPopUpButton" || eligible.count == 1), error == .success, (names as? [String] ?? []).contains(kAXPressAction) {
                     NSRunningApplication(processIdentifier: pid)?.activate(options: [])
                     let result = AXUIElementPerformAction(matches[0].0, kAXPressAction as CFString)
                     report["pressError"] = result.rawValue
                     report["pressed"] = spec
+                    report["actualGeometryPolicy"] = contained(p,s,wp,ws) ? "fully-contained-native-control" : "partial-native-language-popup-AXPress-only"
                     report["status"] = result == .success ? "input-sent" : "blocked"
                 } else { report["status"] = "blocked"; report["reason"] = "Unique actual control has no AXPress" }
             } else { report["status"] = "blocked"; report["reason"] = "Role/name/native geometry no longer uniquely match" }
