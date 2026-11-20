@@ -69,6 +69,9 @@ def validate(value, profile):
                 raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
     scope = value.get("qaScope")
     backend = (value.get("ribbonHarness") or {}).get("inputBackend")
+    entry = (value.get("ribbonHarness") or {}).get("keyboardEntry")
+    if entry is not None and (entry not in ["arrow-down", "tab"] or (entry == "tab" and (backend != "x11-xtest" or scope != "362-only"))):
+        raise ValueError("Tab entry needs the explicit XTest Linux362-only route; no unknown keyboard entry")
     if backend is not None and (backend not in ["w3c", "x11-xtest"] or (backend == "x11-xtest" and (profile != "linux" or scope != "362-only"))):
         raise ValueError("XTest input needs the explicit Linux362-only scope; no unknown input backend")
     if scope is not None and (profile != "linux" or scope != "362-only" or value.get("remainingCoverage") is None or value.get("ribbonHarness") is None or value.get("stylesHarness") is not None):

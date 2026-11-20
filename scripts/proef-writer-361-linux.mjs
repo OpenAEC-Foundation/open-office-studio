@@ -529,6 +529,7 @@ try {
           sessionId: session,
           outDir: join(out, "362-proof"),
           inputBackend: origin.ribbonHarness?.inputBackend ?? "w3c",
+          keyboardEntry: origin.ribbonHarness?.keyboardEntry ?? "arrow-down",
           source: {
             commit: origin.sourceCommit,
             tree: origin.sourceTree,

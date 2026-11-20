@@ -81,6 +81,12 @@ class ManifestTests(unittest.TestCase):
         value['qaScope'] = '362-only'
         value['remainingCoverage'] = {'executionApproved': True, 'run': 1, 'reportSha256': '8'*64, 'harnessCommit': '9'*40, 'reportBase64': 'e30='}
         self.assertEqual(VALIDATE(value, 'linux'), value)
+        value['ribbonHarness']['keyboardEntry'] = 'tab'
+        self.assertEqual(VALIDATE(value, 'linux'), value)
+        value['ribbonHarness']['keyboardEntry'] = 'forced-focus'
+        with self.assertRaisesRegex(ValueError, 'unknown keyboard entry'):
+            VALIDATE(value, 'linux')
+        value['ribbonHarness'].pop('keyboardEntry')
         value['ribbonHarness']['inputBackend'] = 'unverified-input'
         with self.assertRaisesRegex(ValueError, 'unknown input backend'):
             VALIDATE(value, 'linux')

@@ -48,6 +48,10 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
               options.inputBackend,
               context.only362 ? "x11-xtest" : "w3c",
             );
+            assert.equal(
+              options.keyboardEntry,
+              context.only362 ? "tab" : "arrow-down",
+            );
             events.push("362-body");
             throw Error("native362 unavailable");
           },
@@ -92,7 +96,7 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
   // Same actual caller block, now stop after its362 session and cleanup.
   events.length = 0;
   context.only362 = true;
-  context.origin.ribbonHarness = { inputBackend: "x11-xtest" };
+  context.origin.ribbonHarness = { inputBackend: "x11-xtest", keyboardEntry: "tab" };
   context.session = undefined;
   await assert.rejects(
     vm.runInContext("(async()=>{" + src.slice(a, b) + "})()", context),
