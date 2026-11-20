@@ -28,6 +28,11 @@ import {
   verifyPreviousCoverage,
   retainPreviousFailure,
 } from "./writer361-native-remaining.mjs";
+import {
+  selectedDocumentReadyScript,
+  selectedCanvasPointScript,
+  twoReadOnlyFramesScript,
+} from "./writer361-native-ready.mjs";
 
 const [identityFile, outputDirectory] = process.argv.slice(2);
 assert(
@@ -205,15 +210,13 @@ async function clickButton(name) {
 }
 async function clickCanvas(x = 145, y = 110) {
   const point = await waitFor(
-    () =>
-      evaluate(
-        "const c=[...document.querySelectorAll('.canvas-page canvas')].find(e=>e.getClientRects().length); if(!c)return null;const r=c.getBoundingClientRect();return {x:Math.round(r.x+arguments[0]),y:Math.round(r.y+arguments[1])}",
-        [x, y],
-      ),
+    () => evaluate(selectedCanvasPointScript, [x, y]),
     "Actual visible document canvas did not become ready",
     90000,
   );
   assert(point);
+  report.pointerTargets ??= [];
+  report.pointerTargets.push({ at: new Date().toISOString(), ...point });
   await request("POST", `/session/${session}/actions`, {
     actions: [
       {
@@ -221,7 +224,12 @@ async function clickCanvas(x = 145, y = 110) {
         id: "361-native-mouse",
         parameters: { pointerType: "mouse" },
         actions: [
-          { type: "pointerMove", duration: 0, origin: "viewport", ...point },
+          {
+            type: "pointerMove",
+            duration: 0,
+            origin: "viewport",
+            ...point.point,
+          },
           { type: "pointerDown", button: 0 },
           { type: "pointerUp", button: 0 },
         ],
@@ -256,7 +264,45 @@ async function screenshot(name) {
   await writeFile(join(out, name + ".png"), png);
   return hash(png);
 }
-async function startDocument(columns = 3) {
+async function waitSelectedDocumentReady(name, columns, cells) {
+  const started = Date.now();
+  let attempts = 0,
+    initiallyReady;
+  const ready = await waitFor(
+    async () => {
+      const before = await evaluate(selectedDocumentReadyScript, [
+        name,
+        columns,
+        cells,
+      ]);
+      attempts++;
+      initiallyReady ??= Boolean(before);
+      if (!before) return null;
+      const frame = await evaluate(twoReadOnlyFramesScript);
+      const after = await evaluate(selectedDocumentReadyScript, [
+        name,
+        columns,
+        cells,
+      ]);
+      return after && before.panelId === after.panelId
+        ? { ...after, frame }
+        : null;
+    },
+    `Selected ${name} panel/canvas/grid/fonts did not settle`,
+    90000,
+  );
+  report.documentReadiness ??= [];
+  report.documentReadiness.push({
+    elapsedMs: Date.now() - started,
+    attempts,
+    initiallyReady,
+    ...ready,
+  });
+}
+async function startDocument(
+  columns = 3,
+  cells = columns === 3 ? expected : undefined,
+) {
   const created = await request("POST", "/session", {
     capabilities: {
       alwaysMatch: { "tauri:options": { application, args: [documentPath] } },
@@ -281,18 +327,7 @@ async function startDocument(columns = 3) {
     "Native Writer did not render",
     90000,
   );
-  const started = Date.now();
-  const ready = await waitFor(
-    () =>
-      evaluate(
-        "const c=[...document.querySelectorAll('.canvas-page canvas')].find(e=>e.getClientRects().length); const t=[...document.querySelectorAll('[role=table]')].filter(e=>!e.closest('[hidden],[inert]')); if(!c||t.length!==1||Number(t[0].getAttribute('aria-rowcount'))!==3||Number(t[0].getAttribute('aria-colcount'))!==arguments[0]||document.fonts.status!=='loaded')return null; const r=c.getBoundingClientRect(); return {canvas:{x:r.x,y:r.y,width:r.width,height:r.height},rows:3,columns:arguments[0],fonts:document.fonts.status}",
-        [columns],
-      ),
-    "Actual rendered document/table/fonts remained unready",
-    90000,
-  );
-  report.startups ??= [];
-  report.startups.push({ elapsedMs: Date.now() - started, ...ready });
+  await waitSelectedDocumentReady("361-table.docx", columns, cells);
   assert.equal(
     await evaluate("return typeof window.__TAURI_INTERNALS__?.invoke"),
     "function",
@@ -545,6 +580,7 @@ try {
     timeout: 15000,
   });
   await named("tab", "361-other.docx");
+  await waitSelectedDocumentReady("361-other.docx", 3, expected);
   await clickCanvas();
   await chord("\uE011");
   await clickElement(await named("tab", "Table Design"));
@@ -596,7 +632,7 @@ try {
   report.savedSha256 = hash(saved);
   await closeSession();
   report.checks.push({ name: "full native process exit", ownedPids: pids() });
-  await startDocument(4);
+  await startDocument(4, savedCells);
   assert.notEqual(pids()[0], initialPid);
   await check("fresh native process reopened saved table", 4, 3, savedCells);
   assert.equal(hash(await readFile(documentPath)), report.savedSha256);
