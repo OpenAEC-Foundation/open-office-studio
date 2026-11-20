@@ -16,7 +16,7 @@ import {
 } from "node:fs/promises";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import {
@@ -124,6 +124,7 @@ let driver,
   driverPort,
   nativePort,
   driverLog = "";
+let currentPhase = "setup";
 const env = {
   ...process.env,
   GDK_BACKEND: "x11",
@@ -265,7 +266,7 @@ async function screenshot(name) {
   await writeFile(join(out, name + ".png"), png);
   return hash(png);
 }
-async function waitSelectedDocumentReady(name, columns, cells) {
+async function waitSelectedDocumentReady(name, columns, cells, rows = 3) {
   const started = Date.now();
   let attempts = 0,
     initiallyReady;
@@ -277,6 +278,7 @@ async function waitSelectedDocumentReady(name, columns, cells) {
           name,
           columns,
           cells,
+          rows,
         ]);
         attempts++;
         initiallyReady ??= Boolean(before);
@@ -286,6 +288,7 @@ async function waitSelectedDocumentReady(name, columns, cells) {
           name,
           columns,
           cells,
+          rows,
         ]);
         return after && before.panelId === after.panelId
           ? { ...after, frame }
@@ -308,13 +311,15 @@ async function waitSelectedDocumentReady(name, columns, cells) {
     ...ready,
   });
 }
-async function startDocument(
+async function startDocument({
+  path = documentPath,
   columns = 3,
-  cells = columns === 3 ? expected : undefined,
-) {
+  rows = 3,
+  cells = columns === 3 && rows === 3 ? expected : undefined,
+} = {}) {
   const created = await request("POST", "/session", {
     capabilities: {
-      alwaysMatch: { "tauri:options": { application, args: [documentPath] } },
+      alwaysMatch: { "tauri:options": { application, args: [path] } },
     },
   });
   session = created.sessionId;
@@ -328,6 +333,22 @@ async function startDocument(
     width: 1600,
     height: 1000,
   });
+  const nativePids = pids();
+  assert.equal(nativePids.length, 1, "Exactly one owned application process");
+  const proc = `/proc/${nativePids[0]}/exe`;
+  assert.equal(await realpath(proc), await realpath(application));
+  const executableSha256 = hash(await readFile(proc));
+  assert.equal(executableSha256, report.installedExecutableSha256);
+  report.sessions ??= [];
+  report.sessions.push({
+    ready: false,
+    phase: currentPhase,
+    document: basename(path),
+    sessionId: session,
+    pid: Number(nativePids[0]),
+    executable: await realpath(proc),
+    executableSha256,
+  });
   await waitFor(
     () =>
       evaluate(
@@ -336,7 +357,8 @@ async function startDocument(
     "Native Writer did not render",
     90000,
   );
-  await waitSelectedDocumentReady("361-table.docx", columns, cells);
+  await waitSelectedDocumentReady(basename(path), columns, cells, rows);
+  report.sessions.at(-1).ready = true;
   assert.equal(
     await evaluate("return typeof window.__TAURI_INTERNALS__?.invoke"),
     "function",
@@ -348,19 +370,6 @@ async function startDocument(
     false,
     "No diagnostic editor bridge",
   );
-  const nativePids = pids();
-  assert.equal(nativePids.length, 1, "Exactly one owned application process");
-  const proc = `/proc/${nativePids[0]}/exe`;
-  assert.equal(await realpath(proc), await realpath(application));
-  const executableSha256 = hash(await readFile(proc));
-  assert.equal(executableSha256, report.installedExecutableSha256);
-  report.sessions ??= [];
-  report.sessions.push({
-    sessionId: session,
-    pid: Number(nativePids[0]),
-    executable: await realpath(proc),
-    executableSha256,
-  });
 }
 async function closeSession() {
   if (!session) return;
@@ -488,6 +497,70 @@ try {
     async () => (await request("GET", "/status"))?.ready === true,
     "Driver startup",
   );
+  if (optionalModules[362]) {
+    currentPhase = "independent-362";
+    await collectOptionalNativeQa(report, 362, async () => {
+      const { moduleCommit, moduleSha256, module } = optionalModules[362];
+      const fixture362 = await module.createWriter362Fixture({
+        templatePath: resolve("public/templates/nieuw.docx"),
+        outDir: join(out, "362-fixture"),
+        protectedDocument: false,
+      });
+      await startDocument({
+        path: fixture362.path,
+        rows: 2,
+        columns: 3,
+        cells: ["Alpha", "Beta", "Gamma", "One", "Two", "Three"],
+      });
+      return {
+        moduleCommit,
+        moduleSha256,
+        fixture: fixture362,
+        result: await module.runWriter362NativeProbe({
+          endpoint: `http://127.0.0.1:${driverPort}`,
+          sessionId: session,
+          outDir: join(out, "362-proof"),
+          source: {
+            commit: origin.sourceCommit,
+            tree: origin.sourceTree,
+            packageSha256: origin.packageSha256,
+            executableSha256: report.installedExecutableSha256,
+          },
+          fixture: fixture362,
+          ownedProfile: true,
+          signal: AbortSignal.timeout(210000),
+        }),
+      };
+    });
+  }
+  if (session) await closeSession();
+  if (optionalModules[363]) {
+    currentPhase = "independent-363";
+    await collectOptionalNativeQa(report, 363, async () => {
+      const { moduleCommit, moduleSha256, module } = optionalModules[363];
+      await startDocument();
+      return {
+        moduleCommit,
+        moduleSha256,
+        result: await module.runWriter363NativeLabels({
+          endpoint: `http://127.0.0.1:${driverPort}`,
+          sessionId: session,
+          outDir: join(out, "363-proof"),
+          source: {
+            commit: origin.sourceCommit,
+            tree: origin.sourceTree,
+            packageSha256: origin.packageSha256,
+            executableSha256: report.installedExecutableSha256,
+          },
+          ownedProfile: true,
+          signal: AbortSignal.timeout(120000),
+        }),
+      };
+    });
+  }
+  if (session) await closeSession();
+  report.optionalQaSessionsIndependent = true;
+  currentPhase = remaining ? "361-remaining" : "361-core";
   await startDocument();
   const initialPid = pids()[0];
   await clickCanvas();
@@ -641,70 +714,13 @@ try {
   report.savedSha256 = hash(saved);
   await closeSession();
   report.checks.push({ name: "full native process exit", ownedPids: pids() });
-  await startDocument(4, savedCells);
+  await startDocument({ columns: 4, cells: savedCells });
   assert.notEqual(pids()[0], initialPid);
   await check("fresh native process reopened saved table", 4, 3, savedCells);
   assert.equal(hash(await readFile(documentPath)), report.savedSha256);
   report.reopenedScreenshotSha256 = await screenshot("reopened");
   report.writer361Status = remaining ? "failed" : "passed";
   if (remaining) report.remainingCoverageStatus = "passed";
-  if (optionalModules[362]) {
-    await collectOptionalNativeQa(report, 362, async () => {
-      const { moduleCommit, moduleSha256, module } = optionalModules[362];
-      const fixture362 = await module.createWriter362Fixture({
-        templatePath: resolve("public/templates/nieuw.docx"),
-        outDir: join(out, "362-fixture"),
-        protectedDocument: false,
-      });
-      execFileSync(application, [fixture362.path], {
-        env,
-        stdio: "ignore",
-        timeout: 15000,
-      });
-      await clickElement(await named("tab", "writer362-table.docx"));
-      return {
-        moduleCommit,
-        moduleSha256,
-        fixture: fixture362,
-        result: await module.runWriter362NativeProbe({
-          endpoint: `http://127.0.0.1:${driverPort}`,
-          sessionId: session,
-          outDir: join(out, "362-proof"),
-          source: {
-            commit: origin.sourceCommit,
-            tree: origin.sourceTree,
-            packageSha256: origin.packageSha256,
-            executableSha256: report.installedExecutableSha256,
-          },
-          fixture: fixture362,
-          ownedProfile: true,
-          signal: AbortSignal.timeout(210000),
-        }),
-      };
-    });
-  }
-  if (optionalModules[363]) {
-    await collectOptionalNativeQa(report, 363, async () => {
-      const { moduleCommit, moduleSha256, module } = optionalModules[363];
-      return {
-        moduleCommit,
-        moduleSha256,
-        result: await module.runWriter363NativeLabels({
-          endpoint: `http://127.0.0.1:${driverPort}`,
-          sessionId: session,
-          outDir: join(out, "363-proof"),
-          source: {
-            commit: origin.sourceCommit,
-            tree: origin.sourceTree,
-            packageSha256: origin.packageSha256,
-            executableSha256: report.installedExecutableSha256,
-          },
-          ownedProfile: true,
-          signal: AbortSignal.timeout(120000),
-        }),
-      };
-    });
-  }
   await closeSession();
   report.status = remaining
     ? "failed"

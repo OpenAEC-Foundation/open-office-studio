@@ -1,5 +1,10 @@
 /** Read-only readiness probe scoped to the selected Office document's own panel. */
-export function inspectSelectedDocumentReady(name, columns, expectedCells) {
+export function inspectSelectedDocumentReady(
+  name,
+  columns,
+  expectedCells,
+  rows = 3,
+) {
   const tabs = [
     ...document.querySelectorAll(".office-tab[role=tab][aria-selected=true]"),
   ].filter((e) => e.textContent.trim().startsWith(name));
@@ -31,7 +36,7 @@ export function inspectSelectedDocumentReady(name, columns, expectedCells) {
   );
   if (
     tables.length !== 1 ||
-    Number(tables[0].getAttribute("aria-rowcount")) !== 3 ||
+    Number(tables[0].getAttribute("aria-rowcount")) !== rows ||
     Number(tables[0].getAttribute("aria-colcount")) !== columns
   )
     return null;
@@ -46,7 +51,7 @@ export function inspectSelectedDocumentReady(name, columns, expectedCells) {
     name,
     panelId,
     columns,
-    rows: 3,
+    rows,
     cells,
     fonts: document.fonts.status,
     globalInputPortals: inputPortals.length,

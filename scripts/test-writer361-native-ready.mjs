@@ -127,3 +127,16 @@ test("BODY-portaled input is observed without requiring false panel ancestry", (
   assert.equal(r.globalInputPortals, 1);
   assert.match(r.inputOwnership, /not input ancestry/);
 });
+
+test("fresh362 fixture can require its real2x3 grid and exact six header cells", () => {
+  const f = fixture();
+  const six = ["Alpha", "Beta", "Gamma", "One", "Two", "Three"];
+  f.table.getAttribute = (n) =>
+    n === "aria-rowcount" ? "2" : n === "aria-colcount" ? "3" : null;
+  f.table.querySelectorAll = () => six.map((textContent) => ({ textContent }));
+  const r = inspect(f, () =>
+    inspectSelectedDocumentReady("361-other.docx", 3, six, 2),
+  );
+  assert.equal(r.rows, 2);
+  assert.deepEqual(r.cells, six);
+});
