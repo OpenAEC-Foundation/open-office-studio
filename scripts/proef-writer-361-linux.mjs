@@ -15,9 +15,13 @@ import {
 } from "node:fs/promises";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
+import {
+  collectOptionalNativeQa,
+  loadPinnedNativeModule,
+} from "./writer361-native-modules.mjs";
 
 const [identityFile, outputDirectory] = process.argv.slice(2);
 assert(
@@ -285,6 +289,22 @@ async function closeSession() {
   );
 }
 try {
+  const optionalModules = {};
+  for (const issue of [362, 363]) {
+    optionalModules[issue] = await loadPinnedNativeModule({
+      modulePath: process.env[`OOS_${issue}_NATIVE_MODULE`],
+      moduleSha256: process.env[`OOS_${issue}_NATIVE_MODULE_SHA256`],
+      moduleCommit: process.env[`OOS_${issue}_NATIVE_COMMIT`],
+    });
+  }
+  report.modulePins = Object.fromEntries(
+    Object.entries(optionalModules)
+      .filter(([, pin]) => pin)
+      .map(([issue, { moduleCommit, moduleSha256 }]) => [
+        issue,
+        { moduleCommit, moduleSha256 },
+      ]),
+  );
   assert.deepEqual(pids(), [], "No existing app may be affected");
   const driverVersion = execFileSync("cargo", ["install", "--list"], {
     encoding: "utf8",
@@ -509,59 +529,66 @@ try {
   assert.equal(hash(await readFile(documentPath)), report.savedSha256);
   report.reopenedScreenshotSha256 = await screenshot("reopened");
   report.writer361Status = "passed";
-  if (process.env.OOS_362_NATIVE_MODULE) {
-    const modulePath = resolve(process.env.OOS_362_NATIVE_MODULE);
-    const moduleSha256 = process.env.OOS_362_NATIVE_MODULE_SHA256;
-    const moduleCommit = process.env.OOS_362_NATIVE_COMMIT;
-    assert.match(moduleSha256 ?? "", /^[a-f0-9]{64}$/);
-    assert.match(moduleCommit ?? "", /^[a-f0-9]{40}$/);
-    assert.equal(hash(await readFile(modulePath)), moduleSha256);
-    assert.equal(
-      execFileSync("git", ["-C", dirname(modulePath), "rev-parse", "HEAD"], {
-        encoding: "utf8",
-      }).trim(),
-      moduleCommit,
-    );
-    const module = await import(pathToFileURL(modulePath).href);
-    const fixture362 = await module.createWriter362Fixture({
-      templatePath: resolve("public/templates/nieuw.docx"),
-      outDir: join(out, "362-fixture"),
-      protectedDocument: false,
-    });
-    execFileSync(application, [fixture362.path], {
-      env,
-      stdio: "ignore",
-      timeout: 15000,
-    });
-    await clickElement(await named("tab", "writer362-table.docx"));
-    report.optional362 = {
-      moduleCommit,
-      moduleSha256,
-      fixture: fixture362,
-      result: await module.runWriter362NativeProbe({
-        endpoint: `http://127.0.0.1:${driverPort}`,
-        sessionId: session,
-        outDir: join(out, "362-proof"),
-        source: {
-          commit: origin.sourceCommit,
-          tree: origin.sourceTree,
-          packageSha256: origin.packageSha256,
-          executableSha256: report.installedExecutableSha256,
-        },
+  if (optionalModules[362]) {
+    await collectOptionalNativeQa(report, 362, async () => {
+      const { moduleCommit, moduleSha256, module } = optionalModules[362];
+      const fixture362 = await module.createWriter362Fixture({
+        templatePath: resolve("public/templates/nieuw.docx"),
+        outDir: join(out, "362-fixture"),
+        protectedDocument: false,
+      });
+      execFileSync(application, [fixture362.path], {
+        env,
+        stdio: "ignore",
+        timeout: 15000,
+      });
+      await clickElement(await named("tab", "writer362-table.docx"));
+      return {
+        moduleCommit,
+        moduleSha256,
         fixture: fixture362,
-        ownedProfile: true,
-        signal: AbortSignal.timeout(210000),
-      }),
-    };
-  } else {
-    assert.ok(
-      !process.env.OOS_362_NATIVE_MODULE_SHA256 &&
-        !process.env.OOS_362_NATIVE_COMMIT,
-      "Partial optional 362 pin is not allowed",
-    );
+        result: await module.runWriter362NativeProbe({
+          endpoint: `http://127.0.0.1:${driverPort}`,
+          sessionId: session,
+          outDir: join(out, "362-proof"),
+          source: {
+            commit: origin.sourceCommit,
+            tree: origin.sourceTree,
+            packageSha256: origin.packageSha256,
+            executableSha256: report.installedExecutableSha256,
+          },
+          fixture: fixture362,
+          ownedProfile: true,
+          signal: AbortSignal.timeout(210000),
+        }),
+      };
+    });
+  }
+  if (optionalModules[363]) {
+    await collectOptionalNativeQa(report, 363, async () => {
+      const { moduleCommit, moduleSha256, module } = optionalModules[363];
+      return {
+        moduleCommit,
+        moduleSha256,
+        result: await module.runWriter363NativeLabels({
+          endpoint: `http://127.0.0.1:${driverPort}`,
+          sessionId: session,
+          outDir: join(out, "363-proof"),
+          source: {
+            commit: origin.sourceCommit,
+            tree: origin.sourceTree,
+            packageSha256: origin.packageSha256,
+            executableSha256: report.installedExecutableSha256,
+          },
+          ownedProfile: true,
+          signal: AbortSignal.timeout(120000),
+        }),
+      };
+    });
   }
   await closeSession();
-  report.status = "passed";
+  report.status = report.optionalQaFailures?.length ? "partial" : "passed";
+  if (report.optionalQaFailures?.length) process.exitCode = 1;
 } catch (error) {
   report.status = "failed";
   report.error = String(error.stack || error);

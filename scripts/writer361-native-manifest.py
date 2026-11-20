@@ -39,10 +39,11 @@ def validate(value, profile):
         raise ValueError("Frozen integration execution approval required")
     if profile == "macos" and not re.fullmatch("[a-f0-9]{64}", value.get("executableSha256", "")):
         raise ValueError("Canonical macOS executable hash required")
-    ribbon = value.get("ribbonHarness")
-    if ribbon:
-        if profile != "linux" or not re.fullmatch("[a-f0-9]{40}", ribbon.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", ribbon.get("sha256", "")):
-            raise ValueError("Optional 362 module needs its own full commit/hash on Linux")
+    for field in ["ribbonHarness", "stylesHarness"]:
+        module = value.get(field)
+        if module is not None:
+            if profile != "linux" or not isinstance(module, dict) or not re.fullmatch("[a-f0-9]{40}", module.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", module.get("sha256", "")):
+                raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
     return value
 
 
@@ -65,7 +66,8 @@ def main():
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
             output.write("source_commit=" + value["sourceCommit"] + "\n")
             output.write("runner=" + ("ubuntu-22.04" if args.profile == "linux" else "macos-latest") + "\n")
-            output.write("ribbon_commit=" + value.get("ribbonHarness", {}).get("commit", "") + "\n")
+            output.write("ribbon_commit=" + (value.get("ribbonHarness") or {}).get("commit", "") + "\n")
+            output.write("styles_commit=" + (value.get("stylesHarness") or {}).get("commit", "") + "\n")
         return
     git = lambda *parts: subprocess.check_output(["git", *parts], text=True).strip()
     if git("rev-parse", "HEAD") != value["sourceCommit"] or git("rev-parse", "HEAD^{tree}") != value["sourceTree"]:

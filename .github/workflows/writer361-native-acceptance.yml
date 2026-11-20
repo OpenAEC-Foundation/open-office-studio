@@ -28,7 +28,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   compile-macos:
-    if: github.event_name == 'push' || inputs.profile == 'compile-only'
+    # Bootstrap compile already passed on 45bf92b5; later QA edits do not repeat it.
+    if: (github.event_name == 'push' && github.sha == '45bf92b52cd353384d68ada85002e97242fb9159') || (github.event_name == 'workflow_dispatch' && inputs.profile == 'compile-only')
     runs-on: macos-latest
     timeout-minutes: 10
     steps:
@@ -71,6 +72,7 @@ jobs:
       source_commit: ${{ steps.manifest.outputs.source_commit }}
       runner: ${{ steps.manifest.outputs.runner }}
       ribbon_commit: ${{ steps.manifest.outputs.ribbon_commit }}
+      styles_commit: ${{ steps.manifest.outputs.styles_commit }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -107,6 +109,11 @@ jobs:
         with:
           ref: ${{ needs.plan.outputs.ribbon_commit }}
           path: .local/writer362-harness
+      - uses: actions/checkout@v4
+        if: runner.os == 'Linux' && needs.plan.outputs.styles_commit != ''
+        with:
+          ref: ${{ needs.plan.outputs.styles_commit }}
+          path: .local/writer363-harness
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -130,7 +137,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11
           cargo install tauri-driver --version 2.1.0 --locked
           pnpm --dir .local/writer361-harness install --frozen-lockfile --ignore-scripts
-      - name: Linux native 361 and optional separately pinned 362 module
+      - name: Linux native 361 and optional separately pinned 362/363 modules
         if: runner.os == 'Linux'
         env:
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
@@ -143,6 +150,9 @@ jobs:
           if ribbon:
             pathlib.Path('.local/writer362-harness/node_modules').symlink_to(pathlib.Path('.local/writer361-harness/node_modules').resolve(),target_is_directory=True)
             env.update(OOS_362_NATIVE_MODULE=str(pathlib.Path('.local/writer362-harness/scripts/writer362-native-probe.mjs').resolve()),OOS_362_NATIVE_MODULE_SHA256=ribbon['sha256'],OOS_362_NATIVE_COMMIT=ribbon['commit'])
+          styles=identity.get('stylesHarness')
+          if styles:
+            env.update(OOS_363_NATIVE_MODULE=str(pathlib.Path('.local/writer363-harness/scripts/proef-writer-363-native-labels.mjs').resolve()),OOS_363_NATIVE_MODULE_SHA256=styles['sha256'],OOS_363_NATIVE_COMMIT=styles['commit'])
           subprocess.run(['dbus-run-session','--','xvfb-run','-a','node','.local/writer361-harness/scripts/proef-writer-361-linux.mjs','.local/input/identity.json','.local/writer361-native'],env=env,check=True)
           PY
       - name: macOS native bounded core route on the same canonical artifact

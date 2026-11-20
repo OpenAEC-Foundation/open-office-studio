@@ -134,3 +134,19 @@ Primary references:
 - [Tauri manual WebDriver setup](https://tauri.app/develop/tests/webdriver/manual-setup/)
 - [Apple CGEvent](https://developer.apple.com/documentation/coregraphics/cgevent)
 - [Apple Accessibility API](https://developer.apple.com/documentation/applicationservices/axuielement_h)
+
+## Optional labels module in the same installed Linux session
+
+The frozen workflow manifest may include `stylesHarness` with a full independent
+`commit` and module `sha256`. The workflow checks out that exact module branch
+point separately. The caller requires all three `OOS_363_NATIVE_MODULE`,
+`OOS_363_NATIVE_MODULE_SHA256` and `OOS_363_NATIVE_COMMIT` values, verifies file
+bytes and checkout before code import/app start, then calls
+`runWriter363NativeLabels` after #361 and the optional #362 phase. It passes only
+the existing session, owned profile and exact installed executable/package source
+identity. A returned status other than `passed` fails that optional QA section;
+`writer361Status` remains separate. The module owns no app/session lifecycle.
+
+This Linux label module is not a macOS AX implementation. macOS #363 labels and
+EN/NL interaction remain open until separately observed on the canonical native
+app. No result is inferred from the existing 24 module protocol tests.
