@@ -1,0 +1,65 @@
+name: Writer 361 Linux Find Undo diagnosis
+on:
+  push:
+    branches: [codex/linux-find-undo-361-20261120]
+    paths:
+      - scripts/triage-writer361-linux-find.mjs
+      - .github/writer361-linux-find-triage.json
+      - .github/workflows/writer361-linux-find-triage.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EXECUTE_NATIVE: "true"
+      OOS_361_EXECUTE: "1"
+      WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+      FROZEN_MANIFEST_SHA256: ba9498d18c9473e11c780105d1f842936d876c19bf55c04b561d38050b409f56
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 7f126f4b8e5269a54388cf78c48c78d2acc0daa1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/find-harness
+      - uses: actions/checkout@v4
+        with:
+          ref: bdae7647a2417b7668976db7b9f44305c67ecc32
+          path: .local/previous-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Verify and fetch the immutable previously failing I3 package
+        run: |
+          export FROZEN_MANIFEST="$(cat .local/find-harness/.github/writer361-linux-find-triage.json)"
+          python3 .local/previous-harness/scripts/writer361-native-manifest.py fetch linux .local/find-manifest.json
+      - name: Install independent OS input and the original native driver
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm --dir .local/find-harness install --frozen-lockfile --ignore-scripts
+          ln -s "$PWD/.local/previous-harness/scripts/writer361-native-modules.mjs" .local/find-harness/scripts/writer361-native-modules.mjs
+      - name: Observe original failure and independent input controls
+        run: dbus-run-session -- xvfb-run -a node .local/find-harness/scripts/triage-writer361-linux-find.mjs .local/input/identity.json .local/find-diagnosis
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer361-linux-find-diagnosis-${{ github.sha }}
+          path: |
+            .local/find-diagnosis/
+            .local/find-manifest.json
+            .local/input/identity.json
+            .local/input/artifact-origin.json
+          include-hidden-files: true
+          if-no-files-found: warn
