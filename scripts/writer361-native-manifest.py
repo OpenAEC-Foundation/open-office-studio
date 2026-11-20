@@ -4,6 +4,7 @@ No application is built or launched here. The caller must explicitly approve
 execution. The artifact run's head SHA, archive bytes and package bytes must match.
 """
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -17,6 +18,25 @@ REPO = "OpenAEC-Foundation/open-office-studio"
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def verify_root_candidate(value):
+    """Preserve and verify the coordinator's exact bytes, not a reserialized copy."""
+    try:
+        raw = base64.b64decode(value["rootFrozenCandidateBase64"], validate=True)
+        expected = value["rootFrozenCandidateSha256"]
+        if not re.fullmatch("[a-f0-9]{64}", expected) or digest(raw) != expected:
+            raise ValueError("Root frozen candidate byte hash differs")
+        candidate = json.loads(raw)
+        if candidate.get("schemaVersion") != 1 or candidate.get("frozen") is not True or candidate.get("applicationCommit") != value["sourceCommit"] or candidate.get("desktopRun") != value["artifactRun"]:
+            raise ValueError("Root frozen candidate source/run differs")
+        artifact = candidate["artifacts"][value["platform"]]
+        matches = [p for p in artifact["packages"] if p["path"] == value["packageMember"]]
+        if artifact["archiveSha256"] != value["archiveSha256"] or len(matches) != 1 or matches[0]["sha256"] != value["packageSha256"]:
+            raise ValueError("Root frozen candidate archive/package differs")
+        return raw, artifact
+    except (KeyError, TypeError) as error:
+        raise ValueError("Exact coordinator candidate bytes and selected identity required") from error
 
 
 def validate(value, profile):
@@ -47,6 +67,7 @@ def validate(value, profile):
         if module is not None:
             if profile != "linux" or not isinstance(module, dict) or not re.fullmatch("[a-f0-9]{40}", module.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", module.get("sha256", "")):
                 raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
+    verify_root_candidate(value)
     return value
 
 
@@ -77,12 +98,14 @@ def main():
         raise RuntimeError("Application checkout is not the frozen codepoint")
     def api(route):
         return json.loads(subprocess.check_output(["gh", "api", f"repos/{REPO}/{route}"], text=True))
+    root_raw, root_artifact = verify_root_candidate(value)
     run = api(f"actions/runs/{value['artifactRun']}")
     artifact = api(f"actions/artifacts/{value['artifactId']}")
-    if run["head_sha"] != value["sourceCommit"] or artifact["expired"] or artifact["workflow_run"]["id"] != value["artifactRun"] or artifact["workflow_run"]["head_sha"] != value["sourceCommit"]:
+    if run["status"] != "completed" or run["conclusion"] != "success" or artifact["name"] != root_artifact["name"] or run["head_sha"] != value["sourceCommit"] or artifact["expired"] or artifact["workflow_run"]["id"] != value["artifactRun"] or artifact["workflow_run"]["head_sha"] != value["sourceCommit"]:
         raise RuntimeError("Canonical artifact is expired or belongs to another source/run")
     folder = args.manifest.parent / "input"
     folder.mkdir(exist_ok=False)
+    (folder / "root-frozen-candidate.json").write_bytes(root_raw)
     archive = folder / "canonical.zip"
     with archive.open("wb") as output:
         subprocess.run(["gh", "api", f"repos/{REPO}/actions/artifacts/{value['artifactId']}/zip"], stdout=output, check=True, timeout=180)
@@ -96,7 +119,7 @@ def main():
     package_path.write_bytes(package)
     identity = dict(value, packagePath=str(package_path.resolve()))
     (folder / "identity.json").write_text(json.dumps(identity, indent=2), encoding="utf-8")
-    (folder / "artifact-origin.json").write_text(json.dumps({"sourceCommit": run["head_sha"], "run": value["artifactRun"], "artifactId": artifact["id"], "artifactName": artifact["name"], "archiveSha256": digest(archive.read_bytes()), "packageSha256": digest(package)}, indent=2), encoding="utf-8")
+    (folder / "artifact-origin.json").write_text(json.dumps({"sourceCommit": run["head_sha"], "run": value["artifactRun"], "artifactId": artifact["id"], "artifactName": artifact["name"], "rootFrozenCandidateSha256": digest(root_raw), "archiveSha256": digest(archive.read_bytes()), "packageSha256": digest(package)}, indent=2), encoding="utf-8")
 
 
 if __name__ == "__main__":
