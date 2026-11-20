@@ -37,6 +37,8 @@ const harnessCommit =
 assert.match(harnessCommit, /^[a-f0-9]{40}$/);
 const harnessBytes = fs.readFileSync(harnessPath);
 const harnessGitBlob = execFileSync("git", [
+  "-C",
+  dirname(harnessPath),
   "show",
   `${harnessCommit}:scripts/proef-writer-linthoogte.mjs`,
 ]);
