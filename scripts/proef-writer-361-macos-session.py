@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import plistlib
 import re
+import runpy
 import shutil
 import signal
 import subprocess
@@ -181,9 +182,12 @@ def main():
         grid("fresh process reopened persisted table", 4)
         if hashlib.sha256(fixture.read_bytes()).hexdigest() != report["savedSha256"]:
             raise AssertionError("Reopen changed saved bytes")
+        report["coreUndoRedoPersistRestartPassed"] = True
+        # No document edits here: same verified reopened native app, separate QA.
+        collector = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))["collect_mac_ribbon_observations"]
+        report["optionalMac362363"] = collector(action, out / "ribbon-observations", identity, pid)
         quit_app()
         report["status"] = "core-passed"
-        report["coreUndoRedoPersistRestartPassed"] = True
     except PermissionError as error:
         report.update(status="blocked", reason=str(error))
         raise
