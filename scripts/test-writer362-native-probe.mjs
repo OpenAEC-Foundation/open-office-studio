@@ -71,11 +71,13 @@ test("serialized native measurement detects an outline beyond the clipping paddi
   const overflow = triggerMeasurement({ top: 10, bottom: 100 });
   assert.equal(overflow.ring, 5);
   assert.equal(overflow.clipped, true);
+  assert.equal(overflow.clippedY, true);
   assert.equal(overflow.clippingAncestors[0].clip.top, 10);
   assert.equal(overflow.clippingAncestors[0].clip.bottom, 100);
   const fit = triggerMeasurement();
   assert.equal(fit.focusVisible, true);
   assert.equal(fit.clipped, false);
+  assert.equal(fit.clippedY, false);
   assert.equal(fit.outline.top, 10);
   assert.equal(fit.outline.bottom, 100);
 });
@@ -86,6 +88,8 @@ test("serialized native measurement includes additional clipping ancestors", () 
   assert.equal(data.clippingAncestors[0].clipped, false);
   assert.equal(data.clippingAncestors[1].clipped, true);
   assert.equal(data.clipped, true);
+  assert.equal(data.clippedX, true);
+  assert.equal(data.clippedY, false);
 });
 
 test("transport scopes W3C requests to caller session and rejects lifecycle commands", async () => {
