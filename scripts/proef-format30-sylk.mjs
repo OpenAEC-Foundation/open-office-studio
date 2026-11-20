@@ -13,7 +13,7 @@ import { converteerProef } from "./formaatconversie-proef.mjs";
 const APP = "7f126f4b8e5269a54388cf78c48c78d2acc0daa1";
 const TREE = "8bc608488760e48919d7fb4e72a42569175b52a4";
 const SOURCE = "bcfaae8f2ce55e393c100dcd95c37301129b9121af0429586de75b3ec99df420";
-const URL = "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/slk/pass/ooo80484-1.slk";
+const FIXTURE_URL = "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/slk/pass/ooo80484-1.slk";
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const python = process.env.OOS_RUNTIME_PYTHON || (process.platform === "win32" ? "python" : "python3");
@@ -32,7 +32,7 @@ assert.equal(verification.applicationCommit, APP); assert.equal(verification.pla
 assert.deepEqual(verification.packages, plan.artifacts[platform].packages);
 const root = resolve(output); await mkdir(root, { recursive: false });
 const fixturePath = join(root, "original.sylk");
-const response = await fetch(URL, { signal: AbortSignal.timeout(30000) });
+const response = await fetch(FIXTURE_URL, { signal: AbortSignal.timeout(30000) });
 assert(response.ok, `Fixture HTTP ${response.status}`);
 const fixture = new Uint8Array(await response.arrayBuffer());
 assert.equal(fixture.length, 2581); assert.equal(hash(fixture), SOURCE);
@@ -41,7 +41,7 @@ const oracle = fileURLToPath(new URL("format30-sylk-oracle.py", import.meta.url)
 execFileSync(python, ["-B", oracle, "--source", fixturePath, "--report", join(root, "source-oracle.json")], { stdio: "inherit", timeout: 20000 });
 const expected = JSON.parse(await readFile(join(root, "source-oracle.json"), "utf8")).expectedCells;
 const report = { applicationCommit: APP, applicationTree: TREE, desktopRun: plan.desktopRun,
-  harnessCommit: process.env.OOS_FORMAT30_HARNESS, platform, source: { url: URL, sha256: SOURCE, bytes: fixture.length,
+  harnessCommit: process.env.OOS_FORMAT30_HARNESS, platform, source: { url: FIXTURE_URL, sha256: SOURCE, bytes: fixture.length,
     alias: ".sylk is tested with the immutable genuine SYLK bytes originally named .slk; not evidence of a different format" },
   artifactVerification: verification, scope: "Real private runtime + production TypeScript input/engine route; no native app/dialog/visual claim", cases: [], status: "failed" };
 let loader;
@@ -57,7 +57,7 @@ try {
   try {
     globalThis.window = {}; // Test the actual no-Tauri guard, not a native IPC substitute.
     await assert.rejects(bereidOpenen("Bron.sylk", fixture, { runtimeBeschikbaar: async () => false,
-      converteer: formats.converteer }), error => /SYLK/.test(error.message) && /desktopapp/.test(error.message) && /XLSX/.test(error.message));
+      converteer: formats.converteer }), error => /SYLK/.test(error.message) && /desktop(versie|app)/.test(error.message) && /XLSX/.test(error.message));
     report.browserLimitation = { noTauriGuard: true, desktopAlternative: true,
       scope: "Production source-level no-Tauri guard in Node; actual hosted GUI not executed by this job" };
   } finally {
