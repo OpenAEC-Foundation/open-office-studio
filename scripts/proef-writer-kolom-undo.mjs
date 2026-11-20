@@ -9,6 +9,7 @@ import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 const label = process.argv[2] ?? "361-baseline";
 const fixed = process.argv.includes("--fixed");
 const route = process.env.OFFICE_TEST_BASE ?? "/";
+const outDir = process.env.OFFICE_TEST_DIR ?? "dist";
 const output = ".local/" + label;
 fs.mkdirSync(output, { recursive: true });
 const p = unzipSync(fs.readFileSync("public/templates/nieuw.docx"));
@@ -45,15 +46,34 @@ const report = {
   ),
   checks: [],
   errors: [],
+  status: "running",
+  acceptance: false,
+  cleanupErrors: [],
 };
-const server = await preview({
-  configFile: false,
-  base: route,
-  build: { outDir: process.env.OFFICE_TEST_DIR ?? "dist" },
-  preview: { host: "127.0.0.1", port: 0 },
-});
-const browser = await chromium.launch({ headless: true });
+let server, browser, failure;
 try {
+  assert.ok(
+    process.env.OFFICE_TEST_BUILD_RECEIPT,
+    "OFFICE_TEST_BUILD_RECEIPT is required",
+  );
+  const { verifyBuildReceipt } = await import("./writer-proefbuild.mjs");
+  report.buildReceipt = await verifyBuildReceipt({
+    outDir,
+    route,
+    receiptPath: process.env.OFFICE_TEST_BUILD_RECEIPT,
+  });
+  fs.writeFileSync(
+    output + "/build-receipt.json",
+    JSON.stringify(report.buildReceipt, null, 2),
+  );
+  server = await preview({
+    configFile: false,
+    base: route,
+    build: { outDir },
+    preview: { host: "127.0.0.1", port: 0 },
+  });
+  report.serverUrl = server.resolvedUrls.local[0];
+  browser = await chromium.launch({ headless: true, timeout: 30_000 });
   const context = await browser.newContext({
     viewport: { width: 1600, height: 1000 },
   });
@@ -183,15 +203,12 @@ try {
       (await check("search close and document Undo", 3)).tables[0].text,
       rows.flat(),
     );
-    await page
-      .locator("input[type=file]")
-      .first()
-      .setInputFiles({
-        name: "table-other.docx",
-        mimeType:
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        buffer: fixture,
-      });
+    await page.locator("input[type=file]").first().setInputFiles({
+      name: "table-other.docx",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      buffer: fixture,
+    });
     const otherCanvas = page.locator(".canvas-page canvas:visible").first();
     await otherCanvas.waitFor();
     await otherCanvas.click({ position: { x: 150, y: 110 } });
@@ -228,14 +245,31 @@ try {
   });
   await page.screenshot({ path: output + "/after-control.png" });
   assert.deepEqual(report.errors, []);
+  report.status = "passed";
+  report.acceptance = fixed;
 } catch (e) {
+  report.status = "failed";
   report.error = String(e);
-  throw e;
+  failure = e;
 } finally {
+  for (const [name, resource] of [
+    ["browser", browser],
+    ["server", server],
+  ]) {
+    try {
+      await resource?.close();
+    } catch (e) {
+      report.cleanupErrors.push({ resource: name, error: String(e) });
+      failure ??= e;
+    }
+  }
+  if (report.cleanupErrors.length) {
+    report.status = "failed";
+    report.acceptance = false;
+  }
   fs.writeFileSync(output + "/report.json", JSON.stringify(report, null, 2));
-  await browser.close();
-  await server.close();
 }
+if (failure) throw failure;
 console.log(
   JSON.stringify({
     source: report.source,
