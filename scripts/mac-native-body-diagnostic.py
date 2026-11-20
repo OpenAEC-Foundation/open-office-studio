@@ -222,7 +222,20 @@ def main():
                 for name,value in variant_parts.items(): bundle.writestr(name,value)
             variants.append((variant_name,variant_path))
         variants.append(("saved-epub356-control",control))
-        report["experiment"] = "2x2 document-only table/paragraph and inherited/explicit Calibri matrix plus known rendered356 DOCX; no acceptance pass"
+        matched_parts = dict(parts)
+        styles_xml = matched_parts["word/styles.xml"].decode("utf-8")
+        explicit_cambria = '<w:rFonts w:ascii="Cambria" w:hAnsi="Cambria" w:eastAsia="Cambria" w:cs="Cambria"/>'
+        matched_styles, replacements = re.subn(r'(<w:docDefaults>[\s\S]*?)<w:rFonts\b[^>]*/>', lambda match: match[1]+explicit_cambria, styles_xml, count=1)
+        if replacements != 1 or matched_styles == styles_xml:
+            raise RuntimeError("Matched document-default Cambria replacement failed")
+        matched_parts["word/styles.xml"] = matched_styles.encode("utf-8")
+        matched_path = out / "table-defaults-direct-cambria.docx"
+        with zipfile.ZipFile(matched_path,"w",zipfile.ZIP_DEFLATED) as bundle:
+            for name,value in matched_parts.items(): bundle.writestr(name,value)
+        variants = [("table-defaults-direct-cambria",matched_path)]
+        report["experiment"] = "Only original361 table document-default rFonts changes from theme Cambria to explicit Cambria; same family/content/structure, no acceptance pass"
+        report["controlRuns"] = [44750058759,44750921161]
+        report["fixtureChangeScope"] = "Only word/styles.xml docDefaults/rPrDefault/rPr/rFonts; document.xml and every other uncompressed package part unchanged"
         for fixture_name, fixture_path in variants:
             fixture = fixture_path.resolve()
             fixture_hash = hashlib.sha256(fixture.read_bytes()).hexdigest()
