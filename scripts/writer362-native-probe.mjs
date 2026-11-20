@@ -1,8 +1,9 @@
 /** #362 checks in a caller-owned, installed Linux Tauri session. No app lifecycle. */
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { execFile, execFileSync } from "node:child_process";
+import { mkdir, readFile, realpath, stat, writeFile } from "node:fs/promises";
+import { promisify } from "node:util";
 import { resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
@@ -38,8 +39,240 @@ const keys = {
   home: "\uE011",
   end: "\uE010",
 };
+const execFileAsync = promisify(execFile);
 
-// Observations may read DOM state; input and UI changes use W3C commands.
+export function writer362XTestChord(values) {
+  const names = new Map([
+    [keys.down, "Down"],
+    [keys.right, "Right"],
+    [keys.enter, "Return"],
+    [keys.escape, "Escape"],
+    [keys.control, "ctrl"],
+    [keys.home, "Home"],
+    [keys.end, "End"],
+  ]);
+  assert.ok(values.length > 0, "At least one native key required");
+  return values
+    .map((value) => {
+      assert.ok(names.has(value), "Unsupported XTest key");
+      return names.get(value);
+    })
+    .join("+");
+}
+
+export function writer362DocumentFocus() {
+  const e = document.activeElement;
+  return {
+    hasFocus: document.hasFocus(),
+    visibilityState: document.visibilityState,
+    hidden: document.hidden,
+    activeElement: {
+      tag: e?.tagName,
+      id: e?.id,
+      role: e?.getAttribute("role"),
+      label: e?.getAttribute("aria-label"),
+      className: e?.className,
+      focusVisible: e?.matches(":focus-visible"),
+    },
+  };
+}
+
+export function writer362ProcStartTime(text, pid) {
+  assert.equal(
+    Number(text.slice(0, text.indexOf(" "))),
+    pid,
+    "Unexpected /proc PID",
+  );
+  const fields = text
+    .slice(text.lastIndexOf(")") + 2)
+    .trim()
+    .split(/\s+/);
+  assert.match(fields[19] ?? "", /^\d+$/, "Missing /proc starttime");
+  return fields[19];
+}
+
+/** Exact caller PID/executable and private-display binding; injected IO is unit-test only. */
+export function createWriter362XTestInput(
+  { source, ownedProfile, display, observe, signal },
+  io = {},
+) {
+  assert.equal(
+    io.platform ?? process.platform,
+    "linux",
+    "XTest requires Linux",
+  );
+  assert.equal(ownedProfile, true, "XTest requires caller-owned profile");
+  assert.match(
+    display ?? "",
+    /^:\d+(?:\.\d+)?$/,
+    "Explicit local X11 DISPLAY required",
+  );
+  assert.ok(
+    Number.isSafeInteger(source?.pid) && source.pid > 0,
+    "Verified caller PID required",
+  );
+  assert.match(source.executableSha256 ?? "", /^[a-f0-9]{64}$/);
+  const pid = source.pid;
+  const xdo =
+    io.xdo ??
+    (async (args) =>
+      (
+        await execFileAsync("xdotool", args, {
+          env: { ...process.env, DISPLAY: display },
+          timeout: 5000,
+          maxBuffer: 128 * 1024,
+        })
+      ).stdout.trim());
+  const readOwner =
+    io.readOwner ??
+    (async (withHash = false) => {
+      const proc = `/proc/${pid}`,
+        start = (s) => writer362ProcStartTime(s, pid);
+      const first = start(await readFile(proc + "/stat", "utf8")),
+        executable = await realpath(proc + "/exe"),
+        info = await stat(proc + "/exe");
+      const identity = [info.dev, info.ino, info.size, info.mtimeMs].join(":");
+      const sha256 = withHash ? hash(await readFile(proc + "/exe")) : undefined;
+      assert.equal(
+        start(await readFile(proc + "/stat", "utf8")),
+        first,
+        "Caller PID changed while observing",
+      );
+      assert.equal(
+        await realpath(proc + "/exe"),
+        executable,
+        "Caller executable changed while observing",
+      );
+      const after = await stat(proc + "/exe");
+      assert.equal(
+        [after.dev, after.ino, after.size, after.mtimeMs].join(":"),
+        identity,
+        "Caller executable identity changed",
+      );
+      return {
+        pid,
+        startTime: first,
+        executable,
+        identity,
+        ...(sha256 ? { sha256 } : {}),
+      };
+    });
+  const evidence = {
+    backend: "x11-xtest",
+    pid,
+    display,
+    activationPerformed: false,
+    checks: [],
+    keys: [],
+  };
+  let binding, xid;
+  const owner = async () => {
+    assert.ok(binding && xid, "XTest foreground binding is not initialized");
+    signal?.throwIfAborted();
+    const current = await readOwner(false);
+    assert.equal(current.pid, pid);
+    assert.equal(
+      current.startTime,
+      binding.startTime,
+      "Caller PID starttime changed",
+    );
+    assert.equal(
+      current.executable,
+      binding.executable,
+      "Caller executable changed",
+    );
+    assert.equal(
+      current.identity,
+      binding.identity,
+      "Caller executable identity changed",
+    );
+    assert.equal(
+      (await xdo(["getwindowpid", xid])).trim(),
+      String(pid),
+      "X11 window no longer belongs to caller PID",
+    );
+    return current;
+  };
+  const verify = async (stage) => {
+    const process = await owner(),
+      windowFocus = (await xdo(["getwindowfocus"])).trim(),
+      dom = await observe();
+    const observation = {
+      stage,
+      at: new Date().toISOString(),
+      process,
+      windowFocus,
+      dom,
+    };
+    evidence.checks.push(observation);
+    assert.equal(windowFocus, xid, "Owned X11 window lost foreground");
+    assert.equal(dom.hasFocus, true, "Native document lacks focus");
+    assert.equal(dom.hidden, false, "Native document is hidden");
+    assert.equal(
+      dom.visibilityState,
+      "visible",
+      "Native document is not visible",
+    );
+    return observation;
+  };
+  return {
+    evidence,
+    verify,
+    async initialize() {
+      signal?.throwIfAborted();
+      binding = await readOwner(true);
+      assert.equal(binding.pid, pid);
+      assert.equal(
+        binding.sha256,
+        source.executableSha256,
+        "Caller executable hash mismatch",
+      );
+      evidence.binding = binding;
+      const windows = [
+        ...new Set(
+          (await xdo(["search", "--onlyvisible", "--pid", String(pid)]))
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean),
+        ),
+      ];
+      assert.equal(
+        windows.length,
+        1,
+        "Exactly one visible caller window required",
+      );
+      xid = windows[0];
+      assert.match(xid, /^[1-9]\d*$/);
+      evidence.xid = xid;
+      await owner();
+      evidence.pre = {
+        windowFocus: (await xdo(["getwindowfocus"])).trim(),
+        dom: await observe(),
+      };
+      if (evidence.pre.windowFocus !== xid || !evidence.pre.dom.hasFocus) {
+        await owner();
+        evidence.activationPerformed = true;
+        await xdo(["windowfocus", "--sync", xid]);
+      }
+      evidence.post = await verify("foreground postcondition");
+      return evidence;
+    },
+    async press(values) {
+      const chord = writer362XTestChord(values);
+      await verify("before XTest " + chord);
+      const action = {
+        chord,
+        at: new Date().toISOString(),
+        args: ["key", "--clearmodifiers", chord],
+      };
+      evidence.keys.push(action);
+      await xdo(action.args);
+      action.post = await verify("after XTest " + chord);
+    },
+  };
+}
+
+// Observations may read DOM state; input uses native W3C or opt-in XTest.
 // Reject interaction/mutation forms before they can reach the native webview.
 function assertReadOnlyObservation(script) {
   assert.equal(
@@ -384,6 +617,9 @@ export function writer362NativeAnatomy() {
   };
   const f = document.activeElement;
   return {
+    hasFocus: document.hasFocus(),
+    visibilityState: document.visibilityState,
+    hidden: document.hidden,
     focus: {
       tag: f?.tagName,
       id: f?.id,
@@ -452,6 +688,7 @@ export async function runWriter362NativeProbe({
   fixture,
   ownedProfile,
   signal,
+  inputBackend = "w3c",
 }) {
   assert.equal(
     process.platform,
@@ -459,6 +696,10 @@ export async function runWriter362NativeProbe({
     "Native Linux probe only; protocol tests are separate",
   );
   assert.equal(ownedProfile, true, "Disposable caller-owned profile required");
+  assert.ok(
+    ["w3c", "x11-xtest"].includes(inputBackend),
+    "Unsupported native input backend",
+  );
   for (const field of ["commit", "tree"])
     assert.match(source?.[field] ?? "", /^[a-f0-9]{40}$/);
   for (const field of ["packageSha256", "executableSha256"])
@@ -481,6 +722,7 @@ export async function runWriter362NativeProbe({
     fixture,
     harnessSha256: hash(await readFile(fileURLToPath(import.meta.url))),
     platform: "Linux installed Tauri / WebKitGTK",
+    inputBackend,
     status: "running",
     nativePass: false,
     startedAt: new Date().toISOString(),
@@ -493,39 +735,58 @@ export async function runWriter362NativeProbe({
       "Virtual X11 evidence does not certify physical hardware or Windows/macOS",
       "No synthesized disabled/active attributes and no command mutation",
       "#362 group-trigger acceptance checks vertical clipping only. Raw horizontal and combined clipping remain recorded; the existing narrow horizontal scroll route is outside this issue's scope.",
+      "XTest opt-in is distinct native input evidence; any earlier W3C focus-visible failure remains unexplained and is not relabelled as passed.",
     ],
   };
   const runSignal = signal
     ? AbortSignal.any([signal, AbortSignal.timeout(180_000)])
     : AbortSignal.timeout(180_000);
-  const command = createWriter362Transport({
+  const request = createWriter362Transport({
     endpoint,
     sessionId,
     signal: runSignal,
   });
-  const cleanupCommand = createWriter362Transport({
+  const cleanupRequest = createWriter362Transport({
     endpoint,
     sessionId,
     timeoutMs: 5_000,
   });
+  let xtest;
+  const inputRequest = async (send, method, suffix, body) => {
+    if (
+      xtest &&
+      method === "POST" &&
+      (suffix === "/actions" ||
+        suffix === "/window/rect" ||
+        suffix.endsWith("/click"))
+    )
+      await xtest.verify("before W3C " + suffix);
+    return send(method, suffix, body);
+  };
+  const command = (...args) => inputRequest(request, ...args);
+  const cleanupCommand = (...args) => inputRequest(cleanupRequest, ...args);
   const evaluate = (fn, ...args) =>
     command("POST", "/execute/sync", {
       script: `return (${fn.toString()})(...arguments)`,
       args,
     });
   const press = (...values) =>
-    command("POST", "/actions", {
-      actions: [
-        {
-          type: "key",
-          id: "writer362-keyboard",
+    inputBackend === "x11-xtest"
+      ? xtest.press(values)
+      : command("POST", "/actions", {
           actions: [
-            ...values.map((value) => ({ type: "keyDown", value })),
-            ...values.toReversed().map((value) => ({ type: "keyUp", value })),
+            {
+              type: "key",
+              id: "writer362-keyboard",
+              actions: [
+                ...values.map((value) => ({ type: "keyDown", value })),
+                ...values
+                  .toReversed()
+                  .map((value) => ({ type: "keyUp", value })),
+              ],
+            },
           ],
-        },
-      ],
-    });
+        });
   const find = async (selector) =>
     (
       await command("POST", "/element", {
@@ -569,6 +830,21 @@ export async function runWriter362NativeProbe({
     assert.ok(["light", "forge"].includes(original.theme));
     report.runtime = original;
     rect = await command("GET", "/window/rect");
+    if (inputBackend === "x11-xtest") {
+      xtest = createWriter362XTestInput({
+        source,
+        ownedProfile,
+        display: process.env.DISPLAY,
+        signal: runSignal,
+        observe: () =>
+          cleanupRequest("POST", "/execute/sync", {
+            script: `return (${writer362DocumentFocus.toString()})()`,
+            args: [],
+          }),
+      });
+      report.x11Input = xtest.evidence;
+      await xtest.initialize();
+    }
     const setTheme = async (theme) => {
       if (
         (await evaluate(
@@ -808,6 +1084,14 @@ export async function runWriter362NativeProbe({
                 focused: document.activeElement?.matches(":focus-visible"),
               }));
               if (enabled.includes(active.name)) {
+                report.firstKeyboardFocus ??= {
+                  theme,
+                  width,
+                  group: groupName,
+                  inputBackend,
+                  ...active,
+                  document: await evaluate(writer362DocumentFocus),
+                };
                 assert.ok(
                   active.focused,
                   `${active.name}: keyboard focus visible`,
@@ -898,7 +1182,21 @@ export async function runWriter362NativeProbe({
   } catch (error) {
     report.status = "failed";
     report.error = String(error.stack ?? error);
-    await screenshot("failure").catch(() => {});
+    report.failureAnatomy = await cleanupRequest("POST", "/execute/sync", {
+      script: `return (${writer362NativeAnatomy.toString()})()`,
+      args: [],
+    }).catch((e) => ({ readError: String(e) }));
+    await writeFile(
+      join(output, "failure-anatomy.json"),
+      JSON.stringify(report.failureAnatomy, null, 2),
+    );
+    await cleanupRequest("GET", "/screenshot")
+      .then((data) =>
+        writeFile(join(output, "failure.png"), Buffer.from(data, "base64")),
+      )
+      .catch((e) => {
+        report.failureScreenshotError = String(e);
+      });
     throw error;
   } finally {
     const clean = async (label, task) => {

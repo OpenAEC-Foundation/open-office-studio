@@ -14,7 +14,190 @@ import {
   writer362SelectedCanvasPoint,
   writer362NativeCanvasActions,
   writer362NativeAnatomy,
+  writer362DocumentFocus,
+  writer362XTestChord,
+  createWriter362XTestInput,
+  writer362ProcStartTime,
 } from "./writer362-native-probe.mjs";
+
+function fakeXTest(options = {}) {
+  const commands = [],
+    reads = [];
+  const state = {
+    pid: 4635,
+    startTime: "12000",
+    executable: "/usr/bin/open-office-studio",
+    identity: "1:2:3:4",
+    sha256: "a".repeat(64),
+    focus: "901",
+    windows: "901",
+    windowPid: "4635",
+    dom: {
+      hasFocus: true,
+      hidden: false,
+      visibilityState: "visible",
+      activeElement: { label: "Special Character", focusVisible: true },
+    },
+    ...options,
+  };
+  const args = {
+    source: { pid: 4635, executableSha256: "a".repeat(64) },
+    display: ":99",
+    ownedProfile: true,
+    observe: async () => structuredClone(state.dom),
+  };
+  const io = {
+    platform: "linux",
+    readOwner: async (withHash) => {
+      reads.push(withHash);
+      return {
+        pid: state.pid,
+        startTime: state.startTime,
+        executable: state.executable,
+        identity: state.identity,
+        ...(withHash ? { sha256: state.sha256 } : {}),
+      };
+    },
+    xdo: async (argv) => {
+      commands.push(argv);
+      if (argv[0] === "search") return state.windows;
+      if (argv[0] === "getwindowpid") return state.windowPid;
+      if (argv[0] === "getwindowfocus") return state.focus;
+      if (argv[0] === "windowfocus") {
+        state.focus = argv[2];
+        if (!state.keepDomUnfocused) state.dom.hasFocus = true;
+      }
+      return "";
+    },
+  };
+  return {
+    state,
+    commands,
+    reads,
+    args,
+    io,
+    input: createWriter362XTestInput(args, io),
+  };
+}
+
+test("XTest maps only the seven existing W3C keys and their native chords", () => {
+  for (const [value, name] of [
+    ["\uE015", "Down"],
+    ["\uE014", "Right"],
+    ["\uE007", "Return"],
+    ["\uE00C", "Escape"],
+    ["\uE009", "ctrl"],
+    ["\uE011", "Home"],
+    ["\uE010", "End"],
+  ])
+    assert.equal(writer362XTestChord([value]), name);
+  assert.equal(writer362XTestChord(["\uE009", "\uE011"]), "ctrl+Home");
+  assert.throws(() => writer362XTestChord(["x"]), /Unsupported XTest key/);
+  assert.throws(() => writer362XTestChord([]), /At least one/);
+});
+
+test("process binding reads field22 despite spaces/parentheses and validates PID", () => {
+  const fields = Array(22).fill("0");
+  fields[0] = "R";
+  fields[19] = "123456";
+  const text = `4635 (office studio (worker)) ${fields.join(" ")}`;
+  assert.equal(writer362ProcStartTime(text, 4635), "123456");
+  assert.throws(
+    () => writer362ProcStartTime(text, 99),
+    /Unexpected \/proc PID/,
+  );
+  assert.throws(
+    () => writer362ProcStartTime("4635 (office) R", 4635),
+    /Missing \/proc starttime/,
+  );
+});
+
+test("XTest requires Linux, explicit private display, owned profile and verified PID", () => {
+  const f = fakeXTest();
+  for (const [args, io] of [
+    [{ ...f.args, display: undefined }, f.io],
+    [{ ...f.args, display: "remote:1" }, f.io],
+    [{ ...f.args, ownedProfile: false }, f.io],
+    [{ ...f.args, source: { ...f.args.source, pid: 0 } }, f.io],
+    [f.args, { ...f.io, platform: "win32" }],
+  ])
+    assert.throws(() => createWriter362XTestInput(args, io));
+  assert.equal(f.commands.length, 0);
+});
+
+test("already-foreground XTest sends real key arguments without a target-window flag", async () => {
+  const f = fakeXTest();
+  await f.input.initialize();
+  assert.equal(f.input.evidence.activationPerformed, false);
+  await f.input.press(["\uE009", "\uE011"]);
+  assert.deepEqual(
+    f.commands.filter((c) => c[0] === "key"),
+    [["key", "--clearmodifiers", "ctrl+Home"]],
+  );
+  assert.ok(f.commands.every((c) => !c.includes("--window")));
+  assert.equal(
+    f.reads.filter(Boolean).length,
+    1,
+    "Executable hash bound once; PID/starttime/inode identity rechecked per input",
+  );
+  assert.ok(f.reads.length >= 4);
+  assert.equal(f.input.evidence.keys[0].post.dom.hasFocus, true);
+});
+
+test("XTest activates only its exact owned window once and never refocuses on later loss", async () => {
+  const f = fakeXTest({
+    focus: "902",
+    dom: { hasFocus: false, hidden: false, visibilityState: "visible" },
+  });
+  await f.input.initialize();
+  assert.deepEqual(
+    f.commands.filter((c) => c[0] === "windowfocus"),
+    [["windowfocus", "--sync", "901"]],
+  );
+  f.state.focus = "902";
+  await assert.rejects(f.input.press(["\uE015"]), /lost foreground/);
+  assert.equal(f.commands.filter((c) => c[0] === "windowfocus").length, 1);
+  assert.equal(f.commands.filter((c) => c[0] === "key").length, 0);
+});
+
+test("XTest rejects ambiguous windows, wrong window PID, or wrong executable before input", async () => {
+  for (const options of [
+    { windows: "901\n902" },
+    { windowPid: "999" },
+    { sha256: "b".repeat(64) },
+  ]) {
+    const f = fakeXTest(options);
+    await assert.rejects(f.input.initialize());
+    assert.equal(
+      f.commands.filter((c) => ["key", "windowfocus"].includes(c[0])).length,
+      0,
+    );
+  }
+});
+
+test("XTest stops on PID reuse, executable replacement, hidden DOM or failed activation", async () => {
+  for (const change of [
+    { startTime: "99999" },
+    { executable: "/other/app" },
+    { identity: "changed" },
+    { pid: 123 },
+    { dom: { hasFocus: true, hidden: true, visibilityState: "hidden" } },
+  ]) {
+    const f = fakeXTest();
+    await f.input.initialize();
+    Object.assign(f.state, change);
+    await assert.rejects(f.input.press(["\uE015"]));
+    assert.equal(f.commands.filter((c) => c[0] === "key").length, 0);
+  }
+  const f = fakeXTest({
+    focus: "902",
+    keepDomUnfocused: true,
+    dom: { hasFocus: false, hidden: false, visibilityState: "visible" },
+  });
+  await assert.rejects(f.input.initialize(), /lacks focus/);
+  assert.equal(f.commands.filter((c) => c[0] === "windowfocus").length, 1);
+  assert.equal(f.commands.filter((c) => c[0] === "key").length, 0);
+});
 
 // Exercise the serialized read-only WebDriver script, not the product's height
 // calculation. Deliberately use a 5px computed outline instead of its 4px CSS.
@@ -225,6 +408,15 @@ test("native protocol blocks scripted focus and DOM mutations before transmissio
       requests.length,
       4,
       "Read-only serialized geometry stays allowed",
+    );
+    await command("POST", "/execute/sync", {
+      script: `return (${writer362DocumentFocus.toString()})()`,
+      args: [],
+    });
+    assert.equal(
+      requests.length,
+      5,
+      "Read-only document foreground observation stays allowed",
     );
   } finally {
     await new Promise((done) => server.close(done));
