@@ -16,7 +16,8 @@ await mkdir(dirname(output), { recursive: true });
 await mkdir(output);
 const sourcePath = "docs/tests/epub356/leesvolgorde.epub";
 const hash = (b) => createHash("sha256").update(b).digest("hex");
-let server, browser, context, page;
+let server, browser, context, page, report, primaryError, failureBody = "";
+const cleanupErrors = [];
 const errors = [],
   externalRequests = [];
 try {
@@ -93,7 +94,7 @@ try {
   await page.goto(
     `http://127.0.0.1:${server.httpServer.address().port}${route}`,
   );
-  assert(new URL(page.url()).pathname.startsWith(route));
+  assert.equal(new URL(page.url()).pathname, route, "Actual page must remain on the requested browser route");
   assert.equal(
     await page.evaluate(() => typeof window.__TAURI_INTERNALS__),
     "undefined",
@@ -177,7 +178,7 @@ try {
   assert.deepEqual(errors, []);
   assert.deepEqual(externalRequests, []);
   await page.screenshot({ path: `${output}/reopened-invalid-preserved.png` });
-  const report = {
+  report = {
     status: "passed",
     applicationCommit: buildReceipt.source,
     applicationTree: buildReceipt.tree,
@@ -198,29 +199,27 @@ try {
     errors,
     externalRequests,
   };
-  await writeFile(`${output}/report.json`, JSON.stringify(report, null, 2));
-  console.log(JSON.stringify(report));
 } catch (error) {
-  await writeFile(
-    `${output}/failure.json`,
-    JSON.stringify(
-      {
-        error: String(error),
-        errors,
-        externalRequests,
-        bodyText: page ? await page
-          .locator("body")
-          .innerText()
-          .catch(() => "") : "",
-      },
-      null,
-      2,
-    ),
-  );
+  primaryError = error;
+  failureBody = page ? await page.locator("body").innerText().catch(() => "") : "";
   await page?.screenshot({ path: `${output}/failure.png` }).catch(() => {});
-  throw error;
 } finally {
-  await context?.close().catch(() => {});
-  await browser?.close().catch(() => {});
-  if (server) await new Promise((resolve) => server.httpServer.close(resolve));
+  for (const [name, close] of [
+    ["context", () => context?.close()],
+    ["browser", () => browser?.close()],
+    ["server", () => server ? new Promise((resolve, reject) => server.httpServer.close(error => error ? reject(error) : resolve())) : undefined],
+  ]) {
+    try { await close(); }
+    catch (error) { cleanupErrors.push({ resource: name, error: String(error) }); }
+  }
 }
+if (primaryError || cleanupErrors.length) {
+  await writeFile(`${output}/failure.json`, JSON.stringify({
+    error: String(primaryError || new Error("EPUB browser proof cleanup failed")),
+    errors, externalRequests, bodyText: failureBody, cleanupErrors,
+  }, null, 2));
+  throw primaryError || new Error("EPUB browser proof cleanup failed");
+}
+report.cleanupPassed = true;
+await writeFile(`${output}/report.json`, JSON.stringify(report, null, 2));
+console.log(JSON.stringify(report));

@@ -1,8 +1,8 @@
 /** Headless startup gates only: no real browser, Vite server or app is launched. */
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { mkdtemp, mkdir, readFile, writeFile, rm } from "node:fs/promises";
-import { join } from "node:path";
+import { mkdtemp, mkdir, readFile, writeFile, rm, realpath, access } from "node:fs/promises";
+import { join, dirname, basename } from "node:path";
 import { tmpdir } from "node:os";
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -25,7 +25,7 @@ async function sandbox() {
   await writeFile(join(root, ".gitignore"), ".local/\nnode_modules/\n");
   const modules = {
     vite: `import{appendFileSync}from'node:fs';export async function preview(){appendFileSync(process.env.STARTUP_EVENTS,'preview\\n');if(process.env.FAIL_AT==='preview')throw Error('injected preview failure');return{httpServer:{address(){return{port:32100}},close(done){appendFileSync(process.env.STARTUP_EVENTS,'server-close\\n');done()}}}}`,
-    playwright: `import{appendFileSync}from'node:fs';const log=s=>appendFileSync(process.env.STARTUP_EVENTS,s+'\\n');export const chromium={async launch(){log('browser');if(process.env.FAIL_AT==='browser')throw Error('injected browser failure');return{async close(){log('browser-close')},async newContext(){log('context');if(process.env.FAIL_AT==='context')throw Error('injected context failure');return{async close(){log('context-close')},async newPage(){log('page');throw Error('injected page failure')}}}}}}`,
+    playwright: `import{appendFileSync}from'node:fs';const log=s=>appendFileSync(process.env.STARTUP_EVENTS,s+'\\n');export const chromium={async launch(){log('browser');if(process.env.FAIL_AT==='browser')throw Error('injected browser failure');return{async close(){log('browser-close');if(process.env.FAIL_AT==='browser-close')throw Error('injected browser close failure')},async newContext(){log('context');if(process.env.FAIL_AT==='context')throw Error('injected context failure');return{async close(){log('context-close');if(process.env.FAIL_AT==='context-close')throw Error('injected context close failure')},async newPage(){log('page');if(process.env.FAIL_AT==='redirect')return{setDefaultTimeout(){},on(){},async addInitScript(){},async goto(){},url(){return'http://127.0.0.1:32100/another-route/'},locator(){return{async innerText(){return'headless redirect fixture'}}},async screenshot(){}};throw Error('injected page failure')}}}}}}`,
     fflate: `export function unzipSync(){return{'Boek/media/beeld een.png':new Uint8Array([1])}}export function strFromU8(b){return new TextDecoder().decode(b)}`,
   };
   for (const [name, code] of Object.entries(modules)) {
@@ -57,10 +57,14 @@ async function attempt({ route = "/office/", receipt = true, change, failAt = "p
     assert.equal(result.signal, null, "Failure path must terminate normally, not hang");
     const events = await readFile(env.STARTUP_EVENTS, "utf8").catch(() => "");
     const failure = JSON.parse(await readFile(join(box.root, ".local/proof/failure.json"), "utf8"));
+    assert.equal(await access(join(box.root, ".local/proof/report.json")).then(() => true, () => false), false, "A failure or cleanup error must never publish passed report.json");
     return { events: events.trim().split("\n").filter(Boolean), failure, stderr: result.stderr };
   } finally {
     // This freshly created, explicitly named fixture contains only our own files.
-    await rm(box.root, { recursive: true, force: true });
+    const target = await realpath(box.root), parent = await realpath(tmpdir());
+    assert.equal(dirname(target), parent);
+    assert(basename(target).startsWith("epub356-startup-"));
+    await rm(target, { recursive: true, force: true });
   }
 }
 
@@ -98,4 +102,19 @@ test("normal root route uses the same verifier and reaches only the headless inj
   const result = await attempt({ route: "/", change: async b => writeFile(join(b.root, ".local/receipt.json"), JSON.stringify({ ...b.receipt, route: "/" })) });
   assert.deepEqual(result.events, ["preview", "browser", "context", "page", "context-close", "browser-close", "server-close"]);
   assert.match(result.failure.error, /page failure/);
+});
+
+test("cleanup failures are reported, never publish a pass, and do not prevent remaining closes", async () => {
+  for (const resource of ["context", "browser"]) {
+    const result = await attempt({ failAt: `${resource}-close` });
+    assert.deepEqual(result.events, ["preview", "browser", "context", "page", "context-close", "browser-close", "server-close"]);
+    assert.deepEqual(result.failure.cleanupErrors.map(e => e.resource), [resource]);
+    assert.match(result.failure.error, /page failure/);
+  }
+});
+
+test("a real requested '/' route rejects a headless simulated redirect to another pathname", async () => {
+  const result = await attempt({ route: "/", failAt: "redirect", change: async b => writeFile(join(b.root, ".local/receipt.json"), JSON.stringify({ ...b.receipt, route: "/" })) });
+  assert.match(result.failure.error, /Actual page must remain on the requested browser route/);
+  assert.deepEqual(result.events, ["preview", "browser", "context", "page", "context-close", "browser-close", "server-close"]);
 });
