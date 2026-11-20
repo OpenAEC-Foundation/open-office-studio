@@ -7,7 +7,7 @@ at I3 application `7f126f4b8e5269a54388cf78c48c78d2acc0daa1`, tree
 installing dependencies or changing application source. Source was clean
 before and after. The read-only lease is released.
 
-This archive retains 21 byte-identical original files: actual saved DOCX,
+This archive retains 27 byte-identical original files: actual saved DOCX,
 independent oracle, reports, original PNGs, execution logs and shared-build
 receipts for both routes, plus the final handoff. `hashes.json` maps the original
 integration-checkout paths. Text conversion is disabled for exact bytes.
