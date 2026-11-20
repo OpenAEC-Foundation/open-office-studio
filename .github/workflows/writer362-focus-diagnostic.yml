@@ -1,0 +1,32 @@
+name: Writer362 bounded GTK focus cause diagnostic
+on:
+  push:
+    branches: [codex/writer-362-linux-release-2026-11-20]
+    paths:
+      - scripts/proef-writer362-webkit-focus.py
+      - .github/workflows/writer362-focus-diagnostic.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  focus:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GTK diagnostic dependencies
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends python3-gi python3-cairo gir1.2-webkit2-4.1 webkit2gtk-driver xdotool xvfb dbus-x11
+      - name: Actual own-window pointer and keyboard comparison
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: dbus-run-session -- xvfb-run -a -s '-screen 0 1000x700x24' python3 scripts/proef-writer362-webkit-focus.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer362-webkit-focus-${{ github.sha }}
+          path: .local/writer362-webkit-focus/
+          include-hidden-files: true
