@@ -1,0 +1,69 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "desktopRun": 44715026752,
+  "harnessCommit": "81f4dbeb426a75c4aaa845650d2209886f34b8c6",
+  "platform": "macOS",
+  "source": {
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/slk/pass/ooo80484-1.slk",
+    "sha256": "bcfaae8f2ce55e393c100dcd95c37301129b9121af0429586de75b3ec99df420",
+    "bytes": 2581,
+    "alias": ".sylk is tested with the immutable genuine SYLK bytes originally named .slk; not evidence of a different format"
+  },
+  "artifactVerification": {
+    "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "desktopRun": 44715026752,
+    "platform": "macOS",
+    "artifactId": 14621620223,
+    "artifactName": "open-office-studio-macOS",
+    "archiveSha256": "90840910387ec1ffd6a2d93575d2ea0d89c86b6481b2fe8fc1123c7fcb107e54",
+    "packages": [
+      {
+        "path": "dmg/Open Office Studio_2026.46.2_aarch64.dmg",
+        "kind": "dmg",
+        "sha256": "80f10634da0af9199a8a7c561a59a231b76d9787a40d110d981e0d1b3db82df0"
+      }
+    ]
+  },
+  "scope": "Real private runtime + production TypeScript input/engine route; no native app/dialog/visual claim",
+  "cases": [
+    {
+      "kind": "dmg",
+      "packageSha256": "80f10634da0af9199a8a7c561a59a231b76d9787a40d110d981e0d1b3db82df0",
+      "status": "passed",
+      "extensions": [
+        {
+          "ext": "slk",
+          "status": "passed",
+          "originalUnchanged": true,
+          "convertedSha256": "9cde19094d41796ae49e696ff19529f15a300c852de88bc66264dc1e53efabe8",
+          "savedSha256": "494cca7bbe9440d2d4fa6dbcda577dbc4503da39f29a365bea6ed21ed03b9f04",
+          "reopenedSha256": "494cca7bbe9440d2d4fa6dbcda577dbc4503da39f29a365bea6ed21ed03b9f04",
+          "expectedCellsChecked": 12,
+          "markerSavedReopened": true
+        },
+        {
+          "ext": "sylk",
+          "status": "passed",
+          "originalUnchanged": true,
+          "convertedSha256": "9ab8d0b1d76fda046631b04ba67fa86d1ad5e1b6384fe7e188add6bc267571e0",
+          "savedSha256": "9e892a5914f813264e308f2cccd118d3478c06fb0eda054c48a6caa0f39f1bf4",
+          "reopenedSha256": "9e892a5914f813264e308f2cccd118d3478c06fb0eda054c48a6caa0f39f1bf4",
+          "expectedCellsChecked": 12,
+          "markerSavedReopened": true
+        }
+      ],
+      "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+      "temporaryDisposed": true
+    }
+  ],
+  "status": "passed",
+  "browserLimitation": {
+    "noTauriGuard": true,
+    "desktopAlternative": true,
+    "scope": "Production source-level no-Tauri guard in Node; actual hosted GUI not executed by this job"
+  },
+  "dataAndRoutePassed": true,
+  "loaderClosed": true
+}

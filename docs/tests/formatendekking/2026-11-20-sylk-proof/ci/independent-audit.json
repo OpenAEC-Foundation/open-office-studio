@@ -1,0 +1,187 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "harnessCommit": "81f4dbeb426a75c4aaa845650d2209886f34b8c6",
+  "run": 44728178415,
+  "sourceSha256": "bcfaae8f2ce55e393c100dcd95c37301129b9121af0429586de75b3ec99df420",
+  "scope": "Source-level production dispatch + real private runtime + production engine save/reopen; not native UI",
+  "platforms": [
+    {
+      "platform": "Windows",
+      "status": "passed",
+      "reportSha256": "ace191574d3b5335f6246c0461b167a963c29683221979a84839190a860c8026",
+      "cases": [
+        {
+          "kind": "nsis",
+          "packageSha256": "80bcea9e0c6812d7816b6f889e1947458c7bedf17650adbb8cf9f93f38a95b10",
+          "status": "passed",
+          "extensions": [
+            {
+              "ext": "slk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "33ec2420927757d61ce637220109d4f8e01ed2903ae8739bc63d6b53a3a289b3",
+              "savedSha256": "9617cc59849d980121c10181518af979082602e0fe3375b72a08fe7136615ec0",
+              "reopenedSha256": "9617cc59849d980121c10181518af979082602e0fe3375b72a08fe7136615ec0",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            },
+            {
+              "ext": "sylk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "2a1303823eb779c70048f73dcc2d1b260630fa5005a8ac1bc117ae321daf638c",
+              "savedSha256": "2e188cbe477bb152f96e7d17f60c2e206cb094884f790d802421dacf48f3cc4d",
+              "reopenedSha256": "2e188cbe477bb152f96e7d17f60c2e206cb094884f790d802421dacf48f3cc4d",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            }
+          ],
+          "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+          "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+          "temporaryDisposed": true
+        }
+      ],
+      "browserLimitation": {
+        "noTauriGuard": true,
+        "desktopAlternative": true,
+        "scope": "Production source-level no-Tauri guard in Node; actual hosted GUI not executed by this job"
+      }
+    },
+    {
+      "platform": "Linux",
+      "status": "passed",
+      "reportSha256": "3c171a606e266cc7b7f203dc6b0b9834679a1d8ad595d9cd6ec794d710847ef5",
+      "cases": [
+        {
+          "kind": "appimage",
+          "packageSha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964",
+          "status": "passed",
+          "extensions": [
+            {
+              "ext": "slk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "c8178935067b3ce69fe87347a891e4140083f758bc1115f85a63a0aca2681707",
+              "savedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+              "reopenedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            },
+            {
+              "ext": "sylk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "c8178935067b3ce69fe87347a891e4140083f758bc1115f85a63a0aca2681707",
+              "savedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+              "reopenedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            }
+          ],
+          "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+          "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+          "temporaryDisposed": true
+        },
+        {
+          "kind": "deb",
+          "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+          "status": "passed",
+          "extensions": [
+            {
+              "ext": "slk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "f0e79c1ec2437517b43e12ae641f232f1d6e743a3c493b7882247e7e6fba5da3",
+              "savedSha256": "3850de0bbecda55cec8a5f8da800f5c6661068ac62101361d6e22c954f2e8374",
+              "reopenedSha256": "3850de0bbecda55cec8a5f8da800f5c6661068ac62101361d6e22c954f2e8374",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            },
+            {
+              "ext": "sylk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "0a2fc884b48237675efc843e538efdf2320b1c640a6fa3d697b5bede0d7f4567",
+              "savedSha256": "b146c5c1fee83077a764818a0be12798845cb9a8107f13f4a38bef5cb15c4581",
+              "reopenedSha256": "b146c5c1fee83077a764818a0be12798845cb9a8107f13f4a38bef5cb15c4581",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            }
+          ],
+          "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+          "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+          "temporaryDisposed": true
+        }
+      ],
+      "browserLimitation": {
+        "noTauriGuard": true,
+        "desktopAlternative": true,
+        "scope": "Production source-level no-Tauri guard in Node; actual hosted GUI not executed by this job"
+      }
+    },
+    {
+      "platform": "macOS",
+      "status": "passed",
+      "reportSha256": "98849fc993f4b4b1efcf0e56f7be92ee84bd21eb1887a88d6ae7468196764888",
+      "cases": [
+        {
+          "kind": "dmg",
+          "packageSha256": "80f10634da0af9199a8a7c561a59a231b76d9787a40d110d981e0d1b3db82df0",
+          "status": "passed",
+          "extensions": [
+            {
+              "ext": "slk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "9cde19094d41796ae49e696ff19529f15a300c852de88bc66264dc1e53efabe8",
+              "savedSha256": "494cca7bbe9440d2d4fa6dbcda577dbc4503da39f29a365bea6ed21ed03b9f04",
+              "reopenedSha256": "494cca7bbe9440d2d4fa6dbcda577dbc4503da39f29a365bea6ed21ed03b9f04",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            },
+            {
+              "ext": "sylk",
+              "status": "passed",
+              "originalUnchanged": true,
+              "convertedSha256": "9ab8d0b1d76fda046631b04ba67fa86d1ad5e1b6384fe7e188add6bc267571e0",
+              "savedSha256": "9e892a5914f813264e308f2cccd118d3478c06fb0eda054c48a6caa0f39f1bf4",
+              "reopenedSha256": "9e892a5914f813264e308f2cccd118d3478c06fb0eda054c48a6caa0f39f1bf4",
+              "expectedCellsChecked": 12,
+              "markerSavedReopened": true
+            }
+          ],
+          "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+          "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+          "temporaryDisposed": true
+        }
+      ],
+      "browserLimitation": {
+        "noTauriGuard": true,
+        "desktopAlternative": true,
+        "scope": "Production source-level no-Tauri guard in Node; actual hosted GUI not executed by this job"
+      }
+    }
+  ],
+  "checkedFiles": 24,
+  "artifacts": [
+    {
+      "platform": "Windows",
+      "artifactId": 14625276699,
+      "archiveSha256": "0f8cad5fb86a09b3a7ef3dc3e28bc38486229d12f962039e980f9fbd4611d685",
+      "archiveBytes": 51729
+    },
+    {
+      "platform": "Linux",
+      "artifactId": 14624618318,
+      "archiveSha256": "a67195bccbb48e74af22f598a61d9b6ebdcd7983c10e792c30e8d797409e5e84",
+      "archiveBytes": 100941
+    },
+    {
+      "platform": "macOS",
+      "artifactId": 14624129797,
+      "archiveSha256": "2bb7e1b37a8400810a2a41c0bb01d6e34420eaa34480b28bc0ebd6514303a980",
+      "archiveBytes": 51856
+    }
+  ]
+}

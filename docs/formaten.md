@@ -35,6 +35,14 @@ upstreambestanden, SHA-256-controle, het veilige profiel en de echte editors.
 Een controle voorkomt dat een nieuwe catalogusextensie zonder dekkingstoelichting
 wordt toegevoegd.
 
+De [SYLK-proef van 20 november](tests/formatendekking/2026-11-20-sylk-route.md)
+controleert dezelfde echte SYLK-bron via `.slk` en `.sylk` op het vastgelegde
+I3-codepunt: de private runtime en productie-editor op Windows, Linux en macOS,
+plus de expliciete weigering met documentbehoud op beide echte browserroutes.
+Dit bewijst twaalf getypeerde cellen en bewerken/bewaren/heropenen; native
+SYLK-bediening en alle varianten/opmaak zijn hiermee niet bewezen. Vijftien
+andere extensies missen nog een positieve bestandsproef; #30 blijft open.
+
 Bij een mislukte conversie noemt de app het bronformaat, bewaart zij de concrete
 foutreden en adviseert zij export vanuit de oorspronkelijke app naar DOCX/RTF,
 XLSX of PPTX. CSV is alleen een alternatief voor waarden van één werkblad.

@@ -850,10 +850,14 @@
         "xlsx"
       ],
       "route": "runtime",
-      "status": "no-fixture",
+      "status": "real-file",
       "sources": [],
-      "evidence": [],
-      "note": "Geen afzonderlijk SYLK-voorbeeld met deze extensie in de suite; de SLK-proef controleert niet deze bestandskeuze."
+      "evidence": [
+        "docs/tests/formatendekking/2026-11-20-sylk-route.md",
+        "docs/tests/formatendekking/2026-11-20-sylk-proof/ci/independent-audit.json",
+        "docs/tests/formatendekking/2026-11-20-sylk-proof/browser/hosted/report.json"
+      ],
+      "note": "20-11-2026: echte SYLK-bron lo-slk-2 expliciet via .sylk en controle .slk; I3 private Windows/macOS/Linux-runtime + productie-invoer/engine, 12 getypeerde cellen en bewerken/bewaren/heropenen. Browser / en /office/ weigert met desktop/XLSX-advies en behoudt bestaand document. Geen native bediening-, stijl-/formule-/alle-variantenbewijs; apart van historische fixturematrix."
     },
     {
       "ext": "tab",
