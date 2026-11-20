@@ -23,6 +23,17 @@ def digest(data):
 def verify_root_candidate(value):
     """Preserve and verify the coordinator's exact bytes, not a reserialized copy."""
     try:
+        if value.get("qaScope") == "find-baseline-only":
+            raw = base64.b64decode(value["rootBaselineProofBase64"], validate=True)
+            if digest(raw) != value["rootBaselineProofSha256"]:
+                raise ValueError("G baseline proof byte hash differs")
+            proof = json.loads(raw)
+            if proof.get("diagnosticOnly") is not True or proof.get("doesNotReplaceI3Acceptance") is not True or proof.get("previousActualSourceCheckoutVerified") is not True or proof.get("previousGAndI3DriverBytesIdentical") is not True:
+                raise ValueError("Root must identify the older G proof as diagnostic only")
+            for source, target in [("sourceCommit", "sourceCommit"), ("sourceTree", "sourceTree"), ("canonicalRun", "artifactRun"), ("artifactId", "artifactId"), ("archiveSha256", "archiveSha256"), ("packageMember", "packageMember"), ("packageSha256", "packageSha256"), ("packagedExecutableSha256", "executableSha256"), ("expectedDriverSha256", "expectedDriverSha256"), ("expectedWebkitPackages", "expectedWebkitPackages")]:
+                if proof.get(source) != value.get(target):
+                    raise ValueError("G baseline identity differs: " + source)
+            return raw, {"name": "open-office-studio-Linux"}
         raw = base64.b64decode(value["rootFrozenCandidateBase64"], validate=True)
         expected = value["rootFrozenCandidateSha256"]
         if not re.fullmatch("[a-f0-9]{64}", expected) or digest(raw) != expected:
@@ -68,7 +79,10 @@ def validate(value, profile):
             if profile != "linux" or not isinstance(module, dict) or not re.fullmatch("[a-f0-9]{40}", module.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", module.get("sha256", "")):
                 raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
     scope = value.get("qaScope")
-    if scope is not None and (profile != "linux" or scope != "362-only" or value.get("remainingCoverage") is None or value.get("ribbonHarness") is None or value.get("stylesHarness") is not None):
+    if scope == "find-baseline-only":
+        if profile != "linux" or value.get("diagnosticOnly") is not True or value.get("doesNotReplaceI3Acceptance") is not True or any(value.get(k) is not None for k in ["remainingCoverage", "ribbonHarness", "stylesHarness"]) or value.get("originalI3Find", {}).get("status") != "failed":
+            raise ValueError("G Find baseline is diagnostic only, with I3 failure retained and no acceptance/module reuse")
+    elif scope is not None and (profile != "linux" or scope != "362-only" or value.get("remainingCoverage") is None or value.get("ribbonHarness") is None or value.get("stylesHarness") is not None):
         raise ValueError("362-only needs Linux, inherited failure, a362 pin and no363 pin")
     viewport = value.get("macViewportSetup")
     if viewport is not None and (profile != "macos" or viewport != {"mode": "native-maximize-once", "executionApproved": True}):
@@ -117,7 +131,8 @@ def main():
         raise RuntimeError("Canonical artifact is expired or belongs to another source/run")
     folder = args.manifest.parent / "input"
     folder.mkdir(exist_ok=False)
-    (folder / "root-frozen-candidate.json").write_bytes(root_raw)
+    proof_name = "root-baseline-proof.json" if value.get("diagnosticOnly") else "root-frozen-candidate.json"
+    (folder / proof_name).write_bytes(root_raw)
     archive = folder / "canonical.zip"
     with archive.open("wb") as output:
         subprocess.run(["gh", "api", f"repos/{REPO}/actions/artifacts/{value['artifactId']}/zip"], stdout=output, check=True, timeout=180)
@@ -131,7 +146,7 @@ def main():
     package_path.write_bytes(package)
     identity = dict(value, packagePath=str(package_path.resolve()))
     (folder / "identity.json").write_text(json.dumps(identity, indent=2), encoding="utf-8")
-    (folder / "artifact-origin.json").write_text(json.dumps({"sourceCommit": run["head_sha"], "run": value["artifactRun"], "artifactId": artifact["id"], "artifactName": artifact["name"], "rootFrozenCandidateSha256": digest(root_raw), "archiveSha256": digest(archive.read_bytes()), "packageSha256": digest(package)}, indent=2), encoding="utf-8")
+    (folder / "artifact-origin.json").write_text(json.dumps({"sourceCommit": run["head_sha"], "run": value["artifactRun"], "artifactId": artifact["id"], "artifactName": artifact["name"], ("rootBaselineProofSha256" if value.get("diagnosticOnly") else "rootFrozenCandidateSha256"): digest(root_raw), "archiveSha256": digest(archive.read_bytes()), "packageSha256": digest(package)}, indent=2), encoding="utf-8")
 
 
 if __name__ == "__main__":

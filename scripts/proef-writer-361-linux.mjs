@@ -72,6 +72,16 @@ const { unzipSync, zipSync, strFromU8, strToU8 } = await import("fflate");
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const remaining = verifyPreviousCoverage(origin);
 const only362 = origin.qaScope === "362-only";
+const findBaselineOnly = origin.qaScope === "find-baseline-only";
+assert(
+  !findBaselineOnly ||
+    (origin.diagnosticOnly &&
+      !remaining &&
+      !origin.ribbonHarness &&
+      !origin.stylesHarness &&
+      origin.originalI3Find?.status === "failed"),
+  "Older G is a standalone diagnostic, never I3 acceptance",
+);
 const completedRequestedScope = Symbol("completed-requested-scope");
 let invoked362 = false;
 assert(
@@ -105,6 +115,17 @@ const report = {
   cleanup: {},
 };
 retainPreviousFailure(report, remaining);
+if (findBaselineOnly) {
+  report.diagnosticOnly = true;
+  report.limits[1] =
+    "Older G Find-only observation; no I3 or general Writer acceptance";
+  report.doesNotReplaceI3Acceptance = true;
+  report.originalI3Find = origin.originalI3Find;
+  report.i3Writer361Status = "failed";
+  report.writer361Status = "not-executed";
+  report.nativePass = false;
+  report.acceptance = false;
+}
 if (remaining)
   await writeFile(join(out, "previous-linux-report.json"), remaining.raw);
 const application = "/usr/bin/open-office-studio";
@@ -245,6 +266,18 @@ async function clickCanvas(x = 145, y = 110) {
       },
     ],
   });
+}
+async function openNativeFindInput() {
+  await chord("h");
+  const search = await waitFor(
+    () =>
+      evaluate(
+        "return [...document.querySelectorAll('input')].find(e=>e.getClientRects().length&&e.getAttribute('aria-label')==='Find what')||null",
+      ),
+    "Find input",
+  );
+  await clickElement(search);
+  return search;
 }
 async function state() {
   return evaluate(
@@ -504,6 +537,60 @@ try {
     async () => (await request("GET", "/status"))?.ready === true,
     "Driver startup",
   );
+  if (findBaselineOnly) {
+    assert.equal(
+      report.runtime.driverSha256,
+      origin.expectedDriverSha256,
+      "Comparable native driver bytes required",
+    );
+    assert.equal(
+      report.runtime.webkitPackages,
+      origin.expectedWebkitPackages,
+      "Comparable WebKit runtime required",
+    );
+    currentPhase = "G-find-baseline-only";
+    await startDocument();
+    await clickCanvas();
+    await chord("\uE011");
+    await clickElement(await named("tab", "Table Design"));
+    await clickButton("Insert Column Right");
+    const gridBefore = await check("G diagnostic four-column context", 4);
+    await openNativeFindInput();
+    await type("abc");
+    const observe = async () => ({
+      at: Date.now(),
+      ...(await state()),
+      value: await evaluate("return document.activeElement?.value"),
+    });
+    report.findBaseline = { before: await observe(), samples: [] };
+    assert.equal(report.findBaseline.before.focus.tag, "INPUT");
+    assert.equal(report.findBaseline.before.focus.label, "Find what");
+    assert.equal(report.findBaseline.before.value, "abc");
+    assert.deepEqual(report.findBaseline.before.tables, gridBefore.tables);
+    await chord("z");
+    const started = Date.now();
+    for (const target of [0, 250, 1000]) {
+      await delay(Math.max(0, target - (Date.now() - started)));
+      report.findBaseline.samples.push({
+        elapsedMs: Date.now() - started,
+        ...(await observe()),
+      });
+    }
+    const last = report.findBaseline.samples.at(-1);
+    report.findBaseline.outcome =
+      last.value === "" ? "undo-cleared" : "undo-did-not-clear";
+    report.findBaseline.documentGridPreserved =
+      JSON.stringify(gridBefore.tables) === JSON.stringify(last.tables);
+    report.findBaseline.screenshotSha256 = await screenshot("G-find-baseline");
+    await closeSession();
+    report.scopeExecution = {
+      writer361: "not-executed",
+      writer362: "not-executed",
+      writer363: "not-executed",
+      GFindBaseline: "executed",
+    };
+    throw completedRequestedScope;
+  }
   if (optionalModules[362]) {
     currentPhase = "independent-362";
     await collectOptionalNativeQa(report, 362, async () => {
@@ -637,15 +724,7 @@ try {
     await clickButton("Insert Column Right");
     await check("before Find", 4);
   }
-  await chord("h");
-  const search = await waitFor(
-    () =>
-      evaluate(
-        "return [...document.querySelectorAll('input')].find(e=>e.getClientRects().length&&e.getAttribute('aria-label')==='Find what')||null",
-      ),
-    "Find input",
-  );
-  await clickElement(search);
+  await openNativeFindInput();
   if (!remaining) {
     await type("abc");
     await chord("z");
@@ -747,7 +826,10 @@ try {
       : "passed";
   if (remaining || report.optionalQaFailures?.length) process.exitCode = 1;
 } catch (error) {
-  report.status = "failed";
+  report.status =
+    findBaselineOnly && error === completedRequestedScope
+      ? "diagnostic-completed"
+      : "failed";
   if (error !== completedRequestedScope) {
     report.error = String(error.stack || error);
     if (session) {
@@ -755,7 +837,8 @@ try {
       await screenshot("failure").catch(() => {});
     }
   }
-  process.exitCode = 1;
+  process.exitCode =
+    findBaselineOnly && error === completedRequestedScope ? 0 : 1;
 } finally {
   if (session)
     await closeSession().catch(
