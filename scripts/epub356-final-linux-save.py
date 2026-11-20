@@ -61,14 +61,19 @@ def operate(a):
             break
         time.sleep(.25)
     assert window, "BLOCKED: no native Save dialog tied to owned app PID or credential-bound portal request"
-    run("import", "-window", "root", str(a.report.with_suffix(".png")))
+    run("import", "-window", "root", str(a.report.with_name("native-os-save-before-input.png")))
     assert int(run("xdotool", "getwindowpid", window).stdout.strip()) == ownership["windowPid"]
     if ownership["correlation"]:
         assert attributed_portal(a) == ownership["correlation"], "Portal ownership changed before input"
     run("xdotool", "windowfocus", "--sync", window)
     assert run("xdotool", "getwindowfocus").stdout.strip() == window, "Owned chooser did not receive focus"
     run("xdotool", "key", "--clearmodifiers", "ctrl+l")
+    # GTK can leave only the name stem selected, with its old .docx suffix
+    # outside that selection. Replace the complete native entry; never rename
+    # the saved file afterwards to manufacture a requested-path result.
+    run("xdotool", "key", "--clearmodifiers", "ctrl+a")
     run("xdotool", "type", "--clearmodifiers", "--delay", "0", str(a.save.resolve()))
+    run("import", "-window", "root", str(a.report.with_name("native-os-save-after-input.png")))
     run("xdotool", "key", "--clearmodifiers", "Return")
     time.sleep(.7)
     if not a.save.exists():
@@ -103,7 +108,7 @@ def main():
                   "target": str(a.save), "reason": str(error)}
         try:
             report["windowInventory"] = inventory()
-            run("import", "-window", "root", str(a.report.with_suffix(".png")))
+            run("import", "-window", "root", str(a.report.with_name("native-os-save-blocked.png")))
         except Exception as capture_error:
             report["diagnosticsError"] = str(capture_error)
         a.report.write_text(json.dumps(report, indent=2))

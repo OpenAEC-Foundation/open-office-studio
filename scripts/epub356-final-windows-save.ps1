@@ -129,6 +129,9 @@ public static class Epub356NativeField {
             if ($ancestor.ToInt64() -eq $dialogInfo.windowHandle) { $facts.dialogHandle=$ancestor.ToInt64(); $facts.dialogClass=$class.ToString(); break }
             $ancestor=[Epub356NativeField]::GetAncestor($ancestor,1)
         }
+        # Preserve exact native facts even when the fail-closed guard throws
+        # before this function returns to the caller. No text API has run yet.
+        $script:nativeFieldInfo=$facts
         if (-not $facts.focused -or -not $facts.enabled -or $facts.pid -ne $OwnedPid -or $facts.className -cne 'Edit' -or
             $facts.controlId -ne 1001 -or -not $facts.fileNameHost -or -not $facts.allAncestorsOwned -or
             $facts.dialogHandle -ne $dialogInfo.windowHandle -or $facts.dialogClass -cne '#32770') {
