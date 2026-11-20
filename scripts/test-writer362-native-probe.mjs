@@ -175,6 +175,52 @@ test("XTest rejects ambiguous windows, wrong window PID, or wrong executable bef
   }
 });
 
+test("unknown initial X11 focus permits only one proven-owned activation and strict postcheck", async () => {
+  const f = fakeXTest({
+      focus: "902",
+      dom: { hasFocus: false, hidden: false, visibilityState: "visible" },
+    }),
+    run = f.io.xdo;
+  let focusQueries = 0;
+  f.io.xdo = async (args) => {
+    if (args[0] === "getwindowfocus" && ++focusQueries === 1)
+      throw Error("Initial focus unavailable");
+    return run(args);
+  };
+  const input = createWriter362XTestInput(f.args, f.io);
+  await input.initialize();
+  assert.equal(input.evidence.pre.windowFocus, null);
+  assert.match(
+    input.evidence.pre.windowFocusError,
+    /Initial focus unavailable/,
+  );
+  assert.equal(input.evidence.post.windowFocus, "901");
+  assert.equal(input.evidence.post.dom.hasFocus, true);
+  assert.deepEqual(
+    f.commands.filter((c) => c[0] === "windowfocus"),
+    [["windowfocus", "--sync", "901"]],
+  );
+});
+
+test("failed X11 post-activation focus query remains fatal without retry or key input", async () => {
+  const f = fakeXTest({
+      focus: "902",
+      dom: { hasFocus: false, hidden: false, visibilityState: "visible" },
+    }),
+    run = f.io.xdo;
+  let focusQueries = 0;
+  f.io.xdo = async (args) => {
+    if (args[0] === "getwindowfocus" && ++focusQueries === 2)
+      throw Error("Post focus unavailable");
+    return run(args);
+  };
+  const input = createWriter362XTestInput(f.args, f.io);
+  await assert.rejects(input.initialize(), /Post focus unavailable/);
+  assert.equal(input.evidence.post, undefined);
+  assert.equal(f.commands.filter((c) => c[0] === "windowfocus").length, 1);
+  assert.equal(f.commands.filter((c) => c[0] === "key").length, 0);
+});
+
 test("XTest stops on PID reuse, executable replacement, hidden DOM or failed activation", async () => {
   for (const change of [
     { startTime: "99999" },

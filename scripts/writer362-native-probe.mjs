@@ -245,8 +245,16 @@ export function createWriter362XTestInput(
       assert.match(xid, /^[1-9]\d*$/);
       evidence.xid = xid;
       await owner();
+      let windowFocus = null,
+        windowFocusError;
+      try {
+        windowFocus = (await xdo(["getwindowfocus"])).trim();
+      } catch (error) {
+        windowFocusError = String(error);
+      }
       evidence.pre = {
-        windowFocus: (await xdo(["getwindowfocus"])).trim(),
+        windowFocus,
+        ...(windowFocusError ? { windowFocusError } : {}),
         dom: await observe(),
       };
       if (evidence.pre.windowFocus !== xid || !evidence.pre.dom.hasFocus) {
