@@ -528,11 +528,13 @@ try {
           endpoint: `http://127.0.0.1:${driverPort}`,
           sessionId: session,
           outDir: join(out, "362-proof"),
+          inputBackend: origin.ribbonHarness?.inputBackend ?? "w3c",
           source: {
             commit: origin.sourceCommit,
             tree: origin.sourceTree,
             packageSha256: origin.packageSha256,
             executableSha256: report.installedExecutableSha256,
+            pid: report.sessions.at(-1).pid,
           },
           fixture: fixture362,
           ownedProfile: true,

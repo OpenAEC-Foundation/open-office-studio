@@ -73,6 +73,23 @@ class ManifestTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'immutable previous report identity'):
             VALIDATE(value, 'linux')
 
+    def test_xtest_is_explicitly_limited_to_linux362_only(self):
+        value, _ = candidate()
+        value['ribbonHarness'] = {'commit': '6'*40, 'sha256': '7'*64, 'inputBackend': 'x11-xtest'}
+        with self.assertRaisesRegex(ValueError, 'explicit Linux362-only'):
+            VALIDATE(value, 'linux')
+        value['qaScope'] = '362-only'
+        value['remainingCoverage'] = {'executionApproved': True, 'run': 1, 'reportSha256': '8'*64, 'harnessCommit': '9'*40, 'reportBase64': 'e30='}
+        self.assertEqual(VALIDATE(value, 'linux'), value)
+        value['ribbonHarness']['inputBackend'] = 'unverified-input'
+        with self.assertRaisesRegex(ValueError, 'unknown input backend'):
+            VALIDATE(value, 'linux')
+
+    def test_absent_or_null_ribbon_keeps_existing_default(self):
+        value, _ = candidate()
+        value['ribbonHarness'] = None
+        self.assertEqual(VALIDATE(value, 'linux'), value)
+
 
 if __name__ == '__main__':
     unittest.main()

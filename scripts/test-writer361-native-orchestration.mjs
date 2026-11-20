@@ -42,7 +42,12 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
             path: "/writer362-table.docx",
             sha256: "7".repeat(64),
           }),
-          runWriter362NativeProbe: async () => {
+          runWriter362NativeProbe: async (options) => {
+            assert.equal(options.source.pid, report.sessions.at(-1).pid);
+            assert.equal(
+              options.inputBackend,
+              context.only362 ? "x11-xtest" : "w3c",
+            );
             events.push("362-body");
             throw Error("native362 unavailable");
           },
@@ -63,6 +68,8 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
   context.startDocument = async (options) => {
     events.push({ start: context.currentPhase, options });
     context.session = "owned-session-" + events.length;
+    report.sessions ??= [];
+    report.sessions.push({ pid: 5000 + events.length });
   };
   context.closeSession = async () => {
     events.push({ closed: context.currentPhase, session: context.session });
@@ -85,6 +92,7 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
   // Same actual caller block, now stop after its362 session and cleanup.
   events.length = 0;
   context.only362 = true;
+  context.origin.ribbonHarness = { inputBackend: "x11-xtest" };
   context.session = undefined;
   await assert.rejects(
     vm.runInContext("(async()=>{" + src.slice(a, b) + "})()", context),
@@ -100,6 +108,8 @@ test("actual caller closes independent QA sessions before361 even when362 fails"
   );
   assert.equal(report.scopeExecution.writer361, "not-executed");
   assert.equal(report.scopeExecution.writer363, "not-executed");
+  assert.ok(events.includes("362-body"));
+  assert.match(report.optional362.error, /native362 unavailable/);
   assert.equal(report.writer361Status, "failed");
   const first = events.find((e) => e.start);
   assert.equal(first.options.rows, 2);
