@@ -28,6 +28,7 @@ test("dedicated copies preserve cleanup and add real native save/reopen without 
   const parsed = spawnSync(python, ["-c", "import ast,sys;ast.parse(sys.stdin.read())"], { input: generated["epub356-final-macos.py"], encoding: "utf8", timeout: 5000 });
   assert.equal(parsed.status, 0, parsed.stderr);
   assert.match(generated["epub356-final-macos.py"], /epub356-final-macos-save\.py/);
+  assert.match(generated["epub356-final-macos.py"], /report\["ownedPid"\] = pid/);
   assert.match(generated["epub356-final-macos-ax.swift"], /action == "save"/);
   for (let i = 0; i < input.length; i++)
     assert.equal(input[i], readFileSync(new URL(["proef-runtime-interface.mjs", "proef-runtime-macos-interface.py", "runtime-macos-ax.swift"][i], import.meta.url), "utf8"));

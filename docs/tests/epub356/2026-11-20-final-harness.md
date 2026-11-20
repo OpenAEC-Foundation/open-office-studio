@@ -81,8 +81,11 @@ For each canonical NSIS, DMG, DEB and AppImage:
    and order, Unicode/content markers, Hout/42 in the same table row, exact PNG
    bytes referenced by a proper image relationship, and absence of macro/active
    elements/external relationships.
-5. Existing backend cleanup completes app/driver/installer handling; a distinct
-   temporary profile and process opens the saved DOCX. Preserve its raw initial
+5. Existing backend cleanup completes app/driver/installer handling; a new
+   process opens the saved DOCX and its PID must differ from the initial PID.
+   Windows/Linux additionally use distinct temporary profiles; Mac keeps the
+   same normal app-data profile on this own disposable CI host, with no running
+   app allowed to intercept either launch. Preserve its raw initial
    reopened image before Save As/readback. Check saved and original file hashes
    unchanged, then close the second owned app and dispose temporary package data.
 

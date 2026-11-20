@@ -33,6 +33,12 @@ export async function runNative(plan, platform, artifactRoot, output) {
     visualAcceptance: "pending independent original image review", nativeInvalidInput: "not run; separate exact-source browser/unit checks", results: [] };
   const python = process.env.OOS_RUNTIME_PYTHON || (process.platform === "win32" ? "python" : "python3");
   const { proefInterface } = await import(pathToFileURL(resolve("scripts/epub356-final-native-interface.mjs")).href);
+  async function ownedPid(directory, phase) {
+    const pid = platform === "macOS" ? phase.ownedPid : await readFile(join(directory, "native-diagnostics.json"), "utf8")
+      .then(JSON.parse).then(d => platform === "Linux" ? d.ownedApp?.pid : d.launch?.pid);
+    assert(Number.isSafeInteger(pid) && pid > 0, "Native phase must identify its exact owned process");
+    return pid;
+  }
   try {
     for (const packageInfo of plan.artifacts[platform].packages) {
       const reportRoot = join(root, packageInfo.kind);
@@ -56,6 +62,7 @@ export async function runNative(plan, platform, artifactRoot, output) {
           execFileSync("xcrun", ["swiftc", "scripts/epub356-final-macos-save-ax.swift", "-o", join(initial, "epub356-save-ax-helper")], { stdio: "inherit", timeout: 120000 });
         result.initial = await proefInterface(payload, initial, initial, firstTemp, { input: source, inputKind: "epub", savePath: saved });
         assert.equal(result.initial.status, "passed", JSON.stringify(result.initial));
+        result.initialPid = await ownedPid(initial, result.initial);
         assert(result.initial.nativeSave, "Actual native file chooser save must precede independent inspection");
         assert.equal(hash(await readFile(source)), fixtureHash);
         const oraclePath = join(reportRoot, "saved-oracle.json");
@@ -64,9 +71,12 @@ export async function runNative(plan, platform, artifactRoot, output) {
         const savedHash = hash(await readFile(saved));
         assert.equal(result.savedOracle.savedSha256, savedHash);
         // The first backend has completed its own PID/driver/installer cleanup.
-        // A distinct temporary profile and process now open the filesystem DOCX.
+        // A new process now opens the filesystem DOCX. Windows/Linux additionally
+        // use distinct temporary profiles; Mac retains the same own CI profile.
         result.reopened = await proefInterface(payload, reopen, reopen, secondTemp, { input: saved, inputKind: "docx" });
         assert.equal(result.reopened.status, "passed", JSON.stringify(result.reopened));
+        result.reopenedPid = await ownedPid(reopen, result.reopened);
+        assert.notEqual(result.reopenedPid, result.initialPid, "Fresh-process reopen cannot reuse the initial PID");
         assert.equal(result.reopened.freshProcessReopen, true);
         assert.equal(hash(await readFile(saved)), savedHash, "Reopening preserves the exact saved DOCX");
         assert.equal(hash(await readFile(source)), fixtureHash, "Original EPUB remains unchanged");

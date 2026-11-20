@@ -57,6 +57,7 @@ export function generateNativeSources(interfaceSource, macSource, axSource) {
   mac = replace(mac, '"runtime-macos-ax.swift"', '"epub356-final-macos-ax.swift"');
   mac = replace(mac, '    label_file = options.report.with_name("ax-labels.json")', '    labels["save"] = ["Save", "Opslaan"]\n    label_file = options.report.with_name("ax-labels.json")');
   mac = replace(mac, '    try:\n        operation_deadline', MAC_SAVE + '    try:\n        operation_deadline');
+  mac = replace(mac, '        activation = applescript(pid,', '        report["ownedPid"] = pid\n        activation = applescript(pid,');
   mac = replace(mac, 'odtNativeWindow=True', 'inputFormat=os.environ["OOS_EPUB356_INPUT_KIND"], freshProcessReopen=os.environ["OOS_EPUB356_INPUT_KIND"] == "docx", visualAcceptance="pending original image review"');
   mac = replace(mac, '\n    except subprocess.TimeoutExpired:', '\n        if os.environ.get("OOS_EPUB356_SAVE_PATH"):\n            native_save(pid, os.environ["OOS_EPUB356_SAVE_PATH"])\n    except subprocess.TimeoutExpired:');
 
