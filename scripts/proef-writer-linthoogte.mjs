@@ -269,11 +269,9 @@ try {
               ),
               "Measure against the actual clipping track",
             );
-            await page
-              .locator(".ribbon-inhoud")
-              .screenshot({
-                path: `${dir}/${theme}-${width}-${groupName}-${phase}.png`,
-              });
+            await page.locator(".ribbon-inhoud").screenshot({
+              path: `${dir}/${theme}-${width}-${groupName}-${phase}.png`,
+            });
             if (!baseline)
               assert.equal(
                 data.clipped,
