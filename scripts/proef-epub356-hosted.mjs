@@ -2,42 +2,54 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname } from "node:path";
 import { preview } from "vite";
 import { chromium } from "playwright";
 import { unzipSync, strFromU8 } from "fflate";
+import { verifyBuildReceipt } from "./writer-proefbuild.mjs";
 
-const output = ".local/epub356-hosted";
-await mkdir(output, { recursive: true });
+const output = process.env.EPUB356_OUT || `.local/epub356-hosted-${Date.now()}-${process.pid}`;
+const outDir = process.env.OFFICE_TEST_DIR || "dist-hosted";
+const route = process.env.OFFICE_TEST_BASE || "/office/";
+await mkdir(dirname(output), { recursive: true });
+// A run must never overwrite old first/reopened images or a previous receipt.
+await mkdir(output);
 const sourcePath = "docs/tests/epub356/leesvolgorde.epub";
-const source = await readFile(sourcePath);
 const hash = (b) => createHash("sha256").update(b).digest("hex");
-const originalHash = hash(source);
-const expectedImage = unzipSync(source)["Boek/media/beeld een.png"];
-const server = await preview({
-  configFile: false,
-  base: "/office/",
-  cacheDir: ".local/epub356-preview-cache",
-  build: { outDir: "dist-hosted" },
-  preview: { host: "127.0.0.1", port: 0, open: false },
-});
-const browser = await chromium.launch();
-const context = await browser.newContext({
-  locale: "nl-NL",
-  viewport: { width: 1400, height: 1100 },
-});
-const page = await context.newPage();
-page.setDefaultTimeout(60000);
+let server, browser, context, page;
 const errors = [],
   externalRequests = [];
-page.on("pageerror", (e) => errors.push(e.message));
-page.on("request", (request) => {
-  if (
-    /^https?:/.test(request.url()) &&
-    new URL(request.url()).hostname !== "127.0.0.1"
-  )
-    externalRequests.push(request.url());
-});
 try {
+  const buildReceipt = await verifyBuildReceipt({
+    outDir,
+    route,
+    receiptPath: process.env.OFFICE_TEST_BUILD_RECEIPT,
+  });
+  const source = await readFile(sourcePath);
+  const originalHash = hash(source);
+  const expectedImage = unzipSync(source)["Boek/media/beeld een.png"];
+  server = await preview({
+    configFile: false,
+    base: route,
+    cacheDir: `${output}/preview-cache`,
+    build: { outDir },
+    preview: { host: "127.0.0.1", port: 0, open: false },
+  });
+  browser = await chromium.launch();
+  context = await browser.newContext({
+    locale: "nl-NL",
+    viewport: { width: 1400, height: 1100 },
+  });
+  page = await context.newPage();
+  page.setDefaultTimeout(60000);
+  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("request", (request) => {
+    if (
+      /^https?:/.test(request.url()) &&
+      new URL(request.url()).hostname !== "127.0.0.1"
+    )
+      externalRequests.push(request.url());
+  });
   // Observe existing storage preparation, as in the ordinary Writer probe.
   // Network-idle alone can precede the worker's preparation acknowledgement.
   await page.addInitScript(() => {
@@ -79,9 +91,9 @@ try {
     ),
   );
   await page.goto(
-    `http://127.0.0.1:${server.httpServer.address().port}/office/`,
+    `http://127.0.0.1:${server.httpServer.address().port}${route}`,
   );
-  assert(new URL(page.url()).pathname.startsWith("/office/"));
+  assert(new URL(page.url()).pathname.startsWith(route));
   assert.equal(
     await page.evaluate(() => typeof window.__TAURI_INTERNALS__),
     "undefined",
@@ -167,9 +179,12 @@ try {
   await page.screenshot({ path: `${output}/reopened-invalid-preserved.png` });
   const report = {
     status: "passed",
-    applicationCommit: process.env.OOS_RUNTIME_APPLICATION_COMMIT,
+    applicationCommit: buildReceipt.source,
+    applicationTree: buildReceipt.tree,
     harnessCommit: process.env.OOS_RUNTIME_HARNESS_COMMIT,
-    route: "/office/",
+    buildReceiptPath: process.env.OFFICE_TEST_BUILD_RECEIPT,
+    buildDirectory: outDir,
+    route,
     nativeBridge: false,
     importedEpub: true,
     offlineEditAndSave: true,
@@ -193,18 +208,19 @@ try {
         error: String(error),
         errors,
         externalRequests,
-        bodyText: await page
+        bodyText: page ? await page
           .locator("body")
           .innerText()
-          .catch(() => ""),
+          .catch(() => "") : "",
       },
       null,
       2,
     ),
   );
-  await page.screenshot({ path: `${output}/failure.png` }).catch(() => {});
+  await page?.screenshot({ path: `${output}/failure.png` }).catch(() => {});
   throw error;
 } finally {
-  await browser.close();
-  await new Promise((resolve) => server.httpServer.close(resolve));
+  await context?.close().catch(() => {});
+  await browser?.close().catch(() => {});
+  if (server) await new Promise((resolve) => server.httpServer.close(resolve));
 }
