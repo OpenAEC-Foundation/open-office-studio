@@ -265,6 +265,11 @@
 .office[data-module="docx"] .ribbon-inhoud {
   height: 114px;
 }
+/* The track clips overflow. Center collapsed group buttons with enough room
+   above and below for the same 2px outline plus 2px offset as other controls. */
+.office[data-module="docx"] .ribbon-groep[data-niveau="2"] > .ribbon-groep-knop {
+  height: calc(100% - 8px);
+}
 .office .ribbon-groep {
   padding: 0 6px;
   border-color: var(--oa-shell-ribbon-group-separator);

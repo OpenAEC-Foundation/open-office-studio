@@ -13,6 +13,7 @@ assert.match(label, /^[a-zA-Z0-9_-]+$/);
 const baseline = process.argv.includes("--baseline");
 // Preparation only: an old build may exercise the harness, never certify source.
 const smoke = process.argv.includes("--harness-smoke");
+const collapsedFocusOnly = process.argv.includes("--collapsed-focus");
 const route = process.env.OFFICE_TEST_BASE ?? "/";
 const dir = `.local/${label}`;
 fs.mkdirSync(dir, { recursive: true });
@@ -45,12 +46,14 @@ const report = {
   baseline,
   acceptance: false,
   smoke,
+  collapsedFocusOnly,
   status: "running",
   startedAt: new Date().toISOString(),
   route,
   platform: process.platform,
   browser: null,
   cases: [],
+  groupButtonCases: [],
   errors: [],
   limits: [
     "Rendered browser geometry, not native Windows/Linux/macOS UI acceptance",
@@ -85,8 +88,14 @@ try {
   report.serverUrl = server.resolvedUrls.local[0];
   browser = await chromium.launch({ headless: true, timeout: 30_000 });
   report.browser = browser.version();
-  for (const theme of smoke ? ["light"] : ["light", "forge"]) {
-    for (const width of smoke ? [1600, 800] : [1600, 1280, 800]) {
+  for (const theme of smoke && !collapsedFocusOnly
+    ? ["light"]
+    : ["light", "forge"]) {
+    for (const width of collapsedFocusOnly
+      ? [923]
+      : smoke
+        ? [1600, 800]
+        : [1600, 1280, 923, 800]) {
       const context = await browser.newContext({
         viewport: { width, height: 1000 },
       });
@@ -151,7 +160,7 @@ try {
           }
           assert.fail("Ribbon command is not reachable with toolbar keys");
         }
-        async function keyboardTo(target, expectedNames = []) {
+        async function keyboardTo(target, expectedNames = [], end = false) {
           await tabButton.focus();
           await tabButton.press("ArrowDown");
           // Lint enters the toolbar on its next animation frame. Until then
@@ -159,6 +168,7 @@ try {
           await page.waitForFunction(() =>
             Boolean(document.activeElement?.closest(".ribbon-baan")),
           );
+          if (end) await page.keyboard.press("End");
           return walkKeyboardTo(target, expectedNames);
         }
         for (const groupName of groups) {
@@ -169,8 +179,111 @@ try {
           await group.waitFor();
           const collapsed = (await group.getAttribute("data-niveau")) === "2";
           const groupButton = group.locator(":scope > .ribbon-groep-knop");
+          async function measureGroupButton(phase) {
+            const data = await groupButton.evaluate((button) => {
+              const rect = button.getBoundingClientRect(),
+                css = getComputedStyle(button);
+              const focusVisible = button.matches(":focus-visible");
+              const ring =
+                focusVisible && css.outlineStyle !== "none"
+                  ? Math.max(
+                      0,
+                      parseFloat(css.outlineWidth) +
+                        parseFloat(css.outlineOffset),
+                    )
+                  : 0;
+              const outline = {
+                top: rect.top - ring,
+                bottom: rect.bottom + ring,
+                left: rect.left - ring,
+                right: rect.right + ring,
+              };
+              const clippingAncestors = [];
+              for (
+                let parent = button.parentElement;
+                parent;
+                parent = parent.parentElement
+              ) {
+                const style = getComputedStyle(parent),
+                  bounds = parent.getBoundingClientRect();
+                const clipX = ["auto", "scroll", "hidden", "clip"].includes(
+                    style.overflowX,
+                  ),
+                  clipY = ["auto", "scroll", "hidden", "clip"].includes(
+                    style.overflowY,
+                  );
+                if (!clipX && !clipY) continue;
+                const clip = {
+                  top: bounds.top + parent.clientTop,
+                  left: bounds.left + parent.clientLeft,
+                };
+                clip.bottom = clip.top + parent.clientHeight;
+                clip.right = clip.left + parent.clientWidth;
+                clippingAncestors.push({
+                  className: parent.className,
+                  clip,
+                  clipX,
+                  clipY,
+                  clipped:
+                    (clipY &&
+                      (outline.top < clip.top - 0.5 ||
+                        outline.bottom > clip.bottom + 0.5)) ||
+                    (clipX &&
+                      (outline.left < clip.left - 0.5 ||
+                        outline.right > clip.right + 0.5)),
+                });
+              }
+              return {
+                focusVisible,
+                focused: document.activeElement === button,
+                ring,
+                outline,
+                clippingAncestors,
+                clipped: clippingAncestors.some((a) => a.clipped),
+              };
+            });
+            report.groupButtonCases.push({
+              theme,
+              width,
+              tab,
+              group: groupName,
+              phase,
+              navigation:
+                groupName === "Delete"
+                  ? "ArrowDown → End"
+                  : "ArrowDown → ArrowRight",
+              ...data,
+            });
+            assert.ok(
+              data.focused && data.focusVisible,
+              "Collapsed group must retain real keyboard focus",
+            );
+            assert.equal(
+              data.ring,
+              4,
+              "Collapsed group retains its full focus outline and offset",
+            );
+            assert.ok(
+              data.clippingAncestors.some((a) =>
+                String(a.className).includes("ribbon-baan"),
+              ),
+              "Measure against the actual clipping track",
+            );
+            await page
+              .locator(".ribbon-inhoud")
+              .screenshot({
+                path: `${dir}/${theme}-${width}-${groupName}-${phase}.png`,
+              });
+            if (!baseline)
+              assert.equal(
+                data.clipped,
+                false,
+                `${theme}/${width}/${groupName}: collapsed group focus exceeds clipping ancestor`,
+              );
+          }
           if (collapsed) {
-            await keyboardTo(groupButton);
+            await keyboardTo(groupButton, [], groupName === "Delete");
+            await measureGroupButton("keyboard-group-focus");
             await groupButton.press("Enter");
           }
           async function measure(phase) {
@@ -413,6 +526,7 @@ try {
               true,
               "Escape returns focus to the collapsed group button",
             );
+            await measureGroupButton("keyboard-group-after-escape");
           }
         }
       }
@@ -441,6 +555,9 @@ console.log(
     source: report.source,
     acceptance: report.acceptance,
     cases: report.cases.length,
+    groupButtonCases: report.groupButtonCases.length,
+    clippedGroupButtons: report.groupButtonCases.filter((c) => c.clipped)
+      .length,
     clipped: report.cases.reduce(
       (n, c) => n + c.buttons.filter((b) => b.clipped).length,
       0,
