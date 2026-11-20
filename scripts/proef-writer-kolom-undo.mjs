@@ -115,7 +115,8 @@ try {
     documentHome: apple ? "Meta+ArrowUp" : "Control+Home",
     // Home is the SDK's explicit line-start key on both platforms.
     lineHome: "Home",
-    findReplace: apple ? "Meta+h" : "Control+h",
+    // Command+H hides a native macOS app; this test only needs the Find input.
+    findReplace: apple ? "Home ribbon → Replace button" : "Control+h",
   };
   report.keyboardContext = {
     hostPlatform: process.platform,
@@ -216,7 +217,12 @@ try {
       .getByRole("button", { name: "Insert Column Right", exact: true })
       .click();
     await check("before search input", 4);
-    await page.keyboard.press(keys.findReplace);
+    if (apple) {
+      await page.getByRole("tab", { name: "Home", exact: true }).click();
+      await page.getByRole("button", { name: "Replace", exact: true }).click();
+    } else {
+      await page.keyboard.press(keys.findReplace);
+    }
     const search = page.getByLabel("Find what", { exact: true });
     await search.click();
     await page.keyboard.type("abc");
