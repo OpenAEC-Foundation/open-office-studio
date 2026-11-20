@@ -11,6 +11,21 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 
 const HEX = /^[a-f0-9]{64}$/;
 const TYPES = { Windows: ["nsis"], macOS: ["dmg"], Linux: ["deb", "appimage"] };
+const INSTALLERS = {
+  Windows: [{ root: "nsis", kind: "nsis", extension: /\.exe$/i }],
+  macOS: [{ root: "dmg", kind: "dmg", extension: /\.dmg$/i }],
+  Linux: [{ root: "deb", kind: "deb", extension: /\.deb$/i }, { root: "appimage", kind: "appimage", extension: /\.AppImage$/i }],
+};
+const INSTALLER_ROOTS = new Set(Object.values(INSTALLERS).flat().map(rule => rule.root));
+const INSTALLER_EXTENSION = /\.(?:exe|dmg|deb|AppImage)$/i;
+
+/** Only direct canonical installer-root files are executable package candidates. */
+export function installerKind(platform, path) {
+  assert(Object.hasOwn(INSTALLERS, platform), "Unknown installer platform");
+  const parts = path.split("/");
+  if (parts.length !== 2) return null;
+  return INSTALLERS[platform].find(rule => rule.root === parts[0] && rule.extension.test(parts[1]))?.kind ?? null;
+}
 export function validatePlan(plan) {
   assert.equal(plan.schemaVersion, 1);
   assert.equal(plan.frozen, true, "Root must explicitly freeze the final candidate");
@@ -27,7 +42,7 @@ export function validatePlan(plan) {
       assert(!/[\\:\u0000-\u001f]/.test(p.path) && !p.path.split("/").some(s => !s || s === "." || s === ".."));
       assert(!paths.has(p.path)); paths.add(p.path);
       assert.match(p.sha256, HEX);
-      assert(({ nsis: /-setup\.exe$/i, dmg: /\.dmg$/, deb: /\.deb$/, appimage: /\.AppImage$/ })[p.kind].test(p.path));
+      assert.equal(installerKind(platform, p.path), p.kind, "Manifest path must match the platform installer root");
     }
   }
   return plan;
@@ -40,13 +55,24 @@ export async function hashFile(path) {
 }
 
 export async function verifyPackages(root, artifact) {
+  const platform = Object.keys(TYPES).find(p => artifact.name === `open-office-studio-${p}`);
+  assert(platform, "Exact root artifact platform name is required");
   const observed = [];
   async function walk(path, prefix = "") {
     for (const e of await readdir(path, { withFileTypes: true })) {
       const relative = prefix + e.name;
       assert(!e.isSymbolicLink(), "Artifact may not contain symlinks");
       if (e.isDirectory()) await walk(join(path, e.name), relative + "/");
-      else if (/(?:-setup\.exe|\.dmg|\.deb|\.AppImage)$/i.test(e.name)) observed.push(relative);
+      else {
+        const parts = relative.split("/");
+        if (parts.length === 2 && INSTALLER_ROOTS.has(parts[0]) && INSTALLER_EXTENSION.test(e.name)) {
+          assert(installerKind(platform, relative), `Unexpected installer format/platform in canonical root: ${relative}`);
+          observed.push(relative);
+        }
+        // Canonical Mac archives can contain ancillary macos/.../python/*.exe
+        // launchers from the desktop upload glob. They are hash-bound archive
+        // content, not installers, and never enter the execution manifest.
+      }
     }
   }
   await walk(root);

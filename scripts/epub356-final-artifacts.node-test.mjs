@@ -4,18 +4,18 @@ import { mkdtemp, mkdir, writeFile, rm, realpath } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, dirname, basename } from "node:path";
 import { createHash } from "node:crypto";
-import { validatePlan, verifyMetadata, verifyPackages } from "./epub356-final-artifacts.mjs";
+import { validatePlan, verifyMetadata, verifyPackages, installerKind } from "./epub356-final-artifacts.mjs";
 const digest = value => createHash("sha256").update(value).digest("hex");
 const plan = () => ({ schemaVersion: 1, frozen: true, applicationCommit: "a".repeat(40), desktopRun: 123,
   artifacts: {
-    Windows: { name: "open-office-studio-Windows", archiveSha256: "b".repeat(64), packages: [{ path: "app-setup.exe", kind: "nsis", sha256: digest("win") }] },
-    macOS: { name: "open-office-studio-macOS", archiveSha256: "c".repeat(64), packages: [{ path: "app.dmg", kind: "dmg", sha256: digest("mac") }] },
-    Linux: { name: "open-office-studio-Linux", archiveSha256: "d".repeat(64), packages: [{ path: "app.deb", kind: "deb", sha256: digest("deb") }, { path: "app.AppImage", kind: "appimage", sha256: digest("image") }] },
+    Windows: { name: "open-office-studio-Windows", archiveSha256: "b".repeat(64), packages: [{ path: "nsis/app-setup.exe", kind: "nsis", sha256: digest("win") }] },
+    macOS: { name: "open-office-studio-macOS", archiveSha256: "c".repeat(64), packages: [{ path: "dmg/app.dmg", kind: "dmg", sha256: digest("mac") }] },
+    Linux: { name: "open-office-studio-Linux", archiveSha256: "d".repeat(64), packages: [{ path: "deb/app.deb", kind: "deb", sha256: digest("deb") }, { path: "appimage/app.AppImage", kind: "appimage", sha256: digest("image") }] },
   } });
 
 test("final plan must be explicitly frozen and map exactly all four supported installers", () => {
   validatePlan(plan());
-  for (const change of [p => p.frozen = false, p => p.applicationCommit = "old", p => p.artifacts.Linux.packages.pop(), p => p.artifacts.macOS.name = "runtime317-installers-macOS", p => p.artifacts.Windows.packages[0].path = "../escape-setup.exe"])
+  for (const change of [p => p.frozen = false, p => p.applicationCommit = "old", p => p.artifacts.Linux.packages.pop(), p => p.artifacts.macOS.name = "runtime317-installers-macOS", p => p.artifacts.Windows.packages[0].path = "../escape-setup.exe", p => p.artifacts.macOS.packages[0].path = "macos/app.dmg", p => p.artifacts.Windows.packages[0].path = "macos/ancillary-setup.exe"])
     { const p = plan(); change(p); assert.throws(() => validatePlan(p)); }
 });
 
@@ -34,13 +34,41 @@ test("on-disk installer hashes and exact package set are checked before any app 
   const root = await mkdtemp(join(tmpdir(), "epub356-contract-"));
   try {
     const a = plan().artifacts.Linux;
-    await writeFile(join(root, "app.deb"), "deb"); await writeFile(join(root, "app.AppImage"), "image");
+    await mkdir(join(root, "deb")); await mkdir(join(root, "appimage"));
+    await writeFile(join(root, "deb/app.deb"), "deb"); await writeFile(join(root, "appimage/app.AppImage"), "image");
     await verifyPackages(root, a);
-    await writeFile(join(root, "app.AppImage"), "changed");
+    await writeFile(join(root, "appimage/app.AppImage"), "changed");
     await assert.rejects(verifyPackages(root, a), /hash mismatch/);
-    await writeFile(join(root, "app.AppImage"), "image");
-    await mkdir(join(root, "stale")); await writeFile(join(root, "stale/old.deb"), "old");
+    await writeFile(join(root, "appimage/app.AppImage"), "image");
+    await writeFile(join(root, "deb/old.deb"), "old");
     await assert.rejects(verifyPackages(root, a), /stale or extra/);
+  } finally {
+    const target = await realpath(root), parent = await realpath(tmpdir());
+    assert.equal(dirname(target), parent);
+    assert(basename(target).startsWith("epub356-contract-"));
+    await rm(target, { recursive: true, force: true });
+  }
+});
+
+test("Mac ancillary Python launchers are not installers; extra canonical-root packages still fail", async () => {
+  const root = await mkdtemp(join(tmpdir(), "epub356-contract-mac-"));
+  try {
+    const artifact = plan().artifacts.macOS;
+    await mkdir(join(root, "dmg")); await writeFile(join(root, "dmg/app.dmg"), "mac");
+    const python = join(root, "macos/Open Office Studio.app/Contents/Helpers/LibreOffice.app/python3.13/site-packages");
+    for (const file of ["setuptools/gui.exe", "setuptools/cli-64.exe", "pip/_vendor/distlib/t64.exe", "pip/ancillary-setup.exe"]) {
+      await mkdir(dirname(join(python, file)), { recursive: true });
+      await writeFile(join(python, file), "ancillary, never executed");
+    }
+    await verifyPackages(root, artifact);
+    assert.equal(installerKind("macOS", "macos/Open Office Studio.app/python/ancillary-setup.exe"), null);
+    assert.equal(installerKind("Windows", "nsis/app.exe"), "nsis");
+    assert.equal(installerKind("Windows", "nsis/resources/helper.exe"), null);
+    await writeFile(join(root, "dmg/old.dmg"), "unexpected real installer");
+    await assert.rejects(verifyPackages(root, artifact), /stale or extra/);
+    await rm(join(root, "dmg/old.dmg"));
+    await mkdir(join(root, "nsis")); await writeFile(join(root, "nsis/wrong-platform.exe"), "wrong");
+    await assert.rejects(verifyPackages(root, artifact), /Unexpected installer format\/platform/);
   } finally {
     const target = await realpath(root), parent = await realpath(tmpdir());
     assert.equal(dirname(target), parent);

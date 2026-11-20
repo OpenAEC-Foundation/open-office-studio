@@ -49,6 +49,12 @@ separate `hostedCommit`, runtime317 package manifest or old converter proof.
 Native verification requires run `head_sha` equals it, run completed/success,
 the unique non-expired artifact name/digest, streamed downloaded ZIP digest,
 safe extraction, exact installer set and each installer SHA before execution.
+Installer inventory is platform/root scoped: direct `nsis/*.exe` on Windows,
+`dmg/*.dmg` on macOS, and `deb/*.deb` plus `appimage/*.AppImage` on Linux.
+Ancillary `macos/.../python.../*.exe` launchers included by the canonical desktop
+upload glob remain protected by the whole-ZIP hash but are never considered or
+executed as installers. Extra or wrong-platform installer files directly in the
+canonical installer roots fail closed, and manifest paths must match those roots.
 
 The own workflow is native-artifact-only:
 `.github/workflows/epub356-final-native.yml`. Preparation commits use `[skip ci]`.
@@ -149,7 +155,7 @@ python scripts/epub356-final-oracle_test.py -v
 node --test scripts/proef-epub356-hosted-startup.node-test.mjs
 ```
 
-Six native/source artifact Node contracts, nine independent-oracle Python tests,
+Seven native/source artifact Node contracts, nine independent-oracle Python tests,
 and seven headless frontend failure gates passed. Own Node contracts use
 `.node-test.mjs` to avoid Vitest collecting them as empty Vitest suites. Locally,
 `OOS_RUNTIME_PYTHON` can identify the installed Python executable, and the
