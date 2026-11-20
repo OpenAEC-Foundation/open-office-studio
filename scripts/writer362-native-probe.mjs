@@ -39,6 +39,56 @@ const keys = {
   end: "\uE010",
 };
 
+// Observations may read DOM state; input and UI changes use W3C commands.
+// Reject interaction/mutation forms before they can reach the native webview.
+function assertReadOnlyObservation(script) {
+  assert.equal(
+    typeof script,
+    "string",
+    "Read-only DOM observation script required",
+  );
+  const mutatingMethods =
+    "focus|blur|click|select|setSelectionRange|setRangeText|dispatchEvent|setAttribute|removeAttribute|append|appendChild|prepend|replaceChildren|replaceChild|removeChild|remove|replaceWith|insertBefore|insertAdjacentHTML|insertAdjacentText|insertAdjacentElement|before|after|write|writeln|showPopover|hidePopover|showModal|requestFullscreen|exitFullscreen|scroll|scrollTo|scrollBy|scrollIntoView|setProperty|removeProperty|setItem|removeItem|clear|invoke|execute";
+  const call = String.raw`\s*(?:\?\.)?\s*\(`;
+  assert.doesNotMatch(
+    script,
+    new RegExp(String.raw`\.(?:${mutatingMethods})${call}`),
+    "Read-only DOM observation cannot invoke scripted interaction or mutation",
+  );
+  assert.doesNotMatch(
+    script,
+    new RegExp(String.raw`\[\s*["'](?:${mutatingMethods})["']\s*\]${call}`),
+    "Read-only DOM observation cannot invoke computed scripted interaction or mutation",
+  );
+  const assignment = String.raw`\s*(?:(?:[+*/%&|^-]|&&|\|\||\?\?)?=(?!=)|\+\+|--)`;
+  const mutableProperties =
+    "innerHTML|outerHTML|innerText|textContent|value|disabled|checked|selected|tabIndex|scrollTop|scrollLeft|className|ariaExpanded|ariaPressed";
+  assert.doesNotMatch(
+    script,
+    new RegExp(String.raw`\.(?:${mutableProperties})${assignment}`),
+    "Read-only DOM observation cannot assign DOM state",
+  );
+  assert.doesNotMatch(
+    script,
+    new RegExp(
+      String.raw`\[\s*["'](?:${mutableProperties})["']\s*\]${assignment}`,
+    ),
+    "Read-only DOM observation cannot assign computed DOM state",
+  );
+  assert.doesNotMatch(
+    script,
+    new RegExp(
+      String.raw`\.(?:style|dataset)(?:\.[\w$]+|\[[^\]]+\])${assignment}`,
+    ),
+    "Read-only DOM observation cannot change style or dataset",
+  );
+  assert.doesNotMatch(
+    script,
+    /\.classList\.(?:add|remove|toggle|replace)\s*\(|\b(?:Object\.assign|Reflect\.set)\s*\(|\bdelete\s+/,
+    "Read-only DOM observation cannot mutate DOM properties",
+  );
+}
+
 /** Deliberately cannot create/delete sessions, navigate URLs or invoke native IPC. */
 export function createWriter362Transport({
   endpoint,
@@ -67,6 +117,8 @@ export function createWriter362Transport({
           /^\/element\/[a-zA-Z0-9_-]+\/click$/.test(suffix))) ||
       (method === "DELETE" && suffix === "/actions");
     assert.ok(allowed, `Unsupported session command: ${method} ${suffix}`);
+    if (method === "POST" && suffix === "/execute/sync")
+      assertReadOnlyObservation(body?.script);
     const response = await fetch(
       `${url.href.replace(/\/$/, "")}/session/${sessionId}${suffix}`,
       {
@@ -437,11 +489,6 @@ export async function runWriter362NativeProbe({
     };
     // Move the real caret into the first table, without engine/editor API access.
     await click(".canvas-page canvas");
-    await evaluate(() =>
-      [...document.querySelectorAll('[data-testid="yrs-input"]')]
-        .find((e) => e.getClientRects().length)
-        ?.focus(),
-    );
     await press(keys.control, keys.home);
     await waitFor(
       () =>

@@ -153,6 +153,81 @@ test("transport rejects remote endpoints, credential URLs and unsafe session IDs
   );
 });
 
+test("native protocol blocks scripted focus and DOM mutations before transmission", async () => {
+  const requests = [];
+  const server = createServer(async (request, response) => {
+    let body = "";
+    for await (const chunk of request) body += chunk;
+    requests.push({
+      path: request.url,
+      body: body ? JSON.parse(body) : undefined,
+    });
+    response.setHeader("content-type", "application/json");
+    response.end(JSON.stringify({ value: null }));
+  });
+  await new Promise((done) => server.listen(0, "127.0.0.1", done));
+  try {
+    const command = createWriter362Transport({
+      endpoint: `http://127.0.0.1:${server.address().port}`,
+      sessionId: "owned",
+    });
+    for (const script of [
+      "document.querySelector('input')?.focus()",
+      "document.querySelector('input').focus?.()",
+      "document.querySelector('input')['focus']()",
+      "document.querySelector('button').click()",
+      "document.body.dispatchEvent(new KeyboardEvent('keydown'))",
+      "document.body.setAttribute('tabindex', '0')",
+      "document.body.innerHTML = ''",
+      "document.querySelector('input').value += 'synthetic'",
+      "document.querySelector('button').disabled = true",
+      "document.querySelector('button')['disabled'] = true",
+      "document.body.style.color = 'red'",
+      "document.body.dataset.active = 'true'",
+      "document.body.classList.add('active')",
+      "Object.assign(document.body.style, {color:'red'})",
+      "window.__TAURI_INTERNALS__.invoke('something')",
+    ])
+      await assert.rejects(
+        command("POST", "/execute/sync", { script, args: [] }),
+        /Read-only DOM observation/,
+      );
+    assert.equal(requests.length, 0, "No mutating script reaches the driver");
+    await command("POST", "/execute/sync", {
+      script:
+        "return {focused:document.activeElement,disabled:document.querySelector('button').disabled===true}",
+      args: [],
+    });
+    await command("POST", "/element/canvas-id/click");
+    await command("POST", "/actions", {
+      actions: [
+        {
+          type: "key",
+          id: "native-keyboard",
+          actions: [
+            { type: "keyDown", value: "\uE009" },
+            { type: "keyUp", value: "\uE009" },
+          ],
+        },
+      ],
+    });
+    assert.equal(requests.length, 3);
+    assert.ok(requests[1].path.endsWith("/element/canvas-id/click"));
+    assert.ok(requests[2].path.endsWith("/actions"));
+    await command("POST", "/execute/sync", {
+      script: `return (${writer362GroupTriggerGeometry.toString()})(...arguments)`,
+      args: ["Delete"],
+    });
+    assert.equal(
+      requests.length,
+      4,
+      "Read-only serialized geometry stays allowed",
+    );
+  } finally {
+    await new Promise((done) => server.close(done));
+  }
+});
+
 test("transport preserves W3C command failures", async () => {
   const server = createServer((_request, response) => {
     response.writeHead(404, { "content-type": "application/json" });
