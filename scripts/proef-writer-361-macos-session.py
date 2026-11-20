@@ -186,7 +186,16 @@ def main():
                 output.writestr(name, value)
         launch()
         grid("native baseline", 3, readiness=True)
+        viewport_module = None
+        if identity.get("macViewportSetup") is not None:
+            viewport_module = runpy.run_path(str(Path(__file__).with_name("writer361-macos-viewport.py")))
+            report["viewportSetup"] = {"status": "blocked"}
+            report["viewportSetup"] = viewport_module["maximize_once"](action, out / "viewport-setup", identity, pid)
         collect_additional()
+        if viewport_module:
+            alpha_snapshot = action("raw-snapshot")
+            (out / "alpha-target-raw-ax.json").write_text(json.dumps(alpha_snapshot, indent=2), encoding="utf-8")
+            report["alphaTarget"] = viewport_module["alpha_target"](alpha_snapshot, pid)
         action("click-cell", "alpha")
         for side in ["Left", "Right"]:
             action("click-label", "Table Design")
@@ -229,7 +238,7 @@ def main():
         report["status"] = "core-passed"
     except PermissionError as error:
         report.update(status="blocked", reason=str(error))
-        if pid is not None and len(owned()) == 1 and "optionalMac362363" not in report:
+        if pid is not None and len(owned()) == 1 and "optionalMac362363" not in report and (identity.get("macViewportSetup") is None or report.get("viewportSetup", {}).get("status") == "observed"):
             collect_additional()
         raise
     except Exception as error:

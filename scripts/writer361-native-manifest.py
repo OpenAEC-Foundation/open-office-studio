@@ -67,6 +67,9 @@ def validate(value, profile):
         if module is not None:
             if profile != "linux" or not isinstance(module, dict) or not re.fullmatch("[a-f0-9]{40}", module.get("commit", "")) or not re.fullmatch("[a-f0-9]{64}", module.get("sha256", "")):
                 raise ValueError("Optional native module needs its own full commit/hash on Linux: " + field)
+    viewport = value.get("macViewportSetup")
+    if viewport is not None and (profile != "macos" or viewport != {"mode": "native-maximize-once", "executionApproved": True}):
+        raise ValueError("One native Mac viewport setup requires its own exact release")
     remaining = value.get("remainingCoverage")
     if remaining is not None:
         if profile != "linux" or not isinstance(remaining, dict) or remaining.get("executionApproved") is not True:

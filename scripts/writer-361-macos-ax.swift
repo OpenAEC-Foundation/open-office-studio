@@ -80,6 +80,11 @@ func rawAttributes(_ element: AXUIElement, role: String) -> [String: Any] {
 if action == "raw-snapshot" {
     // Permission preflight is read-only and never prompts or changes privacy settings.
     report["screenCaptureAuthorized"] = CGPreflightScreenCaptureAccess()
+    let mainDisplay = CGMainDisplayID()
+    let displayBounds = CGDisplayBounds(mainDisplay)
+    report["mainDisplay"] = ["id": mainDisplay, "coordinateSystem": "CG global desktop",
+        "bounds": ["X": displayBounds.origin.x, "Y": displayBounds.origin.y,
+                   "Width": displayBounds.size.width, "Height": displayBounds.size.height]] as [String: Any]
     let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
     report["ownedScreenWindows"] = windows.filter {
         ($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value == pid &&
