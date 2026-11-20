@@ -24,6 +24,13 @@ NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 ROWS = [["alpha", "beta", ""], ["", "", "omega"], ["delta", "", ""]]
 
 
+def temporary_ax_failure(snapshot, pid, owned_pids):
+    """Same bounded CannotComplete readiness rule as the existing356 driver."""
+    return (snapshot.get("status") == "blocked" and snapshot.get("trusted") is True
+            and set(snapshot.get("errors", {})) == {"-25204"}
+            and owned_pids == [pid])
+
+
 def wait_for_native_grid(snapshot, columns, seconds=15, clock=time.monotonic, pause=time.sleep):
     """Wait for actual AX readiness; absence while loading is not a capability verdict."""
     started = clock()
@@ -65,6 +72,7 @@ def main():
     mount = out / "mount"
     mounted = started = False
     counter = 0
+    last_native = {}
     driver = Path(__file__).with_name("proef-writer-361-macos.py")
     local_identity = out / "identity.json"
     fixture = out / "writer361-macos-table.docx"
@@ -85,12 +93,13 @@ def main():
         raise RuntimeError(label)
 
     def action(kind, target=""):
-        nonlocal counter
+        nonlocal counter, last_native
         counter += 1
         path = out / f"action-{counter:03d}.json"
         result = subprocess.run([sys.executable, str(driver), str(local_identity), str(pid), kind, str(path), "--target", target], capture_output=True, text=True, timeout=150)
         if path.exists():
             snapshot = json.loads(path.read_text(encoding="utf-8"))["native"]
+            last_native = snapshot
             if snapshot.get("status") == "blocked":
                 raise PermissionError(snapshot.get("reason", "Native AX blocked"))
         else:
@@ -99,8 +108,19 @@ def main():
             raise RuntimeError("Native action failed: " + result.stderr[-1500:])
         return snapshot
 
+    def readiness_snapshot():
+        deadline = time.monotonic() + 15
+        while True:
+            try:
+                return action("snapshot")
+            except PermissionError:
+                if not temporary_ax_failure(last_native, pid, owned()) or time.monotonic() >= deadline:
+                    raise
+                report["transientAXRetries"] = report.get("transientAXRetries", 0) + 1
+                time.sleep(.5)
+
     def grid(label, columns, readiness=False):
-        state, timing = wait_for_native_grid(lambda: action("snapshot"), columns, 90 if readiness else 15)
+        state, timing = wait_for_native_grid(readiness_snapshot if readiness else lambda: action("snapshot"), columns, 90 if readiness else 15)
         report["checks"].append({"name": label, "native": state, "readiness": timing})
 
     def collect_additional():

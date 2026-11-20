@@ -2,7 +2,7 @@ name: Mac native body activation diagnostic
 on:
   push:
     branches: [codex/mac-native-body-blocker-20261120]
-    paths: [.github/workflows/mac-native-body-diagnostic.yml, .github/mac-native-body-diagnostic.json]
+    paths: [.github/workflows/mac-native-body-diagnostic.yml, .github/mac-native-body-diagnostic.json, scripts/mac-native-body-diagnostic.py]
 permissions:
   contents: read
   actions: read
