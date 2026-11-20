@@ -17,6 +17,21 @@ jobs:
       - name: Install GTK diagnostic dependencies
         run: |
           sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          # This runner also uses mirror+file: lists outside the helper's *.list/*.sources scan.
+          sudo python3 - <<'PY'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('ubuntu_mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          helper=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(helper)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():
+                  before=path.read_text()
+                  after=helper.herschrijf_bronnen(before)
+                  if before != after:
+                      path.write_text(after)
+                      print('Rewrote known runner mirror list:',path)
+          PY
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends python3-gi python3-cairo gir1.2-webkit2-4.1 webkit2gtk-driver xdotool xvfb dbus-x11
       - name: Actual own-window pointer and keyboard comparison
