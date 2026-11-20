@@ -331,6 +331,113 @@ export function writer362GroupTriggerGeometry(groupName) {
   };
 }
 
+/** Same selected-panel canvas/viewport conversion as the proven #361 driver. */
+export function writer362SelectedCanvasPoint(x, y) {
+  const tabs = [
+    ...document.querySelectorAll(".office-tab[role=tab][aria-selected=true]"),
+  ];
+  if (tabs.length !== 1) return null;
+  const panelId = tabs[0].getAttribute("aria-controls"),
+    panel = document.getElementById(panelId);
+  if (!panel || panel.closest("[hidden],[inert]")) return null;
+  const canvas = [...panel.querySelectorAll(".canvas-page canvas")].find(
+    (e) => e.getClientRects().length && e.width > 0 && e.height > 0,
+  );
+  if (!canvas) return null;
+  const r = canvas.getBoundingClientRect();
+  if (x < 0 || y < 0 || x >= r.width || y >= r.height) return null;
+  return {
+    panelId,
+    point: { x: Math.round(r.x + x), y: Math.round(r.y + y) },
+    canvas: { x: r.x, y: r.y, width: r.width, height: r.height },
+  };
+}
+
+export function writer362NativeCanvasActions(point) {
+  return {
+    actions: [
+      {
+        type: "pointer",
+        id: "writer362-pointer",
+        parameters: { pointerType: "mouse" },
+        actions: [
+          {
+            type: "pointerMove",
+            duration: 0,
+            origin: "viewport",
+            x: point.x,
+            y: point.y,
+          },
+          { type: "pointerDown", button: 0 },
+          { type: "pointerUp", button: 0 },
+        ],
+      },
+    ],
+  };
+}
+
+/** Read-only diagnostics saved before cleanup when initial table context fails. */
+export function writer362NativeAnatomy() {
+  const rect = (e) => {
+    const r = e.getBoundingClientRect();
+    return { x: r.x, y: r.y, width: r.width, height: r.height };
+  };
+  const f = document.activeElement;
+  return {
+    focus: {
+      tag: f?.tagName,
+      id: f?.id,
+      role: f?.getAttribute("role"),
+      label: f?.getAttribute("aria-label"),
+      className: f?.className,
+    },
+    fonts: document.fonts.status,
+    viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
+    ribbonTabs: [...document.querySelectorAll(".ribbon [role=tab]")].map(
+      (e) => ({
+        rawText: e.textContent,
+        trimmedText: e.textContent.trim(),
+        selected: e.getAttribute("aria-selected"),
+        visible: !!e.getClientRects().length,
+      }),
+    ),
+    documentTabs: [...document.querySelectorAll(".office-tab[role=tab]")].map(
+      (e) => ({
+        rawText: e.textContent,
+        trimmedText: e.textContent.trim(),
+        selected: e.getAttribute("aria-selected"),
+        controls: e.getAttribute("aria-controls"),
+      }),
+    ),
+    panels: [...document.querySelectorAll(".office-tabpaneel")].map((p) => ({
+      id: p.id,
+      blocked: !!p.closest("[hidden],[inert]"),
+      tables: [...p.querySelectorAll("[role=table]")].map((t) => ({
+        rows: t.getAttribute("aria-rowcount"),
+        columns: t.getAttribute("aria-colcount"),
+        cells: [
+          ...t.querySelectorAll(
+            "[role=columnheader],[role=rowheader],[role=cell]",
+          ),
+        ].map((c) => c.textContent),
+      })),
+      canvases: [...p.querySelectorAll(".canvas-page canvas")].map((c) => ({
+        width: c.width,
+        height: c.height,
+        rect: rect(c),
+      })),
+    })),
+    inputPortals: [...document.querySelectorAll("[data-testid=yrs-input]")].map(
+      (e) => ({
+        tag: e.tagName,
+        parent: e.parentElement?.tagName,
+        panel: e.closest("[role=tabpanel]")?.id ?? null,
+        rect: rect(e),
+      }),
+    ),
+  };
+}
+
 /**
  * Requires a disposable profile and the supplied fixture already open in English.
  * source hashes must come from the caller's verified installed-package binding.
@@ -490,18 +597,49 @@ export async function runWriter362NativeProbe({
       await click(selector);
       return selector;
     };
-    // Move the real caret into the first table, without engine/editor API access.
-    await click(".canvas-page canvas");
-    await press(keys.control, keys.home);
-    await waitFor(
-      () =>
-        evaluate(() =>
-          [...document.querySelectorAll('[role="tab"]')].some(
-            (e) => e.textContent === "Table Design",
+    // Select the top table with the exact native pointer recipe used by #361,
+    // rather than element/click's center of the entire document canvas.
+    try {
+      let target;
+      await waitFor(
+        async () =>
+          Boolean(
+            (target = await evaluate(writer362SelectedCanvasPoint, 145, 110)),
           ),
-        ),
-      "Fixture table context unavailable",
-    );
+        "Selected document canvas unavailable",
+      );
+      report.pointerTargets = [
+        { at: new Date().toISOString(), offset: { x: 145, y: 110 }, ...target },
+      ];
+      await command(
+        "POST",
+        "/actions",
+        writer362NativeCanvasActions(target.point),
+      );
+      await press(keys.control, keys.home);
+      await waitFor(
+        () =>
+          evaluate(() =>
+            [...document.querySelectorAll('[role="tab"]')].some(
+              (e) => e.textContent === "Table Design",
+            ),
+          ),
+        "Fixture table context unavailable",
+      );
+    } catch (error) {
+      report.fixtureContextFailure = {
+        error: String(error),
+        anatomy: await evaluate(writer362NativeAnatomy).catch((e) => ({
+          readError: String(e),
+        })),
+      };
+      await writeFile(
+        join(output, "fixture-context-anatomy.json"),
+        JSON.stringify(report.fixtureContextFailure, null, 2),
+      );
+      await screenshot("fixture-context-gate-failure").catch(() => {});
+      throw error;
+    }
     for (const theme of ["light", "forge"]) {
       await setTheme(theme);
       for (const width of [1600, 923, 800]) {

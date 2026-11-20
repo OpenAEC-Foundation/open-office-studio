@@ -11,6 +11,9 @@ import {
   createWriter362Transport,
   runWriter362NativeProbe,
   writer362GroupTriggerGeometry,
+  writer362SelectedCanvasPoint,
+  writer362NativeCanvasActions,
+  writer362NativeAnatomy,
 } from "./writer362-native-probe.mjs";
 
 // Exercise the serialized read-only WebDriver script, not the product's height
@@ -281,6 +284,99 @@ test("element clicks send POST JSON objects for WebKitGTK, including cleanup", a
         body: "{}",
       },
     ]);
+  } finally {
+    await new Promise((done) => server.close(done));
+  }
+});
+
+test("initial canvas input uses selected-panel coordinates and real viewport pointer actions", async () => {
+  const canvas = {
+    width: 816,
+    height: 1056,
+    getClientRects: () => [{}],
+    getBoundingClientRect: () => ({ x: 400, y: 252, width: 816, height: 1056 }),
+  };
+  const panel = {
+    closest: () => null,
+    querySelectorAll: (s) => (s === ".canvas-page canvas" ? [canvas] : []),
+  };
+  const document = {
+    querySelectorAll: (s) =>
+      s === ".office-tab[role=tab][aria-selected=true]"
+        ? [{ getAttribute: () => "selected-panel" }]
+        : [],
+    getElementById: (id) => (id === "selected-panel" ? panel : null),
+  };
+  const point = runInNewContext(
+    `(${writer362SelectedCanvasPoint.toString()})(145,110)`,
+    { document },
+  );
+  assert.equal(point.panelId, "selected-panel");
+  assert.equal(point.point.x, 545);
+  assert.equal(point.point.y, 362);
+  assert.equal(
+    runInNewContext(`(${writer362SelectedCanvasPoint.toString()})(900,110)`, {
+      document,
+    }),
+    null,
+  );
+  const requests = [];
+  const server = createServer(async (request, response) => {
+    let body = "";
+    for await (const chunk of request) body += chunk;
+    requests.push({
+      method: request.method,
+      path: request.url,
+      contentType: request.headers["content-type"],
+      body: JSON.parse(body),
+    });
+    response.setHeader("content-type", "application/json");
+    response.end(JSON.stringify({ value: null }));
+  });
+  await new Promise((done) => server.listen(0, "127.0.0.1", done));
+  try {
+    const command = createWriter362Transport({
+      endpoint: `http://127.0.0.1:${server.address().port}`,
+      sessionId: "owned-session",
+    });
+    await command("POST", "/execute/sync", {
+      script: `return (${writer362SelectedCanvasPoint.toString()})(...arguments)`,
+      args: [145, 110],
+    });
+    await command("POST", "/execute/sync", {
+      script: `return (${writer362NativeAnatomy.toString()})()`,
+      args: [],
+    });
+    await command(
+      "POST",
+      "/actions",
+      writer362NativeCanvasActions(point.point),
+    );
+    assert.deepEqual(requests[2], {
+      method: "POST",
+      path: "/session/owned-session/actions",
+      contentType: "application/json",
+      body: {
+        actions: [
+          {
+            type: "pointer",
+            id: "writer362-pointer",
+            parameters: { pointerType: "mouse" },
+            actions: [
+              {
+                type: "pointerMove",
+                duration: 0,
+                origin: "viewport",
+                x: 545,
+                y: 362,
+              },
+              { type: "pointerDown", button: 0 },
+              { type: "pointerUp", button: 0 },
+            ],
+          },
+        ],
+      },
+    });
   } finally {
     await new Promise((done) => server.close(done));
   }
