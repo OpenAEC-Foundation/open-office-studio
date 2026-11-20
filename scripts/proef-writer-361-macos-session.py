@@ -15,12 +15,33 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
 import time
 import xml.etree.ElementTree as ET
 import zipfile
 
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 ROWS = [["alpha", "beta", ""], ["", "", "omega"], ["delta", "", ""]]
+
+
+def wait_for_native_grid(snapshot, columns, seconds=15, clock=time.monotonic, pause=time.sleep):
+    """Wait for actual AX readiness; absence while loading is not a capability verdict."""
+    started = clock()
+    deadline = started + seconds
+    attempts = 0
+    while True:
+        state = snapshot()
+        attempts += 1
+        tables = state.get("tables", [])
+        inspectable = (len(tables) == 1 and tables[0].get("rowEvidenceAvailable")
+                       and tables[0].get("columnEvidenceAvailable"))
+        if inspectable and tables[0]["rows"] == 3 and tables[0]["columns"] == columns:
+            return state, {"elapsedSeconds": round(clock() - started, 3), "attempts": attempts}
+        if clock() >= deadline:
+            if not inspectable:
+                raise PermissionError("Native AX table evidence remained unavailable after the bounded readiness wait; manual acceptance remains open")
+            raise AssertionError(f"Native table remained {tables[0]}, expected 3x{columns}")
+        pause(.25)
 
 
 def main():
@@ -40,7 +61,7 @@ def main():
               "harnessCommit": subprocess.check_output(["git", "-C", str(Path(__file__).resolve().parent.parent), "rev-parse", "HEAD"], text=True).strip(),
               "sessionDriverSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "checks": [], "limits": ["Bounded core Undo/Redo/persist/restart route; Tab, ordinary typing, Find and two-document histories are not executed by this macOS driver", "AX counts do not prove glyph legibility or issue359 correctness"], "cleanup": {}}
-    app = program = pid = None
+    app = program = pid = app_container = None
     mount = out / "mount"
     mounted = started = False
     counter = 0
@@ -78,19 +99,9 @@ def main():
             raise RuntimeError("Native action failed: " + result.stderr[-1500:])
         return snapshot
 
-    def grid(label, columns):
-        end = time.monotonic() + 15
-        while True:
-            state = action("snapshot")
-            tables = state.get("tables", [])
-            if len(tables) != 1 or not tables[0].get("rowEvidenceAvailable") or not tables[0].get("columnEvidenceAvailable"):
-                raise PermissionError("Native AX does not expose one inspectable canvas table; manual visual acceptance remains open")
-            if tables[0]["rows"] == 3 and tables[0]["columns"] == columns:
-                report["checks"].append({"name": label, "native": state})
-                return
-            if time.monotonic() >= end:
-                raise AssertionError(f"{label}: native table is {tables[0]}, expected 3x{columns}")
-            time.sleep(.15)
+    def grid(label, columns, readiness=False):
+        state, timing = wait_for_native_grid(lambda: action("snapshot"), columns, 90 if readiness else 15)
+        report["checks"].append({"name": label, "native": state, "readiness": timing})
 
     def launch():
         nonlocal pid, started
@@ -99,7 +110,6 @@ def main():
         started = True
         subprocess.run(["open", "-a", str(app), str(fixture)], check=True, timeout=20)
         pid = wait(lambda: owned()[0] if len(owned()) == 1 else None, "Exactly one owned native process did not appear", 90)
-        time.sleep(2)
 
     def quit_app():
         action("chord", "cmd-q")
@@ -134,7 +144,10 @@ def main():
             report["executableHashOrigin"] = "Computed from read-only verified canonical DMG payload before launch, copied program must match"
         else:
             raise RuntimeError("No approved executable identity derivation")
-        app = out / apps[0].name
+        # Keep the owned package outside the proof directory; never upload a duplicate app.
+        app_container = Path(tempfile.mkdtemp(prefix="writer361-owned-app-", dir=os.environ.get("RUNNER_TEMP")))
+        report["ownedAppContainer"] = str(app_container)
+        app = app_container / apps[0].name
         shutil.copytree(apps[0], app, symlinks=True)
         subprocess.run(["hdiutil", "detach", str(mount)], check=True, timeout=30, capture_output=True)
         mounted = False
@@ -165,7 +178,7 @@ def main():
             for name, value in parts.items():
                 output.writestr(name, value)
         launch()
-        grid("native baseline", 3)
+        grid("native baseline", 3, readiness=True)
         action("click-cell", "alpha")
         for side in ["Left", "Right"]:
             action("click-label", "Table Design")
@@ -198,7 +211,7 @@ def main():
         launch()
         if pid == first_pid:
             raise RuntimeError("Expected a fresh process after native quit")
-        grid("fresh process reopened persisted table", 4)
+        grid("fresh process reopened persisted table", 4, readiness=True)
         if hashlib.sha256(fixture.read_bytes()).hexdigest() != report["savedSha256"]:
             raise AssertionError("Reopen changed saved bytes")
         report["coreUndoRedoPersistRestartPassed"] = True
@@ -234,10 +247,17 @@ def main():
             while owned() and time.monotonic() < end:
                 time.sleep(.25)
         report["cleanup"]["ownedAppClosed"] = not owned()
-        if not report["cleanup"]["ownedAppClosed"]:
+        if app_container is not None and report["cleanup"]["ownedAppClosed"]:
+            try:
+                shutil.rmtree(app_container)
+                report["cleanup"]["ownedAppContainerRemoved"] = not app_container.exists()
+            except OSError as error:
+                report["cleanup"]["ownedAppContainerRemoved"] = False
+                report["cleanup"]["ownedAppContainerError"] = str(error)
+        if not report["cleanup"]["ownedAppClosed"] or report["cleanup"].get("ownedAppContainerRemoved") is False:
             report["status"] = "cleanup-failed"
         (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-        if not report["cleanup"]["ownedAppClosed"] or report["cleanup"].get("mountDetached") is False:
+        if not report["cleanup"]["ownedAppClosed"] or report["cleanup"].get("mountDetached") is False or report["cleanup"].get("ownedAppContainerRemoved") is False:
             raise RuntimeError("Owned native app/mount cleanup failed; see receipt")
 
 

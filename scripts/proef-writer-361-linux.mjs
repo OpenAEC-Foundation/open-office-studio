@@ -194,9 +194,14 @@ async function clickButton(name) {
   await clickElement(element);
 }
 async function clickCanvas(x = 145, y = 110) {
-  const point = await evaluate(
-    "const c=[...document.querySelectorAll('.canvas-page canvas')].find(e=>e.getClientRects().length); if(!c)return null;const r=c.getBoundingClientRect();return {x:Math.round(r.x+arguments[0]),y:Math.round(r.y+arguments[1])}",
-    [x, y],
+  const point = await waitFor(
+    () =>
+      evaluate(
+        "const c=[...document.querySelectorAll('.canvas-page canvas')].find(e=>e.getClientRects().length); if(!c)return null;const r=c.getBoundingClientRect();return {x:Math.round(r.x+arguments[0]),y:Math.round(r.y+arguments[1])}",
+        [x, y],
+      ),
+    "Actual visible document canvas did not become ready",
+    90000,
   );
   assert(point);
   await request("POST", `/session/${session}/actions`, {
@@ -224,7 +229,8 @@ async function check(name, columns, rows = 3, cells) {
     const s = await state();
     return s.tables.length === 1 &&
       s.tables[0].columns === columns &&
-      s.tables[0].rows === rows
+      s.tables[0].rows === rows &&
+      (!cells || JSON.stringify(s.tables[0].cells) === JSON.stringify(cells))
       ? s
       : null;
   }, name);
@@ -240,7 +246,7 @@ async function screenshot(name) {
   await writeFile(join(out, name + ".png"), png);
   return hash(png);
 }
-async function startDocument() {
+async function startDocument(columns = 3) {
   const created = await request("POST", "/session", {
     capabilities: {
       alwaysMatch: { "tauri:options": { application, args: [documentPath] } },
@@ -265,6 +271,18 @@ async function startDocument() {
     "Native Writer did not render",
     90000,
   );
+  const started = Date.now();
+  const ready = await waitFor(
+    () =>
+      evaluate(
+        "const c=[...document.querySelectorAll('.canvas-page canvas')].find(e=>e.getClientRects().length); const t=[...document.querySelectorAll('[role=table]')].filter(e=>!e.closest('[hidden],[inert]')); if(!c||t.length!==1||Number(t[0].getAttribute('aria-rowcount'))!==3||Number(t[0].getAttribute('aria-colcount'))!==arguments[0]||document.fonts.status!=='loaded')return null; const r=c.getBoundingClientRect(); return {canvas:{x:r.x,y:r.y,width:r.width,height:r.height},rows:3,columns:arguments[0],fonts:document.fonts.status}",
+        [columns],
+      ),
+    "Actual rendered document/table/fonts remained unready",
+    90000,
+  );
+  report.startups ??= [];
+  report.startups.push({ elapsedMs: Date.now() - started, ...ready });
   assert.equal(
     await evaluate("return typeof window.__TAURI_INTERNALS__?.invoke"),
     "function",
@@ -433,7 +451,12 @@ try {
   await clickCanvas(600, 180);
   await press("\uE004");
   await type("newrow");
-  const added = await check("last-cell Tab and typing", 3, 4);
+  const added = await check("last-cell Tab and typing", 3, 4, [
+    ...expected,
+    "newrow",
+    "",
+    "",
+  ]);
   assert.equal(added.tables[0].cells[9], "newrow");
   await chord("z");
   await chord("z");
@@ -505,12 +528,17 @@ try {
   await check("original reset", 3, 3, expected);
   await clickElement(await named("tab", "Table Design"));
   await clickButton("Insert Column Right");
-  await check("persistent inserted column", 4);
+  const beforeMarker = (await check("persistent inserted column", 4)).tables[0]
+    .cells;
   await clickCanvas();
   await press("\uE011");
   await type("SAVED361 ");
-  const savedCells = (await check("persist marker and column", 4)).tables[0]
-    .cells;
+  const savedCells = (
+    await check("persist marker and column", 4, 3, [
+      "SAVED361 alpha",
+      ...beforeMarker.slice(1),
+    ])
+  ).tables[0].cells;
   assert.equal(savedCells[0], "SAVED361 alpha");
   await waitFor(
     () =>
@@ -529,7 +557,7 @@ try {
   report.savedSha256 = hash(saved);
   await closeSession();
   report.checks.push({ name: "full native process exit", ownedPids: pids() });
-  await startDocument();
+  await startDocument(4);
   assert.notEqual(pids()[0], initialPid);
   await check("fresh native process reopened saved table", 4, 3, savedCells);
   assert.equal(hash(await readFile(documentPath)), report.savedSha256);
