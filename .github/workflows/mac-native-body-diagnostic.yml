@@ -1,4 +1,4 @@
-name: Mac native body activation diagnostic
+name: Mac native body font and structure diagnostic
 on:
   push:
     branches: [codex/mac-native-body-blocker-20261120]
@@ -37,7 +37,7 @@ jobs:
           env=dict(os.environ,FROZEN_MANIFEST=manifest.decode(),FROZEN_MANIFEST_SHA256=hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest())
           subprocess.run(['python','.local/mac-body-harness/scripts/writer361-native-manifest.py','fetch','macos','.local/body-manifest.json'],env=env,check=True)
           PY
-      - name: Observe initial body before and after explicit native activation
+      - name: Observe2x2 font and structure fixture matrix on unchanged app
         run: python .local/mac-body-harness/scripts/mac-native-body-diagnostic.py .local/input/identity.json .local/mac-body-diagnostic
       - uses: actions/upload-artifact@v4
         if: always()

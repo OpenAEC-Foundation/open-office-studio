@@ -1,4 +1,4 @@
-"""Bounded native macOS initial-body activation diagnostic on a frozen canonical DMG.
+"""Bounded native macOS initial-body font/structure diagnostic on a frozen canonical DMG.
 
 Only disposable CI after explicit integration go. AX/CGEvent operates the actual
 packaged app; missing Accessibility or native canvas-table evidence stays blocked.
@@ -67,7 +67,7 @@ def main():
     report = {"issue": 359, "status": "running", "nativePass": False, "diagnosticOnly": True, "applicationModified": False, "identity": identity,
               "harnessCommit": subprocess.check_output(["git", "-C", str(Path(__file__).resolve().parent.parent), "rev-parse", "HEAD"], text=True).strip(),
               "sessionDriverSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-              "checks": [], "limits": ["No product correction or native acceptance; original failed attempts remain valid", "Only native activation and one ordinary Maximize per fixture; no body input, theme change or canvas readback", "The saved EPUB356 DOCX is a route/content control, not a re-execution of the EPUB importer", "Physical Mac observation unavailable; original OS captures require independent visual inspection"], "cleanup": {}}
+              "checks": [], "limits": ["No product correction or native acceptance; original failed attempts remain valid", "Font/structure fixture matrix with one ordinary Maximize per fixture; no body input, activation replay, theme change or canvas readback", "The saved EPUB356 DOCX is a route/content control, not a re-execution of the EPUB importer", "Physical Mac observation unavailable; original OS captures require independent visual inspection"], "cleanup": {}}
     app = program = pid = app_container = None
     mount = out / "mount"
     mounted = started = False
@@ -211,14 +211,27 @@ def main():
             raise RuntimeError("Positive control differs from the independently checked356 saved DOCX")
         table_fixture = fixture
         report["fixtures"] = []
-        for fixture_name, fixture_path in [("table361", table_fixture), ("saved-epub356-control", control)]:
+        variants = [("table-inherited-font", table_fixture)]
+        direct_font = '<w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/></w:rPr>'
+        paragraph = '<w:p><w:r><w:t>alpha beta omega delta</w:t></w:r></w:p>'
+        for variant_name, body_xml in [("table-direct-calibri", table.replace("<w:r>", "<w:r>"+direct_font)), ("paragraph-inherited-font", paragraph), ("paragraph-direct-calibri", paragraph.replace("<w:r>", "<w:r>"+direct_font))]:
+            variant_parts = dict(parts)
+            variant_parts["word/document.xml"] = re.sub(r'(<w:body>)[\s\S]*?(<w:sectPr)', lambda match: match[1]+body_xml+match[2], xml, count=1).encode("utf-8")
+            variant_path = out / (variant_name + ".docx")
+            with zipfile.ZipFile(variant_path,"w",zipfile.ZIP_DEFLATED) as bundle:
+                for name,value in variant_parts.items(): bundle.writestr(name,value)
+            variants.append((variant_name,variant_path))
+        variants.append(("saved-epub356-control",control))
+        report["experiment"] = "2x2 document-only table/paragraph and inherited/explicit Calibri matrix plus known rendered356 DOCX; no acceptance pass"
+        for fixture_name, fixture_path in variants:
             fixture = fixture_path.resolve()
             fixture_hash = hashlib.sha256(fixture.read_bytes()).hexdigest()
             record = {"name": fixture_name, "sha256": fixture_hash, "phases": [], "nativePass": False}
             report["fixtures"].append(record)
             launch()
             record["pid"] = pid
-            if fixture_name == "table361":
+            wait(lambda: fixture.name in readiness_snapshot().get("window",{}).get("title",""), "Owned native document title did not become ready", 90)
+            if fixture_name.startswith("table-"):
                 grid("native table loaded before diagnostic activation", 3, readiness=True)
             else:
                 # Word-count/Save readiness is observed in raw AX; no edit is used.
@@ -232,11 +245,7 @@ def main():
                 capture = observation["capture_original"](state, pid, fixture_out / (phase + ".png"))
                 record["phases"].append({"name": phase, "timestamp": time.time(), "applicationActive": state.get("applicationActive"), "frontmostPid": state.get("frontmostPid"), "capture": capture, "tables": state.get("tables"), "rawSha256": hashlib.sha256(path.read_bytes()).hexdigest()})
                 return state
-            capture_phase("before-activation")
-            action("activate")
-            wait(lambda: (state := action("snapshot")).get("applicationActive") is True and state.get("frontmostPid") == pid, "Owned application did not become frontmost", 15)
-            time.sleep(2)
-            capture_phase("after-activation")
+            capture_phase("initial-ready")
             record["maximize"] = viewport["maximize_once"](action, fixture_out / "maximize", identity, pid)
             capture_phase("after-maximize")
             record["originalUnchanged"] = hashlib.sha256(fixture.read_bytes()).hexdigest() == fixture_hash
