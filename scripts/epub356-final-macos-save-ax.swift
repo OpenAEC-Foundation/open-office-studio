@@ -46,8 +46,10 @@ while index < queue.count && index < 600 && Date() < deadline {
         let value = string(e, kAXValueAttribute)
         if value == expectedName || value == (expectedName as NSString).deletingPathExtension { filenameFields.append(e) }
     }
-    if role == "AXButton" && enabled {
-        if ["Save", "Opslaan"].contains(title) || ["Save", "Opslaan"].contains(description) { saveButtons.append(e) }
+    if role == "AXButton" {
+        if enabled && (["Save", "Opslaan"].contains(title) || ["Save", "Opslaan"].contains(description)) { saveButtons.append(e) }
+        // A blank Go-to-Folder field can leave Go disabled. Identify the
+        // native panel first so setting its path can enable that same button.
         if ["Go", "Ga"].contains(title) || ["Go", "Ga"].contains(description) { goButtons.append(e) }
     }
     if depth < 14 { queue.append(contentsOf: children(e).map { ($0, depth + 1) }) }
@@ -75,9 +77,11 @@ if !AXIsProcessTrusted() {
             let result = AXUIElementSetAttributeValue(e, kAXValueAttribute as CFString, folder as CFString)
             report["setPathError"] = result.rawValue
             if result == .success {
-                let press = AXUIElementPerformAction(goButtons[0], kAXPressAction as CFString)
-                report["pressError"] = press.rawValue
-                if press == .success { report["status"] = "acted" }
+                if attribute(goButtons[0], kAXEnabledAttribute) as? Bool == true {
+                    let press = AXUIElementPerformAction(goButtons[0], kAXPressAction as CFString)
+                    report["pressError"] = press.rawValue
+                    if press == .success { report["status"] = "acted" }
+                } else { report["reason"] = "The native Go button is not enabled after path entry" }
             }
         } else { report["reason"] = "The owned native folder path field is not focused" }
     } else { report["reason"] = "The owned native Go-to-Folder panel is unavailable or ambiguous" }
