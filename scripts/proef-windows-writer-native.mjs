@@ -25,6 +25,10 @@ const identity = JSON.parse(await readFile(manifestFile, "utf8"));
 assert.equal(identity.executeNative, true);
 if (process.argv.includes("--require-signed")) assert.equal(identity.requireSigned, true, "Final native route requires an explicitly signed candidate");
 if (process.argv.includes("--test-title-overlap")) assert.equal(identity.testTitleOverlap, true, "Final requested title regression must be explicitly enabled in the frozen candidate");
+if (process.argv.includes("--require-suite-child")) {
+  assert.match(identity.suiteDescriptorSha256, /^[a-f0-9]{64}$/, "Frozen Suite-child descriptor required; never fall back to a second parent download");
+  assert.equal(typeof identity.suiteDescriptorBase64, "string");
+}
 assert.match(identity.applicationCommit, /^[a-f0-9]{40}$/);
 assert.match(identity.applicationTree, /^[a-f0-9]{40}$/);
 if (identity.builderCommit) assert.match(identity.builderCommit, /^[a-f0-9]{40}$/);
@@ -122,6 +126,8 @@ async function startApplication(exe, port, path = documentPath, tableBaseline = 
   assert.equal(await page.evaluate(() => Boolean(window.__writerApis || window.__writerWarmup)), false, "No compiled diagnostic editor bridge");
   await page.waitForFunction(table => document.fonts.status === "loaded" && Boolean(document.querySelector(".canvas-page canvas")) && (!table || [...document.querySelectorAll('[role="table"]')].some(e => !e.closest("[hidden],[inert]") && e.getAttribute("aria-colcount") === "3")), tableBaseline);
   await page.waitForFunction(() => { const b = document.querySelector(".office-snelknop:has(.lucide-save-all)"); return b && !b.disabled; });
+  run.appIdentifier = await page.evaluate(() => window.__TAURI_INTERNALS__.invoke("plugin:app|identifier"));
+  assert.equal(run.appIdentifier, "org.openaec.office-studio");
   run.runtimeStatus = await page.evaluate(() => window.__TAURI_INTERNALS__.invoke("conversie_status"));
   assert.equal(run.runtimeStatus.bron, "meegeleverd");
   return app.pid;
@@ -150,6 +156,7 @@ try {
     assert.equal(run.head_sha, identity.applicationCommit, "Signed producer must use the exact approved application source");
     assert.equal(run.path, ".github/workflows/release.yml");
     assert.equal(run.head_repository.full_name, "OpenAEC-Foundation/open-office-studio");
+    assert.equal(artifact.name, "uitgave-Windows");
     assert.equal(artifact.workflow_run.head_sha, identity.applicationCommit);
     assert(identity.producerRunAttempt <= run.run_attempt);
     const list = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/runs/${identity.runId}/attempts/${identity.producerRunAttempt}/jobs?per_page=100`], { encoding: "utf8", windowsHide: true }));
@@ -165,12 +172,23 @@ try {
   }
   report.run = { id: run.id, head_sha: run.head_sha, status: run.status, conclusion: run.conclusion };
   report.artifact = { id: artifact.id, name: artifact.name, digest: artifact.digest };
-  const zipPath = join(out, "artifact.zip"), fd = openSync(zipPath, "wx");
-  try { execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}/zip`], { windowsHide: true, stdio: ["ignore", fd, "pipe"], timeout: 300_000 }); } finally { closeSync(fd); }
+  const zipPath = join(out, "artifact.zip");
+  if (!identity.suiteDescriptorSha256) {
+    const fd = openSync(zipPath, "wx");
+    try { execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}/zip`], { windowsHide: true, stdio: ["ignore", fd, "pipe"], timeout: 300_000 }); } finally { closeSync(fd); }
+  }
   let sevenZip = "C:\\Program Files\\7-Zip\\7z.exe";
   try { await access(sevenZip); } catch { sevenZip = "7z"; }
-  const installer = join(out, "installer-setup.exe");
-  if (identity.requireSigned) {
+  let installer = join(out, "installer-setup.exe");
+  if (identity.suiteDescriptorSha256) {
+    assert.equal(identity.requireSigned, true);
+    const childOut = join(out, "suite-input");
+    execFileSync("python", ["-B", "scripts/windows-suite-child.py", manifestFile, childOut], { windowsHide: true, stdio: "inherit", timeout: 600_000 });
+    report.suiteChildBinding = JSON.parse(await readFile(join(childOut, "suite-child-binding.json"), "utf8"));
+    installer = join(childOut, report.suiteChildBinding.installer);
+    report.packageSha256 = await fileSha(installer); assert.equal(report.packageSha256, identity.packageSha256);
+    report.archiveReader = { mode: "strict Suite-only child; parent ZIP verified by pinned preparer and official API metadata", parentDownloadedByConsumer: false, childArtifact: report.suiteChildBinding.childArtifact.id };
+  } else if (identity.requireSigned) {
     // Seven installers can exceed readFile's single-buffer limit. Stream the
     // entire immutable ZIP digest, then read only the one frozen Office member.
     report.archiveSha256 = await fileSha(zipPath); assert.equal(report.archiveSha256, identity.archiveSha256);
@@ -206,8 +224,15 @@ try {
   const extraction = execFileSync(sevenZip, ["e", "-y", "-r", `-o${payload}`, installer, "open-office-studio.exe"], { encoding: "utf8", windowsHide: true, timeout: 180_000, maxBuffer: 8 * 1024 * 1024 });
   await writeFile(join(out, "payload-extraction.log"), extraction);
   const payloadBytes = await readFile(join(payload, "open-office-studio.exe"));
+  assert(payloadBytes.length >= 64 && payloadBytes.subarray(0, 2).equals(Buffer.from("MZ")));
+  const peOffset = payloadBytes.readUInt32LE(0x3c);
+  assert(peOffset >= 64 && peOffset + 26 <= payloadBytes.length);
+  assert(payloadBytes.subarray(peOffset, peOffset + 4).equals(Buffer.from("PE\0\0")));
+  assert.equal(payloadBytes.readUInt16LE(peOffset + 4), 0x8664); assert.equal(payloadBytes.readUInt16LE(peOffset + 24), 0x20b);
+  report.payloadArchitecture = "x64 PE32+";
   report.payloadExecutableSha256 = sha(payloadBytes);
   if (identity.expectedPackagedExecutableSha256) assert.equal(report.payloadExecutableSha256, identity.expectedPackagedExecutableSha256);
+  if (report.suiteChildBinding) assert.equal(payloadBytes.length, report.suiteChildBinding.suite.application.payloadExecutable.bytes);
   if (report.applicationProvenance && !identity.requireSigned) {
     const rawHash = report.applicationProvenance.executable.sha256;
     report.bundlePatch = { originalBuildSha256: rawHash, payloadSha256: report.payloadExecutableSha256 };
@@ -248,7 +273,9 @@ try {
   installation = join(out, "installed");
   execFileSync(installer, ["/S", `/D=${installation}`], { env, windowsHide: true, timeout: 600_000, stdio: "inherit" });
   const exe = join(installation, "open-office-studio.exe"); await access(exe); await access(join(installation, "uninstall.exe"));
-  report.executableSha256 = sha(await readFile(exe));
+  const installedBytes = await readFile(exe);
+  report.executableSha256 = sha(installedBytes); report.installedExecutableBytes = installedBytes.length;
+  assert.equal(installedBytes.length, payloadBytes.length);
   assert.equal(report.executableSha256, report.payloadExecutableSha256, "Installed executable equals the independently extracted immutable NSIS payload");
   report.fileVersion = ps(`(Get-Item -LiteralPath '${exe.replaceAll("'", "''")}').VersionInfo.ProductVersion`);
   assert([identity.version, identity.version + ".0"].includes(report.fileVersion), report.fileVersion);

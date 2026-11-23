@@ -12,6 +12,8 @@ on:
       - scripts/format30-stw-oracle.py
       - scripts/windows-final-title-oracle_test.py
       - scripts/windows-final-zip-member.py
+      - scripts/windows-suite-child.py
+      - scripts/windows-suite-child_test.py
       - docs/tests/format30-stw/source.json
       - .github/workflows/windows-final-native-20261123.yml
 permissions:
@@ -37,9 +39,10 @@ jobs:
           version: 11.25.0
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: node --test scripts/windows-native-signature.test.mjs
+      - run: python -B scripts/windows-suite-child_test.py
       - run: python -m pip install pywinauto==0.6.9
       - name: Verify actual signed bytes and exercise native Writer save/reopen
-        run: node scripts/proef-windows-writer-native.mjs .github/windows-final-native-candidate.json .local/windows-final-native --require-signed --test-title-overlap
+        run: node scripts/proef-windows-writer-native.mjs .github/windows-final-native-candidate.json .local/windows-final-native --require-signed --test-title-overlap --require-suite-child
       - name: Reject title-field flattening counterexamples on actual saved DOCX
         run: python -B scripts/windows-final-title-oracle_test.py ".local/windows-final-native/Title overlap roundtrip.docx"
       - uses: actions/upload-artifact@v4
@@ -53,5 +56,8 @@ jobs:
             .local/windows-final-native/*.stw
             .local/windows-final-native/*.log
             .github/windows-final-native-candidate.json
+            .local/windows-final-native/suite-input/suite-child-binding.json
+            .local/windows-final-native/suite-input/package.json
+            .local/windows-final-native/suite-input/canonical-package-report.json
           include-hidden-files: true
           if-no-files-found: warn
