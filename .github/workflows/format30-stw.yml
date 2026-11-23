@@ -1,0 +1,54 @@
+name: Format 30 genuine STW Linux QA
+on:
+  push:
+    branches: [codex/formats-30-stw-qa-2026-11-23]
+    paths: [.github/format30-stw-attempt.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: format30-stw-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  genuine-stw:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      OOS_STW_HARNESS_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/checkout@v4
+        with:
+          path: .local/stw-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Small headless private-runtime dependencies, no installed office suite
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libnss3 libcups2 libxinerama1 libxrender1 libsm6 fontconfig fonts-liberation2
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: stw30-private-runtime-linux-${{ hashFiles('assets/kantoorruntime.json') }}
+      - name: Prepare P2-pinned private runtime only, never a suite build/install
+        run: node scripts/voorbereiden-kantoorruntime.mjs --target linux-x64
+      - name: Check source oracle and actual production input/Writer-engine route
+        run: node .local/stw-harness/scripts/proef-format30-stw.mjs .local/format30-stw-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: format30-stw-Linux
+          path: .local/format30-stw-proof
+          include-hidden-files: true
+          if-no-files-found: warn
