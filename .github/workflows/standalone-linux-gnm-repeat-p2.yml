@@ -54,6 +54,8 @@ jobs:
           assert.ok(Array.isArray(apps)&&apps.length>0&&apps.length<=6&&new Set(apps).size===apps.length&&apps.every(a=>allowed.includes(a)));
           const reuse=process.env.INPUT_REUSE||String(go.reusePreparedRun||'');if(reuse)assert.match(reuse,/^\d+$/);
           const types=go.packageTypes||['appimage','deb'];assert.ok(Array.isArray(types)&&types.length>0&&new Set(types).size===types.length&&types.every(t=>['appimage','deb'].includes(t)));
+          assert.deepEqual(apps,['spreadsheet']);assert.deepEqual(types,['appimage']);assert.equal(reuse,'45159559656');
+          assert.equal(go.harnessCommit,'5da75ff975c798b16557707cf8b376a728a8ae76');assert.equal(go.boundedFreshHostRepetitions,1);
           appendFileSync(process.env.GITHUB_OUTPUT,`apps=${JSON.stringify(apps)}\nreuse=${reuse}\ninputrun=${reuse||process.env.GITHUB_RUN_ID}\ntypes=${JSON.stringify(types)}\n`);
           JS
   standalone:
