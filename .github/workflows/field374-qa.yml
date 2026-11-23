@@ -1,0 +1,32 @@
+name: Writer 374 bounded field paint metrics
+on:
+  push:
+    branches: [codex/writer-docvariable-layout-374-2026-11-23]
+    paths: [qa/field374/attempt.json]
+permissions:
+  contents: read
+jobs:
+  metrics:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: One isolated real Chromium driver
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          pnpm exec playwright install --with-deps chromium
+      - name: One-font Canvas paint and SDK advance evidence
+        run: node qa/field374/font-probe.mjs .local/field374-font-probe
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: field374-font-probe
+          path: .local/field374-font-probe
+          if-no-files-found: warn
