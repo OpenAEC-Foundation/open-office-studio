@@ -5,10 +5,10 @@
   "versie": "0.5.1",
   "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
   "patch": "tekstengine-nootnummering.patch",
-  "patchSha256": "ded034bb8b3029dc691caedfecb66497b7da9b124a21262e1c4577d7c70018a8",
+  "patchSha256": "4ab76ce09642d6e4a5c77a025f41ce1844f41b680ab35322068507d3d3e4bf9a",
   "rustc": "1.98.1",
   "wasmBindgen": "0.2.129",
-  "stand": "Pinned-source CI native tests, WASM build and full JS/WASM contract checks pass. Production equation rendering tests in progress.",
+  "stand": "Pinned-source Linux build and required native regression plus JS/WASM contract checks passed for both replacement kernels. Issue374 browser and new-package native acceptance remain pending.",
   "bronarchiefUrl": "https://api.github.com/repos/openooxml/betteroffice/tarball/4e982c3aea0065578604c3fe7727938533888f66",
   "binaryen": "132",
   "binaryenLinuxSha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
@@ -16,12 +16,18 @@
     "-O3"
   ],
   "oorspronkelijkWasmSha256": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
-  "wasmSha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc",
-  "wasmBytes": 24557871,
+  "wasmSha256": "4364eb8065228c805d8fbefe7e58c29e392516b6e7cca419e191766881d324ce",
+  "wasmBytes": 24560084,
   "oorspronkelijkLayoutWasmSha256": "070296adf0c3940fa75c1cb7dde8a5d3350c742fe8a1cd8f3e9e2cefead2080a",
-  "layoutWasmSha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478",
-  "layoutWasmBytes": 4368673,
-  "mathBuild": {
+  "layoutWasmSha256": "c5a59ce0d980cd7f85775aaf283bcac1c19fba976b47bbe08c0387e2ca7d2569",
+  "layoutWasmBytes": 4373099,
+  "veldHoofdletters374": {
+    "scope": "Measure only allCaps field display text, including tracking and Canvas horizontal scaling once; preserve stored field/cache, atomic span1, primary-font policy, original bounds and ordinary non-caps path",
+    "upstreamCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "testFilter": "field_caps",
+    "buildStatus": "Both replacement WASM modules verified against successful Linux build45160737859; all5 field_caps tests and required core/ABI controls passed; browser proof pending"
+  },
+  "historischeMathBuild": {
     "run": 42616410890,
     "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42616410890",
     "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
@@ -37,6 +43,28 @@
       "docx_layout": {
         "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478",
         "bytes": 4368673
+      }
+    }
+  },
+  "kernBuild": {
+    "run": 45160737859,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45160737859",
+    "appBronCommit": "31f49c175e956b356b46540d40ab1e1afd8a5061",
+    "artifact": 14810727151,
+    "artifactZipSha256": "c119462959995c5f77ee866c6323a0aca243f6fbee7f19108ff1060913e5328b",
+    "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "patchSha256": "4ab76ce09642d6e4a5c77a025f41ce1844f41b680ab35322068507d3d3e4bf9a",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "wasmBindgen": "wasm-bindgen 0.2.129",
+    "wasmOpt": "wasm-opt version 132 (version_132)",
+    "kernen": {
+      "docx_edit": {
+        "sha256": "4364eb8065228c805d8fbefe7e58c29e392516b6e7cca419e191766881d324ce",
+        "bytes": 24560084
+      },
+      "docx_layout": {
+        "sha256": "c5a59ce0d980cd7f85775aaf283bcac1c19fba976b47bbe08c0387e2ca7d2569",
+        "bytes": 4373099
       }
     }
   }
