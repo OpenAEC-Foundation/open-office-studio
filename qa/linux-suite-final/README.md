@@ -1,10 +1,15 @@
 # Final Linux Suite QA preparation
 
 Execution is currently blocked by [request.json](request.json): `go=false`,
-both immutable input descriptors unset. Candidate P4 is exactly
-`04fa6cd43b84e3f59fb9d5055bb2d00dde351a47`, tree
-`94fa38c20b51a73e4912964f37f0e1a659b0fb1b`, version 2026.48.1,
-producer45172070275/Linuxjob137683944835/attempt1.
+both immutable input descriptors unset. Candidate P5 is exactly
+`b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
+`e30879fd772871e690847c061ef66e6b81808a05`, version 2026.48.1,
+producer45177730188/Linuxjob137703365848/attempt1.
+P4 is superseded because the CI installer used `dpkg --install` without a
+dependency resolver. P5 includes both minimal CI-only apt corrections.
+The exact P4 Desktop external-harness recheck45177760596 independently
+confirmed dependency resolution and four preserved Writer smoke checks;
+its own P4 source/bytes remain separate from final P5 Suite acceptance.
 P3 `98b34042`/run45170708933 is explicitly
 retained as superseded after the full Vitest collection failure. Integration
 owns the one import-only correction. No P3 app/package/native
@@ -17,7 +22,7 @@ app hosts do not receive Office. This owner will
 not download another parent ZIP or build an app. Native execution requires the
 new exact coordinator source/tree/version, successful Linux producer job and
 attempt, input descriptor Gitpin/hash, transfer artifact metadata/hash, DEB and
-actual installed ELF identity. The request rejects the superseded P3 source.
+actual installed ELF identity. The request rejects both superseded sources.
 
 ## Prepared core
 
