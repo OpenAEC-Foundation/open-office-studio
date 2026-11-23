@@ -45,6 +45,13 @@ first exposed automatic CRLF conversion, which was corrected in the invocation
 before the resulting byte hashes passed. These are **structural checks**, not
 Cppunit/compiler or product acceptance results.
 
+An additional local full-schema attempt is inconclusive: libxml cannot compile
+the pinned LibreOffice extended RelaxNG grammar (`Attributes conflicts in group,
+line 4673`). Source/schema hashes and the validator boundary are recorded in
+`docs/tests/presentation-375/fixture-schema-check.json`. This neither establishes
+a faulty fixture nor counts as passing full schema validation. No replacement
+validator or runtime component was installed; real loader/Cppunit checks remain.
+
 The actual compiler/red-green Cppunit run and source-built converter/engine
 regressions require the separately reviewed
 [Linux build allocation](../../../docs/tests/presentation-375/linux-build-plan.md).

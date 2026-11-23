@@ -1,0 +1,35 @@
+{
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "fixture": "scripts/qa-presentation-375/runtime-patch/solid-rgb-theme-inheritance.fodp",
+  "fixtureXMLWellFormed": true,
+  "schemaCompiled": false,
+  "fullSchemaValidationPassed": null,
+  "runtimeExecuted": false,
+  "validator": {
+    "lxml": [
+      6,
+      1,
+      1,
+      0
+    ],
+    "libxml": [
+      2,
+      11,
+      9
+    ]
+  },
+  "schemaSources": [
+    {
+      "path": "schema/libreoffice/OpenDocument-v1.4+libreoffice-schema.rng",
+      "sha256": "b7935a89b424c1bb303e8c8b50fd4aa79aa241160ee1e25ce8e40fb7faa9a00d",
+      "bytes": 153520
+    },
+    {
+      "path": "schema/odf1.4/OpenDocument-v1.4-schema.rng",
+      "sha256": "2fb3db45c872249abb35d5c429f5b87dc026812eb243554ca7c77603ccb847ac",
+      "bytes": 610147
+    }
+  ],
+  "schemaCompilerError": "Attributes conflicts in group, line 4673",
+  "limit": "Local libxml cannot compile the pinned extended grammar; this does not establish a fixture failure or a passing schema check. Actual Cppunit/loader validation remains required."
+}
