@@ -36,10 +36,14 @@ class Case:
             time.sleep(0.2)  # Native panels briefly replace AXWindows while opening.
 
     def select(self,roles,labels=(),*,contains=None,action="click",dialog=False,toolbar=None):
-        deadline=time.monotonic()+45
+        deadline=time.monotonic()+45;previous=None;stable=0
         while True:
             matches=self.candidates(roles,labels,contains,action,dialog,toolbar)
-            if len(matches)==1:break
+            if len(matches)==1:
+                stable=stable+1 if matches[0]==previous else 1
+                previous=matches[0]
+                if not dialog or stable>=3:break
+            else:previous=None;stable=0
             if len(matches)>1 or time.monotonic()>=deadline:
                 raise Unavailable("Native selector ambiguous/unavailable: "+str((roles,labels,contains,len(matches))))
             time.sleep(0.2)  # Read-only readiness polling; the eventual input is sent once.
@@ -134,7 +138,7 @@ class Case:
                 ancestor=rows.get(row["parent"])
                 while ancestor:
                     w=ancestor["attributes"]
-                    if w.get("AXRole")=="AXWindow" and w.get("AXIdentifier") in ("open-panel","save-panel") and is_dialog(w):
+                    if w.get("AXRole") in ("AXWindow","AXSheet") and w.get("AXIdentifier") in ("open-panel","save-panel") and is_dialog(w):
                         matches.append((a,w));break
                     ancestor=rows.get(ancestor["parent"])
             focused=snapshot.get("focused",{});f=focused.get("frame",{})

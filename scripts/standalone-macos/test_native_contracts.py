@@ -2,15 +2,37 @@
 from pathlib import Path
 import json
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
-from native import environment,profile_paths,forbidden_suite_state,runtime_inventory
+from native import environment,profile_paths,forbidden_suite_state,runtime_inventory,Session,Unavailable
 from run import verify_transfer
 from test_contracts import request
 from contracts import APPS,digest
 
 
 class IsolationTests(unittest.TestCase):
+    def test_normal_cleanup_cancels_only_an_owned_native_file_panel_before_cmd_q(self):
+        class Own:
+            def __init__(self,identifier):
+                self.panel=identifier;self.actions=[];self.report={}
+                self.process=type('Process',(),{'pid':42,'returncode':0,'wait':lambda p,timeout:None})()
+            def ax(self,action,spec=None):
+                if action=="snapshot":return {'rawNodes':[{'attributes':{'AXRole':'AXSheet','AXIdentifier':self.panel}}]}
+                self.actions.append((action,spec))
+                if spec=='escape':self.panel=None
+            def stop_watch(self):pass
+            def guard_suite_namespace(self):pass
+            def write(self,*args):pass
+        own=Own('save-panel')
+        with patch('native.time.sleep'):self.assertEqual(Session.quit(own),42)
+        self.assertEqual(own.actions,[('key','escape'),('key','cmd-q')])
+        unknown=Own('unsaved-document-confirmation')
+        unknown.process.wait=lambda timeout:(_ for _ in ()).throw(subprocess.TimeoutExpired('own-app',timeout))
+        with self.assertRaises(Unavailable):Session.quit(unknown)
+        self.assertEqual(unknown.actions,[('key','cmd-q')])
+        self.assertNotIn('fullQuitVerified',unknown.report)
+
     def test_inventory_includes_private_signed_helpers_and_bound_runtime_receipt(self):
         with tempfile.TemporaryDirectory(prefix="standalone-private-inventory-") as t:
             bundle=Path(t)/"Own.app"

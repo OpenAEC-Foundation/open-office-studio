@@ -108,6 +108,12 @@ class Session:
         self.report.update(identityVerified=True,bundleInfo=actual,executableSHA256=after,
                            signature=command(["/usr/bin/codesign","--verify","--deep","--strict",self.bundle],timeout=120),
                            signatureIdentity=command(["/usr/bin/codesign","-dv","--verbose=4",self.bundle]))
+        self.report["gatekeeper"]=command(["/usr/sbin/spctl","--assess","--type","execute","--verbose=4",self.bundle],timeout=120)
+        self.report["notarizationStaple"]=command(["/usr/bin/xcrun","stapler","validate",self.bundle],timeout=120)
+        self.report["installedSignatureGatesVerified"]=all(self.report[k]["code"]==0
+            for k in ("signature","signatureIdentity","gatekeeper","notarizationStaple"))
+        if not self.report["installedSignatureGatesVerified"]:
+            raise Unavailable("Own installed app codesign, Gatekeeper or notarization gate failed; no app launched")
         self.write("private-runtime-inventory.json",runtime_inventory(self.bundle))
         identifier=APPS[self.app][2]
         paths=profile_paths(identifier,Path.home())
@@ -252,6 +258,17 @@ class Session:
 
     def quit(self):
         pid=self.process.pid
+        # A pending native file panel consumes Cmd-Q. Cancel only our verified
+        # open/save panels before asking the app to quit normally; retain the
+        # original case failure and never dismiss an unknown confirmation.
+        for attempt in range(3):
+            snap=self.ax("snapshot")
+            panels=[r["attributes"] for r in snap.get("rawNodes",[]) if r["attributes"].get("AXRole") in ("AXWindow","AXSheet")
+                    and r["attributes"].get("AXIdentifier") in ("open-panel","save-panel")]
+            if not panels:break
+            self.report.setdefault("cancelledOwnNativePanelsBeforeQuit",[]).append({"pid":pid,"panels":panels,"action":"one HID Escape"})
+            self.ax("key","escape");time.sleep(0.4)
+        else:raise Unavailable("Owned native file panel did not cancel normally before quit")
         self.ax("key","cmd-q")
         try:self.process.wait(timeout=15)
         except subprocess.TimeoutExpired:raise Unavailable("Full normal app quit did not complete")

@@ -34,6 +34,28 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(s.actions,[("key","return")])
         self.assertEqual(s.report["nativeFileDialogs"][0]["nativeModalWindow"]["AXIdentifier"],"open-panel")
 
+    def test_attached_native_save_sheet_confirms_with_owned_filename_focus(self):
+        snap=self.panel();panel=snap["rawNodes"][0]["attributes"]
+        panel.update(AXRole="AXSheet",AXIdentifier="save-panel")
+        snap["rawNodes"][1]["attributes"]["AXTitle"]="Save"
+        snap["focused"]["AXRole"]="AXTextField"
+        s=FakeSession(snap);Case(s,"fixture").native_panel_confirm("Save","fixture")
+        self.assertEqual(s.actions,[("key","return")])
+
+    def test_animating_dialog_control_settles_before_a_single_native_action(self):
+        class Animating(FakeSession):
+            def __init__(self):super().__init__({});self.reads=0
+            def ax(self,action,spec=None,check=True):
+                if action=="snapshot":
+                    self.reads+=1
+                    y=300 if self.reads==1 else 310
+                    return {"rawNodes":[row(0,-1,AXRole="AXGroup",AXSubrole="AXApplicationDialog"),button(1,0,y)]}
+                return super().ax(action,spec,check)
+        s=Animating()
+        with patch("cases.time.sleep"):Case(s,"fixture").button("Save",dialog=True)
+        self.assertEqual(s.reads,4);self.assertEqual(len(s.actions),1)
+        self.assertEqual(s.actions[0][1]["frame"]["y"],310)
+
     def test_native_modal_confirmation_refuses_disabled_wrong_or_background_controls(self):
         for variant in ("disabled","background","wrong-name","focus-outside","duplicate"):
             with self.subTest(variant=variant):

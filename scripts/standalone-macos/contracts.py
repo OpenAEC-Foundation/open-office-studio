@@ -179,7 +179,7 @@ def validate_producer(request, run, artifact, job, artifacts=None):
 
 
 def acceptance_from_evidence(value):
-    required = ("identityVerified", "suiteAbsent", "freshProfileVerified", "ownCwdEnvironmentVerified",
+    required = ("identityVerified", "installedSignatureGatesVerified", "suiteAbsent", "freshProfileVerified", "ownCwdEnvironmentVerified",
                 "nativeFocusVerified", "nativeSaveVerified", "outputOraclePassed", "fullQuitVerified",
                 "newPidReopenVerified", "resourceObservationsReviewed", "resourceIndependencePassed",
                 "functionalCaseCompleted", "visualReviewPassed", "cleanupPassed")

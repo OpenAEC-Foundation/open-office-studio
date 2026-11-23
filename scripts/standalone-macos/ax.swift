@@ -80,7 +80,7 @@ let display=CGDisplayBounds(CGMainDisplayID())
 report["mainDisplay"]=["X":display.minX,"Y":display.minY,"Width":display.width,"Height":display.height]
 let app = AXUIElementCreateApplication(pid)
 AXUIElementSetMessagingTimeout(app, 0.3)
-let deadline = Date().addingTimeInterval(15)
+var deadline = Date().addingTimeInterval(15)
 func attr(_ e: AXUIElement, _ name: String) -> CFTypeRef? {
     guard Date() < deadline else { return nil }
     var value: CFTypeRef?
@@ -143,9 +143,22 @@ func record(_ e: AXUIElement) -> [String: Any] {
 guard AXIsProcessTrusted() else {report["reason"]="Accessibility unavailable; privacy settings unchanged";finish(3)}
 let screenWindows=CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String: Any]] ?? []
 report["ownedScreenWindows"]=screenWindows.filter {($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value==pid}
-guard let windows=attr(app,kAXWindowsAttribute) as? [AXUIElement], !windows.isEmpty else {
+var windows:[AXUIElement]=[]
+let windowReadinessDeadline=Date().addingTimeInterval(5)
+var windowReadinessReads=0
+repeat {
+    windowReadinessReads+=1
+    windows=attr(app,kAXWindowsAttribute) as? [AXUIElement] ?? []
+    if !windows.isEmpty || running.isTerminated {break}
+    Thread.sleep(forTimeInterval:0.2)
+} while Date()<windowReadinessDeadline
+report["windowReadinessReadCount"]=windowReadinessReads
+guard !windows.isEmpty else {
     report["reason"]="Owned native windows unavailable";finish(3)
 }
+// Bounded read-only acquisition precedes traversal and every possible input.
+// Never replay an event merely because a later native window query failed.
+deadline=Date().addingTimeInterval(15)
 let traversalLimit=12000
 var queue:[(AXUIElement,Int,Int)]=[];var index=0;var nodes:[[String: Any]]=[]
 var seen:[CFHashCode:[AXUIElement]]=[:];var duplicateReferences=0

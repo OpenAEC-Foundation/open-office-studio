@@ -90,7 +90,7 @@ class ContractTests(unittest.TestCase):
                 with self.assertRaises(ValueError):verify_under(target,root)
 
     def test_partial_evidence_never_native_acceptance(self):
-        keys=("identityVerified","suiteAbsent","freshProfileVerified","ownCwdEnvironmentVerified","nativeFocusVerified","nativeSaveVerified","outputOraclePassed","fullQuitVerified","newPidReopenVerified","resourceObservationsReviewed","resourceIndependencePassed","functionalCaseCompleted","visualReviewPassed","cleanupPassed")
+        keys=("identityVerified","installedSignatureGatesVerified","suiteAbsent","freshProfileVerified","ownCwdEnvironmentVerified","nativeFocusVerified","nativeSaveVerified","outputOraclePassed","fullQuitVerified","newPidReopenVerified","resourceObservationsReviewed","resourceIndependencePassed","functionalCaseCompleted","visualReviewPassed","cleanupPassed")
         good={**{k:True for k in keys},"app":"writer","ownConverterChildObserved":True};self.assertTrue(acceptance_from_evidence(good))
         for k in keys:self.assertFalse(acceptance_from_evidence({**good,k:False}),k)
         self.assertFalse(acceptance_from_evidence({**good,"failure":{"message":"runtime export failed"}}))
