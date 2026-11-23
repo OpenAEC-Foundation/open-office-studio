@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "applicationCommit": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+  "applicationTree": "246fcdf922e327a464b06d780b687c091beeb7cc",
+  "version": "2026.46.2",
+  "harnessCommit": "eefdd6b6a4d53bf68b923bd533e39ea31950214e",
+  "package": {
+    "preflightOnly": true,
+    "applicationCommit": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+    "applicationTree": "246fcdf922e327a464b06d780b687c091beeb7cc",
+    "version": "2026.46.2",
+    "artifactRun": null,
+    "archiveSha256": null,
+    "releaseTag": "v2026.46.2",
+    "assetId": 741617327,
+    "installer": "Open.Writer.Studio_2026.46.2_x64-setup.exe",
+    "sourceUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/download/v2026.46.2/Open.Writer.Studio_2026.46.2_x64-setup.exe",
+    "application": {
+      "key": "writer",
+      "title": "Open Writer Studio",
+      "executable": "open-writer-studio.exe",
+      "identifier": "org.openaec.writer-studio",
+      "packagePath": "Open.Writer.Studio_2026.46.2_x64-setup.exe",
+      "sha256": "0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb",
+      "bytes": 73593696,
+      "signature": "record"
+    },
+    "limitation": "The only permitted old public Writer host/driver preflight. Never count as final 2026.48 standalone acceptance."
+  },
+  "scope": "Actual isolated standalone Windows native app; never a browser demo",
+  "status": "passed-old-writer-host-preflight-not-final",
+  "steps": [
+    {
+      "status": "passed",
+      "sessionId": 2,
+      "windowHandle": 131410,
+      "ownedPid": 3476,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "foregroundPid": 3476,
+      "title": "Standalone23.docx — Open Writer Studio (Text)",
+      "action": "Focus"
+    },
+    {
+      "sessionId": 2,
+      "title": "Standalone23.docx — Open Writer Studio (Text)",
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "windowHandle": 131410,
+      "ownedPid": 3476,
+      "foregroundPid": 3476,
+      "action": "Focus"
+    },
+    {
+      "focus": "writer-input",
+      "osAndRenderer": true,
+      "keys": "Windows Control"
+    },
+    {
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "nativeSaveInvoked": true,
+      "title": "Standalone23.docx • — Open Writer Studio (Text)",
+      "windowHandle": 131410,
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\initial.docx",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "ownedPid": 3476,
+      "filenameBefore": "initial.docx",
+      "status": "passed",
+      "filenameHandle": 66206,
+      "ownedTopWindows": [
+        {
+          "title": "Save as",
+          "className": "#32770",
+          "handle": 66064
+        },
+        {
+          "title": "Standalone23.docx • — Open Writer Studio (Text)",
+          "className": "Tauri Window",
+          "handle": 131410
+        },
+        {
+          "title": "org.openaec.writer-studio-siw",
+          "className": "org.openaec.writer-studio-sic",
+          "handle": 131412
+        },
+        {
+          "title": "",
+          "className": "Tao Thread Event Target",
+          "handle": 721304
+        }
+      ],
+      "pathReadbackMatches": true,
+      "action": "SaveDialog",
+      "sessionId": 2
+    },
+    {
+      "phase": "initial",
+      "actualNativeSave": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\initial.docx",
+      "oracle": "passed"
+    },
+    {
+      "sessionId": 2,
+      "title": "initial.docx — Open Writer Studio (Text)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "wmClosePosted": true,
+      "status": "passed",
+      "action": "Close",
+      "windowHandle": 131410,
+      "ownedPid": 3476
+    },
+    {
+      "ownedPid": 1952,
+      "sessionId": 2,
+      "foregroundPid": 1952,
+      "status": "passed",
+      "title": "initial.docx — Open Writer Studio (Text)",
+      "windowHandle": 262598,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "action": "Focus"
+    },
+    {
+      "action": "Focus",
+      "title": "initial.docx — Open Writer Studio (Text)",
+      "windowHandle": 262598,
+      "ownedPid": 1952,
+      "sessionId": 2,
+      "foregroundPid": 1952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "status": "passed"
+    },
+    {
+      "focus": "writer-input",
+      "osAndRenderer": true,
+      "keys": "Windows Control"
+    },
+    {
+      "filenameHandle": 131670,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "title": "Save as",
+      "status": "passed",
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "ownedPid": 1952,
+      "nativeSaveInvoked": true,
+      "sessionId": 2,
+      "pathReadbackMatches": true,
+      "ownedTopWindows": [
+        {
+          "className": "#32770",
+          "handle": 328168,
+          "title": "Save as"
+        },
+        {
+          "className": "Tauri Window",
+          "handle": 262598,
+          "title": "initial.docx — Open Writer Studio (Text)"
+        },
+        {
+          "className": "org.openaec.writer-studio-sic",
+          "handle": 327758,
+          "title": "org.openaec.writer-studio-siw"
+        },
+        {
+          "className": "Tao Thread Event Target",
+          "handle": 262446,
+          "title": ""
+        }
+      ],
+      "filenameBefore": "reopened.docx",
+      "action": "SaveDialog",
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\reopened.docx",
+      "windowHandle": 328168
+    },
+    {
+      "phase": "reopened",
+      "actualNativeSave": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\reopened.docx",
+      "oracle": "passed"
+    },
+    {
+      "ownedPid": 1952,
+      "wmClosePosted": true,
+      "windowHandle": 262598,
+      "status": "passed",
+      "title": "reopened.docx — Open Writer Studio (Text)",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+      "action": "Close"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "initial",
+      "pid": 3476,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\fixtures\\Standalone23.docx",
+      "started": "2026-11-23T08:40:01.101Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.46.2",
+        "name": "Open Writer Studio"
+      },
+      "process": {
+        "pid": 3476,
+        "windowHandle": 131410,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\fixtures\\Standalone23.docx",
+        "parent": 4980,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe"
+      },
+      "runtime": {
+        "gekozen": null,
+        "gevonden": false,
+        "profiel": "veilig"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    },
+    {
+      "phase": "reopened",
+      "pid": 1952,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\initial.docx",
+      "started": "2026-11-23T08:40:25.644Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.46.2",
+        "name": "Open Writer Studio"
+      },
+      "process": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+        "pid": 1952,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\initial.docx",
+        "parent": 4980,
+        "windowHandle": 262598
+      },
+      "runtime": {
+        "gekozen": null,
+        "gevonden": false,
+        "profiel": "veilig"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    }
+  ],
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "limitations": [
+    "Old public Writer is host/driver preflight only; its runtime status is recorded, not accepted as final standalone resource coverage",
+    "Old public Writer is host/driver preflight only; its runtime status is recorded, not accepted as final standalone resource coverage"
+  ],
+  "baseline": {
+    "os": "Microsoft Windows NT 10.0.26100.0",
+    "session": 2,
+    "suitePaths": [],
+    "interactive": true,
+    "webview2": [],
+    "apps": [],
+    "profiles": []
+  },
+  "installer": {
+    "signer": "CN=Impertio Studio B.V., O=Impertio Studio B.V., STREET=Burg de Raadtsingel 31, L=Dordrecht, S=Zuid-Holland, C=NL, PostalCode=3311 JG",
+    "sha256": "0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb",
+    "productName": "Open Writer Studio",
+    "productVersion": "2026.46.2",
+    "signature": "Valid",
+    "fileVersion": "2026.46.2",
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-preflight-package\\Open.Writer.Studio_2026.46.2_x64-setup.exe"
+  },
+  "executable": {
+    "signer": "CN=Impertio Studio B.V., O=Impertio Studio B.V., STREET=Burg de Raadtsingel 31, L=Dordrecht, S=Zuid-Holland, C=NL, PostalCode=3311 JG",
+    "sha256": "fba52966617016d12bf458b85f59dc0a07088a1424ef34013269dd456d3cc736",
+    "productName": "Open Writer Studio",
+    "fileVersion": "2026.46.2",
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-T7W8by\\installed\\open-writer-studio.exe",
+    "productVersion": "2026.46.2",
+    "signature": "Valid"
+  }
+}

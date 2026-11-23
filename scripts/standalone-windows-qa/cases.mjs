@@ -28,9 +28,10 @@ export async function officeCase(qa, kind, phase) {
     if (phase === 'initial') {
       // Actual editable text input is required; no engine applyEdits or DOM state mutation.
       const canvas=page.locator('[data-testid="pptx-slide-canvas"]');
-      await canvas.dblclick({position:{x:300,y:200}});
-      const input=page.locator('[contenteditable="true"]:visible, textarea:visible').first();
-      await qa.focus(input,'presentation-text'); await page.keyboard.type('STANDALONE23 PRESENTATION EDIT');
+      const bounds=await canvas.boundingBox(); assert(bounds);
+      await canvas.dblclick({position:{x:bounds.width*.5,y:bounds.height*.35}});
+      const input=page.locator('.office-presentatie textarea:focus'); await input.waitFor();
+      await qa.checkFocus(input,'presentation-text'); await page.keyboard.type('STANDALONE23 PRESENTATION EDIT');
       await page.keyboard.press('Escape');
       await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
     }
@@ -62,8 +63,8 @@ export async function databaseCase(qa, phase) {
   const {page}=qa;
   await page.locator('input[type="file"]').setInputFiles(qa.databaseInput);
   // SQLite opening may require explicit "not a work copy" confirmation.
-  const confirmation=page.getByRole('button',{name:/^(Open anyway|Toch openen|Open|Openen)$/i});
-  if (await confirmation.count()===1 && await confirmation.isVisible()) await confirmation.click();
+  const confirmation=page.getByRole('dialog').getByRole('button',{name:/^(Open anyway|Toch openen)$/i});
+  await confirmation.waitFor(); await confirmation.click();
   await page.getByRole('button',{name:'standalone_qa',exact:true}).click();
   await page.getByText('STANDALONE23 DATABASE',{exact:true}).waitFor();
   const create=page.getByRole('tab',{name:/^(Create|Maken)$/i}); await create.click();

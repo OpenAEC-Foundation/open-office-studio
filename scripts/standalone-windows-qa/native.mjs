@@ -5,7 +5,7 @@ import { spawn, execFileSync, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { createRequire } from 'node:module';
 import { createWriteStream } from 'node:fs';
-import { access, mkdir, mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, readdir, writeFile, rm } from 'node:fs/promises';
 import { join, resolve, dirname, basename } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createServer } from 'node:net';
@@ -43,6 +43,9 @@ async function action(name,extra=[]) {
 }
 async function focus(locator,label,physicalTarget=locator) {
  await action('Focus'); await physicalTarget.click();
+ await checkFocus(locator,label);
+}
+async function checkFocus(locator,label) {
  assert(await locator.evaluate(el=>el===document.activeElement || el.contains(document.activeElement)),`Actual ${label} input must own renderer focus`);
  record({focus:label,osAndRenderer:true,keys:'Windows Control'});
 }
@@ -100,12 +103,18 @@ async function launch(input,phase) {
  assert(page,'BLOCKED: no attributable Tauri page in owned native WebView'); page.setDefaultTimeout(20000);
  result.pageUrl=page.url(); result.pageErrors=[]; page.on('pageerror',error=>result.pageErrors.push(String(error)));
  await page.waitForFunction(()=>!!window.__TAURI_INTERNALS__);
+ if(input && app.key!=='database') {
+  await page.locator('.office-tabnaam').filter({hasText:basename(input)}).waitFor();
+  result.expectedInputTabVisible=basename(input);
+ }
  result.nativeMetadata=await page.evaluate(async()=>({
   identifier:await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier'),
   version:await window.__TAURI_INTERNALS__.invoke('plugin:app|version'),
   name:await window.__TAURI_INTERNALS__.invoke('plugin:app|name')
  }));
- assert.equal(result.nativeMetadata.identifier,app.identifier); assert.equal(result.nativeMetadata.version,receipt.version);
+ assert.equal(result.nativeMetadata.identifier,app.identifier); assert.equal(result.nativeMetadata.version,receipt.version);assert.equal(result.nativeMetadata.name,app.title);
+ await access(profile);const profileEntries=await readdir(profile);assert(profileEntries.length,'Native WebView must actually create its own isolated profile');
+ result.ownWebviewProfile={path:profile,createdByNativeWebview:true,entries:profileEntries};
  result.process=JSON.parse(await ps('inspect.ps1',['-Action','Process','-OwnedPid',String(child.pid)]));
  assert.equal(result.process.path.toLowerCase(),join(install,app.executable).toLowerCase());
  await action('Focus');
@@ -121,16 +130,20 @@ async function launch(input,phase) {
 }
 try {
  report.baseline=JSON.parse(await ps('inspect.ps1',['-Action','Baseline']));
+ await writeFile(join(root,'baseline.json'),JSON.stringify(report.baseline,null,2)+'\n');
  assert.deepEqual(report.baseline.profiles,[],'Fresh host has previous Office app profile');
  assert.deepEqual(report.baseline.apps,[],'Fresh host already operates another Office app');
  assert.deepEqual(report.baseline.suitePaths,[],'Fresh host already has suite resources');
  report.installer=JSON.parse(await ps('inspect.ps1',['-Action','Executable','-Path',installer]));
  if(app.signature==='valid')assert.equal(report.installer.signature,'Valid');
+ assert(['Valid','NotSigned'].includes(report.installer.signature),'Installer Authenticode is invalid or could not be verified');
  execFileSync(installer,['/S',`/D=${install}`],{windowsHide:true,timeout:300000,stdio:'inherit'}); installed=true;
  const executable=join(install,app.executable); await access(executable); await access(join(install,'uninstall.exe'));
  report.executable=JSON.parse(await ps('inspect.ps1',['-Action','Executable','-Path',executable]));
  assert(report.executable.productVersion?.startsWith(receipt.version),'Installed executable version mismatch');
  if(app.signature==='valid')assert.equal(report.executable.signature,'Valid');
+ assert(['Valid','NotSigned'].includes(report.executable.signature),'Installed executable Authenticode is invalid or could not be verified');
+ if(report.installer.signature==='NotSigned' || report.executable.signature==='NotSigned')report.limitations.push('Canonical test package is unsigned; functional checks do not prove release signing');
  const listener=createServer(); await new Promise(r=>listener.listen(0,'127.0.0.1',r));port=listener.address().port; await new Promise(r=>listener.close(r));
  policyChanged=true;
  await ps('webview-policy.ps1',['-Phase','Enable','-Executable',app.executable,'-StatePath',policy,'-Port',String(port),'-ProfilePath',profile]);
@@ -145,8 +158,9 @@ try {
  }
  const ext={writer:'docx',spreadsheet:'xlsx',presentation:'pptx'}[app.key];
  let input=ext?fixtures[ext].file:app.key==='database'?fixtures.database.file:undefined;
- const original=input?hash(await readFile(input)):null;
- const qa={get page(){return page;},focus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,mail,
+ const sourceInput=input, original=input?hash(await readFile(input)):null;
+ report.originalInput=sourceInput?{path:sourceInput,sha256:original}:null;
+ const qa={get page(){return page;},focus,checkFocus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,mail,
   waitForDraft:async()=>{const deadline=Date.now()+20000;while(Date.now()<deadline){try{await oracle('email',join(root,'mail'));return;}catch{await sleep(250);}}throw Error('Real native draft append did not reach loopback fixture');}};
  for(const phase of ['initial','reopened']) {
   const current=await launch(input,phase);
@@ -161,6 +175,7 @@ try {
   if(phase==='initial' && ext) input=join(root,'initial.'+ext);
  }
  if(app.key==='database') {assert.equal(hash(await readFile(input)),original);execFileSync('python',['-B',join(driver,'oracle.py'),'database',input,join(root,'database-oracle.json')],{stdio:'inherit'});}
+ if(sourceInput){assert.equal(hash(await readFile(sourceInput)),original,'Original input bytes changed');report.originalInput.unchanged=true;}
  report.status=receipt.preflightOnly?'passed-old-writer-host-preflight-not-final':'passed-scoped-native-function';
 } catch(error) {
  primaryError=error; report.status=/BLOCKED:/.test(String(error))?'blocked':'failed';report.error=String(error.stack||error);
@@ -169,10 +184,13 @@ try {
  try {if(child?.pid && child.exitCode===null) {await action('Close').catch(()=>{});await sleep(1500);if(child.exitCode===null){await run('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true});report.cleanup.forcedOwnedProcessTree=true;}}}catch(error){report.cleanup.processError=String(error);}
  await browser?.close().catch(()=>{});
  try{const residual=JSON.parse(await ps('inspect.ps1',['-Action','Residual','-Path',profile]));report.cleanup.residualOwnedWebviews=residual.processes;if(residual.processes.length)report.cleanup.webviewError='Owned WebView processes still running; profile retained';}catch(error){report.cleanup.webviewError=String(error);}
- if(mailChild){mailChild.stdin.end();const deadline=Date.now()+5000;while(mailChild.exitCode===null && Date.now()<deadline)await sleep(100);if(mailChild.exitCode===null){mailChild.kill();report.cleanup.mailError='Loopback server failed to close';}else{report.cleanup.loopbackServerClosed=true;if(!primaryError)try{await oracle('email',join(root,'mail'));}catch(error){primaryError=error;report.status='failed-mail-oracle';report.error=String(error);}}}
+ if(mailChild){mailChild.stdin.end();const deadline=Date.now()+5000;while(mailChild.exitCode===null && Date.now()<deadline)await sleep(100);if(mailChild.exitCode===null){mailChild.kill();report.cleanup.mailError='Loopback server failed to close';}else if(mailChild.exitCode!==0){report.cleanup.mailError=`Loopback fixture crashed: ${mailChild.exitCode}`;}else{try{const serverReport=JSON.parse(await readFile(join(root,'mail/report.json'),'utf8'));assert(serverReport.serversClosed && serverReport.smtpDataRejected===0);report.cleanup.loopbackServerClosed=true;report.mailServer=serverReport;if(!primaryError)await oracle('email',join(root,'mail'));}catch(error){primaryError=error;report.status='failed-mail-oracle';report.error=String(error);}}}
  try {if(policyChanged)await ps('webview-policy.ps1',['-Phase','Restore','-Executable',app.executable,'-StatePath',policy]);report.cleanup.policyRestored=true;}catch(error){report.cleanup.policyError=String(error);}
  try {if(installed)execFileSync(join(install,'uninstall.exe'),['/S'],{windowsHide:true,timeout:60000});report.cleanup.ownedInstallUninstalled=true;}catch(error){report.cleanup.uninstallError=String(error);}
  report.cleanup.ownedAppExited=!child || child.exitCode!==null;
+ if(report.cleanup.ownedAppExited && !report.cleanup.webviewError && report.baseline?.profiles?.length===0){
+  try{await ps('cleanup-profile.ps1',['-Identifier',app.identifier,'-BaselinePath',join(root,'baseline.json'),'-ReportPath',join(root,'profile-cleanup.json')]);report.cleanup.ownedNativeProfilesDisposed=true;}catch(error){report.cleanup.nativeProfileError=String(error);}
+ }
  // Never remove retained files while an app may still own them. Only our exact
  // mkdtemp prefix below the OS temp directory can be removed.
  if(report.cleanup.ownedAppExited && report.cleanup.policyRestored && !report.cleanup.processError && !report.cleanup.webviewError) {

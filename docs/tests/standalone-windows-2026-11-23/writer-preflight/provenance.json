@@ -1,0 +1,18 @@
+{
+  "finalAcceptance": false,
+  "scope": "Only one old public standalone Writer source/installer for host preflight; other five old apps never tested",
+  "nativeAppSource": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+  "successfulRun": 45140342699,
+  "reviewedImages": [
+    "attempt3/initial-ready.png",
+    "attempt3/initial-completed.png",
+    "attempt3/reopened-ready.png",
+    "attempt3/reopened-completed.png"
+  ],
+  "imageReview": "Parent serially reviewed all four original WebView PNGs. Empty initial document, readable STANDALONE23 WRITER EDIT after save, retained on actual new-PID reopen and second save. Native chooser attribution/physical keys are separate OS receipts, not claimed as visible in these WebView screenshots.",
+  "limits": [
+    "Old public Writer has no private runtime; this is recorded, never final 48 resource acceptance.",
+    "First attempts are driver-only failures: hidden textarea click and top-level async native chooser attribution.",
+    "Successful preflight confirms normal app/WebView exit, restored executable-scoped policy, uninstalled own app and disposed temporary WebView profile. It predates the additional guarded final-QA native AppData cleanup helper; no claim that helper was exercised here."
+  ]
+}

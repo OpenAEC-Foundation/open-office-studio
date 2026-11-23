@@ -37,23 +37,46 @@ attempts, are archived under `host-preflight/` with a byte hash inventory and
 `-text` Git attributes. Recheck actual focus/save/new-PID/file identities using
 `python -B scripts/standalone-windows-qa/audit-host.py`.
 
-Six focused helper contracts pass locally without a native app or capture:
+Eight focused helper contracts pass locally without a native app or capture:
 frozen-plan rejection, honest unfrozen plan, wrong Writer content rejection,
 Writer marker/external-link checks, spreadsheet formula/cached-result checks,
-and a real loopback IMAP login/list/fetch/append/readback plus MIME oracle and
+Windows own-job success without waiting for another platform (with wrong-source/
+failed-job rejection), and a real loopback IMAP login/list/fetch/append/readback plus MIME oracle and
 SMTP handshake/server closure. Run
 `python -B scripts/standalone-windows-qa/contracts_test.py`. These helper tests
 do not substitute for final native operation.
 
 The coordinator additionally permits at most one old public standalone Writer
-for host/driver preflight. Run `45139605467` prepares that bounded actual
-WebView2/chooser check only, from public release `v2026.46.2`, tag/source
+for host/driver preflight. Runs `45139605467` and `45139920838` retain initial
+driver failures (hidden-textarea click; async dialog is a separate owned-process
+top-level window). Corrected [run 45140342699](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45140342699)
+at harness `eefdd6b6` **passes** that bounded actual WebView2/chooser check,
+from public release `v2026.46.2`, tag/source
 `cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67`, tree
 `246fcdf922e327a464b06d780b687c091beeb7cc`, asset `741617327`, 73,593,696 bytes,
 SHA-256 `0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb`.
-It remains explicitly **not final** even if successful. Its own runtime status
+It remains explicitly **not final**. Native metadata proves the correct app-ID,
+name and version; both original installer and executable have valid Authenticode.
+Physical canvas focus, actual text input, Ctrl+Shift+S and the real OS Save window
+produce `initial.docx` with independently checked marker. PID `3476` and its owned
+WebViews exit normally; PID `1952` opens it and actually saves `reopened.docx`,
+also independently checked after download. Both final UI images and both ready
+images were serially reviewed: text is readable and retained. Full raw receipts,
+DOCX/PNGs, two failed attempts and hashes are in `writer-preflight/`;
+`python -B scripts/standalone-windows-qa/audit-writer-preflight.py` repeats the
+independent actual-byte/process checks. No OS chooser image is claimed from
+these WebView screenshots; the separate native HWND/physical-key/file receipts
+prove that path.
+
+Its own runtime status
 is recorded without claiming modern bundled-runtime acceptance. No other old
 standalone app is used. The final six-app gate stays unfrozen.
+All preflight CI runs are completed. Native/WebView processes, executable-scoped
+policies, own installation and temporary WebView profile are confirmed cleaned.
+The final-QA helper additionally removes only its own newly created native
+AppData profiles under explicit path/ownership/baseline guards; this later helper
+was not exercised by the old Writer preflight. No local Computer Use/capture
+session was started or reset.
 
 ## Canonical-package gate and host isolation
 

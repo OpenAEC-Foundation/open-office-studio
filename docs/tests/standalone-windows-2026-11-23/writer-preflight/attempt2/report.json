@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "applicationCommit": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+  "applicationTree": "246fcdf922e327a464b06d780b687c091beeb7cc",
+  "version": "2026.46.2",
+  "harnessCommit": "a7c9e9fd47f472685c7e737a2ec32803066e4d30",
+  "package": {
+    "preflightOnly": true,
+    "applicationCommit": "cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67",
+    "applicationTree": "246fcdf922e327a464b06d780b687c091beeb7cc",
+    "version": "2026.46.2",
+    "artifactRun": null,
+    "archiveSha256": null,
+    "releaseTag": "v2026.46.2",
+    "assetId": 741617327,
+    "installer": "Open.Writer.Studio_2026.46.2_x64-setup.exe",
+    "sourceUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/download/v2026.46.2/Open.Writer.Studio_2026.46.2_x64-setup.exe",
+    "application": {
+      "key": "writer",
+      "title": "Open Writer Studio",
+      "executable": "open-writer-studio.exe",
+      "identifier": "org.openaec.writer-studio",
+      "packagePath": "Open.Writer.Studio_2026.46.2_x64-setup.exe",
+      "sha256": "0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb",
+      "bytes": 73593696,
+      "signature": "record"
+    },
+    "limitation": "The only permitted old public Writer host/driver preflight. Never count as final 2026.48 standalone acceptance."
+  },
+  "scope": "Actual isolated standalone Windows native app; never a browser demo",
+  "status": "blocked",
+  "steps": [
+    {
+      "foregroundPid": 4544,
+      "ownedPid": 4544,
+      "sessionId": 2,
+      "windowHandle": 197010,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-o3qn6v\\installed\\open-writer-studio.exe",
+      "action": "Focus",
+      "title": "Standalone23.docx — Open Writer Studio (Text)"
+    },
+    {
+      "action": "Focus",
+      "status": "passed",
+      "sessionId": 2,
+      "foregroundPid": 4544,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-o3qn6v\\installed\\open-writer-studio.exe",
+      "ownedPid": 4544,
+      "windowHandle": 197010,
+      "title": "Standalone23.docx — Open Writer Studio (Text)"
+    },
+    {
+      "focus": "writer-input",
+      "osAndRenderer": true,
+      "keys": "Windows Control"
+    },
+    {
+      "windowHandle": 66110,
+      "status": "passed",
+      "action": "Close",
+      "sessionId": 2,
+      "wmClosePosted": true,
+      "ownedPid": 4544,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-o3qn6v\\installed\\open-writer-studio.exe",
+      "title": "Save as"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "initial",
+      "pid": 4544,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\fixtures\\Standalone23.docx",
+      "started": "2026-11-23T08:36:55.408Z",
+      "status": "running",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.46.2",
+        "name": "Open Writer Studio"
+      },
+      "process": {
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-o3qn6v\\installed\\open-writer-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\fixtures\\Standalone23.docx",
+        "pid": 4544,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-o3qn6v\\installed\\open-writer-studio.exe",
+        "parent": 6928,
+        "windowHandle": 197010
+      },
+      "runtime": {
+        "gekozen": null,
+        "gevonden": false,
+        "profiel": "veilig"
+      }
+    }
+  ],
+  "cleanup": {
+    "forcedOwnedProcessTree": true,
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "limitations": [
+    "Old public Writer is host/driver preflight only; its runtime status is recorded, not accepted as final standalone resource coverage"
+  ],
+  "baseline": {
+    "os": "Microsoft Windows NT 10.0.26100.0",
+    "session": 2,
+    "apps": [],
+    "profiles": [],
+    "interactive": true,
+    "suitePaths": [],
+    "webview2": []
+  },
+  "installer": {
+    "signer": "CN=Impertio Studio B.V., O=Impertio Studio B.V., STREET=Burg de Raadtsingel 31, L=Dordrecht, S=Zuid-Holland, C=NL, PostalCode=3311 JG",
+    "productName": "Open Writer Studio",
+    "fileVersion": "2026.46.2",
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-preflight-package\\Open.Writer.Studio_2026.46.2_x64-setup.exe",
+    "signature": "Valid",
+    "sha256": "0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb",
+    "productVersion": "2026.46.2"
+  },
+  "executable": {
+    "signature": "Valid",
+    "fileVersion": "2026.46.2",
+    "sha256": "fba52966617016d12bf458b85f59dc0a07088a1424ef34013269dd456d3cc736",
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-o3qn6v\\installed\\open-writer-studio.exe",
+    "productName": "Open Writer Studio",
+    "productVersion": "2026.46.2",
+    "signer": "CN=Impertio Studio B.V., O=Impertio Studio B.V., STREET=Burg de Raadtsingel 31, L=Dordrecht, S=Zuid-Holland, C=NL, PostalCode=3311 JG"
+  },
+  "error": "Error: Command failed: pwsh -NoProfile -File D:\\a\\open-office-studio\\open-office-studio\\scripts\\standalone-windows-qa\\windows-actions.ps1 -Action SaveDialog -OwnedPid 4544 -ReportPath D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\1-SaveDialog-3.json -Target D:\\a\\open-office-studio\\open-office-studio\\.local\\standalone-windows-public-writer-preflight\\initial.docx -ExpectedName initial.docx\n\u001b[31;1mException: \u001b[0mD:\\a\\open-office-studio\\open-office-studio\\scripts\\standalone-windows-qa\\windows-actions.ps1:59\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1mLine |\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1m\u001b[36;1m  59 | \u001b[0m .  $dialog) { \u001b[36;1mthrow 'BLOCKED: owned standard native Save dialog not exp\u001b[0m .\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1m\u001b[36;1m\u001b[0m\u001b[36;1m\u001b[0m\u001b[36;1m     | \u001b[31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1m\u001b[36;1m\u001b[0m\u001b[36;1m\u001b[0m\u001b[36;1m\u001b[31;1m\u001b[31;1m\u001b[36;1m     | \u001b[31;1mBLOCKED: owned standard native Save dialog not exposed\u001b[0m\r\n\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at ChildProcess.exithandler (node:child_process:417:12)\n    at ChildProcess.emit (node:events:519:28)\n    at maybeClose (node:internal/child_process:1101:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:304:5)\n    at Process.callbackTrampoline (node:internal/async_hooks:130:17)",
+  "failureVisibleText": "Standalone23.docx • — Open Writer Studio (Text)\nFile\nHome\nInsert\nFormat\nHeader & Footer\nReferences\nStyles\nLayout\nReview\nView\nTools\nEDIT\nPaste\nCLIPBOARD\nCambria\nFONT\nPARAGRAPH\nStyles\nFormatting\nFind\nStart\nStandalone23.docx\n, unsaved changes\nS\nT\nA\nN\nD\nA\nL\nO\nN\nE\n2\n3\nW\nR\nI\nT\nE\nR\nE\nD\nI\nT\n3\n2\n1\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n2\n1\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\nLocal\nPage 1 of 1\n3 words, 25 characters\nEnglish (United States) · no spelling errors\nTrack Changes: off\n100%\nUnsaved changes\nCtrl+S"
+}

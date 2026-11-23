@@ -10,7 +10,7 @@ if ($Phase -eq 'Enable') {
  foreach ($entry in @(@{key='AdditionalBrowserArguments';value="--remote-debugging-port=$Port --remote-debugging-address=127.0.0.1"},@{key='UserDataFolder';value=$ProfilePath})) {
   $key=Join-Path $base $entry.key
   $previous=Get-ItemProperty -LiteralPath $key -Name $Executable -ErrorAction SilentlyContinue
-  $state+=@{key=$key;existed=($null -ne $previous);value=$(if ($previous) {$previous.$Executable} else {$null})}
+  $state+=@{key=$key;existed=($null -ne $previous);value=$(if ($previous) {$previous.$Executable} else {$null});kind=$(if($previous){(Get-Item -LiteralPath $key).GetValueKind($Executable).ToString()}else{'String'})}
  }
  $state | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $StatePath -Encoding utf8
  foreach ($entry in @(@{key='AdditionalBrowserArguments';value="--remote-debugging-port=$Port --remote-debugging-address=127.0.0.1"},@{key='UserDataFolder';value=$ProfilePath})) {
@@ -19,7 +19,7 @@ if ($Phase -eq 'Enable') {
  }
 } elseif (Test-Path -LiteralPath $StatePath) {
  foreach ($entry in (Get-Content -LiteralPath $StatePath -Raw | ConvertFrom-Json)) {
-  if ($entry.existed) { $null=New-ItemProperty -LiteralPath $entry.key -Name $Executable -Value $entry.value -PropertyType String -Force }
+  if ($entry.existed) { $null=New-ItemProperty -LiteralPath $entry.key -Name $Executable -Value $entry.value -PropertyType $entry.kind -Force }
   else { Remove-ItemProperty -LiteralPath $entry.key -Name $Executable -ErrorAction SilentlyContinue }
  }
 }

@@ -37,6 +37,12 @@ def validate(plan):
         assert type(app['bytes']) is int and 0 < app['bytes'] < 2 * 1024 ** 3
         assert app.get('signature', 'record') in ('valid', 'record')
 
+def validate_build(plan, run, commit, job):
+    assert run['head_sha'] == plan['applicationCommit'], 'Canonical build source differs from frozen manifest'
+    assert commit['tree']['sha'] == plan['applicationTree'], 'Frozen tree differs from actual application commit'
+    # The successful own-platform job is the dependency; other OS jobs may run.
+    assert job['run_id'] == plan['artifactRun'] and job['status'] == 'completed' and job['conclusion'] == 'success', 'Canonical Windows package job not successfully completed'
+
 def main():
     command, plan_path, *rest = sys.argv[1:]
     plan = json.loads(Path(plan_path).read_bytes()); validate(plan)
@@ -51,12 +57,10 @@ def main():
     def api(endpoint): return json.loads(subprocess.check_output(['gh', 'api', f'repos/{repo}/{endpoint}']))
     run = api(f"actions/runs/{plan['artifactRun']}")
     commit = api(f"git/commits/{plan['applicationCommit']}")
-    assert commit['tree']['sha'] == plan['applicationTree'], 'Frozen tree differs from actual application commit'
-    assert run['head_sha'] == plan['applicationCommit'], 'Canonical build source differs from frozen manifest'
     # Windows may start as soon as its own canonical build/upload is complete.
     # Do not wait for the unrelated macOS/Linux jobs or require a green whole run.
     job = api(f"actions/jobs/{plan['platformJobId']}")
-    assert job['run_id'] == plan['artifactRun'] and job['status'] == 'completed' and job['conclusion'] == 'success', 'Canonical Windows package job not successfully completed'
+    validate_build(plan, run, commit, job)
     artifacts = api(f"actions/runs/{plan['artifactRun']}/artifacts?per_page=100")['artifacts']
     candidates = [a for a in artifacts if a['name'] == plan['artifactName'] and not a['expired']]
     assert len(candidates) == 1

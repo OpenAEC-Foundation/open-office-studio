@@ -19,6 +19,15 @@ def module(name):
 oracle=module('oracle'); packages=module('packages')
 
 class Contracts(unittest.TestCase):
+    def test_completed_windows_may_start_while_other_platforms_run(self):
+        plan=dict(applicationCommit='a'*40,applicationTree='b'*40,artifactRun=42)
+        packages.validate_build(plan,dict(head_sha='a'*40,status='in_progress',conclusion=None),dict(tree={'sha':'b'*40}),dict(run_id=42,status='completed',conclusion='success'))
+
+    def test_failed_or_wrong_source_windows_job_cannot_be_accepted(self):
+        plan=dict(applicationCommit='a'*40,applicationTree='b'*40,artifactRun=42)
+        with self.assertRaises(AssertionError): packages.validate_build(plan,dict(head_sha='c'*40),dict(tree={'sha':'b'*40}),dict(run_id=42,status='completed',conclusion='success'))
+        with self.assertRaises(AssertionError): packages.validate_build(plan,dict(head_sha='a'*40),dict(tree={'sha':'b'*40}),dict(run_id=42,status='completed',conclusion='failure'))
+
     def test_frozen_plan_requires_real_source(self):
         with self.assertRaises((AssertionError,TypeError)): packages.validate(dict(schemaVersion=1,frozen=True,applicationCommit=None))
 
