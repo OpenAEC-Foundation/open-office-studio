@@ -181,23 +181,29 @@ function peMachine(bytes) {
   return bytes.readUInt16LE(offset + 4);
 }
 
-async function extractWindows(archive, staging, offline, key) {
-  const toolArchive = await cachedArchive(MANIFEST.tools.lessmsi, offline);
+/** Use the .NET Framework overload, independent of inherited Archive modules. */
+export async function extractWindowsToolArchive(archive, staging) {
   const tools = join(staging, "lessmsi");
   // Structured arguments + positional PowerShell parameters avoid interpreting workspace names.
   const unzip = join(staging, "unzip.ps1");
   await writeFile(
     unzip,
-    "param([string]$ArchivePath,[string]$OutputPath)\n$ErrorActionPreference='Stop'\nExpand-Archive -LiteralPath $ArchivePath -DestinationPath $OutputPath\n",
+    "param([string]$ArchivePath,[string]$OutputPath)\n$ErrorActionPreference='Stop'\nAdd-Type -AssemblyName System.IO.Compression.FileSystem\n[System.IO.Compression.ZipFile]::ExtractToDirectory($ArchivePath, $OutputPath)\n",
   );
   command("powershell.exe", [
     "-NoProfile",
     "-NonInteractive",
     "-File",
     unzip,
-    toolArchive,
+    archive,
     tools,
   ]);
+  return tools;
+}
+
+async function extractWindows(archive, staging, offline, key) {
+  const toolArchive = await cachedArchive(MANIFEST.tools.lessmsi, offline);
+  const tools = await extractWindowsToolArchive(toolArchive, staging);
   command(join(tools, "lessmsi.exe"), [
     "x",
     archive,
