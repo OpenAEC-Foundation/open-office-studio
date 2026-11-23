@@ -66,4 +66,71 @@ Portable source-only check:
 python -B qa/xlsb35-native-windows/fixture/oracle.py
 ```
 
-Native results and downloaded-byte audit will be recorded after execution.
+## Completed native result
+
+[Windows run45154252404](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45154252404),
+job `137623055307`, passes on its first attempt at harness
+`98f73b96e8df0639a23907fae2b8848b46d9f104`. Application bytes remain exact
+P2. Integration explicitly reconfirmed the existing exclusive Windows claim,
+unchanged package pin and absence of a signed-six-app runner conflict.
+
+The canonical Windows artifact is `14804672476`, whole ZIP SHA256
+`ecce5a188abbb5b17e52c4097d7add95ddeaaa8c24a9a4e6c492049d16902733`.
+The exact NSIS `Open Office Studio_2026.48.1_x64-setup.exe` is384512913 bytes,
+SHA256 `85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce`.
+The hash-verified canonical package report agrees. An independent extract-only
+NSIS x64 payload and the actually installed executable both have SHA256
+`feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67` before
+launch. Source/run/job/attempt and actual own bundled safe-runtime status are
+preserved in the evidence, rather than inferred from successful startup.
+
+Native Ctrl+O/filepicker, original XLSB import, actual default-XLSX Save As,
+formula-input edit A15=`=40+2`, ordinary Ctrl+S, normal full exit, disappearance
+of owned WebViews and different-process native-picker reopening all pass.
+The short preflight succeeds before broad UI reads. All30 formula inputs are
+then read through the actual native interface after reopening. A second normal
+native Save As also suggests XLSX without driver format replacement. Both
+processes exit normally, with no forced kill. No document/backend mutation
+or Node conversion bridge substitutes for the native operation.
+
+Independent checks reopen the original artifact ZIP/extracted files, original
+BIFF12 source, canonical package receipts, actual native lifecycle and all30
+saved formula/cache cells. The original 7651-byte XLSB remains unchanged.
+Actual native saves retained are:
+
+| Output | Independently checked content | SHA256 |
+| --- | --- | --- |
+| `xlsb35-before-edit.xlsx` | Byte-for-byte snapshot of the first real native Save As; all30 formulas1+2/cached3 | `c7863e703deed7f02c5266e6709fd33fa486792620bee9515b73bfc5b4daf18a` |
+| `xlsb35-edited.xlsx` | Actual Ctrl+S output; A15=40+2/cached42, other29 formulas1+2/cached3 | `0210992079c9cca456734ef02c5c7c31df82333ebb6939f68317aed32638d692` |
+| `xlsb35-reopened.xlsx` | Actual new-process Save As; same30 expected formulas/results | `0210992079c9cca456734ef02c5c7c31df82333ebb6939f68317aed32638d692` |
+
+All three original screenshots were reviewed serially. The original image shows
+visible3 values and A1=`=1+2`. Edited and reopened images show the visible A15
+value42 and formula `=40+2`, with neighboring values3 and Sheet1 intact. The
+product's editable-copy/original-preserved message and later generic protection/
+unknown-extension advice are recorded as separate screenshot observations; they
+do not establish a new reproduced defect or a full style/chart fidelity claim.
+
+Proof artifact `14807757665` has whole ZIP SHA256
+`4dc73ee03e4d4557c0a8ac43b8bfe10accc20d413dfbae2c10dfef28e91f67d4`.
+[`evidence/`](evidence/) retains90 byte-preserved files including that original
+ZIP, official metadata, exact run/source/package records, original input, three
+real XLSX outputs, UI/native-window/process/profile/runtime/cleanup records,
+three screenshots, independent audit and SHA inventory. Large canonical
+installer bytes are bound by the verified receipt and are not committed.
+Own registry policy, installation, native/WebView profiles and guarded temporary
+directories are confirmed cleaned, with no residual owned WebViews. No local
+GUI, capture or Computer Use session was started.
+
+Repeat the complete downloaded-byte audit with:
+
+```sh
+python -B qa/xlsb35-native-windows/audit.py
+```
+
+Node/Python/PowerShell syntax and Git whitespace checks pass. The90 evidence
+files are checked against the SHA inventory and staged Git bytes; the imported
+source/oracle files are checked against their exact original Git blobs.
+Shared coverage/catalog/version/workflows and existing GNM/Windows-six-app
+deliveries are unchanged. Native Linux/macOS stay with their assigned owners;
+this result does not close #35/#30 or approve a signed/standalone release.
