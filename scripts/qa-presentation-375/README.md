@@ -129,3 +129,17 @@ The [separate import patchset](runtime-patch/README.md) is prepared and structur
 checked, but not compiled. Integration must now allocate the concrete
 [Linux source-build/test plan](../../docs/tests/presentation-375/linux-build-plan.md)
 before a large checkout/build or a changed runtime binding is started.
+
+The allocated source preparation is now stopped at its original, explicitly
+redistributed 45-minute boundary (14:02:22 Europe/Amsterdam). The correct distro
+Python/module/header/library binding is measured, but configuration is killed
+by that remaining time limit. No LibreOffice target make/Cppunit or newly built
+converter/engine runs, and no new runtime payload is produced. Source/compiler
+acceptance remains false; no next VM is launched automatically. See the exact
+[final outcome](../../docs/tests/presentation-375/source-preparation-outcome.json)
+and retained official failed-result ZIPs.
+
+Windows/macOS changed-runtime builds/native checks and a new real browser/UI
+check remain outstanding alongside the Linux target build and functional tests.
+The successful old-P2 in-memory counterfactual/exact-tree probe is separate
+historical evidence, never acceptance of the proposed compiled patch.

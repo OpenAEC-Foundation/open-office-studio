@@ -56,3 +56,10 @@ The actual compiler/red-green Cppunit run and source-built converter/engine
 regressions require the separately reviewed
 [Linux build allocation](../../../docs/tests/presentation-375/linux-build-plan.md).
 No passing C++ test or fixed product is claimed yet.
+
+The allocated Linux preparation sequence subsequently reaches the correct
+distribution Python/configure binding but exhausts its hard 45-minute window
+on run 45179488558, before any LibreOffice target compilation. Full evidence and
+unchanged failed histories are in
+`docs/tests/presentation-375/source-preparation-outcome.json`. There is no newly
+built runtime artifact to consume and no validated product correction yet.

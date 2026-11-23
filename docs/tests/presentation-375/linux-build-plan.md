@@ -1,7 +1,7 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: integration allocated the single conditional witness; execution is
-pending actual results.** This is a private QA witness for the reviewed importer patch,
+**Status: the allocated preparation window is exhausted; no LibreOffice target
+compilation or patched runtime acceptance occurred.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -182,3 +182,39 @@ reserves the last ten minutes for finalization/upload. No second cold compiler
 attempt or new 270-minute window is allocated. New resource gates run on this VM
 before the large source acquisition. No acceptance result is inferred from an
 in-progress job.
+
+## Final preparation outcome
+
+Integration allowed a limited prefix redistribution to **45 minutes**, retaining
+the original absolute 17:47:22 end and 210-minute target compiler ceiling. The
+prefix ended at **14:02:22 Europe/Amsterdam**. No new absolute window was opened.
+
+The verified sequence and byte-identical official result ZIPs are retained in
+[`source-preparation-outcome.json`](source-preparation-outcome.json). They
+separate a reader guard failure, a regional package-download timeout, a harness
+`autogen.sh` invocation error, a mismatched Python provider, an explicitly
+cancelled old-code dispatch after a transient Git push rejection, and the final
+proper provider differential. Earlier FAIL/CANCELLED outcomes remain unchanged.
+
+The final [run 45179488558](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45179488558)
+on QA `313fcc39900fac5a566f7c4e31ddb4dea6db3c8e` proves the corrected existing
+distribution provider: `/usr/bin/python3.12`, Python 3.12.3, installed
+setuptools/distutils/lxml and matching development headers, with explicit
+`PYTHON_CFLAGS`/`PYTHON_LIBS` from `/usr/bin/python3-config`. Pinned primary
+configure lines 10708–10763 accept these explicit variables. The actual receipt
+is [`verified-distro-python-provider.json`](verified-distro-python-provider.json).
+No new dependency set, upstream Python patch or fallback runtime was used.
+
+The complete exact upstream checkout and patch preconditions pass. Configure
+advances beyond the previous Python error and is stopped after 22.0018 seconds
+by the **remaining preparation budget**, exit 124, at original elapsed
+2699.7293 seconds. It has not completed configuration. No target `make`, red/green
+Cppunit, newly built converter/engine run or new runtime payload/binding exists.
+The source patch remains **uncompiled and unvalidated as a product fix**.
+
+All task-owned CI attempts have ended; no further VM was started after this
+stop. Only a separate explicit integration allocation can resume source-build
+work. The already verified source patch/fixture hashes, initializer corrections
+and actual provider receipt can be reused; a new build must still verify its
+own VM/source/toolchain and record its exact resulting binary identities. No
+main/tag/version/catalog/release intake changed.
