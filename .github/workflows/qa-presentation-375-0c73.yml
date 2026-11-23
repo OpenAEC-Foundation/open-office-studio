@@ -1,15 +1,12 @@
-name: Presentation 375 private UNO component preflight
+name: Presentation 375 private UNO diagnosis
 on:
-  push:
-    branches: [codex/presentation-375-uop-rectangle-fills-2026-11-23-0c73]
-    paths: [.github/workflows/qa-presentation-375-0c73.yml]
   workflow_dispatch:
     inputs:
       phase:
         type: choice
         description: Explicit diagnostic phase
         default: components
-        options: [components]
+        options: [components, uno]
 permissions:
   contents: read
   actions: read
@@ -28,10 +25,16 @@ jobs:
         run: python scripts/qa-presentation-375/runtime_input.py
       - name: Inventory already present UNO components, without Office execution
         run: python scripts/qa-presentation-375/preflight.py
+      - name: Fetch immutable existing UOP evidence only
+        if: github.event_name == 'workflow_dispatch' && inputs.phase == 'uno'
+        run: git fetch --no-tags --depth=1 origin e280e9521cfad3b2c61c26d19fbb5df8b5b74a42
+      - name: Diagnose own isolated UNO document copies and clean up own process group
+        if: github.event_name == 'workflow_dispatch' && inputs.phase == 'uno'
+        run: python scripts/qa-presentation-375/probe.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: presentation-375-uno-component-preflight
+          name: presentation-375-uno-${{ inputs.phase || 'components' }}
           path: .local/presentation-375-runtime/
           include-hidden-files: true
           if-no-files-found: error
