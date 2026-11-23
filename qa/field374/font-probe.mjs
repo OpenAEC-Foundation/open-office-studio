@@ -3,8 +3,10 @@ import assert from "node:assert/strict";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
-import { preloadLayoutWasm, registerMeasureFont, measureParagraphJson } from "@betteroffice/docx/wasm-layout";
+const { preloadLayoutWasm, registerMeasureFont, measureParagraphJson } = await import(pathToFileURL(resolve("node_modules/@betteroffice/docx/dist/wasm-layout.mjs")));
 
 const root = process.argv[2]; assert(root);
 assert.equal(process.platform, "linux"); assert.equal(process.env.GITHUB_ACTIONS, "true");
