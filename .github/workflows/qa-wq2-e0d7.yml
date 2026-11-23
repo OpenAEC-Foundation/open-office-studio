@@ -1,0 +1,112 @@
+name: WQ2 genuine native source and engine oracle
+on:
+  push:
+    branches: [codex/wq2-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-wq2/*.py
+      - scripts/qa-wq2/*.mjs
+      - scripts/qa-wq2/*.json
+      - .github/workflows/qa-wq2-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  source:
+    outputs:
+      runtime_ready: ${{ steps.runtime_ready.outputs.ready }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: runtime_ready
+        name: Keep runtime consumption disabled until the coordinator pin exists
+        run: |
+          if [ -f scripts/qa-wq2/runtime-input.json ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Verify genuine legacy source and derive independent expectations
+        run: |
+          python -m py_compile scripts/qa-wq2/*.py
+          python scripts/qa-wq2/oracle.py source
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wq2-source-oracle
+          path: .local/wq2-qa/
+          include-hidden-files: true
+          if-no-files-found: error
+  runtime:
+    needs: [source, browser_limit]
+    if: needs.source.outputs.runtime_ready == 'true'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: wq2-source-oracle
+          path: .local/wq2-qa
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Headless OS dependencies, no application build or GUI session
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libcairo2 libcups2 libdbus-1-3 libfontconfig1 libfreetype6 libglib2.0-0 libice6 libnss3 libsm6 libx11-6 libxext6 libxinerama1 libxrandr2 libxrender1 libxslt1.1 libgl1 libglu1-mesa
+      - name: Verify and unpack only the shared private runtime input
+        run: python scripts/qa-wq2/runtime_input.py
+      - name: Real converter, production open helper, pinned engine edit and save/reopen
+        env:
+          OOS_WQ2_RUNTIME_BINDING: .local/wq2-qa/runtime-binding.json
+        run: node scripts/qa-wq2/engine.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wq2-runtime-result
+          path: .local/wq2-qa/
+          include-hidden-files: true
+          if-no-files-found: error
+  browser_limit:
+    needs: source
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch only the frozen application snapshot for the source guard
+        run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: wq2-source-oracle
+          path: .local/wq2-qa
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check production WQ2 and no-desktop conversion guards
+        run: node scripts/qa-wq2/engine.mjs --route-only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wq2-browser-limit
+          path: .local/wq2-qa/route-report.json
+          include-hidden-files: true
+          if-no-files-found: error
