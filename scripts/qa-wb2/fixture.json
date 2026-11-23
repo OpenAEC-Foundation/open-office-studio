@@ -1,0 +1,53 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/openpreserve/format-corpus",
+    "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+    "firstPublicationCommit": "9ab17f1a842a20f28862b34bd841a538ab871d4c",
+    "path": "office/spreadsheet/wb2/testQuattro.wb2",
+    "filename": "testQuattro.wb2",
+    "blob": "9ed7aa4ad6891cd7fca809b7ee918933e4a1d460",
+    "bytes": 4804,
+    "sha256": "64273c74942b0b7456bc8f7da3828311d07f2acf08e9ab756e07dda549a9b569",
+    "url": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wb2/testQuattro.wb2",
+    "license": "CC0-1.0",
+    "licenseOwner": "Johan van der Knijff",
+    "provenanceUrl": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wb2/readme.md",
+    "provenanceSha256": "7fcdacd9d63ec7066bbc55eda970384409ce8250848a0f2d2cfd7302439c464e",
+    "mirror": {
+      "repository": "apache/tika",
+      "commit": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "url": "https://raw.githubusercontent.com/apache/tika/de0cd09a3f373a3254fa2d614d3f330c4aa1cf82/tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-miscoffice-module/src/test/resources/test-documents/testQuattro.wb2"
+    },
+    "variant": "Quattro Pro 6.0, native flat records, BOF version 0x1002; not WB1/WQ2, ZIP or CFB",
+    "coverageLimit": "Single genuine workbook: one default-named sheet, 33 populated cells, ten relative multiplication formulas. Chart/layout/style/trailer fidelity, macros, encryption and other WB variants are not accepted."
+  },
+  "specificationEvidence": [
+    {
+      "repository": "GNOME/gnumeric",
+      "commit": "e15f7f3bfb93361601d54664aaddddd0c643892d",
+      "path": "plugins/qpro/qpro-read.c",
+      "sha256": "4b09932acf96b23558119eb55a11efb9d351fa576e8643cd234e182ca5bed16d",
+      "use": "Independent implementation documents 0x1002 WB2 signature, native default sheet names, record layout and reference bits; no parser execution/results used as oracle."
+    },
+    {
+      "repository": "GNOME/gnumeric",
+      "commit": "e15f7f3bfb93361601d54664aaddddd0c643892d",
+      "path": "plugins/qpro/qpro.h",
+      "blob": "917da72faf62c8de8bccf4f7c85d33e3a81244fb",
+      "use": "Record and opcode numbers: sheet 202/203/204, cell reference 1, multiply 11, formula terminator 3."
+    }
+  ],
+  "edit": {
+    "sheet": "A",
+    "cell": "A2",
+    "value": 7,
+    "formulaCell": "C2",
+    "textCell": "A1",
+    "textValue": "QA_WB2_23NOV"
+  }
+}
