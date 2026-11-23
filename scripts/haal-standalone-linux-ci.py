@@ -4,14 +4,54 @@ The complete artifact stays in RUNNER_TEMP, outside the isolated app HOME. Offic
 payloads are never extracted. A successful build is not treated as native proof.
 """
 import hashlib
+from datetime import datetime
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
 import zipfile
 
 REPO = "OpenAEC-Foundation/open-office-studio"
+SOURCE = 'dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b'
+TREE = '5a644e397ecc6af5452a49b6404edf953687d1b2'
+HERE = Path(__file__).resolve().parent.parent
+REQUIRED_GATES = [
+    'Pakket bouwen (onondertekend)',
+    'Linux-installers werkelijk uitpakken en controleren',
+    'Meet- en inhoudscontrole voor de meegeleverde runtime',
+    'Standaardinstaller controleren met uitsluitend de private runtime',
+    'Linux native WebKit-interface en private installer controleren',
+    'Run actions/upload-artifact@v4',
+]
+
+def verify_intake(pin, run, job, artifact):
+    assert pin['purpose']=='P2-baseline-only' and pin['sourceCommit']==SOURCE and pin['sourceTree']==TREE and pin['version']=='2026.48.1'
+    assert pin['run']==run['id']==45150438420 and run['head_sha']==SOURCE and run['path']=='.github/workflows/release.yml'
+    assert pin['attempt']==run['run_attempt']==job['run_attempt']==1
+    assert pin['job']==job['id']==137610274931 and job['run_id']==run['id'] and job['name']=='Bouwen – Linux'
+    assert job['status']=='completed' and job['conclusion']=='success'
+    for name in REQUIRED_GATES:
+        gates=[s for s in job['steps'] if s['name']==name]
+        assert len(gates)==1 and gates[0]['status']=='completed' and gates[0]['conclusion']=='success',name
+    assert artifact['id']==pin['artifact']['id'] and artifact['name']==pin['artifact']['name']=='uitgave-Linux' and not artifact['expired']
+    assert artifact['workflow_run']['id']==run['id'] and artifact['workflow_run']['head_sha']==SOURCE
+    assert artifact['digest']==pin['artifact']['digest'] and artifact['size_in_bytes']==pin['artifact']['bytes']
+    assert artifact['created_at']==pin['artifact']['createdAt'] and artifact['updated_at']==pin['artifact']['updatedAt']
+    assert job['started_at']==pin['window']['jobStartedAt'] and job['completed_at']==pin['window']['jobCompletedAt']
+    utc=lambda text:datetime.fromisoformat(text.replace('Z','+00:00'))
+    assert utc(run['run_started_at'])<=utc(job['started_at'])<=utc(artifact['created_at'])<=utc(artifact['updated_at'])<=utc(job['completed_at'])
+    assert re.fullmatch(r'sha256:[0-9a-f]{64}',pin['artifact']['digest']) and pin['artifact']['bytes']>0
+
+def pinned_request():
+    raw=(HERE/'docs/tests/standalone-linux-final-p2-intake.json').read_bytes()
+    pin=json.loads(raw)
+    go_raw=(HERE/'docs/tests/standalone-linux-final-p2-request.json').read_bytes()
+    go=json.loads(go_raw)
+    assert go['go'] is True and go['purpose']=='P2-baseline-only' and go['sourceCommit']==SOURCE
+    assert go['intakeSha256']==hashlib.sha256(raw).hexdigest() and go['publicationAuthorized'] is False
+    return pin,dict(intakeSha256=hashlib.sha256(raw).hexdigest(),goSha256=hashlib.sha256(go_raw).hexdigest(),intake=pin)
 
 
 def api(route):
@@ -43,6 +83,8 @@ def main():
     run = api(f"actions/runs/{run_id}")
     assert run["head_sha"] == source
     assert run["path"] == ".github/workflows/release.yml"
+    pin, binding = pinned_request()
+    assert subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip()==pin['sourceTree'] and version==pin['version']
     job_id = os.environ["STANDALONE_LINUX_JOB"]
     assert job_id.isdecimal()
     job = api(f"actions/jobs/{job_id}")
@@ -53,6 +95,7 @@ def main():
     assert len(matches) == 1
     artifact = matches[0]
     assert artifact["workflow_run"]["head_sha"] == source
+    verify_intake(pin,run,job,artifact)
     reuse = os.environ.get("STANDALONE_PREFLIGHT_REUSE_RUN", "")
     if reuse:
         assert purpose == "host-driver-preflight-NOT-final-acceptance" and reuse.isdecimal()
@@ -80,13 +123,13 @@ def main():
     assert artifact["digest"] == "sha256:" + archive_hash and archive.stat().st_size == artifact["size_in_bytes"]
     with zipfile.ZipFile(archive) as bundle:
         for studio in studios:
-            extract_app(bundle, studio, version, source, run_id, artifact, archive_hash)
+            extract_app(bundle, studio, version, source, run_id, artifact, archive_hash,binding)
     manifest = Path('.local/standalone-linux-prepared/preparation-receipt.json')
-    manifest.write_text(json.dumps(dict(source=source,tree=subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),run=int(run_id),linuxJob=job,artifact=artifact,archiveLocallyHashVerified=True,officeExtracted=False,apps=[s['sleutel'] for s in studios]),indent=2)+'\n')
+    manifest.write_text(json.dumps(dict(source=source,tree=subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),run=int(run_id),linuxJob=job,artifact=artifact,intake=binding,archiveLocallyHashVerified=True,officeExtracted=False,apps=[s['sleutel'] for s in studios]),indent=2)+'\n')
     archive.unlink()
 
 
-def extract_app(bundle, studio, version, source, run_id, artifact, archive_hash):
+def extract_app(bundle, studio, version, source, run_id, artifact, archive_hash,binding=None):
     app = studio["sleutel"]
     out = Path(".local/standalone-linux-prepared") / app
     out.mkdir(parents=True, exist_ok=False)
@@ -115,6 +158,8 @@ def extract_app(bundle, studio, version, source, run_id, artifact, archive_hash)
               "studio": studio, "packageReport": report_name, "packageReportSha256":digest(out/report_name),
               "packages": [{"path": p.name,"canonicalMember":members[p.name], "sha256": digest(p), "bytes": p.stat().st_size} for p in packages],
               "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized"}
+    if binding is not None:
+        origin.update(intake=binding,preparedBy=dict(run=int(os.environ['GITHUB_RUN_ID']),qaCommit=os.environ['GITHUB_SHA']))
     (out / "origin.json").write_text(json.dumps(origin, indent=2) + "\n")
     print(json.dumps(origin))
 

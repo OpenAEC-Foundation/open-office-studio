@@ -4,6 +4,15 @@ on:
     branches: [codex/standalone-linux-final-p2-2026-11-23]
     paths: [docs/tests/standalone-linux-final-p2-request.json]
   workflow_dispatch:
+    inputs:
+      verified_input_run:
+        description: Optional previous successful preparation run; never downloads the canonical ZIP again
+        type: string
+        default: ""
+      applications:
+        description: JSON array of required apps; empty uses the pinned go marker
+        type: string
+        default: ""
 permissions:
   contents: read
   actions: read
@@ -13,7 +22,41 @@ env:
   STANDALONE_LINUX_JOB: "137610274931"
   STANDALONE_PURPOSE: frozen-candidate-acceptance
 jobs:
+  request:
+    runs-on: ubuntu-22.04
+    outputs:
+      apps: ${{ steps.go.outputs.apps }}
+      reuse: ${{ steps.go.outputs.reuse }}
+      inputrun: ${{ steps.go.outputs.inputrun }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify separate source intake and explicit conditional go marker
+        id: go
+        env:
+          INPUT_REUSE: ${{ inputs.verified_input_run }}
+          INPUT_APPS: ${{ inputs.applications }}
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFileSync,appendFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const raw=readFileSync('docs/tests/standalone-linux-final-p2-intake.json'),pin=JSON.parse(raw);
+          const go=JSON.parse(readFileSync('docs/tests/standalone-linux-final-p2-request.json'));
+          assert.equal(go.go,true);assert.equal(go.purpose,'P2-baseline-only');assert.equal(go.publicationAuthorized,false);
+          assert.equal(go.sourceCommit,process.env.STANDALONE_APP_COMMIT);assert.equal(pin.sourceCommit,go.sourceCommit);
+          assert.equal(go.intakeSha256,createHash('sha256').update(raw).digest('hex'));
+          const apps=process.env.INPUT_APPS?JSON.parse(process.env.INPUT_APPS):go.applications;
+          const allowed=['writer','spreadsheet','presentation','email','notition','database'];
+          assert.ok(Array.isArray(apps)&&apps.length>0&&apps.length<=6&&new Set(apps).size===apps.length&&apps.every(a=>allowed.includes(a)));
+          const reuse=process.env.INPUT_REUSE||String(go.reusePreparedRun||'');if(reuse)assert.match(reuse,/^\d+$/);
+          appendFileSync(process.env.GITHUB_OUTPUT,`apps=${JSON.stringify(apps)}\nreuse=${reuse}\ninputrun=${reuse||process.env.GITHUB_RUN_ID}\n`);
+          JS
   prepare:
+    needs: request
+    if: needs.request.outputs.reuse == ''
     name: Verify one canonical Linux ZIP and split unchanged standalone bytes
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -84,7 +127,8 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
   standalone:
-    needs: prepare
+    needs: [request, prepare]
+    if: ${{ always() && needs.request.result == 'success' && (needs.prepare.result == 'success' || (needs.prepare.result == 'skipped' && needs.request.outputs.reuse != '')) }}
     name: Independent ${{ matrix.app }} DEB and AppImage
     runs-on: ubuntu-22.04
     timeout-minutes: 45
@@ -92,9 +136,10 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        app: [writer, spreadsheet, presentation, email, notition, database]
+        app: ${{ fromJSON(needs.request.outputs.apps) }}
     env:
       STANDALONE_APP: ${{ matrix.app }}
+      STANDALONE_INPUT_RUN: ${{ needs.request.outputs.inputrun }}
     steps:
       - uses: actions/checkout@v4
         with:

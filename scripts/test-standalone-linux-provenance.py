@@ -1,5 +1,6 @@
 """Contract tests for package provenance and isolation, without downloading GBs."""
 import hashlib
+import copy
 import importlib.util
 import io
 import json
@@ -66,6 +67,37 @@ class Provenance(unittest.TestCase):
 
     def test_rejects_ambiguous_duplicate_package_report(self):
         with self.assertRaises(AssertionError): self.extract(duplicate=True)
+
+class ImmutableIntake(unittest.TestCase):
+    def setUp(self):
+        self.run=dict(id=45150438420,head_sha=fetcher.SOURCE,path='.github/workflows/release.yml',run_attempt=1,run_started_at='2026-11-23T09:49:00Z')
+        self.job=dict(id=137610274931,run_id=self.run['id'],run_attempt=1,name='Bouwen – Linux',status='completed',conclusion='success',started_at='2026-11-23T09:49:22Z',completed_at='2026-11-23T10:46:00Z',steps=[dict(name=n,status='completed',conclusion='success') for n in fetcher.REQUIRED_GATES])
+        self.artifact=dict(id=7,name='uitgave-Linux',expired=False,workflow_run=dict(id=self.run['id'],head_sha=fetcher.SOURCE),digest='sha256:'+'a'*64,size_in_bytes=100,created_at='2026-11-23T10:45:00Z',updated_at='2026-11-23T10:45:59Z')
+        a=self.artifact
+        self.pin=dict(purpose='P2-baseline-only',sourceCommit=fetcher.SOURCE,sourceTree=fetcher.TREE,version='2026.48.1',run=self.run['id'],attempt=1,job=self.job['id'],artifact=dict(id=a['id'],name=a['name'],digest=a['digest'],bytes=a['size_in_bytes'],createdAt=a['created_at'],updatedAt=a['updated_at']),window=dict(jobStartedAt=self.job['started_at'],jobCompletedAt=self.job['completed_at']))
+    def verify(self):fetcher.verify_intake(self.pin,self.run,self.job,self.artifact)
+    def test_accepts_exact_own_linux_success_while_other_os_are_independent(self):self.verify()
+    def test_rejects_changed_attempt(self):
+        self.run['run_attempt']=2
+        with self.assertRaises(AssertionError):self.verify()
+    def test_rejects_artifact_from_another_run(self):
+        self.artifact['workflow_run']['id']+=1
+        with self.assertRaises(AssertionError):self.verify()
+    def test_rejects_artifact_outside_job_window(self):
+        self.pin['artifact']['createdAt']=self.artifact['created_at']='2026-11-23T09:40:00Z'
+        with self.assertRaises(AssertionError):self.verify()
+    def test_rejects_missing_native_package_gate(self):
+        self.job['steps']=[s for s in self.job['steps'] if s['name']!=fetcher.REQUIRED_GATES[-2]]
+        with self.assertRaises(AssertionError):self.verify()
+    def test_rejects_failed_own_linux_job(self):
+        self.job['conclusion']='failure'
+        with self.assertRaises(AssertionError):self.verify()
+    def test_rejects_replaced_archive_digest(self):
+        self.artifact['digest']='sha256:'+'b'*64
+        with self.assertRaises(AssertionError):self.verify()
+    def test_rejects_ambiguous_duplicate_package_gate(self):
+        self.job['steps'].append(copy.deepcopy(self.job['steps'][0]))
+        with self.assertRaises(AssertionError):self.verify()
 
 
 if __name__ == "__main__":
