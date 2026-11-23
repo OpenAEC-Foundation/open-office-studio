@@ -126,6 +126,7 @@ async function packageCase(pkg) {
     limits: [
       "Virtual X11/Xvfb, software rendering",
       "One synthetic core scenario per app; no complete format/conversion or live account certification",
+      "Private conversion runtime presence is inspected where bundled; native format conversion is outside this core scenario",
     ],
   };
   results.push(report);
@@ -589,6 +590,21 @@ async function packageCase(pkg) {
         "Real native Notition backup export",
       );
       report.backupSha256 = hash(await readFile(backup));
+      const independentBackup = JSON.parse(await readFile(backup, "utf8"));
+      assert.equal(independentBackup.formaat, "openaec-notities");
+      assert.ok(
+        independentBackup.boeken.some((book) =>
+          book.secties.some((section) =>
+            section.paginas.some(
+              (page) =>
+                page.titel === "Synthetic standalone notebook" &&
+                page.vakken.some((box) =>
+                  box.blokken.some((block) => block.tekst.includes(marker)),
+                ),
+            ),
+          ),
+        ),
+      );
       report.checks.push(
         "Local notebook title/text typed, Ctrl+S persisted and native backup exported",
       );
@@ -809,6 +825,9 @@ async function packageCase(pkg) {
   } catch (error) {
     report.status = "failed";
     report.error = String(error.stack || error);
+    report.pending.push(
+      "Acceptance is incomplete at the failed gate; see error and completed checks. Later core/reopen/isolation steps are not certified.",
+    );
     if (session) {
       report.failureUI = await observe(
         "return {title:document.title,body:document.body.innerText,active:document.activeElement?.outerHTML}",

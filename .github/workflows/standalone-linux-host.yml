@@ -1,0 +1,33 @@
+name: Standalone Linux OS fixture preflight
+on:
+  push:
+    branches: [codex/standalone-linux-2026-11-23]
+    paths: [scripts/proef-standalone-linux-host.mjs]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixture:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install OS fixture dependencies only
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gnome-keyring libsecret-tools dbus-x11 libglib2.0-bin
+      - name: Real headless OS Secret Service in an empty isolated HOME
+        run: dbus-run-session -- node scripts/proef-standalone-linux-host.mjs
+      - name: Synthetic loopback IMAP protocol without an application backend replacement
+        run: node --test scripts/standalone-linux-mail-fixture.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-linux-host-fixtures
+          path: .local/standalone-linux-host/
+          include-hidden-files: true
+          if-no-files-found: warn
