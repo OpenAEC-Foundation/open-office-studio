@@ -1,0 +1,57 @@
+name: Format 30 native Windows SXC
+on:
+  push:
+    branches: [codex/sxc-native-windows-2026-11-23]
+    paths: [.github/sxc-native-windows.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: sxc-native-windows-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: windows-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce coordinated native SXC intake
+        shell: pwsh
+        run: |
+          $plan=Get-Content .github/sxc-native-windows.json -Raw | ConvertFrom-Json
+          if ($plan.applicationCommit -cne 'dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b' -or $plan.applicationTree -cne '5a644e397ecc6af5452a49b6404edf953687d1b2' -or $plan.platform -cne 'Windows' -or $plan.coordinated -ne $true) { throw 'Uncoordinated or wrong native SXC candidate' }
+      - name: Download and hash canonical P2 Windows artifact once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python qa/sxc-native-windows/packages.py .local/sxc-native-package
+      - name: Test driver only; no application build or product source mutation
+        run: npm install --prefix .local/sxc-native-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Read-only bitmap semantic oracle dependency
+        run: python -m pip install --disable-pip-version-check Pillow==13.0.0
+      - name: Real native Open/edit/Save/Ctrl-S/full-exit/new-process/reopen
+        env:
+          OOS_SXC_NATIVE_HARNESS: ${{ github.sha }}
+        run: node qa/sxc-native-windows/native.mjs .local/sxc-native-package .local/sxc-native-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sxc-native-Windows-proof
+          path: |
+            .local/sxc-native-proof
+            .local/sxc-native-package/package.json
+            .local/sxc-native-package/source-run.json
+            .local/sxc-native-package/source-job.json
+            .local/sxc-native-package/source-commit.json
+            .local/sxc-native-package/artifact-metadata.json
+            .local/sxc-native-package/canonical-package-report.zip
+            .local/sxc-native-package/canonical-package-report.json
+            .local/sxc-native-package/package-report-artifact-metadata.json
+          include-hidden-files: true
+          if-no-files-found: error
