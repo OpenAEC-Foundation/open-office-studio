@@ -308,3 +308,23 @@ Git checks confirm all five field374 product blobs equal P4, including the
 exact locally queried WASM. `evidence/p5-source-binding.json` records this;
 P4 browser results remain historical on their own source. P5 browser/native
 acceptance remains pending. No own GUI, extra CI, suite build or publication.
+
+## P5 Mac capture-sampling follow-up
+
+Real P5 matrix45179944903 / QA7be704895534c3095f697292af07dc10d2e5860b
+has a Mac failure before the new caret preflight (field cases0). Its51 captures
+share one unchanged complete worker frame, but at most2 consecutive equal PNGs.
+The two dominant original PNG states (48/51 samples) differ only in106 pixels
+at the2×53px custom caret; first versus last differs only in the status bar.
+Original first/last/failure images were directly inspected: full marker/title
+visible without overlap. This is a capture-driver diagnosis, not a Mac pass.
+
+Pinned SelectionOverlay.tsx defaults to530ms blinking; sampling median276ms
+included an extra100ms sleep. The minimal Mac-only change removes that extra
+sleep after completed screenshots. Two rAFs, complete unchanged paint,
+three consecutive identical full original PNGs,minimum200ms and15s failclosed
+deadline remain unchanged. Windows/Linux retain100ms. No pixels, CSS, model or
+product code changes; original trace still fails the same acceptance predicate.
+Source/pixel/timing evidence and official ZIP binding are in
+`evidence/p5-mac-capture-sampling-diagnosis.json`. Syntax/static checks pass;
+new actual Mac validation still requires root coordination. No extra CI started.

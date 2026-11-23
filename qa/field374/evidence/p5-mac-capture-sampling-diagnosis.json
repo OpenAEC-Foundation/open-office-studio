@@ -1,0 +1,77 @@
+{
+  "scope": "P5 Mac QA capture sampling diagnosis; no product bug or browser/native pass asserted",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "qa": "7be704895534c3095f697292af07dc10d2e5860b",
+  "run": 45179944903,
+  "job": 137710842488,
+  "artifact": 14820592328,
+  "wholeZipSha256": "3b84fc24791887e3955d91eae796d8eb170545fa7f79726d7e33b46a7d7c9a36",
+  "originalFiles": [
+    {
+      "path": "unchanged-windows-source-capture.json",
+      "bytes": 18173,
+      "sha256": "77e4ba88b5a4042e52d217c951b79ca022d5f1e0ac2fb7cacd92dec80838c100"
+    },
+    {
+      "path": "unchanged-windows-source-capture-first.png",
+      "bytes": 117126,
+      "sha256": "7561f51ac2cf2104d0cf31d7d30315842706f42b0bae62955e104f4b39bac18c"
+    },
+    {
+      "path": "unchanged-windows-source-capture-last.png",
+      "bytes": 117919,
+      "sha256": "9991760dea5b0ce5d0014d1695600a80aa2f8ff549fcae64d4ba12edd4bc512a"
+    },
+    {
+      "path": "failure.png",
+      "bytes": 117951,
+      "sha256": "a2d5f249d4a4c9a68d7f875e2e7c44c09f380445c1823b1674f6c064ec2506d8"
+    },
+    {
+      "path": "report.json",
+      "bytes": 1360,
+      "sha256": "b14b7cdea4466b24a9eeb5714ff4bd8140877087a7b38a79b0a7898dbd93144c"
+    }
+  ],
+  "captureFacts": {
+    "samples": 51,
+    "singleUnchangedCompletePaintSignature": true,
+    "pngHashCounts": {
+      "7561f51ac2cf2104d0cf31d7d30315842706f42b0bae62955e104f4b39bac18c": 1,
+      "00172bc447d6640c4a5c3a9a2e90aba422975e9d394f57a9ff7b140f209e0096": 1,
+      "a2d5f249d4a4c9a68d7f875e2e7c44c09f380445c1823b1674f6c064ec2506d8": 22,
+      "9991760dea5b0ce5d0014d1695600a80aa2f8ff549fcae64d4ba12edd4bc512a": 26,
+      "6f72136afc37beda873a8604048b1ff74e009bff003702da4a1ce4b5342a82c6": 1
+    },
+    "medianIntervalMs": 276.0,
+    "minimumIntervalMs": 218,
+    "maximumIntervalMs": 585,
+    "maxConsecutiveIdentical": 2,
+    "originalTraceStillFailsUnchangedAcceptancePredicate": true
+  },
+  "readOnlyPixelComparison": {
+    "dominantLastVsFailureDifferenceBBox": [
+      495,
+      440,
+      497,
+      493
+    ],
+    "changedPixels": 106,
+    "firstVsLastDifferenceBBox": [
+      229,
+      1082,
+      748,
+      1097
+    ],
+    "interpretation": "The dominant two full-page states differ only in the2px-wide53px-high visible caret. The first/last state differs only in the bottom status bar. All three original images were directly inspected; complete marker/title visible without overlap. No pixels/images/CSS were edited."
+  },
+  "pinnedSource": {
+    "commit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "path": "packages/docx-react/src/components/DocxEditor/overlays/SelectionOverlay.tsx",
+    "sha256": "66a3d5ca5e062abaf94e5d0ac13bbb41a83cba74c28b242ec0624b548bc59ec6",
+    "defaultBlinkIntervalMs": 530,
+    "mechanism": "DOM-div opacity toggled by setInterval; native screenshot caret-hiding does not alter this custom div."
+  },
+  "minimalDelta": "Mac only: remove the additional100ms sleep after each actual presented screenshot. Double rAF, complete current paint before/after, full unedited PNG,3 consecutive identical images,minimum200ms and15s failclosed deadline unchanged. Win/Linux keep100ms.",
+  "validation": "JS syntax and static unchanged-criteria checks only; the original red51-sample trace still fails. Real Mac timing and caret/marker workflow require root-coordinated missing-Mac validation; no extra CI started."
+}

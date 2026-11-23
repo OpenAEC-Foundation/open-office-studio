@@ -11,6 +11,9 @@ const signature = observation => JSON.stringify([
 ]);
 
 export async function capturePresentedStableFrame({ page, findObservation, root, name }) {
+  // Two rAFs plus the actual screenshot already pace presentation. On Mac,
+  // omit the extra100ms: the measured276ms cadence straddled the530ms DOM blink.
+  const extraInterSampleDelayMs = process.platform === "darwin" ? 0 : 100;
   const samples = [], deadline = Date.now() + 15000;
   let previous, stableSince = 0, consecutive = 0, lastPng;
   while (Date.now() < deadline) {
@@ -35,14 +38,15 @@ export async function capturePresentedStableFrame({ page, findObservation, root,
     if (consecutive >= 3 && now - stableSince >= 200) {
       await writeFile(join(root, name + ".png"), png);
       const evidence = { status: "stable-original-PNG-captured", doubleAnimationFramesPerSample: true,
+        extraInterSampleDelayMs,
         requiredConsecutive: 3, requiredStableMs: 200, samples,
         acceptedPngSha256: hash(png), markerReview: "Review the original PNG; worker glyph records and pixel stability alone do not establish visible marker text." };
       await writeFile(join(root, name + "-capture.json"), JSON.stringify(evidence, null, 2));
       return { observation: after, evidence };
     }
-    await delay(100);
+    if (extraInterSampleDelayMs) await delay(extraInterSampleDelayMs);
   }
   if (lastPng) await writeFile(join(root, name + "-capture-last.png"), lastPng);
-  await writeFile(join(root, name + "-capture.json"), JSON.stringify({ status: "driver-failure-no-stable-presented-capture", samples }, null, 2));
+  await writeFile(join(root, name + "-capture.json"), JSON.stringify({ status: "driver-failure-no-stable-presented-capture", extraInterSampleDelayMs, samples }, null, 2));
   assert.fail(`${name}: stable original PNG after complete paint not acquired; driver failure, no visual pass`);
 }

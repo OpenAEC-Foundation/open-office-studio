@@ -75,6 +75,10 @@ sample. It retains the first PNG, accepted PNG and capture hashes/timing. Failur
 to acquire stability is a driver failure. Pixel stability is not text recognition:
 the accepted original PNG must still be reviewed for the complete expected marker
 and layout; the report explicitly preserves that separate visual-review step.
+Mac sampling omits the additional100ms pause after a screenshot: the two animation
+frames and actual screenshot already await presentation. This avoids the observed
+276ms sampling cadence straddling the SDK's530ms custom-caret blink. Windows/Linux
+retain the pause. All stability predicates and original-image criteria are unchanged.
 
 Both helpers share the independent original 8-block/style/heading/placeholder
 oracle and additionally require Title 32pt/caps/80-twip tracking and the original
