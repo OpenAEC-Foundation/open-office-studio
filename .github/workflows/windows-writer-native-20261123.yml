@@ -1,0 +1,40 @@
+name: Windows pinned Writer native roundtrip
+on:
+  push:
+    branches: [codex/windows-runtime-extract-20261123]
+    paths:
+      - .github/windows-writer-native-candidate.json
+      - scripts/proef-windows-writer-native.mjs
+      - .github/workflows/windows-writer-native-20261123.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    if: contains(github.event.head_commit.message, '[windows-native-go]')
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Verified installer and actual native keyboard save/reopen
+        run: node scripts/proef-windows-writer-native.mjs .github/windows-writer-native-candidate.json .local/windows-native-372
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-native-372-${{ github.sha }}
+          path: |
+            .local/windows-native-372/report.json
+            .local/windows-native-372/*.png
+            .local/windows-native-372/*.docx
+            .github/windows-writer-native-candidate.json
+          include-hidden-files: true
+          if-no-files-found: warn
