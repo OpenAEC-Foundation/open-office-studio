@@ -37,6 +37,7 @@ import {readdir,chmod,symlink,copyFile} from "node:fs/promises";
 import {readSuiteRequest} from "../qa/linux-suite-final/request.mjs";
 import {collectOwnedNativeResources} from "./linux-suite-owned-processes.mjs";
 import {clickClosingNativePointer} from "./linux-suite-closing-pointer.mjs";
+import {pickerPaths,requirePickerReady} from "../qa/linux-suite-final/picker-paths.mjs";
 export async function runSuiteNativeScenario({packageType,scenarioName},action){
 assert(["deb","appimage"].includes(packageType));
 assert.match(scenarioName,/^[a-z0-9-]+$/);
@@ -840,10 +841,8 @@ async function bus(method, name) {
   return result.match(/^\('([^']+)',\)$/)?.[1];
 }
 async function observer(member, name) {
-  const prefix = join(out, member.toLowerCase()),
-    proof = prefix + "-portal.json",
-    ready = prefix + "-ready.json";
   const app = report.sessions.at(-1);
+  const {key,proof,ready}=pickerPaths({out,member,pid:app.pid,index:observers.length});
   await requireAppOwner(app);
   const state = await startChild(
     "/usr/bin/python3",
@@ -863,11 +862,13 @@ async function observer(member, name) {
     member + " observer",
     { detached: true },
   );
-  await waitFor(
+  const readyState=await waitFor(
     () => readFile(ready, "utf8").then(JSON.parse),
     "Passive picker observer readiness",
   );
-  const value = { state, proof, app, member };
+  requirePickerReady(readyState,{pid:app.pid,observerPid:state.pid});
+  assert.equal(readyState.busId,await bus('GetId'));
+  const value = { state, proof, app, member, key, readyState };
   observers.push(value);
   return value;
 }
@@ -921,6 +922,7 @@ async function nativePicker(value, path) {
     },
   });
   const evidence = {
+    requestKey:value.key,readiness:value.readyState,
     member: value.member,
     target: path,
     attribution: proof,
@@ -944,7 +946,7 @@ async function nativePicker(value, path) {
   );
   evidence.anatomy = anatomy;
   await writeFile(
-    join(out, value.member.toLowerCase() + "-gtk-anatomy.json"),
+    join(out, value.key + "-gtk-anatomy.json"),
     JSON.stringify(anatomy, null, 2),
   );
   const { binding, xid } = input.evidence;
@@ -956,7 +958,7 @@ async function nativePicker(value, path) {
       xid,
       binding.startTime,
       binding.executable,
-      join(out, value.member.toLowerCase() + "-native-picker.png"),
+      join(out, value.key + "-native-picker.png"),
     ],
     { env, timeout: 10000 },
   );

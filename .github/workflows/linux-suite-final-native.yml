@@ -35,6 +35,7 @@ jobs:
           node qa/linux-suite-final/scenarios.contract.mjs
           node qa/linux-suite-final/ownership.contract.mjs
           node qa/linux-suite-final/closing-pointer.contract.mjs
+          node qa/linux-suite-final/picker-paths.contract.mjs
           python3 scripts/linux-suite-native-package.contract.py
           python3 scripts/linux-suite-reuse-core.contract.py
           python3 -m py_compile qa/linux-suite-final/input-upstream/verify-linux-suite-input-p5.py qa/linux-suite-final/input-upstream/prepare-linux-release-input-p5.py
