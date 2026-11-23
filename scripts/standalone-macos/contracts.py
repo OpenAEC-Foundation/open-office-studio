@@ -55,6 +55,10 @@ def validate_request(value, now=None):
     packages = value.get("packages", {})
     if set(packages) != set(APPS):
         raise ValueError("Exactly six dedicated apps required; suite must not be selected")
+    execute=value.get("executeApps",list(APPS))
+    if (not isinstance(execute,list) or not execute or any(not isinstance(a,str) or a not in APPS for a in execute)
+            or len(execute)!=len(set(execute))):
+        raise ValueError("Native retry execution must select unique existing dedicated apps only")
     members = set()
     for key, package in packages.items():
         member = package.get("member", "")

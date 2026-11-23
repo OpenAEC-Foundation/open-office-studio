@@ -23,11 +23,12 @@ class FakeSession:
 
 class SelectorTests(unittest.TestCase):
     def panel(self):
+        focused={"AXRole":"AXList","AXFocused":True,"frame":{"x":300,"y":200,"width":600,"height":350}}
         return {"rawNodes":[row(0,-1,AXRole="AXWindow",AXIdentifier="open-panel",AXSubrole="AXDialog",
                     frame={"x":200,"y":100,"width":800,"height":600}),
                 row(1,0,AXRole="AXButton",AXIdentifier="OKButton",AXTitle="Open",AXEnabled=True,
-                    frame={"x":900,"y":650,"width":70,"height":30})],
-                "focused":{"AXRole":"AXList","frame":{"x":300,"y":200,"width":600,"height":350}}}
+                    frame={"x":900,"y":650,"width":70,"height":30}),
+                {"index":2,"parent":0,"attributes":focused}],"focused":focused}
 
     def test_native_modal_default_uses_one_return_with_owned_focus(self):
         s=FakeSession(self.panel());Case(s,"fixture").native_panel_confirm("Open","fixture")
@@ -40,6 +41,11 @@ class SelectorTests(unittest.TestCase):
         snap["rawNodes"][1]["attributes"]["AXTitle"]="Save"
         snap["focused"]["AXRole"]="AXTextField"
         s=FakeSession(snap);Case(s,"fixture").native_panel_confirm("Save","fixture")
+        self.assertEqual(s.actions,[("key","return")])
+
+    def test_virtual_native_file_list_uses_focused_panel_ancestry_and_visible_intersection(self):
+        snap=self.panel();snap["focused"]["frame"]={"x":300,"y":-1500,"width":230,"height":2400}
+        s=FakeSession(snap);Case(s,"fixture").native_panel_confirm("Open","fixture")
         self.assertEqual(s.actions,[("key","return")])
 
     def test_animating_dialog_control_settles_before_a_single_native_action(self):
@@ -57,14 +63,15 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(s.actions[0][1]["frame"]["y"],310)
 
     def test_native_modal_confirmation_refuses_disabled_wrong_or_background_controls(self):
-        for variant in ("disabled","background","wrong-name","focus-outside","duplicate"):
+        for variant in ("disabled","background","wrong-name","focus-outside","wrong-focus-ancestor","duplicate"):
             with self.subTest(variant=variant):
                 snap=self.panel();target=snap["rawNodes"][1]["attributes"]
                 if variant=="disabled":target["AXEnabled"]=False
                 elif variant=="background":snap["rawNodes"][0]["attributes"]["AXIdentifier"]="main-window"
                 elif variant=="wrong-name":target["AXTitle"]="Delete"
-                elif variant=="focus-outside":snap["focused"]["frame"]["x"]=0
-                else:snap["rawNodes"].append(row(2,0,**target))
+                elif variant=="focus-outside":snap["focused"]["frame"]["x"]=-1000
+                elif variant=="wrong-focus-ancestor":snap["rawNodes"][2]["parent"]=-1
+                else:snap["rawNodes"].append(row(3,0,**target))
                 s=FakeSession(snap)
                 with patch("cases.time.monotonic",side_effect=[0,0,46]),self.assertRaises(Unavailable):
                     Case(s,"fixture").native_panel_confirm("Open","fixture")

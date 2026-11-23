@@ -33,6 +33,13 @@ class ContractTests(unittest.TestCase):
     def test_exact_six_new_apps_request(self):
         self.assertEqual(len(validate_request(request())["packages"]), 6)
 
+    def test_retry_can_select_existing_apps_but_never_suite_duplicates_or_new_apps(self):
+        q=request();q['executeApps']=['writer','spreadsheet','email','database']
+        self.assertEqual(len(validate_request(q)['packages']),6)
+        for apps in ([],['office'],['writer','writer'],['unknown'],'writer'):
+            q['executeApps']=apps
+            with self.assertRaises(ValueError):validate_request(q)
+
     def test_suite_old_version_expiry_and_missing_approval_rejected(self):
         variants = []
         x=request();x["packages"]["office"]=x["packages"]["writer"];variants.append(x)

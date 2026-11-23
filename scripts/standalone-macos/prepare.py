@@ -56,7 +56,7 @@ def extract(request, archive, output):
                              preparationScope=request["preparationScope"])
             (target.parent/"provenance.json").write_text(json.dumps(proof, indent=2)+"\n", encoding="utf-8")
             (target.parent/"request.json").write_text(json.dumps(request, indent=2)+"\n", encoding="utf-8")
-    return {"app": list(APPS)}
+    return {"app": request.get("executeApps",list(APPS))}
 
 
 def rebind_transfer(request,folder,app,origin_run):
@@ -65,7 +65,7 @@ def rebind_transfer(request,folder,app,origin_run):
     original=json.loads((folder/"request.json").read_text())
     proof=json.loads((folder/"provenance.json").read_text())
     changes={k for k in original.keys() | request.keys() if original.get(k)!=request.get(k)}
-    if original.get("executionApproved") is not True or changes-{"harnessFiles","expiresAt","reuseTransfersFromRun"}:
+    if original.get("executionApproved") is not True or changes-{"harnessFiles","expiresAt","reuseTransfersFromRun","executeApps"}:
         raise ValueError("A QA retry must not change source, version, package, approval or parent identity")
     def verify(q,p):
         if app=="office":return verify_supporting_suite_package(q,p,folder)
@@ -101,7 +101,7 @@ def reuse_transfers(request,output):
         subprocess.run(["gh","run","download",str(origin),"--repo",REPO,"--name",name,
                         "--dir",str(output/folder)],check=True)
         rebind_transfer(request,output/folder,app,origin)
-    return {"app":list(APPS)}
+    return {"app":request.get("executeApps",list(APPS))}
 
 
 def main():
@@ -133,7 +133,8 @@ def main():
         matrix=extract(request,archive,args.output)
     (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job,"artifactListing":listing,
         "preparationScope":request.get("preparationScope","six-app-only-split"),
-        "nativeMatrixScope":"six dedicated app-only hosts; Suite never a native matrix member"},indent=2)+"\n")
+        "nativeAppsRequested":matrix["app"],
+        "nativeMatrixScope":"Only requested dedicated app identities; Suite never a native matrix member"},indent=2)+"\n")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as stream:
             stream.write("matrix="+json.dumps(matrix,separators=(",",":"))+"\nready=true\n")

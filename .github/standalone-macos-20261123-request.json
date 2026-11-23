@@ -50,26 +50,26 @@
   },
   "harnessFiles": {
     "scripts/standalone-macos/ax.swift": "3b35f623c4c0efd72e27c7dccd8d29e281624707f75e0c49372cc4039b48c859",
-    "scripts/standalone-macos/cases.py": "73720addde1ad6cd915a79c3187bdc0cc0215f1c9795dd7f4033f4ea03e095c7",
-    "scripts/standalone-macos/contracts.py": "4a7c128b616be3b7ad03e0cbf0c54ccdfa4c3d24e89ac29704627362ba271c59",
+    "scripts/standalone-macos/cases.py": "b413831d3c864723925448d519aecdaeedf8bd4c9bd27aba8a33f75f9913f2cc",
+    "scripts/standalone-macos/contracts.py": "6b81798ab110e0fe700de2675e56d0afa6512f162aa0fc9d7d61a5c7edead60e",
     "scripts/standalone-macos/fixtures.py": "2914c7f5718fe2cd5634cfbb9f1258eba58d769566ec00e557066836d1489b5a",
     "scripts/standalone-macos/gnm_oracle.py": "7f47fe4fbd5fdc66a1c8179300d257dcef0e1ebae514d7271159c3469dfbb599",
     "scripts/standalone-macos/mail_fixture_server.py": "9a86761229af2589780e61afa7fa92e16be314554addd638d8ca69e8a3366c6e",
     "scripts/standalone-macos/native.py": "4d868bb425d9edec9003d37ec8bfdba0bd8e0fb94ddf2694e81c10130ec270ad",
     "scripts/standalone-macos/ocr.swift": "c18c1ed874873ffb1bad620eb798172578aa8a2cb064b0be33f730c7e322685d",
     "scripts/standalone-macos/oracles.py": "e08aa03b00a4e1670344296eaa45a6ac59da7198a038d89d2a1ab04a67b2ddbc",
-    "scripts/standalone-macos/prepare.py": "a2606346a50abd70f791691851993feccf1085827eeb98a18816741b5d8c099a",
-    "scripts/standalone-macos/run.py": "3f61e769860ec8c38d9f6ab2493c4c1c2ab5b9ea6fd1da45d5d54142c9c84e5f",
+    "scripts/standalone-macos/prepare.py": "8359b9013d04c904651e23c78e1911271f1780f67b796c474d47160330ff2b7f",
+    "scripts/standalone-macos/run.py": "9bfde97996fa2f8574412673d4391e4f9392f5db422245ddb156b3992b05dbfc",
     "scripts/standalone-macos/sheet_formats.py": "97716731b2835c234b2737be4da71bd098631bec638245df8408be0e6fa00f79",
     "scripts/standalone-macos/stw.py": "d6d74dbafe309941c3811f023607abdac5c5b317616a4aa4a680294c087e22d5",
     "scripts/standalone-macos/stw_oracle.py": "172b3ab9bf92cdb804fc68958c894e8468a31671af83a0ddee936f68221fe0ec",
     "scripts/standalone-macos/suite_support_descriptor.py": "fb33dfd1834471d62ee01385c21b1cbbb11716825af2694d0df8c6662117048b",
-    "scripts/standalone-macos/test_contracts.py": "5e39e10fe5fd7aca24a14303666390b4326e5a82e0c6e84dc4594d506c56ad22",
+    "scripts/standalone-macos/test_contracts.py": "bd22258570906386710a73a795614e42605177d5b9c2fd18eb9d897859523f13",
     "scripts/standalone-macos/test_format_gates.py": "48023be11475a05a045e3fddee9ddde55fb176f1998d12d8764f0cca387052bd",
     "scripts/standalone-macos/test_mail_fixture.py": "b3a8f8c26606518cebda517640888b772cf521adb08a70c2bcb34b6bf67293b9",
-    "scripts/standalone-macos/test_native_contracts.py": "66d3cac3b5ab6fe8604d265806189229d3ba2893df21c5a28d209115a0b99764",
-    "scripts/standalone-macos/test_prepare.py": "3166b0d0055464165ea32443689f4d2216d1e68a60af862f061910b5c7d3dc0a",
-    "scripts/standalone-macos/test_selectors.py": "38389e9acdc23e7cec1406cf13640fbab847af5e412caf5d4b4d021f0ac8e7b4",
+    "scripts/standalone-macos/test_native_contracts.py": "4d4297ead15b251c4170f5bfb9602aa1260fe70329f6c0bc642dbd475d6cadd5",
+    "scripts/standalone-macos/test_prepare.py": "17e5363143e0d95a2a35e96c3c3b8009f9e6960005930464df2169b0f469e706",
+    "scripts/standalone-macos/test_selectors.py": "b037653318929e3d9d41d2c9a3b498de0e111af113bab580011dbfa657e36d0e",
     "scripts/standalone-macos/test_suite_support.py": "7168dff9f392792750d6834fa11a439f6d1d4732b7c9f81a2cb0e7354959f9da",
     "scripts/standalone-macos/test_vision.py": "0062ae589604c32a6f1b50d22e9569d6a6c4e6e9c712cc9dfc308456babfade5",
     "scripts/standalone-macos/vision.py": "a227d5def1ba217bf6b8d6cce597171e66c0cf5a7f4673088b4b959d63b355ba",
@@ -85,5 +85,11 @@
       "xlsb"
     ]
   },
-  "reuseTransfersFromRun": 45167809680
+  "reuseTransfersFromRun": 45167809680,
+  "executeApps": [
+    "writer",
+    "spreadsheet",
+    "email",
+    "database"
+  ]
 }

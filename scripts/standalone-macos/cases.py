@@ -4,7 +4,7 @@ import time
 import zipfile
 import xml.etree.ElementTree as ET
 from fixtures import SEEDS,MARKERS,CONTROL,WRITER_ANCHOR,WRITER_VISIBLE_EDIT,WRITER_PAYLOAD
-from native import Unavailable
+from native import Unavailable,active_file_panel
 from oracles import verify
 from contracts import digest
 from mail_fixture_server import USER,PASSWORD
@@ -139,16 +139,20 @@ class Case:
                 while ancestor:
                     w=ancestor["attributes"]
                     if w.get("AXRole") in ("AXWindow","AXSheet") and w.get("AXIdentifier") in ("open-panel","save-panel") and is_dialog(w):
-                        matches.append((a,w));break
+                        matches.append((a,w,ancestor["index"]));break
                     ancestor=rows.get(ancestor["parent"])
             focused=snapshot.get("focused",{});f=focused.get("frame",{})
             if len(matches)==1:
                 w=matches[0][1].get("frame",{})
-                inside=(all(k in f and k in w for k in ("x","y","width","height"))
-                        and f["x"]>=w["x"] and f["y"]>=w["y"]
-                        and f["x"]+f["width"]<=w["x"]+w["width"]
-                        and f["y"]+f["height"]<=w["y"]+w["height"])
-                if inside and focused.get("AXRole") in ("AXList","AXTextField","AXComboBox","AXOutline","AXButton","AXBrowser"):break
+                visible=(all(k in f and k in w for k in ("x","y","width","height"))
+                         and min(f["x"]+f["width"],w["x"]+w["width"])>max(f["x"],w["x"])
+                         and min(f["y"]+f["height"],w["y"]+w["height"])>max(f["y"],w["y"]))
+                binding=active_file_panel(snapshot)
+                # Native virtual file lists extend beyond the viewport. Actual
+                # focused ancestry plus a visible intersection proves ownership;
+                # full list-rectangle containment would reject normal scrolling.
+                if (visible and binding and binding["panelIndex"]==matches[0][2]
+                        and focused.get("AXRole") in ("AXList","AXTextField","AXComboBox","AXOutline","AXButton","AXBrowser")):break
             if len(matches)>1 or time.monotonic()>=deadline:
                 raise Unavailable("One enabled native Open/Save panel default button not established")
             time.sleep(0.2)

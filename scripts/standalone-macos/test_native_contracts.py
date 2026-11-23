@@ -39,6 +39,12 @@ class CleanupSession:
 
 
 class IsolationTests(unittest.TestCase):
+    def test_unselected_retry_app_is_rejected_before_package_or_native_setup(self):
+        with tempfile.TemporaryDirectory(prefix="standalone-selected-app-") as t:
+            root=Path(t);q=request();q['executeApps']=['email']
+            (root/'request.json').write_text(json.dumps(q))
+            with self.assertRaises(PermissionError):verify_transfer(root,'writer')
+
     def test_normal_cleanup_cancels_only_an_owned_native_file_panel_before_cmd_q(self):
         own=CleanupSession()
         with patch('native.time.sleep'):self.assertEqual(Session.quit(own),42)

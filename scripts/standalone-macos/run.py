@@ -16,6 +16,8 @@ from mail_fixture_server import Fixture
 
 def verify_transfer(folder,app):
     request=validate_request(json.loads((folder/"request.json").read_text()))
+    if app not in request.get("executeApps",list(APPS)):
+        raise PermissionError("This native case is not selected in the exact current retry request")
     check_harness(request,Path(__file__).resolve().parents[2])
     proof=json.loads((folder/"provenance.json").read_text())
     dmg=verify_package(request,proof,folder,app)

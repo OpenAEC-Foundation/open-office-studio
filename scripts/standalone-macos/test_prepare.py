@@ -71,6 +71,7 @@ class PrepareTests(unittest.TestCase):
             root=Path(t);q,z=self.archive(root);extract(q,z,root/"old")
             current=copy.deepcopy(q);current["harnessFiles"]={"scripts/standalone-macos/run.py":"f"*64}
             current["reuseTransfersFromRun"]=99;current["expiresAt"]="2099-01-02T00:00:00Z"
+            current["executeApps"]=["writer","email"]
             folder=root/"old/writer";before=digest(next(folder.glob("*.dmg")))
             rebind_transfer(current,folder,"writer",99)
             proof=json.loads((folder/"provenance.json").read_text())
@@ -79,6 +80,14 @@ class PrepareTests(unittest.TestCase):
             self.assertEqual(before,digest(next(folder.glob("*.dmg"))))
             self.assertEqual(json.loads((folder/"request.json").read_text()),current)
             self.assertEqual(len(list(folder.glob("origin-*.json"))),2)
+
+    def test_selective_retry_retains_six_bound_transfers_but_executes_only_missing_cases(self):
+        with tempfile.TemporaryDirectory(prefix="standalone-selective-") as t:
+            root=Path(t);q,z=self.archive(root);q['executeApps']=['writer','spreadsheet','email','database']
+            matrix=extract(q,z,root/'selected')
+            self.assertEqual(matrix,{'app':q['executeApps']})
+            self.assertEqual(sorted(p.name for p in (root/'selected').iterdir()),sorted(APPS))
+            self.assertNotIn('office',matrix['app'])
 
     def test_retry_cannot_change_source_or_accept_tampered_dmg(self):
         for tamper in (False,True):
