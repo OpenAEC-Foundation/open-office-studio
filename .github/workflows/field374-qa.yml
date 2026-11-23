@@ -7,7 +7,7 @@ permissions:
   contents: read
 jobs:
   metrics:
-    if: "!contains(github.event.head_commit.message, '[field374-proof]')"
+    if: "!contains(github.event.head_commit.message, '[field374-proof]') && !contains(github.event.head_commit.message, '[field374-capture]')"
     runs-on: ubuntu-22.04
     timeout-minutes: 15
     steps:
@@ -32,7 +32,7 @@ jobs:
           path: .local/field374-font-probe
           if-no-files-found: warn
   functional:
-    if: contains(github.event.head_commit.message, '[field374-proof]')
+    if: contains(github.event.head_commit.message, '[field374-proof]') || contains(github.event.head_commit.message, '[field374-capture]')
     runs-on: ubuntu-22.04
     timeout-minutes: 25
     steps:
@@ -59,8 +59,10 @@ jobs:
           restore-keys: |
             runtime317-assets-${{ runner.os }}-${{ runner.arch }}-
       - name: Real source fields in both SDK modules, edit/save/fresh reopen
+        if: "!contains(github.event.head_commit.message, '[field374-capture]')"
         run: node qa/field374/sdk.mjs ${{ github.sha }} .local/field374/sdk-proof
       - name: Existing focused Writer field controls and typecheck
+        if: "!contains(github.event.head_commit.message, '[field374-capture]')"
         run: |
           pnpm exec vitest run src/tekst/veldenDocument/model.test.ts src/tekst/veldenDocument/lettertype.test.ts
           pnpm exec tsc --noEmit
@@ -69,6 +71,7 @@ jobs:
           sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
           pnpm exec playwright install --with-deps chromium
       - name: Same-font Canvas tracking and 150-percent transform evidence
+        if: "!contains(github.event.head_commit.message, '[field374-capture]')"
         run: node qa/field374/font-probe.mjs .local/field374/font-probe
       - name: One candidate frontend route, no app or suite build
         run: node scripts/writer-proefbuild.mjs build .local/field374/browser-build /
@@ -77,7 +80,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: field374-linux-functional-proof
+          name: ${{ contains(github.event.head_commit.message, '[field374-capture]') && 'field374-capture-followup' || 'field374-linux-functional-proof' }}
           path: |
             .local/field374/sdk-proof
             .local/field374/browser-proof

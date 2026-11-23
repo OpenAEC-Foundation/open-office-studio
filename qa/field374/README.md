@@ -54,6 +54,14 @@ unchanged. It checks actual glyph bounds, captures images and treats missing
 observations as driver failures. It never sets the editor model or field values.
 Platform shortcuts use Meta on macOS and Control elsewhere.
 
+After a complete current worker frame, `capture.mjs` passively waits two main
+animation frames per sample and requires three identical original full-page PNGs
+over at least200ms, with unchanged complete paint observations before/after each
+sample. It retains the first PNG, accepted PNG and capture hashes/timing. Failure
+to acquire stability is a driver failure. Pixel stability is not text recognition:
+the accepted original PNG must still be reviewed for the complete expected marker
+and layout; the report explicitly preserves that separate visual-review step.
+
 Both helpers share the independent original 8-block/style/heading/placeholder
 oracle and additionally require Title 32pt/caps/80-twip tracking and the original
 DOCVARIABLE with its cached `Report Title`. Reports, actual downloaded DOCX,

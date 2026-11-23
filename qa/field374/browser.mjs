@@ -8,6 +8,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { preview } from "vite";
 import { chromium } from "playwright";
 import { fixture, prepareOracle, auditDocx, MARKER, hash } from "./contract.mjs";
+import { capturePresentedStableFrame } from "./capture.mjs";
 
 const [applicationCommit, outDir, route, output] = process.argv.slice(2);
 assert.match(applicationCommit || "", /^[a-f0-9]{40}$/); assert(["/", "/office/"].includes(route)); assert(outDir && output);
@@ -16,7 +17,10 @@ const { verifyBuildReceipt } = await import(pathToFileURL(resolve("scripts/write
 const root = resolve(output); await mkdir(root, { recursive: true });
 const sourceOracle = await prepareOracle(root), receiptPath = outDir + ".build.json";
 const report = { applicationCommit, route, platform: process.platform, harnessSha256: hash(await readFile(new URL("browser.mjs", import.meta.url))),
-  contractSha256: hash(await readFile(new URL("contract.mjs", import.meta.url))), status: "failed", cases: [], errors: [], externalRequests: [] };
+  contractSha256: hash(await readFile(new URL("contract.mjs", import.meta.url))),
+  captureSha256: hash(await readFile(new URL("capture.mjs", import.meta.url))),
+  visualReview: "Original PNG marker/layout review is required separately from worker geometry and stable capture.",
+  status: "failed", cases: [], errors: [], externalRequests: [] };
 const MOD = process.platform === "darwin" ? "Meta" : "Control";
 let browser, context, page, server, workers = [], hooks = [];
 
@@ -24,18 +28,19 @@ let browser, context, page, server, workers = [], hooks = [];
 // or pixels. The same wrapper calls the original methods in DOM and workers.
 function installPaintObserver() {
   if (globalThis.__oosField374Paint) return;
-  const records = [], states = new WeakMap(); let serial = 0, seq = 0;
+  const records = [], latestFrames = {}, states = new WeakMap(); let serial = 0, seq = 0;
   const state = ctx => { let s = states.get(ctx); if (!s) { s = { id: ++serial, frame: 0 }; states.set(ctx, s); } return s; };
-  globalThis.__oosField374Paint = { records };
+  globalThis.__oosField374Paint = { records, latestFrames };
   for (const name of ["CanvasRenderingContext2D", "OffscreenCanvasRenderingContext2D"]) {
     const proto = globalThis[name]?.prototype; if (!proto) continue;
     const clear = proto.clearRect, fill = proto.fillText;
-    proto.clearRect = function (...args) { state(this).frame++; return clear.apply(this, args); };
+    proto.clearRect = function (...args) { const s = state(this); s.frame++; latestFrames[s.id] = s.frame; return clear.apply(this, args); };
     proto.fillText = function (text, x, y, ...rest) {
       const result = fill.call(this, text, x, y, ...rest);
       const px = Number(/([\d.]+)px/.exec(this.font)?.[1]);
       if (px >= 40 && px <= 45 && this.canvas.width >= 750 && this.canvas.height >= 1000) {
         const m = this.measureText(String(text)), s = state(this);
+        latestFrames[s.id] = s.frame;
         records.push({ context: s.id, frame: s.frame, seq: ++seq, text: String(text), x, y, font: this.font,
           tracking: this.letterSpacing, width: m.width, inkLeft: x - m.actualBoundingBoxLeft, inkRight: x + m.actualBoundingBoxRight,
           canvasWidth: this.canvas.width, canvasHeight: this.canvas.height });
@@ -60,36 +65,41 @@ async function open(bytes, name) {
   await page.waitForLoadState("networkidle"); await Promise.all(hooks);
 }
 async function paints() {
-  const sources = [{ name: "page", value: await page.evaluate(() => globalThis.__oosField374Paint?.records || []) }];
+  const read = () => ({ value: globalThis.__oosField374Paint?.records || [], latestFrames: globalThis.__oosField374Paint?.latestFrames || {} });
+  const sources = [{ name: "page", ...await page.evaluate(read) }];
   for (let i = 0; i < workers.length; i++) {
-    try { sources.push({ name: `worker${i}`, value: await workers[i].evaluate(() => globalThis.__oosField374Paint?.records || []) }); } catch {}
+    try { sources.push({ name: `worker${i}`, ...await workers[i].evaluate(read) }); } catch {}
   }
   return sources;
 }
 async function snapshot(name, marker) {
   const wanted = ("REPORT TITLE" + marker).replace(/\s/g, ""); let observation;
-  const until = Date.now() + 30000;
-  while (Date.now() < until) {
+  async function findObservation() {
     for (const source of await paints()) {
       const titles = source.value.filter(p => p.text === "REPORT TITLE");
       for (const title of titles.toReversed()) {
+        if (source.latestFrames[title.context] !== title.frame) continue;
         const frame = source.value.filter(p => p.context === title.context && p.frame === title.frame).sort((a, b) => a.seq - b.seq);
         if (frame.map(p => p.text).join("").replace(/\s/g, "") !== wanted) continue;
         const neighbors = frame.filter(p => p.seq > title.seq && Math.abs(p.y - title.y) < 0.1 && p.text.trim());
-        observation = { source: source.name, title, frame, neighbors,
+        return { source: source.name, title, frame, neighbors,
           overlapping: neighbors.filter(p => p.inkLeft < title.inkRight - 0.75) };
-        break;
       }
-      if (observation) break;
     }
+  }
+  const until = Date.now() + 30000;
+  while (Date.now() < until) {
+    observation = await findObservation();
     if (observation) break;
     await delay(100);
   }
   assert(observation, `${name}: actual Canvas title/suffix paint not observed; classify as driver failure`);
+  const stable = await capturePresentedStableFrame({ page, findObservation, root, name });
+  observation = stable.observation;
   await writeFile(join(root, name + "-paint.json"), JSON.stringify(observation, null, 2));
-  await page.screenshot({ path: join(root, name + ".png"), animations: "disabled" });
   assert.deepEqual(observation.overlapping, [], `${name}: actual painted glyphs overlap`);
-  report.cases.push({ name, paintedTitleObserved: true, fullExpectedTextPainted: true, overlappingGlyphRuns: 0, marker });
+  report.cases.push({ name, paintedTitleObserved: true, fullExpectedTextPainted: true, overlappingGlyphRuns: 0, marker,
+    stableOriginalPngSha256: stable.evidence.acceptedPngSha256, originalPngMarkerReviewRequired: true });
 }
 async function save(name, marker) {
   const input = page.locator('[data-testid="yrs-input"]:visible'); await input.focus();
