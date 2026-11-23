@@ -1,0 +1,76 @@
+{
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "harnessCommit": "aa011ba4c97ce8f4c865ec3c63159bf82f9c719d",
+  "platform": "linux",
+  "fixtureSha256": "9b29e5fcec3f947a8a626cb2a448488508cb596087b018fa5d34a7ee02cd5340",
+  "oracleSha256": "d71dd3db4ffa28cdd9b94e3705ed9357226caf61119d6f8697b3426784d1522a",
+  "browserGuiStarted": false,
+  "nativeGuiStarted": false,
+  "nativeRoute": "content/edit/save/reopen passed; strict source page-size check failed",
+  "engineWasmSha256": "3a4be9329de1bca77437137ce6417c7910e35c1c7c0e78571bb81f9fe16e5563",
+  "policy": {
+    "input": "runtime",
+    "template": true,
+    "recommendedModernSave": "pptx",
+    "stiExportOffered": false
+  },
+  "browserLimit": {
+    "status": "expected refusal",
+    "message": "Error: Dit STI-bestand kon niet worden geopend. Dit formaat vereist de desktopversie met een kantoorruntime (LibreOffice). Exporteer het bestand vanuit de oorspronkelijke app als PPTX en open die kopie.",
+    "scope": "production route logic in Node; no GUI browser and no native converter"
+  },
+  "directEngineLimit": "legacy STI correctly requires conversion; raw engine open rejected",
+  "route": {
+    "calls": [
+      {
+        "from": "sti",
+        "to": "pptx",
+        "kind": "pptx",
+        "sourceSha256": "9b29e5fcec3f947a8a626cb2a448488508cb596087b018fa5d34a7ee02cd5340"
+      }
+    ],
+    "name": "prs-strategy.pptx",
+    "asNew": true,
+    "modernSave": "pptx",
+    "transportQualification": "actual production open route with a private-CLI transport; not a native Tauri dispatcher or GUI test"
+  },
+  "engine": {
+    "slides": 7,
+    "sourceParagraphs": 24,
+    "exactSourcePageSizePreserved": false,
+    "pageSizeChecks": [
+      {
+        "edited": false,
+        "widthEmu": 10080625,
+        "heightEmu": 7559675,
+        "exactSourceSize": false
+      },
+      {
+        "edited": true,
+        "widthEmu": 10080625,
+        "heightEmu": 7559675,
+        "exactSourceSize": false
+      },
+      {
+        "edited": true,
+        "widthEmu": 10080625,
+        "heightEmu": 7559675,
+        "exactSourceSize": false
+      }
+    ],
+    "sourcePageSize": {
+      "height": "21cm",
+      "heightEmu": 7560000,
+      "width": "28cm",
+      "widthEmu": 10080000
+    },
+    "convertedSizePreservedAfterEditAndReopen": true,
+    "appropriateEdit": "prefix first slide title",
+    "marker": "STI_P2_EDIT_2026_48_1 ",
+    "editSavedAndReopened": true,
+    "sourceUnchanged": true,
+    "relevantMediaQualification": "One PNG belongs to an unused fill-image declaration; no active bitmap or AV preservation claim.",
+    "visualFidelity": "not tested; no GUI/screen capture"
+  }
+}

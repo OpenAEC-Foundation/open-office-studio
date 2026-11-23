@@ -1,0 +1,54 @@
+{
+  "qaRun": 45149020419,
+  "qaHarnessCommit": "aa011ba4c97ce8f4c865ec3c63159bf82f9c719d",
+  "artifactId": 14805567220,
+  "artifactZipSha256": "1aee8094531713c01d3621fb5b1bce44eb00e0a0f54faa165a61ffe4bdeb9d76",
+  "byteVerifiedEvidenceFiles": [
+    "conversion-report.json",
+    "converted/prs-strategy.pptx",
+    "converted-oracle-check.json",
+    "edited-oracle-check.json",
+    "edited.pptx",
+    "engine-report.json",
+    "prs-strategy.sti",
+    "reopened-oracle-check.json",
+    "runtime-binding-evidence.json",
+    "reopened.pptx",
+    "source-oracle.json",
+    "source-package-copyright.txt",
+    "source-package.deb",
+    "source-provenance.json",
+    "tests.json"
+  ],
+  "coordinatorDescriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+  "coordinatorDescriptorMatchesRuntimeBase": true,
+  "sourceFixtureAndOracleHashesVerified": true,
+  "independentOOXMLChecks": [
+    {
+      "file": "converted/prs-strategy.pptx",
+      "sha256": "dd1c4a7569be210d5a4dded12398a56beb5035b731c0523ad586f7f3ff5dc477",
+      "sourceSlides": 7,
+      "sourceParagraphs": 24,
+      "edited": false,
+      "pageSizeExact": false
+    },
+    {
+      "file": "edited.pptx",
+      "sha256": "e15f6b13568fec82d6b86a89b361e0626137f6e1a7f85b92cc3ed9ba11caa3d6",
+      "sourceSlides": 7,
+      "sourceParagraphs": 24,
+      "edited": true,
+      "pageSizeExact": false
+    },
+    {
+      "file": "reopened.pptx",
+      "sha256": "e15f6b13568fec82d6b86a89b361e0626137f6e1a7f85b92cc3ed9ba11caa3d6",
+      "sourceSlides": 7,
+      "sourceParagraphs": 24,
+      "edited": true,
+      "pageSizeExact": false
+    }
+  ],
+  "editedAndFreshlyReopenedSaveBytesEqual": true,
+  "qualification": "Local audit reads Linux CI files only; no converter, engine runtime, GUI or capture started locally. Entire artifact ZIP hash verified; optional private-profile cache files not individually extracted/audited on Windows due long paths."
+}

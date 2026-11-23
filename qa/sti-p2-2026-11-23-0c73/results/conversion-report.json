@@ -1,0 +1,53 @@
+{
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "runtimeArtifact": 14805600515,
+  "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+  "runtimeTarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+  "sourceSha256": "9b29e5fcec3f947a8a626cb2a448488508cb596087b018fa5d34a7ee02cd5340",
+  "outputSha256": "dd1c4a7569be210d5a4dded12398a56beb5035b731c0523ad586f7f3ff5dc477",
+  "outputBytes": 18341,
+  "converterLauncherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+  "converterElfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+  "versionProbe": {
+    "arguments": [
+      "/home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-runtime-0c73/unpacked/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+      "-env:UserInstallation=file:///home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-p2-0c73/private-profiles/version",
+      "--headless",
+      "--version"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.6522241029999805,
+    "output": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276\n\n",
+    "safeProfileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "printerEnvironment": {
+      "SAL_DISABLE_DEFAULTPRINTER": "1",
+      "SAL_DISABLE_PRINTERLIST": "1"
+    }
+  },
+  "conversion": {
+    "arguments": [
+      "/home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-runtime-0c73/unpacked/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+      "-env:UserInstallation=file:///home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-p2-0c73/private-profiles/conversion",
+      "--headless",
+      "--nologo",
+      "--nodefault",
+      "--norestore",
+      "--nolockcheck",
+      "--convert-to",
+      "pptx:Impress MS PowerPoint 2007 XML",
+      "--outdir",
+      "/home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-p2-0c73/converted",
+      "/home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-p2-0c73/prs-strategy.sti"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.994213822000006,
+    "output": "convert /home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-p2-0c73/prs-strategy.sti as a Impress document -> /home/runner/work/open-office-studio/open-office-studio/.local/qa-sti-p2-0c73/converted/prs-strategy.pptx using filter : Impress MS PowerPoint 2007 XML\n",
+    "safeProfileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "printerEnvironment": {
+      "SAL_DISABLE_DEFAULTPRINTER": "1",
+      "SAL_DISABLE_PRINTERLIST": "1"
+    }
+  },
+  "sourceUnchanged": true,
+  "qualification": "Production filter/arguments/safe profile; private CLI transport, no native Tauri dispatcher or GUI."
+}
