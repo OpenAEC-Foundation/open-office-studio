@@ -38,6 +38,13 @@ def validate_previous_core(identity, old):
     if identity.get("requireSignedNotarized") is True and (old["identity"].get("requireSignedNotarized") is not True
             or old.get("signedPackagePreflight", {}).get("status") != "passed"):
         raise RuntimeError("Final signed controls require the same signed core preflight")
+    if identity.get("separateProducerApproved") is True:
+        if old["identity"].get("separateProducerApproved") is not True:
+            raise RuntimeError("Prior core lacks the explicitly separate producer/app chain")
+        for key in ["producerCommit","producerTree","producerWorkflowSha256","checkoutWorkflowSha256",
+                    "artifactRun","artifactAttempt","artifactId","archiveSha256","successfulPlatformJob","sourceWitnessSha256"]:
+            if old["identity"].get(key)!=identity.get(key):
+                raise RuntimeError("Prior core belongs to another producer/parent/witness chain: "+key)
 
 
 def verify_previous(identity):

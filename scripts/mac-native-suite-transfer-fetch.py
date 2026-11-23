@@ -11,6 +11,7 @@ import zipfile
 
 REPO = "OpenAEC-Foundation/open-office-studio"
 PARENT = runpy.run_path(str(Path(__file__).with_name("mac-native-current-fetch.py")))
+PRODUCER = runpy.run_path(str(Path(__file__).with_name("mac-native-producer-source.py")))
 sha = lambda data: hashlib.sha256(data).hexdigest()
 SUITE_STEPS = (
     "Transfer Suite only to its separate validation owner",
@@ -167,6 +168,8 @@ def verify_descriptor(value, descriptor, data):
         raise RuntimeError("Suite child bytes do not match the exact verified-parent descriptor")
     if value.get("packageSha256") is not None and value["packageSha256"] != sha(data):
         raise RuntimeError("Suite DMG differs from integration's independent expected hash")
+    if value.get("separateProducerApproved") is True:
+        PRODUCER["verify_witness"](value,descriptor.get("sourceWitness"))
 
 
 def verify_envelope(value, envelope, child):
@@ -196,6 +199,9 @@ def verify_envelope(value, envelope, child):
         raise RuntimeError("Suite support embedded child expiry/size differs")
     if value.get("packageSha256") is not None and package["sha256"]!=value["packageSha256"]:
         raise RuntimeError("Suite support DMG hash differs from independent root pin")
+    if value.get("separateProducerApproved") is True:
+        return PRODUCER["verify_witness"](value,envelope.get("sourceWitness"))
+    return None
 
 
 def verify_original_request(value, original, provenance, envelope, data):
@@ -214,6 +220,8 @@ def verify_original_request(value, original, provenance, envelope, data):
     expected=dict(provenance["package"],member=provenance["member"])
     if envelope["suitePackage"]!=expected:
         raise RuntimeError("Support envelope and actual original Suite provenance/DMG bytes differ")
+    if value.get("separateProducerApproved") is True and provenance.get("sourceWitness")!=envelope.get("sourceWitness"):
+        raise RuntimeError("Raw provenance and support envelope source witness differ")
 
 
 def validate_go(value):
@@ -234,6 +242,10 @@ def validate_go(value):
         if not isinstance(value.get(key),str) or not value[key]:raise RuntimeError("Concrete member/name binding required before download: "+key)
     if value.get("artifactName")!="uitgave-macOS" or value.get("transferArtifactName")!="standalone-support-suite":
         raise RuntimeError("Official Suite parent/child artifact names differ")
+    if value.get("separateProducerApproved") is True:
+        PRODUCER["validate_pins"](value)
+    elif value.get("producerCommit") is not None:
+        raise RuntimeError("Separate producer cannot silently fall back to app-head equality")
     PARENT["package_member"](value,[value["packageMember"]])
 
 
@@ -245,6 +257,8 @@ def main():
     if (git("rev-parse", "HEAD") != value["sourceCommit"] or git("rev-parse", "HEAD^{tree}") != value["sourceTree"]
             or git("status", "--porcelain", "--untracked-files=no")):
         raise RuntimeError("Clean exact application source required")
+    if value.get("separateProducerApproved") is True and sha(Path(value["producerWorkflowPath"]).read_bytes())!=value["checkoutWorkflowSha256"]:
+        raise RuntimeError("Actual app checkout workflow bytes differ from the app witness pin")
     output.mkdir(parents=True, exist_ok=False)
     (output/"request.json").write_bytes(request)
     receipt={"status":"running","nativeAccepted":False,"requestSha256":sha(request),"parentZipDownloadedByThisRunner":False,
@@ -264,7 +278,13 @@ def main():
     try:
         official=[api(f"actions/runs/{value['artifactRun']}","officialRun"),api(f"actions/artifacts/{value['artifactId']}","officialArtifact"),
                   api(f"actions/jobs/{value['successfulPlatformJob']}","officialMacJob")]
-        PARENT["verify_platform_origin"](value,*official)
+        if value.get("separateProducerApproved") is True:
+            producer_commit=api(f"git/commits/{value['producerCommit']}","producerCommitMetadata")
+            producer_workflow=api(f"contents/{value['producerWorkflowPath']}?ref={value['producerCommit']}","producerWorkflowMetadata")
+            receipt["producerBinding"]=PRODUCER["verify_api"](value,*official,producer_commit,producer_workflow)
+            receipt["applicationCheckout"]={**source_pin(value),"checkoutWorkflowSha256":value["checkoutWorkflowSha256"]}
+        else:
+            PARENT["verify_platform_origin"](value,*official)
         transfer=[api(f"actions/runs/{value['transferRun']}","transferRun"),api(f"actions/artifacts/{value['transferArtifactId']}","transferArtifact"),
                   api(f"actions/jobs/{value['transferProducerJob']}","transferPreparerJob")]
         verify_transfer_origin(value,*transfer)
@@ -281,9 +301,14 @@ def main():
             member=exact_member(bundle.namelist(),value["supportDescriptorMember"],".json")
             if [n for n in bundle.namelist() if not n.endswith("/")] != [member]:raise RuntimeError("Small support artifact must contain only its exact descriptor")
             envelope_bytes=bundle.read(member)
-        envelope=json.loads(envelope_bytes);verify_envelope(value,envelope,transfer[1])
+        envelope=json.loads(envelope_bytes);witness_bytes=verify_envelope(value,envelope,transfer[1])
         (output/"suite-support-descriptor.json").write_bytes(envelope_bytes)
         receipt["supportDescriptorSha256"]=sha(envelope_bytes)
+        if witness_bytes is not None:
+            (output/"actual-parent-source-witness.json").write_bytes(witness_bytes)
+            receipt["sourceWitness"]={"member":value["sourceWitnessMember"],"sha256":sha(witness_bytes),"bytes":len(witness_bytes),
+                                      "rawBytesHashVerifiedByConsumer":True,"value":json.loads(witness_bytes),
+                                      "parentMembershipEstablishedBy":"Verified-parent preparer provenance and root-frozen witness hash; Suite does not download parent"}
         archive=output/"suite-child.zip";download(value["transferArtifactId"],archive)
         receipt["actualWholeChildArchive"]=verify_archive(archive,value["transferArchiveSha256"],value["transferArchiveBytes"],"Suite child")
         with zipfile.ZipFile(archive) as bundle:

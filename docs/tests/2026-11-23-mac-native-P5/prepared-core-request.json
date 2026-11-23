@@ -2,12 +2,12 @@
   "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
   "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
   "declaredVersion": "2026.48.1",
-  "artifactRun": 45177730188,
+  "artifactRun": 45195055147,
   "artifactAttempt": 1,
   "artifactName": "uitgave-macOS",
   "artifactId": null,
   "archiveSha256": null,
-  "successfulPlatformJob": 137703365843,
+  "successfulPlatformJob": 137763371873,
   "successfulPlatformJobName": "Bouwen \u2013 macOS",
   "packageMember": null,
   "packageSha256": null,
@@ -29,16 +29,16 @@
   "derivePackageIdentityFromVerifiedArchive": true,
   "deriveExecutableFromVerifiedDmg": true,
   "requireSignedNotarized": true,
-  "nativeBodyAcceptanceApproved": true,
+  "nativeBodyAcceptanceApproved": false,
   "macViewportSetup": {
     "mode": "native-maximize-once",
-    "executionApproved": true
+    "executionApproved": false
   },
   "nativeControlVisibleAnchors": [
     "EERSTE",
     "TWEEDE"
   ],
-  "remainingBinding": "P5 official Mac success, null-free official parent/child/small-descriptor bindings, wrapper-consumer compatibility closure and explicit root go pending",
+  "remainingBinding": "STOPPED: preserve source pins; no prep/native/download when producer finishes. Actual root witness/parent/child/descriptor bindings and renewed user authorization are still required.",
   "transferRequestMember": "request.json",
   "supportDescriptorRequired": true,
   "supportDescriptorContractQaCommit": "8c4c3b5b441b3e39e2efa711f43d43d9931b1a9d",
@@ -54,5 +54,17 @@
     "Bind separate Suite child artifact to parent and DMG digests",
     "Preserve separate Suite-owner descriptor"
   ],
-  "consumerRequiresRawPreparerLog": true
+  "consumerRequiresRawPreparerLog": true,
+  "separateProducerApproved": false,
+  "producerCommit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+  "producerTree": "94340e40228ddcb11aace00e4dd01f614a13273e",
+  "producerRef": "refs/heads/codex/p5-macos-only-producer-20261123",
+  "producerWorkflowPath": ".github/workflows/release.yml",
+  "producerWorkflowSha256": "2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62",
+  "checkoutWorkflowSha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+  "sourceWitnessRequired": true,
+  "sourceWitnessMember": ".local/macos-only-producer-source.json",
+  "sourceWitnessSha256": null,
+  "sourceWitnessContract": "Root-approved rawBase64/member/SHA/bytes/value in raw provenance and support envelope",
+  "userStop": "2026-11-23: stop now; all unstarted conditional go revoked; resume24Nov only after a new user instruction"
 }
