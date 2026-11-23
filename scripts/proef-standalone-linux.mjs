@@ -1110,6 +1110,9 @@ async function packageCase(pkg) {
       assert.ok(nativeDraft);
       await writeFile(join(dir, "synthetic-native-draft.eml"), nativeDraft.raw);
       report.syntheticDraftRawSha256 = hash(nativeDraft.raw);
+      report.independentMimeOracle = JSON.parse(command("/usr/bin/python3",[join(harnessRoot,"scripts/standalone-email-mime-oracle.py"),join(dir,"synthetic-native-draft.eml"),marker]));
+      assert.equal(report.independentMimeOracle.rawSha256,report.syntheticDraftRawSha256);
+      assert.equal(fixture.commands.filter(c=>c.command==="APPEND").length,1,"Exactly one native draft APPEND after the save shortcut");
       assert.ok(
         fixture.messages.Drafts.some((m) =>
           m.raw.includes(Buffer.from("Synthetic local draft body")),
@@ -1246,6 +1249,7 @@ async function packageCase(pkg) {
         "Stored draft body is read through the real native backend and rendered in the safe message iframe",
       );
       report.mailCommands = fixture.commands;
+      assert.equal(fixture.commands.filter(c=>c.command==="APPEND").length,1,"Cold reopen must retrieve the existing draft without another APPEND");
       report.syntheticDraftSha256 = hash(
         fixture.messages.Drafts.find((m) => m.raw.includes(Buffer.from(marker)))
           .raw,
