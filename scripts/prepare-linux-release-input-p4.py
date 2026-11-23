@@ -47,7 +47,7 @@ def inspect_suite_elf(package):
             root = Path(tmp) / 'payload'
             subprocess.run(['unsquashfs','-no-progress','-no-xattrs','-d',str(root),'-o',str(positions[0]),str(package),member],check=True)
             target = root/member
-            assert target.is_file() and not target.is_symlink()
+            assert target.is_file() and not target.is_symlink() and target.resolve().is_relative_to(root.resolve())
             mode = stat.S_IMODE(target.stat().st_mode)
         with target.open('rb') as stream: header = stream.read(64)
         assert header[:6] == b'\x7fELF\x02\x01' and struct.unpack_from('<H',header,18)[0] == 62 and mode & 0o111
