@@ -1,0 +1,69 @@
+{
+  "kind": "independent-static-Mac-producer-application-source-binding-review",
+  "status": "passed",
+  "recordedAt": "2026-11-23T14:30:02.088906+00:00",
+  "producer": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+  "application": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "changedPaths": [
+    ".github/workflows/release.yml",
+    "docs/tests/2026-11-23-p5-macos-only-producer/README.md",
+    "docs/tests/2026-11-23-p5-macos-only-producer/proposal.json"
+  ],
+  "workflowSha256": "2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62",
+  "checkoutWorkflowP5Sha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+  "field374Blobs": [
+    {
+      "path": "patches/tekstengine-nootnummering.patch",
+      "gitBlob": "5a123a422ecad3f1d9a5d56c8501de10ae1c93d7",
+      "bytes": 67349,
+      "sha256": "4ab76ce09642d6e4a5c77a025f41ce1844f41b680ab35322068507d3d3e4bf9a",
+      "equalToP5": true
+    },
+    {
+      "path": "patches/tekstengine-nootnummering.json",
+      "gitBlob": "02091056a92d988e462fb3a100b1e0c1960a9de8",
+      "bytes": 3576,
+      "sha256": "13b7ec80f7f93612055dcaa41843b1ad7fb0853a1e4ca2e9cf352432322f3250",
+      "equalToP5": true
+    },
+    {
+      "path": "scripts/bouw-tekstkern.py",
+      "gitBlob": "788e8109bdeeda4feaf4c58877f52009c8a30a7d",
+      "bytes": 7706,
+      "sha256": "e351cbf68f49f769165f54593f766963a3c4e257106ed80aeae41588aa640dc6",
+      "equalToP5": true
+    },
+    {
+      "path": "vendor/tekstengine/docx_edit_bg.wasm",
+      "gitBlob": "fff7218c341c3be1cf19873c33fc08882a577424",
+      "bytes": 24560084,
+      "sha256": "4364eb8065228c805d8fbefe7e58c29e392516b6e7cca419e191766881d324ce",
+      "equalToP5": true
+    },
+    {
+      "path": "vendor/tekstengine/docx_layout_bg.wasm",
+      "gitBlob": "cbeef2be18dce6acb2df856c50291981f1c28f63",
+      "bytes": 4373099,
+      "sha256": "c5a59ce0d980cd7f85775aaf283bcac1c19fba976b47bbe08c0387e2ca7d2569",
+      "equalToP5": true
+    }
+  ],
+  "findings": [
+    "Both version and build jobs check out the immutable P5 app SHA before their source guards.",
+    "Each guard requires exact app HEAD/tree/version and no tracked modifications before the build.",
+    "Both guards record GITHUB_SHA and GITHUB_WORKFLOW_SHA separately from checked-out app HEAD/tree, require producer != app and workflow head == producer, exact producer branch/workflow ref and workflow_dispatch/publiceren=false.",
+    "No application, build script, runtime manifest, lockfile, compile config, or vendor bytes differ; only workflow and two proposal documents changed.",
+    "The checked-out-workflow hash is explicitly a P5 checkout-file hash, not the executing producer workflow hash; the latter is independently pinned here to 2ae3b7aa.",
+    "No GITHUB_SHA/GITHUB_WORKFLOW_SHA/GITHUB_REF/GITHUB_HEAD_REF references occur outside workflows/docs in pinned P5 repository source; actual runtime receipt derives source from git HEAD."
+  ],
+  "limits": [
+    "Static source-binding review only; no build, dispatch, native acceptance, signature or full release approval.",
+    "Coordinator must bind eventual official run head to this exact producer SHA and compare source witness app HEAD/tree/version and job/attempt metadata; format-only guard cannot self-pin its own commit.",
+    "Signing/publication/seven-product gate equivalence is reviewed separately by integration, not duplicated here.",
+    "Existing native DEB content audit04075cca stays separate and unchanged."
+  ]
+}
