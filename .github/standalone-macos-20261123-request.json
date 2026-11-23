@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
   "scope": "macos-standalone-six",
-  "executionApproved": true,
+  "executionApproved": false,
   "source": {
-    "version": "2026.48.1",
-    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
-    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2"
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
   },
-  "expiresAt": "2026-11-23T15:40:30.842520+00:00",
+  "expiresAt": null,
   "parentArtifact": {
-    "id": 14815326028,
-    "run": 45150438420,
-    "producerJobId": 137610274868,
+    "id": null,
+    "run": 45177730188,
+    "producerJobId": null,
+    "attempt": 2,
     "name": "uitgave-macOS",
-    "sha256": "42c00b371f3cfe9fa46dd6c4ac63c6ac34b026d8df8a3bdcea0b4326d3bc9052",
-    "attempt": 1
+    "sha256": null
   },
   "packages": {
     "writer": {
@@ -85,11 +85,12 @@
       "xlsb"
     ]
   },
-  "reuseTransfersFromRun": 45167809680,
-  "executeApps": [
-    "writer",
-    "spreadsheet",
-    "email",
-    "database"
-  ]
+  "preparationScope": "seven-product-split-six-app-only-hosts",
+  "supportingSuitePackage": {
+    "member": null,
+    "sha256": null,
+    "hashBinding": "verified-parent-archive",
+    "purpose": "separate-suite-owner",
+    "executionApproved": false
+  }
 }
