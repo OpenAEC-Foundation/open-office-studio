@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import { typeVerifiedNativeText } from "./linux-p2-native-input.mjs";
 import { writer362ProcStartTime } from "./linux-p2-ribbon-native.mjs";
+import { openStandaloneGnmPicker } from "./standalone-gnm-open-picker.mjs";
 export async function runStandaloneGnmProbe(context) {
   assert.equal(context.origin.studio.sleutel, "spreadsheet");
   assert.equal(
@@ -424,8 +425,13 @@ export async function runStandaloneGnmProbe(context) {
     });
   }
   async function openPicker(path) {
-    await key("ctrl+o", true);
-    await picker(path, "Open file");
+    const evidence = await openStandaloneGnmPicker({
+      pid: Number(guard.evidence.pid), env, out, path, phase,
+      appXid: guard.evidence.xid,
+      trigger: () => key("ctrl+o", true),
+      verifyApp: stage => guard.verify(stage),
+    });
+    report.pickers.push({phase, ...evidence});
     await ready(["Sheet1", "Sheet2"]);
   }
   async function oracle(source, xlsx, name, marker = true) {
