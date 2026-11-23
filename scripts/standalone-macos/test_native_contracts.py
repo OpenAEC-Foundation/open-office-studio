@@ -47,7 +47,7 @@ class IsolationTests(unittest.TestCase):
                "package":{"filename":name,"bytes":dmg.stat().st_size,"sha256":digest(dmg)}}
             (root/"request.json").write_text(json.dumps(q));(root/"provenance.json").write_text(json.dumps(p))
             with patch("run.check_harness"):
-                self.assertEqual(verify_transfer(root,"writer")[2],dmg)
+                self.assertEqual(verify_transfer(root,"writer")[2],dmg.resolve())
                 for key,bad in (("source",{}),("member","suite.dmg"),("app","office")):
                     (root/"provenance.json").write_text(json.dumps({**p,key:bad}))
                     with self.assertRaises(ValueError):verify_transfer(root,"writer")
