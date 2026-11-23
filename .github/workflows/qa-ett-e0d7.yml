@@ -1,0 +1,38 @@
+name: ETT source qualification and strict template predicate
+on:
+  push:
+    branches: [codex/ett-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-ett/*.mjs
+      - scripts/qa-ett/*.json
+      - .github/workflows/qa-ett-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source_and_policy:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Inspect immutable public ETT source inventories; never manufacture a qualified fixture
+        run: node scripts/qa-ett/inventory.mjs
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Actual P2 ETT template predicate and negative no-desktop policy (no Office/engine acceptance)
+        run: node scripts/qa-ett/policy.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ett-source-and-policy-result
+          path: .local/ett-qa/
+          include-hidden-files: true
+          if-no-files-found: error
