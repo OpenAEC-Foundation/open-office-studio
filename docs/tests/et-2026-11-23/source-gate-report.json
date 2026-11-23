@@ -1,0 +1,278 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "candidate": {
+    "repository": "Sayi/poi-tl",
+    "commit": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+    "firstPublicationCommit": "c2f77d7fde2975e36f031d05676b125227e0da9c",
+    "path": "poi-tl/src/test/resources/attachment/test.et",
+    "url": "https://raw.githubusercontent.com/Sayi/poi-tl/81edcbd9227a619078c07052830a2cd6a4333bb7/poi-tl/src/test/resources/attachment/test.et",
+    "bytes": 19968,
+    "blob": "484a4fea7dfd403d35b7a2c6c1481911e108c8cc",
+    "sha256": "e0a5ae8f885991b40c8f716a3ae041210426f506c53adb80e392ed577975d3e2",
+    "classification": "Unqualified independent WPS-family ET-named attachment candidate; native ET producer provenance unresolved",
+    "authenticETConfirmed": false
+  },
+  "control": {
+    "role": "Read-only provenance control from same publication, not a separate XLS route/scope",
+    "path": "poi-tl/src/test/resources/attachment/test.xls",
+    "url": "https://raw.githubusercontent.com/Sayi/poi-tl/81edcbd9227a619078c07052830a2cd6a4333bb7/poi-tl/src/test/resources/attachment/test.xls",
+    "bytes": 19968,
+    "blob": "3ce03dc67acb1ecc9ec2f2832f5955a6aadf228c",
+    "sha256": "e510c13c7991206c10a33be2b018631e52b5fb6ef3a0512b538c8730e12fc87b"
+  },
+  "license": {
+    "path": "LICENSE",
+    "url": "https://raw.githubusercontent.com/Sayi/poi-tl/81edcbd9227a619078c07052830a2cd6a4333bb7/LICENSE",
+    "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+    "classification": "Apache-2.0 repository distribution, no per-fixture override found; not an independent ET-producer declaration"
+  },
+  "gate": {
+    "acceptedFixture": false,
+    "sourceImportAcceptance": false,
+    "fullFormatAcceptance": false,
+    "missing": "Independent evidence that the published candidate was saved as native ET by its original producer, or another genuine independently published ET with usable license/provenance and source oracle",
+    "reason": "Workbook and ETExtData payloads are identical to same-commit XLS; differences are only property metadata. WPS-family markers do not independently prove ET Save-As versus WPS XLS/renaming. This does not prove the candidate is fake."
+  },
+  "diagnosticChecksPassed": true,
+  "sourceGatePassed": false,
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "comparison": {
+    "candidateStreams": [
+      {
+        "id": 0,
+        "name": "Root Entry",
+        "type": 5,
+        "first": 31,
+        "bytes": 1280
+      },
+      {
+        "id": 1,
+        "name": "Workbook",
+        "type": 2,
+        "first": 0,
+        "bytes": 15598,
+        "sha256": "7da8ecb0206f0cb61a73f1ec5b64b1ded0447ef164aae2cab3161068cad86bf4"
+      },
+      {
+        "id": 2,
+        "name": "ETExtData",
+        "type": 2,
+        "first": 0,
+        "bytes": 570,
+        "sha256": "59a721bef100a0c143fa624fecc2aca08125eabe32a1a7bccee873eed2278c0a"
+      },
+      {
+        "id": 3,
+        "name": "\u0005SummaryInformation",
+        "type": 2,
+        "first": 9,
+        "bytes": 216,
+        "sha256": "e0f8eeb54f92529460d3760e3222c57d726685b5c858ba634ef4c08ed6b421d8"
+      },
+      {
+        "id": 4,
+        "name": "\u0005DocumentSummaryInformation",
+        "type": 2,
+        "first": 13,
+        "bytes": 412,
+        "sha256": "6e45dd3ad5351f64653115c4d4a3e80c1dade2bbab1ab051e7508ef09567d335"
+      }
+    ],
+    "controlStreams": [
+      {
+        "id": 0,
+        "name": "Root Entry",
+        "type": 5,
+        "first": 31,
+        "bytes": 1280
+      },
+      {
+        "id": 1,
+        "name": "Workbook",
+        "type": 2,
+        "first": 0,
+        "bytes": 15598,
+        "sha256": "7da8ecb0206f0cb61a73f1ec5b64b1ded0447ef164aae2cab3161068cad86bf4"
+      },
+      {
+        "id": 2,
+        "name": "ETExtData",
+        "type": 2,
+        "first": 0,
+        "bytes": 570,
+        "sha256": "59a721bef100a0c143fa624fecc2aca08125eabe32a1a7bccee873eed2278c0a"
+      },
+      {
+        "id": 3,
+        "name": "\u0005SummaryInformation",
+        "type": 2,
+        "first": 9,
+        "bytes": 216,
+        "sha256": "74dd533fee17054f4d60e0c135bf2b24e03be3654bd9b09c41935104cfa0cfa2"
+      },
+      {
+        "id": 4,
+        "name": "\u0005DocumentSummaryInformation",
+        "type": 2,
+        "first": 13,
+        "bytes": 412,
+        "sha256": "a4d28ef07b8294ff8b233969963496ee2fbadeb7a1aec588a7960246c1e87574"
+      }
+    ],
+    "sameWorkbookPayload": true,
+    "sameETExtDataPayload": true,
+    "changedFileBytes": 28,
+    "changedOffsets": [
+      17136,
+      17137,
+      17138,
+      17139,
+      17508,
+      17510,
+      17512,
+      17514,
+      17516,
+      17520,
+      17522,
+      17524,
+      17528,
+      17530,
+      17532,
+      17534,
+      17536,
+      17538,
+      17540,
+      17542,
+      17556,
+      17558,
+      17560,
+      17562,
+      17564,
+      17566,
+      17568,
+      17570
+    ],
+    "changedStreamNames": [
+      "\u0005SummaryInformation",
+      "\u0005DocumentSummaryInformation"
+    ],
+    "metadataApplicationLabels": [
+      "WPS 文字",
+      "WPS 文字"
+    ],
+    "metadataBuild": "2052-7.5.1.8994"
+  },
+  "candidateOracle": {
+    "sheetNames": [
+      "Sheet1"
+    ],
+    "cells": {
+      "A1": {
+        "kind": "text",
+        "value": "类型"
+      },
+      "B1": {
+        "kind": "text",
+        "value": "地址"
+      },
+      "C1": {
+        "kind": "text",
+        "value": "联系方式"
+      },
+      "A2": {
+        "kind": "number",
+        "value": 1.0,
+        "rkHex": "0000f03f"
+      },
+      "B2": {
+        "kind": "text",
+        "value": "武汉"
+      },
+      "C2": {
+        "kind": "text",
+        "value": "00011000"
+      }
+    },
+    "populatedCells": 6,
+    "textCells": 5,
+    "numericCells": 1,
+    "sourceFormulas": 0,
+    "recordCount": 353,
+    "cellRecords": [
+      {
+        "offset": 15404,
+        "id": "0xfd",
+        "cell": "A1",
+        "xf": 15,
+        "kind": "text",
+        "value": "类型"
+      },
+      {
+        "offset": 15418,
+        "id": "0xfd",
+        "cell": "B1",
+        "xf": 15,
+        "kind": "text",
+        "value": "地址"
+      },
+      {
+        "offset": 15432,
+        "id": "0xfd",
+        "cell": "C1",
+        "xf": 15,
+        "kind": "text",
+        "value": "联系方式"
+      },
+      {
+        "offset": 15446,
+        "id": "0x27e",
+        "cell": "A2",
+        "xf": 15,
+        "kind": "number",
+        "value": 1.0,
+        "rkHex": "0000f03f"
+      },
+      {
+        "offset": 15460,
+        "id": "0xfd",
+        "cell": "B2",
+        "xf": 15,
+        "kind": "text",
+        "value": "武汉"
+      },
+      {
+        "offset": 15474,
+        "id": "0xfd",
+        "cell": "C2",
+        "xf": 64,
+        "kind": "text",
+        "value": "00011000"
+      }
+    ],
+    "method": "Own CFB+BIFF8 byte reader, BOUNDSHEET/SST/LABELSST/RK; no parser/engine/converter output used",
+    "role": "Candidate content oracle only; not proof of ET producer authenticity or ET import support"
+  },
+  "rejectedPlaceholder": {
+    "repository": "Tom60chat/Extension-List",
+    "commit": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+    "path": "List/WPS Spreadsheets Workbook.et",
+    "url": "https://raw.githubusercontent.com/Tom60chat/Extension-List/74e784db06e7a76fc3b61189830e241c3b6d0105/List/WPS%20Spreadsheets%20Workbook.et",
+    "bytes": 448,
+    "blob": "33e5dea2e40250780a0f8365b10f58b7eb0e0ba2",
+    "classification": "Plain Lorem ipsum text, not a workbook; never import-test as ET",
+    "sha256": "b9b1d973bccfa07ddef6747cf7b189c2ee1dd7b265c61da5479f1b677e9ccf3a",
+    "headerHex": "224c6f72656d20697073756d20646f6c"
+  },
+  "limits": [
+    "WPS metadata/ETExtData identify family, not independently documented original native ET Save-As intent.",
+    "Equal payloads do not prove renaming; the producer provenance remains unresolved.",
+    "No Office conversion, actual spreadsheet WASM, ET edit/UndoRedo/save/freshreopen, hosted browser UI or native GUI test.",
+    "Opaque ETExtData is hashed, not semantically decoded or accepted for fidelity.",
+    "Candidate has zero formulas; not an original ET formula-import oracle."
+  ]
+}

@@ -47,4 +47,3 @@ def cfb_streams(data):
         assert e["name"] not in streams
         streams[e["name"]]=b;e["sha256"]=digest(b)
     return entries,streams
-
