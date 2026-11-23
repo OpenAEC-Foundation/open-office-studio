@@ -1,0 +1,114 @@
+name: Standalone Windows native QA
+on:
+  push:
+    branches: [codex/standalone-windows-qa-2026-11-23]
+    paths: [.github/standalone-windows-qa.json, .github/workflows/standalone-windows-qa.yml, scripts/standalone-windows-qa/**]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: standalone-windows-qa-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  capability:
+    runs-on: windows-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Native Windows focus, Ctrl, chooser, save and reopen capability
+        shell: pwsh
+        run: ./scripts/standalone-windows-qa/host-capability.ps1 -OutputPath .local/standalone-windows-host
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-windows-host-capability
+          path: .local/standalone-windows-host
+          include-hidden-files: true
+          if-no-files-found: error
+  prepare:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    outputs:
+      frozen: ${{ steps.plan.outputs.frozen }}
+      apps: ${{ steps.plan.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: plan
+        run: python scripts/standalone-windows-qa/packages.py plan .github/standalone-windows-qa.json
+      - name: Download canonical ZIP once, verify and split untouched installers
+        if: steps.plan.outputs.frozen == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python scripts/standalone-windows-qa/packages.py split .github/standalone-windows-qa.json .local/standalone-windows-split
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.frozen == 'true'
+        with:
+          name: standalone-windows-writer-package
+          path: .local/standalone-windows-split/writer
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.frozen == 'true'
+        with:
+          name: standalone-windows-spreadsheet-package
+          path: .local/standalone-windows-split/spreadsheet
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.frozen == 'true'
+        with:
+          name: standalone-windows-presentation-package
+          path: .local/standalone-windows-split/presentation
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.frozen == 'true'
+        with:
+          name: standalone-windows-email-package
+          path: .local/standalone-windows-split/email
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.frozen == 'true'
+        with:
+          name: standalone-windows-notition-package
+          path: .local/standalone-windows-split/notition
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.frozen == 'true'
+        with:
+          name: standalone-windows-database-package
+          path: .local/standalone-windows-split/database
+  app:
+    needs: [prepare]
+    if: needs.prepare.outputs.frozen == 'true'
+    runs-on: windows-latest
+    timeout-minutes: 22
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        app: ${{ fromJSON(needs.prepare.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: standalone-windows-${{ matrix.app }}-package
+          path: .local/standalone-windows-package
+      - name: Only test dependencies, no application build or suite resources
+        shell: pwsh
+        run: npm install --prefix .local/standalone-windows-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Native installed app, bounded preflight and exact saved-file oracle
+        env:
+          OOS_QA_APP: ${{ matrix.app }}
+          OOS_QA_HARNESS: ${{ github.sha }}
+        run: node scripts/standalone-windows-qa/native.mjs .local/standalone-windows-package .local/standalone-windows-${{ matrix.app }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-windows-${{ matrix.app }}-proof
+          path: .local/standalone-windows-${{ matrix.app }}
+          include-hidden-files: true
+          if-no-files-found: error
