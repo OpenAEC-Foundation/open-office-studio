@@ -289,8 +289,18 @@ async function packageCase(pkg) {
       { type: "keyDown", value },
       { type: "keyUp", value },
     ]);
-  const chord = async (value) =>
-    keyActions(
+  const chord = async (value) => {
+    if (value === "o") {
+      await guard.verify("before actual X11 Ctrl+O");
+      command("xdotool", ["key", "--clearmodifiers", "ctrl+o"], { env });
+      (report.nativeOpenKeys ??= []).push({
+        method: "XTest",
+        chord: "ctrl+o",
+        binding: guard.evidence.binding,
+      });
+      return;
+    }
+    return keyActions(
       [
         { type: "keyDown", value: "\uE009" },
         { type: "keyDown", value },
@@ -299,6 +309,7 @@ async function packageCase(pkg) {
       ],
       value === "o",
     );
+  };
   const type = async (text) =>
     keyActions(
       [...text].flatMap((value) => [
