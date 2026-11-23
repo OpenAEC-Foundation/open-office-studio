@@ -691,6 +691,7 @@ async function packageCase(pkg) {
         );
       command("dpkg-deb", ["--extract", pkg.path, payloadRoot]);
       command("sudo", ["apt-get", "install", "-y", "--no-install-recommends", pkg.path]);
+      report.afterDependencyInstallNoSuitePackages = cleanHostPackages();
       report.normalPackageDependencyResolver = true;
       report.nativeMessageDependencyObservation.afterNormalDebInstall = observedTool("which", ["zenity"]);
       report.nativeMessageDependencyObservation.installedThroughDeclaredPackageDependency = report.nativeMessageDependencyObservation.zenityCommand.status === "not-found" && report.nativeMessageDependencyObservation.afterNormalDebInstall.status === "observed";
