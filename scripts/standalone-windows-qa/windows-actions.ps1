@@ -1,5 +1,5 @@
 param([Parameter(Mandatory)][ValidateSet('Focus','SaveDialog','Close','Identity')][string]$Action,
- [Parameter(Mandatory)][int]$OwnedPid,[string]$Target,[string]$ExpectedName,[Parameter(Mandatory)][string]$ReportPath)
+ [Parameter(Mandatory)][int]$OwnedPid,[long]$WindowHandle=0,[string]$Target,[string]$ExpectedName,[Parameter(Mandatory)][string]$ReportPath)
 $ErrorActionPreference='Stop'
 if ($env:GITHUB_ACTIONS -ne 'true' -or $env:RUNNER_ENVIRONMENT -ne 'github-hosted') { throw 'Disposable GitHub Windows host only' }
 Add-Type -AssemblyName UIAutomationClient
@@ -8,6 +8,7 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -TypeDefinition @'
 using System; using System.Runtime.InteropServices;
 public static class StandaloneWindowsNative {
+ [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h,int n);
  [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
  [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h,out uint pid);
@@ -17,13 +18,17 @@ public static class StandaloneWindowsNative {
 $report=@{action=$Action;ownedPid=$OwnedPid;status='failed'}
 try {
  $proc=Get-Process -Id $OwnedPid
- $report.executable=$proc.Path; $report.sessionId=$proc.SessionId; $report.windowHandle=$proc.MainWindowHandle.ToInt64()
- if ($proc.MainWindowHandle -eq [IntPtr]::Zero) { throw 'BLOCKED: actual owned native window handle unavailable' }
- $window=[Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle)
+ $handle=$proc.MainWindowHandle
+ if ($WindowHandle) { $handle=[IntPtr]::new($WindowHandle) }
+ [uint32]$handlePid=0; $null=[StandaloneWindowsNative]::GetWindowThreadProcessId($handle,[ref]$handlePid)
+ $report.executable=$proc.Path; $report.sessionId=$proc.SessionId; $report.windowHandle=$handle.ToInt64()
+ if ($handle -eq [IntPtr]::Zero -or $handlePid -ne $OwnedPid) { throw 'BLOCKED: actual owned native window handle unavailable' }
+ $window=[Windows.Automation.AutomationElement]::FromHandle($handle)
  if ($window.Current.ProcessId -ne $OwnedPid) { throw 'BLOCKED: window ownership mismatch' }
  $report.title=$window.Current.Name
  if ($Action -eq 'Focus') {
-   $null=[StandaloneWindowsNative]::SetForegroundWindow($proc.MainWindowHandle)
+   $null=[StandaloneWindowsNative]::ShowWindow($handle,9)
+   $null=[StandaloneWindowsNative]::SetForegroundWindow($handle)
    Start-Sleep -Milliseconds 200
    [uint32]$foregroundPid=0
    $null=[StandaloneWindowsNative]::GetWindowThreadProcessId([StandaloneWindowsNative]::GetForegroundWindow(),[ref]$foregroundPid)
@@ -55,7 +60,7 @@ try {
    $buttons[0].GetCurrentPattern([Windows.Automation.InvokePattern]::Pattern).Invoke()
    $report.nativeSaveInvoked=$true; $report.pathReadbackMatches=$true; $report.target=$Target
  } elseif ($Action -eq 'Close') {
-   $null=[StandaloneWindowsNative]::PostMessage($proc.MainWindowHandle,0x0010,[IntPtr]::Zero,[IntPtr]::Zero)
+   $null=[StandaloneWindowsNative]::PostMessage($handle,0x0010,[IntPtr]::Zero,[IntPtr]::Zero)
    $report.wmClosePosted=$true
  }
  $report.status='passed'
