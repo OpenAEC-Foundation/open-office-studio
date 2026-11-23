@@ -1,0 +1,32 @@
+name: Spreadsheet chord rendering 380
+on:
+  push:
+    branches: [codex/sxc-chord-render-2026-11-23]
+    paths: [.github/sxc-chord-render.json]
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: node scripts/kopieer-assets.mjs
+      - name: Focused geometry, source and OOXML preservation regressions
+        run: pnpm exec vitest run src/rekenblad/chordGeometrie.test.ts src/rekenblad/tekenobjecten.test.ts src/rekenblad/tekenobject-groepen.test.ts src/rekenblad/objectGeometrie.test.ts --reporter=dot
+      - name: Actual browser source edit/save/fresh reopen and print canvas
+        run: node qa/sxc-chord-render/browser.mjs .local/sxc-chord-browser-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sxc-chord-browser-proof
+          path: .local/sxc-chord-browser-proof
+          include-hidden-files: true
+          if-no-files-found: error

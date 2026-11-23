@@ -6,6 +6,7 @@ import { beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 import { opnameVan } from "../export/pdf/opname";
 import i18next from "../i18n/config";
 import { groepOnderdelen, objectOmvang } from "./groepGeometrie";
+import { chordGeometrie } from "./chordGeometrie";
 
 function vorm(
   c: CanvasRenderingContext2D,
@@ -13,8 +14,18 @@ function vorm(
   w: number,
   h: number,
 ) {
+  const boog = o.vorm === "chord" && o.chord
+    ? chordGeometrie(w, h, o.chord) : null;
+  if (o.vorm === "chord" && !boog) {
+    placeholder(c, o, w, h);
+    return;
+  }
   c.beginPath();
-  if (o.vorm === "ellipse")
+  if (boog) {
+    c.moveTo(boog.start.x, boog.start.y);
+    c.ellipse(boog.cx, boog.cy, boog.rx, boog.ry, 0, boog.begin, boog.einde);
+    c.closePath();
+  } else if (o.vorm === "ellipse")
     c.ellipse(
       w / 2,
       h / 2,

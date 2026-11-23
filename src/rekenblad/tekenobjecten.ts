@@ -18,6 +18,7 @@ import {
 } from "../grafieken/xml";
 import i18next from "../i18n/config";
 import { strFromU8, unzipSync } from "fflate";
+import { leesChordHoeken, type ChordHoeken } from "./chordGeometrie";
 
 const XDR =
   "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing";
@@ -63,6 +64,7 @@ export interface Tekenobject {
   einde?: { row: number; col: number; x: number; y: number };
   absoluut?: boolean;
   vorm: string;
+  chord?: ChordHoeken;
   tekst: string;
   vulling: string;
   lijn: string;
@@ -356,6 +358,11 @@ function leesObject(
   const vorm =
     attr(kind(pr, "prstGeom"), "prst") ??
     (kind(pr, "custGeom") ? "custom" : "rect");
+  const chord = vorm === "chord"
+    ? leesChordHoeken(kinderen(kind(kind(pr, "prstGeom"), "avLst"), "gd").map(
+        (g) => ({ naam: attr(g, "name"), formule: attr(g, "fmla") }),
+      ))
+    : undefined;
   const vulling = kleur(pr, ouderVulling, thema);
   let groep: Tekenobject["groep"];
   if (isGroep && diepte < 16) {
@@ -400,7 +407,7 @@ function leesObject(
         ? "afbeelding"
         : groep
           ? "groep"
-          : obj.lokaal === "sp" && BASISVORMEN.includes(vorm)
+          : obj.lokaal === "sp" && (BASISVORMEN.includes(vorm) || !!chord)
             ? "vorm"
             : "onbekend",
     plek: {
@@ -412,6 +419,7 @@ function leesObject(
       hoogte: Math.max(1, nummer(ext, "cy", 914400) / EMU),
     },
     vorm,
+    chord,
     tekst: kinderen(tx, "p").map(tekstVan).join("\n"),
     vulling,
     lijn: kleur(kind(pr, "ln"), "#36363E", thema),

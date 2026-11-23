@@ -19,6 +19,7 @@ import { openObjectVenster } from "./objectBewerking";
 import { objectGeometrie } from "./objectGeometrie";
 import { beeldVoorbeeldToegestaan } from "./beeldAfmetingen";
 import { groepOnderdelen, objectOmvang } from "./groepGeometrie";
+import { chordGeometrie } from "./chordGeometrie";
 import "./tekenobjecten.css";
 
 /** De engine tekent grafieken; deze laag tekent de andere DrawingML-objecten. */
@@ -459,6 +460,10 @@ function Vorm({
   breedte: number;
   hoogte: number;
 }) {
+  const boog = o.vorm === "chord" && o.chord
+    ? chordGeometrie(w, h, o.chord) : null;
+  if (o.vorm === "chord" && !boog)
+    return <Onbekend naam={o.naam} />;
   const pr = {
     fill: o.vulling,
     stroke: o.lijn,
@@ -474,7 +479,9 @@ function Vorm({
           transform: `scale(${o.spiegelX ? -1 : 1},${o.spiegelY ? -1 : 1})`,
         }}
       >
-        {o.vorm === "ellipse" ? (
+        {boog ? (
+          <path d={boog.pad} {...pr} />
+        ) : o.vorm === "ellipse" ? (
           <ellipse
             cx={w / 2}
             cy={h / 2}
