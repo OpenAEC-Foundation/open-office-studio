@@ -1,0 +1,32 @@
+# Standalone Linux P2 acceptance preparation
+
+QA owner: `standalone_linux`, coordinated exclusively by the existing integration owner. Product frozen at `dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b`, tree `5a644e397ecc6af5452a49b6404edf953687d1b2`, version `2026.48.1`. The canonical release run is `45150438420`, own Linux job `137610274931`. No product changes, app builds, main changes, tag or publication.
+
+## Byte and host isolation
+
+One preparation job checks the own Linux job's success independently of other OS results, verifies the entire canonical `uitgave-Linux` ZIP SHA-256/size, then extracts only the twelve standalone DEB/AppImage files and their six Linux package reports. Office is never extracted. Original source tree, version, canonical archive/member, package/report hashes, bytes and app identities are preserved in each origin receipt.
+
+The original package bytes are uploaded separately per app. Every fresh native test host downloads only its own app input ZIP, verifies that full ZIP against the Actions digest and producer QA/source/parent chain, then verifies its two package hashes and package report again. No suite ZIP, suite payload, shared suite profile, installed host LibreOffice or checkout runtime is exposed to those app hosts. The native executable must hash exactly to its inspected payload. HOME/XDG/PATH are isolated per package and the actual native identifier/version/name, own profile, process/resource paths and needed resources are recorded.
+
+Maximum three app hosts operate concurrently. Each performs real native pointer/keyboard/file-picker operations on its actual standalone binary. Readonly DOM access uses the existing strict transport; compiled native metadata uses only the public readonly app metadata API. Functional cases do not inject files, state, model changes or backend calls. PID/starttime/ELF/XID/focus binding is reused from the proven native P2 protocol.
+
+## Core matrix
+
+| App | Packages | Native core route and independent expected result | External requirements / limits |
+| --- | --- | --- | --- |
+| Writer | DEB + AppImage | Own DOCX, real canvas focus/Ctrl+Home, type a marker while retaining original text, Ctrl+S, exact XML marker/original, normal full exit and new-process reopen/Find | OS libraries and private converter resources inspected; not every DOCX or conversion variant |
+| Spreadsheet | DEB + AppImage | Own XLSX A1=4, B1=A1*3; actual name/formula inputs set A1=9 and C1=A1+B1; Ctrl+S; numeric cell types, exact formulas and caches 27/36; full quit/reopen | Plus both genuine GNM aliases via actual native picker, production Rust IPC and this app's own bundled converter; 8 typed cells/4 formulas/2 sheets/edit/XLSX/new-PID reopen and independent source/XML oracle |
+| Presentation | DEB + AppImage | Own PPTX, actual editable Outline text, add second slide, Ctrl+S; independent saved text and actual second-slide relationship, full quit/reopen | No complete media/transition/format matrix |
+| Email | DEB + AppImage | Own synthetic account/profile and isolated real OS Secret Service; native compose subject/body; Ctrl+S causes actual local IMAP APPEND; normal full quit/reopen retrieves the draft | Synthetic loopback IMAP only; no SMTP server, sent mail, real account, OAuth or live-provider certification |
+| Notition | DEB + AppImage | Native own notebook title/text, Ctrl+S/local persistence, actual backup file picker, independent backup JSON, normal full quit/reopen | Prior old Notition run `45143000504` is driver evidence only, never P2 acceptance |
+| Database | DEB + AppImage | Independently generated two-row SQLite through actual user Open/file picker and explicit Open anyway; read rows and type SELECT SUM(amount)=18; normal full quit/reopen; original hash unchanged | Public SQLite input route is supported in `packages/database/src/DatabaseStudio.tsx:298` and `:319`; read/query scope only, no internal backend seed, Access import/write/save/VBA claim |
+
+## Reused evidence and QA adaptations
+
+The original six-app preparation/harness is preserved cleanly at `1f5ab06a28a1e7c5433e5029aa72d7575edfa1cc`. This separate P2 branch imports that QA code and adds explicit own-Linux-job and per-app artifact binding, the existing PID/XID/readonly/focus protocol, selected-document observations and normal full AppImage exit. Writer input uses the already proven native canvas pointer route.
+
+The caller-owned `standalone-linux-gnm-native.mjs` reuses native operations from successful Office-DEB harness `c576379059fa819ac64017f9c84e1e519ce135fa` / run `45155198992`, while lifecycle, actual executable, identity, resources and profile remain owned by the current standalone package. Office-DEB GNM proof is separately preserved at `0f7c505ec4c66e72fe038da991a944d7af3ba28d`; it is not a standalone or AppImage pass.
+
+Local preparation checks: four provenance/isolation contracts, four synthetic IMAP and OOXML oracle cases, sixteen GNM oracle contracts, Python compile and Node syntax checks pass. The spreadsheet oracle rejects missing formula caches and string-typed numeric cells. Native final cases remain **pending canonical own Linux artifact and actual execution**. Builds or prior source results do not certify native standalone acceptance.
+
+Normal Alt+F4 must close actual app, AppImage wrapper and owned WebKit processes before a new PID can reopen. Own driver/keyring processes and empty profiles are cleaned up; captures are on the disposable remote display only. Candidate signature certification remains separate and pending; publication is unauthorized. Known integration blocker #374 is outside this QA scope and prevents any overall stable-release claim.
