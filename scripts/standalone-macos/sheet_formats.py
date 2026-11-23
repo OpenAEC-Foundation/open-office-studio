@@ -6,6 +6,7 @@ import time
 import urllib.request
 from contracts import digest
 from native import Unavailable
+from cases import is_dialog
 from stw import picker_open,REQUIRED_CORE
 import gnm_oracle
 import xlsb_oracle
@@ -13,6 +14,86 @@ import xlsb_oracle
 GNM_ORACLE_SHA="7f47fe4fbd5fdc66a1c8179300d257dcef0e1ebae514d7271159c3469dfbb599"
 XLSB_ORACLE_SHA="e75c41fd23fa4285b13351b143c6d9d6a7120e58fc16107c1af14476b0f6dae7"
 XLSB_URL="https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb"
+
+
+def unsaved_xlsx_copy(snapshot,stem):
+    matches=[]
+    for row in snapshot.get("rawNodes",[]):
+        a=row["attributes"];text=" ".join(str(a.get(k,"")) for k in ("AXTitle","AXDescription","AXHelp"))
+        if (a.get("AXRole") in ("AXRadioButton","AXTab") and a.get("AXRoleDescription")=="tab"
+                and a.get("AXSelected") is True and a.get("frame") and stem in text and ".xlsx" in text):
+            matches.append(a)
+    if len(matches)!=1 or "unsaved changes" not in " ".join(str(v) for v in matches[0].values()):
+        raise Unavailable("One actual selected unsaved XLSX working-copy tab not established")
+    return {k:matches[0].get(k) for k in ("AXTitle","AXDescription","AXHelp","AXSelected","AXValue")}
+
+
+def default_xlsx_proposal(snapshot,stem):
+    rows={r["index"]:r for r in snapshot.get("rawNodes",[])}
+    dialogs=[r for r in rows.values() if is_dialog(r["attributes"])
+             and "Save as" in (r["attributes"].get("AXTitle"),r["attributes"].get("AXDescription"))]
+    if len(dialogs)>1:raise Unavailable("Save As proposal is ambiguous")
+    if not dialogs:return None
+    children=[]
+    for row in rows.values():
+        cursor=row
+        while cursor:
+            if cursor["index"]==dialogs[0]["index"]:children.append(row["attributes"]);break
+            cursor=rows.get(cursor["parent"])
+    radio=[a for a in children if a.get("AXRole")=="AXRadioButton" and a.get("AXValue") in (True,1)
+           and a.get("frame") and a.get("AXEnabled") is not False
+           and "Excel workbook (.xlsx)" in (a.get("AXTitle"),a.get("AXDescription"))]
+    names=[a for a in children if a.get("AXRole")=="AXTextField" and a.get("AXTitle")=="File name .xlsx"
+           and a.get("frame") and a.get("AXEnabled") is not False
+           and stem in str(a.get("AXValue","")) and not str(a.get("AXValue","")).lower().endswith(".xlsb")]
+    if len(radio)==1 and len(names)==1:return {"dialog":dialogs[0]["attributes"],"selectedFormat":radio[0],"filename":names[0]}
+    return None  # Never select XLSX ourselves to manufacture a correct default.
+
+
+def xlsb_save_policy377(case,fixture,receipt):
+    """Raw-import Cmd-S/ordinary Save proposal and cancel, before any Save As."""
+    source=digest(fixture);proof={"status":"running","nativeAccepted":False,"sourceSHA256":source,"routes":{}}
+    receipt["savePolicy377"]=proof
+    try:
+        case.select(["AXTextField","AXComboBox"],["Name box"]);case.replace("A1");case.s.ax("key","return")
+        deadline=time.monotonic()+5
+        while True:
+            snap=case.snapshot();focus=snap.get("focused",{})
+            label=focus.get("AXDescription") or focus.get("AXTitle","")
+            formula=[r["attributes"] for r in snap.get("rawNodes",[]) if r["attributes"].get("AXRole")=="AXTextField"
+                     and "Enter a value or formula" in (r["attributes"].get("AXTitle"),r["attributes"].get("AXDescription"))]
+            if (focus.get("AXRole")=="AXCell" and focus.get("AXSelected") is True and label.startswith("A1, ")
+                    and len(formula)==1 and formula[0].get("AXValue") in ("=1+2","1+2")):break
+            if time.monotonic()>=deadline:raise Unavailable("377 raw XLSB A1 native grid/formula focus not established")
+            time.sleep(.2)
+        before=unsaved_xlsx_copy(snap,fixture.stem);proof["beforeWorkingCopy"]=before
+        for route in ("command-s","ordinary-save"):
+            item={"status":"running"};proof["routes"][route]=item
+            if route=="command-s":case.s.ax("key","cmd-s")
+            else:case.button("Save",toolbar="Quick access")
+            deadline=time.monotonic()+45
+            while True:
+                snap=case.snapshot();proposal=default_xlsx_proposal(snap,fixture.stem)
+                if proposal:break
+                if time.monotonic()>=deadline:raise Unavailable("377 default XLSX Save As proposal not observed: "+route)
+                time.sleep(.2)
+            item["proposal"]=proposal;case.s.capture("xlsb377-"+route+"-proposal")
+            case.button("Cancel",dialog=True);deadline=time.monotonic()+5
+            while True:
+                snap=case.snapshot()
+                if not any(is_dialog(r["attributes"]) for r in snap.get("rawNodes",[])):break
+                if time.monotonic()>=deadline:raise Unavailable("377 ordinary Cancel did not close the Save As dialog")
+                time.sleep(.2)
+            after=unsaved_xlsx_copy(snap,fixture.stem)
+            if after!=before or digest(fixture)!=source:raise Unavailable("377 Cancel changed source bytes or the unsaved working-copy tab")
+            item.update(status="functional-evidence-collected-review-pending",sourceBytesUnchanged=True,
+                        unsavedWorkingCopyPreserved=True,afterWorkingCopy=after)
+            case.s.capture("xlsb377-"+route+"-cancelled")
+        proof["status"]="functional-evidence-collected-review-pending"
+    except Exception as error:
+        proof.update(status="unavailable-or-incomplete",failure={"type":type(error).__name__,"message":str(error)})
+        raise
+    finally:case.s.write("xlsb/save-policy377.json",proof)
 
 
 def prepare(folder,kind):
@@ -71,6 +152,7 @@ def run_native(session,kind):
     if not conversions or not all(p["resolvedInsideOwnApp"] for p in converters):
         raise Unavailable("Actual legacy spreadsheet import converter not observed inside own app")
     receipt["actualConversionChildren"]=conversions
+    if kind=="xlsb":xlsb_save_policy377(case,fixture,receipt)
     output=session.documents/kind/"imported-original.xlsx"
     receipt["beforeEditOracle"]=save_xlsx(case,output,oracle,kind,False)
     if kind!="xlsb":case.select(["AXRadioButton","AXTab","AXButton"],["Sheet2"])

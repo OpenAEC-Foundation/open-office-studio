@@ -11,6 +11,30 @@ import sheet_formats
 
 
 class FormatGates(unittest.TestCase):
+    def test_377_requires_unique_selected_unsaved_xlsx_copy_not_a_clean_or_other_tab(self):
+        tab={'AXRole':'AXRadioButton','AXRoleDescription':'tab','AXSelected':True,'AXValue':True,
+             'AXTitle':'shared_formula.xlsx','AXHelp':'shared_formula.xlsx · unsaved changes',
+             'frame':{'x':10,'y':190,'width':200,'height':24}}
+        snap={'rawNodes':[{'attributes':tab}]}
+        self.assertTrue(sheet_formats.unsaved_xlsx_copy(snap,'shared_formula')['AXSelected'])
+        for bad in ({**tab,'AXHelp':'shared_formula.xlsx'},{**tab,'AXSelected':False},
+                    {**tab,'AXTitle':'another.xlsx','AXHelp':'another.xlsx · unsaved changes'}):
+            with self.assertRaises(Unavailable):sheet_formats.unsaved_xlsx_copy({'rawNodes':[{'attributes':bad}]},'shared_formula')
+        with self.assertRaises(Unavailable):sheet_formats.unsaved_xlsx_copy({'rawNodes':[{'attributes':tab}]*2},'shared_formula')
+
+    def test_377_reads_existing_default_xlsx_proposal_without_selecting_or_trusting_background(self):
+        frame={'x':20,'y':100,'width':200,'height':30}
+        rows=[{'index':0,'parent':-1,'attributes':{'AXRole':'AXGroup','AXSubrole':'AXApplicationDialog','AXTitle':'Save as'}},
+              {'index':1,'parent':0,'attributes':{'AXRole':'AXRadioButton','AXTitle':'Excel workbook (.xlsx)','AXValue':1,'frame':frame}},
+              {'index':2,'parent':0,'attributes':{'AXRole':'AXTextField','AXTitle':'File name .xlsx','AXValue':'shared_formula','frame':frame}}]
+        self.assertIsNotNone(sheet_formats.default_xlsx_proposal({'rawNodes':rows},'shared_formula'))
+        rows[1]['attributes']['AXValue']=0
+        self.assertIsNone(sheet_formats.default_xlsx_proposal({'rawNodes':rows},'shared_formula'))
+        rows[1]['attributes']['AXValue']=1;rows[1]['parent']=-1
+        self.assertIsNone(sheet_formats.default_xlsx_proposal({'rawNodes':rows},'shared_formula'))
+        rows[1]['parent']=0;rows[2]['attributes']['AXValue']='shared_formula.xlsb'
+        self.assertIsNone(sheet_formats.default_xlsx_proposal({'rawNodes':rows},'shared_formula'))
+
     def test_stw_cannot_run_before_real_docx_core_preflight(self):
         session=SimpleNamespace(app="writer",report={"functionalCaseCompleted":False})
         with patch("stw.prepare",side_effect=AssertionError("No fixture download or UI allowed")):
