@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Independent native owner input; runtime-only prep did not install or operate Office",
+  "artifact": {
+    "run": 45146535263,
+    "id": 14804990580,
+    "name": "p2-runtime-prep-recovery",
+    "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+    "zipBytes": 383818043
+  },
+  "parent": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "appVersion": "2026.48.1",
+    "run": 45143305147,
+    "job": 137586343061,
+    "jobConclusion": "success",
+    "installerArchive": {
+      "id": 14804062140,
+      "name": "open-office-studio-Linux",
+      "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "bytes": 811809091
+    },
+    "reportArchive": {
+      "id": 14804805305,
+      "name": "pakketcontrole-Linux",
+      "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+      "bytes": 671
+    },
+    "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+    "deb": {
+      "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+      "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+      "bytes": 383815340,
+      "control": {
+        "Package": "open-office-studio",
+        "Version": "2026.48.1",
+        "Architecture": "amd64",
+        "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+      }
+    },
+    "officeExecutableMetadataOnly": {
+      "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "bytes": 99899360,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    }
+  },
+  "debMember": "canonical-office.deb",
+  "debSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+  "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+  "qaPin": {
+    "producerCommit": "bbc6777e1ef73654b4bb4391fb1212a9cdcf695b",
+    "producerScript": "scripts/p2-runtime-input.py"
+  },
+  "verification": {
+    "canonicalZipDebAndPayloadElf": "Fully inspected by the producer in run 45146535263 before the unrelated canary log-path failure",
+    "recoveryMetadata": "Read from immutable artifact via CRC-checked HTTP range; official whole-ZIP digest is from GitHub metadata. Consumer must hash its whole download and DEB before installation.",
+    "installedElf": "NOT tested by prep. Native owner must compare installed ELF to expectedInstalledElfSha256."
+  }
+}
