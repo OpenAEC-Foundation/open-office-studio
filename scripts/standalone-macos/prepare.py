@@ -104,7 +104,10 @@ def main():
     run, artifact, job = (api("/actions/runs/"+str(parent["run"])),
                          api("/actions/artifacts/"+str(parent["id"])),
                          api("/actions/jobs/"+str(parent["producerJobId"])))
-    validate_producer(request,run,artifact,job)
+    listing=api("/actions/runs/"+str(parent["run"])+"/artifacts?per_page=100")
+    if listing.get("total_count")!=len(listing.get("artifacts",[])):
+        raise ValueError("Complete producer artifact listing required to exclude duplicate Mac artifacts")
+    validate_producer(request,run,artifact,job,listing["artifacts"])
     if request.get("reuseTransfersFromRun"):
         matrix=reuse_transfers(request,args.output)
     elif args.archive:
@@ -116,7 +119,7 @@ def main():
                            stdout=target,check=True)
     if not request.get("reuseTransfersFromRun"):
         matrix=extract(request,archive,args.output)
-    (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job},indent=2)+"\n")
+    (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job,"artifactListing":listing},indent=2)+"\n")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as stream:
             stream.write("matrix="+json.dumps(matrix,separators=(",",":"))+"\nready=true\n")

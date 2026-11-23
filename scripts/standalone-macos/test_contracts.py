@@ -6,7 +6,7 @@ import json
 import tempfile
 import unittest
 import zipfile
-from contracts import APPS, VERSION, acceptance_from_evidence, validate_bundle, validate_producer, validate_request, verify_under
+from contracts import APPS, VERSION, MAC_PRODUCER_GATES, acceptance_from_evidence, validate_bundle, validate_producer, validate_request, verify_under
 from fixtures import create, MARKERS
 from oracles import verify
 
@@ -14,9 +14,19 @@ from oracles import verify
 def request():
     return {"schemaVersion": 1, "scope": "macos-standalone-six", "executionApproved": True,
             "source": {"commit": "a"*40, "tree": "b"*40, "version": VERSION}, "expiresAt": "2099-01-01T00:00:00Z",
-            "parentArtifact": {"id": 1, "run": 2, "producerJobId": 3, "name": "release-mac", "sha256": "c"*64},
+            "parentArtifact": {"id": 1, "run": 2, "producerJobId": 3, "attempt":1, "name": "uitgave-macOS", "sha256": "c"*64},
             "packages": {k: {"member": n[0]+"_"+VERSION+"_aarch64.dmg", "sha256": "d"*64} for k,n in APPS.items()},
             "harnessFiles": {"scripts/standalone-macos/run.py": "e"*64}}
+
+
+def producer():
+    run={"id":2,"head_sha":"a"*40,"run_attempt":1,"status":"in_progress","conclusion":""}
+    artifact={"id":1,"name":"uitgave-macOS","expired":False,"created_at":"2026-11-23T10:00:01Z",
+              "workflow_run":{"id":2,"head_sha":"a"*40},"digest":"sha256:"+"c"*64}
+    job={"id":3,"run_id":2,"run_attempt":1,"status":"completed","conclusion":"success",
+         "steps":[{"name":n,"status":"completed","conclusion":"success","completed_at":"2026-11-23T10:00:00Z"}
+                  for n in MAC_PRODUCER_GATES]}
+    return run,artifact,job
 
 
 class ContractTests(unittest.TestCase):
@@ -45,12 +55,29 @@ class ContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):validate_bundle(x,"writer")
 
     def test_ready_mac_does_not_wait_for_unrelated_platforms(self):
-        q=request();run={"id":2,"head_sha":"a"*40,"status":"in_progress","conclusion":""}
-        a={"id":1,"name":"release-mac","expired":False,"workflow_run":{"id":2,"head_sha":"a"*40},"digest":"sha256:"+"c"*64}
-        j={"id":3,"run_id":2,"status":"completed","conclusion":"success"}
-        validate_producer(q,run,a,j)
+        q=request();run,a,j=producer()
+        validate_producer(q,run,a,j,[a])
         j["conclusion"]="failure"
-        with self.assertRaises(PermissionError):validate_producer(q,run,a,j)
+        with self.assertRaises(PermissionError):validate_producer(q,run,a,j,[a])
+
+    def test_wrong_attempt_or_missing_api_digest_blocks_package_download(self):
+        for target,key,value in (("run","run_attempt",2),("job","run_attempt",2),("artifact","digest",None)):
+            run,a,j=producer();{"run":run,"artifact":a,"job":j}[target][key]=value
+            with self.subTest(target=target),self.assertRaises(ValueError):validate_producer(request(),run,a,j,[a])
+
+    def test_duplicate_or_incomplete_mac_artifact_listing_is_rejected(self):
+        run,a,j=producer()
+        for listing in (None,[],[a,{**a,"id":4}]):
+            with self.subTest(listing=listing),self.assertRaises(ValueError):validate_producer(request(),run,a,j,listing)
+
+    def test_skipped_signature_or_package_gate_cannot_count_as_success(self):
+        for index in range(len(MAC_PRODUCER_GATES)):
+            run,a,j=producer();j["steps"][index]["conclusion"]="skipped"
+            with self.subTest(index=index),self.assertRaises(PermissionError):validate_producer(request(),run,a,j,[a])
+
+    def test_artifact_created_before_signature_gates_is_rejected(self):
+        run,a,j=producer();a["created_at"]="2026-11-23T09:59:59Z"
+        with self.assertRaises(ValueError):validate_producer(request(),run,a,j,[a])
 
     def test_changed_artifact_source_is_rejected(self):
         q=request();run={"id":2,"head_sha":"f"*40}

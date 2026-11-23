@@ -195,10 +195,25 @@ class Case:
         self.s.report["ownConverterChildObserved"]=True
         self.s.capture("runtime-exported")
 
+    def notes_notebook(self):
+        # The actual UI is a native select, not a button named after the book.
+        # Add backup appends our one synthetic book; selecting it selects its
+        # first section/page through the ordinary onChange handler.
+        self.select(["AXPopUpButton"],["Choose notebook"],action="press")
+        self.s.ax("key","end");self.s.ax("key","return")
+        deadline=time.monotonic()+4
+        while True:
+            nodes=[n for n in attributes(self.s.ax("snapshot")) if n.get("AXRole")=="AXPopUpButton"
+                   and "Choose notebook" in (n.get("AXDescription"),n.get("AXTitle")) and n.get("frame")]
+            if len(nodes)==1 and nodes[0].get("AXValue")=="Standalone QA":return
+            if len(nodes)>1 or time.monotonic()>=deadline:
+                raise Unavailable("Actual selected synthetic notebook not verified; no note edit sent")
+            time.sleep(0.2)
+
     def notition(self):
         self.tab("Save");self.button("Add backup");self.file_dialog(self.fixture)
-        self.button("Standalone QA");self.button("Own Markdown");self.button("Standalone page")
-        self.select(["AXTextField"],["Page title"]);self.replace("Standalone edited page")
+        self.notes_notebook()
+        self.select(["AXTextField"],["Page title"]);self.replace("Standalone edited page",expected="Standalone page")
         self.select(["AXTextArea"],["Markdown text"]);self.append("\n"+MARKERS["notition"],SEEDS["notition"])
         self.tab("Save");self.button("Save now");time.sleep(0.6)
         export=self.s.root/"notes-export.openaec-notities"
@@ -209,7 +224,8 @@ class Case:
         old=self.s.quit();self.s.start()
         if self.s.process.pid==old:raise Unavailable("Notes reopen reused old process")
         self.s.report["newPidReopenVerified"]=True
-        self.button("Standalone QA");self.button("Own Markdown");self.button("Standalone edited page")
+        self.notes_notebook()
+        self.select(["AXTextField"],["Page title"]);self.focus("Standalone edited page")
         if not any(MARKERS["notition"] in str(n.get("AXValue","")) for n in attributes(self.s.capture("notes-reopened"))):
             raise Unavailable("Native notes did not persist without reimport")
 

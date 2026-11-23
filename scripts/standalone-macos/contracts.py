@@ -14,6 +14,11 @@ APPS = {
     "database": ("Open Database Studio", "open-database-studio", "org.openaec.database-studio"),
 }
 SUITE_ID = "org.openaec.office-studio"
+MAC_PRODUCER_GATES = (
+    "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+    "Handtekening en notarisatie controleren (macOS)",
+    "Standaardinstaller controleren met uitsluitend de private runtime",
+)
 
 
 def digest(path):
@@ -41,9 +46,9 @@ def validate_request(value, now=None):
     if cutoff.tzinfo is None or now >= cutoff:
         raise PermissionError("Native request expired")
     parent = value.get("parentArtifact", {})
-    if not all(type(parent.get(k)) is int and parent[k] > 0 for k in ("id", "run", "producerJobId")):
-        raise ValueError("Exact producer artifact/run/job identity required")
-    if not hex_value(parent.get("sha256"), 64) or not isinstance(parent.get("name"), str) or not parent["name"]:
+    if not all(type(parent.get(k)) is int and parent[k] > 0 for k in ("id", "run", "producerJobId", "attempt")):
+        raise ValueError("Exact producer artifact/run/job/attempt identity required")
+    if not hex_value(parent.get("sha256"), 64) or parent.get("name") != "uitgave-macOS":
         raise ValueError("Immutable parent name and archive digest required")
     packages = value.get("packages", {})
     if set(packages) != set(APPS):
@@ -111,7 +116,7 @@ def verify_under(path, owned_root):
     return path
 
 
-def validate_producer(request, run, artifact, job):
+def validate_producer(request, run, artifact, job, artifacts=None):
     """Platform completion is sufficient; unrelated platforms need not finish."""
     parent = request["parentArtifact"]
     if run.get("id") != parent["run"] or run.get("head_sha") != request["source"]["commit"]:
@@ -121,12 +126,25 @@ def validate_producer(request, run, artifact, job):
             or artifact.get("workflow_run", {}).get("id") != parent["run"]
             or artifact.get("workflow_run", {}).get("head_sha") != request["source"]["commit"]):
         raise ValueError("Artifact source/identity differs or is expired")
-    if artifact.get("digest") not in (None, "sha256:" + parent["sha256"]):
+    if artifact.get("digest") != "sha256:" + parent["sha256"]:
         raise ValueError("Published artifact digest differs")
     if job.get("id") != parent["producerJobId"] or job.get("status") != "completed" or job.get("conclusion") != "success":
         raise PermissionError("Own Mac producer job has not completed successfully")
     if job.get("run_id") != parent["run"]:
         raise ValueError("Producer job belongs to another run")
+    if run.get("run_attempt") != parent["attempt"] or job.get("run_attempt") != parent["attempt"]:
+        raise ValueError("Producer run/job attempt differs")
+    if artifacts is None or [a.get("id") for a in artifacts if a.get("name")==parent["name"]] != [parent["id"]]:
+        raise ValueError("Producer must expose exactly one artifact with the approved Mac name")
+    completed=[]
+    for name in MAC_PRODUCER_GATES:
+        matches=[s for s in job.get("steps",[]) if s.get("name")==name]
+        if len(matches)!=1 or matches[0].get("status")!="completed" or matches[0].get("conclusion")!="success":
+            raise PermissionError("Required signed/notarized/package producer gate not successful: "+name)
+        completed.append(datetime.fromisoformat(matches[0]["completed_at"].replace("Z","+00:00")))
+    created=datetime.fromisoformat(artifact["created_at"].replace("Z","+00:00"))
+    if created < max(completed):
+        raise ValueError("Mac artifact predates required package/signature gates")
 
 
 def acceptance_from_evidence(value):

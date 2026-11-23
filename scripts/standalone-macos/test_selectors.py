@@ -53,5 +53,21 @@ class SelectorTests(unittest.TestCase):
             with self.assertRaises(Unavailable):Case(s,"fixture").replace("edit",expected="own-seed")
             self.assertEqual(s.actions,[])
 
+    def test_notebook_native_choice_must_confirm_actual_selected_book(self):
+        popup=row(0,-1,AXRole="AXPopUpButton",AXDescription="Choose notebook",AXValue="Standalone QA",
+                  AXEnabled=True,frame={"x":20,"y":300,"width":200,"height":30},actions=["AXPress"])
+        s=FakeSession({"rawNodes":[popup]})
+        with patch("cases.time.sleep"):Case(s,"fixture").notes_notebook()
+        self.assertEqual([a[0] for a in s.actions],["press","key","key"])
+        self.assertEqual([a[1] for a in s.actions[1:]],["end","return"])
+
+    def test_wrong_selected_notebook_blocks_before_any_note_typing(self):
+        popup=row(0,-1,AXRole="AXPopUpButton",AXTitle="Choose notebook",AXValue="Other book",
+                  AXEnabled=True,frame={"x":20,"y":300,"width":200,"height":30},actions=["AXPress"])
+        s=FakeSession({"rawNodes":[popup]})
+        with patch("cases.time.sleep"),patch("cases.time.monotonic",side_effect=[0,0,5]):
+            with self.assertRaises(Unavailable):Case(s,"fixture").notes_notebook()
+        self.assertFalse(any(a[0]=="type" for a in s.actions))
+
 
 if __name__=="__main__":unittest.main()
