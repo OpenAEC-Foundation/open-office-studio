@@ -1,0 +1,73 @@
+name: Presentation 78 theme-linked background
+on:
+  push:
+    branches: [codex/presentation-78-theme-background-2026-11-23-0c73]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: presentation-78-theme-background-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  windows-web:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: pnpm install --frozen-lockfile
+      - name: Focused theme-background/override and actual engine regressions
+        run: pnpm exec vitest run src/presentatie/themaAchtergrond.test.ts src/presentatie/ontwerp.test.ts --configLoader runner --maxWorkers=2 --reporter=json --outputFile=.local/presentation-78-tests.json
+      - name: Full frontend prebuild, TypeScript and production bundle
+        run: pnpm build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presentation-78-theme-background-windows
+          path: .local/presentation-78-tests.json
+          include-hidden-files: true
+          if-no-files-found: warn
+  linux-browser:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Focused theme-background/override and actual engine regressions
+        run: pnpm exec vitest run src/presentatie/themaAchtergrond.test.ts src/presentatie/ontwerp.test.ts --configLoader runner --maxWorkers=2 --reporter=json --outputFile=.local/presentation-78-tests.json
+      - run: node scripts/controleer-i18n.mjs --ns presentation
+      - name: TypeScript and normal production bundle
+        run: pnpm build
+      - name: Hosted production bundle and required route check
+        run: |
+          pnpm exec vite build --base=./ --mode hosted --outDir dist-hosted
+          node scripts/controleer-hosted.mjs dist-hosted
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Real normal and hosted browser open-edit-save-fresh-reopen
+        run: node scripts/proef-presentatie-thema-achtergrond.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presentation-78-theme-background-linux
+          path: |
+            .local/presentation-78-theme-background/
+            .local/presentation-78-tests.json
+          include-hidden-files: true
+          if-no-files-found: warn
