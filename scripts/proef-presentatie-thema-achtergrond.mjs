@@ -218,7 +218,7 @@ try {
     return { context, page };
   }
   async function background(page) {
-    await page.getByRole("tab", { name: "Design", exact: true }).click();
+    await page.getByRole("tab", { name: "Slide", exact: true }).click();
     await page.getByRole("button", { name: "Background", exact: true }).click();
     const d = page.getByRole("dialog", { name: "Background", exact: true });
     await d.waitFor();
