@@ -999,7 +999,8 @@ async function packageCase(pkg) {
         "Local notebook title/text typed, Ctrl+S persisted and native backup exported",
       );
     } else if (app.sleutel === "database") {
-      await chord("o");
+      await click(".database-zelfstandig > .office-header .office-headerknop");
+      (report.databaseOpenMethod ??= []).push("Visible enabled unique header button; prior Ctrl+O no-picker preserved separately");
       await osFileDialog(doc);
       await wait(
         () => visible('[role="dialog"]'),
@@ -1169,7 +1170,8 @@ async function packageCase(pkg) {
         "Notition own-profile content survives full process restart",
       );
     } else if (app.sleutel === "database") {
-      await chord("o");
+      await click(".database-zelfstandig > .office-header .office-headerknop");
+      (report.databaseOpenMethod ??= []).push("Visible enabled unique header button; prior Ctrl+O no-picker preserved separately");
       await osFileDialog(doc);
       await wait(
         () => visible('[role="dialog"]'),
