@@ -4,6 +4,8 @@ Application source: `dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b`, tree
 `5a644e397ecc6af5452a49b6404edf953687d1b2`, version `2026.48.1`.
 This isolated QA branch changes no product source, catalog, version, or prior delivery.
 It belongs to the existing #35 / #30 scope, outside the closed P2 release intake.
+`p2-source-binding.json` records Git-blob byte hashes for the eleven relevant
+source/profile/engine inputs and the read-only macro/browser route observations.
 
 ## Actual source and independent expectation
 

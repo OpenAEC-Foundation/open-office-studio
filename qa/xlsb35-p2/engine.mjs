@@ -21,7 +21,7 @@ const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 assert.equal(git("rev-parse", `${application}^{tree}`), tree);
 git("merge-base", "--is-ancestor", application, "HEAD");
-const changed = git("diff", "--name-only", application, "HEAD").split("\n").filter(Boolean);
+const changed = git("diff", "--name-only", application).split("\n").filter(Boolean);
 assert(changed.every((p) => p.startsWith("qa/xlsb35-p2/") || p === ".github/workflows/qa-xlsb35-p2-d410.yml"), changed);
 assert.match(process.env.OOS_XLSB_RUNTIME_EXECUTABLE_SHA256 ?? "", /^[a-f0-9]{64}$/);
 assert.equal(hash(await readFile(program)), process.env.OOS_XLSB_RUNTIME_EXECUTABLE_SHA256,
@@ -37,7 +37,7 @@ const report = {
   platform: process.platform, source: oracle.source, runtimeBinding: binding,
   runtimeProgramSha256: hash(await readFile(program)),
   profileSha256: hash(await readFile("src-tauri/src/conversieprofiel.xcu")),
-  stages: [], status: "running",
+  stages: [], phase: "initialize-production-loaders", status: "running",
   limits: ["No Rust IPC, installed native GUI, browser UI, Windows or macOS acceptance is inferred.",
     "Uses the real private runtime via the existing production-profile conversion helper and production TS/WASM entry points.",
     "One XLSB source only; no XLS/XLT/date-system/chart coverage, optional XLSB-save or macro-execution control."],
@@ -55,6 +55,7 @@ try {
   assert(catalog.xlsx.invoer.includes("xlsb"));
   const importFilter = catalog.xlsx.uitvoer.xlsx.filter;
   assert.equal(typeof importFilter, "string");
+  report.phase = "actual-xlsb-conversion";
   const imported = await bereidOpenen("Shared-formula.xlsb", source, {
     runtimeBeschikbaar: async () => true,
     converteer: async (bytes, from, to, kind) => {
@@ -69,8 +70,11 @@ try {
   assert(imported); assert.equal(imported.soort, "xlsx");
   assert.equal(imported.naam, "Shared-formula.xlsx");
   assert.equal(imported.exportFormaat, undefined, "XLSB must not become the default save target");
+  report.saveProposal = { importedName: imported.naam, module: imported.soort,
+    sourceFormatOverride: imported.exportFormaat ?? null, recommendedExtension: "xlsx" };
   const convertedPath = resolve(out, "imported.xlsx");
   await writeFile(convertedPath, imported.bytes);
+  report.phase = "independent-imported-content";
   report.independentImported = python(["--xlsx", convertedPath]);
   report.stages.push("Real private-runtime conversion and independent 30-formula/cache verification");
 
@@ -85,6 +89,7 @@ try {
       assert.deepEqual(cell.value, { kind: "number", value: isEdit ? oracle.edit.value : oracle.cachedValue });
     }
   }
+  report.phase = "production-engine-open-edit";
   const first = openWorkbook(imported.bytes);
   let saved;
   try {
@@ -96,8 +101,10 @@ try {
   report.stages.push("Production WASM reads all original formulas and calculates edited A15=42");
   const savedPath = resolve(out, "Shared-formula-edited.xlsx");
   await writeFile(savedPath, saved);
+  report.phase = "independent-saved-content";
   report.independentSaved = python(["--xlsx", savedPath, "--edited"]);
   report.stages.push("XLSX disk save independently preserves 30 formulas and their expected cached results");
+  report.phase = "fresh-production-reopen";
   const reopened = await bereidOpenen("Shared-formula-edited.xlsx", new Uint8Array(await readFile(savedPath)), {
     runtimeBeschikbaar: async () => false,
     converteer: async () => { throw new Error("Saved XLSX must reopen directly without conversion"); },
@@ -105,9 +112,11 @@ try {
   assert(reopened); assert.equal(reopened.soort, "xlsx");
   const second = openWorkbook(reopened.bytes);
   try { check(second, true); } finally { second.dispose(); }
+  report.reopenWithoutConversion = true;
   report.stages.push("Fresh production open from disk verifies all 30 formulas/results without converter");
   assert.equal(hash(await readFile("qa/xlsb35-p2/shared_formula.xlsb")), oracle.source.sha256);
   report.originalUnchanged = true;
+  report.phase = "complete";
   report.status = "passed";
 } catch (error) {
   report.status = "failed"; report.error = String(error); throw error;
