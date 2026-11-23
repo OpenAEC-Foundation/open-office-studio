@@ -1,0 +1,110 @@
+name: Native Mac explicit DOM replay diagnostic
+on:
+  push:
+    branches: [codex/mac-native-body-blocker-20261120]
+    paths: [.github/workflows/mac-worker-disabled-diagnostic.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnostic:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OOS_361_EXECUTE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 420af640c10ab9ada6c66c844c0098caea87c493
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/mac-body-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json') }}
+      - uses: actions/cache@v4
+        with:
+          path: .local/lettertypen-cache
+          key: lettertypen-${{ hashFiles('assets/lettertypen.json') }}
+      - uses: actions/cache@v4
+        with:
+          path: .local/woordenboeken-cache
+          key: woordenboeken-${{ hashFiles('assets/woordenboeken.json') }}
+      - name: Explicit diagnostic window URL; no application source patch
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()=='420af640c10ab9ada6c66c844c0098caea87c493'
+          assert subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip()=='c1334c8f4d92914e9d2114d56e467ef11eab9646'
+          assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],text=True).strip()
+          base=json.loads(pathlib.Path('src-tauri/tauri.conf.json').read_text())
+          overlay={'app':{'windows':[dict(w,url='index.html?offscreenReplay=0') for w in base['app']['windows']]}}
+          p=pathlib.Path('.local/mac-worker-disabled-input');p.mkdir()
+          (p/'tauri-diagnostic.json').write_text(json.dumps(overlay,indent=2))
+          PY
+      - name: Build a new diagnostic DMG, not the canonical420 package
+        run: pnpm exec tauri build --config .local/mac-worker-disabled-input/tauri-diagnostic.json --bundles dmg
+      - name: Bind new package to exact application source and explicit diagnostic configuration
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,shutil,subprocess
+          sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+          out=pathlib.Path('.local/mac-worker-disabled-package');out.mkdir()
+          packages=list(pathlib.Path('src-tauri/target/release/bundle/dmg').glob('*.dmg'));assert len(packages)==1
+          target=out/packages[0].name;shutil.copyfile(packages[0],target)
+          config=pathlib.Path('.local/mac-worker-disabled-input/tauri-diagnostic.json')
+          receipt={'diagnosticOnly':True,'nativePass':False,'sourceCommit':'420af640c10ab9ada6c66c844c0098caea87c493','sourceTree':'c1334c8f4d92914e9d2114d56e467ef11eab9646','declaredVersion':'2026.47.1','harnessCommit':os.environ['GITHUB_SHA'],'diagnosticRenderingRoute':'offscreenReplay=0','diagnosticConfigSha256':sha(config),'packageMember':target.name,'packageSha256':sha(target),'packagePath':str(target.resolve()),'applicationTrackedSourceClean':not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],text=True).strip()}
+          assert receipt['applicationTrackedSourceClean']
+          (out/'build-receipt.json').write_text(json.dumps(receipt,indent=2));shutil.copyfile(config,out/config.name)
+          PY
+      - id: package
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-worker-disabled-diagnostic-package-${{ github.sha }}
+          path: .local/mac-worker-disabled-package/
+          include-hidden-files: true
+          if-no-files-found: error
+      - name: Record real artifact identity before launching the new diagnostic package
+        env:
+          PACKAGE_ARTIFACT_ID: ${{ steps.package.outputs.artifact-id }}
+          PACKAGE_ARTIFACT_DIGEST: ${{ steps.package.outputs.artifact-digest }}
+        run: |
+          python - <<'PY'
+          import json,os,pathlib,subprocess
+          p=pathlib.Path('.local/mac-worker-disabled-package');receipt=json.loads((p/'build-receipt.json').read_text())
+          aid=int(os.environ['PACKAGE_ARTIFACT_ID']);run=int(os.environ['GITHUB_RUN_ID'])
+          metadata=json.loads(subprocess.check_output(['gh','api',f'repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/{aid}'],text=True))
+          assert metadata['workflow_run']['id']==run and metadata['workflow_run']['head_sha']==os.environ['GITHUB_SHA']
+          digest=os.environ['PACKAGE_ARTIFACT_DIGEST'].removeprefix('sha256:')
+          assert metadata['digest']=='sha256:'+digest
+          identity=dict(receipt,artifactRun=run,artifactId=aid,archiveSha256=digest,executionApproved=True,deriveExecutableFromVerifiedDmg=True,platform='macOS',macViewportSetup={'mode':'native-maximize-once','executionApproved':True})
+          (p/'identity.json').write_text(json.dumps(identity,indent=2))
+          (p/'artifact-origin.json').write_text(json.dumps(metadata,indent=2))
+          PY
+      - name: Original fixture pixels on native diagnostic package; no editor input or priming
+        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac-worker-disabled-package/identity.json .local/mac-worker-disabled-native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac-worker-disabled-native-${{ github.sha }}
+          path: |
+            .local/mac-worker-disabled-native/
+            .local/mac-worker-disabled-package/*.json
+          include-hidden-files: true
+          if-no-files-found: warn

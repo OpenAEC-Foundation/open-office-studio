@@ -64,7 +64,7 @@ def main():
         raise RuntimeError("Clean exact application source required before native launch")
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    report = {"issue": 359, "status": "running", "nativePass": False, "diagnosticOnly": True, "applicationModified": False, "identity": identity,
+    report = {"issue": 359, "status": "running", "nativePass": False, "diagnosticOnly": True, "applicationModified": identity.get("diagnosticRenderingRoute") is not None, "identity": identity,
               "harnessCommit": subprocess.check_output(["git", "-C", str(Path(__file__).resolve().parent.parent), "rev-parse", "HEAD"], text=True).strip(),
               "sessionDriverSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "checks": [], "limits": ["No product correction or native acceptance; original failed attempts remain valid", "Font/structure fixture matrix with one ordinary Maximize per fixture; no body input, activation replay, theme change or canvas readback", "The saved EPUB356 DOCX is a route/content control, not a re-execution of the EPUB importer", "Physical Mac observation unavailable; original OS captures require independent visual inspection"], "cleanup": {}}
