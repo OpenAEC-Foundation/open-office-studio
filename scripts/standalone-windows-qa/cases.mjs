@@ -43,7 +43,6 @@ export async function notitionCase(qa, phase) {
   if (phase==='initial') {
     // Use the ordinary notebook creation UI, not injected localStorage.
     await page.getByRole('button',{name:/^(Add notebook|Notitieblok toevoegen|Nieuw notitieblok)$/i}).click();
-    await page.getByRole('button',{name:/^(Rename notebook|Notitieblok hernoemen)$/i}).click();
     const dialog=page.getByRole('dialog'); await dialog.waitFor();
     await dialog.locator('input').first().fill('STANDALONE23 NOTEBOOK');
     await dialog.getByRole('button',{name:/^(Save|Opslaan)$/i}).click();
@@ -70,7 +69,9 @@ export async function databaseCase(qa, phase) {
   const input=page.locator('textarea:visible').first(); await qa.focus(input,'database-query');
   await input.fill('SELECT label, amount FROM standalone_qa WHERE amount = 42;');
   await input.press('Control+Enter');
-  await page.getByText('STANDALONE23 DATABASE',{exact:true}).waitFor();
+  const result=page.locator('.database-query-resultaat');
+  await result.getByText('STANDALONE23 DATABASE',{exact:true}).waitFor();
+  await result.getByText('42',{exact:true}).waitFor();
   qa.record({phase,queryReadback:true,expectedAmount:42,sourceUnchanged:true,writeCapability:'not claimed'});
 }
 
@@ -97,7 +98,7 @@ export async function emailCase(qa, phase) {
     }
     await wizard.getByRole('button',{name:/^(Save anyway|Toch opslaan|Done|Gereed)$/i}).click();
     await page.getByText('STANDALONE23 LOCAL MESSAGE',{exact:true}).click();
-    await page.getByText('STANDALONE23 LOCAL BODY',{exact:true}).waitFor();
+    await page.frameLocator('.email-berichtframe').getByText('STANDALONE23 LOCAL BODY',{exact:true}).waitFor();
     await page.getByRole('button',{name:/^(New message|Nieuw bericht)$/i}).click();
     await page.getByLabel(/^(Subject|Onderwerp)$/i).fill('STANDALONE23 LOCAL DRAFT');
     const body=page.locator('.email-editor[contenteditable="true"]'); await qa.focus(body,'email-native-compose');
@@ -108,6 +109,6 @@ export async function emailCase(qa, phase) {
   }
   await page.getByRole('button',{name:/^Drafts|^Concepten/i}).click();
   await page.getByText('STANDALONE23 LOCAL DRAFT',{exact:true}).click();
-  await page.getByText('STANDALONE23 DRAFT BODY',{exact:true}).waitFor();
+  await page.frameLocator('.email-berichtframe').getByText('STANDALONE23 DRAFT BODY',{exact:true}).waitFor();
   qa.record({phase,realNativeBackend:true,loopbackOnly:true,draftReadback:true,noSend:true});
 }

@@ -22,6 +22,7 @@ const run=promisify(execFile);
 async function ps(name,args=[]) { return (await run('pwsh',['-NoProfile','-File',join(driver,name),...args],{windowsHide:true,timeout:40000,maxBuffer:2*1024*1024})).stdout.trim(); }
 const receipt=JSON.parse(await readFile(join(packageDir,'package.json'),'utf8')), app=receipt.application;
 assert.equal(app.key,process.env.OOS_QA_APP); assert.match(receipt.applicationCommit,/^[a-f0-9]{40}$/); assert.match(receipt.applicationTree,/^[a-f0-9]{40}$/);
+if(receipt.preflightOnly){assert.equal(app.key,'writer');assert.equal(receipt.version,'2026.46.2');assert.equal(app.sha256,'0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb');}
 assert.equal(app.executable,`open-${app.key}-studio.exe`); assert.equal(app.identifier,`org.openaec.${app.key}-studio`);
 const installer=resolve(packageDir,receipt.installer); assert.equal(dirname(installer),resolve(packageDir));
 const installerBytes=await readFile(installer); assert.equal(installerBytes.length,app.bytes); assert.equal(hash(installerBytes),app.sha256);
@@ -95,14 +96,22 @@ async function launch(input,phase) {
  assert(page,'BLOCKED: no attributable Tauri page in owned native WebView'); page.setDefaultTimeout(20000);
  result.pageUrl=page.url(); result.pageErrors=[]; page.on('pageerror',error=>result.pageErrors.push(String(error)));
  await page.waitForFunction(()=>!!window.__TAURI_INTERNALS__);
+ result.nativeMetadata=await page.evaluate(async()=>({
+  identifier:await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier'),
+  version:await window.__TAURI_INTERNALS__.invoke('plugin:app|version'),
+  name:await window.__TAURI_INTERNALS__.invoke('plugin:app|name')
+ }));
+ assert.equal(result.nativeMetadata.identifier,app.identifier); assert.equal(result.nativeMetadata.version,receipt.version);
  result.process=JSON.parse(await ps('inspect.ps1',['-Action','Process','-OwnedPid',String(child.pid)]));
  assert.equal(result.process.path.toLowerCase(),join(install,app.executable).toLowerCase());
  await action('Focus');
  await page.screenshot({path:join(root,phase+'-ready.png')});
  if(['writer','spreadsheet','presentation','email'].includes(app.key)) {
   result.runtime=await page.evaluate(()=>window.__TAURI_INTERNALS__.invoke('conversie_status'));
-  assert.equal(result.runtime.bron,'meegeleverd','Runtime must belong to this single installed app');
-  assert.equal(result.runtime.profiel,'veilig'); assert(result.runtime.pad.toLowerCase().startsWith(install.toLowerCase()+'\\'));
+  if(!receipt.preflightOnly) {
+   assert.equal(result.runtime.bron,'meegeleverd','Runtime must belong to this single installed app');
+   assert.equal(result.runtime.profiel,'veilig'); assert(result.runtime.pad.toLowerCase().startsWith(install.toLowerCase()+'\\'));
+  } else report.limitations.push('Old public Writer is host/driver preflight only; its runtime status is recorded, not accepted as final standalone resource coverage');
  }
  return result;
 }
@@ -119,7 +128,8 @@ try {
  assert(report.executable.productVersion?.startsWith(receipt.version),'Installed executable version mismatch');
  if(app.signature==='valid')assert.equal(report.executable.signature,'Valid');
  const listener=createServer(); await new Promise(r=>listener.listen(0,'127.0.0.1',r));port=listener.address().port; await new Promise(r=>listener.close(r));
- await ps('webview-policy.ps1',['-Phase','Enable','-Executable',app.executable,'-StatePath',policy,'-Port',String(port),'-ProfilePath',profile]); policyChanged=true;
+ policyChanged=true;
+ await ps('webview-policy.ps1',['-Phase','Enable','-Executable',app.executable,'-StatePath',policy,'-Port',String(port),'-ProfilePath',profile]);
  execFileSync('python',['-B',join(driver,'fixtures.py'),join(root,'fixtures')],{stdio:'inherit',timeout:20000});
  const fixtures=JSON.parse(await readFile(join(root,'fixtures/manifest.json'),'utf8'));
  if(app.key==='email') {
@@ -147,7 +157,7 @@ try {
   if(phase==='initial' && ext) input=join(root,'initial.'+ext);
  }
  if(app.key==='database') {assert.equal(hash(await readFile(input)),original);execFileSync('python',['-B',join(driver,'oracle.py'),'database',input,join(root,'database-oracle.json')],{stdio:'inherit'});}
- report.status='passed-scoped-native-function';
+ report.status=receipt.preflightOnly?'passed-old-writer-host-preflight-not-final':'passed-scoped-native-function';
 } catch(error) {
  primaryError=error; report.status=/BLOCKED:/.test(String(error))?'blocked':'failed';report.error=String(error.stack||error);
  try {await page?.screenshot({path:join(root,'failure.png')});report.failureVisibleText=await page?.locator('body').innerText();}catch{}
@@ -162,7 +172,7 @@ try {
  // mkdtemp prefix below the OS temp directory can be removed.
  if(report.cleanup.ownedAppExited && report.cleanup.policyRestored && !report.cleanup.processError) {
   assert.equal(dirname(temporary),resolve(tmpdir()));assert(basename(temporary).startsWith('oos-standalone23-'));
-  await rm(temporary,{recursive:true,force:true});report.cleanup.ownedTemporaryProfileDisposed=true;
+  try{await rm(temporary,{recursive:true,force:true});report.cleanup.ownedTemporaryProfileDisposed=true;}catch(error){report.cleanup.profileError=String(error);}
  }
  if(Object.keys(report.cleanup).some(k=>k.endsWith('Error')) && !primaryError){report.status='failed-cleanup';primaryError=Error('Native cleanup failed');}
  await writeFile(join(root,'report.json'),JSON.stringify(report,null,2)+'\n');

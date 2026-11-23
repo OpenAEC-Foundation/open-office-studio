@@ -35,6 +35,7 @@ jobs:
       frozen: ${{ steps.plan.outputs.frozen }}
       apps: ${{ steps.plan.outputs.apps }}
       hostProbe: ${{ steps.plan.outputs.hostProbe }}
+      writerPreflight: ${{ steps.plan.outputs.writerPreflight }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -115,3 +116,32 @@ jobs:
           path: .local/standalone-windows-${{ matrix.app }}
           include-hidden-files: true
           if-no-files-found: error
+  writer-preflight:
+    needs: prepare
+    if: needs.prepare.outputs.frozen != 'true' && needs.prepare.outputs.writerPreflight == 'true'
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exactly one old public standalone Writer, host preflight only
+        run: python scripts/standalone-windows-qa/public-writer-preflight.py .local/standalone-windows-preflight-package
+      - name: Driver dependencies only, no app build
+        run: npm install --prefix .local/standalone-windows-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Actual packaged WebView2 focus and native Save/full-exit/reopen preflight
+        env:
+          OOS_QA_APP: writer
+          OOS_QA_HARNESS: ${{ github.sha }}
+        run: node scripts/standalone-windows-qa/native.mjs .local/standalone-windows-preflight-package .local/standalone-windows-public-writer-preflight
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-windows-public-writer-host-preflight-not-final
+          path: .local/standalone-windows-public-writer-preflight
+          include-hidden-files: true
+          if-no-files-found: warn

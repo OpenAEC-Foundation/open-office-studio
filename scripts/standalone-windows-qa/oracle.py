@@ -43,7 +43,9 @@ def inspect(kind, path):
                 a_text=shared[int(value.text)] if a.attrib.get('t')=='s' else ''.join(a.itertext())
                 assert a_text=='STANDALONE23 CELL'
                 assert cells['B1'].find('s:v',ns).text=='41'
+                assert cells['B1'].attrib.get('t','n')=='n'
                 formula=cells['C1'].find('s:f',ns); assert formula is not None and formula.text.lstrip('=')=='B1+1'
+                assert cells['C1'].attrib.get('t','n')=='n' and float(cells['C1'].find('s:v',ns).text)==42
                 result['formula']='B1+1'
             else:
                 slides=[n for n in names if __import__('re').fullmatch(r'ppt/slides/slide\d+\.xml',n)]

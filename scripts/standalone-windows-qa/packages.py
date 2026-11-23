@@ -40,7 +40,7 @@ def main():
     command, plan_path, *rest = sys.argv[1:]
     plan = json.loads(Path(plan_path).read_bytes()); validate(plan)
     if command == 'plan':
-        values = 'frozen=' + str(plan['frozen']).lower() + '\napps=' + json.dumps(APPS) + '\nhostProbe=' + str(plan.get('hostProbe', False)).lower() + '\n'
+        values = 'frozen=' + str(plan['frozen']).lower() + '\napps=' + json.dumps(APPS) + '\nhostProbe=' + str(plan.get('hostProbe', False)).lower() + '\nwriterPreflight=' + str(plan.get('writerPreflight', False)).lower() + '\n'
         if os.environ.get('GITHUB_OUTPUT'):
             with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out: out.write(values)
         print(values, end=''); return
