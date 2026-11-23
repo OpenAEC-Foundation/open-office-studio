@@ -1,0 +1,43 @@
+name: UOT downstream engine diagnostic only
+on:
+  push:
+    branches: [codex/uot-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-uot/diagnostic/**
+      - .github/workflows/qa-uot-engine-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  downstream_engine:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Verify only the small previous result ZIP and unchanged converted DOCX
+        run: |
+          python -m py_compile scripts/qa-uot/diagnostic/*.py
+          python scripts/qa-uot/diagnostic/consume.py
+      - name: Complete missing editor stages without passing the original source discrepancy
+        run: node scripts/qa-uot/diagnostic/engine.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: uot-downstream-engine-diagnostic
+          path: .local/uot-engine/
+          include-hidden-files: true
+          if-no-files-found: error
