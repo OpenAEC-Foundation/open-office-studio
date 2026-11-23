@@ -41,6 +41,7 @@ const install=join(temporary,'installed'), profile=join(temporary,'webview-profi
 const report={schemaVersion:1,applicationCommit:receipt.applicationCommit,applicationTree:receipt.applicationTree,
  version:receipt.version,harnessCommit:process.env.OOS_QA_HARNESS,package:receipt,scope:'Actual isolated standalone Windows native app; never a browser demo',
  status:'failed',steps:[],phases:[],cleanup:{},limitations:[]};
+report.visualAcceptance='Requires separate review of actual completed native screenshots';
 let child,browser,page,port,installed=false,policyChanged=false,firstPid,primaryError,mailChild,mail;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const record=entry=>report.steps.push(entry);
@@ -128,7 +129,8 @@ async function launch(input,phase) {
  await access(profile);const profileEntries=await readdir(profile);assert(profileEntries.length,'Native WebView must actually create its own isolated profile');
  result.ownWebviewProfile={path:profile,createdByNativeWebview:true,entries:profileEntries};
  result.process=JSON.parse(await ps('inspect.ps1',['-Action','Process','-OwnedPid',String(child.pid)]));
- assert.equal((await realpath(result.process.path)).toLowerCase(),(await realpath(join(install,app.executable))).toLowerCase());
+ result.installCanonicalPath=await realpath(install);result.executableCanonicalPath=await realpath(join(install,app.executable));
+ assert.equal((await realpath(result.process.path)).toLowerCase(),result.executableCanonicalPath.toLowerCase());
  await action('Focus');
  await page.screenshot({path:join(root,phase+'-ready.png')});
  if(['writer','spreadsheet','presentation','email'].includes(app.key)) {
@@ -140,6 +142,8 @@ async function launch(input,phase) {
    result.runtimeCanonicalPath=await realpath(result.runtime.pad);
    const within=relative(await realpath(install),result.runtimeCanonicalPath);
    assert(within && within!=='..' && !within.startsWith('..\\') && !isAbsolute(within),'Runtime escapes this single app installation');
+   result.runtimeOwnInstallRelative=within;
+   result.runtimeExecutable=JSON.parse(await ps('inspect.ps1',['-Action','Executable','-Path',result.runtimeCanonicalPath]));
  }
  return result;
 }

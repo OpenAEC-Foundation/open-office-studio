@@ -36,6 +36,18 @@ jobs:
           compression-level: 0
           include-hidden-files: true
           if-no-files-found: error
+      - name: Publish the verified Suite contract immediately after its own child upload
+        if: steps.plan.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/standalone-windows-p4/bind_suite.py .local/p4-windows-split
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p5-suite-descriptor
+          path: .local/p4-windows-split/suite-provenance
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
@@ -98,13 +110,14 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
   app:
+    name: Native ${{ matrix.app }} Windows app-only
     needs: prepare
     if: needs.prepare.outputs.ready == 'true'
     runs-on: windows-latest
     timeout-minutes: 25
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 6
       matrix:
         include: ${{ fromJSON(needs.prepare.outputs.apps) }}
     steps:

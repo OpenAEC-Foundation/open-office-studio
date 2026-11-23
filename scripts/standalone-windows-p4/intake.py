@@ -23,6 +23,9 @@ def digest(path):
 
 def write(path,value):path.write_text(json.dumps(value,indent=2)+'\n',encoding='utf8')
 
+def suite_descriptor(binding,suite):
+    return dict(schemaVersion=1,consumer='750b',source=dict(producer=binding['artifactRun'],attempt=binding['sourceAttempt'],job=binding['platformJobId'],commit=binding['applicationCommit'],tree=binding['applicationTree'],version=binding['version'],parentArtifact=binding['artifactId'],parentZipSha256=binding['archiveSha256']),suite=suite,contract='Verify full child ZIP against official digest, all3 exact members, original NSIS and canonical report size/SHA, payload==installed app and Authenticode before native UI. Own fresh suite host; no new build.')
+
 def validate(plan):
     assert plan['schemaVersion']==1 and type(plan['ready']) is bool
     assert plan['candidate']=='P5'

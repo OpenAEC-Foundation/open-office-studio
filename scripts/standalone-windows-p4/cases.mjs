@@ -42,6 +42,10 @@ export async function officeCase(qa, kind, phase) {
       await page.keyboard.press('Escape');
       await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
     }
+    const thumbnails=page.locator('.office-presentatie aside > button:has(canvas)');
+    await page.waitForFunction(()=>document.querySelectorAll('.office-presentatie aside > button canvas').length>=2);
+    await thumbnails.first().click();
+    qa.record({phase,presentationVisibleSlide:1,actualThumbnailCount:await thumbnails.count(),visualAcceptance:'Separate completed screenshot review required'});
   }
   await qa.saveOffice(`${phase}.${ext}`);
 }
