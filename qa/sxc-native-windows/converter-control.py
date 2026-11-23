@@ -43,7 +43,9 @@ try:
     assert original==json.loads((BASE/'source-oracle-before-import.json').read_bytes())
     # Use the exact P2 profile and catalog filter bytes, not a replacement profile.
     profile_bytes=subprocess.check_output(['git','show',oracle.CONFIG['applicationCommit']+':src-tauri/src/conversieprofiel.xcu'])
-    assert profile_bytes==(BASE.parents[1]/'src-tauri/src/conversieprofiel.xcu').read_bytes()
+    # Checkout CRLF normalization is not the compiled Rust include_str! bytes.
+    # Compare Git objects and write the exact P2 object, never checkout bytes.
+    assert profile_bytes==subprocess.check_output(['git','show','HEAD:src-tauri/src/conversieprofiel.xcu'])
     catalog_bytes=subprocess.check_output(['git','show',oracle.CONFIG['applicationCommit']+':src/formaten.json'])
     catalog=json.loads(catalog_bytes);entry=catalog['xlsx']['uitvoer']['xlsx']
     filter_arg='xlsx:'+entry['filter'];assert filter_arg=='xlsx:Calc MS Excel 2007 XML' and not entry.get('opties')
@@ -60,18 +62,31 @@ try:
     (out/'converter-oracle.json').write_text(json.dumps(observed,indent=2)+'\n',encoding='utf8')
     assert sha(source)==oracle.CONFIG['source']['sha256']
     report.update(status='completed-control-with-recorded-differences',sourceUnchanged=True,outputSha256=sha(files[0]),cellsPassed=observed['cells']['passed'],preservationPassed=observed['preservation']['passed'],differences=observed['preservation']['differences'])
+except BaseException as error:
+    report['error']=repr(error)
+    raise
 finally:
     # Close only our silent installer/runtime processes; no suite UI was launched.
-    if installed:
-        run([install/'uninstall.exe','/S']);report['cleanup']['ownedInstallUninstalled']=True
-    # Prove no process in our resolved unique directory before recursive removal.
-    probe="param([string]$Root); $p=@(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($Root,[StringComparison]::OrdinalIgnoreCase) } | Select-Object ProcessId,ExecutablePath); ConvertTo-Json -InputObject $p -Compress"
-    probe_path=out/'owned-process-check.ps1';probe_path.write_text(probe,encoding='utf8')
-    remaining=json.loads(subprocess.check_output(['pwsh','-NoProfile','-File',str(probe_path),'-Root',str(temporary)],creationflags=subprocess.CREATE_NO_WINDOW))
-    report['cleanup']['residualOwnedProcesses']=remaining
-    if not remaining:
+    try:
+        if installed:
+            run([install/'uninstall.exe','/S']);report['cleanup']['ownedInstallUninstalled']=True
+        # Prove no process in our resolved unique directory before removal.
+        probe="param([string]$Root); $p=@(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($Root,[StringComparison]::OrdinalIgnoreCase) } | Select-Object ProcessId,ExecutablePath); ConvertTo-Json -InputObject $p -Compress"
+        probe_path=out/'owned-process-check.ps1';probe_path.write_text(probe,encoding='utf8')
+        remaining=json.loads(subprocess.check_output(['pwsh','-NoProfile','-File',str(probe_path),'-Root',str(temporary)],creationflags=subprocess.CREATE_NO_WINDOW))
+        report['cleanup']['residualOwnedProcesses']=remaining
+        assert not remaining,'Own converter process still running; no cleanup success'
         assert temporary.parent==Path(tempfile.gettempdir()).resolve() and temporary.name.startswith('oos-sxc-control23-') and not temporary.is_symlink()
-        shutil.rmtree(temporary);report['cleanup']['ownedTemporaryProfileDisposed']=True
-    (out/'report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf8')
-    assert not remaining,'Own converter process still running; no cleanup success'
+        # NSIS can remove descendants concurrently after its launcher returns.
+        # Ignore only already-absent entries, then prove the target is absent.
+        def already_removed(function,path,error):
+            if not isinstance(error,FileNotFoundError):raise error
+        shutil.rmtree(temporary,onexc=already_removed)
+        assert not temporary.exists()
+        report['cleanup']['ownedTemporaryProfileDisposed']=True
+    except BaseException as error:
+        report['cleanup']['error']=repr(error)
+        raise
+    finally:
+        (out/'report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf8')
 print(json.dumps(dict(status=report['status'],preservationPassed=report['preservationPassed'])))
