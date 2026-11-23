@@ -29,6 +29,12 @@ artifact name `uitgave-Windows`. Fetch original official artifact metadata
 after this own job succeeds under integration's conditional go. Until then the config is `ready:false`
 and `officialMetadataGo:false`; null artifact identities are blocking, not wildcards.
 The unrelated Mac/Linux jobs do not gate a successfully completed Windows job.
+Source-run provenance is fetched from `actions/runs/45177730188/attempts/1`,
+and the exact Windows job is selected from that same attempt's `/jobs` response.
+The raw attempt job list is retained as `source-attempt-jobs.json` (also in the
+early Suite descriptor artifact). A Mac-only retry may raise the latest global
+run attempt to 2; it does not replace our original Windows attempt1/job/artifact.
+Old artifact bytes cannot be attached to a successful replacement attempt2 job.
 
 Own prep workflow `.github/workflows/standalone-windows-p4.yml`, branch
 `codex/standalone-windows-p4-2026-11-23`. It checks exact source/tree/job/attempt,
@@ -90,7 +96,7 @@ child artifact's harness SHA directly to the product commit. The original child
 `package.json` excludes the two post-upload fields; use its raw-byte SHA rather
 than incorrectly comparing its entire object to the augmented final descriptor.
 
-Thirteen focused source/input gate contracts and Python/Node/PowerShell syntax
+Seventeen focused source/input gate contracts and Python/Node/PowerShell syntax
 checks pass without app/GUI execution. This preparation is not native acceptance.
 Email uses actual compose/Ctrl+S, independent received MIME body/subject, full
 quit/new-process reopen and synthetic loopback-only data; SMTP sending is disabled.

@@ -28,6 +28,6 @@ suite['packageReceiptSha256']=hashlib.sha256((root/'office/package.json').read_b
 target=root/'suite-provenance';target.mkdir()
 write(target/'suite-consumer.json',suite_descriptor(binding,suite))
 write(target/'child-office-artifact-metadata.json',a)
-for filename in ('approved-input.json','source-run.json','source-job.json','source-commit.json','artifact-metadata.json','pakketcontrole-Windows.json','tool-capability.json'):
+for filename in ('approved-input.json','source-run.json','source-attempt-jobs.json','source-job.json','source-commit.json','artifact-metadata.json','pakketcontrole-Windows.json','tool-capability.json'):
     shutil.copyfile(provenance/filename,target/filename)
 print(json.dumps(dict(scope='Verified Suite child and descriptor ready; no dependency on remaining app uploads/native matrix',child=suite['childArtifact'],preparerRun=run)))

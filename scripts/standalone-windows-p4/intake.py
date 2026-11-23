@@ -52,6 +52,7 @@ def validate_source(plan,run,job,commit,artifact):
     assert run['id']==job['run_id']==RUN and run['head_sha']==commit['sha']==APP
     assert commit['tree']['sha']==TREE
     assert job['id']==JOB and job['status']=='completed' and job['conclusion']=='success'
+    assert job['head_sha']==APP
     assert run['run_attempt']==job['run_attempt']==1
     assert artifact['id']==plan['artifactId'] and artifact['name']==plan['artifactName'] and not artifact['expired']
     assert artifact['digest']=='sha256:'+plan['archiveSha256']
@@ -65,6 +66,20 @@ def validate_source(plan,run,job,commit,artifact):
     def when(value):return datetime.fromisoformat(value.replace('Z','+00:00'))
     assert when(run['created_at'])<=when(job['started_at'])<=when(artifact['created_at'])<=when(job['completed_at'])
     assert when(artifact['updated_at'])>=when(artifact['created_at'])
+
+def attempt_source(plan,api):
+    """Bind the original Windows job, regardless of another OS's later retry."""
+    validate(plan)
+    attempt=plan['sourceAttempt']
+    run=api(f'actions/runs/{RUN}/attempts/{attempt}')
+    jobs=api(f'actions/runs/{RUN}/attempts/{attempt}/jobs?per_page=100')
+    assert run['id']==RUN and run['run_attempt']==attempt and run['head_sha']==APP
+    assert jobs['total_count']<=100
+    own=[job for job in jobs['jobs'] if job['id']==JOB]
+    assert len(own)==1,'Original Windows job missing or duplicated in pinned attempt'
+    job=own[0]
+    assert job['run_id']==RUN and job['run_attempt']==attempt and job['head_sha']==APP
+    return run,job,jobs
 
 def payload(installer,executable):
     seven=shutil.which('7z') or shutil.which('7z.exe');assert seven
@@ -98,7 +113,8 @@ def main():
     write(provenance/'tool-capability.json',dict(path=seven,nsisHandler=True,description=tools.splitlines()[:5],stage='Before whole canonical download'))
     repo=os.environ['GITHUB_REPOSITORY'];assert re.fullmatch(r'[\w.-]+/[\w.-]+',repo)
     def api(endpoint):return json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/{endpoint}']))
-    run=api(f'actions/runs/{RUN}');job=api(f'actions/jobs/{JOB}');commit=api(f'git/commits/{APP}')
+    run,job,attempt_jobs=attempt_source(plan,api)
+    commit=api(f'git/commits/{APP}')
     artifact=api(f"actions/artifacts/{plan['artifactId']}")
     validate_source(plan,run,job,commit,artifact)
     all_artifacts=api(f'actions/runs/{RUN}/artifacts?per_page=100')
@@ -111,7 +127,7 @@ def main():
     assert hashlib.sha1(f'blob {len(studio_bytes)}\0'.encode()+studio_bytes).hexdigest()==studio_entry['sha']
     studios={s['sleutel']:s for s in json.loads(studio_bytes)};assert set(studios)==set(PRODUCTS)
     (provenance/'studios-source.json').write_bytes(studio_bytes)
-    for name,value in [('approved-input.json',plan),('source-run.json',run),('source-job.json',job),('source-commit.json',commit),('source-tree.json',tree),('artifact-metadata.json',artifact)]:write(provenance/name,value)
+    for name,value in [('approved-input.json',plan),('source-run.json',run),('source-attempt-jobs.json',attempt_jobs),('source-job.json',job),('source-commit.json',commit),('source-tree.json',tree),('artifact-metadata.json',artifact)]:write(provenance/name,value)
     archive=root/'canonical.zip'
     with archive.open('xb') as stream:subprocess.run(['gh','api',f"repos/{repo}/actions/artifacts/{artifact['id']}/zip"],stdout=stream,check=True)
     assert archive.stat().st_size==artifact['size_in_bytes'] and digest(archive)==plan['archiveSha256'],'Full canonical ZIP identity differs'
