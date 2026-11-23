@@ -1,0 +1,56 @@
+{
+  "issue": 377,
+  "productBranch": "codex/fix-xlsb-import-save-policy-2026-11-23",
+  "productCommit": "cbacb7d1396aeeca9a0da72c5739def75c036a73",
+  "productTree": "48f0d83d9bd6c25cbad4c3fd1eb02ba4d0e80766",
+  "productDelta": [
+    "src/werkbestand.ts",
+    "src/werkbestand.test.ts"
+  ],
+  "diagnosticProof": {
+    "commit": "43c2d07688260b69debb050740fadcaf6246495d",
+    "run": 45162093720,
+    "summary": "qa/native-xlsb35-p2/ctrl-s-result.json",
+    "rawTrace": "qa/native-xlsb35-p2/evidence/ctrl-s-diagnosis/execve.log"
+  },
+  "verification": {
+    "localPlatform": "Windows",
+    "before": "Original code:2new regressions fail,7controls pass",
+    "after": "46targeted tests across4files PASS; tsc--noEmitexit0",
+    "linuxCi": {
+      "run": 45163780721,
+      "job": 137655442468,
+      "harnessCommit": "8dab271f6850966ff57d7f30c1b2fdd66a4442e3",
+      "checkedProduct": "cbacb7d1396aeeca9a0da72c5739def75c036a73",
+      "tests": 46,
+      "typecheck": "passed",
+      "artifact": {
+        "id": 14814755784,
+        "bytes": 3196,
+        "sha256": "b04eaff495adef36d62bdad8abc99bf1ac8e75dd91666217702c70d696a78797",
+        "fullZipVerified": true
+      }
+    }
+  },
+  "evidence": [
+    {
+      "path": "evidence/binding.json",
+      "sha256": "d6936237ec3920d7e57fed7168648f53534e6734d22f52d4a8ef68cbed1b9ce8"
+    },
+    {
+      "path": "evidence/tests.json",
+      "sha256": "327c4e95e183f32a75d34ad55ac7acdf7cc2215d953ef716695848349d737ca8"
+    },
+    {
+      "path": "evidence/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": [
+    "Source routing correction and targeted tests complete. New fixed-package nativeUI and platform combination acceptance remain for integration's explicit next freeze; no appbuild/main/tag/publication here.",
+    "Original native differential is P2, not a fixed-package pass. Source/fixture stayed unchanged and existing SaveAsXLSX route was proven.",
+    "Original native workfile token is desktop-only; browser ordinary new-document SaveAs logic remains covered by source contracts, not a fresh browserUI claim.",
+    "macOS native fixed-source tests are not run. Windows and Linux checks here are shared source contracts, not fixed-native builds.",
+    "General Linux rfd/Zenity dependency belongs separately to writer_362."
+  ]
+}

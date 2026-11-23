@@ -11,7 +11,10 @@ unchanged; actual unsupported-XLSB confirmation and working XLSX Save As were
 separately observed. General Zenity dependency has a separate owner/scope.
 
 Local Windows: two new original-policy regressions fail before correction; all46
-targeted checks and type checking pass afterward. Linux source CI pending.
+targeted checks and type checking pass afterward. Linux source CI45163780721/job137655442468 passes46tests and TypeScript
+noEmit against exact productcbacb7d1; artifact14814755784/3196bytes/full ZIP
+SHA256b04eaff495adef36d62bdad8abc99bf1ac8e75dd91666217702c70d696a78797
+verified. Exact source hashes match Git bytes. See result.json and evidence/.
 New fixed-package native UI remains for integration's explicitly chosen next
 candidate. No Windows/Linux/macOS native pass is inferred for this new source.
 Browser lacks the original native workfile-token route; its ordinary new-document
