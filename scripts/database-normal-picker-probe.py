@@ -97,10 +97,10 @@ for kind in ['appimage','deb']:
             snapshot=accessible_snapshot(pid)
             text='\n'.join(n['name']+'\n'+n.get('text','') for n in snapshot if n['showing'])
             return snapshot if all(v in text for v in values) else None
-        def click(name,role='push button',dialog=False,prefix=False):
+        def click(name,role='push button',dialog=False,prefix=False,within=None):
             def find():
                 snapshot=accessible_snapshot(pid)
-                choices=[n for n in snapshot if (n['name'].startswith(name) if prefix else n['name']==name) and n['role']==role and n['enabled'] and n['showing'] and n.get('rect',[0,0,0,0])[2]>0 and (not dialog or 'dialog' in n['ancestors'])]
+                choices=[n for n in snapshot if (n['name'].startswith(name) if prefix else n['name']==name) and n['role']==role and n['enabled'] and n['showing'] and n.get('rect',[0,0,0,0])[2]>0 and (not dialog or 'dialog' in n['ancestors']) and (not within or within in n['ancestors'])]
                 return choices[0] if len(choices)==1 else None
             node=wait(find,'Unambiguous native accessible control missing: '+name)
             check_focus();x,y,w,h=node['rect']
@@ -120,7 +120,7 @@ for kind in ['appimage','deb']:
                 return record if focus!=xid and title.lower() in ['open','open file','open a file','choose files','choose a file','select file'] else None
             record=wait(picker,'Normal native Ctrl+O did not display a distinct OS picker',15)
             assert record['pid']==str(pid);case.setdefault('nativePickers',[]).append(record)
-            keys('ctrl+l');type_text(str(path));keys('alt+o')
+            keys('ctrl+l');type_text(str(path));click('Open',within='file chooser')
             if foreign:click('Open anyway',dialog=True)
             wait(lambda:text_present('StandaloneItems'),'Supported actual SQLite UI open')
             click('StandaloneItems',prefix=True)
@@ -171,7 +171,7 @@ for kind in ['appimage','deb']:
         keys('ctrl+l');type_text(str(saved));keys('alt+s')
         wait(lambda:saved.is_file() and saved.stat().st_size>0,'Native export wrote actual SQLite bytes')
         with sqlite3.connect('file:'+str(saved)+'?mode=ro',uri=True) as db:
-            assert db.execute('SELECT id,label,amount FROM StandaloneItems ORDER BY id').fetchall()==[(1,'SyntheticAlpha',13),(2,'SyntheticBeta',11)]
+            assert db.execute('SELECT id,label,amount,typeof(amount) FROM StandaloneItems ORDER BY id').fetchall()==[(1,'SyntheticAlpha',13,'integer'),(2,'SyntheticBeta',11,'integer')]
             assert db.execute('SELECT SUM(amount) FROM StandaloneItems').fetchone()==(24,)
             case['independentSavedTables']=db.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").fetchall()
         assert sha(fixture)==original_sha;case['savedSha256']=sha(saved)
@@ -193,7 +193,10 @@ for kind in ['appimage','deb']:
         try:
             if xid and owned(home):
                 focus=cmd('xdotool','getwindowfocus',env=env)
-                if cmd('xdotool','getwindowpid',focus,env=env)==str(pid):cmd('xdotool','key','--clearmodifiers','Escape',env=env)
+                if cmd('xdotool','getwindowpid',focus,env=env)==str(pid):
+                    snapshot=accessible_snapshot(pid)
+                    if any(n['name']=='Cancel' and n['role']=='push button' and n['enabled'] and n['showing'] and 'file chooser' in n['ancestors'] for n in snapshot):click('Cancel',within='file chooser')
+                    else:cmd('xdotool','key','--clearmodifiers','Escape',env=env)
                 cmd('xdotool','windowactivate','--sync',xid,env=env)
                 cmd('xdotool','key','--clearmodifiers','alt+F4',env=env)
             wait(lambda:not owned(home),'Normal process family cleanup',15)
@@ -201,6 +204,20 @@ for kind in ['appimage','deb']:
             case['cleanupError']=repr(error)
             # Only the probe's own session leader/group, never another app.
             if process and process.poll() is None:os.killpg(process.pid,15)
+        if owned(home):
+            case['failureCleanupTerminatedOwnProcesses']=owned(home)
+            for record in owned(home):
+                try:
+                    # Re-read this private HOME binding immediately before signaling.
+                    if record in owned(home):os.kill(record['pid'],15)
+                except ProcessLookupError:pass
+            try:wait(lambda:not owned(home),'Owned failure-process teardown',3)
+            except AssertionError:
+                for record in owned(home):
+                    try:
+                        if record in owned(home):os.kill(record['pid'],9)
+                    except ProcessLookupError:pass
+                wait(lambda:not owned(home),'Owned forced failure-process teardown',3)
         case['remainingOwnedProcesses']=owned(home)
         case['profilePaths']=[str(p.relative_to(home)) for p in home.rglob('*')]
         assert not any('org.openaec.office-studio' in p for p in case['profilePaths'])
