@@ -1,0 +1,160 @@
+{
+  "recordedAt": "2026-11-23T14:52:24.774003+00:00",
+  "stopInstruction": "Hard user stop: safely closed before 2026-11-23 16:00 CET. No new test/build/research/dispatch. Existing CI may finish independently. Resume only after a new explicit user request.",
+  "unusedStartAuthorizationsRevoked": true,
+  "newDispatchAuthorized": false,
+  "publicationAuthorized": false,
+  "mainMergeAuthorized": false,
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "qaBranch": "codex/linux-release-input-p5-2026-11-23",
+  "preservedQaHead": "4d0dec40aa1c870b156057664704df543ada630d",
+  "activeOrLastDiagnostic": {
+    "id": 45197550291,
+    "attempt": 1,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197550291",
+    "headSha": "f5634851014a106c62e2ee2401fcc5a1d3cb95ee",
+    "status": "completed",
+    "conclusion": "success",
+    "createdAt": "2026-11-23T14:45:09Z",
+    "startedAt": "2026-11-23T14:45:09Z",
+    "jobs": [
+      {
+        "id": 137771968367,
+        "name": "request",
+        "attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197550291/job/137771968367",
+        "startedAt": "2026-11-23T14:45:11Z",
+        "completedAt": "2026-11-23T14:45:24Z"
+      },
+      {
+        "id": 137772125699,
+        "name": "Independent spreadsheet DEB and AppImage",
+        "attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197550291/job/137772125699",
+        "startedAt": "2026-11-23T14:45:26Z",
+        "completedAt": "2026-11-23T14:51:27Z"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 14829826268,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyOTgyNjI2OA==",
+        "name": "standalone-linux-spreadsheet",
+        "size_in_bytes": 3355358,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14829826268",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14829826268/zip",
+        "expired": false,
+        "digest": "sha256:9cc7f012da9f63a1d7b9717bad4aef04c4257de0418fb1370d277e12e128411e",
+        "created_at": "2026-11-23T14:51:20Z",
+        "updated_at": "2026-11-23T14:51:20Z",
+        "expires_at": "2027-02-21T14:45:09Z",
+        "workflow_run": {
+          "id": 45197550291,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "f5634851014a106c62e2ee2401fcc5a1d3cb95ee"
+        }
+      }
+    ]
+  },
+  "canonicalInstallerParent": {
+    "id": 14824745492,
+    "name": "uitgave-Linux",
+    "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+    "size_in_bytes": 4444993178,
+    "created_at": "2026-11-23T13:44:51Z",
+    "updated_at": "2026-11-23T13:44:51Z",
+    "expires_at": "2027-02-21T12:48:08Z",
+    "expired": false,
+    "workflow_run": {
+      "id": 45177730188,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/release-candidate-2026-11-23-p5",
+      "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+    }
+  },
+  "ownSpreadsheetInput": {
+    "id": 14824139421,
+    "name": "standalone-input-spreadsheet-p5",
+    "digest": "sha256:3d1863d088a45e3f93bfb568d53fa2924fd91782a0bacad28a6ed70e987fc41e",
+    "size_in_bytes": 813766987,
+    "created_at": "2026-11-23T13:58:10Z",
+    "expires_at": "2027-02-21T13:53:00Z",
+    "expired": false,
+    "workflow_run": {
+      "id": 45188332685,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/linux-release-input-p5-2026-11-23",
+      "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+    }
+  },
+  "matrix": {
+    "writer": {
+      "coreDeb": "PASS",
+      "coreAppImage": "PASS",
+      "audit": "independent root-assigned auditor completed; no rerun by this owner"
+    },
+    "spreadsheet": {
+      "coreDeb": "PASS",
+      "coreAppImage": "PASS",
+      "gnmDeb": "PASS both aliases",
+      "gnmAppImage": "PASS .gnm; OPEN .gnumeric invalid WebDriver session after verified native picker in45194487509",
+      "boundedDiagnosticRun": 45197550291,
+      "diagnosticNotAuditedDueToUserStop": true,
+      "historicalP2IntermittentCouldNotOpen": "OPEN, no proven common cause"
+    },
+    "presentation": {
+      "coreDeb": "PASS",
+      "coreAppImage": "PASS",
+      "audit": "independent root-assigned auditor completed"
+    },
+    "email": {
+      "coreDeb": "PASS",
+      "coreAppImage": "PASS",
+      "proofRun": 45193219423,
+      "scenario": "actual CtrlS, exactly1 native IMAP APPEND, independent805B MIME, normalquit/newPID, retrieved/rendered body; synthetic only"
+    },
+    "notition": {
+      "coreDeb": "PASS",
+      "coreAppImage": "PASS",
+      "audit": "independent root-assigned auditor completed"
+    },
+    "database": {
+      "coreDeb": "PASS",
+      "coreAppImage": "PASS",
+      "scenario": "normal native SQLite open/query/realUPDATE/export/coldreopen + independent SQLite oracle",
+      "audit": "independent root-assigned auditor completed"
+    }
+  },
+  "cleanup": {
+    "localGuiOrCaptureSessionsOpened": false,
+    "localTestServersOrWatchersStarted": false,
+    "localOwnRunningExecSessions": false,
+    "existingRemoteDiagnosticCiAllowedToFinish": true,
+    "nativeReceiptsBeforeDiagnostic": "owned applications/drivers/profiles closed; Email keyrings and attributed GTK peers closed; diagnostic cleanup pending its own immutable run receipt"
+  },
+  "preservedLocalFiles": [
+    ".local/p5-native-email-45193219423/proof.zip",
+    ".local/p5-spreadsheet-45194487509/proof.zip",
+    ".local/p5-native-proof/email.zip",
+    ".local/p5-native-proof/spreadsheet.zip",
+    ".local/stop-2026-11-23/"
+  ],
+  "proofCommits": {
+    "emailExactBytes": "83b7b33d4b3d3992570fe04f2f79ca327f9095a5",
+    "spreadsheetPartial": "4d0dec40aa1c870b156057664704df543ada630d"
+  },
+  "proofReceiptSha256": {
+    "email": "5be51ba9298ee240cfbfc60cf0bd18ba07254846516d73a99bbf86f3d8c26a54",
+    "spreadsheetPartial": "decbdaa74fcfc578c8a06205d64686b2bfee1aebac56fc4cc619aad55b8ce176"
+  }
+}
