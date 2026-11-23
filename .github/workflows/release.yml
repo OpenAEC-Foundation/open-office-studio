@@ -88,7 +88,7 @@ jobs:
     env:
       WIN_SIGN: ${{ secrets.AZURE_CLIENT_ID != '' && secrets.AZURE_ENDPOINT != '' && secrets.AZURE_TRUSTED_SIGNING_ACCOUNT_NAME != '' }}
       MAC_SIGN: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_SIGNING_IDENTITY != '' && secrets.APPLE_API_KEY != '' }}
-      ONDERTEKENEN_VERPLICHT: ${{ github.ref_type == 'tag' || inputs.publiceren == true }}
+      ONDERTEKENEN_VERPLICHT: 'true'
       # Updaters (#26, docs/updates.md): alleen met het organisatiegeheim én een publieke sleutel
       # in tauri.conf.json. Ontbreekt een van beide, dan wordt gewoon zonder updater-artefacten
       # gebouwd en staat de updatefunctie in die versie uit.
