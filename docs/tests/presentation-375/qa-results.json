@@ -1,0 +1,116 @@
+{
+  "issue": 375,
+  "productFix": false,
+  "sourceAcceptancePassed": false,
+  "runs": [
+    {
+      "run": 45164461311,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45164461311",
+      "qaCommit": "6dd66bbaca1b81220d9cba36bf9d28565300c0e6",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 137657717793,
+          "conclusion": "success"
+        }
+      ],
+      "artifact": {
+        "id": 14813696367,
+        "name": "presentation-375-uno-component-preflight",
+        "zipBytes": 24234,
+        "zipSha256": "3f44368b27f678f9c503fa89db78e1f9abe1055cda24feacc00c1b9e2da6314b"
+      },
+      "kind": "component preflight"
+    },
+    {
+      "run": 45165225390,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45165225390",
+      "qaCommit": "eddcde2a731c857df56f6890f09b4e355f3c1665",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137660311516,
+          "conclusion": "failure"
+        }
+      ],
+      "artifact": {
+        "id": 14812519251,
+        "name": "presentation-375-uno-uno",
+        "zipBytes": 111601,
+        "zipSha256": "ab4718f9e099b8af2ac7a5d6d737b838f3aa62eb36afcf2d3f0487e148cdfc60"
+      },
+      "kind": "actual UNO diagnostic; overall FAIL retained"
+    },
+    {
+      "run": 45165518973,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45165518973",
+      "qaCommit": "4d8d7d5abcca4db953534a8a76c2850ed856d2e4",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137661337992,
+          "conclusion": "failure"
+        }
+      ],
+      "artifact": {
+        "id": 14813533301,
+        "name": "presentation-375-uno-uno",
+        "zipBytes": 115046,
+        "zipSha256": "180417ef83e51f563b5e934b093717ea5a5985cbce1a47d64b5fe4c77ad63d43"
+      },
+      "kind": "actual UNO diagnostic; overall FAIL retained"
+    }
+  ],
+  "retainedPair": {
+    "path": "docs/tests/presentation-375/retained/uno-diagnostic-pair.zip",
+    "bytes": 44350,
+    "sha256": "b885a5bae4e84157f0522677be644dc45346e927a364cb5b1869ffc10750a4bf",
+    "sourceArtifact": 14813533301,
+    "files": [
+      {
+        "name": "control.pptx",
+        "sha256": "31cf8ae0df32049c65c749147bac116dae89425118d5f7bedb461fac4874b9ad"
+      },
+      {
+        "name": "cleared-complex-color.pptx",
+        "sha256": "23ce163b931d6628ad053f752212693cd7574e4a5724514967185f9dbce496ca"
+      },
+      {
+        "name": "properties.tsv",
+        "sha256": "f3f0d6d996b6eeeac1f486d6dabab2b2caf7fc9eba24aeb10633f535b533a944"
+      },
+      {
+        "name": "live-property-snapshots.json",
+        "sha256": "7273bc7c6adae7c1faf5158976aae030d188c9b324454dd9bcb4e381bb382712"
+      },
+      {
+        "name": "control-independent.json",
+        "sha256": "80cfe174f94b018744bdbb6b060f54ac15a90df60d8b0815ad190ebdd1af64a1"
+      },
+      {
+        "name": "diagnostic-independent.json",
+        "sha256": "3ef7cac0d4566d8a0444ac0062e293c6ec41fb64bac889edcad0291228aabdb0"
+      },
+      {
+        "name": "source-oracle.json",
+        "sha256": "a61070ff5daf387962e2ea77ed16d2ed3a98ca5c33b6615f27566c2cd4da90f4"
+      },
+      {
+        "name": "uno-diagnosis.json",
+        "sha256": "424c85985652682ecfe5862cc8a30c4da32064b226a064b7e1b116780bb6161d"
+      },
+      {
+        "name": "expectations.tsv",
+        "sha256": "fb40dbf7444409166e77b529fe00dddb6b6a5b983ec95a27981ecdb68cb095a6"
+      }
+    ]
+  },
+  "limitations": [
+    "No product patch, runtime build or format acceptance pass",
+    "Strict exact-tree FAIL: generated Python caches and two fontconfig UUID files; existing 15082-entry bytes/modes/links unchanged",
+    "Original UOP unchanged; separate diagnostic copies only",
+    "Own local pipe/profile/process group cleaned up; no local GUI or shared process control",
+    "Engine edit/save/fresh reopen on a corrected runtime is outstanding",
+    "Windows/macOS/native/browser/visual acceptance of a corrected product is outstanding"
+  ]
+}

@@ -53,19 +53,23 @@ The script retains complete SHA256 identities for each inspected file.
    current RGB. `WriteSchemeColor` checks the theme type and writes its theme
    reference; it does not compare the resolved theme RGB with `FillColor`.
 
-Together these explain a plausible stale inherited-theme path. No live
-`FillColor`/`FillComplexColor` properties were inspected in this new work yet;
-do not call this a confirmed complete runtime causal trace or a product fix.
+The initial static report deliberately records this as an inference. The live
+UNO counterfactual below subsequently confirms the relevant two property values
+and export behavior. It remains a diagnosis, not a shipped product fix.
 
 ## Proposed next probe and implementation gate
 
-Before changing shared converter/runtime files, ask the integration coordinator
-to confirm the route. Preferred probe: use the exact verified private P2 Linux
-runtime, an isolated safe profile and a loopback-only UNO connection to inspect
-the two loaded rectangles' RGB and complex-color properties. Clear only their
-complex colors in the probe, export modern PPTX and check the unchanged
-source-derived RGB oracle, edit/save/fresh reopen and unaffected document data.
-This is a diagnostic counterfactual, not a shipped fix or global theme policy.
+Integration authorized the isolated UNO diagnosis and its own manual Linux
+workflow. The actual client uses an unpredictable **local named pipe**, with no
+network listener. It connects only to the explicitly launched private process;
+it never calls `Bootstrap.bootstrap()` or finds a system Office. Each load
+disables macros and link updates, aborts interactions, uses the exact P2 safe
+profile and keeps the source read-only. A separate in-memory document copy is
+checked against the complete control snapshot before only its two proven
+complex colors are cleared. Export destinations are new owned PPTX files.
+
+The required later product engine edit/save/fresh reopen is still outstanding;
+the completed counterfactual only observes the private UNO import/export path.
 
 A structural correction should clear an inherited complex color at the
 appropriate import boundary when an explicit non-theme fill is imported, while
@@ -82,3 +86,35 @@ unsafe. No guessed theme RGB or order-only patch is proposed.
 No stroke, canvas-size, broad theme, or other format correction belongs here.
 Windows/macOS/native/browser/visual acceptance and a corrected runtime are still
 outstanding; the browser has no local conversion runtime.
+
+## Recorded Linux results
+
+- [45164461311](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45164461311),
+  QA `6dd66bbaca1b81220d9cba36bf9d28565300c0e6`: component preflight succeeds.
+  The private runtime contains `libreoffice.jar` and `libjpipe.so`; the runner
+  already provides Temurin Java/javac 11.0.33. Nothing extra is installed.
+- [45165225390](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45165225390),
+  QA `eddcde2a`: actual UNO counterfactual succeeds, but the final exact-tree
+  assertion fails. That first assertion did not retain a detailed tree diff;
+  the original failed result and exact artifact remain historical.
+- [45165518973](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45165518973),
+  QA `4d8d7d5a`: records the same live result and the detailed strict tree failure.
+  Both loaded rectangles have correct source RGB plus complex type 4/theme 4.
+  Clearing only the complex member yields type 0/theme -1 and correct RGB
+  output. All other eight-shape live fields and independently observed document
+  content match the control. Existing source canvas/stroke failures remain.
+  All original 15,082 runtime entries retain content/modes/links, but Python
+  bytecode caches and two fontconfig `.uuid` files are newly added. **Overall
+  run remains FAIL.** No caches were deleted or strict test relabelled.
+
+The own process group is empty and its isolated profile removed in the detailed
+report. No local GUI/capture session was started. Complete official artifact
+ZIP hashes, QA/run/job bindings and limitations are recorded in
+[`qa-results.json`](../../docs/tests/presentation-375/qa-results.json).
+The small retained diagnostic pair comes only from the independently hashed
+second-run artifact and contains no runtime binaries or font caches.
+
+The own branch-only bootstrap push trigger was removed after registration;
+the actual UNO phase requires explicit `workflow_dispatch` with `phase=uno`.
+Pending integration decisions: clean-tree cache isolation and the reviewable
+[import/build proposal](../../docs/tests/presentation-375/import-fix-proposal.md).
