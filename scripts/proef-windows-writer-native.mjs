@@ -30,6 +30,7 @@ for (const key of ["runId", "artifactId"]) assert(Number.isSafeInteger(identity[
 assert(/-setup\.exe$/.test(identity.packageMember));
 assert(!identity.packageMember.includes("..") && !identity.packageMember.includes("\\"));
 const out = resolve(outputDirectory);
+await mkdir(dirname(out), { recursive: true });
 await mkdir(out); // Do not overwrite earlier evidence.
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 const report = {
@@ -43,6 +44,8 @@ const processes = [];
 const env = { ...process.env, APPDATA: join(out, "profile/Roaming"), LOCALAPPDATA: join(out, "profile/Local") };
 delete env.OPENAEC_CONVERSIE_PROGRAMMA;
 delete env.OPENAEC_CONVERSIE_PROFIEL;
+delete env.GH_TOKEN;
+delete env.GITHUB_TOKEN;
 const expected = ["alpha", "beta", "", "", "", "omega", "delta", "", ""];
 const marker = "NATIVE_WINDOWS_372 ";
 const edited = [marker + "alpha", ...expected.slice(1)];
@@ -148,7 +151,10 @@ try {
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0, 3, 6].map(n => `<w:tr>${expected.slice(n, n + 3).map(cell).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
   parts["word/document.xml"] = strToU8(strFromU8(parts["word/document.xml"]).replace(/(<w:body>)[\s\S]*?(<w:sectPr)/, `$1${table}$2`));
-  await writeFile(documentPath, zipSync(parts)); report.fixtureSha256 = (await diskState()).sha256;
+  await writeFile(documentPath, zipSync(parts));
+  const fixtureState = await diskState();
+  assert.deepEqual(fixtureState.cells, expected, "Synthetic fixture must match before any application launch");
+  report.fixtureSha256 = fixtureState.sha256;
   await mkdir(env.APPDATA, { recursive: true }); await mkdir(env.LOCALAPPDATA, { recursive: true });
   installation = join(out, "installed");
   execFileSync(installer, ["/S", `/D=${installation}`], { env, windowsHide: true, timeout: 600_000, stdio: "inherit" });
