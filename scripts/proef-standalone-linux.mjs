@@ -139,6 +139,7 @@ async function packageCase(pkg) {
     pending: [],
     externalRequirements: [
       "Linux x64, GTK 3, WebKitGTK 4.1 and declared shared OS libraries",
+      "zenity for native message confirmations: declared DEB dependency; external OS helper for AppImage. Foreign-format message confirmation is outside this core scenario",
       ...(app.sleutel === "email"
         ? [
             "Secret Service for saved account credentials",
@@ -201,7 +202,8 @@ async function packageCase(pkg) {
       "-f=${Status}\t${Version}",
       "zenity",
     ]),
-    installedByHarness: false,
+    explicitManualTestToolInstallation: false,
+    installationPolicy: "AppImage precedes DEB; actual DEB dependencies are resolved by apt without manually adding zenity as a test tool",
     foreignFormatRfdMessageConfirmationExercised: false,
     route:
       "Own-format Ctrl+S and explicit recommended XLSX Save as; no foreign-original Ctrl+S confirmation test",
@@ -691,6 +693,7 @@ async function packageCase(pkg) {
       command("sudo", ["apt-get", "install", "-y", "--no-install-recommends", pkg.path]);
       report.normalPackageDependencyResolver = true;
       report.nativeMessageDependencyObservation.afterNormalDebInstall = observedTool("which", ["zenity"]);
+      report.nativeMessageDependencyObservation.installedThroughDeclaredPackageDependency = report.nativeMessageDependencyObservation.zenityCommand.status === "not-found" && report.nativeMessageDependencyObservation.afterNormalDebInstall.status === "observed";
       application = `/usr/bin/${app.programma}`;
     } else {
       await chmod(pkg.path, 0o755);
