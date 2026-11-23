@@ -1,0 +1,80 @@
+{
+  "issue": 375,
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "patchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+  "qaCommit": "9e01c39e33ad423c85c682e0699a8947fca3223f",
+  "run": "45172855782",
+  "stages": [],
+  "productActivation": false,
+  "portableRuntimeClaim": false,
+  "passed": false,
+  "initialPreflight": {
+    "issue": 375,
+    "kind": "resource inventory only",
+    "buildReadyByPlanGates": true,
+    "failures": [],
+    "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "patchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+    "imageVersion": "20261116.376.1",
+    "imageOS": "ubuntu24",
+    "kernel": "7.0.0-1017-azure",
+    "availableCPUs": 4,
+    "memoryBytes": {
+      "MemTotal": 16759304192,
+      "MemAvailable": 15721365504
+    },
+    "candidateFilesystems": [
+      {
+        "path": "/home/runner/work/open-office-studio/open-office-studio",
+        "filesystemDevice": 2049,
+        "freeBytes": 91217633280,
+        "totalBytes": 154894188544,
+        "writableByCurrentUser": true
+      },
+      {
+        "path": "/home/runner/work/_temp",
+        "filesystemDevice": 2049,
+        "freeBytes": 91217633280,
+        "totalBytes": 154894188544,
+        "writableByCurrentUser": true
+      },
+      {
+        "path": "/mnt",
+        "filesystemDevice": 2049,
+        "freeBytes": 91217633280,
+        "totalBytes": 154894188544,
+        "writableByCurrentUser": false
+      }
+    ],
+    "toolchain": {
+      "gcc13": {
+        "path": "/usr/bin/gcc-13",
+        "available": true,
+        "output": "gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "g++13": {
+        "path": "/usr/bin/g++-13",
+        "available": true,
+        "output": "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "jdk17": {
+        "path": "/usr/lib/jvm/temurin-17-jdk-amd64/bin/javac",
+        "available": true,
+        "output": "javac 17.0.21"
+      },
+      "make": {
+        "path": "/usr/bin/make",
+        "available": true,
+        "output": "GNU Make 4.3\nBuilt for x86_64-pc-linux-gnu\nCopyright (C) 1988-2020 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law."
+      }
+    },
+    "largeSourceCheckout": false,
+    "packagesInstalled": false,
+    "buildStarted": false,
+    "systemCleanup": false,
+    "runtimeChanged": false
+  },
+  "ownBuildRoot": "/home/runner/work/_temp/presentation-375-45172855782",
+  "error": "AssertionError()",
+  "elapsedSeconds": 13.338475276748909
+}

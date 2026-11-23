@@ -1,7 +1,7 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: proposal awaiting integration allocation; no source checkout or build
-has started.** This is a private QA witness for the reviewed importer patch,
+**Status: integration allocated the single conditional witness; execution is
+pending actual results.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -154,3 +154,31 @@ actual job **can** meet the gates, rather than a promise about a later VM. The
 build job must rerun them before downloading source. The selected compiler,
 private build directory and allocation still require the integration decision;
 this preflight does not start a build automatically.
+
+## Allocated execution
+
+Integration subsequently authorized this single bounded witness. The source
+recipe adds only the CLI launcher/bootstrap and UOF XSLT package prerequisites
+needed for a genuine converter execution; all their make time counts toward the
+same 210-minute compiler budget. Skia is disabled for this headless development
+witness, with no visual/native/backend equivalence claim. A uniquely labelled
+baseline assertion identifies the real stale-theme failure. This test-only
+change gives patch SHA256 `e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4`;
+the importer output stays SHA256 `6041110c373f1617c1b1f9256e1e056a36cbf6fafb089e60a9e85a7141d0647b`.
+
+First initialization [45172855782](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45172855782)
+stops before any dependency/install/checkout/compiler stage because its APT
+layout guard does not recognize the runner's mirror representation. The failed
+receipt, including an empty stage list, remains preserved. Only that guard is
+corrected: verify Ubuntu noble and its trusted archive keyring, add a separate
+official archive/security `deb-src` definition, leave existing binary mirrors
+in place.
+
+Continuation [45173253806](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45173253806)
+on producer QA `088643c02522d62561b6c456cd2d66c5b4062830` retains the **original**
+allocated start epoch `1795436242` (13:17:22 Europe/Amsterdam). The single
+270-minute window ends at **17:47:22 on 2026-11-23**; the Python stage controller
+reserves the last ten minutes for finalization/upload. No second cold compiler
+attempt or new 270-minute window is allocated. New resource gates run on this VM
+before the large source acquisition. No acceptance result is inferred from an
+in-progress job.
