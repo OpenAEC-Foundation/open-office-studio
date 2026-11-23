@@ -35,6 +35,22 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: .local/gnm-harness
+      - id: settings
+        name: Reuse valid browser evidence only on the same source and script
+        run: |
+          node --input-type=module -e '
+            import {readFileSync,appendFileSync} from "node:fs";
+            import {createHash} from "node:crypto";
+            import assert from "node:assert/strict";
+            const p=JSON.parse(readFileSync(".local/gnm-harness/.github/format30-gnm-candidate.json","utf8"));
+            const browser=p.runBrowser ?? true;
+            assert.equal(typeof browser,"boolean");
+            if(!browser){
+              assert.equal(p.browserEvidence.applicationCommit,p.applicationCommit);
+              assert.equal(createHash("sha256").update(readFileSync(".local/gnm-harness/scripts/format30-gnm/browser.mjs")).digest("hex"),p.browserEvidence.scriptSha256);
+            }
+            appendFileSync(process.env.GITHUB_OUTPUT,`browser=${browser}\n`);
+          '
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -45,6 +61,7 @@ jobs:
         with:
           version: 11.25.0
       - uses: dtolnay/rust-toolchain@stable
+        if: steps.settings.outputs.browser == 'true'
         with:
           targets: wasm32-unknown-unknown
       - name: Disposable Linux private-runtime extraction dependencies
@@ -54,6 +71,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev squashfs-tools
       - run: pnpm install --frozen-lockfile
       - uses: actions/cache/restore@v4
+        if: steps.settings.outputs.browser == 'true'
         with:
           path: |
             .local/lettertypen-cache
@@ -62,12 +80,16 @@ jobs:
           restore-keys: |
             runtime317-assets-${{ runner.os }}-${{ runner.arch }}-
       - name: Real browser test driver
+        if: steps.settings.outputs.browser == 'true'
         run: pnpm exec playwright install --with-deps chromium
       - name: Build receipt-bound normal P2 frontend
+        if: steps.settings.outputs.browser == 'true'
         run: node scripts/writer-proefbuild.mjs build .local/gnm-P2-normal /
       - name: Build receipt-bound supported hosted P2 frontend
+        if: steps.settings.outputs.browser == 'true'
         run: node scripts/writer-proefbuild.mjs build .local/gnm-P2-hosted /office/
       - name: Actual / and /office/ GNM/Gnumeric rejection and saved-document preservation
+        if: steps.settings.outputs.browser == 'true'
         run: node .local/gnm-harness/scripts/format30-gnm/browser.mjs .local/gnm-P2 .local/gnm-P2-browser-proof
       - name: Verify canonical own Linux packages before any converter execution
         env:
