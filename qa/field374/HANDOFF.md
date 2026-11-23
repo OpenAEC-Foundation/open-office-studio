@@ -195,7 +195,7 @@ the one shared `audit-docx.mjs`/contract/oracle; package identity, actual operat
 full quit/new-PID reopen and visual approval remain separately required. No own
 GUI or build is needed. Root supplies the new actual packages/exports centrally.
 
-## Current P4 source pin
+## Historical P4 source pin
 
 P4 supersedes P3: `04fa6cd43b84e3f59fb9d5055bb2d00dde351a47`, tree
 `94fa38c20b51a73e4912964f37f0e1a659b0fb1b`, version2026.48.1, immutable branch
@@ -270,3 +270,41 @@ the Windows/Linux OS branch makes old and new browser source literally equal;
 contract/capture Git blobs are unchanged. Details are in
 `evidence/p4-mac-followup-win-linux-applicability.json`. This supports retaining
 those exact P4 results without another broad run; it is not a Mac runtime pass.
+
+## Atomic-field projection proof and current P5 QA candidate
+
+The first Mac red run45172148763 and the second red run45175445760 are both
+retained. The second correctly stopped before typing, but its new QA predicate
+wrongly equated the semantic field boundary with the visible ink edge.
+Its focused body caret is557.125px; inkRight is888.25054px. No tolerance was
+increased and no product patch or new product bug claim follows.
+
+Read-only queries using the exact P4/P5 layout WASM c5a59ce0 and the unchanged
+Mac SDK display-list bytes b21b0299 reproduce the projection: field range1..2,
+x225.76/width364.479, forward2..3 empty, backward1..2 width30.37325, caret edge
+256.13325. Canvasleft301 predicts557.13325px, within1/64 CSS pixel of the observed
+caret. Pinned hit.rs clamps cached grapheme stops to docEnd2 and breaks ties
+toward the smallest x; input mapping and End paragraph length1 select that
+model end. Original input data, source hashes and actual query results are in
+`evidence/p4-mac-caret-projection/`. `probe-field-caret.mjs` reproduces the query
+through the same shared `field-caret-projection.mjs`, without a document/session
+or selection setter.
+
+The reviewed replacement keeps real Meta+Home then End and requires the DOM
+caret to match that exact current-WASM model-end projection (0.25 CSS px), on
+the original title baseline with focused body input. It binds the immutable SDK
+display hash, current kernel, original font bytes, live Canvas font and identity
+transform, and1:1 CSS/backing-canvas mapping. The full-ink-edge mismatch stays
+explicitly recorded as a visible caret-projection observation for later.
+Suffix/cache/boundary/paint/capture/save/fresh-reopen criteria are unchanged.
+Local JS syntax checks and the read-only current-WASM query pass; this is not
+yet a Mac browser or native pass. No third standalone P4 run is authorized or
+started; root will validate once in the P5 three-OS/two-route matrix.
+
+Current immutable candidate: P5 b696ab86bd1c128729a079b68c0082e6df3d36a5,
+tree e30879fd772871e690847c061ef66e6b81808a05, version2026.48.1;
+producer45177730188/attempt1, publishing disabled per coordinator. Independent
+Git checks confirm all five field374 product blobs equal P4, including the
+exact locally queried WASM. `evidence/p5-source-binding.json` records this;
+P4 browser results remain historical on their own source. P5 browser/native
+acceptance remains pending. No own GUI, extra CI, suite build or publication.

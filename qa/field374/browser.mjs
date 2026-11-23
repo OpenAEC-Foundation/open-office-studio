@@ -26,7 +26,7 @@ let browser, context, page, server, workers = [], hooks = [];
 
 // Observe actual paint without changing source, field data, font choice, input
 // or pixels. The same wrapper calls the original methods in DOM and workers.
-function installPaintObserver() {
+function installPaintObserver({ captureTransform = false } = {}) {
   if (globalThis.__oosField374Paint) return;
   const records = [], latestFrames = {}, states = new WeakMap(); let serial = 0, seq = 0;
   const state = ctx => { let s = states.get(ctx); if (!s) { s = { id: ++serial, frame: 0 }; states.set(ctx, s); } return s; };
@@ -41,8 +41,10 @@ function installPaintObserver() {
       if (px >= 40 && px <= 45 && this.canvas.width >= 750 && this.canvas.height >= 1000) {
         const m = this.measureText(String(text)), s = state(this);
         latestFrames[s.id] = s.frame;
+        const transform = captureTransform ? this.getTransform() : null;
         records.push({ context: s.id, frame: s.frame, seq: ++seq, text: String(text), x, y, font: this.font,
           tracking: this.letterSpacing, width: m.width, inkLeft: x - m.actualBoundingBoxLeft, inkRight: x + m.actualBoundingBoxRight,
+          ...(transform ? { transform: { a: transform.a, b: transform.b, c: transform.c, d: transform.d, e: transform.e, f: transform.f } } : {}),
           canvasWidth: this.canvas.width, canvasHeight: this.canvas.height });
         if (records.length > 2500) records.splice(0, records.length - 2500);
       }
@@ -53,8 +55,9 @@ function installPaintObserver() {
 async function open(bytes, name) {
   workers = []; hooks = [];
   context = await browser.newContext({ locale: "en-GB", viewport: { width: 1400, height: 1100 }, deviceScaleFactor: 1 });
-  page = await context.newPage(); page.setDefaultTimeout(60000); await page.addInitScript(installPaintObserver);
-  page.on("worker", worker => { workers.push(worker); hooks.push(worker.evaluate(installPaintObserver).catch(() => {})); });
+  const observerOptions = { captureTransform: process.platform === "darwin" };
+  page = await context.newPage(); page.setDefaultTimeout(60000); await page.addInitScript(installPaintObserver, observerOptions);
+  page.on("worker", worker => { workers.push(worker); hooks.push(worker.evaluate(installPaintObserver, observerOptions).catch(() => {})); });
   page.on("pageerror", error => report.errors.push(String(error)));
   page.on("request", req => { if (/^https?:/.test(req.url()) && new URL(req.url()).hostname !== "127.0.0.1") report.externalRequests.push(req.url()); });
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}${route}`);

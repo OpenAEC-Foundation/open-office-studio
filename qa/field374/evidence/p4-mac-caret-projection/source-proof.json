@@ -1,0 +1,83 @@
+{
+  "scope": "Source-backed explanation of an invalid QA ink-edge assumption; no product patch/intake or extra CI",
+  "appCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+  "upstreamCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+  "runtimeInput": {
+    "runId": 45175445760,
+    "qaCommit": "7a0f08993448593466625d0e930030c1b035596d",
+    "artifact": 14818821324,
+    "zipBytes": 2335184,
+    "wholeZipSha256": "c005f0e30208b5315a9deb9f65ee4515a0ea99dec956db63a04e14ff6f531c9d"
+  },
+  "sourcePins": [
+    {
+      "file": "caretColumnOffset.ts",
+      "bytes": 182,
+      "sha256": "18c90f74fb4dac35c0313f53b446ec092a2716e3dd6cdaa673a85ce93b486879"
+    },
+    {
+      "file": "displayList.ts",
+      "bytes": 27795,
+      "sha256": "bd87437827d1b25ff6a20008ad4c09979095c24d437655ab2af700bcdd75e446"
+    },
+    {
+      "file": "displayListQueries.ts",
+      "bytes": 61301,
+      "sha256": "437dec7e1d3fe7f2454bcd2b05a06eb2a759ab10a7e4bc3d3eb623715796c64b"
+    },
+    {
+      "file": "displayPositionIndex.ts",
+      "bytes": 2393,
+      "sha256": "b3db85902e4f34147ef115d389b1b20e01c1c4e9d244a7e60908d56a5852f3c4"
+    },
+    {
+      "file": "hit.rs",
+      "bytes": 138843,
+      "sha256": "f09fc4a489bc3c4537ac575fb39b4331441b5353afbf512ac04c907dbd049586"
+    },
+    {
+      "file": "inputPositionMap.ts",
+      "bytes": 2520,
+      "sha256": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3"
+    },
+    {
+      "file": "paintedCaret.ts",
+      "bytes": 3716,
+      "sha256": "b56a032f548cbb5462b8ff5ed654ef99d58782fe0cc30fc0f9b12b6cce4d2f47"
+    },
+    {
+      "file": "residentCaret.ts",
+      "bytes": 1666,
+      "sha256": "236d52567b39aae0fbf42565efaf83d0b89808f0f21dcffd8e42747998c432d8"
+    },
+    {
+      "file": "YrsInput.tsx",
+      "bytes": 88496,
+      "sha256": "a537105dfe5747de39411bfb1478eff40a4fc5d1cb55e759c9bd947ddd39dc34"
+    },
+    {
+      "file": "yrsPositionProjection.ts",
+      "bytes": 19279,
+      "sha256": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba"
+    }
+  ],
+  "sourceChain": [
+    "inputPositionMap.ts maps paragraph offset1 to displayStart+1+offset, here displaypos2.",
+    "YrsInput.tsx End uses target.length, here the atomic field paragraph length1.",
+    "displayListQueries.ts caretRect(2) uses backward range1..2 when forward2..3 is empty.",
+    "hit.rs doc_position_at_utf16 clamps internal cached-text grapheme stops to docEnd2; x_at_position breaks equal-position ties toward the smallest x."
+  ],
+  "calculation": {
+    "fieldX": 225.76,
+    "fieldWidth": 364.479,
+    "fallbackGraphemes": 12,
+    "queriedRelativeCaretX": 256.13325,
+    "canvasClientLeft": 301,
+    "predictedClientX": 557.13325,
+    "actualDomCaretX": 557.125,
+    "absoluteDifference": 0.00825,
+    "cssPixelRoundingUnit": 0.015625
+  },
+  "conclusion": "The observed DOM caret matches the pinned end-position projection. InkRight is not a valid semantic field-end locator for this atomic cached field. This does not alone inspect the live model selection; no product navigation bug is asserted.",
+  "nextStep": "Coordinate replacement of only the invalid QA geometry assumption while preserving all original suffix paint, cached field boundary, save and fresh-reopen criteria. No additional CI has been started."
+}

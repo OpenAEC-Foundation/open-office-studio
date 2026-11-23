@@ -54,10 +54,19 @@ unchanged. It checks actual glyph bounds, captures images and treats missing
 observations as driver failures. It never sets the editor model or field values.
 Platform shortcuts use Meta on macOS and Control elsewhere. The Mac edit
 preflight uses the pinned input handler's actual `Meta+Home` then `End` route.
-Before typing it reads the DOM caret geometry and compares it with the existing
-observed original title ink/baseline, retaining a preflight report and original
-PNG. Wrong placement fails the driver before mutation. It does not set editor
-selection/model state. Windows/Linux keep their existing Control+Home then End.
+Before typing it reads DOM caret geometry and compares it with the pinned current
+WASM's projection of the original atomic model end. The immutable retained Mac
+SDK display list, WASM hash, measurement-font bytes, live Canvas font/identity
+transform and1:1 CSS canvas mapping are checked. It retains a preflight report
+and original PNG. Wrong placement fails before mutation. No editor selection or
+model is set. Windows/Linux keep their existing Control+Home then End.
+
+For this atomic cached field, model end projects after the first cached grapheme;
+the full visible ink edge is not a semantic cursor locator. This visible caret
+projection limit is retained as an observation for later, not repaired or hidden
+here. `probe-field-caret.mjs RETAINED_DISPLAY.json OUTPUT.json` uses the same
+read-only projection module to reproduce the geometry without opening a document
+or changing a session. No new product or native acceptance follows from it.
 
 After a complete current worker frame, `capture.mjs` passively waits two main
 animation frames per sample and requires three identical original full-page PNGs
