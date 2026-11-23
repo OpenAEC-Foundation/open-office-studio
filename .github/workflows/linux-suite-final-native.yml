@@ -19,6 +19,7 @@ jobs:
       go: ${{ steps.pin.outputs.go }}
       source: ${{ steps.pin.outputs.source }}
       packages: ${{ steps.pin.outputs.packages }}
+      reusecore: ${{ steps.pin.outputs.reusecore }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,6 +35,7 @@ jobs:
           node qa/linux-suite-final/scenarios.contract.mjs
           node qa/linux-suite-final/ownership.contract.mjs
           python3 scripts/linux-suite-native-package.contract.py
+          python3 scripts/linux-suite-reuse-core.contract.py
           python3 -m py_compile scripts/linux-suite-native-package.py scripts/linux-suite-native-anatomy.py
           node --check scripts/linux-suite-native-session.mjs
           node --check scripts/proef-linux-suite-final-core.mjs
@@ -51,6 +53,7 @@ jobs:
           const r=JSON.parse(readFileSync('qa/linux-suite-final/request.json'));
           appendFileSync(process.env.GITHUB_OUTPUT,`go=${r.go===true}\nsource=${r.candidate?.commit??''}\n`);
           appendFileSync(process.env.GITHUB_OUTPUT,`packages=${JSON.stringify(r.nativePackages??['deb','appimage'])}\n`);
+          appendFileSync(process.env.GITHUB_OUTPUT,`reusecore=${Boolean(r.reusedCore)}\n`);
           JS
   native:
     needs: protocol
@@ -101,8 +104,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 .local/suite-harness/scripts/linux-suite-native-package.py ${{ matrix.package }}
       - name: Actual DEB core368/369 and vertical362
-        if: matrix.package == 'deb'
+        if: matrix.package == 'deb' && needs.protocol.outputs.reusecore != 'true'
         run: dbus-run-session -- xvfb-run -a -e .local/core-xvfb.log -s '-screen 0 1800x1200x24 -noreset' node .local/suite-harness/scripts/proef-linux-suite-final-core.mjs
+      - name: Reuse already completed identical source DEB ELF and core probe proof
+        if: matrix.package == 'deb' && needs.protocol.outputs.reusecore == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .local/suite-harness/scripts/linux-suite-reuse-core.py
       - name: Actual DEB native retained field374 and short native edit
         if: matrix.package == 'deb'
         run: |

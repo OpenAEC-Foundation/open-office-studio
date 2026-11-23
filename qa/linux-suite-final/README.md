@@ -1,7 +1,11 @@
 # Final Linux Suite QA preparation
 
-Execution is authorized by the coordinator; [request.json](request.json) is temporarily `go=false`
-while the first native attempt is preserved and an own-UID process-scan driver correction is checked.
+Execution is authorized by the coordinator in [request.json](request.json).
+The own-UID process-scan correction preserves the original failed attempts.
+The current DEB-only continuation reuses the already completed P5 core proof
+from45189806911 under exact official archive/report/source/package/ELF/probe hashes,
+then executes only the remaining native374/378 scopes. AppImage has its own
+independent continuation45190839269 and is not rerun by this request.
 both immutable input descriptors bound to producer Git `3ea55641` and official
 Suite transfers from successful prep45188332685. Native acceptance is still pending.
 Candidate P5 is exactly
