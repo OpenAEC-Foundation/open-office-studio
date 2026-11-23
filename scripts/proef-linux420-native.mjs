@@ -357,11 +357,44 @@ async function capture(path) {
 }
 async function startDocument(path, cells = baseline, columns = 3, rows = 3) {
   assert.equal(session, undefined);
-  const created = await raw("POST", "/session", {
-    capabilities: {
-      alwaysMatch: { "tauri:options": { application, args: [path] } },
-    },
+  const display = await exec("xdpyinfo", ["-display", env.DISPLAY], {
+    env,
+    timeout: 5000,
   });
+  (report.displayChecks ??= []).push({
+    phase,
+    beforeDocument: basename(path),
+    display: env.DISPLAY,
+    reachable: true,
+    dimensions: display.stdout.match(/dimensions:\s+([^\n]+)/)?.[1],
+  });
+  let created;
+  try {
+    created = await raw("POST", "/session", {
+      capabilities: {
+        alwaysMatch: { "tauri:options": { application, args: [path] } },
+      },
+    });
+  } catch (error) {
+    const after = await exec("xdpyinfo", ["-display", env.DISPLAY], {
+      env,
+      timeout: 5000,
+    })
+      .then((r) => ({
+        reachable: true,
+        dimensions: r.stdout.match(/dimensions:\s+([^\n]+)/)?.[1],
+      }))
+      .catch((e) => ({ reachable: false, error: String(e) }));
+    report.failedSessionStart = {
+      phase,
+      document: basename(path),
+      display: env.DISPLAY,
+      displayAfter: after,
+      observedApplicationPids: pids(),
+      error: String(error),
+    };
+    throw error;
+  }
   session = created.sessionId;
   assert.ok(session);
   command = createWriter362Transport({

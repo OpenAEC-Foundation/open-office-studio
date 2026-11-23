@@ -51,7 +51,7 @@ jobs:
                       print('Rewrote exact runner mirror list:',path)
           PY
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool python3-gi gir1.2-gtk-3.0
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0
           cargo install tauri-driver --version 2.1.0 --locked
           pnpm --dir .local/linux420-harness install --frozen-lockfile --ignore-scripts
       - name: Protocol and syntax checks before native app operation
@@ -68,7 +68,9 @@ jobs:
         env:
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
           LIBGL_ALWAYS_SOFTWARE: "1"
-        run: dbus-run-session -- xvfb-run -a -s '-screen 0 1800x1200x24' node .local/linux420-harness/scripts/proef-linux420-native.mjs
+        # Keep the same display alive across full application quits. Xvfb's default
+        # last-client reset can race the next GTK initialization; original failure retained.
+        run: dbus-run-session -- xvfb-run -a -e .local/linux420-xvfb.log -s '-screen 0 1800x1200x24 -noreset' node .local/linux420-harness/scripts/proef-linux420-native.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -80,5 +82,6 @@ jobs:
             .local/linux420-native/**/*.png
             .local/linux420-native/*.docx
             .local/linux420-native/driver.log
+            .local/linux420-xvfb.log
           include-hidden-files: true
           if-no-files-found: warn
