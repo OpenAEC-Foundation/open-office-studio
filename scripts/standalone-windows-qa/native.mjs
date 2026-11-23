@@ -5,8 +5,8 @@ import { spawn, execFileSync, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { createRequire } from 'node:module';
 import { createWriteStream } from 'node:fs';
-import { access, mkdir, mkdtemp, readFile, readdir, writeFile, rm } from 'node:fs/promises';
-import { join, resolve, dirname, basename } from 'node:path';
+import { access, mkdir, mkdtemp, readFile, readdir, realpath, writeFile, rm } from 'node:fs/promises';
+import { join, resolve, dirname, basename, relative, isAbsolute } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createServer } from 'node:net';
 import { fileURLToPath } from 'node:url';
@@ -116,14 +116,19 @@ async function launch(input,phase) {
  await access(profile);const profileEntries=await readdir(profile);assert(profileEntries.length,'Native WebView must actually create its own isolated profile');
  result.ownWebviewProfile={path:profile,createdByNativeWebview:true,entries:profileEntries};
  result.process=JSON.parse(await ps('inspect.ps1',['-Action','Process','-OwnedPid',String(child.pid)]));
- assert.equal(result.process.path.toLowerCase(),join(install,app.executable).toLowerCase());
+ assert.equal((await realpath(result.process.path)).toLowerCase(),(await realpath(join(install,app.executable))).toLowerCase());
  await action('Focus');
  await page.screenshot({path:join(root,phase+'-ready.png')});
  if(['writer','spreadsheet','presentation','email'].includes(app.key)) {
   result.runtime=await page.evaluate(()=>window.__TAURI_INTERNALS__.invoke('conversie_status'));
   if(!receipt.preflightOnly) {
    assert.equal(result.runtime.bron,'meegeleverd','Runtime must belong to this single installed app');
-   assert.equal(result.runtime.profiel,'veilig'); assert(result.runtime.pad.toLowerCase().startsWith(install.toLowerCase()+'\\'));
+   assert.equal(result.runtime.profiel,'veilig');
+   // Windows may report long paths for an executable launched via RUNNER~1.
+   // Compare actual resolved files, never weaken the own-install boundary.
+   result.runtimeCanonicalPath=await realpath(result.runtime.pad);
+   const within=relative(await realpath(install),result.runtimeCanonicalPath);
+   assert(within && within!=='..' && !within.startsWith('..\\') && !isAbsolute(within),'Runtime escapes this single app installation');
   } else report.limitations.push('Old public Writer is host/driver preflight only; its runtime status is recorded, not accepted as final standalone resource coverage');
  }
  return result;
@@ -194,7 +199,7 @@ try {
  // Never remove retained files while an app may still own them. Only our exact
  // mkdtemp prefix below the OS temp directory can be removed.
  if(report.cleanup.ownedAppExited && report.cleanup.policyRestored && !report.cleanup.processError && !report.cleanup.webviewError) {
-  assert.equal(dirname(temporary),resolve(tmpdir()));assert(basename(temporary).startsWith('oos-standalone23-'));
+  assert.equal(dirname(await realpath(temporary)),await realpath(tmpdir()));assert(basename(temporary).startsWith('oos-standalone23-'));
   try{await rm(temporary,{recursive:true,force:true});report.cleanup.ownedTemporaryProfileDisposed=true;}catch(error){report.cleanup.profileError=String(error);}
  }
  if(Object.keys(report.cleanup).some(k=>k.endsWith('Error')) && !primaryError){report.status='failed-cleanup';primaryError=Error('Native cleanup failed');}
