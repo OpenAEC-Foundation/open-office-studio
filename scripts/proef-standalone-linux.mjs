@@ -19,7 +19,6 @@ import { resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "node:net";
 import { setTimeout as delay } from "node:timers/promises";
-import initSqlJs from "sql.js";
 import { mailFixture } from "./standalone-linux-mail-fixture.mjs";
 import { syntheticDocument, savedDocument } from "./standalone-linux-ooxml.mjs";
 import {
@@ -692,7 +691,7 @@ async function packageCase(pkg) {
         );
       command("dpkg-deb", ["--extract", pkg.path, payloadRoot]);
       command("sudo", ["apt-get", "install", "-y", "--no-install-recommends", pkg.path]);
-      report.afterDependencyInstallNoSuitePackages = cleanHostPackages();
+      report.afterDependencyInstallNoSuitePackages = noInstalledSuite();
       report.normalPackageDependencyResolver = true;
       report.nativeMessageDependencyObservation.afterNormalDebInstall = observedTool("which", ["zenity"]);
       report.nativeMessageDependencyObservation.installedThroughDeclaredPackageDependency = report.nativeMessageDependencyObservation.zenityCommand.status === "not-found" && report.nativeMessageDependencyObservation.afterNormalDebInstall.status === "observed";
@@ -772,16 +771,7 @@ async function packageCase(pkg) {
       );
       report.fixtureSha256 = hash(await readFile(doc));
     } else if (app.sleutel === "database") {
-      // SQLite is an explicitly supported input. Use an independent generator.
-      doc = join(dir, "Synthetic standalone.sqlite");
-      const SQL = await initSqlJs(),
-        db = new SQL.Database();
-      db.run(
-        "CREATE TABLE StandaloneItems (id INTEGER PRIMARY KEY, label TEXT, amount INTEGER); INSERT INTO StandaloneItems VALUES (1,'SyntheticAlpha',7),(2,'SyntheticBeta',11);",
-      );
-      await writeFile(doc, db.export());
-      db.close();
-      report.fixtureSha256 = hash(await readFile(doc));
+      report.databaseFixtureMode = "Normal native driver creates and opens the supported synthetic SQLite; WebDriver is metadata-only";
     } else if (app.sleutel === "email") {
       fixture = await mailFixture();
       const setting = {
@@ -892,6 +882,33 @@ async function packageCase(pkg) {
       "Native driver readiness",
     );
     const first = await start(doc && app.sleutel !== "database" ? [doc] : []);
+    if (app.sleutel === "database") {
+      // WebKit automation owns HTML file inputs. Keep its role metadata-only;
+      // the separately validated normal binary performs every functional step.
+      await screenshot("metadata-preflight.png");
+      await quit();
+      report.status = "metadata-preflight-only";
+      report.functionalInputMode = "Normal native binary, readonly AT-SPI, real XTest and credential-bound OS portal; no WebDriver functional mutation";
+      const preflight = join(dir,"metadata-preflight.json");
+      await writeFile(preflight,JSON.stringify(report,null,2)+"\n");
+      try {
+        command("/usr/bin/python3",[join(harnessRoot,"scripts/database-normal-picker-probe.py"),kind,"--caller-owns-package"],{timeout:240_000});
+      } finally {
+        report.normalNativeCase = await readFile(join(out,`normal-${kind}-core.json`),"utf8").then(JSON.parse).catch(()=>null);
+      }
+      const core=report.normalNativeCase;
+      assert.ok(core && core.status==="passed" && core.functionalAcceptanceClaim);
+      assert.equal(core.sourceCommit,origin.sourceCommit);assert.equal(core.sourceTree,origin.sourceTree);
+      assert.equal(core.packageSha256,pkg.sha256);assert.equal(core.expectedElfSha256,report.payloadExecutableSha256);
+      assert.deepEqual(core.normalExitCodes,[0,0]);assert.deepEqual(core.remainingOwnedProcesses,[]);
+      assert.equal(core.ownedProfilesRemoved,true);assert.equal(core.portalPeerCleanup.closed,true);
+      assert.equal(core.portalObserver.monitorClosed,true);
+      report.fixtureSha256=core.fixtureSha256;report.savedSha256=core.savedSha256;
+      report.profilePaths=core.profilePaths;
+      report.checks.push("Normal standalone binary: real SQLite picker/read/SELECT18/UI UPDATE7to13/SELECT24/CtrlS native export/independent typed SQLite/full normal exit/newPID/reopen SELECT24, original unchanged and own profile/portal cleanup");
+      report.status="passed";
+      return;
+    }
     if (app.sleutel === "writer") {
       await wait(
         () => visible('[data-testid="yrs-input"]'),
