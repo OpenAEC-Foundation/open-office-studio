@@ -26,7 +26,7 @@ def normalize(text):
     return " ".join(text.split())
 
 
-def legacy_text(element):
+def legacy_text(element, semantic_placeholders=False):
     out = element.text or ""
     for child in element:
         if child.tag == q("t", "s"):
@@ -35,8 +35,12 @@ def legacy_text(element):
             out += "\t"
         elif child.tag == q("t", "line-break"):
             out += "\n"
+        elif child.tag == q("t", "placeholder") and semantic_placeholders:
+            display = legacy_text(child)
+            assert display.startswith("<") and display.endswith(">"), "Expected old jump-edit field display markers"
+            out += display[1:-1]
         else:
-            out += legacy_text(child)
+            out += legacy_text(child, semantic_placeholders)
         out += child.tail or ""
     return out
 
@@ -85,7 +89,8 @@ def source_oracle(path):
         for element in body.iter():
             if element.tag not in (q("t", "p"), q("t", "h")):
                 continue
-            text = normalize(legacy_text(element))
+            display_text = normalize(legacy_text(element))
+            text = normalize(legacy_text(element, semantic_placeholders=True))
             if not text:
                 continue
             name = element.get(q("t", "style-name"))
@@ -98,7 +103,11 @@ def source_oracle(path):
                 in_index |= parent.tag == q("t", "table-of-content")
                 parent = parents.get(parent)
             index_row = bool(in_index and re.search(r"\s\d+$", text))
-            paragraphs.append({"text": text, "sourceStyle": name,
+            placeholders = [{"type": e.get(q("t", "placeholder-type")),
+                             "prompt": normalize(legacy_text(e))[1:-1],
+                             "description": e.get(q("t", "description"))}
+                            for e in element.iter(q("t", "placeholder"))]
+            paragraphs.append({"text": text, "sourceDisplayText": display_text, "placeholders": placeholders, "sourceStyle": name,
                                "headingLevel": int(element.get(q("t", "level"))) if element.tag == q("t", "h") else None,
                                "dynamicIndexCache": index_row,
                                "stableText": re.sub(r"\s\d+$", "", text) if index_row else text,
@@ -160,6 +169,7 @@ def docx_audit(path, oracle, marker=""):
 
         paragraphs = []
         body = root.find("w:body", NS)
+        parents = {child: parent for parent in body.iter() for child in parent}
         for p in body.iter(q("w", "p")):
             text = normalize(docx_text(p))
             if not text:
@@ -175,7 +185,23 @@ def docx_audit(path, oracle, marker=""):
                 if rs is not None:
                     props.update(style_props(rs.get(q("w", "val")), include_defaults=False))
                 props.update(props_from(first.find("w:rPr", NS)))
+            controls = list(p.iter(q("w", "sdt")))
+            parent = parents.get(p)
+            while parent is not None:
+                if parent.tag == q("w", "sdt"):
+                    controls.append(parent)
+                parent = parents.get(parent)
+            placeholders = []
+            for control in controls:
+                pr = control.find("w:sdtPr", NS)
+                if pr is None or pr.find("w:showingPlcHdr", NS) is None:
+                    continue
+                alias = pr.find("w:alias", NS)
+                placeholders.append({"type": "text" if pr.find("w:text", NS) is not None else "other",
+                                     "prompt": normalize(docx_text(control.find("w:sdtContent", NS))),
+                                     "description": alias.get(q("w", "val")) if alias is not None else None})
             paragraphs.append({"text": text, "style": name,
+                               "placeholders": placeholders,
                                "properties": {"sizePt": float(props["sz"]) / 2 if "sz" in props else None,
                                               "bold": props.get("b", "false") not in ("0", "false", "off"),
                                               "alignment": {"both": "justify", "start": "left"}.get(props.get("jc", "left"), props.get("jc", "left")),
@@ -191,10 +217,12 @@ def docx_audit(path, oracle, marker=""):
             index, actual = candidates[0]
             after = index + 1
             assert actual["properties"] == expected["properties"], f"Source-derived style mismatch at {i}: {expected['sourceStyle']}: expected={expected['properties']}, actual={actual['properties']}"
+            if expected["placeholders"]:
+                assert actual["placeholders"] == expected["placeholders"], f"Source placeholder contract lost at {i}: expected={expected['placeholders']}, actual={actual['placeholders']}"
             if expected["headingLevel"]:
                 assert actual["outlineLevel"] == expected["headingLevel"] - 1, f"Heading level lost at {i}"
             matched.append({"sourceIndex": i, "docxIndex": index, "text": actual["text"],
-                            "properties": actual["properties"], "cachedTextExact": actual["text"] == wanted})
+                            "properties": actual["properties"], "placeholders": actual["placeholders"], "cachedTextExact": actual["text"] == wanted})
         assert len(list(body.iter(q("w", "tbl")))) == oracle["tableCount"]
         assert len(paragraphs) == len(oracle["paragraphs"]), "Unexpected extra nonempty body paragraphs"
         return {"passed": True, "fileSha256": hashlib.sha256(Path(path).read_bytes()).hexdigest(),
@@ -210,8 +238,12 @@ def main():
     parser.add_argument("--marker", default="")
     parser.add_argument("--report", required=True, type=Path)
     args = parser.parse_args()
-    report = source_oracle(args.input) if args.mode == "source" else docx_audit(args.input, json.loads(args.oracle.read_text(encoding="utf8")), args.marker)
     args.report.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        report = source_oracle(args.input) if args.mode == "source" else docx_audit(args.input, json.loads(args.oracle.read_text(encoding="utf8")), args.marker)
+    except Exception as error:
+        args.report.write_text(json.dumps({"passed": False, "mode": args.mode, "input": args.input.name, "error": str(error)}, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+        raise
     args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     print(json.dumps({"mode": args.mode, "report": str(args.report), "paragraphs": len(report.get("paragraphs", report.get("matched", []))), "tableCount": report["tableCount"]}))
 

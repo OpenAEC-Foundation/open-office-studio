@@ -4,6 +4,7 @@ import os
 import tempfile
 import unittest
 import zipfile
+from xml.etree import ElementTree as ET
 from pathlib import Path
 
 spec = importlib.util.spec_from_file_location("stw_oracle", Path(__file__).with_name("format30-stw-oracle.py"))
@@ -27,6 +28,35 @@ class SourceOracleTests(unittest.TestCase):
         self.assertTrue(self.expected["paragraphs"][6]["properties"]["bold"])
         self.assertEqual(self.expected["tableCount"], 0)
         self.assertFalse(self.expected["container"]["mimetypeEntryPresent"])
+        self.assertEqual(self.expected["paragraphs"][6]["text"], "This is the heading of the first section")
+        self.assertEqual(self.expected["paragraphs"][6]["sourceDisplayText"], "<This is the heading of the first section>")
+        self.assertTrue(self.expected["paragraphs"][3]["text"].startswith("<This is"), "Literal cached-index brackets are not stripped")
+
+    def test_real_converted_placeholder_contract_and_lost_field_counterexample(self):
+        converted = Path(os.environ.get("OOS_STW_CONVERTED", ".local/stw30/attempt1/converted.docx"))
+        if not converted.exists():
+            self.skipTest("No Linux-CI converted output supplied; not a local converter test")
+        self.assertTrue(oracle.docx_audit(converted, self.expected)["passed"])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "fields-flattened.docx"
+            with zipfile.ZipFile(converted) as archive:
+                files = {name: archive.read(name) for name in archive.namelist()}
+            document = ET.fromstring(files["word/document.xml"])
+            for parent in document.iter():
+                for control in list(parent):
+                    if control.tag != oracle.q("w", "sdt") or control.find("w:sdtPr/w:showingPlcHdr", oracle.NS) is None:
+                        continue
+                    at = list(parent).index(control)
+                    for child in list(control.find("w:sdtContent", oracle.NS)):
+                        parent.insert(at, child)
+                        at += 1
+                    parent.remove(control)
+            files["word/document.xml"] = ET.tostring(document)
+            with zipfile.ZipFile(path, "w") as archive:
+                for name, data in files.items():
+                    archive.writestr(name, data)
+            with self.assertRaisesRegex(AssertionError, "Source placeholder contract lost"):
+                oracle.docx_audit(path, self.expected)
 
     def test_changed_or_renamed_input_cannot_be_positive_fixture(self):
         with tempfile.TemporaryDirectory() as tmp:

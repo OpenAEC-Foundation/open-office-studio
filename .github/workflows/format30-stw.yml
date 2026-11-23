@@ -15,6 +15,7 @@ jobs:
     timeout-minutes: 20
     env:
       OOS_STW_HARNESS_COMMIT: ${{ github.sha }}
+      OOS_STW_REUSE_PROOF: .local/stw-previous
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,18 +32,14 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: 11.25.0
-      - name: Small headless private-runtime dependencies, no installed office suite
-        run: |
-          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libnss3 libcups2 libxinerama1 libxrender1 libsm6 fontconfig fonts-liberation2
       - run: pnpm install --frozen-lockfile
-      - uses: actions/cache@v4
+      - name: Reuse hash-pinned completed conversion, no additional runtime download
+        uses: actions/download-artifact@v4
         with:
-          path: .local/kantoorruntime-cache
-          key: stw30-private-runtime-linux-${{ hashFiles('assets/kantoorruntime.json') }}
-      - name: Prepare P2-pinned private runtime only, never a suite build/install
-        run: node scripts/voorbereiden-kantoorruntime.mjs --target linux-x64
+          github-token: ${{ github.token }}
+          run-id: 45146601537
+          name: format30-stw-Linux
+          path: .local/stw-previous
       - name: Check source oracle and actual production input/Writer-engine route
         run: node .local/stw-harness/scripts/proef-format30-stw.mjs .local/format30-stw-proof
       - uses: actions/upload-artifact@v4

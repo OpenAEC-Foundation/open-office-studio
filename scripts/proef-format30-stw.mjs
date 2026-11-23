@@ -50,8 +50,44 @@ const report = { applicationCommit: APP, applicationTree: TREE, version: "2026.4
   packageBinding: { desktopRun: 45143305147, status: "pending canonical artifact binding; private runtime proof is not installer acceptance" },
   limits: ["No GUI, keyboard, native Rust IPC or file-dialog proof", "No non-empty table in source", "No universal STW variant, font substitution, pagination or complete TOC-field fidelity claim",
     "No Windows/macOS native checks; no browser STW support claim; no release/catalog promotion"] };
-let loader, kernel, activeSessions = 0, destroyedSessions = 0;
+let loader, kernel, activeSessions = 0, destroyedSessions = 0, program, reusedBytes;
 try {
+  const reuseRoot = process.env.OOS_STW_REUSE_PROOF;
+  if (reuseRoot) {
+    const binding = JSON.parse(await readFile(new URL("../docs/tests/format30-stw/conversion-binding.json", import.meta.url), "utf8"));
+    const verified = {};
+    for (const [path, pin] of Object.entries(binding.files)) {
+      const value = await readFile(join(reuseRoot, path));
+      assert.equal(value.length, pin.bytes, path);
+      assert.equal(hash(value), pin.sha256, path);
+      verified[path] = value;
+      await mkdir(join(root, path, ".."), { recursive: true });
+      await writeFile(join(root, path), value);
+    }
+    const prior = JSON.parse(verified["report.json"]);
+    // A completed conversion is reusable even though the first oracle failed on generated field delimiters.
+    // Preserve its failed report separately; never promote the original job to passed.
+    await writeFile(join(root, "conversion-origin-report.json"), verified["report.json"]);
+    assert.equal(prior.status, "failed");
+    assert.equal(prior.harnessCommit, binding.harnessCommit);
+    assert.equal(prior.applicationCommit, APP);
+    assert.equal(prior.applicationTree, TREE);
+    assert.equal(prior.fixture.sha256, fixture.sha256);
+    assert.equal(hash(await readFile(join(reuseRoot, "original.stw"))), fixture.sha256);
+    assert.equal(prior.runtime.archiveSha256, MANIFEST.targets["linux-x64"].sha256);
+    assert.equal(prior.runtime.receipt.sourceSha256, prior.runtime.archiveSha256);
+    assert.equal(prior.profileSha256, hash(await readFile("src-tauri/src/conversieprofiel.xcu")));
+    assert.equal(prior.editSha256, hash(await readFile("vendor/tekstengine/docx_edit_bg.wasm")));
+    assert.equal(prior.layoutSha256, hash(await readFile("vendor/tekstengine/docx_layout_bg.wasm")));
+    const inventory = JSON.parse(verified["runtime-inventory.json"]);
+    assert.equal(hash(JSON.stringify(inventory)), prior.runtime.inventorySha256);
+    assert.equal(inventory.length, prior.runtime.inventoryEntries);
+    reusedBytes = verified["converted.docx"];
+    assert.deepEqual(reusedBytes, verified["conversion/omgezet.docx"]);
+    report.runtime = prior.runtime;
+    report.reusedConversion = { ...binding, nativeConverterExecutedThisRun: false, originJobStatus: prior.status,
+      reason: "Reuse verified actual P2 conversion; correct source-field oracle and continue real Linux engine tests" };
+  } else {
   const receipt = await prepareRuntime({ key: "linux-x64", offline: true, checkOnly: true });
   const asset = MANIFEST.targets["linux-x64"];
   const archive = join(CACHE, asset.archive);
@@ -59,7 +95,7 @@ try {
   for await (const chunk of createReadStream(archive)) digest.update(chunk);
   assert.equal(digest.digest("hex"), asset.sha256, "Actual private source archive must match P2's pin");
   assert.equal(receipt.sourceSha256, asset.sha256);
-  const program = await realpath(join(DESTINATION, asset.executable));
+  program = await realpath(join(DESTINATION, asset.executable));
   assert(program.startsWith((await realpath(DESTINATION)) + sep));
   const inventory = [];
   async function walk(path) {
@@ -84,6 +120,11 @@ try {
     version: execFileSync(program, ["--version"], { encoding: "utf8", timeout: 15000,
       env: { ...process.env, SAL_DISABLE_DEFAULTPRINTER: "1", SAL_DISABLE_PRINTERLIST: "1" } }).trim() };
   assert(report.runtime.version.includes(MANIFEST.version));
+  }
+  const inventory = JSON.parse(await readFile(join(root, "runtime-inventory.json"), "utf8"));
+  const payload = inventory.filter(entry => !entry.path.startsWith("meta/"));
+  report.runtimePayload = { entries: payload.length, sha256: hash(JSON.stringify(payload)),
+    excludedGeneratedMetadata: inventory.filter(entry => entry.path.startsWith("meta/")).map(entry => entry.path) };
   report.profileSha256 = hash(await readFile("src-tauri/src/conversieprofiel.xcu"));
   report.editSha256 = hash(await readFile("vendor/tekstengine/docx_edit_bg.wasm"));
   report.layoutSha256 = hash(await readFile("vendor/tekstengine/docx_layout_bg.wasm"));
@@ -108,6 +149,7 @@ try {
       assert.equal(hash(input), fixture.sha256);
       assert.deepEqual([from, to, module], ["stw", "docx", "docx"]);
       conversions++;
+      if (reusedBytes) return new Uint8Array(reusedBytes);
       const result = await converteerProef(program, input, from, to, formats.bestandstypen.docx.uitvoer.docx.filter, join(root, "conversion"));
       return result.bytes;
     } });
@@ -121,7 +163,9 @@ try {
   report.openResult = { naam: opened.naam, soort: opened.soort, alsNieuw: opened.alsNieuw, gewijzigd: opened.gewijzigd, exportFormaat: opened.exportFormaat, rapport: opened.rapport };
   const converted = join(root, "converted.docx");
   await writeFile(converted, opened.bytes);
-  audit(converted, "converted"); report.stages.push("actual private-runtime conversion and source-derived OOXML audit");
+  audit(converted, "converted"); report.stages.push(reusedBytes
+    ? "Verified prior actual private-runtime conversion; fresh source-derived OOXML audit"
+    : "Actual private-runtime conversion and source-derived OOXML audit");
   const { openTekstkernProef } = await loader.ssrLoadModule("/scripts/tekstkern-proef.ts");
   kernel = await openTekstkernProef();
   report.engineCompatibility = kernel.aansluiting;
@@ -175,7 +219,7 @@ try {
   assert.equal(hash(await readFile(sourcePath)), fixture.sha256);
   assert.equal(git("status", "--porcelain", "--untracked-files=no"), "");
   report.stages.push("P2 Writer kernel open, title edit, Undo/Redo, modern DOCX save and fresh-session reopen with independent XML audits");
-  report.status = "passed-private-runtime-and-engine";
+  report.status = reusedBytes ? "passed-reused-private-conversion-and-live-engine" : "passed-private-runtime-and-engine";
 } catch (error) {
   report.error = { message: String(error), stack: error.stack };
   throw error;
