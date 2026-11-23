@@ -4,7 +4,7 @@
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { closeSync, openSync } from "node:fs";
+import { closeSync, createReadStream, openSync } from "node:fs";
 import { access, mkdir, readFile, realpath, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { dirname, join, resolve } from "node:path";
@@ -37,6 +37,11 @@ const out = resolve(outputDirectory);
 await mkdir(dirname(out), { recursive: true });
 await mkdir(out); // Do not overwrite earlier evidence.
 const sha = (b) => createHash("sha256").update(b).digest("hex");
+async function fileSha(path) {
+  const hash = createHash("sha256");
+  for await (const chunk of createReadStream(path)) hash.update(chunk);
+  return hash.digest("hex");
+}
 const report = {
   status: "running", identity, harnessCommit: execFileSync("git", ["-C", resolve(dirname(fileURLToPath(import.meta.url)), ".."), "rev-parse", "HEAD"], { encoding: "utf8", windowsHide: true }).trim(),
   harnessSha256: sha(await readFile(new URL(import.meta.url))), checks: [], errors: [], cleanup: {},
@@ -162,31 +167,42 @@ try {
   report.artifact = { id: artifact.id, name: artifact.name, digest: artifact.digest };
   const zipPath = join(out, "artifact.zip"), fd = openSync(zipPath, "wx");
   try { execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}/zip`], { windowsHide: true, stdio: ["ignore", fd, "pipe"], timeout: 300_000 }); } finally { closeSync(fd); }
-  const zip = await readFile(zipPath);
-  report.archiveSha256 = sha(zip); assert.equal(report.archiveSha256, identity.archiveSha256);
-  const contents = unzipSync(zip, { filter: entry => entry.name === identity.packageMember || entry.name === "provenance.json" });
-  const bytes = contents[identity.packageMember]; assert(bytes, "Exact frozen NSIS member must exist");
-  report.packageSha256 = sha(bytes); assert.equal(report.packageSha256, identity.packageSha256);
-  if (identity.builderCommit && identity.builderCommit !== identity.applicationCommit) {
-    assert(contents["provenance.json"], "A separate builder checkout requires immutable application provenance");
-    const proof = JSON.parse(strFromU8(contents["provenance.json"]));
-    assert.equal(proof.applicationCommit, identity.applicationCommit);
-    assert.equal(proof.applicationTree, identity.applicationTree);
-    assert.equal(proof.version, identity.version);
-    assert.equal(proof.builderCommit, identity.builderCommit);
-    assert.equal(proof.runId, identity.runId);
-    assert.equal(proof.installer.path, identity.packageMember);
-    assert.equal(proof.installer.sha256, identity.packageSha256);
-    assert.equal(proof.installer.size, bytes.length);
-    assert.match(proof.executable.sha256, /^[a-f0-9]{64}$/);
-    report.applicationProvenance = proof;
-  }
-  report.checks.push({ name: "frozen application, builder, archive and installer identities verified" });
-  const installer = join(out, "installer-setup.exe"); await writeFile(installer, bytes);
-  // Independently inspect the real immutable NSIS payload before installation.
-  const payload = join(out, "payload"); await mkdir(payload);
   let sevenZip = "C:\\Program Files\\7-Zip\\7z.exe";
   try { await access(sevenZip); } catch { sevenZip = "7z"; }
+  const installer = join(out, "installer-setup.exe");
+  if (identity.requireSigned) {
+    // Seven installers can exceed readFile's single-buffer limit. Stream the
+    // entire immutable ZIP digest, then read only the one frozen Office member.
+    report.archiveSha256 = await fileSha(zipPath); assert.equal(report.archiveSha256, identity.archiveSha256);
+    assert.equal(artifact.digest, `sha256:${report.archiveSha256}`);
+    execFileSync("python", ["-B", "scripts/windows-final-zip-member.py", zipPath, identity.packageMember, installer], { windowsHide: true, stdio: "inherit", timeout: 300_000 });
+    report.packageSha256 = await fileSha(installer); assert.equal(report.packageSha256, identity.packageSha256);
+    report.archiveReader = { mode: "streaming ZIP SHA then exact member to file", member: identity.packageMember, installersExtracted: 1 };
+  } else {
+    const zip = await readFile(zipPath);
+    report.archiveSha256 = sha(zip); assert.equal(report.archiveSha256, identity.archiveSha256);
+    const contents = unzipSync(zip, { filter: entry => entry.name === identity.packageMember || entry.name === "provenance.json" });
+    const bytes = contents[identity.packageMember]; assert(bytes, "Exact frozen NSIS member must exist");
+    report.packageSha256 = sha(bytes); assert.equal(report.packageSha256, identity.packageSha256);
+    if (identity.builderCommit && identity.builderCommit !== identity.applicationCommit) {
+      assert(contents["provenance.json"], "A separate builder checkout requires immutable application provenance");
+      const proof = JSON.parse(strFromU8(contents["provenance.json"]));
+      assert.equal(proof.applicationCommit, identity.applicationCommit);
+      assert.equal(proof.applicationTree, identity.applicationTree);
+      assert.equal(proof.version, identity.version);
+      assert.equal(proof.builderCommit, identity.builderCommit);
+      assert.equal(proof.runId, identity.runId);
+      assert.equal(proof.installer.path, identity.packageMember);
+      assert.equal(proof.installer.sha256, identity.packageSha256);
+      assert.equal(proof.installer.size, bytes.length);
+      assert.match(proof.executable.sha256, /^[a-f0-9]{64}$/);
+      report.applicationProvenance = proof;
+    }
+    await writeFile(installer, bytes);
+  }
+  report.checks.push({ name: "frozen application, builder, archive and installer identities verified" });
+  // Independently inspect the real immutable NSIS payload before installation.
+  const payload = join(out, "payload"); await mkdir(payload);
   const extraction = execFileSync(sevenZip, ["e", "-y", "-r", `-o${payload}`, installer, "open-office-studio.exe"], { encoding: "utf8", windowsHide: true, timeout: 180_000, maxBuffer: 8 * 1024 * 1024 });
   await writeFile(join(out, "payload-extraction.log"), extraction);
   const payloadBytes = await readFile(join(payload, "open-office-studio.exe"));
