@@ -43,7 +43,13 @@ try {
    $report.foregroundPid=$foregroundPid
  } elseif ($Action -eq 'SaveDialog') {
    if (-not $Target -or (-not $ExpectedName -and -not $ExpectedPattern) -or (Test-Path -LiteralPath $Target)) { throw 'Save needs a fresh exact target and expected synthetic filename' }
-   function Expected-Filename($text) { if ($ExpectedPattern) { return $text -cmatch $ExpectedPattern }; return $text -ceq $ExpectedName }
+   function Expected-Filename($text) {
+     if ($ExpectedPattern) { return $text -cmatch $ExpectedPattern }
+     # Windows may hide the registered extension in this same standard filename
+     # field. Both exact known spellings are attributable; the saved bytes and
+     # full destination extension remain independently mandatory.
+     return $text -ceq $ExpectedName -or ($ExpectedName -match '\.(txt|docx|xlsx|pptx)$' -and $text -ceq [IO.Path]::GetFileNameWithoutExtension($ExpectedName))
+   }
    $deadline=[DateTime]::UtcNow.AddSeconds(20); $dialog=$null
    do {
      $all=$window.FindAll([Windows.Automation.TreeScope]::Descendants,[Windows.Automation.Condition]::TrueCondition)
@@ -87,7 +93,8 @@ try {
        if ([StandaloneWindowsNative]::ReadText($fieldHandle,13,[UIntPtr]::new(32768),$text,2,2000,[ref]$read) -eq [IntPtr]::Zero) { throw 'BLOCKED: native filename read timed out' }
        return $text.ToString()
      }
-     if (-not (Expected-Filename (Read-NativeFilename))) { throw 'BLOCKED: focused filename is not the expected synthetic source name' }
+     $report.filenameBefore=Read-NativeFilename
+     if (-not (Expected-Filename $report.filenameBefore)) { throw 'BLOCKED: focused filename is not the expected synthetic source name' }
      [Windows.Forms.SendKeys]::SendWait('^a')
      $literal=($Target.ToCharArray() | ForEach-Object { if ('+^%~(){}[]'.Contains([string]$_)) {'{'+$_+'}'} else {[string]$_} }) -join ''
      [Windows.Forms.SendKeys]::SendWait($literal)
