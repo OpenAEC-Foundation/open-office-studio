@@ -7,6 +7,7 @@ on:
       - scripts/linux-stw-*
       - scripts/test-linux-stw-*
       - scripts/proef-linux-stw-native.mjs
+      - scripts/linux-stw-native/**
       - tests/fixtures/linux-stw/**
 permissions:
   contents: read
@@ -29,3 +30,75 @@ jobs:
           python3 -m py_compile scripts/linux-stw-portal.py scripts/linux-stw-gtk-anatomy.py
           python3 scripts/test-linux-stw-portal.py
           node --test scripts/test-linux-stw-dialog-input.mjs
+  native-stw:
+    needs: portal-contract
+    runs-on: ubuntu-22.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/stw-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Isolated native desktop and real portal dependencies; no Office build
+        run: |
+          sudo /usr/bin/python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo /usr/bin/python3 - <<'PY'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('ubuntu_mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          helper=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(helper)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():
+                  before=path.read_text()
+                  after=helper.herschrijf_bronnen(before)
+                  if before != after: path.write_text(after)
+          PY
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 xdg-desktop-portal xdg-desktop-portal-gtk openbox strace
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm --dir .local/stw-harness install --frozen-lockfile --ignore-scripts
+      - name: Exact original oracle bytes and syntax before any native operation
+        run: |
+          node --check .local/stw-harness/scripts/proef-linux-stw-native.mjs
+          /usr/bin/python3 -m py_compile .local/stw-harness/scripts/linux-stw-native/format30-stw-oracle.py .local/stw-harness/scripts/linux-stw-gtk-anatomy.py
+      - name: Verify same recovery input, canonical P2 source/version/DEB/actual installed ELF
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: /usr/bin/python3 .local/stw-harness/scripts/linux-p2-native-package.py
+      - name: Ordinary native STW Open, Rust/bundled conversion, edit and DOCX Save As
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+          LIBGL_ALWAYS_SOFTWARE: "1"
+          XDG_CURRENT_DESKTOP: GNOME
+          XDG_SESSION_TYPE: x11
+        run: |
+          dbus-run-session -- xvfb-run -a -e .local/stw-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/stw-harness/scripts/proef-linux-stw-native.mjs'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-stw-native-P2-${{ github.sha }}
+          path: |
+            .local/linux-p2-input/identity.json
+            .local/linux-p2-input/api-run.json
+            .local/linux-p2-input/native-input-descriptor.json
+            .local/linux-p2-input/canonical-package-report.json
+            .local/linux-p2-native/stw/**/*.json
+            .local/linux-p2-native/stw/**/*.png
+            .local/linux-p2-native/stw/**/*.docx
+            .local/linux-p2-native/stw/*.stw
+            .local/linux-p2-native/stw/*.log
+            .local/linux-p2-native/stw/*.txt
+            .local/stw-xvfb.log
+          include-hidden-files: true
+          if-no-files-found: warn
