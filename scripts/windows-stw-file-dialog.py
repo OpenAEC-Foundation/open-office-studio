@@ -25,8 +25,9 @@ d = dialogs[0]
 controls = [{"name": c.window_text(), "id": c.automation_id(), "type": c.element_info.control_type}
             for c in d.descendants()]
 args.report.write_text(json.dumps({"pid": args.pid, "title": d.window_text(), "controls": controls}, indent=2), encoding="utf8")
-fields = [c for c in d.descendants(control_type="Edit") if c.automation_id() == "1148"]
-assert len(fields) == 1, f"Expected observed File name Edit1148, found {len(fields)}"
+fields = [c for c in d.descendants(control_type="Edit")
+          if c.automation_id() in ("1148", "1001") and c.window_text() == "File name:"]
+assert len(fields) == 1, f"Expected one observed native File name Edit1148/Open or Edit1001/Save, found {len(fields)}"
 field = fields[0]
 field.set_edit_text(str(args.path.resolve()))
 assert field.get_value() == str(args.path.resolve())

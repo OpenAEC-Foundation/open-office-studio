@@ -48,7 +48,7 @@ delete env.OPENAEC_CONVERSIE_PROGRAMMA;
 delete env.OPENAEC_CONVERSIE_PROFIEL;
 delete env.GH_TOKEN;
 delete env.GITHUB_TOKEN;
-const marker = " â€” STW30 EDIT 2026-11-23";
+const marker = " -- STW30 EDIT 2026-11-23";
 const documentPath = join(out, "STW native roundtrip.docx");
 const sourcePath = join(out, "original.stw");
 const sourceOracle = join(out, "source-oracle.json");
