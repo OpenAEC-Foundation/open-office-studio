@@ -1,0 +1,45 @@
+name: Verify frozen package bytes without publishing
+on:
+  push:
+    branches: [codex/release-signing-preflight-2026-11-23]
+    paths: [.github/candidate-package-verification-20261123.json]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: qa
+      - name: Read explicit frozen candidate request
+        id: request
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          r = json.loads(Path('qa/.github/candidate-package-verification-20261123.json').read_text())
+          assert r['frozen'] is True and r['publication'] is False
+          assert re.fullmatch('[a-f0-9]{40}', r['source'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('source='+r['source']+'\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          path: app
+          ref: ${{ steps.request.outputs.source }}
+      - name: Verify rejection gates before fetching installer bytes
+        run: python -B qa/scripts/qa-candidate-packages-20261123.test.py
+      - name: Hash actual packages, check reports and sign Linux bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OPENAEC_GPG_PRIVATE_KEY: ${{ secrets.OPENAEC_GPG_PRIVATE_KEY }}
+          OPENAEC_GPG_PASSPHRASE: ${{ secrets.OPENAEC_GPG_PASSPHRASE }}
+        run: python qa/scripts/qa-candidate-packages-20261123.py qa/.github/candidate-package-verification-20261123.json app proof
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frozen-package-verification-and-prepared-signatures
+          path: proof
+          if-no-files-found: error
