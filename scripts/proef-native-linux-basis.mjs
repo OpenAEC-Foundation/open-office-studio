@@ -209,7 +209,7 @@ try {
           return null;
         throw error;
       });
-    execFileSync("sudo", ["dpkg", "--install", packagePath], {
+    execFileSync("sudo", ["apt-get", "install", "-y", "--no-install-recommends", packagePath], {
       stdio: "inherit",
     });
     report.executableSha256 = hash(await readFile(application));
