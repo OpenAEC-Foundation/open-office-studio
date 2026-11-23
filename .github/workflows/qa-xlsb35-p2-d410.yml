@@ -17,6 +17,12 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 16
+      - name: Verify P2 ancestry before dependencies or runtime download
+        run: |
+          git cat-file -e '${{ env.OOS_XLSB_APPLICATION_COMMIT }}^{tree}'
+          git merge-base --is-ancestor '${{ env.OOS_XLSB_APPLICATION_COMMIT }}' HEAD
       - uses: actions/setup-node@v4
         with:
           node-version: 22
