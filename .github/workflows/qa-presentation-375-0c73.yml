@@ -1,0 +1,28 @@
+name: Presentation 375 private UNO component preflight
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  components:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify private P2 runtime, producer and official parent package
+        run: python scripts/qa-presentation-375/runtime_input.py
+      - name: Inventory already present UNO components, without Office execution
+        run: python scripts/qa-presentation-375/preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presentation-375-uno-component-preflight
+          path: .local/presentation-375-runtime/
+          include-hidden-files: true
+          if-no-files-found: error

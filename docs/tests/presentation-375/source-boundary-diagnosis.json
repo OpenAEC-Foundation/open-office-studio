@@ -1,0 +1,124 @@
+{
+  "issue": 375,
+  "evidenceCommit": "e280e9521cfad3b2c61c26d19fbb5df8b5b74a42",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "sourceSha256": "7d204f66f3e15a76176145f917089b204f1160ff819a898aa0dd61e977c39c7d",
+  "retainedZipSha256": "e5e3ae456b1c30eb01215797dcc465ba0f3913fb9c2b7794fe965ee814e38839",
+  "upstreamSources": [
+    {
+      "path": "filter/source/xslt/import/uof/uof2odf_presentation.xsl",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/9dea406ab7695df6325b11b0e19fdca8db4b7276/filter/source/xslt/import/uof/uof2odf_presentation.xsl",
+      "sha256": "a48f3e959a374f63a4418fe7d751ebd8d5a821d798669214bef6ef1dd30a6c87"
+    },
+    {
+      "path": "sd/source/core/drawdoc4.cxx",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/9dea406ab7695df6325b11b0e19fdca8db4b7276/sd/source/core/drawdoc4.cxx",
+      "sha256": "3ed0e13c4c52fca023f68b3c21338795f7adbbed565b57581bcad8140c802c7f"
+    },
+    {
+      "path": "svx/source/xoutdev/xattr.cxx",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/9dea406ab7695df6325b11b0e19fdca8db4b7276/svx/source/xoutdev/xattr.cxx",
+      "sha256": "d37f9a8655a5736c825dad88e71ff9d45fd997f222368cb0c184e8b163158489"
+    },
+    {
+      "path": "oox/source/export/drawingml.cxx",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/9dea406ab7695df6325b11b0e19fdca8db4b7276/oox/source/export/drawingml.cxx",
+      "sha256": "b91f8863559173ecbadc1fdfd8d707a59892638f618197fadc21fd48dfbaa4ed"
+    }
+  ],
+  "execution": {
+    "platform": "Windows",
+    "python": "3.12.14",
+    "lxml": [
+      6,
+      1,
+      1,
+      0
+    ],
+    "libxslt": [
+      1,
+      1,
+      45
+    ]
+  },
+  "observations": [
+    {
+      "sourceObject": "gr4_0",
+      "label": "ODP",
+      "sourceFill": "#14213d",
+      "xsltODFFill": "#14213d",
+      "sourceAnchor": {
+        "{http://schemas.uof.org/cn/2003/uof}locID": "u0064",
+        "{http://schemas.uof.org/cn/2003/uof}attrList": "x坐标 y坐标 宽度 高度 图形引用 随动方式 缩略图 占位符",
+        "{http://schemas.uof.org/cn/2003/uof}x坐标": "3",
+        "{http://schemas.uof.org/cn/2003/uof}y坐标": "6",
+        "{http://schemas.uof.org/cn/2003/uof}宽度": "8",
+        "{http://schemas.uof.org/cn/2003/uof}高度": "4",
+        "{http://schemas.uof.org/cn/2003/uof}图形引用": "gr4_0",
+        "{http://schemas.uof.org/cn/2003/uof}随动方式": "movesize",
+        "{http://schemas.uof.org/cn/2003/uof}占位符": ""
+      },
+      "outputs": [
+        {
+          "file": "converted.pptx",
+          "sha256": "db92ff750e7eee1a38b5eb2d889fa55da1fed21681609f49b5d07e59a6459c92",
+          "schemeClr": "accent1"
+        },
+        {
+          "file": "saved.pptx",
+          "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+          "schemeClr": "accent1"
+        },
+        {
+          "file": "reopened-saved.pptx",
+          "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+          "schemeClr": "accent1"
+        }
+      ]
+    },
+    {
+      "sourceObject": "gr5_0",
+      "label": "UOP",
+      "sourceFill": "#046eff",
+      "xsltODFFill": "#046eff",
+      "sourceAnchor": {
+        "{http://schemas.uof.org/cn/2003/uof}locID": "u0064",
+        "{http://schemas.uof.org/cn/2003/uof}attrList": "x坐标 y坐标 宽度 高度 图形引用 随动方式 缩略图 占位符",
+        "{http://schemas.uof.org/cn/2003/uof}x坐标": "17",
+        "{http://schemas.uof.org/cn/2003/uof}y坐标": "6",
+        "{http://schemas.uof.org/cn/2003/uof}宽度": "8",
+        "{http://schemas.uof.org/cn/2003/uof}高度": "4",
+        "{http://schemas.uof.org/cn/2003/uof}图形引用": "gr5_0",
+        "{http://schemas.uof.org/cn/2003/uof}随动方式": "movesize",
+        "{http://schemas.uof.org/cn/2003/uof}占位符": ""
+      },
+      "outputs": [
+        {
+          "file": "converted.pptx",
+          "sha256": "db92ff750e7eee1a38b5eb2d889fa55da1fed21681609f49b5d07e59a6459c92",
+          "schemeClr": "accent1"
+        },
+        {
+          "file": "saved.pptx",
+          "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+          "schemeClr": "accent1"
+        },
+        {
+          "file": "reopened-saved.pptx",
+          "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+          "schemeClr": "accent1"
+        }
+      ]
+    }
+  ],
+  "result": "Confirmed: source and standalone pinned UOF XSLT preserve distinct RGB; retained actual PPTX outputs both use accent1",
+  "sourceAcceptancePassed": false,
+  "newRuntimeExecution": false,
+  "productFix": false,
+  "inference": "Inherited default FillComplexColor may survive RGB assignment and take precedence in DrawingML export; confirm live properties before claiming the precise runtime cause",
+  "limits": [
+    "Standalone lxml transform is not the production Office execution",
+    "Retained actual converter/engine outputs are reused, not rerun",
+    "No native/browser/visual acceptance, runtime build or product correction"
+  ]
+}
