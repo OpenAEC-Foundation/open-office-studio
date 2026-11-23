@@ -39,7 +39,7 @@ def archive_members(z):
     for info in z.infolist():
         raw_name = info.orig_filename
         p = PurePosixPath(raw_name)
-        check(not p.is_absolute() and '..' not in p.parts and '\\' not in raw_name, 'Unsafe ZIP path')
+        check(not p.is_absolute() and '..' not in p.parts and '\\' not in raw_name and not any(':' in part for part in p.parts), 'Unsafe ZIP path')
         check(not stat.S_ISLNK(info.external_attr >> 16), 'ZIP symlinks are forbidden')
         if info.is_dir():
             continue

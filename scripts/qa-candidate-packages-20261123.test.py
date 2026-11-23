@@ -31,7 +31,7 @@ class Gates(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Duplicate'): candidate.archive_members(z)
 
     def test_traversal_and_windows_separators_are_rejected(self):
-        for path in ('../escape','/escape','a\\escape'):
+        for path in ('../escape','/escape','a\\escape','C:/escape','dir:stream/escape'):
             with self.subTest(path=path), self.archive([(path,b'a')]) as z:
                 with self.assertRaisesRegex(ValueError,'Unsafe'): candidate.archive_members(z)
 
