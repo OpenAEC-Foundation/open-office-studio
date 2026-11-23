@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {clickClosingNativePointer} from '../../scripts/linux-suite-closing-pointer.mjs';
+const calls=[],target={hit:true,enabled:true,label:'Don’t save',x:120,y:80,width:923,height:1000};
+const args={target,verify:async()=>({windowFocus:'4194307'}),xdo:async command=>calls.push(command)};
+await clickClosingNativePointer(args);
+assert.deepEqual(calls,[['mousemove','--sync','--window','4194307','120','80','click','1']]);
+await assert.rejects(clickClosingNativePointer({...args,target:{...target,hit:false}}));
+await assert.rejects(clickClosingNativePointer({...args,target:{...target,x:923}}));
+await assert.rejects(clickClosingNativePointer({...args,verify:async()=>{throw Error('Wrong PID/foreground');}}),/Wrong PID/);
+assert.equal(calls.length,1);
+console.log('4 terminal native pointer contracts passed; wrong hit/bounds/ownership emits no input');

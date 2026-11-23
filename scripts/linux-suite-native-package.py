@@ -160,6 +160,14 @@ def main(kind):
     with archive.open("xb") as stream:
         subprocess.run(["gh", "api", f"repos/{REPO}/actions/artifacts/{transfer['id']}/zip"], stdout=stream, check=True)
     assert archive.stat().st_size == transfer["zipBytes"] and digest(archive) == transfer["zipSha256"]
+    shared = HERE / "qa/linux-suite-final/input-upstream"
+    shared_pin = json.loads((shared / "upstream-binding.json").read_bytes())
+    assert shared_pin["commit"] == "9b996cc1e9f1e81febbb097a93309c1fe5d59cca"
+    for name, checksum in shared_pin["files"].items():
+        assert digest(shared / name) == checksum
+    shared_out = out / "shared-verification"
+    subprocess.run([sys.executable, str(shared / "verify-linux-suite-input-p5.py"), "--descriptor", str(descriptor_path), "--zip", str(archive.resolve()), "--out", str(shared_out.resolve())], check=True)
+    shutil.copyfile(shared_out / "verified-input.json", out / "shared-verifier-receipt.json")
     report_bytes = verify_transfer_members(archive, value)
     with zipfile.ZipFile(archive) as bundle:
         for signature in value["signatureBinding"]["members"]:

@@ -36,6 +36,7 @@ import * as fsSync from "node:fs";
 import {readdir,chmod,symlink,copyFile} from "node:fs/promises";
 import {readSuiteRequest} from "../qa/linux-suite-final/request.mjs";
 import {collectOwnedNativeResources} from "./linux-suite-owned-processes.mjs";
+import {clickClosingNativePointer} from "./linux-suite-closing-pointer.mjs";
 export async function runSuiteNativeScenario({packageType,scenarioName},action){
 assert(["deb","appimage"].includes(packageType));
 assert.match(scenarioName,/^[a-z0-9-]+$/);
@@ -603,8 +604,10 @@ async function startDocument(
     actualExecutable,actualAppImage,actualAppDir,effectivePath:actualEnvironment.find(v=>v.startsWith("PATH=")),launchOverride,
     x11: guard.evidence,
     environment: safeEnvironment(await readFile(`/proc/${current}/environ`)),
+    graphicsEnvironment:Object.fromEntries(['GDK_BACKEND','LIBGL_ALWAYS_SOFTWARE','WEBKIT_DISABLE_DMABUF_RENDERER'].map(key=>[key,actualEnvironment.find(v=>v.startsWith(key+'='))?.slice(key.length+1)??null])),
     transientApplications,
   };
+  for(const key of ['GDK_BACKEND','LIBGL_ALWAYS_SOFTWARE','WEBKIT_DISABLE_DMABUF_RENDERER'])if(env[key]!==undefined)assert.equal(record.graphicsEnvironment[key],env[key],'Actual owned process graphics '+key);
   report.sessions.push(record);
   return record;
 }
@@ -1179,7 +1182,9 @@ async function captureStable(name){
 }
 async function clickClosingElement(value){
   assert(value?.['element-6066-11e4-a52e-4f735466cecf']);
-  await command('POST','/element/'+value['element-6066-11e4-a52e-4f735466cecf']+'/click',{});
+  const target=await command('POST','/execute/sync',{script:'const e=arguments[0],r=e.getBoundingClientRect(),x=Math.floor(r.x+r.width/2),y=Math.floor(r.y+r.height/2);return {label:e.textContent.trim(),enabled:!e.disabled,hit:r.width>0&&r.height>0&&e.contains(document.elementFromPoint(x,y)),x,y,width:innerWidth,height:innerHeight}',args:[value]});
+  const proof=await clickClosingNativePointer({target,verify:stage=>guard.verify(stage),xdo});
+  (report.closingClicks??=[]).push(proof);
 }
 async function releaseClosedSession(){
   assert.deepEqual(await ownedApplicationResources(),[]);
@@ -1197,6 +1202,7 @@ try {
     encoding: "utf8",
   }).trim();
   report.runtime = {
+    graphics:Object.fromEntries(['GDK_BACKEND','LIBGL_ALWAYS_SOFTWARE','WEBKIT_DISABLE_DMABUF_RENDERER'].map(key=>[key,env[key]??null])),
     driverPath,
     driverSha256: hash(await readFile(driverPath)),
     webkitPackages: execFileSync(

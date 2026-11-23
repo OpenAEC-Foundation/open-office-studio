@@ -34,8 +34,10 @@ jobs:
           node qa/linux-suite-final/request.contract.mjs
           node qa/linux-suite-final/scenarios.contract.mjs
           node qa/linux-suite-final/ownership.contract.mjs
+          node qa/linux-suite-final/closing-pointer.contract.mjs
           python3 scripts/linux-suite-native-package.contract.py
           python3 scripts/linux-suite-reuse-core.contract.py
+          python3 -m py_compile qa/linux-suite-final/input-upstream/verify-linux-suite-input-p5.py qa/linux-suite-final/input-upstream/prepare-linux-release-input-p5.py
           python3 -m py_compile scripts/linux-suite-native-package.py scripts/linux-suite-native-anatomy.py
           node --check scripts/linux-suite-native-session.mjs
           node --check scripts/proef-linux-suite-final-core.mjs
@@ -64,6 +66,9 @@ jobs:
         package: ${{ fromJSON(needs.protocol.outputs.packages) }}
     runs-on: ubuntu-22.04
     timeout-minutes: 55
+    env:
+      WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+      LIBGL_ALWAYS_SOFTWARE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -93,7 +98,7 @@ jobs:
                   if before!=after:path.write_text(after)
           PY
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 libfuse2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 at-spi2-core xdg-desktop-portal xdg-desktop-portal-gtk openbox strace
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 libfuse2 squashfs-tools webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 at-spi2-core xdg-desktop-portal xdg-desktop-portal-gtk openbox strace
           cargo install tauri-driver --version 2.1.0 --locked
           pnpm install --frozen-lockfile --ignore-scripts
           pnpm --dir .local/suite-harness install --frozen-lockfile --ignore-scripts
