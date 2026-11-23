@@ -1,0 +1,171 @@
+{
+  "scope": "ETT only, WPS spreadsheet template source search and actual read-only production predicate/no-desktop policy",
+  "status": "SOURCE GAP plus independently reproduced production filename-template predicate failure; no ETT import/engine/save acceptance.",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/ett-qa-2026-11-23-e0d7",
+  "testedHarness": "f7a5ad286909b2700cf344a66acd4a1f0a06e3e5",
+  "qualifiedSource": null,
+  "qualifiedProducer": null,
+  "qualifiedFixtureLicense": null,
+  "sourceOracle": null,
+  "sourceGatePassed": false,
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "templateClassificationAcceptance": false,
+  "predicateObservation": {
+    "expectedTemplate": true,
+    "publisher": {
+      "publisher": "WPS Office, original software producer",
+      "url": "https://www.wps.com/blog/how-to-open-convert-and-create-ett-file/",
+      "role": "Producer describes ETT as a spreadsheet master/template and warns against extension renaming; documentation is not a downloadable ETT fixture."
+    },
+    "lowercase": false,
+    "uppercase": false,
+    "existingPredicateControls": {
+      "stc": true,
+      "xlt": true,
+      "ots": true
+    },
+    "controlsRole": "Filename predicate controls only, no other format file/conversion scope"
+  },
+  "negativeNoDesktopPolicy": {
+    "passed": true,
+    "error": "This ETT file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as XLSX. CSV is also possible, but keeps only the values from one sheet.",
+    "method": "Empty window, no Tauri mock; actual production functions, not a hosted browser UI"
+  },
+  "syntheticRequest": {
+    "filename": "policy-only.ett",
+    "bytes": 0,
+    "role": "Explicitly synthetic empty request for negative no-desktop routing only; not an ETT fixture"
+  },
+  "wrapperInference": {
+    "basis": "Read-only bereidOpenen source checks isSjabloon(filename) before its new-document wrapper",
+    "inference": "False ETT predicate means the generic template wrapper is skipped after a successful import",
+    "actualETTImportOrSaveObserved": false,
+    "sourceOverwriteOrDataLossReproduced": false
+  },
+  "primaryTemplateDefinition": {
+    "publisher": "WPS Office, original software producer",
+    "url": "https://www.wps.com/blog/how-to-open-convert-and-create-ett-file/",
+    "role": "Producer describes ETT as a spreadsheet master/template and warns against extension renaming; documentation is not a downloadable ETT fixture."
+  },
+  "sourceSearch": {
+    "inventories": 21,
+    "allUntruncated": true,
+    "matches": [],
+    "foreignTemplateLead": {
+      "repository": "openETCS/modeling",
+      "commit": "b1b6dc6603792c97c0f63891c60a33ca39beee2f",
+      "path": "model/Scade/ScadeTemplates/openETCS_Scade_Template.ett",
+      "blob": "c6b5879a5e21bd5bfb9f9e64b4c4257550096980",
+      "bytes": 10872,
+      "sha256": "c79d42c6652d2411711e2b429ffa183740bbc29aea21f66a1317c8c8124e2e93",
+      "role": "Different-format source-search lead only; not imported, converted or accepted as WPS ETT",
+      "expectedXmlRoot": "Project",
+      "expectedProductProperty": "@STUDIO:PRODUCT",
+      "expectedProductValue": "SC",
+      "observedXmlRoot": "Project",
+      "observedProductValue": "SC",
+      "classifiedAs": "Different software project template, not a WPS spreadsheet template",
+      "sourceBytesRetained": false
+    },
+    "details": "source-search-report.json",
+    "limit": "Targeted complete inventories, not exhaustive Internet absence. Empty results do not prove ETT cannot be supported."
+  },
+  "issueCheck": {
+    "overview": 30,
+    "templateOverview": 27,
+    "states": [
+      "open",
+      "closed"
+    ],
+    "queries": [
+      "ETT in:title,body",
+      "Kingsoft/WPS template variants",
+      "template in:title,body",
+      "sjabloon in:title,body"
+    ],
+    "descriptionsRead": [
+      27,
+      5,
+      1,
+      109,
+      259,
+      305,
+      45,
+      120,
+      373,
+      338,
+      310
+    ],
+    "specificDuplicates": [],
+    "issueNumber": null,
+    "status": "Narrow filename-predicate report ready for separate registration; no actual ETT source-overwrite/converter/native/save defect claimed"
+  },
+  "ci": {
+    "run": 45179206300,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45179206300",
+    "job": 137708305962,
+    "conclusion": "failure",
+    "inventoryDiagnosticsPassed": true,
+    "negativePolicyPassed": true,
+    "strictPredicatePassed": false,
+    "failedStage": "Actual P2 template predicate final assertion false!==true",
+    "zeroHiddenSkips": true
+  },
+  "artifact": {
+    "id": 14820188677,
+    "name": "ett-source-and-policy-result",
+    "bytes": 4346,
+    "zipSha256": "382272cef3974da2e5392ce241e33cca0f38ee983c4253fd2e6c04ea684d6e74",
+    "run": 45179206300,
+    "headSha": "f7a5ad286909b2700cf344a66acd4a1f0a06e3e5",
+    "completeOfficialZipDigestVerified": true,
+    "retained": "retained/ett-source-and-policy-result.zip",
+    "containsQualifiedETT": false
+  },
+  "engineIdentityOnly": {
+    "sha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+    "initialized": false,
+    "executed": false
+  },
+  "runtimeInput": {
+    "artifactId": 14805600515,
+    "pinFile": "scripts/qa-ett/unused-runtime-pin.json",
+    "consumed": false,
+    "downloaded": false,
+    "OfficeExecuted": false,
+    "reason": "No qualified independent native ETT producer fixture; no positive conversion output manufactured."
+  },
+  "platforms": {
+    "linux": "Actual production filename predicate and negative no-desktop policy in Linux Node; official immutable source tree inventories and hashed foreign-format lead. No Office converter/WASM content execution/native GUI/installer/Tauri IPC.",
+    "browser": "Production function-level no-desktop policy only; empty window/no bridge mock, explicitly synthetic empty request. No hosted browser UI test.",
+    "windows": "No native/UI execution; local source-only/static preparation.",
+    "macos": "Not executed."
+  },
+  "limits": [
+    "No ET/XLS/XLT renamed to ETT; no self-export used as independent import proof.",
+    "No actual Office/shared-runtime consumption or spreadsheet WASM initialization without a qualified ETT input.",
+    "Synthetic empty request used only for negative filename/runtime-availability policy, never counted as a fixture.",
+    "Template predicate/code observations do not prove an actual ETT new-document/save/UI outcome.",
+    "No genuine ETT template container/variant, cells/formulas/caches/style oracle yet.",
+    "The actual P2 predicate was executed, but skipped post-import wrapper behavior is a code inference; source overwrite/data loss were not reproduced.",
+    "No actual converter/engine/edit/UndoRedo/XLSX-save/freshreopen, visual/macro/encryption or ETT-export acceptance.",
+    "No product/catalog/P5 intake/main/tag/release publication, app/suite/Mac build or local GUI/capture/profile changes."
+  ],
+  "nextSourcePrerequisite": "Independently published genuine WPS spreadsheet template with producer/license/native-template identity, then a source-derived oracle and the agreed verified conversion/engine/edit/UndoRedo/XLSX-save/freshreopen route.",
+  "previousProofsPreserved": {
+    "et": "f51228f4bdf4d40a6aad92ea5f611823b3c8c880",
+    "wq2": "c8f1f648dbf94fa0c15b76fdb639dd0205c5a46d",
+    "wb2": "0ddb6106bd991873cbcab6338755497a570c1d65",
+    "sdd": "fe66bec9a7ec9b5242fcc8a72646bee00b79b573",
+    "uop": "e280e9521cfad3b2c61c26d19fbb5df8b5b74a42",
+    "uot": "232a10af3966774a49a3c5052bb4a32c6a4ecb14",
+    "uos": "4f94d347b38b851780aa3304c269a8ee385eed94",
+    "stc": "a7962244e86cc4f429ca82894566b49195214139"
+  }
+}
