@@ -113,7 +113,30 @@
         "result": "DOCVARIABLE title layout in Writer, unrelated"
       }
     ],
-    "newIssue": null,
+    "newIssue": {
+      "number": 375,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/375",
+      "title": "Presentation: UOP import collapses two explicit rectangle fills to one theme accent",
+      "labels": [
+        "presentatie",
+        "bug",
+        "formaten"
+      ],
+      "state": "OPEN",
+      "scope": "Only the two explicit source rectangle fills; no stroke/canvas bundle",
+      "productFix": false,
+      "intake": false,
+      "labelValidation": {
+        "run": 45159403707,
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45159403707",
+        "conclusion": "success",
+        "observedLabels": [
+          "bug",
+          "formaten",
+          "presentatie"
+        ]
+      }
+    },
     "registrationScope": "Only the independently confirmed loss of the two explicit rectangle fills; integrationchat explicitly authorized this registration"
   },
   "ci": [
@@ -661,7 +684,13 @@
     "path": "docs/tests/uop-2026-11-23/retained/uop-runtime-result.zip",
     "bytes": 85190,
     "sha256": "e5e3ae456b1c30eb01215797dcc465ba0f3913fb9c2b7794fe965ee814e38839",
-    "contents": "Unchanged actual source, permission excerpt/receipts, source oracle, converter and saved/reopened PPTX, engine snapshots/reports and complete runtime binding; no private runtime binary or complete publisher article"
+    "contents": "Unchanged actual source, permission excerpt/receipts, source oracle, converter and saved/reopened PPTX, engine snapshots/reports and complete runtime binding; no private runtime binary or complete publisher article",
+    "remoteGitBytesVerification": {
+      "commit": "778c61a4f1c532a61738b5a923c46bb667b83373",
+      "bytes": 85190,
+      "sha256": "e5e3ae456b1c30eb01215797dcc465ba0f3913fb9c2b7794fe965ee814e38839",
+      "method": "GitHub contents API at the exact evidence commit, base64-decoded complete bytes hashed independently"
+    }
   },
   "evidenceFiles": {
     "runtime": [
