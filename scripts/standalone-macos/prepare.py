@@ -1,12 +1,15 @@
 """Split one verified parent into six app-only transfers and optional Suite support."""
 from pathlib import Path
 import argparse
+import base64
+import hashlib
 import json
 import os
 import shutil
 import subprocess
 import zipfile
-from contracts import APPS, digest, validate_producer, validate_request, verify_under,verify_package,verify_supporting_suite_package
+from contracts import (APPS, digest, validate_producer, validate_request, verify_under,verify_package,
+                       verify_supporting_suite_package,approved_dual_producer,source_witness_record)
 
 REPO = "OpenAEC-Foundation/open-office-studio"
 
@@ -40,13 +43,44 @@ def check_harness(request, root):
         raise ValueError("QA files differ from the exact coordinator-approved harness map")
 
 
+def verify_frozen_sources(request):
+    bindings=[request['source']]
+    dual=approved_dual_producer(request)
+    if dual:bindings.append(request['producerWorkflow'])
+    receipts=[]
+    for binding in bindings:
+        commit=api('/git/commits/'+binding['commit'])
+        if commit.get('sha')!=binding['commit'] or commit.get('tree',{}).get('sha')!=binding['tree']:
+            raise ValueError('Application or separate producer commit/tree differs from frozen request')
+        receipts.append(commit)
+    if dual:
+        p=request['producerWorkflow']
+        for binding,expected in ((request['source'],p['checkoutWorkflowSha256']),(p,p['workflowSha256'])):
+            blob=api('/contents/'+p['path']+'?ref='+binding['commit'])
+            if blob.get('encoding')!='base64' or blob.get('path')!=p['path']:
+                raise ValueError('Exact workflow blob required for each frozen source')
+            raw=base64.b64decode(blob['content'])
+            if hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('Frozen application/producer workflow hash differs')
+    return receipts
+
+
 def extract(request, archive, output):
     if digest(archive) != request["parentArtifact"]["sha256"]:
         raise ValueError("Downloaded parent archive SHA256 differs")
     output = Path(output).resolve()
-    output.mkdir(parents=True, exist_ok=False)
     with zipfile.ZipFile(archive) as source:
         names = source.namelist()
+        witness=None
+        if approved_dual_producer(request):
+            member=request['producerWorkflow']['witnessMember']
+            if names.count(member)!=1:raise ValueError('Mandatory original source witness missing or duplicated')
+            entry=source.getinfo(member)
+            if (entry.is_dir() or (entry.external_attr>>16)&0o170000==0o120000
+                    or not 0<entry.file_size<=16384):
+                raise ValueError('Source witness must be a bounded regular ZIP member')
+            witness=source_witness_record(request,source.read(entry))
+        # No transfer directory or child bytes exist until the original witness passes.
+        output.mkdir(parents=True, exist_ok=False)
         products=[(app,request["packages"][app],app) for app in APPS]
         if request.get("supportingSuitePackage"):
             products.append(("office",request["supportingSuitePackage"],"suite-support"))
@@ -69,6 +103,8 @@ def extract(request, archive, output):
                      "parentArtifact": request["parentArtifact"], "member": member,
                      "package": {"filename": target.name, "sha256": actual, "bytes": target.stat().st_size},
                      "memberSHA256DerivedFromVerifiedParent":True,"nativeAccepted": False}
+            if witness is not None:
+                proof.update(producerWorkflow=request['producerWorkflow'],sourceWitness=witness)
             if app=="office":
                 proof.update(purpose="separate-suite-owner",nativeExecutionApproved=False,
                              preparationScope=request["preparationScope"])
@@ -127,9 +163,7 @@ def main():
     parser.add_argument("output", type=Path);parser.add_argument("--archive", type=Path)
     args=parser.parse_args();request=validate_request(json.loads(args.request.read_text(encoding="utf-8")))
     root=Path(__file__).resolve().parents[2];check_harness(request,root)
-    commit=api("/git/commits/"+request["source"]["commit"])
-    if commit.get("tree",{}).get("sha") != request["source"]["tree"]:
-        raise ValueError("Producer source tree differs from coordinator request")
+    source_receipts=verify_frozen_sources(request)
     parent=request["parentArtifact"]
     run,artifact,job,listing=producer_state(request)
     if request.get("reuseTransfersFromRun"):
@@ -145,6 +179,8 @@ def main():
         matrix=extract(request,archive,args.output)
     (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job,"artifactListing":listing,
         "producerRunEndpoint":producer_run_endpoint(request),
+        "applicationSource":request['source'],"producerWorkflow":request.get('producerWorkflow'),
+        "frozenSourceApiReceipts":source_receipts,
         "preparationScope":request.get("preparationScope","six-app-only-split"),
         "nativeAppsRequested":matrix["app"],
         "nativeMatrixScope":"Only requested dedicated app identities; Suite never a native matrix member"},indent=2)+"\n")

@@ -24,6 +24,8 @@ def descriptor(request,proof,folder,artifact_id,artifact_digest,qa_run,qa_commit
     name,binary,identifier=SUITE_PRODUCT
     return {"schemaVersion":1,"scope":SEVEN_SPLIT_SCOPE,"source":request["source"],
             "officialParentArtifact":request["parentArtifact"],
+            **({"producerWorkflow":request['producerWorkflow'],
+                "sourceWitness":proof['sourceWitness']} if request.get('producerWorkflow') else {}),
             "officialParentRunEndpoint":producer_run_endpoint(request),
             "suitePackage":{"member":proof["member"],"filename":dmg.name,**proof["package"]},
             "suiteTransferArtifact":{"id":artifact_id,"name":"standalone-support-suite","sha256":child_hash,

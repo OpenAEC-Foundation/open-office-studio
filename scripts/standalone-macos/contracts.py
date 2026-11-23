@@ -3,6 +3,8 @@ from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 import hashlib
 import re
+import base64
+import json
 
 VERSION = "2026.48.1"
 APPS = {
@@ -22,6 +24,69 @@ MAC_PRODUCER_GATES = (
     "Meet- en inhoudscontrole voor de meegeleverde runtime",
     "Standaardinstaller controleren met uitsluitend de private runtime",
 )
+P5_APP_SOURCE={"commit":"b696ab86bd1c128729a079b68c0082e6df3d36a5",
+               "tree":"e30879fd772871e690847c061ef66e6b81808a05","version":VERSION}
+APPROVED_MAC_PRODUCER={
+    "commit":"2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+    "tree":"94340e40228ddcb11aace00e4dd01f614a13273e",
+    "run":45195055147,"attempt":1,"job":137763371873,
+    "branch":"codex/p5-macos-only-producer-20261123","path":".github/workflows/release.yml",
+    "event":"workflow_dispatch",
+    "workflowSha256":"2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62",
+    "checkoutWorkflowSha256":"620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+    "witnessMember":".local/macos-only-producer-source.json"}
+SOURCE_WITNESS_STEP="Exacte P5-appbron en afzonderlijke producerhead bewijzen"
+
+
+def approved_dual_producer(request):
+    producer=request.get("producerWorkflow")
+    if producer is None:return False
+    if (producer!=APPROVED_MAC_PRODUCER or any(type(producer[k]) is not type(v) for k,v in APPROVED_MAC_PRODUCER.items())
+            or request.get("source")!=P5_APP_SOURCE):
+        raise ValueError("Only the exact root-approved separate Mac producer and P5 application source are allowed")
+    parent=request["parentArtifact"]
+    if any(parent.get(k)!=producer[p] for k,p in (("run","run"),("attempt","attempt"),("producerJobId","job"))):
+        raise ValueError("Separate producer run/job/attempt differs from the frozen chain")
+    return True
+
+
+def expected_source_witness(request):
+    if not approved_dual_producer(request):raise ValueError("No separate producer witness authorized")
+    p=request["producerWorkflow"];app=request["source"];ref="refs/heads/"+p["branch"]
+    return {"appHead":app["commit"],"appTree":app["tree"],"appVersion":app["version"],
+        "producerHead":p["commit"],"producerWorkflowHead":p["commit"],"producerRef":ref,
+        "producerWorkflowRef":"OpenAEC-Foundation/open-office-studio/"+p["path"]+"@"+ref,
+        "event":p["event"],"runId":str(p["run"]),"attempt":str(p["attempt"]),"job":"bouwen",
+        "checkoutWorkflowSha256":p["checkoutWorkflowSha256"],"publiceren":"false","nativeAccepted":False,
+        "scope":"Build-only producer/source binding; no native operation or publication"}
+
+
+def source_witness_record(request,raw):
+    if not isinstance(raw,bytes) or not 0<len(raw)<=16384:raise ValueError("Bounded original source-witness bytes required")
+    def unique(pairs):
+        value={}
+        for key,item in pairs:
+            if key in value:raise ValueError("Duplicate source-witness JSON field")
+            value[key]=item
+        return value
+    value=json.loads(raw.decode("utf-8"),object_pairs_hook=unique);expected=expected_source_witness(request)
+    if (value!=expected or any(type(value[k]) is not type(v) for k,v in expected.items())):
+        raise ValueError("Original producer/application source witness differs from the exact frozen chain")
+    return {"member":request["producerWorkflow"]["witnessMember"],"bytes":len(raw),
+            "sha256":hashlib.sha256(raw).hexdigest(),"rawBase64":base64.b64encode(raw).decode("ascii"),"value":value}
+
+
+def verify_source_witness_record(request,proof):
+    record=proof.get("sourceWitness")
+    if not approved_dual_producer(request):
+        if record is not None:raise ValueError("Separate source witness cannot be borrowed by a direct-source request")
+        return None
+    if not isinstance(record,dict) or not isinstance(record.get("rawBase64"),str):raise ValueError("Mandatory original source witness missing")
+    if proof.get('producerWorkflow')!=request['producerWorkflow']:raise ValueError('Transferred producer workflow differs')
+    raw=base64.b64decode(record["rawBase64"],validate=True)
+    canonical=source_witness_record(request,raw)
+    if record!=canonical or type(record.get("bytes")) is not int:raise ValueError("Source-witness raw bytes/hash/provenance differ")
+    return canonical
 
 
 def digest(path):
@@ -53,6 +118,8 @@ def validate_request(value, now=None):
         raise ValueError("Exact producer artifact/run/job/attempt identity required")
     if not hex_value(parent.get("sha256"), 64) or parent.get("name") != "uitgave-macOS":
         raise ValueError("Immutable parent name and archive digest required")
+    approved_dual_producer(value)
+    if source["commit"]==APPROVED_MAC_PRODUCER["commit"]:raise ValueError("Producer head must never be labelled as application source")
     packages = value.get("packages", {})
     if set(packages) != set(APPS):
         raise ValueError("Exactly six dedicated apps required; suite must not be selected")
@@ -118,6 +185,7 @@ def verify_entry(request,proof,folder,app,entry):
         raise ValueError("Transferred app proof differs from coordinator source/parent")
     if proof.get("member")!=entry["member"]:
         raise ValueError("Transferred archive member differs")
+    verify_source_witness_record(request,proof)
     candidates=list(folder.glob("*.dmg"))
     if len(candidates)!=1:raise ValueError("Exactly one standalone DMG permitted on app host")
     dmg=candidates[0]
@@ -155,12 +223,18 @@ def verify_under(path, owned_root):
 def validate_producer(request, run, artifact, job, artifacts=None):
     """Platform completion is sufficient; unrelated platforms need not finish."""
     parent = request["parentArtifact"]
-    if run.get("id") != parent["run"] or run.get("head_sha") != request["source"]["commit"]:
+    dual=approved_dual_producer(request)
+    head=request["producerWorkflow"]["commit"] if dual else request["source"]["commit"]
+    if not dual and run.get("head_sha")==APPROVED_MAC_PRODUCER["commit"]:
+        raise ValueError("Separate Mac producer requires its explicit dual-source contract")
+    if run.get("id") != parent["run"] or run.get("head_sha") != head:
         raise ValueError("Producer run source differs")
+    if dual and any(run.get(k)!=request["producerWorkflow"][p] for k,p in (("head_branch","branch"),("path","path"),("event","event"))):
+        raise ValueError("Separate producer branch/path/event differs")
     if (artifact.get("id") != parent["id"] or artifact.get("name") != parent["name"]
             or artifact.get("expired") is not False
             or artifact.get("workflow_run", {}).get("id") != parent["run"]
-            or artifact.get("workflow_run", {}).get("head_sha") != request["source"]["commit"]):
+            or artifact.get("workflow_run", {}).get("head_sha") != head):
         raise ValueError("Artifact source/identity differs or is expired")
     if artifact.get("digest") != "sha256:" + parent["sha256"]:
         raise ValueError("Published artifact digest differs")
@@ -181,6 +255,13 @@ def validate_producer(request, run, artifact, job, artifacts=None):
     created=datetime.fromisoformat(artifact["created_at"].replace("Z","+00:00"))
     if created < max(completed):
         raise ValueError("Mac artifact predates required package/signature gates")
+    if dual:
+        witness=[s for s in job.get("steps",[]) if s.get("name")==SOURCE_WITNESS_STEP]
+        if len(witness)!=1 or witness[0].get("status")!="completed" or witness[0].get("conclusion")!="success":
+            raise PermissionError("Mandatory exact P5 checkout witness producer step not successful")
+        build=next(s for s in job["steps"] if s.get("name")==MAC_PRODUCER_GATES[0])
+        if datetime.fromisoformat(witness[0]["completed_at"].replace("Z","+00:00"))>datetime.fromisoformat(build["started_at"].replace("Z","+00:00")):
+            raise ValueError("Application checkout witness does not precede the signed build")
 
 
 def acceptance_from_evidence(value):
