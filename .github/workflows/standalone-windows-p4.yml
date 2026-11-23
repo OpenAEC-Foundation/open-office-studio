@@ -1,4 +1,4 @@
-name: P4 Windows seven-product split and six standalone native hosts
+name: P5 Windows seven-product split and six standalone native hosts
 on:
   push:
     branches: [codex/standalone-windows-p4-2026-11-23]
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-office-package
+          name: standalone-windows-p5-office-package
           path: .local/p4-windows-split/office
           compression-level: 0
           include-hidden-files: true
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-writer-package
+          name: standalone-windows-p5-writer-package
           path: .local/p4-windows-split/writer
           compression-level: 0
           include-hidden-files: true
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-spreadsheet-package
+          name: standalone-windows-p5-spreadsheet-package
           path: .local/p4-windows-split/spreadsheet
           compression-level: 0
           include-hidden-files: true
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-presentation-package
+          name: standalone-windows-p5-presentation-package
           path: .local/p4-windows-split/presentation
           compression-level: 0
           include-hidden-files: true
@@ -63,7 +63,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-email-package
+          name: standalone-windows-p5-email-package
           path: .local/p4-windows-split/email
           compression-level: 0
           include-hidden-files: true
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-notition-package
+          name: standalone-windows-p5-notition-package
           path: .local/p4-windows-split/notition
           compression-level: 0
           include-hidden-files: true
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-database-package
+          name: standalone-windows-p5-database-package
           path: .local/p4-windows-split/database
           compression-level: 0
           include-hidden-files: true
@@ -93,7 +93,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always() && steps.plan.outputs.ready == 'true'
         with:
-          name: standalone-windows-p4-binding
+          name: standalone-windows-p5-binding
           path: .local/p4-windows-split/provenance
           include-hidden-files: true
           if-no-files-found: error
@@ -137,7 +137,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: standalone-windows-p4-${{ matrix.app }}-proof
+          name: standalone-windows-p5-${{ matrix.app }}-proof
           path: |
             .local/p4-native-${{ matrix.app }}
             .local/standalone-windows-package/package.json

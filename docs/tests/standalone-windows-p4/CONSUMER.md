@@ -1,12 +1,14 @@
-# P4 Windows: seven-product split, six standalone hosts
+# P5 Windows: seven-product split, six standalone hosts
 
-**Integration freeze:** P4 final parent download/native go is withdrawn even if
-its Windows job finishes. A successor source/build will include only the required
-CI installation correction from dpkg to apt dependency resolution for Zenity.
-No P4 bytes may substitute for that new pin. Current config is additionally
-`superseded:true`; original official successor metadata/go must explicitly repin
-the source/build and clear this gate. No canonical download or native launch has
-started. The contract structure remains preparatory; product hashes stay null.
+**P5 repin:** Integration closed P5 after the two CI-only apt-resolver corrections.
+Product source is `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
+`e30879fd772871e690847c061ef66e6b81808a05`,2026.48.1; immutable branch
+`codex/release-candidate-2026-11-23-p5`. Release45177730188/attempt1,
+Windowsjob137703365803, publication disabled. No original official artifact/go
+exists yet. Config remains `ready:false` / `officialMetadataGo:false`; old P4
+bytes are invalid. The directory/workflow/config filenames retain their earlier
+P4 harness names for continuity; authoritative source identities and actual child
+artifact names are now P5. Root must supply original official P5 metadata/go.
 
 Only this preparation owns the canonical Windows ZIP download. Integration
 reserved a separate Suite transfer for750b; its native/core scope is not ours.
@@ -16,9 +18,9 @@ all historical host/old-Writer evidence remain untouched.
 
 ## Producer and preparation gates
 
-Product source `04fa6cd43b84e3f59fb9d5055bb2d00dde351a47`, tree
-`94fa38c20b51a73e4912964f37f0e1a659b0fb1b`,2026.48.1.
-Official Release producer45172070275, Windowsjob137683944804, attempt1,
+Product source `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
+`e30879fd772871e690847c061ef66e6b81808a05`,2026.48.1.
+Official Release producer45177730188, Windowsjob137703365803, attempt1,
 artifact name `uitgave-Windows`. Root will provide original official artifact
 metadata/go after this own job succeeds. Until then the config is `ready:false`
 and `officialMetadataGo:false`; null artifact identities are blocking, not wildcards.
@@ -37,14 +39,14 @@ actually validate Authenticode with timestamps. No app is rebuilt.
 `suite-consumer.pending.json` is a reviewable **blocked template**. The actual
 final non-null schema is `suite-consumer.schema.json`. Its descriptor is emitted
 by `bind_children.py` as `provenance/suite-consumer.json`,
-alongside `provenance/binding.json` in artifact `standalone-windows-p4-binding`.
+alongside `provenance/binding.json` in artifact `standalone-windows-p5-binding`.
 The final descriptor replaces null fields only with verified actual identities.
 The pending template's `state` and `expectedChildZipMembers` are explanatory;
 the emitted descriptor need not contain them. Validate the final schema instead.
 Its `suite` is the producer receipt augmented after upload with
 `childArtifact` and `packageReceiptSha256`.
 
-The Suite child artifact is named `standalone-windows-p4-office-package` and
+The Suite child artifact is named `standalone-windows-p5-office-package` and
 has exactly three root members:
 
 1. `Open Office Studio_2026.48.1_x64-setup.exe`
@@ -74,16 +76,16 @@ Required consumer order:
   before native functional acceptance. Keep external requirements explicit.
 
 **Product source and preparation harness are different identities.** The Suite
-is built from P4; this QA branch only verifies/splits bytes. Do not compare the
+is built from P5; this QA branch only verifies/splits bytes. Do not compare the
 child artifact's harness SHA directly to the product commit. The original child
 `package.json` excludes the two post-upload fields; use its raw-byte SHA rather
 than incorrectly comparing its entire object to the augmented final descriptor.
 
-Eight focused source/input gate contracts and Python/Node/PowerShell syntax
+Ten focused source/input gate contracts and Python/Node/PowerShell syntax
 checks pass without app/GUI execution. This preparation is not native acceptance.
 Email uses actual compose/Ctrl+S, independent received MIME body/subject, full
 quit/new-process reopen and synthetic loopback-only data; SMTP sending is disabled.
-Database uses SQLite only because the exact P4 native UI explicitly accepts
+Database uses SQLite only because the exact P5 native UI explicitly accepts
 `.sqlite/.sqlite3/.db`, with actual table/query/reopen and independent read-only
 sqlite3/source-hash checks. No Access writes or internal import calls are promised.
 

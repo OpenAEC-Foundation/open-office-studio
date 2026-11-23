@@ -39,5 +39,10 @@ class IntakeContracts(unittest.TestCase):
     def test_superseded_candidate_cannot_be_reactivated_by_old_artifact_metadata(self):
         self.plan['superseded']=True
         with self.assertRaises(AssertionError):self.check()
+    def test_cancelled_P4_product_bytes_cannot_become_P5(self):
+        self.run.update(id=45172070275,head_sha='04fa6cd43b84e3f59fb9d5055bb2d00dde351a47')
+        self.job.update(id=137683944804,run_id=45172070275)
+        self.commit.update(sha=self.run['head_sha'],tree=dict(sha='94fa38c20b51a73e4912964f37f0e1a659b0fb1b'))
+        with self.assertRaises(AssertionError):self.check()
 
 if __name__=='__main__':unittest.main()

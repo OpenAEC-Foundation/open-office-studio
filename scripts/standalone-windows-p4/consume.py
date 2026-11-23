@@ -16,7 +16,7 @@ app=os.environ['OOS_QA_APP'];assert app in APPS
 expected_id=int(os.environ['OOS_QA_CHILD_ID']);expected_sha=os.environ['OOS_QA_CHILD_SHA'];receipt_sha=os.environ['OOS_QA_RECEIPT_SHA']
 repo=os.environ['GITHUB_REPOSITORY'];run=int(os.environ['OOS_QA_PREPARER_RUN']);harness=os.environ['OOS_QA_PREPARER_HARNESS']
 meta=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/artifacts/{expected_id}']))
-assert meta['id']==expected_id and meta['name']==f'standalone-windows-p4-{app}-package' and not meta['expired']
+assert meta['id']==expected_id and meta['name']==f'standalone-windows-p5-{app}-package' and not meta['expired']
 assert meta['workflow_run']['id']==run and meta['workflow_run']['head_sha']==harness
 assert meta['digest']=='sha256:'+expected_sha
 archive=root/'input-child.zip'

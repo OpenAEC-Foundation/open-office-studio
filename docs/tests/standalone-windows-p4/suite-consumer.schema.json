@@ -1,64 +1,264 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Actual final P4 Suite child descriptor for750b",
+  "title": "Actual final P5 Suite child descriptor for750b",
   "$comment": "The pending template deliberately fails this final non-null schema. Hash/API/provenance checks in CONSUMER.md remain mandatory. Product source and preparer harness are distinct.",
   "type": "object",
-  "required": ["schemaVersion", "consumer", "source", "suite", "contract"],
+  "required": [
+    "schemaVersion",
+    "consumer",
+    "source",
+    "suite",
+    "contract"
+  ],
   "properties": {
-    "schemaVersion": {"const": 1},
-    "consumer": {"const": "750b"},
-    "contract": {"type": "string", "minLength": 1},
+    "schemaVersion": {
+      "const": 1
+    },
+    "consumer": {
+      "const": "750b"
+    },
+    "contract": {
+      "type": "string",
+      "minLength": 1
+    },
     "source": {
       "type": "object",
-      "required": ["producer", "attempt", "job", "commit", "tree", "version", "parentArtifact", "parentZipSha256"],
+      "required": [
+        "producer",
+        "attempt",
+        "job",
+        "commit",
+        "tree",
+        "version",
+        "parentArtifact",
+        "parentZipSha256"
+      ],
       "properties": {
-        "producer": {"const": 45172070275}, "attempt": {"const": 1}, "job": {"const": 137683944804},
-        "commit": {"const": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47"},
-        "tree": {"const": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b"},
-        "version": {"const": "2026.48.1"},
-        "parentArtifact": {"$ref": "#/$defs/id"}, "parentZipSha256": {"$ref": "#/$defs/sha256"}
+        "producer": {
+          "const": 45177730188
+        },
+        "attempt": {
+          "const": 1
+        },
+        "job": {
+          "const": 137703365803
+        },
+        "commit": {
+          "const": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+        },
+        "tree": {
+          "const": "e30879fd772871e690847c061ef66e6b81808a05"
+        },
+        "version": {
+          "const": "2026.48.1"
+        },
+        "parentArtifact": {
+          "$ref": "#/$defs/id"
+        },
+        "parentZipSha256": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "suite": {
       "type": "object",
-      "required": ["applicationCommit", "applicationTree", "version", "artifactRun", "platformJobId", "sourceAttempt", "artifactId", "archiveSha256", "archiveBytes", "preparerRun", "preparerHarness", "application", "installer", "canonicalPackageReport", "boundary", "childArtifact", "packageReceiptSha256"],
+      "required": [
+        "applicationCommit",
+        "applicationTree",
+        "version",
+        "artifactRun",
+        "platformJobId",
+        "sourceAttempt",
+        "artifactId",
+        "archiveSha256",
+        "archiveBytes",
+        "preparerRun",
+        "preparerHarness",
+        "application",
+        "installer",
+        "canonicalPackageReport",
+        "boundary",
+        "childArtifact",
+        "packageReceiptSha256"
+      ],
       "properties": {
-        "applicationCommit": {"const": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47"},
-        "applicationTree": {"const": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b"},
-        "version": {"const": "2026.48.1"}, "artifactRun": {"const": 45172070275},
-        "platformJobId": {"const": 137683944804}, "sourceAttempt": {"const": 1},
-        "artifactId": {"$ref": "#/$defs/id"}, "archiveSha256": {"$ref": "#/$defs/sha256"},
-        "archiveBytes": {"$ref": "#/$defs/id"}, "preparerRun": {"$ref": "#/$defs/id"},
-        "preparerHarness": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "installer": {"const": "Open Office Studio_2026.48.1_x64-setup.exe"},
-        "boundary": {"type": "string", "minLength": 1},
+        "applicationCommit": {
+          "const": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+        },
+        "applicationTree": {
+          "const": "e30879fd772871e690847c061ef66e6b81808a05"
+        },
+        "version": {
+          "const": "2026.48.1"
+        },
+        "artifactRun": {
+          "const": 45177730188
+        },
+        "platformJobId": {
+          "const": 137703365803
+        },
+        "sourceAttempt": {
+          "const": 1
+        },
+        "artifactId": {
+          "$ref": "#/$defs/id"
+        },
+        "archiveSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "archiveBytes": {
+          "$ref": "#/$defs/id"
+        },
+        "preparerRun": {
+          "$ref": "#/$defs/id"
+        },
+        "preparerHarness": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "installer": {
+          "const": "Open Office Studio_2026.48.1_x64-setup.exe"
+        },
+        "boundary": {
+          "type": "string",
+          "minLength": 1
+        },
         "application": {
           "type": "object",
-          "required": ["key", "title", "identifier", "executable", "packagePath", "sha256", "bytes", "signature", "timestampRequired", "payloadExecutable"],
+          "required": [
+            "key",
+            "title",
+            "identifier",
+            "executable",
+            "packagePath",
+            "sha256",
+            "bytes",
+            "signature",
+            "timestampRequired",
+            "payloadExecutable"
+          ],
           "properties": {
-            "key": {"const": "office"}, "title": {"const": "Open Office Studio"},
-            "identifier": {"const": "org.openaec.office-studio"}, "executable": {"const": "open-office-studio.exe"},
-            "packagePath": {"const": "dist-installers/office/nsis/Open Office Studio_2026.48.1_x64-setup.exe"},
-            "sha256": {"$ref": "#/$defs/sha256"}, "bytes": {"$ref": "#/$defs/id"},
-            "signature": {"const": "valid"}, "timestampRequired": {"const": true},
+            "key": {
+              "const": "office"
+            },
+            "title": {
+              "const": "Open Office Studio"
+            },
+            "identifier": {
+              "const": "org.openaec.office-studio"
+            },
+            "executable": {
+              "const": "open-office-studio.exe"
+            },
+            "packagePath": {
+              "const": "dist-installers/office/nsis/Open Office Studio_2026.48.1_x64-setup.exe"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "bytes": {
+              "$ref": "#/$defs/id"
+            },
+            "signature": {
+              "const": "valid"
+            },
+            "timestampRequired": {
+              "const": true
+            },
             "payloadExecutable": {
-              "type": "object", "required": ["member", "sha256", "bytes", "pe", "derivation"],
-              "properties": {"member": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}, "bytes": {"$ref": "#/$defs/id"}, "pe": {"const": "x64"}, "derivation": {"type": "string", "minLength": 1}}
+              "type": "object",
+              "required": [
+                "member",
+                "sha256",
+                "bytes",
+                "pe",
+                "derivation"
+              ],
+              "properties": {
+                "member": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                },
+                "bytes": {
+                  "$ref": "#/$defs/id"
+                },
+                "pe": {
+                  "const": "x64"
+                },
+                "derivation": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
             }
           }
         },
         "canonicalPackageReport": {
-          "type": "object", "required": ["parentMember", "sha256", "bytes"],
-          "properties": {"parentMember": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}, "bytes": {"$ref": "#/$defs/id"}}
+          "type": "object",
+          "required": [
+            "parentMember",
+            "sha256",
+            "bytes"
+          ],
+          "properties": {
+            "parentMember": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "bytes": {
+              "$ref": "#/$defs/id"
+            }
+          }
         },
         "childArtifact": {
-          "type": "object", "required": ["id", "name", "bytes", "digest"],
-          "properties": {"id": {"$ref": "#/$defs/id"}, "name": {"const": "standalone-windows-p4-office-package"}, "bytes": {"$ref": "#/$defs/id"}, "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "bytes",
+            "digest"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "name": {
+              "const": "standalone-windows-p5-office-package"
+            },
+            "bytes": {
+              "$ref": "#/$defs/id"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
         },
-        "packageReceiptSha256": {"$ref": "#/$defs/sha256"}
+        "packageReceiptSha256": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     }
   },
-  "$defs": {"id": {"type": "integer", "minimum": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
-  "x-expectedChildZipMembers": ["Open Office Studio_2026.48.1_x64-setup.exe", "canonical-package-report.json", "package.json"]
+  "$defs": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "x-expectedChildZipMembers": [
+    "Open Office Studio_2026.48.1_x64-setup.exe",
+    "canonical-package-report.json",
+    "package.json"
+  ]
 }

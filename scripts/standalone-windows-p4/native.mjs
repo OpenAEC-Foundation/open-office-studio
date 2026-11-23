@@ -23,10 +23,10 @@ async function ps(name,args=[]) { return (await run('pwsh',['-NoProfile','-File'
 const receipt=JSON.parse(await readFile(join(packageDir,'package.json'),'utf8')), app=receipt.application;
 const approved=JSON.parse(await readFile('.github/standalone-windows-p4.json','utf8'));
 assert.equal(approved.ready,true);assert.equal(approved.officialMetadataGo,true);
-assert.equal(receipt.preflightOnly,undefined,'No old/public preflight package in final P4');
-assert.equal(receipt.applicationCommit,'04fa6cd43b84e3f59fb9d5055bb2d00dde351a47');
-assert.equal(receipt.applicationTree,'94fa38c20b51a73e4912964f37f0e1a659b0fb1b');
-assert.equal(receipt.version,'2026.48.1');assert.equal(receipt.artifactRun,45172070275);assert.equal(receipt.platformJobId,137683944804);assert.equal(receipt.sourceAttempt,1);
+assert.equal(receipt.preflightOnly,undefined,'No old/public preflight package in final P5');
+assert.equal(receipt.applicationCommit,'b696ab86bd1c128729a079b68c0082e6df3d36a5');
+assert.equal(receipt.applicationTree,'e30879fd772871e690847c061ef66e6b81808a05');
+assert.equal(receipt.version,'2026.48.1');assert.equal(receipt.artifactRun,45177730188);assert.equal(receipt.platformJobId,137703365803);assert.equal(receipt.sourceAttempt,1);
 assert.equal(receipt.artifactId,approved.artifactId);assert.equal(receipt.archiveSha256,approved.archiveSha256);
 assert.equal(receipt.preparerRun,Number(process.env.OOS_QA_PREPARER_RUN));assert.equal(receipt.preparerHarness,process.env.OOS_QA_PREPARER_HARNESS);
 assert.equal(app.signature,'valid');assert.equal(app.timestampRequired,true);

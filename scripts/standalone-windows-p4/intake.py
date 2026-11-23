@@ -1,4 +1,4 @@
-"""One official P4 ZIP -> seven unchanged products; six app-only native hosts."""
+"""One official P5 ZIP -> seven unchanged products; six app-only native hosts."""
 import base64
 import hashlib
 import json
@@ -13,10 +13,10 @@ import zipfile
 
 APPS=('writer','spreadsheet','presentation','email','notition','database')
 PRODUCTS=('office',)+APPS
-APP='04fa6cd43b84e3f59fb9d5055bb2d00dde351a47'
-TREE='94fa38c20b51a73e4912964f37f0e1a659b0fb1b'
-RUN=45172070275
-JOB=137683944804
+APP='b696ab86bd1c128729a079b68c0082e6df3d36a5'
+TREE='e30879fd772871e690847c061ef66e6b81808a05'
+RUN=45177730188
+JOB=137703365803
 
 def digest(path):
     with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
@@ -25,6 +25,7 @@ def write(path,value):path.write_text(json.dumps(value,indent=2)+'\n',encoding='
 
 def validate(plan):
     assert plan['schemaVersion']==1 and type(plan['ready']) is bool
+    assert plan['candidate']=='P5'
     assert (plan['applicationCommit'],plan['applicationTree'],plan['version'])==(APP,TREE,'2026.48.1')
     assert (plan['artifactRun'],plan['platformJobId'],plan['sourceAttempt'])==(RUN,JOB,1)
     assert plan['artifactName']=='uitgave-Windows'
