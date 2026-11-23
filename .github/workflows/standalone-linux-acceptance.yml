@@ -147,7 +147,7 @@ jobs:
         run: |
           sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool libfuse2 squashfs-tools gnome-keyring libsecret-tools
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool libfuse2 squashfs-tools gnome-keyring libsecret-tools openbox xdg-desktop-portal xdg-desktop-portal-gtk
           pnpm --dir .local/standalone-harness install --frozen-lockfile --ignore-scripts
           node --test .local/standalone-harness/scripts/standalone-linux-mail-fixture.test.mjs .local/standalone-harness/scripts/standalone-linux-ooxml.test.mjs
           cargo install tauri-driver --version 2.1.0 --locked
@@ -158,7 +158,16 @@ jobs:
       - name: Native isolated DEB and AppImage functionality
         env:
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
-        run: dbus-run-session -- xvfb-run -a node .local/standalone-harness/scripts/proef-standalone-linux.mjs
+          XDG_CURRENT_DESKTOP: GNOME
+        run: |
+          xvfb-run -a dbus-run-session -- bash <<'SH'
+          set -euo pipefail
+          mkdir -p .local/standalone-linux-results
+          openbox >.local/standalone-linux-results/openbox.log 2>&1 &
+          standalone_wm=$!
+          trap 'kill "$standalone_wm" 2>/dev/null || true' EXIT
+          node .local/standalone-harness/scripts/proef-standalone-linux.mjs
+          SH
       - uses: actions/upload-artifact@v4
         if: always()
         with:

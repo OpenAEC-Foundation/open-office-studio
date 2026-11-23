@@ -1,0 +1,91 @@
+{
+  "owner": "standalone_linux",
+  "scope": "QA only: six independently installed Linux apps, DEB and AppImage",
+  "harnessBranch": "codex/standalone-linux-2026-11-23",
+  "applicationSource": null,
+  "applicationVersion": null,
+  "finalAcceptance": "pending coordinator freeze and canonical Linux packages",
+  "hostPreflight": {
+    "purpose": "one old Notition app only; never final release acceptance",
+    "source": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+    "artifactRun": 44747669364,
+    "firstRun": 45138441125,
+    "firstResult": "test infrastructure stopped before any app: Ubuntu Python 3.10 lacks hashlib.file_digest; streaming SHA256 correction applied",
+    "retryRun": 45138820006,
+    "retryResult": "running"
+  },
+  "localChecks": {
+    "provenanceAndIsolationContracts": "4 passed",
+    "loopbackImapProtocol": "1 passed (fragmented APPEND, fresh connection FETCH, no SMTP, credential omitted from log)",
+    "independentOoxmlOracles": "3 passed (Writer retained original/exactly one marker; Spreadsheet exact cell/formulas; Presentation text and second slide relationship)",
+    "nativeHarnessSyntax": "passed"
+  },
+  "sharedGates": [
+    "Canonical release workflow run head equals coordinator source; one downloaded ZIP matches Actions artifact digest",
+    "Only 12 standalone packages and 6 corresponding Linux package reports extracted; Office remains unextracted and never reaches app hosts",
+    "One own app per fresh runner, maximum three concurrent app runners; only the selected app DEB/AppImage bytes are transferred",
+    "Each package byte count/SHA256/app identity/version matches original package report",
+    "Host suite executables and LibreOffice package installation absent; unique empty HOME/XDG per package; explicit PATH and environment",
+    "Own native executable SHA256 equals inspected package payload; record process, resource and generated WebKit profile paths",
+    "Real WebKitGTK native app with real keyboard/pointer/OS file chooser; no application state, IPC, File or DOM mutation injection",
+    "Native focus, Linux Ctrl shortcuts, save and complete process reopen must pass before accepting the core scenario",
+    "Record screenshots, unchanged/saved file hashes, independent file oracle, owned process exit and profile cleanup"
+  ],
+  "cases": [
+    {
+      "app": "writer",
+      "packages": ["deb", "appimage"],
+      "core": "Open synthetic DOCX via own binary; type marker preserving original; Ctrl+S; independent ZIP/XML; fully quit; reopen and native Find retrieves saved marker",
+      "result": "pending",
+      "limits": "No complete conversion/format matrix"
+    },
+    {
+      "app": "spreadsheet",
+      "packages": ["deb", "appimage"],
+      "core": "Open synthetic XLSX with A1=4,B1=A1*3; type A1=9,C1=A1+B1 through name/formula bar; Ctrl+S; independent cell/formula/cache XML; fully quit/reopen and inspect saved formula",
+      "result": "pending",
+      "limits": "One workbook; no complete formula/format matrix"
+    },
+    {
+      "app": "presentation",
+      "packages": ["deb", "appimage"],
+      "core": "Open synthetic PPTX; edit real slide text through Outline; add slide via Ctrl+M; Ctrl+S; independent saved text and slide relationship oracle; fully quit/reopen",
+      "result": "pending",
+      "limits": "One presentation; no complete media/transition/conversion matrix"
+    },
+    {
+      "app": "email",
+      "packages": ["deb", "appimage"],
+      "core": "Own synthetic account JSON and OS Secret Service; local loopback IMAP server; real native compose, subject/body keyboard edit, Ctrl+S APPEND, fully quit/reopen, retrieve Drafts",
+      "result": "pending",
+      "externalRequirements": [
+        "OS Secret Service",
+        "Mail server for live use; only loopback IMAP tested"
+      ],
+      "limits": "No SMTP server, sent mail, real account, live provider or OAuth certification; fixture credentials are public synthetic values"
+    },
+    {
+      "app": "notition",
+      "packages": ["deb", "appimage"],
+      "core": "Own new local notebook, title/body keyboard edits, Ctrl+S/local autosave, native backup export, independent backup JSON, full process restart and own-profile persisted note",
+      "result": "pending",
+      "limits": "No suite note migration or full backup corpus certification"
+    },
+    {
+      "app": "database",
+      "packages": ["deb", "appimage"],
+      "core": "Independent two-row synthetic SQLite, real Ctrl+O/OS chooser and external SQLite confirmation; table read, typed SELECT SUM(amount)=18, full process restart and OS reopen; original SHA256 unchanged",
+      "result": "pending",
+      "supportedUserRouteEvidence": "DatabaseStudio.tsx accepts .sqlite/.sqlite3/.db and openBestand calls laadSqlite with explicit Open anyway user confirmation",
+      "limits": "Read/query/reopen only; no Access import, VBA, write/save or broad dialect claim"
+    }
+  ],
+  "signatures": "Linux detached OpenPGP signatures are produced in the publishing job. This task cannot treat currently unsigned candidate bytes as signature-approved; publication remains unauthorized.",
+  "forbiddenActions": [
+    "product fixes",
+    "main merge or main push",
+    "tag",
+    "publication",
+    "local user PC GUI/uninstall"
+  ]
+}

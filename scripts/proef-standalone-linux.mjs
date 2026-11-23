@@ -133,8 +133,10 @@ async function packageCase(pkg) {
   const payloadRoot = join(dir, "payload");
   let driverLog = "";
   const env = {
-    PATH: process.env.PATH,
+    PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     DISPLAY: process.env.DISPLAY,
+    XAUTHORITY: process.env.XAUTHORITY,
+    XDG_CURRENT_DESKTOP: "GNOME",
     DBUS_SESSION_BUS_ADDRESS: process.env.DBUS_SESSION_BUS_ADDRESS,
     HOME: home,
     XDG_CONFIG_HOME: join(home, ".config"),
@@ -238,7 +240,7 @@ async function packageCase(pkg) {
     );
   const clickLabel = async (label) => {
     const found = await observe(
-      "return [...document.querySelectorAll('button,[role=tab]')].filter(e=>e.getClientRects().length).find(e=>e.getAttribute('aria-label')===arguments[0]||e.textContent.trim()===arguments[0]||e.querySelector(':scope > span')?.textContent.trim()===arguments[0])",
+      "const es=[...document.querySelectorAll('button,[role=tab]')].filter(e=>e.getClientRects().length); const label=arguments[0]; const matches=e=>e.getAttribute('aria-label')===label||e.textContent.trim()===label||e.querySelector(':scope > span')?.textContent.trim()===label; return es.find(e=>e.getAttribute('role')==='tab'&&matches(e))||es.find(matches)",
       [label],
     );
     assert.ok(found, `Visible control ${label}`);
@@ -287,7 +289,7 @@ async function packageCase(pkg) {
     const paths = {
       pid,
       executable,
-      executableSha256: hash(await readFile(executable)),
+      executableSha256: hash(await readFile(`/proc/${pid}/exe`)),
       environment: (await readFile(`/proc/${pid}/environ`, "utf8"))
         .split("\0")
         .filter((s) =>
