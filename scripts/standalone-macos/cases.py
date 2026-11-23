@@ -175,6 +175,7 @@ class Case:
 
     def database(self):
         # Normal supported SQLite UI route; no direct WerkkopieClient/backend setup.
+        before=digest(self.fixture)
         self.button("Open database");self.file_dialog(self.fixture)
         self.button("Open anyway")
         self.button("standalone_data")
@@ -182,7 +183,7 @@ class Case:
         for value in (SEEDS["database"],CONTROL,"beta"):
             if not any(value in str(n.get("AXValue",""))+str(n.get("AXTitle",""))+str(n.get("AXDescription","")) for n in attributes(snap)):
                 raise Unavailable("Actual UI table is missing expected synthetic row: "+value)
-        before=digest(self.fixture)
+        if digest(self.fixture)!=before:raise Unavailable("Opening the SQLite UI changed the original fixture")
         self.database_query()
         self.tab("Home");self.button("Save")
         output=self.s.root/"database-export.sqlite";self.file_dialog(output,save=True)
