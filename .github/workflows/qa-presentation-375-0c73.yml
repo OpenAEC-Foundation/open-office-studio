@@ -6,12 +6,13 @@ on:
         type: choice
         description: Explicit diagnostic phase
         default: components
-        options: [components, uno, uno-readonly]
+        options: [components, uno, uno-readonly, source-preflight]
 permissions:
   contents: read
   actions: read
 jobs:
   components:
+    if: inputs.phase != 'source-preflight'
     runs-on: ubuntu-22.04
     timeout-minutes: 12
     env:
@@ -42,5 +43,23 @@ jobs:
         with:
           name: presentation-375-uno-${{ inputs.phase || 'components' }}
           path: .local/presentation-375-runtime/
+          include-hidden-files: true
+          if-no-files-found: error
+  source-resources:
+    if: github.event_name == 'workflow_dispatch' && inputs.phase == 'source-preflight'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read existing compiler, memory and disk without source checkout or build
+        run: python scripts/qa-presentation-375/build_preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presentation-375-source-build-preflight
+          path: .local/presentation-375-build-preflight/
           include-hidden-files: true
           if-no-files-found: error
