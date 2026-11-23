@@ -264,7 +264,7 @@ export async function proefInterface(
       // its real installed resource directory instead of an invented test path.
       let application;
       if (payload.packagePath.endsWith(".deb")) {
-        execFileSync("sudo", ["dpkg", "--install", payload.packagePath], {
+        execFileSync("sudo", ["apt-get", "install", "-y", "--no-install-recommends", payload.packagePath], {
           stdio: "inherit",
         });
         installedLinux = true;
