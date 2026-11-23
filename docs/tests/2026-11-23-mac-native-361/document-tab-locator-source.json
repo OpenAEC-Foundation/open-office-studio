@@ -1,0 +1,152 @@
+{
+  "sourceRun": 45151872444,
+  "sourceArtifact": 14806508110,
+  "originalArtifactZip": "82aa18ab0f85bff812cf808520ad4e49c86bd2cc2eb73ac4c123b1f33165ccfd",
+  "observedNativeTabStates": [
+    {
+      "sourceFile": ".local\\nov23-P2-native-pass\\mac-product-native\\native-original-acceptance\\original-before-input\\raw-ax.json",
+      "sourceFileSha256": "e6e916161b1c7861e581c784e2814419ea776a859fd0245a55c676faa9ebdac9",
+      "rawAttributes": {
+        "actions": {
+          "axError": 0,
+          "value": [
+            "AXPress",
+            "AXShowMenu",
+            "AXScrollToVisible"
+          ]
+        },
+        "AXDescription": {
+          "status": "available",
+          "truncated": false,
+          "value": ""
+        },
+        "AXEnabled": {
+          "status": "available",
+          "value": true
+        },
+        "AXFocused": {
+          "status": "available",
+          "value": false
+        },
+        "AXHelp": {
+          "status": "available",
+          "truncated": false,
+          "value": "native-original-private-copy.docx\nDrag outside for a separate window"
+        },
+        "AXIdentifier": {
+          "axError": -25212,
+          "status": "unavailable"
+        },
+        "AXPosition": {
+          "status": "available",
+          "value": {
+            "x": 76,
+            "y": 210
+          }
+        },
+        "AXRole": {
+          "status": "available",
+          "truncated": false,
+          "value": "AXRadioButton"
+        },
+        "AXSelected": {
+          "status": "available",
+          "value": true
+        },
+        "AXSize": {
+          "status": "available",
+          "value": {
+            "height": 24,
+            "width": 201
+          }
+        },
+        "AXSubrole": {
+          "axError": -25212,
+          "status": "unavailable"
+        },
+        "AXTitle": {
+          "status": "available",
+          "truncated": false,
+          "value": "native-original-private-copy.docx Close native-original-private-copy.docx"
+        },
+        "AXValue": {
+          "status": "available",
+          "value": true
+        }
+      }
+    },
+    {
+      "sourceFile": ".local\\nov23-P2-native-pass\\mac-product-native\\native-original-acceptance\\original-before-persistent-insert\\raw-ax.json",
+      "sourceFileSha256": "0ac5e0b5718c2d906ea273c0dd605ec1aefb79c345f43755d20b27c75c5e01b9",
+      "rawAttributes": {
+        "actions": {
+          "axError": 0,
+          "value": [
+            "AXPress",
+            "AXShowMenu",
+            "AXScrollToVisible"
+          ]
+        },
+        "AXDescription": {
+          "status": "available",
+          "truncated": false,
+          "value": ""
+        },
+        "AXEnabled": {
+          "status": "available",
+          "value": true
+        },
+        "AXFocused": {
+          "status": "available",
+          "value": false
+        },
+        "AXHelp": {
+          "status": "available",
+          "truncated": false,
+          "value": "native-original-private-copy.docx \u00b7 unsaved changes\nDrag outside for a separate window"
+        },
+        "AXIdentifier": {
+          "axError": -25212,
+          "status": "unavailable"
+        },
+        "AXPosition": {
+          "status": "available",
+          "value": {
+            "x": 76,
+            "y": 210
+          }
+        },
+        "AXRole": {
+          "status": "available",
+          "truncated": false,
+          "value": "AXRadioButton"
+        },
+        "AXSelected": {
+          "status": "available",
+          "value": true
+        },
+        "AXSize": {
+          "status": "available",
+          "value": {
+            "height": 24,
+            "width": 201
+          }
+        },
+        "AXSubrole": {
+          "axError": -25212,
+          "status": "unavailable"
+        },
+        "AXTitle": {
+          "status": "available",
+          "truncated": false,
+          "value": "native-original-private-copy.docx , unsaved changes Close native-original-private-copy.docx"
+        },
+        "AXValue": {
+          "status": "available",
+          "value": true
+        }
+      }
+    }
+  ],
+  "reason": "AXTitle aggregates filename, unsaved status and child Close name; AXHelp firstline is exact filename or filename plus documented unsaved suffix. Fixed A/B fixture names and role remain required."
+}

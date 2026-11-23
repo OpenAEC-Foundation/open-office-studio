@@ -167,6 +167,13 @@ if !AXIsProcessTrusted() {
            ["AXButton", "AXRadioButton", "AXTab"].contains(role) { matches.append(element) }
         if action == "click-input" && target == "Find what" && (title == target || label == target) &&
            ["AXTextField", "AXSearchField"].contains(role) { matches.append(element) }
+        if action == "click-document-tab" && ["361-remaining-A.docx", "361-remaining-B.docx"].contains(target) &&
+           ["AXRadioButton", "AXTab"].contains(role) {
+            // The real AXTitle includes the child Close button and dirty label.
+            // Native AXHelp's first line is the exact filename/dirty tooltip.
+            let help = text(element, kAXHelpAttribute).components(separatedBy: "\n").first ?? ""
+            if [target, target + " · unsaved changes"].contains(help) { matches.append(element) }
+        }
         if action == "click-cell" && ["AXStaticText", "AXCell"].contains(role) &&
            text(element, kAXValueAttribute).trimmingCharacters(in: .whitespacesAndNewlines) == target { matches.append(element) }
         if role == "AXTable" {
@@ -265,11 +272,15 @@ if !AXIsProcessTrusted() {
             }
             report["status"] = "input-sent"; report["testText"] = target
         } else { report["status"] = "blocked"; report["reason"] = "Synthetic text requires its exact owned document or Find input focus" }
-    } else if action == "click-label" || action == "click-input" {
+    } else if action == "click-label" || action == "click-input" || action == "click-document-tab" {
         if matches.count == 1, let (p, s) = pointAndSize(matches[0]) {
             let center = CGPoint(x: p.x+s.width/2, y: p.y+s.height/2)
             report["status"] = nativeMouseClick(center) ? "input-sent" : "blocked"
             report["clicked"] = summary(matches[0])
+            if action == "click-document-tab" {
+                report["documentTabTarget"] = target
+                report["documentTabHelp"] = text(matches[0], kAXHelpAttribute)
+            }
         } else { report["status"] = "blocked"; report["reason"] = "Expected one visible native labeled control with geometry" }
     } else if action == "chord" {
         let mappings: [String: (CGKeyCode, CGEventFlags)] = [

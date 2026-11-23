@@ -115,7 +115,7 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
             raise PermissionError("Visible native body target did not focus Document input")
 
     def tab_document(path, expected):
-        action("click-label", path.name)
+        action("click-document-tab", path.name)
         wait(lambda: path.name in ready_snapshot().get("window", {}).get("title", ""), "Document tab did not select its own title")
         if current_pid() != pid:
             raise RuntimeError("Two documents must remain in the same owned process")
