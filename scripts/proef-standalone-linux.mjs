@@ -151,6 +151,7 @@ async function packageCase(pkg) {
       "Virtual X11/Xvfb, software rendering",
       "One synthetic core scenario per app; no complete format/conversion or live account certification",
       "Private conversion runtime presence is inspected where bundled; native format conversion is outside this core scenario",
+      "Where exercised, native file dialogs use the private test desktop's XDG portal and GTK provider; missing-portal behavior is not certified by this core matrix",
     ],
   };
   results.push(report);
