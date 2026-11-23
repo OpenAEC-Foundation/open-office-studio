@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "purpose": "P5 verified Suite byte transfer; native acceptance remains consumer-owned",
+  "executionApproved": true,
+  "provenanceScope": "Original Suite package bytes isolated from all six standalone app hosts",
+  "parent": {
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "appVersion": "2026.48.1",
+    "run": 45177730188,
+    "job": 137703365848,
+    "attempt": 1,
+    "jobConclusion": "success",
+    "installerArchive": {
+      "id": 14824745492,
+      "name": "uitgave-Linux",
+      "sha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+      "bytes": 4444993178
+    },
+    "reportArchive": null,
+    "packageReportSha256": "488ac82490f09b8e66b19215b28c452362e0b9730ca8eca27e25bd4bee9e0c78",
+    "packageReportMember": ".local/pakketcontrole-Linux.json",
+    "packageMember": "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage"
+  },
+  "artifact": {
+    "run": 45188332685,
+    "id": 14823914781,
+    "name": "suite-input-office-appimage-p5",
+    "zipSha256": "90167f0a1464ea57cf0a53d4b8adcd0aa3235879be4b1aca7da28d09cae6950a",
+    "zipBytes": 429876979
+  },
+  "qaPin": {
+    "producerCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+  },
+  "package": {
+    "kind": "appimage",
+    "member": "canonical-office.AppImage",
+    "sha256": "346f8130a710e62d080982d6c0fc45ecd610b49e5b7e8495cce691f2d872fdf6",
+    "bytes": 429873656,
+    "control": null,
+    "payloadElf": {
+      "path": "usr/bin/open-office-studio",
+      "sha256": "24bf634c06847e6a4a94a5ac245cac93af3e76a9e911f06e2d89f1621b4a94fd",
+      "bytes": 99992001,
+      "mode": 493,
+      "elfClass": 2,
+      "machine": 62
+    }
+  },
+  "signatureBinding": {
+    "status": "Original package hashes verified; no Linux signature certification; publication disabled",
+    "members": [],
+    "publicationAuthorized": false
+  },
+  "embeddedDescriptorNote": "Embedded pre-upload descriptor intentionally has no self-referential ZIP digest; this external descriptor binds the uploaded ZIP"
+}

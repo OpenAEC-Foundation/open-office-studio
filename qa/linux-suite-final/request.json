@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "go": false,
+  "go": true,
   "scope": "Linux Suite core 368/369/vertical362, field374 and native-confirmation378",
   "publicationAuthorized": false,
   "candidate": {
@@ -11,7 +11,20 @@
     "linuxJob": 137703365848,
     "attempt": 1
   },
-  "inputDescriptors": null,
+  "inputDescriptors": {
+    "deb": {
+      "commit": "3ea5564105d0b4612ad9d0fd05e9a36af261b679",
+      "sha256": "0c82ca92eaa74a5e631aaf2b8990b40bd24d04830049ed9f48b1cbd3f22e4a03",
+      "path": "qa/linux-suite-final/office-deb-input-descriptor.json",
+      "upstreamPath": "docs/tests/linux-release-input-p5/office-deb-input-descriptor.json"
+    },
+    "appimage": {
+      "commit": "3ea5564105d0b4612ad9d0fd05e9a36af261b679",
+      "sha256": "2ebd84ac4cdb00bb96a9d0617a09a34369cc17333f6941786d69c79e27b61b8a",
+      "path": "qa/linux-suite-final/office-appimage-input-descriptor.json",
+      "upstreamPath": "docs/tests/linux-release-input-p5/office-appimage-input-descriptor.json"
+    }
+  },
   "supersededCandidates": [
     {
       "commit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",

@@ -1,7 +1,9 @@
 # Final Linux Suite QA preparation
 
-Execution is currently blocked by [request.json](request.json): `go=false`,
-both immutable input descriptors unset. Candidate P5 is exactly
+Execution is authorized by the coordinator in [request.json](request.json): `go=true`,
+both immutable input descriptors bound to producer Git `3ea55641` and official
+Suite transfers from successful prep45188332685. Native acceptance is still pending.
+Candidate P5 is exactly
 `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 `e30879fd772871e690847c061ef66e6b81808a05`, version 2026.48.1,
 producer45177730188/Linuxjob137703365848/attempt1.
