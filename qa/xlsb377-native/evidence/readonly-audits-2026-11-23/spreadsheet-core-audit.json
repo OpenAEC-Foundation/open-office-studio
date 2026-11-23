@@ -1,0 +1,138 @@
+{
+  "scope": "Read-only standalone Linux Spreadsheet P5 core-XLSX and completed GNM evidence audit",
+  "status": "core-XLSX-functional-pass-both; AppImage-gnumeric-overall-failure-preserved",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "run": 45194487509,
+  "harness": "548a342cb79e2db317c9157b83bbd7b49635c6b1",
+  "harnessSha256": "8985557e67f2a3d2638ba3f6519fb30aa80f2ac86b909cde64756481cddbb09b",
+  "fixtureOracleSha256": "06dcf6974b1461759b7bf63cba23f9090fbaeaf87152c8d74dcd812f9b491111",
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-linux-release-input-p5-2026-11-23\\.local\\p5-spreadsheet-45194487509\\proof.zip",
+  "proofArtifact": 14828631845,
+  "proofBytes": 5142530,
+  "proofZipSha256": "948517759acfc3e4be36aa3436aa6f27b697286860bcdb41524df8c53599611f",
+  "child": 14824139421,
+  "parent": 14824745492,
+  "forms": [
+    {
+      "kind": "appimage",
+      "originalOverallStatus": "failed",
+      "rawReportSha256": "11e91d4ef700db43d31c0faffd3ccb19063dec952cf6fd406ff2f3a75e39b05a",
+      "coreXlsxFunctionalStatus": "passed",
+      "coreSavedSha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05",
+      "independentTypedCells": {
+        "A1": {
+          "type": "n",
+          "formula": null,
+          "value": "9"
+        },
+        "B1": {
+          "type": "n",
+          "formula": "A1*3",
+          "value": "27"
+        },
+        "C1": {
+          "type": "n",
+          "formula": "A1+B1",
+          "value": "36"
+        }
+      },
+      "corePids": [
+        4915,
+        5132
+      ],
+      "fullQuitThenNewPidVerifiedInPinnedHarness": true,
+      "ownedPrivateXdgEnvironment": true,
+      "noSuiteMappedExecutable": true,
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+        "canonicalMember": "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+        "sha256": "950bb92b52af3977dd7f163670418acb72fc6230e20184c1a77a0bc23e2bc59d",
+        "bytes": 429849080
+      },
+      "payloadElfSha256": "3f0af57e037c355a1e871c4b07a2b321a5f12146e650da1af8b236a29fa7e3ac",
+      "coreSavedAndReopenedPngInspected": true,
+      "allFourFinalCleanupFlagsTrue": true,
+      "finalPostScenarioProfileInventoryPresent": false,
+      "gnmCases": [
+        {
+          "extension": "gnm",
+          "status": "source-derived-typed-XML/caches-and-recorded-reopen-pass",
+          "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+          "savedSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+          "firstPid": 5253,
+          "reopenPid": 14366
+        }
+      ],
+      "gnumericStatus": "failed-unclassified-invalid-session-after-picker"
+    },
+    {
+      "kind": "deb",
+      "originalOverallStatus": "passed",
+      "rawReportSha256": "d782ba331711eb9a0daf46c45739b4c74d2a9f30ddaac33ce0befbef59a4ff51",
+      "coreXlsxFunctionalStatus": "passed",
+      "coreSavedSha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05",
+      "independentTypedCells": {
+        "A1": {
+          "type": "n",
+          "formula": null,
+          "value": "9"
+        },
+        "B1": {
+          "type": "n",
+          "formula": "A1*3",
+          "value": "27"
+        },
+        "C1": {
+          "type": "n",
+          "formula": "A1+B1",
+          "value": "36"
+        }
+      },
+      "corePids": [
+        23667,
+        23831
+      ],
+      "fullQuitThenNewPidVerifiedInPinnedHarness": true,
+      "ownedPrivateXdgEnvironment": true,
+      "noSuiteMappedExecutable": true,
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+        "canonicalMember": "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+        "sha256": "2975d44e7c0a6456aa0bd66c151a83b26ee9b2bd13a775a3c19db051fc15cd11",
+        "bytes": 383910260
+      },
+      "payloadElfSha256": "d56ad92c779e2cafb06c7b44cb23e1c56f2cc04e8e0b6475782bf2c8352197a2",
+      "coreSavedAndReopenedPngInspected": true,
+      "allFourFinalCleanupFlagsTrue": true,
+      "finalPostScenarioProfileInventoryPresent": true,
+      "gnmCases": [
+        {
+          "extension": "gnm",
+          "status": "source-derived-typed-XML/caches-and-recorded-reopen-pass",
+          "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+          "savedSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+          "firstPid": 23941,
+          "reopenPid": 33189
+        },
+        {
+          "extension": "gnumeric",
+          "status": "source-derived-typed-XML/caches-and-recorded-reopen-pass",
+          "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+          "savedSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+          "firstPid": 33553,
+          "reopenPid": 42881
+        }
+      ],
+      "gnumericStatus": "passed"
+    }
+  ],
+  "limits": [
+    "No new GUI/run/build/installer or ZIP download.",
+    "AppImage whole route remains FAILED/unclassified at .gnumeric import; core pass does not waive that addon.",
+    "AppImage final post-scenario profilePaths inventory was not reached after addon failure; actual private XDG bindings/no Suite mapped executable and final cleanup are present. No claim that the missing final inventory ran.",
+    "Forensic reuse of producer package/process receipts; no independent payload extraction, signature/hardware/general-variant acceptance."
+  ],
+  "sixPngsViewedSerially": true
+}

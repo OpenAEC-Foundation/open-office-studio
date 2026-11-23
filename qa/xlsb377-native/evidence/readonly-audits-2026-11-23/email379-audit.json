@@ -1,0 +1,135 @@
+{
+  "scope": "Read-only independent Linux Email #379 MIME/body/APPEND/lifecycle/own-identity evidence audit",
+  "status": "passed-no-blocking-finding",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "proofRun": 45193219423,
+  "harness": "005239a1aec9d031880613bc0495b95977b6deb3",
+  "harnessSha256": "8985557e67f2a3d2638ba3f6519fb30aa80f2ac86b909cde64756481cddbb09b",
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-linux-release-input-p5-2026-11-23\\.local\\p5-native-email-45193219423\\proof.zip",
+  "proofArtifact": 14827246109,
+  "proofZipSha256": "6b02f8e9d7dcbc9a6ba6d235479e70130948baa6cde2a0ecff9c3621d6eaa0c1",
+  "proofBytes": 955980,
+  "child": 14824383776,
+  "parent": 14824745492,
+  "sourceOracleHashes": {
+    "packages/email/src/ui/Opstelvenster.tsx": "d38eed2b619eff0efeebb78684d3eeebc498d93b943dc3bd624fe3ba5f6e857d",
+    "packages/email/src/ui/opstel-sneltoetsen.ts": "61126200ca70ce43bafe2c045e0da39c799ef38759d4a44d480a5c8893264f42",
+    "packages/email/src/tauri-backend.ts": "00b2ae1a836572d7a6d222d259791404ebd8614762e0a70a8eb0476496ec86e9",
+    "src-tauri/src/email/imap.rs": "fe1bcd39b990fd6b0275fd11f5fd7601767da309571bc256d14e9e5c350416c9",
+    "src-tauri/src/email/mime.rs": "568c28666d1cdc6d7e497a59a8a53d493ad86023ce38f31736c1677912b57e49"
+  },
+  "forms": [
+    {
+      "kind": "appimage",
+      "rawReportSha256": "a13fe7b401513c0ff5840f9b1006a38230a25413b182232ec7b23b4d01dc663c",
+      "emlSha256": "f05a6368d87043693f6e0edb34425f8d465fda83fe934a3e404cd98e5268313c",
+      "emlBytes": 805,
+      "subject": "STANDALONE_EMAIL_SAVED",
+      "plainBody": "Synthetic local draft body, never sent.",
+      "htmlConfirmed": true,
+      "mimeDefects": [],
+      "appendCount": 1,
+      "uidBodyFetchAfterColdLogin": true,
+      "noSecondAppend": true,
+      "keyboardWithoutDraftButtonFallback": true,
+      "pids": [
+        4659,
+        4830
+      ],
+      "fullQuitThenNewPidCheckedInPinnedHarness": true,
+      "identity": {
+        "identifier": "org.openaec.email-studio",
+        "name": "Open Email Studio",
+        "version": "2026.48.1"
+      },
+      "payloadSha256": "a8d006ec5ed29216703f3efb496b45e144e92290aa12f32b9194ee350e20f529",
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Email Studio_2026.48.1_amd64.AppImage",
+        "canonicalMember": "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+        "sha256": "3819c9a347521d814c95729de6c72f3874552b79e6597fa81c2d8ca5c468d2d4",
+        "bytes": 429873656
+      },
+      "bothReopenedScreenshotsInspected": true,
+      "cleanupAllFourTrue": true
+    },
+    {
+      "kind": "deb",
+      "rawReportSha256": "099ab7752418f69c6d23574d19f3c93c807c3664311f26f7b9685a9385cabd4f",
+      "emlSha256": "f015502631317a4485f698a2acec5016253fe269ebd03645a304a22ea881765c",
+      "emlBytes": 805,
+      "subject": "STANDALONE_EMAIL_SAVED",
+      "plainBody": "Synthetic local draft body, never sent.",
+      "htmlConfirmed": true,
+      "mimeDefects": [],
+      "appendCount": 1,
+      "uidBodyFetchAfterColdLogin": true,
+      "noSecondAppend": true,
+      "keyboardWithoutDraftButtonFallback": true,
+      "pids": [
+        5150,
+        5285
+      ],
+      "fullQuitThenNewPidCheckedInPinnedHarness": true,
+      "identity": {
+        "identifier": "org.openaec.email-studio",
+        "name": "Open Email Studio",
+        "version": "2026.48.1"
+      },
+      "payloadSha256": "0ad6357dfcee9b2f167df0a0da85048e191436e638df3134326e542cab8931d6",
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Email Studio_2026.48.1_amd64.deb",
+        "canonicalMember": "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+        "sha256": "b3109098a9a78766bb3090badaf4fc1f51454f8e69f6d3730709b667319a9df5",
+        "bytes": 383844166
+      },
+      "bothReopenedScreenshotsInspected": true,
+      "cleanupAllFourTrue": true
+    }
+  ],
+  "keyboardMethod": "guarded WebDriver W3C Ctrl+S actions; not an editor/IPC setter",
+  "limits": [
+    "Synthetic loopback IMAP only; no real account/SMTP/send claim.",
+    "Forensic reuse of producer package/process receipts; no independent package download/extraction or live GUI rerun.",
+    "No Linux cryptographic signature, hardware, real provider/network or cross-platform claim.",
+    "Original fixture-typo failures remain historical, not overwritten."
+  ],
+  "newDownload": false,
+  "newRun": false,
+  "productEdit": false,
+  "historicalGitRepresentation": {
+    "commit": "bc7d28738697f1d03c0163f7a383686de9d5854f",
+    "observed": [
+      {
+        "path": "docs/tests/linux-email-p5-proof/appimage-synthetic-native-draft.eml",
+        "bytes": 784,
+        "sha256": "fb9c78122df65a4569e5ad84c62d793c455eb6460291958d5610ee750deb2248"
+      },
+      {
+        "path": "docs/tests/linux-email-p5-proof/deb-synthetic-native-draft.eml",
+        "bytes": 784,
+        "sha256": "af917a3027f1015b648707a4c4f51d5b509f16fc12b2a3d5ae7c2f65facfb4d9"
+      }
+    ],
+    "originalArtifact805BytesRemainAuthoritative": true,
+    "ownerCorrectingTextAttributes": true,
+    "finalGitBytePinPending": false
+  },
+  "finalGitRepresentation": {
+    "commit": "83b7b33d4b3d3992570fe04f2f79ca327f9095a5",
+    "observed": [
+      {
+        "path": "docs/tests/linux-email-p5-proof/appimage-synthetic-native-draft.eml",
+        "bytes": 805,
+        "sha256": "f05a6368d87043693f6e0edb34425f8d465fda83fe934a3e404cd98e5268313c"
+      },
+      {
+        "path": "docs/tests/linux-email-p5-proof/deb-synthetic-native-draft.eml",
+        "bytes": 805,
+        "sha256": "f015502631317a4485f698a2acec5016253fe269ebd03645a304a22ea881765c"
+      }
+    ],
+    "byteEqualToOriginalArtifact": true
+  }
+}

@@ -1,0 +1,33 @@
+import email.parser,email.policy,hashlib,json,subprocess,zipfile
+from pathlib import Path,PurePosixPath
+shared=Path('C:/Users/alper/Desktop/Documents/ChatGPT/code slaafjes/work/oos-linux-release-input-p5-2026-11-23');p=shared/'.local/p5-native-email-45193219423';out=Path('.local/email379-independent-audit.json')
+sha=lambda b:hashlib.sha256(b).hexdigest();blob=lambda rev,path:subprocess.check_output(['git','-C',str(shared),'show',rev+':'+path]);source='b696ab86bd1c128729a079b68c0082e6df3d36a5';tree='e30879fd772871e690847c061ef66e6b81808a05';harness='005239a1aec9d031880613bc0495b95977b6deb3'
+b=(p/'proof.zip').read_bytes();assert len(b)==955980 and sha(b)=='6b02f8e9d7dcbc9a6ba6d235479e70130948baa6cde2a0ecff9c3621d6eaa0c1'
+meta=json.loads((p/'official-artifact.json').read_bytes());assert meta['digest']=='sha256:'+sha(b) and meta['workflow_run']['head_sha']==harness and meta['workflow_run']['id']==45193219423
+hbytes=blob(harness,'scripts/proef-standalone-linux.mjs');assert sha(hbytes)=='8985557e67f2a3d2638ba3f6519fb30aa80f2ac86b909cde64756481cddbb09b';h=hbytes.decode();assert 'await chord("s")' in h and 'Normal Alt+F4 must fully exit app, AppImage launcher and owned WebKit processes' in h
+studio=next(s for s in json.loads(blob(source,'assets/studios.json')) if s['sleutel']=='email');forms=[]
+with zipfile.ZipFile(p/'proof.zip') as z:
+ o=json.loads(z.read('standalone-linux-input/origin.json'));inputReceipt=json.loads(z.read('standalone-linux-input/input-artifact-receipt.json'));pr=z.read('standalone-linux-input/pakketcontrole-email-Linux.json');packages=json.loads(pr)['pakketten']
+ assert o['sourceCommit']==source and o['sourceTree']==tree and o['version']=='2026.48.1' and o['studio']==studio and sha(pr)==o['packageReportSha256']
+ assert inputReceipt['inputArtifact']['id']==14824383776 and inputReceipt['inputProducerCommit']=='86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c' and inputReceipt['canonicalParent']['id']==14824745492 and inputReceipt['archiveLocallyHashVerified'] is True
+ for kind,pids in [('appimage',[4659,4830]),('deb',[5150,5285])]:
+  raw=(p/(kind+'-report.json')).read_bytes();assert raw==z.read('standalone-linux-results/email/'+kind+'/report.json');r=json.loads(raw)
+  assert r['status']=='passed' and not r['pending'] and r['sourceCommit']==source and r['sourceTree']==tree and r['version']=='2026.48.1' and r['harnessCommit']==harness and r['harnessSha256']==sha(hbytes)
+  assert r['identity']==studio['identifier'] and r['nativeMetadata']==dict(identifier=studio['identifier'],name=studio['naam'],version='2026.48.1')
+  name=PurePosixPath(r['package']['path']).name;originPackage=next(a for a in o['packages'] if a['path']==name);packageReport=next(a for a in packages if a['naam']==name)
+  assert all(r['package'][k]==originPackage[k] for k in ['sha256','bytes','canonicalMember']);assert all(r['package'][k]==packageReport[k] for k in ['sha256','bytes'])
+  assert r['keyboardDraftSave']['status']=='passed' and 'draftButtonControl' not in r
+  commands=r['mailCommands'];appends=[(i,c) for i,c in enumerate(commands) if c['command']=='APPEND'];assert len(appends)==1 and appends[0][1]['args']=='"Drafts" (\\Seen \\Draft) {805}';assert sum(c['command']=='LOGIN' for c in commands)==2 and any(c['command']=='UID FETCH' and 'BODY[]' in c['args'] for c in commands[appends[0][0]+1:])
+  eml=(p/(kind+'-synthetic-native-draft.eml')).read_bytes();assert eml==z.read('standalone-linux-results/email/'+kind+'/synthetic-native-draft.eml');assert len(eml)==805 and sha(eml)==r['syntheticDraftRawSha256']==r['syntheticDraftSha256']
+  m=email.parser.BytesParser(policy=email.policy.default).parsebytes(eml);assert str(m['Subject'])=='STANDALONE_EMAIL_SAVED' and m.get_content_type()=='multipart/alternative' and not [d for part in m.walk() for d in part.defects]
+  body=m.get_body(preferencelist=('plain',)).get_content();html=m.get_body(preferencelist=('html',)).get_content();assert body=='Synthetic local draft body, never sent.' and '<p>'+body+'</p>' in html and r['reopenedMessageText']==body
+  assert [l['pid'] for l in r['launches']]==pids
+  for l in r['launches']:
+   bind=l['x11']['binding'];assert bind['pid']==l['pid'] and bind['sha256']==l['executableSha256']==r['payloadExecutableSha256'] and bind['executable']==l['executable'];assert l['executable'].endswith('/usr/bin/open-email-studio') and not any('/usr/bin/open-office-studio' in s or '/usr/lib/Open Office Studio/' in s for s in l['mappedResources']);assert l['x11']['pre']['dom']['hasFocus']
+  assert all(r[k] is True for k in ['ownedApplicationClosed','ownedDriverClosed','ownedKeyringClosed','ownedProfilesRemoved']);assert r['credentialFixture']['credentialBytesLogged'] is False
+  for c in r['nativeCaptures']:
+   img=(p/(kind+'-'+c['name'])).read_bytes();assert img==z.read('standalone-linux-results/email/'+kind+'/'+c['name']) and sha(img)==c['sha256']
+  forms.append(dict(kind=kind,rawReportSha256=sha(raw),emlSha256=sha(eml),emlBytes=len(eml),subject=str(m['Subject']),plainBody=body,htmlConfirmed=True,mimeDefects=[],appendCount=1,uidBodyFetchAfterColdLogin=True,noSecondAppend=True,keyboardWithoutDraftButtonFallback=True,pids=pids,fullQuitThenNewPidCheckedInPinnedHarness=True,identity=r['nativeMetadata'],payloadSha256=r['payloadExecutableSha256'],package=r['package'],bothReopenedScreenshotsInspected=True,cleanupAllFourTrue=True))
+paths=['packages/email/src/ui/Opstelvenster.tsx','packages/email/src/ui/opstel-sneltoetsen.ts','packages/email/src/tauri-backend.ts','src-tauri/src/email/imap.rs','src-tauri/src/email/mime.rs']
+audit=dict(scope='Read-only independent Linux Email #379 MIME/body/APPEND/lifecycle/own-identity evidence audit',status='passed-no-blocking-finding',source=source,tree=tree,version='2026.48.1',proofRun=45193219423,harness=harness,harnessSha256=sha(hbytes),proofPath=str(p/'proof.zip'),proofArtifact=14827246109,proofZipSha256=sha(b),proofBytes=len(b),child=14824383776,parent=14824745492,sourceOracleHashes={f:sha(blob(source,f)) for f in paths},forms=forms,keyboardMethod='guarded WebDriver W3C Ctrl+S actions; not an editor/IPC setter',limits=['Synthetic loopback IMAP only; no real account/SMTP/send claim.','Forensic reuse of producer package/process receipts; no independent package download/extraction or live GUI rerun.','No Linux cryptographic signature, hardware, real provider/network or cross-platform claim.','Original fixture-typo failures remain historical, not overwritten.'],newDownload=False,newRun=False,productEdit=False)
+out.write_bytes((json.dumps(audit,indent=2)+'\n').encode());print(json.dumps(dict(path=str(out.resolve()),sha256=sha(out.read_bytes()),status=audit['status'])))

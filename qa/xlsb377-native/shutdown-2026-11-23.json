@@ -1,0 +1,112 @@
+{
+  "reason": "Explicit user hard stop relayed by sole integration coordinator; save/close before2026-11-23 16:00 CET. No automatic resumption.",
+  "savedAtUtc": "2026-11-23T14:54:00.583799+00:00",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "linux377": {
+    "status": "PASS",
+    "proofCommit": "497c27eba01f9c3985c8a68af75b5629e7df7db1",
+    "run": 45190827271,
+    "job": 137748390686,
+    "attempt": 1,
+    "artifact": 14826475945,
+    "sha256": "ae2ed056c652d9e64391d0aed706d0b93aef8869ba867ef4219d15c61cf19067",
+    "expiry": "2027-02-21T14:07:32Z"
+  },
+  "windows377": {
+    "status": "OPEN: Spreadsheet native job SUCCESS, exact XLSB/CtrlS/proposal/cancel/source-preservation coverage not yet verified here",
+    "producerRun": 45177730188,
+    "producerJob": 137703365803,
+    "attempt": 1,
+    "parentArtifact": 14828525724,
+    "parentSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d",
+    "nativeRun": 45195780472,
+    "spreadsheetJob": 137767767878,
+    "proofArtifact": 14827264661,
+    "proofBytes": 356491,
+    "proofSha256": "91ae5b296d6ff9593efc6e12dda205c13cca0d9b82b58d976080a1179e99aee0",
+    "proofExpiryLocallyRecorded": false,
+    "noProofDownloadOrNativeRerunByThisChat": true
+  },
+  "mac377": {
+    "status": "OPEN/NOT-RUN: no new Mac package acceptance or377 proof here",
+    "originalFailedRun": 45177730188,
+    "originalFailedJob": 137703365843,
+    "newProducerRun": 45195055147,
+    "newProducerQa": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+    "newJob": 137763371873,
+    "attempt": 1,
+    "lastObservedStage": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+    "externalJobMayFinishUnaided": true,
+    "allUnconsumedNativeAndPrepGoRevoked": true
+  },
+  "extraAudits": {
+    "email379": "PASS on original805B MIME + corrected Git83b7b33d; no new run",
+    "spreadsheet": "Core XLSX functional PASS both; DEB.gnm+.gnumeric PASS, AppImage.gnm PASS; AppImage.gnumeric FAIL/unclassified invalid-session; final AppImage profilePaths inventory not reached",
+    "files": [
+      {
+        "path": "qa/xlsb377-native/evidence/readonly-audits-2026-11-23/email379-audit.json",
+        "sha256": "1cb85f92abc79506fcd883c9599d50f9ee167ccb9dfaf3216938917acec1f717",
+        "bytes": 5921
+      },
+      {
+        "path": "qa/xlsb377-native/evidence/readonly-audits-2026-11-23/email379-audit.py",
+        "sha256": "2b07f211bd5ab9220c33b27ea31f34d9f05cb5538e38dc9421e1d855b8d2c5f1",
+        "bytes": 6643
+      },
+      {
+        "path": "qa/xlsb377-native/evidence/readonly-audits-2026-11-23/spreadsheet-core-audit.json",
+        "sha256": "ef4892f3f10aa189fff09cd6e468663adfd1a7a5fafd4c5996bfec9f81eb0c35",
+        "bytes": 5850
+      },
+      {
+        "path": "qa/xlsb377-native/evidence/readonly-audits-2026-11-23/spreadsheet-core-audit.py",
+        "sha256": "3607d9870139a2d84bbcd98ca19421f524c8867c05f19ae8e20e24796ff99b22",
+        "bytes": 8765
+      }
+    ],
+    "artifactMetadata": [
+      {
+        "id": 14827246109,
+        "expiry": "2027-02-21T14:20:53Z",
+        "path": "qa/xlsb377-native/evidence/readonly-audits-2026-11-23/p5-native-email-45193219423-official-artifact.json",
+        "sha256": "62f5715dd6e65e09f20b38168a6c4a61a6e919f8d4473e0ea22c183b3fb66374"
+      },
+      {
+        "id": 14828631845,
+        "expiry": "2027-02-21T14:27:57Z",
+        "path": "qa/xlsb377-native/evidence/readonly-audits-2026-11-23/p5-spreadsheet-45194487509-official-artifact.json",
+        "sha256": "e580c73cc1413f15355796945fd2db4eb54505bf8cd431254980adc8b0e81246"
+      }
+    ]
+  },
+  "cleanup": {
+    "originalBuildWatcherSession15969": "confirmed exit0",
+    "macBuildWatcherSession4596": "confirmed exit0",
+    "stopFlagsWritten": true,
+    "ownLocalGuiOrRecorderStarted": false,
+    "noSharedProcessOrUserAppTouched": true,
+    "noExternalJobCancelled": true,
+    "noQueuedOwnNativeWorkflow": true
+  },
+  "resume": "Only on a new user instruction on or after2026-11-24; recheck source/package/attempt/hash/expiry and current owners before any action. No timer, automation, auto-prep or conditional native start remains active.",
+  "localRestants": [
+    ".local/email379-independent-audit.json/.py",
+    ".local/spreadsheet-core-audit/ including six copied existing PNGs",
+    ".local/watch-377-platforms/ and .local/watch-377-mac/ stopped snapshots/flags",
+    ".local/377-result-45190827271 and .local/377-attempt-45190211267 retained original verified small proofZIPs"
+  ],
+  "sharedReadOnlyInputs": [
+    {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-linux-release-input-p5-2026-11-23\\.local\\p5-native-email-45193219423\\proof.zip",
+      "bytes": 955980,
+      "sha256": "6b02f8e9d7dcbc9a6ba6d235479e70130948baa6cde2a0ecff9c3621d6eaa0c1"
+    },
+    {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-linux-release-input-p5-2026-11-23\\.local\\p5-spreadsheet-45194487509\\proof.zip",
+      "bytes": 5142530,
+      "sha256": "948517759acfc3e4be36aa3436aa6f27b697286860bcdb41524df8c53599611f"
+    }
+  ]
+}
