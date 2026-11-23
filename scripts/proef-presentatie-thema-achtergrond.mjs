@@ -435,7 +435,11 @@ try {
             current: e.getAttribute("aria-current"),
           })),
         );
-      if (!(await limited.locator('option[value="themakleur"]').isDisabled())) {
+      if (
+        !(await limited
+          .locator('option[value="themakleur"]')
+          .evaluate((el) => el.disabled))
+      ) {
         await limited
           .getByRole("button", { name: "Cancel", exact: true })
           .click();
@@ -471,7 +475,9 @@ try {
         );
       }
       assert.equal(
-        await limited.locator('option[value="themakleur"]').isDisabled(),
+        await limited
+          .locator('option[value="themakleur"]')
+          .evaluate((el) => el.disabled),
         true,
       );
       assert.ok(
@@ -479,9 +485,22 @@ try {
           "cannot be displayed reliably",
         ),
       );
-      await limited
-        .getByRole("combobox", { name: "Fill", exact: true })
-        .selectOption("kleur");
+      // isDisabled follows the enclosing label to its select in this driver.
+      // Check the actual option plus native keyboard exclusion instead.
+      const fill = limited.getByRole("combobox", { name: "Fill", exact: true });
+      assert.equal(await fill.inputValue(), "kleur");
+      await fill.focus();
+      assert.equal(
+        await fill.evaluate((el) => el === document.activeElement),
+        true,
+      );
+      await unsupported.page.keyboard.press("ArrowDown");
+      assert.equal(
+        await fill.inputValue(),
+        "verloop",
+        "native keyboard skips disabled theme option",
+      );
+      await fill.selectOption("kleur");
       assert.equal(
         await limited
           .getByRole("button", { name: "Apply", exact: true })
