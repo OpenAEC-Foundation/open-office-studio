@@ -1,4 +1,5 @@
 """Consume only the coordinator's pinned runtime-only Linux artifact; no app build."""
+import base64
 import hashlib
 import json
 import os
@@ -26,6 +27,14 @@ def main():
     assert re.fullmatch(r"[0-9a-f]{64}", pin["tarSha256"])
     assert pin["application"] == CONFIG["application"]
     repo = "repos/OpenAEC-Foundation/open-office-studio"
+    git_descriptor = gh(f"{repo}/contents/docs/tests/p2-runtime-input-2026-11-23/runtime-input-descriptor.json?ref={pin['coordinatorDescriptorCommit']}")
+    coordinator_bytes = base64.b64decode(git_descriptor["content"])
+    assert hashlib.sha256(coordinator_bytes).hexdigest() == pin["descriptorSha256"], "Coordinator Git descriptor identity differs"
+    coordinator = json.loads(coordinator_bytes)
+    published = coordinator["publishedArtifacts"]["p2-linux-private-runtime-only"]
+    assert (published["id"], published["run"], published["zipSha256"]) == (pin["artifactId"], pin["producerRun"], pin["zipSha256"])
+    assert coordinator["sharedConsumerPin"]["sha256"] == pin["consumerSha256"]
+    assert coordinator["tar"]["sha256"] == pin["tarSha256"]
     run = gh(f"{repo}/actions/runs/{pin['producerRun']}")
     assert run["head_sha"] == pin["producerCommit"] and run["conclusion"] == "success"
     parent = gh(f"{repo}/actions/jobs/{pin['parentJob']}")
@@ -51,7 +60,11 @@ def main():
     consumer = extracted / "p2-runtime-consumer.py"
     assert sha(consumer) == pin["consumerSha256"]
     private = work / "private"
-    assert sha(extracted / "descriptor.json") == pin["descriptorSha256"]
+    out = Path(".local/stc-qa")
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "runtime-coordinator-descriptor.json").write_bytes(coordinator_bytes)
+    (out / "runtime-base-descriptor.json").write_bytes((extracted / "descriptor.json").read_bytes())
+    assert sha(extracted / "descriptor.json") == coordinator["runtimeBaseDescriptorSha256"], "Original artifact descriptor does not match the Git descriptor's base pin"
     descriptor = json.loads((extracted / "descriptor.json").read_text())
     assert descriptor["entryManifest"]["sha256"] == pin["manifestSha256"]
     assert descriptor["entryManifest"]["entries"] == pin["manifestEntries"]
@@ -73,7 +86,6 @@ def main():
         "entryManifest": descriptor["entryManifest"],
         "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test",
     }
-    out = Path(".local/stc-qa")
     write_json(out / "runtime-binding.json", binding)
     write_json(out / "runtime-consumer-verification.json", verified)
     write_json(out / "runtime-descriptor.json", descriptor)
