@@ -100,6 +100,7 @@ async function packageCase(pkg) {
     home = join(dir, "empty-home");
   await mkdir(home, { recursive: true, mode: 0o700 });
   const report = {
+    purpose: origin.purpose,
     app: app.sleutel,
     packageType: kind,
     sourceCommit: origin.sourceCommit,

@@ -19,8 +19,11 @@ def api(route):
 
 
 def digest(path):
+    checksum = hashlib.sha256()
     with path.open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
+        while chunk := stream.read(1024 * 1024):
+            checksum.update(chunk)
+    return checksum.hexdigest()
 
 
 def main():

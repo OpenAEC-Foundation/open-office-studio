@@ -33,6 +33,7 @@ test("Spreadsheet oracle rejects correct values in the wrong cells or missing fo
   assert.equal(savedDocument("spreadsheet", zipSync(parts), marker), false);
   const edited = xml
     .replace("<v>4</v>", "<v>9</v>")
+    .replace("<v>12</v>", "<v>27</v>")
     .replace("</row>", '<c r="C1"><f>A1+B1</f><v>36</v></c></row>');
   parts[path] = strToU8(edited);
   assert.equal(savedDocument("spreadsheet", zipSync(parts), marker), true);
@@ -58,6 +59,13 @@ test("Presentation oracle requires saved text and a real second slide relationsh
     strFromU8(parts["ppt/presentation.xml"]).replace(
       "</p:sldIdLst>",
       '<p:sldId id="257" r:id="synthetic-slide2"/></p:sldIdLst>',
+    ),
+  );
+  assert.equal(savedDocument("presentation", zipSync(parts), marker), false);
+  parts["ppt/_rels/presentation.xml.rels"] = strToU8(
+    strFromU8(parts["ppt/_rels/presentation.xml.rels"]).replace(
+      "</Relationships>",
+      '<Relationship Id="synthetic-slide2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide2.xml"/></Relationships>',
     ),
   );
   assert.equal(savedDocument("presentation", zipSync(parts), marker), true);
