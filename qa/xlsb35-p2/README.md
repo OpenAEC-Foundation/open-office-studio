@@ -6,6 +6,10 @@ This isolated QA branch changes no product source, catalog, version, or prior de
 It belongs to the existing #35 / #30 scope, outside the closed P2 release intake.
 `p2-source-binding.json` records Git-blob byte hashes for the eleven relevant
 source/profile/engine inputs and the read-only macro/browser route observations.
+`p2-parent-package.json` pins the canonical P2 Linux run, parent artifact metadata,
+and independently downloaded/digest-verified package-control receipt. Only that
+small receipt was downloaded locally; parent ZIP/DEB verification is delegated
+to the shared runtime producer and must be checked before runtime consumption.
 
 ## Actual source and independent expectation
 
@@ -60,8 +64,22 @@ date-system, chart or optional XLSB-export coverage is claimed.
 ## Status and reproduction
 
 Source-only inspection passes: `python qa/xlsb35-p2/oracle.py`.
-Runtime acceptance remains pending until the shared P2 Linux runtime artifact
-descriptor is available; source inspection alone is not an XLSB-open pass.
+Runtime acceptance is pending the dedicated Linux CI result; source inspection
+alone is not an XLSB-open pass. The coordinator released runtime artifact
+`14805600515`, run `45147346793`, ZIP SHA256
+`bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487`.
+`runtime-delivery.json` is copied verbatim from `e1f1b84b94fdfa9932f8f33804da9b00c5cf6594`
+and checked against SHA256 `1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6`.
+The shared verifier is copied unchanged from producer QA `22a8577d`; its identity
+is recorded in `shared-verifier-source.json`. `runtime_input.py` verifies the
+complete outer ZIP before using that verifier for the tar, 15,082-entry manifest,
+file bytes/modes/symlinks and launcher/ELF. It checks the descriptor's parent
+against our independently retrieved P2 package-control receipt. No DEB, recovery
+artifact or full installer archive is downloaded by this format consumer.
+
+The workflow runs only this one-source Linux content case. It has no application
+build, full suite, Mac job, GUI/capture or release step. Its output artifact keeps
+the converted/saved XLSX, independent content checks and exact runtime binding.
 
 The Linux-only caller is `node qa/xlsb35-p2/engine.mjs PROGRAM BINDING_JSON OUTPUT`.
 `OOS_XLSB_RUNTIME_EXECUTABLE_SHA256` must come from the verified descriptor.

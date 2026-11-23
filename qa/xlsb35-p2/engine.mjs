@@ -23,6 +23,14 @@ assert.equal(git("rev-parse", `${application}^{tree}`), tree);
 git("merge-base", "--is-ancestor", application, "HEAD");
 const changed = git("diff", "--name-only", application).split("\n").filter(Boolean);
 assert(changed.every((p) => p.startsWith("qa/xlsb35-p2/") || p === ".github/workflows/qa-xlsb35-p2-d410.yml"), changed);
+const sourceBinding = JSON.parse(await readFile("qa/xlsb35-p2/p2-source-binding.json", "utf8"));
+assert.equal(sourceBinding.applicationCommit, application);
+assert.equal(sourceBinding.applicationTree, tree);
+for (const [path, expected] of Object.entries(sourceBinding.files)) {
+  const actual = await readFile(path);
+  assert.equal(actual.length, expected.bytes, `P2 source size: ${path}`);
+  assert.equal(hash(actual), expected.sha256, `P2 source hash: ${path}`);
+}
 assert.match(process.env.OOS_XLSB_RUNTIME_EXECUTABLE_SHA256 ?? "", /^[a-f0-9]{64}$/);
 assert.equal(hash(await readFile(program)), process.env.OOS_XLSB_RUNTIME_EXECUTABLE_SHA256,
   "Runtime program must match the externally verified artifact descriptor before execution");
@@ -36,6 +44,7 @@ const report = {
   applicationCommit: application, applicationTree: tree, harnessCommit: git("rev-parse", "HEAD"),
   platform: process.platform, source: oracle.source, runtimeBinding: binding,
   runtimeProgramSha256: hash(await readFile(program)),
+  sourceInputHashes: sourceBinding.files,
   profileSha256: hash(await readFile("src-tauri/src/conversieprofiel.xcu")),
   stages: [], phase: "initialize-production-loaders", status: "running",
   limits: ["No Rust IPC, installed native GUI, browser UI, Windows or macOS acceptance is inferred.",
