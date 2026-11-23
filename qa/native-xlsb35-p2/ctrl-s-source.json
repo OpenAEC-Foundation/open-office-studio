@@ -1,0 +1,22 @@
+{
+  "crate": "rfd",
+  "version": "0.15.4",
+  "cargoLockPackageSha256": "ef2bee61e6cffa4635c72d7d81a84294e28f0930db0ddcb0f66d10244674ebed",
+  "source": "Existing local Cargo registry source; no extra source download or app build",
+  "files": [
+    {
+      "path": "src/backend/xdg_desktop_portal.rs",
+      "sha256": "8253b3a7303137ff75753ea83994eb23d3028f40de787db86e4cbba66fc5192f"
+    },
+    {
+      "path": "src/backend/linux/zenity.rs",
+      "sha256": "6988be49d04aa52b495e139757e5293d8af28b2c697fce5f863a8411aac5d3cb"
+    }
+  ],
+  "facts": [
+    "XDG-portal backend AsyncMessageDialog uses linux::zenity::question for custom Yes/No/Cancel",
+    "Zenity command is external executable named zenity resolved on PATH",
+    "Spawn error maps to MessageDialogResult::Cancel; app bevestig_formaat maps it to annuleren",
+    "FileChooser uses the separate XDG portal, so successful OpenFile/SaveFile does not establish MessageDialog availability"
+  ]
+}
