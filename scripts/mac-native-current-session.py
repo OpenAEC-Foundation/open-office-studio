@@ -71,6 +71,11 @@ def main():
               "harnessCommit": subprocess.check_output(["git", "-C", str(Path(__file__).resolve().parent.parent), "rev-parse", "HEAD"], text=True).strip(),
               "sessionDriverSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "checks": [], "limits": ["No product correction or native acceptance; original failed attempts remain valid", "Font/structure fixture matrix with one ordinary Maximize per fixture; no body input, activation replay, theme change or canvas readback", "The saved EPUB356 DOCX is a route/content control, not a re-execution of the EPUB importer", "Physical Mac observation unavailable; original OS captures require independent visual inspection"], "cleanup": {}}
+    if args.acceptance:
+        report.update(diagnosticOnly=False, acceptanceRequested=True,
+                      limits=["Acceptance remains false until genuine native control preflight and the original table case both finish",
+                              "Full issue361 Tab/Find/two-document cases are outside this bounded core",
+                              "Original OS captures and independent DOCX oracles retained; no canvas readback or scripted model focus"])
     app = program = pid = app_container = None
     mount = out / "mount"
     mounted = started = False
@@ -226,11 +231,13 @@ def main():
         variants = [("table-original361",original),("saved-epub356-control",control)]
         report["fixtures"] = []
         report["experiment"] = "Current420 untouched original361 and saved356-control baseline before any editor input"
+        if args.acceptance:
+            report["experiment"] = "Exact product-package native acceptance; untouched original/control pixels precede all editor input"
         report["host"] = subprocess.check_output(["sw_vers"],text=True)
         for fixture_name, fixture_path in variants:
             fixture = fixture_path.resolve()
             fixture_hash = hashlib.sha256(fixture.read_bytes()).hexdigest()
-            record = {"name": fixture_name, "sha256": fixture_hash, "phases": [], "nativePass": False}
+            record = {"name": fixture_name, "sha256": fixture_hash, "phases": [], "nativePass": False, "observationOnly": True}
             report["fixtures"].append(record)
             launch()
             record["pid"] = pid
