@@ -37,6 +37,42 @@ func pointAndSize(_ element: AXUIElement) -> (CGPoint, CGSize)? {
           size.width > 1, size.height > 1 else { return nil }
     return (point, size)
 }
+func nativeMouseClick(_ point: CGPoint) -> Bool {
+    // postToPid left the physical pointer over the Apple menu in45148679849.
+    // Reuse the ordinary HID mouseMoved/down/up sequence from the native358
+    // driver, bounded to this frontmost PID and its actual on-screen window.
+    let all = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
+    let owned = all.filter { ($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value == pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue == 0 }
+    guard point.x.isFinite, point.y.isFinite, owned.count == 1,
+          let b = owned[0][kCGWindowBounds as String] as? [String: Any],
+          let x = b["X"] as? Double, let y = b["Y"] as? Double,
+          let width = b["Width"] as? Double, let height = b["Height"] as? Double,
+          point.x > x, point.x < x+width, point.y > y, point.y < y+height,
+          CGDisplayBounds(CGMainDisplayID()).contains(point),
+          NSRunningApplication(processIdentifier: pid)?.isActive == true,
+          NSWorkspace.shared.frontmostApplication?.processIdentifier == pid else {
+        report["reason"] = "HID pointer requires the frontmost owned on-screen window"
+        return false
+    }
+    if let before = CGEvent(source: nil)?.location {
+        report["pointerBefore"] = ["x": before.x, "y": before.y]
+    }
+    CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: point, mouseButton: .left)?.post(tap: .cghidEventTap)
+    Thread.sleep(forTimeInterval: 0.1)
+    guard let moved = CGEvent(source: nil)?.location,
+          abs(moved.x-point.x) <= 1, abs(moved.y-point.y) <= 1,
+          NSWorkspace.shared.frontmostApplication?.processIdentifier == pid else {
+        report["reason"] = "Physical pointer did not reach the verified target; no mouse button posted"
+        return false
+    }
+    report["pointerAfterMove"] = ["x": moved.x, "y": moved.y]
+    CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: point, mouseButton: .left)?.post(tap: .cghidEventTap)
+    Thread.sleep(forTimeInterval: 0.05)
+    CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)?.post(tap: .cghidEventTap)
+    Thread.sleep(forTimeInterval: 0.1)
+    report["pointerTransport"] = "native CG HID mouseMoved/down/up; physical cursor verified before button input"
+    return true
+}
 func children(_ element: AXUIElement) -> [AXUIElement] {
     var count: CFIndex = 0; var values: CFArray?
     guard AXUIElementGetAttributeValueCount(element, kAXChildrenAttribute as CFString, &count) == .success,
@@ -172,10 +208,8 @@ if !AXIsProcessTrusted() {
            NSRunningApplication(processIdentifier: pid)?.isActive == true,
            NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
             let point = CGPoint(x: x, y: y)
-            for kind in [CGEventType.leftMouseDown, CGEventType.leftMouseUp] {
-                CGEvent(mouseEventSource: nil, mouseType: kind, mouseCursorPosition: point, mouseButton: .left)?.postToPid(pid)
-            }
-            report["status"] = "input-sent"; report["clickedBodyPoint"] = data
+            report["status"] = nativeMouseClick(point) ? "input-sent" : "blocked"
+            report["clickedBodyPoint"] = data
         } else { report["status"] = "blocked"; report["reason"] = "Verified visible body point/window/frontmost identity differs" }
     } else if action == "type-test-character" {
         if ["Q", "X"].contains(target),
@@ -193,16 +227,13 @@ if !AXIsProcessTrusted() {
             }
             report["status"] = "input-sent"; report["testCharacter"] = target
         } else { report["status"] = "blocked"; report["reason"] = "Only bounded synthetic character in the focused native document textarea is allowed" }
-    } else if action == "click-label" || action == "click-cell" {
-        if matches.count == 1, let (p, s) = pointAndSize(matches[0]),
-           let application = NSRunningApplication(processIdentifier: pid) {
-            application.activate(options: [])
+    } else if action == "click-cell" {
+        report["status"] = "blocked"; report["reason"] = "Hidden AX table mirrors are not mouse targets; require the verified visible OCR body point"
+    } else if action == "click-label" {
+        if matches.count == 1, let (p, s) = pointAndSize(matches[0]) {
             let center = CGPoint(x: p.x+s.width/2, y: p.y+s.height/2)
-            for kind in [CGEventType.leftMouseDown, CGEventType.leftMouseUp] {
-                let event = CGEvent(mouseEventSource: nil, mouseType: kind, mouseCursorPosition: center, mouseButton: .left)
-                event?.postToPid(pid)
-            }
-            report["status"] = "input-sent"; report["clicked"] = summary(matches[0])
+            report["status"] = nativeMouseClick(center) ? "input-sent" : "blocked"
+            report["clicked"] = summary(matches[0])
         } else { report["status"] = "blocked"; report["reason"] = "Expected one visible native labeled control with geometry" }
     } else if action == "chord" {
         let mappings: [String: (CGKeyCode, CGEventFlags)] = [
