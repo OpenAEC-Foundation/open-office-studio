@@ -181,7 +181,7 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
     capture("Find-native-Undo")
     action("chord", "cmd-shift-z"); find_value("abc", "Find owns native Redo")
     action("chord", "cmd-z"); find_value("", "Find input reset")
-    action("click-label", "Close")
+    action("chord", "escape")
     wait(lambda: action("snapshot").get("focusAfter", {}).get("description") == "Document input", "Find close did not restore native document focus")
     action("chord", "cmd-z"); grid("Find close document Undo", ROWS)
 

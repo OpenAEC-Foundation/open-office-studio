@@ -276,7 +276,25 @@ if !AXIsProcessTrusted() {
             "cmd-z": (6, .maskCommand), "cmd-shift-z": (6, [.maskCommand, .maskShift]),
             "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand), "cmd-q": (12, .maskCommand),
             "cmd-f": (3, .maskCommand), "tab": (48, []), "shift-tab": (48, .maskShift), "escape": (53, [])]
-        if let (code, flags) = mappings[target] {
+        if ["tab", "shift-tab", "escape"].contains(target), let (code, flags) = mappings[target] {
+            let focused = attr(app, kAXFocusedUIElementAttribute)
+            let e = focused.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
+            let doc = e.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false
+            let find = e.map { ["AXTextField", "AXSearchField"].contains(text($0, kAXRoleAttribute)) && [text($0, kAXTitleAttribute), text($0, kAXDescriptionAttribute)].contains("Find what") } ?? false
+            if ((target == "escape" && find) || (target != "escape" && doc)),
+               NSRunningApplication(processIdentifier: pid)?.isActive == true,
+               NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+                func key(_ keyCode: CGKeyCode, _ down: Bool, _ keyFlags: CGEventFlags) {
+                    let event = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: down)
+                    event?.flags = keyFlags; event?.post(tap: .cghidEventTap)
+                }
+                if target == "shift-tab" { key(56, true, .maskShift) }
+                key(code, true, flags); Thread.sleep(forTimeInterval: 0.05); key(code, false, flags)
+                if target == "shift-tab" { key(56, false, []) }
+                report["status"] = "input-sent"; report["chord"] = target
+                report["keyboardTransport"] = "CG HID key down/up; explicit Shift modifier when requested"
+            } else { report["status"] = "blocked"; report["reason"] = "HID Tab/Escape requires the exact owned document/Find focus" }
+        } else if let (code, flags) = mappings[target] {
             for down in [true, false] {
                 let event = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down)
                 event?.flags = flags; event?.postToPid(pid)
