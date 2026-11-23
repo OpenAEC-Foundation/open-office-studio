@@ -5,15 +5,20 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import time
 
 REPO='OpenAEC-Foundation/open-office-studio'
 
 def main():
     run=int(os.environ['GITHUB_RUN_ID']);qa=os.environ['GITHUB_SHA']
-    artifacts=json.loads(subprocess.check_output(['gh','api',f'repos/{REPO}/actions/runs/{run}/artifacts?per_page=100']))['artifacts']
     manifest={'schemaVersion':1,'producerRun':run,'producerCommit':qa,'sourceCommit':'04fa6cd43b84e3f59fb9d5055bb2d00dde351a47','sourceTree':'94fa38c20b51a73e4912964f37f0e1a659b0fb1b','appVersion':'2026.48.1','artifacts':[],'nativeAcceptanceClaim':False,'publicationAuthorized':False}
     metadata=Path('.local/linux-release-input-p4-metadata')
     expected=[f'standalone-input-{app}-p4' for app in ['writer','spreadsheet','presentation','email','notition','database']]+[f'suite-input-office-{kind}-p4' for kind in ['deb','appimage']]
+    for attempt in range(20):
+        artifacts=json.loads(subprocess.check_output(['gh','api',f'repos/{REPO}/actions/runs/{run}/artifacts?per_page=100']))['artifacts']
+        if set(expected).issubset({a['name'] for a in artifacts if not a['expired']}):break
+        time.sleep(1)
+    else:raise AssertionError('Uploaded transfer metadata did not become visible; no canonical parent redownload is permitted')
     for name in expected:
         artifact,=[a for a in artifacts if a['name']==name and not a['expired']]
         assert artifact['workflow_run']['head_sha']==qa and artifact['workflow_run']['id']==run
