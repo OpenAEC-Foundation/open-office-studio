@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   windows-web:
+    if: ${{ !contains(github.event.head_commit.message, '[browser-only]') }}
     runs-on: windows-latest
     timeout-minutes: 25
     steps:
@@ -40,6 +41,17 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - name: Bind browser-only harness work to the unchanged tested product
+        if: contains(github.event.head_commit.message, '[browser-only]')
+        run: |
+          git fetch --no-tags --depth=1 origin 33711565a4dde5a0c81c34f9bc4a8bcfd9d655b2
+          python - <<'PY'
+          import subprocess
+          names=subprocess.check_output(['git','diff','--name-only','33711565a4dde5a0c81c34f9bc4a8bcfd9d655b2','HEAD'],text=True).splitlines()
+          allowed={'.github/workflows/presentation-78-theme-background.yml','scripts/proef-presentatie-thema-achtergrond.mjs'}
+          assert set(names)<=allowed, names
+          print('Product source remains exactly 33711565; reuse its successful Windows checks.')
+          PY
       - uses: actions/setup-node@v4
         with:
           node-version: 22

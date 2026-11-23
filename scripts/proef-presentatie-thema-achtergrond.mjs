@@ -402,6 +402,49 @@ try {
       const unsupported = await setup(url, limitation, `Limit-${label}.pptx`);
       contexts.push(unsupported.context);
       const limited = await background(unsupported.page);
+      report.boundarySlide = await unsupported.page
+        .locator(".office-presentatie:visible aside > button")
+        .evaluateAll((es) =>
+          es.map((e, i) => ({
+            index: i,
+            current: e.getAttribute("aria-current"),
+          })),
+        );
+      if (!(await limited.locator('option[value="themakleur"]').isDisabled())) {
+        await limited
+          .getByRole("button", { name: "Cancel", exact: true })
+          .click();
+        await unsupported.page.getByTestId("rich-notes-editor").focus();
+        const pending = unsupported.page.waitForEvent("download");
+        await unsupported.page.keyboard.press("Control+s");
+        const saveLimit = unsupported.page.getByRole("dialog", {
+          name: "Save as",
+          exact: true,
+        });
+        await saveLimit.waitFor();
+        await saveLimit
+          .getByRole("button", { name: "Save", exact: true })
+          .click();
+        const diagPath = path.join(out, `${label}-limit-live-save.pptx`);
+        await (await pending).saveAs(diagPath);
+        const live = new Uint8Array(await fs.readFile(diagPath)),
+          pp = parts(live);
+        report.boundarySerialization = {
+          sha256: hash(live),
+          availability: leesThemaAchtergrond(live, 0),
+          layoutPath: pp.layout,
+          themeOverrideRelationships: pp.p
+            .relaties(pp.layout)
+            .filter((r) => r.type === R + "themeOverride"),
+          overridePartPresent: pp.p.heeft("ppt/theme/qaOverride.xml"),
+          themeOverrideParts: pp.p
+            .namen()
+            .filter((n) => n.toLowerCase().includes("override")),
+        };
+        throw new Error(
+          "Theme limit was not visible; exact serialized document preserved for diagnosis",
+        );
+      }
       assert.equal(
         await limited.locator('option[value="themakleur"]').isDisabled(),
         true,
