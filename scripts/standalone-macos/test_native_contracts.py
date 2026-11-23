@@ -4,13 +4,25 @@ import json
 import tempfile
 import unittest
 from unittest.mock import patch
-from native import environment,profile_paths,forbidden_suite_state
+from native import environment,profile_paths,forbidden_suite_state,runtime_inventory
 from run import verify_transfer
 from test_contracts import request
 from contracts import APPS,digest
 
 
 class IsolationTests(unittest.TestCase):
+    def test_inventory_includes_private_signed_helpers_and_bound_runtime_receipt(self):
+        with tempfile.TemporaryDirectory(prefix="standalone-private-inventory-") as t:
+            bundle=Path(t)/"Own.app"
+            helper=bundle/"Contents/Helpers/LibreOffice.app/Contents/MacOS/soffice"
+            receipt=bundle/"Contents/Resources/kantoorruntime/meta/receipt.json"
+            for p,data in ((helper,b"private synthetic runtime"),(receipt,b'{"synthetic":true}')):
+                p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+            records=runtime_inventory(bundle)
+            self.assertEqual({r["relative"] for r in records},{p.relative_to(bundle).as_posix() for p in (helper,receipt)})
+            self.assertTrue(all(r["resolvedInsideOwnApp"] for r in records))
+            self.assertEqual({r["sha256"] for r in records},{digest(helper),digest(receipt)})
+
     def test_suite_namespace_created_after_preflight_is_detected_without_deletion(self):
         with tempfile.TemporaryDirectory(prefix="standalone-suite-guard-") as t:
             home=Path(t)

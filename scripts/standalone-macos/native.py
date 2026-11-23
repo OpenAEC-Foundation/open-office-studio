@@ -38,6 +38,24 @@ def forbidden_suite_state(home,processes):
     return found
 
 
+def runtime_inventory(bundle):
+    """Named private executables and runtime receipt, including signed Helpers.
+
+    This is not an exhaustive dependency audit. Never hash a symlink target
+    outside the owned app while gathering evidence.
+    """
+    bundle=Path(bundle).resolve();resources=[]
+    for path in (bundle/"Contents").rglob("*"):
+        relative=path.relative_to(bundle).as_posix()
+        if (path.name not in ("soffice","soffice.bin","python","python3","java","kantoorruntime.json")
+                and relative!="Contents/Resources/kantoorruntime/meta/receipt.json"):continue
+        inside=path.resolve().is_relative_to(bundle)
+        if not path.is_file() and not path.is_symlink():continue
+        resources.append({"relative":relative,"sha256":digest(path) if inside and path.is_file() else None,
+                          "symlink":path.is_symlink(),"resolvedInsideOwnApp":inside})
+    return resources
+
+
 def suite_absence(root):
     found=[]
     for base in (Path("/Applications"),Path.home()/"Applications",Path(root)):
@@ -90,12 +108,7 @@ class Session:
         self.report.update(identityVerified=True,bundleInfo=actual,executableSHA256=after,
                            signature=command(["/usr/bin/codesign","--verify","--deep","--strict",self.bundle],timeout=120),
                            signatureIdentity=command(["/usr/bin/codesign","-dv","--verbose=4",self.bundle]))
-        resources=[]
-        for path in (self.bundle/"Contents/Resources").rglob("*"):
-            if path.is_file() and path.name in ("soffice","soffice.bin","python","python3","java","kantoorruntime.json"):
-                resources.append({"relative":path.relative_to(self.bundle).as_posix(),"sha256":digest(path),"symlink":path.is_symlink(),
-                                  "resolvedInsideOwnApp":path.resolve().is_relative_to(self.bundle.resolve())})
-        self.write("private-runtime-inventory.json",resources)
+        self.write("private-runtime-inventory.json",runtime_inventory(self.bundle))
         identifier=APPS[self.app][2]
         paths=profile_paths(identifier,Path.home())
         existing=[str(p) for p in paths if p.exists() or p.is_symlink()]
