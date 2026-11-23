@@ -3,7 +3,8 @@
 Integration assigned this single free scope after completed Windows GNM/XLSB.
 STW remains exclusively with750b; the UOS source owner e0d7 now works on UOT.
 No overlapping file/native-host operation, new product intake or app build is
-performed. This chat's Windows6/STW preparation remains preserved and queued.
+performed. This chat's Windows6-app preparation remains preserved and queued;
+the Windows STW case belongs to750b.
 The estimate given to the user is45–90 minutes including CI/driver checks and
 independent evidence, conditional on newly discovered problems.
 
@@ -60,4 +61,78 @@ This is one source example, not UOF2, UOS export, pre-existing UOS formula impor
 styles/charts/macros, other OS or complete #30/catalog approval. Product files,
 shared indexes/versions/workflows, main/tags/releases/publication are unchanged.
 
-Native results will be recorded after actual execution and downloaded-byte audit.
+## Completed native result
+
+[Run45157740183](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45157740183),
+job `137634883689`, passes at harness
+`72c91b746502d5fd8aa08f920b2e028b4c624c23`. Exact application/package point
+remains the ordinary P2 suite above. No product correction was required.
+
+Before operation, the full canonical Windows ZIP is verified against SHA256
+`ecce5a188abbb5b17e52c4097d7add95ddeaaa8c24a9a4e6c492049d16902733`.
+Canonical package report and exact NSIS member agree on384512913 bytes/SHA256
+`85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce`.
+Independent extract-only x64 payload and actual installed executable both have
+SHA256 `feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67`.
+The actual app process/id/version, own profile and own bundled safe runtime are
+checked before input. Installer/app are `NotSigned`, as expected for ordinary P2;
+no final signing/standalone approval follows.
+
+The short original-UOS/native Save/full-exit/newPID-reopen preflight passes before
+the broader editing case. All three original sheet names/order and original
+source data persist. Actual visible native grid and real formula input confirm
+SUM result2, A2=7/result9, native Ctrl+Z→A2=0/result2, Ctrl+Y→A2=7/result9.
+Sheet2!A1 text edit is preserved, and final normal full exit/newPID/native-picker
+reopening again shows formula/cache9 and the exact second-sheet text. There are
+three native picker cases, three normal full exits and two new-process reopens.
+
+The independent downloaded-byte audit checks official proof ZIP/extracted bytes,
+source/run/job/attempt/package/executable receipts, original XML/license/README,
+actual native lifecycle and these actual native saves/snapshots:
+
+| Output | Checked content | SHA256 |
+| --- | --- | --- |
+| `uos-original.xlsx` | All156 original typed cells, three sheets, zero formulas | `c4db7491a3b28247f78d9c79383d54b7d710bbc83cec6f3ca7364fb66df950bb` |
+| `uos-sum-before.xlsx` | All157 populated cells, added SUM/cache2, A2 still0 | `f10a844415655053d8bca65e97b0abb92ad0a7639f7fa69e2c2e8aa31f24ffbd` |
+| `uos-working.xlsx`, `uos-edited.xlsx` | All158 cells, A2=7, SUM/cache9, Sheet2 marker, three sheets | `389c321f783c5849ad60f9a4aea9385d5a5185da0eb00011921c39a7f9aef55a` |
+| `uos-reopened.xlsx` | Same158 expected typed cells/formula/cache and three sheets after full restart | `7ff69dd3e3531a786f08737934db62a98ff67d3213f31c542f3e94af90bbb6fd` |
+
+All eight original successful native screenshots were reviewed serially. They
+show source headers/data, readable SUM2→9→Undo2→Redo9 and native A2 changes,
+then readable result9 and `QA_UOS_23NOV` after restart. Production accessibility
+readbacks are corroborated by visible native canvas output. The product's
+editable-copy and generic protection/unknown-extension advice are separate UI
+observations, not a newly established defect or full style/chart fidelity claim.
+
+First run `45156981522` remains failed: after source inspection the driver left
+Sheet3 selected before entering the intended Sheet1 formula. Source156-cell
+save and full-exit/reopen had succeeded, but intended Sheet1!E2 was empty.
+Its artifact and an independent original156-cell audit are preserved separately.
+The driver correction selects Sheet1 explicitly and waits for the actual selected
+production sheet tab; functional assertions/source/package inputs stay unchanged.
+
+Passing artifact `14809801710`, whole ZIP SHA256
+`a526e268692c9e3c02aa4b0694c856d0a5e6dc34446ae214b03949a352455966`,
+and the original failed proof are retained under [`evidence/`](evidence/):201
+byte-preserved files with official metadata, original ZIPs and input/license/
+README, actual outputs, native UI/process/runtime/profile/cleanup records, images,
+independent audit and SHA inventory. Large canonical installer bytes are bound
+by the verified receipt and are not committed.
+
+The successful run confirms old owned WebViews gone, normal exits without
+forcekill, own policy/install/native-WebView profiles/temp removed, and original
+UOS unchanged. The failed run explicitly cleans only its owned unsaved process
+tree and stays a failure. No local GUI/Computer Use/recording session was started.
+
+Repeat the independent original-artifact/source/native-lifecycle/output audit:
+
+```sh
+python -B qa/uos-native-windows/audit.py
+```
+
+Node/Python/PowerShell syntax and Git whitespace checks pass. All201 evidence
+files match their SHA inventory and staged Git bytes; the imported original
+oracle/config match their exact source Git blobs. Existing shared86-extension/
+32-source coverage remains consistent and unchanged. GNM/XLSB deliveries and
+Windows6-app preparation stay preserved. Other platforms, UOF2/UOS export and
+original-formula import remain separate; #30 is not closed by this one case.
