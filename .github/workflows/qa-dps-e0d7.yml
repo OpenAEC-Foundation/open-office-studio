@@ -1,0 +1,37 @@
+name: DPS source qualification and negative P2 policy
+on:
+  push:
+    branches: [codex/dps-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-dps/**
+      - .github/workflows/qa-dps-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source_and_policy:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Inspect pinned published source candidates; retain reports only
+        run: python3 -B scripts/qa-dps/source_gate.py
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Actual P2 negative no-desktop functions; no DPS conversion or engine pass
+        run: node scripts/qa-dps/policy.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dps-source-and-policy-result
+          path: .local/dps-qa/
+          include-hidden-files: true
+          if-no-files-found: error

@@ -1,0 +1,51 @@
+{
+  "application": {"commit":"dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b","tree":"5a644e397ecc6af5452a49b6404edf953687d1b2","version":"2026.48.1"},
+  "scope": "DPS only: candidate qualification and actual negative production policy; no import acceptance",
+  "acceptedFixture": false,
+  "primaryFormatDefinition": "https://open.wps.cn/documents/app-integration-dev/wps365/client/wpsoffice/jsapi/idmso-list/wpp-idmso-reference",
+  "primaryFormatDefinitionObservation": "WPS producer lists FileSaveAsDps separately from FileSaveAsDpt and FileSaveAsPpt. This defines the intended route; it does not authenticate these particular candidates.",
+  "candidates": [
+    {
+      "id":"spire","repository":"eiceblue/Spire.Presentation-for-Java","commit":"4360a64a106946538a1f4e245fa33862adfc3b1d",
+      "firstPublicationCommit":"d1a74f200d0a311edb895e608900f491704de79c",
+      "path":"Examples/data/Sample_dps.dps","bytes":71680,"blob":"a5224138f6da2bad511bdc3afd73144916c0b78b","sha256":"67fde11d202fb10d419cc54b708568c9681cf984cc6e7ebcdd051dee9c5e5fc5",
+      "loader":{"path":"Examples/10_conversion/convertDpsToDpt.java","bytes":392,"blob":"d3beaf74210f14e2306a385a18fb71ee2021e4b0","sha256":"0a7ea74270e9c752527aa8341161672bc41e95139d88702d232b47797f520ae5"},
+      "readme":{"path":"README.md","bytes":9318,"blob":"f27f6cd73e655f00751f38648725fbdcf2da58c7","sha256":"df5a3e821e837270f6907f100acd3b49588c523aa745098f951c39d88cf92b15"},
+      "expectedPresentationStreamSha256":"b5f6c8bfd4309bf65cc820bd75680c2b489d007a92d72e4ec6f70ab866d10e37",
+      "expectedApplication":"WPS 演示",
+      "qualificationGap":"Publisher explicitly loads this source with FileFormat.DPS and metadata names WPS Presentation, but an applicable sample-file license grant was not established. No sample redistributed. No signed producer Save-As witness or full live-slide oracle asserted."
+    },
+    {
+      "id":"sayi","repository":"Sayi/poi-tl","commit":"81edcbd9227a619078c07052830a2cd6a4333bb7",
+      "firstPublicationCommit":"c2f77d7fde2975e36f031d05676b125227e0da9c",
+      "path":"poi-tl/src/test/resources/attachment/test.dps","bytes":164864,"blob":"e19eaf49e7d93227907fd52e78f92d57b44886a7","sha256":"15b5dc38f02b0818389049f2791c0ef4a2ee801c947639ba6b3d1aa56261d134",
+      "control":{"path":"poi-tl/src/test/resources/attachment/test.ppt","bytes":164864,"blob":"b9faa7a95ae67d452e6f49a77a0df1a88470a83f","sha256":"b0c989317189d3b41cea0e14cc920ad0bd3c30f45182df7c5685a3f433798dd4"},
+      "license":{"path":"LICENSE","bytes":11325,"blob":"e06d2081865a766a8668acc12878f98b27fc9ea0","sha256":"cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14","classification":"Apache-2.0 repository distribution; no per-fixture override found in the reviewed publication, not a native DPS producer declaration"},
+      "expectedPresentationStreamSha256":"d305551f1553fb73cb0d049030d5e190eaedd082c65c8107e77f09b4d4e8a2f2",
+      "qualificationGap":"Same-publication PPT control has identical PowerPoint Document and Current User streams; only property streams differ. Generic attachment source does not establish original native DPS Save-As intent. This ambiguity does not prove renaming."
+    },
+    {
+      "id":"tom","repository":"Tom60chat/Extension-List","commit":"74e784db06e7a76fc3b61189830e241c3b6d0105",
+      "firstPublicationCommit":"f83689cab7311e3f7519135611c473383170edef",
+      "path":"List/WPS Presentation Document.dps","bytes":125440,"blob":"0c7464c95377d2f27c4e6e4c0c4ff9e879d27afa","sha256":"40ce47c3dc67f8d177c019477244b254a3c2baf61da19fe6d710b02787809d5d",
+      "control":{"path":"List/Microsoft PowerPoint 97 - 2003 Presentation.ppt","bytes":125440,"blob":"5ee66621d4d1d7dae11fb41336651886f34711c6","sha256":"7c67429d85998e14f3cacfdaf72c2e49b8078c5461f6a121e55525aa8151a0a7"},
+      "license":{"path":"LICENSE","bytes":1211,"blob":"fdddb29aa445bf3d6a5d843d6dd77e10a9f99657","sha256":"6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e","classification":"Unlicense repository distribution; not an independently documented native DPS Save-As process"},
+      "expectedPresentationStreamSha256":"33a78b15daa0775dd950548fffa3b1482178829730842617a4ab9cd190524ed7",
+      "expectedApplication":"Microsoft Office PowerPoint",
+      "qualificationGap":"Real CFB, not the corpus's unrelated ET text placeholder. Presentation/current-user/property streams differ from its PPT control, but generic corpus metadata and history do not document the original producer/native DPS save. App property names PowerPoint. Not claimed fake or renamed."
+    }
+  ],
+  "additionalInventories": [
+    {"repository":"openpreserve/format-corpus","commit":"366f068cec399d0cdfd61fa473de3ab6dc858098"},
+    {"repository":"apache/tika","commit":"de0cd09a3f373a3254fa2d614d3f330c4aa1cf82"},
+    {"repository":"alexschiller/file-format-commons","commit":"0d508180dfeece7ac8b3e87bd2093755e3f356b1"},
+    {"repository":"eiceblue/Spire.Office-for-Java","commit":"b2451371f696aae6a0582e787356bd6527a4d2c5","expectedDpsPaths":["Spire.Presentation/data/Sample_dps.dps"]},
+    {"repository":"eiceblue/Spire.Presentation-for-.NET","commit":"cf26ca4587c5cfd78c667da68ebac53f058fb70a"},
+    {"repository":"aspose-slides/Aspose.Slides-for-Java","commit":"9ef0160fe96031cd3f0808792b6da136763a8d7f"},
+    {"repository":"aspose-slides/Aspose.Slides-for-.NET","commit":"73f0e15894510088edb04e60785e66ee46ff42fe"},
+    {"repository":"eiceblue/Spire.Presentation-for-Python","commit":"22975b5c686382bc86e2c8c970c62181c0441730"},
+    {"repository":"eiceblue/Spire.Presentation-for-JavaScript","commit":"aa190c5bc401c57b94a803f1dd44096b8292630b"},
+    {"repository":"eiceblue/Spire.Presentation-for-C","commit":"0bb16d89dc8aaa26cff2f7a9d58d7e3a1054f96d"}
+  ],
+  "limits":["No qualified native DPS fixture with both established source permission/provenance and a live-slide content oracle was obtained in this bounded search; absence in these repositories is not worldwide absence.","CFB stream hashes/property labels below are independent byte diagnostics, not a slide-order/text/object/geometry/media oracle or proof of native DPS Save-As.","No converter/private runtime, actual PPTX WASM initialization, edit/UndoRedo/PPTX save/freshreopen, Tauri IPC, hosted-browser UI or Windows/Linux/macOS native GUI acceptance.","Shared runtime input remains pinned but not consumed/reverified in this DPS investigation; no alternate runtime, suite, SDK or producer application installed.","PPT files are read-only provenance controls, not extra active format scopes. No DPT fixture, conversion or export is executed."]
+}
