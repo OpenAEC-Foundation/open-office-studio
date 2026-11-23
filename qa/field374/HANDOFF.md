@@ -383,3 +383,38 @@ step remains the unchanged source/field audit on real native exports with exact
 marker ` -- STW30 EDIT 2026-11-23`, package binding and original edit/new-PID
 reopen evidence. All three native STW acceptances and full route closure stay
 open. No own package download, GUI, CI or product edit was performed.
+
+## First genuine P5 Linux native retained-export content audit
+
+DEB producer45191795863/attempt1/job137751994556, QA
+f0f1b8efe8f57b2372944df5236c81a0d8fff829, retains four actual DOCX files from
+the Windows-origin control route. The existing audit-docx helper independently
+passes all four: field374_windows, windows_saved, windows_reopened and
+windows_resaved. All share SHA256
+35739645a4e5d3222e0b764ec6339d6f3e19e5c58ca8d06265f587130ff92861.
+Eight source blocks/styles, both original placeholders, DOCVARIABLE Report and
+its exact Report Title cache remain intact; the exact marker stays outside the
+field. The unchanged Windows control4dcb and converter controlb29d hashes match.
+
+The existing owner ZIP14826078384 (11515169bytes) was read locally, with whole
+SHA2560de395a96be65ba8d1ea82b2ae86adf32c6e03b204adb66d3d7eca9e48379846
+matching official metadata. Each audited DOCX, control and retained binding
+report is byte-equal to its original archive member. Source b696/treee308/48.1,
+DEB5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010 and
+reported installed ELF ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9
+are crosschecked through the retained descriptor/identity/report. This does not
+repeat package execution or certify a Linux signature.
+
+The operator report records normal quit/new PID5575→13592 and Ctrl+S for this
+Windows-origin route. Its marker was already present in the original Windows
+control: this pass establishes preservation, not new Linux marker insertion.
+The separate converted-control edit later failed at SaveFile observer PID
+5575 versus13759, with no accepted converted export. Original overall run stays
+FAILURE and pixels remain unapproved pending the owner's explicit graphics
+follow-up. No full native or STW-route approval follows from this content pass.
+
+`evidence/p5-native-deb-content-audit.json` contains exact archive/package/source
+bindings and limits; `evidence/p5-native-deb-content/*-audit.json` retains all
+four raw independent audit reports without line-ending conversion. No new
+download, GUI, CI, consumer or product edit was performed. Mac/Windows native
+acceptance, converted edit/save and native visual checks remain open.
