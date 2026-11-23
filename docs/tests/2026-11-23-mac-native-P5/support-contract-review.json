@@ -1,0 +1,75 @@
+{
+  "kind": "read-only-contract-compatibility-review; no native/package execution",
+  "contractQaCommit": "8c4c3b5b441b3e39e2efa711f43d43d9931b1a9d",
+  "reviewedGitBlobSha256": {
+    "scripts/standalone-macos/suite_support_descriptor.py": "fb33dfd1834471d62ee01385c21b1cbbb11716825af2694d0df8c6662117048b",
+    "scripts/standalone-macos/contracts.py": "95911c429a4c3f319b85dd7eb25a1a3ce6533c6bd77d0aec2a9487732aba08e5",
+    "scripts/standalone-macos/prepare.py": "a2606346a50abd70f791691851993feccf1085827eeb98a18816741b5d8c099a",
+    ".github/workflows/standalone-macos-20261123.yml": "b88bddf923ef6869074f6c68d610b5059c1b22770700cc8bc5ec24925a041436",
+    "scripts/standalone-macos/test_suite_support.py": "7168dff9f392792750d6834fa11a439f6d1d4732b7c9f81a2cb0e7354959f9da"
+  },
+  "P5Source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "P5Tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "officialParentRun": 45177730188,
+  "officialMacJob": 137703365843,
+  "attempt": 1,
+  "rawChildCompatibility": {
+    "artifactName": "standalone-support-suite",
+    "payload": "one Suite DMG + request.json + provenance.json",
+    "consumerProvenanceMember": "provenance.json",
+    "existingSourceParentMemberPackageHashChecksCompatible": true,
+    "childRequestIsStandaloneScopeAndNotSuiteExecutionAuthority": true
+  },
+  "smallWrapperCompatibility": {
+    "artifactNameTemplate": "standalone-suite-support-descriptor-${actualQAsha}",
+    "member": "suite-support-descriptor.json",
+    "schemaVersion": 1,
+    "topLevelKeys": [
+      "scope",
+      "source",
+      "officialParentArtifact",
+      "suitePackage",
+      "suiteTransferArtifact",
+      "expectedInstalledIdentity",
+      "validationOwner",
+      "nativeExecutionPerformed",
+      "nativeAccepted",
+      "suiteDeliveryToStandaloneHostsAuthorized",
+      "pendingOwnerChecks",
+      "limitations"
+    ],
+    "currentFetchDirectlyConsumesWrapper": false,
+    "requiredMapping": {
+      "officialParentArtifact": "own root request parent metadata and raw child provenance.parentArtifact",
+      "suitePackage.member/filename/bytes/sha256": "exact original parent member and actual independently hashed child DMG",
+      "suiteTransferArtifact.id/name/sha256/qaRun/qaCommit": "own pinned transfer metadata and fresh GitHub API tuple",
+      "suiteTransferArtifact.officialApiDigestVerified": "must be true in uploaded wrapper, cross-checked against actual metadata",
+      "suiteTransferArtifact.wholeChildArchiveHashVerifiedByPreparer": "preserve false; Suite consumer must hash complete actual child ZIP",
+      "expectedInstalledIdentity": "Open Office Studio / open-office-studio / org.openaec.office-studio /2026.48.1; independently verify after read-only mount"
+    },
+    "extraGateRequiredBeforeEnabling": "Bind and hash the separate small wrapper artifact, then cross-compare wrapper, root request, child request/provenance, actual child/DMG and official metadata. Current raw-provenance verifier alone does not read that wrapper.",
+    "preparerJobSuccessAloneInsufficient": "Suite upload/descriptor preservation steps continue-on-error; actual null-free child and valid wrapper artifacts are required."
+  },
+  "unchangedNativeGates": [
+    "full actual child ZIP hash",
+    "actual Suite DMG hash/bytes",
+    "CF identity/version/executable",
+    "codesign strict/DeveloperID",
+    "Gatekeeper notarized origin",
+    "stapled ticket",
+    "own fresh profile",
+    "real native core/361/374 controls and original PNG review",
+    "normal Command-Q/new-PID reopen"
+  ],
+  "executionApproved": false,
+  "suiteChildTransferApproved": false,
+  "consumerReadyForGo": false,
+  "driverChanged": false,
+  "ownerFilesChanged": false,
+  "newBuild": false,
+  "newRunner": false,
+  "newDownload": false,
+  "newTestSuiteRun": false,
+  "scope": "Retarget disabled plan only. No parent ZIP download or Suite STW import. Source fixture/criteria references remain the unchanged P4 plan."
+}
