@@ -1,0 +1,892 @@
+{
+  "scope": "UOP/UOF1 presentation only under #30",
+  "status": "STRICT FAILURE: source rectangle fill colors lost during conversion; actual engine edit/save/reopen diagnostics pass",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/uop-qa-2026-11-23-e0d7",
+  "sourceHarnessCommit": "2a3c3306e869c814dbb7bcd56593e94285896308",
+  "analysisHarnessCommit": "80b48a12af99137dfc102e528d2ea17de8f6f47e",
+  "source": {
+    "publisher": "99helpers.com",
+    "url": "https://99helpers.com/samples/uop/sample-presentation.uop",
+    "filename": "sample-presentation.uop",
+    "bytes": 204509,
+    "sha256": "7d204f66f3e15a76176145f917089b204f1160ff819a898aa0dd61e977c39c7d",
+    "publication": "https://99helpers.com/file-types/uop",
+    "generator": "LibreOffice/24.2.7.2$Linux_X86_64 LibreOffice_project/420$Build-2",
+    "created": "2026-10-27T12:00:00",
+    "author": "99helpers.com",
+    "title": "Sample UOF presentation",
+    "license": "LicenseRef-99helpers-testing-permission",
+    "permission": "Free to use for testing, teaching and demos, commercially or not, with no attribution needed.",
+    "licenseNote": "Publisher permission, not CC0. Retain the independently fetched publication/permission page and its acquisition hash. Mutable public URL is frozen by complete source SHA256 and retained evidence bytes.",
+    "firstAcquisition": {
+      "source": {
+        "url": "https://99helpers.com/samples/uop/sample-presentation.uop",
+        "status": 200,
+        "headers": {
+          "access-control-allow-origin": "*",
+          "age": "0",
+          "cache-control": "public, max-age=86400, stale-while-revalidate=604800",
+          "content-disposition": "inline; filename=\"sample-presentation.uop\"",
+          "content-encoding": "br",
+          "content-type": "application/octet-stream",
+          "date": "Mon, 23 Nov 2026 10:29:31 GMT",
+          "etag": "W/\"d6424faf7e9bcf9442a196b318d681f6\"",
+          "last-modified": "Mon, 23 Nov 2026 10:29:31 GMT",
+          "server": "Vercel",
+          "strict-transport-security": "max-age=63072000; includeSubDomains",
+          "transfer-encoding": "chunked",
+          "x-content-type-options": "nosniff",
+          "x-matched-path": "/samples/uop/sample-presentation.uop",
+          "x-vercel-cache": "MISS",
+          "x-vercel-id": "fra1::pj4tx-1795429771427-16833ac9b078"
+        },
+        "bytes": 204509,
+        "sha256": "7d204f66f3e15a76176145f917089b204f1160ff819a898aa0dd61e977c39c7d"
+      },
+      "publisher": {
+        "url": "https://99helpers.com/file-types/uop",
+        "status": 200,
+        "headers": {
+          "age": "17",
+          "cache-control": "public, max-age=0, must-revalidate",
+          "content-encoding": "br",
+          "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://js.stripe.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://plausible.io https://analytics.eu.umami.is https://api.pirsch.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: wss:; media-src 'self' blob: data: https:; worker-src 'self' blob:; frame-src 'self' https:; form-action 'self' https://checkout.stripe.com; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/client-log; report-to csp",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Mon, 23 Nov 2026 10:28:54 GMT",
+          "etag": "W/\"yckxnzbcvt4wyo\"",
+          "reporting-endpoints": "csp=\"https://99helpers.com/api/client-log\"",
+          "server": "Vercel",
+          "set-cookie": "NEXT_LOCALE=en; Path=/; Expires=Tue, 23 Nov 2027 10:29:12 GMT; Max-Age=31536000; Secure; HttpOnly; SameSite=lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains",
+          "transfer-encoding": "chunked",
+          "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+          "x-frame-options": "DENY",
+          "x-matched-path": "/en/file-types/uop",
+          "x-nextjs-prerender": "1",
+          "x-nextjs-stale-time": "300",
+          "x-powered-by": "Next.js",
+          "x-vercel-cache": "HIT",
+          "x-vercel-id": "fra1::dub1::tvcxz-1795429752147-23483c3c91bc"
+        },
+        "bytes": 230702,
+        "sha256": "c3fbb948e6be935f621c694d4a3e82704ea6ef238500e61906f1dd47691fa81f"
+      }
+    },
+    "variant": "UOF1 plain XML original published .uop; not renamed ODP/PPTX or our own export"
+  },
+  "sourceAcceptancePassed": false,
+  "engineFunctionalPassed": true,
+  "issueCheck": {
+    "overview": 30,
+    "queries": [
+      "UOP in:title,body",
+      "UOF in:title,body",
+      "\"Unified Office\" in:title,body",
+      "accent1 in:title,body",
+      "presentation color in:title,body",
+      "presentatie kleur in:title,body",
+      "color in:title",
+      "kleur in:title",
+      "theme conversion in:title,body"
+    ],
+    "states": [
+      "open",
+      "closed"
+    ],
+    "specificMatches": [],
+    "descriptionsRead": [
+      {
+        "issue": 78,
+        "result": "New theme UI enhancement, not this loss of explicit source fills during UOP conversion; owned separately"
+      },
+      {
+        "issue": 322,
+        "result": "Spreadsheet built-in table rendering, not presentation conversion"
+      },
+      {
+        "issue": 374,
+        "result": "DOCVARIABLE title layout in Writer, unrelated"
+      }
+    ],
+    "newIssue": null,
+    "registrationScope": "Only the independently confirmed loss of the two explicit rectangle fills; integrationchat explicitly authorized this registration"
+  },
+  "ci": [
+    {
+      "id": 45157774470,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45157774470",
+      "headSha": "1c339b1aed941a98d0d9150b27913fadb60245a4",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137635001380,
+          "name": "source",
+          "conclusion": "failure",
+          "startedAt": "2026-11-23T10:37:20Z",
+          "completedAt": "2026-11-23T10:37:32Z"
+        },
+        {
+          "id": 137635130938,
+          "name": "browser_limit",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-23T10:37:32Z",
+          "completedAt": "2026-11-23T10:37:32Z"
+        },
+        {
+          "id": 137635131210,
+          "name": "runtime",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-23T10:37:32Z",
+          "completedAt": "2026-11-23T10:37:32Z"
+        }
+      ]
+    },
+    {
+      "id": 45157946997,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45157946997",
+      "headSha": "2a3c3306e869c814dbb7bcd56593e94285896308",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137635593615,
+          "name": "source",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T10:38:27Z",
+          "completedAt": "2026-11-23T10:38:38Z"
+        },
+        {
+          "id": 137635697273,
+          "name": "browser_limit",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T10:38:40Z",
+          "completedAt": "2026-11-23T10:38:59Z"
+        },
+        {
+          "id": 137635876535,
+          "name": "runtime",
+          "conclusion": "failure",
+          "startedAt": "2026-11-23T10:39:01Z",
+          "completedAt": "2026-11-23T10:39:59Z"
+        }
+      ]
+    },
+    {
+      "id": 45158744805,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45158744805",
+      "headSha": "80b48a12af99137dfc102e528d2ea17de8f6f47e",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 137638350237,
+          "name": "xml_analysis",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T10:43:54Z",
+          "completedAt": "2026-11-23T10:44:05Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14808754080,
+      "name": "uop-source-oracle",
+      "zipBytes": 13785,
+      "zipSha256": "cffc2bf8fc99014836911a111993c880c1cab671f9f442826d06d0b3323ba2f1",
+      "run": 45157946997,
+      "headSha": "2a3c3306e869c814dbb7bcd56593e94285896308",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14809761235,
+      "name": "uop-browser-limit",
+      "zipBytes": 2408,
+      "zipSha256": "fcfdb8ffb4c12b8fe6f356bd104c7d20e66ae52c4b25d0a3abe196b468ea3fc9",
+      "run": 45157946997,
+      "headSha": "2a3c3306e869c814dbb7bcd56593e94285896308",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14808702891,
+      "name": "uop-runtime-result",
+      "zipBytes": 85190,
+      "zipSha256": "e5e3ae456b1c30eb01215797dcc465ba0f3913fb9c2b7794fe965ee814e38839",
+      "run": 45157946997,
+      "headSha": "2a3c3306e869c814dbb7bcd56593e94285896308",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14810296324,
+      "name": "uop-theme-analysis",
+      "zipBytes": 89112,
+      "zipSha256": "c4c40a854b5d5bb0f2009b6bcd053aff2de64ee66a7b0421951d7b0978410a5e",
+      "run": 45158744805,
+      "headSha": "80b48a12af99137dfc102e528d2ea17de8f6f47e",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    }
+  ],
+  "runtime": {
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "receipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "exitCode": 0,
+    "seconds": 2.1203681480000114,
+    "sourceUnchanged": true,
+    "convertedSha256": "db92ff750e7eee1a38b5eb2d889fa55da1fed21681609f49b5d07e59a6459c92",
+    "convertedBytes": 20649,
+    "method": "private CLI using production arguments/profile"
+  },
+  "engine": {
+    "binding": {
+      "package": "@betteroffice/pptx",
+      "version": "0.5.1",
+      "integrity": "sha512-2Rn51fx1GCDfcus1Ly2giDk7CnhLmWjJFPq3QL2DiBAF2BF+A5R9PdRDHYX5gQm0sfWK97C2osTmR3/klJKF2Q==",
+      "wasmSha256": "3a4be9329de1bca77437137ce6417c7910e35c1c7c0e78571bb81f9fe16e5563",
+      "wasmBytes": 6302176
+    },
+    "checks": [
+      "UOP without desktop conversion bridge rejects with a concrete limitation and PPTX alternative.",
+      "Actual pinned presentation engine commits source-title text edit; Undo restores all baseline stories and Redo restores the complete edited stories.",
+      "PPTX save/fresh engine reopen/second save preserve edited engine stories; independent source-derived structure/style/geometry/notes observations retained separately; original UOP unchanged."
+    ],
+    "sourceTextChecks": [
+      {
+        "slide": 0,
+        "check": "own-shape text/paragraphs",
+        "passed": true,
+        "expected": [
+          [
+            "Sample UOF presentation"
+          ],
+          [
+            "示例演示文稿",
+            "Free sample from 99helpers.com/file-types/uop"
+          ]
+        ],
+        "actual": [
+          [
+            "Sample UOF presentation"
+          ],
+          [
+            "示例演示文稿",
+            "Free sample from 99helpers.com/file-types/uop"
+          ]
+        ]
+      },
+      {
+        "slide": 1,
+        "check": "own-shape text/paragraphs",
+        "passed": true,
+        "expected": [
+          [
+            "What's in this file"
+          ],
+          [
+            "Three 16:9 slides on one master slide",
+            "Speaker notes on every slide",
+            "Text in English and Chinese (中文)",
+            "Two shapes and an arrow on slide 3",
+            "Each one is a 图:图形 object, placed with a uof:锚点 anchor"
+          ]
+        ],
+        "actual": [
+          [
+            "What's in this file"
+          ],
+          [
+            "Three 16:9 slides on one master slide",
+            "Speaker notes on every slide",
+            "Text in English and Chinese (中文)",
+            "Two shapes and an arrow on slide 3",
+            "Each one is a 图:图形 object, placed with a uof:锚点 anchor"
+          ]
+        ]
+      },
+      {
+        "slide": 2,
+        "check": "own-shape text/paragraphs",
+        "passed": true,
+        "expected": [
+          [
+            "Shapes"
+          ],
+          [
+            "ODP"
+          ],
+          [
+            "UOP"
+          ],
+          []
+        ],
+        "actual": [
+          [
+            "Shapes"
+          ],
+          [
+            "ODP"
+          ],
+          [
+            "UOP"
+          ],
+          []
+        ]
+      }
+    ],
+    "savedSha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+    "reopenedSavedSha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+    "savedSourceAcceptancePassed": false,
+    "reopenedSourceAcceptancePassed": false
+  },
+  "independentSourceChecks": {
+    "converted": {
+      "passed": false,
+      "checkCount": 38,
+      "initialRawFailures": [
+        {
+          "check": "canvas size",
+          "passed": false,
+          "expected": {
+            "width": 10080000,
+            "height": 5670000
+          },
+          "actual": {
+            "width": 10080625,
+            "height": 5670550
+          }
+        },
+        {
+          "check": "slide 3 object 2 (gr4_0) fill",
+          "passed": false,
+          "expected": "#14213d",
+          "actual": null
+        },
+        {
+          "check": "slide 3 object 3 (gr5_0) fill",
+          "passed": false,
+          "expected": "#046eff",
+          "actual": null
+        },
+        {
+          "check": "slide 3 object 4 (gr6_0) stroke color",
+          "passed": false,
+          "expected": "#475569",
+          "actual": null
+        }
+      ]
+    },
+    "themeResolution": "See immutable theme-analysis.json; initial raw color null observations mean unresolved theme references, not proof of absent paint",
+    "confirmedRectangleFills": [
+      {
+        "file": "converted.pptx",
+        "sha256": "db92ff750e7eee1a38b5eb2d889fa55da1fed21681609f49b5d07e59a6459c92",
+        "parts": {
+          "slide": "ppt/slides/slide3.xml",
+          "layout": "ppt/slideLayouts/slideLayout1.xml",
+          "master": "ppt/slideMasters/slideMaster1.xml",
+          "theme": "ppt/theme/theme1.xml"
+        },
+        "checks": [
+          {
+            "scope": "rectangle fill",
+            "sourceObject": "gr4_0",
+            "expectedRGB": "#14213d",
+            "actual": {
+              "rgb": "#18a303",
+              "reference": {
+                "kind": "schemeClr",
+                "value": "accent1"
+              },
+              "transforms": []
+            },
+            "passed": false
+          },
+          {
+            "scope": "rectangle fill",
+            "sourceObject": "gr5_0",
+            "expectedRGB": "#046eff",
+            "actual": {
+              "rgb": "#18a303",
+              "reference": {
+                "kind": "schemeClr",
+                "value": "accent1"
+              },
+              "transforms": []
+            },
+            "passed": false
+          }
+        ]
+      },
+      {
+        "file": "saved.pptx",
+        "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+        "parts": {
+          "slide": "ppt/slides/slide3.xml",
+          "layout": "ppt/slideLayouts/slideLayout1.xml",
+          "master": "ppt/slideMasters/slideMaster1.xml",
+          "theme": "ppt/theme/theme1.xml"
+        },
+        "checks": [
+          {
+            "scope": "rectangle fill",
+            "sourceObject": "gr4_0",
+            "expectedRGB": "#14213d",
+            "actual": {
+              "rgb": "#18a303",
+              "reference": {
+                "kind": "schemeClr",
+                "value": "accent1"
+              },
+              "transforms": []
+            },
+            "passed": false
+          },
+          {
+            "scope": "rectangle fill",
+            "sourceObject": "gr5_0",
+            "expectedRGB": "#046eff",
+            "actual": {
+              "rgb": "#18a303",
+              "reference": {
+                "kind": "schemeClr",
+                "value": "accent1"
+              },
+              "transforms": []
+            },
+            "passed": false
+          }
+        ]
+      },
+      {
+        "file": "reopened-saved.pptx",
+        "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2",
+        "parts": {
+          "slide": "ppt/slides/slide3.xml",
+          "layout": "ppt/slideLayouts/slideLayout1.xml",
+          "master": "ppt/slideMasters/slideMaster1.xml",
+          "theme": "ppt/theme/theme1.xml"
+        },
+        "checks": [
+          {
+            "scope": "rectangle fill",
+            "sourceObject": "gr4_0",
+            "expectedRGB": "#14213d",
+            "actual": {
+              "rgb": "#18a303",
+              "reference": {
+                "kind": "schemeClr",
+                "value": "accent1"
+              },
+              "transforms": []
+            },
+            "passed": false
+          },
+          {
+            "scope": "rectangle fill",
+            "sourceObject": "gr5_0",
+            "expectedRGB": "#046eff",
+            "actual": {
+              "rgb": "#18a303",
+              "reference": {
+                "kind": "schemeClr",
+                "value": "accent1"
+              },
+              "transforms": []
+            },
+            "passed": false
+          }
+        ]
+      }
+    ]
+  },
+  "separateObservations": {
+    "lineStroke": {
+      "scope": "line stroke observation",
+      "sourceObject": "gr6_0",
+      "expectedRGB": "#475569",
+      "actual": {
+        "rgb": "#127a02",
+        "reference": {
+          "kind": "schemeClr",
+          "value": "accent1"
+        },
+        "transforms": [
+          {
+            "kind": "lumMod",
+            "value": "0.75"
+          },
+          {
+            "kind": "lumOff",
+            "value": "0"
+          }
+        ]
+      },
+      "passed": false
+    },
+    "canvas": {
+      "expectedEMU": {
+        "width": 10080000,
+        "height": 5670000
+      },
+      "actualEMU": {
+        "width": 10080625,
+        "height": 5670550
+      },
+      "deltaEMU": {
+        "width": 625,
+        "height": 550
+      },
+      "exactlyIntegralTwips": true,
+      "sourceToleranceEMU": 360,
+      "strictSourceTolerancePassed": false,
+      "note": "Observed canvas is rounded upward to integral twips (635 EMU each); this arithmetic is recorded, not used to relax the predeclared source tolerance or register a second product bug."
+    },
+    "note": "These stay separate observations; no implementation cause shared with rectangle-fill loss is assumed and no additional issue is registered"
+  },
+  "browserLimit": {
+    "method": "Real production functions in Linux Node with empty window, no Tauri mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This UOP file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as PPTX, then open that copy."
+  },
+  "limits": [
+    "One UOF1 UOP fixture; no UOF2/UOP-export/native or hosted UI/visual fidelity claim. Zero embedded media/formulas does not demonstrate their import.",
+    "Private CLI adapter/production open helper/core SDK, not Tauri IPC, installer, standalone or native GUI acceptance",
+    "Browser boundary is a negative production function check in Node, not hosted browser UI",
+    "No Windows/macOS runtime, rendering or pptx-react snapshot hook acceptance"
+  ],
+  "platforms": {
+    "linux": "Actual verified private conversion, production open helper, pinned real presentation engine edit/Undo/Redo/PPTX-save/fresh reopen; independent package/theme oracle confirms failed fill fidelity. No native GUI.",
+    "browser": "Real negative production capability/open functions in Node without Tauri bridge; hosted browser UI NOT RUN.",
+    "windows": "NOT RUN; Linux-only scope.",
+    "macos": "NOT RUN; Linux-only scope."
+  },
+  "retainedPackage": {
+    "path": "docs/tests/uop-2026-11-23/retained/uop-runtime-result.zip",
+    "bytes": 85190,
+    "sha256": "e5e3ae456b1c30eb01215797dcc465ba0f3913fb9c2b7794fe965ee814e38839",
+    "contents": "Unchanged actual source, permission excerpt/receipts, source oracle, converter and saved/reopened PPTX, engine snapshots/reports and complete runtime binding; no private runtime binary or complete publisher article"
+  },
+  "evidenceFiles": {
+    "runtime": [
+      {
+        "path": "converted-independent.json",
+        "bytes": 10583,
+        "sha256": "6dce0662089e5e728f504e121fc26203600c46c28ed0d6548107a81c36a9267e"
+      },
+      {
+        "path": "converted.pptx",
+        "bytes": 20649,
+        "sha256": "db92ff750e7eee1a38b5eb2d889fa55da1fed21681609f49b5d07e59a6459c92"
+      },
+      {
+        "path": "converter-report.json",
+        "bytes": 5754,
+        "sha256": "b80dea6e41a10cf5b45f8288110fd9fd2d38639429a0724d2216e703cebb16d8"
+      },
+      {
+        "path": "converter.log",
+        "bytes": 148,
+        "sha256": "644385dc4b3234db29a5219656426909fa70d0fe9200ed060a5dc025b3a80ce6"
+      },
+      {
+        "path": "engine-import-snapshot.json",
+        "bytes": 17865,
+        "sha256": "9d6d1093e02204f3fb819f33ce32023053a3b19acf63fdab46f0aceda8f28418"
+      },
+      {
+        "path": "engine-report.json",
+        "bytes": 10434,
+        "sha256": "66d14eaabd2e297954da2357e8fd58f210dd09234121c85cb684d103ba430570"
+      },
+      {
+        "path": "open-result.json",
+        "bytes": 637,
+        "sha256": "9022656c617a5872f27ef06ca1170e1651be230eac16678379678cf2eca34eb1"
+      },
+      {
+        "path": "publisher-permission.json",
+        "bytes": 361,
+        "sha256": "5abf7d90d1bc3c673f83cb81d3484b5b6b61cb4040ee9f2f288441dc9f823aed"
+      },
+      {
+        "path": "publisher-response.json",
+        "bytes": 1847,
+        "sha256": "ab1018c083b2ca5cbf37fe7eb1ba54aac49968a5f892f3d2322897e5345a247d"
+      },
+      {
+        "path": "reopened-saved-independent.json",
+        "bytes": 10613,
+        "sha256": "be2c02899f1e2f17754c0d27c73119ed3abea223f3f3de5bb96e0da87e1f1c24"
+      },
+      {
+        "path": "reopened-saved.pptx",
+        "bytes": 20167,
+        "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2"
+      },
+      {
+        "path": "runtime-base-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "runtime-binding.json",
+        "bytes": 4503,
+        "sha256": "a672ad0413e8135b930b8d3745c9091d46c8662174d6c8677b35d4ea84aa5a6d"
+      },
+      {
+        "path": "runtime-consumer-verification.json",
+        "bytes": 491,
+        "sha256": "dea59ac61af9bd12e1056ca8a30c20c0bf480bea69d12e044fbd2255c24bc602"
+      },
+      {
+        "path": "runtime-coordinator-descriptor.json",
+        "bytes": 6099,
+        "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6"
+      },
+      {
+        "path": "runtime-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "saved-independent.json",
+        "bytes": 10604,
+        "sha256": "b360f8360c989445731bd93b7cae46ffd92b05adba492502fda8e208cd0b94a7"
+      },
+      {
+        "path": "saved.pptx",
+        "bytes": 20167,
+        "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2"
+      },
+      {
+        "path": "source-oracle.json",
+        "bytes": 12945,
+        "sha256": "a61070ff5daf387962e2ea77ed16d2ed3a98ca5c33b6615f27566c2cd4da90f4"
+      },
+      {
+        "path": "source-response.json",
+        "bytes": 994,
+        "sha256": "4ce167d47019e52f169e2e98f6254e0ef30ae7d189c8074c0781ddac166a7ec9"
+      },
+      {
+        "path": "source.uop",
+        "bytes": 204509,
+        "sha256": "7d204f66f3e15a76176145f917089b204f1160ff819a898aa0dd61e977c39c7d"
+      }
+    ],
+    "analysis": [
+      {
+        "path": "input-verification.json",
+        "bytes": 768,
+        "sha256": "d84b3baae8b904ff3272e9e6b3185532c66aeff0e20ce68da47987991bc277ba"
+      },
+      {
+        "path": "input/converted-independent.json",
+        "bytes": 10583,
+        "sha256": "6dce0662089e5e728f504e121fc26203600c46c28ed0d6548107a81c36a9267e"
+      },
+      {
+        "path": "input/converted.pptx",
+        "bytes": 20649,
+        "sha256": "db92ff750e7eee1a38b5eb2d889fa55da1fed21681609f49b5d07e59a6459c92"
+      },
+      {
+        "path": "input/converter-report.json",
+        "bytes": 5754,
+        "sha256": "b80dea6e41a10cf5b45f8288110fd9fd2d38639429a0724d2216e703cebb16d8"
+      },
+      {
+        "path": "input/converter.log",
+        "bytes": 148,
+        "sha256": "644385dc4b3234db29a5219656426909fa70d0fe9200ed060a5dc025b3a80ce6"
+      },
+      {
+        "path": "input/engine-import-snapshot.json",
+        "bytes": 17865,
+        "sha256": "9d6d1093e02204f3fb819f33ce32023053a3b19acf63fdab46f0aceda8f28418"
+      },
+      {
+        "path": "input/engine-report.json",
+        "bytes": 10434,
+        "sha256": "66d14eaabd2e297954da2357e8fd58f210dd09234121c85cb684d103ba430570"
+      },
+      {
+        "path": "input/open-result.json",
+        "bytes": 637,
+        "sha256": "9022656c617a5872f27ef06ca1170e1651be230eac16678379678cf2eca34eb1"
+      },
+      {
+        "path": "input/publisher-permission.json",
+        "bytes": 361,
+        "sha256": "5abf7d90d1bc3c673f83cb81d3484b5b6b61cb4040ee9f2f288441dc9f823aed"
+      },
+      {
+        "path": "input/publisher-response.json",
+        "bytes": 1847,
+        "sha256": "ab1018c083b2ca5cbf37fe7eb1ba54aac49968a5f892f3d2322897e5345a247d"
+      },
+      {
+        "path": "input/reopened-saved-independent.json",
+        "bytes": 10613,
+        "sha256": "be2c02899f1e2f17754c0d27c73119ed3abea223f3f3de5bb96e0da87e1f1c24"
+      },
+      {
+        "path": "input/reopened-saved.pptx",
+        "bytes": 20167,
+        "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2"
+      },
+      {
+        "path": "input/runtime-base-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "input/runtime-binding.json",
+        "bytes": 4503,
+        "sha256": "a672ad0413e8135b930b8d3745c9091d46c8662174d6c8677b35d4ea84aa5a6d"
+      },
+      {
+        "path": "input/runtime-consumer-verification.json",
+        "bytes": 491,
+        "sha256": "dea59ac61af9bd12e1056ca8a30c20c0bf480bea69d12e044fbd2255c24bc602"
+      },
+      {
+        "path": "input/runtime-coordinator-descriptor.json",
+        "bytes": 6099,
+        "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6"
+      },
+      {
+        "path": "input/runtime-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "input/saved-independent.json",
+        "bytes": 10604,
+        "sha256": "b360f8360c989445731bd93b7cae46ffd92b05adba492502fda8e208cd0b94a7"
+      },
+      {
+        "path": "input/saved.pptx",
+        "bytes": 20167,
+        "sha256": "2e337ac21f12bcd9b4859eeabfe383f533da953a9dec082bd8a5b2f5a0f2a7a2"
+      },
+      {
+        "path": "input/source-oracle.json",
+        "bytes": 12945,
+        "sha256": "a61070ff5daf387962e2ea77ed16d2ed3a98ca5c33b6615f27566c2cd4da90f4"
+      },
+      {
+        "path": "input/source-response.json",
+        "bytes": 994,
+        "sha256": "4ce167d47019e52f169e2e98f6254e0ef30ae7d189c8074c0781ddac166a7ec9"
+      },
+      {
+        "path": "input/source.uop",
+        "bytes": 204509,
+        "sha256": "7d204f66f3e15a76176145f917089b204f1160ff819a898aa0dd61e977c39c7d"
+      },
+      {
+        "path": "theme-analysis.json",
+        "bytes": 14084,
+        "sha256": "cf660d4e2b7d294ca29769211cd6cb752337f4fba22e6e5aa72f2b33db91f0c4"
+      }
+    ]
+  }
+}
