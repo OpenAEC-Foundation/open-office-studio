@@ -1,0 +1,133 @@
+name: P4 Windows seven-product split and six standalone native hosts
+on:
+  push:
+    branches: [codex/standalone-windows-p4-2026-11-23]
+    paths: [.github/standalone-windows-p4.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: standalone-windows-p4-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    outputs:
+      ready: ${{ steps.plan.outputs.ready }}
+      apps: ${{ steps.children.outputs.apps || '[]' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: plan
+        run: python scripts/standalone-windows-p4/intake.py plan .github/standalone-windows-p4.json
+      - name: One canonical download, source/job/archive/report/NSIS/payload gates
+        if: steps.plan.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/standalone-windows-p4/intake.py prepare .github/standalone-windows-p4.json .local/p4-windows-split
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-office-package
+          path: .local/p4-windows-split/office
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-writer-package
+          path: .local/p4-windows-split/writer
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-spreadsheet-package
+          path: .local/p4-windows-split/spreadsheet
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-presentation-package
+          path: .local/p4-windows-split/presentation
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-email-package
+          path: .local/p4-windows-split/email
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-notition-package
+          path: .local/p4-windows-split/notition
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-database-package
+          path: .local/p4-windows-split/database
+          compression-level: 0
+      - id: children
+        name: Bind official child ZIP digests; separate Suite consumer contract
+        if: steps.plan.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/standalone-windows-p4/bind_children.py .local/p4-windows-split
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.plan.outputs.ready == 'true'
+        with:
+          name: standalone-windows-p4-binding
+          path: .local/p4-windows-split/provenance
+          include-hidden-files: true
+          if-no-files-found: error
+  app:
+    needs: prepare
+    if: needs.prepare.outputs.ready == 'true'
+    runs-on: windows-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Strict whole own-child ZIP and unchanged app-only input
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OOS_QA_APP: ${{ matrix.app }}
+          OOS_QA_CHILD_ID: ${{ matrix.artifactId }}
+          OOS_QA_CHILD_SHA: ${{ matrix.artifactSha256 }}
+          OOS_QA_RECEIPT_SHA: ${{ matrix.receiptSha256 }}
+          OOS_QA_PREPARER_RUN: ${{ matrix.preparerRun }}
+          OOS_QA_PREPARER_HARNESS: ${{ matrix.preparerHarness }}
+        run: python scripts/standalone-windows-p4/consume.py .github/standalone-windows-p4.json .local/standalone-windows-package
+      - name: Test driver only; no app build and no suite resources
+        run: npm install --prefix .local/standalone-windows-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Actual unchanged signed native app, Ctrl-save and independent reopen oracle
+        env:
+          OOS_QA_APP: ${{ matrix.app }}
+          OOS_QA_HARNESS: ${{ github.sha }}
+          OOS_QA_PREPARER_RUN: ${{ matrix.preparerRun }}
+          OOS_QA_PREPARER_HARNESS: ${{ matrix.preparerHarness }}
+        run: node scripts/standalone-windows-p4/native.mjs .local/standalone-windows-package .local/p4-native-${{ matrix.app }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-windows-p4-${{ matrix.app }}-proof
+          path: |
+            .local/p4-native-${{ matrix.app }}
+            .local/standalone-windows-package/package.json
+            .local/standalone-windows-package/canonical-package-report.json
+            .local/standalone-windows-package/consumer-binding.json
+          include-hidden-files: true
+          if-no-files-found: error
