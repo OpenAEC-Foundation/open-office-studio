@@ -27,9 +27,12 @@ actually validate Authenticode with timestamps. No app is rebuilt.
 ## Suite consumer contract for750b
 
 `suite-consumer.pending.json` is a reviewable **blocked template**. The actual
-schema is emitted by `bind_children.py` as `provenance/suite-consumer.json`,
+final non-null schema is `suite-consumer.schema.json`. Its descriptor is emitted
+by `bind_children.py` as `provenance/suite-consumer.json`,
 alongside `provenance/binding.json` in artifact `standalone-windows-p4-binding`.
 The final descriptor replaces null fields only with verified actual identities.
+The pending template's `state` and `expectedChildZipMembers` are explanatory;
+the emitted descriptor need not contain them. Validate the final schema instead.
 Its `suite` is the producer receipt augmented after upload with
 `childArtifact` and `packageReceiptSha256`.
 
