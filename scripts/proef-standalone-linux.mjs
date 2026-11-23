@@ -1299,6 +1299,14 @@ async function packageCase(pkg) {
         getGuard: () => guard,
         start: async (path) => ({ pid: await start([path]) }),
         close: quit,
+        observeNativeProcessState: async () => ({
+          sessionId: session,
+          driverPid: driver?.pid,
+          driverExitCode: driver?.exitCode,
+          driverSignalCode: driver?.signalCode,
+          ownedApplicationResources: await ownedApplicationResources(),
+          driverLogTail: driverLog.slice(-16000),
+        }),
       });
       assert.equal(report.gnmRegression.status, "passed");
       assert.deepEqual(

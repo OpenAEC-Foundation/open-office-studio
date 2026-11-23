@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile, realpath, stat } from "node:fs/promises";
+import { mkdir, readFile, writeFile, realpath, stat, readdir } from "node:fs/promises";
 import { resolve, join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
@@ -432,6 +432,7 @@ export async function runStandaloneGnmProbe(context) {
       verifyApp: stage => guard.verify(stage),
     });
     report.pickers.push({phase, ...evidence});
+    (report.nativeProcessObservations ??= []).push({phase, at: new Date().toISOString(), stage: "after exact native OpenFile before content observation", ...await context.observeNativeProcessState()});
     await ready(["Sheet1", "Sheet2"]);
   }
   async function oracle(source, xlsx, name, marker = true) {
@@ -585,6 +586,37 @@ export async function runStandaloneGnmProbe(context) {
     report.status = "failed";
     report.failedPhase = phase;
     report.error = String(e.stack ?? e);
+    // An invalid WebDriver session must not erase native process/window evidence.
+    // These are read-only diagnostics, with no extra input, delay or retry.
+    report.nativeFailureProcessState = await context.observeNativeProcessState().catch(error => ({error: String(error)}));
+    try {
+      const b = guard.evidence.binding, pid = Number(b.pid);
+      report.nativeFailureOwner = {
+        pid, expected: b,
+        actualStartTime: writer362ProcStartTime(await readFile(`/proc/${pid}/stat`, "utf8"), pid),
+        actualExecutable: await realpath(`/proc/${pid}/exe`),
+        actualExecutableSha256: hash(await readFile(`/proc/${pid}/exe`)),
+        status: await readFile(`/proc/${pid}/status`, "utf8"),
+      };
+      const owner = report.nativeFailureOwner;
+      assert.equal(owner.actualStartTime, b.startTime);
+      assert.equal(owner.actualExecutable, b.executable);
+      assert.equal(owner.actualExecutableSha256, b.sha256);
+      report.nativeFailureCapture = JSON.parse((await exec("/usr/bin/python3", [join(here,"linux-p2-native-capture.py"),String(pid),guard.evidence.xid,b.startTime,b.executable,join(out,"failure-native-window.png")],{env,timeout:10000})).stdout);
+    } catch (error) { report.nativeFailureCaptureError = String(error.stack ?? error); }
+    try {
+      const files = [];
+      const inspect = async directory => {
+        for (const entry of await readdir(directory,{withFileTypes:true})) {
+          if (files.length >= 300) return;
+          const path = join(directory,entry.name);
+          if (entry.isDirectory()) await inspect(path);
+          else if (entry.isFile()) { const s=await stat(path);files.push({path:path.replace(env.HOME,"<own-home>"),bytes:s.size,...(s.size<20000000?{sha256:hash(await readFile(path))}:{})}); }
+        }
+      };
+      await inspect(out); await inspect(env.XDG_CACHE_HOME);
+      report.nativeFailureOwnFiles = files;
+    } catch (error) { report.nativeFailureOwnFilesError = String(error); }
     report.failureObservation = await observation().catch((e) => ({
       error: String(e),
     }));
