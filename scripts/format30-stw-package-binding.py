@@ -79,7 +79,7 @@ def main():
     assert receipt_entries and all(e["sha256"] == descriptor["runtimeReceiptSha256"] for e in receipt_entries)
     metadata_by_name = {e["path"].split("/meta/")[-1]: e for e in result["packagedMetadata"]}
     for entry in result["testedMetadata"]:
-        name = entry["path"].split("/meta/")[-1]
+        name = entry["path"].removeprefix("meta/")
         if name != "receipt.json":
             assert (entry["bytes"], entry["sha256"]) == (metadata_by_name[name]["bytes"], metadata_by_name[name]["sha256"])
     result.update(applicationCommit=SOURCE, applicationTree=TREE, version="2026.48.1", parent=parent,
