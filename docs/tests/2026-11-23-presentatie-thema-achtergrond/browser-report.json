@@ -1,0 +1,83 @@
+{
+  "commit": "6d6898b77c144d140f13ec3c29381ad0b6ef9549",
+  "dirtyWorktree": false,
+  "platform": "linux",
+  "routes": [
+    {
+      "route": "/",
+      "bundle": "dist",
+      "checks": [
+        "actual mapped-theme preview and painted canvas; selected slides use semantic accent1",
+        "focused keyboard edit, real download, schemeClr/own themes/unselected slide/source preservation",
+        "fresh reopen retains binding and real theme change recolors without background rewrite",
+        "valid unsupported themeOverride is visibly bounded; custom solid color remains available"
+      ],
+      "savedSha256": "3210175c4141a7bf77cd2ccfe8c9ae09953b34b14fe5f4338a6ab66ca1474672",
+      "pass": true
+    },
+    {
+      "route": "/office/",
+      "bundle": "dist-hosted",
+      "checks": [
+        "actual mapped-theme preview and painted canvas; selected slides use semantic accent1",
+        "focused keyboard edit, real download, schemeClr/own themes/unselected slide/source preservation",
+        "fresh reopen retains binding and real theme change recolors without background rewrite",
+        "valid unsupported themeOverride is visibly bounded; custom solid color remains available"
+      ],
+      "savedSha256": "72239c4fafe5ee583101396004f91420316d5ae7870aaf6ccf652230b287e392",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "nativeGui": false,
+  "captureStarted": false,
+  "fixtureSha256": "900ff485d99595a6ff6098c6205524fc31ded15cf039f581a7ef56edd7e07683",
+  "expected": {
+    "scheme": "accent1",
+    "first": "#12AB34",
+    "second": "#AB3412",
+    "unselected": "#EFEFEF"
+  },
+  "themeOverrideLimitation": {
+    "fixtureSha256": "f81fe817a6d24b80bff3bab3c24e606a1bb83a8950bc54da608f5c745efbbe82",
+    "oracleAccent1": "#FA1234",
+    "enginePaint": {
+      "kind": "solid",
+      "color": "#4F81BD"
+    },
+    "separateKnownRendererLimit": true,
+    "boundedAvailability": {
+      "beschikbaar": false,
+      "reden": "unsupportedOverride"
+    }
+  },
+  "boundaryControl": {
+    "disabled": true,
+    "html": "<option value=\"themakleur\" disabled=\"\">Theme color</option>",
+    "selectDisabled": false
+  },
+  "boundaryDialog": {
+    "index": 0,
+    "mode": "background",
+    "palette": {
+      "beschikbaar": false,
+      "reden": "unsupportedOverride"
+    },
+    "part": "ppt/slides/slide1.xml"
+  },
+  "boundarySlide": [
+    {
+      "index": 0,
+      "current": "page"
+    },
+    {
+      "index": 1,
+      "current": null
+    },
+    {
+      "index": 2,
+      "current": null
+    }
+  ]
+}

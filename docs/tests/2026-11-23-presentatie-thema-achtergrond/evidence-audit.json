@@ -1,0 +1,101 @@
+{
+  "productCommit": "33711565a4dde5a0c81c34f9bc4a8bcfd9d655b2",
+  "p2Base": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "windowsRun": 45157744469,
+  "windowsQaCommit": "90cafd15a48861668015450cb93174903961bedf",
+  "linuxBrowserRun": 45159885697,
+  "linuxQaCommit": "6d6898b77c144d140f13ec3c29381ad0b6ef9549",
+  "exactProductEquivalenceVerified": true,
+  "allowedQaOnlyDifferences": [
+    ".github/workflows/presentation-78-theme-background.yml",
+    "scripts/proef-presentatie-thema-achtergrond.mjs"
+  ],
+  "testsPerOs": {
+    "passed": 29,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "run": 45157744469,
+      "id": 14808574522,
+      "name": "presentation-78-theme-background-windows",
+      "bytes": 2182,
+      "zipSha256": "e6b245ace39869511988919d88e6840be85d71d3e1548ff9f1e73c35a71f5aa0",
+      "allExtractedFilesByteVerified": true
+    },
+    {
+      "run": 45159885697,
+      "id": 14809703935,
+      "name": "presentation-78-theme-background-linux",
+      "bytes": 244719,
+      "zipSha256": "e1ed2fbfdbbe109c66124f8b761fdfd169fcbdd14be518b0b08df8c480fd946a",
+      "allExtractedFilesByteVerified": true
+    },
+    {
+      "run": 45159413121,
+      "id": 14809294049,
+      "name": "presentation-78-theme-background-linux",
+      "bytes": 191494,
+      "zipSha256": "f8c0caf38058bf08fc6b26bedc5435cbe0c197615f08853da33ea2cd4dfc7c98",
+      "allExtractedFilesByteVerified": true
+    }
+  ],
+  "browserRoutes": [
+    {
+      "route": "/",
+      "pass": true,
+      "checks": [
+        "actual mapped-theme preview and painted canvas; selected slides use semantic accent1",
+        "focused keyboard edit, real download, schemeClr/own themes/unselected slide/source preservation",
+        "fresh reopen retains binding and real theme change recolors without background rewrite",
+        "valid unsupported themeOverride is visibly bounded; custom solid color remains available"
+      ]
+    },
+    {
+      "route": "/office/",
+      "pass": true,
+      "checks": [
+        "actual mapped-theme preview and painted canvas; selected slides use semantic accent1",
+        "focused keyboard edit, real download, schemeClr/own themes/unselected slide/source preservation",
+        "fresh reopen retains binding and real theme change recolors without background rewrite",
+        "valid unsupported themeOverride is visibly bounded; custom solid color remains available"
+      ]
+    }
+  ],
+  "browserPageErrors": [],
+  "independentSavedFileChecks": [
+    {
+      "file": "normal-saved.pptx",
+      "sha256": "3210175c4141a7bf77cd2ccfe8c9ae09953b34b14fe5f4338a6ab66ca1474672",
+      "schemeClrFirstTwoSlides": "accent1",
+      "unselectedThirdSlideRgb": "EFEFEF",
+      "originalClrMapOverridePreserved": true,
+      "notesEditVerified": true
+    },
+    {
+      "file": "hosted-saved.pptx",
+      "sha256": "72239c4fafe5ee583101396004f91420316d5ae7870aaf6ccf652230b287e392",
+      "schemeClrFirstTwoSlides": "accent1",
+      "unselectedThirdSlideRgb": "EFEFEF",
+      "originalClrMapOverridePreserved": true,
+      "notesEditVerified": true
+    }
+  ],
+  "sourceFixtureSha256": "900ff485d99595a6ff6098c6205524fc31ded15cf039f581a7ef56edd7e07683",
+  "themeOverrideLimitation": {
+    "fixtureSha256": "f81fe817a6d24b80bff3bab3c24e606a1bb83a8950bc54da608f5c745efbbe82",
+    "oracleAccent1": "#FA1234",
+    "enginePaint": {
+      "kind": "solid",
+      "color": "#4F81BD"
+    },
+    "separateKnownRendererLimit": true,
+    "boundedAvailability": {
+      "beschikbaar": false,
+      "reden": "unsupportedOverride"
+    }
+  },
+  "limitationDomDisabled": true,
+  "qualification": "Hash/ZIP/XML audit only. macOS/native GUI/package acceptance not run; no local browser/GUI/capture session."
+}

@@ -1,0 +1,89 @@
+{
+  "commit": "f80bd7673437b96a1cb36d6854a418b9e537875a",
+  "dirtyWorktree": false,
+  "platform": "linux",
+  "routes": [
+    {
+      "route": "/",
+      "bundle": "dist",
+      "checks": [
+        "actual mapped-theme preview and painted canvas; selected slides use semantic accent1",
+        "focused keyboard edit, real download, schemeClr/own themes/unselected slide/source preservation",
+        "fresh reopen retains binding and real theme change recolors without background rewrite"
+      ],
+      "savedSha256": "79a64f2d528d653fbefd968b74b7abc0105451e66dff59ea24710448d65c88d2"
+    }
+  ],
+  "errors": [],
+  "pass": false,
+  "nativeGui": false,
+  "captureStarted": false,
+  "fixtureSha256": "8c02e1664e16dd4cf73409887ab14e0d6e6b64bd30d761fe8e6b25c8eae3ed62",
+  "expected": {
+    "scheme": "accent1",
+    "first": "#12AB34",
+    "second": "#AB3412",
+    "unselected": "#EFEFEF"
+  },
+  "themeOverrideLimitation": {
+    "fixtureSha256": "270ae2e2833c0cd1d65f95a7f52a8c38b0d8e9f6f606abf0e56a973504d731da",
+    "oracleAccent1": "#FA1234",
+    "enginePaint": {
+      "kind": "solid",
+      "color": "#4F81BD"
+    },
+    "separateKnownRendererLimit": true,
+    "boundedAvailability": {
+      "beschikbaar": false,
+      "reden": "unsupportedOverride"
+    }
+  },
+  "boundaryControl": {
+    "disabled": true,
+    "html": "<option value=\"themakleur\" disabled=\"\">Theme color</option>",
+    "selectDisabled": false
+  },
+  "boundaryDialog": {
+    "index": 0,
+    "mode": "background",
+    "palette": {
+      "beschikbaar": false,
+      "reden": "unsupportedOverride"
+    },
+    "part": "ppt/slides/slide1.xml"
+  },
+  "boundarySlide": [
+    {
+      "index": 0,
+      "current": "page"
+    },
+    {
+      "index": 1,
+      "current": null
+    },
+    {
+      "index": 2,
+      "current": null
+    }
+  ],
+  "boundarySerialization": {
+    "sha256": "c707229c9535ed2aae006cfa5b5d4723f7636988d8315432b17ba4b29e9d447b",
+    "availability": {
+      "beschikbaar": false,
+      "reden": "unsupportedOverride"
+    },
+    "layoutPath": "ppt/slideLayouts/slideLayout7.xml",
+    "themeOverrideRelationships": [
+      {
+        "id": "rId2",
+        "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/themeOverride",
+        "target": "../theme/qaOverride.xml",
+        "extern": false
+      }
+    ],
+    "overridePartPresent": true,
+    "themeOverrideParts": [
+      "ppt/theme/qaOverride.xml"
+    ]
+  }
+}
