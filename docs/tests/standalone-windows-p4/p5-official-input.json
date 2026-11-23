@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "scope": "Official metadata gate only; complete parent ZIP verification and native cases still pending",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "producer": 45177730188,
+  "attempt": 1,
+  "job": 137703365803,
+  "attemptEndpoint": "actions/runs/45177730188/attempts/1",
+  "jobListEndpoint": "actions/runs/45177730188/attempts/1/jobs?per_page=100",
+  "jobStarted": "2026-11-23T12:48:24Z",
+  "jobCompleted": "2026-11-23T14:34:04Z",
+  "artifactId": 14828525724,
+  "archiveSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d",
+  "archiveBytes": 2037941610,
+  "artifactCreated": "2026-11-23T14:33:52Z",
+  "artifactUpdated": "2026-11-23T14:33:52Z",
+  "gates": [
+    {
+      "name": "Pakket bouwen (Windows, ondertekend)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 29,
+      "started_at": "2026-11-23T12:57:14Z",
+      "completed_at": "2026-11-23T14:14:53Z"
+    },
+    {
+      "name": "Authenticode controleren (installer, programma en uninstaller)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 31,
+      "started_at": "2026-11-23T14:14:53Z",
+      "completed_at": "2026-11-23T14:20:21Z"
+    },
+    {
+      "name": "Windows-installer werkelijk uitpakken en controleren",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 34,
+      "started_at": "2026-11-23T14:20:21Z",
+      "completed_at": "2026-11-23T14:24:10Z"
+    },
+    {
+      "name": "Meet- en inhoudscontrole voor de meegeleverde runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 35,
+      "started_at": "2026-11-23T14:24:10Z",
+      "completed_at": "2026-11-23T14:24:16Z"
+    },
+    {
+      "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 36,
+      "started_at": "2026-11-23T14:24:16Z",
+      "completed_at": "2026-11-23T14:33:04Z"
+    }
+  ],
+  "nativeGo": "Integration conditional authorization, exact original P5 Windows attempt1 only; no main/tag/publication"
+}

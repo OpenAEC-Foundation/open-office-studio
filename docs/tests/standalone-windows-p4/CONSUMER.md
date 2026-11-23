@@ -4,9 +4,13 @@
 Product source is `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 `e30879fd772871e690847c061ef66e6b81808a05`,2026.48.1; immutable branch
 `codex/release-candidate-2026-11-23-p5`. Release45177730188/attempt1,
-Windowsjob137703365803, publication disabled. No original official artifact/go
-exists yet. Config remains `ready:false` / `officialMetadataGo:false`; old P4
-bytes are invalid. The directory/workflow/config filenames retain their earlier
+Windowsjob137703365803, publication disabled. The original Windows attempt1 job
+succeeded at14:34:04UTC. Official artifact14828525724 is2037941610 bytes,
+ZIP SHA256 `24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d`.
+Config is now `ready:true` / `officialMetadataGo:true` under the conditional go;
+`p5-official-input.json` retains the exact source/attempt/job/time/gate binding.
+This is metadata acceptance; whole-ZIP verification and native cases follow.
+Old P4 bytes are invalid. The directory/workflow/config filenames retain their earlier
 P4 harness names for continuity; authoritative source identities and actual child
 artifact names are now P5. Integration subsequently granted conditional native
 QA go: once this exact Windows job succeeds and its required signing/package/
@@ -26,8 +30,9 @@ Product source `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 `e30879fd772871e690847c061ef66e6b81808a05`,2026.48.1.
 Official Release producer45177730188, Windowsjob137703365803, attempt1,
 artifact name `uitgave-Windows`. Fetch original official artifact metadata
-after this own job succeeds under integration's conditional go. Until then the config is `ready:false`
-and `officialMetadataGo:false`; null artifact identities are blocking, not wildcards.
+after this own job succeeds under integration's conditional go. This has now
+closed against the original official metadata above; null identities are blocking,
+not wildcards.
 The unrelated Mac/Linux jobs do not gate a successfully completed Windows job.
 Source-run provenance is fetched from `actions/runs/45177730188/attempts/1`,
 and the exact Windows job is selected from that same attempt's `/jobs` response.
