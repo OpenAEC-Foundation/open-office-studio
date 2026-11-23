@@ -1,0 +1,55 @@
+name: Issue 35 native Windows XLSB
+on:
+  push:
+    branches: [codex/xlsb35-native-windows-2026-11-23]
+    paths: [.github/xlsb35-native-windows.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: xlsb35-native-windows-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: windows-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce coordinated native XLSB intake
+        shell: pwsh
+        run: |
+          $plan=Get-Content .github/xlsb35-native-windows.json -Raw | ConvertFrom-Json
+          if ($plan.applicationCommit -cne 'dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b' -or $plan.applicationTree -cne '5a644e397ecc6af5452a49b6404edf953687d1b2' -or $plan.platform -cne 'Windows' -or $plan.coordinated -ne $true) { throw 'Uncoordinated or wrong native XLSB candidate' }
+      - name: Download and hash canonical P2 Windows artifact once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python qa/xlsb35-native-windows/packages.py .local/xlsb35-native-package
+      - name: Test driver only; no application build or product source mutation
+        run: npm install --prefix .local/xlsb35-native-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Real native Open/edit/Save/Ctrl-S/full-exit/new-process/reopen
+        env:
+          OOS_XLSB_NATIVE_HARNESS: ${{ github.sha }}
+        run: node qa/xlsb35-native-windows/native.mjs .local/xlsb35-native-package .local/xlsb35-native-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: xlsb35-native-Windows-proof
+          path: |
+            .local/xlsb35-native-proof
+            .local/xlsb35-native-package/package.json
+            .local/xlsb35-native-package/source-run.json
+            .local/xlsb35-native-package/source-job.json
+            .local/xlsb35-native-package/source-commit.json
+            .local/xlsb35-native-package/artifact-metadata.json
+            .local/xlsb35-native-package/canonical-package-report.zip
+            .local/xlsb35-native-package/canonical-package-report.json
+            .local/xlsb35-native-package/package-report-artifact-metadata.json
+          include-hidden-files: true
+          if-no-files-found: error

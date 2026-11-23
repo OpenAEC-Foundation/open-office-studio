@@ -1,0 +1,72 @@
+{
+  "sourceOrigin": "fb7e7b8ad95b9d13ed0ac1a33f70fd9906082588",
+  "nativeDriverOrigin": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+  "inheritedDriverPath": "scripts/format30-gnm/native-windows/native.mjs",
+  "bindings": [
+    {
+      "commit": "fb7e7b8ad95b9d13ed0ac1a33f70fd9906082588",
+      "origin": "qa/xlsb35-p2/oracle.py",
+      "target": "qa/xlsb35-native-windows/fixture/oracle.py",
+      "gitBlob": "dcb90a921de32b710e6443f554465ebcff95c9c2",
+      "sha256": "e75c41fd23fa4285b13351b143c6d9d6a7120e58fc16107c1af14476b0f6dae7",
+      "bytes": 7301
+    },
+    {
+      "commit": "fb7e7b8ad95b9d13ed0ac1a33f70fd9906082588",
+      "origin": "qa/xlsb35-p2/source-oracle.json",
+      "target": "qa/xlsb35-native-windows/fixture/source-oracle.json",
+      "gitBlob": "8b45e42b204bf6193a1700a5ecd6a287e9a9c7a0",
+      "sha256": "9775649195a30d4b4e9474c37e13309cfa9e8521a6cb9e864ae3b8e3c9e9a454",
+      "bytes": 1116
+    },
+    {
+      "commit": "fb7e7b8ad95b9d13ed0ac1a33f70fd9906082588",
+      "origin": "qa/xlsb35-p2/shared_formula.xlsb",
+      "target": "qa/xlsb35-native-windows/fixture/shared_formula.xlsb",
+      "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+      "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "bytes": 7651
+    },
+    {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "origin": "scripts/format30-gnm/native-windows/inspect.ps1",
+      "target": "qa/xlsb35-native-windows/inspect.ps1",
+      "gitBlob": "452f449c139f1e6f3797b30c8b46f0be38641f27",
+      "sha256": "c2b5cad4e2195901d1902ec8abc41db9e3e1c9f7790faebfd23ed49bef85b1b1",
+      "bytes": 2960
+    },
+    {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "origin": "scripts/format30-gnm/native-windows/webview-policy.ps1",
+      "target": "qa/xlsb35-native-windows/webview-policy.ps1",
+      "gitBlob": "dfb92c491644a98f2cd2850a7bf1b848121b12eb",
+      "sha256": "14b527cf53b587d480c33b1a9cdffcdc6a93ee66875d92e4ad17e11790f5bbcf",
+      "bytes": 2019
+    },
+    {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "origin": "scripts/format30-gnm/native-windows/cleanup-profile.ps1",
+      "target": "qa/xlsb35-native-windows/cleanup-profile.ps1",
+      "gitBlob": "de065e561dbf4bdcb2d0b6ec4289f9aca3c3b340",
+      "sha256": "1c58b28b58732ece1aae57ac9f4b409c2f5f429fd39a7c95fa7d25b21b550429",
+      "bytes": 1693
+    },
+    {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "origin": "scripts/format30-gnm/native-windows/windows-actions.ps1",
+      "target": "qa/xlsb35-native-windows/windows-actions.ps1",
+      "gitBlob": "7c6534936fe660e3ab4a60e171244b8e892d3c5a",
+      "sha256": "38ed9903cd69195a72d44b31b66e487ebf76013d298c53497f89a58fa5281345",
+      "bytes": 13025
+    },
+    {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "origin": "scripts/format30-gnm/native-windows/packages.py",
+      "target": "qa/xlsb35-native-windows/packages.py",
+      "gitBlob": "d49c5708094b867a441fda90b5ea3666f1749d4a",
+      "sha256": "d102636059de8861cb6c6e8bcfeb526988406df217e8b8fe2b77cb3c5fde5553",
+      "bytes": 7279
+    }
+  ],
+  "modifications": "Own XLSB source/30-cell oracle/scenario/default-XLSX checks; Open allowlist XLSB/XLSX only; canonical package and native identity/control/cleanup gates retained. GNM paths unchanged."
+}
