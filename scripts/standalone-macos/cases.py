@@ -232,7 +232,9 @@ class Case:
     def database(self):
         # Normal supported SQLite UI route; no direct WerkkopieClient/backend setup.
         before=digest(self.fixture)
-        self.button("Open database");self.file_dialog(self.fixture)
+        # Standalone header and welcome card may both be named Open database.
+        # Its documented native Command-O opens the ordinary OS file picker.
+        self.s.ax("key","cmd-o");self.file_dialog(self.fixture)
         self.button("Open anyway")
         self.button("standalone_data")
         snap=self.s.capture("database-table")
@@ -249,7 +251,7 @@ class Case:
         old=self.s.quit();self.s.start()
         if self.s.process.pid==old:raise Unavailable("Database reopened in same process")
         self.s.report["newPidReopenVerified"]=True
-        self.button("Open database");self.file_dialog(output)
+        self.s.ax("key","cmd-o");self.file_dialog(output)
         self.button("standalone_data");self.database_query();self.s.capture("database-reopened")
         self.s.write("reopened-oracle.json",verify("database",output))
 
