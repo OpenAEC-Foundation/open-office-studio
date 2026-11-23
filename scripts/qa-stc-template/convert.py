@@ -44,6 +44,8 @@ def main():
     env = dict(os.environ)
     env.pop("OPENAEC_CONVERSIE_PROGRAMMA", None)
     env.pop("OPENAEC_CONVERSIE_PROFIEL", None)
+    for name in ("GH_TOKEN", "GITHUB_TOKEN", "ACTIONS_RUNTIME_TOKEN", "ACTIONS_ID_TOKEN_REQUEST_TOKEN"):
+        env.pop(name, None)
     env.update(SAL_DISABLE_DEFAULTPRINTER="1", SAL_DISABLE_PRINTERLIST="1")
     with tempfile.TemporaryDirectory(prefix="stc-p2-") as temp:
         work = Path(temp)
