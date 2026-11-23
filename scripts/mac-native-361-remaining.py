@@ -6,6 +6,7 @@ import runpy
 import subprocess
 import time
 import zipfile
+from pathlib import PurePosixPath
 
 HERE = Path(__file__).parent
 PREFLIGHT = runpy.run_path(str(HERE / "mac-native-writer-preflight.py"))
@@ -15,12 +16,18 @@ RIGHT = [[row[0], "", row[1], row[2]] for row in ROWS]
 sha = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def verify_previous(identity):
-    ref = identity["previous361Core"]
-    path = HERE.parent / "docs/tests/2026-11-23-mac-native-body/P2-native-pass/report.json"
-    if sha(path) != ref["reportSha256"]:
-        raise RuntimeError("Reused original native report bytes differ")
-    old = json.loads(path.read_text(encoding="utf-8"))
+def preserved_report_path(relative):
+    value = PurePosixPath(relative)
+    if (value.is_absolute() or ".." in value.parts or "\\" in relative
+            or value.parts[:2] != ("docs", "tests") or value.name != "report.json"):
+        raise RuntimeError("Prior core must be a preserved docs/tests report")
+    path = HERE.parent / value
+    if not path.resolve().is_relative_to((HERE.parent/"docs/tests").resolve()):
+        raise RuntimeError("Prior core report escapes preserved evidence")
+    return path
+
+
+def validate_previous_core(identity, old):
     if (old["status"] != "native-core-passed" or old["nativePass"] is not True
             or old["nativeControlPreflight"]["status"] != "passed"
             or old["nativeOriginalTable"]["status"] != "core-passed"):
@@ -28,6 +35,18 @@ def verify_previous(identity):
     for key in ["sourceCommit", "sourceTree", "declaredVersion", "packageSha256", "executableSha256"]:
         if old["identity"][key] != identity[key]:
             raise RuntimeError("Remaining controls require the exact same source/package/executable: " + key)
+    if identity.get("requireSignedNotarized") is True and (old["identity"].get("requireSignedNotarized") is not True
+            or old.get("signedPackagePreflight", {}).get("status") != "passed"):
+        raise RuntimeError("Final signed controls require the same signed core preflight")
+
+
+def verify_previous(identity):
+    ref = identity["previous361Core"]
+    path = preserved_report_path(ref.get("reportPath", "docs/tests/2026-11-23-mac-native-body/P2-native-pass/report.json"))
+    if sha(path) != ref["reportSha256"]:
+        raise RuntimeError("Reused original native report bytes differ")
+    old = json.loads(path.read_text(encoding="utf-8"))
+    validate_previous_core(identity, old)
     api = lambda route: json.loads(subprocess.check_output(["gh", "api", "repos/OpenAEC-Foundation/open-office-studio/" + route]))
     run = api(f"actions/runs/{ref['run']}")
     artifact = api(f"actions/artifacts/{ref['artifactId']}")
@@ -75,8 +94,12 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
     report["native361Remaining"] = proof
     independent = identity.get("remaining361Scope") == "find-isolation-only"
     if independent:
-        proof["retainedTabFailure"] = verify_retained_tab_failure(identity)
-        proof["scope"] = "Clean independent native Find and two-document controls; failed Tab outcome retained"
+        if identity.get("finalSuite361Approved") is True:
+            proof["scope"] = "Final signed-package native Find and two-document controls; current-package core prerequisite, Tab history separate"
+            proof["historicalFailures"] = "Earlier P2 failures remain preserved; no earlier-source acceptance is reused"
+        else:
+            proof["retainedTabFailure"] = verify_retained_tab_failure(identity)
+            proof["scope"] = "Clean independent native Find and two-document controls; failed Tab outcome retained"
     source = HERE / "proeven/mac-body-original-361.docx"
     if sha(source) != "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1":
         raise RuntimeError("Original fixture changed")
@@ -112,17 +135,21 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
         return state["tables"][0]["cellTexts"]
 
     def save(path, expected, label):
+        before_sha, before_mtime = sha(path), path.stat().st_mtime_ns
         action("chord", "cmd-s")
         def observed():
             try:
-                return TABLE["saved_rows"](path) == expected
+                return (TABLE["saved_rows"](path) == expected
+                        and (sha(path) != before_sha or path.stat().st_mtime_ns != before_mtime))
             except (OSError, zipfile.BadZipFile):
                 return False
         wait(observed, "CommandS did not persist exact active-document cells: " + label)
         snapshot = out / (label + "-saved.docx")
         snapshot.write_bytes(path.read_bytes())
         proof["checks"].append({"name": label + " saved XML oracle", "path": str(snapshot),
-                                "sha256": sha(snapshot), "cells": TABLE["saved_rows"](snapshot)})
+                                "sha256": sha(snapshot), "cells": TABLE["saved_rows"](snapshot),
+                                "beforeSha256":before_sha,"beforeMtimeNs":before_mtime,
+                                "afterMtimeNs":path.stat().st_mtime_ns,"actualFileWriteObserved":True})
 
     def capture(label):
         folder = out / label; folder.mkdir()
@@ -250,6 +277,6 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
     quit_app()
     if sha(source) != "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1":
         raise AssertionError("Immutable original changed")
-    proof.update(status="find-isolation-passed-tab-retained-failed" if independent else "passed",
+    proof.update(status=("final-find-isolation-passed-tab-separate" if identity.get("finalSuite361Approved") is True else "find-isolation-passed-tab-retained-failed") if independent else "passed",
                  findIsolationPassed=True, sourceFixtureUnchanged=True)
     return proof

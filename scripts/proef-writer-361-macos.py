@@ -23,11 +23,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("identity", type=Path)
     parser.add_argument("pid", type=int)
-    parser.add_argument("action", choices=["snapshot", "raw-snapshot", "activate", "click-label", "click-input", "click-document-tab", "ax-press-label", "click-cell", "click-body-point", "type-test-character", "type-test-text", "chord"])
+    parser.add_argument("action", choices=["snapshot", "raw-snapshot", "activate", "click-label", "click-input", "click-document-tab", "ax-press-label", "click-cell", "click-body-point", "type-test-character", "type-test-text", "type-field374-marker", "chord"])
     parser.add_argument("report", type=Path)
     parser.add_argument("--target", default="")
     options = parser.parse_args()
     identity = json.loads(options.identity.read_text(encoding="utf-8"))
+    if (options.action == "type-field374-marker" or (options.action == "chord" and options.target in ["cmd-up", "cmd-right"])) and identity.get("field374NativeApproved") is not True:
+        raise PermissionError("Native field374 navigation/input requires its own explicit scope")
     for key, length in [("sourceCommit", 40), ("sourceTree", 40),
                         ("packageSha256", 64), ("executableSha256", 64)]:
         if not re.fullmatch("[a-f0-9]{" + str(length) + "}", identity.get(key, "")):

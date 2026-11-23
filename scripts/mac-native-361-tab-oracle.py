@@ -19,8 +19,12 @@ def run_oracle(action, launch_document, quit_app, current_pid, viewport, ready_s
                identity, ocr, out, report):
     out = Path(out); out.mkdir(parents=True, exist_ok=False)
     proof = {"status": "running", "diagnosticOnly": True, "nativePass": False,
-             "priorCore": R["verify_previous"](identity),
-             "retainedTabFailure": R["verify_retained_tab_failure"](identity), "checks": []}
+             "priorCore": R["verify_previous"](identity), "checks": []}
+    if identity.get("finalSuite361Approved") is True and identity.get("tabHistoryOracleApproved") is True:
+        proof["scope"] = "Final current signed-package Tab history with saved XML; no old-source acceptance transfer"
+        proof["historicalFailures"] = "Earlier P2 raw failures and follow-ups remain preserved separately"
+    else:
+        proof["retainedTabFailure"] = R["verify_retained_tab_failure"](identity)
     report["native361TabSaveOracle"] = proof
     source = HERE / "proeven/mac-body-original-361.docx"
     original_sha = "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1"

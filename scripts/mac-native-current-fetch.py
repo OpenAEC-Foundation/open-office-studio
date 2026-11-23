@@ -38,6 +38,9 @@ def verify_platform_origin(value, run, artifact, job):
             or job["status"] != "completed" or job["conclusion"] != "success"
             or "macos-latest" not in job["labels"]):
         raise RuntimeError("Exact successful Mac job / artifact / source identity differs")
+    if value.get("artifactAttempt") is not None and (run.get("run_attempt") != value["artifactAttempt"]
+            or job.get("run_attempt") != value["artifactAttempt"]):
+        raise RuntimeError("Official Mac producer attempt differs")
 
 
 def main():

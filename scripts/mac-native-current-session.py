@@ -58,12 +58,16 @@ def main():
     parser.add_argument("--acceptance", action="store_true")
     parser.add_argument("--remaining361", action="store_true")
     parser.add_argument("--tab-save-oracle", action="store_true")
+    parser.add_argument("--field374", action="store_true")
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text(encoding="utf-8"))
     if args.remaining361 and (not args.acceptance or identity.get("remaining361Approved") is not True):
         raise PermissionError("Remaining361 requires its own explicit QA scope")
     if args.tab_save_oracle and (not args.acceptance or args.remaining361 or identity.get("tabSaveOracleApproved") is not True):
         raise PermissionError("Tab save oracle requires its own diagnostic scope")
+    if args.field374 and (not args.acceptance or args.remaining361 or args.tab_save_oracle
+            or identity.get("field374NativeApproved") is not True or identity.get("requireSignedNotarized") is not True):
+        raise PermissionError("Separate field374 requires the exact signed Suite and its explicit scope")
     if args.acceptance and (identity.get("nativeBodyAcceptanceApproved") is not True or identity.get("diagnosticRenderingRoute") is not None):
         raise PermissionError("Acceptance needs an explicitly approved product package; a query-flag diagnostic cannot accept a product fix")
     if sys.platform != "darwin" or os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("OOS_361_EXECUTE") != "1" or identity.get("executionApproved") is not True:
@@ -89,6 +93,11 @@ def main():
                               "Native modal-dialog Undo and signed-package combination remain separate"])
     if args.tab_save_oracle:
         report.update(diagnosticOnly=True, acceptanceRequested=False)
+    if args.field374:
+        report.update(issue=374, native359Reopened=False, field374VisualApprovalRequired=True,
+                      limits=["Separate Suite DOCX title/adjacent-marker regression, with same-package signed-core prerequisite",
+                              "Current-host genuine preflight precedes marker input; shared immutable source/cache/boundary oracle retained",
+                              "Original PNG review remains required; no standalone Writer/STW import acceptance"])
     app = program = pid = app_container = None
     mount = out / "mount"
     mounted = started = False
@@ -227,6 +236,7 @@ def main():
         if len(apps) != 1:
             raise RuntimeError("Canonical DMG must expose one application")
         payload_info = plistlib.loads((apps[0] / "Contents/Info.plist").read_bytes())
+        report["payloadInfoPlistSha256"] = hashlib.sha256((apps[0]/"Contents/Info.plist").read_bytes()).hexdigest()
         payload_program = apps[0] / "Contents/MacOS" / payload_info["CFBundleExecutable"]
         payload_sha = hashlib.sha256(payload_program.read_bytes()).hexdigest()
         if identity.get("executableSha256") is not None:
@@ -241,15 +251,28 @@ def main():
         app_container = Path(tempfile.mkdtemp(prefix="writer361-owned-app-", dir=os.environ.get("RUNNER_TEMP")))
         report["ownedAppContainer"] = str(app_container)
         app = app_container / apps[0].name
-        shutil.copytree(apps[0], app, symlinks=True)
+        if identity.get("requireSignedNotarized") is True:
+            # Match the official release workflow's signed-app copy path,
+            # then independently verify code/resources/ticket before launch.
+            subprocess.run(["/bin/cp","-R",str(apps[0]),str(app_container)],check=True,capture_output=True,timeout=120)
+            report["appCopyMethod"]="Native cp -R, matching official signed Mac package preflight"
+        else:
+            shutil.copytree(apps[0], app, symlinks=True)
+            report["appCopyMethod"]="Existing unsigned diagnostic copytree; symlinks retained"
         subprocess.run(["hdiutil", "detach", str(mount)], check=True, timeout=30, capture_output=True)
         mounted = False
         info = plistlib.loads((app / "Contents/Info.plist").read_bytes())
+        report["installedInfoPlistSha256"] = hashlib.sha256((app/"Contents/Info.plist").read_bytes()).hexdigest()
+        report["installedBundleIdentity"] = {key:info.get(key) for key in ["CFBundleIdentifier","CFBundleExecutable","CFBundleName","CFBundleDisplayName","CFBundleShortVersionString","CFBundleVersion"]}
+        if report["installedInfoPlistSha256"] != report["payloadInfoPlistSha256"]:
+            raise RuntimeError("Installed Info.plist differs from the read-only DMG payload")
         if info.get("CFBundleShortVersionString") != identity["declaredVersion"]:
             raise RuntimeError("Installed bundle version differs from declared candidate")
         report["installedVersion"] = info["CFBundleShortVersionString"]
         if info.get("CFBundleIdentifier") != "org.openaec.office-studio":
             raise RuntimeError("Unexpected native bundle identity")
+        if info.get("CFBundleExecutable") != "open-office-studio":
+            raise RuntimeError("Unexpected native Suite executable name")
         program = (app / "Contents/MacOS" / info["CFBundleExecutable"]).resolve(strict=True)
         if hashlib.sha256(program.read_bytes()).hexdigest() != identity["executableSha256"]:
             raise RuntimeError("Canonical native executable SHA256 differs")
@@ -272,6 +295,21 @@ def main():
         for path, expected in [(original,"f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1"),(control,"c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d")]:
             if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
                 raise RuntimeError("Untouched baseline fixture bytes differ")
+        if args.field374:
+            prior=runpy.run_path(str(Path(__file__).with_name("mac-native-361-remaining.py")))
+            report["currentSignedCorePrerequisite"]=prior["verify_previous"](identity)
+            field=runpy.run_path(str(Path(__file__).with_name("mac-native-field374.py")))
+            if identity.get("field374SharedQaCommit") != field["SHARED"]:
+                raise RuntimeError("Explicit shared field374 QA commit pin differs")
+            field["verify_shared_checkout"](identity["field374SharedCheckout"])
+            report["host"]=subprocess.check_output(["sw_vers"],text=True)
+            preflight=runpy.run_path(str(Path(__file__).with_name("mac-native-writer-preflight.py")))
+            preflight["run_preflight"](action,launch_document,quit_app,lambda:pid,viewport["maximize_once"],
+                                       identity,ocr_binary,out/"field374-current-host-preflight",report,readiness_snapshot)
+            field["run_field374"](action,launch_document,quit_app,lambda:pid,viewport["maximize_once"],
+                                   identity,ocr_binary,out/"native-field374",report)
+            report.update(status="native-field374-content-passed-visual-pending",nativePass=False,diagnosticOnly=False)
+            return
         if args.tab_save_oracle:
             history = identity.get("tabHistoryOracleApproved") is True
             report.update(diagnosticOnly=True, experiment="Exactly three native Tabs, then planned newrow and CmdS/XML; earlier AX failures retained" +
@@ -290,10 +328,11 @@ def main():
                                         viewport["maximize_once"], readiness_snapshot, identity, ocr_binary,
                                         out / "native361-remaining", report)
             complete = result["status"] == "passed"
-            report.update(status="native361-remaining-passed" if complete else "native361-find-isolation-passed-tab-retained-failed",
+            final_find = result["status"] == "final-find-isolation-passed-tab-separate"
+            report.update(status="native361-remaining-passed" if complete else ("native361-final-find-isolation-passed-tab-separate" if final_find else "native361-find-isolation-passed-tab-retained-failed"),
                           nativePass=complete, native361RemainingPassed=complete, native361FindIsolationPassed=True,
                           issue361FullAcceptance=False,
-                          limits=["Only remaining Tab/cell typing/Find/two-document controls are newly executed" if complete else "Only clean Find/two-document controls and a short cell-typing preflight are newly executed; earlier failed Tab is retained, not retried",
+                          limits=["Only remaining Tab/cell typing/Find/two-document controls are newly executed" if complete else ("Only final signed-package Find/two-document controls and short cell preflight are newly executed; current-package Tab history stays separate" if final_find else "Only clean Find/two-document controls and a short cell-typing preflight are newly executed; earlier failed Tab is retained, not retried"),
                                   "Earlier same-package body/column core and quit/reopen are explicitly reused",
                                   "Native modal-dialog Undo and signed-package final combination are not executed here"])
             return

@@ -288,6 +288,26 @@ if !AXIsProcessTrusted() {
             }
             report["status"] = "input-sent"; report["testText"] = target
         } else { report["status"] = "blocked"; report["reason"] = "Synthetic text requires its exact owned document or Find input focus" }
+    } else if action == "type-field374-marker" {
+        let f = attr(app, kAXFocusedUIElementAttribute)
+        let e = f.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
+        let doc = e.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false
+        if target == " -- STW30 EDIT 2026-11-23", doc,
+           NSRunningApplication(processIdentifier: pid)?.isActive == true,
+           NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+            for character in target {
+                let units = Array(String(character).utf16)
+                for down in [true, false] {
+                    let event = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: down)
+                    event?.flags = []
+                    units.withUnsafeBufferPointer { buffer in event?.keyboardSetUnicodeString(stringLength: buffer.count, unicodeString: buffer.baseAddress!) }
+                    event?.postToPid(pid)
+                }
+                Thread.sleep(forTimeInterval: 0.01)
+            }
+            report["status"] = "input-sent"; report["field374Marker"] = target
+            report["unicodeCharacterCount"] = target.count
+        } else { report["status"] = "blocked"; report["reason"] = "Exact field374 marker requires actual owned Document input focus" }
     } else if action == "click-label" || action == "click-input" || action == "click-document-tab" {
         if matches.count == 1, let (p, s) = pointAndSize(matches[0]) {
             let center = CGPoint(x: p.x+s.width/2, y: p.y+s.height/2)
@@ -302,8 +322,21 @@ if !AXIsProcessTrusted() {
         let mappings: [String: (CGKeyCode, CGEventFlags)] = [
             "cmd-z": (6, .maskCommand), "cmd-shift-z": (6, [.maskCommand, .maskShift]),
             "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand), "cmd-q": (12, .maskCommand),
-            "cmd-f": (3, .maskCommand), "tab": (48, []), "shift-tab": (48, .maskShift), "escape": (53, [])]
-        if ["tab", "shift-tab", "escape"].contains(target), let (code, flags) = mappings[target] {
+            "cmd-f": (3, .maskCommand), "cmd-up": (126, .maskCommand), "cmd-right": (124, .maskCommand),
+            "tab": (48, []), "shift-tab": (48, .maskShift), "escape": (53, [])]
+        if ["cmd-up", "cmd-right"].contains(target), let (code, flags) = mappings[target] {
+            let f = attr(app, kAXFocusedUIElementAttribute)
+            let e = f.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
+            let doc = e.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false
+            if doc, NSRunningApplication(processIdentifier: pid)?.isActive == true,
+               NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+                for down in [true, false] {
+                    let event = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down)
+                    event?.flags = flags; event?.postToPid(pid)
+                }
+                report["status"] = "input-sent"; report["chord"] = target
+            } else { report["status"] = "blocked"; report["reason"] = "Native document navigation requires owned Document input focus" }
+        } else if ["tab", "shift-tab", "escape"].contains(target), let (code, flags) = mappings[target] {
             let focused = attr(app, kAXFocusedUIElementAttribute)
             let e = focused.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
             let doc = e.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false
