@@ -1,0 +1,256 @@
+{
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "qaRun": 45194487509,
+  "qaCommit": "548a342cb79e2db317c9157b83bbd7b49635c6b1",
+  "runConclusion": "failure",
+  "artifact": {
+    "id": 14828631845,
+    "node_id": "MDg6QXJ0aWZhY3QxNDgyODYzMTg0NQ==",
+    "name": "standalone-linux-spreadsheet",
+    "size_in_bytes": 5142530,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14828631845",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14828631845/zip",
+    "expired": false,
+    "digest": "sha256:948517759acfc3e4be36aa3436aa6f27b697286860bcdb41524df8c53599611f",
+    "created_at": "2026-11-23T14:41:27Z",
+    "updated_at": "2026-11-23T14:41:27Z",
+    "expires_at": "2027-02-21T14:27:57Z",
+    "workflow_run": {
+      "id": 45194487509,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/linux-release-input-p5-2026-11-23",
+      "head_sha": "548a342cb79e2db317c9157b83bbd7b49635c6b1"
+    }
+  },
+  "wholeZipSha256": "948517759acfc3e4be36aa3436aa6f27b697286860bcdb41524df8c53599611f",
+  "inputProducerRun": 45188332685,
+  "inputArtifact": 14824139421,
+  "inputZipSha256": "3d1863d088a45e3f93bfb568d53fa2924fd91782a0bacad28a6ed70e987fc41e",
+  "cases": [
+    {
+      "packageType": "appimage",
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+        "canonicalMember": "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+        "sha256": "950bb92b52af3977dd7f163670418acb72fc6230e20184c1a77a0bc23e2bc59d",
+        "bytes": 429849080
+      },
+      "payloadExecutableSha256": "3f0af57e037c355a1e871c4b07a2b321a5f12146e650da1af8b236a29fa7e3ac",
+      "identity": "org.openaec.spreadsheet-studio",
+      "nativeMetadata": {
+        "identifier": "org.openaec.spreadsheet-studio",
+        "name": "Open Spreadsheet Studio",
+        "version": "2026.48.1"
+      },
+      "coreXlsxStatus": "passed",
+      "corePids": [
+        4915,
+        5132
+      ],
+      "overallRawStatus": "failed",
+      "gnmCases": [
+        {
+          "extension": "gnm",
+          "status": "passed",
+          "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+          "sourceBytes": 2062,
+          "xlsx": "gnm-saved.xlsx",
+          "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+          "firstPid": 5253,
+          "reopenPid": 14366,
+          "cells": 8,
+          "formulas": 4,
+          "sheets": 2,
+          "edit": "Sheet2!A1 = GNM30 EDIT",
+          "originalUnchanged": true
+        }
+      ],
+      "gnmRawStatus": "failed",
+      "ownedApplicationClosed": true,
+      "ownedDriverClosed": true,
+      "ownedProfilesRemoved": true
+    },
+    {
+      "packageType": "deb",
+      "package": {
+        "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+        "canonicalMember": "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+        "sha256": "2975d44e7c0a6456aa0bd66c151a83b26ee9b2bd13a775a3c19db051fc15cd11",
+        "bytes": 383910260
+      },
+      "payloadExecutableSha256": "d56ad92c779e2cafb06c7b44cb23e1c56f2cc04e8e0b6475782bf2c8352197a2",
+      "identity": "org.openaec.spreadsheet-studio",
+      "nativeMetadata": {
+        "identifier": "org.openaec.spreadsheet-studio",
+        "name": "Open Spreadsheet Studio",
+        "version": "2026.48.1"
+      },
+      "coreXlsxStatus": "passed",
+      "corePids": [
+        23667,
+        23831
+      ],
+      "overallRawStatus": "passed",
+      "gnmCases": [
+        {
+          "extension": "gnm",
+          "status": "passed",
+          "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+          "sourceBytes": 2062,
+          "xlsx": "gnm-saved.xlsx",
+          "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+          "firstPid": 23941,
+          "reopenPid": 33189,
+          "cells": 8,
+          "formulas": 4,
+          "sheets": 2,
+          "edit": "Sheet2!A1 = GNM30 EDIT",
+          "originalUnchanged": true
+        },
+        {
+          "extension": "gnumeric",
+          "status": "passed",
+          "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+          "sourceBytes": 2062,
+          "xlsx": "gnumeric-saved.xlsx",
+          "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+          "firstPid": 33553,
+          "reopenPid": 42881,
+          "cells": 8,
+          "formulas": 4,
+          "sheets": 2,
+          "edit": "Sheet2!A1 = GNM30 EDIT",
+          "originalUnchanged": true
+        }
+      ],
+      "gnmRawStatus": "passed",
+      "ownedApplicationClosed": true,
+      "ownedDriverClosed": true,
+      "ownedProfilesRemoved": true
+    }
+  ],
+  "files": [
+    {
+      "path": "appimage-core-report.json.gz",
+      "bytes": 94327,
+      "sha256": "b2605e56bcf6b884def9f680306d3723f5752a07bcda630f5c8e98ac83b003f0"
+    },
+    {
+      "path": "appimage-gnm-report.json.gz",
+      "bytes": 140575,
+      "sha256": "a33bd59feec0f19bc2bc3bee79522bc53dd6fce000daacb7f6838da7093e18f1"
+    },
+    {
+      "path": "appimage-Synthetic spreadsheet.xlsx",
+      "bytes": 5037,
+      "sha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05"
+    },
+    {
+      "path": "appimage-reopened.png",
+      "bytes": 106150,
+      "sha256": "51e54733cf95cb3bb1fef39cc51e7df40fe21dceb369d5cc58974a285d04ee4b"
+    },
+    {
+      "path": "appimage-gnm-saved.xlsx",
+      "bytes": 75029,
+      "sha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4"
+    },
+    {
+      "path": "appimage-gnm-reopened-marker.png",
+      "bytes": 117567,
+      "sha256": "366fd7fa0fc57115c74c3f64c811caa2fe87cefd59feb4b0c916050e754dec8b"
+    },
+    {
+      "path": "appimage-gnm-reopened.json",
+      "bytes": 1570,
+      "sha256": "acb786ec36aee796918cff7dc7c99bd2c603195fa171c1fd5a30aa0e4ec60907"
+    },
+    {
+      "path": "appimage-gnm-import-open-protocol-receipt.json.gz",
+      "bytes": 5372,
+      "sha256": "14bd316d6f70943d90b6ee2ce8bf06a153bbc651c29a0edafdad801b439a0543"
+    },
+    {
+      "path": "appimage-gnumeric-import-open-protocol-receipt.json.gz",
+      "bytes": 5661,
+      "sha256": "96f2df4cab77215a3c81c38d36267b7bee9d386210d85af62936ea1d7dc05f91"
+    },
+    {
+      "path": "deb-core-report.json.gz",
+      "bytes": 361446,
+      "sha256": "baa152446dfbd6bd7e2c712813a1b2cb73ee16c64eea6be07f6b25c57e610bea"
+    },
+    {
+      "path": "deb-gnm-report.json.gz",
+      "bytes": 263946,
+      "sha256": "f3690f42425755b1c752c9a3f63bdc1ade656f0628d037ddf76a04b7d57da890"
+    },
+    {
+      "path": "deb-Synthetic spreadsheet.xlsx",
+      "bytes": 5037,
+      "sha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05"
+    },
+    {
+      "path": "deb-reopened.png",
+      "bytes": 106150,
+      "sha256": "51e54733cf95cb3bb1fef39cc51e7df40fe21dceb369d5cc58974a285d04ee4b"
+    },
+    {
+      "path": "deb-gnm-saved.xlsx",
+      "bytes": 75029,
+      "sha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4"
+    },
+    {
+      "path": "deb-gnm-reopened-marker.png",
+      "bytes": 117588,
+      "sha256": "a353a68fe798703d7f11e0209eee9d3fcdab26b3f5995ce5430be35288781098"
+    },
+    {
+      "path": "deb-gnm-reopened.json",
+      "bytes": 1570,
+      "sha256": "acb786ec36aee796918cff7dc7c99bd2c603195fa171c1fd5a30aa0e4ec60907"
+    },
+    {
+      "path": "deb-gnumeric-saved.xlsx",
+      "bytes": 75029,
+      "sha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4"
+    },
+    {
+      "path": "deb-gnumeric-reopened-marker.png",
+      "bytes": 118539,
+      "sha256": "96889814abc3614ad722c92c805a56865650f7e8a9e690dc251a25308d601478"
+    },
+    {
+      "path": "deb-gnumeric-reopened.json",
+      "bytes": 1570,
+      "sha256": "acb786ec36aee796918cff7dc7c99bd2c603195fa171c1fd5a30aa0e4ec60907"
+    },
+    {
+      "path": "deb-gnm-import-open-protocol-receipt.json.gz",
+      "bytes": 5421,
+      "sha256": "cc0f23d49e4854a24b88748eaa066aff0ba9c08e4457f8f6bd5740ac2ce8a98f"
+    },
+    {
+      "path": "deb-gnumeric-import-open-protocol-receipt.json.gz",
+      "bytes": 5559,
+      "sha256": "fcc1a064a9823c90a5778cc610a075e8740d886c1518cf7c73547e20d0fa8ccd"
+    },
+    {
+      "path": "independent-deb-gnumeric-oracle.json",
+      "bytes": 1631,
+      "sha256": "0ad02a1656392b8d655f8a8e2896aead18dd821aac80b6c55e49a759662a44c8"
+    }
+  ],
+  "pending": [
+    "AppImage second GNM alias .gnumeric: native OpenFile completes but WebDriver returns invalid session. No app-crash or driver cause proven from original logs. Bounded same-input AppImage-only run45197550291 adds read-only native failure diagnostics; original error remains open even after a later pass.",
+    "Older P2 intermittent native Could-not-open remains unexplained; it is not the same observation as P5 picker or invalid-session failures."
+  ],
+  "limits": [
+    "Core XLSX and bounded GNM fixtures only; no complete formats/variant certification.",
+    "AppImage supported FUSE-free route; external GTK/WebKitGTK OS libraries. AppImage zenity dependency absent on the initial clean host and no foreign-format native message-confirmation test claimed.",
+    "Native GDK images reviewed for both core reopens and every completed GNM cold-reopen marker. No local GUI sessions."
+  ]
+}
