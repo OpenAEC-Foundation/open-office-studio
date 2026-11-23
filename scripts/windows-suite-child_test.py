@@ -15,7 +15,7 @@ spec.loader.exec_module(c)
 
 
 def fixture():
-    plan = dict(requireSigned=True, testTitleOverlap=True, runId=45172070275, producerRunAttempt=1, producerJobId=137683944804, applicationCommit="04fa6cd43b84e3f59fb9d5055bb2d00dde351a47", applicationTree="94fa38c20b51a73e4912964f37f0e1a659b0fb1b", version="2026.48.1", artifactId=100, archiveSha256="b"*64, suitePreparerRun=200, suitePreparerCommit="d"*40, suitePreparerAttempt=1, suitePreparerJobId=201, expectedPackagedExecutableSha256="a"*64)
+    plan = dict(requireSigned=True, testTitleOverlap=True, runId=45177730188, producerRunAttempt=1, producerJobId=137703365803, applicationCommit="b696ab86bd1c128729a079b68c0082e6df3d36a5", applicationTree="e30879fd772871e690847c061ef66e6b81808a05", version="2026.48.1", artifactId=100, archiveSha256="b"*64, suitePreparerRun=200, suitePreparerCommit="d"*40, suitePreparerAttempt=1, suitePreparerJobId=201, expectedPackagedExecutableSha256="a"*64)
     installer = "Open Office Studio_2026.48.1_x64-setup.exe"
     plan["packageMember"] = "dist-installers/office/nsis/" + installer
     data = b"synthetic NSIS bytes; never executable"
@@ -26,7 +26,7 @@ def fixture():
         canonicalPackageReport=dict(parentMember=".local/pakketcontrole-Windows.json", sha256=c.sha(report), bytes=len(report)), boundary="Synthetic unit fixture, no real package transfer")
     receipt_raw = json.dumps(receipt).encode()
     suite = copy.deepcopy(receipt)
-    suite.update(childArtifact=dict(id=300, name="standalone-windows-p4-office-package", bytes=100, digest="sha256:"+"c"*64), packageReceiptSha256=c.sha(receipt_raw))
+    suite.update(childArtifact=dict(id=300, name="standalone-windows-p5-office-package", bytes=100, digest="sha256:"+"c"*64), packageReceiptSha256=c.sha(receipt_raw))
     descriptor = dict(schemaVersion=1, consumer="750b", source=dict(producer=plan["runId"], attempt=1, job=plan["producerJobId"], commit=plan["applicationCommit"], tree=plan["applicationTree"], version=plan["version"], parentArtifact=100, parentZipSha256=plan["archiveSha256"]), suite=suite, contract="Synthetic nonnetwork contract checks")
     return plan, descriptor, [(installer,data),("canonical-package-report.json",report),("package.json",receipt_raw)]
 
@@ -51,7 +51,7 @@ class ChildContracts(unittest.TestCase):
             self.assertEqual((root/entries[0][0]).read_bytes(),entries[0][1])
 
     def test_null_or_wrong_parent_source_rejects_even_with_matching_descriptor_hash(self):
-        for key,value in (("parentArtifact",None),("commit","e"*40),("attempt",2)):
+        for key,value in (("parentArtifact",None),("commit","04fa6cd43b84e3f59fb9d5055bb2d00dde351a47"),("attempt",2)):
             plan,d,_=fixture(); d["source"][key]=value; freeze(plan,d)
             with self.assertRaises((AssertionError,TypeError)): c.descriptor(plan)
         plan,d,_=fixture();d["suite"]["childArtifact"]["id"]=None;freeze(plan,d)

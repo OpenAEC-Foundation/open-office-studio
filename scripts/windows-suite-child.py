@@ -77,7 +77,7 @@ def descriptor(plan):
     positive(suite["canonicalPackageReport"]["bytes"])
     child = suite["childArtifact"]
     positive(child["id"]); positive(child["bytes"])
-    assert child["name"] == "standalone-windows-p4-office-package"
+    assert child["name"] == "standalone-windows-p5-office-package"
     assert re.fullmatch("sha256:[a-f0-9]{64}", child["digest"])
     return d
 
