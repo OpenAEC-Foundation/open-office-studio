@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { execFile, execFileSync, spawn } from "node:child_process";
 import { promisify } from "node:util";
 import { createHash } from "node:crypto";
-import { copyFile, mkdir, readFile, realpath, writeFile, access, stat } from "node:fs/promises";
+import { copyFile, mkdir, readFile, realpath, writeFile, access, stat, readdir } from "node:fs/promises";
 import { dirname, join, basename, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "node:net";
@@ -176,11 +176,17 @@ async function closeDocument() {
 const tracePath = join(out, 'execve.log');
 const zenityPath = async () => exec('which', ['zenity'], { env }).then(r => r.stdout.trim(), () => null);
 async function ownedZenity(pid) {
-  const children = (await readFile(`/proc/${pid}/task/${pid}/children`, 'utf8')).trim().split(/\s+/).filter(Boolean);
+  const tasks = await readdir(`/proc/${pid}/task`);
+  const lists = await Promise.all(tasks.map(tid => readFile(`/proc/${pid}/task/${tid}/children`, 'utf8').catch(() => '')));
+  const children = [...new Set(lists.flatMap(s => s.trim().split(/\s+/).filter(Boolean)))];
   const result = [];
   for (const candidate of children) {
     const executable = await realpath(`/proc/${candidate}/exe`).catch(() => null);
-    if (executable?.endsWith('/zenity')) result.push({ pid: Number(candidate), executable });
+    if (executable?.endsWith('/zenity')) {
+      const status = await readFile(`/proc/${candidate}/status`, 'utf8');
+      assert.equal(Number(/^PPid:\s+(\d+)/m.exec(status)?.[1]),pid,'Native child must have exact Office process parent');
+      result.push({ pid: Number(candidate), executable });
+    }
   }
   assert(result.length <= 1, 'At most one actual direct Zenity child of exact Office PID');
   return result[0];
@@ -219,7 +225,7 @@ async function cancelNativeConfirmation(child, label) {
   };
   const xdo = async args => { await verifyOffice();const r=await exec('xdotool',args,{env,timeout:5000});await verifyOffice();return r.stdout.trim(); };
   const dialog = await createOwnedDialog({pid:child.pid,expectedExecutable:child.executable,expectedEnvironment:env,xdo});
-  assert.equal((await readFile(`/proc/${pid}/task/${pid}/children`,'utf8')).trim().split(/\s+/).includes(String(child.pid)),true);
+  assert.equal((await ownedZenity(pid))?.pid,child.pid,'Same exact executable and Office-parent binding before any native input');
   const anatomy = JSON.parse((await exec('/usr/bin/python3',[join(here,'shared/scripts/linux-stw-gtk-anatomy.py'),String(child.pid)],{env,timeout:15000})).stdout);
   const texts=anatomy.nodes.map(n=>n.name+' '+(n.text??'')).join('\n');
   assert(texts.includes('NativeXLSB-source.xlsb'),'Actual confirmation names original XLSB');
@@ -288,6 +294,11 @@ try {
   if(guard)await capture('failure.png').catch(e=>{report.failureCaptureError=String(e);});
   throw error;
 } finally {
+  if (guard) {
+    const child = await ownedZenity(guard.evidence.pid).catch(() => null);
+    if (child) await cancelNativeConfirmation(child,'cleanup-confirmation').catch(e=>{ report.cleanup.nativeConfirmationError=String(e); });
+    report.cleanup.nativeConfirmationClosed = !await ownedZenity(guard.evidence.pid).catch(() => null);
+  }
   await stopTrace().catch(e=>{report.cleanup.traceError=String(e);});
   if (session) await closeDocument().catch(e => { report.cleanup.appCloseError = String(e); });
   if (driver?.pid) { try { process.kill(-driver.pid, "SIGTERM"); } catch (e) { if (e.code !== "ESRCH") report.cleanup.driverError = String(e); } }

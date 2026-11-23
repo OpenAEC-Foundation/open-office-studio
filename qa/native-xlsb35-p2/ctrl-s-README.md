@@ -31,3 +31,13 @@ new app build, macro execution, model bridge, synthetic key event or saved-file
 matrix is included here. A diagnosis success is not a fixed-package acceptance.
 
 Status: targeted diagnosis pending. Product change/issue boundaries follow evidence.
+
+First diagnostic run45161230008 verified original source, real Ctrl+S and Save
+launching the missing Zenity command with ENOENT, plus working explicit XLSX
+Save As. After installing Zenity, execve succeeded; the caller incorrectly only
+searched main-thread children although Rust spawns from a worker thread. It
+stopped before native confirmation input. The next caller checks the union of
+all exact Office thread children plus PPid/executable/private env guards. No
+functional criterion is relaxed; differential confirmation remains pending.
+Failure artifact14810113428/ZIP SHA256
+`c66ea0db17f2cc23d0f4b3f68367a692ea466d9f86d6e1b8feff8c6f83c66376`.
