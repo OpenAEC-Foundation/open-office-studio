@@ -262,3 +262,11 @@ marker/cache/boundary, paint/capture and four final-image/save/fresh-reopen
 criteria remain unchanged. Both changed JS modules pass syntax checking;
 functional Mac validation awaits the one authorized root-coordinated Mac-only
 rerun at the same P4 source/build. No local/native GUI or own build is started.
+
+Applicability of retained Win/Linux results was checked explicitly: all four
+actual P4 success reports match prior browser/contract/capture source bytes
+(Linux Git-LF; Windows exact CRLF checkout of the same bytes). Projecting only
+the Windows/Linux OS branch makes old and new browser source literally equal;
+contract/capture Git blobs are unchanged. Details are in
+`evidence/p4-mac-followup-win-linux-applicability.json`. This supports retaining
+those exact P4 results without another broad run; it is not a Mac runtime pass.

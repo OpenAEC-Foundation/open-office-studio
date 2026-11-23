@@ -1,0 +1,86 @@
+{
+  "scope": "Static applicability check for retaining existing P4 Win/Linux browser results; not a rerun or Mac pass",
+  "applicationCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+  "priorHelperGitPin": "01773a0009b4fb376aa4f9b163ea159717f2b755",
+  "newHelperGitPin": "c92d7ea3cd1852a10a5e7309e06a68dac3bfbde9",
+  "winLinuxProjectedBrowserSourceIdentical": true,
+  "sharedContractAndCaptureGitBytesIdentical": true,
+  "retainedReports": [
+    {
+      "os": "Linux",
+      "route": "/",
+      "status": "matched-retained-success-report",
+      "hashes": {
+        "browser.mjs": {
+          "reportedSha256": "f3507e0b6b816083717eb24d6870b51d1d32395b2fbccb47e90c5166b24a38c9",
+          "byteForm": "Git LF"
+        },
+        "contract.mjs": {
+          "reportedSha256": "c1dcf1696188b851b794e6120533c58f2774fb092e84c70072a84db456fcf35e",
+          "byteForm": "Git LF"
+        },
+        "capture.mjs": {
+          "reportedSha256": "6573821292505f5987c48b3cc01dedbe3c96e75bd5541b0342e50a5cca2ed423",
+          "byteForm": "Git LF"
+        }
+      }
+    },
+    {
+      "os": "Linux",
+      "route": "/office/",
+      "status": "matched-retained-success-report",
+      "hashes": {
+        "browser.mjs": {
+          "reportedSha256": "f3507e0b6b816083717eb24d6870b51d1d32395b2fbccb47e90c5166b24a38c9",
+          "byteForm": "Git LF"
+        },
+        "contract.mjs": {
+          "reportedSha256": "c1dcf1696188b851b794e6120533c58f2774fb092e84c70072a84db456fcf35e",
+          "byteForm": "Git LF"
+        },
+        "capture.mjs": {
+          "reportedSha256": "6573821292505f5987c48b3cc01dedbe3c96e75bd5541b0342e50a5cca2ed423",
+          "byteForm": "Git LF"
+        }
+      }
+    },
+    {
+      "os": "Windows",
+      "route": "/",
+      "status": "matched-retained-success-report",
+      "hashes": {
+        "browser.mjs": {
+          "reportedSha256": "855f1db2451331d14cb258ae655be78f4c8b306cb4223419be064402598005b3",
+          "byteForm": "Exact CRLF checkout of same Git bytes"
+        },
+        "contract.mjs": {
+          "reportedSha256": "136ebfecfffb497181a9c97e1e881e67bd7753119797632f259dc1839f3f54ef",
+          "byteForm": "Exact CRLF checkout of same Git bytes"
+        },
+        "capture.mjs": {
+          "reportedSha256": "d17cd49e63dae6ff93660b4b59b291851f1749b3db17067178b70473272f2f83",
+          "byteForm": "Exact CRLF checkout of same Git bytes"
+        }
+      }
+    },
+    {
+      "os": "Windows",
+      "route": "/office/",
+      "status": "matched-retained-success-report",
+      "hashes": {
+        "browser.mjs": {
+          "reportedSha256": "855f1db2451331d14cb258ae655be78f4c8b306cb4223419be064402598005b3",
+          "byteForm": "Exact CRLF checkout of same Git bytes"
+        },
+        "contract.mjs": {
+          "reportedSha256": "136ebfecfffb497181a9c97e1e881e67bd7753119797632f259dc1839f3f54ef",
+          "byteForm": "Exact CRLF checkout of same Git bytes"
+        },
+        "capture.mjs": {
+          "reportedSha256": "d17cd49e63dae6ff93660b4b59b291851f1749b3db17067178b70473272f2f83",
+          "byteForm": "Exact CRLF checkout of same Git bytes"
+        }
+      }
+    }
+  ]
+}
