@@ -1,6 +1,7 @@
 /** Real standalone Linux installers on a disposable runner, with native input.
- * execute/sync is restricted to read-only observations; mutations go through
- * WebDriver keyboard/click or the real OS file dialog. No IPC/DOM/state injection.
+ * execute/sync is restricted to read-only observations; the public Tauri app
+ * metadata API is read through execute/async. Functional mutations go through
+ * WebDriver keyboard/click or the real OS file dialog. No state/IPC mocks.
  */
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
@@ -280,6 +281,26 @@ async function packageCase(pkg) {
       ),
       false,
     );
+    const metadata = await request(
+      "POST",
+      `/session/${session}/execute/async`,
+      {
+        script:
+          "const done=arguments[arguments.length-1]; Promise.all(['version','identifier','name'].map(name=>window.__TAURI_INTERNALS__.invoke('plugin:app|'+name))).then(([version,identifier,name])=>done({version,identifier,name}),error=>done({error:String(error)}))",
+        args: [],
+      },
+    );
+    assert.equal(
+      metadata.version,
+      origin.version,
+      "Actual native app version, including the portable AppImage",
+    );
+    assert.equal(
+      metadata.identifier,
+      app.identifier,
+      "Actual compiled native application identity",
+    );
+    report.nativeMetadata = metadata;
     const pids = await wait(async () => {
       const p = await ownedPids();
       return p.length === 1 ? p : false;
@@ -325,19 +346,49 @@ async function packageCase(pkg) {
     );
     return pid;
   };
-  const osFileDialog = async (path) => {
+  const osFileDialog = async (path, expectedTitle) => {
     // Native dialog entry: no hidden HTML file input or injected File object.
-    await delay(700);
     report.osDialogWindows ??= [];
-    report.osDialogWindows.push(
-      command("xdotool", ["getactivewindow", "getwindowname"], { env }),
+    const title = await wait(
+      () => {
+        const value = command("xdotool", ["getactivewindow", "getwindowname"], {
+          env,
+        });
+        return (
+          expectedTitle
+            ? value === expectedTitle
+            : /^(Open File|Open a File|Choose Files|Choose a File|Choose a database.*|Select.*)$/i.test(
+                value,
+              )
+        )
+          ? value
+          : false;
+      },
+      "The real OS file dialog must own focus before any path input",
+      15_000,
     );
+    report.osDialogWindows.push(title);
+    const capture = async (suffix) =>
+      command(
+        "import",
+        [
+          "-window",
+          "root",
+          join(dir, `os-dialog-${report.osDialogWindows.length}-${suffix}.png`),
+        ],
+        { env },
+      );
+    await capture("before");
     command("xdotool", ["key", "--clearmodifiers", "ctrl+l"], { env });
+    await delay(150);
+    command("xdotool", ["key", "--clearmodifiers", "ctrl+a"], { env });
     command("xdotool", ["type", "--clearmodifiers", "--delay", "1", path], {
       env,
     });
+    await capture("typed");
     command("xdotool", ["key", "Return"], { env });
     await delay(250);
+    await capture("submitted");
   };
   const saveFile = async (path, oracle) => {
     await chord("s");
@@ -595,7 +646,7 @@ async function packageCase(pkg) {
       await clickLabel("Save");
       await clickLabel("Save backup");
       const backup = join(dir, "Synthetic standalone.openaec-notities");
-      await osFileDialog(backup);
+      await osFileDialog(backup, "Save a copy");
       await wait(
         async () => (await readFile(backup, "utf8")).includes(marker),
         "Real native Notition backup export",
@@ -841,7 +892,7 @@ async function packageCase(pkg) {
     );
     if (session) {
       report.failureUI = await observe(
-        "return {title:document.title,body:document.body.innerText,active:document.activeElement?.outerHTML}",
+        "const e=document.activeElement;return {title:document.title,body:document.body.innerText.slice(0,8000),active:e?{tag:e.tagName,id:e.id,className:e.className,label:e.getAttribute('aria-label')}:null}",
       ).catch(() => null);
       await screenshot("failure.png").catch(() => {});
     }
