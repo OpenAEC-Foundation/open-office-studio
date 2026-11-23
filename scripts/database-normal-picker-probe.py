@@ -42,7 +42,8 @@ def owned(home):
         try:
             entries=(path/'environ').read_bytes().split(b'\0')
             if ('HOME='+str(home)).encode() in entries:
-                result.append(dict(pid=int(path.name),exe=str((path/'exe').resolve())))
+                raw=(path/'stat').read_text()
+                result.append(dict(pid=int(path.name),exe=str((path/'exe').resolve()),startTime=raw[raw.rindex(')')+2:].split()[19]))
         except OSError:pass
     return result
 
