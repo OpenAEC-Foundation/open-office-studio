@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "issue": 378,
+  "status": "Product correction prepared; targeted Linux source/unit checks passed; new fixed-package native acceptance pending",
+  "branch": "codex/linux-native-dialog-runtime-2026-11-23",
+  "base": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "productCommit": "82b047fbced83acf421597df903c5f4c6c20dea9",
+  "qaCommit": "89dc3877fd700ae1a655b3116f0e2fb490181772",
+  "changedProductFiles": {
+    "README.md": "38e53465554234ebcc5062b0bfe6345e190164990bf93197f15129ec18e2cd09",
+    "apps/database-studio/src-tauri/src/main.rs": "746d9ec498e629d937c6955ca95ebb13fc79994abe295a6f601aadea53d59921",
+    "apps/database-studio/src-tauri/tauri.conf.json": "2f751b096effd4a1a63b2d4fa2b1d7c2278b557453380b567ea97b517d6b424f",
+    "scripts/controleer-installers.py": "3a599a8aad0fff836f082be0dc288edf5ef11f7bc1216d0a40d40364261dc77f",
+    "scripts/native-dialog-packages.test.mjs": "4d29f7cc3c33ca82759a3c1872fb3f7cbd4d69a266da42b1fa625089ff79d642",
+    "src-tauri/src/database_export.rs": "503201eada6b89f48c47ddad82f3c7b00077b23d2bfa5f959c6892b3b062693e",
+    "src-tauri/src/email/bestanden.rs": "cade188faa944f49f63dc71807669e76e3342bc125ab6654ffc2a874be50dca1",
+    "src-tauri/src/main.rs": "ca5f06bf20fb923f4c9f5edb083be4238556e99093fc13c43973b030627fb68e",
+    "src-tauri/src/native_dialog.rs": "68d465634827ba6bd9e3b4450cbfe383f606d94251246e15dde9c54ed857d125",
+    "src-tauri/src/vensters.rs": "5b361598da6c93736cd2c1451196af53cc8ecd72379e9f7225e648da34866124",
+    "src-tauri/src/werkbestanden.rs": "1b3fe52e199b234f626fc7f3a89f4f23ff61ce9b966620d2d9183b9f7ed5ca1e",
+    "src-tauri/tauri.linux.conf.json": "3752aec2c18d72662b236d5d58da004baa323c7aed460d3631ff96580b12429c",
+    "src/OfficeStudio.tsx": "ff08de011fc90c0739b50546b22f215381da9c58a5e7c0f565525ff3740245aa",
+    "src/i18n/locales/de/desktop.json": "18fd97b8f8d2fa6696eeb8ba2e1c51b67335f5c55d6c9bc207d26afe8cb8123d",
+    "src/i18n/locales/en/desktop.json": "b5951a059af5a21e3ffa00067d99a2b1550af86a41550c913b1e8a00335913a7",
+    "src/i18n/locales/es/desktop.json": "c970be1501ae5b1f7fb033525aba0bf0180c05af79fa47461f95a455118de741",
+    "src/i18n/locales/fr/desktop.json": "fe8acd828ba6307dc03a3204037b7a6fb5b9c639d6c856d0f135cd52e8ef4d7f",
+    "src/i18n/locales/it/desktop.json": "ac0919c80d3355dbb122f4967bdde8e34b0bb08667418a35507aa509862a3559",
+    "src/i18n/locales/lo/desktop.json": "98b71d615ede77512c61c6f40c17fd81799fc01f101faf17313de8ef2b024d55",
+    "src/i18n/locales/nl/desktop.json": "c5900d7f48fb174e28fe95bfd13ae8b3fe14987b1955f886401eac8a66acc1d6",
+    "src/i18n/locales/pt-BR/desktop.json": "9de47d440164d831b0da1f64cf63ab7552c9113bb94313869cb427f74109b246",
+    "src/i18n/locales/zh-CN/desktop.json": "8ed8f01b39bca99710109e6487e77a42fe94ee9e4c33505d2beae6cbb7d17d72"
+  },
+  "unchanged": [
+    "src-tauri/Cargo.toml",
+    "src-tauri/Cargo.lock",
+    "apps/database-studio/src-tauri/Cargo.toml",
+    "apps/database-studio/src-tauri/Cargo.lock",
+    "src/werkbestand.ts",
+    "src/werkbestand.test.ts"
+  ],
+  "diagnosis": {
+    "owner": "d410 native execution; this owner independently read and verified original artifact bytes",
+    "run": 45161230008,
+    "artifact": 14810113428,
+    "zipBytes": 705340,
+    "zipSha256": "c66ea0db17f2cc23d0f4b3f68367a692ea466d9f86d6e1b8feff8c6f83c66376",
+    "rawReportMember": "linux-p2-native/xlsb35-ctrl-s/report.json",
+    "rawReportSha256": "ff54be61620727b31074e0c0f6cb70231221f25ae68b46892f343f56cd925bb1",
+    "originalStatus": "failed",
+    "harnessCommit": "28fcd44b587aa910677a6616186369787917d5fe",
+    "installedElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "packageDepends": "libwebkit2gtk-4.1-0, libgtk-3-0",
+    "initialZenity": null,
+    "observations": [
+      {
+        "label": "original-ctrl-s",
+        "execveSha256": "4a3f15b849cfa64a26a381c6905ec62e55aa61db609e68142d0c414e52145289",
+        "allAttemptsENOENT": true
+      },
+      {
+        "label": "original-save-button",
+        "execveSha256": "6207c376ab9b4c15705c3d42f178661ffd0f064a800d219c6181d9aa618d2a26",
+        "allAttemptsENOENT": true
+      }
+    ],
+    "afterInstall": "Original trace includes an eventual /usr/bin/zenity execve success. Its later assertion failed; original report is preserved as failed, not a fixed-package or complete positive/cancel pass.",
+    "rfd": {
+      "version": "0.15.4",
+      "lockedCrateSha256": "ef2bee61e6cffa4635c72d7d81a84294e28f0930db0ddcb0f66d10244674ebed",
+      "defaultFeatures": [
+        "xdg-portal",
+        "async-std"
+      ],
+      "finding": "Message dialogs use external Zenity; a launch error maps to Cancel. FileDialog continues through the portal."
+    }
+  },
+  "implementation": {
+    "packaging": "Suite Linux overlay and independent Database package declare zenity; generated standalone config merge retains it for all seven products, both DEB/RPM config.",
+    "guard": "Seven confirmation futures are checked before polling; regular file and Linux POSIX X_OK through PATH. No Zenity execution/install in unit tests.",
+    "errorRoute": "Existing storage/export Result errors; Result for format and close confirmations; existing OfficeStudio persistent error toast and abort. Close fallback emits error for a living frontend and never destroys the window on Err.",
+    "userCancel": "Normal response passes through as successful Cancel choice, separate from dependency Err.",
+    "backend": "Pinned rfd/default portal backend and Cargo manifests/locks unchanged"
+  },
+  "sourceValidation": {
+    "run": 45164983592,
+    "attempt": 1,
+    "conclusion": "success",
+    "qa": "89dc3877fd700ae1a655b3116f0e2fb490181772",
+    "product": "82b047fbced83acf421597df903c5f4c6c20dea9",
+    "linuxRustStdTests": 4,
+    "nodeEffectiveConfigTests": 9,
+    "scope": "No app build/install, native GUI or package acceptance",
+    "artifacts": [
+      {
+        "id": 14814626817,
+        "name": "linux-native-dialog-378-attribution-89dc3877fd700ae1a655b3116f0e2fb490181772",
+        "bytes": 589,
+        "sha256": "5dba55800b3dbc2c5e9d713ef92729e0048076fd3a9a9b1238468029975c2236",
+        "files": [
+          "metadata.json"
+        ]
+      },
+      {
+        "id": 14814011679,
+        "name": "linux-native-dialog-378-source-89dc3877fd700ae1a655b3116f0e2fb490181772",
+        "bytes": 1124,
+        "sha256": "8acf1a8e51d6432015a144efd2513b99e04faf8b5beeea716ab9b889dddac989",
+        "files": [
+          "config-unit.txt",
+          "locale.txt",
+          "rust-unit.txt"
+        ]
+      }
+    ],
+    "localChecks": {
+      "windowsRustStdTests": 3,
+      "existingVitest": 31,
+      "nonincrementalTypeScript": "pass",
+      "desktopLocale": "9 offered locales pass; 23 existing non-offered locale directory warnings"
+    },
+    "parsing": "Native Rust source parsing and Python installer-check compilation passed in targeted Linux job"
+  },
+  "pending": [
+    "New candidate exact source/package/installed ELF freeze and official producer metadata",
+    "Actual generated DEB Depends verified for all seven newly built products by strengthened installer checker",
+    "Full Rust/Tauri caller type wiring in coordinator app build; source syntax and std-only helper tests do not certify that build",
+    "Native missing-helper visible feedback and unchanged source/target/retained unsaved work on AppImage or damaged installation",
+    "Native present-helper positive/custom and actual user Cancel, focus return, ordinary portal Open/SaveAs and save/normal full quit/new PID reopen on the new candidate",
+    "Windows/macOS/browser appropriate integration checks on the same new codepoint; no old P2 results relabelled",
+    "RPM config is covered; no RPM installer/native acceptance claim"
+  ],
+  "operations": {
+    "installerDownloaded": false,
+    "appBuilt": false,
+    "nativeGuiStarted": false,
+    "localRecordingStarted": false,
+    "zenityInstalledAsTestTool": false,
+    "mainTagPublication": false,
+    "ownTestProcessesFinished": true
+  }
+}
