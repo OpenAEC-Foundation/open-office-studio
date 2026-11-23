@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-23",
+  "scope": "Actual installed P2 Linux package acceptance of368/369 and vertical362 regression; no other platform/later package claim",
+  "source": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2"
+  },
+  "version": "2026.48.1",
+  "origin": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "runtime": {
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1\n",
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    }
+  },
+  "qa": {
+    "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+    "files": {
+      "proef-linux-p2-native.mjs": {
+        "sha256": "952fbc9adc4e75a98ae232403a0231896280eb26877ac1ac8df74d9de67ab408",
+        "gitBlob": "f48d5b6d7b0d0e4565cf0df7b1056cb885229329"
+      },
+      "linux-p2-ribbon-native.mjs": {
+        "sha256": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72",
+        "gitBlob": "28345e867f64ef65fdb9c842073a39b09be81f26"
+      },
+      "linux-p2-native-ready.mjs": {
+        "sha256": "bd44f20e9b1a2eadc9e08f32c91ca631102c78bea9c02e9a7b84c750484b85b5",
+        "gitBlob": "a4152dc89f48f68f6cf16a2a4cce99ab2d8aa436"
+      },
+      "linux-p2-native-capture.py": {
+        "sha256": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341",
+        "gitBlob": "118fb4ffe5c053af3c8f92dfef2df52ca8592f04"
+      },
+      "linux-p2-native-package.py": {
+        "sha256": "a9c68b7880b7cb0749689096fee81bce980ecf9fa697dfe7bb93554b95e92d45",
+        "gitBlob": "f98385ba8297b44932b71f084d5d196cd0fac8d6"
+      },
+      "linux-p2-native-input.mjs": {
+        "sha256": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020",
+        "gitBlob": "f6c561d9d1395b0fb8225d3038c25cb0c3ab8b5a"
+      }
+    }
+  },
+  "run": {
+    "id": 45148819548,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45148819548",
+    "artifact": 14805173075,
+    "artifactSha256": "55a62c612872f94aa6ed1883d9b00174220a8d40f89e9f83389bf9005d2c9202",
+    "artifactBytes": 7719263,
+    "archive": "native-artifact.zip",
+    "reportSha256": "234ef3704fdb068e5ed75ad1101501794f2ba420c2111585d8f7c76a5597b29c",
+    "ribbonReportSha256": "fe76383eba45c26f65909ad01651010bfbecd0c0f4bc4bbe6905683907df2688",
+    "rawStatus": "passed tested native scopes; wider ribbon state matrix partial"
+  },
+  "protocolChecks": {
+    "node": {
+      "total": 27,
+      "passed": 26,
+      "failed": 0,
+      "skipped": 1,
+      "skip": "Expected Linux platform-guard cannot-certify-another-platform test"
+    },
+    "python": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "logExcerpt": "protocol-checks.log",
+    "logExcerptSha256": "9b48a5ae8121a576672deb6ae369530a622b8af3daebb911d60e76f9a0fd9427",
+    "originalJobLogSha256": "c0db82afc5d77b34f859581fb116fe6da27542fb5b4784724256d8e87497f411"
+  },
+  "functional": {
+    "issue368": "passed bounded native input/history/search/isolation/save controls",
+    "issue369": "passed tested Linux pointer/ArrowDown/Right/Home/End, narrow Delete Enter/Escape vertical focus controls and real keyboard command/document-return/save/reopen",
+    "preflight": "passed real pointer/focus/Ctrl/edit/save/full-exit/reopen; broad controls released",
+    "checks": 63,
+    "scopes": {
+      "368-Find-what": {
+        "status": "passed",
+        "firstCheck": 9,
+        "lastCheck": 38,
+        "applicationClosed": true
+      },
+      "368-Replace-with": {
+        "status": "passed",
+        "firstCheck": 38,
+        "lastCheck": 54,
+        "applicationClosed": true
+      },
+      "369-keyboard-command": {
+        "status": "passed",
+        "firstCheck": 54,
+        "lastCheck": 61,
+        "applicationClosed": true
+      },
+      "369-ribbon": {
+        "status": "passed",
+        "firstCheck": 62,
+        "lastCheck": 63,
+        "applicationClosed": true
+      }
+    }
+  },
+  "vertical362": {
+    "moduleStatus": "partial",
+    "nativePass": false,
+    "cases": 258,
+    "buttonMeasurements": 1284,
+    "groupCases": 24,
+    "keyboardEntries": 24,
+    "homeEnd": 36,
+    "phases": {
+      "normal": 24,
+      "keyboard-focus": 108,
+      "hover": 108,
+      "imported-active": 12,
+      "engine-disabled": 6
+    },
+    "contentClipped": 0,
+    "visibleLabelFailures": 0,
+    "iconFailures": 0,
+    "groupClippedY": 0,
+    "groupClippedX": [
+      {
+        "theme": "light",
+        "width": 800,
+        "group": "Text",
+        "phase": "keyboard-group-focus"
+      },
+      {
+        "theme": "light",
+        "width": 800,
+        "group": "Text",
+        "phase": "keyboard-group-after-escape"
+      },
+      {
+        "theme": "forge",
+        "width": 800,
+        "group": "Text",
+        "phase": "keyboard-group-focus"
+      },
+      {
+        "theme": "forge",
+        "width": 800,
+        "group": "Text",
+        "phase": "keyboard-group-after-escape"
+      }
+    ],
+    "unavailable": [
+      {
+        "theme": "light",
+        "width": 1600,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "light",
+        "width": 923,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "light",
+        "width": 800,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "forge",
+        "width": 1600,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "forge",
+        "width": 923,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "forge",
+        "width": 800,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      }
+    ],
+    "remaining": "Six genuine disabled-Delete variants (two themes x three widths) unavailable: editable imported table exposes enabled Delete Row/Column/Table; no supported readonly UI reached. Outside table context its tab disappears. Fixture/UI-state reachability gap, not independently reproduced disabled rendering defect. No DOM-disabled/CSS injection.",
+    "activeCoverage": "Bottom and Repeat Header Rows imported active:12cases. Genuine engine-disabled Split Table:6cases. No imported-active gap."
+  },
+  "nativeKeyboardCommand": {
+    "summary": "passed native keyboard command Enter, document input return, typing and save/full-exit/reopen",
+    "observation": {
+      "label": "real pointer Down Right keyboard command focus",
+      "phase": "369-keyboard-command",
+      "pointer": {
+        "hasFocus": true,
+        "visibilityState": "visible",
+        "hidden": false,
+        "activeElement": {
+          "className": "",
+          "focusVisible": false,
+          "role": "tab",
+          "label": null,
+          "id": "_r_1_-tabel",
+          "tag": "BUTTON"
+        }
+      },
+      "navigation": [
+        {
+          "name": "Insert Row Above",
+          "ring": 4,
+          "focusVisible": true,
+          "tag": "BUTTON"
+        },
+        {
+          "name": "Insert Row Below",
+          "ring": 4,
+          "focusVisible": true,
+          "tag": "BUTTON"
+        },
+        {
+          "name": "Insert Column Left",
+          "ring": 4,
+          "focusVisible": true,
+          "tag": "BUTTON"
+        },
+        {
+          "name": "Insert Column Right",
+          "ring": 4,
+          "focusVisible": true,
+          "tag": "BUTTON"
+        }
+      ]
+    }
+  },
+  "savedDocuments": [
+    {
+      "label": "saved DOCX independent XML oracle",
+      "phase": "preflight",
+      "file": "preflight.docx",
+      "before": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "sha256": "664b32c23fe544025a2c8e4abff41928f9599441577b332d08601c5cca4e5970",
+      "rows": [
+        [
+          "Palpha",
+          "beta",
+          ""
+        ],
+        [
+          "",
+          "",
+          "omega"
+        ],
+        [
+          "delta",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "label": "saved DOCX independent XML oracle",
+      "phase": "368-Find-what",
+      "file": "find-table.docx",
+      "before": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "sha256": "0e7c25cc2375580b8fff194d1466178d47d282cfbdc84caecdcc5beefb70b4aa",
+      "rows": [
+        [
+          "LINUX420_FINAL alpha",
+          "",
+          "beta",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "omega"
+        ],
+        [
+          "delta",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "label": "saved DOCX independent XML oracle",
+      "phase": "369-keyboard-command",
+      "file": "keyboard-command.docx",
+      "before": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "sha256": "d0b7cecfe392a6a2ffb35521d3c65a44e1f1461b00afb55d73a440d033dcec45",
+      "rows": [
+        [
+          "Kalpha",
+          "",
+          "beta",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "omega"
+        ],
+        [
+          "delta",
+          "",
+          "",
+          ""
+        ]
+      ]
+    }
+  ],
+  "processSessions": [
+    {
+      "phase": "preflight",
+      "pid": 4750,
+      "sessionId": "db5e24f5-fdc2-4f9a-93d5-94cae1448ddb",
+      "document": "preflight.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "preflight",
+      "pid": 4961,
+      "sessionId": "13f61f02-8e91-40be-8802-da364d57196d",
+      "document": "preflight.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "368-Find-what",
+      "pid": 5061,
+      "sessionId": "b6002a43-db56-4c74-a172-67fba0f1c54d",
+      "document": "find-table.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "368-Find-what",
+      "pid": 5415,
+      "sessionId": "6b47b32d-c5a8-4ae9-b722-9fb8acf1a3f9",
+      "document": "find-table.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "368-Replace-with",
+      "pid": 5512,
+      "sessionId": "1dae9187-a5a3-456a-b0ae-487dcc5d1a99",
+      "document": "replace-table.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "369-keyboard-command",
+      "pid": 5718,
+      "sessionId": "c380989c-1b8d-442f-abbe-f6131d20709e",
+      "document": "keyboard-command.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "369-keyboard-command",
+      "pid": 5859,
+      "sessionId": "02bdee0f-5e20-4f80-bb50-5a03fbcaa4b8",
+      "document": "keyboard-command.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "369-ribbon",
+      "pid": 5956,
+      "sessionId": "9a5cc198-61bf-4a66-9702-e7c5de3ddf88",
+      "document": "ribbon-control.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    }
+  ],
+  "visualReview": {
+    "run": 45148819548,
+    "reviewedSerially": true,
+    "images": [
+      {
+        "name": "preflight-saved.png",
+        "sha256": "a28944672d477560a7701a66da97f4316d05d6764aa0ff7f3a432db8a28bdb8a",
+        "reusedExactReviewed420": null
+      },
+      {
+        "name": "preflight-reopened.png",
+        "sha256": "2aef3e72b779b09d6fd1e4e045aa9665fec7b1ba6d8be97c982d56d0a16d581f",
+        "reusedExactReviewed420": null
+      },
+      {
+        "name": "find-redo.png",
+        "sha256": "2a72188c3fe8300fa5e6b595a477786f3da2ffdb69cb716e511a5274ff7c57e1",
+        "reusedExactReviewed420": {
+          "run": 45143046662,
+          "name": "find-redo.png",
+          "sha256": "2a72188c3fe8300fa5e6b595a477786f3da2ffdb69cb716e511a5274ff7c57e1"
+        }
+      },
+      {
+        "name": "replace-redo.png",
+        "sha256": "e007702e737a4587ac0536c92528e1761d434179073bbd50333d2951e30fe59f",
+        "reusedExactReviewed420": {
+          "run": 45143046662,
+          "name": "replace-redo.png",
+          "sha256": "e007702e737a4587ac0536c92528e1761d434179073bbd50333d2951e30fe59f"
+        }
+      },
+      {
+        "name": "final-reopened.png",
+        "sha256": "d031b0fa26662fb5ec99fe8cee2658b1c1e0dfda8055d33adf399c00e2d459eb",
+        "reusedExactReviewed420": {
+          "run": 45143046662,
+          "name": "final-reopened.png",
+          "sha256": "d031b0fa26662fb5ec99fe8cee2658b1c1e0dfda8055d33adf399c00e2d459eb"
+        }
+      },
+      {
+        "name": "keyboard-command-focus.png",
+        "sha256": "607aa680654101bee4e7a2fb7a7a9da00cf5fbb0d40bc2966fa95487a4703b92",
+        "reusedExactReviewed420": null
+      },
+      {
+        "name": "keyboard-command-reopened.png",
+        "sha256": "5a6cbc7600b6959acbdca4c81d12e4120a9fba38ffff189d307fdb2dbd4fa0c1",
+        "reusedExactReviewed420": null
+      },
+      {
+        "name": "ribbon/light-923-Delete-keyboard-group-focus.png",
+        "sha256": "4a6a1048d4ef39ae2e213b6f8c3bb6efc7f4c8baec4a66efacef74911893401e",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/light-923-Delete-keyboard-group-focus.png",
+          "sha256": "4a6a1048d4ef39ae2e213b6f8c3bb6efc7f4c8baec4a66efacef74911893401e"
+        }
+      },
+      {
+        "name": "ribbon/light-923-Delete-keyboard-group-after-escape.png",
+        "sha256": "3dba2b4e178309d0f554239ddd424b519e691e43e30534b86f72fe4bf4bbad02",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/light-923-Delete-keyboard-group-after-escape.png",
+          "sha256": "3dba2b4e178309d0f554239ddd424b519e691e43e30534b86f72fe4bf4bbad02"
+        }
+      },
+      {
+        "name": "ribbon/light-800-Delete-keyboard-group-focus.png",
+        "sha256": "bb9a797ea87cb71b2994d9fc77f17385470c94994b1c63f37c7abee19a7a501a",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/light-800-Delete-keyboard-group-focus.png",
+          "sha256": "bb9a797ea87cb71b2994d9fc77f17385470c94994b1c63f37c7abee19a7a501a"
+        }
+      },
+      {
+        "name": "ribbon/light-800-Delete-keyboard-group-after-escape.png",
+        "sha256": "e53f089f9c69ab8bd887e13763e36f12b1313333ae40cb99cca5928476182bce",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/light-800-Delete-keyboard-group-after-escape.png",
+          "sha256": "e53f089f9c69ab8bd887e13763e36f12b1313333ae40cb99cca5928476182bce"
+        }
+      },
+      {
+        "name": "ribbon/forge-923-Delete-keyboard-group-focus.png",
+        "sha256": "9ba4a24eb8d07bdb52160c6841f8c987ad2ab36c293558dea37f103c466cb13d",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-923-Delete-keyboard-group-focus.png",
+          "sha256": "9ba4a24eb8d07bdb52160c6841f8c987ad2ab36c293558dea37f103c466cb13d"
+        }
+      },
+      {
+        "name": "ribbon/forge-923-Delete-keyboard-group-after-escape.png",
+        "sha256": "faf9ee91e068feb793da1e426109581cb3e76d5c2b0bc1d4ce5a608d281dd753",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-923-Delete-keyboard-group-after-escape.png",
+          "sha256": "faf9ee91e068feb793da1e426109581cb3e76d5c2b0bc1d4ce5a608d281dd753"
+        }
+      },
+      {
+        "name": "ribbon/forge-800-Delete-keyboard-group-focus.png",
+        "sha256": "54dae5333add521d8ffd7f6a980e778ac00cbba64bed573ce34b5dd2d91ff2b6",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-800-Delete-keyboard-group-focus.png",
+          "sha256": "54dae5333add521d8ffd7f6a980e778ac00cbba64bed573ce34b5dd2d91ff2b6"
+        }
+      },
+      {
+        "name": "ribbon/forge-800-Delete-keyboard-group-after-escape.png",
+        "sha256": "0a46bf8f73708352a7b306bf8fdd2b8a11db5fb1078ead20fb4e9608e89d6e51",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-800-Delete-keyboard-group-after-escape.png",
+          "sha256": "0a46bf8f73708352a7b306bf8fdd2b8a11db5fb1078ead20fb4e9608e89d6e51"
+        }
+      },
+      {
+        "name": "ribbon/forge-1600-Text-focus.png",
+        "sha256": "8ba2b5e6a04daf7f9962f5403890ec00eeb1bca38f2b61fe51005ee20d44287f",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-1600-Text-focus.png",
+          "sha256": "8ba2b5e6a04daf7f9962f5403890ec00eeb1bca38f2b61fe51005ee20d44287f"
+        }
+      },
+      {
+        "name": "ribbon/forge-1600-Alignment-focus.png",
+        "sha256": "71ea364d03ec86a22e330dff08d94f6a99ae45c0bba229d4f0705c6d149be7fe",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-1600-Alignment-focus.png",
+          "sha256": "71ea364d03ec86a22e330dff08d94f6a99ae45c0bba229d4f0705c6d149be7fe"
+        }
+      },
+      {
+        "name": "ribbon/forge-1600-Data-focus.png",
+        "sha256": "8fb86b3c3e8c5025bf1b7dc218d957d9fc6d9be2b0496bac304057b80f6d875b",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-1600-Data-focus.png",
+          "sha256": "8fb86b3c3e8c5025bf1b7dc218d957d9fc6d9be2b0496bac304057b80f6d875b"
+        }
+      },
+      {
+        "name": "ribbon/forge-1600-Delete-focus.png",
+        "sha256": "64bc07d9202f9958e3a3f5c920c4b9280f9cc72bf273d76a4a4c41c2f5ddb4df",
+        "reusedExactReviewed420": {
+          "run": 45143888379,
+          "name": "ribbon/forge-1600-Delete-focus.png",
+          "sha256": "64bc07d9202f9958e3a3f5c920c4b9280f9cc72bf273d76a4a4c41c2f5ddb4df"
+        }
+      }
+    ],
+    "observations": [
+      "Required collapsed Delete trigger boundaries complete before/after Escape; focus/icon/label readable.",
+      "Native Find/Replace abcq and complete saved markers verified against raw DOM and independent saved DOCX XML.",
+      "800 Text horizontal clipping remains raw and outside vertical362 acceptance."
+    ],
+    "limits": [
+      "Images establish selected states; raw native inputs/DOM/XML establish intermediate sequences.",
+      "Virtual headed X11/software graphics; not a physical desktop or all-platform claim."
+    ],
+    "method": "Four changed P2 originals viewed serially; fifteen exact SHA256-equal reviewed420 originals reused.",
+    "newOriginalsViewedSerially": [
+      "preflight-saved.png",
+      "preflight-reopened.png",
+      "keyboard-command-focus.png",
+      "keyboard-command-reopened.png"
+    ],
+    "exactPreviouslyReviewedBytesReused": 15
+  },
+  "retainedControl": {
+    "oldApplication": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "oldPackageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+    "oldExecutableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+    "originalFailedArrowRun": 44739164950,
+    "originalPartialTabRun": 44744186201,
+    "ribbonFixtureSha256": "ba26f890485dcee41cbfdf694969014ae7b9951b34cbbbc01bc820a15491b3f9",
+    "unchangedTemplateGitBlob": "c3302b800e96c6d96f75f589d010409c434c7720",
+    "originalRibbonHarness": "2cba4b113e03c0411614a04af63a66c36d9b57dd",
+    "originalRibbonHarnessSha256": "2acdd2f0a32797a3b0149c425c301b1698612541d366f3958ece92e229c16c83",
+    "priorFixedSource": "420af640c10ab9ada6c66c844c0098caea87c493",
+    "priorFixedProof": "45ccd7840414c99610511a31d9f40061c01f40e7",
+    "priorFixedReceiptSha256": "f1945183d64c06ea58b2f51052d46b4ee58fc852e68636329a922116f7fdc077",
+    "note": "Only control provenance; no old package or injected helper is used as a P2 package pass."
+  },
+  "previous420Proof": {
+    "commit": "45ccd7840414c99610511a31d9f40061c01f40e7",
+    "receipt": "docs/tests/2026-11-23-linux420-native-368-369/receipt.json",
+    "receiptSha256": "f1945183d64c06ea58b2f51052d46b4ee58fc852e68636329a922116f7fdc077",
+    "note": "Original failures and successful420 evidence remain unchanged; not relabelled as P2."
+  },
+  "limits": [
+    "Virtual X11/software graphics, not physical hardware or AppImage operation.",
+    "Full process quit uses WebDriver DELETE session; the application menu Quit command is not certified.",
+    "Original I3 failures, GTK diagnostic and 420 acceptance/failures are retained; this run operates the actual P2 package without DOM focus/style injection.",
+    "IME/readonly/disabled/native already-handled event variants are not synthesized; their source/unit coverage is not native UI coverage.",
+    "Native disabled Delete not reached; native IME/composition/already-handled/readonly-search state checks not claimed.",
+    "Four800px Text-trigger horizontal clipping observations retained;362 acceptance is vertical only.",
+    "Only this P2 DEB is covered. A later release DEB requires separate payload identity comparison or appropriate final controls.",
+    "No full-app or all-platform native pass; no green-build-only inference."
+  ],
+  "cleanup": {
+    "caller": {
+      "driverExited": true,
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    },
+    "module": [
+      {
+        "label": "release own input actions",
+        "status": "fulfilled"
+      },
+      {
+        "label": "restore original theme and tab",
+        "status": "fulfilled"
+      },
+      {
+        "label": "restore window rectangle",
+        "status": "fulfilled"
+      },
+      {
+        "label": "fixture remains byte-identical",
+        "status": "fulfilled"
+      }
+    ],
+    "localGuiOrCaptureStarted": false,
+    "localOwnedServersOrBrowsersRunning": false,
+    "mainTagPublicationTouched": false
+  }
+}
