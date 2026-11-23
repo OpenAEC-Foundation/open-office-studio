@@ -1,0 +1,52 @@
+# Field374 — one shared SDK/browser regression
+
+The fixtures and original STW oracle are copied byte-for-byte from the verified
+STW QA branch; hashes are enforced by `contract.mjs`. `source.stw` is the genuine
+LibreOffice/core 2003 `qadevOOo/testdocs/report.stw` at
+`ded596096a767fa470eea8dfccd51c1af5c3dd54`. `converted.docx` is the actual P2 private
+conversion; `windows-resaved.docx` is the unchanged output of native run 45152204418,
+SHA256 `4dcb51f93bd88f3d4bd3a9956f53cff23613235fe222632734b8090f9ea18310`.
+No diagnostic flattened file is used as an accepted input or workaround here.
+
+Run from the **application checkout**, using the exact application commit:
+
+```
+node PATH_TO_QA/qa/field374/sdk.mjs APP_COMMIT OUTPUT
+node scripts/writer-proefbuild.mjs build BUILD_PATH ROUTE
+node PATH_TO_QA/qa/field374/browser.mjs APP_COMMIT BUILD_PATH ROUTE OUTPUT
+```
+
+`APP_COMMIT` is a full 40-character commit matching the current application's HEAD;
+`ROUTE` is `/` or `/office/`; build/output paths should be new private `.local/`
+paths. The SDK helper and browser receipt checks resolve actual production code
+from the application's CWD, even if this QA lives in a separate nested checkout.
+Fixtures/contracts resolve from the QA checkout. Dependencies are the frozen
+application pnpm install, Node 22+, Python 3 (or `OOS_FIELD_PYTHON`) and Playwright
+Chromium plus its ordinary OS dependencies. The builder needs its normal assets
+and spelling-WASM toolchain. The SDK uses the pinned @betteroffice/fonts 0.4.0
+LiberationSans-Regular.ttf bytes, SHA256
+`76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8`;
+this is the same font blob as the upstream Rust tests. Browser font assets come
+from the actual receipt-bound frontend; the test does not replace its fonts.
+
+The SDK checks both resident edit and standalone layout kernels, actual title
+geometry before/after edit/Undo/Redo/save/fresh-session reopen, adjacent-run start
+and wrapping, ordinary non-caps P2 baseline widths, Unicode expansion, tracking,
+150% horizontal scale, primary-font policy and one-unit field spans. Source XML
+and the original unknown DOCVARIABLE instruction/cache stay intact.
+
+The browser helper opens the unmodified Windows DOCX, then edits the unmodified
+converter control through focused keyboard input, downloads actual saved DOCX,
+and opens that output in a fresh browser context. It observes real Canvas title
+and suffix paint in the page/worker by forwarding every original draw call
+unchanged. It checks actual glyph bounds, captures images and treats missing
+observations as driver failures. It never sets the editor model or field values.
+Platform shortcuts use Meta on macOS and Control elsewhere.
+
+Both helpers share the independent original 8-block/style/heading/placeholder
+oracle and additionally require Title 32pt/caps/80-twip tracking and the original
+DOCVARIABLE with its cached `Report Title`. Reports, actual downloaded DOCX,
+source audits, paint observations, images, kernel/source/build hashes and cleanup
+results are written below OUTPUT. Native app acceptance remains a separate owner
+check on the actual newly frozen package. Ordinary non-caps fields with tracking
+are controls; this correction does not claim a general repair of that older path.

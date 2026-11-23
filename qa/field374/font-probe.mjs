@@ -14,8 +14,8 @@ await mkdir(root, { recursive: true });
 const font = await readFile("node_modules/@betteroffice/fonts/assets/LiberationSans-Regular.ttf");
 const wasm = await readFile("vendor/tekstengine/docx_layout_bg.wasm");
 await preloadLayoutWasm(wasm); const id = registerMeasureFont(font);
-const measure = (kind, text, caps, tracking) => JSON.parse(measureParagraphJson(JSON.stringify({
-  block: { kind: "paragraph", runs: [{ kind, ...(kind === "field" ? { fallback: text } : { text }), allCaps: caps, letterSpacing: tracking }] },
+const measure = (kind, text, caps, tracking, scale = 100) => JSON.parse(measureParagraphJson(JSON.stringify({
+  block: { kind: "paragraph", runs: [{ kind, ...(kind === "field" ? { fallback: text } : { text }), allCaps: caps, letterSpacing: tracking, horizontalScale: scale }] },
   maxWidth: 2000, fontChains: { "liberation sans|0|0": [id] }, defaults: { fontFamily: "Liberation Sans", fontSize: 32 }, authoritativeShaping: true,
 }))).lines[0].width;
 let browser, context;
@@ -37,12 +37,17 @@ try {
       const m = ctx.measureText(text); ctx.fillText(text, 20, y); y += 70;
       cases.push({ text, tracking, width: m.width, inkLeft: m.actualBoundingBoxLeft, inkRight: m.actualBoundingBoxRight, kerning: ctx.fontKerning, font: ctx.font });
     }
+    ctx.save(); ctx.scale(1.5, 1); ctx.letterSpacing = (16 / 3) + "px";
+    const m = ctx.measureText("REPORT TITLE"); ctx.fillText("REPORT TITLE", 20, y);
+    cases.push({ text: "REPORT TITLE", tracking: 16 / 3, horizontalScale: 150,
+      width: m.width * 1.5, inkLeft: m.actualBoundingBoxLeft * 1.5, inkRight: m.actualBoundingBoxRight * 1.5,
+      kerning: ctx.fontKerning, font: ctx.font }); ctx.restore();
     return cases;
   }, { bytes: [...font] });
   for (const item of metrics) report.cases.push({ ...item,
-    sdkField: measure("field", item.text, false, item.tracking),
-    sdkText: measure("text", item.text, false, item.tracking),
-    sdkCapsFieldFromOriginalCache: measure("field", item.text === "REPORT TITLE" ? "Report Title" : item.text, true, item.tracking) });
+    sdkField: measure("field", item.text, false, item.tracking, item.horizontalScale),
+    sdkText: measure("text", item.text, false, item.tracking, item.horizontalScale),
+    sdkCapsFieldFromOriginalCache: measure("field", item.text === "REPORT TITLE" ? "Report Title" : item.text, true, item.tracking, item.horizontalScale) });
   await page.screenshot({ path: root + "/canvas.png" });
   report.status = "captured-actual-canvas-metrics-not-a-fixed-product-pass";
 } finally {

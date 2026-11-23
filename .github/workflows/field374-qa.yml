@@ -7,6 +7,7 @@ permissions:
   contents: read
 jobs:
   metrics:
+    if: "!contains(github.event.head_commit.message, '[field374-proof]')"
     runs-on: ubuntu-22.04
     timeout-minutes: 15
     steps:
@@ -29,4 +30,57 @@ jobs:
         with:
           name: field374-font-probe
           path: .local/field374-font-probe
+          if-no-files-found: warn
+  functional:
+    if: contains(github.event.head_commit.message, '[field374-proof]')
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: runtime317-assets-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json', 'assets/lettertypen.json', 'assets/woordenboeken.json') }}
+          restore-keys: |
+            runtime317-assets-${{ runner.os }}-${{ runner.arch }}-
+      - name: Real source fields in both SDK modules, edit/save/fresh reopen
+        run: node qa/field374/sdk.mjs ${{ github.sha }} .local/field374/sdk-proof
+      - name: Existing focused Writer field controls and typecheck
+        run: |
+          pnpm exec vitest run src/tekst/veldenDocument/model.test.ts src/tekst/veldenDocument/lettertype.test.ts
+          pnpm exec tsc --noEmit
+      - name: Isolated real Linux browser driver
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          pnpm exec playwright install --with-deps chromium
+      - name: Same-font Canvas tracking and 150-percent transform evidence
+        run: node qa/field374/font-probe.mjs .local/field374/font-probe
+      - name: One candidate frontend route, no app or suite build
+        run: node scripts/writer-proefbuild.mjs build .local/field374/browser-build /
+      - name: Real cached-field paint and actual edit/save/fresh browser reopen
+        run: node qa/field374/browser.mjs ${{ github.sha }} .local/field374/browser-build / .local/field374/browser-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: field374-linux-functional-proof
+          path: |
+            .local/field374/sdk-proof
+            .local/field374/browser-proof
+            .local/field374/font-probe
+          include-hidden-files: true
           if-no-files-found: warn

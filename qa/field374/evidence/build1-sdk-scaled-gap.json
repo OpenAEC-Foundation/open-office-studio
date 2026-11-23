@@ -1,0 +1,2039 @@
+{
+  "applicationCommit": "09ba25405313a360e205279d00e7924f82048bff",
+  "node": "v24.22.3",
+  "platform": "win32",
+  "status": "failed-regression",
+  "checks": [
+    {
+      "name": "resident edit WASM: displayed field advance Report Title",
+      "passed": true,
+      "facts": {
+        "actual": 364.4792,
+        "expected": 364.4791666666667,
+        "tracking": 5.333333333333333
+      }
+    },
+    {
+      "name": "resident edit WASM: one field unit and unchanged cache Report Title",
+      "passed": true
+    },
+    {
+      "name": "resident edit WASM: displayed field advance straße",
+      "passed": true,
+      "facts": {
+        "actual": 212.66666,
+        "expected": 212.66666,
+        "tracking": 2.25
+      }
+    },
+    {
+      "name": "resident edit WASM: one field unit and unchanged cache straße",
+      "passed": true
+    },
+    {
+      "name": "resident edit WASM: displayed field advance iki",
+      "passed": true,
+      "facts": {
+        "actual": 52.166668,
+        "expected": 52.166668,
+        "tracking": 0
+      }
+    },
+    {
+      "name": "resident edit WASM: one field unit and unchanged cache iki",
+      "passed": true
+    },
+    {
+      "name": "resident edit WASM: unchanged ordinary P2 field Report Title",
+      "passed": true,
+      "facts": {
+        "actual": 218.16669,
+        "p2": 218.16669
+      }
+    },
+    {
+      "name": "resident edit WASM: unchanged ordinary P2 field straße",
+      "passed": true,
+      "facts": {
+        "actual": 120.91667,
+        "p2": 120.91667
+      }
+    },
+    {
+      "name": "resident edit WASM: unchanged ordinary P2 field iki",
+      "passed": true,
+      "facts": {
+        "actual": 40.291668,
+        "p2": 40.291668
+      }
+    },
+    {
+      "name": "resident edit WASM: adjacent text wraps after full painted field",
+      "passed": true,
+      "facts": {
+        "lines": [
+          {
+            "headRun": 0,
+            "headChar": 0,
+            "tailRun": 1,
+            "tailChar": 1,
+            "width": 376.33334,
+            "ascent": 40.020836,
+            "descent": 9.041667,
+            "lineHeight": 49.062504,
+            "runAdvances": [
+              {
+                "runIndex": 0,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 364.4792,
+                "logicalOrder": 0
+              },
+              {
+                "runIndex": 1,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 11.854167,
+                "logicalOrder": 1000000
+              }
+            ],
+            "clusterAdvances": [
+              {
+                "runIndex": 1,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 11.854167,
+                "xOffset": 364.4792,
+                "bidiLevel": 0,
+                "logicalOrder": 1000000
+              }
+            ],
+            "bidiSlices": [
+              {
+                "runIndex": 0,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 364.4792,
+                "bidiLevel": 0,
+                "visualOrder": 0,
+                "logicalOrder": 0
+              },
+              {
+                "runIndex": 1,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 11.854167,
+                "bidiLevel": 0,
+                "visualOrder": 1,
+                "logicalOrder": 1000000
+              }
+            ]
+          },
+          {
+            "headRun": 1,
+            "headChar": 1,
+            "tailRun": 1,
+            "tailChar": 5,
+            "width": 113.79167,
+            "ascent": 40.020836,
+            "descent": 9.041667,
+            "lineHeight": 49.062504,
+            "runAdvances": [
+              {
+                "runIndex": 1,
+                "startChar": 1,
+                "endChar": 5,
+                "advance": 113.79167,
+                "logicalOrder": 1000001
+              }
+            ],
+            "clusterAdvances": [
+              {
+                "runIndex": 1,
+                "startChar": 1,
+                "endChar": 2,
+                "advance": 30.8125,
+                "xOffset": 0,
+                "bidiLevel": 0,
+                "logicalOrder": 1000001
+              },
+              {
+                "runIndex": 1,
+                "startChar": 2,
+                "endChar": 3,
+                "advance": 28.458334,
+                "xOffset": 30.8125,
+                "bidiLevel": 0,
+                "logicalOrder": 1000002
+              },
+              {
+                "runIndex": 1,
+                "startChar": 3,
+                "endChar": 4,
+                "advance": 28.458334,
+                "xOffset": 59.270836,
+                "bidiLevel": 0,
+                "logicalOrder": 1000003
+              },
+              {
+                "runIndex": 1,
+                "startChar": 4,
+                "endChar": 5,
+                "advance": 26.0625,
+                "xOffset": 87.72917,
+                "bidiLevel": 0,
+                "logicalOrder": 1000004
+              }
+            ],
+            "bidiSlices": [
+              {
+                "runIndex": 1,
+                "startChar": 1,
+                "endChar": 2,
+                "advance": 30.8125,
+                "bidiLevel": 0,
+                "visualOrder": 0,
+                "logicalOrder": 1000001
+              },
+              {
+                "runIndex": 1,
+                "startChar": 2,
+                "endChar": 3,
+                "advance": 28.458334,
+                "bidiLevel": 0,
+                "visualOrder": 1,
+                "logicalOrder": 1000002
+              },
+              {
+                "runIndex": 1,
+                "startChar": 3,
+                "endChar": 4,
+                "advance": 28.458334,
+                "bidiLevel": 0,
+                "visualOrder": 2,
+                "logicalOrder": 1000003
+              },
+              {
+                "runIndex": 1,
+                "startChar": 4,
+                "endChar": 5,
+                "advance": 26.0625,
+                "bidiLevel": 0,
+                "visualOrder": 3,
+                "logicalOrder": 1000004
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "resident edit WASM: resolved primary field font policy retained",
+      "passed": true,
+      "facts": {
+        "actual": 305.81253,
+        "expected": 305.8125
+      }
+    },
+    {
+      "name": "resident edit WASM: field visual scale includes tracking once",
+      "passed": false,
+      "facts": {
+        "actual": 517.38544,
+        "expected": 546.71875,
+        "scalePercent": 150,
+        "tracking": 5.333333333333333
+      }
+    },
+    {
+      "name": "standalone layout WASM: displayed field advance Report Title",
+      "passed": true,
+      "facts": {
+        "actual": 364.4792,
+        "expected": 364.4791666666667,
+        "tracking": 5.333333333333333
+      }
+    },
+    {
+      "name": "standalone layout WASM: one field unit and unchanged cache Report Title",
+      "passed": true
+    },
+    {
+      "name": "standalone layout WASM: displayed field advance straße",
+      "passed": true,
+      "facts": {
+        "actual": 212.66666,
+        "expected": 212.66666,
+        "tracking": 2.25
+      }
+    },
+    {
+      "name": "standalone layout WASM: one field unit and unchanged cache straße",
+      "passed": true
+    },
+    {
+      "name": "standalone layout WASM: displayed field advance iki",
+      "passed": true,
+      "facts": {
+        "actual": 52.166668,
+        "expected": 52.166668,
+        "tracking": 0
+      }
+    },
+    {
+      "name": "standalone layout WASM: one field unit and unchanged cache iki",
+      "passed": true
+    },
+    {
+      "name": "standalone layout WASM: unchanged ordinary P2 field Report Title",
+      "passed": true,
+      "facts": {
+        "actual": 218.16669,
+        "p2": 218.16669
+      }
+    },
+    {
+      "name": "standalone layout WASM: unchanged ordinary P2 field straße",
+      "passed": true,
+      "facts": {
+        "actual": 120.91667,
+        "p2": 120.91667
+      }
+    },
+    {
+      "name": "standalone layout WASM: unchanged ordinary P2 field iki",
+      "passed": true,
+      "facts": {
+        "actual": 40.291668,
+        "p2": 40.291668
+      }
+    },
+    {
+      "name": "standalone layout WASM: adjacent text wraps after full painted field",
+      "passed": true,
+      "facts": {
+        "lines": [
+          {
+            "headRun": 0,
+            "headChar": 0,
+            "tailRun": 1,
+            "tailChar": 1,
+            "width": 376.33334,
+            "ascent": 40.020836,
+            "descent": 9.041667,
+            "lineHeight": 49.062504,
+            "runAdvances": [
+              {
+                "runIndex": 0,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 364.4792,
+                "logicalOrder": 0
+              },
+              {
+                "runIndex": 1,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 11.854167,
+                "logicalOrder": 1000000
+              }
+            ],
+            "clusterAdvances": [
+              {
+                "runIndex": 1,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 11.854167,
+                "xOffset": 364.4792,
+                "bidiLevel": 0,
+                "logicalOrder": 1000000
+              }
+            ],
+            "bidiSlices": [
+              {
+                "runIndex": 0,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 364.4792,
+                "bidiLevel": 0,
+                "visualOrder": 0,
+                "logicalOrder": 0
+              },
+              {
+                "runIndex": 1,
+                "startChar": 0,
+                "endChar": 1,
+                "advance": 11.854167,
+                "bidiLevel": 0,
+                "visualOrder": 1,
+                "logicalOrder": 1000000
+              }
+            ]
+          },
+          {
+            "headRun": 1,
+            "headChar": 1,
+            "tailRun": 1,
+            "tailChar": 5,
+            "width": 113.79167,
+            "ascent": 40.020836,
+            "descent": 9.041667,
+            "lineHeight": 49.062504,
+            "runAdvances": [
+              {
+                "runIndex": 1,
+                "startChar": 1,
+                "endChar": 5,
+                "advance": 113.79167,
+                "logicalOrder": 1000001
+              }
+            ],
+            "clusterAdvances": [
+              {
+                "runIndex": 1,
+                "startChar": 1,
+                "endChar": 2,
+                "advance": 30.8125,
+                "xOffset": 0,
+                "bidiLevel": 0,
+                "logicalOrder": 1000001
+              },
+              {
+                "runIndex": 1,
+                "startChar": 2,
+                "endChar": 3,
+                "advance": 28.458334,
+                "xOffset": 30.8125,
+                "bidiLevel": 0,
+                "logicalOrder": 1000002
+              },
+              {
+                "runIndex": 1,
+                "startChar": 3,
+                "endChar": 4,
+                "advance": 28.458334,
+                "xOffset": 59.270836,
+                "bidiLevel": 0,
+                "logicalOrder": 1000003
+              },
+              {
+                "runIndex": 1,
+                "startChar": 4,
+                "endChar": 5,
+                "advance": 26.0625,
+                "xOffset": 87.72917,
+                "bidiLevel": 0,
+                "logicalOrder": 1000004
+              }
+            ],
+            "bidiSlices": [
+              {
+                "runIndex": 1,
+                "startChar": 1,
+                "endChar": 2,
+                "advance": 30.8125,
+                "bidiLevel": 0,
+                "visualOrder": 0,
+                "logicalOrder": 1000001
+              },
+              {
+                "runIndex": 1,
+                "startChar": 2,
+                "endChar": 3,
+                "advance": 28.458334,
+                "bidiLevel": 0,
+                "visualOrder": 1,
+                "logicalOrder": 1000002
+              },
+              {
+                "runIndex": 1,
+                "startChar": 3,
+                "endChar": 4,
+                "advance": 28.458334,
+                "bidiLevel": 0,
+                "visualOrder": 2,
+                "logicalOrder": 1000003
+              },
+              {
+                "runIndex": 1,
+                "startChar": 4,
+                "endChar": 5,
+                "advance": 26.0625,
+                "bidiLevel": 0,
+                "visualOrder": 3,
+                "logicalOrder": 1000004
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "standalone layout WASM: resolved primary field font policy retained",
+      "passed": true,
+      "facts": {
+        "actual": 305.81253,
+        "expected": 305.8125
+      }
+    },
+    {
+      "name": "standalone layout WASM: field visual scale includes tracking once",
+      "passed": false,
+      "facts": {
+        "actual": 517.38544,
+        "expected": 546.71875,
+        "scalePercent": 150,
+        "tracking": 5.333333333333333
+      }
+    },
+    {
+      "name": "before edit: original field, cache and tracking",
+      "passed": true
+    },
+    {
+      "name": "before edit: real source field reserves painted width",
+      "passed": true,
+      "facts": {
+        "actual": 364.479,
+        "expected": 364.4791666666667
+      }
+    },
+    {
+      "name": "before edit: next run starts outside field",
+      "passed": true,
+      "facts": {
+        "titleX": 225.76,
+        "expectedRight": 590.2391666666667,
+        "neighbors": []
+      }
+    },
+    {
+      "name": "before edit: full source and ordinary suffix painted",
+      "passed": true,
+      "facts": {
+        "text": "Report Title",
+        "expected": "Report Title"
+      }
+    },
+    {
+      "name": "after edit: original field, cache and tracking",
+      "passed": true
+    },
+    {
+      "name": "after edit: real source field reserves painted width",
+      "passed": true,
+      "facts": {
+        "actual": 364.479,
+        "expected": 364.4791666666667
+      }
+    },
+    {
+      "name": "after edit: next run starts outside field",
+      "passed": true,
+      "facts": {
+        "titleX": 103.979,
+        "expectedRight": 468.45816666666667,
+        "neighbors": [
+          {
+            "kind": "text",
+            "text": "-",
+            "x": 480.313,
+            "baselineY": 136.021,
+            "width": 19.542,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 3,
+            "docEnd": 4,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000001,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "-",
+            "x": 499.854,
+            "baselineY": 136.021,
+            "width": 19.542,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 4,
+            "docEnd": 5,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000002,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "S",
+            "x": 531.25,
+            "baselineY": 136.021,
+            "width": 33.792,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 6,
+            "docEnd": 7,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000004,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "T",
+            "x": 565.042,
+            "baselineY": 136.021,
+            "width": 31.396,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 7,
+            "docEnd": 8,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000005,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "W",
+            "x": 596.438,
+            "baselineY": 136.021,
+            "width": 45.604,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 8,
+            "docEnd": 9,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000006,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "3",
+            "x": 642.042,
+            "baselineY": 136.021,
+            "width": 29.063,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 9,
+            "docEnd": 10,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000007,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "0",
+            "x": 671.104,
+            "baselineY": 136.021,
+            "width": 29.063,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 10,
+            "docEnd": 11,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000008,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          }
+        ]
+      }
+    },
+    {
+      "name": "after edit: full source and ordinary suffix painted",
+      "passed": true,
+      "facts": {
+        "text": "Report Title -- STW30 EDIT 2026-11-23",
+        "expected": "Report Title -- STW30 EDIT 2026-11-23"
+      }
+    },
+    {
+      "name": "after Undo: original field, cache and tracking",
+      "passed": true
+    },
+    {
+      "name": "after Undo: real source field reserves painted width",
+      "passed": true,
+      "facts": {
+        "actual": 364.479,
+        "expected": 364.4791666666667
+      }
+    },
+    {
+      "name": "after Undo: next run starts outside field",
+      "passed": true,
+      "facts": {
+        "titleX": 225.76,
+        "expectedRight": 590.2391666666667,
+        "neighbors": []
+      }
+    },
+    {
+      "name": "after Undo: full source and ordinary suffix painted",
+      "passed": true,
+      "facts": {
+        "text": "Report Title",
+        "expected": "Report Title"
+      }
+    },
+    {
+      "name": "after Redo: original field, cache and tracking",
+      "passed": true
+    },
+    {
+      "name": "after Redo: real source field reserves painted width",
+      "passed": true,
+      "facts": {
+        "actual": 364.479,
+        "expected": 364.4791666666667
+      }
+    },
+    {
+      "name": "after Redo: next run starts outside field",
+      "passed": true,
+      "facts": {
+        "titleX": 103.979,
+        "expectedRight": 468.45816666666667,
+        "neighbors": [
+          {
+            "kind": "text",
+            "text": "-",
+            "x": 480.313,
+            "baselineY": 136.021,
+            "width": 19.542,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 3,
+            "docEnd": 4,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000001,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "-",
+            "x": 499.854,
+            "baselineY": 136.021,
+            "width": 19.542,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 4,
+            "docEnd": 5,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000002,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "S",
+            "x": 531.25,
+            "baselineY": 136.021,
+            "width": 33.792,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 6,
+            "docEnd": 7,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000004,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "T",
+            "x": 565.042,
+            "baselineY": 136.021,
+            "width": 31.396,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 7,
+            "docEnd": 8,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000005,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "W",
+            "x": 596.438,
+            "baselineY": 136.021,
+            "width": 45.604,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 8,
+            "docEnd": 9,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000006,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "3",
+            "x": 642.042,
+            "baselineY": 136.021,
+            "width": 29.063,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 9,
+            "docEnd": 10,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000007,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "0",
+            "x": 671.104,
+            "baselineY": 136.021,
+            "width": 29.063,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 10,
+            "docEnd": 11,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000008,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          }
+        ]
+      }
+    },
+    {
+      "name": "after Redo: full source and ordinary suffix painted",
+      "passed": true,
+      "facts": {
+        "text": "Report Title -- STW30 EDIT 2026-11-23",
+        "expected": "Report Title -- STW30 EDIT 2026-11-23"
+      }
+    },
+    {
+      "name": "fresh session reopen: original field, cache and tracking",
+      "passed": true
+    },
+    {
+      "name": "fresh session reopen: real source field reserves painted width",
+      "passed": true,
+      "facts": {
+        "actual": 364.479,
+        "expected": 364.4791666666667
+      }
+    },
+    {
+      "name": "fresh session reopen: next run starts outside field",
+      "passed": true,
+      "facts": {
+        "titleX": 103.979,
+        "expectedRight": 468.45816666666667,
+        "neighbors": [
+          {
+            "kind": "text",
+            "text": "-",
+            "x": 480.313,
+            "baselineY": 136.021,
+            "width": 19.542,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 3,
+            "docEnd": 4,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000001,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "-",
+            "x": 499.854,
+            "baselineY": 136.021,
+            "width": 19.542,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 4,
+            "docEnd": 5,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000002,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "S",
+            "x": 531.25,
+            "baselineY": 136.021,
+            "width": 33.792,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 6,
+            "docEnd": 7,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000004,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "T",
+            "x": 565.042,
+            "baselineY": 136.021,
+            "width": 31.396,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 7,
+            "docEnd": 8,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000005,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "W",
+            "x": 596.438,
+            "baselineY": 136.021,
+            "width": 45.604,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 8,
+            "docEnd": 9,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000006,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "3",
+            "x": 642.042,
+            "baselineY": 136.021,
+            "width": 29.063,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 9,
+            "docEnd": 10,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000007,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          },
+          {
+            "kind": "text",
+            "text": "0",
+            "x": 671.104,
+            "baselineY": 136.021,
+            "width": 29.063,
+            "font": "400 42.667px Thorndale, sans-serif",
+            "color": "#000000",
+            "letterSpacing": 5.333,
+            "allCaps": true,
+            "docStart": 10,
+            "docEnd": 11,
+            "blockKey": "body:p0",
+            "fragmentDocStart": 0,
+            "fragmentDocEnd": 28,
+            "fromLine": 0,
+            "toLine": 2,
+            "lineIndex": 0,
+            "logicalOrder": 1000008,
+            "bidiLevel": 0,
+            "lang": "en-US"
+          }
+        ]
+      }
+    },
+    {
+      "name": "fresh session reopen: full source and ordinary suffix painted",
+      "passed": true,
+      "facts": {
+        "text": "Report Title -- STW30 EDIT 2026-11-23",
+        "expected": "Report Title -- STW30 EDIT 2026-11-23"
+      }
+    }
+  ],
+  "stages": [
+    {
+      "phase": "before edit",
+      "title": {
+        "kind": "text",
+        "text": "Report Title",
+        "x": 225.76,
+        "baselineY": 136.021,
+        "width": 364.479,
+        "font": "400 42.667px Thorndale, sans-serif",
+        "color": "#000000",
+        "letterSpacing": 5.333,
+        "allCaps": true,
+        "docStart": 1,
+        "docEnd": 2,
+        "blockKey": "body:p0",
+        "fragmentDocStart": 0,
+        "fragmentDocEnd": 3,
+        "fromLine": 0,
+        "toLine": 1,
+        "lineIndex": 0,
+        "field": {
+          "category": "OTHER",
+          "type": "DOCVARIABLE",
+          "instruction": "DOCVARIABLE Report"
+        },
+        "logicalOrder": 0,
+        "bidiLevel": 0,
+        "lang": "en-US"
+      },
+      "neighbors": [],
+      "text": "Report Title"
+    },
+    {
+      "phase": "after edit",
+      "title": {
+        "kind": "text",
+        "text": "Report Title",
+        "x": 103.979,
+        "baselineY": 136.021,
+        "width": 364.479,
+        "font": "400 42.667px Thorndale, sans-serif",
+        "color": "#000000",
+        "letterSpacing": 5.333,
+        "allCaps": true,
+        "docStart": 1,
+        "docEnd": 2,
+        "blockKey": "body:p0",
+        "fragmentDocStart": 0,
+        "fragmentDocEnd": 28,
+        "fromLine": 0,
+        "toLine": 2,
+        "lineIndex": 0,
+        "field": {
+          "category": "OTHER",
+          "type": "DOCVARIABLE",
+          "instruction": "DOCVARIABLE Report"
+        },
+        "logicalOrder": 0,
+        "bidiLevel": 0,
+        "lang": "en-US"
+      },
+      "neighbors": [
+        {
+          "kind": "text",
+          "text": "-",
+          "x": 480.313,
+          "baselineY": 136.021,
+          "width": 19.542,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 3,
+          "docEnd": 4,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000001,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "-",
+          "x": 499.854,
+          "baselineY": 136.021,
+          "width": 19.542,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 4,
+          "docEnd": 5,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000002,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "S",
+          "x": 531.25,
+          "baselineY": 136.021,
+          "width": 33.792,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 6,
+          "docEnd": 7,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000004,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "T",
+          "x": 565.042,
+          "baselineY": 136.021,
+          "width": 31.396,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 7,
+          "docEnd": 8,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000005,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "W",
+          "x": 596.438,
+          "baselineY": 136.021,
+          "width": 45.604,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 8,
+          "docEnd": 9,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000006,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "3",
+          "x": 642.042,
+          "baselineY": 136.021,
+          "width": 29.063,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 9,
+          "docEnd": 10,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000007,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "0",
+          "x": 671.104,
+          "baselineY": 136.021,
+          "width": 29.063,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 10,
+          "docEnd": 11,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000008,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        }
+      ],
+      "text": "Report Title -- STW30 EDIT 2026-11-23"
+    },
+    {
+      "phase": "after Undo",
+      "title": {
+        "kind": "text",
+        "text": "Report Title",
+        "x": 225.76,
+        "baselineY": 136.021,
+        "width": 364.479,
+        "font": "400 42.667px Thorndale, sans-serif",
+        "color": "#000000",
+        "letterSpacing": 5.333,
+        "allCaps": true,
+        "docStart": 1,
+        "docEnd": 2,
+        "blockKey": "body:p0",
+        "fragmentDocStart": 0,
+        "fragmentDocEnd": 3,
+        "fromLine": 0,
+        "toLine": 1,
+        "lineIndex": 0,
+        "field": {
+          "category": "OTHER",
+          "type": "DOCVARIABLE",
+          "instruction": "DOCVARIABLE Report"
+        },
+        "logicalOrder": 0,
+        "bidiLevel": 0,
+        "lang": "en-US"
+      },
+      "neighbors": [],
+      "text": "Report Title"
+    },
+    {
+      "phase": "after Redo",
+      "title": {
+        "kind": "text",
+        "text": "Report Title",
+        "x": 103.979,
+        "baselineY": 136.021,
+        "width": 364.479,
+        "font": "400 42.667px Thorndale, sans-serif",
+        "color": "#000000",
+        "letterSpacing": 5.333,
+        "allCaps": true,
+        "docStart": 1,
+        "docEnd": 2,
+        "blockKey": "body:p0",
+        "fragmentDocStart": 0,
+        "fragmentDocEnd": 28,
+        "fromLine": 0,
+        "toLine": 2,
+        "lineIndex": 0,
+        "field": {
+          "category": "OTHER",
+          "type": "DOCVARIABLE",
+          "instruction": "DOCVARIABLE Report"
+        },
+        "logicalOrder": 0,
+        "bidiLevel": 0,
+        "lang": "en-US"
+      },
+      "neighbors": [
+        {
+          "kind": "text",
+          "text": "-",
+          "x": 480.313,
+          "baselineY": 136.021,
+          "width": 19.542,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 3,
+          "docEnd": 4,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000001,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "-",
+          "x": 499.854,
+          "baselineY": 136.021,
+          "width": 19.542,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 4,
+          "docEnd": 5,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000002,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "S",
+          "x": 531.25,
+          "baselineY": 136.021,
+          "width": 33.792,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 6,
+          "docEnd": 7,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000004,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "T",
+          "x": 565.042,
+          "baselineY": 136.021,
+          "width": 31.396,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 7,
+          "docEnd": 8,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000005,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "W",
+          "x": 596.438,
+          "baselineY": 136.021,
+          "width": 45.604,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 8,
+          "docEnd": 9,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000006,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "3",
+          "x": 642.042,
+          "baselineY": 136.021,
+          "width": 29.063,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 9,
+          "docEnd": 10,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000007,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "0",
+          "x": 671.104,
+          "baselineY": 136.021,
+          "width": 29.063,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 10,
+          "docEnd": 11,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000008,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        }
+      ],
+      "text": "Report Title -- STW30 EDIT 2026-11-23"
+    },
+    {
+      "phase": "fresh session reopen",
+      "title": {
+        "kind": "text",
+        "text": "Report Title",
+        "x": 103.979,
+        "baselineY": 136.021,
+        "width": 364.479,
+        "font": "400 42.667px Thorndale, sans-serif",
+        "color": "#000000",
+        "letterSpacing": 5.333,
+        "allCaps": true,
+        "docStart": 1,
+        "docEnd": 2,
+        "blockKey": "body:p0",
+        "fragmentDocStart": 0,
+        "fragmentDocEnd": 28,
+        "fromLine": 0,
+        "toLine": 2,
+        "lineIndex": 0,
+        "field": {
+          "category": "OTHER",
+          "type": "DOCVARIABLE",
+          "instruction": "DOCVARIABLE Report"
+        },
+        "logicalOrder": 0,
+        "bidiLevel": 0,
+        "lang": "en-US"
+      },
+      "neighbors": [
+        {
+          "kind": "text",
+          "text": "-",
+          "x": 480.313,
+          "baselineY": 136.021,
+          "width": 19.542,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 3,
+          "docEnd": 4,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000001,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "-",
+          "x": 499.854,
+          "baselineY": 136.021,
+          "width": 19.542,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 4,
+          "docEnd": 5,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000002,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "S",
+          "x": 531.25,
+          "baselineY": 136.021,
+          "width": 33.792,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 6,
+          "docEnd": 7,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000004,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "T",
+          "x": 565.042,
+          "baselineY": 136.021,
+          "width": 31.396,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 7,
+          "docEnd": 8,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000005,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "W",
+          "x": 596.438,
+          "baselineY": 136.021,
+          "width": 45.604,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 8,
+          "docEnd": 9,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000006,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "3",
+          "x": 642.042,
+          "baselineY": 136.021,
+          "width": 29.063,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 9,
+          "docEnd": 10,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000007,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        },
+        {
+          "kind": "text",
+          "text": "0",
+          "x": 671.104,
+          "baselineY": 136.021,
+          "width": 29.063,
+          "font": "400 42.667px Thorndale, sans-serif",
+          "color": "#000000",
+          "letterSpacing": 5.333,
+          "allCaps": true,
+          "docStart": 10,
+          "docEnd": 11,
+          "blockKey": "body:p0",
+          "fragmentDocStart": 0,
+          "fragmentDocEnd": 28,
+          "fromLine": 0,
+          "toLine": 2,
+          "lineIndex": 0,
+          "logicalOrder": 1000008,
+          "bidiLevel": 0,
+          "lang": "en-US"
+        }
+      ],
+      "text": "Report Title -- STW30 EDIT 2026-11-23"
+    }
+  ],
+  "limits": [
+    "Headless SDK only; no native app acceptance"
+  ],
+  "harnessSha256": "d702a2a96c76cce049d1985d403d4b299ae5320870d8d6a138f22c09754f1b26",
+  "contractSha256": "20d565af2a7c2407ce7a957d6c7e422233c72b7461d0b6bd5bd954ef72df9ec2",
+  "kernels": {
+    "edit": {
+      "pad": ".local/field374/build1/files/docx_edit_bg.wasm",
+      "bytes": 24559984,
+      "sha256": "dfc1a0b1e48ac6e8f7b0216c43721349a471db93977d22d1810fe9c4eff81884"
+    },
+    "layout": {
+      "pad": ".local/field374/build1/files/docx_layout_bg.wasm",
+      "bytes": 4372998,
+      "sha256": "7418fba9f7a26726d26d6b8241e2d32d7cd1c365efbe646b8794741c3d084aab"
+    }
+  },
+  "saved": {
+    "passed": true,
+    "fileSha256": "01e74b335361ed173988b7cfe54796cd5efa918d74f30f8516e3229cd3061334",
+    "sourceSha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+    "matched": [
+      {
+        "sourceIndex": 0,
+        "docxIndex": 0,
+        "text": "Report Title -- STW30 EDIT 2026-11-23",
+        "properties": {
+          "sizePt": 32,
+          "bold": false,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 1,
+        "docxIndex": 1,
+        "text": "Report Subheading",
+        "properties": {
+          "sizePt": 24,
+          "bold": false,
+          "alignment": "center",
+          "caps": false,
+          "smallCaps": true
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 2,
+        "docxIndex": 2,
+        "text": "Table of Contents",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 3,
+        "docxIndex": 3,
+        "text": "<This is the heading of the first section> 1",
+        "properties": {
+          "sizePt": 11,
+          "bold": true,
+          "alignment": "left",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 4,
+        "docxIndex": 4,
+        "text": "Illustration Index",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 5,
+        "docxIndex": 5,
+        "text": "Index of Tables",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 6,
+        "docxIndex": 6,
+        "text": "This is the heading of the first section",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [
+          {
+            "type": "text",
+            "prompt": "This is the heading of the first section",
+            "description": "Click placeholder and overwrite"
+          }
+        ],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 7,
+        "docxIndex": 7,
+        "text": "Start your text here",
+        "properties": {
+          "sizePt": 11,
+          "bold": false,
+          "alignment": "justify",
+          "caps": false,
+          "smallCaps": false
+        },
+        "placeholders": [
+          {
+            "type": "text",
+            "prompt": "Start your text here",
+            "description": "Click placeholder and overwrite"
+          }
+        ],
+        "cachedTextExact": true
+      }
+    ],
+    "marker": " -- STW30 EDIT 2026-11-23",
+    "tableCount": 0,
+    "actualNonemptyParagraphs": 8,
+    "scope": [
+      "No non-empty table in source; no table-fidelity proof",
+      "No font substitution, page layout or complete TOC/index-field fidelity claim",
+      "Numeric TOC cache is diagnostic; stable source-derived index text is required"
+    ],
+    "originalTitleFieldAndCachedTextRetained": true,
+    "titleStyle": {
+      "trackingTwips": 80,
+      "sizePt": 32,
+      "allCaps": true
+    }
+  },
+  "reopened": {
+    "passed": true,
+    "fileSha256": "a7f7b133118bf3865f8197d3e17df98ff650035528dc048feb87bab1bc0b68e6",
+    "sourceSha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+    "matched": [
+      {
+        "sourceIndex": 0,
+        "docxIndex": 0,
+        "text": "Report Title -- STW30 EDIT 2026-11-23",
+        "properties": {
+          "sizePt": 32,
+          "bold": false,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 1,
+        "docxIndex": 1,
+        "text": "Report Subheading",
+        "properties": {
+          "sizePt": 24,
+          "bold": false,
+          "alignment": "center",
+          "caps": false,
+          "smallCaps": true
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 2,
+        "docxIndex": 2,
+        "text": "Table of Contents",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 3,
+        "docxIndex": 3,
+        "text": "<This is the heading of the first section> 1",
+        "properties": {
+          "sizePt": 11,
+          "bold": true,
+          "alignment": "left",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 4,
+        "docxIndex": 4,
+        "text": "Illustration Index",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 5,
+        "docxIndex": 5,
+        "text": "Index of Tables",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 6,
+        "docxIndex": 6,
+        "text": "This is the heading of the first section",
+        "properties": {
+          "sizePt": 14,
+          "bold": true,
+          "alignment": "center",
+          "caps": true,
+          "smallCaps": false
+        },
+        "placeholders": [
+          {
+            "type": "text",
+            "prompt": "This is the heading of the first section",
+            "description": "Click placeholder and overwrite"
+          }
+        ],
+        "cachedTextExact": true
+      },
+      {
+        "sourceIndex": 7,
+        "docxIndex": 7,
+        "text": "Start your text here",
+        "properties": {
+          "sizePt": 11,
+          "bold": false,
+          "alignment": "justify",
+          "caps": false,
+          "smallCaps": false
+        },
+        "placeholders": [
+          {
+            "type": "text",
+            "prompt": "Start your text here",
+            "description": "Click placeholder and overwrite"
+          }
+        ],
+        "cachedTextExact": true
+      }
+    ],
+    "marker": " -- STW30 EDIT 2026-11-23",
+    "tableCount": 0,
+    "actualNonemptyParagraphs": 8,
+    "scope": [
+      "No non-empty table in source; no table-fidelity proof",
+      "No font substitution, page layout or complete TOC/index-field fidelity claim",
+      "Numeric TOC cache is diagnostic; stable source-derived index text is required"
+    ],
+    "originalTitleFieldAndCachedTextRetained": true,
+    "titleStyle": {
+      "trackingTwips": 80,
+      "sizePt": 32,
+      "allCaps": true
+    }
+  },
+  "cleanup": {
+    "sessionsDestroyed": true,
+    "privateKernelClosed": true,
+    "guiStarted": false
+  }
+}
