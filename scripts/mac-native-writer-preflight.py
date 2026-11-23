@@ -28,7 +28,7 @@ def body_text(path):
     return "".join(node.text or "" for node in doc.findall(".//w:t", NS))
 
 
-def visible_target(action, out, pid, ocr_binary, text):
+def visible_target(action, out, pid, ocr_binary, text, required_words=()):
     """Capture original native pixels before OCR; never touch the editor model."""
     out = Path(out)
     out.mkdir(parents=True, exist_ok=False)
@@ -42,10 +42,12 @@ def visible_target(action, out, pid, ocr_binary, text):
     subprocess.run(["screencapture", "-x", "-o", "-l", str(window["id"]), str(image)], check=True, capture_output=True, timeout=15)
     ocr_path = out / "ocr.json"
     subprocess.run([str(ocr_binary), str(image), str(ocr_path)], check=True, capture_output=True, timeout=30)
-    target = TARGET(json.loads(ocr_path.read_text()), state, pid, sha(image), text)
+    ocr = json.loads(ocr_path.read_text())
+    target = TARGET(ocr, state, pid, sha(image), text)
+    word_witnesses = {word: TARGET(ocr, state, pid, sha(image), word) for word in required_words}
     receipt = {"nativeWindowCapture": original, "originalDisplaySha256": sha(display_image), "noShadowSha256": sha(image),
                "rawAxSha256": sha(out / "raw-ax.json"), "ocrSha256": sha(ocr_path),
-               "target": target, "editorInputSent": False}
+               "target": target, "visibleWordWitnesses": word_witnesses, "editorInputSent": False}
     (out / "target-receipt.json").write_text(json.dumps(receipt, indent=2), encoding="utf-8")
     return target, receipt
 
