@@ -506,29 +506,100 @@ async function packageCase(pkg) {
     });
     await guard.initialize();
     paths.x11 = guard.evidence;
+    if (app.sleutel === "database") {
+      await wait(
+        () =>
+          observe(
+            "const e=document.querySelector('.database-zelfstandig > .office-header .office-headerknop');return !!e&&!e.disabled&&e.getClientRects().length>0",
+          ),
+        "Database public Open action is enabled before actual Ctrl+O",
+      );
+      report.databaseIdentityEvidence.publicOpenReady = true;
+    }
     return pid;
   };
   const osFileDialog = async (path, expectedTitle) => {
     // Native dialog entry: no hidden HTML file input or injected File object.
     report.osDialogWindows ??= [];
-    const title = await wait(
-      () => {
-        const value = command("xdotool", ["getactivewindow", "getwindowname"], {
-          env,
-        });
-        return (
-          expectedTitle
+    report.osDialogObservations ??= [];
+    const readFocus = () => {
+      const xid = command("xdotool", ["getwindowfocus"], { env });
+      return {
+        xid,
+        title: command("xdotool", ["getwindowname", xid], { env }),
+        pid: command("xdotool", ["getwindowpid", xid], { env }),
+      };
+    };
+    let title;
+    try {
+      title = await wait(
+        () => {
+          const focus = readFocus(),
+            value = focus.title;
+          const previous = report.osDialogObservations.at(-1);
+          if (
+            !previous ||
+            previous.xid !== focus.xid ||
+            previous.title !== value
+          )
+            report.osDialogObservations.push(focus);
+          return (expectedTitle
             ? value === expectedTitle
-            : /^(Open File|Open a File|Choose Files|Choose a File|Choose a database.*|Select.*)$/i.test(
+            : /^(Open|Open File|Open a File|Choose Files|Choose a File|Choose a database.*|Select.*)$/i.test(
                 value,
-              )
-        )
-          ? value
-          : false;
-      },
-      "The real OS file dialog must own focus before any path input",
-      15_000,
-    );
+              )) && focus.xid !== guard.evidence.xid
+            ? value
+            : false;
+        },
+        "The real OS file dialog must own focus before any path input",
+        15_000,
+      );
+    } catch (error) {
+      try {
+        const w = readFocus();
+        const exe = await readlink(`/proc/${w.pid}/exe`);
+        const procEnv = (
+          await readFile(`/proc/${w.pid}/environ`, "utf8")
+        ).split("\0");
+        assert.ok(
+          procEnv.includes(`DISPLAY=${env.DISPLAY}`),
+          "Only the private remote test display",
+        );
+        const startTime = writer362ProcStartTime(
+          await readFile(`/proc/${w.pid}/stat`, "utf8"),
+          Number(w.pid),
+        );
+        const captureDir = resolve(
+          ".local/linux-p2-native",
+          `database-${kind}-picker`,
+        );
+        await mkdir(captureDir, { recursive: true });
+        const file = join(
+          captureDir,
+          `unrecognized-${report.osDialogObservations.length}.png`,
+        );
+        const captured = command(
+          "/usr/bin/python3",
+          [
+            join(harnessRoot, "scripts/linux-p2-native-capture.py"),
+            w.pid,
+            w.xid,
+            startTime,
+            exe,
+            file,
+          ],
+          { env },
+        );
+        report.osDialogFailureCapture = {
+          ...w,
+          file,
+          receipt: JSON.parse(captured),
+        };
+      } catch (captureError) {
+        report.osDialogFailureCaptureError = String(captureError);
+      }
+      throw error;
+    }
     report.osDialogWindows.push(title);
     const capture = async (suffix) =>
       command(
@@ -553,7 +624,7 @@ async function packageCase(pkg) {
       [
         "key",
         "--clearmodifiers",
-        /^Open (?:a )?File$/i.test(title) ? "alt+o" : "Return",
+        /^Open(?: (?:a )?File)?$/i.test(title) ? "alt+o" : "Return",
       ],
       { env },
     );
