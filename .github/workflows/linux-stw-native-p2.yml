@@ -1,0 +1,31 @@
+name: P2 Linux STW native acceptance
+on:
+  push:
+    branches: [codex/linux-native-stw-p2-2026-11-23]
+    paths:
+      - .github/workflows/linux-stw-native-p2.yml
+      - scripts/linux-stw-*
+      - scripts/test-linux-stw-*
+      - scripts/proef-linux-stw-native.mjs
+      - tests/fixtures/linux-stw/**
+permissions:
+  contents: read
+  actions: read
+jobs:
+  portal-contract:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: No app execution; credential, handle, method, ownership and input contracts
+        run: |
+          python3 -m py_compile scripts/linux-stw-portal.py scripts/linux-stw-gtk-anatomy.py
+          python3 scripts/test-linux-stw-portal.py
+          node --test scripts/test-linux-stw-dialog-input.mjs
