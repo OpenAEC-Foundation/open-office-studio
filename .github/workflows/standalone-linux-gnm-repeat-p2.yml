@@ -1,0 +1,138 @@
+name: P2 bounded standalone GNM AppImage repeat
+on:
+  push:
+    branches: [codex/standalone-linux-final-p2-2026-11-23]
+    paths: [docs/tests/standalone-linux-gnm-repeat-p2-request.json]
+  workflow_dispatch:
+    inputs:
+      verified_input_run:
+        description: Optional previous successful preparation run; never downloads the canonical ZIP again
+        type: string
+        default: ""
+      applications:
+        description: JSON array of required apps; empty uses the pinned go marker
+        type: string
+        default: ""
+permissions:
+  contents: read
+  actions: read
+env:
+  STANDALONE_APP_COMMIT: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+  STANDALONE_BUILD_RUN: "45150438420"
+  STANDALONE_LINUX_JOB: "137610274931"
+  STANDALONE_PURPOSE: frozen-candidate-acceptance
+jobs:
+  request:
+    runs-on: ubuntu-22.04
+    outputs:
+      apps: ${{ steps.go.outputs.apps }}
+      reuse: ${{ steps.go.outputs.reuse }}
+      inputrun: ${{ steps.go.outputs.inputrun }}
+      types: ${{ steps.go.outputs.types }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify separate source intake and explicit conditional go marker
+        id: go
+        env:
+          INPUT_REUSE: ${{ inputs.verified_input_run }}
+          INPUT_APPS: ${{ inputs.applications }}
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFileSync,appendFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const raw=readFileSync('docs/tests/standalone-linux-final-p2-intake.json'),pin=JSON.parse(raw);
+          const go=JSON.parse(readFileSync('docs/tests/standalone-linux-gnm-repeat-p2-request.json'));
+          assert.equal(go.go,true);assert.equal(go.purpose,'P2-baseline-only');assert.equal(go.publicationAuthorized,false);
+          assert.equal(go.sourceCommit,process.env.STANDALONE_APP_COMMIT);assert.equal(pin.sourceCommit,go.sourceCommit);
+          assert.equal(go.intakeSha256,createHash('sha256').update(raw).digest('hex'));
+          const apps=process.env.INPUT_APPS?JSON.parse(process.env.INPUT_APPS):go.applications;
+          const allowed=['writer','spreadsheet','presentation','email','notition','database'];
+          assert.ok(Array.isArray(apps)&&apps.length>0&&apps.length<=6&&new Set(apps).size===apps.length&&apps.every(a=>allowed.includes(a)));
+          const reuse=process.env.INPUT_REUSE||String(go.reusePreparedRun||'');if(reuse)assert.match(reuse,/^\d+$/);
+          const types=go.packageTypes||['appimage','deb'];assert.ok(Array.isArray(types)&&types.length>0&&new Set(types).size===types.length&&types.every(t=>['appimage','deb'].includes(t)));
+          appendFileSync(process.env.GITHUB_OUTPUT,`apps=${JSON.stringify(apps)}\nreuse=${reuse}\ninputrun=${reuse||process.env.GITHUB_RUN_ID}\ntypes=${JSON.stringify(types)}\n`);
+          JS
+  standalone:
+    needs: request
+    name: Independent ${{ matrix.app }} DEB and AppImage
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        app: ${{ fromJSON(needs.request.outputs.apps) }}
+    env:
+      STANDALONE_APP: ${{ matrix.app }}
+      STANDALONE_INPUT_RUN: ${{ needs.request.outputs.inputrun }}
+      STANDALONE_PACKAGE_TYPES: ${{ needs.request.outputs.types }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.STANDALONE_APP_COMMIT }}
+      - uses: actions/checkout@v4
+        with:
+          ref: 5da75ff975c798b16557707cf8b376a728a8ae76
+          path: .local/standalone-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Only OS libraries and native test tools, no Office suite
+        run: |
+          sudo /usr/bin/python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo /usr/bin/python3 - <<'PYCODE'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('ubuntu_mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():
+                  before=path.read_text();after=helper.herschrijf_bronnen(before)
+                  if before!=after:path.write_text(after)
+          PYCODE
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 libfuse2 squashfs-tools gnome-keyring libsecret-tools openbox xdg-desktop-portal xdg-desktop-portal-gtk imagemagick
+          pnpm --dir .local/standalone-harness install --frozen-lockfile --ignore-scripts
+          node --check .local/standalone-harness/scripts/proef-standalone-linux.mjs
+          node --check .local/standalone-harness/scripts/standalone-linux-gnm-native.mjs
+          node --test .local/standalone-harness/scripts/standalone-linux-mail-fixture.test.mjs .local/standalone-harness/scripts/standalone-linux-ooxml.test.mjs
+          /usr/bin/python3 .local/standalone-harness/scripts/format30-gnm/oracle_test.py
+          cargo install tauri-driver --version 2.1.0 --locked
+      - name: Verify and download only own app input artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: /usr/bin/python3 .local/standalone-harness/scripts/haal-standalone-app-input.py
+      - name: Real isolated native core and full-reopen acceptance
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+          XDG_CURRENT_DESKTOP: GNOME
+        run: |
+          xvfb-run -a -s '-screen 0 1800x1200x24 -noreset' dbus-run-session -- bash <<'SH'
+          set -euo pipefail
+          mkdir -p .local/standalone-linux-results
+          openbox > .local/standalone-linux-results/openbox.log 2>&1 &
+          standalone_wm=$!
+          trap 'kill "$standalone_wm" 2>/dev/null || true' EXIT
+          dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
+          node .local/standalone-harness/scripts/proef-standalone-linux.mjs
+          SH
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-linux-spreadsheet-gnm-repeat
+          path: |
+            .local/standalone-linux-results/
+            .local/standalone-linux-input/origin.json
+            .local/standalone-linux-input/input-artifact-receipt.json
+            .local/standalone-linux-input/pakketcontrole-*.json
+            .local/linux-p2-native/
+          include-hidden-files: true
+          if-no-files-found: warn
