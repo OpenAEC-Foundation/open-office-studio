@@ -56,6 +56,26 @@ def runtime_inventory(bundle):
     return resources
 
 
+def active_file_panel(snapshot):
+    """Bind actual focused control to its nearest modal, never a panel behind it."""
+    focused=snapshot.get("focused",{});rows={r["index"]:r for r in snapshot.get("rawNodes",[])}
+    fields=("AXRole","AXIdentifier","AXTitle","AXDescription","frame")
+    matches=[r for r in rows.values() if r["attributes"].get("AXFocused") is True
+             and focused.get("frame") and all(r["attributes"].get(k)==focused.get(k) for k in fields)]
+    if len(matches)!=1:return None
+    row=matches[0];seen=set()
+    while row and row["index"] not in seen:
+        seen.add(row["index"]);a=row["attributes"]
+        modal=(a.get("AXRole")=="AXSheet" or "Dialog" in a.get("AXSubrole","")
+               or a.get("AXRoleDescription")=="dialog" or a.get("AXModal") is True)
+        if modal:
+            if a.get("AXRole") in ("AXWindow","AXSheet") and a.get("AXIdentifier") in ("open-panel","save-panel"):
+                return {"panel":a,"focused":focused,"focusedIndex":matches[0]["index"],"panelIndex":row["index"]}
+            return None  # Unknown nearer confirmation must never receive Escape.
+        row=rows.get(row["parent"])
+    return None
+
+
 def suite_absence(root):
     found=[]
     for base in (Path("/Applications"),Path.home()/"Applications",Path(root)):
@@ -261,14 +281,17 @@ class Session:
         # A pending native file panel consumes Cmd-Q. Cancel only our verified
         # open/save panels before asking the app to quit normally; retain the
         # original case failure and never dismiss an unknown confirmation.
-        for attempt in range(3):
+        for attempt in range(4):
             snap=self.ax("snapshot")
             panels=[r["attributes"] for r in snap.get("rawNodes",[]) if r["attributes"].get("AXRole") in ("AXWindow","AXSheet")
                     and r["attributes"].get("AXIdentifier") in ("open-panel","save-panel")]
             if not panels:break
-            self.report.setdefault("cancelledOwnNativePanelsBeforeQuit",[]).append({"pid":pid,"panels":panels,"action":"one HID Escape"})
-            self.ax("key","escape");time.sleep(0.4)
-        else:raise Unavailable("Owned native file panel did not cancel normally before quit")
+            binding=active_file_panel(snap)
+            if not binding:raise Unavailable("Active native file-panel/focus binding unavailable; no cancellation sent")
+            if attempt==3:raise Unavailable("Owned native file panel did not cancel normally before quit")
+            self.ax("cancel-file-panel")  # Helper rechecks nearest modal and actual focus before one HID event.
+            self.report.setdefault("cancelledOwnNativePanelsBeforeQuit",[]).append({"pid":pid,**binding,"action":"one guarded HID Escape"})
+            time.sleep(0.4)
         self.ax("key","cmd-q")
         try:self.process.wait(timeout=15)
         except subprocess.TimeoutExpired:raise Unavailable("Full normal app quit did not complete")

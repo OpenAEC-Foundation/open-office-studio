@@ -196,6 +196,35 @@ guard NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {
 }
 if action=="activate" {
     report["status"]=(report["activationAttempted"] as? Bool == true) ? "input-sent" : "observed";finish()
+} else if action=="cancel-file-panel" {
+    guard arguments.count==3,let value=attr(app,kAXFocusedUIElementAttribute),
+          CFGetTypeID(value)==AXUIElementGetTypeID() else {report["reason"]="Actual focused native file-panel control required";finish(3)}
+    let focused=value as! AXUIElement
+    let found=queue.prefix(index).indices.filter {CFEqual(queue[$0].0,focused)}
+    guard found.count==1 else {report["reason"]="Focused control ancestry is not unique";finish(3)}
+    var cursor=found[0];var panel:AXUIElement?=nil
+    while cursor>=0 {
+        let e=queue[cursor].0;let role=string(e,kAXRoleAttribute)
+        let modal=role=="AXSheet" || string(e,kAXSubroleAttribute).contains("Dialog")
+            || string(e,kAXRoleDescriptionAttribute)=="dialog" || (attr(e,kAXModalAttribute) as? NSNumber)?.boolValue==true
+        if modal {
+            guard ["AXWindow","AXSheet"].contains(role),["open-panel","save-panel"].contains(string(e,kAXIdentifierAttribute)) else {
+                report["reason"]="Nearest focused modal is not a known native file panel; no Escape sent";finish(3)
+            }
+            panel=e;break
+        }
+        cursor=queue[cursor].2
+    }
+    guard let panel=panel,let latest=attr(app,kAXFocusedUIElementAttribute),CFEqual(latest,focused),
+          NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {
+        report["reason"]="Active native file-panel focus changed or is unavailable; no Escape sent";finish(3)
+    }
+    report["cancelledNativePanel"]=record(panel);report["cancellationFocusedControl"]=record(focused)
+    for down in [true,false] {
+        let event=CGEvent(keyboardEventSource:nil,virtualKey:53,keyDown:down)
+        event?.flags=[];event?.post(tap:.cghidEventTap)
+    }
+    report["keyboardTransport"]="One native HID Escape, exact focused-control ancestry and frontmost PID verified"
 } else if action=="click-point" {
     let fresh=CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String:Any]] ?? []
     let owned=fresh.filter {($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value==pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue==0}
@@ -253,7 +282,7 @@ if action=="activate" {
         "cmd-o":(31,.maskCommand),"cmd-s":(1,.maskCommand),"cmd-shift-s":(1,[.maskCommand,.maskShift]),
         "cmd-q":(12,.maskCommand),"cmd-a":(0,.maskCommand),"cmd-z":(6,.maskCommand),
         "cmd-end":(125,.maskCommand),"cmd-shift-g":(5,[.maskCommand,.maskShift]),
-        "return":(36,[]),"tab":(48,[]),"escape":(53,[]),"right":(124,[]),"down":(125,[]),"end":(119,[])]
+        "return":(36,[]),"tab":(48,[]),"right":(124,[]),"down":(125,[]),"end":(119,[])]
     guard arguments.count==4,let (code,flags)=keys[arguments[3]] else {report["reason"]="Unsupported native key";finish(2)}
     for down in [true,false] {
         let event=CGEvent(keyboardEventSource:nil,virtualKey:code,keyDown:down)

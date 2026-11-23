@@ -11,27 +11,55 @@ from test_contracts import request
 from contracts import APPS,digest
 
 
+class CleanupSession:
+    def __init__(self,identifier="save-panel",remaining=1,unknown_foreground=False):
+        self.panel=identifier;self.remaining=remaining;self.unknown_foreground=unknown_foreground
+        self.actions=[];self.report={};self.reads=0
+        self.process=type('Process',(),{'pid':42,'returncode':0,'wait':lambda p,timeout:None})()
+    def ax(self,action,spec=None):
+        if action=="snapshot":
+            self.reads+=1
+            focus={'AXRole':'AXTextField','AXIdentifier':'filename','AXFocused':True,
+                   'frame':{'x':30,'y':30,'width':100,'height':20}}
+            nodes=[]
+            if self.remaining:
+                nodes=[{'index':0,'parent':-1,'attributes':{'AXRole':'AXSheet','AXIdentifier':self.panel}},
+                       {'index':1,'parent':0,'attributes':dict(focus)}]
+                if self.unknown_foreground:
+                    nodes[1]['attributes']['AXFocused']=False
+                    focus={**focus,'AXIdentifier':'unknown-confirmation-field'}
+                    nodes.extend([{'index':2,'parent':-1,'attributes':{'AXRole':'AXSheet','AXIdentifier':'unknown-confirmation'}},
+                                  {'index':3,'parent':2,'attributes':dict(focus)}])
+            return {'rawNodes':nodes,'focused':focus}
+        self.actions.append((action,spec))
+        if action=='cancel-file-panel':self.remaining-=1
+    def stop_watch(self):pass
+    def guard_suite_namespace(self):pass
+    def write(self,*args):pass
+
+
 class IsolationTests(unittest.TestCase):
     def test_normal_cleanup_cancels_only_an_owned_native_file_panel_before_cmd_q(self):
-        class Own:
-            def __init__(self,identifier):
-                self.panel=identifier;self.actions=[];self.report={}
-                self.process=type('Process',(),{'pid':42,'returncode':0,'wait':lambda p,timeout:None})()
-            def ax(self,action,spec=None):
-                if action=="snapshot":return {'rawNodes':[{'attributes':{'AXRole':'AXSheet','AXIdentifier':self.panel}}]}
-                self.actions.append((action,spec))
-                if spec=='escape':self.panel=None
-            def stop_watch(self):pass
-            def guard_suite_namespace(self):pass
-            def write(self,*args):pass
-        own=Own('save-panel')
+        own=CleanupSession()
         with patch('native.time.sleep'):self.assertEqual(Session.quit(own),42)
-        self.assertEqual(own.actions,[('key','escape'),('key','cmd-q')])
-        unknown=Own('unsaved-document-confirmation')
+        self.assertEqual(own.actions,[('cancel-file-panel',None),('key','cmd-q')])
+        unknown=CleanupSession('unsaved-document-confirmation')
         unknown.process.wait=lambda timeout:(_ for _ in ()).throw(subprocess.TimeoutExpired('own-app',timeout))
         with self.assertRaises(Unavailable):Session.quit(unknown)
         self.assertEqual(unknown.actions,[('key','cmd-q')])
         self.assertNotIn('fullQuitVerified',unknown.report)
+
+    def test_known_panel_behind_unknown_focused_confirmation_never_gets_cancelled(self):
+        own=CleanupSession(unknown_foreground=True)
+        with self.assertRaises(Unavailable):Session.quit(own)
+        self.assertEqual(own.actions,[])
+        self.assertNotIn('fullQuitVerified',own.report)
+
+    def test_third_successful_native_panel_cancel_gets_final_observation(self):
+        own=CleanupSession(remaining=3)
+        with patch('native.time.sleep'):self.assertEqual(Session.quit(own),42)
+        self.assertEqual(own.reads,4)
+        self.assertEqual(own.actions,[('cancel-file-panel',None)]*3+[('key','cmd-q')])
 
     def test_inventory_includes_private_signed_helpers_and_bound_runtime_receipt(self):
         with tempfile.TemporaryDirectory(prefix="standalone-private-inventory-") as t:
