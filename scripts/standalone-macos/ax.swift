@@ -126,7 +126,7 @@ if action=="press" || action=="click" {
     let keys:[String:(CGKeyCode,CGEventFlags)]=[
         "cmd-o":(31,.maskCommand),"cmd-s":(1,.maskCommand),"cmd-shift-s":(1,[.maskCommand,.maskShift]),
         "cmd-q":(12,.maskCommand),"cmd-a":(0,.maskCommand),"cmd-z":(6,.maskCommand),
-        "cmd-end":(124,.maskCommand),"cmd-shift-g":(5,[.maskCommand,.maskShift]),
+        "cmd-end":(125,.maskCommand),"cmd-shift-g":(5,[.maskCommand,.maskShift]),
         "return":(36,[]),"tab":(48,[]),"escape":(53,[]),"right":(124,[]),"down":(125,[]),"end":(119,[])]
     guard arguments.count==4,let (code,flags)=keys[arguments[3]] else {report["reason"]="Unsupported native key";finish(2)}
     for down in [true,false] {
