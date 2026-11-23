@@ -42,11 +42,11 @@ def parse_reference(text):
             slides.append({"textObjects":[],"referenceHeader":line.strip()})
         elif line.lstrip().startswith("startTextObject(") and slides:
             obj={"paragraphs":[],"referenceHeader":line.strip()};slides[-1]["textObjects"].append(obj)
-        elif line.lstrip().startswith("openParagraph(") and obj is not None:para=""
+        elif line.lstrip().startswith(("openParagraph(","openListElement(")) and obj is not None:para=""
         elif line.lstrip().startswith("insertText(") and para is not None:
             para+=line.strip()[11:-1]
         elif line.lstrip().startswith("insertLineBreak(") and para is not None:para+="\n"
-        elif line.lstrip().startswith("closeParagraph(") and para is not None:
+        elif line.lstrip().startswith(("closeParagraph(","closeListElement(")) and para is not None:
             obj["paragraphs"].append(para);para=None
         elif line.lstrip().startswith("endTextObject("):obj=None
     assert len(slides)==2 and [len(s["textObjects"]) for s in slides]==[4,4]
@@ -62,6 +62,7 @@ def parse_source(path,reference):
     for page,r in zip(visible,ref):
         text_objects=[]
         for ro in r["textObjects"]:
+            assert ro["paragraphs"], "Reference text object must contain parsed paragraphs/list elements"
             matches=[]
             for leaf in page["leafObjects"]:
                 positions=[]

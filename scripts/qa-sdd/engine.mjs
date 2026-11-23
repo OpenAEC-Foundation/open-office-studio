@@ -19,7 +19,6 @@ const oracle=JSON.parse(fs.readFileSync(path.join(out,"source-oracle.json"),"utf
 const report={application:config.application,harnessCommit:execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim(),source:config.source,checks:[],sourceOracleLimits:oracle.limits,limits:[config.coverageLimit,"Private CLI adapter/production open helper/core SDK, not Tauri IPC, installer, standalone or native GUI acceptance","Browser boundary is a negative production function check in Node, not hosted browser UI","No Windows/macOS runtime, rendering or pptx-react snapshot hook acceptance"]};
 const loader=await createServer({configFile:false,appType:"custom",server:{middlewareMode:true,hmr:false,watch:null},optimizeDeps:{noDiscovery:true,include:[]}});
 const handles=[];
-const textOf=shape=>(shape.textStories??[]).flatMap(s=>s.paragraphs).map(p=>p.runs.map(r=>r.text).join(""));
 try {
   const {bereidOpenen}=await loader.ssrLoadModule("/src/import/openen.ts");
   const formats=await loader.ssrLoadModule("/src/formaten.ts");
@@ -97,7 +96,7 @@ try {
     report.savedSourceAcceptancePassed=savedCheck.passed;
     report.reopenedSourceAcceptancePassed=reopenedCheck.passed;
     report.savedFailures=savedCheck.failures;report.reopenedFailures=reopenedCheck.failures;
-    report.checks.push("PPTX save/fresh engine reopen/second save preserve edited engine stories; independent source-derived structure/style/geometry/notes observations retained separately; original SDD unchanged.");
+    report.checks.push("PPTX save/fresh engine reopen/second save preserve edited engine stories; independent native-page/text/object-bound observations retained separately; original SDD unchanged. Styles, notes, opaque OLE and bitmaps are not accepted by this probe.");
     report.passed=imported.passed && report.engineSourceChecks.every(c=>c.passed) && savedCheck.passed && reopenedCheck.passed;
     assert.ok(report.passed,"Strict source acceptance failed; retain independent failures and any successful engine diagnostics without promoting the format");
   } else report.passed=true;
