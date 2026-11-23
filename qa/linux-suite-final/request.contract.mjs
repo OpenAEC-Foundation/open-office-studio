@@ -10,4 +10,6 @@ assert.throws(()=>validateSuiteRequest({...dummy,candidate:{...dummy.candidate,c
 assert.throws(()=>validateSuiteRequest({...dummy,inputDescriptors:null}),/mandatory/);
 assert.throws(()=>validateSuiteRequest({...dummy,candidate:{...dummy.candidate,attempt:0}}));
 assert.throws(()=>validateSuiteRequest({...dummy,publicationAuthorized:true}));
-console.log('6 preparation request contract checks passed; actual native go='+current.go);
+assert.equal(validateSuiteRequest({...dummy,nativePackages:['appimage']}).nativePackages[0],'appimage');
+assert.throws(()=>validateSuiteRequest({...dummy,nativePackages:['other']}));
+console.log('8 preparation request contract checks passed; actual native go='+current.go);

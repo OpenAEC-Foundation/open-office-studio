@@ -5,6 +5,8 @@ export function validateSuiteRequest(request) {
   assert.equal(request.schemaVersion, 1);
   assert.equal(request.go, true, 'No coordinator package start instruction');
   assert.equal(request.publicationAuthorized, false);
+  const packages=request.nativePackages??['deb','appimage'];
+  assert(Array.isArray(packages)&&packages.length>0&&packages.length<=2&&new Set(packages).size===packages.length&&packages.every(p=>['deb','appimage'].includes(p)),'Only explicitly selected native package forms');
   const c = request.candidate, descriptors = request.inputDescriptors;
   assert(c && descriptors, 'Candidate and immutable Suite input descriptors are mandatory');
   for (const value of [c.commit, c.tree]) assert.match(value, /^[0-9a-f]{40}$/);
