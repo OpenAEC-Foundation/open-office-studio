@@ -975,6 +975,12 @@ async function packageCase(pkg) {
           changesKeyboardVerdict: false,
         };
       }
+      const nativeDraft = fixture.messages.Drafts.find((m) =>
+        m.raw.includes(Buffer.from(marker)),
+      );
+      assert.ok(nativeDraft);
+      await writeFile(join(dir, "synthetic-native-draft.eml"), nativeDraft.raw);
+      report.syntheticDraftRawSha256 = hash(nativeDraft.raw);
       assert.ok(
         fixture.messages.Drafts.some((m) =>
           m.raw.includes(Buffer.from("Synthetic local draft body")),
@@ -1087,6 +1093,28 @@ async function packageCase(pkg) {
           ]),
         "Native app retrieves stored synthetic draft after full restart",
       );
+      const storedRow = await observe(
+        "return [...document.querySelectorAll('.email-rij[role=option]')].find(e=>e.textContent.includes(arguments[0]))",
+        [marker],
+      );
+      assert.ok(
+        storedRow,
+        "Actual native Drafts row for the saved synthetic message",
+      );
+      await guard.verify("before actual native stored draft selection");
+      await request(
+        "POST",
+        `/session/${session}/element/${storedRow["element-6066-11e4-a52e-4f735466cecf"]}/click`,
+        {},
+      );
+      await guard.verify("after actual native stored draft selection");
+      report.reopenedMessageText = await wait(
+        () =>
+          observe(
+            "const f=document.querySelector('iframe.email-berichtframe');const s=f?.contentDocument?.body?.innerText;return s?.includes('Synthetic local draft body, never sent.')?s:null",
+          ),
+        "Stored draft body is read through the real native backend and rendered in the safe message iframe",
+      );
       report.mailCommands = fixture.commands;
       report.syntheticDraftSha256 = hash(
         fixture.messages.Drafts.find((m) => m.raw.includes(Buffer.from(marker)))
@@ -1094,7 +1122,7 @@ async function packageCase(pkg) {
       );
       if (report.draftButtonControl)
         report.draftButtonControl.status =
-          "passed actual APPEND, body bytes, full app quit/new PID and native Drafts retrieval";
+          "passed actual APPEND, raw MIME/body bytes, full app quit/new PID and native Drafts header/body retrieval";
     }
     if (doc && report.savedSha256)
       assert.equal(
