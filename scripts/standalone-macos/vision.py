@@ -3,7 +3,8 @@ import math
 from native import Unavailable
 
 
-def visible_word(ocr,snapshot,pid,image_sha,text):
+def visible_word(ocr,snapshot,pid,image_sha,text,placement="center"):
+    if placement not in ("center","after-word"):raise Unavailable("Unsupported visible-word caret placement")
     if (ocr.get("imageSha256")!=image_sha or ocr.get("imageModified") is not False
             or snapshot.get("pid")!=pid or snapshot.get("frontmost") is not True
             or snapshot.get("screenCaptureAuthorized") is not True):
@@ -18,16 +19,19 @@ def visible_word(ocr,snapshot,pid,image_sha,text):
         raise Unavailable("Owned body window must be fully on-screen at supported size")
     sx,sy=ocr["width"]/bounds["Width"],ocr["height"]/bounds["Height"]
     if not 1<=sx<=3 or abs(sx-sy)>.001:raise Unavailable("Original no-shadow PNG scale does not match native window")
-    matches=[w for w in ocr.get("wordObservations",[]) if w.get("text")==text and w.get("confidence",0)>=.8]
+    matches=[]
+    for word in ocr.get("wordObservations",[]):
+        if word.get("text")!=text or word.get("confidence",0)<.8:continue
+        box=word["normalizedBottomLeft"]
+        if not all(type(box.get(k)) in (int,float) and math.isfinite(box[k]) for k in ("x","y","width","height")):
+            raise Unavailable("Finite OCR bounds required")
+        if min(box["x"],box["y"])<0 or min(box["width"],box["height"])<=0 or box["x"]+box["width"]>1 or box["y"]+box["height"]>1:
+            raise Unavailable("Visible word must be wholly inside original image")
+        point={"x":bounds["X"]+(box["x"]+(box["width"] if placement=="after-word" else box["width"]/2))*bounds["Width"]+(2 if placement=="after-word" else 0),
+               "y":bounds["Y"]+(1-box["y"]-box["height"]/2)*bounds["Height"]}
+        if bounds["X"]<point["x"]<bounds["X"]+bounds["Width"] and bounds["Y"]+235<point["y"]<bounds["Y"]+bounds["Height"]-35:
+            matches.append((word,point))
     if len(matches)!=1:raise Unavailable("Unique readable original body word unavailable: "+text)
-    box=matches[0]["normalizedBottomLeft"]
-    if not all(type(box.get(k)) in (int,float) and math.isfinite(box[k]) for k in ("x","y","width","height")):
-        raise Unavailable("Finite OCR bounds required")
-    if min(box["x"],box["y"])<0 or min(box["width"],box["height"])<=0 or box["x"]+box["width"]>1 or box["y"]+box["height"]>1:
-        raise Unavailable("Visible word must be wholly inside original image")
-    point={"x":bounds["X"]+(box["x"]+box["width"]/2)*bounds["Width"],
-           "y":bounds["Y"]+(1-box["y"]-box["height"]/2)*bounds["Height"]}
-    if not bounds["Y"]+235<point["y"]<bounds["Y"]+bounds["Height"]-35:
-        raise Unavailable("OCR target is outside document body or overlaps ribbon/status")
+    word,point=matches[0]
     return {**point,"windowId":window["kCGWindowNumber"],"bounds":bounds,"imageSHA256":image_sha,
-            "word":text,"confidence":matches[0]["confidence"],"source":"native-original-ocr"}
+            "word":text,"placement":placement,"confidence":word["confidence"],"source":"native-original-ocr"}

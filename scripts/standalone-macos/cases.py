@@ -11,6 +11,7 @@ from mail_fixture_server import USER,PASSWORD
 from vision import visible_word
 from native import command
 import json
+import re
 
 
 def attributes(snapshot):return [n["attributes"] for n in snapshot.get("rawNodes",[])]
@@ -146,7 +147,7 @@ class Case:
         self.s.write("reopened-oracle.json",verify(app,self.fixture));self.s.capture("reopened")
         self.runtime_export()
 
-    def writer_visible(self,text,label):
+    def writer_visible(self,text,label,placement="center"):
         last=None;deadline=time.monotonic()+20;attempt=0
         while True:
             image,snapshot=self.s.capture_original(label+"-"+str(attempt))
@@ -154,7 +155,7 @@ class Case:
             result=command([self.s.ocr,image,output],timeout=30)
             if result["code"]:raise Unavailable("Native Vision original-pixel inspection failed")
             try:
-                target=visible_word(json.loads(output.read_text()),snapshot,self.s.process.pid,digest(image),text)
+                target=visible_word(json.loads(output.read_text()),snapshot,self.s.process.pid,digest(image),text,placement)
                 self.s.write(image.stem+"-target.json",target)
                 return target
             except Unavailable as error:last=error
@@ -164,6 +165,7 @@ class Case:
 
     def runtime_export(self):
         app=self.s.app
+        previous=set(self.s.children)
         ext,label={"writer":("odt","OpenDocument Text"),"spreadsheet":("ods","OpenDocument Spreadsheet"),
                    "presentation":("odp","OpenDocument Presentation")}[app]
         if app=="presentation":self.button("Normal view")
@@ -185,9 +187,10 @@ class Case:
             if app!="spreadsheet" and MARKERS[app] not in text:raise Unavailable("Runtime ODF lost native edit")
         self.s.write("runtime-export-oracle.json",{"path":str(output),"sha256":digest(output),"mimetype":mimetype,
             "independentZipXmlPassed":True,"nativeAcceptance":False})
-        observations=list(self.s.children.values())
+        observations=[p for k,p in list(self.s.children.items()) if k not in previous]
         converters=[p for p in observations if Path(p["executable"]).name in ("soffice","soffice.bin")]
-        if not converters or not all(p["resolvedInsideOwnApp"] for p in converters):
+        conversions=[p for p in converters if re.search(r'--convert-to\s+"?'+ext+r'(?=[:\s"]|$)',p.get("arguments",""))]
+        if not conversions or not all(p["resolvedInsideOwnApp"] for p in converters):
             raise Unavailable("Actual app-driven converter child executable not observed exclusively inside own bundle")
         self.s.report["ownConverterChildObserved"]=True
         self.s.capture("runtime-exported")

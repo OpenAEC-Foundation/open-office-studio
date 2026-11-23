@@ -47,12 +47,41 @@ func frame(_ e: AXUIElement) -> CGRect? {
           size.width > 1,size.height > 1 else {return nil}
     return CGRect(origin:point,size:size)
 }
+func nativeMouseClick(_ point: CGPoint) -> Bool {
+    // Same HID transport as the validated native358 policy. postToPid does not
+    // move the physical cursor and opened the Apple menu in Suite45148679849.
+    let all=CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String:Any]] ?? []
+    let owned=all.filter {($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value==pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue==0}
+    let containing=owned.filter {w in
+        guard let b=w[kCGWindowBounds as String] as? [String:Double],let x=b["X"],let y=b["Y"],let width=b["Width"],let height=b["Height"] else {return false}
+        return point.x>x && point.x<x+width && point.y>y && point.y<y+height
+    }
+    guard point.x.isFinite,point.y.isFinite,!containing.isEmpty,display.contains(point),running.isActive,
+          NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {
+        report["reason"]="HID mouse requires an owned on-screen window and frontmost actual PID";return false
+    }
+    report["pointerOwnedWindowId"]=containing[0][kCGWindowNumber as String] ?? NSNull()
+    if let before=CGEvent(source:nil)?.location {report["pointerBefore"]=["x":before.x,"y":before.y]}
+    CGEvent(mouseEventSource:nil,mouseType:.mouseMoved,mouseCursorPosition:point,mouseButton:.left)?.post(tap:.cghidEventTap)
+    Thread.sleep(forTimeInterval:0.1)
+    guard let moved=CGEvent(source:nil)?.location,abs(moved.x-point.x)<=1,abs(moved.y-point.y)<=1,
+          running.isActive,NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {
+        report["reason"]="Physical cursor did not reach verified target; no button input sent";return false
+    }
+    report["pointerAfterMove"]=["x":moved.x,"y":moved.y]
+    CGEvent(mouseEventSource:nil,mouseType:.leftMouseDown,mouseCursorPosition:point,mouseButton:.left)?.post(tap:.cghidEventTap)
+    Thread.sleep(forTimeInterval:0.05)
+    CGEvent(mouseEventSource:nil,mouseType:.leftMouseUp,mouseCursorPosition:point,mouseButton:.left)?.post(tap:.cghidEventTap)
+    Thread.sleep(forTimeInterval:0.1)
+    report["pointerTransport"]="native HID mouseMoved, physical cursor verification, down/up"
+    return true
+}
 func record(_ e: AXUIElement) -> [String: Any] {
     var result: [String: Any]=[:]
     let secure=string(e,kAXSubroleAttribute)=="AXSecureTextField"
     for key in [kAXRoleAttribute,kAXSubroleAttribute,kAXTitleAttribute,kAXDescriptionAttribute,
                 kAXHelpAttribute,kAXIdentifierAttribute,kAXEnabledAttribute,kAXFocusedAttribute,kAXValueAttribute,
-                kAXRoleDescriptionAttribute,kAXModalAttribute] {
+                kAXRoleDescriptionAttribute,kAXModalAttribute,kAXSelectedAttribute] {
         if secure && key==kAXValueAttribute {result[key]="[secure value omitted]";continue}
         if let text=attr(e,key) as? String {result[key]=String(text.prefix(4096))}
         else if let number=attr(e,key) as? NSNumber {result[key]=number}
@@ -99,7 +128,7 @@ if action=="activate" {
     let owned=fresh.filter {($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value==pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue==0}
     guard running.bundleIdentifier=="org.openaec.writer-studio",owned.count==1,arguments.count==4,
           let raw=arguments[3].data(using:.utf8),let spec=try? JSONSerialization.jsonObject(with:raw) as? [String:Any],
-          spec["source"] as? String=="native-original-ocr",let word=spec["word"] as? String,["velvet","marigold"].contains(word),
+          spec["source"] as? String=="native-original-ocr",let word=spec["word"] as? String,["velvet","marigold","TITLE","MARIGOLD"].contains(word),
           let confidence=spec["confidence"] as? Double,confidence>=0.8,
           let hash=spec["imageSHA256"] as? String,hash.range(of:"^[a-f0-9]{64}$",options:.regularExpression) != nil,
           let id=spec["windowId"] as? NSNumber,let actualId=owned[0][kCGWindowNumber as String] as? NSNumber,id==actualId,
@@ -113,9 +142,7 @@ if action=="activate" {
           x>left,x<left+width,y>top+235,y<top+height-35 else {
         report["reason"]="Original OCR word/window/frontmost geometry no longer valid";finish(3)
     }
-    for kind in [CGEventType.leftMouseDown,CGEventType.leftMouseUp] {
-        CGEvent(mouseEventSource:nil,mouseType:kind,mouseCursorPosition:CGPoint(x:x,y:y),mouseButton:.left)?.postToPid(pid)
-    }
+    guard nativeMouseClick(CGPoint(x:x,y:y)) else {finish(3)}
     report["clickedOriginalWord"]=spec
 } else if action=="press" || action=="click" {
     guard arguments.count==4,let data=arguments[3].data(using:.utf8),
@@ -145,9 +172,7 @@ if action=="activate" {
             report["reason"]="Actual control has no successful AXPress";finish(3)
         }
     } else {
-        for type in [CGEventType.leftMouseDown,CGEventType.leftMouseUp] {
-            CGEvent(mouseEventSource:nil,mouseType:type,mouseCursorPosition:CGPoint(x:f.midX,y:f.midY),mouseButton:.left)?.postToPid(pid)
-        }
+        guard nativeMouseClick(CGPoint(x:f.midX,y:f.midY)) else {finish(3)}
     }
 } else if action=="key" {
     let keys:[String:(CGKeyCode,CGEventFlags)]=[
@@ -165,13 +190,15 @@ if action=="activate" {
           ["AXTextField","AXTextArea","AXComboBox"].contains(string(focused as! AXUIElement,kAXRoleAttribute)) else {
         report["reason"]="Typing requires actual owned focused text control";finish(3)
     }
-    let text=Array(arguments[3].utf16)
-    for start in stride(from:0,to:text.count,by:32) {
-        let chunk=Array(text[start..<min(start+32,text.count)])
+    // Same one-character event granularity as the native control preflight.
+    for character in arguments[3] {
+        let chunk=Array(String(character).utf16)
         for down in [true,false] {
             let event=CGEvent(keyboardEventSource:nil,virtualKey:0,keyDown:down)
+            event?.flags=[]
             event?.keyboardSetUnicodeString(stringLength:chunk.count,unicodeString:chunk);event?.postToPid(pid)
         }
+        Thread.sleep(forTimeInterval:0.01)
     }
 } else {report["reason"]="Unknown native action";finish(2)}
 report["status"]="input-sent";finish()

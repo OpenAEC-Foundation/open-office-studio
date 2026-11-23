@@ -130,8 +130,13 @@ class Session:
                             if ppid in known and pid not in known:known.add(pid);changed=True
                     for pid,ppid,exe in rows:
                         if pid in known:
-                            self.children[str(pid)+":"+exe]={"pid":pid,"ppid":ppid,"executable":exe,
-                                "resolvedInsideOwnApp":Path(exe).resolve().is_relative_to(self.bundle.resolve())}
+                            key=str(pid)+":"+exe
+                            item=self.children.get(key,{"pid":pid,"ppid":ppid,"executable":exe,
+                                "resolvedInsideOwnApp":Path(exe).resolve().is_relative_to(self.bundle.resolve())})
+                            if Path(exe).name in ("soffice","soffice.bin") and "arguments" not in item:
+                                args=command(["/bin/ps","-ww","-p",str(pid),"-o","args="],timeout=3)
+                                item["arguments"]=args["stdout"].strip() if args["code"]==0 else ""
+                            self.children[key]=item
                 except Exception as error:self.watch_errors.append(str(error))
                 self.watch_stop.wait(0.25)
         self.watch_thread=threading.Thread(target=watch,daemon=True);self.watch_thread.start()

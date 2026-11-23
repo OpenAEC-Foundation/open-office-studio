@@ -40,6 +40,37 @@ def cleanup_mail_keychain(session):
             if result["code"] not in (0,44):raise Unavailable("Own test account keychain cleanup failed")
 
 
+def supplementary_cases(session):
+    """Extra format failures are recorded separately from the six ordinary core cases."""
+    if session.app=="writer":
+        from stw import run_native
+        routes=[("stw",lambda:run_native(session))]
+    elif session.app=="spreadsheet":
+        from sheet_formats import run_native
+        routes=[(kind,lambda kind=kind:run_native(session,kind)) for kind in ("gnm","gnumeric","xlsb")]
+    else:return None
+    first_failure=None
+    for key,run in routes:
+        try:run()
+        except Exception as error:
+            first_failure=first_failure or error
+            extra=session.report["additionalCases"].setdefault(key,{})
+            extra.update(status="unavailable-or-incomplete",nativeAccepted=False,
+                         failure={"type":type(error).__name__,"message":str(error)})
+            if session.process and session.process.poll() is None:
+                try:session.capture(key+"-blocked")
+                except Exception as capture_error:extra["captureFailure"]=str(capture_error)
+            session.write(key+"-result.json",extra)
+        if session.process and session.process.poll() is None:
+            try:session.quit()
+            except Exception as error:
+                first_failure=first_failure or error
+                session.report["additionalCases"][key]["normalQuitFailure"]=str(error)
+                # Other core app matrix jobs continue. No uncertain shared session for next format.
+                break
+    return first_failure
+
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("app",choices=APPS)
     parser.add_argument("package",type=Path);parser.add_argument("output",type=Path)
@@ -57,7 +88,7 @@ def main():
             "source":request["source"],"provenance":proof,"capabilities":capabilities},indent=2)+"\n")
         raise SystemExit(3)
     ocr=None
-    if args.app=="writer":
+    if args.app in ("writer","spreadsheet"):
         ocr=args.output.parent/"standalone-ocr"
         subprocess.run(["/usr/bin/swiftc",root/"scripts/standalone-macos/ocr.swift","-o",ocr],check=True)
     session=Session(args.app,args.output,helper);failure=None;session.ocr=ocr
@@ -65,7 +96,9 @@ def main():
                           visualReviewPassed=False,resourceObservationsReviewed=False,resourceIndependencePassed=False,
                           limitations=["Original native screenshots require visual review.",
                                        "Sampled process/files and runtime inventory do not establish complete converter/resource independence."])
-    mail=None
+    extras=("stw",) if args.app=="writer" else ("gnm","gnumeric","xlsb") if args.app=="spreadsheet" else ()
+    session.report["additionalCases"]={key:{"status":"not-run: ordinary native core preflight pending","nativeAccepted":False} for key in extras}
+    mail=None;supplement_failure=None
     try:
         session.install(dmg)
         fixtures=create(session.root/"synthetic-inputs",root/"public/templates")
@@ -80,6 +113,8 @@ def main():
             case.email(mail)
         session.quit();session.report["functionalCaseCompleted"]=True
         session.report["status"]="functional-evidence-collected-review-pending"
+        session.write("core-receipt.json",session.report)
+        supplement_failure=supplementary_cases(session)
     except Exception as error:
         failure=error;session.report.update(status="unavailable-or-incomplete",failure={"type":type(error).__name__,"message":str(error)})
         if session.process and session.process.poll() is None:
@@ -101,7 +136,7 @@ def main():
         # Cleanup is part of acceptance, and manual evidence review is still mandatory.
         session.report["nativeAccepted"]=acceptance_from_evidence(session.report)
         session.write("receipt.json",session.report)
-    if failure:raise SystemExit(2)
+    if failure or supplement_failure:raise SystemExit(2)
 
 
 if __name__=="__main__":main()

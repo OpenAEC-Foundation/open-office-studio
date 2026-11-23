@@ -16,6 +16,15 @@ def inputs():
 
 
 class VisionTests(unittest.TestCase):
+    def test_after_word_caret_uses_actual_visible_glyph_right_edge(self):
+        ocr,snapshot=inputs();point=visible_word(ocr,snapshot,42,"a"*64,"velvet",placement="after-word")
+        self.assertAlmostEqual(point["x"],327);self.assertEqual(point["placement"],"after-word")
+
+    def test_same_label_in_ribbon_does_not_replace_unique_actual_body_word(self):
+        ocr,snapshot=inputs();toolbar=copy.deepcopy(ocr["wordObservations"][0]);toolbar["normalizedBottomLeft"]["y"]=.9
+        ocr["wordObservations"].append(toolbar)
+        self.assertAlmostEqual(visible_word(ocr,snapshot,42,"a"*64,"velvet")["y"],393)
+
     def test_retina_original_window_maps_visible_word_to_body_geometry(self):
         ocr,snapshot=inputs();point=visible_word(ocr,snapshot,42,"a"*64,"velvet")
         self.assertAlmostEqual(point["x"],302.5);self.assertAlmostEqual(point["y"],393)
