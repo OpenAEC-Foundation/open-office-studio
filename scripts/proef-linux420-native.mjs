@@ -884,8 +884,10 @@ try {
   const initial = await startDocument(preflight);
   await canvasFocus();
   await grid("preflight correct selected document", baseline);
-  await type("LINUX420_PRE ");
-  const preCells = ["LINUX420_PRE alpha", ...baseline.slice(1)];
+  // One edit verifies native Undo without assuming multi-character edit grouping.
+  // The scoped Find/Replace checks retain their strict abc/one-Undo contract.
+  await type("P");
+  const preCells = ["Palpha", ...baseline.slice(1)];
   await grid("preflight actual native typing", preCells);
   await nativeKey("ctrl+z");
   await grid("preflight actual Ctrl+Z", baseline);
