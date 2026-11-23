@@ -3,7 +3,7 @@ from pathlib import Path
 import time
 import zipfile
 import xml.etree.ElementTree as ET
-from fixtures import SEEDS,MARKERS,CONTROL,WRITER_ANCHOR,WRITER_VISIBLE_EDIT
+from fixtures import SEEDS,MARKERS,CONTROL,WRITER_ANCHOR,WRITER_VISIBLE_EDIT,WRITER_PAYLOAD
 from native import Unavailable
 from oracles import verify
 from contracts import digest
@@ -117,7 +117,8 @@ class Case:
             focused=self.focus("Document input")
             if focused.get("AXDescription")!="Document input" or focused.get("AXRole")!="AXTextArea":
                 raise Unavailable("Actual visible body click did not focus exact Document input")
-            self.s.ax("key","cmd-end");self.s.ax("type"," "+MARKERS[app]+" "+WRITER_VISIBLE_EDIT)
+            # Insert at the real visible-word caret; no hidden input value or unproven navigation.
+            self.s.ax("type",WRITER_PAYLOAD)
         elif app=="spreadsheet":
             self.select(["AXTextField","AXComboBox"],["Name box"]);self.replace("B2");self.s.ax("key","return");time.sleep(0.4)
             self.focus();self.s.ax("type","42");self.s.ax("key","return")

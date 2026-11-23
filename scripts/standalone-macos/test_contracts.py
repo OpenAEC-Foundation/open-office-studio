@@ -99,6 +99,20 @@ class FixtureTests(unittest.TestCase):
         path=Path(self.receipt["files"]["database"]["path"]);before=path.read_bytes()
         verify("database",path);self.assertEqual(path.read_bytes(),before)
 
+    def test_writer_insert_at_visible_word_caret_preserves_every_original_character(self):
+        from fixtures import WRITER_PAYLOAD,rewrite
+        source=Path(self.receipt["files"]["writer"]["path"]);edited=self.root/"edited.docx"
+        rewrite(source,edited,"word/document.xml",lambda s:s.replace("velvet","vel"+WRITER_PAYLOAD+"vet"))
+        result=verify("writer",edited)
+        self.assertTrue(result["allOriginalTextPreservedAfterRemovingOneInsertedPayload"])
+        self.assertFalse(result["nativeAcceptance"])
+
+    def test_writer_edit_marker_cannot_mask_damage_to_original_visible_word(self):
+        from fixtures import WRITER_PAYLOAD,rewrite
+        source=Path(self.receipt["files"]["writer"]["path"]);edited=self.root/"lost-word-character.docx"
+        rewrite(source,edited,"word/document.xml",lambda s:s.replace("velvet","vel"+WRITER_PAYLOAD+"ve"))
+        with self.assertRaises(AssertionError):verify("writer",edited)
+
     def test_mail_edit_cannot_mask_lost_control_content(self):
         from email import policy
         from email.parser import BytesParser

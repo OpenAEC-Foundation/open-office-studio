@@ -14,6 +14,7 @@ MARKERS = {name: "STANDALONE_" + name.upper() + "_EDIT" for name in SEEDS}
 CONTROL = "STANDALONE_UNCHANGED_CONTROL"
 WRITER_ANCHOR = "velvet"
 WRITER_VISIBLE_EDIT = "marigold"
+WRITER_PAYLOAD = " " + MARKERS["writer"] + " " + WRITER_VISIBLE_EDIT + " "
 
 
 def rewrite(template, target, member, transform):

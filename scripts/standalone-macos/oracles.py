@@ -8,7 +8,7 @@ import json
 import sqlite3
 import xml.etree.ElementTree as ET
 import zipfile
-from fixtures import SEEDS, MARKERS, CONTROL, WRITER_ANCHOR, WRITER_VISIBLE_EDIT
+from fixtures import SEEDS, MARKERS, CONTROL, WRITER_ANCHOR, WRITER_VISIBLE_EDIT, WRITER_PAYLOAD
 
 W = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 X = {"x": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
@@ -28,9 +28,13 @@ def verify(app, path, edited=True):
             root = ET.fromstring(bundle.read("word/document.xml"))
         text = "\n".join("".join(p.itertext()) for p in root.findall(".//w:p", W))
         contains_once(text, SEEDS[app]); contains_once(text, CONTROL)
-        contains_once(text, WRITER_ANCHOR)
         if edited:
             contains_once(text, MARKERS[app]); contains_once(text, WRITER_VISIBLE_EDIT)
+            contains_once(text, WRITER_PAYLOAD)
+            restored=text.replace(WRITER_PAYLOAD,"",1).strip()
+            assert restored==WRITER_ANCHOR+" "+SEEDS[app]+" "+CONTROL, "Native insertion lost or changed original document text"
+            result["allOriginalTextPreservedAfterRemovingOneInsertedPayload"]=True
+        else:contains_once(text, WRITER_ANCHOR)
         result["text"] = text
     elif app == "spreadsheet":
         with zipfile.ZipFile(path) as bundle:
