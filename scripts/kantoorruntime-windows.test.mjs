@@ -25,13 +25,15 @@ afterEach(async () => {
 });
 
 describe.skipIf(process.platform !== "win32")("Windows runtime tool ZIP extraction", () => {
+  // A real PowerShell/.NET process can cold-start slowly on a loaded CI host.
+  // Keep the byte/path assertions; only this integration test has a wider budget.
   it("extracts nested binary bytes through Windows PowerShell with literal paths", async () => {
     const bytes = Uint8Array.from([0, 255, 128, 1, 2, 3]);
     const f = await fixture({ "nested/tool.exe": bytes, "empty/": new Uint8Array() });
     const output = await extractWindowsToolArchive(f.archive, f.staging);
     expect(output).toBe(join(f.staging, "lessmsi"));
     expect(await readFile(join(output, "nested/tool.exe"))).toEqual(Buffer.from(bytes));
-  });
+  }, 30_000);
 
   it("rejects a corrupt archive instead of accepting a partial tool tree", async () => {
     const f = await fixture({ "tool.exe": Uint8Array.of(1) });
