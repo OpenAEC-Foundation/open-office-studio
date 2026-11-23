@@ -1,0 +1,72 @@
+{
+  "metadataArtifact": {
+    "id": 14824463159,
+    "name": "linux-suite-input-p5-metadata",
+    "bytes": 7773,
+    "zipSha256": "180cb913a418f59df3df67aed2f00a1e6ec2020390b7e5342341d94953392f17"
+  },
+  "descriptors": [
+    {
+      "kind": "deb",
+      "path": "docs/tests/linux-release-input-p5/office-deb-input-descriptor.json",
+      "descriptorSha256": "0c82ca92eaa74a5e631aaf2b8990b40bd24d04830049ed9f48b1cbd3f22e4a03",
+      "artifact": {
+        "run": 45188332685,
+        "id": 14823809980,
+        "name": "suite-input-office-deb-p5",
+        "zipSha256": "8a63334448a548c7d90923c659ce99082c7a5360d156ce791c3a2d3a62ba0eec",
+        "zipBytes": 383831912
+      },
+      "package": {
+        "kind": "deb",
+        "member": "canonical-office.deb",
+        "sha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+        "bytes": 383828462,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "payloadElf": {
+          "path": "usr/bin/open-office-studio",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+          "bytes": 99955264,
+          "mode": 493,
+          "elfClass": 2,
+          "machine": 62
+        }
+      },
+      "signatures": []
+    },
+    {
+      "kind": "appimage",
+      "path": "docs/tests/linux-release-input-p5/office-appimage-input-descriptor.json",
+      "descriptorSha256": "2ebd84ac4cdb00bb96a9d0617a09a34369cc17333f6941786d69c79e27b61b8a",
+      "artifact": {
+        "run": 45188332685,
+        "id": 14823914781,
+        "name": "suite-input-office-appimage-p5",
+        "zipSha256": "90167f0a1464ea57cf0a53d4b8adcd0aa3235879be4b1aca7da28d09cae6950a",
+        "zipBytes": 429876979
+      },
+      "package": {
+        "kind": "appimage",
+        "member": "canonical-office.AppImage",
+        "sha256": "346f8130a710e62d080982d6c0fc45ecd610b49e5b7e8495cce691f2d872fdf6",
+        "bytes": 429873656,
+        "control": null,
+        "payloadElf": {
+          "path": "usr/bin/open-office-studio",
+          "sha256": "24bf634c06847e6a4a94a5ac245cac93af3e76a9e911f06e2d89f1621b4a94fd",
+          "bytes": 99992001,
+          "mode": 493,
+          "elfClass": 2,
+          "machine": 62
+        }
+      },
+      "signatures": []
+    }
+  ],
+  "nativeAcceptanceClaim": false
+}
