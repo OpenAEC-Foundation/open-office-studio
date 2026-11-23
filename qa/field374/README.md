@@ -14,6 +14,7 @@ Run from the **application checkout**, using the exact application commit:
 node PATH_TO_QA/qa/field374/sdk.mjs APP_COMMIT OUTPUT
 node scripts/writer-proefbuild.mjs build BUILD_PATH ROUTE
 node PATH_TO_QA/qa/field374/browser.mjs APP_COMMIT BUILD_PATH ROUTE OUTPUT
+node PATH_TO_QA/qa/field374/audit-docx.mjs RETAINED.docx NEW_OUTPUT [EXACT_MARKER]
 ```
 
 `APP_COMMIT` is a full 40-character commit matching the current application's HEAD;
@@ -28,6 +29,16 @@ LiberationSans-Regular.ttf bytes, SHA256
 `76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8`;
 this is the same font blob as the upstream Rust tests. Browser font assets come
 from the actual receipt-bound frontend; the test does not replace its fonts.
+
+`audit-docx.mjs` applies the exact shared contract to an actual retained native
+or browser DOCX, without opening an app. The marker defaults to the existing
+` -- STW30 EDIT 2026-11-23`; pass the exact marker explicitly for another edit,
+or an empty string for an unchanged control. Create the parent output directory
+first; the last directory must be new. It checks the original cache inside the
+field and the marker outside it, plus the source-derived oracle. It copies the
+input into its proof directory and verifies that the original input stays
+unchanged. This is content evidence only: package identity, real native actions,
+normal exit/new-PID reopen and visual paint remain separate owner evidence.
 
 The SDK checks both resident edit and standalone layout kernels, actual title
 geometry before/after edit/Undo/Redo/save/fresh-session reopen, adjacent-run start
