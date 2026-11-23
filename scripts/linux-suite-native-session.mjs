@@ -35,6 +35,7 @@ import {
 import * as fsSync from "node:fs";
 import {readdir,chmod,symlink,copyFile} from "node:fs/promises";
 import {readSuiteRequest} from "../qa/linux-suite-final/request.mjs";
+import {collectOwnedNativeResources} from "./linux-suite-owned-processes.mjs";
 export async function runSuiteNativeScenario({packageType,scenarioName},action){
 assert(["deb","appimage"].includes(packageType));
 assert.match(scenarioName,/^[a-z0-9-]+$/);
@@ -149,15 +150,7 @@ function pids() {
   });
 }
 async function ownedApplicationResources(){
-  const result=[];
-  for(const name of await readdir('/proc')){
-    if(!/^\d+$/.test(name))continue;
-    try{const values=(await readFile('/proc/'+name+'/environ','utf8')).split('\0');
-      if(!values.includes('XDG_CONFIG_HOME='+env.XDG_CONFIG_HOME))continue;
-      const executable=await realpath('/proc/'+name+'/exe');
-      if(executable.endsWith('/usr/bin/open-office-studio')||values.includes('APPIMAGE='+application)||/\/WebKit(?:Web|Network|GPU)Process$/.test(executable)||executable===application)result.push({pid:Number(name),executable});
-    }catch(e){if(!['ENOENT','ESRCH'].includes(e.code))throw e}
-  }return result;
+  return collectOwnedNativeResources({profile:env.XDG_CONFIG_HOME,application});
 }
 async function freePort() {
   const server = createServer();
@@ -1354,8 +1347,14 @@ try {
   }
   report.cleanup.driverExited =
     !driver || driver.exitCode !== null || driver.signalCode !== null;
-  report.cleanup.ownedApplicationClosed = (await ownedApplicationResources()).length === 0;
-  report.cleanup.remainingOwnedResources=await ownedApplicationResources();
+  try{
+    report.cleanup.remainingOwnedResources=await ownedApplicationResources();
+    report.cleanup.ownedApplicationClosed=report.cleanup.remainingOwnedResources.length===0;
+  }catch(error){
+    report.cleanup.resourceScanError=String(error.stack??error);
+    report.cleanup.remainingOwnedResources=null;
+    report.cleanup.ownedApplicationClosed=false;
+  }
   report.cleanup.remainingApplicationPids = pids();
   if (
     !report.cleanup.driverExited ||

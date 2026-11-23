@@ -1,6 +1,7 @@
 # Final Linux Suite QA preparation
 
-Execution is authorized by the coordinator in [request.json](request.json): `go=true`,
+Execution is authorized by the coordinator; [request.json](request.json) is temporarily `go=false`
+while the first native attempt is preserved and an own-UID process-scan driver correction is checked.
 both immutable input descriptors bound to producer Git `3ea55641` and official
 Suite transfers from successful prep45188332685. Native acceptance is still pending.
 Candidate P5 is exactly
