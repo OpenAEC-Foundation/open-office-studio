@@ -1,0 +1,18 @@
+{
+  "scope": "Integration-only proposal; shared coverage index/matrix left unchanged by this parallel owner",
+  "entry": {
+    "ext": "gnm",
+    "modules": [
+      "xlsx"
+    ],
+    "route": "runtime",
+    "status": "real-file",
+    "sources": [],
+    "evidence": [
+      "docs/tests/formatendekking/2026-11-23-gnm-route.md",
+      "docs/tests/formatendekking/2026-11-23-gnm-proof/converter-independent-audit.json",
+      "docs/tests/formatendekking/2026-11-23-gnm-proof/browser-independent-audit.json"
+    ],
+    "note": "23-11-2026 P2: echte niet-lege Gnumeric-bron expliciet via .gnm en controle .gnumeric; private Linux AppImage/DEB-converter + productie-invoer/engine, 8 getypeerde cellen/4 formules/2 bladen, tweede-bladbewerking/bewaren/heropenen. Browser / en /office/ toont desktop/XLSX-advies en behoudt bestaand DOCX. Windows/macOS en native IPC/bediening niet beproefd; geen alle-varianten-/opmaakgarantie."
+  }
+}

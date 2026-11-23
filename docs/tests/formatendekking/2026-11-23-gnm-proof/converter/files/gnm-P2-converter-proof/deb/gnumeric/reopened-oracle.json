@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "sourceUrl": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/gnumeric/universal-content.gnumeric",
+  "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+  "sourceGitBlob": "440c2feb88d5fd5d262c7338047ecdc5f2a6998a",
+  "sourceBytes": 2062,
+  "sheets": [
+    {
+      "name": "Sheet1",
+      "cells": {
+        "A1": {
+          "kind": "number",
+          "value": 1.0
+        },
+        "B1": {
+          "kind": "string",
+          "value": "String1"
+        },
+        "C1": {
+          "kind": "number",
+          "formula": "=2*3",
+          "value": 6.0
+        },
+        "A2": {
+          "kind": "number",
+          "value": 2.0
+        },
+        "B2": {
+          "kind": "string",
+          "value": "String2"
+        },
+        "C2": {
+          "kind": "number",
+          "formula": "=2+3",
+          "value": 5.0
+        },
+        "C3": {
+          "kind": "number",
+          "formula": "=2-3",
+          "value": -1.0
+        },
+        "C4": {
+          "kind": "number",
+          "formula": "=C1+C2",
+          "value": 11.0
+        }
+      }
+    },
+    {
+      "name": "Sheet2",
+      "cells": {}
+    }
+  ],
+  "expectedCells": 8,
+  "expectedFormulas": 4,
+  "scope": "Pinned genuine Gnumeric cells, formulas and two sheets; no native/visual/all-variant claim",
+  "xlsxSha256": "75a83b570ca9bed9e2253362a6d7fc54750ac50f6b917a9cbcb973e648a17ee8",
+  "xlsxBytes": 73252,
+  "secondSheetEditChecked": true,
+  "originalUnchanged": true
+}

@@ -1,0 +1,23 @@
+linux	Verify canonical own Linux packages before any converter execution	﻿2026-11-23T09:24:32.4393467Z ##[group]Run python -B .local/gnm-harness/scripts/format30-gnm/packages.py .local/gnm-harness/.github/format30-gnm-candidate.json .local/gnm-P2-canonical
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4394655Z ^[[36;1mpython -B .local/gnm-harness/scripts/format30-gnm/packages.py .local/gnm-harness/.github/format30-gnm-candidate.json .local/gnm-P2-canonical^[[0m
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4459513Z shell: /usr/bin/bash -e {0}
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4459936Z env:
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4460328Z   OOS_FORMAT30_GNM_HARNESS: 9c88c540aac9321c1968c55184968fdd980800f2
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4460878Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4461317Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4461747Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4462117Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4462490Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4463192Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4463639Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4466106Z   GH_TOKEN: ***
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:32.4466322Z ##[endgroup]
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0496228Z Traceback (most recent call last):
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0497700Z   File "/home/runner/work/open-office-studio/open-office-studio/.local/gnm-harness/scripts/format30-gnm/packages.py", line 78, in <module>
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0498961Z     if __name__=='__main__':main()
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0499527Z                             ^^^^^^
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0500451Z   File "/home/runner/work/open-office-studio/open-office-studio/.local/gnm-harness/scripts/format30-gnm/packages.py", line 61, in main
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0501683Z     assert len(path.parts)==2 and path.parts[0] in ('deb','appimage'),'Unexpected canonical Linux installer-root content'
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0502449Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0503391Z AssertionError: Unexpected canonical Linux installer-root content
+linux	Verify canonical own Linux packages before any converter execution	2026-11-23T09:24:43.0577331Z ##[error]Process completed with exit code 1.
