@@ -1,0 +1,124 @@
+{
+  "kind": "Native diagnosis, not fixed-package acceptance",
+  "status": "diagnosed",
+  "harnessCommit": "aeab060c476fddc281349ceedb4d3891c7a4dc0d",
+  "application": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "fixture": {
+    "upstreamCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+    "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+    "bytes": 7651,
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb",
+    "upstreamTest": "https://github.com/LibreOffice/core/blob/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/subsequent_filters_test2.cxx#L476",
+    "license": "LibreOffice core MPL-2.0; upstream test fixture, unmodified",
+    "formatProof": "workbook.bin/worksheet.bin with 30 BrtFmlaNum records, not renamed XLSX",
+    "macroProjectPresent": false
+  },
+  "run": 45162093720,
+  "job": 137649778111,
+  "artifact": {
+    "id": 14813080706,
+    "name": "xlsb35-initial-ctrl-s-45162093720",
+    "bytes": 541803,
+    "sha256": "0db5aadbee96151afb1a8404a5ee949a390ec67836602c277a5429e80b4a1940",
+    "fullZipDigestVerified": true
+  },
+  "startedAt": "2026-11-23T11:09:51.746Z",
+  "finishedAt": "2026-11-23T11:10:18.088Z",
+  "environment": {
+    "runner": "ubuntu-22.04 x64",
+    "display": "private Xvfb/X11; software rendering",
+    "dbus": "private dbus-run-session",
+    "app": "original canonical P2 installed DEB; unchanged ELF",
+    "trace": "read-only strace execve on exact own app PID; no wrapper or backend mutation"
+  },
+  "initialZenity": null,
+  "afterDiagnosticInstall": "/usr/bin/zenity",
+  "packageDepends": "libwebkit2gtk-4.1-0, libgtk-3-0",
+  "findings": [
+    {
+      "scope": "Imported XLSB save policy",
+      "result": "Both real Ctrl+S and Save invoke a foreign-format confirmation offering Update as XLSB although current XLSB output catalogue entry is absent; with Zenity installed the wrong offer is visibly reproduced and cancelled with real Escape."
+    },
+    {
+      "scope": "Separate general Linux dialog dependency",
+      "result": "Original host lacks Zenity; Ctrl+S and Save each produce18 real Zenity execve attempts, all ENOENT. Installing only Zenity with unchanged app makes /usr/bin/zenity execve succeed and shows the actual question. General dependency correction belongs to writer_362, not this product fix."
+    }
+  ],
+  "explicitSaveAs": {
+    "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)",
+    "extension": ".xlsx"
+  },
+  "originalUnchanged": true,
+  "nativeQuestionCancelled": true,
+  "cleanup": {
+    "tracerGroupClosed": true,
+    "ownedOfficeClosed": true,
+    "driverGroupClosed": true,
+    "capture": "Synchronous owned-window GDK snapshot processes only; no persistent recording session"
+  },
+  "accessibilityBaselineRestored": true,
+  "captures": "Reviewed actual source after Ctrl+S, explicit XLSX Save As and owned native unsupported-XLSB question; all artifact capture digests checked",
+  "evidence": [
+    {
+      "path": "evidence/ctrl-s-diagnosis/accessibility-after.txt",
+      "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/accessibility-before.txt",
+      "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/execve.log",
+      "sha256": "a4cbe70ac3bb59f0259c3e09d0b75a38474ca79e53f970442bc5e74b9f9ae039"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/explicit-save-as.png",
+      "sha256": "ba42ea164475572819e5a48b90de7027ddde715b576301bc390c49581d318f04"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/installed-identity.json",
+      "sha256": "66322ac6b9d1a51a6a6cb857d5bd1bab10dc116a93702c89ea1c7269f247f199"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/original-ctrl-s.png",
+      "sha256": "a388794938312ec84aeda7254510ef8400d28f8d7c32464b24a2e66fbe4885d2"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/report.json",
+      "sha256": "8fe83d1187a4391ddfc355b106503034175155205d37dd2e00cba90dc58ea137"
+    },
+    {
+      "path": "evidence/ctrl-s-diagnosis/with-zenity-ctrl-s-confirmation.png",
+      "sha256": "d5a36c6d638a40c1b8fe41daff54a1312f788ab339845095b36f1f3913bc4915"
+    }
+  ],
+  "limits": [
+    "One ordinary P2 Linux DEB XLSB input case; no fixed-app/native or other-platform claim.",
+    "No save/update was accepted, and no valid30-formula/save/reopen matrix was repeated.",
+    "First diagnosis45161230008 stopped during differential child lookup; original observations preserved, no false differential pass."
+  ]
+}

@@ -30,7 +30,25 @@ accepted. All own app/tracer/driver/capture resources must close. No product fix
 new app build, macro execution, model bridge, synthetic key event or saved-file
 matrix is included here. A diagnosis success is not a fixed-package acceptance.
 
-Status: targeted diagnosis pending. Product change/issue boundaries follow evidence.
+Status: **native differential diagnosis complete**, CI45162093720/job137649778111
+SUCCESS, harnessaeab060c476fddc281349ceedb4d3891c7a4dc0d. Artifact14813080706,
+541803bytes, full ZIP SHA256
+`0db5aadbee96151afb1a8404a5ee949a390ec67836602c277a5429e80b4a1940`
+verified locally. Exact report/execve/screenshots are retained under
+`evidence/ctrl-s-diagnosis/`; summary and bindings in `ctrl-s-result.json`.
+
+Original Ctrl+S and Save each attempted Zenity18times, all ENOENT. With only
+Zenity installed, unchanged P2 showed the actual native question offering
+**Update as XLSB**. The caller verified exact Office-parent/executable/env/XID,
+read native AT-SPI content, captured it, and cancelled with real Escape. The
+source/fixture bytes stayed unchanged; app/driver/tracer groups closed and
+accessibility baseline restored. Explicit visible Save As still proposes XLSX
+and bundled safe runtime. Screenshots and all capture digests were reviewed.
+
+Integration split the independently fixable causes: d410 owns only import-only
+XLSB Save policy; writer_362 owns general missing Linux Zenity dependency.
+No dependencies, Cargo or generic dialog backend are changed here. Original P2
+remains frozen; product correction is prepared separately for a later round.
 
 First diagnostic run45161230008 verified original source, real Ctrl+S and Save
 launching the missing Zenity command with ENOENT, plus working explicit XLSX

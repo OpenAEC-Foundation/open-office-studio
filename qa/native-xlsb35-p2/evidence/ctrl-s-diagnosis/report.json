@@ -1,0 +1,1570 @@
+{
+  "status": "diagnosed",
+  "phase": "complete",
+  "source": {
+    "upstreamCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+    "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+    "bytes": 7651,
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb",
+    "upstreamTest": "https://github.com/LibreOffice/core/blob/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/subsequent_filters_test2.cxx#L476",
+    "license": "LibreOffice core MPL-2.0; upstream test fixture, unmodified",
+    "formatProof": "workbook.bin/worksheet.bin with 30 BrtFmlaNum records, not renamed XLSX",
+    "macroProjectPresent": false
+  },
+  "origin": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "harnessCommit": "aeab060c476fddc281349ceedb4d3891c7a4dc0d",
+  "startedAt": "2026-11-23T11:09:51.746Z",
+  "platform": "Linux x64 / installed Office DEB / headed WebKitGTK on private Xvfb and D-Bus",
+  "sessions": [
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "pid": 4705,
+      "sessionId": "3ad6d02b-a73b-477b-98bc-fcd6e80c78b2",
+      "sourcePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/input/NativeXLSB-source.xlsb",
+      "ready": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "tyP33, emptyQ33, emptyR33, emptyS33, emptyT33, emptyU33, emptyV33, emptyW33, emptyX33, emptyY33, emptyRow 34A34, emptyB34, emptyC34, emptyD34, emptyE34, emptyF34, emptyG34, emptyH34, emptyI34, emptyJ34, emptyK34, emptyL34, emptyM34, emptyN34, emptyO34, emptyP34, emptyQ34, emptyR34, emptyS34, emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/inputToday 11:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.Details\n",
+        "name": "A1",
+        "gridFocused": false
+      },
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 4705,
+        "display": ":99",
+        "activationPerformed": true,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T11:09:52.893Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T11:09:55.889Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T11:09:56.088Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T11:09:56.149Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T11:09:56.195Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T11:09:56.249Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T11:09:56.326Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T11:09:56.383Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T11:09:56.458Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T11:09:56.474Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T11:09:56.521Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T11:09:56.571Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T11:09:56.650Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T11:09:56.664Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T11:09:56.738Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T11:09:56.754Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T11:09:56.915Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before readonly owned execve trace",
+            "at": "2026-11-23T11:09:56.993Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before original-ctrl-s",
+            "at": "2026-11-23T11:09:57.165Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after original-ctrl-s",
+            "at": "2026-11-23T11:09:59.064Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T11:09:59.122Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T11:09:59.267Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before original-save-button",
+            "at": "2026-11-23T11:09:59.351Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .office-snelknop[aria-label=\"Save\"]",
+            "at": "2026-11-23T11:09:59.409Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after original-save-button",
+            "at": "2026-11-23T11:10:01.312Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T11:10:01.365Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T11:10:01.497Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .office-snelknop[aria-label=\"Save as\"]",
+            "at": "2026-11-23T11:10:01.571Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .office-snelknop[aria-label=\"Save as\"]",
+            "at": "2026-11-23T11:10:01.714Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T11:10:01.777Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T11:10:01.919Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T11:10:01.970Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T11:10:02.021Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save as",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T11:10:15.194Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save as",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T11:10:15.228Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T11:10:15.278Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T11:10:15.348Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before with-zenity-ctrl-s",
+            "at": "2026-11-23T11:10:15.406Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T11:10:17.645Z",
+            "process": {
+              "pid": 4705,
+              "startTime": "91068",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:97959:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 4705,
+          "startTime": "91068",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:97959:99899360:1795425472000",
+          "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+        },
+        "xid": "2097155",
+        "pre": {
+          "windowFocus": "1293",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": "gridcell",
+              "label": "A1, 3, selected",
+              "id": "_r_g_-b0-r0-k0",
+              "tag": "SPAN"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T11:10:17.645Z",
+          "process": {
+            "pid": 4705,
+            "startTime": "91068",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:97959:99899360:1795425472000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": "gridcell",
+              "label": "A1, 3, selected",
+              "id": "_r_g_-b0-r0-k0",
+              "tag": "SPAN"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "selected": "A1",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/inputToday 11:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.DetailsInfoFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Calibri → Carlito, Cambria → Caladea. The file keeps the original names.\n",
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "label": "original before Ctrl+S",
+      "sourceSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "fixtureSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "inputFiles": [
+        {
+          "path": "NativeXLSB-source.xlsb",
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651
+        }
+      ]
+    },
+    {
+      "label": "original-ctrl-s",
+      "zenityChild": null,
+      "execveDelta": "4928  execve(\"/home/runner/setup-pnpm/node_modules/.bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/opt/hostedtoolcache/node/22.23.5/x64/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/snap/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/home/runner/.local/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/opt/pipx_bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/home/runner/.cargo/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/home/runner/.config/composer/vendor/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/local/.ghcup/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/home/runner/.dotnet/tools/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/local/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/local/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/games/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/usr/local/games/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  execve(\"/snap/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4928  +++ exited with 127 +++\n4705  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=4928, si_uid=1001, si_status=127, si_utime=0, si_stime=0} ---\n4927  +++ exited with 0 +++\n",
+      "ui": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/inputToday 11:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.DetailsInfoFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Calibri → Carlito, Cambria → Caladea. The file keeps the original names.\n",
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "label": "unchanged after original-ctrl-s",
+      "sourceSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "fixtureSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "inputFiles": [
+        {
+          "path": "NativeXLSB-source.xlsb",
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651
+        }
+      ]
+    },
+    {
+      "label": "original-save-button",
+      "zenityChild": null,
+      "execveDelta": "4948  execve(\"/home/runner/setup-pnpm/node_modules/.bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/opt/hostedtoolcache/node/22.23.5/x64/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/snap/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/home/runner/.local/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/opt/pipx_bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/home/runner/.cargo/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/home/runner/.config/composer/vendor/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/local/.ghcup/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/home/runner/.dotnet/tools/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/local/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/local/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/games/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/usr/local/games/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  execve(\"/snap/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n4948  +++ exited with 127 +++\n4705  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=4948, si_uid=1001, si_status=127, si_utime=0, si_stime=0} ---\n4947  +++ exited with 0 +++\n",
+      "ui": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/inputToday 11:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.DetailsInfoFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Calibri → Carlito, Cambria → Caladea. The file keeps the original names.\n",
+        "name": "A1",
+        "gridFocused": false
+      }
+    },
+    {
+      "label": "unchanged after original-save-button",
+      "sourceSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "fixtureSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "inputFiles": [
+        {
+          "path": "NativeXLSB-source.xlsb",
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651
+        }
+      ]
+    },
+    {
+      "label": "with-zenity-ctrl-s",
+      "zenityChild": {
+        "pid": 5137,
+        "executable": "/usr/bin/zenity"
+      },
+      "execveDelta": "5137  execve(\"/home/runner/setup-pnpm/node_modules/.bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/opt/hostedtoolcache/node/22.23.5/x64/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/snap/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/home/runner/.local/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/opt/pipx_bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/home/runner/.cargo/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/home/runner/.config/composer/vendor/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/usr/local/.ghcup/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/home/runner/.dotnet/tools/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/usr/local/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/usr/local/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/usr/sbin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = -1 ENOENT (No such file or directory)\n5137  execve(\"/usr/bin/zenity\", [\"zenity\", \"--no-markup\", \"--question\", \"--title\", \"Save as XLSB\", \"--text\", \"NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\\n\\nChoose Save as\\342\\200\\246 to keep a DOCX, XLSX or PPTX.\", \"--ok-label\", \"Update as XLSB\", \"--cancel-label\", \"Cancel\", \"--extra-button\", \"Save as\\342\\200\\246\"], 0x7ffc0acb6e40 /* 132 vars */) = 0\n5138  +++ exited with 0 +++\n5139  +++ exited with 0 +++\n5140  +++ exited with 0 +++\n5141  +++ exited with 0 +++\n5142  +++ exited with 0 +++\n",
+      "ui": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "Y33, emptyRow 34A34, emptyB34, emptyC34, emptyD34, emptyE34, emptyF34, emptyG34, emptyH34, emptyI34, emptyJ34, emptyK34, emptyL34, emptyM34, emptyN34, emptyO34, emptyP34, emptyQ34, emptyR34, emptyS34, emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/inputToday 11:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.Details\n",
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "label": "unchanged after with-zenity-ctrl-s",
+      "sourceSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "fixtureSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "inputFiles": [
+        {
+          "path": "NativeXLSB-source.xlsb",
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651
+        }
+      ]
+    },
+    {
+      "label": "final unchanged source",
+      "sourceSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "fixtureSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "inputFiles": [
+        {
+          "path": "NativeXLSB-source.xlsb",
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651
+        }
+      ]
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "fullProcessExit": true
+    }
+  ],
+  "inputs": [
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "ctrl+s",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "key": "ctrl+s",
+      "backend": "XTest"
+    }
+  ],
+  "captures": [
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "file": "before-ctrl-s.png",
+      "pid": 4705,
+      "xid": "2097155",
+      "startTime": "91068",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "98162abf0f68e0b5104d2ae82d7b70d6735ef97172d2566e20bcb4809550a285",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "file": "original-ctrl-s.png",
+      "pid": 4705,
+      "xid": "2097155",
+      "startTime": "91068",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "a388794938312ec84aeda7254510ef8400d28f8d7c32464b24a2e66fbe4885d2",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "file": "original-save-button.png",
+      "pid": 4705,
+      "xid": "2097155",
+      "startTime": "91068",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "ae78bfee5ef482f4a6bf7186e60b797297f250b373841287893aafb3100f4a7c",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "file": "explicit-save-as.png",
+      "pid": 4705,
+      "xid": "2097155",
+      "startTime": "91068",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "ba42ea164475572819e5a48b90de7027ddde715b576301bc390c49581d318f04",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "original-P2-ctrl-s-diagnosis",
+      "file": "with-zenity-ctrl-s-confirmation.png",
+      "pid": 5137,
+      "xid": "14680072",
+      "startTime": "93426",
+      "width": 543,
+      "height": 157,
+      "sha256": "d5a36c6d638a40c1b8fe41daff54a1312f788ab339845095b36f1f3913bc4915",
+      "backend": "owned X11 window pixels"
+    }
+  ],
+  "cleanup": {
+    "tracerGroupClosed": true,
+    "ownedOfficeClosed": true,
+    "driverGroupClosed": true,
+    "capture": "Synchronous owned-window GDK snapshot processes only; no persistent recording session"
+  },
+  "limits": [
+    "Only Ctrl+S/Save/Save As after original XLSB import; no edit or saved-file matrix.",
+    "Virtual X11/software graphics; no physical hardware, AppImage, final signed/standalone app or other-platform claim.",
+    "Full process quit uses WebDriver DELETE session; menu Quit is not certified.",
+    "No product code, editor bridge, DOM model setters, mocked IPC or direct converter call."
+  ],
+  "sharedHelpers": [
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-package.py",
+      "sha256": "a9c68b7880b7cb0749689096fee81bce980ecf9fa697dfe7bb93554b95e92d45"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-capture.py",
+      "sha256": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-ribbon-native.mjs",
+      "sha256": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-input.mjs",
+      "sha256": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "tests/fixtures/linux-p2/native-input-descriptor.json",
+      "sha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92"
+    },
+    {
+      "commit": "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
+      "path": "scripts/linux-stw-portal.py",
+      "sha256": "9594b9bf350fc76bf9bc36a3a78d570f4c31fd65e50617fb66968832e9f5f165",
+      "usage": "Immutable shared picker protocol; its contracts are not a native pass"
+    },
+    {
+      "commit": "3f4ddecd383e6a9fcb6a5f78ff456c08d772797a",
+      "path": "scripts/linux-stw-dialog-input.mjs",
+      "sha256": "846a1bc0e3aba112498c7ce86e4dafba2c885261732b4cbae670cc551dc9ff05",
+      "usage": "Immutable caller readiness: bounded visible window wait on the same credential-bound PID"
+    },
+    {
+      "commit": "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
+      "path": "scripts/linux-stw-gtk-anatomy.py",
+      "sha256": "b59d80b5f47538a503647b1ed86d5c915b6266842f7bed6107cc60da107035d4",
+      "usage": "Immutable shared picker protocol; its contracts are not a native pass"
+    }
+  ],
+  "packageDepends": "libwebkit2gtk-4.1-0, libgtk-3-0",
+  "initialZenity": null,
+  "trace": {
+    "pid": 4920,
+    "target": 4705,
+    "stderr": "strace: Process 4705 attached with 22 threads\nstrace: Process 4927 attached\nstrace: Process 4928 attached\nstrace: Process 4947 attached\nstrace: Process 4948 attached\nstrace: Process 5122 attached\nstrace: Process 5136 attached\nstrace: Process 5137 attached\nstrace: Process 5138 attached\nstrace: Process 5139 attached\nstrace: Process 5140 attached\nstrace: Process 5141 attached\nstrace: Process 5142 attached\nstrace: Process 4705 detached\nstrace: Process 4715 detached\nstrace: Process 4716 detached\nstrace: Process 4751 detached\nstrace: Process 4752 detached\nstrace: Process 4753 detached\nstrace: Process 4754 detached\nstrace: Process 4755 detached\nstrace: Process 4756 detached\nstrace: Process 5122 detached\nstrace: Process 4758 detached\nstrace: Process 4761 detached\nstrace: Process 4762 detached\nstrace: Process 4774 detached\nstrace: Process 4782 detached\nstrace: Process 4792 detached\nstrace: Process 4793 detached\nstrace: Process 4794 detached\nstrace: Process 4795 detached\nstrace: Process 4796 detached\n"
+  },
+  "explicitSaveAs": {
+    "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)",
+    "extension": ".xlsx"
+  },
+  "afterDiagnosticInstall": "/usr/bin/zenity",
+  "confirmation": {
+    "child": {
+      "pid": 5137,
+      "executable": "/usr/bin/zenity"
+    },
+    "dialog": {
+      "binding": {
+        "pid": 5137,
+        "executable": "/usr/bin/zenity",
+        "startTime": "93426",
+        "sha256": "6fd084e86c386cd1d5036b490044dee514021e1bc25af7ec83041a7ac59d872d",
+        "environment": {
+          "DISPLAY": ":99",
+          "HOME": "/home/runner",
+          "XAUTHORITY": "/tmp/xvfb-run.Z9pYcZ/Xauthority",
+          "GDK_BACKEND": "x11",
+          "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/profile/config",
+          "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-ctrl-s/profile/data",
+          "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-FZptyg210M,guid=875ee89843af901f862ef0316b041eff"
+        }
+      },
+      "xid": "14680072",
+      "activationPerformed": true,
+      "checks": [
+        {
+          "stage": "dialog foreground postcondition",
+          "at": "2026-11-23T11:10:17.276Z"
+        },
+        {
+          "stage": "before actual native Escape cancellation",
+          "at": "2026-11-23T11:10:17.427Z"
+        }
+      ],
+      "keys": []
+    },
+    "anatomy": {
+      "pid": 5137,
+      "nodes": [
+        {
+          "name": "zenity",
+          "role": "application",
+          "focused": false,
+          "showing": false
+        },
+        {
+          "name": "Save as XLSB",
+          "role": "dialog",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "",
+          "role": "filler",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "",
+          "role": "filler",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "",
+          "role": "filler",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "Question",
+          "role": "icon",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\n\nChoose Save as… to keep a DOCX, XLSX or PPTX.",
+          "role": "label",
+          "focused": false,
+          "showing": true,
+          "text": "NativeXLSB-source.xlsb will be updated in the XLSB format. The office runtime converts the document for this; formatting that XLSB does not support may be lost.\n\nChoose Save as… to keep a DOCX, XLSX or PPTX."
+        },
+        {
+          "name": "",
+          "role": "filler",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "Save as…",
+          "role": "push button",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "Cancel",
+          "role": "push button",
+          "focused": false,
+          "showing": true
+        },
+        {
+          "name": "Update as XLSB",
+          "role": "push button",
+          "focused": true,
+          "showing": true
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "diagnosis": "Missing undeclared Linux Zenity dependency: original Ctrl+S and Save silently cancel their foreign-format confirmation; same app with Zenity displays it. Explicit Save As works independently.",
+  "originalUnchanged": true,
+  "finishedAt": "2026-11-23T11:10:18.088Z"
+}
