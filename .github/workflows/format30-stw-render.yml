@@ -1,0 +1,57 @@
+name: Format 30 bounded STW title render triage
+on:
+  push:
+    branches: [codex/formats-30-stw-qa-2026-11-23]
+    paths: [.github/format30-stw-render-attempt.json]
+permissions:
+  contents: read
+concurrency:
+  group: format30-stw-render
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    env:
+      OOS_STW_HARNESS_COMMIT: ${{ github.sha }}
+      OFFICE_TEST_SOURCE: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/checkout@v4
+        with:
+          path: .local/stw-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: runtime317-assets-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json', 'assets/lettertypen.json', 'assets/woordenboeken.json') }}
+          restore-keys: |
+            runtime317-assets-${{ runner.os }}-${{ runner.arch }}-
+      - name: Isolated Linux browser driver
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          pnpm exec playwright install --with-deps chromium
+      - name: One immutable P2 frontend route only
+        run: node scripts/writer-proefbuild.mjs build .local/stw-render-P2 /
+      - name: Capture unchanged native DOCX and bounded field control, no edit or save
+        run: node .local/stw-harness/scripts/format30-stw-render.mjs .local/stw-render-P2 .local/stw-render-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: format30-stw-render-Linux
+          path: .local/stw-render-proof
+          include-hidden-files: true
+          if-no-files-found: warn
