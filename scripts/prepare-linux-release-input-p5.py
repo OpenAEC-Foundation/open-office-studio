@@ -187,6 +187,17 @@ def main():
         assert len(names) == len(set(names))
         assert all(not Path(n).is_absolute() and '..' not in Path(n).parts and '\\' not in n for n in names)
         binding['members'] = names
+        # Small original signature bytes remain available for the coordinator;
+        # standalone hosts still receive only their own two packages/report.
+        signature_dir=Path('.local/linux-release-input-p5-metadata/canonical-signatures')
+        signature_dir.mkdir(parents=True)
+        signatures=[]
+        for name in names:
+            if not name.endswith('.sig'):continue
+            raw=bundle.read(name);assert 0<len(raw)<=65536
+            target=signature_dir/Path(name).name;assert not target.exists();target.write_bytes(raw)
+            signatures.append(dict(canonicalMember=name,path='canonical-signatures/'+target.name,sha256=digest(target),bytes=len(raw),status='Original bytes preserved; not cryptographically verified by this QA'))
+        (signature_dir.parent/'canonical-signatures.json').write_text(json.dumps(signatures,indent=2)+'\n',encoding='utf-8')
         for studio in studios:
             extract_app(bundle, studio, version, source, run_id, artifact, archive_hash,binding)
     manifest = Path('.local/standalone-linux-prepared/preparation-receipt.json')
