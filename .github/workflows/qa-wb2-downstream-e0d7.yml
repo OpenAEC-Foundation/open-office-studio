@@ -1,0 +1,43 @@
+name: WB2 downstream engine diagnostic (strict import stays failed)
+on:
+  push:
+    branches: [codex/wb2-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-wb2/analysis/**
+      - .github/workflows/qa-wb2-downstream-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  downstream:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Authenticate exact prior private conversion evidence (33 KB, no Office download)
+        run: |
+          python -m py_compile scripts/qa-wb2/analysis/*.py
+          python scripts/qa-wb2/analysis/continue_input.py
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Actual P2 engine edit Undo Redo XLSX save fresh reopen, independent cells and visible strict name failure
+        run: node scripts/qa-wb2/analysis/downstream.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wb2-downstream-result
+          path: .local/wb2-qa/
+          include-hidden-files: true
+          if-no-files-found: error
