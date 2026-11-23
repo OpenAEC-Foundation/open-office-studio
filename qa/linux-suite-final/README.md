@@ -2,10 +2,14 @@
 
 Execution is authorized by the coordinator in [request.json](request.json).
 The own-UID process-scan correction preserves the original failed attempts.
-The current DEB-only continuation reuses the already completed P5 core proof
+The DEB continuation reuses the already completed P5 core proof
 from45189806911 under exact official archive/report/source/package/ELF/probe hashes,
-then executes only the remaining native374/378 scopes. AppImage has its own
-independent continuation45190839269 and is not rerun by this request.
+then executes only the remaining native374/378 scopes. The earlier AppImage
+attempts stopped before app execution on overly broad process environment scans.
+The current scanner selects own UID plus the exact own driver process group
+or known Office/AppImage/WebKit command names before reading environments;
+an unreadable potential-owned resource remains a hard error. Both unstarted
+package scopes now continue on that corrected driver, preserving failed runs.
 both immutable input descriptors bound to producer Git `3ea55641` and official
 Suite transfers from successful prep45188332685. Native acceptance is still pending.
 Candidate P5 is exactly

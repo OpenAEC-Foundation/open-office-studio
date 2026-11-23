@@ -150,7 +150,7 @@ function pids() {
   });
 }
 async function ownedApplicationResources(){
-  return collectOwnedNativeResources({profile:env.XDG_CONFIG_HOME,application});
+  return collectOwnedNativeResources({profile:env.XDG_CONFIG_HOME,application,processGroup:driver?.pid});
 }
 async function freePort() {
   const server = createServer();
