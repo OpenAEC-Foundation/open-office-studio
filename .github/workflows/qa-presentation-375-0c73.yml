@@ -1,6 +1,15 @@
 name: Presentation 375 private UNO component preflight
 on:
+  push:
+    branches: [codex/presentation-375-uop-rectangle-fills-2026-11-23-0c73]
+    paths: [.github/workflows/qa-presentation-375-0c73.yml]
   workflow_dispatch:
+    inputs:
+      phase:
+        type: choice
+        description: Explicit diagnostic phase
+        default: components
+        options: [components]
 permissions:
   contents: read
   actions: read
