@@ -103,7 +103,17 @@ try {
    }
    $buttons=@($fields | Where-Object { $_.Current.ProcessId -eq $OwnedPid -and $_.Current.AutomationId -eq '1' -and $_.Current.Name -match '^(Save|Opslaan)$' -and $_.Current.IsEnabled })
    if ($buttons.Count -ne 1) { throw 'BLOCKED: unique actual native Save button unavailable' }
-   $buttons[0].GetCurrentPattern([Windows.Automation.InvokePattern]::Pattern).Invoke()
+   $invoke=$null
+   if ($buttons[0].TryGetCurrentPattern([Windows.Automation.InvokePattern]::Pattern,[ref]$invoke)) {
+     $invoke.Invoke(); $report.saveMethod='owned-native-Save-InvokePattern'
+   } else {
+     [uint32]$foregroundPid=0
+     $null=[StandaloneWindowsNative]::GetWindowThreadProcessId([StandaloneWindowsNative]::GetForegroundWindow(),[ref]$foregroundPid)
+     if ($foregroundPid -ne $OwnedPid) { throw 'BLOCKED: native Save lost OS foreground ownership' }
+     # Standard dialog's verified Save button is the default action. Enter is
+     # an actual user key; the independent real file remains mandatory.
+     [Windows.Forms.SendKeys]::SendWait('{ENTER}'); $report.saveMethod='actual-Enter-owned-native-Save-dialog'
+   }
    $report.nativeSaveInvoked=$true; $report.pathReadbackMatches=$true; $report.target=$Target
  } elseif ($Action -eq 'Close') {
    $null=[StandaloneWindowsNative]::PostMessage($handle,0x0010,[IntPtr]::Zero,[IntPtr]::Zero)
