@@ -1,0 +1,331 @@
+{
+  "scope": "SDW StarWriter3.1 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/sdw31-qa-2026-11-23-e0d7",
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "firstPublicationCommit": "f471c55378290fb8dc3571c74cc6abe90d81c46c",
+    "path": "writerperfect/qa/unit/data/writer/libstaroffice/pass/Writer_3.1.sdw",
+    "filename": "Writer_3.1.sdw",
+    "bytes": 10752,
+    "blob": "0884942a4c861019bcaea5841742b3726be4ef31",
+    "sha256": "dafed6b2d84c531f6c1230ba024e5fe3083597b8a8905486c607ebe363785e69",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libstaroffice/pass/Writer_3.1.sdw",
+    "upstream": {
+      "repository": "https://github.com/fosnola/libstaroffice",
+      "commit": "94647518b5060456ace4ea724cd157582c059501",
+      "path": "regression/Text3.1/testText1.sdw",
+      "blob": "0884942a4c861019bcaea5841742b3726be4ef31",
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Text3.1/testText1.sdw"
+    },
+    "license": "Upstream project distribution MPL 2.0 / LGPLv2+; bundled COPYING.MPL and COPYING.LGPL retained, no per-fixture override found",
+    "licenseScope": "Repository-distributed original regression fixture; no CC0 or independent per-file license grant is asserted",
+    "notices": [
+      {
+        "path": "COPYING.MPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.MPL",
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.LGPL",
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "README",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/README",
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      }
+    ],
+    "coverageLimit": "One genuine StarWriter3.1 SW3HDR document; bounded native paragraph sequence/empty paragraphs/explicit list levels and edit preservation. Native section names are inventoried, not accepted as DOCX named-section equivalence. Full style, list numbering labels/restart rules, columns/page geometry, OLE/macros, rendering and other SDW versions remain outside acceptance."
+  },
+  "sourceOracle": "native-source-oracle.json",
+  "runs": {
+    "initial": {
+      "id": 45188793344,
+      "harness": "7c9692437797ed2cc213dcc97a1597cd39b30e81",
+      "sourceJob": 137741311336,
+      "browserJob": 137741458604,
+      "runtimeJob": 137741458710,
+      "source": "success",
+      "negativeBrowserFunctions": "success",
+      "runtime": "failure at initial XML checker; actual verified conversion completed"
+    },
+    "replay": {
+      "id": 45189566903,
+      "harness": "9e5a85c1d8ae82defdaec1a793a93ead31171af0",
+      "result": "failure of strict original-source paragraph-count assertion after real Word engine stages completed",
+      "runtimeReexecuted": false,
+      "convertedInputReusedFromVerifiedInitialZip": true,
+      "job": 137744015271
+    }
+  },
+  "runtimeBinding": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/sdw31-runtime-input/private",
+    "program": "/home/runner/work/open-office-studio/open-office-studio/.local/sdw31-runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "runtimeReceipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test"
+  },
+  "converter": {
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "outputSha256": "541d1198608d43f6e35fb067ca6969bad53d9d5674b60b9c180bd7a8ba81823a",
+    "outputBytes": 14500,
+    "sourceUnchanged": true,
+    "exitCode": 0
+  },
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "sourceQualificationPassed": true,
+  "originalTextAndExplicitListLevelsPreserved": true,
+  "strictSourceAcceptance": false,
+  "fullFormatAcceptance": false,
+  "downstreamEnginePassed": true,
+  "artifacts": [
+    {
+      "id": 14824513431,
+      "name": "sdw31-runtime-result",
+      "bytes": 45586,
+      "fullZipSha256": "11d5ca07b327e446e987e92b0e04f8af2977fa0048999fea66a4e01f5e96a6be",
+      "verifiedAgainstOfficialMetadata": true
+    },
+    {
+      "id": 14823984298,
+      "name": "sdw31-engine-replay-result",
+      "bytes": 69186,
+      "fullZipSha256": "1b733fc98968fa27d899964c770f22d496d0d78b12d1387857e2d12a20c804dc",
+      "verifiedAgainstOfficialMetadata": true
+    },
+    {
+      "id": 14823759655,
+      "name": "sdw31-browser-limit",
+      "bytes": 1726,
+      "fullZipSha256": "0eeb8c0c9efe0b3adc9ce4be996603281d644744302f0ce5a18779e6c9e2ae5f",
+      "verifiedAgainstOfficialMetadata": true
+    }
+  ],
+  "stages": [
+    {
+      "file": "converted.docx",
+      "bytes": 14500,
+      "sha256": "541d1198608d43f6e35fb067ca6969bad53d9d5674b60b9c180bd7a8ba81823a",
+      "originalParagraphSequenceAndSpacesPreserved": true,
+      "explicitListLevelsAndReferencesVerified": {
+        "9": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 1,
+        "19": 3,
+        "20": 0,
+        "22": 0,
+        "23": 0,
+        "25": 0,
+        "26": 0
+      },
+      "nativeTextNodes": 27,
+      "physicalDocxParagraphs": 28,
+      "pureSectionPropertyCarrierIndices": [
+        27
+      ],
+      "strictOriginalParagraphCountAccepted": false,
+      "renderedLayoutOrExtraPageAccepted": false
+    },
+    {
+      "file": "saved.docx",
+      "bytes": 14140,
+      "sha256": "9edb87ecd5358fec64bd0544ee4e4b03eec16bd6f6478b5cb8a20862d6c37e5b",
+      "originalParagraphSequenceAndSpacesPreserved": true,
+      "explicitListLevelsAndReferencesVerified": {
+        "9": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 1,
+        "19": 3,
+        "20": 0,
+        "22": 0,
+        "23": 0,
+        "25": 0,
+        "26": 0
+      },
+      "nativeTextNodes": 27,
+      "physicalDocxParagraphs": 28,
+      "pureSectionPropertyCarrierIndices": [
+        27
+      ],
+      "strictOriginalParagraphCountAccepted": false,
+      "renderedLayoutOrExtraPageAccepted": false
+    },
+    {
+      "file": "reopened-saved.docx",
+      "bytes": 14139,
+      "sha256": "0a705dbeae6c6f33ab983fbb2c74df2d10a0b85729dd565141bb6641b3f94c5c",
+      "originalParagraphSequenceAndSpacesPreserved": true,
+      "explicitListLevelsAndReferencesVerified": {
+        "9": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 1,
+        "19": 3,
+        "20": 0,
+        "22": 0,
+        "23": 0,
+        "25": 0,
+        "26": 0
+      },
+      "nativeTextNodes": 27,
+      "physicalDocxParagraphs": 28,
+      "pureSectionPropertyCarrierIndices": [
+        27
+      ],
+      "strictOriginalParagraphCountAccepted": false,
+      "renderedLayoutOrExtraPageAccepted": false
+    }
+  ],
+  "initialDriverCorrection": "pPr/tabs/tab custom tab-stop definitions were incorrectly counted as run text; corrected to visible run descendants. Initial failed artifact retained as history, not a product tab-insertion bug.",
+  "remainingObservation": "Native 27 text nodes versus 28 physical DOCX paragraphs; index27 is an empty pure pPr/sectPr carrier at all three stages. Not normalized away for strict source acceptance. No independently confirmed wrong layout/extra page or data loss.",
+  "issueDisposition": "No new issue: SDW/StarWriter open+closed searches returned no scoped issue, but carrier normative/layout significance is unresolved, so no product bug invented.",
+  "limits": [
+    "One genuine StarWriter3.1 SW3HDR document; bounded native paragraph sequence/empty paragraphs/explicit list levels and edit preservation. Native section names are inventoried, not accepted as DOCX named-section equivalence. Full style, list numbering labels/restart rules, columns/page geometry, OLE/macros, rendering and other SDW versions remain outside acceptance.",
+    "CLI adapter/production helper and real Word sessions in Linux CI; no new native Windows/Linux/macOS, hosted-browser UI, Tauri IPC, installer or visual acceptance.",
+    "Nonfatal Vite WebSocket port24678 warning appeared during the engine helper, but actual edit/save/reopen completed; it is not a product/native reproduction.",
+    "Private Office runtime downloaded/verified only in initial run; replay verifies original small result ZIP and reuses exact converted bytes/receipts at the same P2 source point.",
+    "Final evidence changes do not alter product or tested engine/oracle code."
+  ],
+  "offlineAnalysis": {
+    "script": "scripts/qa-sdw31/analyse.py",
+    "executedOn": "Windows static Python only; no Office/Word runtime",
+    "passed": true,
+    "report": "offline-analysis.json"
+  }
+}

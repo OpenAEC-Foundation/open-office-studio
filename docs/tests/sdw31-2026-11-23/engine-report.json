@@ -1,0 +1,213 @@
+{
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "9e5a85c1d8ae82defdaec1a793a93ead31171af0",
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "firstPublicationCommit": "f471c55378290fb8dc3571c74cc6abe90d81c46c",
+    "path": "writerperfect/qa/unit/data/writer/libstaroffice/pass/Writer_3.1.sdw",
+    "filename": "Writer_3.1.sdw",
+    "bytes": 10752,
+    "blob": "0884942a4c861019bcaea5841742b3726be4ef31",
+    "sha256": "dafed6b2d84c531f6c1230ba024e5fe3083597b8a8905486c607ebe363785e69",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libstaroffice/pass/Writer_3.1.sdw",
+    "upstream": {
+      "repository": "https://github.com/fosnola/libstaroffice",
+      "commit": "94647518b5060456ace4ea724cd157582c059501",
+      "path": "regression/Text3.1/testText1.sdw",
+      "blob": "0884942a4c861019bcaea5841742b3726be4ef31",
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Text3.1/testText1.sdw"
+    },
+    "license": "Upstream project distribution MPL 2.0 / LGPLv2+; bundled COPYING.MPL and COPYING.LGPL retained, no per-fixture override found",
+    "licenseScope": "Repository-distributed original regression fixture; no CC0 or independent per-file license grant is asserted",
+    "notices": [
+      {
+        "path": "COPYING.MPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.MPL",
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.LGPL",
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "README",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/README",
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      }
+    ],
+    "coverageLimit": "One genuine StarWriter3.1 SW3HDR document; bounded native paragraph sequence/empty paragraphs/explicit list levels and edit preservation. Native section names are inventoried, not accepted as DOCX named-section equivalence. Full style, list numbering labels/restart rules, columns/page geometry, OLE/macros, rendering and other SDW versions remain outside acceptance."
+  },
+  "checks": [
+    "No-desktop SDW opening rejects with a concrete conversion limitation and DOCX alternative.",
+    "Real private converter/production open policy and strict original-source XML result recorded; downstream engine checks do not accept conversion discrepancies.",
+    "Actual production-patched Word engine opens source-derived text, inserts a test prefix and restores exact text through Undo/Redo.",
+    "Modern DOCX save/fresh reopen/second save preserve the actual downstream edited paragraph vector; source XML/list discrepancies stay in separate strict reports. Original SDW unchanged."
+  ],
+  "limits": [
+    "One genuine StarWriter3.1 SW3HDR document; bounded native paragraph sequence/empty paragraphs/explicit list levels and edit preservation. Native section names are inventoried, not accepted as DOCX named-section equivalence. Full style, list numbering labels/restart rules, columns/page geometry, OLE/macros, rendering and other SDW versions remain outside acceptance.",
+    "Private converter adapter + production opening helper/Word engine, not native GUI/Tauri IPC or installer acceptance",
+    "Browser boundary is a negative production-function check in Node, not hosted UI",
+    "No Windows/macOS runtime, font rendering or visual fidelity acceptance"
+  ],
+  "browserLimit": {
+    "method": "Real production functions in Linux Node with empty window, no Tauri bridge mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This SDW file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as DOCX or RTF, then open that copy."
+  },
+  "conversionPhase": {
+    "method": "Reused actual converter/complete original runtime-verifier receipts from the same exact unchanged P2 product; no new Office execution",
+    "artifactId": 14824513431,
+    "run": 45188793344,
+    "harness": "7c9692437797ed2cc213dcc97a1597cd39b30e81",
+    "zipBytes": 45586,
+    "fullZipSha256": "11d5ca07b327e446e987e92b0e04f8af2977fa0048999fea66a4e01f5e96a6be",
+    "convertedSha256": "541d1198608d43f6e35fb067ca6969bad53d9d5674b60b9c180bd7a8ba81823a",
+    "originalSourceVerified": true
+  },
+  "strictInitialSourceAcceptance": false,
+  "initialSourceMismatches": [
+    {
+      "kind": "paragraph-sequence",
+      "expected": [
+        "Col 1",
+        "",
+        "Col 2",
+        "",
+        "",
+        "text1",
+        "",
+        "standart",
+        "standart",
+        "list 2",
+        "",
+        "Text2   azeee",
+        "",
+        "Text2   azeee",
+        "",
+        "List",
+        "same(IV)",
+        "new list",
+        "list level 2",
+        "list level 4",
+        "",
+        "normal",
+        "",
+        "",
+        "List (without bullet)",
+        "",
+        "standart"
+      ],
+      "actual": [
+        "Col 1",
+        "",
+        "Col 2",
+        "",
+        "",
+        "text1",
+        "",
+        "standart",
+        "standart",
+        "list 2",
+        "",
+        "Text2   azeee",
+        "",
+        "Text2   azeee",
+        "",
+        "List",
+        "same(IV)",
+        "new list",
+        "list level 2",
+        "list level 4",
+        "",
+        "normal",
+        "",
+        "",
+        "List (without bullet)",
+        "",
+        "standart",
+        ""
+      ]
+    }
+  ],
+  "downstreamBaselineRole": "Actual converted XML paragraph vector, including any observed extra carrier; independent original-source acceptance remains separate and strict",
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "editedParagraphs": [
+    "QA_SDW31_23NOV Col 1",
+    "",
+    "Col 2",
+    "",
+    "",
+    "text1",
+    "",
+    "standart",
+    "standart",
+    "list 2",
+    "",
+    "Text2   azeee",
+    "",
+    "Text2   azeee",
+    "",
+    "List",
+    "same(IV)",
+    "new list",
+    "list level 2",
+    "list level 4",
+    "",
+    "normal",
+    "",
+    "",
+    "List (without bullet)",
+    "",
+    "standart",
+    ""
+  ],
+  "downstreamEnginePassed": true,
+  "strictSourceAcceptance": false,
+  "passed": false,
+  "error": {
+    "name": "AssertionError",
+    "message": "Independent native source paragraph/list oracle still differs; downstream engine success is not source acceptance\n\nfalse !== true\n",
+    "stack": "AssertionError [ERR_ASSERTION]: Independent native source paragraph/list oracle still differs; downstream engine success is not source acceptance\n\nfalse !== true\n\n    at file:///home/runner/work/open-office-studio/open-office-studio/scripts/qa-sdw31/engine.mjs:112:12"
+  }
+}
