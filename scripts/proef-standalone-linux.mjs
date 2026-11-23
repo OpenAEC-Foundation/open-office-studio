@@ -942,20 +942,48 @@ async function packageCase(pkg) {
       await click(".email-editor");
       await type("Synthetic local draft body, never sent.");
       await chord("s");
-      await wait(
-        () =>
-          fixture.messages.Drafts.some((m) =>
-            m.raw.includes(Buffer.from(marker)),
+      const draftExists = () =>
+        fixture.messages.Drafts.some((m) =>
+          m.raw.includes(Buffer.from(marker)),
+        );
+      try {
+        await wait(draftExists, "Native IMAP APPEND stores synthetic draft");
+        report.keyboardDraftSave = { status: "passed" };
+      } catch (error) {
+        if (process.env.STANDALONE_EMAIL_DRAFT_BUTTON_DIAGNOSTIC !== "true")
+          throw error;
+        report.keyboardDraftSave = {
+          status: "failed",
+          error: String(error.stack ?? error),
+          nativeFocus: await observe(
+            "const e=document.activeElement,d=e?.closest('[role=dialog]');return {tag:e?.tagName,label:e?.getAttribute('aria-label'),dialog:d?{role:d.getAttribute('role'),modal:d.getAttribute('aria-modal'),label:d.getAttribute('aria-label')}:null}",
           ),
-        "Native IMAP APPEND stores synthetic draft",
-      );
+          commandsBeforeButton: [...fixture.commands],
+        };
+        await screenshot("keyboard-save-failure-before-button.png");
+        report.error = String(error.stack ?? error);
+        report.pending.push(
+          "Documented Ctrl+S failed in the actual modal composer; native Draft-button control cannot turn this keyboard gate green",
+        );
+        await clickLabel("Draft");
+        await wait(
+          draftExists,
+          "Differential actual Draft button must issue native IMAP APPEND",
+        );
+        report.draftButtonControl = {
+          status: "APPEND verified; full reopen pending",
+          changesKeyboardVerdict: false,
+        };
+      }
       assert.ok(
         fixture.messages.Drafts.some((m) =>
           m.raw.includes(Buffer.from("Synthetic local draft body")),
         ),
       );
       report.checks.push(
-        "Own profile + OS credential, native composer, keyboard Ctrl+S and synthetic loopback IMAP APPEND verified",
+        report.keyboardDraftSave?.status === "failed"
+          ? "Diagnostic only: own profile + real OS credential + native composer Draft BUTTON causes actual synthetic IMAP APPEND; Ctrl+S remains failed"
+          : "Own profile + OS credential, native composer, keyboard Ctrl+S and synthetic loopback IMAP APPEND verified",
       );
     }
     await screenshot("saved.png");
@@ -1064,6 +1092,9 @@ async function packageCase(pkg) {
         fixture.messages.Drafts.find((m) => m.raw.includes(Buffer.from(marker)))
           .raw,
       );
+      if (report.draftButtonControl)
+        report.draftButtonControl.status =
+          "passed actual APPEND, body bytes, full app quit/new PID and native Drafts retrieval";
     }
     if (doc && report.savedSha256)
       assert.equal(
@@ -1113,7 +1144,8 @@ async function packageCase(pkg) {
     report.checks.push(
       "Full process exit, fresh-process reopen, own-profile persistence and no suite profile verified",
     );
-    report.status = "passed";
+    report.status =
+      report.keyboardDraftSave?.status === "failed" ? "failed" : "passed";
   } catch (error) {
     report.status = "failed";
     report.error = String(error.stack || error);

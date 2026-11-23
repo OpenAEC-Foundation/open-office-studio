@@ -29,6 +29,7 @@ jobs:
       reuse: ${{ steps.go.outputs.reuse }}
       inputrun: ${{ steps.go.outputs.inputrun }}
       types: ${{ steps.go.outputs.types }}
+      emailbutton: ${{ steps.go.outputs.emailbutton }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -54,7 +55,8 @@ jobs:
           assert.ok(Array.isArray(apps)&&apps.length>0&&apps.length<=6&&new Set(apps).size===apps.length&&apps.every(a=>allowed.includes(a)));
           const reuse=process.env.INPUT_REUSE||String(go.reusePreparedRun||'');if(reuse)assert.match(reuse,/^\d+$/);
           const types=go.packageTypes||['appimage','deb'];assert.ok(Array.isArray(types)&&types.length>0&&new Set(types).size===types.length&&types.every(t=>['appimage','deb'].includes(t)));
-          appendFileSync(process.env.GITHUB_OUTPUT,`apps=${JSON.stringify(apps)}\nreuse=${reuse}\ninputrun=${reuse||process.env.GITHUB_RUN_ID}\ntypes=${JSON.stringify(types)}\n`);
+          const emailbutton=go.emailDraftButtonDiagnostic===true;if(emailbutton)assert.deepEqual(apps,['email']);
+          appendFileSync(process.env.GITHUB_OUTPUT,`apps=${JSON.stringify(apps)}\nreuse=${reuse}\ninputrun=${reuse||process.env.GITHUB_RUN_ID}\ntypes=${JSON.stringify(types)}\nemailbutton=${emailbutton}\n`);
           JS
   prepare:
     needs: request
@@ -143,6 +145,7 @@ jobs:
       STANDALONE_APP: ${{ matrix.app }}
       STANDALONE_INPUT_RUN: ${{ needs.request.outputs.inputrun }}
       STANDALONE_PACKAGE_TYPES: ${{ needs.request.outputs.types }}
+      STANDALONE_EMAIL_DRAFT_BUTTON_DIAGNOSTIC: ${{ needs.request.outputs.emailbutton }}
     steps:
       - uses: actions/checkout@v4
         with:
