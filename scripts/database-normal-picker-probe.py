@@ -18,9 +18,11 @@ import pyatspi
 
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='posix'
 ROOT=Path('.local/standalone-linux-results/database').resolve()
+NODE=shutil.which('node')
+assert NODE, 'Explicit available QA Node interpreter required'
 
-def cmd(*args,env=None):
-    return subprocess.check_output(args,env=env,text=True,timeout=10).strip()
+def cmd(*args,env=None,timeout=10):
+    return subprocess.check_output(args,env=env,text=True,timeout=timeout).strip()
 
 def sha(path):
     h=hashlib.sha256()
@@ -197,7 +199,7 @@ for kind in ['appimage','deb']:
         proc=Path('/proc')/str(pid);raw=(proc/'stat').read_text();start=raw[raw.rindex(')')+2:].split()[19]
         directory=Path('.local/linux-p2-native')/f'database-normal-{kind}';directory.mkdir(parents=True,exist_ok=True)
         try:
-            cmd('node',str(Path(__file__).with_name('database-native-save-dialog.mjs')),str(pid),start,source['payloadExecutableSha256'],str(portal_proof),str(saved),str(portal_evidence),str(directory/'save-native-picker.png'),env=env)
+            cmd(NODE,str(Path(__file__).with_name('database-native-save-dialog.mjs')),str(pid),start,source['payloadExecutableSha256'],str(portal_proof),str(saved),str(portal_evidence),str(directory/'save-native-picker.png'),env=env,timeout=75)
         finally:
             if portal_evidence.is_file():case['nativeSaveProtocol']=json.loads(portal_evidence.read_text())
             if observer.poll() is None:observer.terminate()
