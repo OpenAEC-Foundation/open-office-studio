@@ -360,3 +360,26 @@ receipts/SDK/paint and actual DOCX contracts; Linux/Windows P5 audit is reported
 complete by integration. All older red receipts/raw data remain intact.
 P5 native STW packages/exports and their independent audits are still pending;
 the successful browser review is not native approval or full route closure.
+
+## P5 native intake status at 15:07 CET
+
+Official release metadata confirms Linux job137703365848 SUCCESS with
+installer artifact14824745492 (4444993178bytes, official ZIP SHA256
+c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5).
+Integration reports the one Linux preparation45188332685 successful and both
+Suite children sealed. Actual DEB runner45189806911/job137745078121 is running;
+the AppImage case stopped before app startup on an own-UID driver scan and
+is being corrected by its existing owner. No native STW exports have arrived.
+
+Windows job137703365803 still builds signed packages. Mac job137703365843 failed;
+integration's raw-log review places the failure in DMG creation (hdiutil Resource
+busy), after the Presentation app was signed/notarized. No Mac installer/native
+GO exists. Root handles any retry and new attempt binding; this chat does not
+start a build or take over either driver correction.
+
+`evidence/p5-native-status-20261123.json` separates directly read official
+metadata from coordinator-reported log/child evidence. The next independent
+step remains the unchanged source/field audit on real native exports with exact
+marker ` -- STW30 EDIT 2026-11-23`, package binding and original edit/new-PID
+reopen evidence. All three native STW acceptances and full route closure stay
+open. No own package download, GUI, CI or product edit was performed.

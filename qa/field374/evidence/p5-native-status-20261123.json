@@ -1,0 +1,65 @@
+{
+  "kind": "native-stw-point-in-time-status-not-acceptance",
+  "recordedAt": "2026-11-23T15:07:00+01:00",
+  "application": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "officialReleaseMetadataReadByThisChat": {
+    "run": 45177730188,
+    "attempt": 1,
+    "linux": {
+      "job": 137703365848,
+      "conclusion": "success",
+      "artifact": 14824745492,
+      "name": "uitgave-Linux",
+      "bytes": 4444993178,
+      "officialZipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+    },
+    "windows": {
+      "job": 137703365803,
+      "status": "in_progress",
+      "step": "Pakket bouwen (Windows, ondertekend)"
+    },
+    "macos": {
+      "job": 137703365843,
+      "conclusion": "failure",
+      "step": "Pakket bouwen (macOS, ondertekend en genotariseerd)"
+    }
+  },
+  "coordinatorReportedEvidenceNotIndependentlyReproducedHere": {
+    "linuxPrep": {
+      "run": 45188332685,
+      "qaPrefix": "86fe2d5c",
+      "conclusion": "success",
+      "suiteChildren": "DEB and AppImage sealed; existing owner received native GO"
+    },
+    "macFailure": "Presentation.app compiled/signed/notarized Accepted; subsequent DMG creation: hdiutil create failed - Resource busy. No released Mac installer/native GO.",
+    "appImageDriverBlocker": "Own-UID ownership scan failed before app startup reading /proc/1/environ (EACCES); owner handles the driver correction, no product failure established."
+  },
+  "officialNativeRunnerMetadataReadByThisChat": {
+    "run": 45189806911,
+    "deb": {
+      "job": 137745078121,
+      "status": "in_progress",
+      "step": "Actual DEB core368/369 and vertical362"
+    },
+    "appimage": {
+      "job": 137745078000,
+      "conclusion": "failure",
+      "step": "Actual AppImage own preflight and real missing-helper feedback"
+    }
+  },
+  "nativeSTWExportsReceived": [],
+  "nativeSTWPasses": [],
+  "requiredNativeMarker": " -- STW30 EDIT 2026-11-23",
+  "nextAction": "Audit genuine retained native DOCX exports with the existing audit-docx.mjs source/field contract after the coordinator supplies exact package/source/job/attempt/hash binding and original edit/reopen evidence.",
+  "limits": [
+    "No installer downloaded or native GUI operated by this chat.",
+    "No product/driver edits, new CI, app build or speculative bug claim.",
+    "Build metadata and browser passes do not establish native STW acceptance.",
+    "All three native platform acceptances remain open; source fixture has zero tables.",
+    "Previously retained failures and browser receipts remain unchanged."
+  ]
+}
