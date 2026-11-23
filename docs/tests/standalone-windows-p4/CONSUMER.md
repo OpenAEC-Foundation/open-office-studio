@@ -8,7 +8,11 @@ Windowsjob137703365803, publication disabled. No original official artifact/go
 exists yet. Config remains `ready:false` / `officialMetadataGo:false`; old P4
 bytes are invalid. The directory/workflow/config filenames retain their earlier
 P4 harness names for continuity; authoritative source identities and actual child
-artifact names are now P5. Root must supply original official P5 metadata/go.
+artifact names are now P5. Integration subsequently granted conditional native
+QA go: once this exact Windows job succeeds and its required signing/package/
+runtime gates and unique official artifact metadata/times agree, this owner may
+close the actual ID/ZIP digest/size without another acknowledgement. No new
+source, product build, main, tag or publication is authorized.
 
 Only this preparation owns the canonical Windows ZIP download. Integration
 reserved a separate Suite transfer for750b; its native/core scope is not ours.
@@ -21,8 +25,8 @@ all historical host/old-Writer evidence remain untouched.
 Product source `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 `e30879fd772871e690847c061ef66e6b81808a05`,2026.48.1.
 Official Release producer45177730188, Windowsjob137703365803, attempt1,
-artifact name `uitgave-Windows`. Root will provide original official artifact
-metadata/go after this own job succeeds. Until then the config is `ready:false`
+artifact name `uitgave-Windows`. Fetch original official artifact metadata
+after this own job succeeds under integration's conditional go. Until then the config is `ready:false`
 and `officialMetadataGo:false`; null artifact identities are blocking, not wildcards.
 The unrelated Mac/Linux jobs do not gate a successfully completed Windows job.
 
@@ -86,7 +90,7 @@ child artifact's harness SHA directly to the product commit. The original child
 `package.json` excludes the two post-upload fields; use its raw-byte SHA rather
 than incorrectly comparing its entire object to the augmented final descriptor.
 
-Ten focused source/input gate contracts and Python/Node/PowerShell syntax
+Thirteen focused source/input gate contracts and Python/Node/PowerShell syntax
 checks pass without app/GUI execution. This preparation is not native acceptance.
 Email uses actual compose/Ctrl+S, independent received MIME body/subject, full
 quit/new-process reopen and synthetic loopback-only data; SMTP sending is disabled.

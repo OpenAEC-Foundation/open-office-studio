@@ -30,6 +30,7 @@ with zipfile.ZipFile(archive) as z:
     assert receipt['applicationCommit']==APP and receipt['applicationTree']==TREE
     assert receipt['artifactRun']==RUN and receipt['platformJobId']==JOB and receipt['sourceAttempt']==1
     assert receipt['artifactId']==plan['artifactId'] and receipt['archiveSha256']==plan['archiveSha256']
+    assert receipt['archiveBytes']==plan['archiveBytes']
     assert receipt['preparerRun']==run and receipt['preparerHarness']==harness
     assert a['key']==app and a['executable']==f'open-{app}-studio.exe' and a['identifier']==f'org.openaec.{app}-studio'
     assert a['signature']=='valid' and a['timestampRequired'] is True

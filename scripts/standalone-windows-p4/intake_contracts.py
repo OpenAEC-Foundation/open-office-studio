@@ -3,16 +3,18 @@ import copy
 from pathlib import Path
 import json
 import unittest
-from intake import APP,TREE,RUN,JOB,validate,validate_source
+from intake import APP,TREE,RUN,JOB,WINDOWS_GATES,validate,validate_source
 
 class IntakeContracts(unittest.TestCase):
     def setUp(self):
         self.plan=json.loads(Path('.github/standalone-windows-p4.json').read_bytes())
-        self.plan.update(ready=True,officialMetadataGo=True,superseded=False,artifactId=123,archiveSha256='a'*64)
-        self.run=dict(id=RUN,head_sha=APP,run_attempt=1,status='in_progress',conclusion=None)
-        self.job=dict(id=JOB,run_id=RUN,run_attempt=1,status='completed',conclusion='success')
+        self.plan.update(ready=True,officialMetadataGo=True,superseded=False,artifactId=123,archiveSha256='a'*64,archiveBytes=1234)
+        self.run=dict(id=RUN,head_sha=APP,run_attempt=1,status='in_progress',conclusion=None,created_at='2026-11-23T12:00:00Z')
+        steps=[dict(name=name,status='completed',conclusion='success') for name in WINDOWS_GATES]
+        steps.append(dict(name='Pakket bouwen (onondertekend)',status='completed',conclusion='skipped'))
+        self.job=dict(id=JOB,run_id=RUN,run_attempt=1,status='completed',conclusion='success',started_at='2026-11-23T12:01:00Z',completed_at='2026-11-23T13:01:00Z',steps=steps)
         self.commit=dict(sha=APP,tree=dict(sha=TREE))
-        self.artifact=dict(id=123,name='uitgave-Windows',expired=False,digest='sha256:'+'a'*64,workflow_run=dict(id=RUN,head_sha=APP))
+        self.artifact=dict(id=123,name='uitgave-Windows',expired=False,digest='sha256:'+'a'*64,size_in_bytes=1234,created_at='2026-11-23T13:00:00Z',updated_at='2026-11-23T13:00:30Z',workflow_run=dict(id=RUN,head_sha=APP))
     def check(self):validate_source(self.plan,self.run,self.job,self.commit,self.artifact)
     def test_unfrozen_preparation_is_not_acceptance(self):
         p=copy.deepcopy(self.plan);p.update(ready=False,officialMetadataGo=False,artifactId=None,archiveSha256=None);validate(p)
@@ -35,6 +37,15 @@ class IntakeContracts(unittest.TestCase):
         with self.assertRaises(AssertionError):self.check()
     def test_missing_official_go_rejected(self):
         self.plan['officialMetadataGo']=False
+        with self.assertRaises(AssertionError):self.check()
+    def test_skipped_runtime_probe_is_not_successful_native_input(self):
+        self.job['steps'][4]['conclusion']='skipped'
+        with self.assertRaises(AssertionError):self.check()
+    def test_wrong_official_archive_size_rejected(self):
+        self.artifact['size_in_bytes']+=1
+        with self.assertRaises(AssertionError):self.check()
+    def test_archive_created_outside_own_job_rejected(self):
+        self.artifact['created_at']='2026-11-23T11:59:00Z'
         with self.assertRaises(AssertionError):self.check()
     def test_superseded_candidate_cannot_be_reactivated_by_old_artifact_metadata(self):
         self.plan['superseded']=True

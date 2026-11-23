@@ -28,6 +28,7 @@ assert.equal(receipt.applicationCommit,'b696ab86bd1c128729a079b68c0082e6df3d36a5
 assert.equal(receipt.applicationTree,'e30879fd772871e690847c061ef66e6b81808a05');
 assert.equal(receipt.version,'2026.48.1');assert.equal(receipt.artifactRun,45177730188);assert.equal(receipt.platformJobId,137703365803);assert.equal(receipt.sourceAttempt,1);
 assert.equal(receipt.artifactId,approved.artifactId);assert.equal(receipt.archiveSha256,approved.archiveSha256);
+assert.equal(receipt.archiveBytes,approved.archiveBytes);
 assert.equal(receipt.preparerRun,Number(process.env.OOS_QA_PREPARER_RUN));assert.equal(receipt.preparerHarness,process.env.OOS_QA_PREPARER_HARNESS);
 assert.equal(app.signature,'valid');assert.equal(app.timestampRequired,true);
 assert.equal(app.key,process.env.OOS_QA_APP); assert.match(receipt.applicationCommit,/^[a-f0-9]{40}$/); assert.match(receipt.applicationTree,/^[a-f0-9]{40}$/);

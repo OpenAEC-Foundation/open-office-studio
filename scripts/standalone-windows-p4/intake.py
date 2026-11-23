@@ -1,5 +1,6 @@
 """One official P5 ZIP -> seven unchanged products; six app-only native hosts."""
 import base64
+from datetime import datetime
 import hashlib
 import json
 import os
@@ -17,6 +18,13 @@ APP='b696ab86bd1c128729a079b68c0082e6df3d36a5'
 TREE='e30879fd772871e690847c061ef66e6b81808a05'
 RUN=45177730188
 JOB=137703365803
+WINDOWS_GATES=(
+    'Pakket bouwen (Windows, ondertekend)',
+    'Authenticode controleren (installer, programma en uninstaller)',
+    'Windows-installer werkelijk uitpakken en controleren',
+    'Meet- en inhoudscontrole voor de meegeleverde runtime',
+    'Standaardinstaller controleren met uitsluitend de private runtime',
+)
 
 def digest(path):
     with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
@@ -35,6 +43,7 @@ def validate(plan):
     if plan['ready']:
         assert not plan.get('superseded',False),'Candidate superseded/frozen by integration'
         assert type(plan['artifactId']) is int and plan['artifactId']>0
+        assert type(plan['archiveBytes']) is int and plan['archiveBytes']>0
         assert re.fullmatch('[0-9a-f]{64}',plan['archiveSha256'])
         assert plan['officialMetadataGo'] is True
 
@@ -46,7 +55,16 @@ def validate_source(plan,run,job,commit,artifact):
     assert run['run_attempt']==job['run_attempt']==1
     assert artifact['id']==plan['artifactId'] and artifact['name']==plan['artifactName'] and not artifact['expired']
     assert artifact['digest']=='sha256:'+plan['archiveSha256']
+    assert artifact['size_in_bytes']==plan['archiveBytes']
     assert artifact['workflow_run']['id']==RUN and artifact['workflow_run']['head_sha']==APP
+    for name in WINDOWS_GATES:
+        steps=[s for s in job['steps'] if s['name']==name]
+        assert len(steps)==1 and steps[0]['status']=='completed' and steps[0]['conclusion']=='success',name
+    unsigned=[s for s in job['steps'] if s['name']=='Pakket bouwen (onondertekend)']
+    assert len(unsigned)==1 and unsigned[0]['conclusion']=='skipped'
+    def when(value):return datetime.fromisoformat(value.replace('Z','+00:00'))
+    assert when(run['created_at'])<=when(job['started_at'])<=when(artifact['created_at'])<=when(job['completed_at'])
+    assert when(artifact['updated_at'])>=when(artifact['created_at'])
 
 def payload(installer,executable):
     seven=shutil.which('7z') or shutil.which('7z.exe');assert seven
@@ -83,6 +101,10 @@ def main():
     run=api(f'actions/runs/{RUN}');job=api(f'actions/jobs/{JOB}');commit=api(f'git/commits/{APP}')
     artifact=api(f"actions/artifacts/{plan['artifactId']}")
     validate_source(plan,run,job,commit,artifact)
+    all_artifacts=api(f'actions/runs/{RUN}/artifacts?per_page=100')
+    assert all_artifacts['total_count']<=100
+    canonical=[a for a in all_artifacts['artifacts'] if a['name']==plan['artifactName'] and not a['expired']]
+    assert len(canonical)==1 and canonical[0]['id']==artifact['id'],'Official parent name is not unique'
     tree=api(f'git/trees/{TREE}?recursive=1');assert tree['sha']==TREE and not tree['truncated']
     studio_entry=next(e for e in tree['tree'] if e['path']=='assets/studios.json' and e['type']=='blob')
     studio_blob=api('git/blobs/'+studio_entry['sha']);studio_bytes=base64.b64decode(studio_blob['content'])
