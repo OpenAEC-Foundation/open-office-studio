@@ -1,0 +1,27 @@
+name: STC legacy template source oracle
+on:
+  push:
+    branches: [codex/stc-template-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-stc-template/**
+      - .github/workflows/qa-stc-template-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify genuine legacy source and derive independent expectations
+        run: python scripts/qa-stc-template/oracle.py source
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stc-source-oracle
+          path: .local/stc-qa/
+          include-hidden-files: true
+          if-no-files-found: error
