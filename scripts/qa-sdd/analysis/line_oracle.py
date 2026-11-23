@@ -33,7 +33,7 @@ for slide in corrected["slides"]:
         points=[[i32(path,p),i32(path,p+4)] for p in (12,20)]
         x=min(p[0] for p in points);y=min(p[1] for p in points)
         right=max(p[0] for p in points);bottom=max(p[1] for p in points)
-        previous=leaf["rectEMU"]
+        previous=leaf.get("cachedPaintRectEMU",leaf["rectEMU"])
         actual={"x":x*360,"y":y*360,"width":(right-x)*360,"height":(bottom-y)*360}
         leaf["cachedPaintRectEMU"]=previous
         leaf["rectEMU"]=actual
