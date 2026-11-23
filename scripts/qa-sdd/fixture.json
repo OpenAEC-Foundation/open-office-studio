@@ -1,0 +1,81 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/fosnola/libstaroffice",
+    "commit": "94647518b5060456ace4ea724cd157582c059501",
+    "path": "regression/Pres5/go-oox-5.sdd",
+    "filename": "go-oox-5.sdd",
+    "bytes": 48640,
+    "blob": "62193842f97ada53a27077c6460ae490b6b04271",
+    "sha256": "6c1558356cea834a4fb42c13847c5ac2e8f6037965c3cf0a1797ed434417c72b",
+    "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd",
+    "classification": "CFB CompObj Presentation / StarImpress 5.0; native DrMd17 and presentation pages",
+    "license": "Upstream project distribution MPL 2.0 / LGPLv2+; bundled COPYING.MPL and COPYING.LGPL retained, no per-fixture override found",
+    "licenseScope": "Repository-distributed original regression fixture; no CC0 or independent per-file license grant is asserted",
+    "reference": {
+      "path": "regression/Pres5/go-oox-5.sdd.raw",
+      "blob": "8320214d8d0199e62f735a2445fa0167f354bb2e",
+      "sha256": "4764e3004a855343001e26482acc4abf6d1395b0ed2c78f83ff967f6c8204342",
+      "bytes": 36253,
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd.raw",
+      "role": "Historical upstream regression reference only; may share libstaroffice with the tested converter. Text bytes, page count/master associations and dimensions independently verified in original native CFB records."
+    },
+    "notices": [
+      {
+        "path": "COPYING.MPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.MPL",
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.LGPL",
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "README",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/README",
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      }
+    ],
+    "parserProvenance": {
+      "path": "src/lib/StarObjectModel.cxx",
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/src/lib/StarObjectModel.cxx",
+      "blob": "3ddcdba626fb963abfbeecf74cfe9aa22e352d20",
+      "relevantFunctions": [
+        "readSdrPage",
+        "readSdrMPageDesc",
+        "updatePageSpans"
+      ],
+      "role": "Read-only native record-layout reference, not executed as a second converter"
+    }
+  },
+  "engine": {
+    "package": "@betteroffice/pptx",
+    "version": "0.5.1",
+    "tarball": "https://registry.npmjs.org/@betteroffice/pptx/-/pptx-0.5.1.tgz",
+    "integrity": "sha512-2Rn51fx1GCDfcus1Ly2giDk7CnhLmWjJFPq3QL2DiBAF2BF+A5R9PdRDHYX5gQm0sfWK97C2osTmR3/klJKF2Q==",
+    "tarSha256": "7c4dd44e35072c7314c46f523566ce4b049a4f8a27bbfa588becc2df2eb953d3",
+    "entries": [
+      {
+        "path": "package/package.json",
+        "bytes": 1720,
+        "sha256": "9ea37b6e865dc7680519dcfcae966a79afcf4e32c90fb78c270cced36b4f85aa"
+      },
+      {
+        "path": "package/dist/generated/pptx_wasm_bg.wasm",
+        "bytes": 6302176,
+        "sha256": "3a4be9329de1bca77437137ce6417c7910e35c1c7c0e78571bb81f9fe16e5563"
+      }
+    ]
+  },
+  "edit": {
+    "slide": 0,
+    "text": "QA_SDD_23NOV "
+  },
+  "geometryToleranceEMU": 995,
+  "coverageLimit": "Only bounded original SDD presentation page/text/native-object geometry. OLE23 objects, pattern bitmaps, StarBASIC storage, notes-page semantics, formulas, full style/render fidelity and SDD export are not positively accepted."
+}
