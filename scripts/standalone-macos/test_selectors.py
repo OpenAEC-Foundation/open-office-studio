@@ -1,5 +1,6 @@
 """Driver failures must stop input before touching the wrong native control."""
 import unittest
+from unittest.mock import patch
 from cases import Case
 from native import Unavailable
 
@@ -21,6 +22,19 @@ class FakeSession:
 
 
 class SelectorTests(unittest.TestCase):
+    def test_readonly_readiness_poll_sends_only_one_native_press(self):
+        class Delayed(FakeSession):
+            def __init__(self):super().__init__({"rawNodes":[button(0,-1,300)]});self.reads=0
+            def ax(self,action,spec=None):
+                if action=="snapshot":
+                    self.reads+=1
+                    return {"rawNodes":[]} if self.reads==1 else self.snapshot
+                return super().ax(action,spec)
+        s=Delayed()
+        with patch("cases.time.sleep"):Case(s,"fixture").button("Save")
+        self.assertEqual(s.reads,2);self.assertEqual(len(s.actions),1)
+        self.assertEqual(s.actions[0][0],"press")
+
     def test_duplicate_active_names_stop_all_native_input(self):
         s=FakeSession({"rawNodes":[button(0,-1,20),button(1,-1,300)]})
         with self.assertRaises(Unavailable):Case(s,"fixture").button("Save")

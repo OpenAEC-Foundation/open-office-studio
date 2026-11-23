@@ -25,6 +25,17 @@ class Case:
     def __init__(self,session,fixture):self.s=session;self.fixture=Path(fixture)
 
     def select(self,roles,labels=(),*,contains=None,action="click",dialog=False):
+        deadline=time.monotonic()+4
+        while True:
+            matches=self.candidates(roles,labels,contains,action,dialog)
+            if len(matches)==1:break
+            if len(matches)>1 or time.monotonic()>=deadline:
+                raise Unavailable("Native selector ambiguous/unavailable: "+str((roles,labels,contains,len(matches))))
+            time.sleep(0.2)  # Read-only readiness polling; the eventual input is sent once.
+        self.s.ax(action,matches[0]);time.sleep(0.3)
+        return matches[0]
+
+    def candidates(self,roles,labels,contains,action,dialog):
         snapshot=self.s.ax("snapshot");matches=[]
         rows={n["index"]:n for n in snapshot.get("rawNodes",[])}
         for row in rows.values():
@@ -44,9 +55,7 @@ class Case:
                 value=node.get(field)
                 if isinstance(value,str) and ((labels and value in labels) or (contains and contains in value)):
                     matches.append({"role":node["AXRole"],"field":field,"value":value,"frame":node["frame"]});break
-        if len(matches)!=1:raise Unavailable("Native selector ambiguous/unavailable: "+str((roles,labels,contains,len(matches))))
-        self.s.ax(action,matches[0]);time.sleep(0.3)
-        return matches[0]
+        return matches
 
     def button(self,*labels,dialog=False):return self.select(["AXButton"],labels,action="press",dialog=dialog)
 
@@ -137,8 +146,8 @@ class Case:
         self.runtime_export()
 
     def writer_visible(self,text,label):
-        last=None
-        for attempt in range(3):
+        last=None;deadline=time.monotonic()+20;attempt=0
+        while True:
             image,snapshot=self.s.capture_original(label+"-"+str(attempt))
             output=image.with_suffix(".ocr.json")
             result=command([self.s.ocr,image,output],timeout=30)
@@ -147,7 +156,9 @@ class Case:
                 target=visible_word(json.loads(output.read_text()),snapshot,self.s.process.pid,digest(image),text)
                 self.s.write(image.stem+"-target.json",target)
                 return target
-            except Unavailable as error:last=error;time.sleep(0.5)
+            except Unavailable as error:last=error
+            if time.monotonic()>=deadline:break
+            attempt+=1;time.sleep(0.5)
         raise Unavailable("Visible Writer body target unavailable; no input or paint primer sent: "+str(last))
 
     def runtime_export(self):
