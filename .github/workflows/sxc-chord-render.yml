@@ -18,7 +18,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm exec playwright install --with-deps chromium
-      - run: node scripts/kopieer-assets.mjs
+      - name: Supported browser-development assets; spelling is outside this case
+        run: pnpm run predev
       - name: Focused geometry, source and OOXML preservation regressions
         run: pnpm exec vitest run src/rekenblad/chordGeometrie.test.ts src/rekenblad/tekenobjecten.test.ts src/rekenblad/tekenobject-groepen.test.ts src/rekenblad/objectGeometrie.test.ts --reporter=dot
       - name: Actual browser source edit/save/fresh reopen and print canvas
