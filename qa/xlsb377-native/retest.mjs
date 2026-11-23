@@ -21,8 +21,8 @@ const exec = promisify(execFile), hash = (b) => createHash("sha256").update(b).d
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const identity = JSON.parse(await readFile('.local/xlsb377-input/identity.json', 'utf8'));
 assert.equal(identity.issue, 377); assert.equal(identity.executionApproved, true);
-assert.equal(identity.sourceCommit, '98b340429436cf597a569549d043bd75b486e2ab', 'Explicit frozen P3 source');
-assert.equal(identity.sourceTree, '780c0789c8badedc6760a8402a6994154a3bf402');
+assert.equal(identity.sourceCommit, '04fa6cd43b84e3f59fb9d5055bb2d00dde351a47', 'Explicit frozen P4 source');
+assert.equal(identity.sourceTree, '94fa38c20b51a73e4912964f37f0e1a659b0fb1b');
 assert.equal(identity.version, '2026.48.1');
 assert.equal(git('rev-parse', 'HEAD'), identity.sourceCommit);
 assert.equal(git('rev-parse', 'HEAD^{tree}'), identity.sourceTree);

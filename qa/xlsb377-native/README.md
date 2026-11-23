@@ -15,10 +15,16 @@ capture cleanup are required. Existing full XLSB matrix is not repeated.
 Pending: integration's explicit new candidate and immutable package input binding.
 This preparation is not a native result. No local GUI or recording is started.
 
-Final source is approved P3 `98b340429436cf597a569549d043bd75b486e2ab`, tree
+Earlier P3 source was `98b340429436cf597a569549d043bd75b486e2ab`, tree
 `780c0789c8badedc6760a8402a6994154a3bf402`, version2026.48.1.
-Root seven-product producer45170708933/Linuxjob137679288372/attempt1 is
-running. Package bytes and execution approval are still pending. Only a small
+Root seven-product producer45170708933/Linuxjob137679288372/attempt1 was
+stopped before packages after a node:test/Vitest discovery error. Package bytes and execution approval are still pending. Only a small
 root-authenticated Office DEB transfer is requested; no four-GB archive here.
 The caller waits for the asynchronously resolved runtime status as well as the
 visible .xlsx proposal before asserting/capturing it; no criteria are relaxed.
+
+Current final candidate is P4 `04fa6cd43b84e3f59fb9d5055bb2d00dde351a47`,
+tree `94fa38c20b51a73e4912964f37f0e1a659b0fb1b`, version2026.48.1.
+Producer45172070275/Linuxjob137683944835/attempt1 is running. P3 and old P2
+are not eligible for this fixed-package acceptance. Root will supply the small
+hash-bound Office DEB transfer; no execution or native result is claimed yet.
