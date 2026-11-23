@@ -331,8 +331,9 @@ def main():
             except OSError as error:
                 report["cleanup"]["ownedAppContainerRemoved"] = False
                 report["cleanup"]["ownedAppContainerError"] = str(error)
-        if not report["cleanup"]["ownedAppClosed"] or report["cleanup"].get("ownedAppContainerRemoved") is False:
-            report["status"] = "cleanup-failed"
+        if (not report["cleanup"]["ownedAppClosed"] or report["cleanup"].get("mountDetached") is False
+                or report["cleanup"].get("ownedAppContainerRemoved") is False):
+            report.update(status="cleanup-failed", nativePass=False)
         (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
         if not report["cleanup"]["ownedAppClosed"] or report["cleanup"].get("mountDetached") is False or report["cleanup"].get("ownedAppContainerRemoved") is False:
             raise RuntimeError("Owned native app/mount cleanup failed; see receipt")

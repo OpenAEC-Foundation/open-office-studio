@@ -85,8 +85,27 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
                 raise AssertionError(message)
             time.sleep(.2)
 
+    def ready_control(label):
+        # Title readiness alone can precede SDK document loading. This is the
+        # existing native table mirror's read-only 2x2 fixture evidence, never a
+        # body click target or evidence that any edit/save succeeded.
+        started = time.monotonic()
+        while True:
+            state = action("snapshot")
+            tables = state.get("tables", [])
+            if (len(tables) == 1 and tables[0].get("rowEvidenceAvailable")
+                    and tables[0].get("columnEvidenceAvailable")
+                    and tables[0].get("rows") == 2 and tables[0].get("columns") == 2):
+                proof["checks"].append({"name": label, "native": state,
+                                        "readinessSeconds": round(time.monotonic() - started, 3)})
+                return
+            if time.monotonic() - started >= 45:
+                raise PermissionError("The correct native 2x2 control document did not become ready before input")
+            time.sleep(.25)
+
     first_pid = launch_document(document)
     proof["firstPid"] = first_pid
+    ready_control("native control loaded before viewport and body input")
     proof["initialViewport"] = viewport(action, out / "initial-viewport", identity, first_pid)
     target, receipt = visible_target(action, out / "before-input", first_pid, ocr_binary, label)
     proof["checks"].append({"name": "readable original control before body input", "receipt": receipt})
@@ -110,6 +129,7 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
     if second_pid == first_pid or second_pid != current_pid():
         raise RuntimeError("Preflight reopen must be a new exact owned process")
     proof["secondPid"] = second_pid
+    ready_control("saved native control loaded in the fresh process")
     proof["reopenedViewport"] = viewport(action, out / "reopened-viewport", identity, second_pid)
     _, receipt = visible_target(action, out / "reopened-before-input", second_pid, ocr_binary, label)
     if sha(document) != restored_sha or body_text(document) != before:
