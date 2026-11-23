@@ -238,7 +238,7 @@
   "nativeStatus": {
     "windows": {
       "owner": "Existing tester750b via integration",
-      "status": "passed native I/O, open visual observation",
+      "status": "native I/O and final XML passed; visual acceptance blocked by independently confirmed#374",
       "report": "windows-native-audit.json",
       "nativeRun": 45152204418,
       "artifactId": 14807501063,
@@ -259,5 +259,20 @@
     },
     "coordination": "Integration9635 remains sole coordinator and supplies actual package/result manifests"
   },
-  "routeCompletion": "incomplete: Windows I/O passes but title-rendering observation open; Linux DEB/AppImage and macOS native results pending"
+  "routeCompletion": "incomplete: confirmed editor title-layout bug#374; native Linux DEB/AppImage and macOS results pending",
+  "renderBlocker": {
+    "issue": 374,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/374",
+    "status": "open",
+    "nativeEvidence": "Tester750b Windows artifact screenshots; not a new native execution by this chat",
+    "independentReproduction": {
+      "run": 45154167386,
+      "harness": "1fd3f4d79a84f0170c5d91d535a0c808ad0f97ef",
+      "report": "render-audit.json",
+      "artifactId": 14806409519,
+      "artifactDigest": "sha256:6abbe498f364cdf884dfffbf28b4be6ab40fb69949daafcba9b0c7eea70fb716"
+    },
+    "control": "Identical cached text as plain run only; styles/fontTable and19other entries unchanged;42same fonts; diagnostic only",
+    "currentClaim": "Source/image/duplicate triage completed; integration coordinates repair/intake; no product patch"
+  }
 }

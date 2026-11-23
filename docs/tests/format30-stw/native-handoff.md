@@ -6,7 +6,7 @@ not successful test results. The macOS #359 suite blocker takes precedence.
 
 | Check | Assigned by integration | Current evidence |
 | --- | --- | --- |
-| Native Windows | Existing tester chat 750b, within its Suite/Writer claim | P2 unsigned-suite I/O and final DOCX XML pass, run 45152204418; title-rendering observation remains open, no unconditional visual/standalone pass |
+| Native Windows | Existing tester chat 750b, within its Suite/Writer claim | P2 unsigned-suite I/O and final DOCX XML pass, run 45152204418; confirmed title-rendering defect #374 blocks unconditional visual acceptance; standalone acceptance remains separate |
 | Native macOS | Existing chat 6f92 (`optimalisatie`) | Assigned, not yet passed |
 | Native Linux DEB and AppImage | Existing `writer_362`, after current P2 core proof | Assigned, not yet passed |
 | Actual browser limitation on `/` and `/office/` | This STW QA chat 9d3b | Passed: actual Linux Chromium upload/advice + independent saved-DOCX XML equality, run 45150936369 |
@@ -22,7 +22,7 @@ This actual browser evidence is separate from the historical Node guard.
 The Windows evidence was independently downloaded and its full ZIP hash verified.
 `windows-native-audit.json` confirms native dialog ownership, bundled runtime,
 NSIS-payload/installed-PE equality, normal exits and different PIDs (10060 and4176),
-all eight source blocks/styles/heading/placeholders in the final saved DOCX, and
+all eight source blocks, selected effective styles, heading and placeholders in the final saved DOCX, and
 cleanup. The native test used the exact ASCII edit marker
 ` -- STW30 EDIT 2026-11-23`; the oracle checks that actual variant explicitly.
 Earlier saved bytes were overwritten on resave, so their recorded CI-stage audits
@@ -36,6 +36,17 @@ chat source/image/duplicate triage plus one bounded browser comparison; 750b rem
 the sole native Windows operator. Source/original-file preservation is not a visual
 layout pass. Linux still lacks a current owned-picker pass; macOS waits for its
 critical #359 input check and matching Writer package. No completion date is assumed.
+
+The bounded independent browser reproduction confirms the defect as
+[#374](https://github.com/OpenAEC-Foundation/open-office-studio/issues/374), not merely
+an unverified native screenshot observation. Run 45154167386 displays the unchanged
+Windows DOCX with overlap. A diagnostic copy that replaces only its title field with
+identical cached text renders without overlap; all other 19 ZIP entry contents,
+styles/fontTable, 42 registered font faces and replacement advice are identical.
+See `render-audit.json`, `render-diagnostic-audit.json` and the preserved exact small
+artifact in `render-proof/`. The derived copy is neither a product patch nor an
+acceptable field-flattening workaround. Integration owns fix/intake coordination;
+this chat's current assignment is source/image/duplicate triage only.
 
 The actual standalone release packages are not available at this handoff. Integration
 will provide their source/version/artifact/package manifest when each platform's own

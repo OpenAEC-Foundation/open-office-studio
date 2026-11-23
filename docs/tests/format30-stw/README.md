@@ -87,7 +87,7 @@ The 13,946 runtime payload entries have canonical JSON SHA-256
 | --- | --- | --- |
 | Linux private converter + live Writer kernel, canonical DEB runtime payload | Passed on exact P2, including all payload file identities | Native UI/IPC/dialog and installer acceptance |
 | Browser | Actual Linux Chromium STW upload, visible desktop/DOCX advice, retained active tab and independently unchanged saved DOCX XML pass on `/` and `/office/` | No STW browser conversion support claimed |
-| Windows | Actual native unsigned P2-suite I/O passes; independent artifact, process and final DOCX audits pass | Title-rendering screenshot observation remains open; no unconditional visual or standalone acceptance |
+| Windows | Actual native unsigned P2-suite I/O passes; independent artifact, process and final DOCX audits pass | Independently confirmed editor title-rendering defect #374; no unconditional visual or standalone acceptance |
 | macOS | No build or runner claimed | Native checks remain open |
 
 `native-handoff.md` records integration's current Windows, Linux and macOS owners,
@@ -121,6 +121,29 @@ under `browser-proof/files`, then run
 This audit invokes neither office runtime nor browser. Native Windows (`750b`),
 Linux DEB/AppImage (`writer_362`) and macOS (`6f92`) results remain pending with
 integration; successful browser advice is not a native STW opening pass.
+
+## Confirmed title-layout blocker
+
+The route cannot receive unconditional visual approval while
+[#374](https://github.com/OpenAEC-Foundation/open-office-studio/issues/374) remains
+open. Tester750b's Windows screenshots show the cached title overlapping appended
+ordinary text after editing and again after fresh-process reopen. Independent
+Linux Chromium run45154167386 reproduces this by opening the retained, unchanged
+Windows DOCX on the exact P2 frontend. The unmodified converter control has a clear
+title. A diagnostic field-to-cached-text-only copy wraps the same visible text
+without overlap; styles, fonts and the 19 other ZIP entry contents are unchanged.
+Both affected/diagnostic cases have the same42 registered fonts and substitution
+advice. This isolates field representation as relevant without claiming a complete
+implementation cause or a general font-matrix result.
+
+`windows-native-audit.json` keeps native I/O/XML success distinct from this defect.
+`render-audit.json` and `render-diagnostic-audit.json` record the independent
+reproduction and the controls; `render-proof/` preserves its exact378389-byte ZIP,
+official metadata and all three screenshots. All browser contexts/processes and
+the preview server closed. No product code or release intake was changed, and
+field flattening is not offered as a fix. Root assigned this chat the bounded
+source/image/duplicate triage; the actual repair and remaining native Linux/macOS
+checks require the existing integration coordination.
 
 This is body-text/selected-style/placeholder evidence for one real template.
 Headers/footers, full TOC evaluation, pagination, font substitution, universal STW
