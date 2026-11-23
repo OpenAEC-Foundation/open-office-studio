@@ -1,0 +1,41 @@
+name: Format 30 Windows SXC converter control
+on:
+  push:
+    branches: [codex/sxc-native-windows-2026-11-23]
+    paths: [.github/sxc-converter-control-windows.json]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  control:
+    runs-on: windows-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact canonical Windows package gate, no app build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python qa/sxc-native-windows/packages.py .local/sxc-control-package
+      - run: python -m pip install --disable-pip-version-check Pillow==13.0.0
+      - name: Own bundled converter, exact source profile/filter, no native acceptance claim
+        run: python -B qa/sxc-native-windows/converter-control.py .local/sxc-control-package .local/sxc-control-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sxc-converter-control-Windows-proof
+          path: |
+            .local/sxc-control-proof
+            .local/sxc-control-package/package.json
+            .local/sxc-control-package/source-run.json
+            .local/sxc-control-package/source-job.json
+            .local/sxc-control-package/source-commit.json
+            .local/sxc-control-package/artifact-metadata.json
+            .local/sxc-control-package/canonical-package-report.zip
+            .local/sxc-control-package/canonical-package-report.json
+          include-hidden-files: true
+          if-no-files-found: error
