@@ -178,7 +178,7 @@ try {
  let input=ext?fixtures[ext].file:app.key==='database'?fixtures.database.file:undefined;
  const sourceInput=input, original=input?hash(await readFile(input)):null;
  report.originalInput=sourceInput?{path:sourceInput,sha256:original}:null;
- const qa={get page(){return page;},focus,checkFocus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,mail,
+ const qa={get page(){return page;},focus,checkFocus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,presentationPoint:fixtures.pptx.nativeEditablePoint,mail,
   waitForDraft:async()=>{const deadline=Date.now()+20000;while(Date.now()<deadline){try{await oracle('email',join(root,'mail'));return;}catch{await sleep(250);}}throw Error('Real native draft append did not reach loopback fixture');}};
  for(const phase of ['initial','reopened']) {
   const current=await launch(input,phase);

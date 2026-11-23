@@ -34,42 +34,56 @@ jobs:
           name: standalone-windows-p4-office-package
           path: .local/p4-windows-split/office
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
           name: standalone-windows-p4-writer-package
           path: .local/p4-windows-split/writer
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
           name: standalone-windows-p4-spreadsheet-package
           path: .local/p4-windows-split/spreadsheet
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
           name: standalone-windows-p4-presentation-package
           path: .local/p4-windows-split/presentation
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
           name: standalone-windows-p4-email-package
           path: .local/p4-windows-split/email
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
           name: standalone-windows-p4-notition-package
           path: .local/p4-windows-split/notition
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: steps.plan.outputs.ready == 'true'
         with:
           name: standalone-windows-p4-database-package
           path: .local/p4-windows-split/database
           compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
       - id: children
         name: Bind official child ZIP digests; separate Suite consumer contract
         if: steps.plan.outputs.ready == 'true'

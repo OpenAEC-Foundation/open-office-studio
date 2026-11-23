@@ -34,7 +34,9 @@ export async function officeCase(qa, kind, phase) {
       // Actual editable text input is required; no engine applyEdits or DOM state mutation.
       const canvas=page.locator('[data-testid="pptx-slide-canvas"]');
       const bounds=await canvas.boundingBox(); assert(bounds);
-      await canvas.dblclick({position:{x:bounds.width*.5,y:bounds.height*.35}});
+      assert(qa.presentationPoint&&qa.presentationPoint.x>0&&qa.presentationPoint.y>0);
+      await canvas.dblclick({position:{x:bounds.width*qa.presentationPoint.x,y:bounds.height*qa.presentationPoint.y}});
+      qa.record({phase,nativePresentationHitPoint:qa.presentationPoint,source:'Unchanged original PPTX title/layout XML'});
       const input=page.locator('.office-presentatie textarea:focus'); await input.waitFor();
       await qa.checkFocus(input,'presentation-text'); await page.keyboard.type('STANDALONE23 PRESENTATION EDIT');
       await page.keyboard.press('Escape');
