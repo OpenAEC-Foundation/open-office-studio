@@ -1,0 +1,57 @@
+name: XLSB377 save policy source checks only
+on:
+  push:
+    branches: [codex/qa-xlsb-save-policy-d410-2026-11-23]
+    paths:
+      - .github/workflows/qa-xlsb377-policy-d410.yml
+      - qa/xlsb377-policy/**
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  FIX_SOURCE: cbacb7d1396aeeca9a0da72c5739def75c036a73
+jobs:
+  policy:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FIX_SOURCE }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Verify exact product candidate and install test dependencies only
+        run: |
+          test "$(git rev-parse HEAD)" = "$FIX_SOURCE"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          pnpm install --frozen-lockfile --ignore-scripts
+      - name: Targeted import save routing shortcut and revision contracts
+        run: |
+          mkdir -p .local/xlsb377-policy
+          pnpm exec vitest run src/werkbestand.test.ts src/useTabSneltoetsen.test.ts src/import/rekenbladformaten.test.ts src/opslag.test.ts --reporter=json --outputFile=.local/xlsb377-policy/tests.json
+      - name: Type checking without producing an application bundle
+        run: pnpm exec tsc --noEmit > .local/xlsb377-policy/typecheck.log 2>&1
+      - name: Bind exact candidate and source-only verification limits
+        run: |
+          python3 - <<'PY'
+          import pathlib,subprocess,hashlib,json,os
+          root=pathlib.Path('.local/xlsb377-policy')
+          tests=json.loads((root/'tests.json').read_text())
+          value={'source':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run':os.environ['GITHUB_RUN_ID'],'passed':tests['success'],'testCount':tests['numPassedTests'],'files':[{'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in map(pathlib.Path,['src/werkbestand.ts','src/werkbestand.test.ts'])],'scope':'Shared save-policy, native Ctrl/Meta shortcut routing, import and revision contracts plus TypeScript noEmit. No app build, native UI, package or macOS/browser certification.'}
+          assert value['source']==os.environ['FIX_SOURCE'] and value['passed'] and value['testCount']==46
+          (root/'binding.json').write_text(json.dumps(value,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: xlsb377-source-checks-${{ github.run_id }}
+          path: .local/xlsb377-policy/
+          include-hidden-files: true
+          if-no-files-found: warn
