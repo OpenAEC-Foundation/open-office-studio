@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-23",
+  "scope": "Linux installed 420 package acceptance of #368 and #369; #362 vertical-only geometry regression controls",
+  "source": {
+    "commit": "420af640c10ab9ada6c66c844c0098caea87c493",
+    "tree": "c1334c8f4d92914e9d2114d56e467ef11eab9646"
+  },
+  "version": "2026.47.1",
+  "origin": {
+    "sourceCommit": "420af640c10ab9ada6c66c844c0098caea87c493",
+    "sourceTree": "c1334c8f4d92914e9d2114d56e467ef11eab9646",
+    "version": "2026.47.1",
+    "artifactRun": 44753496663,
+    "artifactId": 14639121545,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "3ba6fcdc910803e107b881f57273373db0bfd7f423e6c1e8eb80a78e1cddf7da",
+    "packageMember": "deb/Open Office Studio_2026.47.1_amd64.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux420-input/Open Office Studio_2026.47.1_amd64.deb",
+    "packageSha256": "c68ccacc61421afec6e7a30a26d9ef38f9cb954e86fd5ff9f31c4146a61261e9",
+    "executableSha256": "ea4b4eaf1ac8929a19dba67b7f0dc80561dce119fb66a082a0c8d87d093e6f17",
+    "executionApproved": true,
+    "scope": "Linux packaged 368/369 combination; not another release source"
+  },
+  "runtime": {
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1\n",
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    }
+  },
+  "packagePass": "Bounded tested Linux routes passed across separate reports at identical package/source; not blanket native/all-platform acceptance",
+  "issues": {
+    "362": {
+      "status": "tested vertical contract passes; native disabled Delete variants unavailable",
+      "cases": 258,
+      "buttonMeasurements": 1284,
+      "groupCases": 24,
+      "keyboardEntries": 24,
+      "homeEnd": 36,
+      "contentClipped": 0,
+      "visibleLabelFailures": 0,
+      "iconFailures": 0,
+      "groupClippedY": 0,
+      "groupClippedX": [
+        {
+          "theme": "light",
+          "width": 800,
+          "group": "Text",
+          "phase": "keyboard-group-focus"
+        },
+        {
+          "theme": "light",
+          "width": 800,
+          "group": "Text",
+          "phase": "keyboard-group-after-escape"
+        },
+        {
+          "theme": "forge",
+          "width": 800,
+          "group": "Text",
+          "phase": "keyboard-group-focus"
+        },
+        {
+          "theme": "forge",
+          "width": 800,
+          "group": "Text",
+          "phase": "keyboard-group-after-escape"
+        }
+      ],
+      "states": {
+        "normal": 24,
+        "keyboardFocus": 108,
+        "hover": 108,
+        "importedActive": 12,
+        "engineDisabled": 6
+      },
+      "nativePass": false,
+      "moduleStatus": "partial",
+      "unavailable": [
+        {
+          "theme": "light",
+          "width": 1600,
+          "group": "Delete",
+          "state": "disabled",
+          "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+        },
+        {
+          "theme": "light",
+          "width": 923,
+          "group": "Delete",
+          "state": "disabled",
+          "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+        },
+        {
+          "theme": "light",
+          "width": 800,
+          "group": "Delete",
+          "state": "disabled",
+          "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+        },
+        {
+          "theme": "forge",
+          "width": 1600,
+          "group": "Delete",
+          "state": "disabled",
+          "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+        },
+        {
+          "theme": "forge",
+          "width": 923,
+          "group": "Delete",
+          "state": "disabled",
+          "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+        },
+        {
+          "theme": "forge",
+          "width": 800,
+          "group": "Delete",
+          "state": "disabled",
+          "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+        }
+      ],
+      "remaining": "Disabled Delete Row/Column/Table in each theme/width: all three commands are enabled in actual selected editable table. No supported Writer readonly UI was reached. No synthetic disabled/CSS/DOM mutation used.",
+      "classification": "Fixture/UI-state reachability gap, not independently reproduced faulty disabled rendering.",
+      "sourceEvidence": [
+        "src/lint/tekst.tsx:402 context tab exists only when tableAction.state.value",
+        "src/lint/tekst.tsx:494 Delete commands use engine tableAction state",
+        "src/lint/gedeeld.tsx:46 W passes command state to OpdrachtKnop",
+        "src/Ribbon.tsx:108 disabled derives from !opdracht.state.enabled",
+        "src/editors.tsx:471 DocxEditor does not expose readonly UI; hidden editor remains editable behind inert panel"
+      ],
+      "activeCorrection": "Imported active coverage is complete: Bottom and Repeat Header Rows at all six theme/width combinations. Genuine Split Table disabled is also measured at all six. No imported-active gap remains."
+    },
+    "368": {
+      "status": "passed bounded native Find/Replace criteria",
+      "proofRun": 45143046662,
+      "checks": {
+        "find": 29,
+        "replace": 16
+      },
+      "criteria": [
+        "abc -> one CtrlZ -> empty without refocus/document edit",
+        "CtrlShiftZ and CtrlY restore abc; next typing abcq; alpha search produces one real result",
+        "empty input history preserves column insertion; Close restores document input; one document Undo removes column",
+        "independent documents retain their own Undo/Redo; native full final marker save/XML oracle/full exit/fresh process reopen"
+      ],
+      "limits": [
+        "IME/composition, already-handled and readonly/disabled input events have source/unit coverage but are not claimed native UI tests here."
+      ]
+    },
+    "369": {
+      "status": "passed bounded native pointer/keyboard focus and command-return routes",
+      "matrixRun": 45143888379,
+      "commandRun": 45145243773,
+      "criteria": [
+        "real pointer tab selection retains focusVisible false",
+        "ArrowDown/Right focusVisible true and 4px ring; Home/End expected targets",
+        "collapsed Delete 923/800 both themes before Enter/after Escape: focusVisible true, ring4, clippedY false",
+        "real keyboard Enter executes Insert Column Right; returns document input; native typing/save/full quit/reopen exact table"
+      ],
+      "limits": [
+        "Required Windows/macOS/browser comparison and later P2 source/package acceptance belong to integration; this receipt claims only this exact Linux source/package."
+      ]
+    }
+  },
+  "records": [
+    {
+      "run": 45138542777,
+      "artifact": 14800842616,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45138542777",
+      "archive": "artifacts/45138542777.zip",
+      "archiveSha256": "6552192989043bd541a7533f1d2997a1167e589c7ba85a197c415cf65ead2768",
+      "archiveBytes": 426836,
+      "harnessCommit": "9f03e2bcbad8dffbad27d16f7a55987a3c5c163c",
+      "harnessSha256": "7702cb9cf6eb82ae35fa0f03cf6634f9e23076b05ed0ede03fe71c61e57d0fc3",
+      "reportSha256": "cf907d3deb058eac26eb96bfac6a3c8951a8fccc3622fe38617b8fba8ee0ef1e",
+      "status": "failed",
+      "checks": 36,
+      "failedPhase": "368-Find-what",
+      "error": "TimeoutError: The operation was aborted due to timeout",
+      "scopeStatus": {},
+      "cleanup": {
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      }
+    },
+    {
+      "run": 45139459966,
+      "artifact": 14801483141,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45139459966",
+      "archive": "artifacts/45139459966.zip",
+      "archiveSha256": "eecd229049b0bb0880c4a2d279ee57127c9f8123f514c9dabc488f0b1043d5e4",
+      "archiveBytes": 511220,
+      "harnessCommit": "a9373fa54e16b291e323d51a042ab33b55fcb2d0",
+      "harnessSha256": "8b0b9a9fc13d1046e89a9fcc3ef0b718265bbbb41530dfb03e94a829ec537b00",
+      "reportSha256": "2b62c8e5cfdc69fc51b9e8b380f5de52a32e591839a426eaafb249df7de57a42",
+      "status": "failed",
+      "checks": 34,
+      "failedPhase": "368-Find-what",
+      "error": "Error: final marker and column",
+      "scopeStatus": {},
+      "cleanup": {
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      }
+    },
+    {
+      "run": 45141968924,
+      "artifact": 14801774396,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45141968924",
+      "archive": "artifacts/45141968924.zip",
+      "archiveSha256": "0145a046d10ab2516552e8a032c9bf6d172d104f97db577222ce7cb1ba120b68",
+      "archiveBytes": 225152,
+      "harnessCommit": "e6381d13b95fdd3a8b7e2f7a17772cee1e83ff6f",
+      "harnessSha256": "06794ce167d95bababc6b897610a41813a039066caae749bdd0e478a56fe9b5a",
+      "reportSha256": "1026024f804879f15b432c139964a6e205cee81c61cb8c54cf6086e779c847af",
+      "status": "failed",
+      "checks": 4,
+      "failedPhase": "preflight",
+      "error": "Error: preflight actual Ctrl+Z",
+      "scopeStatus": {},
+      "cleanup": {
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      }
+    },
+    {
+      "run": 45143046662,
+      "artifact": 14803855126,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45143046662",
+      "archive": "artifacts/45143046662.zip",
+      "archiveSha256": "f0d12748714614f1a630ff3a18934219c957df856b5888b56be7f509c60b2835",
+      "archiveBytes": 3395926,
+      "harnessCommit": "3b79f664bb80284a23448cd48312b26cf80c9e42",
+      "harnessSha256": "4bf66976754c519051943030c6f060f031236d692076b995e3cb7128093a492f",
+      "reportSha256": "6d1ce84bb01446053f2ed3d75e2b5728c3bdcb9f95e9704d384b45ec5585d922",
+      "status": "failed",
+      "checks": 55,
+      "failedPhase": "369-ribbon",
+      "error": "Error: {\"error\":\"element click intercepted\",\"message\":\"\",\"stacktrace\":\"\"}",
+      "scopeStatus": {
+        "368-Find-what": "passed",
+        "368-Replace-with": "passed",
+        "369-ribbon": "failed"
+      },
+      "cleanup": {
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      }
+    },
+    {
+      "run": 45143888379,
+      "artifact": 14803811518,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45143888379",
+      "archive": "artifacts/45143888379.zip",
+      "archiveSha256": "0792af9d6c3ca421fa6efbb19a5b32b47fd04b29df0a5b06f05742db94c92e98",
+      "archiveBytes": 7210639,
+      "harnessCommit": "d5f079e31f0e90c535668651aed46be295cf0bb0",
+      "harnessSha256": "b23b516c53700b70070e626f3083b305e154064132df6b659790ae7386c6810c",
+      "reportSha256": "bf11fac9bd66fef8be45329a54ddaeec7cc1e07d16c5a308577f9417ad6c575b",
+      "status": "passed tested native scopes; wider ribbon state matrix partial",
+      "checks": 10,
+      "failedPhase": null,
+      "error": null,
+      "scopeStatus": {
+        "369-ribbon": "passed"
+      },
+      "cleanup": {
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      }
+    },
+    {
+      "run": 45145243773,
+      "artifact": 14803847505,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45145243773",
+      "archive": "artifacts/45145243773.zip",
+      "archiveSha256": "1872a08409790e058a091891d3cddbd08089eb942eb31bc282f616c84a6db9ca",
+      "archiveBytes": 496561,
+      "harnessCommit": "795f7c3a57322164c1ff2f4db7f685d875f57090",
+      "harnessSha256": "9db28977acbc0c7beb94eaeea07a5f361f921d222976564d5a6c0554936b1737",
+      "reportSha256": "27dd0a1a58adcc54295ef3c69a21d2ddffbde3605645ade7558815c5fbf3aafb",
+      "status": "passed",
+      "checks": 17,
+      "failedPhase": null,
+      "error": null,
+      "scopeStatus": {
+        "369-keyboard-command": "passed"
+      },
+      "cleanup": {
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      }
+    }
+  ],
+  "visualReview": {
+    "originalSerialReview": true,
+    "images": [
+      {
+        "run": 45143046662,
+        "name": "preflight-saved.png",
+        "sha256": "246be036aff2a8d1d59a4b9187eeb03cff025df7f5205d2b06ccef560fac174e"
+      },
+      {
+        "run": 45143046662,
+        "name": "preflight-reopened.png",
+        "sha256": "8d865272a409c838d28fc42158b3257ba37e46a0abf45f758d57f37e4a1ba0d8"
+      },
+      {
+        "run": 45143046662,
+        "name": "find-redo.png",
+        "sha256": "2a72188c3fe8300fa5e6b595a477786f3da2ffdb69cb716e511a5274ff7c57e1"
+      },
+      {
+        "run": 45143046662,
+        "name": "replace-redo.png",
+        "sha256": "e007702e737a4587ac0536c92528e1761d434179073bbd50333d2951e30fe59f"
+      },
+      {
+        "run": 45143046662,
+        "name": "final-reopened.png",
+        "sha256": "d031b0fa26662fb5ec99fe8cee2658b1c1e0dfda8055d33adf399c00e2d459eb"
+      },
+      {
+        "run": 45143046662,
+        "name": "ribbon/failure.png",
+        "sha256": "50ed146795aa5e3a898b29d40c248b211d2a9b4c52ededf9921dfc8bfe3f9a45"
+      },
+      {
+        "run": 45143046662,
+        "name": "ribbon/light-923-Delete-keyboard-group-focus.png",
+        "sha256": "b492497d20431b2b446e64682bc5ab26dd27a94ec61f1fb1f3b777c0cd45913a"
+      },
+      {
+        "run": 45143046662,
+        "name": "ribbon/light-923-Delete-keyboard-group-after-escape.png",
+        "sha256": "d19a84ce69c1f7e389ede7b97dfda2c2963a3437862bb0442116025557c19f30"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/light-923-Delete-keyboard-group-focus.png",
+        "sha256": "4a6a1048d4ef39ae2e213b6f8c3bb6efc7f4c8baec4a66efacef74911893401e"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/light-923-Delete-keyboard-group-after-escape.png",
+        "sha256": "3dba2b4e178309d0f554239ddd424b519e691e43e30534b86f72fe4bf4bbad02"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/light-800-Delete-keyboard-group-focus.png",
+        "sha256": "bb9a797ea87cb71b2994d9fc77f17385470c94994b1c63f37c7abee19a7a501a"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/light-800-Delete-keyboard-group-after-escape.png",
+        "sha256": "e53f089f9c69ab8bd887e13763e36f12b1313333ae40cb99cca5928476182bce"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-923-Delete-keyboard-group-focus.png",
+        "sha256": "9ba4a24eb8d07bdb52160c6841f8c987ad2ab36c293558dea37f103c466cb13d"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-923-Delete-keyboard-group-after-escape.png",
+        "sha256": "faf9ee91e068feb793da1e426109581cb3e76d5c2b0bc1d4ce5a608d281dd753"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-800-Delete-keyboard-group-focus.png",
+        "sha256": "54dae5333add521d8ffd7f6a980e778ac00cbba64bed573ce34b5dd2d91ff2b6"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-800-Delete-keyboard-group-after-escape.png",
+        "sha256": "0a46bf8f73708352a7b306bf8fdd2b8a11db5fb1078ead20fb4e9608e89d6e51"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-1600-Text-focus.png",
+        "sha256": "8ba2b5e6a04daf7f9962f5403890ec00eeb1bca38f2b61fe51005ee20d44287f"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-1600-Alignment-focus.png",
+        "sha256": "71ea364d03ec86a22e330dff08d94f6a99ae45c0bba229d4f0705c6d149be7fe"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-1600-Data-focus.png",
+        "sha256": "8fb86b3c3e8c5025bf1b7dc218d957d9fc6d9be2b0496bac304057b80f6d875b"
+      },
+      {
+        "run": 45143888379,
+        "name": "ribbon/forge-1600-Delete-focus.png",
+        "sha256": "64bc07d9202f9958e3a3f5c920c4b9280f9cc72bf273d76a4a4c41c2f5ddb4df"
+      },
+      {
+        "run": 45145243773,
+        "name": "keyboard-command-focus.png",
+        "sha256": "488542508f3b4c0ed22d7626c28ff0dad857c90ba0fef8d40acd823f0d10b60b"
+      },
+      {
+        "run": 45145243773,
+        "name": "keyboard-command-reopened.png",
+        "sha256": "555cacfcb091903a292d6e7b62a6662e8b0675064fc3f9a0470e495fd1cff759"
+      }
+    ],
+    "observations": [
+      "Find and Replace show abcq in correct focused input; full saved FINAL marker remains after new-process reopen.",
+      "Required eight Delete trigger originals have visible complete top/bottom focus outline, icon and label in light/forge at923/800 before Enter and after Escape.",
+      "Wide Text/Alignment/Data/Delete originals show focused controls fitting vertically; bitmap old/new focus regions differ at the expected controls.",
+      "800px Text trigger has four horizontal clipping observations; all are retained raw. Scope362 acceptance remains vertical only.",
+      "Startup font substitution toast/partly populated Home style gallery are visible; this is not a general typography/rendering acceptance."
+    ],
+    "limits": [
+      "Intermediate history/focus sequences are established by source-bound raw DOM/XML/native input records, not inferred from a final picture.",
+      "Headed Xvfb/software graphics is a real native GTK package route, not a physical Linux desktop/operator claim."
+    ]
+  },
+  "retainedFailures": {
+    "beforeFixControls": {
+      "oldApplication": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+      "oldPackageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+      "oldExecutableSha256": "b7e8465ce6273a09fd59e8aa254e88f66b439e3057012164ce13d1908e44f156",
+      "originalFailedArrowRun": 44739164950,
+      "originalPartialTabRun": 44744186201,
+      "ribbonFixtureSha256": "ba26f890485dcee41cbfdf694969014ae7b9951b34cbbbc01bc820a15491b3f9",
+      "unchangedTemplateGitBlob": "c3302b800e96c6d96f75f589d010409c434c7720",
+      "originalRibbonHarness": "2cba4b113e03c0411614a04af63a66c36d9b57dd",
+      "originalRibbonHarnessSha256": "2acdd2f0a32797a3b0149c425c301b1698612541d366f3958ece92e229c16c83",
+      "note": "Only control provenance; no old package or injected helper is used as a 420 package pass."
+    },
+    "attempts": [
+      {
+        "run": 45138542777,
+        "note": "36 positive checks; fourth application GTK initialization failed. No XAUTHORITY failure was established. -noreset remains an unproven cause hypothesis."
+      },
+      {
+        "run": 45139459966,
+        "note": "34 positive checks; xdotool text burst produced LI instead of full FINAL marker. No product cause established; strict marker failed and was preserved."
+      },
+      {
+        "run": 45141968924,
+        "note": "Native full PRE marker typed, one document Undo removed only trailing space. Bad multi-character edit-group preflight assumption; replaced with one-character P control. Core abc/oneUndo acceptance unchanged."
+      },
+      {
+        "run": 45143046662,
+        "note": "Find and Replace scopes pass.99 ribbon content cases;800 tab-center element click intercepted by collapse control. QA switched to real pointer on a read-only hit-tested exposed part of the same tab; no DOM focus or CSS."
+      }
+    ]
+  },
+  "cleanup": {
+    "allRecordedRunsOwnApplicationClosed": true,
+    "allRecordedRunsDriverExited": true,
+    "allRecordedRunsRemainingPids": [],
+    "ribbonCleanup": [
+      {
+        "label": "release own input actions",
+        "status": "fulfilled"
+      },
+      {
+        "label": "restore original theme and tab",
+        "status": "fulfilled"
+      },
+      {
+        "label": "restore window rectangle",
+        "status": "fulfilled"
+      },
+      {
+        "label": "fixture remains byte-identical",
+        "status": "fulfilled"
+      }
+    ],
+    "localGuiOrCaptureStarted": false,
+    "mainTagPublicationTouched": false
+  },
+  "laterSource": "P2 dc3f8d5d is not this tested source; its native package acceptance must remain separately bound."
+}
