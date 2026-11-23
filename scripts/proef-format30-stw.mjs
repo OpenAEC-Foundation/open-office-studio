@@ -193,9 +193,18 @@ try {
   let saved;
   try {
     session.openDocx(opened.bytes, true);
-    await writeFile(join(root, "engine-open.json"), JSON.stringify(checkModel(session, false).structured, null, 2));
-    const title = session.paragraphs("body").find(p => p.text === expected.paragraphs[0].text);
+    const openedModel = checkModel(session, false).structured;
+    await writeFile(join(root, "engine-open.json"), JSON.stringify(openedModel, null, 2));
+    // This genuine template title is a DOCVARIABLE field, represented by one editable engine embed.
+    // Resolve its paragraph through the exported field anchor, then append after the embed.
+    const titleBlock = openedModel.content.stories.flatMap(story => story.blocks).find(block =>
+      block.paragraph?.inlines.some(inline => inline.kind === "field" && inline.fieldType === "DOCVARIABLE" &&
+        inline.cachedResult.kind === "inline" && inline.cachedResult.inlines.some(run => run.text === expected.paragraphs[0].text)));
+    assert(titleBlock?.anchor?.paraId, "Expected source title field anchor");
+    const title = session.paragraphs("body").find(p => p.paraId === titleBlock.anchor.paraId);
     assert(title, "Expected editable source title paragraph");
+    report.editTarget = { fieldType: "DOCVARIABLE", paraId: title.paraId, engineOffset: title.text.length,
+      operation: "Append after source title field; retain original cached title" };
     const at = { story: "body", paraId: title.paraId, offset: title.text.length };
     session.setSelection(at);
     session.beginUndoCapture("body"); session.addUndoBoundary();
