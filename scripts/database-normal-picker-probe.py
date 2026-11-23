@@ -11,6 +11,8 @@ import shutil
 import subprocess
 import time
 import sqlite3
+import re
+import traceback
 import pyatspi
 
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='posix'
@@ -91,9 +93,32 @@ for kind in ['appimage','deb']:
             db.executemany('INSERT INTO StandaloneItems VALUES(?,?,?)',[(1,'SyntheticAlpha',7),(2,'SyntheticBeta',11)])
             db.commit()
         original_sha=sha(fixture);case['fixtureSha256']=original_sha
+        input_dialog={}
         def check_focus():
-            assert cmd('xdotool','getwindowpid',cmd('xdotool','getwindowfocus',env=env),env=env)==str(pid)
             assert sha(f'/proc/{pid}/exe')==source['payloadExecutableSha256']
+            focus=cmd('xdotool','getwindowfocus',env=env)
+            owner=cmd('xdotool','getwindowpid',focus,env=env)
+            if owner==str(pid):return
+            assert input_dialog and focus==input_dialog['xid'] and owner==input_dialog['pid'],'Input requires the exact app or verified private-session OS dialog'
+            proc=Path('/proc')/owner;raw=(proc/'stat').read_text()
+            assert raw[raw.rindex(')')+2:].split()[19]==input_dialog['startTime'] and str((proc/'exe').resolve())==input_dialog['executable']
+            assert sha(proc/'exe')==input_dialog['executableSha256']
+        def bind_native_dialog(record):
+            input_dialog.clear()
+            if record['pid']==str(pid):return
+            proc=Path('/proc')/record['pid'];executable=str((proc/'exe').resolve())
+            providers={'/usr/libexec/xdg-desktop-portal-gtk':'org.freedesktop.impl.portal.desktop.gtk','/usr/libexec/xdg-desktop-portal-gnome':'org.freedesktop.impl.portal.desktop.gnome'}
+            assert executable in providers,'Unexpected native file-dialog owner: '+executable
+            entries=dict(item.split(b'=',1) for item in (proc/'environ').read_bytes().split(b'\0') if b'=' in item)
+            assert entries.get(b'DISPLAY')==env['DISPLAY'].encode(),'OS dialog must use the private remote display'
+            assert env['DBUS_SESSION_BUS_ADDRESS'].encode() in [entries.get(b'DBUS_SESSION_BUS_ADDRESS'),entries.get(b'DBUS_STARTER_ADDRESS')],'OS dialog must use the private session bus'
+            reply=cmd('gdbus','call','--session','--dest','org.freedesktop.DBus','--object-path','/org/freedesktop/DBus','--method','org.freedesktop.DBus.GetConnectionUnixProcessID',providers[executable],env=env)
+            assert re.search(r'uint32 (\d+)',reply).group(1)==record['pid'],'Actual desktopportal DBus owner PID differs'
+            package_owner=cmd('dpkg-query','-S',executable)
+            assert package_owner.startswith(Path(executable).name+': '),'OS provider binary is not from the expected OS package'
+            raw=(proc/'stat').read_text()
+            input_dialog.update(record,startTime=raw[raw.rindex(')')+2:].split()[19],executable=executable,executableSha256=sha(proc/'exe'),osPackageOwner=package_owner,privateDisplayVerified=True,privateSessionBusOwnerVerified=True)
+            case.setdefault('nativePortalBindings',[]).append(dict(input_dialog))
         def text_present(*values):
             snapshot=accessible_snapshot(pid)
             text='\n'.join(n['name']+'\n'+n.get('text','') for n in snapshot if n['showing'])
@@ -183,7 +208,8 @@ for kind in ['appimage','deb']:
         capture('edited')
         keys('ctrl+s')
         save_picker=wait(lambda:(lambda focus:dict(xid=focus,title=cmd('xdotool','getwindowname',focus,env=env),pid=cmd('xdotool','getwindowpid',focus,env=env)))(cmd('xdotool','getwindowfocus',env=env)) if cmd('xdotool','getwindowname',cmd('xdotool','getwindowfocus',env=env),env=env)=='Save database export' else None,'Real native database export picker')
-        assert save_picker['pid']==str(pid);case['nativeSavePicker']=save_picker
+        case['nativeSavePicker']=save_picker
+        bind_native_dialog(save_picker)
         keys('ctrl+l');type_text(str(saved));keys('alt+s')
         wait(lambda:saved.is_file() and saved.stat().st_size>0,'Native export wrote actual SQLite bytes')
         with sqlite3.connect('file:'+str(saved)+'?mode=ro',uri=True) as db:
@@ -202,7 +228,7 @@ for kind in ['appimage','deb']:
         cold_quit()
         case.update(status='passed',functionalAcceptanceClaim=True,scenario='Actual supported SQLite file picker/read/SELECT18/UI UPDATE7to13/SELECT24/CtrlS native export/independent SQLite/cold newPID open/SELECT24; original unchanged')
     except Exception as error:
-        case.update(status='failed',error=repr(error))
+        case.update(status='failed',error=repr(error),traceback=traceback.format_exc())
         if 'pid' in locals():case['failureSnapshot']=accessible_snapshot(pid)
     finally:
         case['focusObservations']=observations
