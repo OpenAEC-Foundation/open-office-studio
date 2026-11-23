@@ -1,0 +1,123 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "scope": "DPT only: native-template source qualification gap and strict P2 filename predicate",
+  "acceptedFixture": false,
+  "templateDefinition": "https://www.wps.com/academy/how-to-save-and-quickly-use-the-local-templates-in-wps-presentation/1862173/",
+  "templateDefinitionObservation": "Original WPS producer explicitly describes saving as WPS Presentation Template (*.dpt); filename meaning, not a source-file license grant.",
+  "candidate": {
+    "id": "spire",
+    "repository": "eiceblue/Spire.Presentation-for-Java",
+    "commit": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+    "firstPublicationCommit": "d1a74f200d0a311edb895e608900f491704de79c",
+    "path": "Examples/data/Sample_dpt.dpt",
+    "bytes": 71680,
+    "blob": "91bdf2170f976552adb76a932d70a8864a6685b7",
+    "sha256": "14a9dad00f8db4191c5e0ddfa31041e6c491d05a5a05fd0c31624c3d108f2571",
+    "loader": {
+      "path": "Examples/10_conversion/convertDptToDps.java",
+      "bytes": 392,
+      "blob": "2c9d26d0f8a856ac580175bbe3ece01ae3e1f942",
+      "sha256": "b34184184f164b1eabaeee9e9da22c870a1b26d0941829f0307146117772ce0e"
+    },
+    "readme": {
+      "path": "README.md",
+      "bytes": 9318,
+      "blob": "f27f6cd73e655f00751f38648725fbdcf2da58c7",
+      "sha256": "df5a3e821e837270f6907f100acd3b49588c523aa745098f951c39d88cf92b15"
+    },
+    "expectedPresentationStreamSha256": "5ca9c51c47b96fc01c467c0a46c04fbe6dd9fe77b5aabac2a2d12efa58a9146e",
+    "expectedApplication": "WPS 演示",
+    "expectedBuild": "2052-11.1.0.14309",
+    "qualificationGap": "Publisher explicitly loads this CFB as FileFormat.DPT; WPS Presentation app/build metadata is consistent with that family. Applicable example-file license grant not established in reviewed pinned tree/README/license endpoint. Native template-specific internal fields and a live-slide content oracle are not independently decoded. No fixture/content pass or source redistribution."
+  },
+  "inventories": [
+    {
+      "repository": "eiceblue/Spire.Presentation-for-Java",
+      "commit": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+      "expectedDptPaths": [
+        "Examples/data/Sample_dpt.dpt"
+      ]
+    },
+    {
+      "repository": "Sayi/poi-tl",
+      "commit": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "Tom60chat/Extension-List",
+      "commit": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "openpreserve/format-corpus",
+      "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "apache/tika",
+      "commit": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "alexschiller/file-format-commons",
+      "commit": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Office-for-Java",
+      "commit": "b2451371f696aae6a0582e787356bd6527a4d2c5",
+      "expectedDptPaths": [
+        "Spire.Presentation/data/Sample_dpt.dpt"
+      ]
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-.NET",
+      "commit": "cf26ca4587c5cfd78c667da68ebac53f058fb70a",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "aspose-slides/Aspose.Slides-for-Java",
+      "commit": "9ef0160fe96031cd3f0808792b6da136763a8d7f",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "aspose-slides/Aspose.Slides-for-.NET",
+      "commit": "73f0e15894510088edb04e60785e66ee46ff42fe",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-Python",
+      "commit": "22975b5c686382bc86e2c8c970c62181c0441730",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-JavaScript",
+      "commit": "aa190c5bc401c57b94a803f1dd44096b8292630b",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-C",
+      "commit": "0bb16d89dc8aaa26cff2f7a9d58d7e3a1054f96d",
+      "expectedDptPaths": []
+    },
+    {
+      "repository": "LibreOffice/core",
+      "commit": "d9b2d316ec4d546f831415aa75514fa237f1fda4",
+      "subtree": "sd",
+      "tree": "9f8aa260dab374769931a57f470bb12185bb712d",
+      "expectedDptPaths": []
+    }
+  ],
+  "limits": [
+    "No accepted original native DPT fixture with applicable source permission and independent live-slide/text/object/geometry/media oracle. Source/import/full-format acceptance false.",
+    "CFB stream hashes and WPS application/build metadata are independent byte diagnostics; not a decoded native-template flag, ordered content oracle or visual-fidelity proof.",
+    "No converter/private Office runtime or actual PPTX WASM initialization/edit/UndoRedo/PPTX save/freshreopen/XML content acceptance.",
+    "Filename predicate and synthetic empty negative no-desktop request are actual production function tests in Linux Node; not a DPT file import, hosted-browser UI, Tauri IPC or native Windows/Linux/macOS GUI test.",
+    "No source bytes, publisher loader or README retained in the report artifact/Git delivery. No SDK, suite, producer application or Mac build executed.",
+    "Existing template/ordinary-document filename controls are function controls only, not additional format routes. Shared private runtime pin is retained but not downloaded/consumed/reverified."
+  ]
+}
