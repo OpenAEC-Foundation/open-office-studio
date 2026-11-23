@@ -230,17 +230,61 @@ def docx_audit(path, oracle, marker=""):
                 "tableCount": 0, "actualNonemptyParagraphs": len(paragraphs), "scope": oracle["limits"]}
 
 
+def title_field_contract(path, marker):
+    """Reject a flattened title even when all cached plain text/styles survive."""
+    with zipfile.ZipFile(path) as archive:
+        root = ET.fromstring(archive.read("word/document.xml"))
+    p = next(p for p in root.find("w:body", NS).iter(q("w", "p")) if normalize(docx_text(p)))
+    simple = list(p.iter(q("w", "fldSimple")))
+    if simple:
+        assert len(simple) == 1 and not list(p.iter(q("w", "fldChar")))
+        field = simple[0]
+        instruction = field.get(q("w", "instr"), "")
+        cached = docx_text(field)
+        field_nodes = set(field.iter())
+        appended = "".join(n.text or "" for n in p.iter(q("w", "t")) if n not in field_nodes)
+        kind = "simple"
+    else:
+        phase, instruction, cached, appended, marks = "before", "", "", "", []
+        for node in p.iter():
+            if node.tag == q("w", "fldChar"):
+                mark = node.get(q("w", "fldCharType"))
+                assert (phase, mark) in (("before", "begin"), ("instruction", "separate"), ("result", "end")), "Invalid title field boundaries"
+                phase = {"begin": "instruction", "separate": "result", "end": "after"}[mark]
+                marks.append(mark)
+            elif node.tag == q("w", "instrText"):
+                assert phase == "instruction"
+                instruction += node.text or ""
+            elif node.tag == q("w", "t"):
+                if phase == "result":
+                    cached += node.text or ""
+                elif phase == "after":
+                    appended += node.text or ""
+                else:
+                    assert not node.text, "Title text moved outside its real field"
+        assert marks == ["begin", "separate", "end"], "DOCVARIABLE title was flattened or lost"
+        kind = "complex"
+    assert normalize(instruction) == "DOCVARIABLE Report", "Original title field definition changed"
+    assert cached == "Report Title", "Original cached title changed"
+    assert appended == marker, "Appended ordinary text must remain outside the field"
+    return {"kind": kind, "instruction": normalize(instruction), "cachedText": cached, "appendedOrdinaryText": appended}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", choices=["source", "audit"])
     parser.add_argument("input", type=Path)
     parser.add_argument("--oracle", type=Path)
     parser.add_argument("--marker", default="")
+    parser.add_argument("--preserve-title-docvariable", action="store_true")
     parser.add_argument("--report", required=True, type=Path)
     args = parser.parse_args()
     args.report.parent.mkdir(parents=True, exist_ok=True)
     try:
         report = source_oracle(args.input) if args.mode == "source" else docx_audit(args.input, json.loads(args.oracle.read_text(encoding="utf8")), args.marker)
+        if args.preserve_title_docvariable:
+            assert args.mode == "audit"
+            report["titleField"] = title_field_contract(args.input, args.marker)
     except Exception as error:
         args.report.write_text(json.dumps({"passed": False, "mode": args.mode, "input": args.input.name, "error": str(error)}, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
         raise

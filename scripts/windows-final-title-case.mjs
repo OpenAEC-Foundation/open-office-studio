@@ -25,7 +25,7 @@ export async function testFinalTitle({ out, exe, port, startApplication, closeAp
     oracleSha256: sha(await readFile(script)), visualStatus: "requires screenshot review", audits: [] };
   async function audit(name) {
     const file = join(out, `title-${name}-oracle.json`);
-    execFileSync("python", ["-B", script, "audit", docx, "--oracle", oracle, "--marker", marker, "--report", file], { stdio: "inherit", timeout: 30000 });
+    execFileSync("python", ["-B", script, "audit", docx, "--oracle", oracle, "--marker", marker, "--preserve-title-docvariable", "--report", file], { stdio: "inherit", timeout: 30000 });
     evidence.audits.push({ stage: name, ...JSON.parse(await readFile(file, "utf8")) });
   }
   async function focusEditor(page) {
