@@ -1,15 +1,20 @@
 # Native Windows GNM case
 
 Prepared for the user's explicit native-GNM follow-up. Execution is gated by
-`.github/format30-gnm-native-windows.json`, which is intentionally absent until
-the integration coordinator confirms Windows ownership and exact package point.
+`.github/format30-gnm-native-windows.json`. The integration coordinator confirmed
+this chat's exclusive Windows ownership and exact package point before enabling
+it. Linux is with `standalone_linux`; macOS is with chat `6f92`, following its
+critical #359 preflight. Windows six-app/STW execution remains separately queued.
 No local native application, screen capture, or extra application build is used.
 
 The package downloader accepts only P2 `dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b`,
 tree `5a644e397ecc6af5452a49b6404edf953687d1b2`, version `2026.48.1`, canonical
 Desktop run `45143305147`, Windows artifact `14804672476` and official ZIP digest
 `ecce5a188abbb5b17e52c4097d7add95ddeaaa8c24a9a4e6c492049d16902733`.
-It hashes the complete ZIP before extracting only the direct NSIS installer.
+It gates source/tree/run/job/attempt and the hash-verified canonical package
+report, then hashes the complete ZIP before extracting only the direct NSIS
+installer. An independent extract-only 7-Zip read derives the x64 executable
+payload hash; the installed executable must equal those bytes before launch.
 This is suite functional acceptance, not the later signed standalone intake.
 
 The native driver installs those unchanged bytes on a fresh hosted Windows VM.

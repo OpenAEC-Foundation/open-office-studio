@@ -45,6 +45,11 @@ jobs:
             .local/gnm-native-proof
             .local/gnm-native-package/package.json
             .local/gnm-native-package/source-run.json
+            .local/gnm-native-package/source-job.json
+            .local/gnm-native-package/source-commit.json
             .local/gnm-native-package/artifact-metadata.json
+            .local/gnm-native-package/canonical-package-report.zip
+            .local/gnm-native-package/canonical-package-report.json
+            .local/gnm-native-package/package-report-artifact-metadata.json
           include-hidden-files: true
           if-no-files-found: error

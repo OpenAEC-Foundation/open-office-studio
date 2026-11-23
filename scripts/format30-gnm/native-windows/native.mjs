@@ -130,6 +130,8 @@ try{
  execFileSync(installer,['/S',`/D=${install}`],{windowsHide:true,timeout:300000,stdio:'inherit'});installed=true;
  await access(join(install,receipt.executable));await access(join(install,'uninstall.exe'));
  report.executable=JSON.parse(await ps('inspect.ps1',['-Action','Executable','-Path',join(install,receipt.executable)]));
+ assert.equal(report.executable.sha256,receipt.payloadExecutable.sha256,'Installed executable must equal independently extracted NSIS payload');
+ report.payloadEqualsInstalled=true;
  assert(report.executable.productVersion?.startsWith(receipt.version));assert(['Valid','NotSigned'].includes(report.executable.signature));
  if(report.installer.signature==='NotSigned'||report.executable.signature==='NotSigned')report.limitations.push('Canonical P2 functional package is unsigned; signing/release acceptance remains separate');
  const listener=createServer();await new Promise(r=>listener.listen(0,'127.0.0.1',r));port=listener.address().port;await new Promise(r=>listener.close(r));
