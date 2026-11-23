@@ -35,7 +35,10 @@ class Imap(socketserver.StreamRequestHandler):
             with lock: state['imapCommands'].append(command)
             ok=f'{tag} OK done\r\n'.encode()
             if command=='CAPABILITY': self.wfile.write(b'* CAPABILITY IMAP4rev1 UIDPLUS SPECIAL-USE\r\n'+ok)
-            elif command in ('LOGIN','NOOP','CHECK','SUBSCRIBE','UNSELECT','CLOSE','ID'): self.wfile.write(ok)
+            elif command=='LOGIN':
+                if words(args)==['qa@localhost','standalone-synthetic-password']: self.wfile.write(ok)
+                else: self.wfile.write(f'{tag} NO [AUTHENTICATIONFAILED] synthetic credentials required\r\n'.encode())
+            elif command in ('NOOP','CHECK','SUBSCRIBE','UNSELECT','CLOSE','ID'): self.wfile.write(ok)
             elif command=='LOGOUT': self.wfile.write(b'* BYE closed\r\n'+ok); break
             elif command in ('LIST','LSUB'):
                 for name in mailboxes:

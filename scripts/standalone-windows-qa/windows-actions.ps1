@@ -53,7 +53,13 @@ try {
    $deadline=[DateTime]::UtcNow.AddSeconds(20); $dialog=$null
    do {
      $all=$window.FindAll([Windows.Automation.TreeScope]::Descendants,[Windows.Automation.Condition]::TrueCondition)
-     $dialog=@($all | Where-Object { $_.Current.ProcessId -eq $OwnedPid -and $_.Current.ClassName -eq '#32770' }) | Select-Object -First 1
+     $top=[Windows.Automation.AutomationElement]::RootElement.FindAll([Windows.Automation.TreeScope]::Children,[Windows.Automation.PropertyCondition]::new([Windows.Automation.AutomationElement]::ProcessIdProperty,$OwnedPid))
+     $report.ownedTopWindows=@($top | ForEach-Object { @{handle=$_.Current.NativeWindowHandle;className=$_.Current.ClassName;title=$_.Current.Name} })
+     # Tauri's async common dialog may be an owned-process top-level window,
+     # rather than a UIA descendant of the main WebView window.
+     $candidates=@(@($all)+@($top)+@($window) | Where-Object { $_.Current.ProcessId -eq $OwnedPid -and $_.Current.ClassName -eq '#32770' } | Sort-Object {$_.Current.NativeWindowHandle} -Unique)
+     if ($candidates.Count -eq 1) { $dialog=$candidates[0] }
+     if ($candidates.Count -gt 1) { throw 'BLOCKED: more than one owned standard native dialog' }
      if (-not $dialog) { Start-Sleep -Milliseconds 200 }
    } while (-not $dialog -and [DateTime]::UtcNow -lt $deadline)
    if (-not $dialog) { throw 'BLOCKED: owned standard native Save dialog not exposed' }

@@ -23,6 +23,7 @@ def validate(plan):
     for key in ('applicationCommit', 'applicationTree'): assert re.fullmatch('[0-9a-f]{40}', plan[key])
     assert re.fullmatch(r'20\d{2}\.\d{1,2}\.\d+', plan['version'])
     assert type(plan['artifactRun']) is int and plan['artifactRun'] > 0
+    assert type(plan['platformJobId']) is int and plan['platformJobId'] > 0
     assert re.fullmatch('[0-9a-f]{64}', plan['archiveSha256'])
     assert plan['artifactName'] and {a['key'] for a in plan['applications']} == set(APPS)
     assert len(plan['applications']) == 6
@@ -52,7 +53,10 @@ def main():
     commit = api(f"git/commits/{plan['applicationCommit']}")
     assert commit['tree']['sha'] == plan['applicationTree'], 'Frozen tree differs from actual application commit'
     assert run['head_sha'] == plan['applicationCommit'], 'Canonical build source differs from frozen manifest'
-    assert run['status'] == 'completed' and run['conclusion'] == 'success', 'Canonical build not successfully completed'
+    # Windows may start as soon as its own canonical build/upload is complete.
+    # Do not wait for the unrelated macOS/Linux jobs or require a green whole run.
+    job = api(f"actions/jobs/{plan['platformJobId']}")
+    assert job['run_id'] == plan['artifactRun'] and job['status'] == 'completed' and job['conclusion'] == 'success', 'Canonical Windows package job not successfully completed'
     artifacts = api(f"actions/runs/{plan['artifactRun']}/artifacts?per_page=100")['artifacts']
     candidates = [a for a in artifacts if a['name'] == plan['artifactName'] and not a['expired']]
     assert len(candidates) == 1
@@ -74,7 +78,7 @@ def main():
             with bundle.open(entry) as source, installer.open('xb') as out: shutil.copyfileobj(source, out, 1024 * 1024)
             assert sha(installer) == app['sha256'], app['key']
             receipt = {key: plan[key] for key in ('applicationCommit', 'applicationTree', 'version', 'artifactRun', 'archiveSha256')}
-            receipt.update(artifactId=artifact['id'], application=app, installer=installer.name,
+            receipt.update(artifactId=artifact['id'], platformJobId=plan['platformJobId'], upstreamRunStatus=run['status'], upstreamRunConclusion=run['conclusion'], application=app, installer=installer.name,
                            boundary='Only this unchanged app installer and this manifest are transferred to its fresh host; no suite package/resources/profile')
             (target / 'package.json').write_text(json.dumps(receipt, indent=2)+'\n', encoding='utf-8')
     print(json.dumps({'source': plan['applicationCommit'], 'applications': list(APPS), 'oneCanonicalDownload': True}))

@@ -78,6 +78,10 @@ async function stopNormally() {
  assert.notEqual(child.exitCode,null,'BLOCKED: app did not fully exit normally; no new-process reopen claim');
  report.phases.at(-1).normalFullExit=true;
  await browser?.close().catch(()=>{}); browser=undefined; page=undefined;
+ const deadlineWebview=Date.now()+5000; let residual;
+ do{residual=JSON.parse(await ps('inspect.ps1',['-Action','Residual','-Path',profile]));if(!residual.processes.length)break;await sleep(200);}while(Date.now()<deadlineWebview);
+ assert.deepEqual(residual.processes,[],'BLOCKED: old owned WebView process remained before restart');
+ report.phases.at(-1).ownedWebviewsExited=true;
 }
 async function launch(input,phase) {
  const owned=spawn(join(install,app.executable),input?[input]:[],{cwd:install,windowsHide:false,env:{...process.env,
@@ -164,13 +168,14 @@ try {
 } finally {
  try {if(child?.pid && child.exitCode===null) {await action('Close').catch(()=>{});await sleep(1500);if(child.exitCode===null){await run('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true});report.cleanup.forcedOwnedProcessTree=true;}}}catch(error){report.cleanup.processError=String(error);}
  await browser?.close().catch(()=>{});
+ try{const residual=JSON.parse(await ps('inspect.ps1',['-Action','Residual','-Path',profile]));report.cleanup.residualOwnedWebviews=residual.processes;if(residual.processes.length)report.cleanup.webviewError='Owned WebView processes still running; profile retained';}catch(error){report.cleanup.webviewError=String(error);}
  if(mailChild){mailChild.stdin.end();const deadline=Date.now()+5000;while(mailChild.exitCode===null && Date.now()<deadline)await sleep(100);if(mailChild.exitCode===null){mailChild.kill();report.cleanup.mailError='Loopback server failed to close';}else{report.cleanup.loopbackServerClosed=true;if(!primaryError)try{await oracle('email',join(root,'mail'));}catch(error){primaryError=error;report.status='failed-mail-oracle';report.error=String(error);}}}
  try {if(policyChanged)await ps('webview-policy.ps1',['-Phase','Restore','-Executable',app.executable,'-StatePath',policy]);report.cleanup.policyRestored=true;}catch(error){report.cleanup.policyError=String(error);}
  try {if(installed)execFileSync(join(install,'uninstall.exe'),['/S'],{windowsHide:true,timeout:60000});report.cleanup.ownedInstallUninstalled=true;}catch(error){report.cleanup.uninstallError=String(error);}
  report.cleanup.ownedAppExited=!child || child.exitCode!==null;
  // Never remove retained files while an app may still own them. Only our exact
  // mkdtemp prefix below the OS temp directory can be removed.
- if(report.cleanup.ownedAppExited && report.cleanup.policyRestored && !report.cleanup.processError) {
+ if(report.cleanup.ownedAppExited && report.cleanup.policyRestored && !report.cleanup.processError && !report.cleanup.webviewError) {
   assert.equal(dirname(temporary),resolve(tmpdir()));assert(basename(temporary).startsWith('oos-standalone23-'));
   try{await rm(temporary,{recursive:true,force:true});report.cleanup.ownedTemporaryProfileDisposed=true;}catch(error){report.cleanup.profileError=String(error);}
  }

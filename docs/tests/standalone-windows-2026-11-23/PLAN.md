@@ -61,12 +61,15 @@ standalone app is used. The final six-app gate stays unfrozen.
 run or package identities filled in, until integration closes its intake.
 No old E92, I3 or earlier installer can become final fixed-package proof.
 
-`packages.py` requires final source/tree/version, successful canonical build,
+`packages.py` requires final source/tree/version, successful canonical Windows
+package job (`platformJobId`, belonging to the recorded run),
 exact archive SHA-256 and all six inner installer path/size/SHA-256 identities.
 The prepare job downloads that ZIP **once**, verifies it and passes only each
 unchanged app-specific NSIS plus its manifest to that app's fresh Windows VM.
 No suite installer/profile/resources are transferred. Maximum parallel app
-jobs is three. App jobs need only their own prepared package, never another OS.
+jobs is three. App jobs need only their own prepared package, never another OS;
+the upstream overall run may still be in progress while its Windows package job
+and artifact are already complete. Overall-run status is recorded separately.
 
 Before installation, `inspect.ps1` audits prior suite/app processes, profiles
 and suite paths. The standard silent NSIS installer is run in an owned temporary
