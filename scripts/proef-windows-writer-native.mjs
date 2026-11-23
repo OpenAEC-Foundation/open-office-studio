@@ -82,7 +82,8 @@ function isAlive(process_) {
   try { process.kill(process_.pid, 0); return true; } catch { return false; }
 }
 async function startApplication(exe, port) {
-  app = spawn(exe, [documentPath], { env, cwd: dirname(exe), windowsHide: true, stdio: ["ignore", "pipe", "pipe"] });
+  // A real visible native window is intentional on this disposable test host.
+  app = spawn(exe, [documentPath], { env, cwd: dirname(exe), stdio: ["ignore", "pipe", "pipe"] });
   const run = { pid: app.pid, executable: exe, stdout: "", stderr: "" };
   processes.push({ process: app, record: run });
   for (const type of ["stdout", "stderr"]) app[type].on("data", b => run[type] = (run[type] + b).slice(-32_000));
