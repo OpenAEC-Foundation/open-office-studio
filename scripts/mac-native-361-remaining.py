@@ -191,7 +191,20 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
         action("chord", "cmd-z"); grid("new-row typing reset", empty)
         action("chord", "cmd-z"); grid("Tab row reset", ROWS)
 
-    body("alpha", "A-before-Find-sentinel")
+    if independent:
+        # The initial genuine visible alpha click and the native X/XML oracle
+        # already prove this first cell. Undo/Redo/reset retain actual input
+        # focus; a second OCR click can be obscured by that same real caret.
+        state = action("snapshot")
+        focus = state.get("focusAfter", {})
+        if (state.get("pid") != pid or state.get("trusted") is not True
+                or state.get("applicationActive") is not True or state.get("frontmostPid") != pid
+                or focus.get("role") != "AXTextArea" or focus.get("description") != "Document input"
+                or len(state.get("tables", [])) != 1 or state["tables"][0].get("cellTexts") != ROWS):
+            raise PermissionError("Independent Find must retain the genuine first-cell preflight focus and original cells")
+        proof["checks"].append({"name": "Find reuses actual first-cell native preflight focus", "native": state})
+    else:
+        body("alpha", "A-before-Find-sentinel")
     insert_right("A Find sentinel column")
     action("chord", "cmd-f")
     wait(lambda: len(action("snapshot").get("findInputs", [])) == 1, "Native Find input did not appear")
