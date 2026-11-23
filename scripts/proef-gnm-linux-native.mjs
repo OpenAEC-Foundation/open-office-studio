@@ -140,55 +140,69 @@ const evaluate = (f, ...args) =>
     args,
   });
 async function observation() {
-  return evaluate(() => ({
-    title: document.title,
-    hasFocus: document.hasFocus(),
-    active: {
-      tag: document.activeElement?.tagName,
-      label: document.activeElement?.getAttribute("aria-label"),
-      testid: document.activeElement?.getAttribute("data-testid"),
-      className: document.activeElement?.className,
-    },
-    tabs: [...document.querySelectorAll('.office-tab[role="tab"]')].map(
-      (e) => ({
-        text: e.textContent,
-        selected: e.getAttribute("aria-selected"),
-      }),
-    ),
-    sheets: [
-      ...document.querySelectorAll(
-        '[data-testid="xlsx-sheet-tabs"] [role="tab"]',
+  return evaluate(() => {
+    const tab = document.querySelector(
+      '.office-tab[role="tab"][aria-selected="true"]',
+    );
+    const panel =
+      tab && document.getElementById(tab.getAttribute("aria-controls"));
+    return {
+      title: document.title,
+      hasFocus: document.hasFocus(),
+      active: {
+        tag: document.activeElement?.tagName,
+        label: document.activeElement?.getAttribute("aria-label"),
+        testid: document.activeElement?.getAttribute("data-testid"),
+        className: document.activeElement?.className,
+      },
+      tabs: [...document.querySelectorAll('.office-tab[role="tab"]')].map(
+        (e) => ({
+          text: e.textContent,
+          selected: e.getAttribute("aria-selected"),
+        }),
       ),
-    ].map((e) => ({
-      name: e.textContent,
-      selected: e.getAttribute("aria-selected"),
-    })),
-    nameBox: document.querySelector(".rekenblad-naamvak")?.value,
-    formula: document.querySelector('[data-testid="xlsx-formula-input"]')
-      ?.value,
-    grid: [...document.querySelectorAll('[role="grid"] [role="row"]')].map(
-      (e) => ({
+      sheets: [
+        ...(panel?.querySelectorAll(
+          '[data-testid="xlsx-sheet-tabs"] [role="tab"]',
+        ) ?? []),
+      ].map((e) => ({
+        name: e.textContent,
+        selected: e.getAttribute("aria-selected"),
+      })),
+      panelId: panel?.id,
+      nameBox: panel?.querySelector(".rekenblad-naamvak")?.value,
+      formula: panel?.querySelector('[data-testid="xlsx-formula-input"]')
+        ?.value,
+      grid: [
+        ...(panel?.querySelectorAll('[role="grid"] [role="row"]') ?? []),
+      ].map((e) => ({
         row: e.querySelector('[role="rowheader"]')?.textContent,
         cells: [...e.querySelectorAll('[role="gridcell"]')].map((c) => ({
           text: c.textContent,
           selected: c.getAttribute("aria-selected"),
         })),
-      }),
-    ),
-    dialogs: [...document.querySelectorAll('[role="dialog"]')].map(
-      (e) => e.textContent,
-    ),
-    alerts: [...document.querySelectorAll('[role="alert"]')].map(
-      (e) => e.textContent,
-    ),
-  }));
+      })),
+      dialogs: [...document.querySelectorAll('[role="dialog"]')].map(
+        (e) => e.textContent,
+      ),
+      alerts: [...document.querySelectorAll('[role="alert"]')].map(
+        (e) => e.textContent,
+      ),
+    };
+  });
 }
 async function click(selector, text) {
   const el = await waitFor(
     () =>
       evaluate(
         (s, t) => {
-          const all = [...document.querySelectorAll(s)].filter(
+          const tab = document.querySelector(
+            '.office-tab[role="tab"][aria-selected="true"]',
+          );
+          const panel =
+            tab && document.getElementById(tab.getAttribute("aria-controls"));
+          const scope = s.startsWith(".opslaanals") ? document : panel;
+          const all = [...(scope?.querySelectorAll(s) ?? [])].filter(
             (e) =>
               e.getClientRects().length &&
               !e.disabled &&
@@ -238,6 +252,9 @@ async function key(chord, opensPicker = false) {
 }
 async function type(text) {
   const sig = () => ({
+    panel: document
+      .querySelector('.office-tab[role="tab"][aria-selected="true"]')
+      ?.getAttribute("aria-controls"),
     tag: document.activeElement?.tagName,
     label: document.activeElement?.getAttribute("aria-label"),
     testid: document.activeElement?.getAttribute("data-testid"),
@@ -267,8 +284,18 @@ async function cell(where, wanted) {
   const a = await waitFor(
     async () => {
       const o = await observation();
+      const expectedDisplay = wanted?.startsWith("=")
+        ? { C1: "6", C2: "5", C3: "-1", C4: "11" }[where]
+        : wanted;
+      const shown = o.grid
+        .flatMap((r) => r.cells)
+        .some(
+          (c) =>
+            c.selected === "true" &&
+            c.text === `${where}, ${expectedDisplay}, selected`,
+        );
       return o.nameBox === where &&
-        (wanted === undefined || o.formula === wanted)
+        (wanted === undefined || (o.formula === wanted && shown))
         ? o
         : null;
     },
@@ -517,7 +544,7 @@ async function picker(path, title) {
     dialog: d,
     selectedPath: path,
     protocol:
-      "wait exact dialog; Ctrl+L; Ctrl+A; XTest path; Return; owned app focus restored",
+      "wait exact dialog; Ctrl+L; Ctrl+A; XTest path; Alt+O for Open or Return for Save; owned app focus restored",
   });
 }
 async function openPicker(path) {
@@ -561,6 +588,19 @@ async function saveAs(source, path, name) {
     "App Save as dialog",
   );
   await click('.opslaanals input[type="radio"][value="xlsx"]');
+  const runtime = await waitFor(
+    () =>
+      evaluate(() => {
+        const text = document.querySelector(".opslaanals-runtime")?.textContent;
+        return text?.includes("included with the app") ? text : null;
+      }),
+    "Save as reports the actual included private runtime",
+  );
+  report.checks.push({
+    phase,
+    label: "Native runtime status identifies bundled office runtime",
+    runtime,
+  });
   assert.equal(
     await evaluate(
       () =>
@@ -612,6 +652,30 @@ const sourceSha =
   "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6";
 const inputs = [];
 try {
+  assert.equal(
+    env.OPENAEC_CONVERSIE_PROGRAMMA,
+    undefined,
+    "No external converter override",
+  );
+  const packageFiles = execFileSync("dpkg", ["-L", "open-office-studio"], {
+    encoding: "utf8",
+  })
+    .trim()
+    .split("\n");
+  const converters = packageFiles.filter((p) =>
+    p.endsWith("/program/soffice.bin"),
+  );
+  assert.equal(
+    converters.length,
+    1,
+    "One bundled converter installed by this DEB",
+  );
+  report.privateRuntime = {
+    path: converters[0],
+    sha256: hash(await readFile(converters[0])),
+    installedBy: "open-office-studio",
+    externalOverride: false,
+  };
   const config = join(env.XDG_CONFIG_HOME, "org.openaec.office-studio");
   await mkdir(config, { recursive: true });
   await writeFile(
