@@ -130,4 +130,4 @@ it.skipIf(!process.env.OOS_STI_BINDING)("converts the authentic STI using the ve
   report.engine = { slides: 7, sourceParagraphs: 24, pageSizePreserved: true, appropriateEdit: "prefix first slide title", marker,
     editSavedAndReopened: true, sourceUnchanged: sha(source) === oracle.fixture.sha256,
     relevantMediaQualification: oracle.media.qualification, visualFidelity: "not tested; no GUI/screen capture" };
-});
+}, 180_000);

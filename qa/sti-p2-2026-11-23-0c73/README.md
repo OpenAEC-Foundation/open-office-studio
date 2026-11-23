@@ -61,3 +61,26 @@ Native testing is guarded by Linux + GitHub Actions and a verified runtime
 binding; a future binding must include the parent package/artifact chain and
 runtime file identities. Each stage reports application P2 and harness commit
 separately. Generated evidence stays in `.local/qa-sti-p2-0c73/` for CI artifacts.
+
+## Bound runtime and first completed stage
+
+Read-only run `45147264855` at QA commit
+`7e60c301b62ad913c8c35f7c8759fa0efb91890c` passed three checks, with native
+conversion explicitly skipped. Artifact `14804526945`, SHA-256
+`31874ad8a89c5316154fe328dc70c5d6227ab89aa1d738e59d76cfdbd3fcacb7`.
+
+The subsequent native stage consumes only shared runtime artifact `14805600515`
+from successful QA run `45147346793` / harness
+`22a8577d215911976400adca4c541f2636212918`. ZIP SHA-256:
+`bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487`;
+inner runtime tar SHA-256:
+`f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3`.
+It originates in canonical P2 Desktop run `45143305147` / Linux job
+`137586343061`, Office DEB SHA-256
+`23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1`.
+`prepare_runtime.py` checks the artifact ZIP, parent chain, descriptor, pinned
+consumer verifier and all 15,082 runtime entries including modes/symlinks.
+The converter receives the unchanged P2 safe profile in two private directories,
+the production PPTX filter and printer-independent process environment. Only
+its own process group is stopped on timeout; no system converter is selected.
+The native result remains pending until this branch's Linux run completes.
