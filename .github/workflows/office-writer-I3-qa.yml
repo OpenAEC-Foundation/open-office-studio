@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: app
-          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+          ref: 98b340429436cf597a569549d043bd75b486e2ab
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -44,20 +44,25 @@ jobs:
       - name: Install headless browser
         working-directory: app
         run: pnpm exec playwright install --with-deps chromium
+      - name: Exact-source field SDK regression
+        working-directory: app
+        run: node ../harness/qa/field374/sdk.mjs 98b340429436cf597a569549d043bd75b486e2ab .local/writer-481-QA-field-sdk
       - name: Normal source-bound application and full combination
         working-directory: app
         run: |
           node scripts/writer-proefbuild.mjs build .local/dist-481-QA-normal /
           node ../harness/scripts/office-writer-I3-qa.mjs .local/dist-481-QA-normal /
+          node ../harness/qa/field374/browser.mjs 98b340429436cf597a569549d043bd75b486e2ab .local/dist-481-QA-normal / .local/writer-481-QA-field-normal
         env:
-          OFFICE_TEST_SOURCE: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+          OFFICE_TEST_SOURCE: 98b340429436cf597a569549d043bd75b486e2ab
       - name: Hosted source-bound application and full combination
         working-directory: app
         run: |
           node scripts/writer-proefbuild.mjs build .local/dist-481-QA-hosted /office/
           node ../harness/scripts/office-writer-I3-qa.mjs .local/dist-481-QA-hosted /office/
+          node ../harness/qa/field374/browser.mjs 98b340429436cf597a569549d043bd75b486e2ab .local/dist-481-QA-hosted /office/ .local/writer-481-QA-field-hosted
         env:
-          OFFICE_TEST_SOURCE: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+          OFFICE_TEST_SOURCE: 98b340429436cf597a569549d043bd75b486e2ab
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -67,3 +72,4 @@ jobs:
             app/.local/writer-481-QA-*/
             app/.local/dist-481-QA-*.build.json
             harness/.github/office-writer-I3-qa.json
+            harness/qa/field374/upstream-binding.json
