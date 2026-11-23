@@ -1,0 +1,84 @@
+name: Linux 420 packaged Find and ribbon acceptance
+on:
+  push:
+    branches: [codex/linux-native-368-369-2026-11-23]
+    paths:
+      - .github/workflows/linux420-native-368-369.yml
+      - scripts/linux420-*
+      - scripts/proef-linux420-native.mjs
+      - scripts/test-linux420-ribbon-native.mjs
+      - tests/fixtures/linux420/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  APP_SOURCE: 420af640c10ab9ada6c66c844c0098caea87c493
+jobs:
+  native:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.APP_SOURCE }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/linux420-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Prepare the isolated Linux runtime and known runner mirrors
+        run: |
+          sudo /usr/bin/python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo /usr/bin/python3 - <<'PY'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('ubuntu_mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          helper=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(helper)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():
+                  before=path.read_text()
+                  after=helper.herschrijf_bronnen(before)
+                  if before != after:
+                      path.write_text(after)
+                      print('Rewrote exact runner mirror list:',path)
+          PY
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool python3-gi gir1.2-gtk-3.0
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm --dir .local/linux420-harness install --frozen-lockfile --ignore-scripts
+      - name: Protocol and syntax checks before native app operation
+        run: |
+          node --check .local/linux420-harness/scripts/proef-linux420-native.mjs
+          node --check .local/linux420-harness/scripts/linux420-ribbon-native.mjs
+          node --test .local/linux420-harness/scripts/test-linux420-ribbon-native.mjs
+          /usr/bin/python3 -m py_compile .local/linux420-harness/scripts/linux420-native-package.py .local/linux420-harness/scripts/linux420-native-capture.py
+      - name: Verify immutable archive, version, DEB and actual installed ELF
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: /usr/bin/python3 .local/linux420-harness/scripts/linux420-native-package.py
+      - name: Real preflight then scoped Find and keyboard ribbon combination
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: dbus-run-session -- xvfb-run -a -s '-screen 0 1800x1200x24' node .local/linux420-harness/scripts/proef-linux420-native.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux420-native-368-369-${{ github.sha }}
+          path: |
+            .local/linux420-input/identity.json
+            .local/linux420-input/api-run.json
+            .local/linux420-native/**/*.json
+            .local/linux420-native/**/*.png
+            .local/linux420-native/*.docx
+            .local/linux420-native/driver.log
+          include-hidden-files: true
+          if-no-files-found: warn
