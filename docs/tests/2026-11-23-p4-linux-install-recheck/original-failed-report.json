@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+  "harnessCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+  "harnessSha256": "0a96af9d43abe7c941da7ce52736a041306457b4d9d46cf512753837d0c4ce67",
+  "sourceTree": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b",
+  "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+  "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+  "status": "failed",
+  "checks": [],
+  "limits": [
+    "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+    "Virtual X11 display and software graphics, not physical hardware",
+    "DEB only; AppImage native operation is not certified"
+  ],
+  "package": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.48.1_amd64.deb",
+    "sha256": "c666690b091d5a4548c7e6d3f3157f9b3c77cb10b534ba2b0d1cbf02b297b3a0"
+  },
+  "packagedExecutableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+  "rawBuildExecutableSha256": "75cd60890bc3f01ccd87c9c5e616f998cd348d6669682d96151472a979af7850",
+  "error": "Error: Command failed: sudo dpkg --install /home/runner/work/open-office-studio/open-office-studio/src-tauri/target/release/bundle/deb/Open Office Studio_2026.48.1_amd64.deb\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at checkExecSyncError (node:child_process:916:11)\n    at execFileSync (node:child_process:952:15)\n    at file:///home/runner/work/open-office-studio/open-office-studio/scripts/proef-native-linux-basis.mjs:212:5",
+  "ownedApplicationClosed": true
+}

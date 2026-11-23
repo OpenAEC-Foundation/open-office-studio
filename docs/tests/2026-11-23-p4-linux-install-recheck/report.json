@@ -1,0 +1,592 @@
+{
+  "sourceCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+  "harnessCommit": "5fe310d3ae40bbd8c453f6944d571c21030762b3",
+  "harnessSha256": "10be1e73a26e0bbaffabacdb272ca7563c1b9d892df39b203f6e6647dcb50868",
+  "sourceTree": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b",
+  "platform": "Linux x64 / Xvfb / installed Tauri WebKitGTK",
+  "scope": "One synthetic Writer keyboard/save/full-process-reopen round trip",
+  "status": "passed",
+  "checks": [
+    "Real installed DEB opens a native Writer document",
+    "Actual keyboard edit and Ctrl+S persist exactly one marker",
+    "Application process fully exits after saving",
+    "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+  ],
+  "limits": [
+    "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+    "Virtual X11 display and software graphics, not physical hardware",
+    "DEB only; AppImage native operation is not certified"
+  ],
+  "package": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/.local/native-recheck-package/Open Office Studio_2026.48.1_amd64.deb",
+    "sha256": "c666690b091d5a4548c7e6d3f3157f9b3c77cb10b534ba2b0d1cbf02b297b3a0"
+  },
+  "artifactOrigin": {
+    "run": 45172076803,
+    "sourceCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+    "sourceTree": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b",
+    "job": {
+      "id": 137683860055,
+      "run_id": 45172076803,
+      "workflow_name": "Kantooromgeving controleren en bouwen",
+      "head_branch": "codex/release-prep-2026-11-20",
+      "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45172076803",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVRiTGs8AAAAgDpj6Vw",
+      "head_sha": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137683860055",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45172076803/job/137683860055",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-23T12:12:19Z",
+      "started_at": "2026-11-23T12:12:21Z",
+      "completed_at": "2026-11-23T12:34:18Z",
+      "name": "desktop (ubuntu-22.04)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-23T12:12:21Z",
+          "completed_at": "2026-11-23T12:12:23Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-23T12:12:23Z",
+          "completed_at": "2026-11-23T12:12:27Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T12:12:27Z",
+          "completed_at": "2026-11-23T12:12:27Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T12:12:27Z",
+          "completed_at": "2026-11-23T12:12:29Z"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T12:12:29Z",
+          "completed_at": "2026-11-23T12:12:31Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-23T12:12:31Z",
+          "completed_at": "2026-11-23T12:12:31Z"
+        },
+        {
+          "name": "Linux-bouwafhankelijkheden",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-23T12:12:31Z",
+          "completed_at": "2026-11-23T12:12:53Z"
+        },
+        {
+          "name": "Conversieruntime installeren",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-11-23T12:12:53Z",
+          "completed_at": "2026-11-23T12:12:53Z"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-23T12:12:53Z",
+          "completed_at": "2026-11-23T12:12:58Z"
+        },
+        {
+          "name": "Cache van de vastgepinde kantoorruntime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-23T12:12:58Z",
+          "completed_at": "2026-11-23T12:13:01Z"
+        },
+        {
+          "name": "Run node scripts/voorbereiden-kantoorruntime.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-23T12:13:01Z",
+          "completed_at": "2026-11-23T12:13:23Z"
+        },
+        {
+          "name": "Lettertypencache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-23T12:13:23Z",
+          "completed_at": "2026-11-23T12:13:24Z"
+        },
+        {
+          "name": "Run node scripts/haal-lettertypen.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-23T12:13:24Z",
+          "completed_at": "2026-11-23T12:13:24Z"
+        },
+        {
+          "name": "Woordenboekencache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-23T12:13:24Z",
+          "completed_at": "2026-11-23T12:13:25Z"
+        },
+        {
+          "name": "Run node scripts/haal-woordenboeken.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-23T12:13:25Z",
+          "completed_at": "2026-11-23T12:13:25Z"
+        },
+        {
+          "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-23T12:13:25Z",
+          "completed_at": "2026-11-23T12:13:35Z"
+        },
+        {
+          "name": "Run node scripts/bouw-spelling-wasm.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-23T12:13:35Z",
+          "completed_at": "2026-11-23T12:13:41Z"
+        },
+        {
+          "name": "Run pnpm versie:check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-23T12:13:41Z",
+          "completed_at": "2026-11-23T12:13:42Z"
+        },
+        {
+          "name": "Vastgelegde versleutelde proefbestanden ophalen",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-23T12:13:42Z",
+          "completed_at": "2026-11-23T12:13:42Z"
+        },
+        {
+          "name": "Run pnpm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-23T12:13:42Z",
+          "completed_at": "2026-11-23T12:17:42Z"
+        },
+        {
+          "name": "Run python -m unittest discover -s tests -v",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-23T12:17:42Z",
+          "completed_at": "2026-11-23T12:17:44Z"
+        },
+        {
+          "name": "Run node scripts/test-kantoor-engines.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-23T12:17:44Z",
+          "completed_at": "2026-11-23T12:17:44Z"
+        },
+        {
+          "name": "Run pnpm test:opdrachten",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-11-23T12:17:44Z",
+          "completed_at": "2026-11-23T12:17:52Z"
+        },
+        {
+          "name": "Experimenteel IFCX-bewaarvoorstel controleren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-23T12:17:52Z",
+          "completed_at": "2026-11-23T12:17:52Z"
+        },
+        {
+          "name": "Windows-loader voorbereiden",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-11-23T12:17:52Z",
+          "completed_at": "2026-11-23T12:17:52Z"
+        },
+        {
+          "name": "Run pnpm build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-23T12:17:52Z",
+          "completed_at": "2026-11-23T12:18:54Z"
+        },
+        {
+          "name": "Chromium voor offline Writer-opslag",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-11-23T12:18:54Z",
+          "completed_at": "2026-11-23T12:19:17Z"
+        },
+        {
+          "name": "Writer werkelijk offline bewerken, opslaan en heropenen",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-11-23T12:19:17Z",
+          "completed_at": "2026-11-23T12:19:24Z"
+        },
+        {
+          "name": "Native document-link path regressions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-23T12:19:24Z",
+          "completed_at": "2026-11-23T12:22:00Z"
+        },
+        {
+          "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30,
+          "started_at": "2026-11-23T12:22:00Z",
+          "completed_at": "2026-11-23T12:22:00Z"
+        },
+        {
+          "name": "Gebouwde databaseparser controleren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-11-23T12:22:00Z",
+          "completed_at": "2026-11-23T12:22:00Z"
+        },
+        {
+          "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-11-23T12:22:00Z",
+          "completed_at": "2026-11-23T12:22:12Z"
+        },
+        {
+          "name": "ODF, oudere formaten en PDF werkelijk converteren",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 33,
+          "started_at": "2026-11-23T12:22:12Z",
+          "completed_at": "2026-11-23T12:22:12Z"
+        },
+        {
+          "name": "Geconverteerde inhoud onafhankelijk controleren",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 34,
+          "started_at": "2026-11-23T12:22:12Z",
+          "completed_at": "2026-11-23T12:22:12Z"
+        },
+        {
+          "name": "Linux-pakket bouwen",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-11-23T12:22:12Z",
+          "completed_at": "2026-11-23T12:33:05Z"
+        },
+        {
+          "name": "Windows-pakket bouwen",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 36,
+          "started_at": "2026-11-23T12:33:05Z",
+          "completed_at": "2026-11-23T12:33:05Z"
+        },
+        {
+          "name": "macOS-pakket bouwen",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 37,
+          "started_at": "2026-11-23T12:33:05Z",
+          "completed_at": "2026-11-23T12:33:05Z"
+        },
+        {
+          "name": "Bestandskoppelingen in de gebouwde macOS-app controleren",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 38,
+          "started_at": "2026-11-23T12:33:05Z",
+          "completed_at": "2026-11-23T12:33:05Z"
+        },
+        {
+          "name": "Bestanden native via macOS openen bij starten en in de draaiende app",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 39,
+          "started_at": "2026-11-23T12:33:05Z",
+          "completed_at": "2026-11-23T12:33:05Z"
+        },
+        {
+          "name": "Linux-installers werkelijk uitpakken en controleren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 40,
+          "started_at": "2026-11-23T12:33:05Z",
+          "completed_at": "2026-11-23T12:33:14Z"
+        },
+        {
+          "name": "Windows-installer werkelijk uitpakken en controleren",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 41,
+          "started_at": "2026-11-23T12:33:14Z",
+          "completed_at": "2026-11-23T12:33:14Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 42,
+          "started_at": "2026-11-23T12:33:14Z",
+          "completed_at": "2026-11-23T12:33:43Z"
+        },
+        {
+          "name": "Pakketrapport bewaren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 43,
+          "started_at": "2026-11-23T12:33:43Z",
+          "completed_at": "2026-11-23T12:33:44Z"
+        },
+        {
+          "name": "Native Linux Writer edit, save and full application reopen",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 44,
+          "started_at": "2026-11-23T12:33:44Z",
+          "completed_at": "2026-11-23T12:34:16Z"
+        },
+        {
+          "name": "Preserve actual native Linux roundtrip proof",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 45,
+          "started_at": "2026-11-23T12:34:16Z",
+          "completed_at": "2026-11-23T12:34:16Z"
+        },
+        {
+          "name": "Post Woordenboekencache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 84,
+          "started_at": "2026-11-23T12:34:16Z",
+          "completed_at": "2026-11-23T12:34:16Z"
+        },
+        {
+          "name": "Post Lettertypencache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 85,
+          "started_at": "2026-11-23T12:34:16Z",
+          "completed_at": "2026-11-23T12:34:16Z"
+        },
+        {
+          "name": "Post Cache van de vastgepinde kantoorruntime",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 86,
+          "started_at": "2026-11-23T12:34:16Z",
+          "completed_at": "2026-11-23T12:34:16Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 87,
+          "started_at": "2026-11-23T12:34:16Z",
+          "completed_at": "2026-11-23T12:34:16Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 88,
+          "started_at": "2026-11-23T12:34:16Z",
+          "completed_at": "2026-11-23T12:34:17Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 89,
+          "started_at": "2026-11-23T12:34:17Z",
+          "completed_at": "2026-11-23T12:34:17Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 90,
+          "started_at": "2026-11-23T12:34:17Z",
+          "completed_at": "2026-11-23T12:34:17Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 91,
+          "started_at": "2026-11-23T12:34:17Z",
+          "completed_at": "2026-11-23T12:34:17Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137683860055",
+      "labels": [
+        "ubuntu-22.04"
+      ],
+      "runner_id": 1000129216,
+      "runner_name": "GitHub Actions 1000129216",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "attempt": 1,
+    "originalJobConclusion": "failure",
+    "artifacts": [
+      {
+        "id": 14818307604,
+        "name": "open-office-studio-Linux",
+        "zipSha256": "131866de994986d4e3cd5ebce3b16148303074084854c5dfae6f31363103c106",
+        "zipBytes": 811837559
+      },
+      {
+        "id": 14818337583,
+        "name": "pakketcontrole-Linux",
+        "zipSha256": "acef4b384c8df391f3d6786cf51c0205b1f1a707204056c388a61748206faab7",
+        "zipBytes": 675
+      },
+      {
+        "id": 14818562463,
+        "name": "native-linux-writer-roundtrip",
+        "zipSha256": "71b70b2ed001844594de18f38fd66d852270727d4d758b753489ddbcbd2cad01",
+        "zipBytes": 1114
+      }
+    ],
+    "expectedExecutableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "packageReportSha256": "52f8d74bd659208ebaf9935537d693569cb15c61196a28ffbdecc358b5603dca",
+    "originalFailedReportSha256": "eb8c69f78823a69eefd65cbf484b022259f605f660651c2d45a99e8879a3fb76"
+  },
+  "packagedExecutableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+  "rawBuildExecutableSha256": null,
+  "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+  "runtime": {
+    "node": "v22.23.5",
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+      "WEBKIT_DISABLE_COMPOSITING_MODE": null
+    },
+    "driver": "tauri-driver v2.1.0:",
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1"
+  },
+  "originalTemplateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+  "inputSha256": "29e13465c5f6a477beee4d52f0830039ac7725e008b6d62fe2acbc109804de02",
+  "beforeSave": {
+    "saveDisabled": false,
+    "keyboard": [
+      {
+        "code": "ControlLeft",
+        "prevented": false,
+        "ctrl": true,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keydown",
+        "key": "Control",
+        "meta": false
+      },
+      {
+        "code": "Home",
+        "prevented": false,
+        "ctrl": true,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keydown",
+        "key": "Home",
+        "meta": false
+      },
+      {
+        "code": "Home",
+        "prevented": false,
+        "ctrl": true,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keyup",
+        "key": "Home",
+        "meta": false
+      },
+      {
+        "code": "ControlLeft",
+        "prevented": false,
+        "ctrl": false,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keyup",
+        "key": "Control",
+        "meta": false
+      },
+      {
+        "code": "KeyS",
+        "prevented": false,
+        "ctrl": false,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keydown",
+        "key": "S",
+        "meta": false
+      },
+      {
+        "code": "KeyS",
+        "prevented": false,
+        "ctrl": false,
+        "shift": false,
+        "target": "TEXTAREA",
+        "type": "keyup",
+        "key": "S",
+        "meta": false
+      }
+    ],
+    "focused": "TEXTAREA"
+  },
+  "savedSha256": "95efd8bfddf8cabb16d6fe05913410d2f60ca986e5dfac61cff4d6db4ccbfd00",
+  "ownedApplicationClosed": true
+}

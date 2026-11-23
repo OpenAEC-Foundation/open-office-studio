@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "scope": "CI DEB dependency resolver correction plus unchanged P4 Desktop Writer smoke recheck",
+  "status": "passed-bounded",
+  "source": {
+    "commit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+    "tree": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b",
+    "version": "2026.48.1"
+  },
+  "ciFixCommits": [
+    "77cb9be47bc0aaff4a8cb91059514605893a110b",
+    "77fe314e87dc07b3912ba2c3b60ef388dac5974a"
+  ],
+  "qa": {
+    "commit": "5fe310d3ae40bbd8c453f6944d571c21030762b3",
+    "probeSha256": "10be1e73a26e0bbaffabacdb272ca7563c1b9d892df39b203f6e6647dcb50868",
+    "run": 45177760596,
+    "job": 137703334912,
+    "attempt": 1,
+    "conclusion": "success",
+    "jobLogSha256": "1912c17c4190abed9540fddc89f3fa8e22aaaa1d268c46f1fd085473cc35adf1"
+  },
+  "original": {
+    "run": 45172076803,
+    "job": 137683860055,
+    "attempt": 1,
+    "conclusion": "failure",
+    "reason": "dpkg --install left declared Zenity dependency unresolved before any application check",
+    "artifacts": [
+      {
+        "id": 14818307604,
+        "name": "open-office-studio-Linux",
+        "zipSha256": "131866de994986d4e3cd5ebce3b16148303074084854c5dfae6f31363103c106",
+        "zipBytes": 811837559
+      },
+      {
+        "id": 14818337583,
+        "name": "pakketcontrole-Linux",
+        "zipSha256": "acef4b384c8df391f3d6786cf51c0205b1f1a707204056c388a61748206faab7",
+        "zipBytes": 675
+      },
+      {
+        "id": 14818562463,
+        "name": "native-linux-writer-roundtrip",
+        "zipSha256": "71b70b2ed001844594de18f38fd66d852270727d4d758b753489ddbcbd2cad01",
+        "zipBytes": 1114
+      }
+    ],
+    "packageReportSha256": "52f8d74bd659208ebaf9935537d693569cb15c61196a28ffbdecc358b5603dca",
+    "failedReportSha256": "eb8c69f78823a69eefd65cbf484b022259f605f660651c2d45a99e8879a3fb76"
+  },
+  "package": {
+    "sha256": "c666690b091d5a4548c7e6d3f3157f9b3c77cb10b534ba2b0d1cbf02b297b3a0",
+    "bytes": 383828606,
+    "installedAndPackagedElfSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0",
+    "resolvedZenity": "zenity\t3.42.1-0ubuntu1"
+  },
+  "proofArchive": {
+    "id": 14819358469,
+    "name": "p4-native-install-recheck",
+    "bytes": 249150,
+    "sha256": "44ba3d32e9b771c61f2f4b77d387707fa650880e6586f1e230454a9459a06890",
+    "privatePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-p4-linux-native-install-recheck-2026-11-23\\.local\\p4-native-recheck-proof\\14819358469.zip"
+  },
+  "checks": [
+    "Real installed DEB opens a native Writer document",
+    "Actual keyboard edit and Ctrl+S persist exactly one marker",
+    "Application process fully exits after saving",
+    "Fresh native process reopens unchanged saved DOCX and Find returns the marker"
+  ],
+  "independentAudit": {
+    "archiveDigestVerified": true,
+    "originalReportDigestVerified": true,
+    "probeLfBytesVerified": true,
+    "installedPayloadIdentical": true,
+    "savedDocxSha256": "95efd8bfddf8cabb16d6fe05913410d2f60ca986e5dfac61cff4d6db4ccbfd00",
+    "savedXmlMarkerCount": 1,
+    "originalPngsReviewedSerially": true,
+    "visual": [
+      "saved.png displays the marker in the real Writer document; its title/tab still shows a dirty dot in this capture, so clean UI-indicator timing is not certified",
+      "reopened-find.png displays the unchanged saved marker, one Find result and a clean document title; font-substitution notice is visible"
+    ]
+  },
+  "cleanup": {
+    "ownedApplicationClosed": true,
+    "remoteJobCompleted": true,
+    "localWatchProcessExited": true,
+    "localGuiOrRecordingStarted": false
+  },
+  "limits": [
+    "Writer only; no general Spreadsheet/Presentation or complete native issue acceptance",
+    "Virtual X11 display and software graphics, not physical hardware",
+    "DEB only; AppImage native operation is not certified",
+    "Artifact recheck uses external harness; original failed job remains failed",
+    "No normal user-quit claim: preserved harness closes WebDriver session and verifies actual application process exit",
+    "No complete #362/#368/#369/#374/#378 acceptance, AppImage or seven-product runtime acceptance",
+    "The second bundled-runtime installer correction has syntax/diff checks; this run exercises the Desktop smoke route only",
+    "No P5 package/native claim; later candidate requires its own packages and acceptance"
+  ],
+  "files": [
+    {
+      "path": "report.json",
+      "sha256": "d1724c0f14def7211008c4d9a693cf68818375068c438354483e7edfe71022b1",
+      "bytes": 20210
+    },
+    {
+      "path": "original-failed-report.json",
+      "sha256": "eb8c69f78823a69eefd65cbf484b022259f605f660651c2d45a99e8879a3fb76",
+      "bytes": 1682
+    },
+    {
+      "path": "original-package-report.json",
+      "sha256": "52f8d74bd659208ebaf9935537d693569cb15c61196a28ffbdecc358b5603dca",
+      "bytes": 1013
+    },
+    {
+      "path": "saved.png",
+      "sha256": "d05dbf2f6a083ac685ce4d7c5a3298f36d9f8005a7b7fa0894ff094efc9fd44d",
+      "bytes": 84842
+    },
+    {
+      "path": "reopened-find.png",
+      "sha256": "94a451b4027147564353e2ce8e0cbe77d7e54830492fdedb626ac66903bb5c3b",
+      "bytes": 125813
+    }
+  ]
+}
