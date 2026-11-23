@@ -120,6 +120,10 @@ def audit(run, metadata, jobs, fetched, target):
                 assert phase['normalFullExit'] and phase['ownedWebviewsExited'] and not phase['pageErrors']
                 assert phase['nativeMetadata']['identifier'] == receipt['application']['identifier']
                 assert phase['nativeMetadata']['version'] == '2026.48.1'
+                if app == 'database':
+                    identity = phase['nativeMetadata']['osIdentity']
+                    assert identity['identifier'] == receipt['application']['identifier'] and identity['shortcuts']
+                    assert all(link['identifier'] == identity['identifier'] and link['canonicalTarget'].lower() == phase['executableCanonicalPath'].lower() for link in identity['shortcuts'])
                 assert phase['ownWebviewProfile']['createdByNativeWebview'] and phase['ownWebviewProfile']['entries']
                 for suffix in ('ready','completed'):
                     assert (proof/(phase['phase']+'-'+suffix+'.png')).stat().st_size > 0
@@ -160,4 +164,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     metadata, jobs, fetched = collect(args.gh, args.repo, args.run, args.destination)
     result = audit(args.run, metadata, jobs, fetched, args.destination)
-    print(json.dumps(result, indent=2))
+    print(json.dumps(dict(source=result['source'],preparerRun=result['preparerRun'],apps={k:{f:v for f,v in a.items() if f in ('status','nativeStatus','error','visualAcceptance')} for k,a in result['apps'].items()}),indent=2))

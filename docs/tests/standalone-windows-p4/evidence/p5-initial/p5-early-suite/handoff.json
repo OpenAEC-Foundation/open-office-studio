@@ -1,0 +1,40 @@
+{
+  "descriptor": {
+    "id": 14828970973,
+    "name": "standalone-windows-p5-suite-descriptor",
+    "bytes": 11785,
+    "sha256": "dd38d57b287f613fdb3c43c063620c2deee419dbb3d8bc6dd879a7c782bf46b0"
+  },
+  "child": {
+    "id": 14828676560,
+    "name": "standalone-windows-p5-office-package",
+    "bytes": 384582285,
+    "digest": "sha256:3b8680e4b1560e05cdc3c90f0498fa066afef18c30a2a1ffb9c6c940238ee261"
+  },
+  "receiptSha256": "0074999fe56c3753c64db6113cffedd90710e9e86b9adb67e88b8c3155ca749e",
+  "nsis": {
+    "key": "office",
+    "title": "Open Office Studio",
+    "identifier": "org.openaec.office-studio",
+    "executable": "open-office-studio.exe",
+    "packagePath": "dist-installers/office/nsis/Open Office Studio_2026.48.1_x64-setup.exe",
+    "sha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+    "bytes": 384579648,
+    "signature": "valid",
+    "timestampRequired": true,
+    "payloadExecutable": {
+      "member": "open-office-studio.exe",
+      "bytes": 88121248,
+      "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+      "pe": "x64",
+      "derivation": "Independent7-Zip stdout from official whole-ZIP/report-bound NSIS before install"
+    }
+  },
+  "report": {
+    "parentMember": ".local/pakketcontrole-Windows.json",
+    "sha256": "c698382dc8998a8e20d8e4ae10cdc727fc0e811977bc56daaab45b9b69e7bab7",
+    "bytes": 594
+  },
+  "preparerRun": 45195780472,
+  "preparerHarness": "f88a805beb152d42a22806d135d9af1c912aedcb"
+}

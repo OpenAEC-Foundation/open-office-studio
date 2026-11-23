@@ -121,7 +121,10 @@ async function launch(input,phase) {
   result.expectedInputTabVisible=basename(input);
   result.exactInputTabActivated=true;
  }
- result.nativeMetadata=await page.evaluate(async()=>({
+ result.nativeMetadata=app.key==='database'?{
+  identifier:report.osIdentity.identifier,version:report.executable.productVersion,name:report.executable.productName,
+  source:'Actual NSIS-created Windows shortcut AppUserModelID + installed signed PE VersionInfo',osIdentity:report.osIdentity
+ }:await page.evaluate(async()=>({
   identifier:await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier'),
   version:await window.__TAURI_INTERNALS__.invoke('plugin:app|version'),
   name:await window.__TAURI_INTERNALS__.invoke('plugin:app|name')
@@ -167,6 +170,15 @@ try {
  if(app.signature==='valid')assert.equal(report.executable.signature,'Valid');
  assert(report.executable.timestampSigner,'Canonical signed app must have an actual timestamp');
  assert(['Valid','NotSigned'].includes(report.executable.signature),'Installed executable Authenticode is invalid or could not be verified');
+ if(app.key==='database') {
+  report.osIdentity=JSON.parse(await ps('app-identity.ps1',['-Executable',executable,'-ProductName',app.title,'-Identifier',app.identifier]));
+  assert.equal(report.osIdentity.identifier,app.identifier);
+  assert(report.osIdentity.shortcuts.length>0,'Actual installer-created Windows app identity required');
+  for(const link of report.osIdentity.shortcuts) {
+   link.canonicalTarget=await realpath(link.target);
+   assert.equal(link.canonicalTarget.toLowerCase(),(await realpath(executable)).toLowerCase());
+  }
+ }
  const listener=createServer(); await new Promise(r=>listener.listen(0,'127.0.0.1',r));port=listener.address().port; await new Promise(r=>listener.close(r));
  policyChanged=true;
  await ps('webview-policy.ps1',['-Phase','Enable','-Executable',app.executable,'-StatePath',policy,'-Port',String(port),'-ProfilePath',profile]);

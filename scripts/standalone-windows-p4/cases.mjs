@@ -37,7 +37,9 @@ export async function officeCase(qa, kind, phase) {
       assert(qa.presentationPoint&&qa.presentationPoint.x>0&&qa.presentationPoint.y>0);
       await canvas.dblclick({position:{x:bounds.width*qa.presentationPoint.x,y:bounds.height*qa.presentationPoint.y}});
       qa.record({phase,nativePresentationHitPoint:qa.presentationPoint,source:'Unchanged original PPTX title/layout XML'});
-      const input=page.locator('.office-presentatie textarea:focus'); await input.waitFor();
+      const input=page.locator('.office-presentatie :is(textarea,[contenteditable]):focus'); await input.waitFor();
+      assert(await input.evaluate(el=>el instanceof HTMLTextAreaElement||el.isContentEditable),'Actual focused slide text editor required');
+      qa.record({phase,actualSlideEditor:await input.evaluate(el=>({tag:el.tagName,contentEditable:el.isContentEditable}))});
       await qa.checkFocus(input,'presentation-text'); await page.keyboard.type('STANDALONE23 PRESENTATION EDIT');
       await page.keyboard.press('Escape');
       await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
@@ -64,6 +66,8 @@ export async function notitionCase(qa, phase) {
     const body=page.locator('.notities-blok textarea').first(); await qa.focus(body,'notition-note-body');
     await body.fill('STANDALONE23 NOTE BODY'); await body.press('Tab');
   } else {
+    await page.locator('.notities-boekkiezer select').selectOption({label:'STANDALONE23 NOTEBOOK'});
+    await page.waitForFunction(()=>document.querySelector('.notities-paginatitel')?.value==='STANDALONE23 NOTE');
     assert.equal(await pageTitle.inputValue(),'STANDALONE23 NOTE');
     assert.equal(await page.locator('.notities-boekkiezer select option:checked').textContent(),'STANDALONE23 NOTEBOOK');
     assert((await page.locator('.notities-blok textarea').first().inputValue()).includes('STANDALONE23 NOTE BODY'));
@@ -74,7 +78,7 @@ export async function notitionCase(qa, phase) {
   assert.equal(await backupTab.getAttribute('aria-selected'),'true');
   const exportButton=page.getByRole('button',{name:/^(Save backup|Back-up opslaan)$/i});
   await exportButton.click();
-  const file=await qa.saveNative(`${phase}.openaec-notities`, /^(Notes|Notities)-\d{4}-\d{2}-\d{2}\.openaec-notities$/);
+  const file=await qa.saveNative(`${phase}.openaec-notities`, /^(Notes|Notities)-\d{4}-\d{2}-\d{2}(?:\.openaec-notities)?$/);
   await qa.oracle('notition',file);
 }
 
@@ -106,8 +110,11 @@ export async function emailCase(qa, phase) {
   const {page}=qa;
   await page.locator('.email-welkom, .email-werkruimte').waitFor();
   if(phase==='initial') {
-    await page.getByRole('button',{name:/^(Add account|Account toevoegen)$/i}).click();
-    const wizard=page.locator('.email-wizard'); await wizard.waitFor();
+    const wizard=page.locator('.email-wizard');
+    const addAccount=page.getByRole('button',{name:/^(Add account|Account toevoegen)$/i});
+    await wizard.or(addAccount).first().waitFor();
+    if(!await wizard.isVisible())await addAccount.click();
+    await wizard.waitFor();
     await wizard.locator('.email-vinkje input[type="checkbox"]').first().uncheck();
     // The visible label also contains its ordinary <small> help text.
     // Match the exact label prefix while keeping selection inside this wizard.

@@ -1,0 +1,210 @@
+{
+  "scope": "Bounded original native core only; failed original cases preserved; later patches unexecuted",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "run": 45195780472,
+  "attempt": 1,
+  "harness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+  "apps": {
+    "writer": {
+      "status": "passed-scoped-native-function",
+      "artifact": {
+        "id": 14827219657,
+        "bytes": 386632,
+        "digest": "sha256:1fa779f5b23ba7a9ef9a104f78864a760b01ba2c223c9abfba32093aa0c468af",
+        "expires": "2027-02-21T14:35:11Z"
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 2008,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        },
+        {
+          "phase": "reopened",
+          "pid": 9568,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "result": "PASS bounded core: independent saved-byte/XML checks, two full normal exits/different PIDs, original source unchanged, native content actually reviewed",
+      "visualReview": [
+        {
+          "file": "initial-completed.png",
+          "sha256": "484303a9769122cf60c85857d2d86eadc8bc19705475228e92d9715c1f928347",
+          "observation": "Writer edit visible on document page"
+        },
+        {
+          "file": "reopened-completed.png",
+          "sha256": "cfd5f0ad0b74e4962ddc74a0e411570e70b39ec64fc1448df7ef016e26059da4",
+          "observation": "Writer edit visible on document page"
+        }
+      ]
+    },
+    "spreadsheet": {
+      "status": "passed-scoped-native-function",
+      "artifact": {
+        "id": 14827264661,
+        "bytes": 356491,
+        "digest": "sha256:91ae5b296d6ff9593efc6e12dda205c13cca0d9b82b58d976080a1179e99aee0",
+        "expires": "2027-02-21T14:35:11Z"
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 6924,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        },
+        {
+          "phase": "reopened",
+          "pid": 7144,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "result": "PASS bounded core: independent saved-byte/XML checks, two full normal exits/different PIDs, original source unchanged, native content actually reviewed",
+      "visualReview": [
+        {
+          "file": "initial-completed.png",
+          "sha256": "099e865d2217b5c2115ac99ac5d6ac93ebe11b52077daffb93f8ffa9cf6902aa",
+          "observation": "Spreadsheet cells41/42 and formula=B1+1 visibly rendered; text clipped at normal column width"
+        },
+        {
+          "file": "reopened-completed.png",
+          "sha256": "2c4fbdec1c46ba98cd20ddf40a4e9474120c1c386cfd37eeb6a0b8297773c2a7",
+          "observation": "Spreadsheet cells41/42 and formula=B1+1 visibly rendered; text clipped at normal column width"
+        }
+      ],
+      "observation": "Native UI displays a compatibility warning about document/workbook protection; protection behavior was not accepted by this small cell/formula case."
+    },
+    "presentation": {
+      "status": "failed",
+      "artifact": {
+        "id": 14828756756,
+        "bytes": 195453,
+        "digest": "sha256:19b26eefd9e54ba1a32b2142398e8e835941e242aa2341ccb47386a8a7484ac7",
+        "expires": "2027-02-21T14:35:11Z"
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 8928,
+          "status": "running"
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "result": "FAIL/BLOCKED original native case, not a product-fix or pass claim",
+      "error": "locator.waitFor: Timeout 20000ms exceeded."
+    },
+    "email": {
+      "status": "failed",
+      "artifact": {
+        "id": 14827214634,
+        "bytes": 238959,
+        "digest": "sha256:9ba94b48ddbaf0d9eeffe7f0ca98a76614cb89bc2ee837432b1b285d0ee613cc",
+        "expires": "2027-02-21T14:35:11Z"
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 5268,
+          "status": "running"
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "loopbackServerClosed": true,
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "result": "FAIL/BLOCKED original native case, not a product-fix or pass claim",
+      "error": "locator.click: Timeout 20000ms exceeded."
+    },
+    "notition": {
+      "status": "blocked",
+      "artifact": {
+        "id": 14829245915,
+        "bytes": 246471,
+        "digest": "sha256:579bec9d6c9235676a5f94076f8cfa79961eba5631582a8acde9dea9db071df7",
+        "expires": "2027-02-21T14:35:11Z"
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 1384,
+          "status": "running"
+        }
+      ],
+      "cleanup": {
+        "forcedOwnedProcessTree": true,
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "result": "FAIL/BLOCKED original native case, not a product-fix or pass claim",
+      "error": "Error: Command failed: pwsh -NoProfile -File D:\\a\\open-office-studio\\open-office-studio\\scripts\\standalone-windows-p4\\windows-actions.ps1 -Action SaveDialog -OwnedPid 1384 -ReportPath D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-notition\\1-SaveDialog-3.json -Target D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-notition\\initial.openaec-notities -ExpectedPattern ^(Notes|Notities)-\\d{4}-\\d{2}-\\d{2}\\.openaec-notities$"
+    },
+    "database": {
+      "status": "failed",
+      "artifact": {
+        "id": 14827716739,
+        "bytes": 166407,
+        "digest": "sha256:683d2db2900f943ef9cf00ccb5a3efd2044d1db71398047ec759bcff51d9063c",
+        "expires": "2027-02-21T14:35:11Z"
+      },
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 8304,
+          "status": "running"
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "result": "FAIL/BLOCKED original native case, not a product-fix or pass claim",
+      "error": "page.evaluate: Command plugin:app|identifier not allowed by ACL"
+    }
+  }
+}

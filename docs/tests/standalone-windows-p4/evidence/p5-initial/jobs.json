@@ -1,0 +1,926 @@
+[
+  {
+    "id": 137765723008,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE3obgA",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137765723008",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137765723008",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T14:35:11Z",
+    "started_at": "2026-11-23T14:35:13Z",
+    "completed_at": "2026-11-23T14:38:26Z",
+    "name": "prepare",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:35:14Z",
+        "completed_at": "2026-11-23T14:35:15Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:35:15Z",
+        "completed_at": "2026-11-23T14:35:20Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:35:20Z",
+        "completed_at": "2026-11-23T14:35:21Z"
+      },
+      {
+        "name": "Run python scripts/standalone-windows-p4/intake.py plan .github/standalone-windows-p4.json",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:35:21Z",
+        "completed_at": "2026-11-23T14:35:21Z"
+      },
+      {
+        "name": "One canonical download, source/job/archive/report/NSIS/payload gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:35:21Z",
+        "completed_at": "2026-11-23T14:37:45Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:37:45Z",
+        "completed_at": "2026-11-23T14:37:50Z"
+      },
+      {
+        "name": "Publish the verified Suite contract immediately after its own child upload",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T14:37:50Z",
+        "completed_at": "2026-11-23T14:37:53Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:37:53Z",
+        "completed_at": "2026-11-23T14:37:54Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T14:37:54Z",
+        "completed_at": "2026-11-23T14:38:00Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T14:38:00Z",
+        "completed_at": "2026-11-23T14:38:05Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-23T14:38:05Z",
+        "completed_at": "2026-11-23T14:38:11Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-11-23T14:38:11Z",
+        "completed_at": "2026-11-23T14:38:16Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-11-23T14:38:16Z",
+        "completed_at": "2026-11-23T14:38:19Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T14:38:19Z",
+        "completed_at": "2026-11-23T14:38:21Z"
+      },
+      {
+        "name": "Bind official child ZIP digests; separate Suite consumer contract",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T14:38:21Z",
+        "completed_at": "2026-11-23T14:38:21Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:38:21Z",
+        "completed_at": "2026-11-23T14:38:23Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 31,
+        "started_at": "2026-11-23T14:38:23Z",
+        "completed_at": "2026-11-23T14:38:23Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 32,
+        "started_at": "2026-11-23T14:38:23Z",
+        "completed_at": "2026-11-23T14:38:23Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 33,
+        "started_at": "2026-11-23T14:38:23Z",
+        "completed_at": "2026-11-23T14:38:23Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137765723008",
+    "labels": [
+      "ubuntu-22.04"
+    ],
+    "runner_id": 1000129882,
+    "runner_name": "GitHub Actions 1000129882",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 137767767839,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE5lPHw",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137767767839",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767839",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-11-23T14:38:26Z",
+    "started_at": "2026-11-23T14:38:28Z",
+    "completed_at": "2026-11-23T14:39:46Z",
+    "name": "Native notition Windows app-only",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:38:29Z",
+        "completed_at": "2026-11-23T14:38:30Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:38:30Z",
+        "completed_at": "2026-11-23T14:38:39Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:38:39Z",
+        "completed_at": "2026-11-23T14:38:44Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:38:44Z",
+        "completed_at": "2026-11-23T14:38:45Z"
+      },
+      {
+        "name": "Strict whole own-child ZIP and unchanged app-only input",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:38:45Z",
+        "completed_at": "2026-11-23T14:38:56Z"
+      },
+      {
+        "name": "Test driver only; no app build and no suite resources",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:38:56Z",
+        "completed_at": "2026-11-23T14:39:04Z"
+      },
+      {
+        "name": "Actual unchanged signed native app, Ctrl-save and independent reopen oracle",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 7,
+        "started_at": "2026-11-23T14:39:04Z",
+        "completed_at": "2026-11-23T14:39:40Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:39:40Z",
+        "completed_at": "2026-11-23T14:39:42Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 14,
+        "started_at": "2026-11-23T14:39:42Z",
+        "completed_at": "2026-11-23T14:39:42Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 15,
+        "started_at": "2026-11-23T14:39:42Z",
+        "completed_at": "2026-11-23T14:39:42Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:39:42Z",
+        "completed_at": "2026-11-23T14:39:44Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T14:39:44Z",
+        "completed_at": "2026-11-23T14:39:44Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137767767839",
+    "labels": [
+      "windows-latest"
+    ],
+    "runner_id": 1000129899,
+    "runner_name": "GitHub Actions 1000129899",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 137767767876,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE5lPRA",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137767767876",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767876",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-11-23T14:38:26Z",
+    "started_at": "2026-11-23T14:38:27Z",
+    "completed_at": "2026-11-23T14:41:22Z",
+    "name": "Native presentation Windows app-only",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:38:28Z",
+        "completed_at": "2026-11-23T14:38:29Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:38:29Z",
+        "completed_at": "2026-11-23T14:38:38Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:38:38Z",
+        "completed_at": "2026-11-23T14:38:42Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:38:42Z",
+        "completed_at": "2026-11-23T14:38:43Z"
+      },
+      {
+        "name": "Strict whole own-child ZIP and unchanged app-only input",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:38:43Z",
+        "completed_at": "2026-11-23T14:38:53Z"
+      },
+      {
+        "name": "Test driver only; no app build and no suite resources",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:38:53Z",
+        "completed_at": "2026-11-23T14:39:00Z"
+      },
+      {
+        "name": "Actual unchanged signed native app, Ctrl-save and independent reopen oracle",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 7,
+        "started_at": "2026-11-23T14:39:00Z",
+        "completed_at": "2026-11-23T14:41:18Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:41:18Z",
+        "completed_at": "2026-11-23T14:41:18Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 14,
+        "started_at": "2026-11-23T14:41:18Z",
+        "completed_at": "2026-11-23T14:41:18Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 15,
+        "started_at": "2026-11-23T14:41:18Z",
+        "completed_at": "2026-11-23T14:41:18Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:41:18Z",
+        "completed_at": "2026-11-23T14:41:20Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T14:41:20Z",
+        "completed_at": "2026-11-23T14:41:20Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137767767876",
+    "labels": [
+      "windows-latest"
+    ],
+    "runner_id": 1000129901,
+    "runner_name": "GitHub Actions 1000129901",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 137767767878,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE5lPRg",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137767767878",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767878",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T14:38:26Z",
+    "started_at": "2026-11-23T14:38:28Z",
+    "completed_at": "2026-11-23T14:41:45Z",
+    "name": "Native spreadsheet Windows app-only",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:38:29Z",
+        "completed_at": "2026-11-23T14:38:30Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:38:30Z",
+        "completed_at": "2026-11-23T14:38:40Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:38:40Z",
+        "completed_at": "2026-11-23T14:38:46Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:38:46Z",
+        "completed_at": "2026-11-23T14:38:47Z"
+      },
+      {
+        "name": "Strict whole own-child ZIP and unchanged app-only input",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:38:47Z",
+        "completed_at": "2026-11-23T14:39:18Z"
+      },
+      {
+        "name": "Test driver only; no app build and no suite resources",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:39:18Z",
+        "completed_at": "2026-11-23T14:39:25Z"
+      },
+      {
+        "name": "Actual unchanged signed native app, Ctrl-save and independent reopen oracle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T14:39:25Z",
+        "completed_at": "2026-11-23T14:41:39Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:41:39Z",
+        "completed_at": "2026-11-23T14:41:40Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T14:41:40Z",
+        "completed_at": "2026-11-23T14:41:40Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T14:41:40Z",
+        "completed_at": "2026-11-23T14:41:41Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:41:41Z",
+        "completed_at": "2026-11-23T14:41:43Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T14:41:43Z",
+        "completed_at": "2026-11-23T14:41:43Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137767767878",
+    "labels": [
+      "windows-latest"
+    ],
+    "runner_id": 1000129900,
+    "runner_name": "GitHub Actions 1000129900",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 137767767906,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE5lPYg",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137767767906",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767906",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-11-23T14:38:26Z",
+    "started_at": "2026-11-23T14:38:28Z",
+    "completed_at": "2026-11-23T14:39:28Z",
+    "name": "Native database Windows app-only",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:38:29Z",
+        "completed_at": "2026-11-23T14:38:31Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:38:31Z",
+        "completed_at": "2026-11-23T14:38:40Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:38:40Z",
+        "completed_at": "2026-11-23T14:38:44Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:38:44Z",
+        "completed_at": "2026-11-23T14:38:44Z"
+      },
+      {
+        "name": "Strict whole own-child ZIP and unchanged app-only input",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:38:44Z",
+        "completed_at": "2026-11-23T14:38:50Z"
+      },
+      {
+        "name": "Test driver only; no app build and no suite resources",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:38:50Z",
+        "completed_at": "2026-11-23T14:38:57Z"
+      },
+      {
+        "name": "Actual unchanged signed native app, Ctrl-save and independent reopen oracle",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 7,
+        "started_at": "2026-11-23T14:38:57Z",
+        "completed_at": "2026-11-23T14:39:23Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:39:23Z",
+        "completed_at": "2026-11-23T14:39:25Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 14,
+        "started_at": "2026-11-23T14:39:25Z",
+        "completed_at": "2026-11-23T14:39:25Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 15,
+        "started_at": "2026-11-23T14:39:25Z",
+        "completed_at": "2026-11-23T14:39:25Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:39:25Z",
+        "completed_at": "2026-11-23T14:39:27Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T14:39:27Z",
+        "completed_at": "2026-11-23T14:39:27Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137767767906",
+    "labels": [
+      "windows-latest"
+    ],
+    "runner_id": 1000129902,
+    "runner_name": "GitHub Actions 1000129902",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 137767767909,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE5lPZQ",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137767767909",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767909",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-11-23T14:38:26Z",
+    "started_at": "2026-11-23T14:38:28Z",
+    "completed_at": "2026-11-23T14:41:34Z",
+    "name": "Native email Windows app-only",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:38:29Z",
+        "completed_at": "2026-11-23T14:38:30Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:38:30Z",
+        "completed_at": "2026-11-23T14:38:39Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:38:39Z",
+        "completed_at": "2026-11-23T14:38:44Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:38:44Z",
+        "completed_at": "2026-11-23T14:38:45Z"
+      },
+      {
+        "name": "Strict whole own-child ZIP and unchanged app-only input",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:38:45Z",
+        "completed_at": "2026-11-23T14:38:59Z"
+      },
+      {
+        "name": "Test driver only; no app build and no suite resources",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:38:59Z",
+        "completed_at": "2026-11-23T14:39:05Z"
+      },
+      {
+        "name": "Actual unchanged signed native app, Ctrl-save and independent reopen oracle",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 7,
+        "started_at": "2026-11-23T14:39:05Z",
+        "completed_at": "2026-11-23T14:41:28Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:41:28Z",
+        "completed_at": "2026-11-23T14:41:30Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 14,
+        "started_at": "2026-11-23T14:41:30Z",
+        "completed_at": "2026-11-23T14:41:30Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 15,
+        "started_at": "2026-11-23T14:41:30Z",
+        "completed_at": "2026-11-23T14:41:30Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:41:30Z",
+        "completed_at": "2026-11-23T14:41:33Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T14:41:33Z",
+        "completed_at": "2026-11-23T14:41:33Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137767767909",
+    "labels": [
+      "windows-latest"
+    ],
+    "runner_id": 1000129903,
+    "runner_name": "GitHub Actions 1000129903",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 137767767915,
+    "run_id": 45195780472,
+    "workflow_name": "P5 Windows seven-product split and six standalone native hosts",
+    "head_branch": "codex/standalone-windows-p4-2026-11-23",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgE5lPaw",
+    "head_sha": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137767767915",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767915",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T14:38:26Z",
+    "started_at": "2026-11-23T14:38:27Z",
+    "completed_at": "2026-11-23T14:41:34Z",
+    "name": "Native writer Windows app-only",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T14:38:28Z",
+        "completed_at": "2026-11-23T14:38:29Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T14:38:29Z",
+        "completed_at": "2026-11-23T14:38:38Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T14:38:38Z",
+        "completed_at": "2026-11-23T14:38:43Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T14:38:43Z",
+        "completed_at": "2026-11-23T14:38:43Z"
+      },
+      {
+        "name": "Strict whole own-child ZIP and unchanged app-only input",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T14:38:43Z",
+        "completed_at": "2026-11-23T14:39:22Z"
+      },
+      {
+        "name": "Test driver only; no app build and no suite resources",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T14:39:22Z",
+        "completed_at": "2026-11-23T14:39:28Z"
+      },
+      {
+        "name": "Actual unchanged signed native app, Ctrl-save and independent reopen oracle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T14:39:28Z",
+        "completed_at": "2026-11-23T14:41:30Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T14:41:30Z",
+        "completed_at": "2026-11-23T14:41:31Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T14:41:31Z",
+        "completed_at": "2026-11-23T14:41:31Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T14:41:31Z",
+        "completed_at": "2026-11-23T14:41:31Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T14:41:31Z",
+        "completed_at": "2026-11-23T14:41:33Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T14:41:33Z",
+        "completed_at": "2026-11-23T14:41:33Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137767767915",
+    "labels": [
+      "windows-latest"
+    ],
+    "runner_id": 1000129898,
+    "runner_name": "GitHub Actions 1000129898",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  }
+]

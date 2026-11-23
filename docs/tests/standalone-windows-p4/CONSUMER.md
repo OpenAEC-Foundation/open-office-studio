@@ -1,5 +1,11 @@
 # P5 Windows: seven-product split, six standalone hosts
 
+**Hard stop23 November before16:00CET:** all unused start grants are revoked.
+Both current input configs are frozen `ready:false` (parent also
+`officialMetadataGo:false`). The successful original package identity and prior
+execution below remain historical evidence. No child reuse, #377 supplement,
+new test/build or automatic resumption is authorized. See `STOP-2026-11-23.md`.
+
 **P5 repin:** Integration closed P5 after the two CI-only apt-resolver corrections.
 Product source is `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 `e30879fd772871e690847c061ef66e6b81808a05`,2026.48.1; immutable branch
@@ -119,3 +125,28 @@ before claiming that the native content was displayed correctly.
 
 No local GUI/capture, extra app/Mac build, current product fix/intake, main/tag or
 publication is performed. #380 remains separate for a future product round.
+
+## Original-child reuse after actual native driver failures
+
+The initial six-host run is45195780472 @f88a805b. Writer and Spreadsheet passed
+their bounded core, independent saved-byte checks and review of both completed
+native screenshots. Four original failures are retained: Presentation expected
+a textarea while the real slide text editor was focused; Email's new-account
+wizard was already open; Windows hid the Notes backup extension; Database does
+not grant the test driver's read-only app metadata command.
+
+The separate `standalone-windows-p5-reuse.yml` verifies the original small binding
+artifact and actual successful Spreadsheet core, then gives only the original
+own app child to each fresh host. It retries those four core drivers and performs
+the short separately reported #377 Spreadsheet supplement. The successful Writer
+and Spreadsheet core cases are retained, not rerun. No canonical ZIP download or
+app build occurs. Original failures remain visible and are not reclassified as
+product fixes or native passes.
+
+Database identity now requires the actual installer-created Windows shortcut's
+`System.AppUserModel.ID`, its target resolving to the independently payload-bound
+installed signed PE, the actual running process path and PE version/name, and
+the isolated native profile. Missing/wrong OS identity still blocks acceptance;
+the driver never adds capabilities or substitutes an expected identifier.
+Microsoft documents the [AppUserModelID property](https://learn.microsoft.com/en-us/windows/win32/properties/props-system-appusermodel-id)
+and its [read-only ExtendedProperty query](https://learn.microsoft.com/en-us/windows/win32/shell/shellfolderitem-extendedproperty).
