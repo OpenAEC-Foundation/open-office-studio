@@ -418,9 +418,13 @@ class Case:
             self.select(["AXTextField"],[protocol+" server"]);self.replace("127.0.0.1")
             self.select(["AXPopUpButton"],[protocol+" security"],action="press")
             self.s.ax("key","end");self.s.ax("key","return")
-            nodes=attributes(self.s.ax("snapshot"))
-            selected=[n for n in nodes if n.get("AXRole")=="AXPopUpButton" and n.get("AXDescription")==protocol+" security"]
-            if len(selected)!=1 or selected[0].get("AXValue")!="None":raise Unavailable("Native loopback security selection not verified")
+            deadline=time.monotonic()+5
+            while True:
+                nodes=attributes(self.snapshot())
+                selected=[n for n in nodes if n.get("AXRole")=="AXPopUpButton" and n.get("AXDescription")==protocol+" security"]
+                if len(selected)==1 and selected[0].get("AXValue")=="None":break
+                if len(selected)>1 or time.monotonic()>=deadline:raise Unavailable("Native loopback security selection not verified")
+                time.sleep(0.2)  # Native popup commit is asynchronous; never repeat the selection.
             self.select(["AXTextField"],[protocol+" port"]);self.replace(str(port))
             self.focus(protocol+" port")
             # The observed username center lies outside the visible modal.

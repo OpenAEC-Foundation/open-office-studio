@@ -19,6 +19,7 @@ SEVEN_SPLIT_SCOPE = "seven-product-split-six-app-only-hosts"
 MAC_PRODUCER_GATES = (
     "Pakket bouwen (macOS, ondertekend en genotariseerd)",
     "Handtekening en notarisatie controleren (macOS)",
+    "Meet- en inhoudscontrole voor de meegeleverde runtime",
     "Standaardinstaller controleren met uitsluitend de private runtime",
 )
 
