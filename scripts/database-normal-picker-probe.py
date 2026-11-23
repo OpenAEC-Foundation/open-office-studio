@@ -79,7 +79,7 @@ for kind in ['appimage','deb']:
     prefs=Path(env['XDG_CONFIG_HOME'])/'org.openaec.database-studio';prefs.mkdir()
     (prefs/'voorkeuren.json').write_text(json.dumps({'taal':'en','updates':{'automatisch':False}}))
     application=source['package']['path'] if kind=='appimage' else '/usr/bin/open-database-studio'
-    case=dict(kind=kind,status='running',normalProcessWithoutWebDriver=True,sourceCommit=source['sourceCommit'],sourceTree=source['sourceTree'],version=source['version'],packageSha256=source['package']['sha256'],expectedElfSha256=source['payloadExecutableSha256'],functionalAcceptanceClaim=False,snapshots={})
+    case=dict(kind=kind,status='running',normalProcessWithoutWebDriver=True,sourceCommit=source['sourceCommit'],sourceTree=source['sourceTree'],version=source['version'],identity=source['identity'],sourceConfigBinding=source['databaseIdentityEvidence'],preflightReportSha256=sha(ROOT/kind/'report.json'),packageSha256=source['package']['sha256'],expectedElfSha256=source['payloadExecutableSha256'],functionalAcceptanceClaim=False,snapshots={})
     results.append(case)
     process=None
     try:
@@ -156,6 +156,8 @@ for kind in ['appimage','deb']:
             case.setdefault('nativeCaptures',[]).append(dict(label=label,**result))
         process,pid,xid,snapshot=launch()
         first_pid=pid;case.update(pid=pid,xid=xid,runningElfSha256=sha(f'/proc/{pid}/exe'),accessibleReadySnapshot=snapshot)
+        case['normalProcessMappings']=sorted({line.split(maxsplit=5)[-1] for line in Path(f'/proc/{pid}/maps').read_text().splitlines() if len(line.split(maxsplit=5))==6})
+        assert not any('/open-office-studio' in p or '/libreoffice/' in p or '/Open Office Studio/' in p for p in case['normalProcessMappings'])
         open_file(fixture,True)
         click('Create',role='page tab');click('Query')
         sql('SELECT SUM(amount) AS SyntheticTotal FROM StandaloneItems')
