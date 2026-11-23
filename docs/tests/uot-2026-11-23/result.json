@@ -1,0 +1,634 @@
+{
+  "scope": ".uot only, original UOF1 real-file probe under #30",
+  "status": "LIMITED: downstream engine checks pass; strict UOT source-text acceptance remains NOT PASSED",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/uot-qa-2026-11-23-e0d7",
+  "sourceHarnessCommit": "dbae9311253cbc0f5eb131834cfd415884f1c8ec",
+  "downstreamHarnessCommit": "fd3c23b664cbc116f9b4ddf1352d39e19d934123",
+  "source": {
+    "repository": "https://github.com/alexschiller/file-format-commons",
+    "commit": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+    "firstPublicationCommit": "5b36d9ea16a82bcc8963bf470dd0e62017b92804",
+    "path": "files/ffc_1.uot",
+    "filename": "ffc_1.uot",
+    "blob": "8da8ed308058de422663d6e9b9e05b6b3a316420",
+    "bytes": 17640,
+    "sha256": "6770640fb210e1b4236f7ed2a5fe19c4bd1c43c578304992137bd4d4a8f43a23",
+    "url": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/files/ffc_1.uot",
+    "generator": "OpenOffice/4.0.1$Unix OpenOffice.org_project/401m5$Build-9714",
+    "created": "2014-03-15T00:13:26",
+    "author": "Alex ",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/LICENSE",
+    "licenseSha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01",
+    "readmeUrl": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/README.md",
+    "readmeSha256": "8bfa495da2855c0de24210fedf5cf5dcd0c21f3801dc88a29576e71480ab02b9",
+    "variant": "UOF1 plain XML, original historical .uot publication",
+    "coverageLimit": "One Standard paragraph; no actual heading paragraphs or tables. UOF2, UOT export and visual fidelity are not demonstrated."
+  },
+  "overallFormatAcceptance": false,
+  "sourceImportAcceptance": false,
+  "downstreamEnginePassed": true,
+  "issueCheck": {
+    "overview": 30,
+    "queries": [
+      "UOT in:title,body",
+      "UOF in:title,body",
+      "\"Unified Office\" in:title,body",
+      "\"carriage\" in:title,body",
+      "\"line breaks\" in:title,body"
+    ],
+    "states": [
+      "open",
+      "closed"
+    ],
+    "specificMatches": [],
+    "unrelatedIssueRead": 374,
+    "newIssue": "None: observed whitespace folding is documented; normative UOF1 CR/reference semantics are unresolved, so a semantic line-break product defect is not asserted"
+  },
+  "ci": [
+    {
+      "id": 45154155907,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45154155907",
+      "headSha": "0bd021df1ed5f0931f95ecd5917635fcc3b09572",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137622735285,
+          "name": "source",
+          "conclusion": "failure",
+          "startedAt": "2026-11-23T10:13:50Z",
+          "completedAt": "2026-11-23T10:14:02Z"
+        },
+        {
+          "id": 137622856157,
+          "name": "browser_limit",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-23T10:14:02Z",
+          "completedAt": "2026-11-23T10:14:02Z"
+        },
+        {
+          "id": 137622857490,
+          "name": "runtime",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-23T10:14:02Z",
+          "completedAt": "2026-11-23T10:14:02Z"
+        }
+      ]
+    },
+    {
+      "id": 45154554762,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45154554762",
+      "headSha": "dbae9311253cbc0f5eb131834cfd415884f1c8ec",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137624058110,
+          "name": "source",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T10:16:19Z",
+          "completedAt": "2026-11-23T10:16:34Z"
+        },
+        {
+          "id": 137624201671,
+          "name": "browser_limit",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T10:16:36Z",
+          "completedAt": "2026-11-23T10:16:51Z"
+        },
+        {
+          "id": 137624347742,
+          "name": "runtime",
+          "conclusion": "failure",
+          "startedAt": "2026-11-23T10:16:53Z",
+          "completedAt": "2026-11-23T10:18:04Z"
+        }
+      ]
+    },
+    {
+      "id": 45155659529,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45155659529",
+      "headSha": "fd3c23b664cbc116f9b4ddf1352d39e19d934123",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 137627801507,
+          "name": "downstream_engine",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T10:23:34Z",
+          "completedAt": "2026-11-23T10:23:51Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14808236569,
+      "name": "uot-source-oracle",
+      "zipBytes": 8381,
+      "zipSha256": "04880a8eb90b5ac2045e4e03ae599282650fd0adab0e11d2b81cc0920f4f9612",
+      "run": 45154554762,
+      "headSha": "dbae9311253cbc0f5eb131834cfd415884f1c8ec",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14807537950,
+      "name": "uot-browser-limit",
+      "zipBytes": 1376,
+      "zipSha256": "2a597ccadbfe1784f208dc376dc55c2bb3594eee613c474146db7f54e103d9af",
+      "run": 45154554762,
+      "headSha": "dbae9311253cbc0f5eb131834cfd415884f1c8ec",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14808291643,
+      "name": "uot-runtime-result",
+      "zipBytes": 27414,
+      "zipSha256": "d4b707dd5daeb847c2fcab56f1caa902db5359e6b7ba4cb86c4b84fe1c8b0b59",
+      "run": 45154554762,
+      "headSha": "dbae9311253cbc0f5eb131834cfd415884f1c8ec",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14807009954,
+      "name": "uot-downstream-engine-diagnostic",
+      "zipBytes": 42939,
+      "zipSha256": "658cf94ab5c637b29054a749d648244d4ec827dd83ed274464a4905374cdf13c",
+      "run": 45155659529,
+      "headSha": "fd3c23b664cbc116f9b4ddf1352d39e19d934123",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    }
+  ],
+  "runtime": {
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "receipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "exitCode": 0,
+    "seconds": 2.0186747020000553,
+    "sourceUnchanged": true,
+    "convertedSha256": "63ece9b4b1f3bc569f9ef8b40880dfd307c9b559dfcd92dff25fc6870592e1f3",
+    "convertedBytes": 5891,
+    "method": "private CLI using production arguments/profile"
+  },
+  "sourceComparison": {
+    "sourceDecodedText": "file format commons uot Uniform Office Format 1 \r01100110011010010110110001100101001000000110011001101111011100100110110101100001011101000010000001100011011011110110110101101101011011110110111001110011\r",
+    "sourceLogicalText": "file format commons uot Uniform Office Format 1 \n01100110011010010110110001100101001000000110011001101111011100100110110101100001011101000010000001100011011011110110110101101101011011110110111001110011\n",
+    "convertedText": "file format commons uot Uniform Office Format 1 01100110011010010110110001100101001000000110011001101111011100100110110101100001011101000010000001100011011011110110110101101101011011110110111001110011 ",
+    "sourceCharacters": 202,
+    "convertedCharacters": 201,
+    "sourceCRPositions": [
+      48,
+      201
+    ],
+    "observation": "Converted text matches source whitespace runs collapsed to spaces; this is recorded as an observation, not used to pass source import"
+  },
+  "primarySourceAnalysis": {
+    "purpose": "Read-only primary-source analysis only, not a normative UOF1 conformance verdict and not a binding for the bundled private runtime stylesheet",
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "d9b2d316ec4d546f831415aa75514fa237f1fda4",
+    "files": [
+      {
+        "path": "filter/source/xslt/import/uof/uof2odf_text.xsl",
+        "blob": "162fa4c7f26fd4deab3abea68df1a5d76b638582",
+        "sha256": "d12b84a2c3469acd02d2d9b550c1bc49348e632f55cca43ac6d71e1ad0fb02a3",
+        "url": "https://github.com/LibreOffice/core/blob/d9b2d316ec4d546f831415aa75514fa237f1fda4/filter/source/xslt/import/uof/uof2odf_text.xsl"
+      },
+      {
+        "path": "filter/source/xslt/export/uof/odf2uof_text.xsl",
+        "blob": "4ca67c25690ebf0b6c1a82af0de2fe95a8ca8d1b",
+        "sha256": "53e4a4a686f73416dbfecfa0a3b54044263f6c87bf64167430fc5c31dbd3359a",
+        "url": "https://github.com/LibreOffice/core/blob/d9b2d316ec4d546f831415aa75514fa237f1fda4/filter/source/xslt/export/uof/odf2uof_text.xsl"
+      }
+    ],
+    "observation": "Upstream import handles text strings with xsl:value-of; a separate explicit 字:换行符 element maps to text:line-break. Export maps text:line-break back to 字:换行符. This fixture has no explicit break element, so CR reference handling is not independently established as lost semantic line breaks.",
+    "schema": {
+      "project": "https://www.openoffice.org/uof/",
+      "linkedSchema": "https://wiki.openoffice.org/wiki/File:UOF1.1_schema.rar",
+      "wikiApiResult": {
+        "batchcomplete": "",
+        "query": {
+          "normalized": [
+            {
+              "from": "File:UOF1.1_schema.rar",
+              "to": "File:UOF1.1 schema.rar"
+            }
+          ],
+          "pages": {
+            "-1": {
+              "ns": 6,
+              "title": "File:UOF1.1 schema.rar",
+              "missing": "",
+              "imagerepository": ""
+            }
+          }
+        }
+      },
+      "imageSearch": {
+        "batchcomplete": "",
+        "query": {
+          "allimages": [
+            {
+              "name": "UOF2.0draft-schema.rar",
+              "timestamp": "2012-06-12T06:19:22Z",
+              "size": 275224,
+              "width": 0,
+              "height": 0,
+              "url": "https://wiki.openoffice.org/w/images/4/42/UOF2.0draft-schema.rar",
+              "descriptionurl": "https://wiki.openoffice.org/wiki/File:UOF2.0draft-schema.rar",
+              "descriptionshorturl": "https://wiki.openoffice.org/w/index.php?curid=36769",
+              "ns": 6,
+              "title": "File:UOF2.0draft-schema.rar"
+            }
+          ]
+        }
+      },
+      "conclusion": "Linked UOF1.1 file is missing; image search exposes only UOF2 draft schema. No normative UOF1 whitespace decision obtained. UOF2 was not downloaded or tested."
+    }
+  },
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ],
+    "checks": [
+      "Real production-patched Word engine opens the exact verified converter DOCX without further text change; strict UOT source mismatch remains separate.",
+      "Text insertion, Undo and Redo retain every downstream baseline character, including its trailing space.",
+      "DOCX save/fresh engine reopen/second save and independent OOXML checks preserve downstream edited text, one ordinary paragraph, zero tables and source single line spacing; original UOT and converter DOCX unchanged."
+    ],
+    "independentSaved": {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/uot-engine/saved.docx",
+      "sha256": "9c23cb3f264b19355fb06537aaa1fc17ac7c414120986b26a5015cbc2bff64f6",
+      "baseline": "unchanged converted DOCX, independently parsed; not the UOT source-text oracle",
+      "scope": "Downstream edit/save/reopen only",
+      "sourceImportAcceptance": false,
+      "observed": {
+        "paragraphs": [
+          {
+            "text": "QA_UOT_23NOV file format commons uot Uniform Office Format 1 01100110011010010110110001100101001000000110011001101111011100100110110101100001011101000010000001100011011011110110110101101101011011110110111001110011 ",
+            "styleId": "Normal",
+            "styleName": "Normal",
+            "line": "240",
+            "lineRule": "auto",
+            "outlineLevel": null
+          }
+        ],
+        "tables": 0
+      },
+      "downstreamPassed": true
+    },
+    "independentReopenedSaved": {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/uot-engine/reopened-saved.docx",
+      "sha256": "298b5624073080daa86bb50531f9a9f1f4020aaad7877fa4281fd847bc2fa411",
+      "baseline": "unchanged converted DOCX, independently parsed; not the UOT source-text oracle",
+      "scope": "Downstream edit/save/reopen only",
+      "sourceImportAcceptance": false,
+      "observed": {
+        "paragraphs": [
+          {
+            "text": "QA_UOT_23NOV file format commons uot Uniform Office Format 1 01100110011010010110110001100101001000000110011001101111011100100110110101100001011101000010000001100011011011110110110101101101011011110110111001110011 ",
+            "styleId": "Normal",
+            "styleName": "Normal",
+            "line": "240",
+            "lineRule": "auto",
+            "outlineLevel": null
+          }
+        ],
+        "tables": 0
+      },
+      "downstreamPassed": true
+    }
+  },
+  "browserLimit": {
+    "method": "Real production functions in Linux Node with empty window, no Tauri bridge mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This UOT file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as DOCX or RTF, then open that copy."
+  },
+  "limits": [
+    "One Standard paragraph; no actual heading paragraphs or tables. UOF2, UOT export and visual fidelity are not demonstrated.",
+    "Strict original CR/reference whitespace comparison failed before Word engine; normative UOF1 whitespace/line-break semantics remain unconfirmed",
+    "Converted DOCX is used only as the downstream baseline, never substituted for the independent source oracle",
+    "No native/Tauri IPC/UI/installer/standalone acceptance, Windows/macOS or hosted-browser UI test",
+    "No new Office execution or runtime download in this stage"
+  ],
+  "platforms": {
+    "linux": "Verified private converter and production open helper executed. Strict source text mismatch occurs before Word engine. Real production-patched Word edit/Undo/Redo/DOCX save/fresh reopen and independent OOXML then pass only as a separate downstream diagnostic.",
+    "browser": "Negative production capability/open helper tested in Node with empty window, no Tauri mock; hosted browser UI NOT RUN.",
+    "windows": "NOT RUN; Linux-only scope.",
+    "macos": "NOT RUN; Linux-only scope."
+  },
+  "evidenceFiles": {
+    "conversionResult": [
+      {
+        "path": "converted-observation.json",
+        "bytes": 402,
+        "sha256": "e8d62385fb7687a44575b3856daed5e7313616b25d63a5af36db149e0b8437f9"
+      },
+      {
+        "path": "converted.docx",
+        "bytes": 5891,
+        "sha256": "63ece9b4b1f3bc569f9ef8b40880dfd307c9b559dfcd92dff25fc6870592e1f3"
+      },
+      {
+        "path": "converter-report.json",
+        "bytes": 5739,
+        "sha256": "0aac0fc8455d3e49c97643d09a5180e3c79b039090456d72b12d6576f5352673"
+      },
+      {
+        "path": "converter.log",
+        "bytes": 133,
+        "sha256": "73f16c57e485e006f58673705f719118b33532fe4b84c51ff02b66a6c29787c5"
+      },
+      {
+        "path": "engine-report.json",
+        "bytes": 3568,
+        "sha256": "a6611a8b1131362bd1c5be47d1041a9d30c29c4050801644220cb2a2aed3e3dc"
+      },
+      {
+        "path": "open-result.json",
+        "bytes": 622,
+        "sha256": "41feadfae5d636ae66aec7056ecf37193a66796863ac58078700e3b13c1af566"
+      },
+      {
+        "path": "runtime-base-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "runtime-binding.json",
+        "bytes": 4503,
+        "sha256": "060d9de3e20b38c3e7d56d05b617ea7bc95964d16bb35816586d37d3ab644985"
+      },
+      {
+        "path": "runtime-consumer-verification.json",
+        "bytes": 491,
+        "sha256": "8818595da17dc8e6d10c45ed3b5efa277e59c358cd5e09fe3d92edef8f27b5ed"
+      },
+      {
+        "path": "runtime-coordinator-descriptor.json",
+        "bytes": 6099,
+        "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6"
+      },
+      {
+        "path": "runtime-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "source-LICENSE.txt",
+        "bytes": 6556,
+        "sha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01"
+      },
+      {
+        "path": "source-README.md",
+        "bytes": 4406,
+        "sha256": "8bfa495da2855c0de24210fedf5cf5dcd0c21f3801dc88a29576e71480ab02b9"
+      },
+      {
+        "path": "source-oracle.json",
+        "bytes": 3025,
+        "sha256": "c189ab9fd76e7e54ba21f83adefe4b8dbd3ef7e0e1f4e2b4c2c25e3655d57fdb"
+      },
+      {
+        "path": "source.uot",
+        "bytes": 17640,
+        "sha256": "6770640fb210e1b4236f7ed2a5fe19c4bd1c43c578304992137bd4d4a8f43a23"
+      }
+    ],
+    "downstreamDiagnostic": [
+      {
+        "path": "diagnostic-engine-report.json",
+        "bytes": 4454,
+        "sha256": "07b30ea106d532ce6393384db2d0796888492f180bb50fcdc05977eb5579f102"
+      },
+      {
+        "path": "engine-import.json",
+        "bytes": 1911,
+        "sha256": "9cfb5dab00ded5b78689c0bece61e91dc17305f6f24ac629c68fd3de3817f05c"
+      },
+      {
+        "path": "input-artifact-verification.json",
+        "bytes": 1553,
+        "sha256": "04d90ace61b0e7030b385202aeeb20b84c0b623e44dba9502bdffd88e0d6ce4a"
+      },
+      {
+        "path": "input/converted-observation.json",
+        "bytes": 402,
+        "sha256": "e8d62385fb7687a44575b3856daed5e7313616b25d63a5af36db149e0b8437f9"
+      },
+      {
+        "path": "input/converted.docx",
+        "bytes": 5891,
+        "sha256": "63ece9b4b1f3bc569f9ef8b40880dfd307c9b559dfcd92dff25fc6870592e1f3"
+      },
+      {
+        "path": "input/converter-report.json",
+        "bytes": 5739,
+        "sha256": "0aac0fc8455d3e49c97643d09a5180e3c79b039090456d72b12d6576f5352673"
+      },
+      {
+        "path": "input/converter.log",
+        "bytes": 133,
+        "sha256": "73f16c57e485e006f58673705f719118b33532fe4b84c51ff02b66a6c29787c5"
+      },
+      {
+        "path": "input/engine-report.json",
+        "bytes": 3568,
+        "sha256": "a6611a8b1131362bd1c5be47d1041a9d30c29c4050801644220cb2a2aed3e3dc"
+      },
+      {
+        "path": "input/open-result.json",
+        "bytes": 622,
+        "sha256": "41feadfae5d636ae66aec7056ecf37193a66796863ac58078700e3b13c1af566"
+      },
+      {
+        "path": "input/runtime-base-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "input/runtime-binding.json",
+        "bytes": 4503,
+        "sha256": "060d9de3e20b38c3e7d56d05b617ea7bc95964d16bb35816586d37d3ab644985"
+      },
+      {
+        "path": "input/runtime-consumer-verification.json",
+        "bytes": 491,
+        "sha256": "8818595da17dc8e6d10c45ed3b5efa277e59c358cd5e09fe3d92edef8f27b5ed"
+      },
+      {
+        "path": "input/runtime-coordinator-descriptor.json",
+        "bytes": 6099,
+        "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6"
+      },
+      {
+        "path": "input/runtime-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "input/source-LICENSE.txt",
+        "bytes": 6556,
+        "sha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01"
+      },
+      {
+        "path": "input/source-README.md",
+        "bytes": 4406,
+        "sha256": "8bfa495da2855c0de24210fedf5cf5dcd0c21f3801dc88a29576e71480ab02b9"
+      },
+      {
+        "path": "input/source-oracle.json",
+        "bytes": 3025,
+        "sha256": "c189ab9fd76e7e54ba21f83adefe4b8dbd3ef7e0e1f4e2b4c2c25e3655d57fdb"
+      },
+      {
+        "path": "input/source.uot",
+        "bytes": 17640,
+        "sha256": "6770640fb210e1b4236f7ed2a5fe19c4bd1c43c578304992137bd4d4a8f43a23"
+      },
+      {
+        "path": "reopened-saved-independent.json",
+        "bytes": 850,
+        "sha256": "3cdf440da9de28eff255072246c14808847c974cb265c304b89519dc0c18d8e4"
+      },
+      {
+        "path": "reopened-saved.docx",
+        "bytes": 5782,
+        "sha256": "298b5624073080daa86bb50531f9a9f1f4020aaad7877fa4281fd847bc2fa411"
+      },
+      {
+        "path": "saved-independent.json",
+        "bytes": 841,
+        "sha256": "1b5bc3b6e02d5b87d9de5004ae9320ea23016a0fa11b331e520da6f36e24b270"
+      },
+      {
+        "path": "saved.docx",
+        "bytes": 5782,
+        "sha256": "9c23cb3f264b19355fb06537aaa1fc17ac7c414120986b26a5015cbc2bff64f6"
+      }
+    ]
+  }
+}
