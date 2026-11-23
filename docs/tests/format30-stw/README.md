@@ -61,21 +61,38 @@ runtime inventory, engine snapshots, all three DOCX files and XML audit reports.
 
 ## Package/platform limits
 
-The source runtime is the exact P2-pinned Linux archive, not an extracted release
-installer. P2 Desktop run 45143305147's small package-check artifact confirms the
-2026.48.1 DEB/AppImage identities. Actual bundled-runtime payload comparison still
-requires the targeted shared artifact binding requested from integration. Its DEB
+The executed source runtime is the exact P2-pinned Linux archive. The subsequent
+canonical payload comparison **passes**: all 13,946 recorded files have the same
+path, byte length and SHA-256 as the actual runtime in the P2 DEB. There are no
+missing, extra or changed payload files; this runtime payload has no symlinks.
+The launcher and ELF identities match. `package-binding.json` records the complete
+parent/producer/manifest/API chain and metadata comparison. Its DEB
 SHA-256 is `23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1`.
-No full release package was downloaded here. Source-runtime metadata under `meta/`
-is retained separately; the 13,946 runtime payload entries have canonical JSON SHA-256
+No full release package was downloaded here. Integration independently hashed the
+single shared runtime-only artifact ZIP and exposed its small entry manifest. This
+chat's bounded prefix retrieval obtained the identical manifest with 5,963,776
+transferred bytes; its SHA-256 matches the immutable Git-pinned descriptor. The
+shared manifest covers 15,082 entries including directories and package metadata.
+No runtime TAR was extracted or executed again by this chat. The full ZIP's digest
+is integration's check, not a claim that this chat hashed the entire ZIP.
+
+Source-runtime metadata under `meta/` remains visible. The notices and `.keep`
+match; receipt fields match except for `preparedMs` (22,546 versus 33,554). Original
+execution permissions were not recorded; the canonical file modes/link roundtrip
+were verified by the shared producer, not inferred from the old inventory.
+The 13,946 runtime payload entries have canonical JSON SHA-256
 `99ebec8e27cba9c102abcf2014d761788e6e44ec5ec5581dc85897a21898f6ae`.
 
 | Platform/route | Evidence | Remaining |
 | --- | --- | --- |
-| Linux private converter + live Writer kernel | Passed on exact P2 | Bundled package binding and native UI/IPC/dialog acceptance |
-| Browser | Production no-Tauri guard rejects STW with desktop/DOCX advice in Node | No real browser GUI acceptance executed by this probe |
+| Linux private converter + live Writer kernel, canonical DEB runtime payload | Passed on exact P2, including all payload file identities | Native UI/IPC/dialog and installer acceptance |
+| Browser | Node guard passed; additional actual Linux Chromium `/` and `/office/` test in progress | Actual browser artifact audit pending |
 | Windows | No runtime/GUI execution in this assignment | Native checks remain open |
 | macOS | No build or runner claimed | Native checks remain open |
+
+`native-handoff.md` records integration's current Windows, Linux and macOS owners,
+their acceptance steps, and the current browser assignment. Assignments are not
+native passes. The actual standalone app bytes/results remain with integration.
 
 This is body-text/selected-style/placeholder evidence for one real template.
 Headers/footers, full TOC evaluation, pagination, font substitution, universal STW

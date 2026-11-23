@@ -1,0 +1,253 @@
+{
+  "passed": true,
+  "testedEntries": 13946,
+  "packagedEntries": 13946,
+  "missing": [],
+  "extra": [],
+  "changed": [],
+  "matchedFiles": 13946,
+  "matchedSymlinks": 0,
+  "packagedMetadata": [
+    {
+      "path": "payload/usr/libexec/Open Office Studio/kantoorruntime/meta/.keep",
+      "mode": "0644",
+      "debMetadata": {
+        "mode": "0644",
+        "uid": 0,
+        "gid": 0,
+        "tarType": "0",
+        "linkTarget": null
+      },
+      "type": "file",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "payload/usr/libexec/Open Office Studio/kantoorruntime/meta/SOURCE-NOTICE.txt",
+      "mode": "0644",
+      "debMetadata": {
+        "mode": "0644",
+        "uid": 0,
+        "gid": 0,
+        "tarType": "0",
+        "linkTarget": null
+      },
+      "type": "file",
+      "bytes": 1605,
+      "sha256": "8b7a0e75d92f785f99612549a663741c6a5277586e1d85e8e6a752124d4bbb47"
+    },
+    {
+      "path": "payload/usr/libexec/Open Office Studio/kantoorruntime/meta/receipt.json",
+      "mode": "0644",
+      "debMetadata": {
+        "mode": "0644",
+        "uid": 0,
+        "gid": 0,
+        "tarType": "0",
+        "linkTarget": null
+      },
+      "type": "file",
+      "bytes": 404,
+      "sha256": "1ed10d43623c1c4f99dc8644df85b94cd7bae05258ca1357ccaeb80d096ecfc2"
+    }
+  ],
+  "testedMetadata": [
+    {
+      "path": "meta/.keep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "meta/receipt.json",
+      "bytes": 404,
+      "sha256": "7f5cfa0a2fdbf01c986e8764cce5e5fe4197a14fddd56031a5f40ba9d1a76c0b"
+    },
+    {
+      "path": "meta/SOURCE-NOTICE.txt",
+      "bytes": 1605,
+      "sha256": "8b7a0e75d92f785f99612549a663741c6a5277586e1d85e8e6a752124d4bbb47"
+    }
+  ],
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "version": "2026.48.1",
+  "parent": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "appVersion": "2026.48.1",
+    "run": 45143305147,
+    "job": 137586343061,
+    "jobConclusion": "success",
+    "installerArchive": {
+      "id": 14804062140,
+      "name": "open-office-studio-Linux",
+      "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "bytes": 811809091
+    },
+    "reportArchive": {
+      "id": 14804805305,
+      "name": "pakketcontrole-Linux",
+      "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+      "bytes": 671
+    },
+    "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+    "deb": {
+      "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+      "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+      "bytes": 383815340,
+      "control": {
+        "Package": "open-office-studio",
+        "Version": "2026.48.1",
+        "Architecture": "amd64",
+        "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+      },
+      "path": "canonical-office.deb",
+      "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+    },
+    "officeExecutableMetadataOnly": {
+      "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "bytes": 99899360,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "reusedVerifiedDebRun": 45146535263
+  },
+  "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+  "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+  "testedInventorySha256": "075114295018725715fc26e05fc06f88ce4513bb2e328e677e8fed70741fbbd8",
+  "runtimeReceipt": {
+    "schemaVersion": 1,
+    "layoutVersion": 2,
+    "name": "LibreOffice",
+    "version": "26.8.2.2",
+    "target": "linux-x64",
+    "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+    "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+    "executable": "program/soffice",
+    "preparedMs": 33554
+  },
+  "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+  "receiptDifference": {
+    "onlyChangedField": "preparedMs",
+    "testedPreparedMs": 22546,
+    "packagedPreparedMs": 33554,
+    "otherReceiptFieldsEqual": true,
+    "sourceNoticeAndKeepEqual": true
+  },
+  "converterElf": {
+    "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "bytes": 15088,
+    "format": "ELF64 little endian",
+    "machine": "x86_64"
+  },
+  "limits": [
+    "Comparison reuses immutable manifest from shared verified producer; same bytes independently compared with metadata extracted by integration from its fully hash-verified ZIP. Own bounded prefix retrieval transferred5963776B; no full runtime ZIP download or extraction here.",
+    "All recorded runtime payload file bytes/hashes and link targets compared; original execution inventory did not record permission modes",
+    "Packaged permissions/links and tar roundtrip verified by shared producer; not a new execution proof",
+    "Generated meta/receipt and notices are explicit metadata, not silently equalized",
+    "No converter/engine rerun or native UI/IPC/installer/browser acceptance"
+  ],
+  "status": "passed-byte-identity-to-canonical-P2-DEB",
+  "descriptorGit": {
+    "commit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+    "path": "docs/tests/p2-runtime-input-2026-11-23/runtime-input-descriptor.json",
+    "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6"
+  },
+  "sharedVerifierGit": {
+    "commit": "22a8577d215911976400adca4c541f2636212918",
+    "path": "scripts/p2-runtime-consumer.py",
+    "sha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+    "executedHere": false
+  },
+  "rootArchiveVerification": {
+    "audit": {
+      "scope": "Root hashed one existing runtime-only archive and published only selected metadata/helper bytes; no runtime execution or second Desktop installer download",
+      "run": 45147346793,
+      "artifact": 14805600515,
+      "archiveSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "payloads": [
+        {
+          "file": "entry-manifest.json",
+          "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+          "bytes": 5875665,
+          "artifactMember": "entry-manifest.json"
+        },
+        {
+          "file": "canary-report.json",
+          "sha256": "ddae8e1fc725287ee3d127300bdc9b6c47f2d158dec8cd7c3b68e0d4b17527f8",
+          "bytes": 1600,
+          "artifactMember": "canary-report.json"
+        },
+        {
+          "file": "p2-runtime-consumer.py",
+          "sha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+          "bytes": 3758,
+          "artifactMember": "p2-runtime-consumer.py"
+        },
+        {
+          "file": "runtime-input-descriptor.json",
+          "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+          "bytes": 6099,
+          "sourceGit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594"
+        }
+      ],
+      "runtimeTarRetainedInPrivateArchiveOnly": true,
+      "nativeAndStandaloneAcceptance": false
+    },
+    "auditSha256": "36970bb6255baa7694e1b71185d527bf24fca781687e2b124c7ca325e780a6a7",
+    "sameManifestBytesVerifiedHere": true,
+    "fullArchiveHashedByIntegration": true,
+    "fullArchiveDownloadedOrHashedHere": false
+  },
+  "officialProvenance": {
+    "checkedAt": "2026-11-23T09:42:00.242Z",
+    "producer": {
+      "run": 45147346793,
+      "head": "22a8577d215911976400adca4c541f2636212918",
+      "conclusion": "success"
+    },
+    "parentRun": {
+      "id": 45143305147,
+      "head": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+    },
+    "parentJob": {
+      "id": 137586343061,
+      "head": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "conclusion": "success"
+    },
+    "artifacts": [
+      {
+        "id": 14805600515,
+        "name": "p2-linux-private-runtime-only",
+        "bytes": 305620081,
+        "digest": "sha256:bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+        "source": "22a8577d215911976400adca4c541f2636212918"
+      },
+      {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "bytes": 811809091,
+        "digest": "sha256:4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "source": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+      },
+      {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "bytes": 671,
+        "digest": "sha256:3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "source": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+      }
+    ]
+  },
+  "ownManifestRetrieval": {
+    "method": "Bounded ZIP-prefix read, exact external descriptor manifest hash; runtime bytes not extracted or executed",
+    "artifactId": 14805600515,
+    "artifactZipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "fullArtifactZipDownloadedOrHashedHere": false,
+    "readLimitBytes": 8388608,
+    "downloadedBytes": 5963776,
+    "manifestBytes": 5875665,
+    "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029"
+  }
+}
