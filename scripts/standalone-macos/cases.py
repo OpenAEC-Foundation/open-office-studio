@@ -95,7 +95,8 @@ class Case:
                 if self.fixture.stat().st_mtime_ns!=before:
                     self.s.report["nativeSaveVerified"]=True;self.s.report["outputOraclePassed"]=True
                     self.s.write("output-oracle.json",result);self.s.capture("saved");return
-            except (AssertionError,KeyError,ValueError,OSError) as error:failure=str(error)
+            except (AssertionError,KeyError,ValueError,OSError,zipfile.BadZipFile,ET.ParseError) as error:
+                failure=str(error)  # Retry reads only while the one native Save completes.
             time.sleep(0.4)
         raise Unavailable("Native Save did not produce independently verified edited output: "+str(failure))
 
