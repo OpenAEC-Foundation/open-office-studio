@@ -107,14 +107,14 @@ export async function emailCase(qa, phase) {
     await wizard.locator('.email-vinkje input[type="checkbox"]').first().uncheck();
     // The visible label also contains its ordinary <small> help text.
     // Match the exact label prefix while keeping selection inside this wizard.
-    await wizard.getByRole('textbox',{name:/^(Your full name|Uw volledige naam)(?:\s|$)/i}).fill('Standalone QA');
+    await wizard.getByRole('textbox',{name:/^(Your full name|Je volledige naam)(?:\s|$)/i}).fill('Standalone QA');
     await wizard.getByLabel(/^(Email address|E-mailadres)$/i).fill('qa@fixture.localhost');
     await wizard.locator('input[type="password"]').fill('standalone-synthetic-password');
     for(const protocol of ['IMAP','SMTP']) {
-      await wizard.getByRole('textbox',{name:new RegExp(`^${protocol} (server|serveradres)$`,'i')}).fill('127.0.0.1');
-      await wizard.getByRole('combobox',{name:new RegExp(`^${protocol} (security|beveiliging)$`,'i')}).selectOption('geen');
-      await wizard.getByRole('spinbutton',{name:new RegExp(`^${protocol} (port|poort)$`,'i')}).fill(String(qa.mail[protocol.toLowerCase()]));
-      await wizard.getByRole('textbox',{name:new RegExp(`^${protocol} (username|gebruikersnaam)$`,'i')}).fill('qa@fixture.localhost');
+      await wizard.getByRole('textbox',{name:new RegExp(`^${protocol}[ -]server$`,'i')}).fill('127.0.0.1');
+      await wizard.getByRole('combobox',{name:new RegExp(`^${protocol}[ -](security|beveiliging)$`,'i')}).selectOption('geen');
+      await wizard.getByRole('spinbutton',{name:new RegExp(`^${protocol}[ -](port|poort)$`,'i')}).fill(String(qa.mail[protocol.toLowerCase()]));
+      await wizard.getByRole('textbox',{name:new RegExp(`^${protocol}[ -](username|gebruikersnaam)$`,'i')}).fill('qa@fixture.localhost');
     }
     await wizard.getByRole('button',{name:/^(Save anyway|Toch opslaan|Done|Gereed)$/i}).click();
     await page.getByText('STANDALONE23 LOCAL MESSAGE',{exact:true}).click();
