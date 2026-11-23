@@ -11,6 +11,7 @@ import { dirname, join, resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { chromium } from "playwright";
 import { DOMParser } from "@xmldom/xmldom";
+import { fileURLToPath } from "node:url";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 
 assert.equal(process.platform, "win32");
@@ -21,6 +22,8 @@ assert(manifestFile && outputDirectory, "Pass frozen candidate JSON and fresh ou
 const identity = JSON.parse(await readFile(manifestFile, "utf8"));
 assert.equal(identity.executeNative, true);
 assert.match(identity.applicationCommit, /^[a-f0-9]{40}$/);
+assert.match(identity.applicationTree, /^[a-f0-9]{40}$/);
+if (identity.builderCommit) assert.match(identity.builderCommit, /^[a-f0-9]{40}$/);
 assert.match(identity.version, /^2026\.\d+\.\d+$/);
 for (const key of ["archiveSha256", "packageSha256"]) assert.match(identity[key], /^[a-f0-9]{64}$/);
 for (const key of ["runId", "artifactId"]) assert(Number.isSafeInteger(identity[key]) && identity[key] > 0);
@@ -30,7 +33,7 @@ const out = resolve(outputDirectory);
 await mkdir(out); // Do not overwrite earlier evidence.
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 const report = {
-  status: "running", identity, harnessCommit: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8", windowsHide: true }).trim(),
+  status: "running", identity, harnessCommit: execFileSync("git", ["-C", resolve(dirname(fileURLToPath(import.meta.url)), ".."), "rev-parse", "HEAD"], { encoding: "utf8", windowsHide: true }).trim(),
   harnessSha256: sha(await readFile(new URL(import.meta.url))), checks: [], errors: [], cleanup: {},
   platform: "Windows hosted runner / installed NSIS / actual WebView2 CDP keyboard and pointer",
   limits: ["CDP input on an isolated native WebView2, not a physical user keyboard", "Office Writer core and bundled-runtime detection only; not all module/release acceptance"],
@@ -101,8 +104,14 @@ async function startApplication(exe, port) {
   return app.pid;
 }
 async function closeApplication() {
-  await page.locator(".office-vensterknop-sluiten").click();
+  let error;
+  try { await page.locator(".office-vensterknop-sluiten").click(); } catch (e) { error = e; }
   await waitFor(() => !isAlive(app), "Normal native window close must fully exit");
+  await waitFor(() => app.exitCode !== null, "Native exit code");
+  assert.equal(app.exitCode, 0, "Normal native close exits successfully");
+  // WebView2 can disconnect before the click acknowledgement reaches CDP.
+  // Accept that transport outcome only after the owned app actually exits0.
+  if (error && !/closed|disconnected/i.test(String(error))) throw error;
   await browser?.close().catch(() => {});
   browser = undefined; page = undefined;
 }
@@ -110,15 +119,29 @@ try {
   assert.equal(ps("@(Get-Process -Name open-office-studio -ErrorAction SilentlyContinue).Count"), "0", "No existing app may intercept this test");
   const run = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/runs/${identity.runId}`], { encoding: "utf8", windowsHide: true }));
   const artifact = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}`], { encoding: "utf8", windowsHide: true }));
-  assert.equal(run.head_sha, identity.applicationCommit);
+  assert.equal(run.head_sha, identity.builderCommit || identity.applicationCommit);
   assert.equal(artifact.workflow_run.id, identity.runId); assert.equal(artifact.expired, false);
   report.run = { id: run.id, head_sha: run.head_sha, status: run.status, conclusion: run.conclusion };
   report.artifact = { id: artifact.id, name: artifact.name, digest: artifact.digest };
   const zipPath = join(out, "artifact.zip"), fd = openSync(zipPath, "wx");
   try { execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}/zip`], { windowsHide: true, stdio: ["ignore", fd, "pipe"], timeout: 300_000 }); } finally { closeSync(fd); }
   const zip = await readFile(zipPath); assert.equal(sha(zip), identity.archiveSha256);
-  const contents = unzipSync(zip, { filter: entry => entry.name === identity.packageMember });
+  const contents = unzipSync(zip, { filter: entry => entry.name === identity.packageMember || entry.name === "provenance.json" });
   const bytes = contents[identity.packageMember]; assert(bytes, "Exact frozen NSIS member must exist"); assert.equal(sha(bytes), identity.packageSha256);
+  if (identity.builderCommit && identity.builderCommit !== identity.applicationCommit) {
+    assert(contents["provenance.json"], "A separate builder checkout requires immutable application provenance");
+    const proof = JSON.parse(strFromU8(contents["provenance.json"]));
+    assert.equal(proof.applicationCommit, identity.applicationCommit);
+    assert.equal(proof.applicationTree, identity.applicationTree);
+    assert.equal(proof.version, identity.version);
+    assert.equal(proof.builderCommit, identity.builderCommit);
+    assert.equal(proof.runId, identity.runId);
+    assert.equal(proof.installer.path, identity.packageMember);
+    assert.equal(proof.installer.sha256, identity.packageSha256);
+    assert.equal(proof.installer.size, bytes.length);
+    assert.match(proof.executable.sha256, /^[a-f0-9]{64}$/);
+    report.applicationProvenance = proof;
+  }
   const installer = join(out, "installer-setup.exe"); await writeFile(installer, bytes);
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
@@ -130,6 +153,7 @@ try {
   execFileSync(installer, ["/S", `/D=${installation}`], { env, windowsHide: true, timeout: 600_000, stdio: "inherit" });
   const exe = join(installation, "open-office-studio.exe"); await access(exe); await access(join(installation, "uninstall.exe"));
   report.executableSha256 = sha(await readFile(exe));
+  if (report.applicationProvenance) assert.equal(report.executableSha256, report.applicationProvenance.executable.sha256, "Installed executable equals the actual application build");
   report.fileVersion = ps(`(Get-Item -LiteralPath '${exe.replaceAll("'", "''")}').VersionInfo.ProductVersion`);
   assert([identity.version, identity.version + ".0"].includes(report.fileVersion), report.fileVersion);
   const server = createServer(); await new Promise(done => server.listen(0, "127.0.0.1", done)); const port = server.address().port; await new Promise(done => server.close(done));
