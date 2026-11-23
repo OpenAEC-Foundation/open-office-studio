@@ -1,5 +1,5 @@
 {
-  "upstreamCommit": "3169b09020184e3a98a4d5364ad77b15f38ac063",
+  "upstreamCommit": "c92d7ea3cd1852a10a5e7309e06a68dac3bfbde9",
   "applicationCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
   "files": {
     "sdk.mjs": {
@@ -7,8 +7,8 @@
       "sha256": "f6850ea604e26dfe37147f5585442b7c1b3f65f471b760aa23948f3fdadc9306"
     },
     "browser.mjs": {
-      "bytes": 10334,
-      "sha256": "f3507e0b6b816083717eb24d6870b51d1d32395b2fbccb47e90c5166b24a38c9"
+      "bytes": 10458,
+      "sha256": "e1ed06431e13eec21feaedb8370bd0bbcb3241a448a76db88cc708b790ab0f8d"
     },
     "capture.mjs": {
       "bytes": 2835,
@@ -37,6 +37,12 @@
     "p2-noncaps-baseline.json": {
       "bytes": 289,
       "sha256": "af7254ab68c76368f11f0566712c5820970f6a531684720cb4ba1267a8b2eb42"
+    },
+    "mac-field-caret.mjs": {
+      "bytes": 3074,
+      "sha256": "7ae2a6ae7993bf708cf4cd5979bf0fa673a6e4033a6fd3a421d54b25bdf9ce70"
     }
-  }
+  },
+  "priorWinLinuxHarness": "22b82fda992632976ca1b84a78f8335bad7ee14b",
+  "scopeOfDelta": "Only macOS keyboard positioning and fail-closed read-only caret preflight; non-darwin Control+Home thenEnd, save/field/cache/paint/capture/oracles unchanged. ExistingWin/LinuxP4 results remain bound to priorharness."
 }
