@@ -7,6 +7,7 @@ on:
       - scripts/linux420-*
       - scripts/proef-linux420-native.mjs
       - scripts/test-linux420-ribbon-native.mjs
+      - scripts/test-linux420-native-input.mjs
       - tests/fixtures/linux420/**
   workflow_dispatch:
 permissions:
@@ -58,7 +59,7 @@ jobs:
         run: |
           node --check .local/linux420-harness/scripts/proef-linux420-native.mjs
           node --check .local/linux420-harness/scripts/linux420-ribbon-native.mjs
-          node --test .local/linux420-harness/scripts/test-linux420-ribbon-native.mjs
+          node --test .local/linux420-harness/scripts/test-linux420-ribbon-native.mjs .local/linux420-harness/scripts/test-linux420-native-input.mjs
           /usr/bin/python3 -m py_compile .local/linux420-harness/scripts/linux420-native-package.py .local/linux420-harness/scripts/linux420-native-capture.py
       - name: Verify immutable archive, version, DEB and actual installed ELF
         env:

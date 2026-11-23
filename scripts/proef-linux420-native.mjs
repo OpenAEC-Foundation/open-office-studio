@@ -3,19 +3,17 @@ import assert from "node:assert/strict";
 import { execFileSync, execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 import { createHash } from "node:crypto";
-import {
-  mkdir,
-  readFile,
-  writeFile,
-  readdir,
-  realpath,
-} from "node:fs/promises";
+import { mkdir, readFile, writeFile, realpath, stat } from "node:fs/promises";
 import { resolve, join, basename, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "node:net";
 import { setTimeout as delay } from "node:timers/promises";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 import { DOMParser } from "@xmldom/xmldom";
+import {
+  typeVerifiedNativeText,
+  safeNativeEnvironment as safeEnvironment,
+} from "./linux420-native-input.mjs";
 import {
   createWriter362Transport,
   createWriter362XTestInput,
@@ -77,6 +75,7 @@ report.harnessFiles = Object.fromEntries(
       "linux420-native-ready.mjs",
       "linux420-native-capture.py",
       "linux420-native-package.py",
+      "linux420-native-input.mjs",
     ].map(async (name) => [name, hash(await readFile(join(here, name)))]),
   ),
 );
@@ -231,16 +230,35 @@ async function nativeKey(chord) {
   action.post = await guard.verify("after native " + chord);
 }
 async function type(text) {
-  assert.match(text, /^[A-Za-z0-9 _]+$/);
-  await guard.verify("before native text");
-  const action = {
-    phase,
-    command: ["xdotool", "type", "--clearmodifiers", "--delay", "3", text],
-    at: new Date().toISOString(),
+  const signature = () => {
+    const e = document.activeElement;
+    return {
+      panel: document
+        .querySelector('.office-tab[role="tab"][aria-selected="true"]')
+        ?.getAttribute("aria-controls"),
+      tag: e?.tagName,
+      label: e?.getAttribute("aria-label"),
+    };
   };
-  report.inputs.push(action);
-  await exec("xdotool", action.command.slice(1), { env, timeout: 10_000 });
-  action.post = await guard.verify("after native text");
+  const expectedTarget = await evaluate(signature);
+  await typeVerifiedNativeText({
+    text,
+    verify: async (stage) => {
+      const observation = await guard.verify(stage);
+      const actualTarget = await evaluate(signature);
+      assert.deepEqual(
+        actualTarget,
+        expectedTarget,
+        "Every native character keeps the exact selected document and input target",
+      );
+      return { ...observation, actualTarget };
+    },
+    run: (args) => exec("xdotool", args, { env, timeout: 5000 }),
+    record: (action) => {
+      action.phase = phase;
+      report.inputs.push(action);
+    },
+  });
 }
 async function tableState() {
   return evaluate(() => {
@@ -355,8 +373,67 @@ async function capture(path) {
   report.captures.push({ phase, file: path.slice(out.length + 1), ...receipt });
   return receipt;
 }
+async function sessionEnvironment() {
+  const parent = Object.fromEntries(
+    [
+      "DISPLAY",
+      "HOME",
+      "XAUTHORITY",
+      "GDK_BACKEND",
+      "XDG_CONFIG_HOME",
+      "XDG_DATA_HOME",
+    ].map((name) => [name, env[name] ?? null]),
+  );
+  const result = {
+    parent,
+    driver: safeEnvironment(await readFile(`/proc/${driver.pid}/environ`)),
+    children: [],
+  };
+  result.xauthorityFileExists = Boolean(
+    env.XAUTHORITY &&
+      (await stat(env.XAUTHORITY)
+        .then((s) => s.isFile())
+        .catch(() => false)),
+  );
+  const children = (
+    await readFile(`/proc/${driver.pid}/task/${driver.pid}/children`, "utf8")
+  )
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  for (const pid of children) {
+    try {
+      const command = (await readFile(`/proc/${pid}/cmdline`))
+        .toString()
+        .split("\0")[0];
+      if (basename(command) === "WebKitWebDriver")
+        result.children.push({
+          pid: Number(pid),
+          command,
+          environment: safeEnvironment(await readFile(`/proc/${pid}/environ`)),
+        });
+    } catch (error) {
+      result.children.push({
+        pid: Number(pid),
+        observationError: String(error),
+      });
+    }
+  }
+  return result;
+}
 async function startDocument(path, cells = baseline, columns = 3, rows = 3) {
   assert.equal(session, undefined);
+  assert.deepEqual(
+    pids(),
+    [],
+    "A new session must not overlap a surviving app",
+  );
+  const environment = await sessionEnvironment();
+  (report.sessionEnvironments ??= []).push({
+    phase,
+    document: basename(path),
+    ...environment,
+  });
   const display = await exec("xdpyinfo", ["-display", env.DISPLAY], {
     env,
     timeout: 5000,
@@ -369,6 +446,36 @@ async function startDocument(path, cells = baseline, columns = 3, rows = 3) {
     dimensions: display.stdout.match(/dimensions:\s+([^\n]+)/)?.[1],
   });
   let created;
+  const observed = new Set(),
+    transientApplications = [],
+    samples = [];
+  const monitor = setInterval(() => {
+    try {
+      for (const pid of pids())
+        if (!observed.has(pid)) {
+          observed.add(pid);
+          samples.push(
+            Promise.all([
+              realpath(`/proc/${pid}/exe`),
+              readFile(`/proc/${pid}/environ`),
+              readFile(`/proc/${pid}/stat`, "utf8"),
+            ])
+              .then(([executable, bytes, stat]) => {
+                if (executable === application)
+                  transientApplications.push({
+                    pid: Number(pid),
+                    startTime: writer362ProcStartTime(stat, Number(pid)),
+                    executable,
+                    environment: safeEnvironment(bytes),
+                  });
+              })
+              .catch(() => {}),
+          );
+        }
+    } catch (error) {
+      report.environmentObservationError = String(error);
+    }
+  }, 25);
   try {
     created = await raw("POST", "/session", {
       capabilities: {
@@ -392,8 +499,13 @@ async function startDocument(path, cells = baseline, columns = 3, rows = 3) {
       displayAfter: after,
       observedApplicationPids: pids(),
       error: String(error),
+      environment,
+      transientApplications,
     };
     throw error;
+  } finally {
+    clearInterval(monitor);
+    await Promise.allSettled(samples);
   }
   session = created.sessionId;
   assert.ok(session);
@@ -454,6 +566,8 @@ async function startDocument(path, cells = baseline, columns = 3, rows = 3) {
     document: basename(path),
     executableSha256: identity.executableSha256,
     x11: guard.evidence,
+    environment: safeEnvironment(await readFile(`/proc/${current}/environ`)),
+    transientApplications,
   };
   report.sessions.push(record);
   return record;
@@ -669,6 +783,40 @@ async function exerciseField(path, field) {
   );
 }
 
+async function scoped(name, action) {
+  phase = name;
+  const result = { status: "running", firstCheck: report.checks.length };
+  (report.scopes ??= {})[name] = result;
+  try {
+    await action();
+    result.status = "passed";
+  } catch (error) {
+    result.status = "failed";
+    result.error = String(error.stack ?? error);
+    report.failedPhase ??= name;
+    report.error ??= result.error;
+    if (session) {
+      result.failureAnatomy = await command("POST", "/execute/sync", {
+        script: selectedDocumentAnatomyScript,
+        args: [],
+      }).catch((e) => ({ error: String(e) }));
+      await capture(join(out, `scope-${name}-failure.png`)).catch((e) => {
+        result.failureCaptureError = String(e);
+      });
+    }
+    process.exitCode = 1;
+  } finally {
+    result.lastCheck = report.checks.length;
+    await closeDocument();
+    result.applicationClosed = pids().length === 0;
+    assert.equal(
+      result.applicationClosed,
+      true,
+      "A failed independent scope must be fully closed before another scope",
+    );
+  }
+}
+
 try {
   assert.deepEqual(pids(), [], "No pre-existing app may be affected");
   const driverPath = execFileSync("which", ["tauri-driver"], {
@@ -757,119 +905,143 @@ try {
   await closeDocument();
   report.preflight =
     "passed real pointer/focus/Ctrl/edit/save/full-exit/reopen; broad controls released";
-  phase = "368-Find-what";
-  await exerciseField(a, "Find what");
-  await exec(application, [b], { env, timeout: 15_000 });
-  await waitFor(
-    () =>
-      command("POST", "/execute/sync", {
-        script: selectedDocumentReadyScript,
-        args: [basename(b), 3, baseline, 3],
-      }),
-    "Other native document loaded",
-    90_000,
-  );
-  await insertColumn();
-  await nativeKey("ctrl+z");
-  await grid("other document Undo", baseline);
-  await clickTab(basename(a));
-  await grid("original document isolated", baseline);
-  await nativeKey("ctrl+y");
-  await grid("original document Redo isolated", inserted, 4);
-  await clickTab(basename(b));
-  await grid("other document unchanged by original Redo", baseline);
-  await nativeKey("ctrl+y");
-  await grid("other document Redo isolated", inserted, 4);
-  await clickTab(basename(a));
-  await grid("original document retains its own edit", inserted, 4);
-  await canvasFocus();
-  await type("LINUX420_FINAL ");
-  const finalCells = ["LINUX420_FINAL alpha", ...inserted.slice(1)];
-  await grid("final marker and column", finalCells, 4);
-  const saved = await save(a, finalCells, 4);
-  const savedPid = report.sessions.at(-1).pid;
-  await closeDocument();
-  await startDocument(a, finalCells, 4);
-  assert.notEqual(report.sessions.at(-1).pid, savedPid);
-  await grid("full new process reopened marker and column", finalCells, 4);
-  assert.equal(hash(await readFile(a)), saved);
-  await capture(join(out, "final-reopened.png"));
-  await closeDocument();
-  phase = "368-Replace-with";
-  await exerciseField(c, "Replace with");
-  assert.equal(
-    hash(await readFile(c)),
-    fixtures["replace-table"].sha256,
-    "Unsaved field tests do not write the DOCX",
-  );
-  await closeDocument();
-  report.issue368 =
-    "passed bounded native input/history/search/isolation/save controls";
-  phase = "369-ribbon";
-  const ribbonBytes = await readFile(
-    join(here, "../tests/fixtures/linux420/ribbon-control.docx"),
-  );
-  assert.equal(
-    hash(ribbonBytes),
-    "ba26f890485dcee41cbfdf694969014ae7b9951b34cbbbc01bc820a15491b3f9",
-  );
-  const ribbonPath = join(out, "ribbon-control.docx");
-  await writeFile(ribbonPath, ribbonBytes);
-  const ribbonCells = ["Alpha", "Beta", "Gamma", "One", "Two", "Three"];
-  const ribbonSession = await startDocument(ribbonPath, ribbonCells, 3, 2);
-  const ribbon = await runWriter362NativeProbe({
-    endpoint: `http://127.0.0.1:${driverPort}`,
-    sessionId: session,
-    outDir: join(out, "ribbon"),
-    source: {
-      commit: identity.sourceCommit,
-      tree: identity.sourceTree,
-      packageSha256: identity.packageSha256,
-      executableSha256: identity.executableSha256,
-      pid: ribbonSession.pid,
-    },
-    fixture: {
-      path: ribbonPath,
-      sha256: hash(ribbonBytes),
-      protectedDocument: false,
-    },
-    ownedProfile: true,
-    inputBackend: "x11-xtest",
-    keyboardEntry: "arrow-down",
-    capture,
-    signal: AbortSignal.timeout(600_000),
+  await scoped("368-Find-what", async () => {
+    await exerciseField(a, "Find what");
+    await exec(application, [b], { env, timeout: 15_000 });
+    await waitFor(
+      () =>
+        command("POST", "/execute/sync", {
+          script: selectedDocumentReadyScript,
+          args: [basename(b), 3, baseline, 3],
+        }),
+      "Other native document loaded",
+      90_000,
+    );
+    await insertColumn();
+    await nativeKey("ctrl+z");
+    await grid("other document Undo", baseline);
+    await clickTab(basename(a));
+    await grid("original document isolated", baseline);
+    await nativeKey("ctrl+y");
+    await grid("original document Redo isolated", inserted, 4);
+    await clickTab(basename(b));
+    await grid("other document unchanged by original Redo", baseline);
+    await nativeKey("ctrl+y");
+    await grid("other document Redo isolated", inserted, 4);
+    await clickTab(basename(a));
+    await grid("original document retains its own edit", inserted, 4);
+    await canvasFocus();
+    await type("LINUX420_FINAL ");
+    const finalCells = ["LINUX420_FINAL alpha", ...inserted.slice(1)];
+    await grid("final marker and column", finalCells, 4);
+    const saved = await save(a, finalCells, 4);
+    const savedPid = report.sessions.at(-1).pid;
+    await closeDocument();
+    await startDocument(a, finalCells, 4);
+    assert.notEqual(report.sessions.at(-1).pid, savedPid);
+    await grid("full new process reopened marker and column", finalCells, 4);
+    assert.equal(hash(await readFile(a)), saved);
+    await capture(join(out, "final-reopened.png"));
+    await closeDocument();
   });
-  report.ribbonSummary = {
-    status: ribbon.status,
-    nativePass: ribbon.nativePass,
-    cases: ribbon.cases.length,
-    groupCases: ribbon.groupButtonCases.length,
-    toolbarNavigation: ribbon.toolbarNavigation.length,
-    unavailable: ribbon.unavailable,
-  };
-  assert.ok(ribbon.status !== "failed" && ribbon.status !== "cleanup-failed");
-  for (const theme of ["light", "forge"])
-    for (const phase of [
-      "keyboard-group-focus",
-      "keyboard-group-after-escape",
-    ]) {
-      const required = ribbon.groupButtonCases.find(
-        (c) =>
-          c.theme === theme &&
-          c.requestedWidth === 923 &&
-          c.group === "Delete" &&
-          c.phase === phase,
-      );
-      assert.ok(required, `Required native 923px Delete ${theme}/${phase}`);
-      assert.equal(required.focusVisible, true);
-      assert.equal(required.ring, 4);
-      assert.equal(required.clippedY, false);
-    }
-  report.issue369 =
-    "passed tested Linux ArrowDown/Right/Home/End and required narrow Delete Enter/Escape focus/vertical outline controls";
-  await closeDocument();
-  report.status =
-    ribbon.status === "passed"
+  await scoped("368-Replace-with", async () => {
+    await exerciseField(c, "Replace with");
+    assert.equal(
+      hash(await readFile(c)),
+      fixtures["replace-table"].sha256,
+      "Unsaved field tests do not write the DOCX",
+    );
+    await closeDocument();
+  });
+  report.issue368 = ["368-Find-what", "368-Replace-with"].every(
+    (name) => report.scopes[name].status === "passed",
+  )
+    ? "passed bounded native input/history/search/isolation/save controls"
+    : "failed required scope; positive individual input checks remain separately recorded";
+  await scoped("369-ribbon", async () => {
+    const ribbonBytes = await readFile(
+      join(here, "../tests/fixtures/linux420/ribbon-control.docx"),
+    );
+    assert.equal(
+      hash(ribbonBytes),
+      "ba26f890485dcee41cbfdf694969014ae7b9951b34cbbbc01bc820a15491b3f9",
+    );
+    const ribbonPath = join(out, "ribbon-control.docx");
+    await writeFile(ribbonPath, ribbonBytes);
+    const ribbonCells = ["Alpha", "Beta", "Gamma", "One", "Two", "Three"];
+    const ribbonSession = await startDocument(ribbonPath, ribbonCells, 3, 2);
+    const ribbon = await runWriter362NativeProbe({
+      endpoint: `http://127.0.0.1:${driverPort}`,
+      sessionId: session,
+      outDir: join(out, "ribbon"),
+      source: {
+        commit: identity.sourceCommit,
+        tree: identity.sourceTree,
+        packageSha256: identity.packageSha256,
+        executableSha256: identity.executableSha256,
+        pid: ribbonSession.pid,
+      },
+      fixture: {
+        path: ribbonPath,
+        sha256: hash(ribbonBytes),
+        protectedDocument: false,
+      },
+      ownedProfile: true,
+      inputBackend: "x11-xtest",
+      keyboardEntry: "arrow-down",
+      capture,
+      signal: AbortSignal.timeout(600_000),
+    });
+    report.ribbonSummary = {
+      status: ribbon.status,
+      nativePass: ribbon.nativePass,
+      cases: ribbon.cases.length,
+      groupCases: ribbon.groupButtonCases.length,
+      toolbarNavigation: ribbon.toolbarNavigation.length,
+      unavailable: ribbon.unavailable,
+    };
+    assert.ok(ribbon.status !== "failed" && ribbon.status !== "cleanup-failed");
+    assert.equal(
+      ribbon.keyboardEntries.length,
+      24,
+      "Every required group/theme/width keyboard route executed",
+    );
+    assert.equal(
+      ribbon.toolbarNavigation.length,
+      36,
+      "Home/End controls executed for every tab/theme/width",
+    );
+    for (const theme of ["light", "forge"])
+      for (const width of [923, 800])
+        for (const phase of [
+          "keyboard-group-focus",
+          "keyboard-group-after-escape",
+        ]) {
+          const required = ribbon.groupButtonCases.find(
+            (c) =>
+              c.theme === theme &&
+              c.requestedWidth === width &&
+              c.group === "Delete" &&
+              c.phase === phase,
+          );
+          assert.ok(
+            required,
+            `Required native ${width}px Delete ${theme}/${phase}`,
+          );
+          assert.equal(required.focusVisible, true);
+          assert.equal(required.ring, 4);
+          assert.equal(required.clippedY, false);
+        }
+    report.issue369 =
+      "passed tested Linux ArrowDown/Right/Home/End and required narrow Delete Enter/Escape focus/vertical outline controls";
+    await closeDocument();
+  });
+  report.issue369 ??= "failed or unavailable required native ribbon scope";
+  report.status = Object.values(report.scopes).some(
+    (s) => s.status !== "passed",
+  )
+    ? "failed"
+    : report.ribbonSummary.status === "passed"
       ? "passed"
       : "passed scoped 368/369; wider ribbon state matrix partial";
 } catch (error) {
