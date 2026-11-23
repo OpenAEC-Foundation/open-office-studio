@@ -36,12 +36,14 @@ def visible_target(action, out, pid, ocr_binary, text):
     window = OBS["capture_window"](state, pid)
     (out / "raw-ax.json").write_text(json.dumps(state, indent=2), encoding="utf-8")
     original = OBS["capture_original"](state, pid, out / "original-window.png")
+    display_image = out / "original-display.png"
+    subprocess.run(["screencapture", "-x", str(display_image)], check=True, capture_output=True, timeout=15)
     image = out / "original-no-shadow.png"
     subprocess.run(["screencapture", "-x", "-o", "-l", str(window["id"]), str(image)], check=True, capture_output=True, timeout=15)
     ocr_path = out / "ocr.json"
     subprocess.run([str(ocr_binary), str(image), str(ocr_path)], check=True, capture_output=True, timeout=30)
     target = TARGET(json.loads(ocr_path.read_text()), state, pid, sha(image), text)
-    receipt = {"nativeWindowCapture": original, "noShadowSha256": sha(image),
+    receipt = {"nativeWindowCapture": original, "originalDisplaySha256": sha(display_image), "noShadowSha256": sha(image),
                "rawAxSha256": sha(out / "raw-ax.json"), "ocrSha256": sha(ocr_path),
                "target": target, "editorInputSent": False}
     (out / "target-receipt.json").write_text(json.dumps(receipt, indent=2), encoding="utf-8")
