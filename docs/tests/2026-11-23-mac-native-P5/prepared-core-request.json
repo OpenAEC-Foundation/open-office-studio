@@ -46,5 +46,13 @@
   "supportDescriptorArtifactName": null,
   "supportDescriptorArchiveSha256": null,
   "supportDescriptorMember": "suite-support-descriptor.json",
-  "supportDescriptorBindingStatus": "disabled: separately uploaded wrapper not consumed by current fetch; review only, no driver change in P5 retarget"
+  "supportDescriptorBindingStatus": "consumer implemented; actual null-free parent/child/support artifacts, source/job/step/time/log bindings and explicit root go pending",
+  "transferArchiveBytes": null,
+  "supportDescriptorArchiveBytes": null,
+  "consumerRequiredSuiteSteps": [
+    "Transfer Suite only to its separate validation owner",
+    "Bind separate Suite child artifact to parent and DMG digests",
+    "Preserve separate Suite-owner descriptor"
+  ],
+  "consumerRequiresRawPreparerLog": true
 }

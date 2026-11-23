@@ -1,0 +1,84 @@
+{
+  "scope": "Own Suite consumer implementation; no product/native execution",
+  "applicationSource": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "officialRun": 45177730188,
+  "officialMacJob": 137703365843,
+  "attempt": 1,
+  "ownerContractQa": "8c4c3b5b441b3e39e2efa711f43d43d9931b1a9d",
+  "ownerContractFileSha256": "fb33dfd1834471d62ee01385c21b1cbbb11716825af2694d0df8c6662117048b",
+  "source": {
+    "scripts/mac-native-suite-transfer-fetch.py": {
+      "stagedGitBlobSha256": "3b6030b6f9e3e7de87a404a81a74f31f145043feee10319a6bf9f0453031d4f8",
+      "testedWorkingCopySha256": "3b6030b6f9e3e7de87a404a81a74f31f145043feee10319a6bf9f0453031d4f8"
+    },
+    "scripts/test-mac-native-suite-transfer.py": {
+      "stagedGitBlobSha256": "090f8e13207026f570ed1cda7d44c1634758bfeb16168790341de4bb4cd91de8",
+      "testedWorkingCopySha256": "090f8e13207026f570ed1cda7d44c1634758bfeb16168790341de4bb4cd91de8"
+    }
+  },
+  "implementationReady": true,
+  "liveBindingAndGoReady": false,
+  "implemented": [
+    "actual small-descriptor archive hash and size before parsing",
+    "wrapper source/tree/version/parent run/job/attempt/hash/member/DMG bytes/hash/installed identity match",
+    "child ID/digest/size/QA and embedded API match against root request and fresh official metadata",
+    "all3 named transfer/bind/preserve steps explicitly completed/successful, plus raw outcome when exposed",
+    "full official preparer log retained and time-scoped failure detection even if job/step conclusion green",
+    "concrete parent/child/support artifact presence and creation/update/step timeline gates",
+    "actual complete child ZIP independently streamed through SHA256 and exact size before DMG output",
+    "exact original child request and raw provenance cross-compared; no standalone execution authority inherited",
+    "preparer wholeChildArchiveHashVerifiedByPreparer=false preserved; separate consumer=true only after actual full hash",
+    "failure metadata/logs/ZIPs retained with observed hashes and no DMG/identity on failure"
+  ],
+  "tests": {
+    "command": "python -B scripts/test-mac-native-suite-transfer.py",
+    "tests": 23,
+    "failures": 0,
+    "errors": 0,
+    "status": "passed",
+    "mode": "local synthetic metadata/log/ZIPs and fully mocked GitHub IO; no real package or network calls from tests",
+    "negativeCases": [
+      "missing/failed required steps",
+      "continued raw failure despite green metadata, including completion-boundary timestamp",
+      "incomplete raw job log",
+      "missing/stale artifact",
+      "wrong source/child digest/API size/installed identity",
+      "original request authority/source mismatch",
+      "DMG bytes/size mismatch",
+      "actual whole child ZIP corruption before identity/DMG output"
+    ],
+    "endToEnd": "Valid synthetic chain passes; corrupt child writes no DMG/identity; masked descriptor error acquires no ZIPs"
+  },
+  "preparedRequests": {
+    "prepared-core-request.json": {
+      "sha256": "1d77a41a6cc9113da85ea627afda9b107d099dc834a3aa3e345d3583231702c4",
+      "executionApproved": false,
+      "suiteChildTransferApproved": false
+    },
+    "prepared-field374-request.json": {
+      "sha256": "500c7c27a2f39c075fcb0cb5dbb5e4cd60c3e37c734100e0993450477e8c7068",
+      "executionApproved": false,
+      "suiteChildTransferApproved": false
+    },
+    "prepared-find-isolation-request.json": {
+      "sha256": "ec30e5d8218695efe3dc74135c4ee873a12da56e10bfcf54690751fd16e3d3f3",
+      "executionApproved": false,
+      "suiteChildTransferApproved": false
+    },
+    "prepared-Tab-history-request.json": {
+      "sha256": "0716b17cb51130fd69edc809efb8d1f834ae1a411d16d9a124a1424430a6a2cd",
+      "executionApproved": false,
+      "suiteChildTransferApproved": false
+    }
+  },
+  "noRealArtifactOrPackageDownload": true,
+  "noNewBuild": true,
+  "noNativeRunner": true,
+  "noAppOperation": true,
+  "ownerFilesChanged": false,
+  "nativeAccepted": false,
+  "remaining": "Actual null-free official parent/child/support metadata, step/log/time evidence and explicit root go; then own CF/codesign/stapler/Gatekeeper/native controls",
+  "reference": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#steps-context"
+}
