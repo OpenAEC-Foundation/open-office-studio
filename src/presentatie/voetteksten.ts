@@ -270,6 +270,15 @@ function vormTekst(
   return vervang(xml, wijzigingen);
 }
 
+/** Dezelfde korte datum bij toepassen en bij openen, met de gekozen veldtaal. */
+export function formatteerVoettekstDatum(nu: Date, locale: string) {
+  return new Intl.DateTimeFormat(locale, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(nu);
+}
+
 /** Pas toe op de gekozen dia's. De overige dia's en pakketonderdelen blijven bytegelijk. */
 export function schrijfVoetteksten(
   bytes: Uint8Array,
@@ -287,11 +296,7 @@ export function schrijfVoetteksten(
     throw new VoettekstFout("invalidSelection");
   const eerste = Number(attr(pres.wortel, "firstSlideNum") ?? 1);
   const datum = opties.automatisch
-    ? new Intl.DateTimeFormat(locale, {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }).format(nu)
+    ? formatteerVoettekstDatum(nu, locale)
     : opties.datumTekst;
   for (const index of new Set(selectie)) {
     const pad = pres.dias[index],

@@ -5,6 +5,7 @@ import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
 import { PresentatieOpenwijze } from "./presentatie/PresentatieOpenwijze";
 import { werkDianummersBij } from "./presentatie/dianummers";
+import { maakDatumOpenen } from "./presentatie/datumOpenen";
 import { metRijkeNotities } from "./presentatie/notitiesSessie";
 import { RijkeNotitiesPaneel } from "./presentatie/RijkeNotitiesPaneel";
 import type { PptxFontFace } from "@betteroffice/pptx";
@@ -124,13 +125,23 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => () => stopDiaWijzigingen.current?.(), []);
   const recent = useRef(props);
   recent.current = props;
+  const datumOpenen = useRef<ReturnType<typeof maakDatumOpenen> | null>(null);
+  datumOpenen.current ??= maakDatumOpenen();
+  const datumOpening = props.soort === "pptx" ? datumOpenen.current(props.bytes, intlLocale()) : null;
+  const gemeldeDatumBron = useRef<Uint8Array | null>(null);
+  useEffect(() => {
+    if (datumOpening?.gewijzigd && gemeldeDatumBron.current !== props.bytes) {
+      gemeldeDatumBron.current = props.bytes;
+      recent.current.gewijzigd();
+    }
+  }, [props.bytes, datumOpening]);
   const meldEditor = (tekst: string, toon: "info" | "waarschuwing") =>
     recent.current.melding
       ? recent.current.melding(tekst, toon)
       : recent.current.fout(new Error(tekst));
   // Grafieken bewerken het pakket zelf en laden de editor daarna opnieuw.
   const herladen = useHerladen({
-    bytes: props.bytes,
+    bytes: datumOpening?.bytes ?? props.bytes,
     gewijzigd: () => recent.current.gewijzigd(),
     // De oude engine-handles worden bij het hermounten opgeruimd; niemand mag ze dan nog lezen.
     voorVervangen: () => {

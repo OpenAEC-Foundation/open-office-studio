@@ -1,0 +1,44 @@
+name: Presentation 87 automatic date on open
+on:
+  push:
+    branches: [codex/presentation-87-auto-date-open-2026-11-23-0c73]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-browser:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Focused date/footer/number and actual engine regressions
+        run: pnpm exec vitest run src/presentatie/datumOpenen.test.ts src/presentatie/voetteksten.test.ts src/presentatie/dianummers.test.ts --configLoader runner --maxWorkers=2 --reporter=json --outputFile=.local/presentation-87-tests.json
+      - run: node scripts/controleer-i18n.mjs --ns presentation
+      - name: TypeScript and normal production bundle
+        run: pnpm build
+      - name: Hosted production bundle and required route check
+        run: |
+          pnpm exec vite build --base=./ --mode hosted --outDir dist-hosted
+          node scripts/controleer-hosted.mjs dist-hosted
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Real normal and hosted browser open-edit-save-fresh-reopen
+        run: node scripts/proef-presentatie-datum-openen.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presentation-87-date-open-linux
+          path: |
+            .local/presentation-87-date-open/
+            .local/presentation-87-tests.json
+          include-hidden-files: true
+          if-no-files-found: warn
