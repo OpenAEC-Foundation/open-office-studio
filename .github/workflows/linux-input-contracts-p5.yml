@@ -1,0 +1,24 @@
+name: P5 Linux input harness contracts only
+on:
+  push:
+    branches: [codex/linux-release-input-p5-2026-11-23]
+    paths: [docs/tests/linux-release-input-p5/contract-request.json]
+permissions:
+  contents: read
+jobs:
+  synthetic-contracts:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: OS inspection tools, no product package or canonical artifact
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends squashfs-tools
+      - name: Provenance rejection and real minimal DEB/SquashFS ELF inspection
+        run: |
+          python3 scripts/test-linux-release-input-p5.py
+          python3 scripts/test-standalone-email-mime-oracle.py
+          python3 scripts/format30-gnm/oracle_test.py
+          node --check scripts/proef-standalone-linux.mjs
