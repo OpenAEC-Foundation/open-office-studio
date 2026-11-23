@@ -45,13 +45,15 @@ await runSuiteNativeScenario({packageType,scenarioName:'confirm378-'+mode},async
     const xdo=async args=>{await s.requireAppOwner(app);return s.xdo(args);};
     const dialog=await s.createOwnedDialog({pid:found,expectedExecutable:executable,expectedEnvironment:s.env,xdo});
     const anatomy=JSON.parse((await s.exec('/usr/bin/python3',[join(s.here,'linux-suite-native-anatomy.py'),String(found)],{env:s.env,timeout:15000})).stdout);
-    assert.equal(anatomy.pid,found);assert(anatomy.nodes.some(n=>n.showing&&n.name==='Overwrite'),'Actual custom Overwrite button');
-    assert(anatomy.nodes.some(n=>n.showing&&n.name==='Cancel'),'Actual Cancel button');
+    assert.equal(anatomy.pid,found);
     const proof={officePid:app.pid,pid:found,executable,executableSha256:s.hash(await readFile(executable)),input:dialog.evidence,anatomy};
     (s.report.confirmations??=[]).push(proof);
     const file=join(s.out,'confirmation-'+s.report.confirmations.length+'.png');
     const image=JSON.parse((await s.exec('/usr/bin/python3',[join(s.here,'linux-p2-native-capture.py'),String(found),dialog.evidence.xid,dialog.evidence.binding.startTime,executable,file],{env:s.env,timeout:10000})).stdout);
     assert.equal(s.hash(await readFile(file)),image.sha256);proof.capture=image;
+    // Preserve the first actual owned dialog before a label/role assertion can fail.
+    assert(anatomy.nodes.some(n=>n.showing&&n.name==='Overwrite'),'Actual custom Overwrite button');
+    assert(anatomy.nodes.some(n=>n.showing&&n.name==='Cancel'),'Actual Cancel button');
     return {app,dialog,proof};
   }
   async function modalReturned(value){

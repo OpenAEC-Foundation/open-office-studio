@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -19,6 +20,37 @@ def fixture():
 
 
 class Contracts(unittest.TestCase):
+    def transfer_fixture(self, root, *, signature=False, extra=False, corrupt=False):
+        _, value = fixture()
+        report = b'{"synthetic":"package report"}'
+        value["parent"]["packageReportSha256"] = hashlib.sha256(report).hexdigest()
+        value["signatureBinding"]["members"] = []
+        if signature:
+            value["signatureBinding"]["members"] = [dict(path="office.deb.sig", canonicalMember="dist/office.deb.sig", packagePath="office.deb", sha256=hashlib.sha256(b"original signature").hexdigest(), bytes=18)]
+        archive = root / "transfer.zip"
+        with zipfile.ZipFile(archive, "w") as bundle:
+            bundle.writestr("canonical-office.deb", b"owned package")
+            bundle.writestr("report.json", report)
+            bundle.writestr("descriptor.json", json.dumps(value))
+            if signature:
+                bundle.writestr("office.deb.sig", b"corrupt signature!" if corrupt else b"original signature")
+            if extra:
+                bundle.writestr("unbound.txt", b"unbound")
+        return archive, value, report
+
+    def test_optional_original_signature_and_exact_transfer_members(self):
+        for signature in (False, True):
+            with tempfile.TemporaryDirectory() as temp:
+                archive, value, report = self.transfer_fixture(Path(temp), signature=signature)
+                self.assertEqual(consumer.verify_transfer_members(archive, value), report)
+
+    def test_unbound_or_changed_signature_is_rejected(self):
+        for options in (dict(extra=True), dict(signature=True, corrupt=True)):
+            with tempfile.TemporaryDirectory() as temp:
+                archive, value, _ = self.transfer_fixture(Path(temp), **options)
+                with self.assertRaises(AssertionError):
+                    consumer.verify_transfer_members(archive, value)
+
     def test_bound_descriptor(self):
         request, value = fixture()
         self.assertIs(consumer.validate_descriptor(value, request, "deb"), value)

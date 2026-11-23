@@ -80,6 +80,37 @@ def copy_package(archive, destination, package):
     assert destination.stat().st_size == package["bytes"] and digest(destination) == package["sha256"]
 
 
+def verify_transfer_members(archive, descriptor):
+    """Bind the original optional signature bytes, without certifying signatures."""
+    package, parent = descriptor["package"], descriptor["parent"]
+    report_name = PurePosixPath(parent["packageReportMember"]).name
+    signatures = descriptor["signatureBinding"]["members"]
+    expected = [package["member"], report_name, "descriptor.json"]
+    for signature in signatures:
+        assert signature["packagePath"] == PurePosixPath(parent["packageMember"]).name
+        assert signature["path"] == signature["packagePath"] + ".sig"
+        assert signature["canonicalMember"] == parent["packageMember"] + ".sig"
+        assert re.fullmatch(r"[0-9a-f]{64}", signature["sha256"])
+        assert isinstance(signature["bytes"], int) and signature["bytes"] > 0
+        expected.append(signature["path"])
+    assert len(expected) == len(set(expected))
+    with zipfile.ZipFile(archive) as bundle:
+        names = bundle.namelist()
+        assert len(names) == len(set(names)) and set(names) == set(expected)
+        assert all(safe_member(n).parent == PurePosixPath(".") for n in names)
+        embedded = json.loads(bundle.read("descriptor.json"))
+        for key in ["parent", "package", "qaPin", "signatureBinding"]:
+            assert embedded[key] == descriptor[key], key
+        for key in ["run", "name"]:
+            assert embedded["artifact"][key] == descriptor["artifact"][key]
+        for signature in signatures:
+            raw = bundle.read(signature["path"])
+            assert len(raw) == signature["bytes"] and hashlib.sha256(raw).hexdigest() == signature["sha256"]
+        report = bundle.read(report_name)
+    assert hashlib.sha256(report).hexdigest() == parent["packageReportSha256"]
+    return report
+
+
 def verify_elf(path, expected):
     with path.open("rb") as stream:
         header = stream.read(20)
@@ -129,17 +160,17 @@ def main(kind):
     with archive.open("xb") as stream:
         subprocess.run(["gh", "api", f"repos/{REPO}/actions/artifacts/{transfer['id']}/zip"], stdout=stream, check=True)
     assert archive.stat().st_size == transfer["zipBytes"] and digest(archive) == transfer["zipSha256"]
+    report_bytes = verify_transfer_members(archive, value)
+    with zipfile.ZipFile(archive) as bundle:
+        for signature in value["signatureBinding"]["members"]:
+            (out / signature["path"]).write_bytes(bundle.read(signature["path"]))
     path = out / package["member"]
     copy_package(archive, path, package)
-    with zipfile.ZipFile(archive) as bundle:
-        reports = [bundle.read(i) for i in bundle.infolist() if not i.is_dir() and i.filename != package["member"] and i.file_size < 2 * 1024 * 1024]
-    reports = [b for b in reports if hashlib.sha256(b).hexdigest() == parent["packageReportSha256"]]
-    assert len(reports) == 1, "Canonical package report bytes included in transfer"
-    report = json.loads(reports[0])
+    report = json.loads(report_bytes)
     assert report["platform"] == "linux" and report["programma"] == "open-office-studio" and report["versie"] == candidate["version"]
     matches = [p for p in report["pakketten"] if p["sha256"] == package["sha256"] and p["bytes"] == package["bytes"] and p["naam"] == PurePosixPath(parent["packageMember"]).name]
     assert len(matches) == 1
-    (out / "canonical-package-report.json").write_bytes(reports[0])
+    (out / "canonical-package-report.json").write_bytes(report_bytes)
     (out / "native-input-descriptor.json").write_bytes(git_bytes)
     extracted = out / "payload"
     if kind == "deb":

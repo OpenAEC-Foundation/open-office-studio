@@ -127,6 +127,7 @@ jobs:
           name: linux-suite-final-${{ matrix.package }}-${{ github.sha }}
           path: |
             .local/linux-suite-final-input/*.json
+            .local/linux-suite-final-input/*.sig
             .local/linux-p2-native/**/*.json
             .local/linux-p2-native/**/*.png
             .local/linux-p2-native/**/*.docx
