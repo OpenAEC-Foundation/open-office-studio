@@ -42,8 +42,14 @@ def fetch(url, path, digest):
 
 
 def source_text(p):
-    # XML 1.0 parser normalizes source literal CR line endings to LF.
+    # Character references such as &#x0d; remain CR after XML parsing.
     return "".join(n.text or "" for n in p.iter(T + "文本串"))
+
+
+def canonical_text(text):
+    # CR, CRLF and LF encode the same logical line ending here. Retain every
+    # logical break and all other characters; never strip or collapse whitespace.
+    return text.replace("\r\n", "\n").replace("\r", "\n")
 
 
 def parse_source(path):
@@ -70,12 +76,15 @@ def parse_source(path):
             spacing = style.find(T + "行距")
         assert spacing is not None and spacing.get(T + "类型") == "multi-lines"
         ratio = Decimal(spacing.get(T + "值"))
-        paragraphs.append({"text":source_text(p), "styleId":style_id, "styleName":style.get(T + "名称"),
+        decoded = source_text(p)
+        paragraphs.append({"text":canonical_text(decoded), "decodedXmlText":decoded, "styleId":style_id, "styleName":style.get(T + "名称"),
                            "lineSpacingMultiple":str(ratio), "lineSpacingOOXML":str(int(ratio * 240))})
     assert len(paragraphs) == 1
     assert paragraphs[0]["styleId"] == "Standard"
     assert paragraphs[0]["text"].startswith("file format commons uot Uniform Office Format 1 ")
     assert paragraphs[0]["text"].count("\n") == 2
+    assert paragraphs[0]["decodedXmlText"].count("\r") == 2
+    assert data.count(b"&#x0d;") == 2
     # Heading style definition exists but is not applied to a body paragraph.
     assert "Heading" in styles
     headings = sum(p["styleId"].startswith("Heading") for p in paragraphs)
@@ -101,7 +110,7 @@ def word_text(p):
             chunks.append("\n")
         elif n.tag == W + "tab":
             chunks.append("\t")
-    return "".join(chunks)
+    return canonical_text("".join(chunks))
 
 
 def read_docx(path):

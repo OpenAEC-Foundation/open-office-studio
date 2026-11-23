@@ -68,7 +68,7 @@ try {
     assert.equal(production.kernen.layout.sha256,pins.layoutWasmSha256);
     report.engine={route:production.route,kernels:production.kernen,productionJSBindings:production.aansluiting};
     const s=await production.sdk.createYrsSession();sessions.push(s);s.openDocx(opened.bytes,true);
-    const texts=h=>h.paragraphs("body").map(p=>p.text);
+    const texts=h=>h.paragraphs("body").map(p=>p.text.replace(/\r\n?/g,"\n"));
     fs.writeFileSync(path.join(out,"engine-import.json"),JSON.stringify({stories:s.storyIds(),paragraphs:s.paragraphs("body")},null,2));
     assert.deepEqual(texts(s),oracle.expected.texts,"Initial Word engine text differs from independent source oracle");
     s.beginUndoCapture();s.setUndoCaptureMode("manual");s.addUndoBoundary();
