@@ -55,8 +55,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("identity", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--acceptance", action="store_true")
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text(encoding="utf-8"))
+    if args.acceptance and (identity.get("nativeBodyAcceptanceApproved") is not True or identity.get("diagnosticRenderingRoute") is not None):
+        raise PermissionError("Acceptance needs an explicitly approved product package; a query-flag diagnostic cannot accept a product fix")
     if sys.platform != "darwin" or os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("OOS_361_EXECUTE") != "1" or identity.get("executionApproved") is not True:
         raise RuntimeError("Frozen, explicitly released, disposable macOS execution only")
     git = lambda *parts: subprocess.check_output(["git", *parts], text=True).strip()
@@ -73,6 +76,7 @@ def main():
     mounted = started = False
     counter = 0
     last_native = {}
+    ocr_binary = None
     driver = Path(__file__).with_name("proef-writer-361-macos.py")
     local_identity = out / "identity.json"
     fixture = out / "writer361-macos-table.docx"
@@ -142,6 +146,14 @@ def main():
         action("chord", "cmd-q")
         wait(lambda: not owned(), "Native CmdQ did not fully quit the owned process", 15)
 
+    def launch_document(path):
+        nonlocal fixture
+        fixture = Path(path).resolve(strict=True)
+        launch()
+        wait(lambda: fixture.name in readiness_snapshot().get("window", {}).get("title", ""),
+             "Owned document title did not become ready", 90)
+        return pid
+
     try:
         helper_source = Path(__file__).with_name("writer-361-macos-ax.swift")
         helper_sha = hashlib.sha256(helper_source.read_bytes()).hexdigest()
@@ -151,6 +163,15 @@ def main():
         report["newSwiftHelperCompiledBeforeAppLaunch"] = True
         report["helperSourceSha256"] = helper_sha
         report["helperBinarySha256"] = hashlib.sha256(helper.read_bytes()).hexdigest()
+        if args.acceptance:
+            ocr_source = Path(__file__).with_name("mac-native-body-ocr.swift")
+            ocr_binary = out / "mac-native-body-ocr"
+            with (out / "ocr-swift-compile.log").open("wb") as log:
+                subprocess.run(["xcrun", "swiftc", str(ocr_source), "-o", str(ocr_binary)],
+                               stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
+            report["ocrHelper"] = {"sourceSha256": hashlib.sha256(ocr_source.read_bytes()).hexdigest(),
+                                   "binarySha256": hashlib.sha256(ocr_binary.read_bytes()).hexdigest(),
+                                   "compiledBeforeAppLaunch": True}
         package = Path(identity["packagePath"]).resolve(strict=True)
         if hashlib.sha256(package.read_bytes()).hexdigest() != identity["packageSha256"]:
             raise RuntimeError("Canonical DMG SHA256 differs")
@@ -237,6 +258,21 @@ def main():
             quit_app()
             record["ownedProcessExitedNormally"] = not owned()
         report["status"] = "diagnostic-observed"
+        if args.acceptance:
+            # The untouched original/control captures above precede all editor input.
+            # A failed control preflight stops the original table case without retries.
+            preflight = runpy.run_path(str(Path(__file__).with_name("mac-native-writer-preflight.py")))
+            preflight["run_preflight"](action, launch_document, quit_app, lambda: pid,
+                                       viewport["maximize_once"], identity, ocr_binary,
+                                       out / "native-control-preflight", report)
+            table = runpy.run_path(str(Path(__file__).with_name("mac-native-writer-table-acceptance.py")))
+            table["run_original_table"](action, launch_document, quit_app, lambda: pid,
+                                        viewport["maximize_once"], grid, identity, ocr_binary,
+                                        out / "native-original-acceptance", report)
+            report.update(status="native-core-passed", nativePass=True, diagnosticOnly=False,
+                          issue361FullAcceptance=False,
+                          limits=["Bounded original body/table Undo/Redo/save/full-quit/reopen acceptance only; full361 Tab/Find/two-document cases remain separate",
+                                  "Original OS window/display screenshots and file oracles retained; no canvas readback or model focus injection"])
     except PermissionError as error:
         report.update(status="blocked", reason=str(error))
         raise
