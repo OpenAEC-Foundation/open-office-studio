@@ -36,6 +36,36 @@ describe("Ctrl+S en het werkbestand", () => {
     ).toMatchObject({ bevestigen: false });
   });
 
+  it.each([false, true])("houdt de XLSB-bron buiten terugschrijven (bevestigd=%s)", (bevestigd) => {
+    const bron = Object.freeze({ token: "originele-xlsb", naam: "Begroting.XLSB", bevestigd });
+    const toestand = tabbladReducer(beginToestand, {
+      type: "openDocument",
+      naam: "Begroting.xlsx",
+      soort: "xlsx",
+      bytes: new Uint8Array([1]),
+      werkbestand: bron,
+      gewijzigd: true,
+    });
+    const kopie = toestand.tabbladen[0];
+    if (kopie.type !== "document") throw new Error("Verwacht de geïmporteerde werkmap");
+    expect(kopie).toMatchObject({ naam: "Begroting.xlsx", exportFormaat: "xlsx", gewijzigd: true });
+    // Ook een eerdere uitvoerkeuze mag een niet-ondersteunde bronroute niet activeren.
+    for (const heeftKeuze of [false, true]) {
+      expect(opslagplan({ ...kopie, heeftKeuze })).toEqual({ route: "opslaanAls" });
+    }
+    expect(kopie.werkbestand).toBe(bron);
+    expect(bron).toEqual({ token: "originele-xlsb", naam: "Begroting.XLSB", bevestigd });
+  });
+
+  it("bewaart de gekozen XLSX rechtstreeks en behoudt de XLS-waarschuwing", () => {
+    expect(opslagplan({
+      soort: "xlsx", werkbestand: { token: "nieuwe-xlsx", naam: "Begroting.xlsx" }, heeftKeuze: true,
+    })).toEqual({ route: "terugschrijven", ext: "xlsx", bevestigen: false });
+    expect(opslagplan({
+      soort: "xlsx", werkbestand: { token: "originele-xls", naam: "Begroting.xls" }, heeftKeuze: false,
+    })).toEqual({ route: "terugschrijven", ext: "xls", bevestigen: true });
+  });
+
   it("nieuw document: eerst Opslaan als, daarna dezelfde keuze", () => {
     expect(
       opslagplan({ soort: "xlsx", werkbestand: null, heeftKeuze: false }),

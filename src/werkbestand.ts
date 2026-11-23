@@ -1,7 +1,7 @@
 import type { Soort } from "./editors";
 import type { BewaarUitkomst } from "./opslag";
 import { blokkeerBijVerlies } from "./export/bewaar";
-import { converteer } from "./formaten";
+import { converteer, uitvoerformaat } from "./formaten";
 import { MACROUITVOER, bereidOpslag, type Bronkenmerken } from "./import/bron";
 import { bereidIfcxOpslag } from "./ifcx/opslag";
 
@@ -61,6 +61,10 @@ export function opslagplan(tabblad: {
   const { werkbestand, soort } = tabblad;
   if (werkbestand) {
     const ext = extensieVan(werkbestand.naam);
+    // XLSB is nu alleen invoer: bewaar de geconverteerde kopie via Opslaan als.
+    // Terugschrijven kan pas zodra er daadwerkelijk een XLSB-uitvoerroute is.
+    if (soort === "xlsx" && ext === "xlsb" && !uitvoerformaat(soort, ext))
+      return { route: "opslaanAls" };
     return {
       route: "terugschrijven",
       ext,
