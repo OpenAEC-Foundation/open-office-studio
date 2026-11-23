@@ -1,5 +1,13 @@
 # P4 Windows: seven-product split, six standalone hosts
 
+**Integration freeze:** P4 final parent download/native go is withdrawn even if
+its Windows job finishes. A successor source/build will include only the required
+CI installation correction from dpkg to apt dependency resolution for Zenity.
+No P4 bytes may substitute for that new pin. Current config is additionally
+`superseded:true`; original official successor metadata/go must explicitly repin
+the source/build and clear this gate. No canonical download or native launch has
+started. The contract structure remains preparatory; product hashes stay null.
+
 Only this preparation owns the canonical Windows ZIP download. Integration
 reserved a separate Suite transfer for750b; its native/core scope is not ours.
 The six fresh standalone hosts each receive only their own app's NSIS, report

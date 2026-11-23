@@ -8,7 +8,7 @@ from intake import APP,TREE,RUN,JOB,validate,validate_source
 class IntakeContracts(unittest.TestCase):
     def setUp(self):
         self.plan=json.loads(Path('.github/standalone-windows-p4.json').read_bytes())
-        self.plan.update(ready=True,officialMetadataGo=True,artifactId=123,archiveSha256='a'*64)
+        self.plan.update(ready=True,officialMetadataGo=True,superseded=False,artifactId=123,archiveSha256='a'*64)
         self.run=dict(id=RUN,head_sha=APP,run_attempt=1,status='in_progress',conclusion=None)
         self.job=dict(id=JOB,run_id=RUN,run_attempt=1,status='completed',conclusion='success')
         self.commit=dict(sha=APP,tree=dict(sha=TREE))
@@ -35,6 +35,9 @@ class IntakeContracts(unittest.TestCase):
         with self.assertRaises(AssertionError):self.check()
     def test_missing_official_go_rejected(self):
         self.plan['officialMetadataGo']=False
+        with self.assertRaises(AssertionError):self.check()
+    def test_superseded_candidate_cannot_be_reactivated_by_old_artifact_metadata(self):
+        self.plan['superseded']=True
         with self.assertRaises(AssertionError):self.check()
 
 if __name__=='__main__':unittest.main()

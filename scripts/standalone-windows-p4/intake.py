@@ -29,6 +29,7 @@ def validate(plan):
     assert (plan['artifactRun'],plan['platformJobId'],plan['sourceAttempt'])==(RUN,JOB,1)
     assert plan['artifactName']=='uitgave-Windows'
     if plan['ready']:
+        assert not plan.get('superseded',False),'Candidate superseded/frozen by integration'
         assert type(plan['artifactId']) is int and plan['artifactId']>0
         assert re.fullmatch('[0-9a-f]{64}',plan['archiveSha256'])
         assert plan['officialMetadataGo'] is True
