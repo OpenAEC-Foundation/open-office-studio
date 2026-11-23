@@ -74,6 +74,11 @@ try {
     const coordinate=a=>{const m=/^([A-Z]+)(\d+)$/.exec(a);return {row:Number(m[2])-1,col:[...m[1]].reduce((n,c)=>n*26+c.charCodeAt(0)-64,0)-1};};
     book.editCells(sheet,Object.entries({...cfg.coefficients,...cfg.grades}).map(([a,v])=>({...coordinate(a),input:String(v)})));
     book.editCells(nameSheet,[{...coordinate(cfg.nameCell),input:cfg.nameValue}]);
+    for(const [a,v] of Object.entries({...cfg.coefficients,...cfg.grades})){
+      const {row,col}=coordinate(a);assert.equal(book.cell(sheet,row,col).input,String(v),`Input ${a} was not committed`);
+    }
+    const nameCoordinate=coordinate(cfg.nameCell);
+    assert.equal(book.cell(nameSheet,nameCoordinate.row,nameCoordinate.col).input,cfg.nameValue,"Name edit was not committed");
     const snapshot=h=>{
       const info=h.sheetInfo();
       const value=h.readCells({ranges:[{sheetId:info.sheetIds[sheet],range:{kind:"a1",a1:"H5:I5"}},{sheetId:info.sheetIds[sheet],range:{kind:"a1",a1:"A5"}}]});

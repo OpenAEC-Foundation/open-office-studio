@@ -3,7 +3,9 @@ on:
   push:
     branches: [codex/stc-template-qa-2026-11-23-e0d7]
     paths:
-      - scripts/qa-stc-template/**
+      - scripts/qa-stc-template/*.py
+      - scripts/qa-stc-template/*.mjs
+      - scripts/qa-stc-template/*.json
       - .github/workflows/qa-stc-template-e0d7.yml
   workflow_dispatch:
 permissions:
