@@ -80,6 +80,8 @@ async function selectSheet(name){
  const menu=page.locator('.rekenblad-menu[role="menu"]');await menu.waitFor();
  assert.deepEqual(await menu.getByRole('menuitem').allTextContents(),['Sheet1','Sheet2','Sheet3']);
  await menu.getByRole('menuitem',{name,exact:true}).click();
+ await page.waitForFunction(name=>[...document.querySelectorAll('[role="tab"][aria-selected="true"]')].some(tab=>tab.textContent?.trim()===name),name);
+ record({actualSelectedSheet:name,verifiedProductionAriaTab:true});
 }
 async function cell(address){
  const name=page.locator('.rekenblad-naamvak');await focus(name,'name-box-'+address);await name.fill(address);await name.press('Enter');
@@ -180,6 +182,7 @@ try{
  const current=await launch('editing');const editPid=child.pid;assert.notEqual(editPid,firstPid);await openNative(saved);await checkUi(false,true);
  report.shortPreflight={status:'passed',focus:true,platformKeys:'Windows Control',actualNativeSave:true,normalFullQuit:true,newProcessPid:editPid,previousPid:firstPid};
  await checkUi();
+ await selectSheet(config.edit.sheet);
  await editCell(config.edit.formulaCell,config.edit.formula);await resultUi('sum-before',before,originalA2);
  await saveCurrent(saved,hash(await readFile(join(root,'uos-original.xlsx'))),'sum');await snapshot(saved,'uos-sum-before.xlsx','sum');
  await editCell(config.edit.cell,String(config.edit.value));await resultUi('sum-after',after,config.edit.value);
