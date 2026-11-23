@@ -411,16 +411,27 @@ class Case:
                 if time.monotonic()>=deadline:raise
                 time.sleep(0.5)
         for protocol,port in (("IMAP",server.imap_port),("SMTP",server.smtp_port)):
-            for label,value in ((protocol+" server","127.0.0.1"),(protocol+" username",USER)):
-                self.select(["AXTextField"],[label]);self.replace(value)
+            self.select(["AXTextField"],[protocol+" server"]);self.replace("127.0.0.1")
             self.select(["AXPopUpButton"],[protocol+" security"],action="press")
             self.s.ax("key","end");self.s.ax("key","return")
             nodes=attributes(self.s.ax("snapshot"))
             selected=[n for n in nodes if n.get("AXRole")=="AXPopUpButton" and n.get("AXDescription")==protocol+" security"]
             if len(selected)!=1 or selected[0].get("AXValue")!="None":raise Unavailable("Native loopback security selection not verified")
             self.select(["AXTextField"],[protocol+" port"]);self.replace(str(port))
+            self.focus(protocol+" port")
+            # The observed username center lies outside the visible modal.
+            # Walk its real native tab order instead of clicking the backdrop.
+            for suffix,role in ((" security","AXPopUpButton"),(" authentication","AXPopUpButton"),(" username","AXTextField")):
+                self.s.ax("key","tab");deadline=time.monotonic()+5
+                while True:
+                    focused=self.snapshot().get("focused",{});label=protocol+suffix
+                    if focused.get("AXRole")==role and label in (focused.get("AXTitle"),focused.get("AXDescription")):break
+                    if time.monotonic()>=deadline:raise Unavailable("Exact native account-wizard Tab target not established: "+label)
+                    time.sleep(0.2)  # Observe only; never repeat a Tab or type into a different control.
+                self.s.report.setdefault("nativeAccountFieldNavigation",[]).append({"key":"Tab","focused":focused})
+            self.replace(USER,expected=protocol+" username")
         self.button("Done","Save anyway");time.sleep(1)
-        self.button("New")
+        self.button("New message")
         self.select(["AXTextField","AXComboBox"],["To"]);self.replace("fixture@example.invalid");self.s.ax("key","tab")
         self.select(["AXTextField"],["Subject"]);self.replace(SEEDS["email"])
         self.select(["AXTextArea"],["Message text"]);self.replace(SEEDS["email"]+"\n"+CONTROL+"\n"+MARKERS["email"])
