@@ -28,17 +28,9 @@ def prepare(folder):
 
 
 def picker_open(case,fixture):
-    deadline=time.monotonic()+10
-    while True:
-        opened=case.candidates(["AXButton"],["Open"],None,"press",False)
-        if len(opened)==1:
-            case.button("Open");break
-        if len(opened)>1:raise Unavailable("Ordinary Open control is ambiguous")
-        file=case.candidates(["AXButton"],["File"],None,"press",False)
-        if len(file)==1:
-            case.button("File");case.button("Open");break
-        if len(file)>1 or time.monotonic()>=deadline:raise Unavailable("Ordinary File/Open native route unavailable")
-        time.sleep(.2)
+    # The real start page also has an Open button. The observed ordinary
+    # header command is uniquely contained in the Quick access toolbar.
+    case.button("Open",toolbar="Quick access")
     case.file_dialog(fixture)
 
 
