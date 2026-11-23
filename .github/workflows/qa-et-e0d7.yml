@@ -1,0 +1,42 @@
+name: ET source qualification diagnostics (no ET import acceptance)
+on:
+  push:
+    branches: [codex/et-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-et/*.py
+      - scripts/qa-et/*.mjs
+      - scripts/qa-et/*.json
+      - .github/workflows/qa-et-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source_gate_and_policy:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Authenticate public candidates and retain the failed authenticity gate
+        run: |
+          python -m py_compile scripts/qa-et/*.py
+          python scripts/qa-et/intake.py
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Actual read-only production policy without a desktop runtime (no engine/Office execution)
+        run: node scripts/qa-et/browser-limit.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: et-source-gate-and-policy-result
+          path: .local/et-qa/
+          include-hidden-files: true
+          if-no-files-found: error

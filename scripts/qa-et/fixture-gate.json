@@ -1,0 +1,64 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "scope": "ET source-authenticity gate and read-only production browser policy; no ET import pass",
+  "candidate": {
+    "repository": "Sayi/poi-tl",
+    "commit": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+    "firstPublicationCommit": "c2f77d7fde2975e36f031d05676b125227e0da9c",
+    "path": "poi-tl/src/test/resources/attachment/test.et",
+    "url": "https://raw.githubusercontent.com/Sayi/poi-tl/81edcbd9227a619078c07052830a2cd6a4333bb7/poi-tl/src/test/resources/attachment/test.et",
+    "bytes": 19968,
+    "blob": "484a4fea7dfd403d35b7a2c6c1481911e108c8cc",
+    "sha256": "e0a5ae8f885991b40c8f716a3ae041210426f506c53adb80e392ed577975d3e2",
+    "classification": "Unqualified independent WPS-family ET-named attachment candidate; native ET producer provenance unresolved",
+    "authenticETConfirmed": false
+  },
+  "control": {
+    "role": "Read-only provenance control from same publication, not a separate XLS route/scope",
+    "path": "poi-tl/src/test/resources/attachment/test.xls",
+    "url": "https://raw.githubusercontent.com/Sayi/poi-tl/81edcbd9227a619078c07052830a2cd6a4333bb7/poi-tl/src/test/resources/attachment/test.xls",
+    "bytes": 19968,
+    "blob": "3ce03dc67acb1ecc9ec2f2832f5955a6aadf228c",
+    "sha256": "e510c13c7991206c10a33be2b018631e52b5fb6ef3a0512b538c8730e12fc87b"
+  },
+  "license": {
+    "path": "LICENSE",
+    "url": "https://raw.githubusercontent.com/Sayi/poi-tl/81edcbd9227a619078c07052830a2cd6a4333bb7/LICENSE",
+    "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+    "classification": "Apache-2.0 repository distribution, no per-fixture override found; not an independent ET-producer declaration"
+  },
+  "falsePositive": {
+    "repository": "Tom60chat/Extension-List",
+    "commit": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+    "path": "List/WPS Spreadsheets Workbook.et",
+    "url": "https://raw.githubusercontent.com/Tom60chat/Extension-List/74e784db06e7a76fc3b61189830e241c3b6d0105/List/WPS%20Spreadsheets%20Workbook.et",
+    "bytes": 448,
+    "blob": "33e5dea2e40250780a0f8365b10f58b7eb0e0ba2",
+    "classification": "Plain Lorem ipsum text, not a workbook; never import-test as ET"
+  },
+  "gate": {
+    "acceptedFixture": false,
+    "sourceImportAcceptance": false,
+    "fullFormatAcceptance": false,
+    "missing": "Independent evidence that the published candidate was saved as native ET by its original producer, or another genuine independently published ET with usable license/provenance and source oracle",
+    "reason": "Workbook and ETExtData payloads are identical to same-commit XLS; differences are only property metadata. WPS-family markers do not independently prove ET Save-As versus WPS XLS/renaming. This does not prove the candidate is fake."
+  },
+  "primaryFormatSources": [
+    {
+      "url": "https://docs.sheetjs.com/docs/miscellany/formats/#wps-office-spreadsheet-et",
+      "role": "Primary parser developer documents ET as BIFF8 plus proprietary extensions; no executed SheetJS parser/oracle used."
+    },
+    {
+      "url": "https://www.wps.com/feature/et-file/",
+      "role": "Producer documents native ET and that suffix renaming is not conversion."
+    },
+    {
+      "url": "https://forum.aspose.com/t/wps-office-support/199681",
+      "role": "Historical2019 component developer report says WPS-produced ET can be read similarly to XLS; does not authenticate this particular candidate."
+    }
+  ]
+}
