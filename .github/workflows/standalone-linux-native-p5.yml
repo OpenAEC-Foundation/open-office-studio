@@ -106,7 +106,7 @@ jobs:
           pnpm --dir .local/standalone-harness install --frozen-lockfile --ignore-scripts
           node --check .local/standalone-harness/scripts/proef-standalone-linux.mjs
           node --check .local/standalone-harness/scripts/standalone-linux-gnm-native.mjs
-          node --test .local/standalone-harness/scripts/standalone-linux-mail-fixture.test.mjs .local/standalone-harness/scripts/standalone-linux-ooxml.test.mjs
+          node --test .local/standalone-harness/scripts/standalone-linux-mail-fixture.test.mjs .local/standalone-harness/scripts/standalone-linux-ooxml.test.mjs .local/standalone-harness/scripts/test-standalone-deb-dependency.mjs
           /usr/bin/python3 .local/standalone-harness/scripts/format30-gnm/oracle_test.py
           cargo install tauri-driver --version 2.1.0 --locked
       - name: Verify and download only own app input artifact

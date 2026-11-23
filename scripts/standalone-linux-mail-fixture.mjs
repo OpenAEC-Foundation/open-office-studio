@@ -13,7 +13,7 @@ export async function mailFixture() {
   const server = createServer((socket) => {
     sockets.add(socket);
     socket.once("close", () => sockets.delete(socket));
-    socket.write("* OK [CAPABILITY IMAP5rev1] Synthetic local QA mailbox\r\n");
+    socket.write("* OK [CAPABILITY IMAP4rev1] Synthetic local QA mailbox\r\n");
     let buffer = Buffer.alloc(0),
       selected = "INBOX",
       append;
@@ -55,7 +55,7 @@ export async function mailFixture() {
           assert.equal(unquote(words[0]), "standalone@example.invalid");
           assert.equal(unquote(words[1]), "SYNTHETIC-QA-PASSWORD");
         } else if (cmd === "CAPABILITY")
-          response = "* CAPABILITY IMAP5rev1 UIDPLUS SPECIAL-USE UNSELECT\r\n";
+          response = "* CAPABILITY IMAP4rev1 UIDPLUS SPECIAL-USE UNSELECT\r\n";
         else if (cmd === "LIST")
           response =
             '* LIST (\\HasNoChildren) "/" "INBOX"\r\n* LIST (\\HasNoChildren \\Drafts) "/" "Drafts"\r\n';

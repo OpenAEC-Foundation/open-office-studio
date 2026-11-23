@@ -23,7 +23,9 @@ test("synthetic peer accepts fragmented APPEND and serves the unchanged draft af
         received = "";
         return result;
       };
-      await response("Synthetic local QA mailbox");
+      const greeting = await response("Synthetic local QA mailbox");
+      assert.match(greeting, /\[CAPABILITY IMAP4rev1\]/);
+      assert.doesNotMatch(greeting, /IMAP5/);
       socket.write(
         'a1 LOGIN "standalone@example.invalid" "SYNTHETIC-QA-PASSWORD"\r\n',
       );
@@ -31,6 +33,13 @@ test("synthetic peer accepts fragmented APPEND and serves the unchanged draft af
       return response;
     }
     let response = await session();
+    socket.write("cap CAPABILITY\r\n");
+    const capabilities = await response("cap OK");
+    assert.match(
+      capabilities,
+      /\* CAPABILITY IMAP4rev1 UIDPLUS SPECIAL-USE UNSELECT/,
+    );
+    assert.doesNotMatch(capabilities, /IMAP5/);
     socket.write('a2 LIST "" "*"\r\n');
     assert.match(await response("a2 OK"), /\\Drafts/);
     const raw = Buffer.from(

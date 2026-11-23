@@ -29,6 +29,7 @@ import {
 } from "./linux-p2-ribbon-native.mjs";
 import { selectedCanvasPointScript } from "./linux-p2-native-ready.mjs";
 import { runStandaloneGnmProbe } from "./standalone-linux-gnm-native.mjs";
+import { declaresZenity } from "./standalone-deb-dependency.mjs";
 
 assert.equal(process.platform, "linux");
 assert.equal(process.env.GITHUB_ACTIONS, "true", "Disposable CI runner only");
@@ -686,9 +687,7 @@ async function packageCase(pkg) {
         "Depends",
       ]);
       report.nativeMessageDependencyObservation.zenityDeclaredByDeb =
-        /(?:^|[,|])\s*zenity(?::[a-z0-9]+)?(?:\s|$)/.test(
-          report.declaredDependencies,
-        );
+        declaresZenity(report.declaredDependencies);
       command("dpkg-deb", ["--extract", pkg.path, payloadRoot]);
       command("sudo", ["apt-get", "install", "-y", "--no-install-recommends", pkg.path]);
       report.afterDependencyInstallNoSuitePackages = noInstalledSuite();
@@ -1083,6 +1082,10 @@ async function packageCase(pkg) {
             "return document.body.textContent.includes('Synthetic local QA')",
           ),
         "Native own-profile account loaded",
+      );
+      await wait(
+        () => visible(".email-map[title=\"Drafts\"]"),
+        "Actual configured IMAP Drafts folder has loaded before composing",
       );
       await clickLabel("New message");
       await wait(() => visible("#email-onderwerp"), "Native message composer");
