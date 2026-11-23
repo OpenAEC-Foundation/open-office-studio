@@ -38,6 +38,10 @@ def receipt():
 def run(name, argv, cwd=None, timeout=600, check=True):
     assert shutil.disk_usage(OUT).free >= 10*1024**3, 'Disk stop: less than 10 GiB'
     timeout=min(timeout,max(1,int(260*60-(time.monotonic()-START))))
+    if not REPORT.get('preparationCompleted'):
+        prep_left=int(30*60-(time.monotonic()-START))
+        assert prep_left>0, 'Original 30-minute preparation window exhausted; no new source/compiler attempt'
+        timeout=min(timeout,prep_left)
     log=OUT/(name+'.log'); started=time.monotonic()
     print(name,flush=True)
     with log.open('wb') as stream:
@@ -87,7 +91,21 @@ def main():
     assert re.search(r'^ID=ubuntu$',os_release,re.M) and re.search(r'^VERSION_CODENAME=noble$',os_release,re.M)
     assert Path('/usr/share/keyrings/ubuntu-archive-keyring.gpg').is_file()
     original=Path('/etc/apt/sources.list.d/ubuntu.sources')
-    if original.is_file():shutil.copyfile(original,OUT/'original-ubuntu.sources.txt')
+    if original.is_file():
+        text=original.read_text();shutil.copyfile(original,OUT/'original-ubuntu.sources.txt')
+        blocks=[]
+        for block in text.split('\n\n'):
+            suites=re.search(r'^Suites:\s*(.+)$',block,re.M)
+            uri=re.search(r'^URIs:\s*(.+)$',block,re.M)
+            if suites and uri:
+                assert all(s.startswith('noble') for s in suites[1].split())
+                allowed=uri[1]=='mirror+file:/etc/apt/apt-mirrors.txt' or bool(re.fullmatch(r'https?://(?:[A-Za-z0-9.-]+\.)?(?:archive|security)\.ubuntu\.com/ubuntu/?',uri[1]))
+                assert allowed, 'Unknown Ubuntu mirror; do not silently replace an unrelated repository'
+                canonical='https://security.ubuntu.com/ubuntu/' if all(s.endswith('-security') for s in suites[1].split()) else 'https://archive.ubuntu.com/ubuntu/'
+                block=re.sub(r'^URIs:.*$', 'URIs: '+canonical,block,flags=re.M)
+            blocks.append(block)
+        binary=OUT/'canonical-ubuntu.sources';binary.write_text('\n\n'.join(blocks))
+        run('official-binary-mirror',['sudo','cp',str(binary),str(original)])
     src=OUT/'presentation-375-src.sources'
     src.write_text('Types: deb-src\nURIs: https://archive.ubuntu.com/ubuntu/\nSuites: noble noble-updates\nComponents: main restricted universe multiverse\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\nTypes: deb-src\nURIs: https://security.ubuntu.com/ubuntu/\nSuites: noble-security\nComponents: main restricted universe multiverse\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n')
     run('ubuntu-source-index',['sudo','cp',str(src),'/etc/apt/sources.list.d/presentation-375-src.sources'])
@@ -122,6 +140,7 @@ def main():
     REPORT['configureFlags']=flags
     run('configure',[str(source/'autogen.sh'),*flags],cwd=source,timeout=900)
     assert time.monotonic()-START <=30*60, 'Acquisition/configuration exceeded 30-minute bound'
+    REPORT['preparationCompleted']=True
     REPORT['configurationHashes']={p.name:sha(p) for p in [source/'config_host.mk',source/'config_host/config_global.h'] if p.is_file()}
     for p in [source/'config_host.mk',source/'config_host/config_global.h']:
         if p.is_file():shutil.copyfile(p,OUT/p.name)
