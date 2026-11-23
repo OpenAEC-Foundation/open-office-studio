@@ -17,6 +17,10 @@ on:
         description: Test only old Notition bytes as host/driver preflight; never final acceptance
         type: boolean
         default: false
+      preflight_input_run:
+        description: Optional previous QA run with immutable verified Notition inputs (host preflight only)
+        type: string
+        default: ""
 permissions:
   contents: read
   actions: read
@@ -28,6 +32,7 @@ jobs:
       run: ${{ steps.request.outputs.run }}
       apps: ${{ steps.request.outputs.apps }}
       purpose: ${{ steps.request.outputs.purpose }}
+      reuse: ${{ steps.request.outputs.reuse }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,6 +44,7 @@ jobs:
           INPUT_SOURCE: ${{ inputs.application_commit }}
           INPUT_RUN: ${{ inputs.artifact_run }}
           INPUT_PREFLIGHT: ${{ inputs.host_preflight_only }}
+          INPUT_REUSE: ${{ inputs.preflight_input_run }}
         run: |
           node --input-type=module <<'JS'
           import {readFileSync,appendFileSync} from 'node:fs';
@@ -47,7 +53,8 @@ jobs:
           assert.match(c.source,/^[0-9a-f]{40}$/); assert.match(String(c.run),/^\d+$/); assert.equal(typeof c.hostPreflightOnly,'boolean');
           const apps=c.hostPreflightOnly?['notition']:['writer','spreadsheet','presentation','email','notition','database'];
           const purpose=c.hostPreflightOnly?'host-driver-preflight-NOT-final-acceptance':'frozen-candidate-acceptance';
-          appendFileSync(process.env.GITHUB_OUTPUT,`source=${c.source}\nrun=${c.run}\napps=${JSON.stringify(apps)}\npurpose=${purpose}\n`);
+          const reuse=process.env.INPUT_REUSE||''; if(reuse){assert.equal(c.hostPreflightOnly,true);assert.match(reuse,/^\d+$/);}
+          appendFileSync(process.env.GITHUB_OUTPUT,`source=${c.source}\nrun=${c.run}\napps=${JSON.stringify(apps)}\npurpose=${purpose}\nreuse=${reuse}\n`);
           JS
   prepare:
     needs: request
@@ -58,6 +65,7 @@ jobs:
       STANDALONE_APP_COMMIT: ${{ needs.request.outputs.source }}
       STANDALONE_BUILD_RUN: ${{ needs.request.outputs.run }}
       STANDALONE_PURPOSE: ${{ needs.request.outputs.purpose }}
+      STANDALONE_PREFLIGHT_REUSE_RUN: ${{ needs.request.outputs.reuse }}
     steps:
       - uses: actions/checkout@v4
         with:

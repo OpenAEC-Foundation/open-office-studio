@@ -305,13 +305,24 @@ async function packageCase(pkg) {
       report.payloadExecutableSha256,
       "Running binary is exactly the inspected package binary",
     );
-    assert.ok(
-      !paths.mappedResources.some((s) =>
-        /Open Office Studio|open-office-studio|\/resources\//.test(s),
-      ),
-      "No suite or checkout runtime mappings",
-    );
     report.launches.push(paths);
+    const mappedPaths = paths.mappedResources.map((line) =>
+      line.trim().split(/\s+/).slice(5).join(" "),
+    );
+    const checkoutResources = [
+      resolve("resources"),
+      resolve("src-tauri/resources"),
+    ];
+    assert.ok(
+      !mappedPaths.some(
+        (path) =>
+          path === "/usr/bin/open-office-studio" ||
+          path.startsWith("/usr/libexec/Open Office Studio/") ||
+          path.startsWith("/usr/share/Open Office Studio/") ||
+          checkoutResources.some((root) => path.startsWith(`${root}/`)),
+      ),
+      "No suite executable/private runtime or checkout resource mappings",
+    );
     return pid;
   };
   const osFileDialog = async (path) => {

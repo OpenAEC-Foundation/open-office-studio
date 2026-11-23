@@ -47,6 +47,26 @@ def main():
     matches = [a for a in artifacts if a["name"] == "uitgave-Linux" and not a["expired"]]
     assert len(matches) == 1
     artifact = matches[0]
+    reuse = os.environ.get("STANDALONE_PREFLIGHT_REUSE_RUN", "")
+    if reuse:
+        assert purpose == "host-driver-preflight-NOT-final-acceptance" and reuse.isdecimal()
+        qa_run = api(f"actions/runs/{reuse}")
+        assert qa_run["path"] == ".github/workflows/standalone-linux-acceptance.yml"
+        out = Path(".local/standalone-linux-prepared/notition")
+        subprocess.run(["gh", "run", "download", reuse, "--repo", REPO, "--name", "standalone-input-notition", "--dir", str(out)], check=True)
+        origin = json.loads((out / "origin.json").read_text())
+        assert origin["purpose"] == purpose and origin["sourceCommit"] == source and origin["version"] == version
+        assert origin["run"] == int(run_id) and origin["artifact"]["id"] == artifact["id"]
+        assert "sha256:" + origin["artifact"]["zipSha256"] == artifact["digest"]
+        assert origin["sourceTree"] == subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], text=True).strip()
+        assert origin["studio"]["sleutel"] == "notition"
+        for package in origin["packages"]:
+            path = out / package["path"]
+            assert path.parent == out and path.stat().st_size == package["bytes"] and digest(path) == package["sha256"]
+        origin["reusedVerifiedInputRun"] = int(reuse)
+        (out / "origin.json").write_text(json.dumps(origin, indent=2) + "\n")
+        print(json.dumps(origin))
+        return
     archive = Path(os.environ["RUNNER_TEMP"]) / "standalone-release.zip"
     with archive.open("wb") as target:
         subprocess.run(["gh", "api", f"repos/{REPO}/actions/artifacts/{artifact['id']}/zip"], stdout=target, check=True)
