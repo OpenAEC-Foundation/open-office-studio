@@ -1,0 +1,119 @@
+name: Windows Office 48.1 intermediate build
+on:
+  push:
+    branches: [codex/windows-runtime-extract-20261123]
+    paths:
+      - .github/workflows/windows-office-build-20261123.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  office:
+    if: contains(github.event.head_commit.message, '[windows-build-go]')
+    runs-on: windows-latest
+    timeout-minutes: 100
+    env:
+      APP_SOURCE: 3a0decac3d45234d4b4d487e431b21cff961ccca
+      APP_TREE: e46b8faed3ca6b468e71a4d0d77b6dc8ce259360
+      APP_VERSION: 2026.48.1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.APP_SOURCE }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/build-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify application source, tree and version before building
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';import{execFileSync}from'node:child_process';import{mkdirSync,readFileSync,writeFileSync}from'node:fs';
+          const git=(...args)=>execFileSync('git',args,{encoding:'utf8'}).trim();
+          assert.equal(git('rev-parse','HEAD'),process.env.APP_SOURCE);assert.equal(git('rev-parse','HEAD^{tree}'),process.env.APP_TREE);assert.equal(git('status','--porcelain','--untracked-files=no'),'');
+          for(const file of ['package.json','src-tauri/tauri.conf.json','versie.json']){const v=JSON.parse(readFileSync(file,'utf8'));assert.equal(v.version??v.versie,process.env.APP_VERSION);}
+          mkdirSync('.local/windows-build-proof',{recursive:true});writeFileSync('.local/windows-build-proof/source.json',JSON.stringify({applicationCommit:process.env.APP_SOURCE,applicationTree:process.env.APP_TREE,version:process.env.APP_VERSION,builderCommit:process.env.GITHUB_SHA,runId:Number(process.env.GITHUB_RUN_ID)},null,2));
+          JS
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            src-tauri -> target
+            src/spelling/rust -> target
+          shared-key: runtime317
+          cache-on-failure: true
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json') }}
+      - run: node scripts/voorbereiden-kantoorruntime.mjs
+      - uses: actions/cache@v4
+        with:
+          path: .local/lettertypen-cache
+          key: lettertypen-${{ hashFiles('assets/lettertypen.json') }}
+      - run: node scripts/haal-lettertypen.mjs
+      - uses: actions/cache@v4
+        with:
+          path: .local/woordenboeken-cache
+          key: woordenboeken-${{ hashFiles('assets/woordenboeken.json') }}
+      - run: node scripts/haal-woordenboeken.mjs
+      - run: cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib
+      - run: node scripts/bouw-spelling-wasm.mjs
+      - run: pnpm versie:check
+      - run: node scripts/corpus-download.mjs docs/tests/versleuteling-manifest.json
+      - run: pnpm test
+      - run: python -m unittest discover -s tests -v
+      - run: node scripts/test-kantoor-engines.mjs
+      - run: pnpm test:opdrachten
+      - run: node experiments/ifcx-office/proef.mjs
+      - name: Prepare the pinned WebView2 loader
+        shell: pwsh
+        run: ./scripts/voorbereiden-windows.ps1
+      - run: pnpm build
+      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked documentkoppeling --no-default-features
+      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked
+      - name: Build the Office Windows development installer only
+        run: pnpm desktop:build --bundles nsis
+      - name: Extract and validate the actual installer
+        run: python scripts/controleer-installers.py --platform windows --rapport .local/pakketcontrole-Windows.json
+      - name: Bind installer and executable bytes to the application checkout
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';import{createHash}from'node:crypto';import{createReadStream}from'node:fs';import{copyFile,mkdir,readFile,readdir,stat,writeFile}from'node:fs/promises';import{execFileSync}from'node:child_process';
+          const digest=async p=>{const h=createHash('sha256');for await(const b of createReadStream(p))h.update(b);return h.digest('hex')};
+          const source=JSON.parse(await readFile('.local/windows-build-proof/source.json','utf8'));assert.equal(execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),source.applicationCommit);
+          const dir='src-tauri/target/release/bundle/nsis';const files=(await readdir(dir)).filter(n=>n.endsWith('-setup.exe'));assert.equal(files.length,1);await mkdir('.local/windows-build-installers/nsis',{recursive:true});
+          const path='nsis/'+files[0];await copyFile(dir+'/'+files[0],'.local/windows-build-installers/'+path);
+          const proof={...source,installer:{path,sha256:await digest(dir+'/'+files[0]),size:(await stat(dir+'/'+files[0])).size},executable:{sha256:await digest('src-tauri/target/release/open-office-studio.exe')},helperGitBlob:execFileSync('git',['rev-parse','HEAD:scripts/voorbereiden-kantoorruntime.mjs'],{encoding:'utf8'}).trim(),developmentBuild:true,signingRequired:false};
+          await writeFile('.local/windows-build-installers/provenance.json',JSON.stringify(proof,null,2));await writeFile('.local/windows-build-proof/provenance.json',JSON.stringify(proof,null,2));console.log(JSON.stringify(proof,null,2));
+          JS
+      - uses: actions/upload-artifact@v4
+        id: installer
+        with:
+          name: windows-office-372-${{ env.APP_SOURCE }}
+          path: .local/windows-build-installers/
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-office-build-proof-${{ env.APP_SOURCE }}
+          path: |
+            .local/windows-build-proof/
+            .local/pakketcontrole-Windows.json
+            src-tauri/resources/kantoorruntime/meta/receipt.json
+          include-hidden-files: true
+          if-no-files-found: warn
