@@ -78,3 +78,21 @@ and native acceptance are still outstanding: Windows750b, Linux writer_362 and
 macOS6f92. Their previous package passes do not transfer to changed kernels.
 This Linux frontend proof is not native acceptance. Source has zero tables, so
 there is no table-fidelity claim. No main/tag/release change or app/Mac build.
+
+## Coordinator-confirmed native status, 2026-11-23
+
+These are coordinator-reported results, not new native tests performed here:
+
+- Windows750b, run45152204418: P2 native I/O/XML passes, with the original
+  issue374 overlap. No visual approval of the replacement kernels.
+- Linux writer_362, run45157371765 / proof5622eeb0: real OpenFile/SaveFile,
+  Rust conversion, normal Alt+F4 exit, new-PID reopen and three XML audits pass.
+  This is old-P2 evidence; long-marker images do not approve issue374.
+- macOS6f92: NOT-RUN; its own Mac release producer is still building.
+
+The coordinator is reviewing product85ac155f and the actual WASM/render proof.
+The next single combination pin also awaits the independently owned necessary
+Linux storage corrections377 and378. They have no source overlap with the five
+field374 product files. No further field374 source change is requested without
+a new review finding. The shared QA helpers will run at that new pin; all
+new-kernel native and new-pin platform results remain explicitly outstanding.
