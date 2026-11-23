@@ -2,6 +2,7 @@
 import base64
 import datetime as dt
 import hashlib
+import io
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -15,7 +16,8 @@ import zipfile
 REPO = "OpenAEC-Foundation/open-office-studio"
 WORKFLOW = ".github/workflows/standalone-windows-p4.yml"
 PREP_GATE = "One canonical download, source/job/archive/report/NSIS/payload gates"
-BIND_GATE = "Bind official child ZIP digests; separate Suite consumer contract"
+BIND_GATE = "Publish the verified Suite contract immediately after its own child upload"
+DESCRIPTOR_NAME = "standalone-windows-p5-suite-descriptor"
 
 
 def positive(value):
@@ -38,6 +40,7 @@ def stamp(value):
 
 def descriptor(plan):
     assert plan["requireSigned"] is True and plan["testTitleOverlap"] is True
+    assert plan["suitePrefixSealed"] is True
     for key in ("runId", "producerRunAttempt", "producerJobId", "artifactId"):
         positive(plan[key])
     raw = base64.b64decode(plan["suiteDescriptorBase64"], validate=True)
@@ -53,6 +56,9 @@ def descriptor(plan):
         assert suite[key] == value, f"Suite {key} differs from frozen input"
     for key in ("suitePreparerRun", "suitePreparerAttempt", "suitePreparerJobId"):
         positive(plan[key])
+    positive(plan["suiteDescriptorArtifactId"])
+    assert 0 < positive(plan["suiteDescriptorArtifactBytes"]) < 5 * 1024**2
+    assert re.fullmatch("[a-f0-9]{64}", plan["suiteDescriptorArtifactSha256"])
     positive(suite["archiveBytes"])
     assert isinstance(suite["boundary"], str) and suite["boundary"].strip()
     assert re.fullmatch("[a-f0-9]{40}", suite["preparerHarness"])
@@ -82,29 +88,63 @@ def descriptor(plan):
     return d
 
 
-def producer_metadata(plan, suite, run, job, child, parent):
+def producer_metadata(plan, suite, run, job, child, parent, descriptor_meta):
     assert run["id"] == job["run_id"] == suite["preparerRun"]
     assert run["head_sha"] == job["head_sha"] == suite["preparerHarness"]
     assert run["path"] == WORKFLOW and run["head_repository"]["full_name"] == REPO
     assert run["run_attempt"] >= plan["suitePreparerAttempt"] == job["run_attempt"]
     assert job["id"] == plan["suitePreparerJobId"] and job["name"] == "prepare"
-    assert job["status"] == "completed" and job["conclusion"] == "success"
+    assert job["status"] in ("in_progress", "completed")
     gates = {}
     for name in (PREP_GATE, BIND_GATE):
         steps = [s for s in job["steps"] if s["name"] == name]
         assert len(steps) == 1 and steps[0]["conclusion"] == "success" and steps[0]["status"] == "completed"
         gates[name] = steps[0]
+    # The first upload immediately following the reviewed Suite-binding step
+    # seals its immutable descriptor. No later app upload/native case is borrowed.
+    uploads = [s for s in job["steps"] if s["number"] == gates[BIND_GATE]["number"] + 1]
+    assert len(uploads) == 1
+    upload = uploads[0]
+    assert upload["name"] == "Run actions/upload-artifact@v4"
+    assert upload["status"] == "completed" and upload["conclusion"] == "success"
+    for step in job["steps"]:
+        if step["number"] <= upload["number"]:
+            assert step["status"] == "completed" and step["conclusion"] in ("success", "skipped"), "Suite prefix did not succeed"
+    if job["status"] == "completed":
+        assert stamp(upload["completed_at"]) <= stamp(job["completed_at"])
     expected = suite["childArtifact"]
     assert (child["id"], child["name"], child["size_in_bytes"], child["digest"]) == (expected["id"], expected["name"], expected["bytes"], expected["digest"])
     assert not child["expired"] and child["workflow_run"]["id"] == suite["preparerRun"]
     assert child["workflow_run"]["head_sha"] == suite["preparerHarness"]
     created = stamp(child["created_at"])
-    assert stamp(job["started_at"]) <= created <= stamp(job["completed_at"])
+    assert stamp(job["started_at"]) <= created <= stamp(upload["completed_at"])
     assert stamp(gates[PREP_GATE]["completed_at"]) <= created <= stamp(gates[BIND_GATE]["started_at"])
+    assert (descriptor_meta["id"], descriptor_meta["name"], descriptor_meta["digest"], descriptor_meta["size_in_bytes"]) == (plan["suiteDescriptorArtifactId"], DESCRIPTOR_NAME, "sha256:" + plan["suiteDescriptorArtifactSha256"], plan["suiteDescriptorArtifactBytes"])
+    assert not descriptor_meta["expired"]
+    assert descriptor_meta["workflow_run"]["id"] == suite["preparerRun"] and descriptor_meta["workflow_run"]["head_sha"] == suite["preparerHarness"]
+    assert stamp(gates[BIND_GATE]["completed_at"]) <= stamp(descriptor_meta["created_at"]) <= stamp(upload["completed_at"])
     assert parent["id"] == suite["artifactId"] and parent["name"] == "uitgave-Windows" and not parent["expired"]
     assert parent["digest"] == "sha256:" + suite["archiveSha256"] and parent["size_in_bytes"] == suite["archiveBytes"]
     assert parent["workflow_run"]["id"] == plan["runId"] and parent["workflow_run"]["head_sha"] == plan["applicationCommit"]
-    return {"preparerJobId": job["id"], "preparerAttempt": job["run_attempt"], "childCreatedAt": child["created_at"], "gates": gates}
+    return {"preparerJobId": job["id"], "preparerAttempt": job["run_attempt"], "jobStatusAtValidation": job["status"], "jobConclusionAtValidation": job["conclusion"], "childCreatedAt": child["created_at"], "gates": gates, "descriptorUpload": upload, "scope": "Only the completed sealed Suite prefix; later app uploads/native jobs are not accepted by this proof"}
+
+
+def sealed_descriptor(blob, plan, suite):
+    assert len(blob) == plan["suiteDescriptorArtifactBytes"] and sha(blob) == plan["suiteDescriptorArtifactSha256"]
+    with zipfile.ZipFile(io.BytesIO(blob)) as z:
+        names = z.namelist()
+        assert len(names) == len(set(names)) < 32
+        assert {"suite-consumer.json", "pakketcontrole-Windows.json"}.issubset(names)
+        for info in z.infolist():
+            p = PurePosixPath(info.filename)
+            assert len(p.parts) == 1 and not p.is_absolute() and ".." not in p.parts and "\\" not in info.filename
+            assert not info.is_dir() and stat.S_IFMT(info.external_attr >> 16) in (0, stat.S_IFREG)
+            assert info.file_size < 5 * 1024**2
+        raw = z.read("suite-consumer.json")
+        assert sha(raw) == plan["suiteDescriptorSha256"]
+        assert raw == base64.b64decode(plan["suiteDescriptorBase64"], validate=True)
+        report = z.read("pakketcontrole-Windows.json")
+        assert len(report) == suite["canonicalPackageReport"]["bytes"] and sha(report) == suite["canonicalPackageReport"]["sha256"]
 
 
 def unpack(archive, root, suite):
@@ -153,13 +193,18 @@ def main():
     job = next(j for j in jobs["jobs"] if j["id"] == plan["suitePreparerJobId"])
     child = api(f"actions/artifacts/{suite['childArtifact']['id']}")
     parent = api(f"actions/artifacts/{suite['artifactId']}")
-    metadata = producer_metadata(plan, suite, run, job, child, parent)
+    descriptor_meta = api(f"actions/artifacts/{plan['suiteDescriptorArtifactId']}")
+    metadata = producer_metadata(plan, suite, run, job, child, parent, descriptor_meta)
+    # Small metadata archive lives only in memory; the only package ZIP on disk
+    # is the Suite child. The large official parent stays on8020's prep host.
+    descriptor_zip = subprocess.check_output(["gh", "api", f"repos/{REPO}/actions/artifacts/{descriptor_meta['id']}/zip"])
+    sealed_descriptor(descriptor_zip, plan, suite)
     root = Path(sys.argv[2]); root.mkdir(parents=True, exist_ok=False)
     archive = root / "suite-child.zip"
     with archive.open("xb") as f:
         subprocess.run(["gh", "api", f"repos/{REPO}/actions/artifacts/{child['id']}/zip"], stdout=f, check=True)
     receipt = unpack(archive, root, suite)
-    proof = {"status": "verified", "descriptorSha256": plan["suiteDescriptorSha256"], "source": d["source"], "parentArchiveVerification": "Official API digest and size + pinned preparer full-parent-download attestation; consumer did not download parent", "preparer": metadata, "childArtifact": child, "downloadedChildSha256": file_sha(archive), "downloadedChildBytes": archive.stat().st_size, "packageReceiptSha256": suite["packageReceiptSha256"], "installer": suite["installer"], "suite": suite, "receipt": receipt}
+    proof = {"status": "verified", "descriptorSha256": plan["suiteDescriptorSha256"], "descriptorArtifact": descriptor_meta, "downloadedDescriptorArchiveSha256": sha(descriptor_zip), "source": d["source"], "parentArchiveVerification": "Official API digest and size + pinned preparer full-parent-download attestation; consumer did not download parent", "preparer": metadata, "childArtifact": child, "downloadedChildSha256": file_sha(archive), "downloadedChildBytes": archive.stat().st_size, "packageReceiptSha256": suite["packageReceiptSha256"], "installer": suite["installer"], "suite": suite, "receipt": receipt}
     (root / "suite-child-binding.json").write_text(json.dumps(proof, indent=2) + "\n", encoding="utf8")
     print(json.dumps({"status": "verified", "childArtifactId": child["id"], "parentDownloadedByConsumer": False}))
 
