@@ -1,0 +1,86 @@
+name: Native P2 Linux XLSB OpenFile picker only
+on:
+  push:
+    branches: [codex/qa-xlsb35-openfile-p2-d410-2026-11-23]
+    paths:
+      - qa/native-xlsb35-p2/openfile*
+      - .github/workflows/qa-xlsb35-openfile-p2-d410.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  APP_SOURCE: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+jobs:
+  native-openfile:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.APP_SOURCE }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/native-xlsb-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Native driver and private-display dependencies, without an app build
+        run: |
+          sudo /usr/bin/python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo /usr/bin/python3 - <<'PY'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():path.write_text(module.herschrijf_bronnen(path.read_text()))
+          PY
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 at-spi2-core libatk-adaptor xdg-desktop-portal xdg-desktop-portal-gtk
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm --dir .local/native-xlsb-harness install --frozen-lockfile --ignore-scripts
+      - name: Source oracle and native driver syntax
+        run: |
+          node --check .local/native-xlsb-harness/qa/native-xlsb35-p2/openfile-driver.mjs
+          /usr/bin/python3 .local/native-xlsb-harness/qa/native-xlsb35-p2/oracle.py
+      - name: Verify the approved P2 descriptor and actual installed DEB ELF
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: /usr/bin/python3 .local/native-xlsb-harness/qa/native-xlsb35-p2/shared/scripts/linux-p2-native-package.py
+      - name: Only missing real OpenFile picker and source A1 case
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: |
+          export XDG_CONFIG_HOME="$PWD/.local/linux-p2-native/xlsb35-openfile/profile/config"
+          export XDG_DATA_HOME="$PWD/.local/linux-p2-native/xlsb35-openfile/profile/data"
+          export XDG_CACHE_HOME="$PWD/.local/linux-p2-native/xlsb35-openfile/profile/cache"
+          export XDG_CURRENT_DESKTOP=GNOME
+          export GDK_BACKEND=x11
+          unset NO_AT_BRIDGE
+          mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME"
+          xvfb-run -a -e .local/native-xlsb-xvfb.log -s '-screen 0 1800x1200x24 -noreset' dbus-run-session -- bash .local/native-xlsb-harness/qa/native-xlsb35-p2/openfile-run.sh
+      - name: Preserve scoped native evidence, without installer/profile archives
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-xlsb35-openfile-p2-${{ github.run_id }}
+          path: |
+            .local/linux-p2-input/identity.json
+            .local/linux-p2-input/api-run.json
+            .local/linux-p2-input/native-input-descriptor.json
+            .local/linux-p2-input/canonical-package-report.json
+            .local/linux-p2-native/xlsb35-openfile/report.json
+            .local/linux-p2-native/xlsb35-openfile/*.png
+            .local/linux-p2-native/xlsb35-openfile/driver.log
+            .local/linux-p2-native/xlsb35-openfile/accessibility-*.txt
+            .local/linux-p2-native/xlsb35-openfile/open-picker/*
+            .local/native-xlsb-xvfb.log
+          include-hidden-files: true
+          if-no-files-found: warn
