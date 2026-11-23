@@ -907,59 +907,68 @@ try {
   await closeDocument();
   report.preflight =
     "passed real pointer/focus/Ctrl/edit/save/full-exit/reopen; broad controls released";
-  await scoped("368-Find-what", async () => {
-    await exerciseField(a, "Find what");
-    await exec(application, [b], { env, timeout: 15_000 });
-    await waitFor(
-      () =>
-        command("POST", "/execute/sync", {
-          script: selectedDocumentReadyScript,
-          args: [basename(b), 3, baseline, 3],
-        }),
-      "Other native document loaded",
-      90_000,
-    );
-    await insertColumn();
-    await nativeKey("ctrl+z");
-    await grid("other document Undo", baseline);
-    await clickTab(basename(a));
-    await grid("original document isolated", baseline);
-    await nativeKey("ctrl+y");
-    await grid("original document Redo isolated", inserted, 4);
-    await clickTab(basename(b));
-    await grid("other document unchanged by original Redo", baseline);
-    await nativeKey("ctrl+y");
-    await grid("other document Redo isolated", inserted, 4);
-    await clickTab(basename(a));
-    await grid("original document retains its own edit", inserted, 4);
-    await canvasFocus();
-    await type("LINUX420_FINAL ");
-    const finalCells = ["LINUX420_FINAL alpha", ...inserted.slice(1)];
-    await grid("final marker and column", finalCells, 4);
-    const saved = await save(a, finalCells, 4);
-    const savedPid = report.sessions.at(-1).pid;
-    await closeDocument();
-    await startDocument(a, finalCells, 4);
-    assert.notEqual(report.sessions.at(-1).pid, savedPid);
-    await grid("full new process reopened marker and column", finalCells, 4);
-    assert.equal(hash(await readFile(a)), saved);
-    await capture(join(out, "final-reopened.png"));
-    await closeDocument();
-  });
-  await scoped("368-Replace-with", async () => {
-    await exerciseField(c, "Replace with");
-    assert.equal(
-      hash(await readFile(c)),
-      fixtures["replace-table"].sha256,
-      "Unsaved field tests do not write the DOCX",
-    );
-    await closeDocument();
-  });
-  report.issue368 = ["368-Find-what", "368-Replace-with"].every(
-    (name) => report.scopes[name].status === "passed",
-  )
-    ? "passed bounded native input/history/search/isolation/save controls"
-    : "failed required scope; positive individual input checks remain separately recorded";
+  assert.ok(
+    [undefined, "ribbon"].includes(process.env.OFFICE_LINUX420_SCOPE),
+    "Unknown native probe scope",
+  );
+  if (process.env.OFFICE_LINUX420_SCOPE !== "ribbon") {
+    await scoped("368-Find-what", async () => {
+      await exerciseField(a, "Find what");
+      await exec(application, [b], { env, timeout: 15_000 });
+      await waitFor(
+        () =>
+          command("POST", "/execute/sync", {
+            script: selectedDocumentReadyScript,
+            args: [basename(b), 3, baseline, 3],
+          }),
+        "Other native document loaded",
+        90_000,
+      );
+      await insertColumn();
+      await nativeKey("ctrl+z");
+      await grid("other document Undo", baseline);
+      await clickTab(basename(a));
+      await grid("original document isolated", baseline);
+      await nativeKey("ctrl+y");
+      await grid("original document Redo isolated", inserted, 4);
+      await clickTab(basename(b));
+      await grid("other document unchanged by original Redo", baseline);
+      await nativeKey("ctrl+y");
+      await grid("other document Redo isolated", inserted, 4);
+      await clickTab(basename(a));
+      await grid("original document retains its own edit", inserted, 4);
+      await canvasFocus();
+      await type("LINUX420_FINAL ");
+      const finalCells = ["LINUX420_FINAL alpha", ...inserted.slice(1)];
+      await grid("final marker and column", finalCells, 4);
+      const saved = await save(a, finalCells, 4);
+      const savedPid = report.sessions.at(-1).pid;
+      await closeDocument();
+      await startDocument(a, finalCells, 4);
+      assert.notEqual(report.sessions.at(-1).pid, savedPid);
+      await grid("full new process reopened marker and column", finalCells, 4);
+      assert.equal(hash(await readFile(a)), saved);
+      await capture(join(out, "final-reopened.png"));
+      await closeDocument();
+    });
+    await scoped("368-Replace-with", async () => {
+      await exerciseField(c, "Replace with");
+      assert.equal(
+        hash(await readFile(c)),
+        fixtures["replace-table"].sha256,
+        "Unsaved field tests do not write the DOCX",
+      );
+      await closeDocument();
+    });
+    report.issue368 = ["368-Find-what", "368-Replace-with"].every(
+      (name) => report.scopes[name].status === "passed",
+    )
+      ? "passed bounded native input/history/search/isolation/save controls"
+      : "failed required scope; positive individual input checks remain separately recorded";
+  } else {
+    report.issue368 =
+      "not repeated in ribbon-only run; independent acceptance remains in run45143046662";
+  }
   await scoped("369-ribbon", async () => {
     const ribbonBytes = await readFile(
       join(here, "../tests/fixtures/linux420/ribbon-control.docx"),
@@ -1045,7 +1054,7 @@ try {
     ? "failed"
     : report.ribbonSummary.status === "passed"
       ? "passed"
-      : "passed scoped 368/369; wider ribbon state matrix partial";
+      : "passed tested native scopes; wider ribbon state matrix partial";
 } catch (error) {
   report.status = "failed";
   report.failedPhase = phase;

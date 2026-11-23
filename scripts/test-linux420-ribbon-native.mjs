@@ -13,6 +13,7 @@ import {
   writer362GroupTriggerGeometry,
   writer362SelectedCanvasPoint,
   writer362NativeCanvasActions,
+  writer362NativeTabPoint,
   writer362NativeAnatomy,
   writer362DocumentFocus,
   writer362XTestChord,
@@ -640,6 +641,51 @@ test("initial canvas input uses selected-panel coordinates and real viewport poi
   } finally {
     await new Promise((done) => server.close(done));
   }
+});
+
+test("native tab pointer chooses an unobscured owned point and never bypasses an overlay", () => {
+  const tab = {
+      id: "table-design",
+      textContent: "Table Design",
+      getBoundingClientRect: () => ({
+        left: 728,
+        right: 826,
+        top: 31,
+        bottom: 59,
+      }),
+      contains: (hit) => hit === child,
+    },
+    child = {},
+    overlay = {};
+  const run = (hitTest, tabs = [tab]) =>
+    runInNewContext(`(${writer362NativeTabPoint.toString()})("Table Design")`, {
+      innerWidth: 800,
+      innerHeight: 1000,
+      document: {
+        querySelectorAll: () => tabs,
+        elementFromPoint: hitTest,
+      },
+    });
+  const target = run((x) => (x >= 756 ? overlay : child));
+  assert.equal(target.id, "table-design");
+  assert.ok(target.point.x >= 730 && target.point.x < 756);
+  assert.equal(target.point.y, 45);
+  assert.equal(
+    run(() => overlay),
+    null,
+  );
+  assert.equal(
+    run(() => child, [tab, tab]),
+    null,
+  );
+  assert.equal(
+    run(() => child, []),
+    null,
+  );
+  assert.equal(
+    writer362NativeCanvasActions(target.point).actions[0].actions[0].origin,
+    "viewport",
+  );
 });
 
 test("transport preserves W3C command failures", async () => {

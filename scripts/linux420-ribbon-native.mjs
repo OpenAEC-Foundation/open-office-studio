@@ -628,6 +628,32 @@ export function writer362NativeCanvasActions(point) {
   };
 }
 
+/** Read-only hit test: a narrow tab's center can be covered by the collapse button. */
+export function writer362NativeTabPoint(name) {
+  const tabs = [...document.querySelectorAll('[role="tab"]')].filter(
+    (e) => e.textContent === name,
+  );
+  if (tabs.length !== 1 || !tabs[0].id) return null;
+  const tab = tabs[0],
+    r = tab.getBoundingClientRect();
+  const left = Math.max(0, Math.ceil(r.left + 2));
+  const right = Math.min(innerWidth - 1, Math.floor(r.right - 2));
+  const y = Math.round((r.top + r.bottom) / 2);
+  if (right < left || y < 0 || y >= innerHeight) return null;
+  const xs = [Math.round((left + right) / 2)];
+  for (let x = left; x <= right; x += 2) xs.push(x);
+  for (const x of xs) {
+    const hit = document.elementFromPoint(x, y);
+    if (hit === tab || (hit && tab.contains(hit)))
+      return {
+        id: tab.id,
+        point: { x, y },
+        bounds: { left: r.left, right: r.right, top: r.top, bottom: r.bottom },
+      };
+  }
+  return null;
+}
+
 /** Read-only diagnostics saved before cleanup when initial table context fails. */
 export function writer362NativeAnatomy() {
   const rect = (e) => {
@@ -898,15 +924,24 @@ export async function runWriter362NativeProbe({
       );
     };
     const selectTab = async (name) => {
-      const selector = await evaluate((name) => {
-        const tab = [...document.querySelectorAll('[role="tab"]')].find(
-          (e) => e.textContent === name,
-        );
-        return tab?.id ? `[id=${JSON.stringify(tab.id)}]` : null;
-      }, name);
-      assert.ok(selector, `Missing English tab: ${name}`);
-      await click(selector);
-      return selector;
+      const target = await evaluate(writer362NativeTabPoint, name);
+      assert.ok(target, `No unobscured native pointer point on tab: ${name}`);
+      (report.tabPointerTargets ??= []).push({ name, ...target });
+      await command(
+        "POST",
+        "/actions",
+        writer362NativeCanvasActions(target.point),
+      );
+      await waitFor(
+        () =>
+          evaluate(
+            (id) =>
+              document.getElementById(id)?.getAttribute("aria-selected") ===
+              "true",
+            target.id,
+          ),
+        `Native pointer did not select tab: ${name}`,
+      );
     };
     // Select the top table with the exact native pointer recipe used by #361,
     // rather than element/click's center of the entire document canvas.
@@ -971,7 +1006,7 @@ export async function runWriter362NativeProbe({
           continue;
         }
         for (const tab of ["Insert", "Table Design"]) {
-          const tabSelector = await selectTab(tab);
+          await selectTab(tab);
           for (const groupName of tab === "Insert"
             ? ["Text"]
             : ["Alignment", "Data", "Delete"]) {
@@ -980,7 +1015,7 @@ export async function runWriter362NativeProbe({
               (s) => document.querySelector(s)?.dataset.niveau === "2",
               selector,
             );
-            await click(tabSelector);
+            await selectTab(tab);
             const entry = {
               theme,
               requestedWidth: width,
