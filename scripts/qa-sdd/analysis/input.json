@@ -1,0 +1,18 @@
+{
+  "run": 45162378106,
+  "headSha": "bd261a8fca798af0d5689aada25e481f9cda8823",
+  "artifactId": 14812420108,
+  "name": "sdd-runtime-result",
+  "zipBytes": 84155,
+  "zipSha256": "7435d19c0d225163d65f087d20708d0ebe4b38853e44b761c6bd0b70a3ca6f72",
+  "reason": "Read-only replay with actual native line endpoints rather than cached paint bounds; no Office/engine rerun or private runtime download",
+  "primaryLineRecordReference": {
+    "repository": "fosnola/libstaroffice",
+    "commit": "94647518b5060456ace4ea724cd157582c059501",
+    "path": "src/lib/StarObjectSmallGraphic.cxx",
+    "blob": "0a3af7ccf1b3f8825bb5fca8405a2cbb42b5e12a",
+    "sha256": "360732a71933422ffdc38dfbb7ce85dfd549277862cfb1cb9724caf443eeac4c",
+    "function": "readSVDRObjectPath",
+    "nativeRule": "Version>=11 path record: nested record, uint16 polygon count, uint16 point count, int32 x/y points, then byte flags."
+  }
+}
