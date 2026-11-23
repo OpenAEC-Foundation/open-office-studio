@@ -170,7 +170,7 @@ The old-P2 Mac producer is now successful: artifact14815326028, ZIP SHA256
 running its app cases; no Mac STW actual is reported yet. Old-P2 Windows/Linux
 STW approval remains bounded and does not transfer to the changed kernels.
 
-## Final P3 source pin and native handoff
+## Historical P3 source pin and native handoff
 
 Intake is now closed on P3 commit
 `98b340429436cf597a569549d043bd75b486e2ab`, tree
@@ -194,3 +194,25 @@ is ready, without waiting for another OS. Independent export audits here retain
 the one shared `audit-docx.mjs`/contract/oracle; package identity, actual operation,
 full quit/new-PID reopen and visual approval remain separately required. No own
 GUI or build is needed. Root supplies the new actual packages/exports centrally.
+
+## Current P4 source pin
+
+P4 supersedes P3: `04fa6cd43b84e3f59fb9d5055bb2d00dde351a47`, tree
+`94fa38c20b51a73e4912964f37f0e1a659b0fb1b`, version2026.48.1, immutable branch
+`codex/release-candidate-2026-11-23-p4`. The only code change from P3 replaces
+the node:test import with vitest in the same nine package checks; the other
+changed paths are release evidence/hand-off documentation. Independent Git-byte
+checks confirm all five field374 product files still equal product85ac155f.
+Official producer45172070275/attempt1 is bound to that exact branch/commit;
+`evidence/p4-source-binding.json` retains this source/run binding.
+
+The coordinator reports the complete local standard run:3657 pass,0 fail,
+10 skip (4 missing POI corpus,3 spelling assets,3 DB corpus). Skips are not
+passes. Exact-P4 SDK44 also passes; valid checks are reused here without reruns.
+P3 failed/cancelled receipts and its source binding remain historical and intact.
+
+All three OS jobs were building at first official inspection, with zero
+artifacts then available. No P4 native STW exports or native approval yet.
+Existing Windows750b/Linux writer_362/macOS6f92 operators and independent
+per-OS start requirements remain unchanged. Publishing remains disabled per
+coordinator; no own GUI/build or main/tag/publication action is authorized here.
