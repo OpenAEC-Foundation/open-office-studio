@@ -7,6 +7,7 @@ The output contains receipts/signatures/reports, never duplicate installers.
 import hashlib
 import json
 import os
+from datetime import datetime
 from pathlib import Path, PurePosixPath
 import shutil
 import stat
@@ -65,6 +66,28 @@ def validate_platform_job(job, platform):
     }[platform]
     steps = {s['name']:s for s in job['steps']}
     check(all(name in steps and steps[name]['status']=='completed' and steps[name]['conclusion']=='success' for name in required), 'Required package/signature gate did not pass: '+platform)
+    return [steps[name] for name in required]
+
+
+def validate_artifact_binding(producer, binding, job, artifact, platform):
+    gates = validate_platform_job(job, platform)
+    attempt = binding['runAttempt']
+    check(type(attempt) is int and 1 <= attempt <= producer['run_attempt'], 'Invalid explicit producer attempt')
+    check(job['run_id'] == producer['id'] and job['run_attempt'] == attempt and job['head_sha'] == producer['head_sha'], 'Job producer/attempt/source mismatch')
+    check(artifact['workflow_run']['id'] == producer['id'] and artifact['workflow_run']['head_sha'] == producer['head_sha'], 'Artifact producer/source mismatch')
+    stamp = lambda value: datetime.fromisoformat(value.replace('Z', '+00:00'))
+    created, started, ended = map(stamp, (artifact['created_at'], job['started_at'], job['completed_at']))
+    check(started <= created <= ended, 'Artifact is outside the selected producer job window')
+    check(max(stamp(gate['completed_at']) for gate in gates) <= created, 'Artifact predates required package/signature verification')
+
+
+def stop_gpg_agents(homes):
+    outcomes = []
+    for home in homes:
+        result = subprocess.run(['gpgconf','--homedir',str(home),'--kill','gpg-agent'],check=False,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        outcomes.append({'temporaryHomeRole':home.name,'terminationReturnCode':result.returncode,'stderr':result.stderr.decode(errors='replace')[:2000]})
+    check(all(item['terminationReturnCode'] == 0 for item in outcomes), 'Scoped GPG-agent termination could not be confirmed: '+json.dumps(outcomes))
+    return outcomes
 
 
 def validate_report(report, studio, platform, version, installers):
@@ -98,11 +121,20 @@ def run(request_path, app_path, output_path):
     producer = api(f'actions/runs/{run_id}')
     check(producer['head_sha'] == source and producer['head_repository']['full_name'] == REPO, 'Producer source/repository mismatch')
     check(producer['path'] == '.github/workflows/release.yml', 'Expected existing release build workflow')
-    jobs = api(f'actions/runs/{run_id}/jobs?per_page=100')['jobs']
-    jobs = {j['id']: j for j in jobs}
     artifacts = api(f'actions/runs/{run_id}/artifacts?per_page=100')['artifacts']
     artifacts = {a['id']: a for a in artifacts}
     check(set(request['platforms']) == set(FORMS), 'All three platform artifact bindings required')
+    jobs_by_attempt, selected = {}, {}
+    for platform, binding in request['platforms'].items():
+        attempt = binding['runAttempt']
+        check(type(attempt) is int and 1 <= attempt <= producer['run_attempt'], 'Invalid explicit producer attempt')
+        if attempt not in jobs_by_attempt:
+            jobs_by_attempt[attempt] = {j['id']:j for j in api(f'actions/runs/{run_id}/attempts/{attempt}/jobs?per_page=100')['jobs']}
+        job, artifact = jobs_by_attempt[attempt][binding['jobId']], artifacts[binding['artifactId']]
+        validate_artifact_binding(producer, binding, job, artifact, platform)
+        check(artifact['name'] == 'uitgave-'+platform and not artifact['expired'], 'Unexpected/expired platform artifact')
+        check(artifact['digest'] == 'sha256:'+binding['archiveSha256'], 'Expected archive binding differs from API')
+        selected[platform] = job, artifact
     check(not output_path.exists(), 'Output directory must be fresh')
     output_path.mkdir(parents=True)
     checksums, installers, reports, archives, linux_signatures = {}, {}, [], [], []
@@ -133,10 +165,7 @@ def run(request_path, app_path, output_path):
             (output_path/'openaec-signing-fingerprint.txt').write_text(KEY+'\n')
             for platform in ('Windows', 'macOS', 'Linux'):
                 binding = request['platforms'][platform]
-                job, artifact = jobs[binding['jobId']], artifacts[binding['artifactId']]
-                validate_platform_job(job, platform)
-                check(artifact['name'] == 'uitgave-'+platform and not artifact['expired'], 'Unexpected/expired platform artifact')
-                check(artifact['digest'] == 'sha256:'+binding['archiveSha256'], 'Expected archive binding differs from API')
+                job, artifact = selected[platform]
                 check(shutil.disk_usage(temporary).free > artifact['size_in_bytes']+2_500_000_000, 'Insufficient space for one verified archive and one package')
                 archive = temporary/'parent.zip'
                 with archive.open('wb') as f:
@@ -173,7 +202,7 @@ def run(request_path, app_path, output_path):
                         canonical = name.replace('pakketcontrole-', 'package-verification-').replace('Database-', 'database-')
                         (output_path/canonical).write_bytes(raw)
                         reports.append({'name':canonical,'platform':platform,'studio':studio['sleutel'],'artifactId':artifact['id'],'member':members[name].filename})
-                archives.append({'platform':platform,'producerJobId':job['id'],'artifactId':artifact['id'],'archiveSha256':binding['archiveSha256']})
+                archives.append({'platform':platform,'producerAttempt':binding['runAttempt'],'producerJobId':job['id'],'producerJobStartedAt':job['started_at'],'producerJobCompletedAt':job['completed_at'],'artifactId':artifact['id'],'artifactCreatedAt':artifact['created_at'],'archiveSha256':binding['archiveSha256']})
                 archive.unlink()
             check(len(installers)==28 and len(reports)==14 and len(linux_signatures)==14, 'Incomplete release set')
             for p in output_path.iterdir():
@@ -183,9 +212,9 @@ def run(request_path, app_path, output_path):
             sums.write_text(''.join(f'{digest}  {name}\n' for name,digest in sorted(checksums.items())))
             sign(sums, output_path/'SHA256SUMS.asc')
         finally:
-            for home in (signing_home,verify_home):
-                subprocess.run(['gpgconf','--homedir',str(home),'--kill','gpg-agent'],check=False,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-    receipt = {'kind':'Verified existing installer bytes and prepared signatures; NOT published/native acceptance', 'source':source,'tree':tree,'version':version,'producerRun':run_id,'archives':archives,'installers':installers,'reports':reports,'linuxSignatures':linux_signatures,'releasePayloadChecksums':checksums,'publication':False,'mainOrTagWrite':False,'nativeAcceptance':False}
+            cleanup = stop_gpg_agents((signing_home,verify_home))
+    check(not temporary.exists(), 'Temporary signing-key/payload tree remains')
+    receipt = {'kind':'Verified existing installer bytes and prepared signatures; NOT published/native acceptance', 'source':source,'tree':tree,'version':version,'producerRun':run_id,'producerLatestAttemptAtAudit':producer['run_attempt'],'producerLatestConclusionAtAudit':producer['conclusion'],'archives':archives,'installers':installers,'reports':reports,'linuxSignatures':linux_signatures,'releasePayloadChecksums':checksums,'cleanup':{'scopedGpgconfTermination':cleanup,'temporaryKeyAndPayloadTreeRemoved':True,'scopeLimit':'Scoped termination command outcomes and private-directory removal; no global process-inventory claim.'},'publication':False,'mainOrTagWrite':False,'nativeAcceptance':False}
     (output_path/'verification-receipt.json').write_text(json.dumps(receipt,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps({'verifiedInstallers':28,'verifiedReports':14,'signedLinuxPackages':14,'publication':False}))
 
