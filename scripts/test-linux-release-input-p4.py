@@ -10,6 +10,10 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import zipfile
+import shutil
+import struct
+import subprocess
+import sys
 
 spec = importlib.util.spec_from_file_location("standalone_fetch", Path(__file__).with_name("prepare-linux-release-input-p4.py"))
 fetcher = importlib.util.module_from_spec(spec)
@@ -99,6 +103,38 @@ class ImmutableIntake(unittest.TestCase):
     def test_rejects_ambiguous_duplicate_package_gate(self):
         self.job['steps'].append(copy.deepcopy(self.job['steps'][0]))
         with self.assertRaises(AssertionError):self.verify()
+
+
+@unittest.skipUnless(sys.platform=='linux' and shutil.which('unsquashfs') and shutil.which('mksquashfs') and shutil.which('dpkg-deb'),'Linux package-inspection tools required')
+class ActualMinimalPackageElfInspection(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
+        self.env=patch.dict(os.environ,{'RUNNER_TEMP':self.tmp.name});self.env.start()
+        self.payload=self.root/'payload';target=self.payload/'usr/bin/open-office-studio';target.parent.mkdir(parents=True)
+        header=bytearray(64);header[:6]=b'\x7fELF\x02\x01';struct.pack_into('<H',header,18,62)
+        target.write_bytes(header+b'SYNTHETIC QA HEADER ONLY, NOT A PRODUCT APP');target.chmod(0o751)
+        self.target=target
+    def tearDown(self):self.env.stop();self.tmp.cleanup()
+    def verify(self,package):
+        result=fetcher.inspect_suite_elf(package)
+        self.assertEqual(result['sha256'],hashlib.sha256(self.target.read_bytes()).hexdigest())
+        self.assertEqual((result['mode'],result['elfClass'],result['machine']),(0o751,2,62))
+    def deb(self):
+        control=self.payload/'DEBIAN';control.mkdir()
+        (control/'control').write_text('Package: synthetic-inspection-only\nVersion: 1\nArchitecture: amd64\nMaintainer: Synthetic QA <qa@example.invalid>\nDescription: Not a product app\n')
+        package=self.root/'synthetic.deb'
+        subprocess.run(['dpkg-deb','--build',str(self.payload),str(package)],check=True,stdout=subprocess.DEVNULL)
+        return package
+    def test_inspects_real_deb_stream_without_unpacking_suite_tree(self):self.verify(self.deb())
+    def test_rejects_deb_executable_symlink(self):
+        self.target.unlink();self.target.symlink_to('/untrusted/host/executable')
+        with self.assertRaises(AssertionError):fetcher.inspect_suite_elf(self.deb())
+    def test_inspects_real_squashfs_at_appimage_offset(self):
+        squash=self.root/'payload.squashfs'
+        subprocess.run(['mksquashfs',str(self.payload),str(squash),'-noappend','-processors','1','-no-progress'],check=True,stdout=subprocess.DEVNULL)
+        prefix=bytearray(4096);prefix[:4]=b'\x7fELF';prefix[8:11]=b'AI\x02'
+        package=self.root/'synthetic.AppImage';package.write_bytes(prefix+squash.read_bytes())
+        self.verify(package)
 
 
 if __name__ == "__main__":

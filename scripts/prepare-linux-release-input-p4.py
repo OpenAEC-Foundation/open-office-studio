@@ -47,7 +47,7 @@ def inspect_suite_elf(package):
             mode = stat.S_IMODE(target.stat().st_mode)
         with target.open('rb') as stream: header = stream.read(64)
         assert header[:6] == b'\x7fELF\x02\x01' and struct.unpack_from('<H',header,18)[0] == 62 and mode & 0o111
-        return dict(path=member,sha256=digest(target),bytes=target.stat().st_size,mode=oct(mode),elfClass=64,machine='x86_64')
+        return dict(path=member,sha256=digest(target),bytes=target.stat().st_size,mode=mode,elfClass=2,machine=62)
 
 
 def prepare_suite_transfers(artifact, job, binding):
