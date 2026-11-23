@@ -1,0 +1,48 @@
+{
+  "applicationCommit": "37d51d3e42a3a41dd8d4ffead41dff67e7f45724",
+  "scope": "QA-only passive presentation guard, not a new native pass",
+  "reviewMethod": "Direct visual inspection of four original unmodified accepted PNGs by STW QA chat9d3b",
+  "cases": [
+    {
+      "name": "unchanged-windows-source",
+      "originalPngSha256": "d4045ad93ca5b2b3f9c23b54947e2e6138002542a2db54e709f6500ad1988e00",
+      "originalPngVisuallyInspected": true,
+      "expectedTitleAndSuffixVisible": true,
+      "markerExpected": true,
+      "overlapSeen": false,
+      "consecutiveStableSamples": 3,
+      "stableForMs": 334
+    },
+    {
+      "name": "unmodified-control",
+      "originalPngSha256": "4359dbd858e4428cdedba8a8dcba3c9c92e6fb58da3a4949e95b2694cdb90a5f",
+      "originalPngVisuallyInspected": true,
+      "expectedTitleAndSuffixVisible": true,
+      "markerExpected": false,
+      "overlapSeen": false,
+      "consecutiveStableSamples": 3,
+      "stableForMs": 315
+    },
+    {
+      "name": "after-real-edit",
+      "originalPngSha256": "5e5371df423d947c49e8aa49f9b9a0b15d98210b5339706da04c4f61cad69513",
+      "originalPngVisuallyInspected": true,
+      "expectedTitleAndSuffixVisible": true,
+      "markerExpected": true,
+      "overlapSeen": false,
+      "consecutiveStableSamples": 3,
+      "stableForMs": 332
+    },
+    {
+      "name": "fresh-context-reopen",
+      "originalPngSha256": "e6f926818bd2a8d98e4c8fa19100c9a5a3773603b2df4609548ec742a927b1ba",
+      "originalPngVisuallyInspected": true,
+      "expectedTitleAndSuffixVisible": true,
+      "markerExpected": true,
+      "overlapSeen": false,
+      "consecutiveStableSamples": 3,
+      "stableForMs": 330
+    }
+  ],
+  "originalEvidenceCorrection": "Root confirmed original a1823a99 PNG title pixels match fresh reopen. No acquisition or product defect was independently reproduced; old final-linux evidence remains unchanged."
+}

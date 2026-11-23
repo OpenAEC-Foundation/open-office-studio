@@ -115,3 +115,32 @@ converted controlb29d6adc. The coordinator will use it for the actual new-native
 exports. This adds no product delta, GUI operator, app build or new native pass.
 The coordinator will supply the exact new pin after necessary intake closes;
 new-package STW operation/paint checks cannot begin before those inputs exist.
+
+## Passive capture follow-up (QA only)
+
+The coordinator corrected an initial visual interpretation of the old
+`unchanged-windows-source.png`: SHA256a1823a99efd76c42c7bb5bfee30922c83b519f3ffde94a61f98f976a186d4916
+is identical in both copies, and its title-area pixels equal fresh-context-reopen.
+The original image already shows all three expected text bands. No acquisition
+or product failure was independently reproduced; all old evidence is unchanged.
+
+QA helper commit37d51d3e42a3a41dd8d4ffead41dff67e7f45724 nevertheless adds a
+passive stability guard: a complete current worker frame, two main animation
+frames per sample, and three identical original PNGs over at least200ms with
+unchanged complete paint before/after capture. It retains first/accepted PNGs
+and timing/hashes. No input, model injection, canvas replacement or pixel edit.
+Original PNG marker/layout review remains explicitly separate from automation.
+
+The already-started bounded Linux browser run45167245091 passed all four paint
+cases and three real save/source audits. SDK44, existing field tests/typecheck
+and font metrics were valid and not repeated. This was one frontend route,
+without a kernel, native app or suite build. Artifact14815386292/full ZIP SHA256
+`741a52645ca350015391b38a44c782f09b28dec4cd591e506a8cab8729df5fc6`
+was verified before extraction. Accepted captures were stable315–334ms; all four
+original PNGs were inspected, showing complete expected title/marker text and
+no overlap, with the unchanged control retaining its original title only.
+
+Reports, original first/final PNGs, actual DOCX exports, original-PNG review and
+entry hashes are retained in `evidence/capture-followup/`. Product85ac155f is
+unchanged. This QA follow-up is not a new-pin or native platform pass; root will
+use the same helpers at the upcoming combination pin.
