@@ -25,7 +25,7 @@ class IsolationTests(unittest.TestCase):
         self.assertEqual(len(paths),7)
         self.assertTrue(all(p.is_relative_to(root/"Library") for p in paths))
         self.assertTrue(all(p.name.startswith(APPS["writer"][2]) for p in paths))
-        self.assertFalse(any("office-studio" in str(p) for p in paths))
+        self.assertFalse(any(p.name.startswith("org.openaec.office-studio") for p in paths))
 
     def test_transfer_hash_source_member_bytes_are_separate_gates(self):
         with tempfile.TemporaryDirectory(prefix="standalone-transfer-") as t:

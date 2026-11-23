@@ -19,7 +19,8 @@ class MailFixtureTests(unittest.TestCase):
                     self.assertIn(raw,client.uid("fetch","1","(BODY.PEEK[])")[1][0])
                     self.assertEqual(client.append("Drafts","(\\Draft)",None,raw)[0],"OK")
                     client.select("Drafts");self.assertIn(raw,client.uid("fetch","2","(BODY.PEEK[])")[1][0])
-                with smtplib.SMTP("127.0.0.1",server.smtp_port,timeout=5) as client:
+                # Avoid external reverse-DNS lookup of the disposable runner hostname.
+                with smtplib.SMTP("127.0.0.1",server.smtp_port,local_hostname="localhost",timeout=5) as client:
                     client.ehlo();self.assertEqual(client.docmd("DATA")[0],554)
                 receipt=server.receipt();self.assertEqual(receipt["smtpDataAttempts"],1)
                 self.assertEqual(receipt["relayedMessages"],0)

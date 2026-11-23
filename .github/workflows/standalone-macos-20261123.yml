@@ -31,6 +31,7 @@ jobs:
       - name: Verify isolated contracts and independent fixture oracles
         run: python -m unittest discover -s scripts/standalone-macos -p 'test_*.py'
       - name: Compile actual macOS native helper before touching applications
+        if: always()
         run: |
           mkdir -p receipts
           swiftc scripts/standalone-macos/ax.swift -o receipts/standalone-ax
