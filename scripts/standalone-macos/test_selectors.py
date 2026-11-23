@@ -22,6 +22,32 @@ class FakeSession:
 
 
 class SelectorTests(unittest.TestCase):
+    def panel(self):
+        return {"rawNodes":[row(0,-1,AXRole="AXWindow",AXIdentifier="open-panel",AXSubrole="AXDialog",
+                    frame={"x":200,"y":100,"width":800,"height":600}),
+                row(1,0,AXRole="AXButton",AXIdentifier="OKButton",AXTitle="Open",AXEnabled=True,
+                    frame={"x":900,"y":650,"width":70,"height":30})],
+                "focused":{"AXRole":"AXList","frame":{"x":300,"y":200,"width":600,"height":350}}}
+
+    def test_native_modal_default_uses_one_return_with_owned_focus(self):
+        s=FakeSession(self.panel());Case(s,"fixture").native_panel_confirm("Open","fixture")
+        self.assertEqual(s.actions,[("key","return")])
+        self.assertEqual(s.report["nativeFileDialogs"][0]["nativeModalWindow"]["AXIdentifier"],"open-panel")
+
+    def test_native_modal_confirmation_refuses_disabled_wrong_or_background_controls(self):
+        for variant in ("disabled","background","wrong-name","focus-outside","duplicate"):
+            with self.subTest(variant=variant):
+                snap=self.panel();target=snap["rawNodes"][1]["attributes"]
+                if variant=="disabled":target["AXEnabled"]=False
+                elif variant=="background":snap["rawNodes"][0]["attributes"]["AXIdentifier"]="main-window"
+                elif variant=="wrong-name":target["AXTitle"]="Delete"
+                elif variant=="focus-outside":snap["focused"]["frame"]["x"]=0
+                else:snap["rawNodes"].append(row(2,0,**target))
+                s=FakeSession(snap)
+                with patch("cases.time.monotonic",side_effect=[0,0,46]),self.assertRaises(Unavailable):
+                    Case(s,"fixture").native_panel_confirm("Open","fixture")
+                self.assertEqual(s.actions,[])
+
     def test_readonly_readiness_poll_sends_only_one_native_press(self):
         class Delayed(FakeSession):
             def __init__(self):super().__init__({"rawNodes":[button(0,-1,300)]});self.reads=0

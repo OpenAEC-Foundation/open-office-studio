@@ -183,11 +183,17 @@ class Session:
     def ax(self,action,spec=None,check=True):
         argv=[self.helper,str(self.process.pid),action]
         if spec is not None:argv.append(json.dumps(spec,separators=(",",":")) if isinstance(spec,dict) else str(spec))
-        result=command(argv,timeout=25);self.sequence+=1
-        try:value=json.loads(result["stdout"])
-        except json.JSONDecodeError:
-            self.write("ax-"+str(self.sequence)+"-error.json",result);raise Unavailable("Native helper did not return structured evidence")
-        self.write("ax-"+str(self.sequence)+".json",value)
+        deadline=time.monotonic()+10
+        while True:
+            result=command(argv,timeout=25);self.sequence+=1
+            try:value=json.loads(result["stdout"])
+            except json.JSONDecodeError:
+                self.write("ax-"+str(self.sequence)+"-error.json",result);raise Unavailable("Native helper did not return structured evidence")
+            self.write("ax-"+str(self.sequence)+".json",value)
+            if (action=="snapshot" and value.get("reason")=="Owned native windows unavailable"
+                    and self.process.poll() is None and time.monotonic()<deadline):
+                time.sleep(0.2);continue  # Read only; never repeat native input.
+            break
         if check and value.get("status") not in ("observed","input-sent"):raise Unavailable(value.get("reason","Native action blocked"))
         return value
 

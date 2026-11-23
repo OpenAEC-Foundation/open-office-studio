@@ -38,10 +38,7 @@ def prepare(folder,kind):
 
 
 def save_xlsx(case,path,oracle,kind,edited):
-    case.s.ax("key","cmd-shift-s");time.sleep(.3)
-    case.select(["AXTextField"],["File name"]);case.replace(path.stem)
-    case.select(["AXRadioButton"],["Excel workbook (.xlsx)"],action="press")
-    case.button("Save",dialog=True);case.file_dialog(path,save=True)
+    case.office_save_as(path,"xlsx","Excel workbook")
     deadline=time.monotonic()+20
     while True:
         try:

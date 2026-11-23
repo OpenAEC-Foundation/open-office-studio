@@ -119,9 +119,38 @@ class Case:
         self.replace(str(path.parent if save else path));self.s.ax("key","return");time.sleep(0.6)
         if save:
             self.select(["AXTextField"],["Save As:","Save As","saveAsNameTextField"])
-            self.replace(path.name);self.button("Save",dialog=True)
-        else:self.button("Open",dialog=True)
+            self.replace(path.name)
+        self.native_panel_confirm("Save" if save else "Open",path)
         time.sleep(0.8)
+
+    def native_panel_confirm(self,label,path):
+        deadline=time.monotonic()+45
+        while True:
+            snapshot=self.snapshot();rows={n["index"]:n for n in snapshot.get("rawNodes",[])};matches=[]
+            for row in rows.values():
+                a=row["attributes"]
+                if (a.get("AXRole")!="AXButton" or a.get("AXIdentifier")!="OKButton"
+                        or a.get("AXTitle")!=label or a.get("AXEnabled") is not True):continue
+                ancestor=rows.get(row["parent"])
+                while ancestor:
+                    w=ancestor["attributes"]
+                    if w.get("AXRole")=="AXWindow" and w.get("AXIdentifier") in ("open-panel","save-panel") and is_dialog(w):
+                        matches.append((a,w));break
+                    ancestor=rows.get(ancestor["parent"])
+            focused=snapshot.get("focused",{});f=focused.get("frame",{})
+            if len(matches)==1:
+                w=matches[0][1].get("frame",{})
+                inside=(all(k in f and k in w for k in ("x","y","width","height"))
+                        and f["x"]>=w["x"] and f["y"]>=w["y"]
+                        and f["x"]+f["width"]<=w["x"]+w["width"]
+                        and f["y"]+f["height"]<=w["y"]+w["height"])
+                if inside and focused.get("AXRole") in ("AXList","AXTextField","AXComboBox","AXOutline","AXButton","AXBrowser"):break
+            if len(matches)>1 or time.monotonic()>=deadline:
+                raise Unavailable("One enabled native Open/Save panel default button not established")
+            time.sleep(0.2)
+        self.s.report.setdefault("nativeFileDialogs",[]).append({"requestedPath":str(path),"button":matches[0][0],
+            "nativeModalWindow":matches[0][1],"focused":snapshot.get("focused"),"confirmation":"one native HID Return"})
+        self.s.ax("key","return")
 
     def fit_viewport(self):
         def fitted(snapshot):
@@ -246,13 +275,9 @@ class Case:
         previous=set(self.s.children)
         ext,label={"writer":("odt","OpenDocument Text"),"spreadsheet":("ods","OpenDocument Spreadsheet"),
                    "presentation":("odp","OpenDocument Presentation")}[app]
-        if app=="presentation":self.button("Normal view")
-        self.s.ax("key","cmd-shift-s");time.sleep(0.5)
-        self.select(["AXTextField"],["File name"]);self.replace("standalone-runtime-"+app)
-        self.select(["AXRadioButton"],[label+" (."+ext+")"],action="press")
-        self.s.capture("own-runtime-choice");self.button("Save",dialog=True);time.sleep(0.5)
+        if app=="presentation":self.view_toggle("Normal")
         output=self.s.root/("standalone-runtime-"+app+"."+ext)
-        self.file_dialog(output,save=True)
+        self.office_save_as(output,ext,label)
         deadline=time.monotonic()+50
         while not output.exists() and time.monotonic()<deadline:time.sleep(0.4)
         if not output.is_file():raise Unavailable("Native runtime export did not produce requested ODF file")
@@ -272,6 +297,16 @@ class Case:
             raise Unavailable("Actual app-driven converter child executable not observed exclusively inside own bundle")
         self.s.report["ownConverterChildObserved"]=True
         self.s.capture("runtime-exported")
+
+    def office_save_as(self,path,extension,label):
+        path=Path(path)
+        self.s.ax("key","cmd-shift-s")
+        self.select(["AXRadioButton"],[label+" (."+extension+")"],action="press",dialog=True)
+        # macOS includes the selected extension in the accessible field name.
+        self.select(["AXTextField"],["File name ."+extension],dialog=True)
+        self.replace(path.stem)
+        self.s.capture("save-as-"+extension+"-choice")
+        self.button("Save",dialog=True);self.file_dialog(path,save=True)
 
     def notes_notebook(self):
         # The actual UI is a native select, not a button named after the book.
@@ -314,7 +349,7 @@ class Case:
         # Its documented native Command-O opens the ordinary OS file picker.
         self.s.ax("key","cmd-o");self.file_dialog(self.fixture)
         self.button("Open anyway")
-        self.button("standalone_data")
+        self.button("standalone_data 3")
         snap=self.s.capture("database-table")
         for value in (SEEDS["database"],CONTROL,"beta"):
             if not any(value in str(n.get("AXValue",""))+str(n.get("AXTitle",""))+str(n.get("AXDescription","")) for n in attributes(snap)):
@@ -330,7 +365,7 @@ class Case:
         if self.s.process.pid==old:raise Unavailable("Database reopened in same process")
         self.s.report["newPidReopenVerified"]=True
         self.s.ax("key","cmd-o");self.file_dialog(output)
-        self.button("standalone_data");self.database_query();self.s.capture("database-reopened")
+        self.button("standalone_data 3");self.database_query();self.s.capture("database-reopened")
         self.s.write("reopened-oracle.json",verify("database",output))
 
     def database_query(self):

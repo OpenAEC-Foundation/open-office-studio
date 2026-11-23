@@ -43,10 +43,7 @@ def picker_open(case,fixture):
 
 
 def save_docx(case,output,oracle,marker):
-    case.s.ax("key","cmd-shift-s");time.sleep(.3)
-    case.select(["AXTextField"],["File name"]);case.replace(Path(output).stem)
-    case.select(["AXRadioButton"],["Word document (.docx)"],action="press")
-    case.button("Save",dialog=True);case.file_dialog(output,save=True)
+    case.office_save_as(output,"docx","Word document")
     deadline=time.monotonic()+20;last=None
     while True:
         try:return docx_audit(output,oracle,marker)

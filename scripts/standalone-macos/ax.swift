@@ -65,6 +65,17 @@ report["bundleIdentifier"] = running.bundleIdentifier.map { $0 as Any } ?? NSNul
 report["executableURL"] = running.executableURL.map { $0.path as Any } ?? NSNull()
 report["bundleURL"] = running.bundleURL.map { $0.path as Any } ?? NSNull()
 report["frontmost"] = NSWorkspace.shared.frontmostApplication?.processIdentifier == pid
+if action != "snapshot" {
+    guard AXIsProcessTrusted(),CGPreflightPostEventAccess() else {report["reason"]="Native input permissions unavailable";finish(3)}
+    let needed=NSWorkspace.shared.frontmostApplication?.processIdentifier != pid
+    report["activationAttempted"]=needed
+    if needed {
+        guard running.activate(options:[]) else {report["reason"]="Owned application activation failed";finish(3)}
+        Thread.sleep(forTimeInterval:0.2)
+    }
+    guard NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {report["reason"]="Target did not become frontmost";finish(3)}
+    report["frontmost"]=true
+}
 let display=CGDisplayBounds(CGMainDisplayID())
 report["mainDisplay"]=["X":display.minX,"Y":display.minY,"Width":display.width,"Height":display.height]
 let app = AXUIElementCreateApplication(pid)
@@ -167,13 +178,11 @@ guard report["bounded"] as? Bool == false, report["childrenTruncated"] as? Bool 
     report["reason"]="Native tree was truncated; uniqueness cannot be established";finish(3)
 }
 guard CGPreflightPostEventAccess() else {report["reason"]="Native event posting unavailable";finish(3)}
-guard running.activate(options: []) else {report["reason"]="Owned application activation failed";finish(3)}
-Thread.sleep(forTimeInterval:0.2)
 guard NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {
     report["reason"]="Target did not become frontmost";finish(3)
 }
 if action=="activate" {
-    report["status"]="input-sent";finish()
+    report["status"]=(report["activationAttempted"] as? Bool == true) ? "input-sent" : "observed";finish()
 } else if action=="click-point" {
     let fresh=CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String:Any]] ?? []
     let owned=fresh.filter {($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value==pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue==0}
@@ -209,6 +218,7 @@ if action=="activate" {
               let x=expected["x"],let y=expected["y"],let w=expected["width"],let h=expected["height"] else {return false}
         return abs(actual.minX-x)<2 && abs(actual.minY-y)<2 && abs(actual.width-w)<2 && abs(actual.height-h)<2
     }
+    report["selector"]=spec;report["nativeSelectorMatchCount"]=matches.count
     guard matches.count==1,let target=matches.first?.0,let f=frame(target),
           windows.contains(where:{frame($0)?.contains(f)==true}),
           (attr(target,kAXEnabledAttribute) as? Bool) != false else {
