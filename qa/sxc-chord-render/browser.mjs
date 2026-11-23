@@ -358,8 +358,10 @@ try {
             let checked = 0,
               inside = 0;
             const mismatches = [];
-            for (let y = 1; y < 400; y += 4)
-              for (let x = 1; x < 400; x += 4) {
+            // A quarter ellipse has a small chord segment. Sample every2px,
+            // keeping the original minimum interior coverage and zero mismatches.
+            for (let y = 1; y < 400; y += 2)
+              for (let x = 1; x < 400; x += 2) {
                 const xx = x + 0.5 - (80 + rx),
                   yy = y + 0.5 - (80 + ry);
                 let px = cos * xx + sin * yy,
@@ -411,6 +413,8 @@ try {
           Buffer.from(c.png.split(",")[1], "base64"),
         );
         delete c.png;
+      }
+      for (const c of report.canvas) {
         assert(c.checked > 1500 && c.inside > 100);
         assert.deepEqual(c.mismatches, []);
       }
