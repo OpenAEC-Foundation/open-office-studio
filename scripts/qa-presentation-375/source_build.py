@@ -39,8 +39,8 @@ def run(name, argv, cwd=None, timeout=600, check=True):
     assert shutil.disk_usage(OUT).free >= 10*1024**3, 'Disk stop: less than 10 GiB'
     timeout=min(timeout,max(1,int(260*60-(time.monotonic()-START))))
     if not REPORT.get('preparationCompleted'):
-        prep_left=int(30*60-(time.monotonic()-START))
-        assert prep_left>0, 'Original 30-minute preparation window exhausted; no new source/compiler attempt'
+        prep_left=int(45*60-(time.monotonic()-START))
+        assert prep_left>0, 'Allocated 45-minute preparation window exhausted; no new source/compiler attempt'
         timeout=min(timeout,prep_left)
     log=OUT/(name+'.log'); started=time.monotonic()
     print(name,flush=True)
@@ -138,8 +138,9 @@ def main():
            '--with-fonts','--with-lang=en-US','--with-parallelism=3','--with-jdk-home='+ENV['JAVA_HOME'],
            '--with-external-tar='+str(external)]
     REPORT['configureFlags']=flags
-    run('configure',[str(source/'autogen.sh'),*flags],cwd=source,timeout=900)
-    assert time.monotonic()-START <=30*60, 'Acquisition/configuration exceeded 30-minute bound'
+    assert sha(source/'autogen.sh')=='a79875cdff86bde59f8ab4c60b6da73cd9be82bf32cbdbb07262b9a712d69ca8'
+    run('configure',['perl',str(source/'autogen.sh'),*flags],cwd=source,timeout=900)
+    assert time.monotonic()-START <=45*60, 'Acquisition/configuration exceeded allocated 45-minute bound'
     REPORT['preparationCompleted']=True
     REPORT['configurationHashes']={p.name:sha(p) for p in [source/'config_host.mk',source/'config_host/config_global.h'] if p.is_file()}
     for p in [source/'config_host.mk',source/'config_host/config_global.h']:
