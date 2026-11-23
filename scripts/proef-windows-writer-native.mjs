@@ -14,6 +14,7 @@ import { DOMParser } from "@xmldom/xmldom";
 import { fileURLToPath } from "node:url";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 import { requireAuthenticode } from "./windows-native-signature.mjs";
+import { testFinalTitle } from "./windows-final-title-case.mjs";
 
 assert.equal(process.platform, "win32");
 assert.equal(process.env.GITHUB_ACTIONS, "true");
@@ -23,6 +24,7 @@ assert(manifestFile && outputDirectory, "Pass frozen candidate JSON and fresh ou
 const identity = JSON.parse(await readFile(manifestFile, "utf8"));
 assert.equal(identity.executeNative, true);
 if (process.argv.includes("--require-signed")) assert.equal(identity.requireSigned, true, "Final native route requires an explicitly signed candidate");
+if (process.argv.includes("--test-title-overlap")) assert.equal(identity.testTitleOverlap, true, "Final requested title regression must be explicitly enabled in the frozen candidate");
 assert.match(identity.applicationCommit, /^[a-f0-9]{40}$/);
 assert.match(identity.applicationTree, /^[a-f0-9]{40}$/);
 if (identity.builderCommit) assert.match(identity.builderCommit, /^[a-f0-9]{40}$/);
@@ -96,9 +98,9 @@ function isAlive(process_) {
   if (!process_?.pid || process_.exitCode !== null) return false;
   try { process.kill(process_.pid, 0); return true; } catch { return false; }
 }
-async function startApplication(exe, port) {
+async function startApplication(exe, port, path = documentPath, tableBaseline = true) {
   // A real visible native window is intentional on this disposable test host.
-  app = spawn(exe, [documentPath], { env, cwd: dirname(exe), stdio: ["ignore", "pipe", "pipe"] });
+  app = spawn(exe, [path], { env, cwd: dirname(exe), stdio: ["ignore", "pipe", "pipe"] });
   const run = { pid: app.pid, executable: exe, stdout: "", stderr: "" };
   processes.push({ process: app, record: run });
   for (const type of ["stdout", "stderr"]) app[type].on("data", b => run[type] = (run[type] + b).slice(-32_000));
@@ -113,7 +115,7 @@ async function startApplication(exe, port) {
   page.on("pageerror", e => report.errors.push(String(e)));
   await page.waitForFunction(() => typeof window.__TAURI_INTERNALS__?.invoke === "function");
   assert.equal(await page.evaluate(() => Boolean(window.__writerApis || window.__writerWarmup)), false, "No compiled diagnostic editor bridge");
-  await page.waitForFunction(() => document.fonts.status === "loaded" && Boolean(document.querySelector(".canvas-page canvas")) && [...document.querySelectorAll('[role="table"]')].some(e => !e.closest("[hidden],[inert]") && e.getAttribute("aria-colcount") === "3"));
+  await page.waitForFunction(table => document.fonts.status === "loaded" && Boolean(document.querySelector(".canvas-page canvas")) && (!table || [...document.querySelectorAll('[role="table"]')].some(e => !e.closest("[hidden],[inert]") && e.getAttribute("aria-colcount") === "3")), tableBaseline);
   await page.waitForFunction(() => { const b = document.querySelector(".office-snelknop:has(.lucide-save-all)"); return b && !b.disabled; });
   run.runtimeStatus = await page.evaluate(() => window.__TAURI_INTERNALS__.invoke("conversie_status"));
   assert.equal(run.runtimeStatus.bron, "meegeleverd");
@@ -268,6 +270,7 @@ try {
   await check("full process reopen renders saved cells", edited);
   assert.deepEqual(await diskState(), saved); await page.screenshot({ path: join(out, "reopened.png") });
   await closeApplication(); report.checks.push({ name: "normal close exits reopened process", pid: secondPid });
+  if (identity.testTitleOverlap) await testFinalTitle({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
   assert.deepEqual(report.errors, []); report.status = "passed";
 } catch (error) {
   report.status = "failed"; report.error = String(error.stack || error); process.exitCode = 1;
