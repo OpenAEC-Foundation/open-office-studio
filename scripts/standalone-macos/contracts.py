@@ -65,7 +65,29 @@ def validate_request(value, now=None):
     if not files or any(not p.startswith("scripts/standalone-macos/") or ".." in PurePosixPath(p).parts
                         or not hex_value(h, 64) for p, h in files.items()):
         raise ValueError("Exact own QA-file digest map required")
+    if "reuseTransfersFromRun" in value and (type(value["reuseTransfersFromRun"]) is not int or value["reuseTransfersFromRun"]<=0):
+        raise ValueError("Exact previous own transfer run identity required")
     return value
+
+
+def verify_package(request,proof,folder,app):
+    """Same app bytes/source chain on every fresh host or QA-only driver retry."""
+    folder=Path(folder).resolve()
+    if proof.get("app")!=app or proof.get("source")!=request["source"] or proof.get("parentArtifact")!=request["parentArtifact"]:
+        raise ValueError("Transferred app proof differs from coordinator source/parent")
+    if proof.get("member")!=request["packages"][app]["member"]:
+        raise ValueError("Transferred archive member differs")
+    candidates=list(folder.glob("*.dmg"))
+    if len(candidates)!=1:raise ValueError("Exactly one standalone DMG permitted on app host")
+    dmg=candidates[0]
+    if dmg.is_symlink() or not dmg.resolve().is_relative_to(folder):raise ValueError("Transferred DMG must be an own regular file")
+    expected=request["packages"][app]["sha256"]
+    if (dmg.name!=Path(proof["member"]).name or proof.get("package",{}).get("filename")!=dmg.name
+        or proof["package"].get("bytes")!=dmg.stat().st_size or digest(dmg)!=proof["package"].get("sha256")
+        or (expected is not None and proof["package"].get("sha256")!=expected)
+        or (expected is None and proof.get("memberSHA256DerivedFromVerifiedParent") is not True)):
+        raise ValueError("Transferred DMG bytes/name/hash differ")
+    return dmg
 
 
 def validate_bundle(info, app, executable_sha=None):

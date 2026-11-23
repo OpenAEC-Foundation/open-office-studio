@@ -6,7 +6,7 @@ import plistlib
 import re
 import subprocess
 import sys
-from contracts import APPS,acceptance_from_evidence,digest,validate_request
+from contracts import APPS,acceptance_from_evidence,validate_request,verify_package
 from prepare import check_harness
 from fixtures import create
 from native import Session,Unavailable,command
@@ -18,19 +18,7 @@ def verify_transfer(folder,app):
     request=validate_request(json.loads((folder/"request.json").read_text()))
     check_harness(request,Path(__file__).resolve().parents[2])
     proof=json.loads((folder/"provenance.json").read_text())
-    if proof.get("app")!=app or proof.get("source")!=request["source"] or proof.get("parentArtifact")!=request["parentArtifact"]:
-        raise ValueError("Transferred app proof differs from coordinator source/parent")
-    if proof.get("member")!=request["packages"][app]["member"]:
-        raise ValueError("Transferred archive member differs")
-    candidates=list(folder.glob("*.dmg"))
-    if len(candidates)!=1:raise ValueError("Exactly one standalone DMG permitted on app host")
-    dmg=candidates[0]
-    expected=request["packages"][app]["sha256"]
-    if (dmg.name!=Path(proof["member"]).name or proof.get("package",{}).get("filename")!=dmg.name
-        or proof["package"].get("bytes")!=dmg.stat().st_size or digest(dmg)!=proof["package"].get("sha256")
-        or (expected is not None and proof["package"].get("sha256")!=expected)
-        or (expected is None and proof.get("memberSHA256DerivedFromVerifiedParent") is not True)):
-        raise ValueError("Transferred DMG bytes/name/hash differ")
+    dmg=verify_package(request,proof,folder,app)
     return request,proof,dmg
 
 

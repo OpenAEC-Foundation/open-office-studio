@@ -5,8 +5,11 @@ import tempfile
 import unittest
 import warnings
 import zipfile
+import json
+import shutil
+from unittest.mock import patch
 from contracts import APPS, digest
-from prepare import extract
+from prepare import extract,rebind_transfer,reuse_transfers,REPO
 from test_contracts import request
 
 
@@ -62,6 +65,44 @@ class PrepareTests(unittest.TestCase):
                 if not duplicate:q["packages"]["writer"]["sha256"]="f"*64
                 with self.assertRaises(ValueError):extract(q,z,root/"selected")
                 self.assertFalse((root/"selected/writer/provenance.json").exists())
+
+    def test_retry_rebinds_only_qa_helpers_with_unchanged_package_chain(self):
+        with tempfile.TemporaryDirectory(prefix="standalone-reuse-") as t:
+            root=Path(t);q,z=self.archive(root);extract(q,z,root/"old")
+            current=copy.deepcopy(q);current["harnessFiles"]={"scripts/standalone-macos/run.py":"f"*64}
+            current["reuseTransfersFromRun"]=99;current["expiresAt"]="2099-01-02T00:00:00Z"
+            folder=root/"old/writer";before=digest(next(folder.glob("*.dmg")))
+            rebind_transfer(current,folder,"writer",99)
+            proof=json.loads((folder/"provenance.json").read_text())
+            self.assertTrue(proof["qaRequestRebind"]["packageBytesUnchanged"])
+            self.assertEqual(proof["parentArtifact"],q["parentArtifact"])
+            self.assertEqual(before,digest(next(folder.glob("*.dmg"))))
+            self.assertEqual(json.loads((folder/"request.json").read_text()),current)
+            self.assertEqual(len(list(folder.glob("origin-*.json"))),2)
+
+    def test_retry_cannot_change_source_or_accept_tampered_dmg(self):
+        for tamper in (False,True):
+            with tempfile.TemporaryDirectory(prefix="standalone-reuse-") as t:
+                root=Path(t);q,z=self.archive(root);extract(q,z,root/"old");folder=root/"old/writer"
+                current=copy.deepcopy(q);current["reuseTransfersFromRun"]=99
+                if tamper:next(folder.glob("*.dmg")).write_bytes(b"tampered")
+                else:current["source"]["commit"]="f"*40
+                with self.assertRaises(ValueError):rebind_transfer(current,folder,"writer",99)
+                self.assertEqual(json.loads((folder/"request.json").read_text()),q)
+
+    def test_retry_fetches_six_app_only_transfers_without_parent_archive(self):
+        with tempfile.TemporaryDirectory(prefix="standalone-reuse-") as t:
+            root=Path(t);q,z=self.archive(root);extract(q,z,root/"old")
+            current=copy.deepcopy(q);current["reuseTransfersFromRun"]=99;calls=[]
+            ownrun={"head_branch":"codex/standalone-macos-20261123","path":".github/workflows/standalone-macos-20261123.yml","repository":{"full_name":REPO}}
+            artifacts={"artifacts":[{"name":"standalone-own-"+app,"expired":False} for app in APPS]}
+            def download(args,**kwargs):
+                self.assertEqual(args[:3],["gh","run","download"])
+                app=args[args.index("--name")+1].removeprefix("standalone-own-")
+                shutil.copytree(root/"old"/app,args[args.index("--dir")+1]);calls.append(app)
+            with patch("prepare.api",side_effect=[ownrun,artifacts]),patch("prepare.subprocess.run",side_effect=download):
+                self.assertEqual(reuse_transfers(current,root/"fresh"),{"app":list(APPS)})
+            self.assertEqual(calls,list(APPS))
 
 
 if __name__=="__main__":unittest.main()
