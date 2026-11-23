@@ -2,7 +2,7 @@ name: Mac Writer first paint renderer boundary
 on:
   push:
     branches: [codex/mac-native-body-blocker-20261120]
-    paths: [.github/workflows/mac-native-body-browser-boundary.yml]
+    paths: [.github/workflows/mac-native-body-browser-boundary.yml, scripts/mac-body-firstpaint-browser.mjs]
 permissions:
   contents: read
 jobs:
