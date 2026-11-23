@@ -21,10 +21,10 @@ REQUIRED_GATES = [
     'Pakket bouwen (onondertekend)',
     'Linux-installers werkelijk uitpakken en controleren',
     'Meet- en inhoudscontrole voor de meegeleverde runtime',
-    'Standaardinstaller controleren met uitsluitend de private runtime',
     'Linux native WebKit-interface en private installer controleren',
     'Run actions/upload-artifact@v4',
 ]
+NON_LINUX_GATE = 'Standaardinstaller controleren met uitsluitend de private runtime'
 
 def verify_intake(pin, run, job, artifact):
     assert pin['purpose']=='P2-baseline-only' and pin['sourceCommit']==SOURCE and pin['sourceTree']==TREE and pin['version']=='2026.48.1'
@@ -35,6 +35,10 @@ def verify_intake(pin, run, job, artifact):
     for name in REQUIRED_GATES:
         gates=[s for s in job['steps'] if s['name']==name]
         assert len(gates)==1 and gates[0]['status']=='completed' and gates[0]['conclusion']=='success',name
+    # P2 release.yml runs this variant only when runner.os != Linux. The real
+    # Linux native alternative above is mandatory and must be SUCCESS.
+    skipped=[s for s in job['steps'] if s['name']==NON_LINUX_GATE]
+    assert len(skipped)==1 and skipped[0]['status']=='completed' and skipped[0]['conclusion']=='skipped'
     assert artifact['id']==pin['artifact']['id'] and artifact['name']==pin['artifact']['name']=='uitgave-Linux' and not artifact['expired']
     assert artifact['workflow_run']['id']==run['id'] and artifact['workflow_run']['head_sha']==SOURCE
     assert artifact['digest']==pin['artifact']['digest'] and artifact['size_in_bytes']==pin['artifact']['bytes']

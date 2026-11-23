@@ -73,6 +73,7 @@ class ImmutableIntake(unittest.TestCase):
         self.run=dict(id=45150438420,head_sha=fetcher.SOURCE,path='.github/workflows/release.yml',run_attempt=1,run_started_at='2026-11-23T09:49:00Z')
         self.job=dict(id=137610274931,run_id=self.run['id'],run_attempt=1,name='Bouwen – Linux',status='completed',conclusion='success',started_at='2026-11-23T09:49:22Z',completed_at='2026-11-23T10:46:00Z',steps=[dict(name=n,status='completed',conclusion='success') for n in fetcher.REQUIRED_GATES])
         self.artifact=dict(id=7,name='uitgave-Linux',expired=False,workflow_run=dict(id=self.run['id'],head_sha=fetcher.SOURCE),digest='sha256:'+'a'*64,size_in_bytes=100,created_at='2026-11-23T10:45:00Z',updated_at='2026-11-23T10:45:59Z')
+        self.job['steps'].append(dict(name=fetcher.NON_LINUX_GATE,status='completed',conclusion='skipped'))
         a=self.artifact
         self.pin=dict(purpose='P2-baseline-only',sourceCommit=fetcher.SOURCE,sourceTree=fetcher.TREE,version='2026.48.1',run=self.run['id'],attempt=1,job=self.job['id'],artifact=dict(id=a['id'],name=a['name'],digest=a['digest'],bytes=a['size_in_bytes'],createdAt=a['created_at'],updatedAt=a['updated_at']),window=dict(jobStartedAt=self.job['started_at'],jobCompletedAt=self.job['completed_at']))
     def verify(self):fetcher.verify_intake(self.pin,self.run,self.job,self.artifact)
