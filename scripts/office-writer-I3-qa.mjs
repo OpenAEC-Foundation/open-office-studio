@@ -31,7 +31,7 @@ const outDir = process.argv[2],
   route = process.argv[3];
 assert(["/", "/office/"].includes(route));
 const key = route === "/" ? "normal" : "hosted";
-const label = `writer-471-QA-${key}`;
+const label = `writer-481-QA-${key}`;
 const output = `.local/${label}`;
 const receiptPath = `${outDir}.build.json`;
 await mkdir(output, { recursive: true });
