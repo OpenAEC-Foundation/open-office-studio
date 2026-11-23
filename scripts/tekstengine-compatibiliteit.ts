@@ -348,6 +348,15 @@ export function herstelVormAfbeeldingen(bron: string): string {
   return 'import {bronAfbeelding as oosBronAfbeelding} from "openaec-tekst-vormafbeelding";\n' + uit;
 }
 
+/** Alleen native macOS kiest de bestaande DOM-presenter; workers blijven intact. */
+export function herstelNativeMacPresentatie(bron: string): string {
+  const oud = 'Re&&gt&&typeof OffscreenCanvas<"u"&&typeof HTMLCanvasElement<"u"&&"transferControlToOffscreen"in HTMLCanvasElement.prototype';
+  if (bron.split(oud).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de native macOS-presentatie.");
+  return 'import {gebruikWorkerPresentatie as oosWorkerPresentatie} from "openaec-tekst-workerpresentatie";\n'
+    + bron.replace(oud, oud.replace("Re&&gt", "Re&&gt&&oosWorkerPresentatie()"));
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
@@ -355,6 +364,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     enforce: "pre",
     buildStart() { controleerNootKern(); },
     resolveId(id) {
+      if (id === "openaec-tekst-workerpresentatie")
+        return fileURLToPath(new URL("../src/tekst/gedeeld/workerPresentatie.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-veldlettertype")
         return fileURLToPath(new URL("../src/tekst/veldenDocument/lettertype.ts", import.meta.url)).replaceAll("\\", "/");
       if (id === "openaec-tekst-vormafbeelding")
@@ -411,7 +422,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKopVoetDoel(herstelTabelContext(bron), "opdrachten"), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelVormAfbeeldingen(herstelKopVoetDoel(herstelVervolgstijl(herstelSplitsBreedtes(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))))), "editor")), map: null };
+      return { code: herstelVormAfbeeldingen(herstelKopVoetDoel(herstelVervolgstijl(herstelSplitsBreedtes(herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(herstelNativeMacPresentatie(bron))))))), "editor")), map: null };
     },
   };
 }
