@@ -22,12 +22,12 @@ def fixture():
     plan["packageSha256"] = c.sha(data)
     report = json.dumps(dict(programma="open-office-studio", platform="windows", versie=plan["version"], pakketten=[dict(naam=installer, bytes=len(data), sha256=c.sha(data))])).encode()
     receipt = dict(applicationCommit=plan["applicationCommit"], applicationTree=plan["applicationTree"], version=plan["version"], artifactRun=plan["runId"], platformJobId=plan["producerJobId"], sourceAttempt=1, artifactId=100, archiveSha256=plan["archiveSha256"], archiveBytes=1000, preparerRun=200, preparerHarness=plan["suitePreparerCommit"], installer=installer,
-        application=dict(key="office", title="Open Office Studio", identifier="org.openaec.office-studio", executable="open-office-studio.exe", packagePath=plan["packageMember"], sha256=c.sha(data), bytes=len(data), signature="valid", timestampRequired=True, payloadExecutable=dict(member="open-office-studio.exe", sha256="a"*64, bytes=100, pe="x64")),
-        canonicalPackageReport=dict(parentMember=".local/pakketcontrole-Windows.json", sha256=c.sha(report), bytes=len(report)))
+        application=dict(key="office", title="Open Office Studio", identifier="org.openaec.office-studio", executable="open-office-studio.exe", packagePath=plan["packageMember"], sha256=c.sha(data), bytes=len(data), signature="valid", timestampRequired=True, payloadExecutable=dict(member="open-office-studio.exe", sha256="a"*64, bytes=100, pe="x64", derivation="Synthetic unit fixture, no native acceptance")),
+        canonicalPackageReport=dict(parentMember=".local/pakketcontrole-Windows.json", sha256=c.sha(report), bytes=len(report)), boundary="Synthetic unit fixture, no real package transfer")
     receipt_raw = json.dumps(receipt).encode()
     suite = copy.deepcopy(receipt)
     suite.update(childArtifact=dict(id=300, name="standalone-windows-p4-office-package", bytes=100, digest="sha256:"+"c"*64), packageReceiptSha256=c.sha(receipt_raw))
-    descriptor = dict(schemaVersion=1, consumer="750b", source=dict(producer=plan["runId"], attempt=1, job=plan["producerJobId"], commit=plan["applicationCommit"], tree=plan["applicationTree"], version=plan["version"], parentArtifact=100, parentZipSha256=plan["archiveSha256"]), suite=suite)
+    descriptor = dict(schemaVersion=1, consumer="750b", source=dict(producer=plan["runId"], attempt=1, job=plan["producerJobId"], commit=plan["applicationCommit"], tree=plan["applicationTree"], version=plan["version"], parentArtifact=100, parentZipSha256=plan["archiveSha256"]), suite=suite, contract="Synthetic nonnetwork contract checks")
     return plan, descriptor, [(installer,data),("canonical-package-report.json",report),("package.json",receipt_raw)]
 
 
@@ -55,6 +55,8 @@ class ChildContracts(unittest.TestCase):
             plan,d,_=fixture(); d["source"][key]=value; freeze(plan,d)
             with self.assertRaises((AssertionError,TypeError)): c.descriptor(plan)
         plan,d,_=fixture();d["suite"]["childArtifact"]["id"]=None;freeze(plan,d)
+        with self.assertRaises((AssertionError,TypeError)): c.descriptor(plan)
+        plan,d,_=fixture();d["suite"]["application"]["payloadExecutable"]["member"]=None;freeze(plan,d)
         with self.assertRaises((AssertionError,TypeError)): c.descriptor(plan)
 
     def test_changed_canonical_report_or_duplicate_member_rejects(self):

@@ -38,10 +38,13 @@ def stamp(value):
 
 def descriptor(plan):
     assert plan["requireSigned"] is True and plan["testTitleOverlap"] is True
+    for key in ("runId", "producerRunAttempt", "producerJobId", "artifactId"):
+        positive(plan[key])
     raw = base64.b64decode(plan["suiteDescriptorBase64"], validate=True)
     assert sha(raw) == plan["suiteDescriptorSha256"], "Raw frozen descriptor differs"
     d = json.loads(raw)
     assert d["schemaVersion"] == 1 and d["consumer"] == "750b"
+    assert isinstance(d["contract"], str) and d["contract"].strip()
     source, suite = d["source"], d["suite"]
     assert (source["producer"], source["attempt"], source["job"], source["commit"], source["tree"], source["version"], source["parentArtifact"], source["parentZipSha256"]) == (
         plan["runId"], plan["producerRunAttempt"], plan["producerJobId"], plan["applicationCommit"], plan["applicationTree"], plan["version"], plan["artifactId"], plan["archiveSha256"])
@@ -51,6 +54,7 @@ def descriptor(plan):
     for key in ("suitePreparerRun", "suitePreparerAttempt", "suitePreparerJobId"):
         positive(plan[key])
     positive(suite["archiveBytes"])
+    assert isinstance(suite["boundary"], str) and suite["boundary"].strip()
     assert re.fullmatch("[a-f0-9]{40}", suite["preparerHarness"])
     app = suite["application"]
     assert (app["key"], app["title"], app["identifier"], app["executable"]) == ("office", "Open Office Studio", "org.openaec.office-studio", "open-office-studio.exe")
@@ -62,6 +66,8 @@ def descriptor(plan):
     assert re.fullmatch("[a-f0-9]{64}", app["payloadExecutable"]["sha256"])
     positive(app["payloadExecutable"]["bytes"])
     assert app["payloadExecutable"]["pe"] == "x64"
+    for key in ("member", "derivation"):
+        assert isinstance(app["payloadExecutable"][key], str) and app["payloadExecutable"][key].strip()
     assert suite["installer"] == f"Open Office Studio_{plan['version']}_x64-setup.exe"
     assert PurePosixPath(app["packagePath"]).name == suite["installer"]
     assert app["packagePath"].startswith("dist-installers/office/nsis/")
