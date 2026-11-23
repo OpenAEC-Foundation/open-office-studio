@@ -1,0 +1,962 @@
+{
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "canonicalIntakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+  "producerRun": 45188332685,
+  "producerCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c",
+  "canonicalParent": {
+    "id": 14824745492,
+    "name": "uitgave-Linux",
+    "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+    "bytes": 4444993178,
+    "createdAt": "2026-11-23T13:44:51Z",
+    "updatedAt": "2026-11-23T13:44:51Z",
+    "parent": {
+      "id": 45177730188,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/release-candidate-2026-11-23-p5",
+      "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+    }
+  },
+  "metadataArtifact": {
+    "id": 14824014785,
+    "zipSha256": "cd04b02869b7ca2a0acfc4273f063700191460419c6524e363012aea8f4a3c91",
+    "bytes": 32455
+  },
+  "singleCanonicalParentWholeZipHashVerified": true,
+  "apps": [
+    {
+      "app": "writer",
+      "inputArtifact": {
+        "id": 14823914820,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyMzkxNDgyMA==",
+        "name": "standalone-input-writer-p5",
+        "size_in_bytes": 813713169,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14823914820",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14823914820/zip",
+        "expired": false,
+        "digest": "sha256:2c2b437dda832559fcf4478fd9d7eddeaeef15b18a19f86a21ae9f19854eace8",
+        "created_at": "2026-11-23T13:58:00Z",
+        "updated_at": "2026-11-23T13:58:00Z",
+        "expires_at": "2027-02-21T13:53:00Z",
+        "workflow_run": {
+          "id": 45188332685,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      },
+      "origin": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "version": "2026.48.1",
+        "run": 45177730188,
+        "linuxJob": 137703365848,
+        "artifact": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "bytes": 4444993178,
+          "zipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+        },
+        "purpose": "P5-frozen-candidate",
+        "studio": {
+          "sleutel": "writer",
+          "naam": "Open Writer Studio",
+          "programma": "open-writer-studio",
+          "identifier": "org.openaec.writer-studio",
+          "module": "docx",
+          "beeldmerk": {
+            "bestand": "studios/open-writer-studio-logo-afgerond.png",
+            "sha256": "603ec1dae3f5ee936db8989b08c0fea44ce7056419ebc58189d2f23fb7f0f8a3",
+            "bron": "https://dashboard.snapcraft.io/site_media/appmedia/2026/11/open-writer-studio-logo-afgerond.png",
+            "issue": 166,
+            "bronBestand": "docs/branding/open-writer-studio.png"
+          }
+        },
+        "packageReport": "pakketcontrole-writer-Linux.json",
+        "packageReportSha256": "97caed112cb2b35581b4b5680b9a929eac4157130d84e491c67537d5cfd9c098",
+        "packages": [
+          {
+            "path": "Open Writer Studio_2026.48.1_amd64.AppImage",
+            "canonicalMember": "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "sha256": "bd800d149bea0a23ea0175fc9b81b9cb7ab381c9baa313f0b4e26a0a34efc5d9",
+            "bytes": 429861368
+          },
+          {
+            "path": "Open Writer Studio_2026.48.1_amd64.deb",
+            "canonicalMember": "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            "sha256": "16728e64e28fa43543fdc19332867aebf310a4bfa7a7ab4b337f102bafae5dbd",
+            "bytes": 383844254
+          }
+        ],
+        "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized",
+        "debControl": {
+          "path": "Open Writer Studio_2026.48.1_amd64.deb",
+          "sha256": "16728e64e28fa43543fdc19332867aebf310a4bfa7a7ab4b337f102bafae5dbd",
+          "bytes": 383844254,
+          "fields": {
+            "Package": "open-writer-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "method": "dpkg-deb --field on actual hash-verified original DEB; no install/native claim"
+        },
+        "intake": {
+          "intakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+          "goSha256": "31fd9682c4d638afd46affdfef61cb2e4ee2b8e3e9be694714a9d4de5a86a306",
+          "intake": {
+            "purpose": "P5-frozen-candidate",
+            "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+            "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+            "version": "2026.48.1",
+            "run": 45177730188,
+            "attempt": 1,
+            "job": 137703365848,
+            "workflow": ".github/workflows/release.yml",
+            "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+            "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+            "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+            "window": {
+              "runStartedAt": "2026-11-23T12:48:06Z",
+              "jobStartedAt": "2026-11-23T12:48:23Z",
+              "jobCompletedAt": "2026-11-23T13:44:57Z"
+            },
+            "artifact": {
+              "id": 14824745492,
+              "name": "uitgave-Linux",
+              "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+              "bytes": 4444993178,
+              "createdAt": "2026-11-23T13:44:51Z",
+              "updatedAt": "2026-11-23T13:44:51Z",
+              "parent": {
+                "id": 45177730188,
+                "repository_id": 1427673882,
+                "head_repository_id": 1427673882,
+                "head_branch": "codex/release-candidate-2026-11-23-p5",
+                "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+              }
+            },
+            "requiredGates": [
+              "Pakket bouwen (onondertekend)",
+              "Linux-installers werkelijk uitpakken en controleren",
+              "Meet- en inhoudscontrole voor de meegeleverde runtime",
+              "Linux native WebKit-interface en private installer controleren",
+              "Run actions/upload-artifact@v4"
+            ],
+            "skippedNonLinuxGate": {
+              "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+              "sourceCondition": "runner.os != 'Linux'"
+            },
+            "publicationAuthorized": false
+          },
+          "members": [
+            "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb",
+            "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            ".local/pakketcontrole-Database-Linux.json",
+            ".local/pakketcontrole-Linux.json",
+            ".local/pakketcontrole-email-Linux.json",
+            ".local/pakketcontrole-notition-Linux.json",
+            ".local/pakketcontrole-presentation-Linux.json",
+            ".local/pakketcontrole-spreadsheet-Linux.json",
+            ".local/pakketcontrole-writer-Linux.json"
+          ]
+        },
+        "preparedBy": {
+          "run": 45188332685,
+          "qaCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      }
+    },
+    {
+      "app": "spreadsheet",
+      "inputArtifact": {
+        "id": 14824139421,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyNDEzOTQyMQ==",
+        "name": "standalone-input-spreadsheet-p5",
+        "size_in_bytes": 813766987,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824139421",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824139421/zip",
+        "expired": false,
+        "digest": "sha256:3d1863d088a45e3f93bfb568d53fa2924fd91782a0bacad28a6ed70e987fc41e",
+        "created_at": "2026-11-23T13:58:10Z",
+        "updated_at": "2026-11-23T13:58:10Z",
+        "expires_at": "2027-02-21T13:53:00Z",
+        "workflow_run": {
+          "id": 45188332685,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      },
+      "origin": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "version": "2026.48.1",
+        "run": 45177730188,
+        "linuxJob": 137703365848,
+        "artifact": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "bytes": 4444993178,
+          "zipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+        },
+        "purpose": "P5-frozen-candidate",
+        "studio": {
+          "sleutel": "spreadsheet",
+          "naam": "Open Spreadsheet Studio",
+          "programma": "open-spreadsheet-studio",
+          "identifier": "org.openaec.spreadsheet-studio",
+          "module": "xlsx",
+          "beeldmerk": {
+            "bestand": "studios/open-spreadsheet-studio.png",
+            "sha256": "c177abda9931323e99d514f8a6f91f82e6597ecbb800514fa017112d3e912a59",
+            "bron": "https://dashboard.snapcraft.io/site_media/appmedia/2026/11/OpenSpreadsheet-Snap-Store.png",
+            "issue": 167,
+            "bronBestand": "docs/branding/open-spreadsheet-studio.png"
+          }
+        },
+        "packageReport": "pakketcontrole-spreadsheet-Linux.json",
+        "packageReportSha256": "8c626ce23b586451b51669b1ea96b4529584c74ad5f367db097eb346f3b89aae",
+        "packages": [
+          {
+            "path": "Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "canonicalMember": "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "sha256": "950bb92b52af3977dd7f163670418acb72fc6230e20184c1a77a0bc23e2bc59d",
+            "bytes": 429849080
+          },
+          {
+            "path": "Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "canonicalMember": "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "sha256": "2975d44e7c0a6456aa0bd66c151a83b26ee9b2bd13a775a3c19db051fc15cd11",
+            "bytes": 383910260
+          }
+        ],
+        "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized",
+        "debControl": {
+          "path": "Open Spreadsheet Studio_2026.48.1_amd64.deb",
+          "sha256": "2975d44e7c0a6456aa0bd66c151a83b26ee9b2bd13a775a3c19db051fc15cd11",
+          "bytes": 383910260,
+          "fields": {
+            "Package": "open-spreadsheet-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "method": "dpkg-deb --field on actual hash-verified original DEB; no install/native claim"
+        },
+        "intake": {
+          "intakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+          "goSha256": "31fd9682c4d638afd46affdfef61cb2e4ee2b8e3e9be694714a9d4de5a86a306",
+          "intake": {
+            "purpose": "P5-frozen-candidate",
+            "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+            "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+            "version": "2026.48.1",
+            "run": 45177730188,
+            "attempt": 1,
+            "job": 137703365848,
+            "workflow": ".github/workflows/release.yml",
+            "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+            "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+            "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+            "window": {
+              "runStartedAt": "2026-11-23T12:48:06Z",
+              "jobStartedAt": "2026-11-23T12:48:23Z",
+              "jobCompletedAt": "2026-11-23T13:44:57Z"
+            },
+            "artifact": {
+              "id": 14824745492,
+              "name": "uitgave-Linux",
+              "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+              "bytes": 4444993178,
+              "createdAt": "2026-11-23T13:44:51Z",
+              "updatedAt": "2026-11-23T13:44:51Z",
+              "parent": {
+                "id": 45177730188,
+                "repository_id": 1427673882,
+                "head_repository_id": 1427673882,
+                "head_branch": "codex/release-candidate-2026-11-23-p5",
+                "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+              }
+            },
+            "requiredGates": [
+              "Pakket bouwen (onondertekend)",
+              "Linux-installers werkelijk uitpakken en controleren",
+              "Meet- en inhoudscontrole voor de meegeleverde runtime",
+              "Linux native WebKit-interface en private installer controleren",
+              "Run actions/upload-artifact@v4"
+            ],
+            "skippedNonLinuxGate": {
+              "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+              "sourceCondition": "runner.os != 'Linux'"
+            },
+            "publicationAuthorized": false
+          },
+          "members": [
+            "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb",
+            "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            ".local/pakketcontrole-Database-Linux.json",
+            ".local/pakketcontrole-Linux.json",
+            ".local/pakketcontrole-email-Linux.json",
+            ".local/pakketcontrole-notition-Linux.json",
+            ".local/pakketcontrole-presentation-Linux.json",
+            ".local/pakketcontrole-spreadsheet-Linux.json",
+            ".local/pakketcontrole-writer-Linux.json"
+          ]
+        },
+        "preparedBy": {
+          "run": 45188332685,
+          "qaCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      }
+    },
+    {
+      "app": "presentation",
+      "inputArtifact": {
+        "id": 14824114030,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyNDExNDAzMA==",
+        "name": "standalone-input-presentation-p5",
+        "size_in_bytes": 813810931,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824114030",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824114030/zip",
+        "expired": false,
+        "digest": "sha256:1945f4c243a3e83184db6cbbec9f81b4c0a2281aa0eb89140966aeab63a00a50",
+        "created_at": "2026-11-23T13:58:20Z",
+        "updated_at": "2026-11-23T13:58:20Z",
+        "expires_at": "2027-02-21T13:53:00Z",
+        "workflow_run": {
+          "id": 45188332685,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      },
+      "origin": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "version": "2026.48.1",
+        "run": 45177730188,
+        "linuxJob": 137703365848,
+        "artifact": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "bytes": 4444993178,
+          "zipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+        },
+        "purpose": "P5-frozen-candidate",
+        "studio": {
+          "sleutel": "presentation",
+          "naam": "Open Presentation Studio",
+          "programma": "open-presentation-studio",
+          "identifier": "org.openaec.presentation-studio",
+          "module": "pptx",
+          "beeldmerk": {
+            "bestand": "studios/open-presentation-studio-logo-afgerond.png",
+            "sha256": "bf54e696c95a865a887a6e179f41a77cf63e2729c6b8d19673d37009a81b3d2b",
+            "bron": "https://dashboard.snapcraft.io/site_media/appmedia/2026/11/open-presentation-studio-logo-afgerond.png",
+            "issue": 168,
+            "bronBestand": "docs/branding/open-presentation-studio.png"
+          }
+        },
+        "packageReport": "pakketcontrole-presentation-Linux.json",
+        "packageReportSha256": "adc3e6c4a212cc4a897b2403b25e02521a78705223e2861d58fac283ac55033f",
+        "packages": [
+          {
+            "path": "Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "canonicalMember": "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "sha256": "f9b72975725305243660bec067e0cde13d59d39e5eda2ecbacc6ada5fd54d934",
+            "bytes": 429873656
+          },
+          {
+            "path": "Open Presentation Studio_2026.48.1_amd64.deb",
+            "canonicalMember": "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "sha256": "b1ea114547f035804549bed296df0e3a1f33ca582dedc50b573902dd66f6774e",
+            "bytes": 383929578
+          }
+        ],
+        "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized",
+        "debControl": {
+          "path": "Open Presentation Studio_2026.48.1_amd64.deb",
+          "sha256": "b1ea114547f035804549bed296df0e3a1f33ca582dedc50b573902dd66f6774e",
+          "bytes": 383929578,
+          "fields": {
+            "Package": "open-presentation-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "method": "dpkg-deb --field on actual hash-verified original DEB; no install/native claim"
+        },
+        "intake": {
+          "intakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+          "goSha256": "31fd9682c4d638afd46affdfef61cb2e4ee2b8e3e9be694714a9d4de5a86a306",
+          "intake": {
+            "purpose": "P5-frozen-candidate",
+            "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+            "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+            "version": "2026.48.1",
+            "run": 45177730188,
+            "attempt": 1,
+            "job": 137703365848,
+            "workflow": ".github/workflows/release.yml",
+            "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+            "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+            "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+            "window": {
+              "runStartedAt": "2026-11-23T12:48:06Z",
+              "jobStartedAt": "2026-11-23T12:48:23Z",
+              "jobCompletedAt": "2026-11-23T13:44:57Z"
+            },
+            "artifact": {
+              "id": 14824745492,
+              "name": "uitgave-Linux",
+              "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+              "bytes": 4444993178,
+              "createdAt": "2026-11-23T13:44:51Z",
+              "updatedAt": "2026-11-23T13:44:51Z",
+              "parent": {
+                "id": 45177730188,
+                "repository_id": 1427673882,
+                "head_repository_id": 1427673882,
+                "head_branch": "codex/release-candidate-2026-11-23-p5",
+                "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+              }
+            },
+            "requiredGates": [
+              "Pakket bouwen (onondertekend)",
+              "Linux-installers werkelijk uitpakken en controleren",
+              "Meet- en inhoudscontrole voor de meegeleverde runtime",
+              "Linux native WebKit-interface en private installer controleren",
+              "Run actions/upload-artifact@v4"
+            ],
+            "skippedNonLinuxGate": {
+              "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+              "sourceCondition": "runner.os != 'Linux'"
+            },
+            "publicationAuthorized": false
+          },
+          "members": [
+            "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb",
+            "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            ".local/pakketcontrole-Database-Linux.json",
+            ".local/pakketcontrole-Linux.json",
+            ".local/pakketcontrole-email-Linux.json",
+            ".local/pakketcontrole-notition-Linux.json",
+            ".local/pakketcontrole-presentation-Linux.json",
+            ".local/pakketcontrole-spreadsheet-Linux.json",
+            ".local/pakketcontrole-writer-Linux.json"
+          ]
+        },
+        "preparedBy": {
+          "run": 45188332685,
+          "qaCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      }
+    },
+    {
+      "app": "email",
+      "inputArtifact": {
+        "id": 14824383776,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyNDM4Mzc3Ng==",
+        "name": "standalone-input-email-p5",
+        "size_in_bytes": 813725345,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824383776",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824383776/zip",
+        "expired": false,
+        "digest": "sha256:a9859b57cde1c51620766b86be7cd748791d2028462a07553927d90cddf53701",
+        "created_at": "2026-11-23T13:58:31Z",
+        "updated_at": "2026-11-23T13:58:31Z",
+        "expires_at": "2027-02-21T13:53:00Z",
+        "workflow_run": {
+          "id": 45188332685,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      },
+      "origin": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "version": "2026.48.1",
+        "run": 45177730188,
+        "linuxJob": 137703365848,
+        "artifact": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "bytes": 4444993178,
+          "zipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+        },
+        "purpose": "P5-frozen-candidate",
+        "studio": {
+          "sleutel": "email",
+          "naam": "Open Email Studio",
+          "programma": "open-email-studio",
+          "identifier": "org.openaec.email-studio",
+          "module": "email",
+          "beeldmerk": {
+            "bestand": "studios/open-email-studio-logo-afgerond.png",
+            "sha256": "6a2289f4c1b3ee4d069dc1196aff1cd5e532e8abf3bce30783179b8e357359fe",
+            "bron": "https://dashboard.snapcraft.io/site_media/appmedia/2026/11/open-email-studio-logo-afgerond.png",
+            "issue": 170,
+            "bronBestand": "docs/branding/open-email-studio.png"
+          }
+        },
+        "packageReport": "pakketcontrole-email-Linux.json",
+        "packageReportSha256": "32bd3325a20832e6520f09c39d11334132e92c0b0474a489d757f76a34a024d5",
+        "packages": [
+          {
+            "path": "Open Email Studio_2026.48.1_amd64.AppImage",
+            "canonicalMember": "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "sha256": "3819c9a347521d814c95729de6c72f3874552b79e6597fa81c2d8ca5c468d2d4",
+            "bytes": 429873656
+          },
+          {
+            "path": "Open Email Studio_2026.48.1_amd64.deb",
+            "canonicalMember": "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "sha256": "b3109098a9a78766bb3090badaf4fc1f51454f8e69f6d3730709b667319a9df5",
+            "bytes": 383844166
+          }
+        ],
+        "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized",
+        "debControl": {
+          "path": "Open Email Studio_2026.48.1_amd64.deb",
+          "sha256": "b3109098a9a78766bb3090badaf4fc1f51454f8e69f6d3730709b667319a9df5",
+          "bytes": 383844166,
+          "fields": {
+            "Package": "open-email-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "method": "dpkg-deb --field on actual hash-verified original DEB; no install/native claim"
+        },
+        "intake": {
+          "intakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+          "goSha256": "31fd9682c4d638afd46affdfef61cb2e4ee2b8e3e9be694714a9d4de5a86a306",
+          "intake": {
+            "purpose": "P5-frozen-candidate",
+            "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+            "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+            "version": "2026.48.1",
+            "run": 45177730188,
+            "attempt": 1,
+            "job": 137703365848,
+            "workflow": ".github/workflows/release.yml",
+            "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+            "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+            "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+            "window": {
+              "runStartedAt": "2026-11-23T12:48:06Z",
+              "jobStartedAt": "2026-11-23T12:48:23Z",
+              "jobCompletedAt": "2026-11-23T13:44:57Z"
+            },
+            "artifact": {
+              "id": 14824745492,
+              "name": "uitgave-Linux",
+              "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+              "bytes": 4444993178,
+              "createdAt": "2026-11-23T13:44:51Z",
+              "updatedAt": "2026-11-23T13:44:51Z",
+              "parent": {
+                "id": 45177730188,
+                "repository_id": 1427673882,
+                "head_repository_id": 1427673882,
+                "head_branch": "codex/release-candidate-2026-11-23-p5",
+                "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+              }
+            },
+            "requiredGates": [
+              "Pakket bouwen (onondertekend)",
+              "Linux-installers werkelijk uitpakken en controleren",
+              "Meet- en inhoudscontrole voor de meegeleverde runtime",
+              "Linux native WebKit-interface en private installer controleren",
+              "Run actions/upload-artifact@v4"
+            ],
+            "skippedNonLinuxGate": {
+              "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+              "sourceCondition": "runner.os != 'Linux'"
+            },
+            "publicationAuthorized": false
+          },
+          "members": [
+            "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb",
+            "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            ".local/pakketcontrole-Database-Linux.json",
+            ".local/pakketcontrole-Linux.json",
+            ".local/pakketcontrole-email-Linux.json",
+            ".local/pakketcontrole-notition-Linux.json",
+            ".local/pakketcontrole-presentation-Linux.json",
+            ".local/pakketcontrole-spreadsheet-Linux.json",
+            ".local/pakketcontrole-writer-Linux.json"
+          ]
+        },
+        "preparedBy": {
+          "run": 45188332685,
+          "qaCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      }
+    },
+    {
+      "app": "notition",
+      "inputArtifact": {
+        "id": 14824019756,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyNDAxOTc1Ng==",
+        "name": "standalone-input-notition-p5",
+        "size_in_bytes": 230213876,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824019756",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824019756/zip",
+        "expired": false,
+        "digest": "sha256:d4e5fa7ae05e6aa88504474ef85a0c0e923e3e29c99d5c8b2416a33d2666ac0a",
+        "created_at": "2026-11-23T13:58:36Z",
+        "updated_at": "2026-11-23T13:58:36Z",
+        "expires_at": "2027-02-21T13:53:00Z",
+        "workflow_run": {
+          "id": 45188332685,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      },
+      "origin": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "version": "2026.48.1",
+        "run": 45177730188,
+        "linuxJob": 137703365848,
+        "artifact": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "bytes": 4444993178,
+          "zipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+        },
+        "purpose": "P5-frozen-candidate",
+        "studio": {
+          "sleutel": "notition",
+          "naam": "Open Notition Studio",
+          "programma": "open-notition-studio",
+          "identifier": "org.openaec.notition-studio",
+          "module": "notities",
+          "beeldmerk": {
+            "bestand": "studios/open-notition-studio-logo-afgerond.png",
+            "sha256": "dbdfa6e51229465a184e796a972d5d0e4b878a9cbe037f11f613cd74aea4a5f5",
+            "bron": "https://dashboard.snapcraft.io/site_media/appmedia/2026/11/open-notition-studio-logo-afgerond.png",
+            "issue": 169,
+            "bronBestand": "docs/branding/open-notition-studio.png"
+          }
+        },
+        "packageReport": "pakketcontrole-notition-Linux.json",
+        "packageReportSha256": "01025941bef129fdf2e006a55193d70d35d6fb262a5b486552995483b5955c5c",
+        "packages": [
+          {
+            "path": "Open Notition Studio_2026.48.1_amd64.AppImage",
+            "canonicalMember": "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "sha256": "08ddb2cb9f1088f69779aec92a48e3ace7b58d605779fd930c2c70345056b83e",
+            "bytes": 153893368
+          },
+          {
+            "path": "Open Notition Studio_2026.48.1_amd64.deb",
+            "canonicalMember": "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "sha256": "68e8b78913dee415936bf7dc081d257da80bba9f295c66d519353a85433c241a",
+            "bytes": 76312910
+          }
+        ],
+        "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized",
+        "debControl": {
+          "path": "Open Notition Studio_2026.48.1_amd64.deb",
+          "sha256": "68e8b78913dee415936bf7dc081d257da80bba9f295c66d519353a85433c241a",
+          "bytes": 76312910,
+          "fields": {
+            "Package": "open-notition-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "method": "dpkg-deb --field on actual hash-verified original DEB; no install/native claim"
+        },
+        "intake": {
+          "intakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+          "goSha256": "31fd9682c4d638afd46affdfef61cb2e4ee2b8e3e9be694714a9d4de5a86a306",
+          "intake": {
+            "purpose": "P5-frozen-candidate",
+            "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+            "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+            "version": "2026.48.1",
+            "run": 45177730188,
+            "attempt": 1,
+            "job": 137703365848,
+            "workflow": ".github/workflows/release.yml",
+            "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+            "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+            "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+            "window": {
+              "runStartedAt": "2026-11-23T12:48:06Z",
+              "jobStartedAt": "2026-11-23T12:48:23Z",
+              "jobCompletedAt": "2026-11-23T13:44:57Z"
+            },
+            "artifact": {
+              "id": 14824745492,
+              "name": "uitgave-Linux",
+              "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+              "bytes": 4444993178,
+              "createdAt": "2026-11-23T13:44:51Z",
+              "updatedAt": "2026-11-23T13:44:51Z",
+              "parent": {
+                "id": 45177730188,
+                "repository_id": 1427673882,
+                "head_repository_id": 1427673882,
+                "head_branch": "codex/release-candidate-2026-11-23-p5",
+                "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+              }
+            },
+            "requiredGates": [
+              "Pakket bouwen (onondertekend)",
+              "Linux-installers werkelijk uitpakken en controleren",
+              "Meet- en inhoudscontrole voor de meegeleverde runtime",
+              "Linux native WebKit-interface en private installer controleren",
+              "Run actions/upload-artifact@v4"
+            ],
+            "skippedNonLinuxGate": {
+              "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+              "sourceCondition": "runner.os != 'Linux'"
+            },
+            "publicationAuthorized": false
+          },
+          "members": [
+            "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb",
+            "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            ".local/pakketcontrole-Database-Linux.json",
+            ".local/pakketcontrole-Linux.json",
+            ".local/pakketcontrole-email-Linux.json",
+            ".local/pakketcontrole-notition-Linux.json",
+            ".local/pakketcontrole-presentation-Linux.json",
+            ".local/pakketcontrole-spreadsheet-Linux.json",
+            ".local/pakketcontrole-writer-Linux.json"
+          ]
+        },
+        "preparedBy": {
+          "run": 45188332685,
+          "qaCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      }
+    },
+    {
+      "app": "database",
+      "inputArtifact": {
+        "id": 14824318917,
+        "node_id": "MDg6QXJ0aWZhY3QxNDgyNDMxODkxNw==",
+        "name": "standalone-input-database-p5",
+        "size_in_bytes": 161090768,
+        "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824318917",
+        "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14824318917/zip",
+        "expired": false,
+        "digest": "sha256:e9fc8db019881c019432201729b778f2829257c4d2ca11d1cc37d5242d10a842",
+        "created_at": "2026-11-23T13:58:39Z",
+        "updated_at": "2026-11-23T13:58:39Z",
+        "expires_at": "2027-02-21T13:53:00Z",
+        "workflow_run": {
+          "id": 45188332685,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/linux-release-input-p5-2026-11-23",
+          "head_sha": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      },
+      "origin": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "version": "2026.48.1",
+        "run": 45177730188,
+        "linuxJob": 137703365848,
+        "artifact": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "bytes": 4444993178,
+          "zipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+        },
+        "purpose": "P5-frozen-candidate",
+        "studio": {
+          "sleutel": "database",
+          "naam": "Open Database Studio",
+          "programma": "open-database-studio",
+          "identifier": "org.openaec.database-studio",
+          "module": "database"
+        },
+        "packageReport": "pakketcontrole-Database-Linux.json",
+        "packageReportSha256": "422652bb0bd180dc94ee123f3797421bfbfabe724316fd34a3e18c7340573ca3",
+        "packages": [
+          {
+            "path": "Open Database Studio_2026.48.1_amd64.AppImage",
+            "canonicalMember": "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "sha256": "9a3618b91f1c20c9cf78eed95a2cf7424e9eaa12a97563297d8de4ec6a80417c",
+            "bytes": 119671288
+          },
+          {
+            "path": "Open Database Studio_2026.48.1_amd64.deb",
+            "canonicalMember": "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "sha256": "847f5486dd0ab3241a66b031dc75d8fd23e91ab8a68986cb4d6cd9ae2db6c26d",
+            "bytes": 41412256
+          }
+        ],
+        "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized",
+        "debControl": {
+          "path": "Open Database Studio_2026.48.1_amd64.deb",
+          "sha256": "847f5486dd0ab3241a66b031dc75d8fd23e91ab8a68986cb4d6cd9ae2db6c26d",
+          "bytes": 41412256,
+          "fields": {
+            "Package": "open-database-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "method": "dpkg-deb --field on actual hash-verified original DEB; no install/native claim"
+        },
+        "intake": {
+          "intakeSha256": "7e98e6a712b32eb7311b078295d34885b578327259eb3e09b5a8d589e9b3df74",
+          "goSha256": "31fd9682c4d638afd46affdfef61cb2e4ee2b8e3e9be694714a9d4de5a86a306",
+          "intake": {
+            "purpose": "P5-frozen-candidate",
+            "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+            "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+            "version": "2026.48.1",
+            "run": 45177730188,
+            "attempt": 1,
+            "job": 137703365848,
+            "workflow": ".github/workflows/release.yml",
+            "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+            "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+            "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+            "window": {
+              "runStartedAt": "2026-11-23T12:48:06Z",
+              "jobStartedAt": "2026-11-23T12:48:23Z",
+              "jobCompletedAt": "2026-11-23T13:44:57Z"
+            },
+            "artifact": {
+              "id": 14824745492,
+              "name": "uitgave-Linux",
+              "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+              "bytes": 4444993178,
+              "createdAt": "2026-11-23T13:44:51Z",
+              "updatedAt": "2026-11-23T13:44:51Z",
+              "parent": {
+                "id": 45177730188,
+                "repository_id": 1427673882,
+                "head_repository_id": 1427673882,
+                "head_branch": "codex/release-candidate-2026-11-23-p5",
+                "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+              }
+            },
+            "requiredGates": [
+              "Pakket bouwen (onondertekend)",
+              "Linux-installers werkelijk uitpakken en controleren",
+              "Meet- en inhoudscontrole voor de meegeleverde runtime",
+              "Linux native WebKit-interface en private installer controleren",
+              "Run actions/upload-artifact@v4"
+            ],
+            "skippedNonLinuxGate": {
+              "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+              "sourceCondition": "runner.os != 'Linux'"
+            },
+            "publicationAuthorized": false
+          },
+          "members": [
+            "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+            "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+            "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+            "dist-installers/office/appimage/Open Office Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb",
+            "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+            "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+            "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+            "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+            ".local/pakketcontrole-Database-Linux.json",
+            ".local/pakketcontrole-Linux.json",
+            ".local/pakketcontrole-email-Linux.json",
+            ".local/pakketcontrole-notition-Linux.json",
+            ".local/pakketcontrole-presentation-Linux.json",
+            ".local/pakketcontrole-spreadsheet-Linux.json",
+            ".local/pakketcontrole-writer-Linux.json"
+          ]
+        },
+        "preparedBy": {
+          "run": 45188332685,
+          "qaCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+        }
+      }
+    }
+  ],
+  "nativeAcceptanceClaim": false,
+  "publicationAuthorized": false
+}
