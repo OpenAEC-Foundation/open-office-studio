@@ -1,0 +1,49 @@
+{
+  "scope": "One genuine legacy STW input route under #30; QA only, no catalog promotion",
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "version": "2026.48.1",
+  "fixture": {
+    "repo": "LibreOffice/core",
+    "revision": "ded596096a767fa470eea8dfccd51c1af5c3dd54",
+    "revisionDate": "2003-01-27T17:31:46Z",
+    "path": "qadevOOo/testdocs/report.stw",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/ded596096a767fa470eea8dfccd51c1af5c3dd54/qadevOOo/testdocs/report.stw",
+    "bytes": 11186,
+    "gitBlob": "5b8efafa159bac197fdab0b48a6dfaf8a11a6478",
+    "sha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+    "originalExtension": "stw",
+    "generator": "StarOffice 6.0 (Win32)",
+    "officeNamespace": "http://openoffice.org/2000/office",
+    "officeVersion": "1.0",
+    "manifestMediaType": "application/vnd.sun.xml.writer",
+    "mimetypeEntryPresent": false,
+    "templateProvenanceUrl": "https://github.com/LibreOffice/core/blob/6fd2fcd6764974f6a8f1c0c7a3498aaa8e45c558/qadevOOo/tests/java/ifc/frame/_XDocumentTemplates.java",
+    "templateProvenance": "The upstream addTemplate test uses this original report.stw. The early ZIP's generic writer manifest and absent mimetype entry are recorded, not silently changed.",
+    "redistribution": "Download immutable upstream bytes during QA; this branch does not vendor the binary fixture"
+  },
+  "oracle": {
+    "bodyNonemptyParagraphs": 8,
+    "headingLevels": [
+      1
+    ],
+    "selectedEffectiveProperties": [
+      "font size",
+      "bold",
+      "alignment",
+      "uppercase",
+      "small caps"
+    ],
+    "tableCount": 0,
+    "tableLimit": "No source table exists; no non-empty table coverage is claimed",
+    "dynamicIndexCache": "Numeric cached TOC value is recorded; stable source-derived entry text is required. No complete TOC/page fidelity claim.",
+    "placeholderSemantics": "Only text:placeholder fields use generated angle-bracket display delimiters. Preserve their source-derived prompt/type/description as showing-placeholder DOCX text content controls; literal brackets in the cached TOC remain literal text.",
+    "placeholderSemanticsSource": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/sw/source/core/fields/docufld.cxx"
+  },
+  "excludedCandidate": {
+    "url": "https://raw.githubusercontent.com/hellsdeur/template-sbc/6b48f92517e8c028c3490eed4dd3a7cabdf141ea/template-openoffice.stw",
+    "bytes": 14067,
+    "sha256": "a2bb0bf793800fc0c9bebe189ac61561db2114991588cd4e210456e9bd72f385",
+    "reason": "Actual bytes are HTML, not the requested old XML ZIP container; not accepted as positive evidence for this scope and not classified as a product failure"
+  }
+}
