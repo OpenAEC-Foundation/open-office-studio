@@ -174,7 +174,7 @@ for kind in ['appimage','deb']:
         case['snapshots']['initial-query']=wait(lambda:text_present('SyntheticTotal','18'),'Initial independent sum 18')
         sql('UPDATE StandaloneItems SET amount=13 WHERE id=1')
         click('Run',dialog=True)
-        wait(lambda:text_present('1 row'),'One synthetic row changed')
+        wait(lambda:text_present('1 row changed.'),'One synthetic row changed')
         sql('SELECT SUM(amount) AS SyntheticEditedTotal FROM StandaloneItems')
         case['snapshots']['edited-query']=wait(lambda:text_present('SyntheticEditedTotal','24'),'Actual edited sum 24')
         capture('edited')
