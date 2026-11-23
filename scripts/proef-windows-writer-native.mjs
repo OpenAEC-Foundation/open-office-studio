@@ -129,9 +129,11 @@ try {
   report.artifact = { id: artifact.id, name: artifact.name, digest: artifact.digest };
   const zipPath = join(out, "artifact.zip"), fd = openSync(zipPath, "wx");
   try { execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}/zip`], { windowsHide: true, stdio: ["ignore", fd, "pipe"], timeout: 300_000 }); } finally { closeSync(fd); }
-  const zip = await readFile(zipPath); assert.equal(sha(zip), identity.archiveSha256);
+  const zip = await readFile(zipPath);
+  report.archiveSha256 = sha(zip); assert.equal(report.archiveSha256, identity.archiveSha256);
   const contents = unzipSync(zip, { filter: entry => entry.name === identity.packageMember || entry.name === "provenance.json" });
-  const bytes = contents[identity.packageMember]; assert(bytes, "Exact frozen NSIS member must exist"); assert.equal(sha(bytes), identity.packageSha256);
+  const bytes = contents[identity.packageMember]; assert(bytes, "Exact frozen NSIS member must exist");
+  report.packageSha256 = sha(bytes); assert.equal(report.packageSha256, identity.packageSha256);
   if (identity.builderCommit && identity.builderCommit !== identity.applicationCommit) {
     assert(contents["provenance.json"], "A separate builder checkout requires immutable application provenance");
     const proof = JSON.parse(strFromU8(contents["provenance.json"]));
@@ -146,6 +148,7 @@ try {
     assert.match(proof.executable.sha256, /^[a-f0-9]{64}$/);
     report.applicationProvenance = proof;
   }
+  report.checks.push({ name: "frozen application, builder, archive and installer identities verified" });
   const installer = join(out, "installer-setup.exe"); await writeFile(installer, bytes);
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
