@@ -1,0 +1,20 @@
+{
+  "status": "reviewed-ten-actual-ci-images",
+  "images": [
+    "route0-original.png", "route0-preflight-reopened.png", "route0-edited-reopened.png",
+    "route1-original.png", "route1-preflight-reopened.png", "route1-edited-reopened.png",
+    "canvas-source-major.png", "canvas-minor-flip.png", "canvas-major-rotated.png", "canvas-full-turn.png"
+  ],
+  "observations": [
+    "Both actual browser routes show the original blue chord arc and straight closing edge at C3 instead of the preserved-object text placeholder.",
+    "Fresh reopened source and edited documents retain that curved shape; H1 added marker and I1 result42 are visible after edit/reopen. Full marker/formula inputs and UndoRedo are separately asserted by the actual UI driver.",
+    "Isolated production canvas PNGs show actual filled major/minor/transformed/full-turn segments. Transparent backgrounds appear dark in the preview; the independent pixel oracle reads RGBA directly.",
+    "Original source cell text and separate annotation are visible. Existing unsupported-control and substituted-font warnings remain."
+  ],
+  "separateUnverifiedObservation": "The GIF area shows a broken/alt image preview in these Linux Chromium snapshots. Image loading and baseline attribution were not independently tested in this chord scope. Original GIF/drawing bytes remain unchanged; no general bitmap appearance pass, product cause or new issue is claimed.",
+  "limits": [
+    "Linux Chromium browser-development route, not new native Windows/Linux/macOS packages, optimized hosted build or final release acceptance.",
+    "Print-canvas component checks do not prove an end-to-end native print/PDF dialog workflow.",
+    "No local GUI, Computer Use or recording session was started; the own CI browser/contexts/server were closed."
+  ]
+}

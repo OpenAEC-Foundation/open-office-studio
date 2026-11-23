@@ -1,0 +1,73 @@
+{
+  "status": "passed-official-byte-source-and-output-audit",
+  "binding": {
+    "issue": 380,
+    "sourceCommit": "42d161a3d494fb56fa159501a510a34ac95f6fd0",
+    "sourceTree": "436d8f94c68b8fb5d9b6b23c6dd8485502f1bfd6",
+    "run": 45171202941,
+    "job": 137680896372,
+    "artifact": 14817341148,
+    "zipSha256": "8598a2e4bf252395f86c8d6e6a4317a4a65161dc0805fc0e3998ca051137af55",
+    "productFiles": [
+      "src/rekenblad/chordGeometrie.ts",
+      "src/rekenblad/tekenobjecten.ts",
+      "src/rekenblad/TekenobjectLaag.tsx",
+      "src/rekenblad/tekenobjectCanvas.ts"
+    ],
+    "scope": "Only existing OOXML chord render/print support. Corrected native packages and current release intake remain separate."
+  },
+  "productFileSha256": {
+    "src/rekenblad/chordGeometrie.ts": "4fc7836da7dd68054b8ab251ede051f13f5c69ead75565501e51d8dbdd718c12",
+    "src/rekenblad/tekenobjecten.ts": "dd4c882e60761341d1267b6bb191a5a38a035a3bd5d3e62722a4dd0de2f2d65f",
+    "src/rekenblad/TekenobjectLaag.tsx": "26f42a37fe8f50486e5910a0ec83557f12e53dc0ebfe6f162dfe2637caa7a714",
+    "src/rekenblad/tekenobjectCanvas.ts": "44a3d4d506d464dc5cd017be41e694b0d793f38f19efb70ad987361e7cc9f08f"
+  },
+  "outputAudit": {
+    "status": "passed-independent-saved-xml-audit",
+    "sourceCommit": "42d161a3d494fb56fa159501a510a34ac95f6fd0",
+    "sourceTree": "436d8f94c68b8fb5d9b6b23c6dd8485502f1bfd6",
+    "sourceUnchanged": true,
+    "actualSavedFiles": [
+      {
+        "file": "route0-preflight.xlsx",
+        "sha256": "6c1193ff02f2ff45979f294dbc3a1a9a9e796a4fedcf9a0bc4a74c15989e526e",
+        "objectsUnchanged": true,
+        "independentCellsPassed": true
+      },
+      {
+        "file": "route0-edited.xlsx",
+        "sha256": "e01e5a93cd75677d2b5e78e3d8c18727ff40348bb5c450bea02ad9f2eaf63e84",
+        "objectsUnchanged": true,
+        "independentCellsPassed": true
+      },
+      {
+        "file": "route0-reopened.xlsx",
+        "sha256": "ce5b34072685c1de9b1adc523b24a132bdb84c0bcf0eeeebaedc26910453228f",
+        "objectsUnchanged": true,
+        "independentCellsPassed": true
+      },
+      {
+        "file": "route1-preflight.xlsx",
+        "sha256": "2c273573d38e94adc113e6c9b434dae51adfb256c1c41bc40777c26abfd4d45b",
+        "objectsUnchanged": true,
+        "independentCellsPassed": true
+      },
+      {
+        "file": "route1-edited.xlsx",
+        "sha256": "e01e5a93cd75677d2b5e78e3d8c18727ff40348bb5c450bea02ad9f2eaf63e84",
+        "objectsUnchanged": true,
+        "independentCellsPassed": true
+      },
+      {
+        "file": "route1-reopened.xlsx",
+        "sha256": "c9915996d6286fc93091cf1bbdaca77ce4b6dd17618494e3f75dab3df9fc27d8",
+        "objectsUnchanged": true,
+        "independentCellsPassed": true
+      }
+    ],
+    "originalChordAdjustmentsRetained": true,
+    "allObjectPartsUnchanged": true,
+    "scope": "Corrected browser rendering only. Original converter width/control limitations remain; no fixed native or standalone/signing acceptance."
+  },
+  "scope": "Actual browser and print-canvas evidence only; no new native package/standalone/signing or all-SXC acceptance."
+}

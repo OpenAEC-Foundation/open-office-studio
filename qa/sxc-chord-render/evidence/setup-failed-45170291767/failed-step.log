@@ -1,0 +1,32 @@
+browser	Run node scripts/kopieer-assets.mjs	﻿2026-11-23T12:01:23.1997265Z ##[group]Run node scripts/kopieer-assets.mjs
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:23.1997653Z ^[[36;1mnode scripts/kopieer-assets.mjs^[[0m
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:23.2030670Z shell: /usr/bin/bash -e {0}
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:23.2030927Z env:
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:23.2031202Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:23.2031528Z ##[endgroup]
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:39.1963504Z Lettertypen: 20 extra families (18.3 MB), 95 gedownload.
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:40.5463176Z Woordenboeken: 3 talen (3.6 MB), 8 gedownload.
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6140174Z file:///home/runner/work/open-office-studio/open-office-studio/scripts/kopieer-assets.mjs:76
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6141397Z     if (!dev) throw new Error(problemen.join(" "));
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6142035Z                     ^
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6142312Z 
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6144232Z Error: De spellingmodule kon niet worden gebouwd (cargo met doel wasm32-unknown-unknown nodig: "rustup target add wasm32-unknown-unknown"). error: could not compile `foldhash` (lib) due to 1 previous error warning: build failed, waiting for other jobs to finish... error: could not compile `hashbrown` (lib) due to 1 previous error
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6146369Z     at file:///home/runner/work/open-office-studio/open-office-studio/scripts/kopieer-assets.mjs:76:21
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6147280Z     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6147748Z 
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6147858Z Node.js v22.23.5
+browser	Run node scripts/kopieer-assets.mjs	2026-11-23T12:01:41.6235628Z ##[error]Process completed with exit code 1.
+browser	Run actions/upload-artifact@v4	﻿2026-11-23T12:01:41.6311143Z ##[group]Run actions/upload-artifact@v4
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6311453Z with:
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6311666Z   name: sxc-chord-browser-proof
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6311944Z   path: .local/sxc-chord-browser-proof
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6312229Z   include-hidden-files: true
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6312475Z   if-no-files-found: error
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6312704Z   compression-level: 6
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6312915Z   overwrite: false
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6313107Z env:
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6313340Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.6313643Z ##[endgroup]
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.8062530Z (node:2980) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.8063493Z (Use `node --trace-deprecation ...` to show where the warning was created)
+browser	Run actions/upload-artifact@v4	2026-11-23T12:01:41.8096657Z ##[error]No files were found with the provided path: .local/sxc-chord-browser-proof. No artifacts will be uploaded.
