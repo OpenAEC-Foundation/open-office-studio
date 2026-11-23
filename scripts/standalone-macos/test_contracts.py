@@ -63,9 +63,12 @@ class ContractTests(unittest.TestCase):
                 with self.assertRaises(ValueError):verify_under(target,root)
 
     def test_partial_evidence_never_native_acceptance(self):
-        keys=("identityVerified","suiteAbsent","freshProfileVerified","ownCwdEnvironmentVerified","nativeFocusVerified","nativeSaveVerified","outputOraclePassed","fullQuitVerified","newPidReopenVerified","resourceObservationsReviewed","visualReviewPassed","cleanupPassed")
-        good={k:True for k in keys};self.assertTrue(acceptance_from_evidence(good))
+        keys=("identityVerified","suiteAbsent","freshProfileVerified","ownCwdEnvironmentVerified","nativeFocusVerified","nativeSaveVerified","outputOraclePassed","fullQuitVerified","newPidReopenVerified","resourceObservationsReviewed","resourceIndependencePassed","functionalCaseCompleted","visualReviewPassed","cleanupPassed")
+        good={**{k:True for k in keys},"app":"writer","ownConverterChildObserved":True};self.assertTrue(acceptance_from_evidence(good))
         for k in keys:self.assertFalse(acceptance_from_evidence({**good,k:False}),k)
+        self.assertFalse(acceptance_from_evidence({**good,"failure":{"message":"runtime export failed"}}))
+        self.assertFalse(acceptance_from_evidence({**good,"ownConverterChildObserved":False}))
+        self.assertFalse(acceptance_from_evidence({**good,"app":"office"}))
 
 
 class FixtureTests(unittest.TestCase):
@@ -95,6 +98,16 @@ class FixtureTests(unittest.TestCase):
     def test_database_readonly_oracle_preserves_source_bytes(self):
         path=Path(self.receipt["files"]["database"]["path"]);before=path.read_bytes()
         verify("database",path);self.assertEqual(path.read_bytes(),before)
+
+    def test_mail_edit_cannot_mask_lost_control_content(self):
+        from email import policy
+        from email.parser import BytesParser
+        from fixtures import SEEDS
+        source=Path(self.receipt["files"]["email"]["path"])
+        message=BytesParser(policy=policy.SMTP).parsebytes(source.read_bytes())
+        message.set_content(SEEDS["email"]+"\n"+MARKERS["email"])
+        bad=self.root/"lost-control.eml";bad.write_bytes(message.as_bytes())
+        with self.assertRaises(AssertionError):verify("email",bad)
 
 
 if __name__ == "__main__":unittest.main()

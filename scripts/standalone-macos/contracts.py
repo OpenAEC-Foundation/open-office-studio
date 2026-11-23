@@ -110,5 +110,8 @@ def validate_producer(request, run, artifact, job):
 def acceptance_from_evidence(value):
     required = ("identityVerified", "suiteAbsent", "freshProfileVerified", "ownCwdEnvironmentVerified",
                 "nativeFocusVerified", "nativeSaveVerified", "outputOraclePassed", "fullQuitVerified",
-                "newPidReopenVerified", "resourceObservationsReviewed", "visualReviewPassed", "cleanupPassed")
-    return all(value.get(key) is True for key in required)
+                "newPidReopenVerified", "resourceObservationsReviewed", "resourceIndependencePassed",
+                "functionalCaseCompleted", "visualReviewPassed", "cleanupPassed")
+    if value.get("app") not in APPS or value.get("failure") or not all(value.get(key) is True for key in required):
+        return False
+    return value["app"] not in ("writer","spreadsheet","presentation") or value.get("ownConverterChildObserved") is True

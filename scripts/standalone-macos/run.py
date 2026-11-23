@@ -70,7 +70,7 @@ def main():
         raise SystemExit(3)
     session=Session(args.app,args.output,helper);failure=None
     session.report.update(source=request["source"],provenance=proof,capabilities=capabilities,
-                          visualReviewPassed=False,resourceObservationsReviewed=False,
+                          visualReviewPassed=False,resourceObservationsReviewed=False,resourceIndependencePassed=False,
                           limitations=["Original native screenshots require visual review.",
                                        "Sampled process/files and runtime inventory do not establish complete converter/resource independence."])
     mail=None
