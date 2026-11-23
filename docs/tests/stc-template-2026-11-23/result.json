@@ -1,0 +1,109 @@
+{
+  "scope": "One historical STC template route under #30; no product changes or catalog claim",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "ec6d511480165a88d45ab43c3be20b8d864f2012",
+  "ci": {
+    "run": 45149986178,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45149986178",
+    "conclusion": "success",
+    "platform": "ubuntu-22.04",
+    "artifact": {
+      "id": 14804804420,
+      "name": "stc-runtime-result",
+      "bytes": 600746,
+      "digest": "sha256:651d7fdeda05b0a693769084bba2a4f3c25eb4cd016ad6cd3b748ff3a98e33df",
+      "fullZipDigestIndependentlyVerified": true
+    }
+  },
+  "source": {
+    "repository": "https://github.com/apache/openoffice-org",
+    "commit": "1a66d6baadf2699680758c2d68e628125bf5aec7",
+    "path": "assets/fr/Documentation/modele/carnet de notes.stc",
+    "blob": "0ee1d25ec364e23fe840d5a4164d3b3ac11ba3a2",
+    "url": "https://raw.githubusercontent.com/apache/openoffice-org/1a66d6baadf2699680758c2d68e628125bf5aec7/assets/fr/Documentation/modele/carnet%20de%20notes.stc",
+    "publication": "https://www.openoffice.org/fr/Documentation/modele/index_model.htm",
+    "filename": "carnet de notes.stc",
+    "bytes": 22293,
+    "sha256": "ff735a1a20c28e39e8349d46e5a531e6e6cde24f50f7aaa8d92e408e4a344d4c",
+    "generator": "OpenOffice.org 1.1.0 (Win32)",
+    "license": "Public Documentation License 1.0; original notice is embedded in meta.xml",
+    "licenseUrl": "https://www.openoffice.org/licenses/PDL.html",
+    "attribution": "Carnet de notes, Francis Lecher, Copyright 2003",
+    "observedMime": "application/vnd.sun.xml.calc",
+    "mimeNote": "The original historical STC distribution uses the legacy Calc MIME, not calc.template. Preserve and disclose this; do not rewrite it or claim a modern renamed OTS/XLSX."
+  },
+  "runtime": {
+    "producerRun": 45147346793,
+    "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+    "artifactId": 14805600515,
+    "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+    "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+    "manifestEntries": 15082,
+    "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "receipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "parentRun": 45143305147,
+    "parentJob": 137586343061,
+    "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "coordinatorDescriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+    "baseDescriptorSha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+  },
+  "checks": [
+    "STC is a template; browser without a native bridge reports a concrete conversion limitation and XLSX alternative.",
+    "Real private conversion passes the independent six-sheet/854-formula structure check; production helper opens as a new XLSX document.",
+    "Actual engine edits calculate source-derived weighted mean/quarter rounding and named-range text; Undo/Redo restores the text edit.",
+    "Modern engine XLSX save/reopen retains all source formula cells and expected edits; original STC bytes remain unchanged."
+  ],
+  "values": [
+    {
+      "kind": "number",
+      "value": 13.666666666666666
+    },
+    {
+      "kind": "number",
+      "value": 13.75
+    },
+    {
+      "kind": "text",
+      "value": "QA_STC_23NOV"
+    }
+  ],
+  "originalSourceUnchanged": true,
+  "sourceFormulaCellsRetained": 854,
+  "sheets": 6,
+  "convertedSha256": "ed8de3edd0b566580ca20e150088f243fa0e3eaf71327f5c3fd3d4dccd17218b",
+  "savedSha256": "aedb0d2e1e26413d3e5ba08a5f013a167ecd8d4678d710253ce59ae4f0b9d5c7",
+  "converterSeconds": 3.931129721000005,
+  "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+  "productIssueFound": false,
+  "limits": [
+    "CLI adapter and production helper/engine; no packaged native UI or Tauri IPC claim",
+    "Negative browser capability/helper check, not a hosted browser UI test",
+    "No Windows or macOS runtime tested by this probe"
+  ],
+  "harnessCorrections": [
+    {
+      "run": 45146649239,
+      "reason": "Frozen P2 commit was absent in the shallow checkout; explicit snapshot fetch added; no application code reached."
+    },
+    {
+      "run": 45149421124,
+      "reason": "Consumer confused enriched coordinator Git attestation with original artifact descriptor; both are now pinned through the explicit base-descriptor hash; no Office process started."
+    }
+  ]
+}
