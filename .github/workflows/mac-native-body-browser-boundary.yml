@@ -1,0 +1,64 @@
+name: Mac Writer first paint renderer boundary
+on:
+  push:
+    branches: [codex/mac-native-body-blocker-20261120]
+    paths: [.github/workflows/mac-native-body-browser-boundary.yml]
+permissions:
+  contents: read
+jobs:
+  boundary:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 420af640c10ab9ada6c66c844c0098caea87c493
+          path: app
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Locked dependencies and actual Mac Chromium/WebKit engines
+        run: |
+          pnpm --dir app install --frozen-lockfile --ignore-scripts
+          pnpm --dir app exec playwright install chromium webkit
+      - uses: actions/cache@v4
+        with:
+          path: app/.local/lettertypen-cache
+          key: lettertypen-${{ hashFiles('app/assets/lettertypen.json') }}
+      - uses: actions/cache@v4
+        with:
+          path: app/.local/woordenboeken-cache
+          key: woordenboeken-${{ hashFiles('app/assets/woordenboeken.json') }}
+      - name: Build untouched current420 supported normal browser route
+        working-directory: app
+        env:
+          OFFICE_TEST_SOURCE: 420af640c10ab9ada6c66c844c0098caea87c493
+        run: node scripts/writer-proefbuild.mjs build .local/mac-body-browser /
+      - name: Original pixels first, then read-only layout; explicit replay diagnostic is not acceptance
+        run: |
+          export OOS_DIAGNOSTIC_DEPENDENCIES="$PWD/app"
+          export OOS_DIAGNOSTIC_APP="$PWD/app"
+          export OOS_DIAGNOSTIC_RECEIPT=.local/mac-body-browser.build.json
+          export OOS_DIAGNOSTIC_SOURCE=420af640c10ab9ada6c66c844c0098caea87c493
+          export OOS_DIAGNOSTIC_TREE=c1334c8f4d92914e9d2114d56e467ef11eab9646
+          export OOS_DIAGNOSTIC_BROWSER_MATRIX=1
+          node harness/scripts/mac-body-firstpaint-browser.mjs harness/.local/nov23-firstpaint-mac-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac-body-browser-boundary-${{ github.sha }}
+          path: |
+            harness/.local/nov23-firstpaint-mac-browser/
+            app/.local/mac-body-browser.build.json
+          include-hidden-files: true
+          if-no-files-found: warn

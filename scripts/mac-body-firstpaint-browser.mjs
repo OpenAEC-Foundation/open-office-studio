@@ -8,15 +8,15 @@ import { pathToFileURL } from "node:url";
 const dependencyRoot = resolve(process.env.OOS_DIAGNOSTIC_DEPENDENCIES);
 const appRoot = resolve(process.env.OOS_DIAGNOSTIC_APP);
 const require = createRequire(join(dependencyRoot, "package.json"));
-const { chromium } = require("playwright");
+const { chromium, webkit } = require("playwright");
 const { preview } = await import(pathToFileURL(require.resolve("vite")));
 const out = resolve(process.argv[2]);
 await mkdir(out, { recursive: false });
 const sha = value => createHash("sha256").update(value).digest("hex");
-const receiptPath = join(appRoot, ".local/nov20-I3-normal.build.json");
+const receiptPath = join(appRoot, process.env.OOS_DIAGNOSTIC_RECEIPT ?? ".local/nov20-I3-normal.build.json");
 const receiptBytes = await readFile(receiptPath), receipt = JSON.parse(receiptBytes);
-assert.equal(receipt.source, "7f126f4b8e5269a54388cf78c48c78d2acc0daa1");
-assert.equal(receipt.tree, "8bc608488760e48919d7fb4e72a42569175b52a4");
+assert.equal(receipt.source, process.env.OOS_DIAGNOSTIC_SOURCE ?? "7f126f4b8e5269a54388cf78c48c78d2acc0daa1");
+assert.equal(receipt.tree, process.env.OOS_DIAGNOSTIC_TREE ?? "8bc608488760e48919d7fb4e72a42569175b52a4");
 for (const [name, expected] of Object.entries(receipt.files))
   assert.equal(sha(await readFile(join(appRoot, receipt.outDir, name))), expected, name);
 const report = { diagnosticOnly: true, nativePass: false, source: receipt.source,
@@ -25,10 +25,15 @@ const report = { diagnosticOnly: true, nativePass: false, source: receipt.source
 let server, browser;
 try {
   server = await preview({ configFile: false, base: "/", build: { outDir: join(appRoot, receipt.outDir) }, preview: { host: "127.0.0.1", port: 0 } });
-  browser = await chromium.launch({ headless: true });
-  for (const [name, fixture] of [["original361", "docs/tests/2026-11-20-mac-native-body-diagnostic/44750058759-activation-observed/mac-body-diagnostic/writer361-macos-table.docx"], ["saved356", "scripts/proeven/mac-body-positive-356.docx"]]) {
+  const matrix = process.env.OOS_DIAGNOSTIC_BROWSER_MATRIX === "1";
+  if (matrix) assert.equal(process.platform,"darwin");
+  const plans = matrix ? [{name:"chromium-default",engine:chromium,query:""},{name:"webkit-default",engine:webkit,query:""},{name:"webkit-dom-replay",engine:webkit,query:"?offscreenReplay=0"}] : [{name:"chromium-default",engine:chromium,query:""}];
+  for (const plan of plans) {
+  browser = await plan.engine.launch({ headless: true });
+  for (const [fixtureName, fixture] of [["original361", "docs/tests/2026-11-20-mac-native-body-diagnostic/44750058759-activation-observed/mac-body-diagnostic/writer361-macos-table.docx"], ["saved356", "scripts/proeven/mac-body-positive-356.docx"]]) {
+    const name = matrix ? plan.name+"-"+fixtureName : fixtureName;
     const bytes = await readFile(new URL("../" + fixture, import.meta.url));
-    const record = { name, fixtureSha256: sha(bytes), errors: [], console: [], failedRequests: [], responses: [] };
+    const record = { name, browserVersion:browser.version(), browserPlan:plan.name, query:plan.query, fixtureSha256: sha(bytes), errors: [], console: [], failedRequests: [], responses: [] };
     report.fixtures.push(record);
     const context = await browser.newContext({ viewport: { width: 1440, height: 950 } });
     await context.addInitScript(() => localStorage.setItem("openaec-office-instellingen", JSON.stringify({ taal: "en", thema: "forge", spelling: { controleren: false, autocorrectie: false } })));
@@ -37,7 +42,7 @@ try {
     page.on("console", m => record.console.push({ type: m.type(), text: m.text().slice(0, 3000) }));
     page.on("requestfailed", r => record.failedRequests.push({ url: r.url(), failure: r.failure() }));
     page.on("response", r => { if (/font|\.ttf|\.woff|\.wasm/.test(r.url())) record.responses.push({ url: r.url(), status: r.status() }); });
-    await page.goto(server.resolvedUrls.local[0]);
+    await page.goto(server.resolvedUrls.local[0]+plan.query);
     await page.locator("input[type=file]").first().setInputFiles({ name: name + ".docx", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", buffer: bytes });
     const canvas = page.locator(".canvas-page canvas").first();
     await canvas.waitFor({ timeout: 60_000 });
@@ -69,6 +74,8 @@ try {
     await page.waitForTimeout(5000);
     await page.screenshot({ path: join(out, name + "-after-readonly-inspection.png") });
     await context.close();
+  }
+  await browser.close();
   }
   report.completed = true;
 } finally {
