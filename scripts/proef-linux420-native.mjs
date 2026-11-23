@@ -908,10 +908,12 @@ try {
   report.preflight =
     "passed real pointer/focus/Ctrl/edit/save/full-exit/reopen; broad controls released";
   assert.ok(
-    [undefined, "ribbon"].includes(process.env.OFFICE_LINUX420_SCOPE),
+    [undefined, "ribbon", "keyboard-command"].includes(
+      process.env.OFFICE_LINUX420_SCOPE,
+    ),
     "Unknown native probe scope",
   );
-  if (process.env.OFFICE_LINUX420_SCOPE !== "ribbon") {
+  if (process.env.OFFICE_LINUX420_SCOPE === undefined) {
     await scoped("368-Find-what", async () => {
       await exerciseField(a, "Find what");
       await exec(application, [b], { env, timeout: 15_000 });
@@ -967,92 +969,166 @@ try {
       : "failed required scope; positive individual input checks remain separately recorded";
   } else {
     report.issue368 =
-      "not repeated in ribbon-only run; independent acceptance remains in run45143046662";
+      "not repeated in scoped run; independent acceptance remains in run45143046662";
   }
-  await scoped("369-ribbon", async () => {
-    const ribbonBytes = await readFile(
-      join(here, "../tests/fixtures/linux420/ribbon-control.docx"),
-    );
-    assert.equal(
-      hash(ribbonBytes),
-      "ba26f890485dcee41cbfdf694969014ae7b9951b34cbbbc01bc820a15491b3f9",
-    );
-    const ribbonPath = join(out, "ribbon-control.docx");
-    await writeFile(ribbonPath, ribbonBytes);
-    const ribbonCells = ["Alpha", "Beta", "Gamma", "One", "Two", "Three"];
-    const ribbonSession = await startDocument(ribbonPath, ribbonCells, 3, 2);
-    const ribbon = await runWriter362NativeProbe({
-      endpoint: `http://127.0.0.1:${driverPort}`,
-      sessionId: session,
-      outDir: join(out, "ribbon"),
-      source: {
-        commit: identity.sourceCommit,
-        tree: identity.sourceTree,
-        packageSha256: identity.packageSha256,
-        executableSha256: identity.executableSha256,
-        pid: ribbonSession.pid,
-      },
-      fixture: {
-        path: ribbonPath,
-        sha256: hash(ribbonBytes),
-        protectedDocument: false,
-      },
-      ownedProfile: true,
-      inputBackend: "x11-xtest",
-      keyboardEntry: "arrow-down",
-      capture,
-      signal: AbortSignal.timeout(600_000),
+  if (process.env.OFFICE_LINUX420_SCOPE === "keyboard-command") {
+    await scoped("369-keyboard-command", async () => {
+      const original = await startDocument(a);
+      await canvasFocus();
+      await clickTab("Table Design");
+      const pointer = await evaluate(writer362DocumentFocus);
+      assert.equal(pointer.activeElement.role, "tab");
+      assert.equal(pointer.activeElement.focusVisible, false);
+      await nativeKey("Down");
+      const navigation = [];
+      for (let step = 0; step < 20; step++) {
+        const focus = await evaluate(() => {
+          const e = document.activeElement,
+            s = getComputedStyle(e);
+          return {
+            name: e?.getAttribute("aria-label"),
+            tag: e?.tagName,
+            focusVisible: e?.matches(":focus-visible"),
+            ring: parseFloat(s.outlineWidth) + parseFloat(s.outlineOffset),
+          };
+        });
+        navigation.push(focus);
+        assert.equal(focus.tag, "BUTTON");
+        assert.equal(focus.focusVisible, true);
+        assert.equal(focus.ring, 4);
+        if (focus.name === "Insert Column Right") break;
+        await nativeKey("Right");
+      }
+      assert.equal(
+        navigation.at(-1).name,
+        "Insert Column Right",
+        "Bounded native keyboard route reaches command",
+      );
+      report.checks.push({
+        label: "real pointer Down Right keyboard command focus",
+        phase,
+        pointer,
+        navigation,
+      });
+      await capture(join(out, "keyboard-command-focus.png"));
+      await nativeKey("Return");
+      await grid("keyboard Enter executes one column command", inserted, 4);
+      await waitFor(
+        () =>
+          evaluate(() =>
+            document.activeElement?.matches(".paged-editor__yrs-input"),
+          ),
+        "Keyboard command restores real document input",
+      );
+      await type("K");
+      const finalCells = ["Kalpha", ...inserted.slice(1)];
+      await grid(
+        "typing follows keyboard command into real document",
+        finalCells,
+        4,
+      );
+      const saved = await save(a, finalCells, 4);
+      await closeDocument();
+      const reopened = await startDocument(a, finalCells, 4);
+      assert.notEqual(reopened.pid, original.pid);
+      assert.equal(hash(await readFile(a)), saved);
+      await grid(
+        "keyboard command saved and reopened in fresh process",
+        finalCells,
+        4,
+      );
+      await capture(join(out, "keyboard-command-reopened.png"));
+      report.issue369 =
+        "passed supplementary native keyboard command Enter, document input return, typing and save/full-exit/reopen; matrix remains separately bound to run45143888379";
     });
-    report.ribbonSummary = {
-      status: ribbon.status,
-      nativePass: ribbon.nativePass,
-      cases: ribbon.cases.length,
-      groupCases: ribbon.groupButtonCases.length,
-      toolbarNavigation: ribbon.toolbarNavigation.length,
-      unavailable: ribbon.unavailable,
-    };
-    assert.ok(ribbon.status !== "failed" && ribbon.status !== "cleanup-failed");
-    assert.equal(
-      ribbon.keyboardEntries.length,
-      24,
-      "Every required group/theme/width keyboard route executed",
-    );
-    assert.equal(
-      ribbon.toolbarNavigation.length,
-      36,
-      "Home/End controls executed for every tab/theme/width",
-    );
-    for (const theme of ["light", "forge"])
-      for (const width of [923, 800])
-        for (const phase of [
-          "keyboard-group-focus",
-          "keyboard-group-after-escape",
-        ]) {
-          const required = ribbon.groupButtonCases.find(
-            (c) =>
-              c.theme === theme &&
-              c.requestedWidth === width &&
-              c.group === "Delete" &&
-              c.phase === phase,
-          );
-          assert.ok(
-            required,
-            `Required native ${width}px Delete ${theme}/${phase}`,
-          );
-          assert.equal(required.focusVisible, true);
-          assert.equal(required.ring, 4);
-          assert.equal(required.clippedY, false);
-        }
-    report.issue369 =
-      "passed tested Linux ArrowDown/Right/Home/End and required narrow Delete Enter/Escape focus/vertical outline controls";
-    await closeDocument();
-  });
+  } else {
+    await scoped("369-ribbon", async () => {
+      const ribbonBytes = await readFile(
+        join(here, "../tests/fixtures/linux420/ribbon-control.docx"),
+      );
+      assert.equal(
+        hash(ribbonBytes),
+        "ba26f890485dcee41cbfdf694969014ae7b9951b34cbbbc01bc820a15491b3f9",
+      );
+      const ribbonPath = join(out, "ribbon-control.docx");
+      await writeFile(ribbonPath, ribbonBytes);
+      const ribbonCells = ["Alpha", "Beta", "Gamma", "One", "Two", "Three"];
+      const ribbonSession = await startDocument(ribbonPath, ribbonCells, 3, 2);
+      const ribbon = await runWriter362NativeProbe({
+        endpoint: `http://127.0.0.1:${driverPort}`,
+        sessionId: session,
+        outDir: join(out, "ribbon"),
+        source: {
+          commit: identity.sourceCommit,
+          tree: identity.sourceTree,
+          packageSha256: identity.packageSha256,
+          executableSha256: identity.executableSha256,
+          pid: ribbonSession.pid,
+        },
+        fixture: {
+          path: ribbonPath,
+          sha256: hash(ribbonBytes),
+          protectedDocument: false,
+        },
+        ownedProfile: true,
+        inputBackend: "x11-xtest",
+        keyboardEntry: "arrow-down",
+        capture,
+        signal: AbortSignal.timeout(600_000),
+      });
+      report.ribbonSummary = {
+        status: ribbon.status,
+        nativePass: ribbon.nativePass,
+        cases: ribbon.cases.length,
+        groupCases: ribbon.groupButtonCases.length,
+        toolbarNavigation: ribbon.toolbarNavigation.length,
+        unavailable: ribbon.unavailable,
+      };
+      assert.ok(
+        ribbon.status !== "failed" && ribbon.status !== "cleanup-failed",
+      );
+      assert.equal(
+        ribbon.keyboardEntries.length,
+        24,
+        "Every required group/theme/width keyboard route executed",
+      );
+      assert.equal(
+        ribbon.toolbarNavigation.length,
+        36,
+        "Home/End controls executed for every tab/theme/width",
+      );
+      for (const theme of ["light", "forge"])
+        for (const width of [923, 800])
+          for (const phase of [
+            "keyboard-group-focus",
+            "keyboard-group-after-escape",
+          ]) {
+            const required = ribbon.groupButtonCases.find(
+              (c) =>
+                c.theme === theme &&
+                c.requestedWidth === width &&
+                c.group === "Delete" &&
+                c.phase === phase,
+            );
+            assert.ok(
+              required,
+              `Required native ${width}px Delete ${theme}/${phase}`,
+            );
+            assert.equal(required.focusVisible, true);
+            assert.equal(required.ring, 4);
+            assert.equal(required.clippedY, false);
+          }
+      report.issue369 =
+        "passed tested Linux ArrowDown/Right/Home/End and required narrow Delete Enter/Escape focus/vertical outline controls";
+      await closeDocument();
+    });
+  }
   report.issue369 ??= "failed or unavailable required native ribbon scope";
   report.status = Object.values(report.scopes).some(
     (s) => s.status !== "passed",
   )
     ? "failed"
-    : report.ribbonSummary.status === "passed"
+    : !report.ribbonSummary || report.ribbonSummary.status === "passed"
       ? "passed"
       : "passed tested native scopes; wider ribbon state matrix partial";
 } catch (error) {

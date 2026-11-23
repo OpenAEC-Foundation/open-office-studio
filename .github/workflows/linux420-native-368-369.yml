@@ -67,8 +67,8 @@ jobs:
         run: /usr/bin/python3 .local/linux420-harness/scripts/linux420-native-package.py
       - name: Real preflight then scoped Find and keyboard ribbon combination
         env:
-          # Find/Replace acceptance is retained in run45143046662; only missing ribbon scope.
-          OFFICE_LINUX420_SCOPE: ribbon
+          # Retain completed Find/Replace and matrix evidence; only the missing command-return route.
+          OFFICE_LINUX420_SCOPE: keyboard-command
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
           LIBGL_ALWAYS_SOFTWARE: "1"
         # Keep the same display alive across full application quits. Xvfb's default
