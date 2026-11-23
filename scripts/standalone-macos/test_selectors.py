@@ -16,7 +16,7 @@ def button(index,parent,y,**attrs):
 
 class FakeSession:
     def __init__(self,snapshot):self.snapshot=snapshot;self.actions=[];self.report={}
-    def ax(self,action,spec=None):
+    def ax(self,action,spec=None,check=True):
         if action=="snapshot":return self.snapshot
         self.actions.append((action,spec));return {"status":"input-sent"}
 
@@ -25,7 +25,7 @@ class SelectorTests(unittest.TestCase):
     def test_readonly_readiness_poll_sends_only_one_native_press(self):
         class Delayed(FakeSession):
             def __init__(self):super().__init__({"rawNodes":[button(0,-1,300)]});self.reads=0
-            def ax(self,action,spec=None):
+            def ax(self,action,spec=None,check=True):
                 if action=="snapshot":
                     self.reads+=1
                     return {"rawNodes":[]} if self.reads==1 else self.snapshot
@@ -47,6 +47,22 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(len(s.actions),1)
         self.assertEqual(s.actions[0][1]["frame"]["y"],300)
 
+    def test_toolbar_scope_distinguishes_quick_access_from_ribbon_duplicate(self):
+        s=FakeSession({"rawNodes":[row(0,-1,AXRole="AXToolbar",AXTitle="Quick access"),button(1,0,35),
+            row(2,-1,AXRole="AXToolbar",AXTitle="Save"),button(3,2,100)]})
+        Case(s,"fixture").button("Save",toolbar="Save")
+        self.assertEqual(len(s.actions),1);self.assertEqual(s.actions[0][1]["frame"]["y"],100)
+
+    def test_transient_native_panel_window_is_polled_without_any_input(self):
+        class Opening(FakeSession):
+            def __init__(self):super().__init__({"status":"observed","rawNodes":[]});self.reads=0
+            def ax(self,action,spec=None,check=True):
+                self.reads+=1
+                return {"status":"blocked","reason":"Owned native windows unavailable"} if self.reads==1 else self.snapshot
+        s=Opening();s.process=type('Process',(),{'poll':lambda self:None})()
+        with patch("cases.time.sleep"):self.assertEqual(Case(s,"fixture").snapshot()["status"],"observed")
+        self.assertEqual(s.reads,2);self.assertEqual(s.actions,[])
+
     def test_missing_focus_or_wrong_field_value_prevents_replace(self):
         for focused in ({"AXRole":"AXButton"},{"AXRole":"AXTextArea","AXValue":"other document"}):
             s=FakeSession({"focused":focused})
@@ -65,7 +81,7 @@ class SelectorTests(unittest.TestCase):
         popup=row(0,-1,AXRole="AXPopUpButton",AXTitle="Choose notebook",AXValue="Other book",
                   AXEnabled=True,frame={"x":20,"y":300,"width":200,"height":30},actions=["AXPress"])
         s=FakeSession({"rawNodes":[popup]})
-        with patch("cases.time.sleep"),patch("cases.time.monotonic",side_effect=[0,0,5]):
+        with patch("cases.time.sleep"),patch("cases.time.monotonic",side_effect=[0,0,0,5]):
             with self.assertRaises(Unavailable):Case(s,"fixture").notes_notebook()
         self.assertFalse(any(a[0]=="type" for a in s.actions))
 

@@ -106,6 +106,15 @@ class Session:
         self.report["freshProfileVerified"]=True
         self.write("profile-preflight.json",{"checkedAbsent":[str(p) for p in paths],"seededPreferencesOnly":str(config/"voorkeuren.json")})
 
+    def prepare_display(self):
+        if self.process is not None:raise Unavailable("Display preparation must precede any own app launch")
+        result=command([self.helper,"prepare-display"],timeout=15)
+        self.write("host-display-command.json",result)
+        if result["code"]:raise Unavailable("Disposable native host display preparation unavailable")
+        value=json.loads(result["stdout"])
+        if value.get("applicationLaunched") is not False:raise Unavailable("Unexpected display preparation scope")
+        self.report["hostDisplayPreparation"]=value
+
     def start(self,document=None):
         if self.process is not None and self.process.poll() is None:raise Unavailable("Own previous app is still running")
         argv=[str(self.exe)]+([str(document)] if document else [])
@@ -156,7 +165,12 @@ class Session:
                     if cwd["code"] or paths!=[str(self.cwd)]:raise Unavailable("Actual owned process CWD differs or is unavailable")
                     self.report["ownCwdEnvironmentVerified"]=True
                     self.guard_suite_namespace()
-                    self.capture("opened");return last
+                    self.capture("opened-untouched")
+                    # Native Maximize is the accepted viewport fallback. No AX
+                    # geometry setter, body input or font/tab paint primer.
+                    from cases import Case
+                    Case(self,self.root).fit_viewport()
+                    self.capture("opened");return self.ax("snapshot")
             except (json.JSONDecodeError,subprocess.TimeoutExpired):pass
             time.sleep(1)
         raise Unavailable("Native owned window unavailable: "+str(last and last.get("reason")))
@@ -164,7 +178,7 @@ class Session:
     def ax(self,action,spec=None,check=True):
         argv=[self.helper,str(self.process.pid),action]
         if spec is not None:argv.append(json.dumps(spec,separators=(",",":")) if isinstance(spec,dict) else str(spec))
-        result=command(argv,timeout=18);self.sequence+=1
+        result=command(argv,timeout=25);self.sequence+=1
         try:value=json.loads(result["stdout"])
         except json.JSONDecodeError:
             self.write("ax-"+str(self.sequence)+"-error.json",result);raise Unavailable("Native helper did not return structured evidence")

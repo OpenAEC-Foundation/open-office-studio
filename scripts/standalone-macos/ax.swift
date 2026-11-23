@@ -12,9 +12,38 @@ func finish(_ code: Int32 = 0) -> Never {
     let data = try! JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
     print(String(data: data, encoding: .utf8)!); exit(code)
 }
-if arguments.count == 2 && arguments[1] == "capabilities" {
+func displayBounds() -> [String:CGFloat] {
+    let r=CGDisplayBounds(CGMainDisplayID())
+    return ["X":r.minX,"Y":r.minY,"Width":r.width,"Height":r.height]
+}
+let displayModes=CGDisplayCopyAllDisplayModes(CGMainDisplayID(),nil) as? [CGDisplayMode] ?? []
+if arguments.count == 2 && ["capabilities","prepare-display"].contains(arguments[1]) {
     report["status"] = "observed"; report["applicationLaunched"] = false
     report["guiSession"] = CGSessionCopyCurrentDictionary() as? [String: Any] ?? [:]
+    report["mainDisplayBefore"]=displayBounds()
+    report["availableDisplayModes"]=displayModes.map {["width":$0.width,"height":$0.height,"pixelWidth":$0.pixelWidth,"pixelHeight":$0.pixelHeight]}
+    if arguments[1]=="prepare-display" {
+        guard ProcessInfo.processInfo.environment["GITHUB_ACTIONS"]=="true",
+              let own=ProcessInfo.processInfo.environment["OWN_APP"],
+              ["writer","spreadsheet","presentation","email","notition","database"].contains(own) else {
+            report["reason"]="Only the approved disposable own-app CI host may prepare its display";finish(3)
+        }
+        let candidates=displayModes.filter {$0.width>=1600 && $0.height>=1050 && $0.width<=2560 && $0.height<=1600}
+            .sorted {a,b in
+                let ap=a.width==1920 && a.height==1080,bp=b.width==1920 && b.height==1080
+                if ap != bp {return ap}
+                if a.width*a.height != b.width*b.height {return a.width*a.height < b.width*b.height}
+                return a.pixelWidth*a.pixelHeight < b.pixelWidth*b.pixelHeight
+            }
+        if let chosen=candidates.first {
+            report["selectedDisplayMode"]=["width":chosen.width,"height":chosen.height,"pixelWidth":chosen.pixelWidth,"pixelHeight":chosen.pixelHeight]
+            let error=CGDisplaySetDisplayMode(CGMainDisplayID(),chosen,nil)
+            report["displayConfigurationError"]=error.rawValue
+            Thread.sleep(forTimeInterval:0.3)
+        } else {report["displayConfigurationUnavailable"]=true}
+        report["mainDisplayAfter"]=displayBounds()
+        report["scope"]="Disposable host display before application launch; no app/model/window-size/privacy setters"
+    }
     finish()
 }
 guard arguments.count >= 3, let pid = Int32(arguments[1]), pid > 0,
@@ -31,7 +60,7 @@ let display=CGDisplayBounds(CGMainDisplayID())
 report["mainDisplay"]=["X":display.minX,"Y":display.minY,"Width":display.width,"Height":display.height]
 let app = AXUIElementCreateApplication(pid)
 AXUIElementSetMessagingTimeout(app, 0.3)
-let deadline = Date().addingTimeInterval(10)
+let deadline = Date().addingTimeInterval(15)
 func attr(_ e: AXUIElement, _ name: String) -> CFTypeRef? {
     guard Date() < deadline else { return nil }
     var value: CFTypeRef?
@@ -97,22 +126,35 @@ report["ownedScreenWindows"]=screenWindows.filter {($0[kCGWindowOwnerPID as Stri
 guard let windows=attr(app,kAXWindowsAttribute) as? [AXUIElement], !windows.isEmpty else {
     report["reason"]="Owned native windows unavailable";finish(3)
 }
-var queue=windows.map {($0,0,-1)};var index=0;var nodes:[[String: Any]]=[]
-while index<queue.count && index<2200 && Date()<deadline {
+let traversalLimit=12000
+var queue:[(AXUIElement,Int,Int)]=[];var index=0;var nodes:[[String: Any]]=[]
+var seen:[CFHashCode:[AXUIElement]]=[:];var duplicateReferences=0
+func enqueue(_ e:AXUIElement,_ depth:Int,_ parent:Int) {
+    let hash=CFHash(e)
+    if seen[hash,default:[]].contains(where:{CFEqual($0,e)}) {duplicateReferences+=1;return}
+    seen[hash,default:[]].append(e);queue.append((e,depth,parent))
+}
+for w in windows {enqueue(w,0,-1)}
+while index<queue.count && index<traversalLimit && Date()<deadline {
     let (e,depth,parent)=queue[index]
     nodes.append(["index":index,"parent":parent,"depth":depth,"attributes":record(e)])
     if depth<30, let children=attr(e,kAXChildrenAttribute) as? [AXUIElement] {
         if children.count>160 {report["childrenTruncated"]=true}
-        queue.append(contentsOf:children.prefix(160).map {($0,depth+1,index)})
+        for child in children.prefix(160) {enqueue(child,depth+1,index)}
+    } else if depth>=30,let children=attr(e,kAXChildrenAttribute) as? [AXUIElement],!children.isEmpty {
+        report["depthTruncated"]=true
     }
     index+=1
 }
-report["rawNodes"]=nodes;report["bounded"]=index>=2200 || Date()>=deadline
+report["rawNodes"]=nodes;report["bounded"]=index<traversalLimit ? index<queue.count || Date()>=deadline : true
+report["traversalLimit"]=traversalLimit;report["traversalQueueCount"]=queue.count
+report["duplicateNativeReferencesSkipped"]=duplicateReferences
 if let focused=attr(app,kAXFocusedUIElementAttribute),CFGetTypeID(focused)==AXUIElementGetTypeID() {
     report["focused"]=record(focused as! AXUIElement)
 }
 if action=="snapshot" {report["status"]="observed";finish()}
-guard report["bounded"] as? Bool == false, report["childrenTruncated"] as? Bool != true else {
+guard report["bounded"] as? Bool == false, report["childrenTruncated"] as? Bool != true,
+      report["depthTruncated"] as? Bool != true else {
     report["reason"]="Native tree was truncated; uniqueness cannot be established";finish(3)
 }
 guard CGPreflightPostEventAccess() else {report["reason"]="Native event posting unavailable";finish(3)}

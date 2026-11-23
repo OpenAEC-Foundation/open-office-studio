@@ -25,10 +25,20 @@ def is_dialog(node):
 class Case:
     def __init__(self,session,fixture):self.s=session;self.fixture=Path(fixture)
 
-    def select(self,roles,labels=(),*,contains=None,action="click",dialog=False):
-        deadline=time.monotonic()+4
+    def snapshot(self):
+        deadline=time.monotonic()+10
         while True:
-            matches=self.candidates(roles,labels,contains,action,dialog)
+            value=self.s.ax("snapshot",check=False)
+            if value.get("status", "observed")=="observed":return value
+            if value.get("reason")!="Owned native windows unavailable" or time.monotonic()>=deadline:
+                raise Unavailable(value.get("reason","Native window snapshot unavailable"))
+            if self.s.process.poll() is not None:raise Unavailable("Own process exited while native dialog was opening")
+            time.sleep(0.2)  # Native panels briefly replace AXWindows while opening.
+
+    def select(self,roles,labels=(),*,contains=None,action="click",dialog=False,toolbar=None):
+        deadline=time.monotonic()+45
+        while True:
+            matches=self.candidates(roles,labels,contains,action,dialog,toolbar)
             if len(matches)==1:break
             if len(matches)>1 or time.monotonic()>=deadline:
                 raise Unavailable("Native selector ambiguous/unavailable: "+str((roles,labels,contains,len(matches))))
@@ -36,8 +46,8 @@ class Case:
         self.s.ax(action,matches[0]);time.sleep(0.3)
         return matches[0]
 
-    def candidates(self,roles,labels,contains,action,dialog):
-        snapshot=self.s.ax("snapshot");matches=[]
+    def candidates(self,roles,labels,contains,action,dialog,toolbar=None):
+        snapshot=self.snapshot();matches=[]
         rows={n["index"]:n for n in snapshot.get("rawNodes",[])}
         for row in rows.values():
             node=row["attributes"]
@@ -52,18 +62,26 @@ class Case:
                         dialog_found=True;break
                     ancestor=rows.get(ancestor["parent"])
                 if not dialog_found:continue
+            if toolbar:
+                ancestor=rows.get(row["parent"]);found=False
+                while ancestor:
+                    a=ancestor["attributes"]
+                    if a.get("AXRole")=="AXToolbar" and toolbar in (a.get("AXTitle"),a.get("AXDescription")):
+                        found=True;break
+                    ancestor=rows.get(ancestor["parent"])
+                if not found:continue
             for field in ("AXDescription","AXTitle","AXIdentifier","AXValue"):
                 value=node.get(field)
                 if isinstance(value,str) and ((labels and value in labels) or (contains and contains in value)):
                     matches.append({"role":node["AXRole"],"field":field,"value":value,"frame":node["frame"]});break
         return matches
 
-    def button(self,*labels,dialog=False):return self.select(["AXButton"],labels,action="press",dialog=dialog)
+    def button(self,*labels,dialog=False,toolbar=None):return self.select(["AXButton"],labels,action="press",dialog=dialog,toolbar=toolbar)
 
     def tab(self,label):return self.select(["AXRadioButton","AXTab"],[label],action="press")
 
     def focus(self,expected=None):
-        snap=self.s.ax("snapshot");focused=snap.get("focused",{})
+        snap=self.snapshot();focused=snap.get("focused",{})
         if focused.get("AXRole") not in ("AXTextField","AXTextArea","AXComboBox"):
             raise Unavailable("Actual owned editable text focus not proven")
         if expected and not any(expected in str(focused.get(f,"")) for f in ("AXValue","AXTitle","AXDescription")):
@@ -80,9 +98,9 @@ class Case:
     def file_dialog(self,path,*,save=False):
         path=Path(path).resolve()
         # Go To Folder is native. Never assign HTML input/model/backend values.
-        deadline=time.monotonic()+4
+        deadline=time.monotonic()+45
         while True:
-            snapshot=self.s.ax("snapshot")
+            snapshot=self.snapshot()
             if any(n.get("AXRole")=="AXSheet" or (n.get("AXRole")=="AXWindow" and "Dialog" in n.get("AXSubrole",""))
                    for n in attributes(snapshot)):break
             if time.monotonic()>=deadline:raise Unavailable("Expected native file dialog is not present")
@@ -94,6 +112,32 @@ class Case:
             self.replace(path.name);self.button("Save",dialog=True)
         else:self.button("Open",dialog=True)
         time.sleep(0.8)
+
+    def fit_viewport(self):
+        def fitted(snapshot):
+            windows=[w for w in snapshot.get("ownedScreenWindows",[]) if w.get("kCGWindowLayer")==0]
+            if len(windows)!=1:raise Unavailable("One own main window required before viewport setup")
+            b=windows[0].get("kCGWindowBounds",{});d=snapshot.get("mainDisplay",{})
+            return (b.get("X",-1)>=d.get("X",0) and b.get("Y",-1)>=d.get("Y",0)
+                    and b.get("X",0)+b.get("Width",0)<=d.get("X",0)+d.get("Width",0)
+                    and b.get("Y",0)+b.get("Height",0)<=d.get("Y",0)+d.get("Height",0)
+                    and b.get("Width",0)>=800 and b.get("Height",0)>=600)
+        before=self.snapshot()
+        record={"pid":self.s.process.pid,"before":before.get("ownedScreenWindows"),
+                "mainDisplay":before.get("mainDisplay"),"nativeMaximizeActionsSent":0,
+                "scope":"Own disposable native viewport only; not a paint repair or body input"}
+        self.s.report.setdefault("viewportPreflights",[]).append(record)
+        if fitted(before):record["fitted"]=True;return
+        self.button("Maximize");record["nativeMaximizeActionsSent"]=1
+        deadline=time.monotonic()+15
+        while True:
+            after=self.snapshot()
+            restore=[n for n in attributes(after) if n.get("AXRole")=="AXButton"
+                     and "Restore down" in (n.get("AXTitle"),n.get("AXDescription"))]
+            if fitted(after) and len(restore)==1:
+                record.update(fitted=True,after=after.get("ownedScreenWindows"));return
+            if time.monotonic()>=deadline:raise Unavailable("Native Maximize did not establish a fully on-screen viewport")
+            time.sleep(0.2)
 
     def save_office(self):
         before=self.fixture.stat().st_mtime_ns
@@ -211,13 +255,13 @@ class Case:
             time.sleep(0.2)
 
     def notition(self):
-        self.tab("Save");self.button("Add backup");self.file_dialog(self.fixture)
+        self.tab("Save");self.button("Add backup",toolbar="Save");self.file_dialog(self.fixture)
         self.notes_notebook()
         self.select(["AXTextField"],["Page title"]);self.replace("Standalone edited page",expected="Standalone page")
         self.select(["AXTextArea"],["Markdown text"]);self.append("\n"+MARKERS["notition"],SEEDS["notition"])
-        self.tab("Save");self.button("Save now");time.sleep(0.6)
+        self.tab("Save");self.button("Save now",toolbar="Save");time.sleep(0.6)
         export=self.s.root/"notes-export.openaec-notities"
-        self.button("Save backup");self.file_dialog(export,save=True)
+        self.button("Save backup",toolbar="Save");self.file_dialog(export,save=True)
         result=verify("notition",export)
         if result["page"]["titel"]!="Standalone edited page":raise Unavailable("Native page title did not survive export")
         self.s.write("output-oracle.json",result);self.s.report.update(nativeSaveVerified=True,outputOraclePassed=True)
@@ -266,14 +310,26 @@ class Case:
 
     def email(self,server):
         # Own fake account is entered through the real wizard, never backend injection.
-        self.button("Add account")
-        checkbox=[n for n in attributes(self.s.ax("snapshot")) if n.get("AXRole")=="AXCheckBox"
-                  and n.get("AXDescription",n.get("AXTitle"))=="Also consult the Thunderbird database"]
+        # The verified fresh profile opens this dialog automatically.
+        deadline=time.monotonic()+45
+        while True:
+            dialogs=[n for n in attributes(self.snapshot()) if is_dialog(n)
+                     and "Add account" in (n.get("AXTitle"),n.get("AXDescription"))]
+            if len(dialogs)==1:break
+            if len(dialogs)>1 or time.monotonic()>=deadline:raise Unavailable("One actual fresh-account wizard not established")
+            time.sleep(0.2)
+        checkbox_labels=("Also consult the Thunderbird database",
+                         "Also consult the Thunderbird database The domain name (not your address or password) is then sent to Mozilla.")
+        checkbox=[n for n in attributes(self.snapshot()) if n.get("AXRole")=="AXCheckBox"
+                  and any(n.get(f) in checkbox_labels for f in ("AXDescription","AXTitle"))]
         if len(checkbox)!=1:raise Unavailable("ISPDB checkbox state cannot be identified before synthetic account entry")
         if str(checkbox[0].get("AXValue")) in ("1","True","true"):
-            self.select(["AXCheckBox"],["Also consult the Thunderbird database"],action="press")
-        for label,value in (("Your full name","Standalone QA"),("Email address",USER),("Password",PASSWORD)):
-            self.select(["AXTextField"],[label]);self.replace(value)
+            self.select(["AXCheckBox"],checkbox_labels,action="press")
+        fields=((('Your full name','Your full name How recipients see your name.'),'Standalone QA'),
+                (('Email address',),USER),
+                (('Password',"Password Only used when you choose Test or Done, and stored only in your operating system's keychain."),PASSWORD))
+        for labels,value in fields:
+            self.select(["AXTextField"],labels);self.replace(value)
         # Wait for the genuine wizard to render manual server fields after .invalid discovery.
         deadline=time.monotonic()+20
         while True:
