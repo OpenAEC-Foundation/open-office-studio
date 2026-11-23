@@ -1,0 +1,26 @@
+{
+  "purpose": "Read-only open and closed descriptions for existing coverage and duplicate context; no new issue or status change",
+  "issues": [
+    {
+      "body": "## Goal\n\nUsers install only Open Office Studio and can then open and save all common office files.\n\n## Current behavior\n\nOnly DOCX, XLSX, and PPTX work directly. ODF, legacy binary formats, and PDF export require a separately installed conversion program through `OPENAEC_CONVERSIE_PROGRAMMA` (see `docs/formaten.md`).\n\n## Expected behavior\n\n- [ ] Investigate approach A: bundle an open-source conversion runtime (sidecar or WASM). Measure installation size, startup time, conversion time, and memory; licensing obligations; signing and notarization of bundled binaries; disable macros during conversion.\n- [ ] Investigate approach B: implement importers and exporters per format (for example ODF directly to the internal model).\n- [ ] Investigate approach C: combine approaches, such as native ODF/PDF support with a runtime only for legacy binary formats, potentially as an optional download.\n- [ ] Record the decision and measurements in `docs/ontwerp`.\n- [ ] The standard installation opens every format in `src/formaten.json` without additional installations or environment variables.\n- [ ] Browser version: the same coverage, or a clearly documented limitation.\n\n## Related\n\n- ODF follow-up: #6.\n- Per format: #31, #32, #33, #34, #35, #36; PDF: #37.\n- Part of roadmap #12.\n",
+      "number": 30,
+      "state": "OPEN",
+      "title": "Formats: open all supported formats without a separately installed conversion program",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/30"
+    },
+    {
+      "body": "## Goal\n\nOpen less common files, or clearly explain why they cannot be opened.\n\n## Expected behavior\n\n- [ ] For each extension in `src/formaten.json`, record whether opening has been tested, with a sample file or an explanation of its absence.\n- [ ] Priority: WPD, WPS, WRI, LWP, PAGES, NUMBERS, KEY, HWP, WK1/WK3/WK4, DBF, and SXW/SXC/SXI.\n- [ ] Give unsupported variants a clear message with a suggested alternative.\n- [ ] Update `docs/formaten.md`.\n\n## Related\n\n- Approach: #30.\n- Part of roadmap #12.\n",
+      "number": 43,
+      "state": "CLOSED",
+      "title": "Formats: less common and legacy formats in the catalog",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/43"
+    },
+    {
+      "body": "## Goal\n\nAdd links and illustrations to worksheets.\n\n## Expected behavior\n\n- [ ] Insert hyperlinks to websites, files, sheets, or cells; HYPERLINK function.\n- [ ] Insert, move, and resize images anchored to cells.\n- [ ] Shapes and text boxes.\n- [ ] Correctly render and preserve existing objects.\n\n## Related\n\n- Part of roadmap #12.\n",
+      "number": 75,
+      "state": "OPEN",
+      "title": "Spreadsheet: links, images, and shapes in worksheets",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/75"
+    }
+  ]
+}

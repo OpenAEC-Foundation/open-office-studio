@@ -1,0 +1,1 @@
+param([string]$Root); $p=@(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($Root,[StringComparison]::OrdinalIgnoreCase) } | Select-Object ProcessId,ExecutablePath); ConvertTo-Json -InputObject $p -Compress

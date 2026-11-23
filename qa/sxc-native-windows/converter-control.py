@@ -41,10 +41,10 @@ try:
     source=out/'calcshapes.sxc';oracle.fetch(oracle.CONFIG['source']['url'],source,oracle.CONFIG['source']['sha256'])
     original=oracle.read_source(source)
     assert original==json.loads((BASE/'source-oracle-before-import.json').read_bytes())
-    # Use the exact P2 profile and catalog filter bytes, not a replacement profile.
+    # Use the pinned P2 profile XML and catalog filter, not a replacement profile.
     profile_bytes=subprocess.check_output(['git','show',oracle.CONFIG['applicationCommit']+':src-tauri/src/conversieprofiel.xcu'])
-    # Checkout CRLF normalization is not the compiled Rust include_str! bytes.
-    # Compare Git objects and write the exact P2 object, never checkout bytes.
+    # Compare Git objects and write the pinned P2 XML. Checkout line endings can
+    # differ; this does not claim extraction of the binary-embedded literal.
     assert profile_bytes==subprocess.check_output(['git','show','HEAD:src-tauri/src/conversieprofiel.xcu'])
     catalog_bytes=subprocess.check_output(['git','show',oracle.CONFIG['applicationCommit']+':src/formaten.json'])
     catalog=json.loads(catalog_bytes);entry=catalog['xlsx']['uitvoer']['xlsx']

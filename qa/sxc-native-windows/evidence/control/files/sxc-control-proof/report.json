@@ -1,0 +1,257 @@
+{
+  "kind": "supplementary-converter-control-not-native-acceptance",
+  "package": {
+    "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "desktopRun": 45143305147,
+    "artifactId": 14804672476,
+    "archiveSha256": "ecce5a188abbb5b17e52c4097d7add95ddeaaa8c24a9a4e6c492049d16902733",
+    "installer": {
+      "path": "Open Office Studio_2026.48.1_x64-setup.exe",
+      "bytes": 384512913,
+      "sha256": "85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce"
+    },
+    "executable": "open-office-studio.exe",
+    "identifier": "org.openaec.office-studio",
+    "payloadExecutable": {
+      "member": "open-office-studio.exe",
+      "bytes": 88199680,
+      "sha256": "feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67",
+      "derivation": "7-Zip extract-only stdout from whole-ZIP/report-bound NSIS before install",
+      "pe": "x64"
+    },
+    "sourceJob": 137586342967,
+    "sourceAttempt": 1,
+    "canonicalPackageReportSha256": "a1d16b139c3193e377ec2147319fd632b6b9ba8698e69f6fc84127870ccd6d9e",
+    "title": "Open Office Studio",
+    "ancillaryNotExtracted": [],
+    "scope": "Canonical suite native SXC QA; not standalone or release-signing acceptance"
+  },
+  "harness": "92f86fc5abcf9c4f2a588480d0707bc4ab4809c4",
+  "cleanup": {
+    "ownedInstallUninstalled": true,
+    "residualOwnedProcesses": [],
+    "ownedTemporaryProfileDisposed": true
+  },
+  "status": "completed-control-with-recorded-differences",
+  "baseline": {
+    "os": "Microsoft Windows NT 10.0.26100.0",
+    "session": 2,
+    "suitePaths": [],
+    "apps": [],
+    "profiles": [],
+    "interactive": true,
+    "webview2": []
+  },
+  "installer": {
+    "productName": "Open Office Studio",
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\sxc-control-package\\Open Office Studio_2026.48.1_x64-setup.exe",
+    "signer": null,
+    "signature": "NotSigned",
+    "sha256": "85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce",
+    "productVersion": "2026.48.1",
+    "fileVersion": "2026.48.1"
+  },
+  "installedExecutable": {
+    "sha256": "feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67",
+    "productVersion": "2026.48.1",
+    "signer": null,
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-sxc-control23-_88ac781\\installed\\open-office-studio.exe",
+    "fileVersion": "2026.48.1",
+    "productName": "Open Office Studio",
+    "signature": "NotSigned"
+  },
+  "converter": {
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-sxc-control23-_88ac781\\installed\\kantoorruntime\\program\\soffice.com",
+    "productName": "LibreOffice",
+    "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+    "productVersion": "26.8.2.2",
+    "fileVersion": "26.8.2.2",
+    "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+    "signature": "Valid"
+  },
+  "command": [
+    "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-sxc-control23-_88ac781\\installed\\kantoorruntime\\program\\soffice.com",
+    "-env:UserInstallation=file:///C:/Users/runneradmin/AppData/Local/Temp/oos-sxc-control23-_88ac781/profile/",
+    "--headless",
+    "--nologo",
+    "--nodefault",
+    "--norestore",
+    "--nolockcheck",
+    "--convert-to",
+    "xlsx:Calc MS Excel 2007 XML",
+    "--outdir",
+    "D:\\a\\open-office-studio\\open-office-studio\\.local\\sxc-control-proof\\converted",
+    "D:\\a\\open-office-studio\\open-office-studio\\.local\\sxc-control-proof\\calcshapes.sxc"
+  ],
+  "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+  "sourceUnchanged": true,
+  "outputSha256": "7b3410fa3b5cb0897bf6a4caf61390e65199aa5e9f5c1f95f3025c49932c1196",
+  "cellsPassed": true,
+  "preservationPassed": false,
+  "differences": [
+    {
+      "category": "vector-size-within-0.001cm",
+      "expected": {
+        "preset": "rect",
+        "sizeEmu": [
+          888840,
+          631440
+        ]
+      },
+      "observed": [
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            892080,
+            631080
+          ]
+        },
+        {
+          "preset": "ellipse",
+          "sizeEmu": [
+            693720,
+            621720
+          ]
+        },
+        {
+          "preset": "chord",
+          "sizeEmu": [
+            958320,
+            736560
+          ]
+        },
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            1030320,
+            803160
+          ]
+        },
+        {
+          "preset": "line",
+          "sizeEmu": [
+            775080,
+            841680
+          ]
+        }
+      ]
+    },
+    {
+      "category": "vector-size-within-0.001cm",
+      "expected": {
+        "preset": "chord",
+        "sizeEmu": [
+          955080,
+          736560
+        ]
+      },
+      "observed": [
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            892080,
+            631080
+          ]
+        },
+        {
+          "preset": "ellipse",
+          "sizeEmu": [
+            693720,
+            621720
+          ]
+        },
+        {
+          "preset": "chord",
+          "sizeEmu": [
+            958320,
+            736560
+          ]
+        },
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            1030320,
+            803160
+          ]
+        },
+        {
+          "preset": "line",
+          "sizeEmu": [
+            775080,
+            841680
+          ]
+        }
+      ]
+    },
+    {
+      "category": "vector-size-within-0.001cm",
+      "expected": {
+        "preset": "ellipse",
+        "sizeEmu": [
+          690480,
+          622080
+        ]
+      },
+      "observed": [
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            892080,
+            631080
+          ]
+        },
+        {
+          "preset": "ellipse",
+          "sizeEmu": [
+            693720,
+            621720
+          ]
+        },
+        {
+          "preset": "chord",
+          "sizeEmu": [
+            958320,
+            736560
+          ]
+        },
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            1030320,
+            803160
+          ]
+        },
+        {
+          "preset": "line",
+          "sizeEmu": [
+            775080,
+            841680
+          ]
+        }
+      ]
+    },
+    {
+      "category": "form-control-kind-counts",
+      "expected": {
+        "button": 1,
+        "radio": 1,
+        "checkbox": 1,
+        "edit": 1
+      },
+      "observed": {
+        "button": 1,
+        "checkbox": 1
+      }
+    },
+    {
+      "category": "form-control-label",
+      "expected": "Option Button1",
+      "observed": [
+        "Button10, 22, 23, 15, 1, -32, 25, 11CenterCenter",
+        "Check Box11, 49, 24, 1, 2, -8, 25, 10Center"
+      ]
+    }
+  ]
+}

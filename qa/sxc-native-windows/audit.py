@@ -18,6 +18,9 @@ def audit(root,binding):
     run=read(root/'run.json');meta=read(root/'artifact-metadata.json')
     assert run['id']==binding['nativeRun'] and run['head_sha']==binding['harnessCommit']
     assert run['conclusion']==binding['nativeConclusion'] and meta['id']==binding['proofArtifact']
+    jobs=read(root/'jobs.json')['jobs'];assert len(jobs)==1
+    assert jobs[0]['id']==binding['nativeJob'] and jobs[0]['run_id']==run['id']
+    assert jobs[0]['run_attempt']==run['run_attempt']==1 and jobs[0]['conclusion']==run['conclusion']
     assert meta['name']=='sxc-native-Windows-proof'
     assert sha(root/'artifact.zip')==binding['proofZipSha256']
     assert meta['digest']=='sha256:'+binding['proofZipSha256']
@@ -44,7 +47,7 @@ def audit(root,binding):
     assert receipt['payloadExecutable']['sha256']==report['executable']['sha256']=='feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67'
     assert report['payloadEqualsInstalled']
     assert sha(packages/'canonical-package-report.json')==receipt['canonicalPackageReportSha256']
-    assert sha(packages/'canonical-package-report.zip')=='99185caa31f2496d198aef67a8c1cca6acbc18012d90f2ebec7c5f2d2fed4a0'
+    assert sha(packages/'canonical-package-report.zip')=='99185caa31f249f6d198aef67a8c1cca6acbc18012d90f2ebec7c5f2d2fed4a0'
     with zipfile.ZipFile(packages/'canonical-package-report.zip') as archive:
         assert archive.namelist()==['pakketcontrole-Windows.json']
         assert archive.read('pakketcontrole-Windows.json')==(packages/'canonical-package-report.json').read_bytes()

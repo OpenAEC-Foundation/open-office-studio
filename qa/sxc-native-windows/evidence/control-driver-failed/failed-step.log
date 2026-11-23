@@ -1,0 +1,31 @@
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	﻿2026-11-23T11:32:00.6409834Z ##[group]Run python -B qa/sxc-native-windows/converter-control.py .local/sxc-control-package .local/sxc-control-proof
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6410810Z ^[[36;1mpython -B qa/sxc-native-windows/converter-control.py .local/sxc-control-package .local/sxc-control-proof^[[0m
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6490513Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6490929Z env:
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6491217Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6491677Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6492145Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6492550Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6492962Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:32:00.6493284Z ##[endgroup]
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8586337Z Traceback (most recent call last):
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8597255Z   File "D:\a\open-office-studio\open-office-studio\qa\sxc-native-windows\converter-control.py", line 46, in <module>
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8599200Z     assert profile_bytes==(BASE.parents[1]/'src-tauri/src/conversieprofiel.xcu').read_bytes()
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8600124Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8600728Z AssertionError
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8600946Z 
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8601259Z During handling of the above exception, another exception occurred:
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8601763Z 
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8601941Z Traceback (most recent call last):
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8602975Z   File "D:\a\open-office-studio\open-office-studio\qa\sxc-native-windows\converter-control.py", line 74, in <module>
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8604233Z     shutil.rmtree(temporary);report['cleanup']['ownedTemporaryProfileDisposed']=True
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8605002Z     ^^^^^^^^^^^^^^^^^^^^^^^^
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8605751Z   File "C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\shutil.py", line 781, in rmtree
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8641163Z     return _rmtree_unsafe(path, onexc)
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8643079Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8645279Z   File "C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\shutil.py", line 635, in _rmtree_unsafe
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8647635Z     onexc(os.unlink, fullname, err)
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8648476Z   File "C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\shutil.py", line 633, in _rmtree_unsafe
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8649745Z     os.unlink(fullname)
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.8651512Z FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-sxc-control23-9hjsbiem\\installed\\kantoorruntime\\help\\media\\icon-themes\\cmd\\32\\numberformatdecdecimals.svg'
+control	Own bundled converter, exact source profile/filter, no native acceptance claim	2026-11-23T11:33:29.9985278Z ##[error]Process completed with exit code 1.
