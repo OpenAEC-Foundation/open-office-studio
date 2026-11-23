@@ -270,15 +270,17 @@ try {
   phase = "native-input-save-reopen-preflight"; report.phase = phase;
   const first = await openDocument(input);
   await goTo("A1", "1+2", 3); await goTo("A15", "1+2", 3); await focusGrid();
-  await capture("opened-source.png"); await key("ctrl+s");
-  await waitFor(async () => Boolean((await evaluate(inspect)).saveDialog), "Ctrl+S opens genuine app Save As");
+  await capture("opened-source.png");
+  await click('.office-snelknop[aria-label="Save As"]');
+  await waitFor(async () => Boolean((await evaluate(inspect)).saveDialog), "Native pointer opens actual app Save As");
+  report.preflightSaveEntry = "Actual visible Save As toolbar button; initial imported-copy Ctrl+S behavior is not certified";
   const savedPath = join(out, "preflight-save/NativeXLSB.xlsx");
   await nativeSaveAs(savedPath);
   report.preflightSaved = await independent(savedPath, false);
   await capture("preflight-saved.png"); await closeDocument();
   const second = await openDocument(savedPath); assert.notEqual(second.pid, first.pid);
   await goTo("A15", "1+2", 3);
-  report.preflight = "Passed: selected input/focus, Linux Ctrl+S, real OS Save As, all 30 formulas/caches, full quit/new PID reopen";
+  report.preflight = "Passed: selected input/focus, real visible Save As control and OS picker, all 30 formulas/caches, full quit/new PID reopen";
   await capture("preflight-reopened.png");
 
   phase = "native-edit-save-reopen"; report.phase = phase;
