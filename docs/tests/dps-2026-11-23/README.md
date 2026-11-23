@@ -10,6 +10,20 @@ import and full-format acceptance remain false. Green diagnostics would mean
 only that the documented candidate distinctions and negative production policy
 are reproduced. No source was renamed/exported to manufacture import evidence.
 
+Actual [Linux CI45183381288](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45183381288),
+job137722637243, completed successfully on QA harness
+`dffae9611d101db35795fa258305a3456e223d7f`. It ran the source diagnostics and
+actual negative production functions; this green result is not DPS import
+acceptance. The final evidence commit adds only documentation/reports.
+
+Retained [official result ZIP](retained/dps-source-and-policy-result.zip),
+artifact14822961232, contains exactly `source-gate-report.json` and
+`policy-report.json`: 7125 bytes, SHA256
+`171d9a0939fadf89961ed8b41d01bf01799ca4555cd507adc80cf9b8fccb61b8`.
+The entire downloaded ZIP was verified against official artifact metadata,
+retained in [artifact.json](artifact.json). The source gate and every content/
+format acceptance field are false; only diagnostic/policy checks are true.
+
 ## Three independently published candidates
 
 Exact immutable Git paths, blobs, full-file hashes, sizes, introduction commits

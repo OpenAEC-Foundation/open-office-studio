@@ -1,0 +1,564 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "scope": "DPS only: candidate qualification and actual negative production policy; no import acceptance",
+  "diagnosticsPassed": true,
+  "sourceGatePassed": false,
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "qualifiedFixture": null,
+  "sourceOracle": null,
+  "candidateReports": [
+    {
+      "source": {
+        "id": "spire",
+        "repository": "eiceblue/Spire.Presentation-for-Java",
+        "commit": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+        "firstPublicationCommit": "d1a74f200d0a311edb895e608900f491704de79c",
+        "path": "Examples/data/Sample_dps.dps",
+        "bytes": 71680,
+        "blob": "a5224138f6da2bad511bdc3afd73144916c0b78b",
+        "sha256": "67fde11d202fb10d419cc54b708568c9681cf984cc6e7ebcdd051dee9c5e5fc5",
+        "loader": {
+          "path": "Examples/10_conversion/convertDpsToDpt.java",
+          "bytes": 392,
+          "blob": "d3beaf74210f14e2306a385a18fb71ee2021e4b0",
+          "sha256": "0a7ea74270e9c752527aa8341161672bc41e95139d88702d232b47797f520ae5"
+        },
+        "readme": {
+          "path": "README.md",
+          "bytes": 9318,
+          "blob": "f27f6cd73e655f00751f38648725fbdcf2da58c7",
+          "sha256": "df5a3e821e837270f6907f100acd3b49588c523aa745098f951c39d88cf92b15"
+        },
+        "expectedPresentationStreamSha256": "b5f6c8bfd4309bf65cc820bd75680c2b489d007a92d72e4ec6f70ab866d10e37",
+        "expectedApplication": "WPS 演示",
+        "qualificationGap": "Publisher explicitly loads this source with FileFormat.DPS and metadata names WPS Presentation, but an applicable sample-file license grant was not established. No sample redistributed. No signed producer Save-As witness or full live-slide oracle asserted."
+      },
+      "diagnostics": {
+        "container": "CFB version3",
+        "bytes": 71680,
+        "sha256": "67fde11d202fb10d419cc54b708568c9681cf984cc6e7ebcdd051dee9c5e5fc5",
+        "streams": [
+          {
+            "name": "\u0005SummaryInformation",
+            "bytes": 29080,
+            "sha256": "d32b308b7555ee439904f527fd5f7450ad9cc1bf63654e00e4cc0b5aa39cc97c"
+          },
+          {
+            "name": "\u0005DocumentSummaryInformation",
+            "bytes": 548,
+            "sha256": "931c8660510db3ccff3652888ac80cfcce7a1d8fffe0da25c6a7f619d3fc6708"
+          },
+          {
+            "name": "PowerPoint Document",
+            "bytes": 38309,
+            "sha256": "b5f6c8bfd4309bf65cc820bd75680c2b489d007a92d72e4ec6f70ab866d10e37"
+          },
+          {
+            "name": "Current User",
+            "bytes": 71,
+            "sha256": "f9b104ea726d3bc2230477017fefe0cd0a57af5ad196be59b1a08ab1977a5392"
+          }
+        ],
+        "selectedProperties": {
+          "\u0005SummaryInformation": [
+            {
+              "section": 0,
+              "property": 18,
+              "type": 31,
+              "value": "WPS 演示"
+            }
+          ],
+          "\u0005DocumentSummaryInformation": [
+            {
+              "section": 1,
+              "property": 3,
+              "type": 31,
+              "value": "2052-11.1.0.14309"
+            }
+          ]
+        }
+      },
+      "qualifiedFixture": false,
+      "sourceOracle": null,
+      "qualificationGap": "Publisher explicitly loads this source with FileFormat.DPS and metadata names WPS Presentation, but an applicable sample-file license grant was not established. No sample redistributed. No signed producer Save-As witness or full live-slide oracle asserted.",
+      "publisherEvidence": {
+        "explicitDpsLoaderVerified": true,
+        "loaderExecuted": false,
+        "licenseEndpointStatus": 404,
+        "completePinnedTreeLicenseNoticePaths": [],
+        "readmeHasTemporarySdkLicenseLink": true,
+        "sampleFileLicenseGrantEstablished": false,
+        "interpretation": "SDK temporary-license link is not treated as permission for redistribution of the source example; no license-absence claim beyond reviewed sources"
+      }
+    },
+    {
+      "source": {
+        "id": "sayi",
+        "repository": "Sayi/poi-tl",
+        "commit": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+        "firstPublicationCommit": "c2f77d7fde2975e36f031d05676b125227e0da9c",
+        "path": "poi-tl/src/test/resources/attachment/test.dps",
+        "bytes": 164864,
+        "blob": "e19eaf49e7d93227907fd52e78f92d57b44886a7",
+        "sha256": "15b5dc38f02b0818389049f2791c0ef4a2ee801c947639ba6b3d1aa56261d134",
+        "control": {
+          "path": "poi-tl/src/test/resources/attachment/test.ppt",
+          "bytes": 164864,
+          "blob": "b9faa7a95ae67d452e6f49a77a0df1a88470a83f",
+          "sha256": "b0c989317189d3b41cea0e14cc920ad0bd3c30f45182df7c5685a3f433798dd4"
+        },
+        "license": {
+          "path": "LICENSE",
+          "bytes": 11325,
+          "blob": "e06d2081865a766a8668acc12878f98b27fc9ea0",
+          "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+          "classification": "Apache-2.0 repository distribution; no per-fixture override found in the reviewed publication, not a native DPS producer declaration"
+        },
+        "expectedPresentationStreamSha256": "d305551f1553fb73cb0d049030d5e190eaedd082c65c8107e77f09b4d4e8a2f2",
+        "qualificationGap": "Same-publication PPT control has identical PowerPoint Document and Current User streams; only property streams differ. Generic attachment source does not establish original native DPS Save-As intent. This ambiguity does not prove renaming."
+      },
+      "diagnostics": {
+        "container": "CFB version3",
+        "bytes": 164864,
+        "sha256": "15b5dc38f02b0818389049f2791c0ef4a2ee801c947639ba6b3d1aa56261d134",
+        "streams": [
+          {
+            "name": "PowerPoint Document",
+            "bytes": 76284,
+            "sha256": "d305551f1553fb73cb0d049030d5e190eaedd082c65c8107e77f09b4d4e8a2f2"
+          },
+          {
+            "name": "Current User",
+            "bytes": 68,
+            "sha256": "b8c396372ad3ea3525094ed8fb8886ea19806e6e43e67943d4e63073161d6587"
+          },
+          {
+            "name": "\u0005SummaryInformation",
+            "bytes": 83672,
+            "sha256": "84aacd8abd288546396ba43b6b901647abb629a8454bf89fd46c40a8a403534e"
+          },
+          {
+            "name": "\u0005DocumentSummaryInformation",
+            "bytes": 532,
+            "sha256": "28dc62d4798d02d783690424cdbdd63db2cdd301264fdce57f186ab36f9873c2"
+          }
+        ],
+        "selectedProperties": {
+          "\u0005SummaryInformation": [
+            {
+              "section": 0,
+              "property": 18,
+              "type": 31,
+              "value": "WPS 演示"
+            }
+          ],
+          "\u0005DocumentSummaryInformation": [
+            {
+              "section": 1,
+              "property": 2,
+              "type": 31,
+              "value": "2052-7.5.1.8994"
+            }
+          ]
+        }
+      },
+      "qualifiedFixture": false,
+      "sourceOracle": null,
+      "qualificationGap": "Same-publication PPT control has identical PowerPoint Document and Current User streams; only property streams differ. Generic attachment source does not establish original native DPS Save-As intent. This ambiguity does not prove renaming.",
+      "repositoryLicenseBytesVerified": true,
+      "provenanceComparison": {
+        "control": {
+          "container": "CFB version3",
+          "bytes": 164864,
+          "sha256": "b0c989317189d3b41cea0e14cc920ad0bd3c30f45182df7c5685a3f433798dd4",
+          "streams": [
+            {
+              "name": "PowerPoint Document",
+              "bytes": 76284,
+              "sha256": "d305551f1553fb73cb0d049030d5e190eaedd082c65c8107e77f09b4d4e8a2f2"
+            },
+            {
+              "name": "Current User",
+              "bytes": 68,
+              "sha256": "b8c396372ad3ea3525094ed8fb8886ea19806e6e43e67943d4e63073161d6587"
+            },
+            {
+              "name": "\u0005SummaryInformation",
+              "bytes": 83672,
+              "sha256": "2172ea002eaa1bc57bb7edb00c7a2e3a5b1cb1ac6b1ef75d895c1f1525a7de7d"
+            },
+            {
+              "name": "\u0005DocumentSummaryInformation",
+              "bytes": 532,
+              "sha256": "6221eba442669db7c7c265f2e6023b7066d5653ccc9a79f578841f34d184c85f"
+            }
+          ],
+          "selectedProperties": {
+            "\u0005SummaryInformation": [
+              {
+                "section": 0,
+                "property": 18,
+                "type": 31,
+                "value": "WPS 演示"
+              }
+            ],
+            "\u0005DocumentSummaryInformation": [
+              {
+                "section": 1,
+                "property": 2,
+                "type": 31,
+                "value": "2052-7.5.1.8994"
+              }
+            ]
+          }
+        },
+        "sameStreams": {
+          "PowerPoint Document": true,
+          "Current User": true,
+          "\u0005SummaryInformation": false,
+          "\u0005DocumentSummaryInformation": false
+        },
+        "changedFileBytes": 362,
+        "meaning": "Ambiguous producer/native-save provenance; differences/equalities alone do not prove a renamed file or genuine DPS fidelity"
+      }
+    },
+    {
+      "source": {
+        "id": "tom",
+        "repository": "Tom60chat/Extension-List",
+        "commit": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+        "firstPublicationCommit": "f83689cab7311e3f7519135611c473383170edef",
+        "path": "List/WPS Presentation Document.dps",
+        "bytes": 125440,
+        "blob": "0c7464c95377d2f27c4e6e4c0c4ff9e879d27afa",
+        "sha256": "40ce47c3dc67f8d177c019477244b254a3c2baf61da19fe6d710b02787809d5d",
+        "control": {
+          "path": "List/Microsoft PowerPoint 97 - 2003 Presentation.ppt",
+          "bytes": 125440,
+          "blob": "5ee66621d4d1d7dae11fb41336651886f34711c6",
+          "sha256": "7c67429d85998e14f3cacfdaf72c2e49b8078c5461f6a121e55525aa8151a0a7"
+        },
+        "license": {
+          "path": "LICENSE",
+          "bytes": 1211,
+          "blob": "fdddb29aa445bf3d6a5d843d6dd77e10a9f99657",
+          "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+          "classification": "Unlicense repository distribution; not an independently documented native DPS Save-As process"
+        },
+        "expectedPresentationStreamSha256": "33a78b15daa0775dd950548fffa3b1482178829730842617a4ab9cd190524ed7",
+        "expectedApplication": "Microsoft Office PowerPoint",
+        "qualificationGap": "Real CFB, not the corpus's unrelated ET text placeholder. Presentation/current-user/property streams differ from its PPT control, but generic corpus metadata and history do not document the original producer/native DPS save. App property names PowerPoint. Not claimed fake or renamed."
+      },
+      "diagnostics": {
+        "container": "CFB version3",
+        "bytes": 125440,
+        "sha256": "40ce47c3dc67f8d177c019477244b254a3c2baf61da19fe6d710b02787809d5d",
+        "streams": [
+          {
+            "name": "\u0005SummaryInformation",
+            "bytes": 51084,
+            "sha256": "c5f71b612939ad3ce0349c765733eb60d636d9e584967a0d49e239b4a14a2e52"
+          },
+          {
+            "name": "\u0005DocumentSummaryInformation",
+            "bytes": 528,
+            "sha256": "1d053b2aade27a0d04a4c78366fe95022f947878136516b74e18c35cbcbae88a"
+          },
+          {
+            "name": "PowerPoint Document",
+            "bytes": 69781,
+            "sha256": "33a78b15daa0775dd950548fffa3b1482178829730842617a4ab9cd190524ed7"
+          },
+          {
+            "name": "Current User",
+            "bytes": 47,
+            "sha256": "4f88c0e5327927be01c50328e5ce56063f001c6caf294c8a9d864c89f36821f8"
+          }
+        ],
+        "selectedProperties": {
+          "\u0005SummaryInformation": [
+            {
+              "section": 0,
+              "property": 18,
+              "type": 31,
+              "value": "Microsoft Office PowerPoint"
+            }
+          ],
+          "\u0005DocumentSummaryInformation": [
+            {
+              "section": 1,
+              "property": 2,
+              "type": 31,
+              "value": "1036-11.2.0.10307"
+            }
+          ]
+        }
+      },
+      "qualifiedFixture": false,
+      "sourceOracle": null,
+      "qualificationGap": "Real CFB, not the corpus's unrelated ET text placeholder. Presentation/current-user/property streams differ from its PPT control, but generic corpus metadata and history do not document the original producer/native DPS save. App property names PowerPoint. Not claimed fake or renamed.",
+      "repositoryLicenseBytesVerified": true,
+      "provenanceComparison": {
+        "control": {
+          "container": "CFB version3",
+          "bytes": 125440,
+          "sha256": "7c67429d85998e14f3cacfdaf72c2e49b8078c5461f6a121e55525aa8151a0a7",
+          "streams": [
+            {
+              "name": "\u0005SummaryInformation",
+              "bytes": 51084,
+              "sha256": "31027ea3a9e826a94819fc283b958f860b9d78e2c97244f87b35affc29d2e374"
+            },
+            {
+              "name": "\u0005DocumentSummaryInformation",
+              "bytes": 528,
+              "sha256": "e509df8341aa83d03c4e602f04adc28cec819f1da92bb704ae12dabede5d52c0"
+            },
+            {
+              "name": "PowerPoint Document",
+              "bytes": 69777,
+              "sha256": "c5b32a02ef0f96b21098efda58701534f5d37232f51cf9a602960f0864536270"
+            },
+            {
+              "name": "Current User",
+              "bytes": 47,
+              "sha256": "6c16207f9a971edba1774911681659a9ac21dd213e59d1158737355730cfb1e9"
+            }
+          ],
+          "selectedProperties": {
+            "\u0005SummaryInformation": [
+              {
+                "section": 0,
+                "property": 18,
+                "type": 31,
+                "value": "Microsoft Office PowerPoint"
+              }
+            ],
+            "\u0005DocumentSummaryInformation": [
+              {
+                "section": 1,
+                "property": 2,
+                "type": 31,
+                "value": "1036-11.2.0.10307"
+              }
+            ]
+          }
+        },
+        "sameStreams": {
+          "\u0005SummaryInformation": false,
+          "\u0005DocumentSummaryInformation": false,
+          "PowerPoint Document": false,
+          "Current User": false
+        },
+        "changedFileBytes": 60475,
+        "meaning": "Ambiguous producer/native-save provenance; differences/equalities alone do not prove a renamed file or genuine DPS fidelity"
+      }
+    }
+  ],
+  "inventories": [
+    {
+      "repository": "eiceblue/Spire.Presentation-for-Java",
+      "commit": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+      "treeSha": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+      "truncated": false,
+      "entryCount": 544,
+      "dpsFiles": [
+        {
+          "path": "Examples/data/Sample_dps.dps",
+          "sha": "a5224138f6da2bad511bdc3afd73144916c0b78b",
+          "size": 71680
+        }
+      ],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "Sayi/poi-tl",
+      "commit": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+      "treeSha": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+      "truncated": false,
+      "entryCount": 1051,
+      "dpsFiles": [
+        {
+          "path": "poi-tl/src/test/resources/attachment/test.dps",
+          "sha": "e19eaf49e7d93227907fd52e78f92d57b44886a7",
+          "size": 164864
+        }
+      ],
+      "licenseNoticePaths": [
+        "LICENSE",
+        "plugin/poi-tl-plugin-math/NOTICE"
+      ]
+    },
+    {
+      "repository": "Tom60chat/Extension-List",
+      "commit": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+      "treeSha": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+      "truncated": false,
+      "entryCount": 111,
+      "dpsFiles": [
+        {
+          "path": "List/WPS Presentation Document.dps",
+          "sha": "0c7464c95377d2f27c4e6e4c0c4ff9e879d27afa",
+          "size": 125440
+        }
+      ],
+      "licenseNoticePaths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "openpreserve/format-corpus",
+      "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+      "treeSha": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+      "truncated": false,
+      "entryCount": 892,
+      "dpsFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "apache/tika",
+      "commit": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "treeSha": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "truncated": false,
+      "entryCount": 8118,
+      "dpsFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "tika-app/src/main/appended-resources/META-INF/LICENSE",
+        "tika-bundles/tika-bundle-standard/src/main/appended-resources/META-INF/LICENSE",
+        "tika-core/src/main/appended-resources/META-INF/LICENSE",
+        "tika-eval/tika-eval-app/src/main/appended-resources/META-INF/LICENSE",
+        "tika-grpc/src/main/appended-resources/META-INF/LICENSE",
+        "tika-parent/license-header.txt",
+        "tika-parsers/tika-parsers-extended/tika-parser-scientific-package/src/main/appended-resources/META-INF/LICENSE",
+        "tika-parsers/tika-parsers-extended/tika-parser-sqlite3-package/src/main/appended-resources/META-INF/LICENSE",
+        "tika-parsers/tika-parsers-ml/tika-parser-nlp-package/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-atlassian-jwt/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-az-blob/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-es/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-gcs/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-google-drive/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-kafka/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-microsoft-graph/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-opensearch/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-s3/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-solr/src/main/appended-resources/META-INF/LICENSE",
+        "tika-server/tika-server-standard/src/main/appended-resources/META-INF/LICENSE"
+      ]
+    },
+    {
+      "repository": "alexschiller/file-format-commons",
+      "commit": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+      "treeSha": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+      "truncated": false,
+      "entryCount": 70,
+      "dpsFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "eiceblue/Spire.Office-for-Java",
+      "commit": "b2451371f696aae6a0582e787356bd6527a4d2c5",
+      "treeSha": "b2451371f696aae6a0582e787356bd6527a4d2c5",
+      "truncated": false,
+      "entryCount": 2259,
+      "dpsFiles": [
+        {
+          "path": "Spire.Presentation/data/Sample_dps.dps",
+          "sha": "a5224138f6da2bad511bdc3afd73144916c0b78b",
+          "size": 71680
+        }
+      ],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-.NET",
+      "commit": "cf26ca4587c5cfd78c667da68ebac53f058fb70a",
+      "treeSha": "cf26ca4587c5cfd78c667da68ebac53f058fb70a",
+      "truncated": false,
+      "entryCount": 800,
+      "dpsFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "aspose-slides/Aspose.Slides-for-Java",
+      "commit": "9ef0160fe96031cd3f0808792b6da136763a8d7f",
+      "treeSha": "9ef0160fe96031cd3f0808792b6da136763a8d7f",
+      "truncated": false,
+      "entryCount": 2209,
+      "dpsFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE",
+        "Plugins/Aspose.Slides Java (Maven) for NetBeans/LICENSE",
+        "Plugins/Aspose.Slides Java for Pptx4j/Maven/LICENSE",
+        "Plugins/Aspose_Slides_Java_Maven_for_Eclipse/LICENSE",
+        "Plugins/Aspose_Slides_Java_for_PHP/vendor/composer/LICENSE",
+        "Plugins/Aspose_Slides_Java_for_Ruby/LICENSE",
+        "Plugins/Aspose_Slides_for_Apache_POI/LICENSE"
+      ]
+    },
+    {
+      "repository": "aspose-slides/Aspose.Slides-for-.NET",
+      "commit": "73f0e15894510088edb04e60785e66ee46ff42fe",
+      "treeSha": "73f0e15894510088edb04e60785e66ee46ff42fe",
+      "truncated": false,
+      "entryCount": 2183,
+      "dpsFiles": [],
+      "licenseNoticePaths": [
+        "Demos/Aspose.Slides.Web.Core/Infrastructure/LicenseProvider.cs",
+        "Demos/Aspose.Slides.Web/wwwroot/slides/static/css/viewer/theme/fonts/league-gothic/LICENSE",
+        "Demos/Aspose.Slides.Web/wwwroot/slides/static/css/viewer/theme/fonts/source-sans-pro/LICENSE",
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-Python",
+      "commit": "22975b5c686382bc86e2c8c970c62181c0441730",
+      "treeSha": "22975b5c686382bc86e2c8c970c62181c0441730",
+      "truncated": false,
+      "entryCount": 344,
+      "dpsFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-JavaScript",
+      "commit": "aa190c5bc401c57b94a803f1dd44096b8292630b",
+      "treeSha": "aa190c5bc401c57b94a803f1dd44096b8292630b",
+      "truncated": false,
+      "entryCount": 360,
+      "dpsFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-C",
+      "commit": "0bb16d89dc8aaa26cff2f7a9d58d7e3a1054f96d",
+      "treeSha": "0bb16d89dc8aaa26cff2f7a9d58d7e3a1054f96d",
+      "truncated": false,
+      "entryCount": 344,
+      "dpsFiles": [],
+      "licenseNoticePaths": []
+    }
+  ],
+  "inventoryCount": 13,
+  "limits": [
+    "No qualified native DPS fixture with both established source permission/provenance and a live-slide content oracle was obtained in this bounded search; absence in these repositories is not worldwide absence.",
+    "CFB stream hashes/property labels below are independent byte diagnostics, not a slide-order/text/object/geometry/media oracle or proof of native DPS Save-As.",
+    "No converter/private runtime, actual PPTX WASM initialization, edit/UndoRedo/PPTX save/freshreopen, Tauri IPC, hosted-browser UI or Windows/Linux/macOS native GUI acceptance.",
+    "Shared runtime input remains pinned but not consumed/reverified in this DPS investigation; no alternate runtime, suite, SDK or producer application installed.",
+    "PPT files are read-only provenance controls, not extra active format scopes. No DPT fixture, conversion or export is executed."
+  ],
+  "sharedRuntime": {
+    "pinFile": "scripts/qa-dps/unused-runtime-pin.json",
+    "downloaded": false,
+    "consumed": false,
+    "reverifiedInThisProbe": false
+  },
+  "retention": "Reports only; all source/control/license/loader/README bytes stay outside the uploaded artifact directory"
+}

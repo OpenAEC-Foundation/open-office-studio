@@ -1,0 +1,20 @@
+{
+  "scope": "DPS only under #30; bounded source qualification gap and negative production policy",
+  "application": {"commit":"dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b","tree":"5a644e397ecc6af5452a49b6404edf953687d1b2","version":"2026.48.1"},
+  "branch": "codex/dps-qa-2026-11-23-e0d7",
+  "testedHarnessCommit": "dffae9611d101db35795fa258305a3456e223d7f",
+  "evidenceCommitDifference": "Documentation/retained JSON/ZIP only; no harness or product changes after the tested commit",
+  "run": {"id":45183381288,"job":137722637243,"conclusion":"success","url":"https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45183381288","runner":"ubuntu-22.04","runnerImage":"20261116.365.1","node":"22.23.5","pnpm":"11.25.0"},
+  "artifact": {"id":14822961232,"bytes":7125,"sha256":"171d9a0939fadf89961ed8b41d01bf01799ca4555cd507adc80cf9b8fccb61b8","fullZipDigestVerifiedAgainstOfficialMetadata":true,"entries":["source-gate-report.json","policy-report.json"],"sourceBinariesIncluded":false},
+  "actualChecks": {"pinnedCompleteSourceInventories":13,"publishedCandidatesCompared":3,"independentCfbStreamDiagnostics":true,"p2ProductSourceUnchanged":true,"negativeProductionNoDesktopPolicy":true,"presentationWasmIdentityOnly":true},
+  "sourceGatePassed": false,
+  "qualifiedFixture": null,
+  "sourceOracle": null,
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "sharedPrivateRuntime": {"pin":"scripts/qa-dps/unused-runtime-pin.json","downloaded":false,"consumed":false,"reverifiedInThisProbe":false},
+  "notExecuted": ["DPS positive conversion/import","actual presentation WASM initialization/edit/UndoRedo","PPTX save/freshreopen/independent OOXML acceptance","DPT or other format route","Tauri IPC/hosted browser UI/native Windows/Linux/macOS GUI"],
+  "sourceGap": "Spire has explicit DPS loader/WPS metadata but no established sample-file license grant. Sayi Apache-distribution candidate shares presentation/current-user payload with PPT without a native-save witness. Tom Unlicense-distribution candidate differs from PPT but has generic source provenance/PowerPoint metadata. Neither byte similarity nor difference alone establishes original native DPS producer intent.",
+  "nextRequiredEvidence": "A qualified independently published original DPS with applicable permission/provenance/internal variant and an independent live-slide/text/object/geometry/media oracle, before the approved runtime→production helper→real engine→edit/UndoRedo→PPTX save/freshreopen→independent XML acceptance route",
+  "issueAction": "No independent product defect established; no new issue or intake/catalog/product/main/release change"
+}
