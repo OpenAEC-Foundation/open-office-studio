@@ -1,0 +1,438 @@
+{
+  "run": {
+    "id": 45150438420,
+    "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "head_branch": "codex/release-candidate-2026-11-23-p2",
+    "path": ".github/workflows/release.yml",
+    "run_attempt": 1,
+    "run_started_at": "2026-11-23T09:49:08Z",
+    "created_at": "2026-11-23T09:49:08Z",
+    "updated_at": "2026-11-23T09:49:23Z",
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "linuxJob": {
+    "id": 137610274931,
+    "run_id": 45150438420,
+    "workflow_name": "Build, sign and publish release",
+    "head_branch": "codex/release-candidate-2026-11-23-p2",
+    "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45150438420",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVRiTGs8AAAAgCjYocw",
+    "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137610274931",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45150438420/job/137610274931",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T09:49:21Z",
+    "started_at": "2026-11-23T09:49:22Z",
+    "completed_at": "2026-11-23T10:46:05Z",
+    "name": "Bouwen \u2013 Linux",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T09:49:23Z",
+        "completed_at": "2026-11-23T09:49:26Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T09:49:26Z",
+        "completed_at": "2026-11-23T09:49:31Z"
+      },
+      {
+        "name": "Ondertekening beschikbaar",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T09:49:31Z",
+        "completed_at": "2026-11-23T09:49:31Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T09:49:31Z",
+        "completed_at": "2026-11-23T09:49:34Z"
+      },
+      {
+        "name": "Run pnpm/action-setup@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T09:49:34Z",
+        "completed_at": "2026-11-23T09:49:35Z"
+      },
+      {
+        "name": "Run dtolnay/rust-toolchain@stable",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T09:49:35Z",
+        "completed_at": "2026-11-23T09:49:40Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T09:49:40Z",
+        "completed_at": "2026-11-23T09:49:40Z"
+      },
+      {
+        "name": "Updater-artefacten (alleen met geheim en publieke sleutel)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T09:49:40Z",
+        "completed_at": "2026-11-23T09:49:40Z"
+      },
+      {
+        "name": "Linux-bouwafhankelijkheden",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T09:49:40Z",
+        "completed_at": "2026-11-23T09:50:17Z"
+      },
+      {
+        "name": "Run pnpm install --frozen-lockfile",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T09:50:17Z",
+        "completed_at": "2026-11-23T09:50:21Z"
+      },
+      {
+        "name": "Cache van de vastgepinde kantoorruntime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-23T09:50:21Z",
+        "completed_at": "2026-11-23T09:50:21Z"
+      },
+      {
+        "name": "Lettertypencache",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-11-23T09:50:21Z",
+        "completed_at": "2026-11-23T09:50:22Z"
+      },
+      {
+        "name": "Run node scripts/haal-lettertypen.mjs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-11-23T09:50:22Z",
+        "completed_at": "2026-11-23T09:50:23Z"
+      },
+      {
+        "name": "Woordenboekencache",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T09:50:23Z",
+        "completed_at": "2026-11-23T09:50:23Z"
+      },
+      {
+        "name": "Run node scripts/haal-woordenboeken.mjs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T09:50:23Z",
+        "completed_at": "2026-11-23T09:50:23Z"
+      },
+      {
+        "name": "Run pnpm versie:check",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-23T09:50:23Z",
+        "completed_at": "2026-11-23T09:50:24Z"
+      },
+      {
+        "name": "Vastgelegde versleutelde proefbestanden ophalen",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-23T09:50:24Z",
+        "completed_at": "2026-11-23T09:50:24Z"
+      },
+      {
+        "name": "Run pnpm test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-11-23T09:50:24Z",
+        "completed_at": "2026-11-23T09:54:07Z"
+      },
+      {
+        "name": "Run python -m unittest discover -s tests -v",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-23T09:54:07Z",
+        "completed_at": "2026-11-23T09:54:09Z"
+      },
+      {
+        "name": "Run node scripts/test-kantoor-engines.mjs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-23T09:54:09Z",
+        "completed_at": "2026-11-23T09:54:09Z"
+      },
+      {
+        "name": "Run pnpm test:opdrachten",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 21,
+        "started_at": "2026-11-23T09:54:09Z",
+        "completed_at": "2026-11-23T09:54:17Z"
+      },
+      {
+        "name": "Windows-loader voorbereiden",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 22,
+        "started_at": "2026-11-23T09:54:17Z",
+        "completed_at": "2026-11-23T09:54:17Z"
+      },
+      {
+        "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 23,
+        "started_at": "2026-11-23T09:54:17Z",
+        "completed_at": "2026-11-23T09:56:45Z"
+      },
+      {
+        "name": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24,
+        "started_at": "2026-11-23T09:56:45Z",
+        "completed_at": "2026-11-23T09:58:20Z"
+      },
+      {
+        "name": ".NET 8 voor de signeerclient",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 25,
+        "started_at": "2026-11-23T09:58:20Z",
+        "completed_at": "2026-11-23T09:58:20Z"
+      },
+      {
+        "name": "Authenticode voorbereiden",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 26,
+        "started_at": "2026-11-23T09:58:20Z",
+        "completed_at": "2026-11-23T09:58:20Z"
+      },
+      {
+        "name": "App Store Connect-sleutel klaarzetten",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 27,
+        "started_at": "2026-11-23T09:58:20Z",
+        "completed_at": "2026-11-23T09:58:20Z"
+      },
+      {
+        "name": "Pakket bouwen (onondertekend)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 28,
+        "started_at": "2026-11-23T09:58:20Z",
+        "completed_at": "2026-11-23T10:38:39Z"
+      },
+      {
+        "name": "Pakket bouwen (Windows, ondertekend)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 29,
+        "started_at": "2026-11-23T10:38:39Z",
+        "completed_at": "2026-11-23T10:38:39Z"
+      },
+      {
+        "name": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 30,
+        "started_at": "2026-11-23T10:38:39Z",
+        "completed_at": "2026-11-23T10:38:39Z"
+      },
+      {
+        "name": "Authenticode controleren (installer, programma en uninstaller)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 31,
+        "started_at": "2026-11-23T10:38:39Z",
+        "completed_at": "2026-11-23T10:38:39Z"
+      },
+      {
+        "name": "Handtekening en notarisatie controleren (macOS)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 32,
+        "started_at": "2026-11-23T10:38:39Z",
+        "completed_at": "2026-11-23T10:38:39Z"
+      },
+      {
+        "name": "Linux-installers werkelijk uitpakken en controleren",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 33,
+        "started_at": "2026-11-23T10:38:39Z",
+        "completed_at": "2026-11-23T10:40:03Z"
+      },
+      {
+        "name": "Windows-installer werkelijk uitpakken en controleren",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 34,
+        "started_at": "2026-11-23T10:40:03Z",
+        "completed_at": "2026-11-23T10:40:03Z"
+      },
+      {
+        "name": "Meet- en inhoudscontrole voor de meegeleverde runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 35,
+        "started_at": "2026-11-23T10:40:03Z",
+        "completed_at": "2026-11-23T10:40:08Z"
+      },
+      {
+        "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 36,
+        "started_at": "2026-11-23T10:40:08Z",
+        "completed_at": "2026-11-23T10:40:08Z"
+      },
+      {
+        "name": "Linux native WebKit-interface en private installer controleren",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 37,
+        "started_at": "2026-11-23T10:40:08Z",
+        "completed_at": "2026-11-23T10:43:41Z"
+      },
+      {
+        "name": "Runtimebewijs bewaren",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 38,
+        "started_at": "2026-11-23T10:43:41Z",
+        "completed_at": "2026-11-23T10:43:42Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 39,
+        "started_at": "2026-11-23T10:43:42Z",
+        "completed_at": "2026-11-23T10:45:59Z"
+      },
+      {
+        "name": "Post Woordenboekencache",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 72,
+        "started_at": "2026-11-23T10:45:59Z",
+        "completed_at": "2026-11-23T10:45:59Z"
+      },
+      {
+        "name": "Post Lettertypencache",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 73,
+        "started_at": "2026-11-23T10:45:59Z",
+        "completed_at": "2026-11-23T10:46:00Z"
+      },
+      {
+        "name": "Post Cache van de vastgepinde kantoorruntime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 74,
+        "started_at": "2026-11-23T10:46:00Z",
+        "completed_at": "2026-11-23T10:46:02Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 75,
+        "started_at": "2026-11-23T10:46:02Z",
+        "completed_at": "2026-11-23T10:46:02Z"
+      },
+      {
+        "name": "Post Run pnpm/action-setup@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 76,
+        "started_at": "2026-11-23T10:46:02Z",
+        "completed_at": "2026-11-23T10:46:03Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 77,
+        "started_at": "2026-11-23T10:46:03Z",
+        "completed_at": "2026-11-23T10:46:03Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 78,
+        "started_at": "2026-11-23T10:46:03Z",
+        "completed_at": "2026-11-23T10:46:03Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 79,
+        "started_at": "2026-11-23T10:46:03Z",
+        "completed_at": "2026-11-23T10:46:03Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137610274931",
+    "labels": [
+      "ubuntu-22.04"
+    ],
+    "runner_id": 1000128367,
+    "runner_name": "GitHub Actions 1000128367",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "artifact": {
+    "id": 14808939009,
+    "node_id": "MDg6QXJ0aWZhY3QxNDgwODkzOTAwOQ==",
+    "name": "uitgave-Linux",
+    "size_in_bytes": 4444678701,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14808939009",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14808939009/zip",
+    "expired": false,
+    "digest": "sha256:904a128efa87e73b6fb58072c208c348a043f86553d614c5d39fb9de83ea3f09",
+    "created_at": "2026-11-23T10:45:59Z",
+    "updated_at": "2026-11-23T10:45:59Z",
+    "expires_at": "2027-02-21T09:49:10Z",
+    "workflow_run": {
+      "id": 45150438420,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/release-candidate-2026-11-23-p2",
+      "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+    }
+  }
+}

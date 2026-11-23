@@ -1,0 +1,87 @@
+{
+  "purpose": "P2-baseline-only",
+  "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "version": "2026.48.1",
+  "run": 45150438420,
+  "attempt": 1,
+  "job": 137610274931,
+  "workflow": ".github/workflows/release.yml",
+  "canonicalBranch": "codex/release-candidate-2026-11-23-p2",
+  "qaCodeCommit": "bc1f13487cb804dda84666f10639164cd548e9f8",
+  "checkedAt": "2026-11-23T10:48:31.556957+00:00",
+  "window": {
+    "runStartedAt": "2026-11-23T09:49:08Z",
+    "jobStartedAt": "2026-11-23T09:49:22Z",
+    "jobCompletedAt": "2026-11-23T10:46:05Z"
+  },
+  "artifact": {
+    "id": 14808939009,
+    "name": "uitgave-Linux",
+    "digest": "sha256:904a128efa87e73b6fb58072c208c348a043f86553d614c5d39fb9de83ea3f09",
+    "bytes": 4444678701,
+    "createdAt": "2026-11-23T10:45:59Z",
+    "updatedAt": "2026-11-23T10:45:59Z",
+    "parent": {
+      "id": 45150438420,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/release-candidate-2026-11-23-p2",
+      "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+    }
+  },
+  "requiredGates": [
+    {
+      "name": "Pakket bouwen (onondertekend)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 28,
+      "started_at": "2026-11-23T09:58:20Z",
+      "completed_at": "2026-11-23T10:38:39Z"
+    },
+    {
+      "name": "Linux-installers werkelijk uitpakken en controleren",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 33,
+      "started_at": "2026-11-23T10:38:39Z",
+      "completed_at": "2026-11-23T10:40:03Z"
+    },
+    {
+      "name": "Meet- en inhoudscontrole voor de meegeleverde runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 35,
+      "started_at": "2026-11-23T10:40:03Z",
+      "completed_at": "2026-11-23T10:40:08Z"
+    },
+    {
+      "name": "Linux native WebKit-interface en private installer controleren",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 37,
+      "started_at": "2026-11-23T10:40:08Z",
+      "completed_at": "2026-11-23T10:43:41Z"
+    },
+    {
+      "name": "Run actions/upload-artifact@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 39,
+      "started_at": "2026-11-23T10:43:42Z",
+      "completed_at": "2026-11-23T10:45:59Z"
+    }
+  ],
+  "notApplicableGates": [
+    {
+      "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 36,
+      "started_at": "2026-11-23T10:40:08Z",
+      "completed_at": "2026-11-23T10:40:08Z",
+      "sourceCondition": "runner.os != 'Linux'",
+      "reason": "The separate Linux native alternative is mandatory and SUCCESS"
+    }
+  ]
+}
