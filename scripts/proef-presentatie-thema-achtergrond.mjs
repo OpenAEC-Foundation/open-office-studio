@@ -402,6 +402,31 @@ try {
       const unsupported = await setup(url, limitation, `Limit-${label}.pptx`);
       contexts.push(unsupported.context);
       const limited = await background(unsupported.page);
+      report.boundaryControl = await limited
+        .locator('option[value="themakleur"]')
+        .evaluate((el) => ({
+          disabled: el.disabled,
+          html: el.outerHTML,
+          selectDisabled: el.parentElement.disabled,
+        }));
+      report.boundaryDialog = await limited.evaluate((el) => {
+        for (
+          let f =
+            el[Object.keys(el).find((k) => k.startsWith("__reactFiber$"))];
+          f;
+          f = f.return
+        ) {
+          const b = f.memoizedProps?.begin;
+          if (b?.achtergrondThema)
+            return {
+              index: b.index,
+              mode: b.modus,
+              palette: b.achtergrondThema,
+              part: b.info.dias[b.index]?.pad,
+            };
+        }
+        return null;
+      });
       report.boundarySlide = await unsupported.page
         .locator(".office-presentatie:visible aside > button")
         .evaluateAll((es) =>
