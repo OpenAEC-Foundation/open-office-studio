@@ -105,7 +105,9 @@ export async function emailCase(qa, phase) {
     await page.getByRole('button',{name:/^(Add account|Account toevoegen)$/i}).click();
     const wizard=page.locator('.email-wizard'); await wizard.waitFor();
     await wizard.locator('.email-vinkje input[type="checkbox"]').first().uncheck();
-    await wizard.getByLabel(/^(Your full name|Uw volledige naam)$/i).fill('Standalone QA');
+    // The visible label also contains its ordinary <small> help text.
+    // Match the exact label prefix while keeping selection inside this wizard.
+    await wizard.getByRole('textbox',{name:/^(Your full name|Uw volledige naam)(?:\s|$)/i}).fill('Standalone QA');
     await wizard.getByLabel(/^(Email address|E-mailadres)$/i).fill('qa@fixture.localhost');
     await wizard.locator('input[type="password"]').fill('standalone-synthetic-password');
     for(const protocol of ['IMAP','SMTP']) {
