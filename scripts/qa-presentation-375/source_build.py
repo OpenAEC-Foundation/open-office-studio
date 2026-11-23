@@ -69,8 +69,20 @@ ENV=dict(os.environ)
 for key in tuple(ENV):
     if key in ('GH_TOKEN','GITHUB_TOKEN','OPENAEC_CONVERSIE_PROGRAMMA','OPENAEC_CONVERSIE_PROFIEL') or key.startswith('ACTIONS_'):
         ENV.pop(key,None)
+# Keep the Python used by configure paired with Ubuntu's installed development
+# headers/setuptools/lxml. Do not mix setup-python's private interpreter/libraries
+# with distribution development packages, and do not change the parent/global env.
+BUILD_PYTHON='/usr/bin/python3'
+python_root=os.environ.get('pythonLocation','')
+if python_root.startswith('/opt/hostedtoolcache/Python/'):
+    for key in ('PATH','LD_LIBRARY_PATH','PKG_CONFIG_PATH'):
+        values=[p for p in ENV.get(key,'').split(os.pathsep) if p and not (p==python_root or p.startswith(python_root+'/'))]
+        if values:ENV[key]=os.pathsep.join(values)
+        else:ENV.pop(key,None)
+for key in ('PYTHONHOME','PYTHONPATH'):ENV.pop(key,None)
 ENV.update(CC='/usr/bin/gcc-13',CXX='/usr/bin/g++-13',SAL_USE_VCLPLUGIN='svp',
-           SAL_DISABLE_DEFAULTPRINTER='1',SAL_DISABLE_PRINTERLIST='1',PYTHONDONTWRITEBYTECODE='1')
+           SAL_DISABLE_DEFAULTPRINTER='1',SAL_DISABLE_PRINTERLIST='1',PYTHONDONTWRITEBYTECODE='1',
+           PYTHON=BUILD_PYTHON,PYTHON_FOR_BUILD=BUILD_PYTHON)
 
 
 def main():
@@ -117,7 +129,20 @@ def main():
     run('explicit-dependencies',['sudo','apt-get','install','-y','--no-install-recommends',
         'gcc-13','g++-13','openjdk-17-jdk','gperf','bison','flex','zip','unzip','python3-dev','libxslt1-dev'],timeout=600)
     run('package-versions',['dpkg-query','-W','-f=${binary:Package}\t${Version}\n'])
-    run('post-install-resource-gate',[sys.executable,str(OWN/'build_preflight.py')])
+    run('post-install-resource-gate',[BUILD_PYTHON,str(OWN/'build_preflight.py')])
+    run('distribution-python-provider',[BUILD_PYTHON,'-c',
+        'import sys,sysconfig,distutils.sysconfig,lxml,setuptools,json,os,hashlib;from pathlib import Path;'
+        'p=sysconfig.get_path("include");assert Path(p,"Python.h").is_file();'
+        'print(json.dumps({"executable":sys.executable,"resolvedExecutable":os.path.realpath(sys.executable),"version":sys.version,"include":p,'
+        '"headerSHA256":hashlib.sha256(Path(p,"Python.h").read_bytes()).hexdigest(),'
+        '"distutils":distutils.sysconfig.__file__,"lxml":lxml.__file__,"setuptools":setuptools.__file__,"setuptoolsVersion":setuptools.__version__,"LIBDIR":sysconfig.get_config_var("LIBDIR"),"LDLIBRARY":sysconfig.get_config_var("LDLIBRARY")}))'])
+    assert Path('/usr/bin/python3-config').is_file()
+    run('distribution-python-cflags',['/usr/bin/python3-config','--includes'])
+    run('distribution-python-libs',['/usr/bin/python3-config','--embed','--ldflags'])
+    ENV['PYTHON_CFLAGS']=(OUT/'distribution-python-cflags.log').read_text().strip()
+    ENV['PYTHON_LIBS']=(OUT/'distribution-python-libs.log').read_text().strip()
+    assert ENV['PYTHON_CFLAGS'] and ENV['PYTHON_LIBS']
+    REPORT['pythonConfigureBinding']={k:ENV[k] for k in ('PYTHON','PYTHON_FOR_BUILD','PYTHON_CFLAGS','PYTHON_LIBS')}
     run('source-init',['git','init','--initial-branch=codex/runtime-375-witness',str(source)])
     run('source-remote',['git','remote','add','origin','https://github.com/LibreOffice/core.git'],cwd=source)
     run('source-fetch',['git','fetch','--no-tags','--depth=1','origin',PIN['upstreamCommit']],cwd=source,timeout=900)
@@ -125,7 +150,7 @@ def main():
     assert subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()==PIN['upstreamCommit']
     REPORT['upstreamTree']=subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD^{tree}'],text=True).strip()
     # Full checked applicator preconditions before installing only the tests for the red witness.
-    run('patchset-preconditions',[sys.executable,str(OWN/'runtime-patch/apply.py'),str(source)])
+    run('patchset-preconditions',[BUILD_PYTHON,str(OWN/'runtime-patch/apply.py'),str(source)])
     patch=OWN/'runtime-patch/375-solid-rgb-import.patch'
     run('test-diff',['git','apply','--include=xmloff/qa/unit/draw.cxx',str(patch)],cwd=source)
     for entry in PIN['fixtures']:

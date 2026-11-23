@@ -1,0 +1,29 @@
+{
+  "issue": 375,
+  "kind": "read primary configure source and previous official artifact; no new VM execution claimed",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "configureAcSHA256": "a29d75952286370eb4b85b97d875b1a030207e17848c583df062eac54d50e3e2",
+  "sourceBinding": {
+    "lines": "10616-10629,10708-10763",
+    "PYTHON": "/usr/bin/python3",
+    "PYTHON_FOR_BUILD": "/usr/bin/python3",
+    "PYTHON_CFLAGS": "generate from existing /usr/bin/python3-config --includes",
+    "PYTHON_LIBS": "generate from existing /usr/bin/python3-config --embed --ldflags",
+    "reason": "Pinned configure accepts both explicit flag variables before its Python auto-search/reset branch; interpreter, headers, library and modules must be paired."
+  },
+  "readArtifact": {
+    "id": 14820940078,
+    "zipSHA256": "ae861b504ddf3efb09153935536644b28c61bb787aa5f230dedd8319001bfeac"
+  },
+  "alreadyInstalledPackages": {
+    "python3-setuptools": "68.1.2-2ubuntu1.2",
+    "python3-lxml": "5.2.1-1ubuntu0.2",
+    "python3-dev": "3.12.3-0ubuntu2.1",
+    "libpython3.12-dev": "3.12.3-1ubuntu0.17"
+  },
+  "newVMPrecondition": "import existing distro distutils/lxml/setuptools and verify Python.h, actual version/provider paths and header hash before source checkout",
+  "newDependencies": false,
+  "upstreamSourceModified": false,
+  "globalEnvironmentModified": false,
+  "sourceCompilerAcceptance": false
+}
