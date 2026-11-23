@@ -8,6 +8,12 @@ import { DiaKnop, huidigeIndex } from "../lint/presentatie-acties";
 import { Dialoog } from "../werkruimte/Dialoog";
 import { diaKeuze } from "./voetteksten";
 import { leesWeergave } from "./weergave";
+import {
+  leesThemaAchtergrond,
+  THEMA_ACCENTEN,
+  type ThemaAccent,
+  type ThemaAchtergrond,
+} from "./themaAchtergrond";
 import { bewaarBytes } from "../afdrukken/bewaren";
 import {
   leesThemaBestand,
@@ -45,6 +51,7 @@ interface Begin {
   versie: string;
   modus: Modus;
   thema?: Thema;
+  achtergrondThema?: ThemaAchtergrond;
 }
 const OPSLAG = "oos.presentatie.themas.v1";
 function eigenThemas(): Thema[] {
@@ -91,6 +98,10 @@ export function DiaOntwerp() {
         api,
         modus,
         ...actueel,
+        achtergrondThema:
+          modus === "background"
+            ? leesThemaAchtergrond(bytes, index)
+            : undefined,
         index,
         selectie: leesWeergave(herlaad).selectie,
         versie: api.handle.version(),
@@ -175,7 +186,13 @@ function OntwerpVenster({
   const [bgDoel, setBgDoel] = useState<"slides" | "layout" | "master">(
     "slides",
   );
-  const [soort, setSoort] = useState<Achtergrond["soort"]>("kleur");
+  const palet = begin.achtergrondThema;
+  const [themaAccent, setThemaAccent] = useState<ThemaAccent>(
+    palet?.beschikbaar ? (palet.gekozen ?? "accent1") : "accent1",
+  );
+  const [soort, setSoort] = useState<Achtergrond["soort"]>(
+    palet?.beschikbaar && palet.gekozen ? "themakleur" : "kleur",
+  );
   const [kleur, setKleur] = useState("#FFFFFF"),
     [tweede, setTweede] = useState("#356BC4"),
     [hoek, setHoek] = useState(90);
@@ -214,9 +231,11 @@ function OntwerpVenster({
           ? { soort }
           : soort === "kleur"
             ? { soort, kleur }
-            : soort === "verloop"
-              ? { soort, kleur, tweede, hoek }
-              : { soort, bytes: afbeelding ?? new Uint8Array() };
+            : soort === "themakleur"
+              ? { soort, naam: themaAccent }
+              : soort === "verloop"
+                ? { soort, kleur, tweede, hoek }
+                : { soort, bytes: afbeelding ?? new Uint8Array() };
       const current = info.layouts.find(
         (l) => l.pad === info.dias[index]?.layout,
       );
@@ -313,7 +332,12 @@ function OntwerpVenster({
             disabled={
               bezig ||
               (modus === "layouts" && !layout) ||
-              (modus === "background" && soort === "afbeelding" && !afbeelding)
+              (modus === "background" &&
+                soort === "afbeelding" &&
+                !afbeelding) ||
+              (modus === "background" &&
+                soort === "themakleur" &&
+                (!palet?.beschikbaar || bgDoel !== "slides"))
             }
             onClick={toepassen}
           >
@@ -520,7 +544,12 @@ function OntwerpVenster({
               <select
                 aria-label={t("design.backgroundTarget")}
                 value={bgDoel}
-                onChange={(e) => setBgDoel(e.target.value as typeof bgDoel)}
+                onChange={(e) => {
+                  const doel = e.target.value as typeof bgDoel;
+                  setBgDoel(doel);
+                  if (doel !== "slides" && soort === "themakleur")
+                    setSoort("kleur");
+                }}
               >
                 {["slides", "layout", "master"].map((d) => (
                   <option key={d} value={d}>
@@ -537,13 +566,49 @@ function OntwerpVenster({
                 value={soort}
                 onChange={(e) => setSoort(e.target.value as typeof soort)}
               >
-                {["erven", "kleur", "verloop", "afbeelding"].map((d) => (
-                  <option key={d} value={d}>
+                {[
+                  "erven",
+                  "kleur",
+                  ...(bgDoel === "slides" ? ["themakleur"] : []),
+                  "verloop",
+                  "afbeelding",
+                ].map((d) => (
+                  <option
+                    key={d}
+                    value={d}
+                    disabled={d === "themakleur" && !palet?.beschikbaar}
+                  >
                     {t(`design.${d}`)}
                   </option>
                 ))}
               </select>
             </label>
+            {bgDoel === "slides" && !palet?.beschikbaar && (
+              <p role="note">{t("design.errors.themeColorUnavailable")}</p>
+            )}
+            {soort === "themakleur" && palet?.beschikbaar && (
+              <>
+                <label className="werkruimte-veld">
+                  {t("design.themakleur")}
+                  <select
+                    aria-label={t("design.themakleur")}
+                    value={themaAccent}
+                    onChange={(e) =>
+                      setThemaAccent(e.target.value as ThemaAccent)
+                    }
+                  >
+                    {THEMA_ACCENTEN.map((naam) => (
+                      <option key={naam} value={naam}>
+                        {t(`design.colors.${naam}`)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <p className="werkruimte-uitleg">
+                  {t("design.themeBackgroundHelp")}
+                </p>
+              </>
+            )}
             {(soort === "kleur" || soort === "verloop") &&
               veld("color", kleur, setKleur, "color")}
             {soort === "verloop" && (
@@ -585,16 +650,22 @@ function OntwerpVenster({
                 />
               </label>
             )}
-            {(soort === "kleur" || soort === "verloop") && (
+            {(soort === "kleur" ||
+              soort === "verloop" ||
+              soort === "themakleur") && (
               <div
                 className="ontwerp-voorbeeld"
                 role="img"
                 aria-label={t("design.preview")}
                 style={{
                   background:
-                    soort === "kleur"
-                      ? kleur
-                      : `linear-gradient(${hoek + 90}deg,${kleur},${tweede})`,
+                    soort === "themakleur"
+                      ? palet?.beschikbaar
+                        ? palet.kleuren[themaAccent]
+                        : undefined
+                      : soort === "kleur"
+                        ? kleur
+                        : `linear-gradient(${hoek + 90}deg,${kleur},${tweede})`,
                 }}
               />
             )}

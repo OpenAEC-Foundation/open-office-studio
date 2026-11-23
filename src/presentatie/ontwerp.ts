@@ -1,6 +1,11 @@
 /** Verliesvrije PPTX-ontwerpbewerkingen waarvoor de engine geen schrijf-API heeft. */
 import { Pakket, REL } from "../grafieken/pakket";
 import {
+  leesThemaAchtergrondPakket,
+  THEMA_ACCENTEN,
+  type ThemaAccent,
+} from "./themaAchtergrond";
+import {
   attr,
   attrTekst,
   elementen,
@@ -22,7 +27,14 @@ const MASTER = `${R}/slideMaster`,
   THEME = `${R}/theme`;
 const CT = "application/vnd.openxmlformats-officedocument.presentationml.";
 export class OntwerpFout extends Error {
-  constructor(public code: "invalid" | "inUse" | "lastLayout" | "missing") {
+  constructor(
+    public code:
+      | "invalid"
+      | "inUse"
+      | "lastLayout"
+      | "missing"
+      | "themeColorUnavailable",
+  ) {
     super(code);
   }
 }
@@ -303,6 +315,7 @@ export function pasLayoutToe(
 export type Achtergrond =
   | { soort: "erven" }
   | { soort: "kleur"; kleur: string }
+  | { soort: "themakleur"; naam: ThemaAccent }
   | { soort: "verloop"; kleur: string; tweede: string; hoek: number }
   | { soort: "afbeelding"; bytes: Uint8Array };
 const hex = (s: string) => {
@@ -314,7 +327,10 @@ function achtergrondXml(p: Pakket, pad: string, a: Achtergrond) {
   let fill: string;
   if (a.soort === "kleur")
     fill = `<a:solidFill><a:srgbClr val="${hex(a.kleur)}"/></a:solidFill>`;
-  else if (a.soort === "verloop") {
+  else if (a.soort === "themakleur") {
+    if (!THEMA_ACCENTEN.includes(a.naam)) throw new OntwerpFout("invalid");
+    fill = `<a:solidFill><a:schemeClr val="${a.naam}"/></a:solidFill>`;
+  } else if (a.soort === "verloop") {
     if (!Number.isFinite(a.hoek) || a.hoek < 0 || a.hoek > 360)
       throw new OntwerpFout("invalid");
     fill = `<a:gradFill rotWithShape="1"><a:gsLst><a:gs pos="0"><a:srgbClr val="${hex(a.kleur)}"/></a:gs><a:gs pos="100000"><a:srgbClr val="${hex(a.tweede)}"/></a:gs></a:gsLst><a:lin ang="${Math.round(a.hoek * 60000)}" scaled="1"/></a:gradFill>`;
@@ -347,6 +363,15 @@ export function schrijfAchtergrond(
   );
   if (!doelen.length || doelen.some((d) => !geldig.has(d)))
     throw new OntwerpFout("invalid");
+  if (
+    achtergrond.soort === "themakleur" &&
+    doelen.some(
+      (pad) =>
+        !lijst.dias.some((d) => d.pad === pad) ||
+        !leesThemaAchtergrondPakket(p, pad).beschikbaar,
+    )
+  )
+    throw new OntwerpFout("themeColorUnavailable");
   for (const pad of new Set(doelen)) {
     const xml = p.lees(pad),
       root = leesXml(xml),
