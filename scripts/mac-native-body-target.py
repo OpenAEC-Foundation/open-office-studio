@@ -21,7 +21,8 @@ def visible_body_target(ocr, snapshot, pid, expected_image_sha, text="alpha"):
     sx, sy = ocr["width"]/bounds["Width"], ocr["height"]/bounds["Height"]
     if not 1 <= sx <= 3 or abs(sx-sy) > .001:
         raise PermissionError("No-shadow capture must match the owned window at one uniform pixel scale")
-    matches = [o for o in ocr.get("observations", []) if o.get("text") == text and o.get("confidence", 0) >= .8]
+    candidates = ocr.get("wordObservations", ocr.get("observations", [])) if len(text.split()) == 1 else ocr.get("observations", [])
+    matches = [o for o in candidates if o.get("text") == text and o.get("confidence", 0) >= .8]
     if len(matches) != 1:
         raise PermissionError("Expected one confidently visible original body word: "+text)
     match = matches[0]

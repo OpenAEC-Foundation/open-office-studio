@@ -18,6 +18,18 @@ class VisibleTargetTests(unittest.TestCase):
     def test_valid_visible_target(self):
         self.assertAlmostEqual(target(self.ocr, self.snapshot, 123, "a"*64)["point"]["x"], 225.28)
 
+    def test_retina_capture_keeps_global_point(self):
+        retina = dict(self.ocr, width=2048, height=1354)
+        result = target(retina, self.snapshot, 123, "a"*64)
+        self.assertEqual(result["pixelScale"], 2)
+        self.assertAlmostEqual(result["point"]["x"], 225.28)
+
+    def test_word_box_is_used_inside_combined_ocr_line(self):
+        ocr = copy.deepcopy(self.ocr)
+        ocr["wordObservations"] = copy.deepcopy(ocr["observations"])
+        ocr["observations"][0]["text"] = "alpha beta"
+        self.assertAlmostEqual(target(ocr, self.snapshot, 123, "a"*64)["point"]["x"], 225.28)
+
     def test_reject_capture_or_ownership_mismatch(self):
         for key, value in [("frontmostPid", 456), ("applicationActive", False), ("screenCaptureAuthorized", False)]:
             with self.subTest(key=key), self.assertRaises(PermissionError):
