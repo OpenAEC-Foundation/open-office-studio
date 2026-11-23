@@ -5,6 +5,11 @@ remain outside scope. Own branch `codex/ett-qa-2026-11-23-e0d7`, frozen product
 P2 `dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b`, tree
 `5a644e397ecc6af5452a49b6404edf953687d1b2`, version `2026.48.1`, unchanged.
 
+Filename recognition is tracked separately as [issue #382](https://github.com/OpenAEC-Foundation/open-office-studio/issues/382),
+labels `rekenblad`, `bug`, `formaten`; label validation
+[45180038178](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45180038178) passes.
+No product fix or P5 intake is included.
+
 **No ETT import/engine/save acceptance.** A qualified original producer fixture
 is missing. There is separately an independently reproduced production
 filename-classification failure, without a real ETT input or GUI claim.
