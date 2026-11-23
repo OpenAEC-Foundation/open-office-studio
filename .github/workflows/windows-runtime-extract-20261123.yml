@@ -1,0 +1,39 @@
+name: Windows runtime extraction regression
+on:
+  push:
+    branches: [codex/windows-runtime-extract-20261123]
+    paths:
+      - scripts/voorbereiden-kantoorruntime.mjs
+      - scripts/kantoorruntime-windows.test.mjs
+      - scripts/proef-windows-runtime-extract.mjs
+      - .github/workflows/windows-runtime-extract-20261123.yml
+permissions:
+  contents: read
+jobs:
+  runtime:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Real Windows ZIP tests and existing runtime configuration tests
+        run: pnpm exec vitest run scripts/kantoorruntime-windows.test.mjs scripts/kantoorruntime.test.mjs
+      - uses: actions/cache@v4
+        with:
+          path: .local/kantoorruntime-cache
+          key: kantoorruntime-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json') }}
+      - name: Prepare and launch the pinned runtime; compare the original ZIP route
+        run: node scripts/proef-windows-runtime-extract.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-runtime-extract-${{ github.sha }}
+          path: .local/windows-runtime-extract-probe/
+          include-hidden-files: true
+          if-no-files-found: warn
