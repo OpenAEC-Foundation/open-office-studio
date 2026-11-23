@@ -22,12 +22,14 @@ spec.loader.exec_module(fetcher)
 
 class Provenance(unittest.TestCase):
     def setUp(self):
+        self.actions_env=patch.dict(os.environ,{'GITHUB_ACTIONS':'false'});self.actions_env.start()
         self.temp = tempfile.TemporaryDirectory()
         self.cwd = Path.cwd()
         os.chdir(self.temp.name)
         self.studio = {"sleutel": "writer", "programma": "open-writer-studio"}
 
     def tearDown(self):
+        self.actions_env.stop()
         os.chdir(self.cwd)
         self.temp.cleanup()
 

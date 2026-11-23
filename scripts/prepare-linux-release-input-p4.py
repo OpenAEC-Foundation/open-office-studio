@@ -53,7 +53,14 @@ def inspect_suite_elf(package):
 def prepare_suite_transfers(artifact, job, binding):
     suite = Path('.local/standalone-linux-prepared/office')
     origin = json.loads((suite/'origin.json').read_text(encoding='utf-8'))
-    metadata = Path('.local/linux-release-input-p4-metadata');metadata.mkdir()
+    metadata = Path('.local/linux-release-input-p4-metadata');metadata.mkdir(exist_ok=True)
+    dependencies=[]
+    for appdir in sorted(suite.parent.iterdir()):
+        if not appdir.is_dir():continue
+        apporigin=json.loads((appdir/'origin.json').read_text(encoding='utf-8'))
+        dependencies.append(dict(app=apporigin['studio']['sleutel'],sourceCommit=SOURCE,sourceTree=TREE,version=apporigin['version'],parentArtifact=apporigin['artifact'],packageReportSha256=apporigin['packageReportSha256'],debControl=apporigin['debControl']))
+    assert len(dependencies)==7
+    (metadata/'all-seven-deb-controls.json').write_text(json.dumps(dependencies,indent=2)+'\n',encoding='utf-8')
     for kind in ['deb','appimage']:
         package, = [p for p in origin['packages'] if p['path'].lower().endswith('.'+kind)]
         src = suite/package['path']
@@ -140,6 +147,7 @@ def digest(path):
 
 
 def main():
+    assert os.environ.get('GITHUB_ACTIONS') == 'true' and os.name == 'posix'
     assert os.environ["GITHUB_REPOSITORY"] == REPO
     source = os.environ["STANDALONE_APP_COMMIT"]
     run_id = os.environ["STANDALONE_BUILD_RUN"]
@@ -212,6 +220,12 @@ def extract_app(bundle, studio, version, source, run_id, artifact, archive_hash,
               "studio": studio, "packageReport": report_name, "packageReportSha256":digest(out/report_name),
               "packages": [{"path": p.name,"canonicalMember":members[p.name], "sha256": digest(p), "bytes": p.stat().st_size} for p in packages],
               "signatureStatus": "not signature-certified by this QA: detached Linux OpenPGP signing belongs to the publishing job, which is not authorized"}
+    if os.environ.get('GITHUB_ACTIONS') == 'true':
+        deb, = [p for p in packages if p.suffix=='.deb']
+        fields={key:subprocess.check_output(['dpkg-deb','--field',str(deb),key],text=True).strip() for key in ['Package','Version','Architecture','Depends']}
+        assert fields['Package']==studio['programma'] and fields['Version']==version and fields['Architecture']=='amd64'
+        assert re.search(r'(^|[, ])zenity([ (,]|$)',fields['Depends']), f'{app} DEB must declare zenity at P4'
+        origin['debControl']=dict(path=deb.name,sha256=digest(deb),bytes=deb.stat().st_size,fields=fields,method='dpkg-deb --field on actual hash-verified original DEB; no install/native claim')
     if app == 'office':
         origin['signatures']=[]
         for package in packages:
