@@ -16,7 +16,11 @@ template assertion **fails**: lowercase and uppercase DPT both return false,
 expected true. POTX/OTP/STI controls return true; ordinary PPTX returns false.
 The assertion is retained unchanged. This is the same shared filename-set
 omission recorded for ETT in existing [#382](https://github.com/OpenAEC-Foundation/open-office-studio/issues/382),
-to which this DPT-only reproduction is added as a variant. No duplicate issue.
+to which this DPT-only reproduction was added as a variant. The title and
+criteria now explicitly cover ETT/DPT filename recognition; prior ETT evidence,
+status and labels are preserved, with the presentation component added. The
+verified update receipt is [issue382-update.json](issue382-update.json).
+No duplicate issue or product fix is included.
 
 The [complete official artifact ZIP](retained/dpt-source-and-policy-result.zip)
 is retained: artifact `14823851357`, 5648 bytes, SHA256
