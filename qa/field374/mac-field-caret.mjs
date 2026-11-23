@@ -24,8 +24,9 @@ export async function moveMacCaretToCachedFieldEnd({ page, root }) {
     Number.isFinite(paint.title.transform[key]) && Math.abs(paint.title.transform[key] - expected) <= 1e-9),
     "Require the fixture's actual identity Canvas transform");
   const projectedOffset = projection.queriedCaretEdge - projection.field.x;
-  // In pinned YrsInput, Home/End receive metaKey||ctrlKey as wholeDocument;
-  // Meta+ArrowUp/Right are not a reliable document-start/field-end contract.
+  // Home/End explicitly receive metaKey||ctrlKey as wholeDocument. APP also
+  // patches Command+Up/Down (#358). The failed old Up→Right sequence does not
+  // isolate which step failed; Right as field-end was not established.
   // The unchanged first paragraph contains exactly the original atomic field.
   await page.keyboard.press("Meta+Home");
   await page.keyboard.press("End");
