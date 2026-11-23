@@ -26,8 +26,13 @@ func text(_ element: AXUIElement, _ key: String) -> String {
     String((attr(element, key) as? String ?? "").prefix(240))
 }
 func summary(_ element: AXUIElement) -> [String: Any] {
-    ["role": text(element, kAXRoleAttribute), "title": text(element, kAXTitleAttribute),
-     "description": text(element, kAXDescriptionAttribute)]
+    let role = text(element, kAXRoleAttribute), title = text(element, kAXTitleAttribute)
+    let description = text(element, kAXDescriptionAttribute)
+    var result: [String: Any] = ["role": role, "title": title, "description": description]
+    if ["AXTextField", "AXSearchField"].contains(role) && [title, description].contains("Find what") {
+        result["value"] = text(element, kAXValueAttribute)
+    }
+    return result
 }
 func pointAndSize(_ element: AXUIElement) -> (CGPoint, CGSize)? {
     guard let p = attr(element, kAXPositionAttribute), let s = attr(element, kAXSizeAttribute),
@@ -80,6 +85,11 @@ func children(_ element: AXUIElement) -> [AXUIElement] {
     if count > 64 { report["childListsTruncated"] = true }
     guard AXUIElementCopyAttributeValues(element, kAXChildrenAttribute as CFString, 0, min(count, 64), &values) == .success else { return [] }
     return values as? [AXUIElement] ?? []
+}
+func tableCellText(_ element: AXUIElement, _ depth: Int = 0) -> String {
+    if depth > 8 || Date() >= deadline { return "" }
+    if text(element, kAXRoleAttribute) == "AXStaticText" { return text(element, kAXValueAttribute) }
+    return children(element).map { tableCellText($0, depth+1) }.joined()
 }
 func rawAttributes(_ element: AXUIElement, role: String) -> [String: Any] {
     var output: [String: Any] = [:]
@@ -143,27 +153,36 @@ if !AXIsProcessTrusted() {
     }
     var queue: [(AXUIElement, Int, Int)] = [(windows[0], 0, -1)]
     var index = 0; var tables: [[String: Any]] = []; var matches: [AXUIElement] = []
+    var findInputs: [[String: Any]] = []
     var rawNodes: [[String: Any]] = []
     while index < queue.count && index < 1000 && Date() < deadline {
         let (element, depth, parent) = queue[index]; index += 1
         let role = text(element, kAXRoleAttribute)
         let title = text(element, kAXTitleAttribute); let label = text(element, kAXDescriptionAttribute)
+        if ["AXTextField", "AXSearchField"].contains(role) && [title, label].contains("Find what") {
+            findInputs.append(summary(element))
+        }
         if action == "raw-snapshot" { rawNodes.append(["index": index-1, "parent": parent, "depth": depth, "attributes": rawAttributes(element, role: role)]) }
         if (action == "click-label" || action == "ax-press-label") && (title == target || label == target) &&
            ["AXButton", "AXRadioButton", "AXTab"].contains(role) { matches.append(element) }
+        if action == "click-input" && target == "Find what" && (title == target || label == target) &&
+           ["AXTextField", "AXSearchField"].contains(role) { matches.append(element) }
         if action == "click-cell" && ["AXStaticText", "AXCell"].contains(role) &&
            text(element, kAXValueAttribute).trimmingCharacters(in: .whitespacesAndNewlines) == target { matches.append(element) }
         if role == "AXTable" {
             let rows = attr(element, kAXRowsAttribute) as? [AXUIElement]
             let columns = attr(element, kAXColumnsAttribute) as? [AXUIElement]
             tables.append(["rows": rows?.count ?? 0, "columns": columns?.count ?? 0,
-                           "rowEvidenceAvailable": rows != nil, "columnEvidenceAvailable": columns != nil])
+                           "rowEvidenceAvailable": rows != nil, "columnEvidenceAvailable": columns != nil,
+                           "cellTexts": (rows ?? []).prefix(16).map { row in
+                               children(row).filter { text($0, kAXRoleAttribute) == "AXCell" }.prefix(16).map { tableCellText($0) }
+                           }])
         }
         // The synthetic fixture is in our own app, but avoid unbounded editor values.
         if role != "AXTextArea" && depth < 20 { queue.append(contentsOf: children(element).map { ($0, depth+1, index-1) }) }
         else if role != "AXTextArea" { report["depthBoundReached"] = true }
     }
-    report["tables"] = tables; report["visited"] = index
+    report["tables"] = tables; report["visited"] = index; report["findInputs"] = findInputs
     report["bounded"] = Date() >= deadline || index >= 1000
     if action == "raw-snapshot" {
         report["rawNodes"] = rawNodes
@@ -229,7 +248,24 @@ if !AXIsProcessTrusted() {
         } else { report["status"] = "blocked"; report["reason"] = "Only bounded synthetic character in the focused native document textarea is allowed" }
     } else if action == "click-cell" {
         report["status"] = "blocked"; report["reason"] = "Hidden AX table mirrors are not mouse targets; require the verified visible OCR body point"
-    } else if action == "click-label" {
+    } else if action == "type-test-text" {
+        let f = attr(app, kAXFocusedUIElementAttribute)
+        let element = f.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
+        let inDocument = element.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false
+        let inFind = element.map { ["AXTextField", "AXSearchField"].contains(text($0, kAXRoleAttribute)) && [text($0, kAXTitleAttribute), text($0, kAXDescriptionAttribute)].contains("Find what") } ?? false
+        if ((target == "newrow" && inDocument) || (target == "abc" && inFind)),
+           NSRunningApplication(processIdentifier: pid)?.isActive == true,
+           NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+            let units = Array(target.utf16)
+            for down in [true, false] {
+                let event = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: down)
+                event?.flags = []
+                units.withUnsafeBufferPointer { buffer in event?.keyboardSetUnicodeString(stringLength: buffer.count, unicodeString: buffer.baseAddress!) }
+                event?.postToPid(pid)
+            }
+            report["status"] = "input-sent"; report["testText"] = target
+        } else { report["status"] = "blocked"; report["reason"] = "Synthetic text requires its exact owned document or Find input focus" }
+    } else if action == "click-label" || action == "click-input" {
         if matches.count == 1, let (p, s) = pointAndSize(matches[0]) {
             let center = CGPoint(x: p.x+s.width/2, y: p.y+s.height/2)
             report["status"] = nativeMouseClick(center) ? "input-sent" : "blocked"
@@ -238,7 +274,8 @@ if !AXIsProcessTrusted() {
     } else if action == "chord" {
         let mappings: [String: (CGKeyCode, CGEventFlags)] = [
             "cmd-z": (6, .maskCommand), "cmd-shift-z": (6, [.maskCommand, .maskShift]),
-            "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand), "cmd-q": (12, .maskCommand)]
+            "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand), "cmd-q": (12, .maskCommand),
+            "cmd-f": (3, .maskCommand), "tab": (48, []), "shift-tab": (48, .maskShift), "escape": (53, [])]
         if let (code, flags) = mappings[target] {
             for down in [true, false] {
                 let event = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down)

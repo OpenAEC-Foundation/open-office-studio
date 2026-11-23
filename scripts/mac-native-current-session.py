@@ -56,8 +56,11 @@ def main():
     parser.add_argument("identity", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--acceptance", action="store_true")
+    parser.add_argument("--remaining361", action="store_true")
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text(encoding="utf-8"))
+    if args.remaining361 and (not args.acceptance or identity.get("remaining361Approved") is not True):
+        raise PermissionError("Remaining361 requires its own explicit QA scope")
     if args.acceptance and (identity.get("nativeBodyAcceptanceApproved") is not True or identity.get("diagnosticRenderingRoute") is not None):
         raise PermissionError("Acceptance needs an explicitly approved product package; a query-flag diagnostic cannot accept a product fix")
     if sys.platform != "darwin" or os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("OOS_361_EXECUTE") != "1" or identity.get("executionApproved") is not True:
@@ -76,6 +79,11 @@ def main():
                       limits=["Acceptance remains false until genuine native control preflight and the original table case both finish",
                               "Full issue361 Tab/Find/two-document cases are outside this bounded core",
                               "Original OS captures and independent DOCX oracles retained; no canvas readback or scripted model focus"])
+    if args.remaining361:
+        report.update(issue=361, native359Reopened=False,
+                      limits=["Only the missing361 controls are newly executed; earlier exact-package core is explicitly verified and reused",
+                              "New-host focus/save/Undo/Redo is checked before Tab/Find/two-document input",
+                              "Native modal-dialog Undo and signed-package combination remain separate"])
     app = program = pid = app_container = None
     mount = out / "mount"
     mounted = started = False
@@ -158,6 +166,14 @@ def main():
         wait(lambda: fixture.name in readiness_snapshot().get("window", {}).get("title", ""),
              "Owned document title did not become ready", 90)
         return pid
+
+    def open_additional_document(path):
+        if owned() != [pid]:
+            raise RuntimeError("Additional document requires the current single owned process")
+        previous_pid = pid
+        subprocess.run(["open", "-a", str(app), str(Path(path).resolve(strict=True))], check=True, timeout=20)
+        wait(lambda: owned() == [previous_pid] and Path(path).name in readiness_snapshot().get("window", {}).get("title", ""),
+             "Additional document did not enter the existing native process", 90)
 
     def capture_acceptance_failure():
         if not args.acceptance or pid is None or owned() != [pid]:
@@ -246,6 +262,19 @@ def main():
         for path, expected in [(original,"f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1"),(control,"c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d")]:
             if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
                 raise RuntimeError("Untouched baseline fixture bytes differ")
+        if args.remaining361:
+            report["experiment"] = "Only missing native361 controls; prior same-package body/core explicitly reused"
+            report["host"] = subprocess.check_output(["sw_vers"], text=True)
+            remaining = runpy.run_path(str(Path(__file__).with_name("mac-native-361-remaining.py")))
+            remaining["run_remaining"](action, launch_document, open_additional_document, quit_app, lambda: pid,
+                                        viewport["maximize_once"], readiness_snapshot, identity, ocr_binary,
+                                        out / "native361-remaining", report)
+            report.update(status="native361-remaining-passed", nativePass=True, native361RemainingPassed=True,
+                          issue361FullAcceptance=False,
+                          limits=["Only remaining Tab/cell typing/Find/two-document controls are newly executed",
+                                  "Earlier same-package body/column core and quit/reopen are explicitly reused",
+                                  "Native modal-dialog Undo and signed-package final combination are not executed here"])
+            return
         variants = [("table-original361",original),("saved-epub356-control",control)]
         report["fixtures"] = []
         report["experiment"] = "Current420 untouched original361 and saved356-control baseline before any editor input"
