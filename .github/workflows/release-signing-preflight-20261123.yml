@@ -71,10 +71,12 @@ jobs:
           $ErrorActionPreference = 'Stop'
           New-Item -ItemType Directory -Path proof | Out-Null
           $source = 'class Entry { static int Main() { return 0; } }'
-          [IO.File]::WriteAllText((Join-Path $PWD 'proof/synthetic-preflight.cs'), $source)
+          $sourcePath = Join-Path $PWD 'proof\synthetic-preflight.cs'
+          $exePath = Join-Path $PWD 'proof\synthetic-preflight.exe'
+          [IO.File]::WriteAllText($sourcePath, $source)
           $compiler = Join-Path $env:WINDIR 'Microsoft.NET/Framework64/v4.0.30319/csc.exe'
           if (-not (Test-Path -LiteralPath $compiler)) { throw 'Synthetic executable compiler is unavailable.' }
-          & $compiler /nologo /target:exe /out:proof/synthetic-preflight.exe proof/synthetic-preflight.cs
+          & $compiler /nologo /target:exe "/out:$exePath" $sourcePath
           if ($LASTEXITCODE -ne 0) { throw 'Synthetic executable compilation failed.' }
           $unsigned = (Get-FileHash -Algorithm SHA256 -LiteralPath proof/synthetic-preflight.exe).Hash.ToLowerInvariant()
           pwsh -NoProfile -File scripts/windows-sign.ps1 proof/synthetic-preflight.exe
