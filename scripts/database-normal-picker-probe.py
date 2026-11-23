@@ -12,6 +12,7 @@ import subprocess
 import time
 import sqlite3
 import re
+import sys
 import traceback
 import pyatspi
 
@@ -84,6 +85,8 @@ for kind in ['appimage','deb']:
     case=dict(kind=kind,status='running',normalProcessWithoutWebDriver=True,sourceCommit=source['sourceCommit'],sourceTree=source['sourceTree'],version=source['version'],identity=source['identity'],sourceConfigBinding=source['databaseIdentityEvidence'],preflightReportSha256=sha(ROOT/kind/'report.json'),packageSha256=source['package']['sha256'],expectedElfSha256=source['payloadExecutableSha256'],functionalAcceptanceClaim=False,snapshots={})
     results.append(case)
     process=None
+    observer=None
+    portal_log=None
     try:
         if kind=='deb':subprocess.run(['sudo','dpkg','--install',source['package']['path']],check=True)
         fixture=ROOT/f'normal-{kind}-input.sqlite';saved=ROOT/f'normal-{kind}-saved.sqlite'
@@ -93,32 +96,9 @@ for kind in ['appimage','deb']:
             db.executemany('INSERT INTO StandaloneItems VALUES(?,?,?)',[(1,'SyntheticAlpha',7),(2,'SyntheticBeta',11)])
             db.commit()
         original_sha=sha(fixture);case['fixtureSha256']=original_sha
-        input_dialog={}
         def check_focus():
             assert sha(f'/proc/{pid}/exe')==source['payloadExecutableSha256']
-            focus=cmd('xdotool','getwindowfocus',env=env)
-            owner=cmd('xdotool','getwindowpid',focus,env=env)
-            if owner==str(pid):return
-            assert input_dialog and focus==input_dialog['xid'] and owner==input_dialog['pid'],'Input requires the exact app or verified private-session OS dialog'
-            proc=Path('/proc')/owner;raw=(proc/'stat').read_text()
-            assert raw[raw.rindex(')')+2:].split()[19]==input_dialog['startTime'] and str((proc/'exe').resolve())==input_dialog['executable']
-            assert sha(proc/'exe')==input_dialog['executableSha256']
-        def bind_native_dialog(record):
-            input_dialog.clear()
-            if record['pid']==str(pid):return
-            proc=Path('/proc')/record['pid'];executable=str((proc/'exe').resolve())
-            providers={'/usr/libexec/xdg-desktop-portal-gtk':'org.freedesktop.impl.portal.desktop.gtk','/usr/libexec/xdg-desktop-portal-gnome':'org.freedesktop.impl.portal.desktop.gnome'}
-            assert executable in providers,'Unexpected native file-dialog owner: '+executable
-            entries=dict(item.split(b'=',1) for item in (proc/'environ').read_bytes().split(b'\0') if b'=' in item)
-            assert entries.get(b'DISPLAY')==env['DISPLAY'].encode(),'OS dialog must use the private remote display'
-            assert env['DBUS_SESSION_BUS_ADDRESS'].encode() in [entries.get(b'DBUS_SESSION_BUS_ADDRESS'),entries.get(b'DBUS_STARTER_ADDRESS')],'OS dialog must use the private session bus'
-            reply=cmd('gdbus','call','--session','--dest','org.freedesktop.DBus','--object-path','/org/freedesktop/DBus','--method','org.freedesktop.DBus.GetConnectionUnixProcessID',providers[executable],env=env)
-            assert re.search(r'uint32 (\d+)',reply).group(1)==record['pid'],'Actual desktopportal DBus owner PID differs'
-            package_owner=cmd('dpkg-query','-S',executable)
-            assert package_owner.startswith(Path(executable).name+': '),'OS provider binary is not from the expected OS package'
-            raw=(proc/'stat').read_text()
-            input_dialog.update(record,startTime=raw[raw.rindex(')')+2:].split()[19],executable=executable,executableSha256=sha(proc/'exe'),osPackageOwner=package_owner,privateDisplayVerified=True,privateSessionBusOwnerVerified=True)
-            case.setdefault('nativePortalBindings',[]).append(dict(input_dialog))
+            assert cmd('xdotool','getwindowpid',cmd('xdotool','getwindowfocus',env=env),env=env)==str(pid),'Ordinary app input requires its exact native PID'
         def text_present(*values):
             snapshot=accessible_snapshot(pid)
             text='\n'.join(n['name']+'\n'+n.get('text','') for n in snapshot if n['showing'])
@@ -206,11 +186,26 @@ for kind in ['appimage','deb']:
         sql('SELECT SUM(amount) AS SyntheticEditedTotal FROM StandaloneItems')
         case['snapshots']['edited-query']=wait(lambda:text_present('SyntheticEditedTotal','24'),'Actual edited sum 24')
         capture('edited')
+        portal_proof=ROOT/f'normal-{kind}-save-portal.json'
+        portal_ready=ROOT/f'normal-{kind}-save-ready.json'
+        portal_evidence=ROOT/f'normal-{kind}-save-protocol.json'
+        portal_log=(ROOT/f'normal-{kind}-save-observer.log').open('wb')
+        observer=subprocess.Popen(['/usr/bin/python3',str(Path(__file__).with_name('linux-stw-portal.py')),'--pid',str(pid),'--name',fixture.name,'--member','SaveFile','--report',str(portal_proof),'--ready',str(portal_ready)],env=env,stdout=portal_log,stderr=subprocess.STDOUT,start_new_session=True)
+        ready=wait(lambda:json.loads(portal_ready.read_text()) if portal_ready.is_file() else None,'Proven passive portal monitor readiness')
+        assert ready['ownedPid']==pid and ready['status']=='ready'
         keys('ctrl+s')
-        save_picker=wait(lambda:(lambda focus:dict(xid=focus,title=cmd('xdotool','getwindowname',focus,env=env),pid=cmd('xdotool','getwindowpid',focus,env=env)))(cmd('xdotool','getwindowfocus',env=env)) if cmd('xdotool','getwindowname',cmd('xdotool','getwindowfocus',env=env),env=env)=='Save database export' else None,'Real native database export picker')
-        case['nativeSavePicker']=save_picker
-        bind_native_dialog(save_picker)
-        keys('ctrl+l');type_text(str(saved));keys('alt+s')
+        proc=Path('/proc')/str(pid);raw=(proc/'stat').read_text();start=raw[raw.rindex(')')+2:].split()[19]
+        directory=Path('.local/linux-p2-native')/f'database-normal-{kind}';directory.mkdir(parents=True,exist_ok=True)
+        try:
+            cmd('node',str(Path(__file__).with_name('database-native-save-dialog.mjs')),str(pid),start,source['payloadExecutableSha256'],str(portal_proof),str(saved),str(portal_evidence),str(directory/'save-native-picker.png'),env=env)
+        finally:
+            if portal_evidence.is_file():case['nativeSaveProtocol']=json.loads(portal_evidence.read_text())
+            if observer.poll() is None:observer.terminate()
+            observer.wait(timeout=5);portal_log.close()
+            case['portalObserver']=json.loads(portal_proof.read_text())
+            assert case['portalObserver']['monitorClosed'] is True
+        assert case['nativeSaveProtocol']['status']=='passed-credential-bound-native-save'
+        cmd('xdotool','windowactivate','--sync',xid,env=env);check_focus()
         wait(lambda:saved.is_file() and saved.stat().st_size>0,'Native export wrote actual SQLite bytes')
         with sqlite3.connect('file:'+str(saved)+'?mode=ro',uri=True) as db:
             assert db.execute('SELECT id,label,amount,typeof(amount) FROM StandaloneItems ORDER BY id').fetchall()==[(1,'SyntheticAlpha',13,'integer'),(2,'SyntheticBeta',11,'integer')]
@@ -231,6 +226,23 @@ for kind in ['appimage','deb']:
         case.update(status='failed',error=repr(error),traceback=traceback.format_exc())
         if 'pid' in locals():case['failureSnapshot']=accessible_snapshot(pid)
     finally:
+        if observer and observer.poll() is None:
+            observer.terminate();observer.wait(timeout=5)
+        if portal_log and not portal_log.closed:portal_log.close()
+        protocol=case.get('nativeSaveProtocol',{})
+        peer=protocol.get('input',{}).get('binding')
+        if peer:
+            try:
+                peer_proc=Path('/proc')/str(peer['pid'])
+                cleanup=dict(pid=peer['pid'],credentialBoundRequest=protocol['attribution']['correlation']['requestHandle'])
+                if peer_proc.exists():
+                    raw=(peer_proc/'stat').read_text()
+                    assert raw[raw.rindex(')')+2:].split()[19]==peer['startTime'] and str((peer_proc/'exe').resolve())==peer['executable'] and sha(peer_proc/'exe')==peer['sha256']
+                    os.kill(peer['pid'],15)
+                    wait(lambda:not peer_proc.exists(),'Attributed private GTK peer stopped normally',5)
+                cleanup['closed']=True;case['portalPeerCleanup']=cleanup
+            except Exception as error:
+                case['portalPeerCleanupError']=repr(error);case['status']='failed'
         case['focusObservations']=observations
         try:
             if xid and owned(home):
@@ -263,6 +275,7 @@ for kind in ['appimage','deb']:
         case['remainingOwnedProcesses']=owned(home)
         case['profilePaths']=[str(p.relative_to(home)) for p in home.rglob('*')]
         assert not any('org.openaec.office-studio' in p for p in case['profilePaths'])
+        if case['status']=='passed':assert any('org.openaec.database-studio' in p and ('webkit' in p.lower() or 'storage' in p.lower()) for p in case['profilePaths'])
         if not case['remainingOwnedProcesses']:shutil.rmtree(home)
         if kind=='deb':subprocess.run(['sudo','dpkg','--remove','open-database-studio'],check=True)
         (ROOT/'normal-picker-differential.json').write_text(json.dumps(results,indent=2)+'\n')
