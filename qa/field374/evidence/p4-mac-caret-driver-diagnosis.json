@@ -1,0 +1,47 @@
+{
+  "scope": "Mac-only browser QA navigation diagnosis, not a product navigation bug assertion",
+  "applicationCommit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+  "failedRun": 45172148763,
+  "job": 137684110044,
+  "officialArtifactBindingSuppliedByRoot": {
+    "id": 14818247540,
+    "zipSha256": "56c49dedbf3a3b38993d45a0f276efa3a4f4ab1ff0486f064991fa7d0b2cf634"
+  },
+  "originalInputs": [
+    {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-macOS\\app\\.local\\writer-481-QA-field-normal\\failure.png",
+      "bytes": 117712,
+      "sha256": "47c77e2f953122527ca78fe45956a7e10bb5b0ef0edc6273c168aef526cdac40"
+    },
+    {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-macOS\\app\\.local\\writer-481-QA-field-normal\\report.json",
+      "bytes": 6340,
+      "sha256": "272f86c4706a6982416f43180a4ed666671a4ed5aaef2e7190750ed4f73e6bff"
+    },
+    {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-macOS\\app\\.local\\writer-481-QA-field-normal\\unmodified-control-paint.json",
+      "bytes": 811,
+      "sha256": "c9a621c4c65b87b1c85f4a064db99117ca20f8c4b999d7e846f1f2d7e1d5f202"
+    }
+  ],
+  "failureImageDirectlyInspected": true,
+  "observedFailure": "Marker appears before original REPORT TITLE; complete title is visible without overlap. The after-edit suffix oracle correctly fails.",
+  "source": {
+    "package": "@betteroffice/docx-react",
+    "version": "0.5.1",
+    "path": "node_modules/@betteroffice/docx-react/dist/index.mjs",
+    "sha256": "d17b7a630163623e99d73b8c4b3678397ec0598e332237df1e4737767799e58d",
+    "facts": [
+      "Pinned YrsInput sends metaKey||ctrlKey as wholeDocument only for Home/End.",
+      "Its up/down branch does not make Meta+ArrowUp a document-start contract.",
+      "Its home branch uses first paragraph offset0 when wholeDocument is true; plain End uses current paragraph length.",
+      "DOM caret uses data-testid=caret and read-only getBoundingClientRect geometry."
+    ]
+  },
+  "delta": [
+    "Mac only: actual Meta+Home then End, followed by read-only focused body-input/caret geometry preflight against the observed original title.",
+    "Wrong placement fails before typing; no model/selection setter or product patch.",
+    "Win/Linux keep exact Control+Home then End; shared marker, source/cache/boundary audits, paint/capture and save/fresh-reopen criteria unchanged."
+  ],
+  "validation": "Syntax checked locally; functional Mac evidence awaits one root-coordinated Mac-only rerun at the exact P4 source/build."
+}

@@ -238,3 +238,27 @@ downloaded DOCX contracts; those results are not asserted by this image review.
 The existing font-substitution notice is visible; no cross-OS pixel/font identity
 or full-document fidelity is claimed. macOS browser images and all P4 native
 STW acceptance remain pending. This review does not grant native approval.
+
+## P4 Mac edit-position driver follow-up
+
+Run45172148763/job137684110044 reached the real edit with the marker before
+the original title. The original failure PNG was directly reviewed: marker and
+original title are complete and separated, but the required suffix order is
+wrong. The unchanged Windows-output/control stages passed; the after-edit oracle
+correctly failed. This is a wrong driver edit position, not a proved product
+navigation bug. Original failure/paint/report hashes and source findings are
+retained in `evidence/p4-mac-caret-driver-diagnosis.json`.
+
+Pinned docx-react0.5.1 YrsInput applies metaKey||ctrlKey as wholeDocument to
+Home/End. Its up/down branch does not make Meta+ArrowUp a document-start
+contract. The Mac-only QA branch now uses real Meta+Home then End and verifies
+the focused body input plus DOM caret position against the observed original
+title ink/baseline before typing. `mac-field-caret.mjs` retains its read-only
+geometry preflight and original PNG; wrong placement fails before mutation.
+No document model/selection setter or product patch is used.
+
+Windows/Linux retain their exact Control+Home then End path. Shared source,
+marker/cache/boundary, paint/capture and four final-image/save/fresh-reopen
+criteria remain unchanged. Both changed JS modules pass syntax checking;
+functional Mac validation awaits the one authorized root-coordinated Mac-only
+rerun at the same P4 source/build. No local/native GUI or own build is started.

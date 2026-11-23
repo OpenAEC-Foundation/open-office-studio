@@ -52,7 +52,12 @@ and opens that output in a fresh browser context. It observes real Canvas title
 and suffix paint in the page/worker by forwarding every original draw call
 unchanged. It checks actual glyph bounds, captures images and treats missing
 observations as driver failures. It never sets the editor model or field values.
-Platform shortcuts use Meta on macOS and Control elsewhere.
+Platform shortcuts use Meta on macOS and Control elsewhere. The Mac edit
+preflight uses the pinned input handler's actual `Meta+Home` then `End` route.
+Before typing it reads the DOM caret geometry and compares it with the existing
+observed original title ink/baseline, retaining a preflight report and original
+PNG. Wrong placement fails the driver before mutation. It does not set editor
+selection/model state. Windows/Linux keep their existing Control+Home then End.
 
 After a complete current worker frame, `capture.mjs` passively waits two main
 animation frames per sample and requires three identical original full-page PNGs

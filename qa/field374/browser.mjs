@@ -124,8 +124,13 @@ try {
   await open(await fixture("converted.docx"), "Original-control.docx"); await snapshot("unmodified-control", "");
   const input = page.locator('[data-testid="yrs-input"]:visible');
   await page.locator(".canvas-page canvas:visible").first().click(); assert(await input.evaluate(el => el === document.activeElement));
-  await page.keyboard.press(process.platform === "darwin" ? "Meta+ArrowUp" : "Control+Home");
-  await page.keyboard.press(process.platform === "darwin" ? "Meta+ArrowRight" : "End");
+  if (process.platform === "darwin") {
+    const { moveMacCaretToCachedFieldEnd } = await import("./mac-field-caret.mjs");
+    report.macCaretPreflight = await moveMacCaretToCachedFieldEnd({ page, root });
+  } else {
+    await page.keyboard.press("Control+Home");
+    await page.keyboard.press("End");
+  }
   await page.keyboard.type(MARKER); await snapshot("after-real-edit", MARKER);
   const saved = await save("after-edit-save", MARKER); await context.close(); context = undefined;
   await open(saved, "Fresh-reopen.docx"); await snapshot("fresh-context-reopen", MARKER); await save("reopened-save", MARKER);
