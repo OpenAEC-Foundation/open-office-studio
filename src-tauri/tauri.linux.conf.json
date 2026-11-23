@@ -228,11 +228,13 @@
     },
     "linux": {
       "deb": {
+        "depends": ["zenity"],
         "files": {
           "/usr/libexec/Open Office Studio/kantoorruntime": "resources/kantoorruntime"
         }
       },
       "rpm": {
+        "depends": ["zenity"],
         "files": {
           "/usr/libexec/Open Office Studio/kantoorruntime": "resources/kantoorruntime"
         }

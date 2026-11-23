@@ -210,6 +210,22 @@ export function OfficeStudio() {
       meld(tekst, tabs.toestandRef.current.actief ?? undefined, opties),
     [meld, tabs.toestandRef],
   );
+  useEffect(() => {
+    if (!tauri) return;
+    let actief = true;
+    let stop: (() => void) | undefined;
+    void import("@tauri-apps/api/event").then(async ({ listen }) => {
+      const klaar = await listen<string>("office-native-dialog-error", (e) => {
+        if (actief) meld(e.payload, null, "fout");
+      });
+      if (actief) stop = klaar;
+      else klaar();
+    });
+    return () => {
+      actief = false;
+      stop?.();
+    };
+  }, [meld]);
   // Updates (#26): melding rechtsonder voor het hele venster; met knoppen blijft zij staan.
   useUpdateBijStart((tekst, toon, acties) =>
     meld(tekst, null, {
@@ -368,10 +384,16 @@ export function OfficeStudio() {
       !verliesvrij &&
       werkbestand
     ) {
-      const antwoord = await bevestigFormaat(
-        werkbestand.naam,
-        verliesmeldingVoor(tabblad, plan.ext),
-      ).catch(() => "opslaan-als" as const);
+      let antwoord: Awaited<ReturnType<typeof bevestigFormaat>>;
+      try {
+        antwoord = await bevestigFormaat(
+          werkbestand.naam,
+          verliesmeldingVoor(tabblad, plan.ext),
+        );
+      } catch (e) {
+        meld(t("errors.saveFailed", { error: String(e) }), tabblad.id, "fout");
+        return false;
+      }
       if (antwoord === "annuleren") return false;
       if (antwoord === "opslaan-als") return vraagOpslaanAls(tabblad.id);
       tabs.werkBij(tabblad.id, {
@@ -695,7 +717,10 @@ export function OfficeStudio() {
         return false;
       if (!verzendingRef.current) return true;
       const { invoke } = await import("@tauri-apps/api/core");
-      return invoke<boolean>("bevestig_verlaten", { aantal: 1 });
+      return invoke<boolean>("bevestig_verlaten", { aantal: 1 }).catch((e) => {
+        meld(String(e), null, "fout");
+        return false;
+      });
     },
   });
 

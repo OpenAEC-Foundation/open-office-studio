@@ -84,15 +84,18 @@ pub async fn bewaar_database_export(
         return Err(crate::taal::t("errors.databaseExport.extensionMismatch"));
     }
     if pad.exists()
-        && rfd::AsyncMessageDialog::new()
-            .set_title(crate::taal::t("dialogs.databaseExport.replaceTitle"))
-            .set_description(crate::taal::t_met(
-                "dialogs.replaceFile.message",
-                &[("path", &pad.display().to_string())],
-            ))
-            .set_buttons(rfd::MessageButtons::YesNo)
-            .show()
-            .await
+        && crate::native_dialog::toon(
+            rfd::AsyncMessageDialog::new()
+                .set_title(crate::taal::t("dialogs.databaseExport.replaceTitle"))
+                .set_description(crate::taal::t_met(
+                    "dialogs.replaceFile.message",
+                    &[("path", &pad.display().to_string())],
+                ))
+                .set_buttons(rfd::MessageButtons::YesNo)
+                .show(),
+            crate::taal::t("errors.nativeDialogMissing"),
+        )
+        .await?
             != rfd::MessageDialogResult::Yes
     {
         return Ok(None);

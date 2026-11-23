@@ -671,15 +671,19 @@ pub async fn email_bewaar_bestand(request: tauri::ipc::Request<'_>) -> Uitkomst<
     };
     let pad = bestand.path().to_path_buf();
     if pad.exists()
-        && rfd::AsyncMessageDialog::new()
-            .set_title("Bestand vervangen")
-            .set_description(format!(
-                "Het bestand {} bestaat al. Vervangen?",
-                pad.display()
-            ))
-            .set_buttons(rfd::MessageButtons::YesNo)
-            .show()
-            .await
+        && crate::native_dialog::toon(
+            rfd::AsyncMessageDialog::new()
+                .set_title("Bestand vervangen")
+                .set_description(format!(
+                    "Het bestand {} bestaat al. Vervangen?",
+                    pad.display()
+                ))
+                .set_buttons(rfd::MessageButtons::YesNo)
+                .show(),
+            crate::taal::t("errors.nativeDialogMissing"),
+        )
+        .await
+        .map_err(MailFout::niet_beschikbaar)?
             != rfd::MessageDialogResult::Yes
     {
         return Ok(None);

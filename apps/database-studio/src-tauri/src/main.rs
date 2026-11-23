@@ -4,6 +4,8 @@ use std::{io::Write, path::Path};
 // Native teksten in 31 talen, gedeeld met Open Office Studio (zie docs/i18n.md).
 #[path = "../../../../src-tauri/src/taal.rs"]
 mod taal;
+#[path = "../../../../src-tauri/src/native_dialog.rs"]
+mod native_dialog;
 
 const SQLITE_KOP: &[u8] = b"SQLite format 3\0";
 
@@ -96,12 +98,15 @@ async fn bewaar_database_export(
         return Err(taal::t("errors.databaseExport.extensionMismatch"));
     }
     if pad.exists()
-        && rfd::AsyncMessageDialog::new()
-            .set_title(taal::t("dialogs.databaseExport.replaceTitle"))
-            .set_description(taal::t("dialogs.databaseExport.replaceMessage"))
-            .set_buttons(rfd::MessageButtons::YesNo)
-            .show()
-            .await
+        && native_dialog::toon(
+            rfd::AsyncMessageDialog::new()
+                .set_title(taal::t("dialogs.databaseExport.replaceTitle"))
+                .set_description(taal::t("dialogs.databaseExport.replaceMessage"))
+                .set_buttons(rfd::MessageButtons::YesNo)
+                .show(),
+            taal::t("errors.nativeDialogMissing"),
+        )
+        .await?
             != rfd::MessageDialogResult::Yes
     {
         return Ok(None);

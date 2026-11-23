@@ -132,14 +132,17 @@ pub fn wijzigingsstatus(
 }
 
 #[tauri::command]
-pub async fn bevestig_verlaten(aantal: Option<u32>) -> bool {
-    rfd::AsyncMessageDialog::new()
-        .set_title(crate::taal::t("dialogs.unsavedChanges.title"))
-        .set_description(sluitvraag(aantal.unwrap_or(1)))
-        .set_buttons(rfd::MessageButtons::YesNo)
-        .show()
-        .await
-        == rfd::MessageDialogResult::Yes
+pub async fn bevestig_verlaten(aantal: Option<u32>) -> Result<bool, String> {
+    crate::native_dialog::toon(
+        rfd::AsyncMessageDialog::new()
+            .set_title(crate::taal::t("dialogs.unsavedChanges.title"))
+            .set_description(sluitvraag(aantal.unwrap_or(1)))
+            .set_buttons(rfd::MessageButtons::YesNo)
+            .show(),
+        crate::taal::t("errors.nativeDialogMissing"),
+    )
+    .await
+    .map(|keuze| keuze == rfd::MessageDialogResult::Yes)
 }
 
 /// Sluitbeveiliging per venster; de app stopt als het laatste venster sluit.
@@ -167,9 +170,18 @@ pub fn bij_venstergebeurtenis(venster: &tauri::Window, gebeurtenis: &tauri::Wind
                         .lock()
                         .map(|mut s| s.remove(venster.label()))
                         .unwrap_or(false);
-                    if onbeantwoord && bevestig_verlaten(Some(aantal)).await {
-                        venster.state::<Vensters>().vergeet(venster.label());
-                        let _ = venster.destroy();
+                    if onbeantwoord {
+                        match bevestig_verlaten(Some(aantal)).await {
+                            Ok(true) => {
+                                venster.state::<Vensters>().vergeet(venster.label());
+                                let _ = venster.destroy();
+                            }
+                            Err(fout) => {
+                                eprintln!("{fout}");
+                                let _ = venster.emit("office-native-dialog-error", fout);
+                            }
+                            Ok(false) => {}
+                        }
                     }
                 });
             }

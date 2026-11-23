@@ -119,7 +119,7 @@ def deb(pakket, map, versie, programma="open-office-studio"):
         eis(opdracht("dpkg-deb", "--field", pakket, veld).strip() == verwacht,
             f"Verkeerde DEB-{veld}; verwacht {verwacht}.")
     afhankelijkheden = opdracht("dpkg-deb", "--field", pakket, "Depends")
-    for bibliotheek in ("libwebkit2gtk-4.1-0", "libgtk-3-0"):
+    for bibliotheek in ("libwebkit2gtk-4.1-0", "libgtk-3-0", "zenity"):
         eis(bibliotheek in afhankelijkheden, f"DEB-afhankelijkheid ontbreekt: {bibliotheek}.")
     opdracht("dpkg-deb", "--extract", pakket, map)
     elf_x64(map / f"usr/bin/{programma}")

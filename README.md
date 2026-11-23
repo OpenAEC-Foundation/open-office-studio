@@ -114,6 +114,16 @@ shasum -a 256 Open.Office.Studio_VERSION_aarch64.dmg      # macOS: compare with 
 Get-FileHash .\Open.Office.Studio_VERSION_x64-setup.exe -Algorithm SHA256   # Windows: compare with SHA256SUMS
 ```
 
+### Linux: native confirmations
+
+All seven Linux products require `zenity` for native confirmation dialogs.
+Install DEB packages with `sudo apt install ./PACKAGE.deb` so their declared
+dependencies are resolved. AppImage users must install the `zenity` package
+through their distribution's package manager. If it is missing or is not
+executable through PATH, the app reports the missing requirement before a
+confirmation; the requested overwrite or close is not approved. File pickers
+continue to use the desktop portal.
+
 ### Linux: media support
 
 The Linux app uses WebKitGTK, which plays audio and video through GStreamer. If the app reports that media cannot be played, install the base and good plugin sets, for example on Debian/Ubuntu:

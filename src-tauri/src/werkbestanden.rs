@@ -338,17 +338,20 @@ pub async fn bewaar_document(
         let tekst = crate::taal::t_met(sleutel, &[("name", &naam)]);
         let overschrijven = crate::taal::t("dialogs.fileChanged.overwrite");
         let opslaan_als = crate::taal::t("dialogs.saveAsEllipsis");
-        let keuze = rfd::AsyncMessageDialog::new()
-            .set_title(crate::taal::t("dialogs.fileChanged.title"))
-            .set_description(tekst)
-            .set_level(rfd::MessageLevel::Warning)
-            .set_buttons(rfd::MessageButtons::YesNoCancelCustom(
-                overschrijven.clone(),
-                opslaan_als.clone(),
-                crate::taal::t("dialogs.cancel"),
-            ))
-            .show()
-            .await;
+        let keuze = crate::native_dialog::toon(
+            rfd::AsyncMessageDialog::new()
+                .set_title(crate::taal::t("dialogs.fileChanged.title"))
+                .set_description(tekst)
+                .set_level(rfd::MessageLevel::Warning)
+                .set_buttons(rfd::MessageButtons::YesNoCancelCustom(
+                    overschrijven.clone(),
+                    opslaan_als.clone(),
+                    crate::taal::t("dialogs.cancel"),
+                ))
+                .show(),
+            crate::taal::t("errors.nativeDialogMissing"),
+        )
+        .await?;
         match keuze {
             rfd::MessageDialogResult::Custom(k) if k == overschrijven => {
                 uitkomst = schrijf(true, bytes).await.map_err(|e| e.to_string())??;
@@ -449,7 +452,7 @@ pub fn bij_venstergebeurtenis<R: tauri::Runtime>(
 
 /// Eenmalige vraag vóór terugschrijven in een niet-eigen formaat (ODT, DOC, …).
 #[tauri::command]
-pub async fn bevestig_formaat(naam: String, melding: Option<String>) -> String {
+pub async fn bevestig_formaat(naam: String, melding: Option<String>) -> Result<String, String> {
     let naam: String = naam.chars().take(200).collect();
     let ext = extensie(Path::new(&naam)).to_uppercase();
     let mut tekst = crate::taal::t_met(
@@ -464,25 +467,31 @@ pub async fn bevestig_formaat(naam: String, melding: Option<String>) -> String {
     tekst.push_str(&crate::taal::t("dialogs.foreignFormat.hint"));
     let bijwerken = crate::taal::t_met("dialogs.foreignFormat.update", &[("format", &ext)]);
     let opslaan_als = crate::taal::t("dialogs.saveAsEllipsis");
-    let keuze = rfd::AsyncMessageDialog::new()
-        .set_title(crate::taal::t_met("dialogs.foreignFormat.title", &[("format", &ext)]))
-        .set_description(tekst)
-        .set_level(rfd::MessageLevel::Warning)
-        .set_buttons(rfd::MessageButtons::YesNoCancelCustom(
-            bijwerken.clone(),
-            opslaan_als.clone(),
-            crate::taal::t("dialogs.cancel"),
-        ))
-        .show()
-        .await;
-    match keuze {
+    let keuze = crate::native_dialog::toon(
+        rfd::AsyncMessageDialog::new()
+            .set_title(crate::taal::t_met(
+                "dialogs.foreignFormat.title",
+                &[("format", &ext)],
+            ))
+            .set_description(tekst)
+            .set_level(rfd::MessageLevel::Warning)
+            .set_buttons(rfd::MessageButtons::YesNoCancelCustom(
+                bijwerken.clone(),
+                opslaan_als.clone(),
+                crate::taal::t("dialogs.cancel"),
+            ))
+            .show(),
+        crate::taal::t("errors.nativeDialogMissing"),
+    )
+    .await?;
+    Ok(match keuze {
         rfd::MessageDialogResult::Yes => "ja",
         rfd::MessageDialogResult::Custom(k) if k == bijwerken => "ja",
         rfd::MessageDialogResult::No => "opslaan-als",
         rfd::MessageDialogResult::Custom(k) if k == opslaan_als => "opslaan-als",
         _ => "annuleren",
     }
-    .into()
+    .into())
 }
 
 /// Vergeet het token van een gesloten tabblad.

@@ -45,9 +45,11 @@
     },
     "linux": {
       "deb": {
+        "depends": ["zenity"],
         "desktopTemplate": "linux/open-database-studio.desktop.hbs"
       },
       "rpm": {
+        "depends": ["zenity"],
         "desktopTemplate": "linux/open-database-studio.desktop.hbs"
       }
     }

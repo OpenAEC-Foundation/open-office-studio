@@ -6,6 +6,7 @@ mod documentkoppeling;
 mod email;
 mod herstel;
 mod lettertypen;
+mod native_dialog;
 mod recent;
 mod systeembestanden;
 mod taal;
@@ -147,15 +148,18 @@ async fn kies_opslagpad(
         return Err(taal::t("errors.file.extensionMismatch"));
     }
     if pad.exists() {
-        let bevestiging = rfd::AsyncMessageDialog::new()
-            .set_title(taal::t("dialogs.replaceFile.title"))
-            .set_description(taal::t_met(
-                "dialogs.replaceFile.message",
-                &[("path", &pad.display().to_string())],
-            ))
-            .set_buttons(rfd::MessageButtons::YesNo)
-            .show()
-            .await;
+        let bevestiging = native_dialog::toon(
+            rfd::AsyncMessageDialog::new()
+                .set_title(taal::t("dialogs.replaceFile.title"))
+                .set_description(taal::t_met(
+                    "dialogs.replaceFile.message",
+                    &[("path", &pad.display().to_string())],
+                ))
+                .set_buttons(rfd::MessageButtons::YesNo)
+                .show(),
+            taal::t("errors.nativeDialogMissing"),
+        )
+        .await?;
         if bevestiging != rfd::MessageDialogResult::Yes {
             return Ok(None);
         }
