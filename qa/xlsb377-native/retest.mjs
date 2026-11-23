@@ -21,7 +21,9 @@ const exec = promisify(execFile), hash = (b) => createHash("sha256").update(b).d
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const identity = JSON.parse(await readFile('.local/xlsb377-input/identity.json', 'utf8'));
 assert.equal(identity.issue, 377); assert.equal(identity.executionApproved, true);
-assert.notEqual(identity.sourceCommit, 'dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b', 'Old P2 is not a fixed-package retest');
+assert.equal(identity.sourceCommit, '98b340429436cf597a569549d043bd75b486e2ab', 'Explicit frozen P3 source');
+assert.equal(identity.sourceTree, '780c0789c8badedc6760a8402a6994154a3bf402');
+assert.equal(identity.version, '2026.48.1');
 assert.equal(git('rev-parse', 'HEAD'), identity.sourceCommit);
 assert.equal(git('rev-parse', 'HEAD^{tree}'), identity.sourceTree);
 assert.equal(git('status', '--porcelain', '--untracked-files=no'), '');
@@ -189,15 +191,19 @@ async function proposal(label, pointer=false) {
   await focusGrid();
   if(pointer) await click('.office-snelknop[aria-label="Save"]');
   else await key('ctrl+s');
-  const actual = await waitFor(async()=>evaluate(()=>{
-    const dialog=document.querySelector('.opslaanals[role="dialog"]');
-    return dialog?.getClientRects().length ? {
-      extension:dialog.querySelector('.opslaanals-naam em')?.textContent,
-      filename:dialog.querySelector('.opslaanals-naam input')?.value,
-      runtime:dialog.querySelector('.opslaanals-runtime')?.textContent,
-      text:dialog.textContent,
-    } : null;
-  }), 'Actual '+label+' opens visible app XLSX Save As');
+  const actual = await waitFor(async()=>{
+    const state = await evaluate(()=>{
+      const dialog=document.querySelector('.opslaanals[role="dialog"]');
+      return dialog?.getClientRects().length ? {
+        extension:dialog.querySelector('.opslaanals-naam em')?.textContent,
+        filename:dialog.querySelector('.opslaanals-naam input')?.value,
+        runtime:dialog.querySelector('.opslaanals-runtime')?.textContent,
+        text:dialog.textContent,
+      } : null;
+    });
+    report.lastProposal = state;
+    return state?.extension === '.xlsx' && state.runtime?.includes(bundledLabel) ? state : null;
+  }, 'Actual '+label+' opens XLSX Save As with resolved bundled-runtime status');
   assert.equal(actual.extension,'.xlsx');
   assert(actual.runtime.includes(bundledLabel),'Approved bundled runtime is visibly selected');
   report.checks.push({label,proposal:actual});
