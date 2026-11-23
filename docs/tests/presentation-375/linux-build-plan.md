@@ -1,7 +1,7 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: the allocated preparation window is exhausted; no LibreOffice target
-compilation or patched runtime acceptance occurred.** This is a private QA witness for the reviewed importer patch,
+**Status: an independently allocated second witness is running; no LibreOffice target
+compilation or patched runtime acceptance has yet been verified.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -218,3 +218,28 @@ work. The already verified source patch/fixture hashes, initializer corrections
 and actual provider receipt can be reused; a new build must still verify its
 own VM/source/toolchain and record its exact resulting binary identities. No
 main/tag/version/catalog/release intake changed.
+
+## Independent second allocation (2026-11-23)
+
+After the original preparation window ended, the user explicitly requested a
+new integration-coordinated bounded build. Integration authorized exactly one
+independent witness on QA `73653c134cf6a049e273b975ab9b8452b2f45af3`, retaining
+patch SHA256 `e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4`
+and the verified distribution Python binding. This does not relabel or extend
+the original failed allocation.
+
+Before dispatch, start epoch `1795439943` was recorded: **14:19:03 CET**. The
+preparation deadline is **15:04:03 CET**, the stage-controller deadline is
+**18:39:03 CET**, and the overall end is **18:49:03 CET**, including ten minutes
+reserved for actual upload/cleanup. Compiler/test time is at most 210 minutes
+and also bounded by the remaining overall allocation. A new real configure,
+compiler or test failure ends this attempt without automatic repair/retry or
+another VM.
+
+[Run 45182719759](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45182719759),
+job `137720371933`, confirms the exact QA commit and manual dispatch. It passed
+the fresh VM resource/toolchain gate and fixed application-dependency step.
+Detailed source/configuration/compile results remain pending. The complete
+allocation receipt is [`second-source-allocation.json`](second-source-allocation.json).
+This is outside P5 and current release intake; no application build, runtime pin,
+main/tag/publication or portable-runtime claim follows from this witness.
