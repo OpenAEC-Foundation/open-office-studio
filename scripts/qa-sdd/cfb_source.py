@@ -83,6 +83,21 @@ def native_pages(main):
                 assert right>=left and bottom>=top
                 page["leafObjects"].append({"offset":a,"bytes":u32(main,a+6),"type":u16(main,a+14),"boundsNative":bounds,
                     "rectEMU":{"x":left*360,"y":top*360,"width":(right-left)*360,"height":(bottom-top)*360}})
+                leaf=page["leafObjects"][-1]
+                if leaf["type"]==2:
+                    # SdrGraphicPath version17 stores actual endpoints in its
+                    # final nested polygon record. The generic cached rectangle
+                    # also includes paint/selection margins and is not the line.
+                    record=main[a:a+leaf["bytes"]];path=record[-30:]
+                    assert (u32(path,0),u32(path,4),u16(path,8),u16(path,10))==(30,26,1,2)
+                    assert path[28:]==b"\0\0"
+                    points=[[i32(path,k),i32(path,k+4)] for k in (12,20)]
+                    px=min(p[0] for p in points);py=min(p[1] for p in points)
+                    rx=max(p[0] for p in points);by=max(p[1] for p in points)
+                    leaf["cachedPaintRectEMU"]=leaf["rectEMU"]
+                    leaf["rectEMU"]={"x":px*360,"y":py*360,"width":(rx-px)*360,"height":(by-py)*360}
+                    leaf["linePointsNative"]=points
+                    leaf["geometryMeaning"]="Native path endpoint bounds; cached painted/selection bounds retained separately"
             q+=n
         assert main[q:q+4]==b"DrXX"
         pages.append(page)

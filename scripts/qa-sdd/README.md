@@ -18,6 +18,8 @@ Initial source-only run `45162187707` caught a harness reference-reader omission
 
 The geometry budget is fixed before testing at 995 EMU: one native 0.01mm unit (360 EMU) plus one intermediate twip (635 EMU). The independent OOXML reader flattens groups to absolute positions, checks native page/leaf/text bounds and exact paragraphs, then repeats after the planned title-prefix edit and fresh reopen.
 
+The first actual converter/engine run `45162378106` completed real editor operations and passed31/33 source checks. Its two failures were in the QA source geometry: generic line rectangles include paint/selection margins. Primary `StarObjectSmallGraphic.cxx::readSVDRObjectPath` specifies a separate nested polygon record with actual path endpoints. Independent read-only replay `45163296441` decoded those original source points and passed all33 checks on each unchanged converter/saved/reopened output, with no tolerance change, converter rerun or expectation learned from output. The main native source reader now uses those endpoint records for type2 lines and retains cached paint rectangles separately. This fixes a harness field-selection error, not application code.
+
 Four native type23 OLE objects are opaque to this small reader. Some style bitmap/pattern resources and three handout/notes page records are not completely interpreted. StarBASIC/BasicManager storage is present. Do not claim chart/OLE, actual bitmap pixels, formula, note semantics, macro absence/execution, source font/style rendering or full SDD fidelity acceptance. Retain those boundaries even when bounded page/text/geometry checks pass.
 
 ## Actual assigned route
