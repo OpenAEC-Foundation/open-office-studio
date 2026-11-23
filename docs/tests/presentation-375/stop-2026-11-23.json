@@ -1,0 +1,223 @@
+{
+  "issue": 375,
+  "recordedAtUTC": "2026-11-23T14:54:17.236556+00:00",
+  "reason": "New hard user stop by 16:00 CET; overrides continued local work and unused start permissions",
+  "harnessQACommit": "e0883ddfb8bc516651048f2dc5afea4c66b3982e",
+  "committedGitByteSHA256": {
+    "scripts/qa-presentation-375/source_build.py": "6c4d41dde36acabe5f6015152941bc22a31d20c321ea22fb1f7f964927998643",
+    "scripts/qa-presentation-375/source_targets.py": "e4b572d9ec5de4d5a8a56067aad3e6b07974f1a2f5d7d9d78a7cfcac817d0cbd",
+    "scripts/qa-presentation-375/test_source_targets.py": "0a0b820daa9a5b1155769be9db989719118dd9cb45b84dab7ef87f53d885003f",
+    "scripts/qa-presentation-375/runtime-patch/375-solid-rgb-import.patch": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4"
+  },
+  "allocation": {
+    "issue": 375,
+    "source": "Explicit third integration allocation after target-selection correction",
+    "qaCommit": "e0883ddfb8bc516651048f2dc5afea4c66b3982e",
+    "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "patchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+    "startEpoch": 1795445063,
+    "preparationEndEpoch": 1795447763,
+    "controllerEndEpoch": 1795460663,
+    "totalEndEpoch": 1795461263,
+    "maxCompilerSeconds": 12600,
+    "cleanupUploadReserveSeconds": 600,
+    "retryAllowed": false,
+    "linuxQueueGate": {
+      "checkedAtUTC": "2026-11-23T14:44:23.190361+00:00",
+      "activeRunsExamined": 2,
+      "queuedLinuxJobs": [],
+      "passNoPotentialP5LinuxQueue": true
+    },
+    "run": 45197419347,
+    "job": 137771513436,
+    "runURL": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347",
+    "acceptance": "Pending; no C++ or product acceptance inferred"
+  },
+  "officialAttempt": {
+    "conclusion": null,
+    "created_at": "2026-11-23T14:44:24Z",
+    "head_sha": "e0883ddfb8bc516651048f2dc5afea4c66b3982e",
+    "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347",
+    "id": 45197419347,
+    "run_attempt": 1,
+    "run_started_at": "2026-11-23T14:44:24Z",
+    "status": "in_progress",
+    "updated_at": "2026-11-23T14:44:28Z"
+  },
+  "officialJobsSnapshot": {
+    "conclusion": "",
+    "createdAt": "2026-11-23T14:44:24Z",
+    "headSha": "e0883ddfb8bc516651048f2dc5afea4c66b3982e",
+    "jobs": [
+      {
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "databaseId": 137771513436,
+        "name": "source-build",
+        "startedAt": "2026-11-23T14:44:27Z",
+        "status": "in_progress",
+        "steps": [
+          {
+            "completedAt": "2026-11-23T14:44:29Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-23T14:44:28Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:30Z",
+            "conclusion": "success",
+            "name": "Run echo \"OOS_375_JOB_START_EPOCH=$(date +%s)\" >> \"$GITHUB_ENV\"",
+            "number": 2,
+            "startedAt": "2026-11-23T14:44:30Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:35Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 3,
+            "startedAt": "2026-11-23T14:44:30Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:35Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 4,
+            "startedAt": "2026-11-23T14:44:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:37Z",
+            "conclusion": "success",
+            "name": "Recheck all resource gates on this actual VM before a large download",
+            "number": 5,
+            "startedAt": "2026-11-23T14:44:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:37Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 6,
+            "startedAt": "2026-11-23T14:44:37Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:38Z",
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 7,
+            "startedAt": "2026-11-23T14:44:37Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T14:44:43Z",
+            "conclusion": "success",
+            "name": "Frozen application/core-engine dependencies and immutable earlier oracles",
+            "number": 8,
+            "startedAt": "2026-11-23T14:44:38Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "name": "One bounded source witness, expected baseline red, full corrected draw tests and scoped engine oracle",
+            "number": 9,
+            "startedAt": "2026-11-23T14:44:43Z",
+            "status": "in_progress"
+          },
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 10,
+            "startedAt": "0001-01-01T00:00:00Z",
+            "status": "pending"
+          },
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 17,
+            "startedAt": "0001-01-01T00:00:00Z",
+            "status": "pending"
+          },
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 18,
+            "startedAt": "0001-01-01T00:00:00Z",
+            "status": "pending"
+          },
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 19,
+            "startedAt": "0001-01-01T00:00:00Z",
+            "status": "pending"
+          },
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "name": "Post Run actions/checkout@v4",
+            "number": 20,
+            "startedAt": "0001-01-01T00:00:00Z",
+            "status": "pending"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347/job/137771513436"
+      },
+      {
+        "completedAt": "2026-11-23T14:44:26Z",
+        "conclusion": "skipped",
+        "databaseId": 137771515628,
+        "name": "components",
+        "startedAt": "2026-11-23T14:44:26Z",
+        "status": "completed",
+        "steps": [],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347/job/137771515628"
+      },
+      {
+        "completedAt": "2026-11-23T14:44:26Z",
+        "conclusion": "skipped",
+        "databaseId": 137771516741,
+        "name": "source-resources",
+        "startedAt": "2026-11-23T14:44:26Z",
+        "status": "completed",
+        "steps": [],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347/job/137771516741"
+      }
+    ],
+    "status": "in_progress",
+    "updatedAt": "2026-11-23T14:44:28Z",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347"
+  },
+  "officialArtifactSnapshot": {
+    "total_count": 0,
+    "artifacts": []
+  },
+  "artifactDigestAndExpiry": "Not available: no artifact exists in the snapshot",
+  "productFixValidated": false,
+  "localTargetSelectionTestsPassed": 7,
+  "ownWatchSession": {
+    "id": 47802,
+    "interrupted": true,
+    "exitCode": 1,
+    "finished": true
+  },
+  "ownOrchestrationCell": {
+    "id": "g12:449",
+    "terminated": true
+  },
+  "localGuiCaptureServerOrOfficeStarted": false,
+  "externalJobCancelled": false,
+  "newDispatchOrRetryAfterHardStop": false,
+  "automaticResumption": false,
+  "remainingLocalEvidence": ".local/375-*, .local/presentation-375-diagnosis; inactive raw evidence only",
+  "nextAction": "Only on new user instruction: inspect exact final run/artifact status, digest/expiry, then actual C++/engine outcomes; do not infer pass"
+}

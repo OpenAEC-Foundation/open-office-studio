@@ -1,7 +1,8 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: a third, independently authorized witness is running with the target-selection
-correction. Patched importer/Cppunit/runtime acceptance remains unverified.** This is a private QA witness for the reviewed importer patch,
+**Status: local work/watchers stopped for the user's new 16:00 CET hard stop;
+the already running external third witness may finish independently. Patched
+importer/Cppunit/runtime acceptance remains unverified.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -332,3 +333,7 @@ before dispatch; it did not start another VM or consume a separate build.
 The actual registered allocation is
 [`third-source-allocation.json`](third-source-allocation.json). All previous
 FAIL/CANCELLED outcomes remain unchanged.
+
+The later hard stop supersedes local continued work and all unused start
+permissions. See [`stop-2026-11-23.md`](stop-2026-11-23.md). The external job is
+left to finish without local monitoring; no follow-up is automatic.
