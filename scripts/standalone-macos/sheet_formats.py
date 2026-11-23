@@ -19,9 +19,11 @@ def prepare(folder,kind):
     folder=Path(folder);folder.mkdir(exist_ok=False)
     if kind in ("gnm","gnumeric"):
         oracle_file=Path(__file__).with_name("gnm_oracle.py");expected_sha=GNM_ORACLE_SHA
+        origin="d21243acad54235e2674f7e89f44db75cf6bcb44:scripts/format30-gnm/oracle.py"
         url=gnm_oracle.SOURCE_URL;size=2062;sha=gnm_oracle.SOURCE_SHA;name="universal-content."+kind
     else:
         oracle_file=Path(__file__).with_name("xlsb_oracle.py");expected_sha=XLSB_ORACLE_SHA
+        origin="fb7e7b8ad95b9d13ed0ac1a33f70fd9906082588:qa/xlsb35-p2/oracle.py"
         url=XLSB_URL;size=7651;sha=xlsb_oracle.SHA256;name="shared_formula.xlsb"
     if digest(oracle_file)!=expected_sha:raise Unavailable("Pinned independent spreadsheet oracle source changed")
     with urllib.request.urlopen(url,timeout=30) as response:data=response.read(size+1)
@@ -32,7 +34,7 @@ def prepare(folder,kind):
     else:
         # Independent BIFF12 oracle input location only, never an app/model setting.
         xlsb_oracle.BASE=folder;oracle=xlsb_oracle.source_oracle()
-    return path,oracle,{"url":url,"sha256":sha,"bytes":size,"oracleSHA256":expected_sha}
+    return path,oracle,{"url":url,"sha256":sha,"bytes":size,"oracleSHA256":expected_sha,"oracleOrigin":origin}
 
 
 def save_xlsx(case,path,oracle,kind,edited):
