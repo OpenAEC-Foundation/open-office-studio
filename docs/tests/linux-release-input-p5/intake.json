@@ -1,0 +1,45 @@
+{
+  "purpose": "P5-frozen-candidate",
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "run": 45177730188,
+  "attempt": 1,
+  "job": 137703365848,
+  "workflow": ".github/workflows/release.yml",
+  "canonicalBranch": "codex/release-candidate-2026-11-23-p5",
+  "qaCodeCommit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+  "checkedAt": "2026-11-23T13:45:57.141148+00:00",
+  "window": {
+    "runStartedAt": "2026-11-23T12:48:06Z",
+    "jobStartedAt": "2026-11-23T12:48:23Z",
+    "jobCompletedAt": "2026-11-23T13:44:57Z"
+  },
+  "artifact": {
+    "id": 14824745492,
+    "name": "uitgave-Linux",
+    "digest": "sha256:c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+    "bytes": 4444993178,
+    "createdAt": "2026-11-23T13:44:51Z",
+    "updatedAt": "2026-11-23T13:44:51Z",
+    "parent": {
+      "id": 45177730188,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/release-candidate-2026-11-23-p5",
+      "head_sha": "b696ab86bd1c128729a079b68c0082e6df3d36a5"
+    }
+  },
+  "requiredGates": [
+    "Pakket bouwen (onondertekend)",
+    "Linux-installers werkelijk uitpakken en controleren",
+    "Meet- en inhoudscontrole voor de meegeleverde runtime",
+    "Linux native WebKit-interface en private installer controleren",
+    "Run actions/upload-artifact@v4"
+  ],
+  "skippedNonLinuxGate": {
+    "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+    "sourceCondition": "runner.os != 'Linux'"
+  },
+  "publicationAuthorized": false
+}
