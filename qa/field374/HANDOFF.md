@@ -144,3 +144,28 @@ Reports, original first/final PNGs, actual DOCX exports, original-PNG review and
 entry hashes are retained in `evidence/capture-followup/`. Product85ac155f is
 unchanged. This QA follow-up is not a new-pin or native platform pass; root will
 use the same helpers at the upcoming combination pin.
+
+## Combined staging binding, still awaiting final freeze
+
+The coordinator provided staging commit
+`aa6a72ebef6968be1710ac7351335313f3241a47`, tree
+`334ba1b6edc58ef04a4951c0e7521ccdf7da1906`, on
+`codex/release-481-p3-staging-20261123`. It contains374/377/378 and the bounded
+ZIP-test budget correction. His reported checks pass:71 directed tests,
+44 SDK checks,9 config checks,3 std-Rust checks and TypeScript. Independently,
+read-only Git-byte comparison confirms all five field374 product files exactly
+equal product85ac155f, including both built WASM hashes. The binding is retained
+in `evidence/staging-binding-aa6a72eb.json`; it is not runtime/package evidence.
+
+This staging point is explicitly not a final freeze and has no new OS packages
+or new-kernel native STW exports. The remaining Email blocker is localized:
+with actual credentials the Draft button performs APPEND/MIME and preserves the
+body after full quit/reopen, but advertised Ctrl+S in the compose modal does not.
+The existing owner is preparing a local handler fix, without changing the global
+modal guard. Only the coordinator chooses the resulting final commit/tree.
+
+The old-P2 Mac producer is now successful: artifact14815326028, ZIP SHA256
+`42c00b371f3cfe9fa46dd6c4ac63c6ac34b026d8df8a3bdcea0b4326d3bc9052`
+(coordinator-reported; no large archive downloaded here). The Mac owner is
+running its app cases; no Mac STW actual is reported yet. Old-P2 Windows/Linux
+STW approval remains bounded and does not transfer to the changed kernels.
