@@ -9,11 +9,23 @@ import json
 import shutil
 from unittest.mock import patch
 from contracts import APPS, digest
-from prepare import extract,rebind_transfer,reuse_transfers,REPO
-from test_contracts import request
+from prepare import extract,rebind_transfer,reuse_transfers,producer_state,REPO
+from test_contracts import request,producer
 
 
 class PrepareTests(unittest.TestCase):
+    def test_frozen_attempt_two_never_borrows_global_latest_attempt_three(self):
+        q=request();q['parentArtifact'].update(attempt=2,producerJobId=33)
+        run,a,j=producer();run['run_attempt']=2;j.update(id=33,run_attempt=2)
+        payload={'/actions/runs/2':{**run,'run_attempt':3},'/actions/runs/2/attempts/2':run,
+                 '/actions/artifacts/1':a,'/actions/jobs/33':j,
+                 '/actions/runs/2/artifacts?per_page=100':{'total_count':1,'artifacts':[a]}}
+        with patch('prepare.api',side_effect=lambda path:payload[path]) as mocked:
+            self.assertEqual(producer_state(q)[:3],(run,a,j))
+            self.assertNotIn('/actions/runs/2',[c.args[0] for c in mocked.call_args_list])
+        payload['/actions/jobs/33']={**j,'run_attempt':1}
+        with patch('prepare.api',side_effect=lambda path:payload[path]),self.assertRaises(ValueError):producer_state(q)
+
     def archive(self, root, *, duplicate=False):
         q=request();archive=root/"parent.zip"
         with zipfile.ZipFile(archive,"w") as z:

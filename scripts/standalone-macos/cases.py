@@ -436,9 +436,12 @@ class Case:
         self.select(["AXTextField","AXComboBox"],["To"]);self.replace("fixture@example.invalid");self.s.ax("key","tab")
         self.select(["AXTextField"],["Subject"]);self.replace(SEEDS["email"])
         self.select(["AXTextArea"],["Message text"]);self.replace(SEEDS["email"]+"\n"+CONTROL+"\n"+MARKERS["email"])
-        self.button("Draft");time.sleep(0.8)
+        # Final P5 includes #379: save through the real advertised Mac shortcut
+        # with actual composer text focus. No button fallback may mask a failure.
+        self.focus("Message text");self.s.ax("key","cmd-s");time.sleep(0.8)
         captured=list(server.directory.glob("draft-*.eml"))
         if len(captured)!=1:raise Unavailable("Native draft save did not APPEND exactly one synthetic MIME message")
+        self.s.report["draftSavedByNativeCommandS"]=True
         self.s.write("output-oracle.json",verify("email",captured[0]))
         self.s.report.update(nativeSaveVerified=True,outputOraclePassed=True)
         old=self.s.quit();self.s.start()

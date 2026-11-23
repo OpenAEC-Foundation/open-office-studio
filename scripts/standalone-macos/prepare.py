@@ -15,6 +15,24 @@ def api(endpoint):
     return json.loads(subprocess.check_output(["gh", "api", "repos/"+REPO+endpoint], text=True))
 
 
+def producer_run_endpoint(request):
+    parent=request["parentArtifact"]
+    return "/actions/runs/"+str(parent["run"])+"/attempts/"+str(parent["attempt"])
+
+
+def producer_state(request):
+    """Read the frozen platform attempt, never borrow global latest-run state."""
+    parent=request["parentArtifact"]
+    run=api(producer_run_endpoint(request))
+    artifact=api("/actions/artifacts/"+str(parent["id"]))
+    job=api("/actions/jobs/"+str(parent["producerJobId"]))
+    listing=api("/actions/runs/"+str(parent["run"])+"/artifacts?per_page=100")
+    if listing.get("total_count")!=len(listing.get("artifacts",[])):
+        raise ValueError("Complete producer artifact listing required to exclude duplicate Mac artifacts")
+    validate_producer(request,run,artifact,job,listing["artifacts"])
+    return run,artifact,job,listing
+
+
 def check_harness(request, root):
     actual = {p.relative_to(root).as_posix(): digest(p) for p in
               (root/"scripts/standalone-macos").iterdir() if p.is_file() and p.suffix in (".py", ".swift")}
@@ -113,13 +131,7 @@ def main():
     if commit.get("tree",{}).get("sha") != request["source"]["tree"]:
         raise ValueError("Producer source tree differs from coordinator request")
     parent=request["parentArtifact"]
-    run, artifact, job = (api("/actions/runs/"+str(parent["run"])),
-                         api("/actions/artifacts/"+str(parent["id"])),
-                         api("/actions/jobs/"+str(parent["producerJobId"])))
-    listing=api("/actions/runs/"+str(parent["run"])+"/artifacts?per_page=100")
-    if listing.get("total_count")!=len(listing.get("artifacts",[])):
-        raise ValueError("Complete producer artifact listing required to exclude duplicate Mac artifacts")
-    validate_producer(request,run,artifact,job,listing["artifacts"])
+    run,artifact,job,listing=producer_state(request)
     if request.get("reuseTransfersFromRun"):
         matrix=reuse_transfers(request,args.output)
     elif args.archive:
@@ -132,6 +144,7 @@ def main():
     if not request.get("reuseTransfersFromRun"):
         matrix=extract(request,archive,args.output)
     (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job,"artifactListing":listing,
+        "producerRunEndpoint":producer_run_endpoint(request),
         "preparationScope":request.get("preparationScope","six-app-only-split"),
         "nativeAppsRequested":matrix["app"],
         "nativeMatrixScope":"Only requested dedicated app identities; Suite never a native matrix member"},indent=2)+"\n")

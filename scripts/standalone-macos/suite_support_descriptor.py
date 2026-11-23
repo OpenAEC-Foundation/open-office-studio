@@ -2,7 +2,7 @@
 import argparse,json,os
 from pathlib import Path
 from contracts import SUITE_PRODUCT,SEVEN_SPLIT_SCOPE,hex_value,validate_request,verify_supporting_suite_package
-from prepare import api,check_harness
+from prepare import api,check_harness,producer_run_endpoint
 
 
 def verify_child_artifact(meta,artifact_id,artifact_digest,qa_run,qa_commit):
@@ -24,6 +24,7 @@ def descriptor(request,proof,folder,artifact_id,artifact_digest,qa_run,qa_commit
     name,binary,identifier=SUITE_PRODUCT
     return {"schemaVersion":1,"scope":SEVEN_SPLIT_SCOPE,"source":request["source"],
             "officialParentArtifact":request["parentArtifact"],
+            "officialParentRunEndpoint":producer_run_endpoint(request),
             "suitePackage":{"member":proof["member"],"filename":dmg.name,**proof["package"]},
             "suiteTransferArtifact":{"id":artifact_id,"name":"standalone-support-suite","sha256":child_hash,
                                      "qaRun":qa_run,"qaCommit":qa_commit,"officialApiDigestVerified":False,
