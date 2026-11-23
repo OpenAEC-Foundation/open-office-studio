@@ -37,10 +37,15 @@ actually validate Authenticode with timestamps. No app is rebuilt.
 ## Suite consumer contract for750b
 
 `suite-consumer.pending.json` is a reviewable **blocked template**. The actual
-final non-null schema is `suite-consumer.schema.json`. Its descriptor is emitted
+final non-null schema is `suite-consumer.schema.json`. Immediately after the
+verified Suite child upload, `bind_suite.py` publishes `suite-consumer.json` in
+the small artifact `standalone-windows-p5-suite-descriptor`. It does not wait for
+the other child uploads or native matrix. The same descriptor is also emitted
 by `bind_children.py` as `provenance/suite-consumer.json`,
 alongside `provenance/binding.json` in artifact `standalone-windows-p5-binding`.
 The final descriptor replaces null fields only with verified actual identities.
+The six app-only native jobs have `max-parallel: 6`; actual hosted runner
+capacity and queue time remain external constraints.
 The pending template's `state` and `expectedChildZipMembers` are explanatory;
 the emitted descriptor need not contain them. Validate the final schema instead.
 Its `suite` is the producer receipt augmented after upload with
