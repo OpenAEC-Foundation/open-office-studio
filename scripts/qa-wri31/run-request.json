@@ -1,0 +1,38 @@
+{
+  "purpose": "One explicitly authorized bounded WRI31 Linux QA job; no P5 Linux queue at dispatch",
+  "application": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "sourceHarness": "48754fa4ecfe2de71518e6f84ac9ed0ae2fad392",
+  "capacityCheck": {
+    "method": "Read-only queued/in_progress/waiting critical release workflow jobs and actual runner labels; unknown queued runner labels conservatively block",
+    "checked": [
+      {
+        "run": 45195055147,
+        "workflow": "Build and sign P5 macOS only — no publication",
+        "branch": "codex/p5-macos-only-producer-20261123",
+        "job": 137763168266,
+        "name": "versie",
+        "status": "completed",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "linux": true
+      },
+      {
+        "run": 45195055147,
+        "workflow": "Build and sign P5 macOS only — no publication",
+        "branch": "codex/p5-macos-only-producer-20261123",
+        "job": 137763371873,
+        "name": "Bouwen – macOS",
+        "status": "in_progress",
+        "labels": [
+          "macos-latest"
+        ],
+        "linux": false
+      }
+    ],
+    "blockers": [],
+    "noCriticalP5LinuxJobQueued": true,
+    "mutationsOrCancellations": false
+  },
+  "workflowDispatch404": "New branch-only workflow not registered on default; no run created. Use one own-branch marker push instead; no main mutation."
+}

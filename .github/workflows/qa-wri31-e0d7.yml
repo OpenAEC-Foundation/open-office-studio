@@ -1,5 +1,8 @@
 name: WRI31 bounded native oracle and real Word route
 on:
+  push:
+    branches: [codex/wri31-qa-2026-11-23-e0d7]
+    paths: [scripts/qa-wri31/run-request.json]
   workflow_dispatch:
 permissions:
   contents: read
