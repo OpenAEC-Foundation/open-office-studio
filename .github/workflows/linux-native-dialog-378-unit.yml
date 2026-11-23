@@ -1,0 +1,59 @@
+name: Linux confirmation requirement targeted source checks
+on:
+  push:
+    branches: [codex/linux-native-dialog-runtime-2026-11-23]
+    paths:
+      - .github/workflows/linux-native-dialog-378-unit.yml
+      - src-tauri/src/native_dialog.rs
+      - scripts/native-dialog-packages.test.mjs
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bounded-source-checks:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Isolated std-only Rust helper tests, no app build or helper install
+        run: |
+          mkdir -p .local/native-dialog-378
+          rustc --edition 2021 --test src-tauri/src/native_dialog.rs -o .local/native-dialog-378/requirement-unit
+          .local/native-dialog-378/requirement-unit | tee .local/native-dialog-378/rust-unit.txt
+      - name: Effective config of all seven products and guarded callsites
+        run: node --test scripts/native-dialog-packages.test.mjs | tee .local/native-dialog-378/config-unit.txt
+      - name: Native locale and source syntax, no Office build
+        run: |
+          node scripts/controleer-i18n.mjs --ns desktop > .local/native-dialog-378/locale.txt
+          python3 -m py_compile scripts/controleer-installers.py
+          rustfmt --edition 2021 --emit stdout --config skip_children=true src-tauri/src/native_dialog.rs src-tauri/src/main.rs src-tauri/src/werkbestanden.rs src-tauri/src/vensters.rs src-tauri/src/database_export.rs src-tauri/src/email/bestanden.rs apps/database-studio/src-tauri/src/main.rs > /dev/null
+      - name: Separate product and QA attribution
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          import {createHash} from 'node:crypto';
+          import assert from 'node:assert/strict';
+          const product='82b047fbced83acf421597df903c5f4c6c20dea9';
+          execFileSync('git',['fetch','--no-tags','--depth=1','origin',product]);
+          execFileSync('git',['cat-file','-e',product+':src-tauri/src/native_dialog.rs']);
+          const files=['src-tauri/src/native_dialog.rs','scripts/native-dialog-packages.test.mjs','src-tauri/tauri.linux.conf.json','apps/database-studio/src-tauri/tauri.conf.json'];
+          for(const file of files) assert.ok(readFileSync(file).equals(execFileSync('git',['show',product+':'+file])),file+' differs from product commit');
+          writeFileSync('.local/native-dialog-378/metadata.json',JSON.stringify({scope:'Targeted source/unit checks only, not app/package/native GUI acceptance',productCommit:product,qaCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),run:process.env.GITHUB_RUN_ID,attempt:process.env.GITHUB_RUN_ATTEMPT,files:Object.fromEntries(files.map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')]))},null,2)+'\n');
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-native-dialog-378-source-${{ github.sha }}
+          path: .local/native-dialog-378/*.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-native-dialog-378-attribution-${{ github.sha }}
+          path: .local/native-dialog-378/metadata.json
