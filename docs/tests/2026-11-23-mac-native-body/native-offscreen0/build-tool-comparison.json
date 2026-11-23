@@ -1,0 +1,44 @@
+{
+  "canonical420": {
+    "run": 44753496663,
+    "job": 136347096394,
+    "logSha256": "7f145178cfb604fade15f92bd46f4dcd1fc7bfb401c3a752084e4786c8e4e1c0",
+    "toolLines": [
+      "desktop (macos-latest)\tUNKNOWN STEP\t2026-11-20T14:26:39.0516860Z Image: macos-26-arm64",
+      "desktop (macos-latest)\tUNKNOWN STEP\t2026-11-20T14:26:48.8590310Z Found in cache @ /Users/runner/hostedtoolcache/node/22.23.5/arm64",
+      "desktop (macos-latest)\tUNKNOWN STEP\t2026-11-20T14:26:49.5075820Z node: v22.23.5",
+      "desktop (macos-latest)\tUNKNOWN STEP\t2026-11-20T14:26:53.0465270Z   stable-aarch64-apple-darwin updated - rustc 1.100.0 (0ef1bc386 2026-11-09) (from rustc 1.100.0 (0ef1bc386 2026-11-09))",
+      "desktop (macos-latest)\tUNKNOWN STEP\t2026-11-20T14:26:53.1468920Z   stable-aarch64-apple-darwin unchanged - rustc 1.100.0 (0ef1bc386 2026-11-09)",
+      "desktop (macos-latest)\tUNKNOWN STEP\t2026-11-20T14:26:53.5646860Z rustc 1.100.0 (0ef1bc386 2026-11-09)"
+    ],
+    "runnerVersions": [
+      "20261111.635",
+      "20261117.0516.1"
+    ],
+    "nodeVersion": "22.23.5",
+    "rustcVersion": "1.100.0 (0ef1bc386 2026-11-09)",
+    "hostOS": "macOS26.7.2/25G332"
+  },
+  "nativeOffscreen0": {
+    "run": 45137361883,
+    "job": 137566727326,
+    "logSha256": "c6a838d83815d384ba65e186546571181a906812cd649fdd07adf16f1937a223",
+    "toolLines": [
+      "diagnostic\tSet up job\t2026-11-23T08:35:29.3920250Z Image: macos-26-arm64",
+      "diagnostic\tRun actions/setup-node@v4\t2026-11-23T08:35:43.9619980Z Found in cache @ /Users/runner/hostedtoolcache/node/22.23.5/arm64",
+      "diagnostic\tRun actions/setup-node@v4\t2026-11-23T08:35:44.7436850Z node: v22.23.5",
+      "diagnostic\tRun dtolnay/rust-toolchain@stable\t2026-11-23T08:35:48.9503540Z   stable-aarch64-apple-darwin updated - rustc 1.100.0 (0ef1bc386 2026-11-09) (from rustc 1.100.0 (0ef1bc386 2026-11-09))",
+      "diagnostic\tRun dtolnay/rust-toolchain@stable\t2026-11-23T08:35:49.0652130Z   stable-aarch64-apple-darwin unchanged - rustc 1.100.0 (0ef1bc386 2026-11-09)",
+      "diagnostic\tRun dtolnay/rust-toolchain@stable\t2026-11-23T08:35:49.6375190Z rustc 1.100.0 (0ef1bc386 2026-11-09)"
+    ],
+    "runnerVersions": [
+      "20261111.635",
+      "20261117.0516.1"
+    ],
+    "nodeVersion": "22.23.5",
+    "rustcVersion": "1.100.0 (0ef1bc386 2026-11-09)",
+    "hostOS": "macOS26.7.2/25G332"
+  },
+  "scope": "Read-only completed-job log comparison; no extra build or native probe",
+  "comparison": "Same runner image20261117.0516.1, OS26.7.2/25G332, Node22.23.5, rustc1.100.0(0ef1bc386); pnpm11.25.0 explicitly pinned by both workflows. No source/font fixture change."
+}
