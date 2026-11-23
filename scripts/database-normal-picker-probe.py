@@ -108,7 +108,11 @@ for kind in ['appimage','deb']:
             focused=cmd('xdotool','getwindowfocus',env=env)
             geometry=dict(line.split('=',1) for line in cmd('xdotool','getwindowgeometry','--shell',focused,env=env).splitlines() if '=' in line)
             assert int(geometry['X'])<=x+w//2<int(geometry['X'])+int(geometry['WIDTH']) and int(geometry['Y'])<=y+h//2<int(geometry['Y'])+int(geometry['HEIGHT'])
-            cmd('xdotool','mousemove','--sync',str(x+w//2),str(y+h//2),env=env)
+            # --sync waits for movement, which never arrives when a later edit
+            # clicks the same textarea coordinates. Verify the real X pointer.
+            cmd('xdotool','mousemove',str(x+w//2),str(y+h//2),env=env)
+            pointer=dict(line.split('=',1) for line in cmd('xdotool','getmouselocation','--shell',env=env).splitlines() if '=' in line)
+            assert (int(pointer['X']),int(pointer['Y']))==(x+w//2,y+h//2)
             cmd('xdotool','click','1',env=env)
         def keys(chord):check_focus();cmd('xdotool','key','--clearmodifiers',chord,env=env)
         def type_text(text):check_focus();cmd('xdotool','type','--clearmodifiers','--delay','1',text,env=env)
