@@ -84,6 +84,37 @@ jobs:
       - name: Verify source and split one parent into isolated product transfers
         id: prepare
         run: python scripts/standalone-macos/prepare.py .github/standalone-macos-20261123-request.json transfer
+      - name: Transfer Suite only to its separate validation owner
+        id: suite-support
+        if: steps.prepare.outputs.suite-support-prepared == 'true'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: standalone-support-suite
+          path: transfer/suite-support/
+          if-no-files-found: error
+          compression-level: 0
+      - name: Bind separate Suite child artifact to parent and DMG digests
+        if: steps.suite-support.outcome == 'success'
+        continue-on-error: true
+        env:
+          SUITE_SUPPORT_ARTIFACT_ID: ${{ steps.suite-support.outputs.artifact-id }}
+          SUITE_SUPPORT_ARTIFACT_DIGEST: ${{ steps.suite-support.outputs.artifact-digest }}
+        run: python scripts/standalone-macos/suite_support_descriptor.py .github/standalone-macos-20261123-request.json transfer/suite-support transfer/suite-support-descriptor.json
+      - name: Preserve separate Suite-owner descriptor
+        if: steps.suite-support.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: standalone-suite-support-descriptor-${{ github.sha }}
+          path: transfer/suite-support-descriptor.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-parent-producer-receipt
+          path: transfer/producer-receipt.json
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         with:
           name: standalone-own-writer
@@ -120,37 +151,6 @@ jobs:
           path: transfer/database/
           if-no-files-found: error
           compression-level: 0
-      - name: Transfer Suite only to its separate validation owner
-        id: suite-support
-        if: steps.prepare.outputs.suite-support-prepared == 'true'
-        continue-on-error: true
-        uses: actions/upload-artifact@v4
-        with:
-          name: standalone-support-suite
-          path: transfer/suite-support/
-          if-no-files-found: error
-          compression-level: 0
-      - name: Bind separate Suite child artifact to parent and DMG digests
-        if: steps.suite-support.outcome == 'success'
-        continue-on-error: true
-        env:
-          SUITE_SUPPORT_ARTIFACT_ID: ${{ steps.suite-support.outputs.artifact-id }}
-          SUITE_SUPPORT_ARTIFACT_DIGEST: ${{ steps.suite-support.outputs.artifact-digest }}
-        run: python scripts/standalone-macos/suite_support_descriptor.py .github/standalone-macos-20261123-request.json transfer/suite-support transfer/suite-support-descriptor.json
-      - name: Preserve separate Suite-owner descriptor
-        if: steps.suite-support.outcome == 'success'
-        continue-on-error: true
-        uses: actions/upload-artifact@v4
-        with:
-          name: standalone-suite-support-descriptor-${{ github.sha }}
-          path: transfer/suite-support-descriptor.json
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: standalone-parent-producer-receipt
-          path: transfer/producer-receipt.json
-          if-no-files-found: warn
   native:
     needs: prepare
     strategy:
