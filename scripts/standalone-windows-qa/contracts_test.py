@@ -69,12 +69,12 @@ class Contracts(unittest.TestCase):
                     time.sleep(.05)
                 ports=json.loads((root/'ports.json').read_bytes()); self.assertEqual(ports['host'],'127.0.0.1')
                 client=imaplib.IMAP4(ports['host'],ports['imap'],timeout=5)
-                with self.assertRaises(imaplib.IMAP4.error): client.login('qa@localhost','wrong-password')
-                self.assertEqual(client.login('qa@localhost','standalone-synthetic-password')[0],'OK')
+                with self.assertRaises(imaplib.IMAP4.error): client.login('qa@fixture.localhost','wrong-password')
+                self.assertEqual(client.login('qa@fixture.localhost','standalone-synthetic-password')[0],'OK')
                 self.assertEqual(client.list()[0],'OK'); self.assertEqual(client.select('INBOX')[0],'OK')
                 self.assertEqual(client.uid('search',None,'ALL')[0],'OK')
                 self.assertIn(b'STANDALONE23 LOCAL MESSAGE',client.uid('fetch','1','(UID FLAGS BODY.PEEK[HEADER])')[1][0][1])
-                message=EmailMessage(); message['From']='qa@localhost'; message['To']='fixture@localhost'
+                message=EmailMessage(); message['From']='qa@fixture.localhost'; message['To']='fixture@fixture.localhost'
                 message['Subject']='STANDALONE23 LOCAL DRAFT'; message.set_content('STANDALONE23 DRAFT BODY')
                 self.assertEqual(client.append('Drafts','\\Draft',None,message.as_bytes(policy=email.policy.SMTP))[0],'OK')
                 self.assertEqual(oracle.inspect('email',root)['status'],'passed')

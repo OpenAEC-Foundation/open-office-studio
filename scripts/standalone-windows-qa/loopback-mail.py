@@ -10,7 +10,7 @@ import threading
 
 root=Path(sys.argv[1]); root.mkdir()
 lock=threading.Lock()
-seed=(b'From: Fixture <fixture@localhost>\r\nTo: QA <qa@localhost>\r\nSubject: STANDALONE23 LOCAL MESSAGE\r\n'
+seed=(b'From: Fixture <fixture@fixture.localhost>\r\nTo: QA <qa@fixture.localhost>\r\nSubject: STANDALONE23 LOCAL MESSAGE\r\n'
       b'Date: Mon, 23 Nov 2026 08:00:00 +0000\r\nMessage-ID: <standalone23@localhost>\r\n'
       b'Content-Type: text/plain; charset=utf-8\r\n\r\nSTANDALONE23 LOCAL BODY\r\n')
 mailboxes={'INBOX':[dict(uid=1,body=seed,flags='')],'Drafts':[],'Sent':[],'Trash':[]}
@@ -36,7 +36,7 @@ class Imap(socketserver.StreamRequestHandler):
             ok=f'{tag} OK done\r\n'.encode()
             if command=='CAPABILITY': self.wfile.write(b'* CAPABILITY IMAP4rev1 UIDPLUS SPECIAL-USE\r\n'+ok)
             elif command=='LOGIN':
-                if words(args)==['qa@localhost','standalone-synthetic-password']: self.wfile.write(ok)
+                if words(args)==['qa@fixture.localhost','standalone-synthetic-password']: self.wfile.write(ok)
                 else: self.wfile.write(f'{tag} NO [AUTHENTICATIONFAILED] synthetic credentials required\r\n'.encode())
             elif command in ('NOOP','CHECK','SUBSCRIBE','UNSELECT','CLOSE','ID'): self.wfile.write(ok)
             elif command=='LOGOUT': self.wfile.write(b'* BYE closed\r\n'+ok); break
