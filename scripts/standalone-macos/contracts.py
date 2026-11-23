@@ -14,6 +14,8 @@ APPS = {
     "database": ("Open Database Studio", "open-database-studio", "org.openaec.database-studio"),
 }
 SUITE_ID = "org.openaec.office-studio"
+SUITE_PRODUCT = ("Open Office Studio","open-office-studio",SUITE_ID)
+SEVEN_SPLIT_SCOPE = "seven-product-split-six-app-only-hosts"
 MAC_PRODUCER_GATES = (
     "Pakket bouwen (macOS, ondertekend en genotariseerd)",
     "Handtekening en notarisatie controleren (macOS)",
@@ -66,6 +68,21 @@ def validate_request(value, now=None):
         if member in members or not (hex_value(package.get("sha256"), 64) or parent_bound):
             raise ValueError("Duplicate member or missing package digest")
         members.add(member)
+    support=value.get("supportingSuitePackage")
+    if support is not None:
+        if (value.get("preparationScope")!=SEVEN_SPLIT_SCOPE
+                or support.get("purpose")!="separate-suite-owner" or support.get("executionApproved") is not False):
+            raise ValueError("Suite support must be an explicitly separate transfer, never standalone execution")
+        member=support.get("member","");path=PurePosixPath(member)
+        expected=SUITE_PRODUCT[0]+"_"+VERSION+"_aarch64.dmg"
+        if (not member or "\\" in member or path.is_absolute() or ".." in path.parts
+                or path.name not in (expected,expected.replace(" ",".")) or member in members):
+            raise ValueError("Wrong/unsafe separately approved Suite DMG member")
+        if not (hex_value(support.get("sha256"),64) or
+                (support.get("sha256") is None and support.get("hashBinding")=="verified-parent-archive")):
+            raise ValueError("Supporting Suite DMG must bind to the verified parent or an exact digest")
+    elif value.get("preparationScope")==SEVEN_SPLIT_SCOPE:
+        raise ValueError("Seven-product split requires the separately declared Suite support package")
     files = value.get("harnessFiles", {})
     if not files or any(not p.startswith("scripts/standalone-macos/") or ".." in PurePosixPath(p).parts
                         or not hex_value(h, 64) for p, h in files.items()):
@@ -77,16 +94,30 @@ def validate_request(value, now=None):
 
 def verify_package(request,proof,folder,app):
     """Same app bytes/source chain on every fresh host or QA-only driver retry."""
+    if app not in APPS:raise ValueError("Only six dedicated apps can be delivered to standalone native hosts")
+    return verify_entry(request,proof,folder,app,request["packages"][app])
+
+
+def verify_supporting_suite_package(request,proof,folder):
+    entry=request.get("supportingSuitePackage")
+    if (not entry or request.get("preparationScope")!=SEVEN_SPLIT_SCOPE
+            or entry.get("executionApproved") is not False or proof.get("purpose")!="separate-suite-owner"
+            or proof.get("nativeExecutionApproved") is not False):
+        raise ValueError("Only a separate nonexecuting Suite support transfer is permitted")
+    return verify_entry(request,proof,folder,"office",entry)
+
+
+def verify_entry(request,proof,folder,app,entry):
     folder=Path(folder).resolve()
     if proof.get("app")!=app or proof.get("source")!=request["source"] or proof.get("parentArtifact")!=request["parentArtifact"]:
         raise ValueError("Transferred app proof differs from coordinator source/parent")
-    if proof.get("member")!=request["packages"][app]["member"]:
+    if proof.get("member")!=entry["member"]:
         raise ValueError("Transferred archive member differs")
     candidates=list(folder.glob("*.dmg"))
     if len(candidates)!=1:raise ValueError("Exactly one standalone DMG permitted on app host")
     dmg=candidates[0]
     if dmg.is_symlink() or not dmg.resolve().is_relative_to(folder):raise ValueError("Transferred DMG must be an own regular file")
-    expected=request["packages"][app]["sha256"]
+    expected=entry["sha256"]
     if (dmg.name!=Path(proof["member"]).name or proof.get("package",{}).get("filename")!=dmg.name
         or proof["package"].get("bytes")!=dmg.stat().st_size or digest(dmg)!=proof["package"].get("sha256")
         or (expected is not None and proof["package"].get("sha256")!=expected)

@@ -1,4 +1,4 @@
-"""Verify one immutable producer archive, extract only the six approved DMGs."""
+"""Split one verified parent into six app-only transfers and optional Suite support."""
 from pathlib import Path
 import argparse
 import json
@@ -6,7 +6,7 @@ import os
 import shutil
 import subprocess
 import zipfile
-from contracts import APPS, digest, validate_producer, validate_request, verify_under,verify_package
+from contracts import APPS, digest, validate_producer, validate_request, verify_under,verify_package,verify_supporting_suite_package
 
 REPO = "OpenAEC-Foundation/open-office-studio"
 
@@ -29,25 +29,31 @@ def extract(request, archive, output):
     output.mkdir(parents=True, exist_ok=False)
     with zipfile.ZipFile(archive) as source:
         names = source.namelist()
-        for app in APPS:
-            member = request["packages"][app]["member"]
+        products=[(app,request["packages"][app],app) for app in APPS]
+        if request.get("supportingSuitePackage"):
+            products.append(("office",request["supportingSuitePackage"],"suite-support"))
+        for app,package,folder in products:
+            member = package["member"]
             if names.count(member) != 1:
                 raise ValueError("Approved DMG missing or duplicated: "+app)
             entry = source.getinfo(member)
             if entry.is_dir() or (entry.external_attr >> 16) & 0o170000 == 0o120000:
                 raise ValueError("DMG member is not a regular file")
-            target = verify_under(output/app/Path(member).name, output)
+            target = verify_under(output/folder/Path(member).name, output)
             target.parent.mkdir()
             with source.open(entry) as src, target.open("xb") as dest:
                 shutil.copyfileobj(src, dest, 1024*1024)
             actual = digest(target)
-            expected=request["packages"][app]["sha256"]
+            expected=package["sha256"]
             if expected is not None and actual != expected:
                 raise ValueError("Extracted DMG SHA256 differs: "+app)
             proof = {"schemaVersion": 1, "app": app, "source": request["source"],
                      "parentArtifact": request["parentArtifact"], "member": member,
                      "package": {"filename": target.name, "sha256": actual, "bytes": target.stat().st_size},
                      "memberSHA256DerivedFromVerifiedParent":True,"nativeAccepted": False}
+            if app=="office":
+                proof.update(purpose="separate-suite-owner",nativeExecutionApproved=False,
+                             preparationScope=request["preparationScope"])
             (target.parent/"provenance.json").write_text(json.dumps(proof, indent=2)+"\n", encoding="utf-8")
             (target.parent/"request.json").write_text(json.dumps(request, indent=2)+"\n", encoding="utf-8")
     return {"app": list(APPS)}
@@ -61,7 +67,10 @@ def rebind_transfer(request,folder,app,origin_run):
     changes={k for k in original.keys() | request.keys() if original.get(k)!=request.get(k)}
     if original.get("executionApproved") is not True or changes-{"harnessFiles","expiresAt","reuseTransfersFromRun"}:
         raise ValueError("A QA retry must not change source, version, package, approval or parent identity")
-    verify_package(original,proof,folder,app)
+    def verify(q,p):
+        if app=="office":return verify_supporting_suite_package(q,p,folder)
+        return verify_package(q,p,folder,app)
+    verify(original,proof)
     old_request_sha=digest(folder/"request.json");old_proof_sha=digest(folder/"provenance.json")
     for name,sha in (("request",old_request_sha),("provenance",old_proof_sha)):
         target=folder/("origin-"+name+"-"+sha+".json")
@@ -71,7 +80,7 @@ def rebind_transfer(request,folder,app,origin_run):
                               "packageBytesUnchanged":True}
     (folder/"request.json").write_text(json.dumps(request,indent=2)+"\n",encoding="utf-8")
     (folder/"provenance.json").write_text(json.dumps(proof,indent=2)+"\n",encoding="utf-8")
-    verify_package(request,proof,folder,app)
+    verify(request,proof)
 
 
 def reuse_transfers(request,output):
@@ -81,14 +90,17 @@ def reuse_transfers(request,output):
             or run.get("repository",{}).get("full_name")!=REPO):
         raise ValueError("Reuse run must be this own QA workflow/repository/branch")
     artifacts=api("/actions/runs/"+str(origin)+"/artifacts?per_page=100")["artifacts"]
-    for app in APPS:
-        matching=[a for a in artifacts if a.get("name")=="standalone-own-"+app and a.get("expired") is False]
+    products=[(app,"standalone-own-"+app,app) for app in APPS]
+    if request.get("supportingSuitePackage"):
+        products.append(("office","standalone-support-suite","suite-support"))
+    for app,name,folder in products:
+        matching=[a for a in artifacts if a.get("name")==name and a.get("expired") is False]
         if len(matching)!=1:raise ValueError("Exactly one existing own app transfer required: "+app)
     output.mkdir(parents=True,exist_ok=False)
-    for app in APPS:
-        subprocess.run(["gh","run","download",str(origin),"--repo",REPO,"--name","standalone-own-"+app,
-                        "--dir",str(output/app)],check=True)
-        rebind_transfer(request,output/app,app,origin)
+    for app,name,folder in products:
+        subprocess.run(["gh","run","download",str(origin),"--repo",REPO,"--name",name,
+                        "--dir",str(output/folder)],check=True)
+        rebind_transfer(request,output/folder,app,origin)
     return {"app":list(APPS)}
 
 
@@ -119,10 +131,13 @@ def main():
                            stdout=target,check=True)
     if not request.get("reuseTransfersFromRun"):
         matrix=extract(request,archive,args.output)
-    (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job,"artifactListing":listing},indent=2)+"\n")
+    (args.output/"producer-receipt.json").write_text(json.dumps({"run":run,"artifact":artifact,"job":job,"artifactListing":listing,
+        "preparationScope":request.get("preparationScope","six-app-only-split"),
+        "nativeMatrixScope":"six dedicated app-only hosts; Suite never a native matrix member"},indent=2)+"\n")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as stream:
             stream.write("matrix="+json.dumps(matrix,separators=(",",":"))+"\nready=true\n")
+            stream.write("suite-support-prepared="+str(bool(request.get("supportingSuitePackage"))).lower()+"\n")
 
 
 if __name__ == "__main__":main()
