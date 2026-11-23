@@ -1,5 +1,8 @@
 # Native Windows GNM case
 
+Completed native result and preserved evidence:
+[`2026-11-23-gnm-native-windows.md`](../../../docs/tests/formatendekking/2026-11-23-gnm-native-windows.md).
+
 Prepared for the user's explicit native-GNM follow-up. Execution is gated by
 `.github/format30-gnm-native-windows.json`. The integration coordinator confirmed
 this chat's exclusive Windows ownership and exact package point before enabling

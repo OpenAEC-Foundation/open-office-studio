@@ -11,8 +11,10 @@
     "evidence": [
       "docs/tests/formatendekking/2026-11-23-gnm-route.md",
       "docs/tests/formatendekking/2026-11-23-gnm-proof/converter-independent-audit.json",
-      "docs/tests/formatendekking/2026-11-23-gnm-proof/browser-independent-audit.json"
+      "docs/tests/formatendekking/2026-11-23-gnm-proof/browser-independent-audit.json",
+      "docs/tests/formatendekking/2026-11-23-gnm-native-windows.md",
+      "docs/tests/formatendekking/2026-11-23-gnm-native-windows-proof/independent-audit.json"
     ],
-    "note": "23-11-2026 P2: echte niet-lege Gnumeric-bron expliciet via .gnm en controle .gnumeric; private Linux AppImage/DEB-converter + productie-invoer/engine, 8 getypeerde cellen/4 formules/2 bladen, tweede-bladbewerking/bewaren/heropenen. Browser / en /office/ toont desktop/XLSX-advies en behoudt bestaand DOCX. Windows/macOS en native IPC/bediening niet beproefd; geen alle-varianten-/opmaakgarantie."
+    "note": "23-11-2026 P2: echte niet-lege Gnumeric-bron expliciet via .gnm en controle .gnumeric; private Linux AppImage/DEB-converter + productie-invoer/engine, 8 getypeerde cellen/4 formules/2 bladen, tweede-bladbewerking/bewaren/heropenen. Windows native op canonical P2Suite: echte bestandskeuze/Rust-IPC/eigen gebundelde runtime/UI-cellen/edit/Ctrl-S/fullquit/newPIDreopen en vier onafhankelijk gecontroleerde XLSX geslaagd. Browser / en /office/ toont desktop/XLSX-advies en behoudt bestaand DOCX. Native Linux/macOS blijven bij eigen platformowners; geen standalone/signing-/alle-varianten-/opmaakgarantie."
   }
 }

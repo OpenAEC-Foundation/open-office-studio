@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "version": "2026.48.1",
+  "harnessCommit": "5349c6cc3118bb851b52d4a4fd74b1b6d201763b",
+  "package": {
+    "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "desktopRun": 45143305147,
+    "artifactId": 14804672476,
+    "archiveSha256": "ecce5a188abbb5b17e52c4097d7add95ddeaaa8c24a9a4e6c492049d16902733",
+    "installer": {
+      "path": "Open Office Studio_2026.48.1_x64-setup.exe",
+      "bytes": 384512913,
+      "sha256": "85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce"
+    },
+    "executable": "open-office-studio.exe",
+    "identifier": "org.openaec.office-studio",
+    "payloadExecutable": {
+      "member": "open-office-studio.exe",
+      "bytes": 88199680,
+      "sha256": "feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67",
+      "derivation": "7-Zip extract-only stdout from whole-ZIP/report-bound NSIS before install",
+      "pe": "x64"
+    },
+    "sourceJob": 137586342967,
+    "sourceAttempt": 1,
+    "canonicalPackageReportSha256": "a1d16b139c3193e377ec2147319fd632b6b9ba8698e69f6fc84127870ccd6d9e",
+    "title": "Open Office Studio",
+    "ancillaryNotExtracted": [],
+    "scope": "Canonical suite native GNM QA; not standalone or release-signing acceptance"
+  },
+  "status": "blocked",
+  "steps": [
+    {
+      "title": "Open Office Studio",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "windowHandle": 393328,
+      "ownedPid": 7060,
+      "foregroundPid": 7060,
+      "action": "Focus"
+    },
+    {
+      "foregroundPid": 7060,
+      "sessionId": 2,
+      "ownedPid": 7060,
+      "action": "Focus",
+      "title": "Open Office Studio",
+      "windowHandle": 393328,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\open-office-studio.exe",
+      "status": "passed"
+    },
+    {
+      "title": "Open file",
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\open-office-studio.exe",
+      "windowHandle": 66070,
+      "action": "Close",
+      "sessionId": 2,
+      "wmClosePosted": true,
+      "ownedPid": 7060
+    }
+  ],
+  "phases": [
+    {
+      "phase": "gnm-initial",
+      "pid": 7060,
+      "status": "running",
+      "pageErrors": [],
+      "pageUrl": "http://tauri.localhost/",
+      "nativeMetadata": {
+        "identifier": "org.openaec.office-studio",
+        "version": "2026.48.1",
+        "name": "Open Office Studio"
+      },
+      "process": {
+        "parent": 7148,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\open-office-studio.exe",
+        "pid": 7060,
+        "windowHandle": 393328,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\open-office-studio.exe"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\webview-profile",
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeExecutable": {
+        "signature": "Valid",
+        "productVersion": "26.8.2.2",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "productName": "LibreOffice",
+        "fileVersion": "26.8.2.2",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\kantoorruntime\\program\\soffice.com",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE"
+      }
+    }
+  ],
+  "cleanup": {
+    "forcedOwnedProcessTree": true,
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "limitations": [
+    "Canonical P2 functional package is unsigned; signing/release acceptance remains separate"
+  ],
+  "scope": "Canonical Windows suite native GNM/Gnumeric through real file picker and production IPC; no standalone/release approval",
+  "baseline": {
+    "profiles": [],
+    "interactive": true,
+    "session": 2,
+    "apps": [],
+    "os": "Microsoft Windows NT 10.0.26100.0",
+    "webview2": [],
+    "suitePaths": []
+  },
+  "installer": {
+    "productVersion": "2026.48.1",
+    "productName": "Open Office Studio",
+    "sha256": "85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce",
+    "signer": null,
+    "signature": "NotSigned",
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\gnm-native-package\\Open Office Studio_2026.48.1_x64-setup.exe",
+    "fileVersion": "2026.48.1"
+  },
+  "executable": {
+    "signature": "NotSigned",
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-7lgT8f\\installed\\open-office-studio.exe",
+    "productVersion": "2026.48.1",
+    "sha256": "feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67",
+    "productName": "Open Office Studio",
+    "fileVersion": "2026.48.1",
+    "signer": null
+  },
+  "payloadEqualsInstalled": true,
+  "error": "Error: Command failed: pwsh -NoProfile -File D:\\a\\open-office-studio\\open-office-studio\\scripts\\format30-gnm\\native-windows\\windows-actions.ps1 -Action OpenDialog -OwnedPid 7060 -ReportPath D:\\a\\open-office-studio\\open-office-studio\\.local\\gnm-native-proof\\1-OpenDialog-2.json -Target D:\\a\\open-office-studio\\open-office-studio\\.local\\gnm-native-proof\\GNM30-gnm.gnm\n\u001b[31;1mException: \u001b[0mD:\\a\\open-office-studio\\open-office-studio\\scripts\\format30-gnm\\native-windows\\windows-actions.ps1:106\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1mLine |\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1m\u001b[36;1m 106 | \u001b[0m . -ne 1001) { \u001b[36;1mthrow 'BLOCKED: focused native filename identity not esta\u001b[0m .\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1m\u001b[36;1m\u001b[0m\u001b[36;1m\u001b[0m\u001b[36;1m     | \u001b[31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n\u001b[31;1m\u001b[0m\u001b[36;1m\u001b[36;1m\u001b[0m\u001b[36;1m\u001b[0m\u001b[36;1m\u001b[31;1m\u001b[31;1m\u001b[36;1m     | \u001b[31;1mBLOCKED: focused native filename identity not established\u001b[0m\r\n\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at ChildProcess.exithandler (node:child_process:417:12)\n    at ChildProcess.emit (node:events:519:28)\n    at maybeClose (node:internal/child_process:1101:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:304:5)\n    at Process.callbackTrampoline (node:internal/async_hooks:130:17)",
+  "failureVisibleText": "Open Office Studio\nStart\nWORKSPACE\nHome\nOpen\nEmail\nNEW FILE\nText\nSpreadsheet\nPresentation\nNotes\nDatabase Studio\nWorking copy · editing, queries, VBA\nSettings\nKeyboard shortcuts\nOpenAEC Foundation\nYour local office\nYour workspace.\n\nWrite, calculate, present and capture ideas.\n\nOpen file\nNew file\nChoose your tool and start with a blank file\nText\nBlank document\nText\nSpreadsheet\nA\nB\nC\nD\nBlank spreadsheet\nSpreadsheet\nPresentation\nBlank presentation\nPresentation\nA place for your ideas.\nNotebooks, sections and pages. Saved locally and automatically.\nOpen Notes\nOpenAEC Email Studio\nYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.\nOpen Email\nDiscover what you can make\nSample files\nDesign memo\nText, styles and a table\nMaterials overview\nMaterials, formulas and totals\nDesign vision\nSlides, shapes and notes\nExisting file\nBrowse this computer\nOpen a document, spreadsheet or presentation.\nDOCX\nXLSX\nPPTX\nYour files stay on your computer.\nAbout this version\nLocal\nDevelopment version 2026-W48.1"
+}

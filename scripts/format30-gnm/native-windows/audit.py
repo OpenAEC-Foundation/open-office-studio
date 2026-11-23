@@ -67,5 +67,23 @@ def audit(root):
                 nativeChooserCases=4, fullNormalExits=4, newProcessReopens=2, originalSourceUnchanged=True,
                 scope='Native Windows suite only; visual screenshot review separate, no other OS/standalone/signing approval')
 
+def audit_bundle(root):
+    run = json.loads((root / 'run.json').read_bytes())
+    meta = json.loads((root / 'artifact-metadata.json').read_bytes())
+    assert run['id'] == 45151594168 and run['head_sha'] == '2d599cdb05560feb71008e63c3285ee7f8d930f3'
+    assert run['conclusion'] == 'success' and meta['id'] == 14807236412
+    archive_path = root / 'artifact.zip'
+    digest = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+    assert meta['digest'] == 'sha256:' + digest
+    assert digest == '459f9a74dbafa3a4d8ea0809cbc2bc3f427347f1bdd0382a7ceb7677c1b9c7c7'
+    with zipfile.ZipFile(archive_path) as archive:
+        members = [e.filename for e in archive.infolist() if not e.is_dir()]
+        assert len(members) == len(set(members))
+        assert set(members) == {p.relative_to(root / 'files').as_posix() for p in (root / 'files').rglob('*') if p.is_file()}
+        for name in members:
+            assert archive.read(name) == (root / 'files' / name).read_bytes(), name
+    return dict(**audit(root / 'files'), nativeRun=run['id'], artifactId=meta['id'], archiveSha256=digest)
+
 if __name__ == '__main__':
-    print(json.dumps(audit(Path(sys.argv[1]))))
+    target = Path(sys.argv[1] if len(sys.argv) > 1 else 'docs/tests/formatendekking/2026-11-23-gnm-native-windows-proof/passed')
+    print(json.dumps(audit_bundle(target)))
