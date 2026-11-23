@@ -1,0 +1,53 @@
+{
+  "issue": 361,
+  "scope": "P2 native Mac ordinary typing, last-cell Tab and separate row/text UndoRedo, Find input UndoRedo, two-document isolation",
+  "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "version": "2026.48.1",
+  "producerRun": 45143305147,
+  "packageArtifactId": 14805147807,
+  "packageZipSha256": "9b0a335a26590e5f9b617711679f82252b31cdcf9dea1a13115e2955e53caf85",
+  "dmgSha256": "7ba6db8afaf73d3ef5b8d02a978aacd750a239433fb4d7bc3d2ee451ed2a29fd",
+  "executableSha256": "e1779fe6a7be4be603d6be155715f0d860d6226a99f24a24c76e847c1609cbb0",
+  "scopedNative361RemainingReady": true,
+  "productChangeInThisScope": false,
+  "additionalAppBuild": false,
+  "earlierNative359BodyCoreReusedRun": 45151872444,
+  "earlierFailedReportsPreserved": true,
+  "controls": {
+    "cellTyping": "passed on all target hosts; exact original cells preserved",
+    "TabModel": "saved4x3; earlier AX3x3 is stale/incomplete observation before text/save, not proven missing model row",
+    "TabHistory": "two Undo/two Redo saved XML empty4/original3/empty4/newrow4; separate actual row/text histories",
+    "Find": "native input UndoRedo isolated; document sentinel intact; Escape returns document Undo",
+    "twoDocuments": "samePID actual document tabs; separate histories; final private A3x4/B3x3 independently verified"
+  },
+  "evidence": {
+    "Tab-save-oracle": {
+      "run": 45164433686,
+      "artifactId": 14813093059,
+      "zipSha256": "eaf722dc6197685b2c908d5c04d4e3f0e67886308743ef2f181eb81a5cbd416e",
+      "reportSha256": "57a1e2c4c42370cbec3dafb1a274cbed1c6c500c1f3cec4622696f86d64ea43d",
+      "auditSha256": "3ea0f69a763632376bf1706c27a5ce66f9d7765b5dd00a1f828d9dc05287cb2f"
+    },
+    "Find-isolation-pass": {
+      "run": 45165715341,
+      "artifactId": 14813629072,
+      "zipSha256": "1ebbd602018702cd3333f647a2cbf5c71ca3c47d771aee404f7bf1ccda43c0e9",
+      "reportSha256": "dd2503bbfff73d6380a471063ea6d0f1c870c23c09f931d317811d7a3fc86361",
+      "auditSha256": "371cb7cd5eb3ac99a54fb105d1237499e06b38874081ef6c92598697ab63b682"
+    },
+    "Tab-history-pass": {
+      "run": 45166342456,
+      "artifactId": 14815380479,
+      "zipSha256": "849901dc28b589dfe52d5031eadded2b048568ea585d2917eed74cf5ae3bd659",
+      "reportSha256": "7de95b1fbfeb3e0fa834bf41bb36c3f04fe575f6202a38d2c90db7aa8d193499",
+      "auditSha256": "5227f81bfea5f813204f46215da2ee4594e35e17ba61b0dfac5feb38e13cd650"
+    }
+  },
+  "limits": [
+    "Scoped P2 acceptance only; original nativePass=false raw reports remain unchanged",
+    "Native modal-dialog Undo, standalone/formats are separate owners/scopes",
+    "Signed Suite and any newer integrated product source require their own exact package binding and final combined native control",
+    "No main/tag/publication authorization; overall stable release readiness is not asserted"
+  ]
+}
