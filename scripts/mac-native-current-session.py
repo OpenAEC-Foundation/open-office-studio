@@ -253,6 +253,10 @@ def main():
         program = (app / "Contents/MacOS" / info["CFBundleExecutable"]).resolve(strict=True)
         if hashlib.sha256(program.read_bytes()).hexdigest() != identity["executableSha256"]:
             raise RuntimeError("Canonical native executable SHA256 differs")
+        if identity.get("requireSignedNotarized") is True:
+            signature = runpy.run_path(str(Path(__file__).with_name("mac-native-signed-package.py")))
+            report["signedPackagePreflight"] = {}
+            signature["verify_signed_bundle"](app, out/"signed-package-preflight", report["signedPackagePreflight"])
         identity["executablePath"] = str(program)
         local_identity.write_text(json.dumps(identity), encoding="utf-8")
         preferences = Path.home() / "Library/Application Support/org.openaec.office-studio/voorkeuren.json"

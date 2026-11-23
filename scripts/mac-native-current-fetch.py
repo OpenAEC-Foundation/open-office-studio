@@ -9,6 +9,21 @@ import zipfile
 REPO = "OpenAEC-Foundation/open-office-studio"
 
 
+def package_member(value, names):
+    pinned = value.get("packageMember")
+    if value.get("requireExactPackageMember") is True and not isinstance(pinned, str):
+        raise RuntimeError("This producer requires an explicitly pinned DMG member")
+    if pinned is not None and (not isinstance(pinned, str) or not pinned.endswith(".dmg")):
+        raise RuntimeError("Exact DMG member pin required")
+    candidates = [n for n in names if n.endswith(".dmg") and (pinned is None or n == pinned)]
+    if len(candidates) != 1:
+        raise RuntimeError("Expected one exact DMG member in the canonical archive")
+    member = PurePosixPath(candidates[0])
+    if member.is_absolute() or ".." in member.parts or "\\" in str(member) or value["declaredVersion"] not in member.name:
+        raise RuntimeError("DMG member identity/version differs")
+    return str(member)
+
+
 def verify_platform_origin(value, run, artifact, job):
     source = value["sourceCommit"]
     if (run["id"] != value["artifactRun"] or run["head_sha"] != source
@@ -49,13 +64,10 @@ def main():
     if sha(archive.read_bytes()) != value["archiveSha256"]:
         raise RuntimeError("Canonical artifact ZIP differs")
     with zipfile.ZipFile(archive) as bundle:
-        candidates = [n for n in bundle.namelist() if n.endswith(".dmg")]
-        if len(candidates) != 1:
-            raise RuntimeError("Expected one DMG in exact canonical archive")
-        member = PurePosixPath(candidates[0])
-        if member.is_absolute() or ".." in member.parts or "\\" in str(member) or value["declaredVersion"] not in member.name:
-            raise RuntimeError("DMG member identity/version differs")
+        member = PurePosixPath(package_member(value, bundle.namelist()))
         package = bundle.read(str(member))
+    if value.get("packageSha256") is not None and sha(package) != value["packageSha256"]:
+        raise RuntimeError("Canonical DMG differs from its independent expected hash")
     package_path = output / member.name
     package_path.write_bytes(package)
     identity = dict(value, packageMember=str(member), packageSha256=sha(package), packagePath=str(package_path.resolve()))
