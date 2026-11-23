@@ -94,5 +94,13 @@ Database uses SQLite only because the exact P5 native UI explicitly accepts
 `.sqlite/.sqlite3/.db`, with actual table/query/reopen and independent read-only
 sqlite3/source-hash checks. No Access writes or internal import calls are promised.
 
+After the native jobs, `collect_proofs.py REPO PREPARER_RUN NEW_DESTINATION`
+downloads only the small official binding/proof artifacts, strictly checks their
+complete ZIP hashes, and independently rechecks receipts, identity/signatures,
+two normal exits/different PIDs, cleanup and saved DOCX/XLSX/PPTX/JSON/MIME/SQLite
+bytes. Failed native evidence is retained. Its functional audit explicitly leaves
+visual acceptance pending: review both actual completed screenshots per app
+before claiming that the native content was displayed correctly.
+
 No local GUI/capture, extra app/Mac build, current product fix/intake, main/tag or
 publication is performed. #380 remains separate for a future product round.
