@@ -1,0 +1,6282 @@
+{
+  "status": "passed",
+  "phase": "complete",
+  "source": {
+    "upstreamCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+    "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+    "bytes": 7651,
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb",
+    "upstreamTest": "https://github.com/LibreOffice/core/blob/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/subsequent_filters_test2.cxx#L476",
+    "license": "LibreOffice core MPL-2.0; upstream test fixture, unmodified",
+    "formatProof": "workbook.bin/worksheet.bin with 30 BrtFmlaNum records, not renamed XLSX",
+    "macroProjectPresent": false
+  },
+  "origin": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "harnessCommit": "85e9c49ebe50df632751cbfa08d8083dae884c8c",
+  "startedAt": "2026-11-23T10:36:37.243Z",
+  "platform": "Linux x64 / installed Office DEB / headed WebKitGTK on private Xvfb and D-Bus",
+  "sessions": [
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "pid": 4685,
+      "sessionId": "905ec21c-4b7c-4b1f-acec-6e9418fbcd1d",
+      "sourcePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/input/NativeXLSB-source.xlsb",
+      "ready": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A1",
+        "gridFocused": false
+      },
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 4685,
+        "display": ":99",
+        "activationPerformed": true,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T10:36:38.581Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:36:42.794Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:36:42.904Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:36:43.078Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:36:43.215Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:43.259Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:43.308Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:43.379Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:43.423Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:36:43.485Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:36:43.547Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_1_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:36:43.614Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_1_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:36:43.764Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:36:43.824Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:36:43.877Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:43.935Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:43.978Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:44.040Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:44.083Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:44.145Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:44.189Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:36:44.250Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:36:44.323Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T10:36:44.404Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T10:36:44.538Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T10:36:44.597Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T10:36:44.678Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T10:36:44.741Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T10:36:44.941Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .office-snelknop[aria-label=\"Save as\"]",
+            "at": "2026-11-23T10:36:45.001Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .office-snelknop[aria-label=\"Save as\"]",
+            "at": "2026-11-23T10:36:45.184Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .opslaanals-naam input",
+            "at": "2026-11-23T10:36:45.296Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .opslaanals-naam input",
+            "at": "2026-11-23T10:36:45.410Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:36:45.469Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:36:45.520Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:45.579Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:45.641Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:45.708Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:45.774Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:45.830Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:45.888Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:45.943Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.004Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:46.060Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.124Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:46.180Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.238Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:46.294Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.362Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:46.428Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.499Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:46.564Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.629Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:46.696Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:46.760Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .office-dialoogdoorgaan",
+            "at": "2026-11-23T10:36:47.238Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T10:36:55.715Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T10:36:56.188Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T10:36:56.376Z",
+            "process": {
+              "pid": 4685,
+              "startTime": "58868",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 4685,
+          "startTime": "58868",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:97961:99899360:1795425472000",
+          "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+        },
+        "xid": "2097155",
+        "pre": {
+          "windowFocus": "1293",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T10:36:55.715Z",
+          "process": {
+            "pid": 4685,
+            "startTime": "58868",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:97961:99899360:1795425472000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        }
+      }
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "pid": 6467,
+      "sessionId": "d0fe9fdf-c527-4919-a2ba-59b1181121f0",
+      "sourcePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/preflight-save/NativeXLSB.xlsx",
+      "ready": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB.xlsx",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A1",
+        "gridFocused": false
+      },
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 6467,
+        "display": ":99",
+        "activationPerformed": true,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T10:36:57.363Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:36:58.677Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:36:58.823Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:36:58.885Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:36:58.942Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:59.004Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:59.051Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:59.115Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:59.160Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:36:59.224Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:36:59.270Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:36:59.337Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:36:59.405Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T10:36:59.501Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T10:36:59.702Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T10:36:59.766Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 3, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T10:36:59.826Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:36:59.891Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:36:59.953Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:00.017Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:00.068Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:00.133Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:00.185Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:00.250Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:00.298Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:00.366Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:00.413Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:00.488Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:00.565Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:37:00.624Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:37:00.770Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A16, 3, selected",
+                "id": "_r_1_-b0-r15-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:37:00.826Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A16, 3, selected",
+                "id": "_r_1_-b0-r15-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:37:00.937Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:37:00.995Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:37:01.043Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:01.099Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:01.177Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:01.235Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:01.314Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:01.372Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:01.451Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:37:01.508Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:37:01.574Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T10:37:01.679Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T10:37:01.821Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T10:37:01.877Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T10:37:01.956Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+s",
+            "at": "2026-11-23T10:37:02.021Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+s",
+            "at": "2026-11-23T10:37:02.083Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T10:37:02.555Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T10:37:02.738Z",
+            "process": {
+              "pid": 6467,
+              "startTime": "60778",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 6467,
+          "startTime": "60778",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:97961:99899360:1795425472000",
+          "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+        },
+        "xid": "2097155",
+        "pre": {
+          "windowFocus": "1293",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T10:36:57.363Z",
+          "process": {
+            "pid": 6467,
+            "startTime": "60778",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:97961:99899360:1795425472000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        }
+      }
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "pid": 6684,
+      "sessionId": "cd6e9c63-42a4-4254-8ba2-dc311d29fd11",
+      "sourcePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/preflight-save/NativeXLSB.xlsx",
+      "ready": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB.xlsx",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A1",
+        "gridFocused": false
+      },
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 6684,
+        "display": ":99",
+        "activationPerformed": true,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T10:37:03.761Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:37:04.996Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:37:05.108Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:37:05.170Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:37:05.229Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:05.292Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:05.340Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:05.406Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:05.451Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:05.474Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:05.560Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:37:05.625Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:37:05.689Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:37:05.780Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A15, 42, selected",
+                "id": "_r_1_-b0-r14-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T10:37:05.938Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T10:37:05.962Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T10:37:06.029Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:06.094Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:06.144Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:06.210Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:06.258Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T10:37:06.324Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T10:37:06.373Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T10:37:06.399Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T10:37:06.467Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A30, 3, selected",
+                "id": "_r_1_-b0-r29-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T10:37:07.019Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A30, 3, selected",
+                "id": "_r_1_-b0-r29-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T10:37:07.211Z",
+            "process": {
+              "pid": 6684,
+              "startTime": "61413",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:97961:99899360:1795425472000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A30, 3, selected",
+                "id": "_r_1_-b0-r29-k0",
+                "tag": "SPAN"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 6684,
+          "startTime": "61413",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:97961:99899360:1795425472000",
+          "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+        },
+        "xid": "2097155",
+        "pre": {
+          "windowFocus": "1293",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T10:37:03.761Z",
+          "process": {
+            "pid": 6684,
+            "startTime": "61413",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:97961:99899360:1795425472000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "selected": "A1",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "selected": "A15",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A15, 3, selected",
+            "address": "A15",
+            "text": "A15, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A15",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "fullProcessExit": true
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "selected": "A15",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB.xlsx",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A15, 3, selected",
+            "address": "A15",
+            "text": "A15, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A15",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "selected": "A15",
+      "expectedFormula": "40+2",
+      "expectedValue": 42,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB.xlsx, unsaved changes",
+        "formula": "=40+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A15, 42, selected",
+            "address": "A15",
+            "text": "A15, 42, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A15",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "fullProcessExit": true
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "selected": "A15",
+      "expectedFormula": "40+2",
+      "expectedValue": 42,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB.xlsx",
+        "formula": "=40+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A15, 42, selected",
+            "address": "A15",
+            "text": "A15, 42, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A15",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "selected": "A30",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB.xlsx",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A30, 3, selected",
+            "address": "A30",
+            "text": "A30, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "name": "A30",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "fullProcessExit": true
+    }
+  ],
+  "inputs": [
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "5",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "N",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "a",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "t",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "i",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "v",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "e",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "X",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "L",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "S",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "B",
+      "selector": ".opslaanals-naam input",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "character": "5",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "=",
+      "selector": "[data-testid=\"xlsx-formula-input\"]",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "4",
+      "selector": "[data-testid=\"xlsx-formula-input\"]",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "0",
+      "selector": "[data-testid=\"xlsx-formula-input\"]",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "+",
+      "selector": "[data-testid=\"xlsx-formula-input\"]",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "2",
+      "selector": "[data-testid=\"xlsx-formula-input\"]",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "5",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "ctrl+s",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "5",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "3",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "character": "0",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "key": "Return",
+      "backend": "XTest"
+    }
+  ],
+  "captures": [
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "file": "opened-source.png",
+      "pid": 4685,
+      "xid": "2097155",
+      "startTime": "58868",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "d7e80aaa61056ab58b766adbeb0401bf9ba188dc3d303a414063abfa8301b5de",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "file": "picker-before-input.png",
+      "pid": 4720,
+      "xid": "4194311",
+      "startTime": "58891",
+      "width": 1096,
+      "height": 822,
+      "sha256": "1aea42d6d64e5d0942a04a1555c209ec37e7edad4ddfaf5fb977d89ba0a0aba7",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "file": "picker-filled.png",
+      "pid": 4720,
+      "xid": "4194311",
+      "startTime": "58891",
+      "width": 1096,
+      "height": 822,
+      "sha256": "9281ebedc3127e1561bf30a37859ef52aa592ae0011ba1bcd4fe4fbeb3f7252f",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "file": "preflight-saved.png",
+      "pid": 4685,
+      "xid": "2097155",
+      "startTime": "58868",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "0001064cd0904a4ef22d23806d91bdd774f0e3266f6e879e7043db840b378196",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-input-save-reopen-preflight",
+      "file": "preflight-reopened.png",
+      "pid": 6467,
+      "xid": "2097155",
+      "startTime": "60778",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "c273997c5622240f3de6934e886805ca3f90357bf168b199a7f6ecb9fd969c0e",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "file": "edited-saved.png",
+      "pid": 6467,
+      "xid": "2097155",
+      "startTime": "60778",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "ad5b22b2c239de3c98e48257886814db9e1cf6be0703a0e866a058317fd1e78d",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-edit-save-reopen",
+      "file": "final-reopened.png",
+      "pid": 6684,
+      "xid": "2097155",
+      "startTime": "61413",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "7736ee17e950725eb055ebadf117b00d4de489964be5901037d9e0c367807080",
+      "backend": "owned X11 window pixels"
+    }
+  ],
+  "cleanup": {
+    "ownedOfficeClosed": true,
+    "driverGroupClosed": true,
+    "capture": "Synchronous owned-window GDK snapshot processes only; no persistent recording session"
+  },
+  "limits": [
+    "One genuine XLSB fixture; 30 source formulas/cache values, A15 edit, XLSX Save As and direct reopen.",
+    "Virtual X11/software graphics; no physical hardware, AppImage, final signed/standalone app or other-platform claim.",
+    "Full process quit uses WebDriver DELETE session; menu Quit is not certified.",
+    "No product code, editor bridge, DOM model setters, mocked IPC or direct converter call."
+  ],
+  "sharedHelpers": [
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-package.py",
+      "sha256": "a9c68b7880b7cb0749689096fee81bce980ecf9fa697dfe7bb93554b95e92d45"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-capture.py",
+      "sha256": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-ribbon-native.mjs",
+      "sha256": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-input.mjs",
+      "sha256": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "tests/fixtures/linux-p2/native-input-descriptor.json",
+      "sha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92"
+    },
+    {
+      "commit": "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
+      "path": "scripts/linux-stw-portal.py",
+      "sha256": "9594b9bf350fc76bf9bc36a3a78d570f4c31fd65e50617fb66968832e9f5f165",
+      "usage": "Immutable shared picker protocol; its contracts are not a native pass"
+    },
+    {
+      "commit": "3f4ddecd383e6a9fcb6a5f78ff456c08d772797a",
+      "path": "scripts/linux-stw-dialog-input.mjs",
+      "sha256": "846a1bc0e3aba112498c7ce86e4dafba2c885261732b4cbae670cc551dc9ff05",
+      "usage": "Immutable caller readiness: bounded visible window wait on the same credential-bound PID"
+    },
+    {
+      "commit": "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
+      "path": "scripts/linux-stw-gtk-anatomy.py",
+      "sha256": "b59d80b5f47538a503647b1ed86d5c915b6266842f7bed6107cc60da107035d4",
+      "usage": "Immutable shared picker protocol; its contracts are not a native pass"
+    }
+  ],
+  "preflightSaveEntry": "Actual visible Save As toolbar button; initial imported-copy Ctrl+S behavior is not certified",
+  "saveProposal": {
+    "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)",
+    "extension": ".xlsx"
+  },
+  "nativeSaveAs": {
+    "status": "passed",
+    "attributed": {
+      "status": "attributed",
+      "ownedPid": 4685,
+      "busId": "3bc0b9402ecd0c8381fa26666b041734",
+      "privateBusAddress": "unix:abstract=/tmp/dbus-0mZefge29f,guid=ebaaf1b2cc7f54bcd0d39d936b041734",
+      "display": ":99",
+      "member": "SaveFile",
+      "calls": [
+        {
+          "sender": ":1.20",
+          "destination": "org.freedesktop.portal.Desktop",
+          "serial": 16,
+          "interface": "org.freedesktop.portal.FileChooser",
+          "member": "SaveFile",
+          "token": "ashpd_BYjaBpjQ2a",
+          "currentName": "NativeXLSB.xlsx",
+          "handle": null
+        },
+        {
+          "sender": ":1.7",
+          "destination": ":1.10",
+          "serial": 105,
+          "interface": "org.freedesktop.impl.portal.FileChooser",
+          "member": "SaveFile",
+          "token": null,
+          "currentName": "NativeXLSB.xlsx",
+          "handle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_BYjaBpjQ2a"
+        }
+      ],
+      "readyBeforeSave": true,
+      "protocolBaseCommit": "75ca3dfe836f58a54c0bde5c1006a24b85b5ec3d",
+      "observerPid": 4987,
+      "ownedProcessGroup": 4987,
+      "monitorPid": 4992,
+      "correlation": {
+        "ownedPid": 4685,
+        "requestHandle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_BYjaBpjQ2a",
+        "frontend": {
+          "sender": ":1.20",
+          "destination": "org.freedesktop.portal.Desktop",
+          "serial": 16,
+          "interface": "org.freedesktop.portal.FileChooser",
+          "member": "SaveFile",
+          "token": "ashpd_BYjaBpjQ2a",
+          "currentName": "NativeXLSB.xlsx",
+          "handle": null
+        },
+        "backend": {
+          "sender": ":1.7",
+          "destination": ":1.10",
+          "serial": 105,
+          "interface": "org.freedesktop.impl.portal.FileChooser",
+          "member": "SaveFile",
+          "token": null,
+          "currentName": "NativeXLSB.xlsx",
+          "handle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_BYjaBpjQ2a"
+        },
+        "brokerUniqueName": ":1.7",
+        "backendUniqueName": ":1.10",
+        "backendPid": 4720
+      },
+      "backendExecutable": "/usr/libexec/xdg-desktop-portal-gtk"
+    },
+    "dialog": {
+      "binding": {
+        "pid": 4720,
+        "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+        "startTime": "58891",
+        "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+        "environment": {
+          "DISPLAY": ":99",
+          "HOME": "/home/runner",
+          "XAUTHORITY": "/tmp/xvfb-run.lC0Jr5/Xauthority",
+          "GDK_BACKEND": "x11",
+          "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/profile/config",
+          "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/profile/data",
+          "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-0mZefge29f,guid=ebaaf1b2cc7f54bcd0d39d936b041734"
+        }
+      },
+      "xid": "4194311",
+      "activationPerformed": false,
+      "checks": [
+        {
+          "stage": "dialog foreground postcondition",
+          "at": "2026-11-23T10:36:48.582Z"
+        },
+        {
+          "stage": "before picker capture",
+          "at": "2026-11-23T10:36:48.608Z"
+        },
+        {
+          "stage": "after picker capture",
+          "at": "2026-11-23T10:36:48.767Z"
+        },
+        {
+          "stage": "before ctrl+l",
+          "at": "2026-11-23T10:36:48.779Z"
+        },
+        {
+          "stage": "after ctrl+l",
+          "at": "2026-11-23T10:36:48.826Z"
+        },
+        {
+          "stage": "before ctrl+a",
+          "at": "2026-11-23T10:36:48.840Z"
+        },
+        {
+          "stage": "after ctrl+a",
+          "at": "2026-11-23T10:36:48.886Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:48.898Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:48.930Z"
+        },
+        {
+          "stage": "before h",
+          "at": "2026-11-23T10:36:48.943Z"
+        },
+        {
+          "stage": "after h",
+          "at": "2026-11-23T10:36:48.973Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:48.986Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:49.027Z"
+        },
+        {
+          "stage": "before m",
+          "at": "2026-11-23T10:36:49.043Z"
+        },
+        {
+          "stage": "after m",
+          "at": "2026-11-23T10:36:49.075Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:49.087Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:49.118Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:49.132Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:49.166Z"
+        },
+        {
+          "stage": "before r",
+          "at": "2026-11-23T10:36:49.177Z"
+        },
+        {
+          "stage": "after r",
+          "at": "2026-11-23T10:36:49.209Z"
+        },
+        {
+          "stage": "before u",
+          "at": "2026-11-23T10:36:49.225Z"
+        },
+        {
+          "stage": "after u",
+          "at": "2026-11-23T10:36:49.258Z"
+        },
+        {
+          "stage": "before n",
+          "at": "2026-11-23T10:36:49.272Z"
+        },
+        {
+          "stage": "after n",
+          "at": "2026-11-23T10:36:49.306Z"
+        },
+        {
+          "stage": "before n",
+          "at": "2026-11-23T10:36:49.319Z"
+        },
+        {
+          "stage": "after n",
+          "at": "2026-11-23T10:36:49.352Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:49.365Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:49.398Z"
+        },
+        {
+          "stage": "before r",
+          "at": "2026-11-23T10:36:49.414Z"
+        },
+        {
+          "stage": "after r",
+          "at": "2026-11-23T10:36:49.448Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:49.460Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:49.500Z"
+        },
+        {
+          "stage": "before w",
+          "at": "2026-11-23T10:36:49.511Z"
+        },
+        {
+          "stage": "after w",
+          "at": "2026-11-23T10:36:49.542Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:49.554Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:49.585Z"
+        },
+        {
+          "stage": "before r",
+          "at": "2026-11-23T10:36:49.598Z"
+        },
+        {
+          "stage": "after r",
+          "at": "2026-11-23T10:36:49.629Z"
+        },
+        {
+          "stage": "before k",
+          "at": "2026-11-23T10:36:49.641Z"
+        },
+        {
+          "stage": "after k",
+          "at": "2026-11-23T10:36:49.672Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:49.683Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:49.714Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:49.726Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:49.756Z"
+        },
+        {
+          "stage": "before p",
+          "at": "2026-11-23T10:36:49.769Z"
+        },
+        {
+          "stage": "after p",
+          "at": "2026-11-23T10:36:49.800Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:49.812Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:49.844Z"
+        },
+        {
+          "stage": "before n",
+          "at": "2026-11-23T10:36:49.856Z"
+        },
+        {
+          "stage": "after n",
+          "at": "2026-11-23T10:36:49.893Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:49.906Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:49.937Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:49.949Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:49.984Z"
+        },
+        {
+          "stage": "before f",
+          "at": "2026-11-23T10:36:49.995Z"
+        },
+        {
+          "stage": "after f",
+          "at": "2026-11-23T10:36:50.026Z"
+        },
+        {
+          "stage": "before f",
+          "at": "2026-11-23T10:36:50.038Z"
+        },
+        {
+          "stage": "after f",
+          "at": "2026-11-23T10:36:50.069Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:50.080Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:50.110Z"
+        },
+        {
+          "stage": "before c",
+          "at": "2026-11-23T10:36:50.121Z"
+        },
+        {
+          "stage": "after c",
+          "at": "2026-11-23T10:36:50.156Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:50.170Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:50.200Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:50.212Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:50.241Z"
+        },
+        {
+          "stage": "before s",
+          "at": "2026-11-23T10:36:50.253Z"
+        },
+        {
+          "stage": "after s",
+          "at": "2026-11-23T10:36:50.284Z"
+        },
+        {
+          "stage": "before t",
+          "at": "2026-11-23T10:36:50.296Z"
+        },
+        {
+          "stage": "after t",
+          "at": "2026-11-23T10:36:50.330Z"
+        },
+        {
+          "stage": "before u",
+          "at": "2026-11-23T10:36:50.344Z"
+        },
+        {
+          "stage": "after u",
+          "at": "2026-11-23T10:36:50.375Z"
+        },
+        {
+          "stage": "before d",
+          "at": "2026-11-23T10:36:50.387Z"
+        },
+        {
+          "stage": "after d",
+          "at": "2026-11-23T10:36:50.417Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:50.429Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:50.459Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:50.471Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:50.503Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:50.518Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:50.549Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:50.561Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:50.592Z"
+        },
+        {
+          "stage": "before p",
+          "at": "2026-11-23T10:36:50.604Z"
+        },
+        {
+          "stage": "after p",
+          "at": "2026-11-23T10:36:50.634Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:50.646Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:50.677Z"
+        },
+        {
+          "stage": "before n",
+          "at": "2026-11-23T10:36:50.690Z"
+        },
+        {
+          "stage": "after n",
+          "at": "2026-11-23T10:36:50.722Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:50.738Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:50.769Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:50.780Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:50.811Z"
+        },
+        {
+          "stage": "before f",
+          "at": "2026-11-23T10:36:50.823Z"
+        },
+        {
+          "stage": "after f",
+          "at": "2026-11-23T10:36:50.853Z"
+        },
+        {
+          "stage": "before f",
+          "at": "2026-11-23T10:36:50.865Z"
+        },
+        {
+          "stage": "after f",
+          "at": "2026-11-23T10:36:50.901Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:50.914Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:50.947Z"
+        },
+        {
+          "stage": "before c",
+          "at": "2026-11-23T10:36:50.959Z"
+        },
+        {
+          "stage": "after c",
+          "at": "2026-11-23T10:36:50.990Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:51.002Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:51.033Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:51.045Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:51.079Z"
+        },
+        {
+          "stage": "before s",
+          "at": "2026-11-23T10:36:51.092Z"
+        },
+        {
+          "stage": "after s",
+          "at": "2026-11-23T10:36:51.123Z"
+        },
+        {
+          "stage": "before t",
+          "at": "2026-11-23T10:36:51.135Z"
+        },
+        {
+          "stage": "after t",
+          "at": "2026-11-23T10:36:51.167Z"
+        },
+        {
+          "stage": "before u",
+          "at": "2026-11-23T10:36:51.179Z"
+        },
+        {
+          "stage": "after u",
+          "at": "2026-11-23T10:36:51.210Z"
+        },
+        {
+          "stage": "before d",
+          "at": "2026-11-23T10:36:51.222Z"
+        },
+        {
+          "stage": "after d",
+          "at": "2026-11-23T10:36:51.256Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:51.270Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:51.301Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:51.312Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:51.343Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:51.354Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:51.385Z"
+        },
+        {
+          "stage": "before period",
+          "at": "2026-11-23T10:36:51.398Z"
+        },
+        {
+          "stage": "after period",
+          "at": "2026-11-23T10:36:51.432Z"
+        },
+        {
+          "stage": "before l",
+          "at": "2026-11-23T10:36:51.446Z"
+        },
+        {
+          "stage": "after l",
+          "at": "2026-11-23T10:36:51.478Z"
+        },
+        {
+          "stage": "before o",
+          "at": "2026-11-23T10:36:51.492Z"
+        },
+        {
+          "stage": "after o",
+          "at": "2026-11-23T10:36:51.525Z"
+        },
+        {
+          "stage": "before c",
+          "at": "2026-11-23T10:36:51.538Z"
+        },
+        {
+          "stage": "after c",
+          "at": "2026-11-23T10:36:51.571Z"
+        },
+        {
+          "stage": "before a",
+          "at": "2026-11-23T10:36:51.585Z"
+        },
+        {
+          "stage": "after a",
+          "at": "2026-11-23T10:36:51.630Z"
+        },
+        {
+          "stage": "before l",
+          "at": "2026-11-23T10:36:51.647Z"
+        },
+        {
+          "stage": "after l",
+          "at": "2026-11-23T10:36:51.680Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:51.695Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:51.728Z"
+        },
+        {
+          "stage": "before l",
+          "at": "2026-11-23T10:36:51.744Z"
+        },
+        {
+          "stage": "after l",
+          "at": "2026-11-23T10:36:51.780Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:51.793Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:51.831Z"
+        },
+        {
+          "stage": "before n",
+          "at": "2026-11-23T10:36:51.845Z"
+        },
+        {
+          "stage": "after n",
+          "at": "2026-11-23T10:36:51.879Z"
+        },
+        {
+          "stage": "before u",
+          "at": "2026-11-23T10:36:51.893Z"
+        },
+        {
+          "stage": "after u",
+          "at": "2026-11-23T10:36:51.929Z"
+        },
+        {
+          "stage": "before x",
+          "at": "2026-11-23T10:36:51.942Z"
+        },
+        {
+          "stage": "after x",
+          "at": "2026-11-23T10:36:51.974Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:51.987Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:52.023Z"
+        },
+        {
+          "stage": "before p",
+          "at": "2026-11-23T10:36:52.035Z"
+        },
+        {
+          "stage": "after p",
+          "at": "2026-11-23T10:36:52.067Z"
+        },
+        {
+          "stage": "before 2",
+          "at": "2026-11-23T10:36:52.081Z"
+        },
+        {
+          "stage": "after 2",
+          "at": "2026-11-23T10:36:52.116Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:52.128Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:52.160Z"
+        },
+        {
+          "stage": "before n",
+          "at": "2026-11-23T10:36:52.174Z"
+        },
+        {
+          "stage": "after n",
+          "at": "2026-11-23T10:36:52.214Z"
+        },
+        {
+          "stage": "before a",
+          "at": "2026-11-23T10:36:52.227Z"
+        },
+        {
+          "stage": "after a",
+          "at": "2026-11-23T10:36:52.260Z"
+        },
+        {
+          "stage": "before t",
+          "at": "2026-11-23T10:36:52.272Z"
+        },
+        {
+          "stage": "after t",
+          "at": "2026-11-23T10:36:52.305Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:52.318Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:52.352Z"
+        },
+        {
+          "stage": "before v",
+          "at": "2026-11-23T10:36:52.366Z"
+        },
+        {
+          "stage": "after v",
+          "at": "2026-11-23T10:36:52.401Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:52.415Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:52.447Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:52.461Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:52.493Z"
+        },
+        {
+          "stage": "before x",
+          "at": "2026-11-23T10:36:52.506Z"
+        },
+        {
+          "stage": "after x",
+          "at": "2026-11-23T10:36:52.539Z"
+        },
+        {
+          "stage": "before l",
+          "at": "2026-11-23T10:36:52.559Z"
+        },
+        {
+          "stage": "after l",
+          "at": "2026-11-23T10:36:52.595Z"
+        },
+        {
+          "stage": "before s",
+          "at": "2026-11-23T10:36:52.609Z"
+        },
+        {
+          "stage": "after s",
+          "at": "2026-11-23T10:36:52.641Z"
+        },
+        {
+          "stage": "before b",
+          "at": "2026-11-23T10:36:52.653Z"
+        },
+        {
+          "stage": "after b",
+          "at": "2026-11-23T10:36:52.686Z"
+        },
+        {
+          "stage": "before 3",
+          "at": "2026-11-23T10:36:52.699Z"
+        },
+        {
+          "stage": "after 3",
+          "at": "2026-11-23T10:36:52.731Z"
+        },
+        {
+          "stage": "before 5",
+          "at": "2026-11-23T10:36:52.743Z"
+        },
+        {
+          "stage": "after 5",
+          "at": "2026-11-23T10:36:52.777Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:52.788Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:52.819Z"
+        },
+        {
+          "stage": "before p",
+          "at": "2026-11-23T10:36:52.832Z"
+        },
+        {
+          "stage": "after p",
+          "at": "2026-11-23T10:36:52.863Z"
+        },
+        {
+          "stage": "before r",
+          "at": "2026-11-23T10:36:52.875Z"
+        },
+        {
+          "stage": "after r",
+          "at": "2026-11-23T10:36:52.907Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:52.919Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:52.953Z"
+        },
+        {
+          "stage": "before f",
+          "at": "2026-11-23T10:36:52.966Z"
+        },
+        {
+          "stage": "after f",
+          "at": "2026-11-23T10:36:52.997Z"
+        },
+        {
+          "stage": "before l",
+          "at": "2026-11-23T10:36:53.010Z"
+        },
+        {
+          "stage": "after l",
+          "at": "2026-11-23T10:36:53.041Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:53.054Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:53.085Z"
+        },
+        {
+          "stage": "before g",
+          "at": "2026-11-23T10:36:53.098Z"
+        },
+        {
+          "stage": "after g",
+          "at": "2026-11-23T10:36:53.134Z"
+        },
+        {
+          "stage": "before h",
+          "at": "2026-11-23T10:36:53.149Z"
+        },
+        {
+          "stage": "after h",
+          "at": "2026-11-23T10:36:53.182Z"
+        },
+        {
+          "stage": "before t",
+          "at": "2026-11-23T10:36:53.196Z"
+        },
+        {
+          "stage": "after t",
+          "at": "2026-11-23T10:36:53.227Z"
+        },
+        {
+          "stage": "before minus",
+          "at": "2026-11-23T10:36:53.239Z"
+        },
+        {
+          "stage": "after minus",
+          "at": "2026-11-23T10:36:53.271Z"
+        },
+        {
+          "stage": "before s",
+          "at": "2026-11-23T10:36:53.284Z"
+        },
+        {
+          "stage": "after s",
+          "at": "2026-11-23T10:36:53.319Z"
+        },
+        {
+          "stage": "before a",
+          "at": "2026-11-23T10:36:53.335Z"
+        },
+        {
+          "stage": "after a",
+          "at": "2026-11-23T10:36:53.368Z"
+        },
+        {
+          "stage": "before v",
+          "at": "2026-11-23T10:36:53.380Z"
+        },
+        {
+          "stage": "after v",
+          "at": "2026-11-23T10:36:53.411Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:53.424Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:53.460Z"
+        },
+        {
+          "stage": "before slash",
+          "at": "2026-11-23T10:36:53.472Z"
+        },
+        {
+          "stage": "after slash",
+          "at": "2026-11-23T10:36:53.507Z"
+        },
+        {
+          "stage": "before N",
+          "at": "2026-11-23T10:36:53.522Z"
+        },
+        {
+          "stage": "after N",
+          "at": "2026-11-23T10:36:53.554Z"
+        },
+        {
+          "stage": "before a",
+          "at": "2026-11-23T10:36:53.566Z"
+        },
+        {
+          "stage": "after a",
+          "at": "2026-11-23T10:36:53.597Z"
+        },
+        {
+          "stage": "before t",
+          "at": "2026-11-23T10:36:53.610Z"
+        },
+        {
+          "stage": "after t",
+          "at": "2026-11-23T10:36:53.642Z"
+        },
+        {
+          "stage": "before i",
+          "at": "2026-11-23T10:36:53.655Z"
+        },
+        {
+          "stage": "after i",
+          "at": "2026-11-23T10:36:53.689Z"
+        },
+        {
+          "stage": "before v",
+          "at": "2026-11-23T10:36:53.705Z"
+        },
+        {
+          "stage": "after v",
+          "at": "2026-11-23T10:36:53.738Z"
+        },
+        {
+          "stage": "before e",
+          "at": "2026-11-23T10:36:53.753Z"
+        },
+        {
+          "stage": "after e",
+          "at": "2026-11-23T10:36:53.785Z"
+        },
+        {
+          "stage": "before X",
+          "at": "2026-11-23T10:36:53.797Z"
+        },
+        {
+          "stage": "after X",
+          "at": "2026-11-23T10:36:53.829Z"
+        },
+        {
+          "stage": "before L",
+          "at": "2026-11-23T10:36:53.841Z"
+        },
+        {
+          "stage": "after L",
+          "at": "2026-11-23T10:36:53.878Z"
+        },
+        {
+          "stage": "before S",
+          "at": "2026-11-23T10:36:53.895Z"
+        },
+        {
+          "stage": "after S",
+          "at": "2026-11-23T10:36:53.930Z"
+        },
+        {
+          "stage": "before B",
+          "at": "2026-11-23T10:36:53.942Z"
+        },
+        {
+          "stage": "after B",
+          "at": "2026-11-23T10:36:53.974Z"
+        },
+        {
+          "stage": "before period",
+          "at": "2026-11-23T10:36:53.986Z"
+        },
+        {
+          "stage": "after period",
+          "at": "2026-11-23T10:36:54.017Z"
+        },
+        {
+          "stage": "before x",
+          "at": "2026-11-23T10:36:54.030Z"
+        },
+        {
+          "stage": "after x",
+          "at": "2026-11-23T10:36:54.063Z"
+        },
+        {
+          "stage": "before l",
+          "at": "2026-11-23T10:36:54.082Z"
+        },
+        {
+          "stage": "after l",
+          "at": "2026-11-23T10:36:54.114Z"
+        },
+        {
+          "stage": "before s",
+          "at": "2026-11-23T10:36:54.127Z"
+        },
+        {
+          "stage": "after s",
+          "at": "2026-11-23T10:36:54.159Z"
+        },
+        {
+          "stage": "before x",
+          "at": "2026-11-23T10:36:54.172Z"
+        },
+        {
+          "stage": "after x",
+          "at": "2026-11-23T10:36:54.203Z"
+        },
+        {
+          "stage": "before picker capture",
+          "at": "2026-11-23T10:36:54.415Z"
+        },
+        {
+          "stage": "after picker capture",
+          "at": "2026-11-23T10:36:54.569Z"
+        },
+        {
+          "stage": "before native Return",
+          "at": "2026-11-23T10:36:54.581Z"
+        }
+      ],
+      "keys": [
+        {
+          "chord": "ctrl+l",
+          "at": "2026-11-23T10:36:48.780Z"
+        },
+        {
+          "chord": "ctrl+a",
+          "at": "2026-11-23T10:36:48.840Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:48.898Z"
+        },
+        {
+          "chord": "h",
+          "at": "2026-11-23T10:36:48.943Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:48.986Z"
+        },
+        {
+          "chord": "m",
+          "at": "2026-11-23T10:36:49.043Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:49.087Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:49.132Z"
+        },
+        {
+          "chord": "r",
+          "at": "2026-11-23T10:36:49.177Z"
+        },
+        {
+          "chord": "u",
+          "at": "2026-11-23T10:36:49.225Z"
+        },
+        {
+          "chord": "n",
+          "at": "2026-11-23T10:36:49.272Z"
+        },
+        {
+          "chord": "n",
+          "at": "2026-11-23T10:36:49.319Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:49.365Z"
+        },
+        {
+          "chord": "r",
+          "at": "2026-11-23T10:36:49.414Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:49.460Z"
+        },
+        {
+          "chord": "w",
+          "at": "2026-11-23T10:36:49.511Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:49.554Z"
+        },
+        {
+          "chord": "r",
+          "at": "2026-11-23T10:36:49.598Z"
+        },
+        {
+          "chord": "k",
+          "at": "2026-11-23T10:36:49.641Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:49.683Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:49.726Z"
+        },
+        {
+          "chord": "p",
+          "at": "2026-11-23T10:36:49.769Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:49.812Z"
+        },
+        {
+          "chord": "n",
+          "at": "2026-11-23T10:36:49.856Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:49.906Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:49.949Z"
+        },
+        {
+          "chord": "f",
+          "at": "2026-11-23T10:36:49.995Z"
+        },
+        {
+          "chord": "f",
+          "at": "2026-11-23T10:36:50.038Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:50.080Z"
+        },
+        {
+          "chord": "c",
+          "at": "2026-11-23T10:36:50.121Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:50.170Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:50.212Z"
+        },
+        {
+          "chord": "s",
+          "at": "2026-11-23T10:36:50.253Z"
+        },
+        {
+          "chord": "t",
+          "at": "2026-11-23T10:36:50.296Z"
+        },
+        {
+          "chord": "u",
+          "at": "2026-11-23T10:36:50.344Z"
+        },
+        {
+          "chord": "d",
+          "at": "2026-11-23T10:36:50.387Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:50.429Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:50.471Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:50.518Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:50.561Z"
+        },
+        {
+          "chord": "p",
+          "at": "2026-11-23T10:36:50.604Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:50.646Z"
+        },
+        {
+          "chord": "n",
+          "at": "2026-11-23T10:36:50.690Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:50.738Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:50.780Z"
+        },
+        {
+          "chord": "f",
+          "at": "2026-11-23T10:36:50.823Z"
+        },
+        {
+          "chord": "f",
+          "at": "2026-11-23T10:36:50.865Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:50.914Z"
+        },
+        {
+          "chord": "c",
+          "at": "2026-11-23T10:36:50.959Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:51.002Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:51.045Z"
+        },
+        {
+          "chord": "s",
+          "at": "2026-11-23T10:36:51.092Z"
+        },
+        {
+          "chord": "t",
+          "at": "2026-11-23T10:36:51.135Z"
+        },
+        {
+          "chord": "u",
+          "at": "2026-11-23T10:36:51.179Z"
+        },
+        {
+          "chord": "d",
+          "at": "2026-11-23T10:36:51.222Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:51.270Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:51.312Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:51.354Z"
+        },
+        {
+          "chord": "period",
+          "at": "2026-11-23T10:36:51.398Z"
+        },
+        {
+          "chord": "l",
+          "at": "2026-11-23T10:36:51.446Z"
+        },
+        {
+          "chord": "o",
+          "at": "2026-11-23T10:36:51.492Z"
+        },
+        {
+          "chord": "c",
+          "at": "2026-11-23T10:36:51.538Z"
+        },
+        {
+          "chord": "a",
+          "at": "2026-11-23T10:36:51.585Z"
+        },
+        {
+          "chord": "l",
+          "at": "2026-11-23T10:36:51.647Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:51.695Z"
+        },
+        {
+          "chord": "l",
+          "at": "2026-11-23T10:36:51.744Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:51.793Z"
+        },
+        {
+          "chord": "n",
+          "at": "2026-11-23T10:36:51.845Z"
+        },
+        {
+          "chord": "u",
+          "at": "2026-11-23T10:36:51.893Z"
+        },
+        {
+          "chord": "x",
+          "at": "2026-11-23T10:36:51.942Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:51.987Z"
+        },
+        {
+          "chord": "p",
+          "at": "2026-11-23T10:36:52.035Z"
+        },
+        {
+          "chord": "2",
+          "at": "2026-11-23T10:36:52.081Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:52.128Z"
+        },
+        {
+          "chord": "n",
+          "at": "2026-11-23T10:36:52.174Z"
+        },
+        {
+          "chord": "a",
+          "at": "2026-11-23T10:36:52.227Z"
+        },
+        {
+          "chord": "t",
+          "at": "2026-11-23T10:36:52.272Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:52.318Z"
+        },
+        {
+          "chord": "v",
+          "at": "2026-11-23T10:36:52.366Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:52.415Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:52.461Z"
+        },
+        {
+          "chord": "x",
+          "at": "2026-11-23T10:36:52.506Z"
+        },
+        {
+          "chord": "l",
+          "at": "2026-11-23T10:36:52.559Z"
+        },
+        {
+          "chord": "s",
+          "at": "2026-11-23T10:36:52.609Z"
+        },
+        {
+          "chord": "b",
+          "at": "2026-11-23T10:36:52.653Z"
+        },
+        {
+          "chord": "3",
+          "at": "2026-11-23T10:36:52.699Z"
+        },
+        {
+          "chord": "5",
+          "at": "2026-11-23T10:36:52.743Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:52.788Z"
+        },
+        {
+          "chord": "p",
+          "at": "2026-11-23T10:36:52.832Z"
+        },
+        {
+          "chord": "r",
+          "at": "2026-11-23T10:36:52.875Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:52.919Z"
+        },
+        {
+          "chord": "f",
+          "at": "2026-11-23T10:36:52.966Z"
+        },
+        {
+          "chord": "l",
+          "at": "2026-11-23T10:36:53.010Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:53.054Z"
+        },
+        {
+          "chord": "g",
+          "at": "2026-11-23T10:36:53.098Z"
+        },
+        {
+          "chord": "h",
+          "at": "2026-11-23T10:36:53.149Z"
+        },
+        {
+          "chord": "t",
+          "at": "2026-11-23T10:36:53.196Z"
+        },
+        {
+          "chord": "minus",
+          "at": "2026-11-23T10:36:53.239Z"
+        },
+        {
+          "chord": "s",
+          "at": "2026-11-23T10:36:53.284Z"
+        },
+        {
+          "chord": "a",
+          "at": "2026-11-23T10:36:53.335Z"
+        },
+        {
+          "chord": "v",
+          "at": "2026-11-23T10:36:53.380Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:53.424Z"
+        },
+        {
+          "chord": "slash",
+          "at": "2026-11-23T10:36:53.472Z"
+        },
+        {
+          "chord": "N",
+          "at": "2026-11-23T10:36:53.522Z"
+        },
+        {
+          "chord": "a",
+          "at": "2026-11-23T10:36:53.566Z"
+        },
+        {
+          "chord": "t",
+          "at": "2026-11-23T10:36:53.610Z"
+        },
+        {
+          "chord": "i",
+          "at": "2026-11-23T10:36:53.655Z"
+        },
+        {
+          "chord": "v",
+          "at": "2026-11-23T10:36:53.705Z"
+        },
+        {
+          "chord": "e",
+          "at": "2026-11-23T10:36:53.753Z"
+        },
+        {
+          "chord": "X",
+          "at": "2026-11-23T10:36:53.797Z"
+        },
+        {
+          "chord": "L",
+          "at": "2026-11-23T10:36:53.841Z"
+        },
+        {
+          "chord": "S",
+          "at": "2026-11-23T10:36:53.895Z"
+        },
+        {
+          "chord": "B",
+          "at": "2026-11-23T10:36:53.942Z"
+        },
+        {
+          "chord": "period",
+          "at": "2026-11-23T10:36:53.986Z"
+        },
+        {
+          "chord": "x",
+          "at": "2026-11-23T10:36:54.030Z"
+        },
+        {
+          "chord": "l",
+          "at": "2026-11-23T10:36:54.082Z"
+        },
+        {
+          "chord": "s",
+          "at": "2026-11-23T10:36:54.127Z"
+        },
+        {
+          "chord": "x",
+          "at": "2026-11-23T10:36:54.172Z"
+        },
+        {
+          "chord": "Return",
+          "at": "2026-11-23T10:36:54.581Z",
+          "transition": "Expected owned dialog closes; caller verifies exact response URI and document"
+        }
+      ]
+    },
+    "focusedPath": {
+      "name": "",
+      "role": "text",
+      "focused": true,
+      "showing": true,
+      "text": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/preflight-save/NativeXLSB.xlsx"
+    }
+  },
+  "portalObserverCleanup": {
+    "code": 0,
+    "signal": null,
+    "closed": true,
+    "groupClosed": true,
+    "stderr": ""
+  },
+  "preflightSaved": {
+    "file": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/preflight-save/NativeXLSB.xlsx",
+    "sha256": "eb27e7081f1194043a02922a460e7e221eae1d879a1add1d74f41e39c1bc58cd",
+    "sheets": [
+      "Sheet1"
+    ],
+    "formulaCount": 30,
+    "cells": [
+      {
+        "cell": "A1",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A2",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A3",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A4",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A5",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A6",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A7",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A8",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A9",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A10",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A11",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A12",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A13",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A14",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A15",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A16",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A17",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A18",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A19",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A20",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A21",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A22",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A23",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A24",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A25",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A26",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A27",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A28",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A29",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A30",
+        "formula": "1+2",
+        "cached": 3
+      }
+    ],
+    "edited": false
+  },
+  "preflight": "Passed: selected input/focus, real visible Save As control and OS picker, all 30 formulas/caches, full quit/new PID reopen",
+  "saved": {
+    "file": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/preflight-save/NativeXLSB.xlsx",
+    "sha256": "6aa34959dddd5a0aed025b62beb0dc31223919da4776f4c5b8fe7b49e03cf0c2",
+    "sheets": [
+      "Sheet1"
+    ],
+    "formulaCount": 30,
+    "cells": [
+      {
+        "cell": "A1",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A2",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A3",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A4",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A5",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A6",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A7",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A8",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A9",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A10",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A11",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A12",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A13",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A14",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A15",
+        "formula": "40+2",
+        "cached": 42
+      },
+      {
+        "cell": "A16",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A17",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A18",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A19",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A20",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A21",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A22",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A23",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A24",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A25",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A26",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A27",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A28",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A29",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A30",
+        "formula": "1+2",
+        "cached": 3
+      }
+    ],
+    "edited": true
+  },
+  "reopened": {
+    "file": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35/preflight-save/NativeXLSB.xlsx",
+    "sha256": "6aa34959dddd5a0aed025b62beb0dc31223919da4776f4c5b8fe7b49e03cf0c2",
+    "sheets": [
+      "Sheet1"
+    ],
+    "formulaCount": 30,
+    "cells": [
+      {
+        "cell": "A1",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A2",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A3",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A4",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A5",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A6",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A7",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A8",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A9",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A10",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A11",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A12",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A13",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A14",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A15",
+        "formula": "40+2",
+        "cached": 42
+      },
+      {
+        "cell": "A16",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A17",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A18",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A19",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A20",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A21",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A22",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A23",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A24",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A25",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A26",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A27",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A28",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A29",
+        "formula": "1+2",
+        "cached": 3
+      },
+      {
+        "cell": "A30",
+        "formula": "1+2",
+        "cached": 3
+      }
+    ],
+    "edited": true
+  },
+  "originalUnchanged": true,
+  "fullQuitReopen": true,
+  "finishedAt": "2026-11-23T10:37:07.490Z"
+}

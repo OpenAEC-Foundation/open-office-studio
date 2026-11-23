@@ -69,8 +69,31 @@ Office, driver and owned portal-observer groups; screenshots use synchronous
 owned-window capture processes, not a persistent recording session. Cleanup is recorded
 in the result; no other chat's processes/session may be terminated.
 
-Status: native execution pending. Previous content-only Linux proof stays valid
-at `fb7e7b8a`; it is not substituted for this native acceptance.
+Status: **PASS for the bounded Linux installed-DEB native case**. Tested harness
+`85e9c49ebe50df632751cbfa08d8083dae884c8c`, CI [45157164075](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45157164075),
+job `137632939907`. Proof artifact `14808249573` (648,478 bytes), SHA256
+`62dab9aeafe98fb3a4825152fcab4f3cc215bcee9b5614abad13522a4d7010f6`.
+See `result.json` and exact-byte receipts under `evidence/`.
+
+Actual Office PIDs `4685 -> 6467 -> 6684` prove fresh process launches. The GTK
+SaveFile request binds Office4685 to portal4720 and unique dialog XID4194311;
+read-only AT-SPI proved the exact focused target path before native Return.
+All30 original formula/caches passed before editing; A15=`40+2`/42 and other29=3
+passed after real Ctrl+S and again after the final fresh reopen. Final XLSX SHA256
+`6aa34959dddd5a0aed025b62beb0dc31223919da4776f4c5b8fe7b49e03cf0c2`.
+The original XLSB and QA fixture stayed unchanged. Actual native screenshots were
+reviewed, the downloaded artifact digest checked, and the independent XML oracle
+was rerun against the downloaded workbook. Office/driver/observer process groups
+closed; accessibility setting returned to its initial `false`.
+
+Initial imported-copy Ctrl+S remains unclassified and is not certified. The first
+save uses the real visible Save as control; edited XLSX Ctrl+S is separately proven.
+Source/reopened documents use real Office CLI file-open, not a native OpenFile
+picker. SaveFile picker is proven. Screens retain font-substitution and existing
+protection/extension warnings; no font/protection/extension claim is made.
+
+Previous content-only Linux proof stays valid at `fb7e7b8a`; it is separate from
+this native acceptance.
 
 First native run `45154508819` stopped before input: the driver inspected the
 engine name box that P2 deliberately hides via CSS. The visible P2 control is
