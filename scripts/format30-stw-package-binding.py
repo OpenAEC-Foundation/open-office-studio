@@ -48,6 +48,7 @@ def main():
     parser.add_argument("manifest", type=Path)
     parser.add_argument("tested_inventory", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--executed-report", required=True, type=Path)
     args = parser.parse_args()
     assert sha(args.descriptor) == DESCRIPTOR_SHA, "Descriptor must match coordinator's immutable Git bytes"
     descriptor = json.loads(args.descriptor.read_bytes())
@@ -62,6 +63,12 @@ def main():
     assert len({e["path"] for e in entries}) == len(entries)
     original = json.loads(args.tested_inventory.read_bytes())
     assert len(original) == 13949
+    assert sha(args.executed_report) == "9a865867b33f2292a01e63ba5f0954dc21917d26870abd95c90f399161601ed8"
+    executed = json.loads(args.executed_report.read_bytes())
+    assert (executed["applicationCommit"], executed["applicationTree"]) == (SOURCE, TREE)
+    tested_receipt = executed["runtime"]["receipt"]
+    packaged_receipt = descriptor["runtimeReceipt"]
+    assert {k: v for k, v in tested_receipt.items() if k != "preparedMs"} == {k: v for k, v in packaged_receipt.items() if k != "preparedMs"}
     result = compare(original, entries, descriptor["privateRuntimePath"])
     by_path = {e["path"]: e for e in entries}
     assert by_path[descriptor["canonicalConverterPath"]]["sha256"] == descriptor["converterLauncherSha256"]
@@ -70,9 +77,15 @@ def main():
     assert by_path[descriptor["converterElfPath"]]["mode"] in ("0755", "0775")
     receipt_entries = [e for e in entries if e["path"].endswith("/meta/receipt.json")]
     assert receipt_entries and all(e["sha256"] == descriptor["runtimeReceiptSha256"] for e in receipt_entries)
+    metadata_by_name = {e["path"].split("/meta/")[-1]: e for e in result["packagedMetadata"]}
+    for entry in result["testedMetadata"]:
+        name = entry["path"].split("/meta/")[-1]
+        if name != "receipt.json":
+            assert (entry["bytes"], entry["sha256"]) == (metadata_by_name[name]["bytes"], metadata_by_name[name]["sha256"])
     result.update(applicationCommit=SOURCE, applicationTree=TREE, version="2026.48.1", parent=parent,
                   descriptorSha256=DESCRIPTOR_SHA, manifestSha256=sha(args.manifest), testedInventorySha256=INVENTORY_SHA,
                   runtimeReceipt=descriptor["runtimeReceipt"], launcherSha256=descriptor["converterLauncherSha256"],
+                  receiptDifference={"onlyChangedField": "preparedMs", "testedPreparedMs": tested_receipt["preparedMs"], "packagedPreparedMs": packaged_receipt["preparedMs"], "otherReceiptFieldsEqual": True, "sourceNoticeAndKeepEqual": True},
                   converterElf=descriptor["converterElfMetadata"],
                   limits=["Comparison reuses immutable manifest from shared verified producer; no runtime ZIP downloaded or extracted here",
                           "All recorded runtime payload file bytes/hashes and link targets compared; original execution inventory did not record permission modes",
