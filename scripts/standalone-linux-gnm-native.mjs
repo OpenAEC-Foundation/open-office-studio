@@ -113,6 +113,7 @@ export async function runStandaloneGnmProbe(context) {
           selected: e.getAttribute("aria-selected"),
         })),
         panelId: panel?.id,
+        panelText: panel?.innerText?.slice(0, 16000),
         nameBox: panel?.querySelector(".rekenblad-naamvak")?.value,
         formula: panel?.querySelector('[data-testid="xlsx-formula-input"]')
           ?.value,
@@ -581,6 +582,38 @@ export async function runStandaloneGnmProbe(context) {
     report.failureObservation = await observation().catch((e) => ({
       error: String(e),
     }));
+    // Observe the app's own diagnostic through a real native click. Never
+    // replace its error with an injected model, hidden bridge or retry setter.
+    try {
+      const details = await evaluate(() => {
+        const tab = document.querySelector(
+          '.office-tab[role="tab"][aria-selected="true"]',
+        );
+        const panel =
+          tab && document.getElementById(tab.getAttribute("aria-controls"));
+        const items = [
+          ...(panel?.querySelectorAll("button,summary") ?? []),
+        ].filter(
+          (e) =>
+            e.getClientRects().length &&
+            e.textContent.trim() === "Show details",
+        );
+        return items.length === 1 ? items[0] : null;
+      });
+      if (details) {
+        await guard.verify("before actual native Show details diagnostic");
+        await command(
+          "POST",
+          `/element/${details["element-6066-11e4-a52e-4f735466cecf"]}/click`,
+          {},
+        );
+        await guard.verify("after actual native Show details diagnostic");
+        report.failureDetails = await observation();
+        await capture("failure-details");
+      }
+    } catch (error) {
+      report.failureDetailsObservationError = String(error);
+    }
     throw e;
   } finally {
     report.completedAt = new Date().toISOString();

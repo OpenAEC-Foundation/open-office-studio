@@ -57,6 +57,19 @@ const harnessCommit = execFileSync(
   { encoding: "utf8" },
 ).trim();
 const results = [];
+const selectedTypes = JSON.parse(
+  process.env.STANDALONE_PACKAGE_TYPES || '["appimage","deb"]',
+);
+assert.ok(
+  Array.isArray(selectedTypes) &&
+    selectedTypes.length > 0 &&
+    new Set(selectedTypes).size === selectedTypes.length &&
+    selectedTypes.every((t) => ["appimage", "deb"].includes(t)),
+);
+const selectedPackages = origin.packages.filter((p) =>
+  selectedTypes.includes(p.path.endsWith(".deb") ? "deb" : "appimage"),
+);
+assert.equal(selectedPackages.length, selectedTypes.length);
 
 async function wait(check, message, timeout = 60_000) {
   const end = Date.now() + timeout;
@@ -169,6 +182,29 @@ async function packageCase(pkg) {
     WEBKIT_DISABLE_DMABUF_RENDERER: "1",
     APPIMAGE_EXTRACT_AND_RUN: "1",
     GITHUB_ACTIONS: "true",
+  };
+  const observedTool = (file, args) => {
+    try {
+      return { status: "observed", output: command(file, args, { env }) };
+    } catch (e) {
+      return {
+        status: e.status === 1 ? "not-found" : "observation-error",
+        exitStatus: e.status ?? null,
+        error: String(e.message).slice(0, 300),
+      };
+    }
+  };
+  report.nativeMessageDependencyObservation = {
+    zenityCommand: observedTool("which", ["zenity"]),
+    zenityPackage: observedTool("dpkg-query", [
+      "-W",
+      "-f=${Status}\t${Version}",
+      "zenity",
+    ]),
+    installedByHarness: false,
+    foreignFormatRfdMessageConfirmationExercised: false,
+    route:
+      "Own-format Ctrl+S and explicit recommended XLSX Save as; no foreign-original Ctrl+S confirmation test",
   };
   for (const path of [
     env.XDG_CONFIG_HOME,
@@ -389,10 +425,13 @@ async function packageCase(pkg) {
       pid,
       executable,
       executableSha256: hash(await readFile(`/proc/${pid}/exe`)),
+      workingDirectory: await readlink(`/proc/${pid}/cwd`),
       environment: (await readFile(`/proc/${pid}/environ`, "utf8"))
         .split("\0")
         .filter((s) =>
-          /^(HOME|XDG_[A-Z_]+|APPDIR|APPIMAGE|LD_LIBRARY_PATH)=/.test(s),
+          /^(HOME|XDG_[A-Z_]+|APPDIR|APPIMAGE|LD_LIBRARY_PATH|TMPDIR|TMP|TEMP|PATH)=/.test(
+            s,
+          ),
         ),
       mappedResources: (await readFile(`/proc/${pid}/maps`, "utf8"))
         .split("\n")
@@ -521,6 +560,10 @@ async function packageCase(pkg) {
         pkg.path,
         "Depends",
       ]);
+      report.nativeMessageDependencyObservation.zenityDeclaredByDeb =
+        /(?:^|[,|])\s*zenity(?::[a-z0-9]+)?(?:\s|$)/.test(
+          report.declaredDependencies,
+        );
       command("dpkg-deb", ["--extract", pkg.path, payloadRoot]);
       command("sudo", ["dpkg", "--install", pkg.path]);
       application = `/usr/bin/${app.programma}`;
@@ -1124,13 +1167,13 @@ async function packageCase(pkg) {
     );
   }
 }
-for (const pkg of origin.packages) await packageCase(pkg);
+for (const pkg of selectedPackages) await packageCase(pkg);
 await writeFile(
   join(out, "matrix.json"),
   JSON.stringify(results, null, 2) + "\n",
 );
 assert.ok(
-  results.length === 2 &&
+  results.length === selectedPackages.length &&
     results.every((r) => r.status === "passed" && r.ownedApplicationClosed),
-  "Both standalone package routes must pass with full cleanup",
+  "All explicitly selected standalone package routes must pass with full cleanup",
 );
