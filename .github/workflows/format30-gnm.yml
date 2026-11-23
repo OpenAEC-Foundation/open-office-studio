@@ -42,6 +42,9 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
       - name: Disposable Linux private-runtime extraction dependencies
         run: |
           sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
