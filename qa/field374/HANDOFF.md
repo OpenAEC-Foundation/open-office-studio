@@ -96,3 +96,22 @@ Linux storage corrections377 and378. They have no source overlap with the five
 field374 product files. No further field374 source change is requested without
 a new review finding. The shared QA helpers will run at that new pin; all
 new-kernel native and new-pin platform results remain explicitly outstanding.
+
+## Latest freeze dependency and content-audit handoff
+
+The coordinator subsequently confirmed that no new combination pin or new
+Linux/Windows/macOS build has started. His independent Windows SDK run passes
+all44 checks on exact product-only85ac155f; both actual built WASM blobs and
+metadata were verified. That is kernel evidence, not native app acceptance.
+Necessary storage deltas377/cbacb7d1 and378/82b047fb are reviewable. A bounded
+Email compose-modal Ctrl+S storage investigation may require one necessary
+correction before the same freeze. That work remains with its existing owners.
+Old-P2 Mac STW is still NOT-RUN while job137610274868 builds.
+
+QA commitce4409d2 adds `audit-docx.mjs INPUT.docx NEW_OUTPUT [EXACT_MARKER]`,
+which calls the unchanged shared contract/oracle directly. It passes on original
+Windows output4dcb51f9, retained browser fresh-reopen676608bc and unchanged
+converted controlb29d6adc. The coordinator will use it for the actual new-native
+exports. This adds no product delta, GUI operator, app build or new native pass.
+The coordinator will supply the exact new pin after necessary intake closes;
+new-package STW operation/paint checks cannot begin before those inputs exist.
