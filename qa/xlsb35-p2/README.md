@@ -64,8 +64,26 @@ date-system, chart or optional XLSB-export coverage is claimed.
 ## Status and reproduction
 
 Source-only inspection passes: `python qa/xlsb35-p2/oracle.py`.
-Runtime acceptance is pending the dedicated Linux CI result; source inspection
-alone is not an XLSB-open pass. The coordinator released runtime artifact
+The single real XLSB content case passes in [Linux run 45150022204](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45150022204),
+job `137608776000`, tested harness `1a464510f89485887c90306d5179e7e479443293`.
+Application source remains exact P2. All 30 original formulas/caches survive the
+actual conversion; after editing, A15 is `40+2`/42 and the other 29 remain `1+2`/3.
+The saved XLSX reopens directly through production TS/WASM with no converter.
+The original XLSB remains byte-identical, and the save proposal is XLSX.
+
+Evidence artifact `14805204418` is 29,180 bytes, ZIP SHA256
+`628cea0bb5f948d59cf4fb5d9f83a9447bae95ff3b691e48e51bf1912a3bfa43`.
+The downloaded artifact digest and imported/saved XML were independently checked.
+The saved XLSX SHA256 is `7573ba2faaa3c7859f912256e9c541c41ca5b9118797703074c9e20500c0728d`.
+`result.json` preserves the exact source/runtime/package/engine bindings and limits.
+This is one fixture and four stages, not complete #35 or catalog acceptance.
+
+The first run, `45149742104`, failed before conversion because its shallow Git
+checkout omitted the P2 ancestor. Checkout depth and early ancestry preflight were
+corrected; none of the functional assertions were removed or relaxed. Its failure
+is historical test-driver evidence, not a reproduced product defect.
+
+The coordinator released runtime artifact
 `14805600515`, run `45147346793`, ZIP SHA256
 `bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487`.
 `runtime-delivery.json` is copied verbatim from `e1f1b84b94fdfa9932f8f33804da9b00c5cf6594`

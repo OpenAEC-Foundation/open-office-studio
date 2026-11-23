@@ -1,0 +1,71 @@
+{
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "harnessCommit": "1a464510f89485887c90306d5179e7e479443293",
+  "run": 45150022204,
+  "job": 137608776000,
+  "status": "passed",
+  "proofArtifact": {
+    "id": 14805204418,
+    "bytes": 29180,
+    "sha256": "628cea0bb5f948d59cf4fb5d9f83a9447bae95ff3b691e48e51bf1912a3bfa43"
+  },
+  "source": {
+    "upstreamCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+    "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+    "bytes": 7651,
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb",
+    "upstreamTest": "https://github.com/LibreOffice/core/blob/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/subsequent_filters_test2.cxx#L476",
+    "license": "LibreOffice core MPL-2.0; upstream test fixture, unmodified",
+    "formatProof": "workbook.bin/worksheet.bin with 30 BrtFmlaNum records, not renamed XLSX",
+    "macroProjectPresent": false
+  },
+  "runtimeArtifact": {
+    "id": 14805600515,
+    "name": "p2-linux-private-runtime-only",
+    "run": 45147346793,
+    "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "zipBytes": 305620081
+  },
+  "runtimeProgramSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+  "wasmSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+  "wasmBytes": 7794993,
+  "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+  "stages": [
+    "Real private-runtime conversion and independent 30-formula/cache verification",
+    "Production WASM reads all original formulas and calculates edited A15=42",
+    "XLSX disk save independently preserves 30 formulas and their expected cached results",
+    "Fresh production open from disk verifies all 30 formulas/results without converter"
+  ],
+  "formulasImported": 30,
+  "formulasSaved": 30,
+  "editedCell": {
+    "cell": "A15",
+    "formula": "40+2",
+    "cached": 42
+  },
+  "other29CachedResults": [
+    3
+  ],
+  "saveProposal": {
+    "importedName": "Shared-formula.xlsx",
+    "module": "xlsx",
+    "sourceFormatOverride": null,
+    "recommendedExtension": "xlsx"
+  },
+  "reopenWithoutConversion": true,
+  "originalUnchanged": true,
+  "importedSha256": "7c921100c861ce37f7195647c19a28568efb9df52c018ceccad1d40c57b61203",
+  "savedSha256": "7573ba2faaa3c7859f912256e9c541c41ca5b9118797703074c9e20500c0728d",
+  "limits": [
+    "No Rust IPC, installed native GUI, browser UI, Windows or macOS acceptance is inferred.",
+    "Uses the real private runtime via the existing production-profile conversion helper and production TS/WASM entry points.",
+    "One XLSB source only; no XLS/XLT/date-system/chart coverage, optional XLSB-save or macro-execution control."
+  ],
+  "historicalDriverFailure": {
+    "run": 45149742104,
+    "harness": "25f1b14ef3a15e3cc92ac1fa1b60d5c8c4b85200",
+    "reason": "Shallow checkout omitted the pinned P2 ancestor; no conversion or engine acceptance was reached. Fixed checkout/preflight; all acceptance assertions retained."
+  }
+}
