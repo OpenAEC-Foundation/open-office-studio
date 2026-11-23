@@ -1,7 +1,7 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: the second witness stopped on an own conditional-target selection error.
-Original-source compilation ran; patched importer/Cppunit/runtime acceptance remains unverified.** This is a private QA witness for the reviewed importer patch,
+**Status: a third, independently authorized witness is running with the target-selection
+correction. Patched importer/Cppunit/runtime acceptance remains unverified.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -308,3 +308,27 @@ future actual VM. This is only harness verification, not C++ or runtime
 acceptance. See [`target-selection-correction.json`](target-selection-correction.json).
 At this point no further build has been dispatched; a fresh integration-approved
 allocation and its exact epochs/QA commit remain required.
+
+## Third allocation after target-selection correction
+
+Integration authorized exactly one standard Ubuntu24 source witness on harness
+commit `e0883ddfb8bc516651048f2dc5afea4c66b3982e`, unchanged upstream/importer
+patch and all existing resource/source/toolchain/profile gates, separately from
+P5. The pre-dispatch capacity check examined every queued/in-progress/waiting run
+and its jobs: two active runs and zero queued/waiting Linux jobs. No critical P5
+Linux queue dependency was present.
+
+Start epoch `1795445063` was recorded before the only actual dispatch:
+**15:44:23 CET**, preparation end **16:29:23 CET**, controller end
+**20:04:23 CET**, overall end **20:14:23 CET**, with ten minutes reserved for
+upload/cleanup. Compiler/tests are limited to 210 minutes within the remaining
+total budget. No automatic repair/retry, extra VM, paid host, configuration,
+dependency, upstream/app/runtime-pin change or P5 intake is authorized.
+
+[Run 45197419347](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197419347),
+job `137771513436`, confirms the exact harness commit and manual dispatch.
+Results are pending. A local date-parsing guard failed before allocation and
+before dispatch; it did not start another VM or consume a separate build.
+The actual registered allocation is
+[`third-source-allocation.json`](third-source-allocation.json). All previous
+FAIL/CANCELLED outcomes remain unchanged.
