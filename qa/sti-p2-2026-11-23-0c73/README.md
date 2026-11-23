@@ -135,3 +135,9 @@ The browser-boundary check exercises actual production logic in Node. No local
 app/capture session was started, so there is no owned recording session to clean
 up. This is QA outside P2 intake, not a release, standalone-app or format-wide
 acceptance claim. No product correction or precision-policy decision is made.
+
+The follow-up [#373 source investigation](precision-373.md) identifies the
+matching upstream PPTX-export master-unit calculation and reproduces its exact
+prediction from the original STI, using existing CI evidence only. Its explicit
+precision-policy decision is pending the integration coordinator; the historical
+strict failures and original oracle remain unchanged.

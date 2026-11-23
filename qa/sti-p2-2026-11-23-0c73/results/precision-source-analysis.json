@@ -1,0 +1,95 @@
+{
+  "issue": 373,
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "runtimeSourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "upstreamSourceFiles": [
+    {
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/sd/source/filter/eppt/pptx-epptbase.cxx",
+      "sha256": "ee04b82a5302d45be1b550c8b75330489aaf6f0abd204f607571f4244b5be891",
+      "bytes": 36171
+    },
+    {
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/sd/source/filter/eppt/pptx-epptooxml.cxx",
+      "sha256": "50f99423289257e37232c2fc242c88a4af4185ff927c435149b43f1cdcbea14f",
+      "bytes": 118948
+    },
+    {
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/include/oox/export/utils.hxx",
+      "sha256": "9d220421ef1ae24d41176cd052b436dd341775642fc853d39e9838edca9de3da",
+      "bytes": 2550
+    },
+    {
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/include/o3tl/unit_conversion.hxx",
+      "sha256": "8d60b600da7e679b41db0452e126863feb6b9b283c579e1c8c3431f3a0e5a19b",
+      "bytes": 10062
+    },
+    {
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/vcl/source/outdev/map.cxx",
+      "sha256": "c6c0d2cbb8b7cc24eba6217977b0145eb286adb8d6ed674593b5c9501d015739",
+      "bytes": 59806
+    }
+  ],
+  "fixtureSha256": "9b29e5fcec3f947a8a626cb2a448488508cb596087b018fa5d34a7ee02cd5340",
+  "sourceMasterPage": "PM1",
+  "masterUnitInches": "1/576",
+  "masterUnitEmu": "3175/2",
+  "calculation": "round-half-up(round-half-up(sourceMm100 * 576 / 2540) * 914400 / 576)",
+  "axes": {
+    "widthEmu": {
+      "sourceLength": "28cm",
+      "sourceMm100": 28000,
+      "sourceExactEmu": 10080000,
+      "unroundedMasterUnits": "806400/127",
+      "roundedMasterUnits": 6350,
+      "predictedPptxEmu": 10080625,
+      "deltaEmu": 625,
+      "deltaMm": "5/288"
+    },
+    "heightEmu": {
+      "sourceLength": "21cm",
+      "sourceMm100": 21000,
+      "sourceExactEmu": 7560000,
+      "unroundedMasterUnits": "604800/127",
+      "roundedMasterUnits": 4762,
+      "predictedPptxEmu": 7559675,
+      "deltaEmu": -325,
+      "deltaMm": "-13/1440"
+    }
+  },
+  "existingArtifactChecks": [
+    {
+      "file": "converted/prs-strategy.pptx",
+      "sha256": "dd1c4a7569be210d5a4dded12398a56beb5035b731c0523ad586f7f3ff5dc477",
+      "actualDimensions": {
+        "widthEmu": 10080625,
+        "heightEmu": 7559675
+      },
+      "matchesSourceDerivedMasterUnitPredictionExactly": true,
+      "matchesExactSourceDimensions": false
+    },
+    {
+      "file": "edited.pptx",
+      "sha256": "e15f6b13568fec82d6b86a89b361e0626137f6e1a7f85b92cc3ed9ba11caa3d6",
+      "actualDimensions": {
+        "widthEmu": 10080625,
+        "heightEmu": 7559675
+      },
+      "matchesSourceDerivedMasterUnitPredictionExactly": true,
+      "matchesExactSourceDimensions": false
+    },
+    {
+      "file": "reopened.pptx",
+      "sha256": "e15f6b13568fec82d6b86a89b361e0626137f6e1a7f85b92cc3ed9ba11caa3d6",
+      "actualDimensions": {
+        "widthEmu": 10080625,
+        "heightEmu": 7559675
+      },
+      "matchesSourceDerivedMasterUnitPredictionExactly": true,
+      "matchesExactSourceDimensions": false
+    }
+  ],
+  "interpretation": "The pinned upstream PPTX-export master-unit step predicts the observed drift exactly. This is source/numeric attribution, not an instrumented UNO import measurement.",
+  "policyStatus": "Awaiting integration coordinator decision; original strict source-size failures remain failed.",
+  "scope": "Only this seven-slide factory STI and pinned P2 runtime. No product correction, general format tolerance or GUI/platform fidelity claim.",
+  "execution": "XML, source hash and rational arithmetic audit of existing Linux evidence; no runtime/engine/GUI/capture execution and no additional CI run."
+}
