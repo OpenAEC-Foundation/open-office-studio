@@ -431,12 +431,42 @@ async function picker(path, title) {
       d,
       "Exact native dialog retains focus",
     );
+  async function snapshot(suffix) {
+    await check();
+    const executable = await realpath(`/proc/${d.pid}/exe`);
+    assert.equal(executable, "/usr/libexec/xdg-desktop-portal-gtk");
+    const startTime = writer362ProcStartTime(
+      await readFile(`/proc/${d.pid}/stat`, "utf8"),
+      Number(d.pid),
+    );
+    const file = `${phase}-picker-${suffix}.png`;
+    const r = await exec(
+      "/usr/bin/python3",
+      [
+        join(here, "linux-p2-native-capture.py"),
+        d.pid,
+        d.xid,
+        startTime,
+        executable,
+        join(out, file),
+      ],
+      { env, timeout: 10000 },
+    );
+    report.captures.push({
+      phase,
+      file,
+      kind: "Owned private-session GTK picker",
+      ...JSON.parse(r.stdout),
+    });
+  }
+  await delay(350);
+  await snapshot("initial");
   await check();
   await exec("xdotool", ["key", "--clearmodifiers", "ctrl+l"], {
     env,
     timeout: 5000,
   });
-  await delay(120);
+  await delay(350);
   await check();
   await exec("xdotool", ["key", "--clearmodifiers", "ctrl+a"], {
     env,
@@ -450,18 +480,36 @@ async function picker(path, title) {
     { env, timeout: 10000 },
   );
   await check();
-  await exec("xdotool", ["key", "--clearmodifiers", "Return"], {
-    env,
-    timeout: 5000,
+  await snapshot("typed-path");
+  report.pickers.push({
+    phase,
+    dialog: d,
+    selectedPath: path,
+    status: "typed verified path in actual OS dialog",
   });
-  await waitFor(
-    async () => {
-      const w = await focusedWindow();
-      return w.xid === guard.evidence.xid;
+  await exec(
+    "xdotool",
+    ["key", "--clearmodifiers", title === "Open file" ? "alt+o" : "Return"],
+    {
+      env,
+      timeout: 5000,
     },
-    "Picker closed and exact app window resumed",
-    60000,
   );
+  try {
+    await waitFor(
+      async () => {
+        const w = await focusedWindow();
+        return w.xid === guard.evidence.xid;
+      },
+      "Picker closed and exact app window resumed",
+      60000,
+    );
+  } catch (e) {
+    await snapshot("not-dismissed").catch(
+      (c) => (report.pickerCaptureError = String(c)),
+    );
+    throw e;
+  }
   await guard.verify("after real GTK picker");
   report.pickers.push({
     phase,
