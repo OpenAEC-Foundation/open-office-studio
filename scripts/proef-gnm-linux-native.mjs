@@ -466,7 +466,7 @@ async function picker(path, title) {
       await readFile(`/proc/${d.pid}/stat`, "utf8"),
       Number(d.pid),
     );
-    const file = `${phase}-picker-${suffix}.png`;
+    const file = `${phase}-${title === "Open file" ? "open" : "save"}-picker-${suffix}.png`;
     const r = await exec(
       "/usr/bin/python3",
       [
