@@ -25,3 +25,29 @@ jobs:
           path: .local/stc-qa/
           include-hidden-files: true
           if-no-files-found: error
+  browser_limit:
+    needs: source
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: stc-source-oracle
+          path: .local/stc-qa
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check production template and no-desktop conversion guards
+        run: node scripts/qa-stc-template/engine.mjs --route-only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stc-browser-limit
+          path: .local/stc-qa/route-report.json
+          include-hidden-files: true
+          if-no-files-found: error
