@@ -659,6 +659,7 @@ try {
   );
   const packageFiles = execFileSync("dpkg", ["-L", "open-office-studio"], {
     encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
   })
     .trim()
     .split("\n");
