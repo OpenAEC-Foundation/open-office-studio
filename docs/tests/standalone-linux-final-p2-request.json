@@ -5,18 +5,18 @@
   "intakeSha256": "22e66e34c7376a01a73c58e6c3bc0bc79ce045f207ebd9084a692f28030daed9",
   "publicationAuthorized": false,
   "applications": [
-    "email"
+    "database"
   ],
   "reusePreparedRun": 45159559656,
-  "requestedAt": "2026-11-23T11:37:36.853884+00:00",
+  "requestedAt": "2026-11-23T11:55:05.406448+00:00",
   "authorization": "Root explicit conditional start; own attempt-1 Linux job and required applicable package gates verified SUCCESS; no root ACK or other-OS dependency",
   "intakeCommit": "f326520c54b519640c2473aedf724eb4bfc6d568",
   "packageTypes": [
     "appimage",
     "deb"
   ],
-  "previousGoSha256": "4643020b0641fb9425ad3e147613898c4322d33d199205e156d0108d9f538781",
-  "qaDiagnosticCommit": "0f8ebc59641c1e0f4b03c336e6917c30896c32a8",
-  "reason": "Email native differential: retain Ctrl+S failure, then actual Draft button/MIME/quit/newPID/header-and-body retrieval on unchanged P2 bytes; strict shortcut verdict remains failed even if button control passes",
-  "emailDraftButtonDiagnostic": true
+  "previousGoSha256": "12ada7edf85699808b9c4561b53b2d9dddf5085510f038ed0b14a12174e87f83",
+  "qaDiagnosticCommit": "96da33e1f0ea7848f371dd6c04ad2093ebae41b7",
+  "reason": "Database-only unchanged P2 DEB/AppImage: honor intentional metadata ACL; bind exact source/config/package/running ELF/native UI version/own profile, then existing real Ctrl+O foreign-SQLite read/query/fullquit/reopen scenario; no ACL or product change",
+  "emailDraftButtonDiagnostic": false
 }
