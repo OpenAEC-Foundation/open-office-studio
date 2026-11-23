@@ -116,5 +116,16 @@ second-run artifact and contains no runtime binaries or font caches.
 
 The own branch-only bootstrap push trigger was removed after registration;
 the actual UNO phase requires explicit `workflow_dispatch` with `phase=uno`.
-Pending integration decisions: clean-tree cache isolation and the reviewable
-[import/build proposal](../../docs/tests/presentation-375/import-fix-proposal.md).
+The separately authorized clean-tree follow-up
+[45167757305](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45167757305)
+on QA `07eb12af` succeeds: same real counterfactual, all 15,082 runtime entries
+identical and no extra paths, with `PYTHONDONTWRITEBYTECODE=1` and an own verified
+read-only payload mount in a private Linux user/mount namespace. Namespace,
+read-only flag, unchanged parent namespace, own unmount/profile/process cleanup
+are retained. The two original FAIL runs remain unchanged. Product/strict source
+acceptance is still false.
+
+The [separate import patchset](runtime-patch/README.md) is prepared and structurally
+checked, but not compiled. Integration must now allocate the concrete
+[Linux source-build/test plan](../../docs/tests/presentation-375/linux-build-plan.md)
+before a large checkout/build or a changed runtime binding is started.

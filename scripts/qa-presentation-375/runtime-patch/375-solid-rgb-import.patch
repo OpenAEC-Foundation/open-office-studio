@@ -1,0 +1,150 @@
+--- a/xmloff/source/draw/XMLShapeStyleContext.cxx
++++ b/xmloff/source/draw/XMLShapeStyleContext.cxx
+@@ -27,6 +27,7 @@
+ #include <com/sun/star/beans/XPropertySet.hpp>
+ #include <com/sun/star/beans/XPropertySetInfo.hpp>
+ #include <com/sun/star/lang/IllegalArgumentException.hpp>
++#include <com/sun/star/util/XComplexColor.hpp>
+ #include <com/sun/star/container/XIndexReplace.hpp>
+ #include <xmloff/xmlimp.hxx>
+ #include <xmloff/xmlnumi.hxx>
+@@ -201,11 +202,43 @@
+     SvXMLImportPropertyMapper* pImpPrMap =
+         GetStyles()->GetImportPropertyMapper( GetFamily() );
+     assert( pImpPrMap );
+-    pImpPrMap->FillPropertySet( GetProperties(), rPropSet, aContextIDs );
+-
+-    Reference< XPropertySetInfo > xInfo;
+-    // get property set mapper
+-    rtl::Reference<XMLPropertySetMapper> xPropMapper( pImpPrMap->getPropertySetMapper() );
++    rtl::Reference<XMLPropertySetMapper> xPropMapper(pImpPrMap->getPropertySetMapper());
++    bool bExplicitSolidFill = false;
++    bool bExplicitFillColor = false;
++    bool bExplicitComplexColor = false;
++    for (const auto& rProperty : GetProperties())
++    {
++        if (rProperty.mnIndex == -1)
++            continue;
++
++        const OUString& rName = xPropMapper->GetEntryAPIName(rProperty.mnIndex);
++        if (rName == u"FillStyle")
++        {
++            drawing::FillStyle eFillStyle;
++            bExplicitSolidFill = (rProperty.maValue >>= eFillStyle)
++                                 && eFillStyle == drawing::FillStyle_SOLID;
++        }
++        else if (rName == u"FillColor")
++        {
++            sal_Int32 nColor;
++            bExplicitFillColor = (rProperty.maValue >>= nColor);
++        }
++        else if (rName == u"FillComplexColor")
++            bExplicitComplexColor = true;
++    }
++
++    Reference<XPropertySetInfo> xInfo;
++    if (bExplicitSolidFill && bExplicitFillColor && !bExplicitComplexColor)
++    {
++        // An explicit RGB fill overrides an inherited theme fill. Otherwise
++        // assigning FillColor leaves the old complex color on the color item,
++        // and DrawingML export incorrectly prefers that inherited theme.
++        xInfo = rPropSet->getPropertySetInfo();
++        if (xInfo->hasPropertyByName(u"FillComplexColor"_ustr))
++            rPropSet->setPropertyValue(u"FillComplexColor"_ustr,
++                                      Any(Reference<util::XComplexColor>()));
++    }
++    pImpPrMap->FillPropertySet(GetProperties(), rPropSet, aContextIDs);
+ 
+     for( sal_uInt16 i=0; aContextIDs[i].nContextID != -1; i++ )
+     {
+--- a/xmloff/qa/unit/draw.cxx
++++ b/xmloff/qa/unit/draw.cxx
+@@ -282,6 +282,88 @@
+ }
+ 
+ } // end anonymous ns
++
++
++CPPUNIT_TEST_FIXTURE(XmloffDrawTest, testUOFExplicitRectangleFillColors)
++{
++    // Genuine UOF1 input: two distinct RGB fills must not inherit Accent1.
++    loadFromFile(u"uop-explicit-rectangle-fills.uop");
++    auto checkRectangles = [this]() {
++        uno::Reference<drawing::XDrawPagesSupplier> xSupplier(mxComponent, uno::UNO_QUERY_THROW);
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(3), xSupplier->getDrawPages()->getCount());
++        uno::Reference<container::XIndexAccess> xPage(
++            xSupplier->getDrawPages()->getByIndex(2), uno::UNO_QUERY_THROW);
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(4), xPage->getCount());
++        const sal_Int32 aExpected[] = { 0x14213d, 0x046eff };
++        for (sal_Int32 i = 0; i < 2; ++i)
++        {
++            uno::Reference<beans::XPropertySet> xShape(xPage->getByIndex(i + 1),
++                                                     uno::UNO_QUERY_THROW);
++            CPPUNIT_ASSERT_EQUAL(aExpected[i],
++                                 xShape->getPropertyValue(u"FillColor"_ustr).get<sal_Int32>());
++            uno::Reference<util::XComplexColor> xColor;
++            xShape->getPropertyValue(u"FillComplexColor"_ustr) >>= xColor;
++            CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Unknown,
++                                 model::color::getFromXComplexColor(xColor).getThemeColorType());
++        }
++    };
++    checkRectangles();
++    saveAndReload(TestFilter::PPTX_2007);
++    checkRectangles();
++    auto pXml = parseExport(u"ppt/slides/slide3.xml"_ustr);
++    assertXPath(pXml, "//p:sp[p:txBody//a:t='ODP']/p:spPr/a:solidFill/a:srgbClr", "val", u"14213D");
++    assertXPath(pXml, "//p:sp[p:txBody//a:t='UOP']/p:spPr/a:solidFill/a:srgbClr", "val", u"046EFF");
++    assertXPath(pXml, "//p:sp[p:txBody//a:t='ODP' or p:txBody//a:t='UOP']/p:spPr/a:solidFill/a:schemeClr", 0);
++}
++
++CPPUNIT_TEST_FIXTURE(XmloffDrawTest, testSolidRGBThemeInheritance)
++{
++    loadFromFile(u"solid-rgb-theme-inheritance.fodp");
++    auto checkColors = [this]() {
++        auto complexColor = [this](sal_uInt8 nShape, OUString const& rName) {
++            uno::Reference<beans::XPropertySet> xShape(getShape(nShape), uno::UNO_QUERY_THROW);
++            uno::Reference<util::XComplexColor> xColor;
++            xShape->getPropertyValue(rName) >>= xColor;
++            return model::color::getFromXComplexColor(xColor);
++        };
++        const sal_Int32 aRGB[] = { 0x14213d, 0x046eff };
++        for (sal_uInt8 i = 0; i < 2; ++i)
++        {
++            uno::Reference<beans::XPropertySet> xShape(getShape(i), uno::UNO_QUERY_THROW);
++            CPPUNIT_ASSERT_EQUAL(aRGB[i], xShape->getPropertyValue(u"FillColor"_ustr).get<sal_Int32>());
++            CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Unknown,
++                                 complexColor(i, u"FillComplexColor"_ustr).getThemeColorType());
++        }
++        // A parent theme without a local RGB override remains inherited.
++        auto aInherited = complexColor(2, u"FillComplexColor"_ustr);
++        CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Accent3, aInherited.getThemeColorType());
++        CPPUNIT_ASSERT_EQUAL(size_t(2), aInherited.getTransformations().size());
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(4000), aInherited.getTransformations()[0].mnValue);
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(6000), aInherited.getTransformations()[1].mnValue);
++        // An explicit theme plus its fallback RGB must not be cleared.
++        auto aExplicit = complexColor(3, u"FillComplexColor"_ustr);
++        CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Accent2, aExplicit.getThemeColorType());
++        CPPUNIT_ASSERT_EQUAL(size_t(2), aExplicit.getTransformations().size());
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(2000), aExplicit.getTransformations()[0].mnValue);
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(8000), aExplicit.getTransformations()[1].mnValue);
++        // No-fill/gradient RGB fallback values do not change complex-color inheritance.
++        for (sal_uInt8 i : { sal_uInt8(4), sal_uInt8(5) })
++            CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Accent3,
++                                 complexColor(i, u"FillComplexColor"_ustr).getThemeColorType());
++        uno::Reference<beans::XPropertySet> xNone(getShape(4), uno::UNO_QUERY_THROW);
++        uno::Reference<beans::XPropertySet> xGradient(getShape(5), uno::UNO_QUERY_THROW);
++        CPPUNIT_ASSERT_EQUAL(drawing::FillStyle_NONE,
++                             xNone->getPropertyValue(u"FillStyle"_ustr).get<drawing::FillStyle>());
++        CPPUNIT_ASSERT_EQUAL(drawing::FillStyle_GRADIENT,
++                             xGradient->getPropertyValue(u"FillStyle"_ustr).get<drawing::FillStyle>());
++        // Clearing a fill must never alter the inherited stroke theme.
++        CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Accent4,
++                             complexColor(1, u"LineComplexColor"_ustr).getThemeColorType());
++    };
++    checkColors();
++    saveAndReload(TestFilter::ODP);
++    checkColors();
++}
+ 
+ CPPUNIT_TEST_FIXTURE(XmloffDrawTest, testFillAndLineThemeColorExportImport)
+ {

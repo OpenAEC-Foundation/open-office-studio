@@ -100,3 +100,27 @@ No source/runtime file content was replaced. The strict exact-tree assertion
 correctly failed; it must not be relabelled as passed. A subsequent clean-tree
 probe requires an independently justified cache or read-only-namespace strategy
 before execution. No caches were deleted to manufacture a pass.
+
+## Subsequent authorized work
+
+The proposed separate import patchset is now reviewable under
+`scripts/qa-presentation-375/runtime-patch`, with primary input/patched file
+hashes, unchanged genuine UOP and authored inheritance controls. Its patch
+context and complete output hashes pass structural checks. **No C++ compiler,
+Cppunit run or patched runtime build is claimed.** The allocation proposal is
+[`linux-build-plan.md`](linux-build-plan.md).
+
+The one separately authorized read-only follow-up,
+[45167757305](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45167757305)
+on QA `07eb12afd99948564d867cf31825d4872041c72d`, succeeds as a **diagnostic
+counterfactual plus exact-tree check**. It uses `PYTHONDONTWRITEBYTECODE=1` and
+an own recursively private user/mount namespace, mounting only the already
+verified own payload read-only. The kernel read-only flag, distinct namespace,
+unchanged parent namespace, unmount and own process/profile cleanup are
+recorded. All 15,082 entries match with zero added/missing/changed paths. No
+runtime mode/content edits, system Office installation or font substitution.
+
+This new result does not relabel the earlier two FAIL runs or complete source
+acceptance: canvas/stroke gaps remain explicit, and it is still an in-memory
+diagnostic rather than a shipped fix. Official run/artifact hashes and the
+retained small follow-up pair are appended to `qa-results.json`.

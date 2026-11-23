@@ -59,6 +59,25 @@
         "zipSha256": "180417ef83e51f563b5e934b093717ea5a5985cbce1a47d64b5fe4c77ad63d43"
       },
       "kind": "actual UNO diagnostic; overall FAIL retained"
+    },
+    {
+      "run": 45167757305,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45167757305",
+      "qaCommit": "07eb12afd99948564d867cf31825d4872041c72d",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 137669045489,
+          "conclusion": "success"
+        }
+      ],
+      "artifact": {
+        "id": 14815746081,
+        "name": "presentation-375-uno-uno-readonly",
+        "zipBytes": 116006,
+        "zipSha256": "20cf6c767f9e0ae84cae52b2368c30694ed6dcb267cfbb02c188b31f13704a9e"
+      },
+      "kind": "new, separate diagnostic counterfactual and exact-tree success; original two FAIL runs unchanged; no product correction"
     }
   ],
   "retainedPair": {
@@ -107,10 +126,24 @@
   },
   "limitations": [
     "No product patch, runtime build or format acceptance pass",
-    "Strict exact-tree FAIL: generated Python caches and two fontconfig UUID files; existing 15082-entry bytes/modes/links unchanged",
+    "Two original exact-tree FAIL runs remain unchanged; separate read-only namespace run45167757305 verifies all15082 entries with no added/missing/changed paths",
     "Original UOP unchanged; separate diagnostic copies only",
     "Own local pipe/profile/process group cleaned up; no local GUI or shared process control",
     "Engine edit/save/fresh reopen on a corrected runtime is outstanding",
     "Windows/macOS/native/browser/visual acceptance of a corrected product is outstanding"
-  ]
+  ],
+  "readOnlyNamespaceFollowup": {
+    "sourceArtifact": 14815746081,
+    "path": "docs/tests/presentation-375/retained/uno-readonly-diagnostic-pair.zip",
+    "bytes": 45253,
+    "sha256": "abc40429ee3dd6b4acc1dee7017e88e95df933b3447ec91091f4059546535cbc",
+    "runtimeTreeUnchanged": true,
+    "addedPaths": [],
+    "missingPaths": [],
+    "changedEntries": [],
+    "counterfactualProven": true,
+    "sourceAcceptancePassed": false,
+    "productFix": false,
+    "ownProcessesProfileMountCleanedUp": true
+  }
 }

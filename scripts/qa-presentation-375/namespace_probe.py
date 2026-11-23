@@ -43,11 +43,12 @@ def child(target, parent_ns, capability):
         result["readOnlyMountVerified"] = bool(os.statvfs(target).f_flag & os.ST_RDONLY)
         assert result["readOnlyMountVerified"]
         if not capability:
+            result["officeExecuted"] = True
             env = dict(os.environ)
             env["PYTHONDONTWRITEBYTECODE"] = "1"
             completed = subprocess.run([sys.executable, "scripts/qa-presentation-375/probe.py"], env=env,
                                        timeout=240)
-            result.update(officeExecuted=True, probeExitCode=completed.returncode)
+            result.update(probeExitCode=completed.returncode)
             assert completed.returncode == 0, "Inspect the separate UNO diagnosis"
     finally:
         if mounted:
