@@ -1,0 +1,99 @@
+name: Nonpublishing release signing capability preflight
+on:
+  push:
+    branches: [codex/release-signing-preflight-2026-11-23]
+    paths: [.github/workflows/release-signing-preflight-20261123.yml]
+permissions:
+  contents: read
+jobs:
+  openpgp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sign a synthetic receipt; verify using only the public key
+        shell: bash
+        env:
+          OPENAEC_GPG_PRIVATE_KEY: ${{ secrets.OPENAEC_GPG_PRIVATE_KEY }}
+          OPENAEC_GPG_PASSPHRASE: ${{ secrets.OPENAEC_GPG_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          signing_home="$(mktemp -d "$RUNNER_TEMP/oos-signing-preflight.XXXXXX")"
+          verify_home="$(mktemp -d "$RUNNER_TEMP/oos-verify-preflight.XXXXXX")"
+          cleanup() { gpgconf --homedir "$signing_home" --kill gpg-agent || true; rm -rf -- "$signing_home" "$verify_home"; }
+          trap cleanup EXIT
+          test -n "$OPENAEC_GPG_PRIVATE_KEY" || { echo '::error::OpenAEC OpenPGP signing key unavailable'; exit 1; }
+          key=13F6D414ADEE4ED4CD09AC60601D86C93C504D29
+          printf '%s' "$OPENAEC_GPG_PRIVATE_KEY" | gpg --homedir "$signing_home" --batch --import
+          gpg --homedir "$signing_home" --batch --list-secret-keys "$key" >/dev/null
+          mkdir -p proof
+          printf 'Synthetic release signing preflight. Not an installer, release or native acceptance.\n' > proof/synthetic-receipt.txt
+          printf '%s' "$OPENAEC_GPG_PASSPHRASE" | gpg --homedir "$signing_home" --batch --yes --pinentry-mode loopback --passphrase-fd 0 --local-user "$key" --armor --detach-sign proof/synthetic-receipt.txt
+          gpg --homedir "$signing_home" --armor --export "$key" > proof/openaec-public-key.asc
+          gpg --homedir "$verify_home" --batch --import proof/openaec-public-key.asc
+          gpg --homedir "$verify_home" --batch --status-fd 1 --verify proof/synthetic-receipt.txt.asc proof/synthetic-receipt.txt > proof/verification-status.txt
+          sha256sum proof/synthetic-receipt.txt proof/synthetic-receipt.txt.asc proof/openaec-public-key.asc > proof/SHA256SUMS
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          key = '13F6D414ADEE4ED4CD09AC60601D86C93C504D29'
+          signatures = [line.split() for line in Path('proof/verification-status.txt').read_text().splitlines() if line.startswith('[GNUPG:] VALIDSIG ')]
+          assert len(signatures) == 1 and key in (signatures[0][2], signatures[0][-1]), 'Unexpected signing primary key'
+          Path('proof/result.json').write_text(json.dumps({'kind':'synthetic signing capability only','nativeOrPackageAcceptance':False,'publication':False,'source':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'expectedFingerprint':'13F6D414ADEE4ED4CD09AC60601D86C93C504D29','valid':True}, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-openpgp-preflight
+          path: proof
+          if-no-files-found: error
+  authenticode:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Prepare the unchanged existing signing client
+        shell: pwsh
+        env:
+          AZURE_ENDPOINT: ${{ secrets.AZURE_ENDPOINT }}
+          AZURE_TRUSTED_SIGNING_ACCOUNT_NAME: ${{ secrets.AZURE_TRUSTED_SIGNING_ACCOUNT_NAME }}
+          AZURE_CERTIFICATE_PROFILE_NAME: ${{ secrets.AZURE_CERTIFICATE_PROFILE_NAME }}
+        run: pwsh -NoProfile -File scripts/windows-sign.ps1 -Setup
+      - name: Sign an inert synthetic executable; verify chain and timestamp
+        shell: pwsh
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Path proof | Out-Null
+          $source = 'class Entry { static int Main() { return 0; } }'
+          [IO.File]::WriteAllText((Join-Path $PWD 'proof/synthetic-preflight.cs'), $source)
+          $compiler = Join-Path $env:WINDIR 'Microsoft.NET/Framework64/v4.0.30319/csc.exe'
+          if (-not (Test-Path -LiteralPath $compiler)) { throw 'Synthetic executable compiler is unavailable.' }
+          & $compiler /nologo /target:exe /out:proof/synthetic-preflight.exe proof/synthetic-preflight.cs
+          if ($LASTEXITCODE -ne 0) { throw 'Synthetic executable compilation failed.' }
+          $unsigned = (Get-FileHash -Algorithm SHA256 -LiteralPath proof/synthetic-preflight.exe).Hash.ToLowerInvariant()
+          pwsh -NoProfile -File scripts/windows-sign.ps1 proof/synthetic-preflight.exe
+          if ($LASTEXITCODE -ne 0) { throw 'Actual Authenticode signing failed.' }
+          $signature = Get-AuthenticodeSignature -LiteralPath proof/synthetic-preflight.exe
+          if ($signature.Status -ne 'Valid' -or $null -eq $signature.TimeStamperCertificate) { throw 'Valid signature and timestamp required.' }
+          & $env:OPS_SIGNTOOL verify /pa /v proof/synthetic-preflight.exe
+          if ($LASTEXITCODE -ne 0) { throw 'signtool verification failed.' }
+          $receipt = [ordered]@{
+            kind = 'synthetic signing capability only'; nativeOrPackageAcceptance = $false; publication = $false
+            source = $env:GITHUB_SHA; run = $env:GITHUB_RUN_ID; valid = $true
+            unsignedSha256 = $unsigned
+            signedSha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath proof/synthetic-preflight.exe).Hash.ToLowerInvariant()
+            subject = $signature.SignerCertificate.Subject; signerThumbprint = $signature.SignerCertificate.Thumbprint
+            timestampSubject = $signature.TimeStamperCertificate.Subject
+          }
+          $receipt | ConvertTo-Json | Set-Content -Encoding utf8 proof/result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-authenticode-preflight
+          path: proof
+          if-no-files-found: error
