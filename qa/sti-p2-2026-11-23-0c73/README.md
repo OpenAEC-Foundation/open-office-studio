@@ -134,10 +134,13 @@ Tauri dispatcher/native GUI, Windows/macOS runtime or real browser GUI acceptanc
 The browser-boundary check exercises actual production logic in Node. No local
 app/capture session was started, so there is no owned recording session to clean
 up. This is QA outside P2 intake, not a release, standalone-app or format-wide
-acceptance claim. No product correction or precision-policy decision is made.
+acceptance claim. No product correction is made.
 
-The follow-up [#373 source investigation](precision-373.md) identifies the
-matching upstream PPTX-export master-unit calculation and reproduces its exact
-prediction from the original STI, using existing CI evidence only. Its explicit
-precision-policy decision is pending the integration coordinator; the historical
-strict failures and original oracle remain unchanged.
+The follow-up [#373 source investigation and decision](precision-373.md) identifies
+the matching upstream PPTX-export master-unit calculation and reproduces its
+exact prediction from the original STI, using existing CI evidence only. The
+integration coordinator accepted a separate case-specific precision-conformance
+contract and requires no product correction in P2. Its assessment passes the
+source-derived prediction/content/no-added-drift criteria, while explicitly
+retaining the historical strict failures and bit-inexact source size. This is
+an explained research outcome, not a product fix or broad format/fidelity pass.

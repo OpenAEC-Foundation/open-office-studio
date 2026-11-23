@@ -52,20 +52,41 @@ paragraphs through edit/save/reopen and no added size drift by the engine.
 
 ## Decision and limits
 
-Pending the existing integration coordinator's decision, requested explicitly
-under the user's #373 instruction. Recommendation: document the deterministic
-master-unit export precision for this concrete STI fixture/runtime rather than
-introduce a product patch solely to change `p:sldSz`. A product correction would
-need its own authorized scope and geometry/visual acceptance; this research
-does not establish that such a patch preserves all layout behavior.
+On 23 November 2026, after the user's explicit consultation request, the existing
+integration coordinator independently read the pinned primary source and
+reproduced the rational calculation. The technical decision is **no product
+correction or isolated `sldSz` patch in closed P2**. Accept only a separately
+reported precision-conformance result for this fixture/runtime, retaining the
+fact that exact source dimensions are not bit-exactly preserved.
 
-Any accepted precision contract must retain the strict-source mismatch as an
-explicit observation and require the source-derived prediction exactly, plus
+The explicit decision is encoded in [`precision-policy-373.json`](precision-policy-373.json).
+[`assess_precision.py`](assess_precision.py) applies it to the original,
+hash-verified result ZIP. It re-derives the source oracle from unchanged STI
+bytes, predicts export dimensions from those source lengths, checks exact
+agreement in all three files, and independently checks all seven ordered
+slides/24 source-derived paragraphs with only the intended title prefix.
+It also verifies that the original three-pass/one-fail/zero-skip evidence still
+reports failure. No file from those historical results is rewritten.
+
+The separate [`results/precision-conformance-373.json`](results/precision-conformance-373.json)
+passes these explicit criteria: source-predicted export dimensions match
+exactly, edit/save/fresh engine-handle reopen adds no drift, and source content
+is preserved. It records `sourceBitExactSizePreserved: false` and
+`historicalStrictRunStillFailed: true`. The earlier source-analysis report's
+pending-policy text is retained as its pre-decision snapshot, not the current
+decision. No new runtime/engine/GUI or CI execution was needed.
+
+This accepted precision contract retains the strict-source mismatch as an
+explicit observation and requires the source-derived prediction exactly, plus
 unchanged dimensions during engine edit/save/reopen. Do not replace this with
 a general one-twip/one-pixel tolerance or a converted-file content baseline.
 No conclusion is drawn for other STI templates, page sizes, other formats,
 active media, visual fidelity or untested platforms. The production catalog,
 safe profile, application version and closed P2 intake remain unchanged.
+No functional or visible damage has been demonstrated; this does not establish
+the absence of every possible visual effect. A more accurate export correction
+would require separately authorized product scope and checks for consistency
+with object geometry, without an ad-hoc postprocessor.
 
 Local analysis reads source/XML and existing CI bytes only. No local app or
 recording session was started; no capture cleanup is outstanding.

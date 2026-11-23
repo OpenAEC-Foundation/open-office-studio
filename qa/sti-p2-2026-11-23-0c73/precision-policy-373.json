@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "issue": 373,
+  "decisionDate": "2026-11-23",
+  "decisionAuthority": "Existing integration coordinator, explicitly consulted under the user's #373 instruction",
+  "coordinatorThreadId": "01a1bf9c-9635-7733-aa46-eb3bd68262aa",
+  "productCorrectionRequiredInP2": false,
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "fixtureSha256": "9b29e5fcec3f947a8a626cb2a448488508cb596087b018fa5d34a7ee02cd5340",
+  "runtimeArtifactId": 14805600515,
+  "runtimeTarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+  "runtimeSourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "scope": "Only the original prs-strategy.sti fixture and this pinned P2 private Linux runtime",
+  "criteria": [
+    "Retain exact source dimensions and report that they are not bit-exactly preserved",
+    "Converter dimensions must equal the independently source-predicted integer master-unit export values exactly",
+    "Engine edit, PPTX save and fresh engine-handle reopen must introduce no additional dimension drift",
+    "All seven ordered slides and 24 source-derived paragraphs remain intact, allowing only the deliberate title prefix",
+    "Keep historical zero-tolerance failures and artifacts unchanged"
+  ],
+  "qualification": "Separate case-specific precision conformance, not a general tolerance, product fix, catalog claim, full fidelity, native GUI, visual or platform acceptance",
+  "visualImpact": "No functional or visible damage demonstrated; absence of all visual effects is not established",
+  "futureCorrection": "A more accurate export requires separately authorized product scope and geometry consistency checks; no ad-hoc sldSz postprocessor"
+}

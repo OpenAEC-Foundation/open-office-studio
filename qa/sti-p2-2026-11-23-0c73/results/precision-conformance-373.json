@@ -1,0 +1,77 @@
+{
+  "issue": 373,
+  "status": "conformant to separately approved case-specific export precision",
+  "policySha256": "6931faf9a92eb35328e4a388a66f20b1ebb1e6032bca83bdd8739b5ad98035a3",
+  "decisionAuthority": "Existing integration coordinator, explicitly consulted under the user's #373 instruction",
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "runtimeArtifactId": 14805600515,
+  "sourceFixtureSha256": "9b29e5fcec3f947a8a626cb2a448488508cb596087b018fa5d34a7ee02cd5340",
+  "sourceOracleSha256": "d71dd3db4ffa28cdd9b94e3705ed9357226caf61119d6f8697b3426784d1522a",
+  "originalQaRun": 45149020419,
+  "originalHarnessCommit": "aa011ba4c97ce8f4c865ec3c63159bf82f9c719d",
+  "originalResultArtifactId": 14805567220,
+  "originalResultZipSha256": "1aee8094531713c01d3621fb5b1bce44eb00e0a0f54faa165a61ffe4bdeb9d76",
+  "sourceExactDimensions": {
+    "width": "28cm",
+    "height": "21cm",
+    "widthEmu": 10080000,
+    "heightEmu": 7560000
+  },
+  "sourcePredictedExportDimensions": {
+    "widthEmu": 10080625,
+    "heightEmu": 7559675
+  },
+  "sourceBitExactSizePreserved": false,
+  "engineAddsDimensionDrift": false,
+  "files": [
+    {
+      "file": "converted/prs-strategy.pptx",
+      "sha256": "dd1c4a7569be210d5a4dded12398a56beb5035b731c0523ad586f7f3ff5dc477",
+      "sourceSlides": 7,
+      "sourceParagraphs": 24,
+      "intentionalTitleEdit": false,
+      "actualDimensions": {
+        "widthEmu": 10080625,
+        "heightEmu": 7559675
+      },
+      "sourcePredictedDimensionsMatchExactly": true,
+      "strictExactSourceDimensionsPreserved": false
+    },
+    {
+      "file": "edited.pptx",
+      "sha256": "e15f6b13568fec82d6b86a89b361e0626137f6e1a7f85b92cc3ed9ba11caa3d6",
+      "sourceSlides": 7,
+      "sourceParagraphs": 24,
+      "intentionalTitleEdit": true,
+      "actualDimensions": {
+        "widthEmu": 10080625,
+        "heightEmu": 7559675
+      },
+      "sourcePredictedDimensionsMatchExactly": true,
+      "strictExactSourceDimensionsPreserved": false
+    },
+    {
+      "file": "reopened.pptx",
+      "sha256": "e15f6b13568fec82d6b86a89b361e0626137f6e1a7f85b92cc3ed9ba11caa3d6",
+      "sourceSlides": 7,
+      "sourceParagraphs": 24,
+      "intentionalTitleEdit": true,
+      "actualDimensions": {
+        "widthEmu": 10080625,
+        "heightEmu": 7559675
+      },
+      "sourcePredictedDimensionsMatchExactly": true,
+      "strictExactSourceDimensionsPreserved": false
+    }
+  ],
+  "historicalStrictRunStillFailed": true,
+  "historicalTests": {
+    "passed": 3,
+    "failed": 1,
+    "skipped": 0
+  },
+  "newRuntimeEngineOrGuiRun": false,
+  "visualImpact": "No functional or visible damage demonstrated; absence of all visual effects is not established",
+  "scope": "Only the original prs-strategy.sti fixture and this pinned P2 private Linux runtime",
+  "qualification": "Separate case-specific precision conformance, not a general tolerance, product fix, catalog claim, full fidelity, native GUI, visual or platform acceptance"
+}
