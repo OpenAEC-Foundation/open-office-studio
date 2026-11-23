@@ -32,6 +32,7 @@ assert.equal(identity.executableSha256, "62923344ce4d11f6892ed1b1d4064ff5b85ce50
 const oracle = (...args) => JSON.parse(execFileSync("/usr/bin/python3", [join(here, "oracle.py"), ...args],
   { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }));
 const sourceOracle = oracle();
+const saveAsLabel = JSON.parse(await readFile("src/i18n/locales/en/shell.json", "utf8")).header.saveAs;
 const bundledLabel = JSON.parse(await readFile("src/i18n/locales/en/backstage.json", "utf8")).saveAs.sourceBundled;
 assert.equal(bundledLabel, "included with the app");
 await mkdir(join(out, "input"), { recursive: true });
@@ -271,7 +272,7 @@ try {
   const first = await openDocument(input);
   await goTo("A1", "1+2", 3); await goTo("A15", "1+2", 3); await focusGrid();
   await capture("opened-source.png");
-  await click('.office-snelknop[aria-label="Save As"]');
+  await click(`.office-snelknop[aria-label="${saveAsLabel}"]`);
   await waitFor(async () => Boolean((await evaluate(inspect)).saveDialog), "Native pointer opens actual app Save As");
   report.preflightSaveEntry = "Actual visible Save As toolbar button; initial imported-copy Ctrl+S behavior is not certified";
   const savedPath = join(out, "preflight-save/NativeXLSB.xlsx");

@@ -1,4 +1,4 @@
-# Native XLSB #35 â€” installed P2 Office DEB, Linux
+# Native XLSB #35 — installed P2 Office DEB, Linux
 
 User-authorized platform split, coordinated by the existing integration chat:
 this branch owns **Linux only**, on a disposable private CI display. The existing
@@ -44,7 +44,7 @@ application/converter output; no renamed XLSX or output-derived golden is used.
 
 1. Launch the actual installed Office with the genuine XLSB path. Wait for the
    selected document, Spreadsheet canvas and actual editable name/formula inputs.
-2. Preflight real input focus and Linux Ctrl+S. Verify default XLSX/bundled-runtime
+2. Preflight real input focus and the visible Save As control. Verify default XLSX/bundled-runtime
    information in the actual Save As UI, then complete the real native picker.
    Independently verify all 30 original formulas/caches, fully quit and reopen
    the saved XLSX in a **new Office PID** before broader editing.
@@ -80,3 +80,15 @@ Its verified evidence ZIP is SHA256
 `0837aad9d6eed7289a12149f4e5675006ec504d0787ec637476e8b06b19c2afa`;
 Office and driver cleanup passed. The Save As runtime label is read from P2's
 English locale, and the shared caller now uses immutable `3f4ddecd` readiness.
+
+Run `45155931118` proved the visible name box, actual A1/A15 formula/value
+selection, canvas and grid focus. Its initial imported-copy Ctrl+S produced no
+visible Save As dialog, so it stopped; no shortcut pass or product diagnosis is
+claimed. Evidence ZIP SHA256
+`4e6dbcdb6bd2d41c90c10d5e955c74798eb9a96ccea2609c085039d90f910204`.
+The next preflight uses the actual visible Save As toolbar control to test the
+requested XLSX-save route. Edited-file native Ctrl+S remains mandatory later;
+there is no fallback that silently certifies an unobserved shortcut.
+Run `45157037178` was cancelled before native testing after source inspection
+found its hardcoded toolbar label had wrong capitalization. Both Save As and
+bundled-runtime labels are now derived from the frozen P2 English locale.
