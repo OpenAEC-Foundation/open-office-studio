@@ -80,6 +80,10 @@ class Case:
 
     def tab(self,label):return self.select(["AXRadioButton","AXTab"],[label],action="press")
 
+    def view_toggle(self,label):
+        # A real pointer click also blurs/commits the ordinary outline editor.
+        return self.select(["AXCheckBox","AXButton","AXRadioButton"],[label],action="click",toolbar="View")
+
     def focus(self,expected=None):
         snap=self.snapshot();focused=snap.get("focused",{})
         if focused.get("AXRole") not in ("AXTextField","AXTextArea","AXComboBox"):
@@ -106,6 +110,12 @@ class Case:
             if time.monotonic()>=deadline:raise Unavailable("Expected native file dialog is not present")
             time.sleep(0.2)
         self.s.ax("key","cmd-shift-g");time.sleep(0.4)
+        deadline=time.monotonic()+10
+        while True:
+            focused=self.snapshot().get("focused",{})
+            if focused.get("AXRole") in ("AXTextField","AXComboBox") and focused.get("AXSubrole")!="AXSearchField":break
+            if time.monotonic()>=deadline:raise Unavailable("Native Go To Folder did not establish an actual editable path field")
+            time.sleep(0.2)
         self.replace(str(path.parent if save else path));self.s.ax("key","return");time.sleep(0.6)
         if save:
             self.select(["AXTextField"],["Save As:","Save As","saveAsNameTextField"])
@@ -166,17 +176,17 @@ class Case:
             self.s.ax("type",WRITER_PAYLOAD)
         elif app=="spreadsheet":
             self.select(["AXTextField","AXComboBox"],["Name box"]);self.replace("B2");self.s.ax("key","return");time.sleep(0.4)
-            self.focus();self.s.ax("type","42");self.s.ax("key","return")
+            self.edit_selected_cell("B2","42",expected="2")
         elif app=="presentation":
-            self.tab("View");self.button("Outline")
+            self.tab("View");self.view_toggle("Outline")
             self.select(["AXTextArea"],contains=SEEDS[app]);self.append(" "+MARKERS[app],SEEDS[app])
             # Blur commits the ordinary outline editor's onBlur handler.
-            self.button("Normal view")
+            self.view_toggle("Normal")
         self.s.capture("edited");self.save_office()
         old=self.s.quit();snap=self.s.start(self.fixture)
         if self.s.process.pid==old:raise Unavailable("Cold reopen reused the old process")
         self.s.report["newPidReopenVerified"]=True
-        if app=="presentation":self.tab("View");self.button("Outline")
+        if app=="presentation":self.tab("View");self.view_toggle("Outline")
         if app=="spreadsheet":
             self.select(["AXTextField","AXComboBox"],["Name box"]);self.replace("B2");self.s.ax("key","return")
             self.s.capture("reopened-B2")
@@ -190,6 +200,30 @@ class Case:
                 raise Unavailable("Edited text absent from cold-reopened native UI")
         self.s.write("reopened-oracle.json",verify(app,self.fixture));self.s.capture("reopened")
         self.runtime_export()
+
+    def edit_selected_cell(self,cell,text,expected=None):
+        # Normal native navigation focuses AXCell, not a text-input control.
+        # Require the actual selected cell and name box before editing through
+        # its visible, genuinely editable formula-bar text field.
+        deadline=time.monotonic()+45
+        while True:
+            snapshot=self.snapshot();focused=snapshot.get("focused",{})
+            names=[n for n in attributes(snapshot) if n.get("AXRole") in ("AXTextField","AXComboBox")
+                   and "Name box" in (n.get("AXTitle"),n.get("AXDescription")) and n.get("AXValue")==cell]
+            label=focused.get("AXDescription") or focused.get("AXTitle","")
+            if (len(names)==1 and focused.get("AXRole")=="AXCell" and focused.get("AXSelected") is True
+                    and label.startswith(cell+", ")):break
+            if len(names)>1 or time.monotonic()>=deadline:
+                raise Unavailable("Actual selected native cell/name-box context not established; no cell edit sent")
+            time.sleep(0.2)
+        self.select(["AXTextField","AXTextArea"],["Enter a value or formula"])
+        before=self.focus("Enter a value or formula")
+        allowed=expected if isinstance(expected,tuple) else (expected,)
+        if expected is not None and str(before.get("AXValue","")) not in allowed:
+            raise Unavailable("Selected cell formula-bar value differs before edit; no text sent")
+        self.replace(text,expected="Enter a value or formula");self.s.ax("key","return")
+        self.s.report.setdefault("nativeCellEdits",[]).append({"cell":cell,"originalNativeValue":before.get("AXValue"),
+            "typedText":text,"route":"Native selected cell/name box + visible formula-bar input + Return"})
 
     def writer_visible(self,text,label,placement="center"):
         last=None;deadline=time.monotonic()+20;attempt=0

@@ -53,6 +53,31 @@ class SelectorTests(unittest.TestCase):
         Case(s,"fixture").button("Save",toolbar="Save")
         self.assertEqual(len(s.actions),1);self.assertEqual(s.actions[0][1]["frame"]["y"],100)
 
+    def test_view_toggle_uses_actual_checkbox_role_and_ribbon_scope(self):
+        toggle=lambda index,parent,y:row(index,parent,AXRole="AXCheckBox",AXTitle="Outline",AXEnabled=True,
+                                        frame={"x":20,"y":y,"width":60,"height":30},actions=["AXPress"])
+        s=FakeSession({"rawNodes":[row(0,-1,AXRole="AXToolbar",AXTitle="View"),toggle(1,0,100),
+                                  row(2,-1,AXRole="AXGroup"),toggle(3,2,650)]})
+        Case(s,"fixture").view_toggle("Outline")
+        self.assertEqual(s.actions[0][1]["frame"]["y"],100)
+
+    def test_formula_bar_value_mismatch_blocks_native_cell_typing(self):
+        class Cell(FakeSession):
+            def __init__(self):
+                self.formula=False
+                super().__init__({})
+            def ax(self,action,spec=None,check=True):
+                if action=="click":self.formula=True
+                if action!="snapshot":return super().ax(action,spec,check)
+                formula={"AXRole":"AXTextField","AXDescription":"Enter a value or formula","AXValue":"3",
+                         "frame":{"x":150,"y":220,"width":300,"height":28},"AXEnabled":True}
+                return {"focused":formula if self.formula else {"AXRole":"AXCell","AXSelected":True,"AXTitle":"B2, 3, selected"},
+                        "rawNodes":[row(0,-1,AXRole="AXTextField",AXTitle="Name box",AXValue="B2"),
+                                    {"index":1,"parent":-1,"attributes":formula}]}
+        s=Cell()
+        with patch("cases.time.sleep"),self.assertRaises(Unavailable):Case(s,"fixture").edit_selected_cell("B2","42",expected="2")
+        self.assertFalse(any(a[0]=="type" for a in s.actions))
+
     def test_transient_native_panel_window_is_polled_without_any_input(self):
         class Opening(FakeSession):
             def __init__(self):super().__init__({"status":"observed","rawNodes":[]});self.reads=0

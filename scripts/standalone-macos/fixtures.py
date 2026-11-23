@@ -13,6 +13,9 @@ SEEDS = {name: "STANDALONE_" + name.upper() + "_SEED" for name in
 MARKERS = {name: "STANDALONE_" + name.upper() + "_EDIT" for name in SEEDS}
 CONTROL = "STANDALONE_UNCHANGED_CONTROL"
 WRITER_ANCHOR = "velvet"
+# A noninitial anchor avoids the first-letter caret and the normal default
+# sentence-capitalization feature. Every original character is still audited.
+WRITER_OPENING = "The "
 WRITER_VISIBLE_EDIT = "marigold"
 WRITER_PAYLOAD = " " + MARKERS["writer"] + " " + WRITER_VISIBLE_EDIT + " "
 
@@ -33,7 +36,7 @@ def create(output, templates):
     writer = output / "writer.docx"
     def document(text):
         assert text.count("<w:p/>") == 1
-        return text.replace("<w:p/>", "<w:p><w:r><w:t>" + WRITER_ANCHOR + " " + SEEDS["writer"] + " " + CONTROL + "</w:t></w:r></w:p>")
+        return text.replace("<w:p/>", "<w:p><w:r><w:t>" + WRITER_OPENING + WRITER_ANCHOR + " " + SEEDS["writer"] + " " + CONTROL + "</w:t></w:r></w:p>")
     rewrite(templates / "nieuw.docx", writer, "word/document.xml", document)
     sheet = output / "spreadsheet.xlsx"
     def worksheet(text):

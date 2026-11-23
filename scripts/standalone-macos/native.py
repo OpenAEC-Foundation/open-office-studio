@@ -113,6 +113,11 @@ class Session:
         if result["code"]:raise Unavailable("Disposable native host display preparation unavailable")
         value=json.loads(result["stdout"])
         if value.get("applicationLaunched") is not False:raise Unavailable("Unexpected display preparation scope")
+        after=command([self.helper,"capabilities"],timeout=15)
+        self.write("host-display-after-helper-exit.json",after)
+        if after["code"]:raise Unavailable("Independent post-helper native display observation unavailable")
+        value["afterHelperExitMainDisplay"]=json.loads(after["stdout"]).get("mainDisplayBefore")
+        value["configurationPersistedAfterHelperExit"]=value["afterHelperExitMainDisplay"]==value.get("mainDisplayAfter")
         self.report["hostDisplayPreparation"]=value
 
     def start(self,document=None):

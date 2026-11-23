@@ -37,8 +37,17 @@ if arguments.count == 2 && ["capabilities","prepare-display"].contains(arguments
             }
         if let chosen=candidates.first {
             report["selectedDisplayMode"]=["width":chosen.width,"height":chosen.height,"pixelWidth":chosen.pixelWidth,"pixelHeight":chosen.pixelHeight]
-            let error=CGDisplaySetDisplayMode(CGMainDisplayID(),chosen,nil)
-            report["displayConfigurationError"]=error.rawValue
+            var configuration:CGDisplayConfigRef?
+            let begun=CGBeginDisplayConfiguration(&configuration)
+            report["displayConfigurationBeginError"]=begun.rawValue
+            if begun == .success,let configuration=configuration {
+                let configured=CGConfigureDisplayWithDisplayMode(configuration,CGMainDisplayID(),chosen,nil)
+                report["displayModeConfigurationError"]=configured.rawValue
+                if configured == .success {
+                    report["displayConfigurationError"]=CGCompleteDisplayConfiguration(configuration,.forSession).rawValue
+                    report["displayConfigurationScope"]="forSession on disposable CI host"
+                } else {_=CGCancelDisplayConfiguration(configuration)}
+            }
             Thread.sleep(forTimeInterval:0.3)
         } else {report["displayConfigurationUnavailable"]=true}
         report["mainDisplayAfter"]=displayBounds()
@@ -224,8 +233,10 @@ if action=="activate" {
         "return":(36,[]),"tab":(48,[]),"escape":(53,[]),"right":(124,[]),"down":(125,[]),"end":(119,[])]
     guard arguments.count==4,let (code,flags)=keys[arguments[3]] else {report["reason"]="Unsupported native key";finish(2)}
     for down in [true,false] {
-        let event=CGEvent(keyboardEventSource:nil,virtualKey:code,keyDown:down);event?.flags=flags;event?.postToPid(pid)
+        let event=CGEvent(keyboardEventSource:nil,virtualKey:code,keyDown:down)
+        event?.flags=down ? flags : [];event?.post(tap:.cghidEventTap)
     }
+    report["keyboardTransport"]="Native HID with verified actual frontmost PID; key-up clears modifier flags"
 } else if action=="type" {
     guard arguments.count==4,arguments[3].utf16.count<=8192,
           let focused=attr(app,kAXFocusedUIElementAttribute),CFGetTypeID(focused)==AXUIElementGetTypeID(),
@@ -238,9 +249,10 @@ if action=="activate" {
         for down in [true,false] {
             let event=CGEvent(keyboardEventSource:nil,virtualKey:0,keyDown:down)
             event?.flags=[]
-            event?.keyboardSetUnicodeString(stringLength:chunk.count,unicodeString:chunk);event?.postToPid(pid)
+            event?.keyboardSetUnicodeString(stringLength:chunk.count,unicodeString:chunk);event?.post(tap:.cghidEventTap)
         }
         Thread.sleep(forTimeInterval:0.01)
     }
+    report["keyboardTransport"]="Native HID unicode, verified focused owned text control and frontmost PID"
 } else {report["reason"]="Unknown native action";finish(2)}
 report["status"]="input-sent";finish()

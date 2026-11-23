@@ -140,6 +140,14 @@ class FixtureTests(unittest.TestCase):
         rewrite(source,edited,"word/document.xml",lambda s:s.replace("velvet","vel"+WRITER_PAYLOAD+"ve"))
         with self.assertRaises(AssertionError):verify("writer",edited)
 
+    def test_writer_noninitial_anchor_preserves_original_capitalization_exactly(self):
+        from fixtures import WRITER_PAYLOAD,rewrite
+        source=Path(self.receipt["files"]["writer"]["path"]);edited=self.root/"case-damage.docx"
+        # A natural capitalized opening avoids testing default sentence correction
+        # while clicking the second word. The oracle still rejects any case loss.
+        rewrite(source,edited,"word/document.xml",lambda s:s.replace("The velvet","The Vel"+WRITER_PAYLOAD+"vet"))
+        with self.assertRaises(AssertionError):verify("writer",edited)
+
     def test_mail_edit_cannot_mask_lost_control_content(self):
         from email import policy
         from email.parser import BytesParser
