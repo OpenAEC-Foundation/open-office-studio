@@ -199,6 +199,10 @@ try {
  }
  if(app.key==='database') {assert.equal(hash(await readFile(input)),original);execFileSync('python',['-B',join(driver,'oracle.py'),'database',input,join(root,'database-oracle.json')],{stdio:'inherit'});}
  if(sourceInput){assert.equal(hash(await readFile(sourceInput)),original,'Original input bytes changed');report.originalInput.unchanged=true;}
+ report.afterNative=JSON.parse(await ps('inspect.ps1',['-Action','Baseline']));
+ assert.deepEqual(report.afterNative.apps,[],'Unexpected Office app remained after both full exits');
+ assert.deepEqual(report.afterNative.suitePaths,[],'Standalone operation created suite installation/resources');
+ assert(report.afterNative.profiles.every(path=>basename(path)===app.identifier),'Standalone operation created another app or suite profile');
  report.shortPreflight={status:'passed-in-bounded-core-case',focusAndWindowsControl:true,normalFullQuit:true,newProcessReopen:true,scope:'Only this small core case was executed, no broader controls or formats. Database is read/query/reopen, not an unsupported write/save claim.'};
  report.status='passed-scoped-native-function';
 } catch(error) {

@@ -110,6 +110,8 @@ def audit(run, metadata, jobs, fetched, target):
             for identity in (executable, report['installer']):
                 assert identity['signature'] == 'Valid' and identity['timestampSigner']
             assert all(report['baseline'][key] == [] for key in ('profiles','apps','suitePaths'))
+            assert report['afterNative']['apps'] == [] and report['afterNative']['suitePaths'] == []
+            assert all(p.replace('\\','/').split('/')[-1] == receipt['application']['identifier'] for p in report['afterNative']['profiles'])
             phases = report['phases']
             assert [p['phase'] for p in phases] == ['initial','reopened']
             assert phases[0]['pid'] != phases[1]['pid']
