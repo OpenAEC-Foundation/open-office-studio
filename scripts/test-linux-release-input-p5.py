@@ -107,6 +107,26 @@ class ImmutableIntake(unittest.TestCase):
         with self.assertRaises(AssertionError):self.verify()
 
 
+class ExactRequestBytes(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
+        self.here=patch.object(fetcher,'HERE',self.root);self.here.start()
+        folder=self.root/'docs/tests/linux-release-input-p5';folder.mkdir(parents=True)
+        self.intake=folder/'intake.json';self.request=folder/'request.json'
+        self.raw=b'{\n  "sourceCommit": "'+fetcher.SOURCE.encode()+b'"\n}\n'
+        self.intake.write_bytes(self.raw)
+        self.request.write_bytes((json.dumps(dict(go=True,purpose='P5-frozen-candidate',sourceCommit=fetcher.SOURCE,intakeSha256=hashlib.sha256(self.raw).hexdigest(),publicationAuthorized=False))+'\n').encode())
+    def tearDown(self):self.here.stop();self.tmp.cleanup()
+    def test_accepts_exact_canonical_bytes(self):
+        self.assertEqual(fetcher.pinned_request()[1]['intakeSha256'],hashlib.sha256(self.raw).hexdigest())
+    def test_rejects_semantically_identical_crlf_bytes(self):
+        self.intake.write_bytes(self.raw.replace(b'\n',b'\r\n'))
+        with self.assertRaises(AssertionError):fetcher.pinned_request()
+    def test_rejects_raw_mutation(self):
+        self.intake.write_bytes(self.raw.replace(b'  ',b'   ',1))
+        with self.assertRaises(AssertionError):fetcher.pinned_request()
+
+
 @unittest.skipUnless(sys.platform=='linux' and shutil.which('unsquashfs') and shutil.which('mksquashfs') and shutil.which('dpkg-deb'),'Linux package-inspection tools required')
 class ActualMinimalPackageElfInspection(unittest.TestCase):
     def setUp(self):

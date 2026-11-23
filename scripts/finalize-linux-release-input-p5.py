@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import subprocess
 import time
+import sys
 
 REPO='OpenAEC-Foundation/open-office-studio'
 
@@ -13,7 +14,8 @@ def main():
     run=int(os.environ['GITHUB_RUN_ID']);qa=os.environ['GITHUB_SHA']
     manifest={'schemaVersion':1,'producerRun':run,'producerCommit':qa,'sourceCommit':'b696ab86bd1c128729a079b68c0082e6df3d36a5','sourceTree':'e30879fd772871e690847c061ef66e6b81808a05','appVersion':'2026.48.1','artifacts':[],'nativeAcceptanceClaim':False,'publicationAuthorized':False}
     metadata=Path('.local/linux-release-input-p5-metadata')
-    expected=[f'standalone-input-{app}-p5' for app in ['writer','spreadsheet','presentation','email','notition','database']]+[f'suite-input-office-{kind}-p5' for kind in ['deb','appimage']]
+    suite_only=sys.argv[1:]==['--suite-only'];assert not sys.argv[1:] or suite_only
+    expected=([f'standalone-input-{app}-p5' for app in ['writer','spreadsheet','presentation','email','notition','database']] if not suite_only else [])+[f'suite-input-office-{kind}-p5' for kind in ['deb','appimage']]
     for attempt in range(20):
         artifacts=json.loads(subprocess.check_output(['gh','api',f'repos/{REPO}/actions/runs/{run}/artifacts?per_page=100']))['artifacts']
         if set(expected).issubset({a['name'] for a in artifacts if not a['expired']}):break
@@ -35,6 +37,6 @@ def main():
             descriptor['embeddedDescriptorNote']='Embedded pre-upload descriptor intentionally has no self-referential ZIP digest; this external descriptor binds the uploaded ZIP'
             path.write_text(json.dumps(descriptor,indent=2)+'\n',encoding='utf-8')
             manifest[name+'DescriptorSha256']=hashlib.sha256(path.read_bytes()).hexdigest()
-    (metadata/'transfers.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
+    (metadata/('suite-transfers.json' if suite_only else 'transfers.json')).write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
 
 if __name__=='__main__':main()

@@ -37,6 +37,30 @@ jobs:
           python3 .local/p5-harness/scripts/prepare-linux-release-input-p5.py
       - uses: actions/upload-artifact@v4
         with:
+          name: suite-input-office-deb-p5
+          path: .local/suite-input-office-deb-p5/
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: suite-input-office-appimage-p5
+          path: .local/suite-input-office-appimage-p5/
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
+      - name: Seal Suite descriptors independently before standalone app uploads
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .local/p5-harness/scripts/finalize-linux-release-input-p5.py --suite-only
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-suite-input-p5-metadata
+          path: .local/linux-release-input-p5-metadata/
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
           name: standalone-input-writer-p5
           path: .local/standalone-linux-prepared/writer/
           include-hidden-files: true
@@ -74,20 +98,6 @@ jobs:
         with:
           name: standalone-input-database-p5
           path: .local/standalone-linux-prepared/database/
-          include-hidden-files: true
-          compression-level: 0
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: suite-input-office-deb-p5
-          path: .local/suite-input-office-deb-p5/
-          include-hidden-files: true
-          compression-level: 0
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: suite-input-office-appimage-p5
-          path: .local/suite-input-office-appimage-p5/
           include-hidden-files: true
           compression-level: 0
           if-no-files-found: error

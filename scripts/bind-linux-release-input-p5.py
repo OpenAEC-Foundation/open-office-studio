@@ -25,7 +25,7 @@ def main():
     prepare.verify_intake(pin,run,job,artifact)
     path=HERE/'docs/tests/linux-release-input-p5/intake.json'
     assert not path.exists(), 'Existing immutable intake must not be silently replaced'
-    path.write_text(json.dumps(pin,indent=2)+'\n',encoding='utf-8')
+    path.write_bytes((json.dumps(pin,indent=2)+'\n').encode('utf-8'))
     print(json.dumps(dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest(),sourceCommit=source,sourceTree=tree,artifact=pin['artifact'],nativeExecutionAuthorizedByThisFile=False)))
 
 if __name__=='__main__':main()
