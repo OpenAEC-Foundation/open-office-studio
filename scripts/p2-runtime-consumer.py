@@ -6,6 +6,8 @@ from pathlib import Path, PurePosixPath
 import stat
 import sys
 import tarfile
+import tempfile
+import zipfile
 
 
 def sha(path):
@@ -64,6 +66,33 @@ def verify(artifact, expected_sha, destination):
     return {"status": "verified", "converter": str(converter), "resources": str(destination / descriptor["resourcesPath"]), "sourceCommit": descriptor["parent"]["sourceCommit"], "tarSha256": expected_sha}
 
 
+def verify_download(archive, delivery_descriptor, expected_descriptor_sha, destination):
+    """Common outer ZIP + pinned delivery descriptor + existing tar verifier."""
+    assert sha(delivery_descriptor) == expected_descriptor_sha, "Coordinator delivery descriptor SHA256"
+    delivery = json.loads(delivery_descriptor.read_text())
+    artifact = delivery["publishedArtifacts"]["p2-linux-private-runtime-only"]
+    assert sha(archive) == artifact["zipSha256"], "Exact immutable QA artifact ZIP"
+    allowed = {"descriptor.json", "entry-manifest.json", "canary-report.json", "canary-execve.log", "canary.fodt",
+               "soffice-bin-ldd.txt", "package-verification-Linux.json", "p2-runtime-consumer.py", "consumer-verification.json", delivery["tar"]["name"]}
+    with tempfile.TemporaryDirectory(prefix="p2-runtime-verified-input-") as temp:
+        root = Path(temp)
+        with zipfile.ZipFile(archive) as bundle:
+            names = bundle.namelist()
+            assert len(names) == len(set(names))
+            assert set(names) == allowed, "Only the runtime-only input and its QA evidence; no Office installer/app files"
+            for name in names:
+                assert len(PurePosixPath(name).parts) == 1
+                with bundle.open(name) as source, (root / name).open("wb") as target:
+                    while chunk := source.read(1024 * 1024): target.write(chunk)
+        assert sha(root / "descriptor.json") == delivery["runtimeBaseDescriptorSha256"]
+        result = verify(root, delivery["tar"]["sha256"], destination)
+        result.update(artifactId=artifact["id"], artifactZipSha256=artifact["zipSha256"], deliveryDescriptorSha256=expected_descriptor_sha)
+        return result
+
+
 if __name__ == "__main__":
-    assert len(sys.argv) == 4, __doc__
-    print(json.dumps(verify(Path(sys.argv[1]).resolve(), sys.argv[2], Path(sys.argv[3]).resolve())))
+    if len(sys.argv) == 6 and sys.argv[1] == "--archive":
+        print(json.dumps(verify_download(Path(sys.argv[2]).resolve(), Path(sys.argv[3]).resolve(), sys.argv[4], Path(sys.argv[5]).resolve())))
+    else:
+        assert len(sys.argv) == 4, __doc__ + " OR --archive ZIP DELIVERY_DESCRIPTOR DESCRIPTOR_SHA NEW_DESTINATION"
+        print(json.dumps(verify(Path(sys.argv[1]).resolve(), sys.argv[2], Path(sys.argv[3]).resolve())))

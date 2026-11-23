@@ -13,6 +13,9 @@ from unittest.mock import patch
 spec = importlib.util.spec_from_file_location("runtime_input", Path(__file__).with_name("p2-runtime-input.py"))
 producer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(producer)
+consumer_spec = importlib.util.spec_from_file_location("runtime_consumer", Path(__file__).with_name("p2-runtime-consumer.py"))
+consumer = importlib.util.module_from_spec(consumer_spec)
+consumer_spec.loader.exec_module(consumer)
 
 
 def synthetic_tar(link="../share/data.txt"):
@@ -44,6 +47,24 @@ def synthetic_tar(link="../share/data.txt"):
 
 
 class Contracts(unittest.TestCase):
+    def test_delivery_descriptor_must_match_coordinator_hash_before_any_extraction(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            descriptor = root / "descriptor.json"
+            descriptor.write_text("{}")
+            with self.assertRaises(AssertionError): consumer.verify_download(root / "absent.zip", descriptor, "wrong", root / "destination")
+            self.assertFalse((root / "destination").exists())
+
+    def test_outer_zip_must_match_delivery_hash_before_any_extraction(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            descriptor = root / "descriptor.json"
+            descriptor.write_text(json.dumps({"publishedArtifacts": {"p2-linux-private-runtime-only": {"zipSha256": "wrong"}}}))
+            archive = root / "input.zip"
+            archive.write_bytes(b"changed archive")
+            with self.assertRaises(AssertionError): consumer.verify_download(archive, descriptor, producer.sha(descriptor), root / "destination")
+            self.assertFalse((root / "destination").exists())
+
     def test_only_runtime_and_meta_extracted_while_app_elf_is_fingerprinted(self):
         with tempfile.TemporaryDirectory() as temp:
             payload = Path(temp) / "payload"

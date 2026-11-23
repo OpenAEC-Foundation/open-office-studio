@@ -9,6 +9,10 @@ on:
       - .github/workflows/qa-p2-runtime-input.yml
   workflow_dispatch:
     inputs:
+      contracts_only:
+        description: Run only shared verifier contracts, without any package download/build
+        type: boolean
+        default: false
       recovery_run:
         description: Reuse verified DEB from a previous failed prep to avoid a second Desktop ZIP download
         type: string
@@ -31,6 +35,7 @@ jobs:
       - name: Linux archive selection, provenance gate and mode/link roundtrip contracts
         run: python scripts/test-p2-runtime-input.py
   prepare:
+    if: inputs.contracts_only != true
     needs: contracts
     runs-on: ubuntu-22.04
     timeout-minutes: 45
