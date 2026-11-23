@@ -1,0 +1,45 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/alexschiller/file-format-commons",
+    "commit": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+    "firstPublicationCommit": "5b36d9ea16a82bcc8963bf470dd0e62017b92804",
+    "path": "files/ffc.psw",
+    "filename": "PocketWord.psw",
+    "blob": "75c0b60f397cfa1ceb96059abab2bf98fa890bea",
+    "bytes": 752,
+    "sha256": "bef5eeabfc34d59d14f7f66796aca17a0b1231c1015ce3d0bc9d32e0c8cf1740",
+    "url": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/files/ffc.psw",
+    "catalogCopy": {
+      "repository": "LibreOffice/core",
+      "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+      "firstPublicationCommit": "9b9d668d45dce3f318d89d54725a4d6cfc750315",
+      "path": "writerperfect/qa/unit/data/writer/libwps/pass/PocketWord.psw",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwps/pass/PocketWord.psw"
+    },
+    "license": "CC0-1.0",
+    "licenseUrl": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/LICENSE",
+    "licenseSha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01",
+    "readmeUrl": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/README.md",
+    "readmeSha256": "8bfa495da2855c0de24210fedf5cf5dcd0c21f3801dc88a29576e71480ab02b9",
+    "variant": "Genuine published Pocket Word family binary {\\pwi header, version6; not WPS/Works, RTF or a renamed DOCX",
+    "coverageLimit": "One Pocket Word version6 binary sample: single text record, original 0x0A bytes, paragraph linkage, font family/10pt. No original headings, tables or lists, so no claims for those; opaque page/line geometry/unknown records, embedded objects/ink/sound/macros, rendering and other PSW variants remain outside acceptance."
+  },
+  "parserReference": {
+    "repository": "deepin-community/libwps",
+    "commit": "a5ad3a399e52ff174e188edfca170a7689232d0b",
+    "path": "src/lib/PocketWord.cpp",
+    "blob": "6592cb0b8c049279c292d915d2cf8dd75052297b",
+    "sha256": "380a896991b06c50e198b8446bcc28603548181246f62cee504dc1ec6f21ab0e",
+    "role": "Distribution mirror of primary libwps parser layout; consulted for byte grammar only, no parser execution/output oracle. Own decoder validates full source, bounds, unique record IDs, paragraph references, text/commands/font indices directly."
+  },
+  "edit": {
+    "paragraph": 0,
+    "offset": 0,
+    "text": "QA_PSW_23NOV "
+  }
+}
