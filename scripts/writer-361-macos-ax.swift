@@ -152,6 +152,47 @@ if !AXIsProcessTrusted() {
                 report["pressError"] = result.rawValue; report["pressed"] = summary(matches[0])
             } else { report["status"] = "blocked"; report["reason"] = "Unique control has no native AXPress action" }
         } else { report["status"] = "blocked"; report["reason"] = "Expected one enabled labeled native control" }
+    } else if action == "click-body-point" {
+        let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
+        let owned = windows.filter { ($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value == pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue == 0 }
+        let parsed = target.data(using: .utf8).flatMap { try? JSONSerialization.jsonObject(with: $0) } as? [String: Any]
+        if owned.count == 1, let data = parsed,
+           let x = data["x"] as? Double, let y = data["y"] as? Double, x.isFinite, y.isFinite,
+           let expectedId = data["windowId"] as? NSNumber,
+           let actualId = owned[0][kCGWindowNumber as String] as? NSNumber, expectedId == actualId,
+           let b = owned[0][kCGWindowBounds as String] as? [String: Any],
+           let expected = data["bounds"] as? [String: Any],
+           ["X", "Y", "Width", "Height"].allSatisfy({ key in
+               guard let actual = b[key] as? Double, let before = expected[key] as? Double else { return false }
+               return actual.isFinite && before.isFinite && abs(actual-before) < 0.5
+           }),
+           let left = b["X"] as? Double, let top = b["Y"] as? Double,
+           let width = b["Width"] as? Double, let height = b["Height"] as? Double,
+           x > left, x < left+width, y > top+235, y < top+height-35,
+           NSRunningApplication(processIdentifier: pid)?.isActive == true,
+           NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+            let point = CGPoint(x: x, y: y)
+            for kind in [CGEventType.leftMouseDown, CGEventType.leftMouseUp] {
+                CGEvent(mouseEventSource: nil, mouseType: kind, mouseCursorPosition: point, mouseButton: .left)?.postToPid(pid)
+            }
+            report["status"] = "input-sent"; report["clickedBodyPoint"] = data
+        } else { report["status"] = "blocked"; report["reason"] = "Verified visible body point/window/frontmost identity differs" }
+    } else if action == "type-test-character" {
+        if ["Q", "X"].contains(target),
+           let focused = attr(app, kAXFocusedUIElementAttribute), CFGetTypeID(focused) == AXUIElementGetTypeID(),
+           text(focused as! AXUIElement, kAXRoleAttribute) == "AXTextArea",
+           text(focused as! AXUIElement, kAXDescriptionAttribute) == "Document input",
+           NSRunningApplication(processIdentifier: pid)?.isActive == true,
+           NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+            let units = Array(target.utf16)
+            for down in [true, false] {
+                let event = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: down)
+                event?.flags = []
+                units.withUnsafeBufferPointer { buffer in event?.keyboardSetUnicodeString(stringLength: buffer.count, unicodeString: buffer.baseAddress!) }
+                event?.postToPid(pid)
+            }
+            report["status"] = "input-sent"; report["testCharacter"] = target
+        } else { report["status"] = "blocked"; report["reason"] = "Only bounded synthetic character in the focused native document textarea is allowed" }
     } else if action == "click-label" || action == "click-cell" {
         if matches.count == 1, let (p, s) = pointAndSize(matches[0]),
            let application = NSRunningApplication(processIdentifier: pid) {
