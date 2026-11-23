@@ -169,3 +169,28 @@ The old-P2 Mac producer is now successful: artifact14815326028, ZIP SHA256
 (coordinator-reported; no large archive downloaded here). The Mac owner is
 running its app cases; no Mac STW actual is reported yet. Old-P2 Windows/Linux
 STW approval remains bounded and does not transfer to the changed kernels.
+
+## Final P3 source pin and native handoff
+
+Intake is now closed on P3 commit
+`98b340429436cf597a569549d043bd75b486e2ab`, tree
+`780c0789c8badedc6760a8402a6994154a3bf402`, version2026.48.1, immutable branch
+`codex/release-candidate-2026-11-23-p3`. Email379 is integrated alongside the
+agreed374/377/378 and bounded Windows ZIP-test budget correction. The coordinator
+reports229 directed Vitest tests,44 SDK checks,9 config checks and non-incremental
+TypeScript passing. Official release producer45170708933/attempt1 is bound to
+that exact branch/commit. Publishing is disabled per coordinator; no main/tag or
+publication action is authorized here.
+
+Independent read-only Git checks confirm the exact tree/version and all five
+field374 product blobs match product85ac155f. Official run metadata confirms
+workflow_dispatch at that exact source; the binding is retained in
+`evidence/p3-source-binding.json`. This is source/run evidence, not an OS package
+or native STW pass. New native exports have not been supplied yet.
+
+Native operation remains with Windows750b, Linux writer_362 and macOS6f92. Each
+OS can begin after its own official job/attempt/artifact/signature/hash binding
+is ready, without waiting for another OS. Independent export audits here retain
+the one shared `audit-docx.mjs`/contract/oracle; package identity, actual operation,
+full quit/new-PID reopen and visual approval remain separately required. No own
+GUI or build is needed. Root supplies the new actual packages/exports centrally.
