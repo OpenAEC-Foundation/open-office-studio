@@ -694,8 +694,35 @@ async function packageCase(pkg) {
           "username",
           account.id,
         ],
-        { env, input: "SYNTHETIC-QA-PASSWORD" },
+        {
+          env,
+          input: "SYNTHETIC-QA-PASSWORD",
+          stdio: ["pipe", "pipe", "pipe"],
+        },
       );
+      const credentialRoundtrip = command(
+        "secret-tool",
+        ["lookup", "service", "OpenAEC Email Studio", "username", account.id],
+        { env },
+      );
+      assert.ok(
+        credentialRoundtrip.length > 0,
+        "Synthetic OS credential must be nonempty before native application acceptance",
+      );
+      assert.equal(
+        hash(credentialRoundtrip),
+        hash("SYNTHETIC-QA-PASSWORD"),
+        "Exact synthetic credential roundtrip via real OS Secret Service, without logging credential bytes",
+      );
+      report.credentialFixture = {
+        provider: "Actual isolated OS Secret Service",
+        service: "OpenAEC Email Studio",
+        username: account.id,
+        seedStdin: "pipe",
+        roundtripNonempty: true,
+        exactFixtureCredentialVerified: true,
+        credentialBytesLogged: false,
+      };
       report.mailFixture = {
         host: "127.0.0.1",
         port: fixture.port,
