@@ -142,6 +142,19 @@ def api(route):
     return json.loads(subprocess.check_output(["gh", "api", f"repos/{REPO}/{route}"]))
 
 
+def attempt_one_linux(run_id=45177730188, job_id=137703365848):
+    """The frozen Linux attempt, independent of a later Mac-only retry."""
+    assert int(run_id)==45177730188 and int(job_id)==137703365848
+    run=api(f'actions/runs/{run_id}/attempts/1')
+    jobs=api(f'actions/runs/{run_id}/attempts/1/jobs?per_page=100')['jobs']
+    job,=[j for j in jobs if j['id']==int(job_id)]
+    assert run['id']==job['run_id']==int(run_id)
+    assert run['run_attempt']==job['run_attempt']==1
+    assert run['head_sha']==job['head_sha']==SOURCE and run['path']=='.github/workflows/release.yml'
+    assert job['name']=='Bouwen – Linux'
+    return run,job
+
+
 def digest(path):
     checksum = hashlib.sha256()
     with path.open("rb") as stream:
@@ -161,14 +174,13 @@ def main():
     assert len(studios) == 7 and {s["sleutel"] for s in studios} == {"office","writer","spreadsheet","presentation","email","notition","database"}
     purpose = "P5-frozen-candidate"
     version = json.loads(Path("package.json").read_text())["version"]
-    run = api(f"actions/runs/{run_id}")
+    job_id = os.environ["STANDALONE_LINUX_JOB"]
+    assert job_id.isdecimal()
+    run, job = attempt_one_linux(run_id,job_id)
     assert run["head_sha"] == source
     assert run["path"] == ".github/workflows/release.yml"
     pin, binding = pinned_request()
     assert subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip()==pin['sourceTree'] and version==pin['version']
-    job_id = os.environ["STANDALONE_LINUX_JOB"]
-    assert job_id.isdecimal()
-    job = api(f"actions/jobs/{job_id}")
     assert job["run_id"] == int(run_id) and job["name"].endswith("Linux")
     assert job["status"] == "completed" and job["conclusion"] == "success", "Only the own Linux job must be ready; other platforms are independent"
     artifacts = api(f"actions/runs/{run_id}/artifacts?per_page=100")["artifacts"]

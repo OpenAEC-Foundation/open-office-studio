@@ -15,8 +15,7 @@ def main():
     assert subprocess.check_output(['git','rev-parse',source+'^{tree}'],text=True).strip()==tree
     version=json.loads(subprocess.check_output(['git','show',source+':package.json']))['version']
     assert version=='2026.48.1'
-    run=prepare.api('actions/runs/45177730188')
-    job=prepare.api('actions/jobs/137703365848')
+    run,job=prepare.attempt_one_linux()
     if job['status']!='completed' or job['conclusion']!='success':
         raise SystemExit('Own P5 Linux job is not SUCCESS; no intake/go/download was created')
     artifacts=prepare.api('actions/runs/45177730188/artifacts?per_page=100')['artifacts']

@@ -18,7 +18,7 @@ def main():
     raw=args.descriptor.read_bytes();d=json.loads(raw);p=d['parent'];a=d['artifact'];package=d['package']
     assert d['schemaVersion']==1 and d['executionApproved'] is True and d['signatureBinding']['publicationAuthorized'] is False
     assert (p['sourceCommit'],p['sourceTree'],p['appVersion'],p['run'],p['job'],p['attempt'],p['jobConclusion'])==(producer.SOURCE,producer.TREE,'2026.48.1',45177730188,137703365848,1,'success')
-    run=producer.api('actions/runs/45177730188');job=producer.api('actions/jobs/137703365848')
+    run,job=producer.attempt_one_linux()
     canonical,=[x for x in producer.api('actions/runs/45177730188/artifacts?per_page=100')['artifacts'] if x['name']=='uitgave-Linux' and not x['expired']]
     archive=p['installerArchive'];assert (archive['id'],archive['name'],archive['sha256'],archive['bytes'])==(canonical['id'],canonical['name'],canonical['digest'].removeprefix('sha256:'),canonical['size_in_bytes'])
     pin=dict(purpose='P5-frozen-candidate',sourceCommit=producer.SOURCE,sourceTree=producer.TREE,version='2026.48.1',run=p['run'],job=p['job'],attempt=1,artifact=dict(id=archive['id'],name=archive['name'],digest='sha256:'+archive['sha256'],bytes=archive['bytes'],createdAt=canonical['created_at'],updatedAt=canonical['updated_at']),window=dict(jobStartedAt=job['started_at'],jobCompletedAt=job['completed_at']))

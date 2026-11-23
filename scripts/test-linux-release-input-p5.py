@@ -77,7 +77,7 @@ class Provenance(unittest.TestCase):
 class ImmutableIntake(unittest.TestCase):
     def setUp(self):
         self.run=dict(id=45177730188,head_sha=fetcher.SOURCE,path='.github/workflows/release.yml',run_attempt=1,run_started_at='2026-11-23T09:49:00Z')
-        self.job=dict(id=137703365848,run_id=self.run['id'],run_attempt=1,name='Bouwen – Linux',status='completed',conclusion='success',started_at='2026-11-23T09:49:22Z',completed_at='2026-11-23T10:46:00Z',steps=[dict(name=n,status='completed',conclusion='success') for n in fetcher.REQUIRED_GATES])
+        self.job=dict(id=137703365848,run_id=self.run['id'],head_sha=fetcher.SOURCE,run_attempt=1,name='Bouwen – Linux',status='completed',conclusion='success',started_at='2026-11-23T09:49:22Z',completed_at='2026-11-23T10:46:00Z',steps=[dict(name=n,status='completed',conclusion='success') for n in fetcher.REQUIRED_GATES])
         self.artifact=dict(id=7,name='uitgave-Linux',expired=False,workflow_run=dict(id=self.run['id'],head_sha=fetcher.SOURCE),digest='sha256:'+'a'*64,size_in_bytes=100,created_at='2026-11-23T10:45:00Z',updated_at='2026-11-23T10:45:59Z')
         self.job['steps'].append(dict(name=fetcher.NON_LINUX_GATE,status='completed',conclusion='skipped'))
         a=self.artifact
@@ -105,6 +105,26 @@ class ImmutableIntake(unittest.TestCase):
     def test_rejects_ambiguous_duplicate_package_gate(self):
         self.job['steps'].append(copy.deepcopy(self.job['steps'][0]))
         with self.assertRaises(AssertionError):self.verify()
+    def attempt_api(self,route):
+        if route=='actions/runs/45177730188/attempts/1':return copy.deepcopy(self.run)
+        if route=='actions/runs/45177730188/attempts/1/jobs?per_page=100':return {'jobs':[copy.deepcopy(self.job)]}
+        if route=='actions/runs/45177730188':return dict(self.run,run_attempt=2,run_started_at='2026-11-23T15:00:00Z')
+        if route=='actions/runs/45177730188/attempts/2/jobs?per_page=100':return {'jobs':[dict(self.job,id=999,run_attempt=2,conclusion='success',started_at='2026-11-23T15:00:00Z',completed_at='2026-11-23T15:30:00Z')]}
+        raise AssertionError('Unexpected/unbound attempt route: '+route)
+    def test_valid_linux_attempt1_survives_latest_mac_attempt2(self):
+        self.assertEqual(self.attempt_api('actions/runs/45177730188')['run_attempt'],2)
+        with patch.object(fetcher,'api',side_effect=self.attempt_api) as api:
+            run,job=fetcher.attempt_one_linux()
+            fetcher.verify_intake(self.pin,run,job,self.artifact)
+        self.assertEqual(run['run_started_at'],'2026-11-23T09:49:00Z')
+        self.assertEqual([c.args[0] for c in api.call_args_list],['actions/runs/45177730188/attempts/1','actions/runs/45177730188/attempts/1/jobs?per_page=100'])
+    def test_failed_attempt1_cannot_borrow_later_success_for_old_artifact(self):
+        self.job['conclusion']='failure'
+        later_success=self.attempt_api('actions/runs/45177730188/attempts/2/jobs?per_page=100')['jobs'][0]
+        self.assertEqual(later_success['conclusion'],'success')
+        with patch.object(fetcher,'api',side_effect=self.attempt_api):
+            run,job=fetcher.attempt_one_linux()
+            with self.assertRaises(AssertionError):fetcher.verify_intake(self.pin,run,job,self.artifact)
 
 
 class ExactRequestBytes(unittest.TestCase):
