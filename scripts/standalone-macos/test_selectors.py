@@ -22,6 +22,27 @@ class FakeSession:
 
 
 class SelectorTests(unittest.TestCase):
+    def test_warming_full_tree_is_observed_again_before_any_input(self):
+        class Warming(FakeSession):
+            def __init__(self):
+                super().__init__({"rawNodes":[button(0,-1,300)],"bounded":False});self.reads=0
+                self.process=type('Process',(),{'poll':lambda self:None})()
+            def ax(self,action,spec=None,check=True):
+                if action=='snapshot':
+                    self.reads+=1
+                    return {**self.snapshot,'bounded':self.reads==1}
+                self.assert_complete=self.reads>=2
+                return super().ax(action,spec,check)
+        s=Warming()
+        with patch('cases.time.sleep'):Case(s,'fixture').button('Save')
+        self.assertEqual(s.reads,2);self.assertTrue(s.assert_complete);self.assertEqual(len(s.actions),1)
+
+    def test_hard_tree_truncation_still_blocks_all_selector_input(self):
+        for key in ('childrenTruncated','depthTruncated'):
+            s=FakeSession({'rawNodes':[button(0,-1,300)],key:True})
+            with self.assertRaises(Unavailable):Case(s,'fixture').button('Save')
+            self.assertEqual(s.actions,[])
+
     def panel(self):
         focused={"AXRole":"AXList","AXFocused":True,"frame":{"x":300,"y":200,"width":600,"height":350}}
         return {"rawNodes":[row(0,-1,AXRole="AXWindow",AXIdentifier="open-panel",AXSubrole="AXDialog",

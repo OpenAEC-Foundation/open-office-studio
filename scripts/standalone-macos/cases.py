@@ -26,11 +26,15 @@ class Case:
     def __init__(self,session,fixture):self.s=session;self.fixture=Path(fixture)
 
     def snapshot(self):
-        deadline=time.monotonic()+10
+        deadline=time.monotonic()+45
         while True:
             value=self.s.ax("snapshot",check=False)
-            if value.get("status", "observed")=="observed":return value
-            if value.get("reason")!="Owned native windows unavailable" or time.monotonic()>=deadline:
+            observed=value.get("status", "observed")=="observed"
+            if observed and (value.get("childrenTruncated") is True or value.get("depthTruncated") is True):
+                raise Unavailable("Native child/depth tree limit reached; no selector or input attempted")
+            if observed and value.get("bounded") is not True:return value
+            warming=observed and value.get("bounded") is True
+            if (not warming and value.get("reason")!="Owned native windows unavailable") or time.monotonic()>=deadline:
                 raise Unavailable(value.get("reason","Native window snapshot unavailable"))
             if self.s.process.poll() is not None:raise Unavailable("Own process exited while native dialog was opening")
             time.sleep(0.2)  # Native panels briefly replace AXWindows while opening.
@@ -284,7 +288,7 @@ class Case:
         ext,label={"writer":("odt","OpenDocument Text"),"spreadsheet":("ods","OpenDocument Spreadsheet"),
                    "presentation":("odp","OpenDocument Presentation")}[app]
         if app=="presentation":self.view_toggle("Normal")
-        output=self.s.root/("standalone-runtime-"+app+"."+ext)
+        output=self.s.documents/("standalone-runtime-"+app+"."+ext)
         self.office_save_as(output,ext,label)
         deadline=time.monotonic()+50
         while not output.exists() and time.monotonic()<deadline:time.sleep(0.4)
@@ -337,7 +341,7 @@ class Case:
         self.select(["AXTextField"],["Page title"]);self.replace("Standalone edited page",expected="Standalone page")
         self.select(["AXTextArea"],["Markdown text"]);self.append("\n"+MARKERS["notition"],SEEDS["notition"])
         self.tab("Save");self.button("Save now",toolbar="Save");time.sleep(0.6)
-        export=self.s.root/"notes-export.openaec-notities"
+        export=self.s.documents/"notes-export.openaec-notities"
         self.button("Save backup",toolbar="Save");self.file_dialog(export,save=True)
         result=verify("notition",export)
         if result["page"]["titel"]!="Standalone edited page":raise Unavailable("Native page title did not survive export")
@@ -365,7 +369,7 @@ class Case:
         if digest(self.fixture)!=before:raise Unavailable("Opening the SQLite UI changed the original fixture")
         self.database_query()
         self.tab("Home");self.button("Save")
-        output=self.s.root/"database-export.sqlite";self.file_dialog(output,save=True)
+        output=self.s.documents/"database-export.sqlite";self.file_dialog(output,save=True)
         self.s.write("output-oracle.json",verify("database",output))
         if digest(self.fixture)!=before:raise Unavailable("Original SQLite file changed during read/query/export")
         self.s.report.update(nativeSaveVerified=True,outputOraclePassed=True)

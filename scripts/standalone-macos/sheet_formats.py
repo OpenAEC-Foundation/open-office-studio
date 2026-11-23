@@ -59,7 +59,7 @@ def run_native(session,kind):
     receipt={"status":"running","nativeAccepted":False,"scope":"One pinned original source via ."+kind,
              "applicationSource":session.report["source"],"coreSpreadsheetPassedBeforeThisCase":True}
     session.report.setdefault("additionalCases",{})[kind]=receipt
-    fixture,oracle,binding=prepare(session.root/kind,kind);receipt["input"]=binding
+    fixture,oracle,binding=prepare(session.documents/kind,kind);receipt["input"]=binding
     session.write(kind+"/source-oracle.json",oracle)
     previous=set(session.children);session.start();case=Case(session,fixture);picker_open(case,fixture)
     # Name box proves a real active workbook before attempting its native Save As.
@@ -71,13 +71,13 @@ def run_native(session,kind):
     if not conversions or not all(p["resolvedInsideOwnApp"] for p in converters):
         raise Unavailable("Actual legacy spreadsheet import converter not observed inside own app")
     receipt["actualConversionChildren"]=conversions
-    output=session.root/kind/"imported-original.xlsx"
+    output=session.documents/kind/"imported-original.xlsx"
     receipt["beforeEditOracle"]=save_xlsx(case,output,oracle,kind,False)
     if kind!="xlsb":case.select(["AXRadioButton","AXTab","AXButton"],["Sheet2"])
     cell="A15" if kind=="xlsb" else "A1";text="=40+2" if kind=="xlsb" else gnm_oracle.MARKER
     case.select(["AXTextField","AXComboBox"],["Name box"]);case.replace(cell);session.ax("key","return")
     case.edit_selected_cell(cell,text,expected=("=1+2","1+2") if kind=="xlsb" else "")
-    output=session.root/kind/"edited-native.xlsx"
+    output=session.documents/kind/"edited-native.xlsx"
     receipt["editedOracle"]=save_xlsx(case,output,oracle,kind,True)
     old=session.quit();session.start(output)
     if session.process.pid==old:raise Unavailable("Supplementary XLSX cold reopen reused old PID")

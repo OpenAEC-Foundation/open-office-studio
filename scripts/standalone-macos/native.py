@@ -97,11 +97,16 @@ class Session:
         self.root.mkdir(parents=True,exist_ok=False)
         self.process=None;self.mount=None;self.bundle=None;self.exe=None;self.sequence=0;self.profiles=[]
         self.cwd=self.root/"empty-cwd";self.cwd.mkdir()
+        # Native column-view choosers expose ancestor directories too. Keep
+        # selectable data beside, never underneath the growing diagnostic tree.
+        self.documents=verify_under(self.root.parent/(app+"-documents"),self.root.parent);self.documents.mkdir()
         self.watch_stop=threading.Event();self.watch_thread=None;self.children={};self.watch_errors=[]
-        self.env=environment(os.environ);self.report={"app":app,"nativeAccepted":False,"observations":[]}
+        self.env=environment(os.environ);self.report={"app":app,"nativeAccepted":False,"observations":[],
+            "diagnosticRoot":str(self.root),"documentOutputRoot":str(self.documents)}
 
     def write(self,name,value):
         path=verify_under(self.root/name,self.root)
+        path.parent.mkdir(parents=True,exist_ok=True)
         path.write_text(json.dumps(value,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
 
     def install(self,dmg):

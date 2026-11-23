@@ -104,7 +104,7 @@ def main():
     try:
         session.install(dmg)
         session.prepare_display()
-        fixtures=create(session.root/"synthetic-inputs",root/"public/templates")
+        fixtures=create(session.documents/"synthetic-inputs",root/"public/templates")
         fixture=Path(fixtures["files"][args.app]["path"])
         session.start(fixture if args.app in ("writer","spreadsheet","presentation") else None)
         case=Case(session,fixture)

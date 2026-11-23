@@ -54,7 +54,7 @@ def run_native(session):
              "applicationSource":session.report["source"],"oracleOrigin":ORACLE_ORIGIN,"oracleSHA256":ORACLE_SHA256,
              "tableCount":0,"coreDocxPassedBeforeThisCase":True}
     session.report.setdefault("additionalCases",{})["stw"]=receipt
-    fixture,oracle=prepare(session.root/"stw")
+    fixture,oracle=prepare(session.documents/"stw")
     receipt["input"]={"url":FIXTURE_URL,"sha256":SOURCE_SHA256,"bytes":11186}
     session.write("stw/source-oracle.json",oracle)
     previous=set(session.children)
@@ -65,14 +65,14 @@ def run_native(session):
     if not conversions or not all(p["resolvedInsideOwnApp"] for p in converters):
         raise Unavailable("STW importer did not show an own-bundle converter child")
     receipt["actualStwConversionChildren"]=conversions
-    output=session.root/"stw/imported-original.docx"
+    output=session.documents/"stw/imported-original.docx"
     receipt["beforeEditOracle"]=save_docx(case,output,oracle,"")
     target=case.writer_visible("TITLE","stw-before-edit",placement="after-word")
     session.ax("click-point",target);focus=case.focus("Document input")
     if focus.get("AXRole")!="AXTextArea" or focus.get("AXDescription")!="Document input":
         raise Unavailable("STW visible title click did not focus exact Document input")
     session.ax("type",MARKER)
-    output=session.root/"stw/edited-native.docx"
+    output=session.documents/"stw/edited-native.docx"
     receipt["editedOracle"]=save_docx(case,output,oracle,MARKER)
     old=session.quit();session.start(output)
     if session.process.pid==old:raise Unavailable("STW DOCX cold reopen reused old PID")
