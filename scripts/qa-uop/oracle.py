@@ -61,7 +61,7 @@ def fetch_source(path, out):
     plain = " ".join(" ".join(parser.parts).split())
     assert CONFIG["source"]["permission"] in plain, "Publisher test-use permission is missing"
     assert "/samples/uop/sample-presentation.uop" in page.decode("utf-8")
-    (out / "publisher-permission.html").write_bytes(page)
+    write_json(out / "publisher-permission.json",{"url":CONFIG["source"]["publication"],"permission":CONFIG["source"]["permission"],"pageSha256":sha(page),"note":"Only the relevant permission excerpt is retained; the full publisher article is not redistributed."})
     write_json(out / "publisher-response.json",receipt)
 
 
@@ -102,7 +102,7 @@ def parse_source(path):
     object_set = root.find(U + "对象集")
     assert all(n.tag == G + "图形" for n in object_set)
     objects = {n.get(G + "标识符"):n for n in object_set}
-    assert len(objects) == 35
+    assert len(objects) == len(object_set) == 40
 
     def anchor_shape(anchor):
         oid = anchor.get(U + "图形引用")
@@ -140,6 +140,7 @@ def parse_source(path):
     assert not formula_nodes
     assert all(n.tag not in (G + "图片",G + "二进制数据",U + "二进制数据") for n in root.iter())
     return {"application":CONFIG["application"],"source":CONFIG["source"],"slides":slides,"formulaCount":0,"embeddedMediaCount":0,
+            "objectDefinitions":len(objects),"cachedMetadataObjectCount":root.findtext(U + "元数据/" + U + "对象数"),
             "edit":CONFIG["edit"],"geometryToleranceEMU":CONFIG["geometryToleranceEMU"],
             "note":"Source-only slide/master/object/paragraph/list/shape-style/notes oracle. Generated-software PNG labels are not embedded raster images. No font/rounded-corner/visual claim is inferred from absent applied style data."}
 

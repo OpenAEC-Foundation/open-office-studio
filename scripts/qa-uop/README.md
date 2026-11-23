@@ -6,13 +6,15 @@ Integrationchat exclusively assigned this route. New branch `codex/uop-qa-2026-1
 
 The earlier CC0 file-format-commons repository has no UOP. This probe instead downloads the independently published [99helpers three-slide UOP](https://99helpers.com/samples/uop/sample-presentation.uop), complete bytes pinned in `fixture.json`: 204509 bytes, SHA256 `7d204f66f3e15a76176145f917089b204f1160ff819a898aa0dd61e977c39c7d`. It is actual UOF1 XML, not a renamed ODP/PPTX or this probe's own export. Embedded metadata identifies 99helpers, LibreOffice 24.2.7.2 and creation 2026-10-27. Acquisition response headers are observations, not independent historical authentication; the mutable URL is frozen by complete byte hash and retained source evidence.
 
-The [publisher's sample page](https://99helpers.com/file-types/uop) explicitly permits testing, teaching and demos, including commercial use without attribution. Record this as custom testing permission, **not CC0**. Source CI independently retains the page bytes/hash/HTTP receipt and checks the specific permission and linked asset. No comparison ODP is used or fetched as an import substitute.
+The [publisher's sample page](https://99helpers.com/file-types/uop) explicitly permits testing, teaching and demos, including commercial use without attribution. Record this as custom testing permission, **not CC0**. Source CI independently retains the relevant permission excerpt, full-page hash and HTTP receipt and checks the specific permission and linked asset. The full publisher article is not redistributed. No comparison ODP is used or fetched as an import substitute.
 
 ## Oracle fixed before conversion
 
 Python stdlib parses original slide/master/object references, actual 28 × 15.75 cm canvas, eight direct slide objects across three slides, every source paragraph including Chinese, list levels, notes on all three slides, object geometry, selected rectangle fills and line color/width/arrow presence. Applied paragraph/run references are retained without inventing missing explicit font properties. Geometry uses the declared centimetre unit, 360000 EMU/cm, and a predeclared 360 EMU (0.001 cm) tolerance reflecting the recorded source coordinate resolution. No visual equivalence is inferred.
 
 Source media/formula counts are zero. A shape's generated-software label `PNG` is not embedded image data. Absent media/formulas provide no positive coverage. Known limitations of an earlier ODP export described by the publisher are distinct from the actual UOP content; the independent UOP oracle is the sole input-content expectation.
+
+Source-only run `45157774470` stopped at a harness assumption that the cached metadata object count (35) equalled actual object definitions. Direct inspection of unchanged source bytes gives 40 unique object definitions, including layout/note objects, and eight actual slide anchors. The oracle now verifies those actual definitions and retains the stale cached value separately. No converter/engine ran in that initial attempt; no product issue is inferred from a stale source statistic.
 
 ## Runtime, policy and real engine
 
