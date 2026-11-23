@@ -1,0 +1,1405 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/fosnola/libstaroffice",
+    "commit": "94647518b5060456ace4ea724cd157582c059501",
+    "path": "regression/Pres5/go-oox-5.sdd",
+    "filename": "go-oox-5.sdd",
+    "bytes": 48640,
+    "blob": "62193842f97ada53a27077c6460ae490b6b04271",
+    "sha256": "6c1558356cea834a4fb42c13847c5ac2e8f6037965c3cf0a1797ed434417c72b",
+    "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd",
+    "classification": "CFB CompObj Presentation / StarImpress 5.0; native DrMd17 and presentation pages",
+    "license": "Upstream project distribution MPL 2.0 / LGPLv2+; bundled COPYING.MPL and COPYING.LGPL retained, no per-fixture override found",
+    "licenseScope": "Repository-distributed original regression fixture; no CC0 or independent per-file license grant is asserted",
+    "reference": {
+      "path": "regression/Pres5/go-oox-5.sdd.raw",
+      "blob": "8320214d8d0199e62f735a2445fa0167f354bb2e",
+      "sha256": "4764e3004a855343001e26482acc4abf6d1395b0ed2c78f83ff967f6c8204342",
+      "bytes": 36253,
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd.raw",
+      "role": "Historical upstream regression reference only; may share libstaroffice with the tested converter. Text bytes, page count/master associations and dimensions independently verified in original native CFB records."
+    },
+    "notices": [
+      {
+        "path": "COPYING.MPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.MPL",
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.LGPL",
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "README",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/README",
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      }
+    ],
+    "parserProvenance": {
+      "path": "src/lib/StarObjectModel.cxx",
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/src/lib/StarObjectModel.cxx",
+      "blob": "3ddcdba626fb963abfbeecf74cfe9aa22e352d20",
+      "relevantFunctions": [
+        "readSdrPage",
+        "readSdrMPageDesc",
+        "updatePageSpans"
+      ],
+      "role": "Read-only native record-layout reference, not executed as a second converter"
+    }
+  },
+  "streams": [
+    {
+      "id": 0,
+      "name": "Root Entry",
+      "type": 5,
+      "first": 3,
+      "bytes": 1664
+    },
+    {
+      "id": 1,
+      "name": "\u0001CompObj",
+      "type": 2,
+      "first": 0,
+      "bytes": 69,
+      "sha256": "7eb93281f5b24785d87f82e9a05a657e0afd911a467c9d10b916157516473f1e"
+    },
+    {
+      "id": 2,
+      "name": "\u0001Ole",
+      "type": 2,
+      "first": 2,
+      "bytes": 20,
+      "sha256": "c36c8a4b7dee703b9ce6e288032033b718feef01ca283cfaa4332a8334b2adf3"
+    },
+    {
+      "id": 3,
+      "name": "persist elements",
+      "type": 2,
+      "first": 3,
+      "bytes": 21,
+      "sha256": "5bfa832fd2c70f3681a887cd8b66679a468d1a02bc9be292922ec4adbc9a13ce"
+    },
+    {
+      "id": 4,
+      "name": "SfxDocumentInfo",
+      "type": 2,
+      "first": 4,
+      "bytes": 885,
+      "sha256": "21b46e75c8b365631d6cf6d2047355c2bb884eef6207f2afd30e83281436d0c7"
+    },
+    {
+      "id": 5,
+      "name": "BasicManager2",
+      "type": 2,
+      "first": 18,
+      "bytes": 52,
+      "sha256": "685be937155c5a4b784767b6737958b91af8e4daf3f774fb863f8782f66f5b53"
+    },
+    {
+      "id": 6,
+      "name": "StarBASIC",
+      "type": 1,
+      "first": 4294967294,
+      "bytes": 0
+    },
+    {
+      "id": 7,
+      "name": "Standard",
+      "type": 2,
+      "first": 19,
+      "bytes": 106,
+      "sha256": "8b6a37acd343b3cb4a15fbb792c20782029543a7025d98b7a4bf339627d97721"
+    },
+    {
+      "id": 8,
+      "name": "SfxStyleSheets",
+      "type": 2,
+      "first": 6,
+      "bytes": 27964,
+      "sha256": "ac35dd4c639e32b30cfffa0b105589a141ba447e416851bd07bdf79f5eac5815"
+    },
+    {
+      "id": 9,
+      "name": "\u0005SummaryInformation",
+      "type": 2,
+      "first": 21,
+      "bytes": 312,
+      "sha256": "a0bdfe0e4904f45950901499deabe39fa2d7fe3df493c5b01c95e3e072a0bd38"
+    },
+    {
+      "id": 10,
+      "name": "StarDrawDocument3",
+      "type": 2,
+      "first": 62,
+      "bytes": 14718,
+      "sha256": "2fe0d12fdf6ad1edfed747ced078c31ee6a63ab135e0ccf98b698dc7089cf159"
+    }
+  ],
+  "nativePages": [
+    {
+      "offset": 5471,
+      "bytes": 232,
+      "masterId": 0,
+      "nativeSize": [
+        29700,
+        21000
+      ],
+      "topObjects": [],
+      "leafObjects": []
+    },
+    {
+      "offset": 5703,
+      "bytes": 3408,
+      "masterId": 1,
+      "nativeSize": [
+        28002,
+        20999
+      ],
+      "topObjects": [
+        {
+          "offset": 5813,
+          "bytes": 487,
+          "type": 20
+        },
+        {
+          "offset": 6300,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 6525,
+          "bytes": 669,
+          "type": 1
+        },
+        {
+          "offset": 7194,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 7419,
+          "bytes": 654,
+          "type": 1
+        },
+        {
+          "offset": 8073,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 8298,
+          "bytes": 670,
+          "type": 1
+        }
+      ],
+      "leafObjects": [
+        {
+          "offset": 5813,
+          "bytes": 487,
+          "type": 20,
+          "boundsNative": [
+            1398,
+            961,
+            26594,
+            4214
+          ],
+          "rectEMU": {
+            "x": 503280,
+            "y": 345960,
+            "width": 9070560,
+            "height": 1171080
+          }
+        },
+        {
+          "offset": 6300,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            798,
+            5838,
+            13744,
+            16760
+          ],
+          "rectEMU": {
+            "x": 287280,
+            "y": 2101680,
+            "width": 4660560,
+            "height": 3931920
+          }
+        },
+        {
+          "offset": 6604,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            987,
+            4740,
+            11314,
+            5700
+          ],
+          "rectEMU": {
+            "x": 355320,
+            "y": 1706400,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 6819,
+          "bytes": 363,
+          "type": 16,
+          "boundsNative": [
+            987,
+            4740,
+            11314,
+            5700
+          ],
+          "rectEMU": {
+            "x": 355320,
+            "y": 1706400,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 7194,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            14587,
+            5472,
+            24900,
+            11878
+          ],
+          "rectEMU": {
+            "x": 5251320,
+            "y": 1969920,
+            "width": 3712680,
+            "height": 2306160
+          }
+        },
+        {
+          "offset": 7498,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            15124,
+            4255,
+            25451,
+            5215
+          ],
+          "rectEMU": {
+            "x": 5444640,
+            "y": 1531800,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 7713,
+          "bytes": 348,
+          "type": 16,
+          "boundsNative": [
+            15124,
+            4255,
+            25451,
+            5215
+          ],
+          "rectEMU": {
+            "x": 5444640,
+            "y": 1531800,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 8073,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            14781,
+            13745,
+            25094,
+            20151
+          ],
+          "rectEMU": {
+            "x": 5321160,
+            "y": 4948200,
+            "width": 3712680,
+            "height": 2306160
+          }
+        },
+        {
+          "offset": 8377,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            14877,
+            12612,
+            25204,
+            13572
+          ],
+          "rectEMU": {
+            "x": 5355720,
+            "y": 4540320,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 8592,
+          "bytes": 364,
+          "type": 16,
+          "boundsNative": [
+            14877,
+            12612,
+            25204,
+            13572
+          ],
+          "rectEMU": {
+            "x": 5355720,
+            "y": 4540320,
+            "width": 3717720,
+            "height": 345600
+          }
+        }
+      ]
+    },
+    {
+      "offset": 9111,
+      "bytes": 547,
+      "masterId": 2,
+      "nativeSize": [
+        21000,
+        29700
+      ],
+      "topObjects": [
+        {
+          "offset": 9221,
+          "bytes": 60,
+          "type": 28
+        },
+        {
+          "offset": 9281,
+          "bytes": 226,
+          "type": 16
+        }
+      ],
+      "leafObjects": [
+        {
+          "offset": 9221,
+          "bytes": 60,
+          "type": 28,
+          "boundsNative": [
+            3810,
+            2121,
+            17779,
+            12598
+          ],
+          "rectEMU": {
+            "x": 1371600,
+            "y": 763560,
+            "width": 5028840,
+            "height": 3771720
+          }
+        },
+        {
+          "offset": 9281,
+          "bytes": 226,
+          "type": 16,
+          "boundsNative": [
+            2161,
+            13269,
+            19433,
+            25589
+          ],
+          "rectEMU": {
+            "x": 777960,
+            "y": 4776840,
+            "width": 6217920,
+            "height": 4435200
+          }
+        }
+      ]
+    },
+    {
+      "offset": 9658,
+      "bytes": 4210,
+      "masterId": 1,
+      "nativeSize": [
+        28002,
+        20999
+      ],
+      "topObjects": [
+        {
+          "offset": 9768,
+          "bytes": 475,
+          "type": 20
+        },
+        {
+          "offset": 10243,
+          "bytes": 1466,
+          "type": 21
+        },
+        {
+          "offset": 11709,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 11934,
+          "bytes": 660,
+          "type": 1
+        },
+        {
+          "offset": 12594,
+          "bytes": 659,
+          "type": 1
+        },
+        {
+          "offset": 13253,
+          "bytes": 241,
+          "type": 2
+        },
+        {
+          "offset": 13494,
+          "bytes": 241,
+          "type": 2
+        }
+      ],
+      "leafObjects": [
+        {
+          "offset": 9768,
+          "bytes": 475,
+          "type": 20,
+          "boundsNative": [
+            1398,
+            454,
+            26594,
+            3707
+          ],
+          "rectEMU": {
+            "x": 503280,
+            "y": 163440,
+            "width": 9070560,
+            "height": 1171080
+          }
+        },
+        {
+          "offset": 10243,
+          "bytes": 1466,
+          "type": 21,
+          "boundsNative": [
+            1358,
+            3731,
+            26554,
+            13096
+          ],
+          "rectEMU": {
+            "x": 488880,
+            "y": 1343160,
+            "width": 9070560,
+            "height": 3371400
+          }
+        },
+        {
+          "offset": 11709,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            16779,
+            11126,
+            27419,
+            20412
+          ],
+          "rectEMU": {
+            "x": 6040440,
+            "y": 4005360,
+            "width": 3830400,
+            "height": 3342960
+          }
+        },
+        {
+          "offset": 12013,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            11557,
+            13688,
+            15198,
+            14882
+          ],
+          "rectEMU": {
+            "x": 4160520,
+            "y": 4927680,
+            "width": 1310760,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 12228,
+          "bytes": 354,
+          "type": 16,
+          "boundsNative": [
+            11557,
+            13688,
+            15198,
+            14882
+          ],
+          "rectEMU": {
+            "x": 4160520,
+            "y": 4927680,
+            "width": 1310760,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 12673,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            11897,
+            16453,
+            15591,
+            17647
+          ],
+          "rectEMU": {
+            "x": 4282920,
+            "y": 5923080,
+            "width": 1329840,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 12888,
+          "bytes": 353,
+          "type": 16,
+          "boundsNative": [
+            11897,
+            16453,
+            15591,
+            17647
+          ],
+          "rectEMU": {
+            "x": 4282920,
+            "y": 5923080,
+            "width": 1329840,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 13253,
+          "bytes": 241,
+          "type": 2,
+          "boundsNative": [
+            14662,
+            13542,
+            23605,
+            14455
+          ],
+          "rectEMU": {
+            "x": 5359320,
+            "y": 4956120,
+            "width": 3057480,
+            "height": 166680
+          },
+          "cachedPaintRectEMU": {
+            "x": 5278320,
+            "y": 4875120,
+            "width": 3219480,
+            "height": 328680
+          },
+          "linePointsNative": [
+            [
+              14887,
+              14230
+            ],
+            [
+              23380,
+              13767
+            ]
+          ],
+          "geometryMeaning": "Native path endpoint bounds; cached painted/selection bounds retained separately"
+        },
+        {
+          "offset": 13494,
+          "bytes": 241,
+          "type": 2,
+          "boundsNative": [
+            14578,
+            14393,
+            21122,
+            17418
+          ],
+          "rectEMU": {
+            "x": 5329080,
+            "y": 5262480,
+            "width": 2193840,
+            "height": 927000
+          },
+          "cachedPaintRectEMU": {
+            "x": 5248080,
+            "y": 5181480,
+            "width": 2355840,
+            "height": 1089000
+          },
+          "linePointsNative": [
+            [
+              14803,
+              17193
+            ],
+            [
+              20897,
+              14618
+            ]
+          ],
+          "geometryMeaning": "Native path endpoint bounds; cached painted/selection bounds retained separately"
+        }
+      ]
+    },
+    {
+      "offset": 13868,
+      "bytes": 533,
+      "masterId": 2,
+      "nativeSize": [
+        21000,
+        29700
+      ],
+      "topObjects": [
+        {
+          "offset": 13978,
+          "bytes": 60,
+          "type": 28
+        },
+        {
+          "offset": 14038,
+          "bytes": 226,
+          "type": 16
+        }
+      ],
+      "leafObjects": [
+        {
+          "offset": 13978,
+          "bytes": 60,
+          "type": 28,
+          "boundsNative": [
+            3810,
+            2121,
+            17779,
+            12598
+          ],
+          "rectEMU": {
+            "x": 1371600,
+            "y": 763560,
+            "width": 5028840,
+            "height": 3771720
+          }
+        },
+        {
+          "offset": 14038,
+          "bytes": 226,
+          "type": 16,
+          "boundsNative": [
+            2161,
+            13269,
+            19433,
+            25589
+          ],
+          "rectEMU": {
+            "x": 777960,
+            "y": 4776840,
+            "width": 6217920,
+            "height": 4435200
+          }
+        }
+      ]
+    }
+  ],
+  "slides": [
+    {
+      "offset": 5703,
+      "bytes": 3408,
+      "masterId": 1,
+      "nativeSize": [
+        28002,
+        20999
+      ],
+      "topObjects": [
+        {
+          "offset": 5813,
+          "bytes": 487,
+          "type": 20
+        },
+        {
+          "offset": 6300,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 6525,
+          "bytes": 669,
+          "type": 1
+        },
+        {
+          "offset": 7194,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 7419,
+          "bytes": 654,
+          "type": 1
+        },
+        {
+          "offset": 8073,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 8298,
+          "bytes": 670,
+          "type": 1
+        }
+      ],
+      "leafObjects": [
+        {
+          "offset": 5813,
+          "bytes": 487,
+          "type": 20,
+          "boundsNative": [
+            1398,
+            961,
+            26594,
+            4214
+          ],
+          "rectEMU": {
+            "x": 503280,
+            "y": 345960,
+            "width": 9070560,
+            "height": 1171080
+          }
+        },
+        {
+          "offset": 6300,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            798,
+            5838,
+            13744,
+            16760
+          ],
+          "rectEMU": {
+            "x": 287280,
+            "y": 2101680,
+            "width": 4660560,
+            "height": 3931920
+          }
+        },
+        {
+          "offset": 6604,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            987,
+            4740,
+            11314,
+            5700
+          ],
+          "rectEMU": {
+            "x": 355320,
+            "y": 1706400,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 6819,
+          "bytes": 363,
+          "type": 16,
+          "boundsNative": [
+            987,
+            4740,
+            11314,
+            5700
+          ],
+          "rectEMU": {
+            "x": 355320,
+            "y": 1706400,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 7194,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            14587,
+            5472,
+            24900,
+            11878
+          ],
+          "rectEMU": {
+            "x": 5251320,
+            "y": 1969920,
+            "width": 3712680,
+            "height": 2306160
+          }
+        },
+        {
+          "offset": 7498,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            15124,
+            4255,
+            25451,
+            5215
+          ],
+          "rectEMU": {
+            "x": 5444640,
+            "y": 1531800,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 7713,
+          "bytes": 348,
+          "type": 16,
+          "boundsNative": [
+            15124,
+            4255,
+            25451,
+            5215
+          ],
+          "rectEMU": {
+            "x": 5444640,
+            "y": 1531800,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 8073,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            14781,
+            13745,
+            25094,
+            20151
+          ],
+          "rectEMU": {
+            "x": 5321160,
+            "y": 4948200,
+            "width": 3712680,
+            "height": 2306160
+          }
+        },
+        {
+          "offset": 8377,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            14877,
+            12612,
+            25204,
+            13572
+          ],
+          "rectEMU": {
+            "x": 5355720,
+            "y": 4540320,
+            "width": 3717720,
+            "height": 345600
+          }
+        },
+        {
+          "offset": 8592,
+          "bytes": 364,
+          "type": 16,
+          "boundsNative": [
+            14877,
+            12612,
+            25204,
+            13572
+          ],
+          "rectEMU": {
+            "x": 5355720,
+            "y": 4540320,
+            "width": 3717720,
+            "height": 345600
+          }
+        }
+      ],
+      "sizeEMU": {
+        "width": 10080720,
+        "height": 7559640
+      },
+      "textObjects": [
+        {
+          "offset": 5813,
+          "bytes": 487,
+          "type": 20,
+          "boundsNative": [
+            1398,
+            961,
+            26594,
+            4214
+          ],
+          "rectEMU": {
+            "x": 503280,
+            "y": 345960,
+            "width": 9070560,
+            "height": 1171080
+          },
+          "paragraphs": [
+            "Savings for libsvx (2)?"
+          ],
+          "nativeStringOffsets": [
+            6059
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: middle, fo:min-height: 99.3827pt, librevenge:parent-display-name: Default~LT~Titel, style:print-content: true, svg:height: 92.2110pt, svg:width: 714.2173pt, svg:x: 39.6283pt, svg:y: 27.2409pt, text:anchor-type: page)"
+        },
+        {
+          "offset": 6819,
+          "bytes": 363,
+          "type": 16,
+          "boundsNative": [
+            987,
+            4740,
+            11314,
+            5700
+          ],
+          "rectEMU": {
+            "x": 355320,
+            "y": 1706400,
+            "width": 3717720,
+            "height": 345600
+          },
+          "paragraphs": [
+            "dlopen time: millions of cycles."
+          ],
+          "nativeStringOffsets": [
+            6957
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: top, fo:min-height: 27.2126pt, librevenge:parent-display-name: Default, style:print-content: true, svg:height: 27.2126pt, svg:stroke-width: 0.7370pt, svg:width: 292.7339pt, svg:x: 27.9780pt, svg:y: 134.3622pt, text:anchor-type: page)"
+        },
+        {
+          "offset": 7713,
+          "bytes": 348,
+          "type": 16,
+          "boundsNative": [
+            15124,
+            4255,
+            25451,
+            5215
+          ],
+          "rectEMU": {
+            "x": 5444640,
+            "y": 1531800,
+            "width": 3717720,
+            "height": 345600
+          },
+          "paragraphs": [
+            "Size savings: ~5%"
+          ],
+          "nativeStringOffsets": [
+            7851
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: top, fo:min-height: 27.2126pt, librevenge:parent-display-name: Default, style:print-content: true, svg:height: 27.2126pt, svg:stroke-width: 0.7370pt, svg:width: 292.7339pt, svg:x: 428.7118pt, svg:y: 120.6142pt, text:anchor-type: page)"
+        },
+        {
+          "offset": 8592,
+          "bytes": 364,
+          "type": 16,
+          "boundsNative": [
+            14877,
+            12612,
+            25204,
+            13572
+          ],
+          "rectEMU": {
+            "x": 5355720,
+            "y": 4540320,
+            "width": 3717720,
+            "height": 345600
+          },
+          "paragraphs": [
+            "Binding savings (writer startup)?"
+          ],
+          "nativeStringOffsets": [
+            8730
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: top, fo:min-height: 27.2126pt, librevenge:parent-display-name: Default, style:print-content: true, svg:height: 27.2126pt, svg:stroke-width: 0.7370pt, svg:width: 292.7339pt, svg:x: 421.7102pt, svg:y: 357.5055pt, text:anchor-type: page)"
+        }
+      ]
+    },
+    {
+      "offset": 9658,
+      "bytes": 4210,
+      "masterId": 1,
+      "nativeSize": [
+        28002,
+        20999
+      ],
+      "topObjects": [
+        {
+          "offset": 9768,
+          "bytes": 475,
+          "type": 20
+        },
+        {
+          "offset": 10243,
+          "bytes": 1466,
+          "type": 21
+        },
+        {
+          "offset": 11709,
+          "bytes": 225,
+          "type": 23
+        },
+        {
+          "offset": 11934,
+          "bytes": 660,
+          "type": 1
+        },
+        {
+          "offset": 12594,
+          "bytes": 659,
+          "type": 1
+        },
+        {
+          "offset": 13253,
+          "bytes": 241,
+          "type": 2
+        },
+        {
+          "offset": 13494,
+          "bytes": 241,
+          "type": 2
+        }
+      ],
+      "leafObjects": [
+        {
+          "offset": 9768,
+          "bytes": 475,
+          "type": 20,
+          "boundsNative": [
+            1398,
+            454,
+            26594,
+            3707
+          ],
+          "rectEMU": {
+            "x": 503280,
+            "y": 163440,
+            "width": 9070560,
+            "height": 1171080
+          }
+        },
+        {
+          "offset": 10243,
+          "bytes": 1466,
+          "type": 21,
+          "boundsNative": [
+            1358,
+            3731,
+            26554,
+            13096
+          ],
+          "rectEMU": {
+            "x": 488880,
+            "y": 1343160,
+            "width": 9070560,
+            "height": 3371400
+          }
+        },
+        {
+          "offset": 11709,
+          "bytes": 225,
+          "type": 23,
+          "boundsNative": [
+            16779,
+            11126,
+            27419,
+            20412
+          ],
+          "rectEMU": {
+            "x": 6040440,
+            "y": 4005360,
+            "width": 3830400,
+            "height": 3342960
+          }
+        },
+        {
+          "offset": 12013,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            11557,
+            13688,
+            15198,
+            14882
+          ],
+          "rectEMU": {
+            "x": 4160520,
+            "y": 4927680,
+            "width": 1310760,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 12228,
+          "bytes": 354,
+          "type": 16,
+          "boundsNative": [
+            11557,
+            13688,
+            15198,
+            14882
+          ],
+          "rectEMU": {
+            "x": 4160520,
+            "y": 4927680,
+            "width": 1310760,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 12673,
+          "bytes": 215,
+          "type": 3,
+          "boundsNative": [
+            11897,
+            16453,
+            15591,
+            17647
+          ],
+          "rectEMU": {
+            "x": 4282920,
+            "y": 5923080,
+            "width": 1329840,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 12888,
+          "bytes": 353,
+          "type": 16,
+          "boundsNative": [
+            11897,
+            16453,
+            15591,
+            17647
+          ],
+          "rectEMU": {
+            "x": 4282920,
+            "y": 5923080,
+            "width": 1329840,
+            "height": 429840
+          }
+        },
+        {
+          "offset": 13253,
+          "bytes": 241,
+          "type": 2,
+          "boundsNative": [
+            14662,
+            13542,
+            23605,
+            14455
+          ],
+          "rectEMU": {
+            "x": 5359320,
+            "y": 4956120,
+            "width": 3057480,
+            "height": 166680
+          },
+          "cachedPaintRectEMU": {
+            "x": 5278320,
+            "y": 4875120,
+            "width": 3219480,
+            "height": 328680
+          },
+          "linePointsNative": [
+            [
+              14887,
+              14230
+            ],
+            [
+              23380,
+              13767
+            ]
+          ],
+          "geometryMeaning": "Native path endpoint bounds; cached painted/selection bounds retained separately"
+        },
+        {
+          "offset": 13494,
+          "bytes": 241,
+          "type": 2,
+          "boundsNative": [
+            14578,
+            14393,
+            21122,
+            17418
+          ],
+          "rectEMU": {
+            "x": 5329080,
+            "y": 5262480,
+            "width": 2193840,
+            "height": 927000
+          },
+          "cachedPaintRectEMU": {
+            "x": 5248080,
+            "y": 5181480,
+            "width": 2355840,
+            "height": 1089000
+          },
+          "linePointsNative": [
+            [
+              14803,
+              17193
+            ],
+            [
+              20897,
+              14618
+            ]
+          ],
+          "geometryMeaning": "Native path endpoint bounds; cached painted/selection bounds retained separately"
+        }
+      ],
+      "sizeEMU": {
+        "width": 10080720,
+        "height": 7559640
+      },
+      "textObjects": [
+        {
+          "offset": 9768,
+          "bytes": 475,
+          "type": 20,
+          "boundsNative": [
+            1398,
+            454,
+            26594,
+            3707
+          ],
+          "rectEMU": {
+            "x": 503280,
+            "y": 163440,
+            "width": 9070560,
+            "height": 1171080
+          },
+          "paragraphs": [
+            "Conclusion:"
+          ],
+          "nativeStringOffsets": [
+            10014
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: middle, fo:min-height: 99.3827pt, librevenge:parent-display-name: Default~LT~Titel, style:print-content: true, svg:height: 92.2110pt, svg:width: 714.2173pt, svg:x: 39.6283pt, svg:y: 12.8693pt, text:anchor-type: page)"
+        },
+        {
+          "offset": 10243,
+          "bytes": 1466,
+          "type": 21,
+          "boundsNative": [
+            1358,
+            3731,
+            26554,
+            13096
+          ],
+          "rectEMU": {
+            "x": 488880,
+            "y": 1343160,
+            "width": 9070560,
+            "height": 3371400
+          },
+          "paragraphs": [
+            "A set of useful wins",
+            "More space/time saving work is possible",
+            "breaking the C++ ABI as a side-effect",
+            "private thunks, direct vtable calls etc.",
+            "existing DSO size breakdown:"
+          ],
+          "nativeStringOffsets": [
+            10496,
+            10735,
+            10993,
+            11225,
+            11460
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: top, fo:min-height: 392.8535pt, librevenge:parent-display-name: Default~LT~Gliederung 1, style:print-content: true, svg:height: 265.4646pt, svg:width: 714.2173pt, svg:x: 38.4945pt, svg:y: 105.7606pt, text:anchor-type: page)"
+        },
+        {
+          "offset": 12228,
+          "bytes": 354,
+          "type": 16,
+          "boundsNative": [
+            11557,
+            13688,
+            15198,
+            14882
+          ],
+          "rectEMU": {
+            "x": 4160520,
+            "y": 4927680,
+            "width": 1310760,
+            "height": 429840
+          },
+          "paragraphs": [
+            "Before:"
+          ],
+          "nativeStringOffsets": [
+            12366
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: top, fo:min-height: 33.8457pt, librevenge:parent-display-name: Default, style:print-content: true, svg:height: 33.8457pt, svg:stroke-width: 0.7370pt, svg:width: 103.2094pt, svg:x: 327.6000pt, svg:y: 388.0063pt, text:anchor-type: page)"
+        },
+        {
+          "offset": 12888,
+          "bytes": 353,
+          "type": 16,
+          "boundsNative": [
+            11897,
+            16453,
+            15591,
+            17647
+          ],
+          "rectEMU": {
+            "x": 4282920,
+            "y": 5923080,
+            "width": 1329840,
+            "height": 429840
+          },
+          "paragraphs": [
+            "After:"
+          ],
+          "nativeStringOffsets": [
+            13026
+          ],
+          "referenceHeader": "startTextObject(draw:auto-grow-height: false, draw:fill: none, draw:fill-color: #ffffff, draw:shadow: hidden, draw:stroke: none, draw:stroke-linejoin: round, draw:textarea-vertical-align: top, fo:min-height: 33.8457pt, librevenge:parent-display-name: Default, style:print-content: true, svg:height: 33.8457pt, svg:stroke-width: 0.7370pt, svg:width: 104.7118pt, svg:x: 337.2378pt, svg:y: 466.3842pt, text:anchor-type: page)"
+        }
+      ]
+    }
+  ],
+  "visibleNativePageCount": 2,
+  "notesAndHandoutPageRecords": 3,
+  "opaqueOLEType23Objects": 4,
+  "basicStoragePresent": true,
+  "edit": {
+    "slide": 0,
+    "text": "QA_SDD_23NOV "
+  },
+  "geometryToleranceEMU": 995,
+  "limits": [
+    "Only bounded original SDD presentation page/text/native-object geometry. OLE23 objects, pattern bitmaps, StarBASIC storage, notes-page semantics, formulas, full style/render fidelity and SDD export are not positively accepted.",
+    "Upstream .raw reference can share the libstaroffice algorithm; only direct original CFB checks establish independent native page/text/bounds identity",
+    "Text/style data beyond the checked native strings/boxes, opaque OLE content, bitmap fill resources and notes are not fully decoded"
+  ]
+}

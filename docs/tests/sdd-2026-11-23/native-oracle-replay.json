@@ -1,0 +1,154 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "analysisCommit": "42a6cc2af7e9a1f9b7ff6c335734ff5801382565",
+  "source": {
+    "repository": "https://github.com/fosnola/libstaroffice",
+    "commit": "94647518b5060456ace4ea724cd157582c059501",
+    "path": "regression/Pres5/go-oox-5.sdd",
+    "filename": "go-oox-5.sdd",
+    "bytes": 48640,
+    "blob": "62193842f97ada53a27077c6460ae490b6b04271",
+    "sha256": "6c1558356cea834a4fb42c13847c5ac2e8f6037965c3cf0a1797ed434417c72b",
+    "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd",
+    "classification": "CFB CompObj Presentation / StarImpress 5.0; native DrMd17 and presentation pages",
+    "license": "Upstream project distribution MPL 2.0 / LGPLv2+; bundled COPYING.MPL and COPYING.LGPL retained, no per-fixture override found",
+    "licenseScope": "Repository-distributed original regression fixture; no CC0 or independent per-file license grant is asserted",
+    "reference": {
+      "path": "regression/Pres5/go-oox-5.sdd.raw",
+      "blob": "8320214d8d0199e62f735a2445fa0167f354bb2e",
+      "sha256": "4764e3004a855343001e26482acc4abf6d1395b0ed2c78f83ff967f6c8204342",
+      "bytes": 36253,
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd.raw",
+      "role": "Historical upstream regression reference only; may share libstaroffice with the tested converter. Text bytes, page count/master associations and dimensions independently verified in original native CFB records."
+    },
+    "notices": [
+      {
+        "path": "COPYING.MPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.MPL",
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.LGPL",
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "README",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/README",
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      }
+    ],
+    "parserProvenance": {
+      "path": "src/lib/StarObjectModel.cxx",
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/src/lib/StarObjectModel.cxx",
+      "blob": "3ddcdba626fb963abfbeecf74cfe9aa22e352d20",
+      "relevantFunctions": [
+        "readSdrPage",
+        "readSdrMPageDesc",
+        "updatePageSpans"
+      ],
+      "role": "Read-only native record-layout reference, not executed as a second converter"
+    }
+  },
+  "sourceCorrection": "Use true native line-path endpoints rather than cached paint/selection rectangles; source points read independently before inspecting candidates",
+  "primaryReference": {
+    "repository": "fosnola/libstaroffice",
+    "commit": "94647518b5060456ace4ea724cd157582c059501",
+    "path": "src/lib/StarObjectSmallGraphic.cxx",
+    "blob": "0a3af7ccf1b3f8825bb5fca8405a2cbb42b5e12a",
+    "sha256": "360732a71933422ffdc38dfbb7ce85dfd549277862cfb1cb9724caf443eeac4c",
+    "function": "readSVDRObjectPath",
+    "nativeRule": "Version>=11 path record: nested record, uint16 polygon count, uint16 point count, int32 x/y points, then byte flags."
+  },
+  "lineSourceObservations": [
+    {
+      "nativeObjectOffset": 13253,
+      "recordBytes": 241,
+      "pointsNative": [
+        [
+          14887,
+          14230
+        ],
+        [
+          23380,
+          13767
+        ]
+      ],
+      "cachedPaintRectEMU": {
+        "x": 5278320,
+        "y": 4875120,
+        "width": 3219480,
+        "height": 328680
+      },
+      "endpointRectEMU": {
+        "x": 5359320,
+        "y": 4956120,
+        "width": 3057480,
+        "height": 166680
+      }
+    },
+    {
+      "nativeObjectOffset": 13494,
+      "recordBytes": 241,
+      "pointsNative": [
+        [
+          14803,
+          17193
+        ],
+        [
+          20897,
+          14618
+        ]
+      ],
+      "cachedPaintRectEMU": {
+        "x": 5248080,
+        "y": 5181480,
+        "width": 2355840,
+        "height": 1089000
+      },
+      "endpointRectEMU": {
+        "x": 5329080,
+        "y": 5262480,
+        "width": 2193840,
+        "height": 927000
+      }
+    }
+  ],
+  "toleranceEMU": 995,
+  "results": [
+    {
+      "file": "converted.pptx",
+      "sha256": "efa3823043c4a308e648523e97324873b9d0d0a72ba804db117fc93af9e4f0e9",
+      "passed": true,
+      "checks": 33,
+      "failures": []
+    },
+    {
+      "file": "saved.pptx",
+      "sha256": "21205b661945926053276a66f656193dc8d1cb9524bb25f45ab8514fabbbd1a7",
+      "passed": true,
+      "checks": 33,
+      "failures": []
+    },
+    {
+      "file": "reopened-saved.pptx",
+      "sha256": "21205b661945926053276a66f656193dc8d1cb9524bb25f45ab8514fabbbd1a7",
+      "passed": true,
+      "checks": 33,
+      "failures": []
+    }
+  ],
+  "boundedNativePageTextGeometryPassed": true,
+  "fullFormatAcceptance": false,
+  "newConverterOrEngineExecution": false,
+  "limits": [
+    "Only bounded original SDD presentation page/text/native-object geometry. OLE23 objects, pattern bitmaps, StarBASIC storage, notes-page semantics, formulas, full style/render fidelity and SDD export are not positively accepted.",
+    "Upstream .raw reference can share the libstaroffice algorithm; only direct original CFB checks establish independent native page/text/bounds identity",
+    "Text/style data beyond the checked native strings/boxes, opaque OLE content, bitmap fill resources and notes are not fully decoded",
+    "Positive conformance is bounded to native visible pages, checked paragraphs and geometry, including actual line endpoints; no native/hosted UI proof"
+  ]
+}

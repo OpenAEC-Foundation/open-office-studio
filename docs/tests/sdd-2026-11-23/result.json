@@ -1,0 +1,693 @@
+{
+  "scope": "SDD historical StarImpress 5.0 route under #30; bounded original native pages/text/object/line-endpoint geometry",
+  "status": "BOUNDED PASS: actual verified conversion, production open policy, real pinned engine edit/Undo/Redo/PPTX save/fresh reopen and all 33 independent checks on each output",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/sdd-qa-2026-11-23-e0d7",
+  "testedEndToEndHarness": "6ee0192295a107910985a765658abf44c3775816",
+  "testedReplayHarness": "42a6cc2af7e9a1f9b7ff6c335734ff5801382565",
+  "boundedNativePageTextGeometryPassed": true,
+  "fullFormatAcceptance": false,
+  "source": {
+    "repository": "https://github.com/fosnola/libstaroffice",
+    "commit": "94647518b5060456ace4ea724cd157582c059501",
+    "path": "regression/Pres5/go-oox-5.sdd",
+    "filename": "go-oox-5.sdd",
+    "bytes": 48640,
+    "blob": "62193842f97ada53a27077c6460ae490b6b04271",
+    "sha256": "6c1558356cea834a4fb42c13847c5ac2e8f6037965c3cf0a1797ed434417c72b",
+    "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd",
+    "classification": "CFB CompObj Presentation / StarImpress 5.0; native DrMd17 and presentation pages",
+    "license": "Upstream project distribution MPL 2.0 / LGPLv2+; bundled COPYING.MPL and COPYING.LGPL retained, no per-fixture override found",
+    "licenseScope": "Repository-distributed original regression fixture; no CC0 or independent per-file license grant is asserted",
+    "reference": {
+      "path": "regression/Pres5/go-oox-5.sdd.raw",
+      "blob": "8320214d8d0199e62f735a2445fa0167f354bb2e",
+      "sha256": "4764e3004a855343001e26482acc4abf6d1395b0ed2c78f83ff967f6c8204342",
+      "bytes": 36253,
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/regression/Pres5/go-oox-5.sdd.raw",
+      "role": "Historical upstream regression reference only; may share libstaroffice with the tested converter. Text bytes, page count/master associations and dimensions independently verified in original native CFB records."
+    },
+    "notices": [
+      {
+        "path": "COPYING.MPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.MPL",
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/COPYING.LGPL",
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "README",
+        "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/README",
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      }
+    ],
+    "parserProvenance": {
+      "path": "src/lib/StarObjectModel.cxx",
+      "url": "https://raw.githubusercontent.com/fosnola/libstaroffice/94647518b5060456ace4ea724cd157582c059501/src/lib/StarObjectModel.cxx",
+      "blob": "3ddcdba626fb963abfbeecf74cfe9aa22e352d20",
+      "relevantFunctions": [
+        "readSdrPage",
+        "readSdrMPageDesc",
+        "updatePageSpans"
+      ],
+      "role": "Read-only native record-layout reference, not executed as a second converter"
+    }
+  },
+  "sourceMetrics": {
+    "container": "Original CFB, CompObj Presentation / StarImpress 5.0",
+    "model": "StarDrawDocument3 / DrMd version17",
+    "nativePages": 5,
+    "visiblePages": 2,
+    "masterIds": [
+      0,
+      1,
+      2,
+      1,
+      2
+    ],
+    "sourceSizeEMU": {
+      "width": 10080720,
+      "height": 7559640
+    },
+    "topLevelObjects": [
+      7,
+      7
+    ],
+    "leafObjects": [
+      10,
+      9
+    ],
+    "textObjects": [
+      4,
+      4
+    ],
+    "paragraphs": 12,
+    "opaqueOLE23Objects": 4,
+    "nativePictureType22Objects": 0,
+    "basicStoragePresent": true,
+    "mediaAndOLELimit": "Opaque OLE records and style/pattern resources are not fully decoded; no assertion that opaque payloads were preserved or lost"
+  },
+  "issueCheck": {
+    "overview": 30,
+    "states": [
+      "open",
+      "closed"
+    ],
+    "queries": [
+      "SDD in:title,body",
+      "StarOffice in:title,body",
+      "\"StarImpress\" in:title,body"
+    ],
+    "specificDuplicates": [],
+    "newIssue": null,
+    "reason": "No independently confirmed product fault in the bounded probe; initial failures were QA reference-list/line-field selection errors"
+  },
+  "ci": [
+    {
+      "id": 45162187707,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45162187707",
+      "headSha": "ddbe1c96b0d47f9a2a1c89982a99b667d15d5746",
+      "conclusion": "failure",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 137650102701,
+          "name": "source",
+          "conclusion": "failure",
+          "startedAt": "2026-11-23T11:06:59Z",
+          "completedAt": "2026-11-23T11:07:11Z"
+        },
+        {
+          "id": 137650230563,
+          "name": "browser_limit",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-23T11:07:11Z",
+          "completedAt": "2026-11-23T11:07:11Z"
+        },
+        {
+          "id": 137650231924,
+          "name": "runtime",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-23T11:07:11Z",
+          "completedAt": "2026-11-23T11:07:11Z"
+        }
+      ]
+    },
+    {
+      "id": 45162378106,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45162378106",
+      "headSha": "bd261a8fca798af0d5689aada25e481f9cda8823",
+      "conclusion": "failure",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 137650749566,
+          "name": "source",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:08:14Z",
+          "completedAt": "2026-11-23T11:08:24Z"
+        },
+        {
+          "id": 137650851024,
+          "name": "browser_limit",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:08:26Z",
+          "completedAt": "2026-11-23T11:08:45Z"
+        },
+        {
+          "id": 137651043918,
+          "name": "runtime",
+          "conclusion": "failure",
+          "startedAt": "2026-11-23T11:08:47Z",
+          "completedAt": "2026-11-23T11:09:53Z"
+        }
+      ]
+    },
+    {
+      "id": 45163296441,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45163296441",
+      "headSha": "aca791b48d9198fed13a80eb66c80976aab2e847",
+      "conclusion": "success",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 137653824924,
+          "name": "xml_analysis",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:14:01Z",
+          "completedAt": "2026-11-23T11:14:14Z"
+        }
+      ]
+    },
+    {
+      "id": 45163525359,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45163525359",
+      "headSha": "6ee0192295a107910985a765658abf44c3775816",
+      "conclusion": "success",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 137654586504,
+          "name": "source",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:15:29Z",
+          "completedAt": "2026-11-23T11:15:41Z"
+        },
+        {
+          "id": 137654713248,
+          "name": "browser_limit",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:15:43Z",
+          "completedAt": "2026-11-23T11:16:05Z"
+        },
+        {
+          "id": 137654921020,
+          "name": "runtime",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:16:07Z",
+          "completedAt": "2026-11-23T11:16:56Z"
+        }
+      ]
+    },
+    {
+      "id": 45163624080,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45163624080",
+      "headSha": "42a6cc2af7e9a1f9b7ff6c335734ff5801382565",
+      "conclusion": "success",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 137654911394,
+          "name": "xml_analysis",
+          "conclusion": "success",
+          "startedAt": "2026-11-23T11:16:06Z",
+          "completedAt": "2026-11-23T11:16:16Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14812527277,
+      "name": "sdd-source-oracle",
+      "zipBytes": 33936,
+      "zipSha256": "ad714373db6b3cf322aa57b2adb23d0035f20ee39a1f0fd3e6f4c32e4a65cef8",
+      "run": 45163525359,
+      "headSha": "6ee0192295a107910985a765658abf44c3775816",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14814635548,
+      "name": "sdd-browser-limit",
+      "zipBytes": 2030,
+      "zipSha256": "25c1f2115ff39e70c778e3b3625e6800a63a5aac12fbf31f48876bd20959b84a",
+      "run": 45163525359,
+      "headSha": "6ee0192295a107910985a765658abf44c3775816",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14814015777,
+      "name": "sdd-runtime-result",
+      "zipBytes": 83814,
+      "zipSha256": "08b4889ab8b7657faec0259f5d9e820df4d3efa70b2971fbf781d3cad5e62a47",
+      "run": 45163525359,
+      "headSha": "6ee0192295a107910985a765658abf44c3775816",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    },
+    {
+      "id": 14812981884,
+      "name": "sdd-native-oracle-replay",
+      "zipBytes": 96948,
+      "zipSha256": "b5da741fd873ce6584826172a261ea924c1f7ae0f5ec1f54bc2bcc80d9ccfcfb",
+      "run": 45163624080,
+      "headSha": "42a6cc2af7e9a1f9b7ff6c335734ff5801382565",
+      "verification": "Independently hashed complete downloaded ZIP against official metadata"
+    }
+  ],
+  "runtime": {
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "receipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "exitCode": 0,
+    "seconds": 0.6152605169999958,
+    "sourceUnchanged": true,
+    "convertedSha256": "800df0e7c9c00b887c3485d2a7e5b76f33d7a005e4428185d40bd607d8b84c95",
+    "convertedBytes": 11479,
+    "method": "private CLI using production arguments/profile"
+  },
+  "engine": {
+    "binding": {
+      "package": "@betteroffice/pptx",
+      "version": "0.5.1",
+      "integrity": "sha512-2Rn51fx1GCDfcus1Ly2giDk7CnhLmWjJFPq3QL2DiBAF2BF+A5R9PdRDHYX5gQm0sfWK97C2osTmR3/klJKF2Q==",
+      "wasmSha256": "3a4be9329de1bca77437137ce6417c7910e35c1c7c0e78571bb81f9fe16e5563",
+      "wasmBytes": 6302176
+    },
+    "checks": [
+      "SDD without desktop conversion bridge rejects with a concrete limitation and PPTX alternative.",
+      "Actual pinned presentation engine commits source-title text edit; Undo restores all baseline stories and Redo restores the complete edited stories.",
+      "PPTX save/fresh engine reopen/second save preserve edited engine stories; independent native-page/text/object-bound observations retained separately; original SDD unchanged. Styles, notes, opaque OLE and bitmaps are not accepted by this probe."
+    ],
+    "allEightNativeTextStoriesPassed": true,
+    "functionalPassed": true
+  },
+  "independentOutputChecks": [
+    {
+      "file": "converted.pptx",
+      "sha256": "800df0e7c9c00b887c3485d2a7e5b76f33d7a005e4428185d40bd607d8b84c95",
+      "checks": 33,
+      "passed": true,
+      "acceptanceScope": "Bounded native page/text/object geometry only; no opaque OLE/bitmap/notes/macro/style/render acceptance",
+      "observedSizeEMU": {
+        "width": 10080625,
+        "height": 7559675
+      },
+      "observedLeaves": [
+        10,
+        9
+      ],
+      "observedTextObjects": [
+        4,
+        4
+      ],
+      "observedMediaParts": [],
+      "observedEmbeddingParts": []
+    },
+    {
+      "file": "saved.pptx",
+      "sha256": "814ce9b6841555e856a543b08588c73f357af2634df9956f8104a39fd852f101",
+      "checks": 33,
+      "passed": true,
+      "acceptanceScope": "Bounded native page/text/object geometry only; no opaque OLE/bitmap/notes/macro/style/render acceptance",
+      "observedSizeEMU": {
+        "width": 10080625,
+        "height": 7559675
+      },
+      "observedLeaves": [
+        10,
+        9
+      ],
+      "observedTextObjects": [
+        4,
+        4
+      ],
+      "observedMediaParts": [],
+      "observedEmbeddingParts": []
+    },
+    {
+      "file": "reopened-saved.pptx",
+      "sha256": "814ce9b6841555e856a543b08588c73f357af2634df9956f8104a39fd852f101",
+      "checks": 33,
+      "passed": true,
+      "acceptanceScope": "Bounded native page/text/object geometry only; no opaque OLE/bitmap/notes/macro/style/render acceptance",
+      "observedSizeEMU": {
+        "width": 10080625,
+        "height": 7559675
+      },
+      "observedLeaves": [
+        10,
+        9
+      ],
+      "observedTextObjects": [
+        4,
+        4
+      ],
+      "observedMediaParts": [],
+      "observedEmbeddingParts": []
+    }
+  ],
+  "oracleCorrection": {
+    "initialSourceOnlyRun": 45162187707,
+    "initialActualRun": 45162378106,
+    "readOnlyReplay": 45163296441,
+    "primaryReference": {
+      "repository": "fosnola/libstaroffice",
+      "commit": "94647518b5060456ace4ea724cd157582c059501",
+      "path": "src/lib/StarObjectSmallGraphic.cxx",
+      "blob": "0a3af7ccf1b3f8825bb5fca8405a2cbb42b5e12a",
+      "sha256": "360732a71933422ffdc38dfbb7ce85dfd549277862cfb1cb9724caf443eeac4c",
+      "function": "readSVDRObjectPath",
+      "nativeRule": "Version>=11 path record: nested record, uint16 polygon count, uint16 point count, int32 x/y points, then byte flags."
+    },
+    "toleranceEMU": 995,
+    "points": [
+      {
+        "nativeObjectOffset": 13253,
+        "recordBytes": 241,
+        "pointsNative": [
+          [
+            14887,
+            14230
+          ],
+          [
+            23380,
+            13767
+          ]
+        ],
+        "cachedPaintRectEMU": {
+          "x": 5278320,
+          "y": 4875120,
+          "width": 3219480,
+          "height": 328680
+        },
+        "endpointRectEMU": {
+          "x": 5359320,
+          "y": 4956120,
+          "width": 3057480,
+          "height": 166680
+        }
+      },
+      {
+        "nativeObjectOffset": 13494,
+        "recordBytes": 241,
+        "pointsNative": [
+          [
+            14803,
+            17193
+          ],
+          [
+            20897,
+            14618
+          ]
+        ],
+        "cachedPaintRectEMU": {
+          "x": 5248080,
+          "y": 5181480,
+          "width": 2355840,
+          "height": 1089000
+        },
+        "endpointRectEMU": {
+          "x": 5329080,
+          "y": 5262480,
+          "width": 2193840,
+          "height": 927000
+        }
+      }
+    ],
+    "explanation": "Original generic line rectangles describe cached paint/selection bounds. True endpoint polygon records were decoded directly from original native source; only the two line expectations changed, with no tolerance relaxation. Final independent and actual complete rerun both pass."
+  },
+  "browserLimit": {
+    "method": "Real production functions in Linux Node with empty window, no Tauri mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This SDD file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as PPTX, then open that copy."
+  },
+  "limits": [
+    "Only bounded original SDD presentation page/text/native-object geometry. OLE23 objects, pattern bitmaps, StarBASIC storage, notes-page semantics, formulas, full style/render fidelity and SDD export are not positively accepted.",
+    "Upstream .raw reference can share the libstaroffice algorithm; only direct original CFB checks establish independent native page/text/bounds identity",
+    "Text/style data beyond the checked native strings/boxes, opaque OLE content, bitmap fill resources and notes are not fully decoded",
+    "Only bounded original SDD presentation page/text/native-object geometry. OLE23 objects, pattern bitmaps, StarBASIC storage, notes-page semantics, formulas, full style/render fidelity and SDD export are not positively accepted.",
+    "Private CLI adapter/production open helper/core SDK, not Tauri IPC, installer, standalone or native GUI acceptance",
+    "Browser boundary is a negative production function check in Node, not hosted browser UI",
+    "No Windows/macOS runtime, rendering or pptx-react snapshot hook acceptance"
+  ],
+  "platforms": {
+    "linux": "PASS within declared converter/helper/core-engine/native-page-text-geometry scope; no packaged native UI or Tauri IPC acceptance",
+    "browser": "PASS only at real negative capability/open-function level in Node with empty window/no Tauri bridge mock; hosted browser UI NOT RUN",
+    "windows": "NOT RUN; Linux-only execution scope",
+    "macos": "NOT RUN; Linux-only execution scope"
+  },
+  "evidenceFiles": {
+    "finalRuntime": [
+      {
+        "path": "converted-independent.json",
+        "bytes": 11257,
+        "sha256": "10b851788b9c157f5d6c123b3c7a4a44cc5d6df67779ea5e9d13c0cf7af0c46a"
+      },
+      {
+        "path": "converted.pptx",
+        "bytes": 11479,
+        "sha256": "800df0e7c9c00b887c3485d2a7e5b76f33d7a005e4428185d40bd607d8b84c95"
+      },
+      {
+        "path": "converter-report.json",
+        "bytes": 5754,
+        "sha256": "54e55b10a1baf3f4b4982165fe60993691dd817efe187d726b7709309e20c7f0"
+      },
+      {
+        "path": "converter.log",
+        "bytes": 148,
+        "sha256": "ba3fbee564e5a97d7987223c9204b1efd9dbe205f160847d68aa71b973f3c5de"
+      },
+      {
+        "path": "engine-import-snapshot.json",
+        "bytes": 33913,
+        "sha256": "808d309a593dc4902ae7ea1c432e042c8c8714adacc2e1a7250b04a26e178731"
+      },
+      {
+        "path": "engine-report.json",
+        "bytes": 7141,
+        "sha256": "15cbec45f4b34bc7f0384eace83e1a44c4fc8673bb936384b78065a23b06085b"
+      },
+      {
+        "path": "open-result.json",
+        "bytes": 626,
+        "sha256": "59347d8aa6259efc7817da05b054367a80108b82afdd789e9698f09a693f32fa"
+      },
+      {
+        "path": "reopened-saved-independent.json",
+        "bytes": 11287,
+        "sha256": "578de1918729c790f039e4f1085e1d0209373e8a18672e7d9f46d77db73a300c"
+      },
+      {
+        "path": "reopened-saved.pptx",
+        "bytes": 11199,
+        "sha256": "814ce9b6841555e856a543b08588c73f357af2634df9956f8104a39fd852f101"
+      },
+      {
+        "path": "runtime-base-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "runtime-binding.json",
+        "bytes": 4503,
+        "sha256": "6d5d96b08785ef1177701bbf030772e8789d8d34feb6aa0426b62e83c1f0a565"
+      },
+      {
+        "path": "runtime-consumer-verification.json",
+        "bytes": 491,
+        "sha256": "1b34b4a34c8082c123240282b99a0ab6d86b9dcad357c483bd6bc57d6904576b"
+      },
+      {
+        "path": "runtime-coordinator-descriptor.json",
+        "bytes": 6099,
+        "sha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6"
+      },
+      {
+        "path": "runtime-descriptor.json",
+        "bytes": 4303,
+        "sha256": "9497f67c9c9e4f30b11c85f32cf3d3254a3f857ad6d53a40ab2f9a01d0f3adb5"
+      },
+      {
+        "path": "saved-independent.json",
+        "bytes": 11278,
+        "sha256": "857762c18ff2a5d0aef830f76aee8cb1aa9d55a767e494d77fd8ee44a07f6560"
+      },
+      {
+        "path": "saved.pptx",
+        "bytes": 11199,
+        "sha256": "814ce9b6841555e856a543b08588c73f357af2634df9956f8104a39fd852f101"
+      },
+      {
+        "path": "source-oracle.json",
+        "bytes": 34818,
+        "sha256": "720a9817e715d33e21a62715278c7979a0669d7ca27f6f4d94eec1773e4d4e0e"
+      },
+      {
+        "path": "source.sdd",
+        "bytes": 48640,
+        "sha256": "6c1558356cea834a4fb42c13847c5ac2e8f6037965c3cf0a1797ed434417c72b"
+      },
+      {
+        "path": "upstream-COPYING.LGPL",
+        "bytes": 26521,
+        "sha256": "592987e8510228d546540b84a22444bde98e48d03078d3b2eefcd889bec5ce8c"
+      },
+      {
+        "path": "upstream-COPYING.MPL",
+        "bytes": 16726,
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+      },
+      {
+        "path": "upstream-README",
+        "bytes": 1283,
+        "sha256": "089f84711b8d2d337560bee84cb7037cd2284378a2f3c83b8093b65adb404595"
+      },
+      {
+        "path": "upstream-reference.raw",
+        "bytes": 36253,
+        "sha256": "4764e3004a855343001e26482acc4abf6d1395b0ed2c78f83ff967f6c8204342"
+      }
+    ],
+    "finalReplay": [
+      {
+        "path": "converted-corrected-independent.json",
+        "bytes": 11213,
+        "sha256": "7320c8c247604070d66f7ef2cc6f5373c350969037038ca3009e9f2fb048e61c"
+      },
+      {
+        "path": "corrected-native-oracle.json",
+        "bytes": 35330,
+        "sha256": "c88727d6b60c7a32b1a84a51a61fe3a3f158dd30c68f3b08dedea6291c35ba06"
+      },
+      {
+        "path": "input-verification.json",
+        "bytes": 1274,
+        "sha256": "8af9e03873f25926dd1e6d272b90c06415ff4e8a7083627783e7386c4d2bd5f3"
+      },
+      {
+        "path": "native-oracle-replay.json",
+        "bytes": 6121,
+        "sha256": "89d9322ead6bdb9e593a372d244e4e81a44f2f04f0686d5e01198fcc4ff29b0e"
+      },
+      {
+        "path": "reopened-saved-corrected-independent.json",
+        "bytes": 11243,
+        "sha256": "ed8cd1780b11072b519fc7fdc10a703593cc3343ec3237434210274c4ff90938"
+      },
+      {
+        "path": "saved-corrected-independent.json",
+        "bytes": 11234,
+        "sha256": "15b8f8eceb8a3a12b07e8247d72148b91c421630f6dbb35a3db6bc318cf1aa24"
+      }
+    ]
+  }
+}
