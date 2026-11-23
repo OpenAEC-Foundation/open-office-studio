@@ -76,6 +76,7 @@ def main():
                         bestand.write(blok)
     subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(patch)], cwd=bronmap, check=True)
     if args.controle:
+        subprocess.run(['cargo', 'test', '-p', 'betteroffice-ooxml-text', '--locked', '--lib', 'field_caps'], cwd=bronmap, check=True)
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-ooxml-text', '--locked', '--lib', 'math_image'], cwd=bronmap, check=True)
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-edit', '--locked', '--lib', 'math_preview'], cwd=bronmap, check=True)
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-layout', '--locked', '--lib', 'chicago', '--', '--test-threads=1'], cwd=bronmap, check=True)

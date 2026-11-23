@@ -1174,14 +1174,12 @@ index 3d99d3a..3a348a0 100644
              left_offset: margins.text_left(),
              right_offset: margins.right,
 diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measure/mod.rs
-index a547d91..bcf2a8c 100644
 --- a/crates/ooxml-text/src/measure/mod.rs
 +++ b/crates/ooxml-text/src/measure/mod.rs
-@@ -730,6 +730,27 @@ mod authoritative_tests {
-         assert!(extent.lines[0].line_height >= 80.0);
+@@ -731,6 +731,27 @@
      }
  
-+    #[test]
+     #[test]
 +    fn math_image_preserves_ascent_and_descent_in_a_text_line() {
 +        let mut store = FontStore::new();
 +        store.register(FIXTURE.to_vec()).unwrap();
@@ -1202,14 +1200,111 @@ index a547d91..bcf2a8c 100644
 +        assert!(extent.lines[0].line_height >= 60.0);
 +    }
 +
-     #[test]
++    #[test]
      fn an_inline_image_wider_than_the_column_keeps_its_declared_box() {
          let store = FontStore::new();
+         let measure = |max_width: f64| {
+@@ -867,3 +888,96 @@
+         );
+     }
+ }
++
++#[cfg(test)]
++mod field_caps_tests {
++    use super::*;
++    use serde_json::{Value, json};
++
++    const FONT: &[u8] = include_bytes!("../../tests/fonts/LiberationSans-Regular.ttf");
++
++    fn input(runs: Vec<Value>, max_width: f32) -> MeasureInput {
++        serde_json::from_value(json!({
++            "block": {"kind": "paragraph", "runs": runs},
++            "maxWidth": max_width,
++            "fontChains": {"liberation sans|0|0": [0]},
++            "defaults": {"fontFamily": "Liberation Sans", "fontSize": 32.0},
++            "authoritativeShaping": true
++        }))
++        .unwrap()
++    }
++
++    fn measured(input: &MeasureInput) -> ParagraphExtentOut {
++        let mut store = FontStore::new();
++        store.register(FONT.to_vec()).unwrap();
++        measure_paragraph(&store, input).unwrap()
++    }
++
++    fn field(text: &str, caps: bool, language: Option<&str>) -> Value {
++        let mut run = json!({"kind": "field", "fallback": text, "allCaps": caps});
++        if let Some(language) = language {
++            run["language"] = json!({"latin": language});
++        }
++        run
++    }
++
++    #[test]
++    fn field_caps_match_displayed_fallback_without_rewriting_source() {
++        let mut title = field("Report Title", true, None);
++        title["letterSpacing"] = json!(16.0 / 3.0);
++        let original = input(vec![title], 1000.0);
++        let painted = input(vec![json!({"kind": "text", "text": "REPORT TITLE", "letterSpacing": 16.0 / 3.0})], 1000.0);
++        let normal = input(vec![field("Report Title", false, None)], 1000.0);
++        let cap = measured(&original);
++        assert!((cap.lines[0].width - measured(&painted).lines[0].width).abs() < 0.001);
++        assert!(cap.lines[0].width > measured(&normal).lines[0].width + 1.0);
++        // Field geometry remains one document unit despite a multi-character cache.
++        assert_eq!((cap.lines[0].head_char, cap.lines[0].tail_char), (0, 1));
++        assert_eq!(original.block.runs[0].fallback.as_deref(), Some("Report Title"));
++        assert!(original.block.runs[0].all_caps);
++    }
++
++    #[test]
++    fn field_caps_unicode_language_and_non_caps_controls() {
++        for (source, display, language) in [
++            ("straße", "STRASSE", None),
++            // Canvas field paint uses Unicode default uppercase, not locale casing.
++            ("iki", "IKI", Some("tr-TR")),
++        ] {
++            let capped = input(vec![field(source, true, language)], 1000.0);
++            let ordinary = input(vec![field(source, false, language)], 1000.0);
++            let ordinary_before = measured(&ordinary).lines[0].width;
++            let painted = input(vec![json!({"kind": "text", "text": display})], 1000.0);
++            assert!((measured(&capped).lines[0].width - measured(&painted).lines[0].width).abs() < 0.001);
++            assert_eq!(ordinary_before, measured(&ordinary).lines[0].width);
++            assert_eq!(capped.block.runs[0].fallback.as_deref(), Some(source));
++        }
++    }
++
++    #[test]
++    fn field_caps_reserve_width_before_adjacent_text() {
++        let field_width = measured(&input(vec![json!({"kind": "text", "text": "REPORT TITLE", "letterSpacing": 16.0 / 3.0})], 1000.0)).lines[0].width;
++        let suffix = json!({"kind": "text", "text": " NEXT"});
++        let suffix_width = measured(&input(vec![suffix.clone()], 1000.0)).lines[0].width;
++        let max_width = field_width + suffix_width - 1.0;
++        let ordinary = measured(&input(vec![field("Report Title", false, None), suffix.clone()], max_width));
++        let mut title = field("Report Title", true, None);
++        title["letterSpacing"] = json!(16.0 / 3.0);
++        let capped = measured(&input(vec![title, suffix], max_width));
++        assert_eq!(ordinary.lines.len(), 1, "unchanged mixed-case field still fits");
++        assert_eq!(capped.lines.len(), 2, "uppercase field must reserve its painted width");
++        assert_eq!(capped.lines[1].head_run, 1, "following text moves rather than overlaps");
++    }
++
++    #[test]
++    fn field_caps_keep_the_resolved_primary_font_policy() {
++        let mut title = field("Report Title", true, None);
++        title["fontSlots"] = json!({"ascii": "Unregistered", "cs": "Unregistered"});
++        title["complexScript"] = json!(true);
++        title["fontSizeCs"] = json!(8.0);
++        title["boldCs"] = json!(true);
++        let actual = measured(&input(vec![title], 1000.0));
++        let expected = measured(&input(vec![json!({"kind": "text", "text": "REPORT TITLE"})], 1000.0));
++        assert!((actual.lines[0].width - expected.lines[0].width).abs() < 0.001);
++    }
++}
 diff --git a/crates/ooxml-text/src/measure/prepare.rs b/crates/ooxml-text/src/measure/prepare.rs
-index 85cd897..7669bfc 100644
 --- a/crates/ooxml-text/src/measure/prepare.rs
 +++ b/crates/ooxml-text/src/measure/prepare.rs
-@@ -121,6 +121,7 @@ pub(super) struct PreparedImage {
+@@ -121,6 +121,7 @@
      pub dist_top: f32,
      pub dist_bottom: f32,
      pub bidi_level: u8,
@@ -1217,7 +1312,7 @@ index 85cd897..7669bfc 100644
  }
  
  #[derive(Debug, Clone)]
-@@ -228,17 +229,38 @@ pub(super) fn prepare_runs(
+@@ -228,17 +229,38 @@
          match run.kind.as_str() {
              "lineBreak" => prepared.push(PreparedRun::LineBreak),
              "text" if run.hidden => prepared.push(PreparedRun::Hidden {
@@ -1266,7 +1361,7 @@ index 85cd897..7669bfc 100644
              "tab" => prepared.push(PreparedRun::Tab(prepare_tab_run(
                  store,
                  input,
-@@ -465,6 +487,7 @@ fn prepare_image_run(run: &RunIn, bidi_level: u8) -> Result<PreparedRun, Measure
+@@ -465,6 +487,7 @@
      // Own-line wrap distances default to six pixels.
      if wrap == Some("topAndBottom") || display == Some("block") {
          return Ok(PreparedRun::OwnLineImage(PreparedImage {
@@ -1274,7 +1369,7 @@ index 85cd897..7669bfc 100644
              width: validate_image_dim(
                  run.rotation_bounds
                      .as_ref()
-@@ -488,6 +511,7 @@ fn prepare_image_run(run: &RunIn, bidi_level: u8) -> Result<PreparedRun, Measure
+@@ -488,6 +511,7 @@
      }
  
      Ok(PreparedRun::InlineImage(PreparedImage {
@@ -1282,3 +1377,47 @@ index 85cd897..7669bfc 100644
          width: validate_image_dim(
              run.rotation_bounds
                  .as_ref()
+@@ -511,8 +535,9 @@
+ }
+ 
+ /// Measures a field at `fallback` (`"1"` when absent or empty) with the run's
+-/// family, size, bold and italic. Caps flags and letter spacing do not apply
+-/// to fields; super/subscript scaling does.
++/// family, size, bold and italic. Uppercase fields measure the same displayed
++/// text the painter uses, without rewriting the stored fallback or field span.
++/// Other fields retain their existing plain fallback measurement policy.
+ fn prepare_field_run(
+     store: &FontStore,
+     input: &MeasureRequest<'_>,
+@@ -533,6 +558,31 @@
+         Some(t) if !t.is_empty() => t,
+         _ => "1",
+     };
++    if run.all_caps {
++        // Canvas paints uppercase plus tracking, while the cached field remains
++        // one document unit. Shape only a transient display copy; do not rewrite
++        // its stored fallback or expose its characters as editable text units.
++        let mut display = run.clone();
++        display.text = Some(fallback.to_uppercase());
++        display.all_caps = false;
++        display.small_caps = false;
++        // Fields paint with their resolved primary face. Retain that policy:
++        // script slots belong to text subsequently typed into the field run.
++        display.font_slots = None;
++        display.complex_script = false;
++        display.bold_cs = None;
++        display.italic_cs = None;
++        display.font_size_cs = None;
++        display.language = None;
++        let text = prepare_text_run(store, input, &display, &[])?;
++        return Ok(PreparedField {
++            width: super::line_filler::span_width(&text.chars, text.letter_spacing),
++            font_size_pt: text.font_size_pt,
++            metrics_font: text.metrics_font,
++            baseline_shift_px: text.baseline_shift_px,
++            bidi_level,
++        });
++    }
+     let width = measure_plain_text(
+         store,
+         &chain,
