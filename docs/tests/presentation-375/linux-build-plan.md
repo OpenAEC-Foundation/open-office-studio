@@ -1,7 +1,7 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: an independently allocated second witness is running; no LibreOffice target
-compilation or patched runtime acceptance has yet been verified.** This is a private QA witness for the reviewed importer patch,
+**Status: the second witness stopped on an own conditional-target selection error.
+Original-source compilation ran; patched importer/Cppunit/runtime acceptance remains unverified.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -239,7 +239,54 @@ another VM.
 [Run 45182719759](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45182719759),
 job `137720371933`, confirms the exact QA commit and manual dispatch. It passed
 the fresh VM resource/toolchain gate and fixed application-dependency step.
-Detailed source/configuration/compile results remain pending. The complete
+The resulting target-selection failure is preserved below; no patched-runtime acceptance follows. The complete
 allocation receipt is [`second-source-allocation.json`](second-source-allocation.json).
 This is outside P5 and current release intake; no application build, runtime pin,
 main/tag/publication or portable-runtime claim follows from this witness.
+
+## Second witness outcome: stopped, no retry
+
+The exact official artifact **14828210064** is retained byte-for-byte as
+[`retained/source-witness-45182719759.zip`](retained/source-witness-45182719759.zip),
+171,399 bytes, ZIP SHA256
+`3cf159df0870d218067b2f2f46e8b23e247f0ea4151bce9531579bb823df56a3`.
+All twenty retained stage-log hashes were verified. The structured
+[`second-source-outcome.json`](second-source-outcome.json) includes the exact
+run/source/configuration binding, primary source hashes/excerpts and failure.
+
+Fresh resource/toolchain gates, official APT dependencies, source/fixture hashes,
+distro-Python binding and configure passed. Configuration took 27.8423 seconds;
+`config_host.mk` SHA256 is
+`dd1a2a7278e926bbb628f48e718ec631d99fbc039f0563faa7710ca14a9ebdd5`.
+Actual original-source compilation began at **14:22:33 CET**. The CLI prerequisite
+command returned exit 2 after 3916.3008 seconds. The recorded error is:
+
+```text
+make[1]: *** No rule to make target 'Package_instsetoo_native_ooenv'.  Stop.
+make: *** [Makefile:187: Package_instsetoo_native_ooenv] Error 2
+make: *** Waiting for unfinished jobs....
+```
+
+This is an **own harness target-selection error**, not a demonstrated importer
+compiler/test failure. On the exact source, `Module_instsetoo_native.mk` registers
+that package only if `ENABLE_OOENV` is set. Pinned `configure.ac` defaults it off
+for this non-debug/non-dbgutil configuration; the retained actual configuration
+records `export ENABLE_OOENV=`. The harness nevertheless requested that optional
+target unconditionally. Make let its already running parallel jobs complete,
+including the original importer and final soffice.bin link, before returning the
+failure. That does not prove a complete or usable converter/runtime payload.
+
+The baseline-red stage was not reached. The production importer patch was never
+applied in this build; new Cppunit tests, corrected converter/engine edit/save/
+fresh-reopen and runtime packaging were not run. No new runtime binding or
+product acceptance exists. The job completed at **15:28:04 CET**, well before the
+allocated overall limit. No other VM, retry or repair build followed.
+
+For a separately authorized future continuation, first make target selection
+reflect the configured module: omit the optional ooenv package when it is not
+registered, and check the requested list before expensive compilation. Enabling
+an unnecessary ooenv feature merely to manufacture the target is not proposed.
+This is a recorded bounded harness proposal only; no new harness/product patch
+or allocation is included. The importer patch, all earlier failures and P2/P5
+release identities remain unchanged. Corrected-runtime Linux functional checks
+and same-source Windows/macOS/browser/native acceptance remain outstanding.

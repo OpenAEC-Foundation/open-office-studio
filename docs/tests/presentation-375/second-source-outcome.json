@@ -1,0 +1,247 @@
+{
+  "issue": 375,
+  "run": 45182719759,
+  "job": 137720371933,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45182719759",
+  "qaCommit": "73653c134cf6a049e273b975ab9b8452b2f45af3",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "upstreamTree": "f96d5442101820c26fd9f19c15065d4ae7e63150",
+  "patchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+  "conclusion": "failure",
+  "artifact": {
+    "id": 14828210064,
+    "bytes": 171399,
+    "zipSHA256": "3cf159df0870d218067b2f2f46e8b23e247f0ea4151bce9531579bb823df56a3",
+    "retained": "docs/tests/presentation-375/retained/source-witness-45182719759.zip"
+  },
+  "officialJobCompletedAt": "2026-11-23T14:28:04Z",
+  "buildReportSHA256": "6a729bb47e3d9f6c91dbec83fe5ce66ef50f0890936e196263020ac944e12e76",
+  "retainedStageLogsVerified": 20,
+  "preparationCompleted": true,
+  "configureSeconds": 27.842292923000002,
+  "configurationHashes": {
+    "config_host.mk": "dd1a2a7278e926bbb628f48e718ec631d99fbc039f0563faa7710ca14a9ebdd5",
+    "config_global.h": "d2df11dc199dd08bc27404939bae35775e9fa71608ab8e8f9d45a5a6eccd351e"
+  },
+  "makeStarted": true,
+  "makeSeconds": 3916.3008103390002,
+  "makeExitCode": 2,
+  "elapsedFromAllocatedStartSeconds": 4126.4849625374745,
+  "failureKind": "own harness requested a conditionally unregistered package target; not an importer/compiler/test verdict",
+  "failedTarget": "Package_instsetoo_native_ooenv",
+  "configuredENABLE_OOENV": "",
+  "primarySourceEvidence": [
+    {
+      "path": "instsetoo_native/Module_instsetoo_native.mk",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/instsetoo_native/Module_instsetoo_native.mk",
+      "sha256": "36ee079207d9e432e91e55dc67c5068746dd182327f13d5b27df5c4a7fe9fcdf",
+      "excerpt": [
+        {
+          "line": 27,
+          "text": "\tCustomTarget_setup \\"
+        },
+        {
+          "line": 28,
+          "text": "\tPackage_setup \\"
+        },
+        {
+          "line": 29,
+          "text": "\tPackage_setup_ure \\"
+        },
+        {
+          "line": 30,
+          "text": "\t$(if $(ENABLE_OOENV),Package_instsetoo_native_ooenv) \\"
+        },
+        {
+          "line": 31,
+          "text": "))"
+        },
+        {
+          "line": 32,
+          "text": ""
+        },
+        {
+          "line": 33,
+          "text": "# vim: set noet sw=4 ts=4:"
+        }
+      ]
+    },
+    {
+      "path": "instsetoo_native/Package_instsetoo_native_ooenv.mk",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/instsetoo_native/Package_instsetoo_native_ooenv.mk",
+      "sha256": "e5d69da2cc166f7ef599805d19d3c52d0a1be9d6b058892850ed1f5e5d405d62",
+      "excerpt": [
+        {
+          "line": 1,
+          "text": "# -*- Mode: makefile-gmake; tab-width: 4; indent-tabs-mode: t -*-"
+        },
+        {
+          "line": 2,
+          "text": "#"
+        },
+        {
+          "line": 3,
+          "text": "# This file is part of the LibreOffice project."
+        },
+        {
+          "line": 4,
+          "text": "#"
+        },
+        {
+          "line": 5,
+          "text": "# This Source Code Form is subject to the terms of the Mozilla Public"
+        },
+        {
+          "line": 6,
+          "text": "# License, v. 2.0. If a copy of the MPL was not distributed with this"
+        },
+        {
+          "line": 7,
+          "text": "# file, You can obtain one at http://mozilla.org/MPL/2.0/."
+        },
+        {
+          "line": 8,
+          "text": "#"
+        },
+        {
+          "line": 9,
+          "text": ""
+        },
+        {
+          "line": 10,
+          "text": "$(eval $(call gb_Package_Package,instsetoo_native_ooenv,$(SRCDIR)/instsetoo_native))"
+        },
+        {
+          "line": 11,
+          "text": ""
+        },
+        {
+          "line": 12,
+          "text": "$(eval $(call gb_Package_add_file,instsetoo_native_ooenv,$(LIBO_BIN_FOLDER)/ooenv,ooenv))"
+        },
+        {
+          "line": 13,
+          "text": ""
+        },
+        {
+          "line": 14,
+          "text": "# vim: set noet sw=4 ts=4:"
+        }
+      ]
+    },
+    {
+      "path": "configure.ac",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/configure.ac",
+      "sha256": "a29d75952286370eb4b85b97d875b1a030207e17848c583df062eac54d50e3e2",
+      "excerpt": [
+        {
+          "line": 6630,
+          "text": "# ==================================================================="
+        },
+        {
+          "line": 6631,
+          "text": "if test $_os != \"WINNT\" -a $_os != \"Darwin\"; then"
+        },
+        {
+          "line": 6632,
+          "text": "    AC_MSG_CHECKING([whether to use ooenv for the instdir installation])"
+        },
+        {
+          "line": 6633,
+          "text": "    if test -z \"$enable_ooenv\"; then"
+        },
+        {
+          "line": 6634,
+          "text": "        if test -n \"$ENABLE_DEBUG$ENABLE_DBGUTIL\"; then"
+        },
+        {
+          "line": 6635,
+          "text": "            enable_ooenv=yes"
+        },
+        {
+          "line": 6636,
+          "text": "        else"
+        },
+        {
+          "line": 6637,
+          "text": "            enable_ooenv=no"
+        },
+        {
+          "line": 6638,
+          "text": "        fi"
+        },
+        {
+          "line": 6639,
+          "text": "    fi"
+        },
+        {
+          "line": 6640,
+          "text": "    if test \"$enable_ooenv\" = \"no\"; then"
+        },
+        {
+          "line": 6641,
+          "text": "        AC_MSG_RESULT([no])"
+        },
+        {
+          "line": 6642,
+          "text": "    else"
+        },
+        {
+          "line": 6643,
+          "text": "        ENABLE_OOENV=\"TRUE\""
+        },
+        {
+          "line": 6644,
+          "text": "        AC_MSG_RESULT([yes])"
+        },
+        {
+          "line": 6645,
+          "text": "    fi"
+        },
+        {
+          "line": 6646,
+          "text": "fi"
+        },
+        {
+          "line": 6647,
+          "text": "AC_SUBST(ENABLE_OOENV)"
+        },
+        {
+          "line": 6648,
+          "text": ""
+        },
+        {
+          "line": 6649,
+          "text": "if test \"$test_kf5\" = \"yes\" -a \"$enable_kf5\" = \"yes\"; then"
+        },
+        {
+          "line": 6650,
+          "text": "    if test \"$enable_qt5\" = \"no\"; then"
+        }
+      ]
+    }
+  ],
+  "actualErrorLines": [
+    {
+      "line": 4523,
+      "text": "make[1]: *** No rule to make target 'Package_instsetoo_native_ooenv'.  Stop."
+    },
+    {
+      "line": 4525,
+      "text": "make: *** [Makefile:187: Package_instsetoo_native_ooenv] Error 2"
+    }
+  ],
+  "originalImporterCompilationObserved": true,
+  "patchedImporterApplied": false,
+  "patchedImporterCompiled": false,
+  "baselineRedTestStarted": false,
+  "cppunitStarted": false,
+  "correctedConverterEngineStarted": false,
+  "newRuntimeBindingProduced": false,
+  "runtimePayloadProduced": false,
+  "productFixValidated": false,
+  "automaticRetryStarted": false,
+  "ownRunCompleted": true,
+  "priorHistoryUnchanged": true,
+  "futureProposalOnly": "Read configured ENABLE_OOENV and include Package_instsetoo_native_ooenv only if registered; validate target list against pinned module/configuration before expensive work. Do not enable ooenv or change importer/runtime identity merely to make an unnecessary target exist. No harness edit, rerun or new VM is included in this outcome."
+}

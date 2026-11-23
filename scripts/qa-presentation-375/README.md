@@ -143,3 +143,15 @@ Windows/macOS changed-runtime builds/native checks and a new real browser/UI
 check remain outstanding alongside the Linux target build and functional tests.
 The successful old-P2 in-memory counterfactual/exact-tree probe is separate
 historical evidence, never acceptance of the proposed compiled patch.
+
+
+The independently authorized second witness
+[45182719759](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45182719759)
+passed configure and began original-source compilation. It stopped on an own
+harness target-selection error: optional `Package_instsetoo_native_ooenv` was
+requested although the actual configuration has empty `ENABLE_OOENV`. No baseline
+Cppunit, patched importer compilation, corrected converter/engine or payload was
+reached. The exact official ZIP, primary module/configure evidence and bounded
+future target-selection proposal are in the
+[second outcome](../../docs/tests/presentation-375/second-source-outcome.json).
+No retry or extra VM was started; the importer patch remains uncompiled.
