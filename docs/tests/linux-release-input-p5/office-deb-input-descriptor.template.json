@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "purpose": "P5 native Suite consumer input; TEMPLATE ONLY, no package/native approval",
+  "executionApproved": false,
+  "provenanceScope": "Original Suite package bytes isolated from all six standalone app hosts",
+  "parent": {
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "appVersion": "2026.48.1",
+    "run": 45177730188,
+    "job": 137703365848,
+    "attempt": 1,
+    "jobConclusion": null,
+    "installerArchive": {
+      "id": null,
+      "name": "uitgave-Linux",
+      "sha256": null,
+      "bytes": null
+    },
+    "reportArchive": null,
+    "packageReportSha256": null,
+    "packageReportMember": null,
+    "packageMember": null
+  },
+  "artifact": {
+    "run": null,
+    "id": null,
+    "name": "suite-input-office-deb-p5",
+    "zipSha256": null,
+    "zipBytes": null
+  },
+  "qaPin": {
+    "producerCommit": null
+  },
+  "package": {
+    "kind": "deb",
+    "member": "canonical-office.deb",
+    "sha256": null,
+    "bytes": null,
+    "control": {
+      "Package": "open-office-studio",
+      "Version": "2026.48.1",
+      "Architecture": "amd64",
+      "Depends": null
+    },
+    "payloadElf": {
+      "path": "usr/bin/open-office-studio",
+      "sha256": null,
+      "bytes": null,
+      "mode": null,
+      "elfClass": null,
+      "machine": null
+    }
+  },
+  "signatureBinding": {
+    "status": "uninspected; no signature certification",
+    "members": [],
+    "publicationAuthorized": false
+  }
+}
