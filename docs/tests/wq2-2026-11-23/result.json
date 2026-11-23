@@ -1,0 +1,1271 @@
+{
+  "scope": "WQ2 only under #30, one original DOS5 fixture with native zero-based VLOOKUP semantics",
+  "status": "STRICT FAIL: converter does not translate native zero-based VLOOKUP column arguments; real engine edit/UndoRedo/save/freshreopen execute the emitted formulas consistently but do not preserve original results.",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/wq2-qa-2026-11-23-e0d7",
+  "testedHarness": "369d138083c4e8c9d1cc84bb03754036ac7db6df",
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "downstreamImportedFormulaEnginePassed": true,
+  "source": {
+    "repository": "https://github.com/openpreserve/format-corpus",
+    "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+    "firstPublicationCommit": "a55fb95b5d2fe990ddd463e4a15eb11c00087f25",
+    "path": "office/spreadsheet/wq2/vlookup-compat-demo/TESTLU.WQ2",
+    "filename": "TESTLU.WQ2",
+    "blob": "d0acc8556b121c64d85089c9b19edf5a0bb280f7",
+    "bytes": 4784,
+    "sha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+    "url": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wq2/vlookup-compat-demo/TESTLU.WQ2",
+    "license": "CC0-1.0",
+    "licenseOwner": "Johan van der Knijff",
+    "licenseUrl": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wq2/readme.md",
+    "licenseSha256": "198532541daf9c71fccf0e89587a180ce75c44b817c9bf8587ea3fbe7e82b5d5",
+    "authorOracleUrl": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wq2/vlookup-compat-demo/readme.md",
+    "authorOracleSha256": "934c3724edc361966779cfe930dde00c5bbf8b2960b247d1588ebcd904e411e6",
+    "variant": "Authentic Quattro Pro for DOS 5.0, author-created source, native BOF 000002002151 and EOF 01000000 (PRONOM x-fmt/122)",
+    "signatureAuthority": "https://pronom.nationalarchives.gov.uk/x-fmt/122",
+    "coverageLimit": "One native sheet, 61 populated cells/four VLOOKUP formulas including numeric and text caches. No chart/style/rendering, custom name, macro, encryption, external-link, WQ2 export or other variant acceptance.",
+    "knownHistoricalReport": "The source author reported zero-based Quattro VLOOKUP column semantics versus Calc one-based semantics with LibreOffice 6.4.7.2/25.3.2.3. That historical report is separate from this probe’s actual P2 results."
+  },
+  "sourceMetrics": {
+    "signature": "000002002151 / 01000000",
+    "pronom": "x-fmt/122",
+    "nativeRecordCount": 236,
+    "logicalSheetIds": [
+      0
+    ],
+    "explicitSheetNames": [],
+    "populatedCells": 61,
+    "nonFormulaConstants": 57,
+    "formulaCells": 4,
+    "integerConstantCells": 11,
+    "floatingConstantCells": 20,
+    "textConstantCells": 26,
+    "styledBlankRecords": 85,
+    "formulaExpectedBefore": {
+      "B15": {
+        "kind": "number",
+        "value": 683.93
+      },
+      "C15": {
+        "kind": "number",
+        "value": 3134.2
+      },
+      "D15": {
+        "kind": "text",
+        "value": "c"
+      },
+      "E15": {
+        "kind": "text",
+        "value": "sal"
+      }
+    },
+    "formulaExpectedAfter": {
+      "B15": {
+        "kind": "number",
+        "value": 685.35
+      },
+      "C15": {
+        "kind": "number",
+        "value": 3134.58
+      },
+      "D15": {
+        "kind": "text",
+        "value": "c"
+      },
+      "E15": {
+        "kind": "text",
+        "value": "l"
+      }
+    }
+  },
+  "sourceOracleMethod": "Original creator explicitly documents Quattro VLOOKUP zero-based column indexing; raw integer constants 1/2/3/4 select B/C/D/E, whereas modern OOXML requires 2/3/4/5. Results independently selected from original native table and cross-checked against all four native caches including separate string records.",
+  "layoutReference": {
+    "repository": "Distrotech/libwps",
+    "commit": "9ba5aab538f1aba633d3066ecd82ba66068dee2e",
+    "paths": [
+      "src/lib/Quattro.cpp",
+      "src/lib/QuattroSpreadsheet.cpp"
+    ],
+    "role": "Read-only historical implementation mirror for record/operand layout, may share converter parser lineage; not executed as an independent parser oracle. Actual expected values/semantics are independently read from source records and author-created source documentation."
+  },
+  "originalAuthorReference": {
+    "repository": "https://github.com/openpreserve/format-corpus",
+    "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+    "path": "office/spreadsheet/wq2/vlookup-compat-demo/qp-vlookup-demo.png",
+    "blob": "5654da687fff9318b34af347af8ab004e8f60ed6",
+    "bytes": 10922,
+    "sha256": "688a71d1e5bfea4022af50c1731b5dc9accd47479ab5c71c89de236e37ad2970",
+    "license": "CC0 per original wq2 folder declaration",
+    "role": "Original creator screenshot in Quattro Pro DOS, separately inspected as corroborating source evidence after the CI oracle was derived from native bytes and creator-written semantics; not a screenshot from our application/native run.",
+    "visibleObservation": "Formula bar shows @VLOOKUP($A$15,$A$2..$E$11,1) for B15 with value683.93; native row15 shows4005,683.93,3134.2,c,sal."
+  },
+  "negativeOracleGuards": [
+    "WQ1 signature",
+    "wrong function opcode",
+    "wrong numeric source cache",
+    "wrong text source cache"
+  ],
+  "issueCheck": {
+    "overview": 30,
+    "states": [
+      "open",
+      "closed"
+    ],
+    "queries": [
+      "WQ2 in:title,body",
+      "Quattro in:title,body",
+      "VLOOKUP in:title,body",
+      "lookup import in:title,body"
+    ],
+    "specificDuplicates": [],
+    "descriptionsRead": [
+      30,
+      35,
+      59,
+      322
+    ],
+    "registrationOwner": "This QA chat e0d7, narrow VLOOKUP index translation only; integration coordinator informed",
+    "issueNumber": null,
+    "status": "Concrete scoped issue ready for separate registration; no productfix/release intake"
+  },
+  "runtimeInput": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+    "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+    "producerRun": 45147346793,
+    "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+    "artifactId": 14805600515,
+    "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "zipBytes": 305620081,
+    "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+    "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+    "manifestEntries": 15082,
+    "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+    "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "parentRun": 45143305147,
+    "parentJob": 137586343061,
+    "parentZipArtifact": 14804062140,
+    "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+  },
+  "converter": {
+    "method": "private CLI using production arguments/profile",
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "sourceSha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+    "sourceUnchanged": true,
+    "outputBytes": 6494,
+    "outputSha256": "9289c177eb429cbd8719159f4231e66c45ed5ea62c24070ed1960885419f2e98",
+    "seconds": 0.7659637330000066,
+    "exitCode": 0,
+    "phaseSeparation": "Wrong modern formula indices1/2/3/4 are already present before P2 engine; B15/C15 still carry original numeric caches, whereas D15/E15 values/types already mismatch."
+  },
+  "engine": {
+    "wasmSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+    "checks": [
+      "Production no-desktop policy rejects genuine WQ2 with concrete XLSX alternative.",
+      "Actual verified private converter invoked through P2 opening helper; independent comparison recorded before engine opening.",
+      "Actual P2 WASM preserves 57 source constants and emitted formulas; A15 edit, Undo, Redo and A13 text edit tested against independent imported-formula diagnostics. Native semantic mismatches remain separate.",
+      "Modern XLSX save/fresh engine reopen completed, all three independent XML comparisons retained, original WQ2 unchanged."
+    ],
+    "nativeEngineObservations": [
+      {
+        "stage": "fresh engine open",
+        "values": {
+          "B15": {
+            "kind": "number",
+            "value": 4005
+          },
+          "C15": {
+            "kind": "number",
+            "value": 683.93
+          },
+          "D15": {
+            "kind": "number",
+            "value": 3134.2
+          },
+          "E15": {
+            "kind": "text",
+            "value": "c"
+          }
+        },
+        "nativeExpected": {
+          "B15": {
+            "kind": "number",
+            "value": 683.93
+          },
+          "C15": {
+            "kind": "number",
+            "value": 3134.2
+          },
+          "D15": {
+            "kind": "text",
+            "value": "c"
+          },
+          "E15": {
+            "kind": "text",
+            "value": "sal"
+          }
+        },
+        "nativeSourceMatch": false,
+        "differences": [
+          {
+            "cell": "B15",
+            "expected": {
+              "kind": "number",
+              "value": 683.93
+            },
+            "actual": {
+              "kind": "number",
+              "value": 4005
+            }
+          },
+          {
+            "cell": "C15",
+            "expected": {
+              "kind": "number",
+              "value": 3134.2
+            },
+            "actual": {
+              "kind": "number",
+              "value": 683.93
+            }
+          },
+          {
+            "cell": "D15",
+            "expected": {
+              "kind": "text",
+              "value": "c"
+            },
+            "actual": {
+              "kind": "number",
+              "value": 3134.2
+            }
+          },
+          {
+            "cell": "E15",
+            "expected": {
+              "kind": "text",
+              "value": "sal"
+            },
+            "actual": {
+              "kind": "text",
+              "value": "c"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "after A15 edit",
+        "values": {
+          "B15": {
+            "kind": "number",
+            "value": 4007
+          },
+          "C15": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "D15": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "E15": {
+            "kind": "text",
+            "value": "c"
+          }
+        },
+        "nativeExpected": {
+          "B15": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "C15": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "D15": {
+            "kind": "text",
+            "value": "c"
+          },
+          "E15": {
+            "kind": "text",
+            "value": "l"
+          }
+        },
+        "nativeSourceMatch": false,
+        "differences": [
+          {
+            "cell": "B15",
+            "expected": {
+              "kind": "number",
+              "value": 685.35
+            },
+            "actual": {
+              "kind": "number",
+              "value": 4007
+            }
+          },
+          {
+            "cell": "C15",
+            "expected": {
+              "kind": "number",
+              "value": 3134.58
+            },
+            "actual": {
+              "kind": "number",
+              "value": 685.35
+            }
+          },
+          {
+            "cell": "D15",
+            "expected": {
+              "kind": "text",
+              "value": "c"
+            },
+            "actual": {
+              "kind": "number",
+              "value": 3134.58
+            }
+          },
+          {
+            "cell": "E15",
+            "expected": {
+              "kind": "text",
+              "value": "l"
+            },
+            "actual": {
+              "kind": "text",
+              "value": "c"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "after Undo",
+        "values": {
+          "B15": {
+            "kind": "number",
+            "value": 4005
+          },
+          "C15": {
+            "kind": "number",
+            "value": 683.93
+          },
+          "D15": {
+            "kind": "number",
+            "value": 3134.2
+          },
+          "E15": {
+            "kind": "text",
+            "value": "c"
+          }
+        },
+        "nativeExpected": {
+          "B15": {
+            "kind": "number",
+            "value": 683.93
+          },
+          "C15": {
+            "kind": "number",
+            "value": 3134.2
+          },
+          "D15": {
+            "kind": "text",
+            "value": "c"
+          },
+          "E15": {
+            "kind": "text",
+            "value": "sal"
+          }
+        },
+        "nativeSourceMatch": false,
+        "differences": [
+          {
+            "cell": "B15",
+            "expected": {
+              "kind": "number",
+              "value": 683.93
+            },
+            "actual": {
+              "kind": "number",
+              "value": 4005
+            }
+          },
+          {
+            "cell": "C15",
+            "expected": {
+              "kind": "number",
+              "value": 3134.2
+            },
+            "actual": {
+              "kind": "number",
+              "value": 683.93
+            }
+          },
+          {
+            "cell": "D15",
+            "expected": {
+              "kind": "text",
+              "value": "c"
+            },
+            "actual": {
+              "kind": "number",
+              "value": 3134.2
+            }
+          },
+          {
+            "cell": "E15",
+            "expected": {
+              "kind": "text",
+              "value": "sal"
+            },
+            "actual": {
+              "kind": "text",
+              "value": "c"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "after Redo",
+        "values": {
+          "B15": {
+            "kind": "number",
+            "value": 4007
+          },
+          "C15": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "D15": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "E15": {
+            "kind": "text",
+            "value": "c"
+          }
+        },
+        "nativeExpected": {
+          "B15": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "C15": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "D15": {
+            "kind": "text",
+            "value": "c"
+          },
+          "E15": {
+            "kind": "text",
+            "value": "l"
+          }
+        },
+        "nativeSourceMatch": false,
+        "differences": [
+          {
+            "cell": "B15",
+            "expected": {
+              "kind": "number",
+              "value": 685.35
+            },
+            "actual": {
+              "kind": "number",
+              "value": 4007
+            }
+          },
+          {
+            "cell": "C15",
+            "expected": {
+              "kind": "number",
+              "value": 3134.58
+            },
+            "actual": {
+              "kind": "number",
+              "value": 685.35
+            }
+          },
+          {
+            "cell": "D15",
+            "expected": {
+              "kind": "text",
+              "value": "c"
+            },
+            "actual": {
+              "kind": "number",
+              "value": 3134.58
+            }
+          },
+          {
+            "cell": "E15",
+            "expected": {
+              "kind": "text",
+              "value": "l"
+            },
+            "actual": {
+              "kind": "text",
+              "value": "c"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "fresh saved-file reopen",
+        "values": {
+          "B15": {
+            "kind": "number",
+            "value": 4007
+          },
+          "C15": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "D15": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "E15": {
+            "kind": "text",
+            "value": "c"
+          }
+        },
+        "nativeExpected": {
+          "B15": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "C15": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "D15": {
+            "kind": "text",
+            "value": "c"
+          },
+          "E15": {
+            "kind": "text",
+            "value": "l"
+          }
+        },
+        "nativeSourceMatch": false,
+        "differences": [
+          {
+            "cell": "B15",
+            "expected": {
+              "kind": "number",
+              "value": 685.35
+            },
+            "actual": {
+              "kind": "number",
+              "value": 4007
+            }
+          },
+          {
+            "cell": "C15",
+            "expected": {
+              "kind": "number",
+              "value": 3134.58
+            },
+            "actual": {
+              "kind": "number",
+              "value": 685.35
+            }
+          },
+          {
+            "cell": "D15",
+            "expected": {
+              "kind": "text",
+              "value": "c"
+            },
+            "actual": {
+              "kind": "number",
+              "value": 3134.58
+            }
+          },
+          {
+            "cell": "E15",
+            "expected": {
+              "kind": "text",
+              "value": "l"
+            },
+            "actual": {
+              "kind": "text",
+              "value": "c"
+            }
+          }
+        ]
+      }
+    ],
+    "editedValues": {
+      "lookupKeyBefore": 4005,
+      "lookupKeyAfter": 4007,
+      "afterEdit": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "afterUndo": {
+        "B15": {
+          "kind": "number",
+          "value": 4005
+        },
+        "C15": {
+          "kind": "number",
+          "value": 683.93
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.2
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "afterRedo": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "text": {
+        "kind": "text",
+        "value": "QA_WQ2_23NOV"
+      }
+    },
+    "passed": false,
+    "strictSourceImportAcceptance": false,
+    "downstreamImportedFormulaEnginePassed": true,
+    "error": {
+      "name": "Error",
+      "message": "Strict native WQ2 lookup semantics/results were not preserved; downstream execution does not override this failure.",
+      "stack": "Error: Strict native WQ2 lookup semantics/results were not preserved; downstream execution does not override this failure.\n    at file:///home/runner/work/open-office-studio/open-office-studio/scripts/qa-wq2/engine.mjs:108:51"
+    }
+  },
+  "independentOutputComparisons": [
+    {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wq2-qa/converted.xlsx",
+      "sha256": "9289c177eb429cbd8719159f4231e66c45ed5ea62c24070ed1960885419f2e98",
+      "sheetNames": [
+        "Sheet1"
+      ],
+      "checkedPopulatedCells": 61,
+      "checkedOriginalFormulas": 4,
+      "edited": false,
+      "absoluteNumericTolerance": "1E-9",
+      "importedModernColumnIndices": {
+        "B15": 1,
+        "C15": 2,
+        "D15": 3,
+        "E15": 4
+      },
+      "sourceImportAcceptance": false,
+      "fullFormatAcceptance": false,
+      "differences": [
+        {
+          "cell": "B15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,2)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,1)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,1)"
+        },
+        {
+          "cell": "C15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,3)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,2)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,2)"
+        },
+        {
+          "cell": "D15",
+          "field": "value/type",
+          "expected": {
+            "kind": "text",
+            "value": "c"
+          },
+          "actual": {
+            "value": "3134.2",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,3)"
+          }
+        },
+        {
+          "cell": "D15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,4)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,3)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,3)"
+        },
+        {
+          "cell": "E15",
+          "field": "value/type",
+          "expected": {
+            "kind": "text",
+            "value": "sal"
+          },
+          "actual": {
+            "value": "c",
+            "kind": "text",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,4)"
+          }
+        },
+        {
+          "cell": "E15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,5)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,4)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,4)"
+        }
+      ],
+      "nativeExpectedResults": {
+        "B15": {
+          "kind": "number",
+          "value": 683.93
+        },
+        "C15": {
+          "kind": "number",
+          "value": 3134.2
+        },
+        "D15": {
+          "kind": "text",
+          "value": "c"
+        },
+        "E15": {
+          "kind": "text",
+          "value": "sal"
+        }
+      },
+      "expectedImportedFormulaResults": {
+        "B15": {
+          "kind": "number",
+          "value": 4005
+        },
+        "C15": {
+          "kind": "number",
+          "value": 683.93
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.2
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "expectedImportedFormulaResultsBefore": {
+        "B15": {
+          "kind": "number",
+          "value": 4005
+        },
+        "C15": {
+          "kind": "number",
+          "value": 683.93
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.2
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "expectedImportedFormulaResultsAfter": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "distinction": "Source preservation uses independent zero-based native oracle; imported-formula results are a separate diagnostic of what the converter actually emitted, not replacement acceptance criteria."
+    },
+    {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wq2-qa/saved.xlsx",
+      "sha256": "0f49b132d4b99815f960d10ae0f477f8209c3cbc90f0c00095e4e3da603b6b11",
+      "sheetNames": [
+        "Sheet1"
+      ],
+      "checkedPopulatedCells": 61,
+      "checkedOriginalFormulas": 4,
+      "edited": true,
+      "absoluteNumericTolerance": "1E-9",
+      "importedModernColumnIndices": {
+        "B15": 1,
+        "C15": 2,
+        "D15": 3,
+        "E15": 4
+      },
+      "sourceImportAcceptance": false,
+      "fullFormatAcceptance": false,
+      "differences": [
+        {
+          "cell": "B15",
+          "field": "value/type",
+          "expected": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "actual": {
+            "value": "4007",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,1)"
+          }
+        },
+        {
+          "cell": "B15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,2)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,1)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,1)"
+        },
+        {
+          "cell": "C15",
+          "field": "value/type",
+          "expected": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "actual": {
+            "value": "685.35",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,2)"
+          }
+        },
+        {
+          "cell": "C15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,3)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,2)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,2)"
+        },
+        {
+          "cell": "D15",
+          "field": "value/type",
+          "expected": {
+            "kind": "text",
+            "value": "c"
+          },
+          "actual": {
+            "value": "3134.58",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,3)"
+          }
+        },
+        {
+          "cell": "D15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,4)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,3)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,3)"
+        },
+        {
+          "cell": "E15",
+          "field": "value/type",
+          "expected": {
+            "kind": "text",
+            "value": "l"
+          },
+          "actual": {
+            "value": "c",
+            "kind": "text",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,4)"
+          }
+        },
+        {
+          "cell": "E15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,5)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,4)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,4)"
+        }
+      ],
+      "nativeExpectedResults": {
+        "B15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "C15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "D15": {
+          "kind": "text",
+          "value": "c"
+        },
+        "E15": {
+          "kind": "text",
+          "value": "l"
+        }
+      },
+      "expectedImportedFormulaResults": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "expectedImportedFormulaResultsBefore": {
+        "B15": {
+          "kind": "number",
+          "value": 4005
+        },
+        "C15": {
+          "kind": "number",
+          "value": 683.93
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.2
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "expectedImportedFormulaResultsAfter": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "distinction": "Source preservation uses independent zero-based native oracle; imported-formula results are a separate diagnostic of what the converter actually emitted, not replacement acceptance criteria."
+    },
+    {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wq2-qa/reopened.xlsx",
+      "sha256": "0f49b132d4b99815f960d10ae0f477f8209c3cbc90f0c00095e4e3da603b6b11",
+      "sheetNames": [
+        "Sheet1"
+      ],
+      "checkedPopulatedCells": 61,
+      "checkedOriginalFormulas": 4,
+      "edited": true,
+      "absoluteNumericTolerance": "1E-9",
+      "importedModernColumnIndices": {
+        "B15": 1,
+        "C15": 2,
+        "D15": 3,
+        "E15": 4
+      },
+      "sourceImportAcceptance": false,
+      "fullFormatAcceptance": false,
+      "differences": [
+        {
+          "cell": "B15",
+          "field": "value/type",
+          "expected": {
+            "kind": "number",
+            "value": 685.35
+          },
+          "actual": {
+            "value": "4007",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,1)"
+          }
+        },
+        {
+          "cell": "B15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,2)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,1)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,1)"
+        },
+        {
+          "cell": "C15",
+          "field": "value/type",
+          "expected": {
+            "kind": "number",
+            "value": 3134.58
+          },
+          "actual": {
+            "value": "685.35",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,2)"
+          }
+        },
+        {
+          "cell": "C15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,3)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,2)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,2)"
+        },
+        {
+          "cell": "D15",
+          "field": "value/type",
+          "expected": {
+            "kind": "text",
+            "value": "c"
+          },
+          "actual": {
+            "value": "3134.58",
+            "kind": "number",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,3)"
+          }
+        },
+        {
+          "cell": "D15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,4)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,3)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,3)"
+        },
+        {
+          "cell": "E15",
+          "field": "value/type",
+          "expected": {
+            "kind": "text",
+            "value": "l"
+          },
+          "actual": {
+            "value": "c",
+            "kind": "text",
+            "formula": "VLOOKUP($A$15,$A$2:$E$11,4)"
+          }
+        },
+        {
+          "cell": "E15",
+          "field": "formula semantics",
+          "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,5)",
+          "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,4)",
+          "actual": "VLOOKUP($A$15,$A$2:$E$11,4)"
+        }
+      ],
+      "nativeExpectedResults": {
+        "B15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "C15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "D15": {
+          "kind": "text",
+          "value": "c"
+        },
+        "E15": {
+          "kind": "text",
+          "value": "l"
+        }
+      },
+      "expectedImportedFormulaResults": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "expectedImportedFormulaResultsBefore": {
+        "B15": {
+          "kind": "number",
+          "value": 4005
+        },
+        "C15": {
+          "kind": "number",
+          "value": 683.93
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.2
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "expectedImportedFormulaResultsAfter": {
+        "B15": {
+          "kind": "number",
+          "value": 4007
+        },
+        "C15": {
+          "kind": "number",
+          "value": 685.35
+        },
+        "D15": {
+          "kind": "number",
+          "value": 3134.58
+        },
+        "E15": {
+          "kind": "text",
+          "value": "c"
+        }
+      },
+      "distinction": "Source preservation uses independent zero-based native oracle; imported-formula results are a separate diagnostic of what the converter actually emitted, not replacement acceptance criteria."
+    }
+  ],
+  "ci": {
+    "run": 45170944200,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45170944200",
+    "conclusion": "failure",
+    "meaning": "Intentional strict failure for independently reproduced source semantic loss; all engine/edit/save/freshreopen stages executed before final strict assertion.",
+    "jobs": [
+      {
+        "id": 137680005645,
+        "name": "source",
+        "conclusion": "success"
+      },
+      {
+        "id": 137680109507,
+        "name": "browser_limit",
+        "conclusion": "success"
+      },
+      {
+        "id": 137680277581,
+        "name": "runtime",
+        "conclusion": "failure"
+      }
+    ]
+  },
+  "artifacts": {
+    "source": {
+      "id": 14817300693,
+      "name": "wq2-source-oracle",
+      "bytes": 17426,
+      "zipSha256": "e59372a636e53049a605f727f9648bb700e43c8b8a6adb63bb75e3693bfb92db",
+      "run": 45170944200,
+      "headSha": "369d138083c4e8c9d1cc84bb03754036ac7db6df",
+      "completeZipDigestVerified": true
+    },
+    "browser": {
+      "id": 14816756961,
+      "name": "wq2-browser-limit",
+      "bytes": 1709,
+      "zipSha256": "3d6976d7ec7c6dc5f29d7613c768b9d7bd02b0ed4faad8de81c2cbe07405b8e6",
+      "run": 45170944200,
+      "headSha": "369d138083c4e8c9d1cc84bb03754036ac7db6df",
+      "completeZipDigestVerified": true
+    },
+    "runtime": {
+      "id": 14817860054,
+      "name": "wq2-runtime-result",
+      "bytes": 55220,
+      "zipSha256": "4fc2da77b1e52eaa9ddc97ba8c8b4e3f119b9f9b9a16f9b3747fe98dd1a8711b",
+      "run": 45170944200,
+      "headSha": "369d138083c4e8c9d1cc84bb03754036ac7db6df",
+      "completeZipDigestVerified": true
+    }
+  },
+  "retained": [
+    {
+      "path": "retained/wq2-runtime-result.zip",
+      "bytes": 55220,
+      "sha256": "4fc2da77b1e52eaa9ddc97ba8c8b4e3f119b9f9b9a16f9b3747fe98dd1a8711b"
+    },
+    {
+      "path": "retained/original-author-qp5.png",
+      "bytes": 10922,
+      "sha256": "688a71d1e5bfea4022af50c1731b5dc9accd47479ab5c71c89de236e37ad2970"
+    }
+  ],
+  "platforms": {
+    "linux": "Actual verified private headless conversion and actual production open helper; actual P2 WASM open/edit/UndoRedo/XLSX save/freshreopen with independent native/source/OOXML oracles. No installer/native GUI or actual Tauri IPC acceptance.",
+    "browser": "Actual production capability/open functions in Linux Node with empty window; concrete WQ2 rejection/XLSX alternative passes. No hosted browser UI tested.",
+    "windows": "Not executed for this scoped probe.",
+    "macos": "Not executed for this scoped probe."
+  },
+  "limits": [
+    "One native sheet, 61 populated cells/four VLOOKUP formulas including numeric and text caches. No chart/style/rendering, custom name, macro, encryption, external-link, WQ2 export or other variant acceptance.",
+    "Private headless CLI adapter, actual production helper and actual pinned WASM; no packaged native UI/installer or real Tauri IPC acceptance.",
+    "Browser negative production-function check in Node, not actual hosted browser UI. Windows/macOS not executed.",
+    "Historical author report is independent source context, not this probe’s reproduced result. No visual/native reproduction claim.",
+    "Only exact matching lookup keys4005/4007; no general approximate-match/sorting/missing-key/HLOOKUP behavior claim.",
+    "No independent text-cache parser bug claimed; the registered fault is missing index translation, not a bundle of cache or function variants.",
+    "Source-author historical report/reference image is separate from our own independently reproduced private CLI/core/XML observations.",
+    "No original explicit sheet-name retention assertion; do not infer WQ2 naming from the prior WB2 implementation.",
+    "No changes to product/catalog/release intake/main/tag/publication; no new suite/Mac build or local GUI/capture/profile changes."
+  ],
+  "previousProofsPreserved": {
+    "wb2": "0ddb6106bd991873cbcab6338755497a570c1d65",
+    "sdd": "fe66bec9a7ec9b5242fcc8a72646bee00b79b573",
+    "uop": "e280e9521cfad3b2c61c26d19fbb5df8b5b74a42",
+    "uot": "232a10af3966774a49a3c5052bb4a32c6a4ecb14",
+    "uos": "4f94d347b38b851780aa3304c269a8ee385eed94",
+    "stc": "a7962244e86cc4f429ca82894566b49195214139"
+  }
+}

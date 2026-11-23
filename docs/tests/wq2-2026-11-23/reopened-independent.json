@@ -1,0 +1,174 @@
+{
+  "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wq2-qa/reopened.xlsx",
+  "sha256": "0f49b132d4b99815f960d10ae0f477f8209c3cbc90f0c00095e4e3da603b6b11",
+  "sheetNames": [
+    "Sheet1"
+  ],
+  "checkedPopulatedCells": 61,
+  "checkedOriginalFormulas": 4,
+  "edited": true,
+  "absoluteNumericTolerance": "1E-9",
+  "importedModernColumnIndices": {
+    "B15": 1,
+    "C15": 2,
+    "D15": 3,
+    "E15": 4
+  },
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "differences": [
+    {
+      "cell": "B15",
+      "field": "value/type",
+      "expected": {
+        "kind": "number",
+        "value": 685.35
+      },
+      "actual": {
+        "value": "4007",
+        "kind": "number",
+        "formula": "VLOOKUP($A$15,$A$2:$E$11,1)"
+      }
+    },
+    {
+      "cell": "B15",
+      "field": "formula semantics",
+      "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,2)",
+      "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,1)",
+      "actual": "VLOOKUP($A$15,$A$2:$E$11,1)"
+    },
+    {
+      "cell": "C15",
+      "field": "value/type",
+      "expected": {
+        "kind": "number",
+        "value": 3134.58
+      },
+      "actual": {
+        "value": "685.35",
+        "kind": "number",
+        "formula": "VLOOKUP($A$15,$A$2:$E$11,2)"
+      }
+    },
+    {
+      "cell": "C15",
+      "field": "formula semantics",
+      "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,3)",
+      "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,2)",
+      "actual": "VLOOKUP($A$15,$A$2:$E$11,2)"
+    },
+    {
+      "cell": "D15",
+      "field": "value/type",
+      "expected": {
+        "kind": "text",
+        "value": "c"
+      },
+      "actual": {
+        "value": "3134.58",
+        "kind": "number",
+        "formula": "VLOOKUP($A$15,$A$2:$E$11,3)"
+      }
+    },
+    {
+      "cell": "D15",
+      "field": "formula semantics",
+      "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,4)",
+      "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,3)",
+      "actual": "VLOOKUP($A$15,$A$2:$E$11,3)"
+    },
+    {
+      "cell": "E15",
+      "field": "value/type",
+      "expected": {
+        "kind": "text",
+        "value": "l"
+      },
+      "actual": {
+        "value": "c",
+        "kind": "text",
+        "formula": "VLOOKUP($A$15,$A$2:$E$11,4)"
+      }
+    },
+    {
+      "cell": "E15",
+      "field": "formula semantics",
+      "expectedModernFormula": "VLOOKUP($A$15,$A$2:$E$11,5)",
+      "originalNativeFormula": "@VLOOKUP($A$15,$A$2..$E$11,4)",
+      "actual": "VLOOKUP($A$15,$A$2:$E$11,4)"
+    }
+  ],
+  "nativeExpectedResults": {
+    "B15": {
+      "kind": "number",
+      "value": 685.35
+    },
+    "C15": {
+      "kind": "number",
+      "value": 3134.58
+    },
+    "D15": {
+      "kind": "text",
+      "value": "c"
+    },
+    "E15": {
+      "kind": "text",
+      "value": "l"
+    }
+  },
+  "expectedImportedFormulaResults": {
+    "B15": {
+      "kind": "number",
+      "value": 4007
+    },
+    "C15": {
+      "kind": "number",
+      "value": 685.35
+    },
+    "D15": {
+      "kind": "number",
+      "value": 3134.58
+    },
+    "E15": {
+      "kind": "text",
+      "value": "c"
+    }
+  },
+  "expectedImportedFormulaResultsBefore": {
+    "B15": {
+      "kind": "number",
+      "value": 4005
+    },
+    "C15": {
+      "kind": "number",
+      "value": 683.93
+    },
+    "D15": {
+      "kind": "number",
+      "value": 3134.2
+    },
+    "E15": {
+      "kind": "text",
+      "value": "c"
+    }
+  },
+  "expectedImportedFormulaResultsAfter": {
+    "B15": {
+      "kind": "number",
+      "value": 4007
+    },
+    "C15": {
+      "kind": "number",
+      "value": 685.35
+    },
+    "D15": {
+      "kind": "number",
+      "value": 3134.58
+    },
+    "E15": {
+      "kind": "text",
+      "value": "c"
+    }
+  },
+  "distinction": "Source preservation uses independent zero-based native oracle; imported-formula results are a separate diagnostic of what the converter actually emitted, not replacement acceptance criteria."
+}

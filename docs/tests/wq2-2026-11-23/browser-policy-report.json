@@ -1,0 +1,49 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "369d138083c4e8c9d1cc84bb03754036ac7db6df",
+  "source": {
+    "repository": "https://github.com/openpreserve/format-corpus",
+    "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+    "firstPublicationCommit": "a55fb95b5d2fe990ddd463e4a15eb11c00087f25",
+    "path": "office/spreadsheet/wq2/vlookup-compat-demo/TESTLU.WQ2",
+    "filename": "TESTLU.WQ2",
+    "blob": "d0acc8556b121c64d85089c9b19edf5a0bb280f7",
+    "bytes": 4784,
+    "sha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+    "url": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wq2/vlookup-compat-demo/TESTLU.WQ2",
+    "license": "CC0-1.0",
+    "licenseOwner": "Johan van der Knijff",
+    "licenseUrl": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wq2/readme.md",
+    "licenseSha256": "198532541daf9c71fccf0e89587a180ce75c44b817c9bf8587ea3fbe7e82b5d5",
+    "authorOracleUrl": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wq2/vlookup-compat-demo/readme.md",
+    "authorOracleSha256": "934c3724edc361966779cfe930dde00c5bbf8b2960b247d1588ebcd904e411e6",
+    "variant": "Authentic Quattro Pro for DOS 5.0, author-created source, native BOF 000002002151 and EOF 01000000 (PRONOM x-fmt/122)",
+    "signatureAuthority": "https://pronom.nationalarchives.gov.uk/x-fmt/122",
+    "coverageLimit": "One native sheet, 61 populated cells/four VLOOKUP formulas including numeric and text caches. No chart/style/rendering, custom name, macro, encryption, external-link, WQ2 export or other variant acceptance.",
+    "knownHistoricalReport": "The source author reported zero-based Quattro VLOOKUP column semantics versus Calc one-based semantics with LibreOffice 6.4.7.2/25.3.2.3. That historical report is separate from this probe’s actual P2 results."
+  },
+  "checks": [
+    "Production no-desktop policy rejects genuine WQ2 with concrete XLSX alternative."
+  ],
+  "fullFormatAcceptance": false,
+  "limits": [
+    "One native sheet, 61 populated cells/four VLOOKUP formulas including numeric and text caches. No chart/style/rendering, custom name, macro, encryption, external-link, WQ2 export or other variant acceptance.",
+    "Private headless CLI adapter, actual production helper and actual pinned WASM; no packaged native UI/installer or real Tauri IPC acceptance.",
+    "Browser negative production-function check in Node, not actual hosted browser UI. Windows/macOS not executed.",
+    "Historical author report is independent source context, not this probe’s reproduced result. No visual/native reproduction claim."
+  ],
+  "nativeEngineObservations": [],
+  "browserLimit": {
+    "method": "Actual P2 capability/open functions in Linux Node, empty window, no Tauri mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This WQ2 file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as XLSX. CSV is also possible, but keeps only the values from one sheet."
+  },
+  "passed": true
+}
