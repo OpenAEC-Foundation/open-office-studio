@@ -23,6 +23,7 @@ import { foutTekst } from "../fouten";
 import { grootteTekst, inhoudstype } from "../kantoor";
 import { Adresveld } from "./Adresveld";
 import { useVraag } from "./Dialoog";
+import { conceptOpslaanToets } from "./opstel-sneltoetsen";
 
 export interface OpstelActies {
   /** Concept bewaren (Ctrl+S van de host). */
@@ -287,6 +288,7 @@ export function Opstelvenster({
         inert={vraagOpen}
         onKeyDown={(e) => {
           e.stopPropagation();
+          if (conceptOpslaanToets(e, !!bezig, bewaarConcept)) return;
           if (e.key === "Escape" && !koppeling) {
             e.preventDefault();
             void probeerSluiten();
