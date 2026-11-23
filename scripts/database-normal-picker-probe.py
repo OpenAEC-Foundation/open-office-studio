@@ -1,7 +1,7 @@
 """Remote Linux-only normal-process differential for WebKit HTML file chooser.
 
 No WebDriver connection, DOM script, hidden File input, or application IPC.
-This probes picker availability only; it is not Database functional acceptance.
+It keeps the failed WebDriver route separate and uses actual UI input throughout.
 """
 import hashlib
 import json
@@ -10,6 +10,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import time
+import sqlite3
 import pyatspi
 
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='posix'
@@ -49,11 +50,16 @@ def accessible_snapshot(pid):
     desktop=pyatspi.Registry.getDesktop(0)
     apps=[node for node in desktop if node.get_process_id()==pid]
     result=[]
-    def visit(node,depth=0):
+    def visit(node,depth=0,ancestors=()):
         if depth>20 or len(result)>2000:return
         states=node.getState()
-        result.append(dict(name=node.name,role=node.getRoleName(),enabled=states.contains(pyatspi.STATE_ENABLED),showing=states.contains(pyatspi.STATE_SHOWING)))
-        for child in node:visit(child,depth+1)
+        row=dict(name=node.name,role=node.getRoleName(),enabled=states.contains(pyatspi.STATE_ENABLED),showing=states.contains(pyatspi.STATE_SHOWING),ancestors=ancestors)
+        try:row['text']=node.queryText().getText(0,-1)[:4000]
+        except (NotImplementedError,RuntimeError):pass
+        try:row['rect']=list(node.queryComponent().getExtents(pyatspi.DESKTOP_COORDS))
+        except (NotImplementedError,RuntimeError):pass
+        result.append(row)
+        for child in node:visit(child,depth+1,(*ancestors,node.getRoleName()))
     for app in apps:visit(app)
     return result
 
@@ -72,42 +78,122 @@ for kind in ['appimage','deb']:
     prefs=Path(env['XDG_CONFIG_HOME'])/'org.openaec.database-studio';prefs.mkdir()
     (prefs/'voorkeuren.json').write_text(json.dumps({'taal':'en','updates':{'automatisch':False}}))
     application=source['package']['path'] if kind=='appimage' else '/usr/bin/open-database-studio'
-    case=dict(kind=kind,status='running',normalProcessWithoutWebDriver=True,packageSha256=source['package']['sha256'],expectedElfSha256=source['payloadExecutableSha256'],functionalAcceptanceClaim=False)
+    case=dict(kind=kind,status='running',normalProcessWithoutWebDriver=True,sourceCommit=source['sourceCommit'],sourceTree=source['sourceTree'],version=source['version'],packageSha256=source['package']['sha256'],expectedElfSha256=source['payloadExecutableSha256'],functionalAcceptanceClaim=False,snapshots={})
     results.append(case)
     process=None
     try:
-        with (ROOT/f'normal-picker-{kind}.log').open('wb') as log:
-            process=subprocess.Popen([application],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-        def app_pid():
-            matches=[p for p in owned(home) if p['exe'].endswith('/open-database-studio')]
-            return matches[0]['pid'] if len(matches)==1 else None
-        pid=wait(app_pid,'Normal Database PID missing')
-        assert sha(f'/proc/{pid}/exe')==source['payloadExecutableSha256']
-        xid=wait(lambda:cmd('xdotool','search','--onlyvisible','--pid',str(pid),env=env).splitlines()[0],'Native main XID missing')
-        case.update(pid=pid,xid=xid,runningElfSha256=sha(f'/proc/{pid}/exe'))
-        def ready():
+        if kind=='deb':subprocess.run(['sudo','dpkg','--install',source['package']['path']],check=True)
+        fixture=ROOT/f'normal-{kind}-input.sqlite';saved=ROOT/f'normal-{kind}-saved.sqlite'
+        assert not fixture.exists() and not saved.exists()
+        with sqlite3.connect(fixture) as db:
+            db.execute('CREATE TABLE StandaloneItems(id INTEGER PRIMARY KEY,label TEXT,amount INTEGER)')
+            db.executemany('INSERT INTO StandaloneItems VALUES(?,?,?)',[(1,'SyntheticAlpha',7),(2,'SyntheticBeta',11)])
+            db.commit()
+        original_sha=sha(fixture);case['fixtureSha256']=original_sha
+        def check_focus():
+            assert cmd('xdotool','getwindowpid',cmd('xdotool','getwindowfocus',env=env),env=env)==str(pid)
+            assert sha(f'/proc/{pid}/exe')==source['payloadExecutableSha256']
+        def text_present(*values):
             snapshot=accessible_snapshot(pid)
-            matches=[n for n in snapshot if n['name']=='Open database' and n['role']=='push button' and n['enabled'] and n['showing']]
-            if matches:case['accessibleReadySnapshot']=snapshot;return True
-        wait(ready,'Actual visible enabled Database Open action unavailable through AT-SPI')
-        cmd('xdotool','windowactivate','--sync',xid,env=env)
-        assert cmd('xdotool','getwindowpid',cmd('xdotool','getwindowfocus',env=env),env=env)==str(pid)
-        cmd('xdotool','key','--clearmodifiers','ctrl+o',env=env)
-        def picker():
-            focus=cmd('xdotool','getwindowfocus',env=env)
-            title=cmd('xdotool','getwindowname',focus,env=env)
-            record=dict(xid=focus,title=title,pid=cmd('xdotool','getwindowpid',focus,env=env))
-            if not observations or observations[-1]!=record:observations.append(record)
-            return record if focus!=xid and title.lower() in ['open','open file','open a file','choose files','choose a file'] else None
-        case['picker']=wait(picker,'Normal native Ctrl+O did not display a distinct OS picker',15)
-        case['status']='passed-picker-differential-only'
-        cmd('xdotool','key','--clearmodifiers','Escape',env=env)
+            text='\n'.join(n['name']+'\n'+n.get('text','') for n in snapshot if n['showing'])
+            return snapshot if all(v in text for v in values) else None
+        def click(name,role='push button',dialog=False,prefix=False):
+            def find():
+                snapshot=accessible_snapshot(pid)
+                choices=[n for n in snapshot if (n['name'].startswith(name) if prefix else n['name']==name) and n['role']==role and n['enabled'] and n['showing'] and n.get('rect',[0,0,0,0])[2]>0 and (not dialog or 'dialog' in n['ancestors'])]
+                return choices[0] if len(choices)==1 else None
+            node=wait(find,'Unambiguous native accessible control missing: '+name)
+            check_focus();x,y,w,h=node['rect']
+            focused=cmd('xdotool','getwindowfocus',env=env)
+            geometry=dict(line.split('=',1) for line in cmd('xdotool','getwindowgeometry','--shell',focused,env=env).splitlines() if '=' in line)
+            assert int(geometry['X'])<=x+w//2<int(geometry['X'])+int(geometry['WIDTH']) and int(geometry['Y'])<=y+h//2<int(geometry['Y'])+int(geometry['HEIGHT'])
+            cmd('xdotool','mousemove','--sync',str(x+w//2),str(y+h//2),env=env)
+            cmd('xdotool','click','1',env=env)
+        def keys(chord):check_focus();cmd('xdotool','key','--clearmodifiers',chord,env=env)
+        def type_text(text):check_focus();cmd('xdotool','type','--clearmodifiers','--delay','1',text,env=env)
+        def open_file(path,foreign):
+            keys('ctrl+o')
+            def picker():
+                focus=cmd('xdotool','getwindowfocus',env=env);title=cmd('xdotool','getwindowname',focus,env=env)
+                record=dict(xid=focus,title=title,pid=cmd('xdotool','getwindowpid',focus,env=env))
+                if not observations or observations[-1]!=record:observations.append(record)
+                return record if focus!=xid and title.lower() in ['open','open file','open a file','choose files','choose a file','select file'] else None
+            record=wait(picker,'Normal native Ctrl+O did not display a distinct OS picker',15)
+            assert record['pid']==str(pid);case.setdefault('nativePickers',[]).append(record)
+            keys('ctrl+l');type_text(str(path));keys('alt+o')
+            if foreign:click('Open anyway',dialog=True)
+            wait(lambda:text_present('StandaloneItems'),'Supported actual SQLite UI open')
+            click('StandaloneItems',prefix=True)
+            case['snapshots']['rows-'+str(len(case['snapshots']))]=wait(lambda:text_present('SyntheticAlpha','SyntheticBeta'),'Original/reopened rows rendered')
+        def sql(statement):
+            click('Access-SQL',role='text')
+            keys('ctrl+a');type_text(statement);keys('ctrl+Return')
+        def cold_quit():
+            keys('alt+F4')
+            wait(lambda:not owned(home),'Full normal Database/AppImage/WebKit exit',15)
+        def launch():
+            with (ROOT/f'normal-picker-{kind}.log').open('ab') as log:
+                proc=subprocess.Popen([application],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+            def app_pid():
+                matches=[p for p in owned(home) if p['exe'].endswith('/open-database-studio')]
+                return matches[0]['pid'] if len(matches)==1 else None
+            actual_pid=wait(app_pid,'Normal Database PID missing')
+            assert sha(f'/proc/{actual_pid}/exe')==source['payloadExecutableSha256']
+            actual_xid=wait(lambda:cmd('xdotool','search','--onlyvisible','--pid',str(actual_pid),env=env).splitlines()[0],'Native main XID missing')
+            def ready():
+                snapshot=accessible_snapshot(actual_pid)
+                return snapshot if any(n['name']=='Open database' and n['role']=='push button' and n['enabled'] and n['showing'] for n in snapshot) else None
+            snapshot=wait(ready,'Actual visible enabled Database Open action unavailable through AT-SPI')
+            cmd('xdotool','windowactivate','--sync',actual_xid,env=env)
+            return proc,actual_pid,actual_xid,snapshot
+        def capture(label):
+            check_focus();assert cmd('xdotool','getwindowfocus',env=env)==xid
+            proc=Path('/proc')/str(pid);raw=(proc/'stat').read_text();start=raw[raw.rindex(')')+2:].split()[19]
+            directory=Path('.local/linux-p2-native')/f'database-normal-{kind}';directory.mkdir(parents=True,exist_ok=True)
+            target=directory/(label+'.png')
+            result=json.loads(cmd('/usr/bin/python3',str(Path(__file__).with_name('linux-p2-native-capture.py')),str(pid),xid,start,str((proc/'exe').resolve()),str(target),env=env))
+            case.setdefault('nativeCaptures',[]).append(dict(label=label,**result))
+        process,pid,xid,snapshot=launch()
+        first_pid=pid;case.update(pid=pid,xid=xid,runningElfSha256=sha(f'/proc/{pid}/exe'),accessibleReadySnapshot=snapshot)
+        open_file(fixture,True)
+        click('Create',role='page tab');click('Query')
+        sql('SELECT SUM(amount) AS SyntheticTotal FROM StandaloneItems')
+        case['snapshots']['initial-query']=wait(lambda:text_present('SyntheticTotal','18'),'Initial independent sum 18')
+        sql('UPDATE StandaloneItems SET amount=13 WHERE id=1')
+        click('Run',dialog=True)
+        wait(lambda:text_present('1 row'),'One synthetic row changed')
+        sql('SELECT SUM(amount) AS SyntheticEditedTotal FROM StandaloneItems')
+        case['snapshots']['edited-query']=wait(lambda:text_present('SyntheticEditedTotal','24'),'Actual edited sum 24')
+        capture('edited')
+        keys('ctrl+s')
+        save_picker=wait(lambda:(lambda focus:dict(xid=focus,title=cmd('xdotool','getwindowname',focus,env=env),pid=cmd('xdotool','getwindowpid',focus,env=env)))(cmd('xdotool','getwindowfocus',env=env)) if cmd('xdotool','getwindowname',cmd('xdotool','getwindowfocus',env=env),env=env)=='Save database export' else None,'Real native database export picker')
+        assert save_picker['pid']==str(pid);case['nativeSavePicker']=save_picker
+        keys('ctrl+l');type_text(str(saved));keys('alt+s')
+        wait(lambda:saved.is_file() and saved.stat().st_size>0,'Native export wrote actual SQLite bytes')
+        with sqlite3.connect('file:'+str(saved)+'?mode=ro',uri=True) as db:
+            assert db.execute('SELECT id,label,amount FROM StandaloneItems ORDER BY id').fetchall()==[(1,'SyntheticAlpha',13),(2,'SyntheticBeta',11)]
+            assert db.execute('SELECT SUM(amount) FROM StandaloneItems').fetchone()==(24,)
+            case['independentSavedTables']=db.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").fetchall()
+        assert sha(fixture)==original_sha;case['savedSha256']=sha(saved)
+        cold_quit()
+        process,pid,xid,snapshot=launch();assert pid!=first_pid;case['reopenedPid']=pid
+        open_file(saved,False)
+        click('Create',role='page tab');click('Query')
+        sql('SELECT SUM(amount) AS SyntheticReopenedTotal FROM StandaloneItems')
+        case['snapshots']['reopened-query']=wait(lambda:text_present('SyntheticReopenedTotal','24'),'Cold-reopened actual exported edit persists')
+        capture('reopened')
+        assert sha(saved)==case['savedSha256'] and sha(fixture)==original_sha
+        cold_quit()
+        case.update(status='passed',functionalAcceptanceClaim=True,scenario='Actual supported SQLite file picker/read/SELECT18/UI UPDATE7to13/SELECT24/CtrlS native export/independent SQLite/cold newPID open/SELECT24; original unchanged')
     except Exception as error:
         case.update(status='failed',error=repr(error))
+        if 'pid' in locals():case['failureSnapshot']=accessible_snapshot(pid)
     finally:
         case['focusObservations']=observations
         try:
-            if xid:
+            if xid and owned(home):
+                focus=cmd('xdotool','getwindowfocus',env=env)
+                if cmd('xdotool','getwindowpid',focus,env=env)==str(pid):cmd('xdotool','key','--clearmodifiers','Escape',env=env)
                 cmd('xdotool','windowactivate','--sync',xid,env=env)
                 cmd('xdotool','key','--clearmodifiers','alt+F4',env=env)
             wait(lambda:not owned(home),'Normal process family cleanup',15)
@@ -119,5 +205,6 @@ for kind in ['appimage','deb']:
         case['profilePaths']=[str(p.relative_to(home)) for p in home.rglob('*')]
         assert not any('org.openaec.office-studio' in p for p in case['profilePaths'])
         if not case['remainingOwnedProcesses']:shutil.rmtree(home)
+        if kind=='deb':subprocess.run(['sudo','dpkg','--remove','open-database-studio'],check=True)
         (ROOT/'normal-picker-differential.json').write_text(json.dumps(results,indent=2)+'\n')
-assert all(c['status']=='passed-picker-differential-only' and not c['remainingOwnedProcesses'] for c in results)
+assert all(c['status']=='passed' and not c['remainingOwnedProcesses'] for c in results)
