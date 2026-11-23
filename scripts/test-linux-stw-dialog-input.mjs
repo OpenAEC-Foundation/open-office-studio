@@ -4,6 +4,7 @@ import {
   nativePathKey,
   requireExactFocusedPath,
   createOwnedDialog,
+  waitForOwnedDialogWindow,
 } from "./linux-stw-dialog-input.mjs";
 test("native fixture path typing has fixed KeySyms and rejects shell/control characters", () => {
   assert.deepEqual([..."/a-b_c.docx"].map(nativePathKey), [
@@ -95,7 +96,7 @@ test("ambiguous portal windows or PID reuse cannot accept input", async () => {
       observeOwner: async () => owner,
       xdo: async () => "99 100",
     }),
-    /One visible/,
+    /Ambiguous visible/,
   );
   let calls = 0;
   await assert.rejects(
@@ -111,5 +112,43 @@ test("ambiguous portal windows or PID reuse cannot accept input", async () => {
         args[0] === "search" ? "99" : args[0] === "getwindowpid" ? "7" : "99",
     }),
     /startTime/,
+  );
+});
+
+test("credential attribution may precede mapping; wait only reads the same proven owner", async () => {
+  let count = 0,
+    verified = 0;
+  const xid = await waitForOwnedDialogWindow({
+    verify: async () => {
+      verified++;
+    },
+    query: async () => {
+      if (++count === 1)
+        throw Object.assign(new Error("not mapped"), { code: 1 });
+      return count === 2 ? "" : "99";
+    },
+    wait: async () => {},
+  });
+  assert.equal(xid, "99");
+  assert.equal(verified, 3);
+  await assert.rejects(
+    waitForOwnedDialogWindow({
+      verify: async () => {
+        throw Error("owner changed");
+      },
+      query: async () => {
+        throw Error("must not query");
+      },
+    }),
+    /owner changed/,
+  );
+  await assert.rejects(
+    waitForOwnedDialogWindow({
+      verify: async () => {},
+      query: async () => {
+        throw Object.assign(Error("bad command"), { code: 2 });
+      },
+    }),
+    /bad command/,
   );
 });

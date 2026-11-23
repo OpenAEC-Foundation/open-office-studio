@@ -65,7 +65,7 @@ jobs:
                   if before != after: path.write_text(after)
           PY
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 xdg-desktop-portal xdg-desktop-portal-gtk openbox strace
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 at-spi2-core xdg-desktop-portal xdg-desktop-portal-gtk openbox strace
           cargo install tauri-driver --version 2.1.0 --locked
           pnpm --dir .local/stw-harness install --frozen-lockfile --ignore-scripts
       - name: Exact original oracle bytes and syntax before any native operation
