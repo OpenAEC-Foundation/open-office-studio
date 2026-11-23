@@ -78,6 +78,29 @@
         "zipSha256": "20cf6c767f9e0ae84cae52b2368c30694ed6dcb267cfbb02c188b31f13704a9e"
       },
       "kind": "new, separate diagnostic counterfactual and exact-tree success; original two FAIL runs unchanged; no product correction"
+    },
+    {
+      "run": 45169505588,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45169505588",
+      "qaCommit": "d4690dc35fbe9f8dbb3c5c04c91056868ab3f2c1",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 137675037548,
+          "conclusion": "success"
+        },
+        {
+          "id": 137675040233,
+          "conclusion": "skipped"
+        }
+      ],
+      "artifact": {
+        "id": 14815004271,
+        "name": "presentation-375-source-build-preflight",
+        "zipBytes": 1141,
+        "zipSha256": "94ef3fea21646bcb1857b9104989f21969cceeb0432e8a89d6e2454de8eaf4c0"
+      },
+      "kind": "read-only source-build resource inventory; no LOcheckout/install/build"
     }
   ],
   "retainedPair": {
@@ -145,5 +168,13 @@
     "sourceAcceptancePassed": false,
     "productFix": false,
     "ownProcessesProfileMountCleanedUp": true
+  },
+  "patchset": {
+    "applicationQACommit": "d63e150f5c4a53e7cf948ede329bf99e0cf2d72b",
+    "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "manifest": "scripts/qa-presentation-375/runtime-patch/manifest.json",
+    "compiled": false,
+    "runtimeBuilt": false,
+    "buildAllocation": "pending integration decision; measured preflight passes"
   }
 }

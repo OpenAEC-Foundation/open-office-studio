@@ -138,3 +138,19 @@ runner label/filesystem, or supply one concrete existing source-build host/cache
 meeting the pinned source/configuration requirements. If neither is available,
 the reviewable patchset can be retained but must remain **uncompiled/unfixed**;
 do not close #375 or present the diagnostic in-memory export as the product fix.
+
+## Measured read-only preflight
+
+[Run 45169505588](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45169505588),
+QA `d4690dc3`, performs only resource inventory on an Ubuntu 24 runner. It passes
+the proposed gates: 4 CPUs; 16,464,306,176 bytes physical RAM; 94,684,569,600
+bytes free in the current-user-writable workspace/runner-temp filesystem;
+GCC/G++ 13.3.0, Temurin JDK 17.0.21 and GNU make 4.3 already installed. No large
+checkout, package installation, system cleanup or build occurred.
+
+The full [resource receipt](source-build-preflight.json) and official artifact
+ZIP digest are bound in `qa-results.json`. This is evidence that an ordinary
+actual job **can** meet the gates, rather than a promise about a later VM. The
+build job must rerun them before downloading source. The selected compiler,
+private build directory and allocation still require the integration decision;
+this preflight does not start a build automatically.

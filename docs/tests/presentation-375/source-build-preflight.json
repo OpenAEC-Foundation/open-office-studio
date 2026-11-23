@@ -1,0 +1,66 @@
+{
+  "issue": 375,
+  "kind": "resource inventory only",
+  "buildReadyByPlanGates": true,
+  "failures": [],
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "patchSHA256": "092e40473827ef42bf37b54d8a1a753d53e0160124ec234afc224b023b6ca459",
+  "imageVersion": "20261116.133.1",
+  "imageOS": "ubuntu24",
+  "kernel": "7.0.0-1014-aws",
+  "availableCPUs": 4,
+  "memoryBytes": {
+    "MemTotal": 16464306176,
+    "MemAvailable": 15470637056
+  },
+  "candidateFilesystems": [
+    {
+      "path": "/home/runner/work/open-office-studio/open-office-studio",
+      "filesystemDevice": 64512,
+      "freeBytes": 94684569600,
+      "totalBytes": 154894188544,
+      "writableByCurrentUser": true
+    },
+    {
+      "path": "/home/runner/work/_temp",
+      "filesystemDevice": 64512,
+      "freeBytes": 94684569600,
+      "totalBytes": 154894188544,
+      "writableByCurrentUser": true
+    },
+    {
+      "path": "/mnt",
+      "filesystemDevice": 64512,
+      "freeBytes": 94684569600,
+      "totalBytes": 154894188544,
+      "writableByCurrentUser": false
+    }
+  ],
+  "toolchain": {
+    "gcc13": {
+      "path": "/usr/bin/gcc-13",
+      "available": true,
+      "output": "gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    "g++13": {
+      "path": "/usr/bin/g++-13",
+      "available": true,
+      "output": "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    "jdk17": {
+      "path": "/usr/lib/jvm/temurin-17-jdk-amd64/bin/javac",
+      "available": true,
+      "output": "javac 17.0.21"
+    },
+    "make": {
+      "path": "/usr/bin/make",
+      "available": true,
+      "output": "GNU Make 4.3\nBuilt for x86_64-pc-linux-gnu\nCopyright (C) 1988-2020 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law."
+    }
+  },
+  "largeSourceCheckout": false,
+  "packagesInstalled": false,
+  "buildStarted": false,
+  "systemCleanup": false,
+  "runtimeChanged": false
+}
