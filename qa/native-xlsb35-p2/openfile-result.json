@@ -1,0 +1,123 @@
+{
+  "status": "passed",
+  "scope": "#35 Linux P2 installed-DEB native OpenFile picker -> genuine XLSB only",
+  "branch": "codex/qa-xlsb35-openfile-p2-d410-2026-11-23",
+  "harnessCommit": "572919467eff59007d6740767ea6a9d70dc9f876",
+  "application": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "source": {
+    "upstreamCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+    "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+    "bytes": 7651,
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb",
+    "upstreamTest": "https://github.com/LibreOffice/core/blob/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/subsequent_filters_test2.cxx#L476",
+    "license": "LibreOffice core MPL-2.0; upstream test fixture, unmodified",
+    "formatProof": "workbook.bin/worksheet.bin with 30 BrtFmlaNum records, not renamed XLSX",
+    "macroProjectPresent": false
+  },
+  "ci": {
+    "run": 45158544195,
+    "job": 137637647013,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45158544195",
+    "conclusion": "success",
+    "artifact": {
+      "id": 14810500641,
+      "name": "native-xlsb35-openfile-p2-45158544195",
+      "bytes": 318425,
+      "sha256": "48d4fb5cb1ad2609a3656c326bb2371a902347f9ec9f75f328a0f32249c7094a",
+      "downloadedFullDigestVerified": true
+    }
+  },
+  "evidence": [
+    {
+      "path": "evidence/openfile-native-report.json",
+      "sha256": "dcb36c0af82614722209ea7b888629225e123ddea1ecb81f2fe0ac494973c9dc"
+    },
+    {
+      "path": "evidence/openfile-installed-identity.json",
+      "sha256": "66322ac6b9d1a51a6a6cb857d5bd1bab10dc116a93702c89ea1c7269f247f199"
+    },
+    {
+      "path": "evidence/openfile-picker.json",
+      "sha256": "3413c3e8658d3fd06749e7196b19d81b44b721a3b33e0e41d392572f156ea45c"
+    }
+  ],
+  "checks": {
+    "officeLaunchArguments": [],
+    "visibleEntry": "Actual Open toolbar button, native pointer input; observer ready before click",
+    "member": "OpenFile",
+    "officePid": 4727,
+    "portalPid": 4763,
+    "requestHandle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_YUCMvVf7no",
+    "portalExecutable": "/usr/libexec/xdg-desktop-portal-gtk",
+    "portalXid": "4194311",
+    "exactFocusedPath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-openfile/input/NativeXLSB-source.xlsb",
+    "pathProvenBeforeNativeReturn": true,
+    "selectedTab": "NativeXLSB-source.xlsx, unsaved changes",
+    "formula": "=1+2",
+    "cell": "A1",
+    "cachedResult": 3,
+    "selectedCell": [
+      {
+        "label": "A1, 3, selected",
+        "address": "A1",
+        "text": "A1, 3, selected"
+      }
+    ],
+    "nativeBackendPresent": true,
+    "canvasReady": true,
+    "newHostPreflight": "New host: exact Office PID/ELF/XID/focus, visible Open, actual native picker focused path and keyboard; source A1 selection via real visible name box",
+    "originalUnchanged": true,
+    "sourceSha256After": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "screenshotsReviewed": [
+      "before-open.png",
+      "open-picker/picker-filled.png",
+      "opened-through-picker.png"
+    ],
+    "artifactCaptureHashesVerified": true,
+    "cleanup": {
+      "officeClosed": true,
+      "driverGroupClosed": true,
+      "observerGroupClosed": true,
+      "observerExitCode": 0,
+      "accessibilityBaselineRestored": true,
+      "capture": "Only synchronous owned-window GDK snapshots; no persistent Computer Use/recording session"
+    }
+  },
+  "reusedEvidence": {
+    "nativeSaveFileEdit30FormulaReopenRun": 45157164075,
+    "resultGitCommit": "3a740f0d65938af76e633a672116172173b4157d",
+    "resultPath": "qa/native-xlsb35-p2/result.json",
+    "repeated": false
+  },
+  "limitations": [
+    "Only this genuine XLSB case, installed Office DEB on virtual X11/software graphics; no AppImage/final signed/standalone, hardware, other format or other-platform claim.",
+    "Visible Open control is proven; Ctrl+O itself is not separately certified.",
+    "Earlier initial imported-copy Ctrl+S observation remains unclassified; this OpenFile-only case does not retest or resolve it.",
+    "Font-substitution notice remains visible; this does not certify font fidelity.",
+    "No product code, editor bridge, DOM model setter, direct converter call, document CLI-open fallback, extra app build or new issue."
+  ]
+}

@@ -1,0 +1,1654 @@
+{
+  "status": "passed",
+  "attributed": {
+    "status": "attributed",
+    "ownedPid": 4727,
+    "busId": "82540b319b877e25befa16666b041906",
+    "privateBusAddress": "unix:abstract=/tmp/dbus-YbxKlNLU4Q,guid=0a3e3cdfad52e38f067c27456b041906",
+    "display": ":99",
+    "member": "OpenFile",
+    "calls": [
+      {
+        "sender": ":1.20",
+        "destination": "org.freedesktop.portal.Desktop",
+        "serial": 16,
+        "interface": "org.freedesktop.portal.FileChooser",
+        "member": "OpenFile",
+        "token": "ashpd_YUCMvVf7no",
+        "currentName": null,
+        "handle": null
+      },
+      {
+        "sender": ":1.7",
+        "destination": ":1.10",
+        "serial": 105,
+        "interface": "org.freedesktop.impl.portal.FileChooser",
+        "member": "OpenFile",
+        "token": null,
+        "currentName": null,
+        "handle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_YUCMvVf7no"
+      }
+    ],
+    "readyBeforeSave": true,
+    "protocolBaseCommit": "75ca3dfe836f58a54c0bde5c1006a24b85b5ec3d",
+    "observerPid": 4833,
+    "ownedProcessGroup": 4833,
+    "monitorPid": 4843,
+    "correlation": {
+      "ownedPid": 4727,
+      "requestHandle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_YUCMvVf7no",
+      "frontend": {
+        "sender": ":1.20",
+        "destination": "org.freedesktop.portal.Desktop",
+        "serial": 16,
+        "interface": "org.freedesktop.portal.FileChooser",
+        "member": "OpenFile",
+        "token": "ashpd_YUCMvVf7no",
+        "currentName": null,
+        "handle": null
+      },
+      "backend": {
+        "sender": ":1.7",
+        "destination": ":1.10",
+        "serial": 105,
+        "interface": "org.freedesktop.impl.portal.FileChooser",
+        "member": "OpenFile",
+        "token": null,
+        "currentName": null,
+        "handle": "/org/freedesktop/portal/desktop/request/1_20/ashpd_YUCMvVf7no"
+      },
+      "brokerUniqueName": ":1.7",
+      "backendUniqueName": ":1.10",
+      "backendPid": 4763
+    },
+    "backendExecutable": "/usr/libexec/xdg-desktop-portal-gtk"
+  },
+  "dialog": {
+    "binding": {
+      "pid": 4763,
+      "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+      "startTime": "13692",
+      "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.Qu5UdM/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-openfile/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-openfile/profile/data",
+        "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-YbxKlNLU4Q,guid=0a3e3cdfad52e38f067c27456b041906"
+      }
+    },
+    "xid": "4194311",
+    "activationPerformed": false,
+    "checks": [
+      {
+        "stage": "dialog foreground postcondition",
+        "at": "2026-11-23T10:44:26.669Z"
+      },
+      {
+        "stage": "before picker capture",
+        "at": "2026-11-23T10:44:26.680Z"
+      },
+      {
+        "stage": "after picker capture",
+        "at": "2026-11-23T10:44:26.799Z"
+      },
+      {
+        "stage": "before ctrl+l",
+        "at": "2026-11-23T10:44:26.815Z"
+      },
+      {
+        "stage": "after ctrl+l",
+        "at": "2026-11-23T10:44:26.858Z"
+      },
+      {
+        "stage": "before ctrl+a",
+        "at": "2026-11-23T10:44:26.866Z"
+      },
+      {
+        "stage": "after ctrl+a",
+        "at": "2026-11-23T10:44:26.903Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:26.911Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:26.936Z"
+      },
+      {
+        "stage": "before h",
+        "at": "2026-11-23T10:44:26.945Z"
+      },
+      {
+        "stage": "after h",
+        "at": "2026-11-23T10:44:26.972Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:26.980Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:27.007Z"
+      },
+      {
+        "stage": "before m",
+        "at": "2026-11-23T10:44:27.014Z"
+      },
+      {
+        "stage": "after m",
+        "at": "2026-11-23T10:44:27.039Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:27.048Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:27.072Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:27.081Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:27.105Z"
+      },
+      {
+        "stage": "before r",
+        "at": "2026-11-23T10:44:27.113Z"
+      },
+      {
+        "stage": "after r",
+        "at": "2026-11-23T10:44:27.142Z"
+      },
+      {
+        "stage": "before u",
+        "at": "2026-11-23T10:44:27.150Z"
+      },
+      {
+        "stage": "after u",
+        "at": "2026-11-23T10:44:27.174Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:27.182Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:27.206Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:27.214Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:27.238Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:27.247Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:27.271Z"
+      },
+      {
+        "stage": "before r",
+        "at": "2026-11-23T10:44:27.280Z"
+      },
+      {
+        "stage": "after r",
+        "at": "2026-11-23T10:44:27.306Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:27.316Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:27.342Z"
+      },
+      {
+        "stage": "before w",
+        "at": "2026-11-23T10:44:27.351Z"
+      },
+      {
+        "stage": "after w",
+        "at": "2026-11-23T10:44:27.375Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:27.383Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:27.408Z"
+      },
+      {
+        "stage": "before r",
+        "at": "2026-11-23T10:44:27.416Z"
+      },
+      {
+        "stage": "after r",
+        "at": "2026-11-23T10:44:27.440Z"
+      },
+      {
+        "stage": "before k",
+        "at": "2026-11-23T10:44:27.448Z"
+      },
+      {
+        "stage": "after k",
+        "at": "2026-11-23T10:44:27.473Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:27.482Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:27.509Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:27.517Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:27.541Z"
+      },
+      {
+        "stage": "before p",
+        "at": "2026-11-23T10:44:27.550Z"
+      },
+      {
+        "stage": "after p",
+        "at": "2026-11-23T10:44:27.578Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:27.586Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:27.610Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:27.618Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:27.641Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:27.649Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:27.675Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:27.684Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:27.709Z"
+      },
+      {
+        "stage": "before f",
+        "at": "2026-11-23T10:44:27.717Z"
+      },
+      {
+        "stage": "after f",
+        "at": "2026-11-23T10:44:27.742Z"
+      },
+      {
+        "stage": "before f",
+        "at": "2026-11-23T10:44:27.750Z"
+      },
+      {
+        "stage": "after f",
+        "at": "2026-11-23T10:44:27.774Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:27.782Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:27.805Z"
+      },
+      {
+        "stage": "before c",
+        "at": "2026-11-23T10:44:27.813Z"
+      },
+      {
+        "stage": "after c",
+        "at": "2026-11-23T10:44:27.838Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:27.848Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:27.876Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:27.884Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:27.908Z"
+      },
+      {
+        "stage": "before s",
+        "at": "2026-11-23T10:44:27.916Z"
+      },
+      {
+        "stage": "after s",
+        "at": "2026-11-23T10:44:27.941Z"
+      },
+      {
+        "stage": "before t",
+        "at": "2026-11-23T10:44:27.949Z"
+      },
+      {
+        "stage": "after t",
+        "at": "2026-11-23T10:44:27.973Z"
+      },
+      {
+        "stage": "before u",
+        "at": "2026-11-23T10:44:27.981Z"
+      },
+      {
+        "stage": "after u",
+        "at": "2026-11-23T10:44:28.006Z"
+      },
+      {
+        "stage": "before d",
+        "at": "2026-11-23T10:44:28.015Z"
+      },
+      {
+        "stage": "after d",
+        "at": "2026-11-23T10:44:28.042Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:28.050Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:28.074Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:28.083Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:28.107Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:28.115Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:28.139Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:28.147Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:28.172Z"
+      },
+      {
+        "stage": "before p",
+        "at": "2026-11-23T10:44:28.188Z"
+      },
+      {
+        "stage": "after p",
+        "at": "2026-11-23T10:44:28.213Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:28.222Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:28.246Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:28.255Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:28.279Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:28.287Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:28.311Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:28.319Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:28.344Z"
+      },
+      {
+        "stage": "before f",
+        "at": "2026-11-23T10:44:28.352Z"
+      },
+      {
+        "stage": "after f",
+        "at": "2026-11-23T10:44:28.379Z"
+      },
+      {
+        "stage": "before f",
+        "at": "2026-11-23T10:44:28.387Z"
+      },
+      {
+        "stage": "after f",
+        "at": "2026-11-23T10:44:28.412Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:28.420Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:28.445Z"
+      },
+      {
+        "stage": "before c",
+        "at": "2026-11-23T10:44:28.453Z"
+      },
+      {
+        "stage": "after c",
+        "at": "2026-11-23T10:44:28.477Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:28.486Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:28.511Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:28.519Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:28.544Z"
+      },
+      {
+        "stage": "before s",
+        "at": "2026-11-23T10:44:28.554Z"
+      },
+      {
+        "stage": "after s",
+        "at": "2026-11-23T10:44:28.579Z"
+      },
+      {
+        "stage": "before t",
+        "at": "2026-11-23T10:44:28.587Z"
+      },
+      {
+        "stage": "after t",
+        "at": "2026-11-23T10:44:28.611Z"
+      },
+      {
+        "stage": "before u",
+        "at": "2026-11-23T10:44:28.619Z"
+      },
+      {
+        "stage": "after u",
+        "at": "2026-11-23T10:44:28.644Z"
+      },
+      {
+        "stage": "before d",
+        "at": "2026-11-23T10:44:28.652Z"
+      },
+      {
+        "stage": "after d",
+        "at": "2026-11-23T10:44:28.676Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:28.684Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:28.709Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:28.718Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:28.743Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:28.752Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:28.778Z"
+      },
+      {
+        "stage": "before period",
+        "at": "2026-11-23T10:44:28.786Z"
+      },
+      {
+        "stage": "after period",
+        "at": "2026-11-23T10:44:28.811Z"
+      },
+      {
+        "stage": "before l",
+        "at": "2026-11-23T10:44:28.820Z"
+      },
+      {
+        "stage": "after l",
+        "at": "2026-11-23T10:44:28.845Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:28.854Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:28.879Z"
+      },
+      {
+        "stage": "before c",
+        "at": "2026-11-23T10:44:28.889Z"
+      },
+      {
+        "stage": "after c",
+        "at": "2026-11-23T10:44:28.914Z"
+      },
+      {
+        "stage": "before a",
+        "at": "2026-11-23T10:44:28.923Z"
+      },
+      {
+        "stage": "after a",
+        "at": "2026-11-23T10:44:28.948Z"
+      },
+      {
+        "stage": "before l",
+        "at": "2026-11-23T10:44:28.956Z"
+      },
+      {
+        "stage": "after l",
+        "at": "2026-11-23T10:44:28.981Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:28.990Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:29.016Z"
+      },
+      {
+        "stage": "before l",
+        "at": "2026-11-23T10:44:29.025Z"
+      },
+      {
+        "stage": "after l",
+        "at": "2026-11-23T10:44:29.050Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:29.058Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:29.085Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:29.093Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:29.118Z"
+      },
+      {
+        "stage": "before u",
+        "at": "2026-11-23T10:44:29.126Z"
+      },
+      {
+        "stage": "after u",
+        "at": "2026-11-23T10:44:29.152Z"
+      },
+      {
+        "stage": "before x",
+        "at": "2026-11-23T10:44:29.160Z"
+      },
+      {
+        "stage": "after x",
+        "at": "2026-11-23T10:44:29.185Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:29.193Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:29.218Z"
+      },
+      {
+        "stage": "before p",
+        "at": "2026-11-23T10:44:29.227Z"
+      },
+      {
+        "stage": "after p",
+        "at": "2026-11-23T10:44:29.253Z"
+      },
+      {
+        "stage": "before 2",
+        "at": "2026-11-23T10:44:29.262Z"
+      },
+      {
+        "stage": "after 2",
+        "at": "2026-11-23T10:44:29.286Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:29.294Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:29.320Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:29.329Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:29.354Z"
+      },
+      {
+        "stage": "before a",
+        "at": "2026-11-23T10:44:29.363Z"
+      },
+      {
+        "stage": "after a",
+        "at": "2026-11-23T10:44:29.387Z"
+      },
+      {
+        "stage": "before t",
+        "at": "2026-11-23T10:44:29.395Z"
+      },
+      {
+        "stage": "after t",
+        "at": "2026-11-23T10:44:29.423Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:29.434Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:29.459Z"
+      },
+      {
+        "stage": "before v",
+        "at": "2026-11-23T10:44:29.467Z"
+      },
+      {
+        "stage": "after v",
+        "at": "2026-11-23T10:44:29.491Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:29.499Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:29.524Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:29.533Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:29.557Z"
+      },
+      {
+        "stage": "before x",
+        "at": "2026-11-23T10:44:29.565Z"
+      },
+      {
+        "stage": "after x",
+        "at": "2026-11-23T10:44:29.591Z"
+      },
+      {
+        "stage": "before l",
+        "at": "2026-11-23T10:44:29.601Z"
+      },
+      {
+        "stage": "after l",
+        "at": "2026-11-23T10:44:29.626Z"
+      },
+      {
+        "stage": "before s",
+        "at": "2026-11-23T10:44:29.642Z"
+      },
+      {
+        "stage": "after s",
+        "at": "2026-11-23T10:44:29.666Z"
+      },
+      {
+        "stage": "before b",
+        "at": "2026-11-23T10:44:29.674Z"
+      },
+      {
+        "stage": "after b",
+        "at": "2026-11-23T10:44:29.700Z"
+      },
+      {
+        "stage": "before 3",
+        "at": "2026-11-23T10:44:29.708Z"
+      },
+      {
+        "stage": "after 3",
+        "at": "2026-11-23T10:44:29.733Z"
+      },
+      {
+        "stage": "before 5",
+        "at": "2026-11-23T10:44:29.742Z"
+      },
+      {
+        "stage": "after 5",
+        "at": "2026-11-23T10:44:29.767Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:29.777Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:29.803Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:29.812Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:29.836Z"
+      },
+      {
+        "stage": "before p",
+        "at": "2026-11-23T10:44:29.845Z"
+      },
+      {
+        "stage": "after p",
+        "at": "2026-11-23T10:44:29.870Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:29.879Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:29.907Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:29.915Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:29.940Z"
+      },
+      {
+        "stage": "before f",
+        "at": "2026-11-23T10:44:29.949Z"
+      },
+      {
+        "stage": "after f",
+        "at": "2026-11-23T10:44:29.974Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:29.984Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:30.010Z"
+      },
+      {
+        "stage": "before l",
+        "at": "2026-11-23T10:44:30.018Z"
+      },
+      {
+        "stage": "after l",
+        "at": "2026-11-23T10:44:30.043Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:30.051Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:30.076Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:30.084Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:30.108Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:30.117Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:30.143Z"
+      },
+      {
+        "stage": "before n",
+        "at": "2026-11-23T10:44:30.152Z"
+      },
+      {
+        "stage": "after n",
+        "at": "2026-11-23T10:44:30.176Z"
+      },
+      {
+        "stage": "before p",
+        "at": "2026-11-23T10:44:30.185Z"
+      },
+      {
+        "stage": "after p",
+        "at": "2026-11-23T10:44:30.210Z"
+      },
+      {
+        "stage": "before u",
+        "at": "2026-11-23T10:44:30.218Z"
+      },
+      {
+        "stage": "after u",
+        "at": "2026-11-23T10:44:30.243Z"
+      },
+      {
+        "stage": "before t",
+        "at": "2026-11-23T10:44:30.252Z"
+      },
+      {
+        "stage": "after t",
+        "at": "2026-11-23T10:44:30.277Z"
+      },
+      {
+        "stage": "before slash",
+        "at": "2026-11-23T10:44:30.286Z"
+      },
+      {
+        "stage": "after slash",
+        "at": "2026-11-23T10:44:30.318Z"
+      },
+      {
+        "stage": "before N",
+        "at": "2026-11-23T10:44:30.327Z"
+      },
+      {
+        "stage": "after N",
+        "at": "2026-11-23T10:44:30.352Z"
+      },
+      {
+        "stage": "before a",
+        "at": "2026-11-23T10:44:30.361Z"
+      },
+      {
+        "stage": "after a",
+        "at": "2026-11-23T10:44:30.385Z"
+      },
+      {
+        "stage": "before t",
+        "at": "2026-11-23T10:44:30.394Z"
+      },
+      {
+        "stage": "after t",
+        "at": "2026-11-23T10:44:30.420Z"
+      },
+      {
+        "stage": "before i",
+        "at": "2026-11-23T10:44:30.429Z"
+      },
+      {
+        "stage": "after i",
+        "at": "2026-11-23T10:44:30.453Z"
+      },
+      {
+        "stage": "before v",
+        "at": "2026-11-23T10:44:30.462Z"
+      },
+      {
+        "stage": "after v",
+        "at": "2026-11-23T10:44:30.489Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:30.498Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:30.522Z"
+      },
+      {
+        "stage": "before X",
+        "at": "2026-11-23T10:44:30.531Z"
+      },
+      {
+        "stage": "after X",
+        "at": "2026-11-23T10:44:30.555Z"
+      },
+      {
+        "stage": "before L",
+        "at": "2026-11-23T10:44:30.564Z"
+      },
+      {
+        "stage": "after L",
+        "at": "2026-11-23T10:44:30.590Z"
+      },
+      {
+        "stage": "before S",
+        "at": "2026-11-23T10:44:30.598Z"
+      },
+      {
+        "stage": "after S",
+        "at": "2026-11-23T10:44:30.624Z"
+      },
+      {
+        "stage": "before B",
+        "at": "2026-11-23T10:44:30.640Z"
+      },
+      {
+        "stage": "after B",
+        "at": "2026-11-23T10:44:30.667Z"
+      },
+      {
+        "stage": "before minus",
+        "at": "2026-11-23T10:44:30.677Z"
+      },
+      {
+        "stage": "after minus",
+        "at": "2026-11-23T10:44:30.702Z"
+      },
+      {
+        "stage": "before s",
+        "at": "2026-11-23T10:44:30.711Z"
+      },
+      {
+        "stage": "after s",
+        "at": "2026-11-23T10:44:30.737Z"
+      },
+      {
+        "stage": "before o",
+        "at": "2026-11-23T10:44:30.746Z"
+      },
+      {
+        "stage": "after o",
+        "at": "2026-11-23T10:44:30.772Z"
+      },
+      {
+        "stage": "before u",
+        "at": "2026-11-23T10:44:30.781Z"
+      },
+      {
+        "stage": "after u",
+        "at": "2026-11-23T10:44:30.806Z"
+      },
+      {
+        "stage": "before r",
+        "at": "2026-11-23T10:44:30.814Z"
+      },
+      {
+        "stage": "after r",
+        "at": "2026-11-23T10:44:30.841Z"
+      },
+      {
+        "stage": "before c",
+        "at": "2026-11-23T10:44:30.852Z"
+      },
+      {
+        "stage": "after c",
+        "at": "2026-11-23T10:44:30.877Z"
+      },
+      {
+        "stage": "before e",
+        "at": "2026-11-23T10:44:30.886Z"
+      },
+      {
+        "stage": "after e",
+        "at": "2026-11-23T10:44:30.911Z"
+      },
+      {
+        "stage": "before period",
+        "at": "2026-11-23T10:44:30.919Z"
+      },
+      {
+        "stage": "after period",
+        "at": "2026-11-23T10:44:30.945Z"
+      },
+      {
+        "stage": "before x",
+        "at": "2026-11-23T10:44:30.953Z"
+      },
+      {
+        "stage": "after x",
+        "at": "2026-11-23T10:44:30.980Z"
+      },
+      {
+        "stage": "before l",
+        "at": "2026-11-23T10:44:30.989Z"
+      },
+      {
+        "stage": "after l",
+        "at": "2026-11-23T10:44:31.015Z"
+      },
+      {
+        "stage": "before s",
+        "at": "2026-11-23T10:44:31.025Z"
+      },
+      {
+        "stage": "after s",
+        "at": "2026-11-23T10:44:31.051Z"
+      },
+      {
+        "stage": "before b",
+        "at": "2026-11-23T10:44:31.059Z"
+      },
+      {
+        "stage": "after b",
+        "at": "2026-11-23T10:44:31.085Z"
+      },
+      {
+        "stage": "before picker capture",
+        "at": "2026-11-23T10:44:31.194Z"
+      },
+      {
+        "stage": "after picker capture",
+        "at": "2026-11-23T10:44:31.307Z"
+      },
+      {
+        "stage": "before native Return",
+        "at": "2026-11-23T10:44:31.316Z"
+      }
+    ],
+    "keys": [
+      {
+        "chord": "ctrl+l",
+        "at": "2026-11-23T10:44:26.815Z"
+      },
+      {
+        "chord": "ctrl+a",
+        "at": "2026-11-23T10:44:26.866Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:26.911Z"
+      },
+      {
+        "chord": "h",
+        "at": "2026-11-23T10:44:26.945Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:26.980Z"
+      },
+      {
+        "chord": "m",
+        "at": "2026-11-23T10:44:27.014Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:27.048Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:27.081Z"
+      },
+      {
+        "chord": "r",
+        "at": "2026-11-23T10:44:27.113Z"
+      },
+      {
+        "chord": "u",
+        "at": "2026-11-23T10:44:27.150Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:27.182Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:27.214Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:27.247Z"
+      },
+      {
+        "chord": "r",
+        "at": "2026-11-23T10:44:27.280Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:27.316Z"
+      },
+      {
+        "chord": "w",
+        "at": "2026-11-23T10:44:27.351Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:27.383Z"
+      },
+      {
+        "chord": "r",
+        "at": "2026-11-23T10:44:27.416Z"
+      },
+      {
+        "chord": "k",
+        "at": "2026-11-23T10:44:27.448Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:27.482Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:27.517Z"
+      },
+      {
+        "chord": "p",
+        "at": "2026-11-23T10:44:27.550Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:27.586Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:27.618Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:27.649Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:27.684Z"
+      },
+      {
+        "chord": "f",
+        "at": "2026-11-23T10:44:27.717Z"
+      },
+      {
+        "chord": "f",
+        "at": "2026-11-23T10:44:27.750Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:27.782Z"
+      },
+      {
+        "chord": "c",
+        "at": "2026-11-23T10:44:27.813Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:27.848Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:27.884Z"
+      },
+      {
+        "chord": "s",
+        "at": "2026-11-23T10:44:27.916Z"
+      },
+      {
+        "chord": "t",
+        "at": "2026-11-23T10:44:27.949Z"
+      },
+      {
+        "chord": "u",
+        "at": "2026-11-23T10:44:27.981Z"
+      },
+      {
+        "chord": "d",
+        "at": "2026-11-23T10:44:28.016Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:28.050Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:28.083Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:28.115Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:28.148Z"
+      },
+      {
+        "chord": "p",
+        "at": "2026-11-23T10:44:28.188Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:28.222Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:28.255Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:28.287Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:28.320Z"
+      },
+      {
+        "chord": "f",
+        "at": "2026-11-23T10:44:28.352Z"
+      },
+      {
+        "chord": "f",
+        "at": "2026-11-23T10:44:28.387Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:28.420Z"
+      },
+      {
+        "chord": "c",
+        "at": "2026-11-23T10:44:28.453Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:28.486Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:28.519Z"
+      },
+      {
+        "chord": "s",
+        "at": "2026-11-23T10:44:28.554Z"
+      },
+      {
+        "chord": "t",
+        "at": "2026-11-23T10:44:28.587Z"
+      },
+      {
+        "chord": "u",
+        "at": "2026-11-23T10:44:28.619Z"
+      },
+      {
+        "chord": "d",
+        "at": "2026-11-23T10:44:28.652Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:28.684Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:28.718Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:28.752Z"
+      },
+      {
+        "chord": "period",
+        "at": "2026-11-23T10:44:28.786Z"
+      },
+      {
+        "chord": "l",
+        "at": "2026-11-23T10:44:28.820Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:28.854Z"
+      },
+      {
+        "chord": "c",
+        "at": "2026-11-23T10:44:28.889Z"
+      },
+      {
+        "chord": "a",
+        "at": "2026-11-23T10:44:28.923Z"
+      },
+      {
+        "chord": "l",
+        "at": "2026-11-23T10:44:28.956Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:28.990Z"
+      },
+      {
+        "chord": "l",
+        "at": "2026-11-23T10:44:29.025Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:29.058Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:29.093Z"
+      },
+      {
+        "chord": "u",
+        "at": "2026-11-23T10:44:29.126Z"
+      },
+      {
+        "chord": "x",
+        "at": "2026-11-23T10:44:29.160Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:29.193Z"
+      },
+      {
+        "chord": "p",
+        "at": "2026-11-23T10:44:29.227Z"
+      },
+      {
+        "chord": "2",
+        "at": "2026-11-23T10:44:29.262Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:29.294Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:29.329Z"
+      },
+      {
+        "chord": "a",
+        "at": "2026-11-23T10:44:29.363Z"
+      },
+      {
+        "chord": "t",
+        "at": "2026-11-23T10:44:29.395Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:29.434Z"
+      },
+      {
+        "chord": "v",
+        "at": "2026-11-23T10:44:29.467Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:29.499Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:29.533Z"
+      },
+      {
+        "chord": "x",
+        "at": "2026-11-23T10:44:29.565Z"
+      },
+      {
+        "chord": "l",
+        "at": "2026-11-23T10:44:29.601Z"
+      },
+      {
+        "chord": "s",
+        "at": "2026-11-23T10:44:29.642Z"
+      },
+      {
+        "chord": "b",
+        "at": "2026-11-23T10:44:29.674Z"
+      },
+      {
+        "chord": "3",
+        "at": "2026-11-23T10:44:29.708Z"
+      },
+      {
+        "chord": "5",
+        "at": "2026-11-23T10:44:29.742Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:29.777Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:29.812Z"
+      },
+      {
+        "chord": "p",
+        "at": "2026-11-23T10:44:29.845Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:29.879Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:29.915Z"
+      },
+      {
+        "chord": "f",
+        "at": "2026-11-23T10:44:29.950Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:29.984Z"
+      },
+      {
+        "chord": "l",
+        "at": "2026-11-23T10:44:30.018Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:30.051Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:30.084Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:30.117Z"
+      },
+      {
+        "chord": "n",
+        "at": "2026-11-23T10:44:30.152Z"
+      },
+      {
+        "chord": "p",
+        "at": "2026-11-23T10:44:30.185Z"
+      },
+      {
+        "chord": "u",
+        "at": "2026-11-23T10:44:30.218Z"
+      },
+      {
+        "chord": "t",
+        "at": "2026-11-23T10:44:30.252Z"
+      },
+      {
+        "chord": "slash",
+        "at": "2026-11-23T10:44:30.286Z"
+      },
+      {
+        "chord": "N",
+        "at": "2026-11-23T10:44:30.327Z"
+      },
+      {
+        "chord": "a",
+        "at": "2026-11-23T10:44:30.361Z"
+      },
+      {
+        "chord": "t",
+        "at": "2026-11-23T10:44:30.394Z"
+      },
+      {
+        "chord": "i",
+        "at": "2026-11-23T10:44:30.429Z"
+      },
+      {
+        "chord": "v",
+        "at": "2026-11-23T10:44:30.462Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:30.498Z"
+      },
+      {
+        "chord": "X",
+        "at": "2026-11-23T10:44:30.531Z"
+      },
+      {
+        "chord": "L",
+        "at": "2026-11-23T10:44:30.564Z"
+      },
+      {
+        "chord": "S",
+        "at": "2026-11-23T10:44:30.598Z"
+      },
+      {
+        "chord": "B",
+        "at": "2026-11-23T10:44:30.640Z"
+      },
+      {
+        "chord": "minus",
+        "at": "2026-11-23T10:44:30.677Z"
+      },
+      {
+        "chord": "s",
+        "at": "2026-11-23T10:44:30.711Z"
+      },
+      {
+        "chord": "o",
+        "at": "2026-11-23T10:44:30.746Z"
+      },
+      {
+        "chord": "u",
+        "at": "2026-11-23T10:44:30.781Z"
+      },
+      {
+        "chord": "r",
+        "at": "2026-11-23T10:44:30.814Z"
+      },
+      {
+        "chord": "c",
+        "at": "2026-11-23T10:44:30.852Z"
+      },
+      {
+        "chord": "e",
+        "at": "2026-11-23T10:44:30.886Z"
+      },
+      {
+        "chord": "period",
+        "at": "2026-11-23T10:44:30.919Z"
+      },
+      {
+        "chord": "x",
+        "at": "2026-11-23T10:44:30.953Z"
+      },
+      {
+        "chord": "l",
+        "at": "2026-11-23T10:44:30.989Z"
+      },
+      {
+        "chord": "s",
+        "at": "2026-11-23T10:44:31.025Z"
+      },
+      {
+        "chord": "b",
+        "at": "2026-11-23T10:44:31.059Z"
+      },
+      {
+        "chord": "Return",
+        "at": "2026-11-23T10:44:31.316Z",
+        "transition": "Expected owned dialog closes; caller verifies exact response URI and document"
+      }
+    ]
+  },
+  "focusedPath": {
+    "name": "",
+    "role": "text",
+    "focused": true,
+    "showing": true,
+    "text": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-openfile/input/NativeXLSB-source.xlsb"
+  },
+  "openedUi": {
+    "readiness": {
+      "nameVisible": true,
+      "formulaVisible": true,
+      "nameReadOnly": false,
+      "canvasVisible": true,
+      "fonts": "loaded",
+      "formulaDisabled": false
+    },
+    "saveEnabled": true,
+    "panelBlocked": false,
+    "tab": "NativeXLSB-source.xlsx, unsaved changes",
+    "formula": "=1+2",
+    "panel": "office-tabpaneel-1",
+    "selectedCells": [
+      {
+        "label": "A1, 3, selected",
+        "address": "A1",
+        "text": "A1, 3, selected"
+      }
+    ],
+    "focusedTestId": null,
+    "nativeBackendPresent": true,
+    "ready": true,
+    "saveDialog": null,
+    "bodySummary": " emptyS27, emptyT27, emptyU27, emptyV27, emptyW27, emptyX27, emptyY27, emptyRow 28A28, 3B28, emptyC28, emptyD28, emptyE28, emptyF28, emptyG28, emptyH28, emptyI28, emptyJ28, emptyK28, emptyL28, emptyM28, emptyN28, emptyO28, emptyP28, emptyQ28, emptyR28, emptyS28, emptyT28, emptyU28, emptyV28, emptyW28, emptyX28, emptyY28, emptyRow 29A29, 3B29, emptyC29, emptyD29, emptyE29, emptyF29, emptyG29, emptyH29, emptyI29, emptyJ29, emptyK29, emptyL29, emptyM29, emptyN29, emptyO29, emptyP29, emptyQ29, emptyR29, emptyS29, emptyT29, emptyU29, emptyV29, emptyW29, emptyX29, emptyY29, emptyRow 30A30, 3B30, emptyC30, emptyD30, emptyE30, emptyF30, emptyG30, emptyH30, emptyI30, emptyJ30, emptyK30, emptyL30, emptyM30, emptyN30, emptyO30, emptyP30, emptyQ30, emptyR30, emptyS30, emptyT30, emptyU30, emptyV30, emptyW30, emptyX30, emptyY30, emptyRow 31A31, emptyB31, emptyC31, emptyD31, emptyE31, emptyF31, emptyG31, emptyH31, emptyI31, emptyJ31, emptyK31, emptyL31, emptyM31, emptyN31, emptyO31, emptyP31, emptyQ31, emptyR31, emptyS31, emptyT31, emptyU31, emptyV31, emptyW31, emptyX31, emptyY31, emptyRow 32A32, emptyB32, emptyC32, emptyD32, emptyE32, emptyF32, emptyG32, emptyH32, emptyI32, emptyJ32, emptyK32, emptyL32, emptyM32, emptyN32, emptyO32, emptyP32, emptyQ32, emptyR32, emptyS32, emptyT32, emptyU32, emptyV32, emptyW32, emptyX32, emptyY32, emptyRow 33A33, emptyB33, emptyC33, emptyD33, emptyE33, emptyF33, emptyG33, emptyH33, emptyI33, emptyJ33, emptyK33, emptyL33, emptyM33, emptyN33, emptyO33, emptyP33, emptyQ33, emptyR33, emptyS33, emptyT33, emptyU33, emptyV33, emptyW33, emptyX33, emptyY33, emptyRow 34A34, emptyB34, emptyC34, emptyD34, emptyE34, emptyF34, emptyG34, emptyH34, emptyI34, emptyJ34, emptyK34, emptyL34, emptyM34, emptyN34, emptyO34, emptyP34, emptyQ34, emptyR34, emptyS34, emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb35-openfile/inputToday 10:44New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.Details\n",
+    "name": "A1",
+    "gridFocused": false
+  }
+}
