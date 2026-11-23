@@ -119,6 +119,7 @@ const env = {
   XDG_CONFIG_HOME: join(out, "profile/config"),
   XDG_DATA_HOME: join(out, "profile/data"),
   XDG_CACHE_HOME: join(out, "profile/cache"),
+  XDG_RUNTIME_DIR: join(out,"profile/runtime"),
 };
 let driver, driverPort, nativePort, driverStart, session, command, guard;
 let driverLog = "",
@@ -927,7 +928,6 @@ try {
   assert.deepEqual(pids(), [], "No pre-existing app may be affected");
   report.actualInstalledDepends=execFileSync("dpkg-query",["-W","-f=${Depends}","open-office-studio"],{encoding:"utf8"});
   assert.match(report.actualInstalledDepends,/(?:^|,\s*)zenity(?:\s|,|$)/,"Actual new Suite DEB must declare Zenity");
-  await startChild("openbox",["--sm-disable"],"owned window manager");
   const driverPath = execFileSync("which", ["tauri-driver"], {
     encoding: "utf8",
   }).trim();
@@ -951,6 +951,7 @@ try {
     },
   };
   const configuration = join(env.XDG_CONFIG_HOME, "org.openaec.office-studio");
+  for(const directory of [env.XDG_CONFIG_HOME,env.XDG_DATA_HOME,env.XDG_CACHE_HOME,env.XDG_RUNTIME_DIR])await mkdir(directory,{recursive:true,mode:0o700});
   await mkdir(configuration, { recursive: true });
   await writeFile(
     join(configuration, "voorkeuren.json"),
@@ -965,6 +966,7 @@ try {
     b = await fixture("other-table"),
     c = await fixture("replace-table");
   report.fixtures = fixtures;
+  await startChild("openbox",["--sm-disable"],"owned window manager");
   driverPort = await freePort();
   do {
     nativePort = await freePort();

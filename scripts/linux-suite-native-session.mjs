@@ -551,8 +551,9 @@ async function startDocument(
   const actualExecutable=await realpath(`/proc/${current}/exe`);
   assert.equal(basename(actualExecutable),"open-office-studio");
   const actualEnvironment=(await readFile(`/proc/${current}/environ`,"utf8")).split("\0");
+  const actualAppImage=actualEnvironment.find(v=>v.startsWith('APPIMAGE='))?.slice(9),actualAppDir=actualEnvironment.find(v=>v.startsWith('APPDIR='))?.slice(7);
   if(packageType==="deb")assert.equal(actualExecutable,"/usr/bin/open-office-studio");
-  else {assert(actualEnvironment.includes("APPIMAGE="+application));assert(actualEnvironment.some(v=>v.startsWith("APPDIR=/tmp/")));}
+  else {assert.equal(actualAppImage,application);assert(actualAppDir?.startsWith('/tmp/'));assert.equal(actualExecutable,await realpath(join(actualAppDir,'usr/bin/open-office-studio')));}
   if(launchOverride)assert(actualEnvironment.includes("PATH="+join(out,"without-zenity")));
   assert.equal(
     hash(await readFile(`/proc/${current}/exe`)),
@@ -606,7 +607,7 @@ async function startDocument(
     sessionId: session,
     document: basename(path),
     executableSha256: identity.executableSha256,
-    actualExecutable,effectivePath:actualEnvironment.find(v=>v.startsWith("PATH=")),launchOverride,
+    actualExecutable,actualAppImage,actualAppDir,effectivePath:actualEnvironment.find(v=>v.startsWith("PATH=")),launchOverride,
     x11: guard.evidence,
     environment: safeEnvironment(await readFile(`/proc/${current}/environ`)),
     transientApplications,
