@@ -97,6 +97,7 @@ report.protocolOrigin = {
     "a452f3e3ca42505161a2e8c5cec098a896b11e1e27076d8b2db3eb924795da18",
   pickerContractCommit: "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
   pickerContractRun: 45152944453,
+  pickerMappingCommit: "3f4ddecd383e6a9fcb6a5f78ff456c08d772797a",
   oracleCommit: "082319659e0e2349c8ab8860a7d886c6733a936e",
   note: "Protocol reuse only; the native STW route must execute independently in this report.",
 };
@@ -709,6 +710,14 @@ function inspectStwReady(marker, expectedName) {
   );
   if (!canvases.length || !document.querySelector(".paged-editor__yrs-input"))
     return null;
+  const first = canvases[0],
+    bounds = first.getBoundingClientRect();
+  if (
+    first.width < Math.floor(bounds.width * devicePixelRatio) ||
+    first.height < Math.floor(bounds.height * devicePixelRatio)
+  )
+    return null;
+  if (!panel.querySelector("[role=paragraph],[role=heading]")) return null;
   return {
     tab: tabs[0].textContent.trim(),
     panelId: panel.id,
@@ -1031,6 +1040,71 @@ async function waitForCleanUI() {
     "Actual selected document UI clean and native Save settled",
   );
 }
+async function closeAttributedBackends() {
+  const peers = new Map(
+    (report.nativePickers ?? []).map((p) => [p.input.binding.pid, p]),
+  );
+  for (const [pid, picker] of peers) {
+    const binding = picker.input.binding,
+      record = {
+        pid,
+        scope: "Exact attributed portal peer on the same private test bus",
+        closed: false,
+      };
+    (report.cleanup.attributedBackends ??= []).push(record);
+    try {
+      let proc;
+      try {
+        proc = await readFile(`/proc/${pid}/stat`, "utf8");
+      } catch (e) {
+        if (e.code === "ENOENT") {
+          record.closed = true;
+          record.alreadyExited = true;
+          continue;
+        }
+        throw e;
+      }
+      assert.equal(writer362ProcStartTime(proc, pid), binding.startTime);
+      assert.equal(await realpath(`/proc/${pid}/exe`), binding.executable);
+      assert.equal(hash(await readFile(`/proc/${pid}/exe`)), binding.sha256);
+      const environment = (await readFile(`/proc/${pid}/environ`))
+        .toString()
+        .split("\0");
+      for (const key of ["DISPLAY", "XAUTHORITY", "DBUS_SESSION_BUS_ADDRESS"])
+        assert.equal(
+          environment
+            .find((s) => s.startsWith(key + "="))
+            ?.slice(key.length + 1),
+          env[key],
+        );
+      assert.equal(await bus("GetId"), picker.attribution.busId);
+      assert.equal(
+        await bus(
+          "GetConnectionUnixProcessID",
+          picker.attribution.correlation.backendUniqueName,
+        ),
+        pid,
+      );
+      process.kill(pid, "SIGTERM");
+      await waitFor(
+        () =>
+          stat(`/proc/${pid}`)
+            .then(() => false)
+            .catch((e) => {
+              if (e.code === "ENOENT") return true;
+              throw e;
+            }),
+        "Exact attributed portal peer exited",
+        5000,
+      );
+      record.closed = true;
+    } catch (error) {
+      record.error = String(error);
+      (report.cleanup.errors ??= []).push(record);
+      process.exitCode = 1;
+    }
+  }
+}
 const oracleScript = join(here, "linux-stw-native/format30-stw-oracle.py");
 assert.equal(
   hash(await readFile(oracleScript)),
@@ -1255,7 +1329,7 @@ try {
     await evaluate(() => document.querySelector(".opslaanals-naam input")),
   );
   await nativeKey("ctrl+a");
-  await type("native-stw-p2");
+  await type("native_stw_p2");
   await clickElement(
     await evaluate(() =>
       document.querySelector('.opslaanals-formaten input[value="docx"]'),
@@ -1266,11 +1340,11 @@ try {
     format: document.querySelector(".opslaanals-formaten input:checked")?.value,
     text: document.querySelector(".opslaanals-naam")?.textContent,
   }));
-  assert.equal(report.saveAsSelection.name, "native-stw-p2");
+  assert.equal(report.saveAsSelection.name, "native_stw_p2");
   assert.equal(report.saveAsSelection.format, "docx");
   await capture(join(out, "docx-save-as-selection.png"));
-  const target = join(out, "native-stw-p2.docx"),
-    saving = await observer("SaveFile", "native-stw-p2.docx");
+  const target = join(out, "native_stw_p2.docx"),
+    saving = await observer("SaveFile", "native_stw_p2.docx");
   await clickElement(
     await evaluate(() =>
       document
@@ -1378,6 +1452,14 @@ try {
   await closeDocument().catch((e) => {
     report.cleanup.sessionError = String(e);
   });
+  for (const value of observers)
+    await stopChild(value.state).catch((e) => {
+      (report.cleanup.errors ??= []).push({
+        label: value.state.label,
+        error: String(e),
+      });
+    });
+  await closeAttributedBackends();
   for (const value of [...children].reverse()) {
     try {
       const result = await stopChild(value);
