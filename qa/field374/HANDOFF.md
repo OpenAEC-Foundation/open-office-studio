@@ -418,3 +418,39 @@ bindings and limits; `evidence/p5-native-deb-content/*-audit.json` retains all
 four raw independent audit reports without line-ending conversion. No new
 download, GUI, CI, consumer or product edit was performed. Mac/Windows native
 acceptance, converted edit/save and native visual checks remain open.
+
+## P5 Linux Suite DEB field374 content and original-image acceptance
+
+The complete new native field case45193639082/attempt1/job137758403838,
+QA80f85a5cb4ae536f1bf7248fbe4cfeeb2653d7d4, passes the bounded #374 scope on
+P5 b696/treee308/48.1 with the same DEB5ab7701c/installed ELFee4ed625.
+Independent audit-docx runs pass all six actual saved/reopened/resaved outputs:
+Windows-origin route SHAfc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71;
+converter route SHAea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4.
+Both preserve the exact DOCVARIABLE/cache, adjacent marker boundary, eight
+source blocks/styles and two placeholders, with zero source tables.
+
+All seven original title PNGs were independently viewed serially and rehashed.
+The Windows-origin before/save/new-PID images retain the already present marker;
+the converter before image contains only REPORT TITLE, while its real edit,
+save and new-PID images show REPORT TITLE -- / STW30 EDIT / 2026-11-23 in full.
+No title overlap/clipping is visible and the subtitle remains separated. The
+Thorndale/font-substitution notice remains explicit; no general font, pagination
+or complete TOC/index-field fidelity is asserted.
+
+The owner ZIP14827731026 (14256701bytes) was independently hashed locally against
+official SHA336d4c6e693f6e74595dc980276a89357e574e37b32b9314276e078640eb751e.
+All reviewed DOCX/PNG/report/descriptor/identity bytes equal original ZIP members.
+The raw operator record contains19 native checks,8 field XML oracles and6 normal
+process sessions, with Windows5571→14141 and converted14278→23211, actual
+Save As/Ctrl+S and cleanup with no remaining own resources. Source hashes of
+the common session harness and separate field scenario were checked on QA80f85.
+
+`evidence/p5-native-deb-complete-review.json` retains the exact package/source/
+job/attempt/archive bindings, seven per-image hashes/findings and limits; the
+six raw independent content reports are in `evidence/p5-native-deb-complete/`.
+Overall workflow remains FAILURE in a later separate #378 negative-helper case;
+this field374 acceptance does not approve that case or assign its cause. It
+does not transfer to AppImage, native Windows or macOS. Full STW-route closure
+still awaits those applicable native results. No new download, GUI, CI, build,
+product or consumer change occurred; all earlier failed proofs remain intact.
