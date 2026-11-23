@@ -1,14 +1,19 @@
 # Final Linux Suite QA preparation
 
 Execution is currently blocked by [request.json](request.json): `go=false`,
-candidate and input descriptor unset. P3 `98b34042`/run45170708933 is explicitly
+both immutable input descriptors unset. Candidate P4 is exactly
+`04fa6cd43b84e3f59fb9d5055bb2d00dde351a47`, tree
+`94fa38c20b51a73e4912964f37f0e1a659b0fb1b`, version 2026.48.1,
+producer45172070275/Linuxjob137683944835/attempt1.
+P3 `98b34042`/run45170708933 is explicitly
 retained as superseded after the full Vitest collection failure. Integration
-owns the one import-only correction and the next freeze. No P3 app/package/native
+owns the one import-only correction. No P3 app/package/native
 pass or producer retry is inferred by these preparation files.
 
 One shared parent download/prep is claimed by `standalone_linux`. It will supply
-an unchanged separate Suite-DEB input and parent/report/member/DEB/ELF/signature
-bindings. The six standalone app hosts do not receive Office. This owner will
+unchanged separate Suite-DEB and Suite-AppImage transfers with
+parent/report/member/package/own-ELF/signature bindings. The six standalone
+app hosts do not receive Office. This owner will
 not download another parent ZIP or build an app. Native execution requires the
 new exact coordinator source/tree/version, successful Linux producer job and
 attempt, input descriptor Gitpin/hash, transfer artifact metadata/hash, DEB and
@@ -75,18 +80,38 @@ hash. On the normal declared runtime, inspect the exact Office-owned Zenity
 question, Cancel with real input and verify target hash/unsaved work; then
 repeat and confirm Overwrite, verify actual saved XML and normal quit/reopen.
 
-The missing-helper negative route still needs coordinator review before
-execution: launch the same verified installed binary with an explicitly owned
-child-only PATH that cannot resolve Zenity, leaving the shared host/global PATH
-alone. Trigger the same conflict and prove visible actionable error with
-unchanged pre-action target bytes and retained work. This is a scoped installed
-DEB missing-runtime-environment test, not native AppImage acceptance. If root
-requires actual AppImage coverage, the shared prep can retain that unchanged
-Office member separately without another parent download. No such negative
-native route, wrapper, app or CI run has been started by this preparation.
+Root approved the child-only PATH negative route: it cannot resolve Zenity,
+while the host/global PATH and app payload stay unchanged. When the actual host
+already has no helper, use that natural state instead. The same conflict must
+produce an actionable error, unchanged pre-action target bytes and retained
+work. Close/discard only this synthetic dirty copy through real UI.
 
-The core source parses and six plain Node request-contract checks pass. Full
-374/378 scenario wiring, shared input consumer and native workflow remain to be
-bound to the next actual candidate/descriptor; this preparation is not a claim
-that those runs occurred. There is no new app build, local GUI, main change,
-tag or publication.
+The actual original AppImage gets a separate fresh host without an installed
+Suite DEB. Its package and extracted/running ELF are verified independently;
+the launcher, APPIMAGE, APPDIR and process/window are bound. It runs its own
+native focus/Ctrl/save/normal quit/new PID preflight and missing-helper case,
+then installs the explicitly documented external Zenity requirement and runs
+Cancel/Overwrite/save/reopen. Do not repeat the entire core/ribbon matrix or
+reuse the DEB negative as AppImage evidence.
+
+`linux-suite-native-package.py` follows the producer's37df descriptor contract:
+no parent re-download, exact official source/run/job/attempt/artifact metadata,
+full transfer/member/report hashes, own ELF/header/mode, actual DEB dependency
+resolution or real AppImage extraction. The embedded pre-upload descriptor is
+not treated as the external immutable root-approved descriptor.
+
+`linux-suite-native-session.mjs` reuses proven PID/XID/input/portal/lifecycle
+protocols, with AppImage ownership and tracking of actual private portal peers.
+The field and confirmation scenario entrypoints are wired, and the workflow
+keeps native jobs behind literal coordinator `go=true`. It uses Vitest for the
+repository's nine `.test.mjs` package checks. PNGs are original GDK window
+captures after two read-only frames, sampled three times; a blinking caret can
+change full-window hashes, so equality is diagnostic and visual review remains
+mandatory. No model/focus/style setter or drawing replacement is used.
+
+Six plain request contracts and three exact short-marker mapping contracts pass
+locally, as do Node syntax checks. Linux protocol CI will verify the nine
+stdlib consumer contracts and original shared field/XML fixtures without
+opening an app. No native route, wrapper or app has been started. Exact input
+descriptors and root package start instruction still remain mandatory. No app
+build, local GUI, main change, tag or publication is authorized.

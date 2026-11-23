@@ -1,0 +1,135 @@
+name: Coordinator-pinned Linux Suite native acceptance
+on:
+  push:
+    branches: [codex/linux-suite-final-acceptance-2026-11-23]
+    paths:
+      - .github/workflows/linux-suite-final-native.yml
+      - qa/linux-suite-final/**
+      - scripts/linux-suite-*
+      - scripts/proef-linux-suite-final-*
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  protocol:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    outputs:
+      go: ${{ steps.pin.outputs.go }}
+      source: ${{ steps.pin.outputs.source }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Bounded request, input and syntax contracts only
+        run: |
+          node qa/linux-suite-final/request.contract.mjs
+          node qa/linux-suite-final/scenarios.contract.mjs
+          python3 scripts/linux-suite-native-package.contract.py
+          python3 -m py_compile scripts/linux-suite-native-package.py scripts/linux-suite-native-anatomy.py
+          node --check scripts/linux-suite-native-session.mjs
+          node --check scripts/proef-linux-suite-final-core.mjs
+          node --check scripts/proef-linux-suite-final-field374.mjs
+          node --check scripts/proef-linux-suite-final-confirm378.mjs
+      - name: Shared immutable field XML oracle, no app operation
+        run: |
+          mkdir -p .local/field-contract
+          node qa/linux-suite-final/field374/audit-docx.mjs qa/linux-suite-final/field374/windows-resaved.docx .local/field-contract/windows
+          node qa/linux-suite-final/field374/audit-docx.mjs qa/linux-suite-final/field374/converted.docx .local/field-contract/converted ''
+      - id: pin
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync,appendFileSync} from 'node:fs';
+          const r=JSON.parse(readFileSync('qa/linux-suite-final/request.json'));
+          appendFileSync(process.env.GITHUB_OUTPUT,`go=${r.go===true}\nsource=${r.candidate?.commit??''}\n`);
+          JS
+  native:
+    needs: protocol
+    if: needs.protocol.outputs.go == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [deb, appimage]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.protocol.outputs.source }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/suite-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Own Linux test host libraries; Zenity is not a hidden test tool
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo python3 - <<'PY'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():
+                  before=path.read_text();after=helper.herschrijf_bronnen(before)
+                  if before!=after:path.write_text(after)
+          PY
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 libfuse2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 gir1.2-atspi-2.0 at-spi2-core xdg-desktop-portal xdg-desktop-portal-gtk openbox strace
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm --dir .local/suite-harness install --frozen-lockfile --ignore-scripts
+      - name: Existing package dependency checks use repository Vitest
+        run: pnpm exec vitest run scripts/native-dialog-packages.test.mjs
+      - name: Official job/attempt, transfer, package and own installed/extracted ELF gates
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .local/suite-harness/scripts/linux-suite-native-package.py ${{ matrix.package }}
+      - name: Actual DEB core368/369 and vertical362
+        if: matrix.package == 'deb'
+        run: dbus-run-session -- xvfb-run -a -e .local/core-xvfb.log -s '-screen 0 1800x1200x24 -noreset' node .local/suite-harness/scripts/proef-linux-suite-final-core.mjs
+      - name: Actual DEB native retained field374 and short native edit
+        if: matrix.package == 'deb'
+        run: |
+          dbus-run-session -- xvfb-run -a -e .local/field-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-field374.mjs'
+      - name: Actual DEB declared-runtime Cancel/Overwrite and own child-PATH missing-helper
+        if: matrix.package == 'deb'
+        run: |
+          dbus-run-session -- xvfb-run -a -e .local/confirm-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs deb both'
+      - name: Actual AppImage own preflight and real missing-helper feedback
+        if: matrix.package == 'appimage'
+        run: |
+          dbus-run-session -- xvfb-run -a -e .local/appimage-negative-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs appimage missing'
+      - name: Install the documented external AppImage confirmation requirement
+        if: matrix.package == 'appimage'
+        run: sudo apt-get install -y --no-install-recommends zenity
+      - name: Same original AppImage actual Cancel/Overwrite/save/normal quit/new PID reopen
+        if: matrix.package == 'appimage'
+        run: |
+          dbus-run-session -- xvfb-run -a -e .local/appimage-positive-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs appimage present'
+      - name: Keep automated, unavailable state and human visual acceptance separate
+        run: node .local/suite-harness/qa/linux-suite-final/aggregate.mjs ${{ matrix.package }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-suite-final-${{ matrix.package }}-${{ github.sha }}
+          path: |
+            .local/linux-suite-final-input/*.json
+            .local/linux-p2-native/**/*.json
+            .local/linux-p2-native/**/*.png
+            .local/linux-p2-native/**/*.docx
+            .local/linux-p2-native/**/*.log
+            .local/*xvfb.log
+          include-hidden-files: true
