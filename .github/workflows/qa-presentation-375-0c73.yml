@@ -6,13 +6,13 @@ on:
         type: choice
         description: Explicit diagnostic phase
         default: components
-        options: [components, uno, uno-readonly, source-preflight]
+        options: [components, uno, uno-readonly, source-preflight, source-build]
 permissions:
   contents: read
   actions: read
 jobs:
   components:
-    if: inputs.phase != 'source-preflight'
+    if: inputs.phase != 'source-preflight' && inputs.phase != 'source-build'
     runs-on: ubuntu-22.04
     timeout-minutes: 12
     env:
@@ -43,6 +43,39 @@ jobs:
         with:
           name: presentation-375-uno-${{ inputs.phase || 'components' }}
           path: .local/presentation-375-runtime/
+          include-hidden-files: true
+          if-no-files-found: error
+  source-build:
+    if: github.event_name == 'workflow_dispatch' && inputs.phase == 'source-build'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - run: echo "OOS_375_JOB_START_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck all resource gates on this actual VM before a large download
+        run: python scripts/qa-presentation-375/build_preflight.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Frozen application/core-engine dependencies and immutable earlier oracles
+        run: |
+          git fetch --no-tags --depth=1 origin e280e9521cfad3b2c61c26d19fbb5df8b5b74a42 dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+          pnpm install --frozen-lockfile --ignore-scripts
+      - name: One bounded source witness, expected baseline red, full corrected draw tests and scoped engine oracle
+        run: python scripts/qa-presentation-375/source_build.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presentation-375-source-witness
+          path: |
+            .local/presentation-375-source-build/
+            .local/presentation-375-build-preflight/
           include-hidden-files: true
           if-no-files-found: error
   source-resources:

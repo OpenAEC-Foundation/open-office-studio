@@ -59,7 +59,7 @@
      {
 --- a/xmloff/qa/unit/draw.cxx
 +++ b/xmloff/qa/unit/draw.cxx
-@@ -282,6 +282,88 @@
+@@ -282,6 +282,89 @@
  }
  
  } // end anonymous ns
@@ -84,7 +84,8 @@
 +                                 xShape->getPropertyValue(u"FillColor"_ustr).get<sal_Int32>());
 +            uno::Reference<util::XComplexColor> xColor;
 +            xShape->getPropertyValue(u"FillComplexColor"_ustr) >>= xColor;
-+            CPPUNIT_ASSERT_EQUAL(model::ThemeColorType::Unknown,
++            CPPUNIT_ASSERT_EQUAL_MESSAGE("UOP375_STALE_INHERITED_FILL_THEME",
++                                 model::ThemeColorType::Unknown,
 +                                 model::color::getFromXComplexColor(xColor).getThemeColorType());
 +        }
 +    };
