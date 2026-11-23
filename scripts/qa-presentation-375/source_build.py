@@ -14,12 +14,15 @@ import tarfile
 import tempfile
 import time
 
-START = time.monotonic()-max(0,time.time()-float(os.environ.get('OOS_375_JOB_START_EPOCH',time.time())))
+START_EPOCH=os.environ.get('OOS_375_WITNESS_START_EPOCH') or os.environ.get('OOS_375_JOB_START_EPOCH') or str(int(time.time()))
+assert re.fullmatch(r'\d{10}',START_EPOCH) and 0<=time.time()-float(START_EPOCH)<270*60
+START = time.monotonic()-(time.time()-float(START_EPOCH))
 OUT = Path('.local/presentation-375-source-build').resolve()
 OWN = Path(__file__).resolve().parent
 PIN = json.loads((OWN / 'runtime-patch/manifest.json').read_text())
 REPORT = {'issue':375, 'upstreamCommit':PIN['upstreamCommit'], 'patchSHA256':PIN['patchSHA256'],
           'qaCommit':os.environ.get('GITHUB_SHA'), 'run':os.environ.get('GITHUB_RUN_ID'),
+          'allocatedWitnessStartEpoch':START_EPOCH,
           'stages':[], 'productActivation':False, 'portableRuntimeClaim':False, 'passed':False}
 
 
@@ -80,11 +83,13 @@ def main():
     REPORT['ownBuildRoot']=str(build)
     ENV['JAVA_HOME']=str(Path(preflight['toolchain']['jdk17']['path']).parent.parent)
     # Only official Ubuntu source repositories; no arbitrary compiler repositories.
-    ubuntu=Path('/etc/apt/sources.list.d/ubuntu.sources')
-    text=ubuntu.read_text()
-    assert 'ubuntu.com/ubuntu' in text and 'Types: deb' in text
+    os_release=Path('/etc/os-release').read_text()
+    assert re.search(r'^ID=ubuntu$',os_release,re.M) and re.search(r'^VERSION_CODENAME=noble$',os_release,re.M)
+    assert Path('/usr/share/keyrings/ubuntu-archive-keyring.gpg').is_file()
+    original=Path('/etc/apt/sources.list.d/ubuntu.sources')
+    if original.is_file():shutil.copyfile(original,OUT/'original-ubuntu.sources.txt')
     src=OUT/'presentation-375-src.sources'
-    src.write_text(re.sub(r'^Types:.*$', 'Types: deb-src', text,flags=re.M))
+    src.write_text('Types: deb-src\nURIs: https://archive.ubuntu.com/ubuntu/\nSuites: noble noble-updates\nComponents: main restricted universe multiverse\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\nTypes: deb-src\nURIs: https://security.ubuntu.com/ubuntu/\nSuites: noble-security\nComponents: main restricted universe multiverse\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n')
     run('ubuntu-source-index',['sudo','cp',str(src),'/etc/apt/sources.list.d/presentation-375-src.sources'])
     run('apt-update',['sudo','apt-get','update'])
     run('dependency-plan',['sudo','apt-get','-s','build-dep','libreoffice'])

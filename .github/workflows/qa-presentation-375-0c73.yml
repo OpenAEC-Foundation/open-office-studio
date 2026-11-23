@@ -7,6 +7,10 @@ on:
         description: Explicit diagnostic phase
         default: components
         options: [components, uno, uno-readonly, source-preflight, source-build]
+      witness_start:
+        type: string
+        description: Preserve the original allocated witness start after a pre-source initialization failure
+        default: ''
 permissions:
   contents: read
   actions: read
@@ -49,6 +53,8 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.phase == 'source-build'
     runs-on: ubuntu-24.04
     timeout-minutes: 270
+    env:
+      OOS_375_WITNESS_START_EPOCH: ${{ inputs.witness_start }}
     steps:
       - run: echo "OOS_375_JOB_START_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
