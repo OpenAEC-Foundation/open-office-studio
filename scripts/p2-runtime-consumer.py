@@ -57,6 +57,10 @@ def verify(artifact, expected_sha, destination):
     assert actual == [{k: v for k, v in entry.items() if k != "debMetadata"} for entry in expected]
     converter = destination / descriptor["canonicalConverterPath"]
     assert converter.resolve(strict=True).is_relative_to(destination.resolve()) and os.access(converter, os.X_OK)
+    assert sha(converter) == descriptor["converterLauncherSha256"]
+    binary = destination / descriptor["converterElfPath"]
+    assert binary.resolve(strict=True).is_relative_to(destination.resolve())
+    assert sha(binary) == descriptor["converterElfMetadata"]["sha256"]
     return {"status": "verified", "converter": str(converter), "resources": str(destination / descriptor["resourcesPath"]), "sourceCommit": descriptor["parent"]["sourceCommit"], "tarSha256": expected_sha}
 
 

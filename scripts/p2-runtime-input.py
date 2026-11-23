@@ -277,8 +277,8 @@ def canary(consumer, receipt):
     marker = "P2_PRIVATE_RUNTIME_ONLY_CANARY_2026_48_1"
     source = case / "canary.txt"
     source.write_text(marker + "\n", encoding="utf-8")
-    trace = OUT / "canary-execve.log"
-    result = command("strace", "-f", "-e", "trace=execve", "-o", trace, *invocation,
+    trace = (OUT / "canary-execve.log").resolve()
+    result = command("strace", "-f", "-s", "4096", "-e", "trace=execve", "-o", trace, *invocation,
                      "--convert-to", "fodt", "--outdir", case, source, env=env, cwd=case)
     output = case / "canary.fodt"
     assert output.is_file() and marker in output.read_text(encoding="utf-8")
@@ -316,6 +316,9 @@ def main():
             process.stdout.close()
         assert process.wait(timeout=60) == 0
         parent["officeExecutableMetadataOnly"] = executable
+        parent["deb"]["path"] = "canonical-office.deb"
+        parent["deb"]["expectedInstalledElfSha256"] = executable["sha256"]
+        parent["deb"]["installedValidation"] = "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
         write_json(RECOVERY / "parent.json", parent)
         receipt_path = payload / META / "receipt.json"
         receipt = json.loads(receipt_path.read_text())
@@ -325,6 +328,10 @@ def main():
         assert receipt["sourceSha256"] == asset["sha256"] and receipt["executable"] == asset["executable"]
         assert receipt["layoutVersion"] == manifest["layoutVersion"]
         private = payload / RUNTIME
+        converter_elf = private / "program/soffice.bin"
+        with converter_elf.open("rb") as binary:
+            converter_metadata = elf_metadata(binary.read(64), sha(converter_elf), converter_elf.stat().st_size)
+        launcher_sha = sha(private / receipt["executable"])
         for name in ("LICENSE.html", "NOTICE", "meta/SOURCE-NOTICE.txt"):
             assert (private / name).is_file(), f"Bundled runtime original licenses/notice required: {name}"
         if (private / "meta/receipt.json").exists():
@@ -352,11 +359,15 @@ def main():
                       "tar": {"name": tar.name, "sha256": sha(tar), "bytes": tar.stat().st_size},
                       "entryManifest": {"name": "entry-manifest.json", "sha256": sha(OUT / "entry-manifest.json"), "entries": len(entries)},
                       "canonicalConverterPath": "payload/" + str(RUNTIME / receipt["executable"]),
+                      "converterLauncherSha256": launcher_sha,
+                      "converterElfPath": "payload/" + str(RUNTIME / "program/soffice.bin"), "converterElfMetadata": converter_metadata,
                       "resourcesPath": "payload/usr/lib/Open Office Studio",
                       "privateRuntimePath": "payload/" + str(RUNTIME),
                       "canary": {"status": probe["status"], "report": "canary-report.json", "reportSha256": sha(OUT / "canary-report.json")},
                       "qaRun": int(os.environ["GITHUB_RUN_ID"]), "qaArtifact": "p2-linux-private-runtime-only", "officeDebArtifact": "p2-linux-office-deb-input",
-                      "harnessCommit": command("git", "-C", Path(__file__).resolve().parent.parent, "rev-parse", "HEAD")}
+                      "harnessCommit": command("git", "-C", Path(__file__).resolve().parent.parent, "rev-parse", "HEAD"),
+                      "consumerVerifier": {"artifactPath": "p2-runtime-consumer.py", "repositoryPath": "scripts/p2-runtime-consumer.py",
+                                           "usage": "python p2-runtime-consumer.py ARTIFACT_DIR EXPECTED_TAR_SHA256 NEW_DESTINATION"}}
         write_json(OUT / "descriptor.json", descriptor)
         shutil.copy2(RECOVERY / "package-verification-Linux.json", OUT)
         verifier = Path(__file__).with_name("p2-runtime-consumer.py")

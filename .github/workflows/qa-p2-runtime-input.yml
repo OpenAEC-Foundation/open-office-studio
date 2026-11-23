@@ -85,10 +85,26 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: p2-linux-office-deb-input
-          path: .local/p2-runtime-recovery/
+          path: |
+            .local/p2-runtime-recovery/canonical-office.deb
+            .local/p2-runtime-recovery/parent.json
+            .local/p2-runtime-recovery/package-verification-Linux.json
           compression-level: 0
           include-hidden-files: true
           if-no-files-found: error
+      - name: Preserve runtime failure diagnostics without another Desktop ZIP
+        if: failure()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          recovery=Path('.local/p2-runtime-recovery')
+          if recovery.exists():
+            target=recovery/'diagnostics';target.mkdir(exist_ok=True)
+            for name in ['entry-manifest.json','canary-execve.log','soffice-bin-ldd.txt','canary-report.json','descriptor.json','consumer-verification.json']:
+              src=Path('.local/p2-runtime-input')/name
+              if src.is_file():shutil.copy2(src,target/name)
+          PY
       - name: Preserve the already verified DEB only when prep fails
         if: failure()
         uses: actions/upload-artifact@v4
