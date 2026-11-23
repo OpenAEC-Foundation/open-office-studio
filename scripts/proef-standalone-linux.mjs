@@ -173,6 +173,25 @@ async function packageCase(pkg) {
     }
     return found;
   };
+  const ownedApplicationResources = async () => {
+    const found = [];
+    for (const name of await readdir("/proc")) {
+      if (!/^\d+$/.test(name)) continue;
+      const entries = (
+        await readFile(`/proc/${name}/environ`, "utf8").catch(() => "")
+      ).split("\0");
+      if (!entries.includes(`HOME=${home}`)) continue;
+      const exe = await readlink(`/proc/${name}/exe`).catch(() => "");
+      if (
+        exe.endsWith(`/${app.programma}`) ||
+        exe === pkg.path ||
+        entries.includes(`APPIMAGE=${pkg.path}`) ||
+        /\/WebKit(?:Web|Network|GPU)Process$/.test(exe)
+      )
+        found.push({ pid: Number(name), executable: exe });
+    }
+    return found;
+  };
   const request = async (method, route, body) => {
     const r = await fetch(`http://127.0.0.1:${port}${route}`, {
       method,
@@ -254,13 +273,31 @@ async function packageCase(pkg) {
   };
   const quit = async () => {
     if (!session) return;
-    await request("DELETE", `/session/${session}`);
-    session = undefined;
+    const pids = await ownedPids();
+    if (pids.length) {
+      assert.equal(pids.length, 1);
+      const windows = command(
+        "xdotool",
+        ["search", "--onlyvisible", "--pid", String(pids[0])],
+        { env },
+      ).split("\n");
+      assert.ok(
+        windows.length && windows[0],
+        "Owned application window for normal Linux close",
+      );
+      command("xdotool", ["windowactivate", "--sync", windows[0]], { env });
+      command("xdotool", ["key", "--clearmodifiers", "alt+F4"], { env });
+    }
     await wait(
-      async () => (await ownedPids()).length === 0,
-      "Full application process exit",
+      async () => (await ownedApplicationResources()).length === 0,
+      "Normal Alt+F4 must fully exit app, AppImage launcher and owned WebKit processes",
       15_000,
     );
+    await request("DELETE", `/session/${session}`).catch((error) => {
+      report.driverCloseAfterNormalAppExit ??= [];
+      report.driverCloseAfterNormalAppExit.push(String(error));
+    });
+    session = undefined;
   };
   const start = async (args) => {
     const r = await request("POST", "/session", {
@@ -327,6 +364,7 @@ async function packageCase(pkg) {
       "Running binary is exactly the inspected package binary",
     );
     report.launches.push(paths);
+    paths.ownedApplicationResources = await ownedApplicationResources();
     const mappedPaths = paths.mappedResources.map((line) =>
       line.trim().split(/\s+/).slice(5).join(" "),
     );
@@ -908,7 +946,33 @@ async function packageCase(pkg) {
       await fixture.close();
     }
     keyring?.kill("SIGTERM");
-    report.ownedApplicationClosed = (await ownedPids()).length === 0;
+    await wait(
+      async () => (await ownedApplicationResources()).length === 0,
+      "Owned native resource cleanup",
+      3_000,
+    ).catch(() => {});
+    report.ownedApplicationClosed =
+      (await ownedApplicationResources()).length === 0;
+    for (
+      let attempt = 0;
+      attempt < 30 &&
+      ((driver && driver.exitCode === null && driver.signalCode === null) ||
+        (keyring && keyring.exitCode === null && keyring.signalCode === null));
+      attempt++
+    )
+      await delay(100);
+    report.ownedDriverClosed =
+      !driver || driver.exitCode !== null || driver.signalCode !== null;
+    report.ownedKeyringClosed =
+      !keyring || keyring.exitCode !== null || keyring.signalCode !== null;
+    if (
+      !report.ownedApplicationClosed ||
+      !report.ownedDriverClosed ||
+      !report.ownedKeyringClosed
+    ) {
+      report.status = "failed";
+      report.pending.push("Owned app/driver/keyring cleanup is incomplete");
+    }
     if (kind === "deb" && application) {
       try {
         command("sudo", ["dpkg", "--remove", app.programma]);
