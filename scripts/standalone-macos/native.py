@@ -34,6 +34,7 @@ def environment(inherited):
 
 def suite_absence(root):
     found=[]
+    found.extend(str(p) for p in profile_paths(SUITE_ID,Path.home()) if p.exists() or p.is_symlink())
     for base in (Path("/Applications"),Path.home()/"Applications",Path(root)):
         if base.exists():
             for p in base.rglob("*.app"):
@@ -139,6 +140,10 @@ class Session:
                 if last.get("status")=="observed":
                     if last.get("bundleIdentifier")!=APPS[self.app][2] or Path(last.get("executableURL","")).resolve()!=self.exe.resolve():
                         raise Unavailable("Actual process bundle/executable identity differs")
+                    cwd=command(["/usr/sbin/lsof","-a","-p",str(self.process.pid),"-d","cwd","-Fn"])
+                    self.write("actual-cwd-"+str(self.process.pid)+".json",cwd)
+                    paths=[line[1:] for line in cwd["stdout"].splitlines() if line.startswith("n")]
+                    if cwd["code"] or paths!=[str(self.cwd)]:raise Unavailable("Actual owned process CWD differs or is unavailable")
                     self.report["ownCwdEnvironmentVerified"]=True
                     self.capture("opened");return last
             except (json.JSONDecodeError,subprocess.TimeoutExpired):pass

@@ -30,13 +30,13 @@ class Case:
             if node.get("AXEnabled") is False or not node.get("frame"):continue
             if action=="press" and "AXPress" not in node.get("actions",[]):continue
             if dialog:
-                ancestor=row;is_dialog=False
+                ancestor=row;dialog_found=False
                 while ancestor:
                     a=ancestor["attributes"]
                     if is_dialog(a):
-                        is_dialog=True;break
+                        dialog_found=True;break
                     ancestor=rows.get(ancestor["parent"])
-                if not is_dialog:continue
+                if not dialog_found:continue
             for field in ("AXDescription","AXTitle","AXIdentifier","AXValue"):
                 value=node.get(field)
                 if isinstance(value,str) and ((labels and value in labels) or (contains and contains in value)):
@@ -67,9 +67,13 @@ class Case:
     def file_dialog(self,path,*,save=False):
         path=Path(path).resolve()
         # Go To Folder is native. Never assign HTML input/model/backend values.
-        snapshot=self.s.ax("snapshot")
-        if not any(is_dialog(n) for n in attributes(snapshot)):
-            raise Unavailable("Expected native file dialog is not present")
+        deadline=time.monotonic()+4
+        while True:
+            snapshot=self.s.ax("snapshot")
+            if any(n.get("AXRole")=="AXSheet" or (n.get("AXRole")=="AXWindow" and "Dialog" in n.get("AXSubrole",""))
+                   for n in attributes(snapshot)):break
+            if time.monotonic()>=deadline:raise Unavailable("Expected native file dialog is not present")
+            time.sleep(0.2)
         self.s.ax("key","cmd-shift-g");time.sleep(0.4)
         self.replace(str(path.parent if save else path));self.s.ax("key","return");time.sleep(0.6)
         if save:
