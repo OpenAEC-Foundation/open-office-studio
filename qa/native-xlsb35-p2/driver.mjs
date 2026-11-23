@@ -32,6 +32,8 @@ assert.equal(identity.executableSha256, "62923344ce4d11f6892ed1b1d4064ff5b85ce50
 const oracle = (...args) => JSON.parse(execFileSync("/usr/bin/python3", [join(here, "oracle.py"), ...args],
   { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }));
 const sourceOracle = oracle();
+const bundledLabel = JSON.parse(await readFile("src/i18n/locales/en/backstage.json", "utf8")).saveAs.sourceBundled;
+assert.equal(bundledLabel, "included with the app");
 await mkdir(join(out, "input"), { recursive: true });
 const input = join(out, "input/NativeXLSB-source.xlsb");
 await copyFile(join(here, "shared_formula.xlsb"), input);
@@ -75,11 +77,12 @@ const evaluate = (fn, ...args) => command("POST", "/execute/sync", { script: `re
 function inspect() {
   const tab = document.querySelector('.office-tab[role=tab][aria-selected=true]');
   const panel = tab && document.getElementById(tab.getAttribute("aria-controls"));
-  const name = panel?.querySelector('[data-testid="xlsx-name-box"]');
+  const name = panel?.querySelector('.rekenblad-naamvak');
   const formula = panel?.querySelector('[data-testid="xlsx-formula-input"]');
   const save = document.querySelector('.office-snelknop[aria-label="Save"]');
   return { tab: tab?.textContent.trim(), panel: panel?.id, panelBlocked: Boolean(panel?.closest("[hidden],[inert]")),
     name: name?.value, formula: formula?.value,
+    readiness: { nameVisible: Boolean(name?.getClientRects().length), nameReadOnly: name?.readOnly, formulaVisible: Boolean(formula?.getClientRects().length), formulaDisabled: formula?.disabled, canvasVisible: Boolean(panel?.querySelector('[data-testid="xlsx-scroll"] canvas')?.getClientRects().length), fonts: document.fonts.status },
     ready: Boolean(name && formula && !name.readOnly && !formula.disabled && name.getClientRects().length &&
       panel?.querySelector('[data-testid="xlsx-scroll"] canvas')?.getClientRects().length && document.fonts.status === "loaded"),
     selectedCells: [...(panel?.querySelectorAll('[data-oos-rastercel][aria-selected=true]') ?? [])].map(c => ({
@@ -117,8 +120,8 @@ async function type(text, selector) {
   }
 }
 async function goTo(address, formula, value) {
-  await click('[data-testid="xlsx-name-box"]'); await key("ctrl+a");
-  await type(address, '[data-testid="xlsx-name-box"]'); await key("Return");
+  await click('.rekenblad-naamvak'); await key("ctrl+a");
+  await type(address, '.rekenblad-naamvak'); await key("Return");
   const actual = await waitFor(async () => {
     const s = await evaluate(inspect);
     const cell = s.selectedCells.find(c => c.address === address);
@@ -149,13 +152,13 @@ async function openDocument(path) {
   assert.equal(await realpath(`/proc/${pid}/exe`), application);
   assert.equal(hash(await readFile(`/proc/${pid}/exe`)), identity.executableSha256);
   await command("POST", "/window/rect", { width: 1600, height: 1000 });
+  guard = createWriter362XTestInput({ source: { pid, executableSha256: identity.executableSha256 },
+    ownedProfile: true, display: env.DISPLAY, observe: () => evaluate(writer362DocumentFocus) });
+  await guard.initialize();
   const ready = await waitFor(async () => {
     const s = await evaluate(inspect);
     return s.ready && !s.panelBlocked && s.nativeBackendPresent && s.tab?.startsWith(basename(path).replace(/\.xlsb$/i, ".xlsx")) ? s : null;
   }, "Native selected XLSB/XLSX document canvas/input ready", 90_000);
-  guard = createWriter362XTestInput({ source: { pid, executableSha256: identity.executableSha256 },
-    ownedProfile: true, display: env.DISPLAY, observe: () => evaluate(writer362DocumentFocus) });
-  await guard.initialize();
   const entry = { phase, pid, sessionId: session, sourcePath: path, ready, x11: guard.evidence };
   report.sessions.push(entry); return entry;
 }
@@ -179,9 +182,9 @@ async function nativeSaveAs(path) {
   const metadata = await waitFor(async () => {
     const value = await evaluate(() => ({ extension: document.querySelector(".opslaanals-naam em")?.textContent,
       runtime: document.querySelector(".opslaanals-runtime")?.textContent }));
-    return value.extension === ".xlsx" && /bundled|meegeleverd/i.test(value.runtime ?? "") ? value : null;
+    return value.extension === ".xlsx" && value.runtime?.includes(bundledLabel) ? value : null;
   }, "Actual XLSX Save As proposal and bundled runtime status", 30000);
-  assert.equal(metadata.extension, ".xlsx"); assert(/bundled|meegeleverd/i.test(metadata.runtime ?? ""));
+  assert.equal(metadata.extension, ".xlsx"); assert(metadata.runtime?.includes(bundledLabel));
   report.saveProposal = metadata;
   await click(".opslaanals-naam input"); await key("ctrl+a");
   await type(basename(path, ".xlsx"), ".opslaanals-naam input");

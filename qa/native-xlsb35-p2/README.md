@@ -1,4 +1,4 @@
-# Native XLSB #35 — installed P2 Office DEB, Linux
+# Native XLSB #35 â€” installed P2 Office DEB, Linux
 
 User-authorized platform split, coordinated by the existing integration chat:
 this branch owns **Linux only**, on a disposable private CI display. The existing
@@ -71,3 +71,12 @@ in the result; no other chat's processes/session may be terminated.
 
 Status: native execution pending. Previous content-only Linux proof stays valid
 at `fb7e7b8a`; it is not substituted for this native acceptance.
+
+First native run `45154508819` stopped before input: the driver inspected the
+engine name box that P2 deliberately hides via CSS. The visible P2 control is
+`.rekenblad-naamvak`; the driver now targets it, retaining actual editability and
+visibility checks. No product failure or native pass is claimed from that run.
+Its verified evidence ZIP is SHA256
+`0837aad9d6eed7289a12149f4e5675006ec504d0787ec637476e8b06b19c2afa`;
+Office and driver cleanup passed. The Save As runtime label is read from P2's
+English locale, and the shared caller now uses immutable `3f4ddecd` readiness.
