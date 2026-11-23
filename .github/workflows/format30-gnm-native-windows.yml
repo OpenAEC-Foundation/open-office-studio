@@ -1,0 +1,50 @@
+name: Format 30 native Windows GNM
+on:
+  push:
+    branches: [codex/formats-30-gnm-2026-11-23]
+    paths: [.github/format30-gnm-native-windows.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: format30-gnm-native-windows-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: windows-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce coordinated native GNM intake
+        shell: pwsh
+        run: |
+          $plan=Get-Content .github/format30-gnm-native-windows.json -Raw | ConvertFrom-Json
+          if ($plan.applicationCommit -cne 'dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b' -or $plan.applicationTree -cne '5a644e397ecc6af5452a49b6404edf953687d1b2' -or $plan.platform -cne 'Windows' -or $plan.coordinated -ne $true) { throw 'Uncoordinated or wrong native GNM candidate' }
+      - name: Download and hash canonical P2 Windows artifact once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/format30-gnm/native-windows/packages.py .local/gnm-native-package
+      - name: Test driver only; no application build or product source mutation
+        run: npm install --prefix .local/gnm-native-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Real native Open/edit/Save/Ctrl-S/full-exit/new-process/reopen
+        env:
+          OOS_GNM_NATIVE_HARNESS: ${{ github.sha }}
+        run: node scripts/format30-gnm/native-windows/native.mjs .local/gnm-native-package .local/gnm-native-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: format30-gnm-native-Windows-proof
+          path: |
+            .local/gnm-native-proof
+            .local/gnm-native-package/package.json
+            .local/gnm-native-package/source-run.json
+            .local/gnm-native-package/artifact-metadata.json
+          include-hidden-files: true
+          if-no-files-found: error
