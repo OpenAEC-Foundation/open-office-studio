@@ -62,7 +62,7 @@ def verify(app, path, edited=True):
         assert len(addresses) == 2 and all(address.endswith("@example.invalid") for _, address in addresses)
         body = message.get_body(preferencelist=("plain",)) if message.is_multipart() else message
         text = body.get_content()
-        contains_once(text, SEEDS[app])
+        contains_once(text, SEEDS[app]); contains_once(text, CONTROL)
         if edited: contains_once(text, MARKERS[app])
         assert SEEDS[app] in str(message["Subject"])
         result.update(subject=str(message["Subject"]), body=text)
