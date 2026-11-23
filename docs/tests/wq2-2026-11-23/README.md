@@ -6,6 +6,11 @@ tree `5a644e397ecc6af5452a49b6404edf953687d1b2`, version `2026.48.1`.
 Branch `codex/wq2-qa-2026-11-23-e0d7`; tested harness
 `369d138083c4e8c9d1cc84bb03754036ac7db6df`.
 
+Tracked separately as [issue #381](https://github.com/OpenAEC-Foundation/open-office-studio/issues/381),
+with `rekenblad`, `bug`, `formaten` labels and successful label validation
+[45172151980](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45172151980).
+No product fix or late release intake is included.
+
 **Strict source/format acceptance is false.** The converter copies native
 zero-based VLOOKUP arguments 1/2/3/4 to modern one-based arguments 1/2/3/4,
 instead of preserving their meaning with 2/3/4/5. Wrong formula semantics are
