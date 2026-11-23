@@ -1,0 +1,55 @@
+name: Format 30 native Windows STC
+on:
+  push:
+    branches: [codex/stc-native-windows-2026-11-23]
+    paths: [.github/stc-native-windows.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: stc-native-windows-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: windows-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce coordinated native STC intake
+        shell: pwsh
+        run: |
+          $plan=Get-Content .github/stc-native-windows.json -Raw | ConvertFrom-Json
+          if ($plan.applicationCommit -cne 'dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b' -or $plan.applicationTree -cne '5a644e397ecc6af5452a49b6404edf953687d1b2' -or $plan.platform -cne 'Windows' -or $plan.coordinated -ne $true) { throw 'Uncoordinated or wrong native STC candidate' }
+      - name: Download and hash canonical P2 Windows artifact once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python qa/stc-native-windows/packages.py .local/stc-native-package
+      - name: Test driver only; no application build or product source mutation
+        run: npm install --prefix .local/stc-native-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Real native Open/edit/Save/Ctrl-S/full-exit/new-process/reopen
+        env:
+          OOS_STC_NATIVE_HARNESS: ${{ github.sha }}
+        run: node qa/stc-native-windows/native.mjs .local/stc-native-package .local/stc-native-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stc-native-Windows-proof
+          path: |
+            .local/stc-native-proof
+            .local/stc-native-package/package.json
+            .local/stc-native-package/source-run.json
+            .local/stc-native-package/source-job.json
+            .local/stc-native-package/source-commit.json
+            .local/stc-native-package/artifact-metadata.json
+            .local/stc-native-package/canonical-package-report.zip
+            .local/stc-native-package/canonical-package-report.json
+            .local/stc-native-package/package-report-artifact-metadata.json
+          include-hidden-files: true
+          if-no-files-found: error
