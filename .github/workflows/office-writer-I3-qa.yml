@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: app
-          ref: 98b340429436cf597a569549d043bd75b486e2ab
+          ref: 04fa6cd43b84e3f59fb9d5055bb2d00dde351a47
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -46,23 +46,23 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Exact-source field SDK regression
         working-directory: app
-        run: node ../harness/qa/field374/sdk.mjs 98b340429436cf597a569549d043bd75b486e2ab .local/writer-481-QA-field-sdk
+        run: node ../harness/qa/field374/sdk.mjs 04fa6cd43b84e3f59fb9d5055bb2d00dde351a47 .local/writer-481-QA-field-sdk
       - name: Normal source-bound application and full combination
         working-directory: app
         run: |
           node scripts/writer-proefbuild.mjs build .local/dist-481-QA-normal /
           node ../harness/scripts/office-writer-I3-qa.mjs .local/dist-481-QA-normal /
-          node ../harness/qa/field374/browser.mjs 98b340429436cf597a569549d043bd75b486e2ab .local/dist-481-QA-normal / .local/writer-481-QA-field-normal
+          node ../harness/qa/field374/browser.mjs 04fa6cd43b84e3f59fb9d5055bb2d00dde351a47 .local/dist-481-QA-normal / .local/writer-481-QA-field-normal
         env:
-          OFFICE_TEST_SOURCE: 98b340429436cf597a569549d043bd75b486e2ab
+          OFFICE_TEST_SOURCE: 04fa6cd43b84e3f59fb9d5055bb2d00dde351a47
       - name: Hosted source-bound application and full combination
         working-directory: app
         run: |
           node scripts/writer-proefbuild.mjs build .local/dist-481-QA-hosted /office/
           node ../harness/scripts/office-writer-I3-qa.mjs .local/dist-481-QA-hosted /office/
-          node ../harness/qa/field374/browser.mjs 98b340429436cf597a569549d043bd75b486e2ab .local/dist-481-QA-hosted /office/ .local/writer-481-QA-field-hosted
+          node ../harness/qa/field374/browser.mjs 04fa6cd43b84e3f59fb9d5055bb2d00dde351a47 .local/dist-481-QA-hosted /office/ .local/writer-481-QA-field-hosted
         env:
-          OFFICE_TEST_SOURCE: 98b340429436cf597a569549d043bd75b486e2ab
+          OFFICE_TEST_SOURCE: 04fa6cd43b84e3f59fb9d5055bb2d00dde351a47
       - uses: actions/upload-artifact@v4
         if: always()
         with:
