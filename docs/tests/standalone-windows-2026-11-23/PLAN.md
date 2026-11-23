@@ -32,6 +32,29 @@ packaged WebView2/CDP attachment or any standalone application's function.
 Every real app must pass its own short native preflight before wider actions.
 The host result is reused, rather than rerun for each unrelated case edit.
 
+Original receipts and saved bytes for the successful run, plus all four failed
+attempts, are archived under `host-preflight/` with a byte hash inventory and
+`-text` Git attributes. Recheck actual focus/save/new-PID/file identities using
+`python -B scripts/standalone-windows-qa/audit-host.py`.
+
+Six focused helper contracts pass locally without a native app or capture:
+frozen-plan rejection, honest unfrozen plan, wrong Writer content rejection,
+Writer marker/external-link checks, spreadsheet formula/cached-result checks,
+and a real loopback IMAP login/list/fetch/append/readback plus MIME oracle and
+SMTP handshake/server closure. Run
+`python -B scripts/standalone-windows-qa/contracts_test.py`. These helper tests
+do not substitute for final native operation.
+
+The coordinator additionally permits at most one old public standalone Writer
+for host/driver preflight. Run `45139605467` prepares that bounded actual
+WebView2/chooser check only, from public release `v2026.46.2`, tag/source
+`cf65adf4b2ca76e4affd89f6f8812bfa4b8bec67`, tree
+`246fcdf922e327a464b06d780b687c091beeb7cc`, asset `741617327`, 73,593,696 bytes,
+SHA-256 `0d8db828c23379bddcad8f9028e12cef0e43b00e7a312c3b3ba8652774be7adb`.
+It remains explicitly **not final** even if successful. Its own runtime status
+is recorded without claiming modern bundled-runtime acceptance. No other old
+standalone app is used. The final six-app gate stays unfrozen.
+
 ## Canonical-package gate and host isolation
 
 `.github/standalone-windows-qa.json` stays **unfrozen**, with no final source,
