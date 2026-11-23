@@ -394,26 +394,63 @@ async function packageCase(pkg) {
       ),
       false,
     );
-    const metadata = await request(
-      "POST",
-      `/session/${session}/execute/async`,
-      {
-        script:
-          "const done=arguments[arguments.length-1]; Promise.all(['version','identifier','name'].map(name=>window.__TAURI_INTERNALS__.invoke('plugin:app|'+name))).then(([version,identifier,name])=>done({version,identifier,name}),error=>done({error:String(error)}))",
-        args: [],
-      },
-    );
-    assert.equal(
-      metadata.version,
-      origin.version,
-      "Actual native app version, including the portable AppImage",
-    );
-    assert.equal(
-      metadata.identifier,
-      app.identifier,
-      "Actual compiled native application identity",
-    );
-    report.nativeMetadata = metadata;
+    if (app.sleutel === "database") {
+      // This standalone app intentionally does not grant plugin:app metadata.
+      // Keep its ACL intact and bind identity through the pinned configuration,
+      // package/running ELF and the actual app-created WebKit profile instead.
+      const configPath = "apps/database-studio/src-tauri/tauri.conf.json";
+      const configBytes = await readFile(configPath),
+        config = JSON.parse(configBytes);
+      assert.equal(config.identifier, app.identifier);
+      assert.equal(config.productName, app.naam);
+      assert.equal(config.version, origin.version);
+      const uiVersion = await wait(
+        () =>
+          observe(
+            "return document.querySelector('.database-weekversie')?.getAttribute('title')",
+          ),
+        "Actual Database version label",
+      );
+      assert.ok(
+        uiVersion.includes(origin.version),
+        "Native Database UI displays the exact package/source version",
+      );
+      report.nativeMetadata = {
+        status: "not requested: deliberately unavailable by Database ACL",
+        apiExecuted: false,
+      };
+      report.databaseIdentityEvidence = {
+        sourceConfigPath: configPath,
+        sourceConfigSha256: hash(configBytes),
+        identifier: config.identifier,
+        productName: config.productName,
+        version: config.version,
+        nativeUiVersion: uiVersion,
+        binding:
+          "Pinned source/config and exact package/running ELF; actual own WebKit profile and absence of suite profile checked after native scenario",
+      };
+    } else {
+      const metadata = await request(
+        "POST",
+        `/session/${session}/execute/async`,
+        {
+          script:
+            "const done=arguments[arguments.length-1]; Promise.all(['version','identifier','name'].map(name=>window.__TAURI_INTERNALS__.invoke('plugin:app|'+name))).then(([version,identifier,name])=>done({version,identifier,name}),error=>done({error:String(error)}))",
+          args: [],
+        },
+      );
+      assert.equal(
+        metadata.version,
+        origin.version,
+        "Actual native app version, including the portable AppImage",
+      );
+      assert.equal(
+        metadata.identifier,
+        app.identifier,
+        "Actual compiled native application identity",
+      );
+      report.nativeMetadata = metadata;
+    }
     const pids = await wait(async () => {
       const p = await ownedPids();
       return p.length === 1 ? p : false;
