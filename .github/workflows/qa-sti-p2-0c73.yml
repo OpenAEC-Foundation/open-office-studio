@@ -1,0 +1,42 @@
+name: P2 isolated STI source and route QA
+on:
+  push:
+    branches: [codex/qa-sti-p2-2026-11-23-0c73]
+    paths:
+      - qa/sti-p2-2026-11-23-0c73/**
+      - .github/workflows/qa-sti-p2-0c73.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  sti-qa:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      OOS_STI_APPLICATION: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin "$OOS_STI_APPLICATION"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Dependency installation only: no Office build, suite, runtime or GUI.
+      - run: pnpm install --frozen-lockfile
+      - name: Original factory STI and conversion-independent source oracle
+        run: python qa/sti-p2-2026-11-23-0c73/fixture.py
+      - name: Read-only catalog, browser-boundary and real engine checks
+        run: pnpm exec vitest run --config qa/sti-p2-2026-11-23-0c73/vitest.config.ts --configLoader runner --reporter=json --outputFile=.local/qa-sti-p2-0c73/tests.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qa-sti-p2-0c73
+          path: .local/qa-sti-p2-0c73
+          include-hidden-files: true
+          if-no-files-found: warn
