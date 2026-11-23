@@ -1,0 +1,87 @@
+name: P5 Linux native XLSB import save policy 377
+on:
+  push:
+    branches: [codex/qa-xlsb377-native-retest-d410-2026-11-23]
+    paths:
+      - qa/xlsb377-native/**
+      - .github/workflows/qa-xlsb377-native-d410.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  APP_SOURCE: b696ab86bd1c128729a079b68c0082e6df3d36a5
+jobs:
+  native-377:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.APP_SOURCE }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/xlsb377-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Driver and private display only; no app build or manual Zenity install
+        run: |
+          sudo /usr/bin/python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo /usr/bin/python3 - <<'PY'
+          import importlib.util,pathlib
+          spec=importlib.util.spec_from_file_location('mirror','scripts/gebruik-ubuntu-hoofdarchief.py')
+          module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+          for name in ['apt-mirrors.txt','apt-mirrors-security.txt']:
+              path=pathlib.Path('/etc/apt')/name
+              if path.is_file():path.write_text(module.herschrijf_bronnen(path.read_text()))
+          PY
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0
+          cargo install tauri-driver --version 2.1.0 --locked
+          pnpm --dir .local/xlsb377-harness install --frozen-lockfile --ignore-scripts
+      - name: Genuine source oracle and immutable caller syntax
+        run: |
+          node --check .local/xlsb377-harness/qa/xlsb377-native/retest.mjs
+          /usr/bin/python3 .local/xlsb377-harness/qa/xlsb377-native/oracle.py
+      - name: Verify canonical small P5 transfer and actual installed Suite ELF
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: /usr/bin/python3 .local/xlsb377-harness/qa/xlsb377-native/package-input.py
+      - name: Native Ctrl S and Save propose XLSX; cancel and preserve original XLSB
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: |
+          export XDG_CONFIG_HOME="$PWD/.local/xlsb377-native/profile/config"
+          export XDG_DATA_HOME="$PWD/.local/xlsb377-native/profile/data"
+          export XDG_CACHE_HOME="$PWD/.local/xlsb377-native/profile/cache"
+          export XDG_CURRENT_DESKTOP=GNOME
+          export GDK_BACKEND=x11
+          unset NO_AT_BRIDGE
+          mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME"
+          xvfb-run -a -e .local/xlsb377-xvfb.log -s '-screen 0 1800x1200x24 -noreset' dbus-run-session -- bash .local/xlsb377-harness/qa/xlsb377-native/run.sh
+      - name: Preserve small scoped proof only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xlsb377-native-p5-${{ github.run_id }}
+          path: |
+            .local/xlsb377-input/identity.json
+            .local/xlsb377-input/api-input.json
+            .local/xlsb377-input/office-deb-descriptor.json
+            .local/xlsb377-input/apt-install.log
+            .local/xlsb377-input/verified/verified-input.json
+            .local/xlsb377-input/verified/pakketcontrole-Linux.json
+            .local/xlsb377-native/report.json
+            .local/xlsb377-native/*.png
+            .local/xlsb377-native/driver.log
+            .local/xlsb377-native/accessibility-*.txt
+            .local/xlsb377-xvfb.log
+          include-hidden-files: true
+          if-no-files-found: warn
