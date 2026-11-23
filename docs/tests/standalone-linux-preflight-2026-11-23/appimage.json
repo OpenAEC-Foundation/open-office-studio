@@ -1,0 +1,191 @@
+{
+  "purpose": "host-driver-preflight-NOT-final-acceptance",
+  "app": "notition",
+  "packageType": "appimage",
+  "sourceCommit": "e92b93a607c1bc6b2e37b56273ccc5047498f9e6",
+  "sourceTree": "2d9f2d74d26f685b83941da0ffb1c607b29ae10a",
+  "version": "2026.47.1",
+  "package": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Notition Studio_2026.47.1_amd64.AppImage",
+    "sha256": "f53bc8e9a6723325d70cecf23b5712506d0e3402f9e395a5fa9381340f0abcf7",
+    "bytes": 153864696
+  },
+  "identity": "org.openaec.notition-studio",
+  "harnessCommit": "5e016950786be87bbe8794095e83dbb91e952da9",
+  "harnessSha256": "10e67a6bd1becba18894586415f2fb46e16d0b9e69b072c2a004c3bd7b750035",
+  "signatureStatus": "not signed: detached Linux OpenPGP signatures are created only by the publishing job, which is not authorized",
+  "status": "passed",
+  "checks": [
+    "Package checksum, version, own executable/desktop identity and no Office payload verified",
+    "Local notebook title/text typed, Ctrl+S persisted and native backup exported",
+    "Full process exit, fresh-process reopen, own-profile persistence and no suite profile verified"
+  ],
+  "pending": [],
+  "externalRequirements": [
+    "Linux x64, GTK 3, WebKitGTK 4.1 and declared shared OS libraries"
+  ],
+  "limits": [
+    "Virtual X11/Xvfb, software rendering",
+    "One synthetic core scenario per app; no complete format/conversion or live account certification",
+    "Private conversion runtime presence is inspected where bundled; native format conversion is outside this core scenario"
+  ],
+  "cleanHostPackages": [
+    "fuse-overlayfs",
+    "fuse3",
+    "gir1.2-secret-1",
+    "gnome-keyring",
+    "libfuse2",
+    "libfuse3-3",
+    "libgtk-3-0",
+    "libgtk-3-common",
+    "libsecret-1-0",
+    "libsecret-1-dev",
+    "libsecret-common",
+    "libsecret-tools",
+    "libwebkit2gtk-4.1-0",
+    "python3-keyring",
+    "python3-secretstorage",
+    "ubuntu-keyring",
+    "webkit2gtk-driver"
+  ],
+  "appImageRoute": "Actual AppImage executable with APPIMAGE_EXTRACT_AND_RUN=1 (supported FUSE-free launch)",
+  "payloadExecutableSha256": "d185f1f0096e63a954d45e2d02b95c8cb7101a629be4d6d3d6f110cdb0bfc064",
+  "desktopEntry": "[Desktop Entry]\nType=Application\nName=Open Notition Studio\nExec=open-notition-studio\nStartupWMClass=open-notition-studio\nIcon=open-notition-studio\nTerminal=false\nCategories=Office;\n",
+  "resourcePaths": [
+    "<payload>/usr/share/applications/Open Notition Studio.desktop"
+  ],
+  "driver": {
+    "path": "/home/runner/.cargo/bin/tauri-driver",
+    "sha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "version": "2.1.0"
+  },
+  "nativeMetadata": {
+    "identifier": "org.openaec.notition-studio",
+    "name": "Open Notition Studio",
+    "version": "2026.47.1"
+  },
+  "launches": [
+    {
+      "pid": 4511,
+      "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+      "executableSha256": "d185f1f0096e63a954d45e2d02b95c8cb7101a629be4d6d3d6f110cdb0bfc064",
+      "environment": [
+        "XDG_DATA_HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/.local/share",
+        "XDG_CONFIG_HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/.config",
+        "HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home",
+        "XDG_CURRENT_DESKTOP=GNOME",
+        "APPDIR=/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798",
+        "XDG_CACHE_HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/.cache",
+        "APPIMAGE=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Notition Studio_2026.47.1_amd64.AppImage",
+        "XDG_RUNTIME_DIR=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/runtime",
+        "XDG_DATA_DIRS=/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/share/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/share:/usr/share:",
+        "LD_LIBRARY_PATH=/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/i386-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/x86_64-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib32/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib64/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib/i386-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib/x86_64-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib32/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib64/:"
+      ],
+      "mappedResources": [
+        "561023277000-561027746000 r--p 00000000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "561027746000-5610286bc000 r-xp 044ce000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "5610286bc000-56102874a000 r--p 05443000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "56102874a000-56102874e000 rw-p 054d0000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "561028752000-56102875b000 rw-p 05f45000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "7f0511a60000-7f0511a61000 r--s 00000000 103:01 9291394                   /home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/runtime/dconf/user"
+      ],
+      "ownedApplicationResources": [
+        {
+          "pid": 4507,
+          "executable": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Notition Studio_2026.47.1_amd64.AppImage"
+        },
+        {
+          "pid": 4511,
+          "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio"
+        },
+        {
+          "pid": 4564,
+          "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess"
+        },
+        {
+          "pid": 4569,
+          "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess"
+        }
+      ]
+    },
+    {
+      "pid": 4664,
+      "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+      "executableSha256": "d185f1f0096e63a954d45e2d02b95c8cb7101a629be4d6d3d6f110cdb0bfc064",
+      "environment": [
+        "XDG_DATA_HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/.local/share",
+        "XDG_CONFIG_HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/.config",
+        "HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home",
+        "XDG_CURRENT_DESKTOP=GNOME",
+        "APPDIR=/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798",
+        "XDG_CACHE_HOME=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/.cache",
+        "APPIMAGE=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Notition Studio_2026.47.1_amd64.AppImage",
+        "XDG_RUNTIME_DIR=/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/runtime",
+        "XDG_DATA_DIRS=/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/share/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/share:/usr/share:",
+        "LD_LIBRARY_PATH=/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/i386-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/x86_64-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib32/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib64/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib/i386-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib/x86_64-linux-gnu/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib32/:/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/lib64/:"
+      ],
+      "mappedResources": [
+        "55c767fae000-55c76c47d000 r--p 00000000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "55c76c47d000-55c76d3f3000 r-xp 044ce000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "55c76d3f3000-55c76d481000 r--p 05443000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "55c76d481000-55c76d485000 rw-p 054d0000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "55c76d489000-55c76d492000 rw-p 05f45000 103:01 9291406                   /tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio",
+        "7f3e1d00c000-7f3e1d00d000 r--s 00000000 103:01 9291394                   /home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-results/notition/appimage/empty-home/runtime/dconf/user"
+      ],
+      "ownedApplicationResources": [
+        {
+          "pid": 4663,
+          "executable": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Notition Studio_2026.47.1_amd64.AppImage"
+        },
+        {
+          "pid": 4664,
+          "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/bin/open-notition-studio"
+        },
+        {
+          "pid": 4684,
+          "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess"
+        },
+        {
+          "pid": 4689,
+          "executable": "/tmp/appimage_extracted_c6a3a7b4f1614f76d44a199648164798/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess"
+        }
+      ]
+    }
+  ],
+  "savedSha256": "5909a04dee9822ce73408dd59d259b98d69c359247c57d7b1b0ee3cf05bc0fd8",
+  "osDialogWindows": [
+    "Save a copy"
+  ],
+  "backupSha256": "5909a04dee9822ce73408dd59d259b98d69c359247c57d7b1b0ee3cf05bc0fd8",
+  "profilePaths": [
+    "<own-home>",
+    "<own-home>/runtime",
+    "<own-home>/runtime/dconf",
+    "<own-home>/runtime/dconf/user",
+    "<own-home>/.local",
+    "<own-home>/.local/share",
+    "<own-home>/.local/share/org.openaec.notition-studio",
+    "<own-home>/.local/share/org.openaec.notition-studio/CacheStorage",
+    "<own-home>/.local/share/org.openaec.notition-studio/CacheStorage/salt",
+    "<own-home>/.local/share/org.openaec.notition-studio/localstorage",
+    "<own-home>/.local/share/org.openaec.notition-studio/localstorage/tauri_localhost_0.localstorage",
+    "<own-home>/.local/share/org.openaec.notition-studio/storage",
+    "<own-home>/.local/share/org.openaec.notition-studio/storage/salt",
+    "<own-home>/.local/share/org.openaec.notition-studio/mediakeys",
+    "<own-home>/.local/share/org.openaec.notition-studio/mediakeys/v1",
+    "<own-home>/.local/share/org.openaec.notition-studio/mediakeys/v1/salt",
+    "<own-home>/.local/share/org.openaec.notition-studio/hsts-storage.sqlite",
+    "<own-home>/.local/share/org.openaec.notition-studio/WebKitCache",
+    "<own-home>/.local/share/org.openaec.notition-studio/WebKitCache/Version 17",
+    "<own-home>/.local/share/org.openaec.notition-studio/WebKitCache/Version 17/salt",
+    "<own-home>/.local/share/org.openaec.notition-studio/WebKitCache/Version 17/Blobs",
+    "<own-home>/.cache",
+    "<own-home>/.config",
+    "<own-home>/.config/org.openaec.notition-studio",
+    "<own-home>/.config/org.openaec.notition-studio/voorkeuren.json"
+  ],
+  "ownedApplicationClosed": true,
+  "ownedDriverClosed": true,
+  "ownedKeyringClosed": true,
+  "ownedProfilesRemoved": true
+}

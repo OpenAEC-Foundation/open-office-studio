@@ -11,8 +11,39 @@
     "artifactRun": 44747669364,
     "firstRun": 45138441125,
     "firstResult": "test infrastructure stopped before any app: Ubuntu Python 3.10 lacks hashlib.file_digest; streaming SHA256 correction applied",
-    "retryRun": 45138820006,
-    "retryResult": "running"
+    "successfulRun": 45143000504,
+    "successfulHarnessCommit": "5e016950786be87bbe8794095e83dbb91e952da9",
+    "result": "Both old Notition DEB and AppImage passed native keyboard/Ctrl+S, exact-name backup export, independent JSON, normal Alt+F4, complete app/launcher/WebKit exit, fresh process reopen and own profile persistence; all owned app/driver/profile cleanup confirmed. NOT final 2026.48.1 acceptance.",
+    "artifactName": "standalone-linux-notition",
+    "appImageSha256": "f53bc8e9a6723325d70cecf23b5712506d0e3402f9e395a5fa9381340f0abcf7",
+    "debSha256": "3ea6896ce272eafb1803bfcf84d6ed0617451b568fe8fd55e0eb6f4dc7fa0b5d",
+    "earlierDriverRuns": [
+      {
+        "run": 45138820006,
+        "result": "isolated HOME omitted XAUTHORITY, GTK could not start; driver corrected"
+      },
+      {
+        "run": 45139507265,
+        "result": "repository folder open-office-studio was falsely matched as a suite mapping; exact resource paths corrected"
+      },
+      {
+        "run": 45140955420,
+        "result": "OS dialog focus/name selection was not assured; explicit focus and Ctrl+A corrected the duplicate extension observation, no product issue"
+      },
+      {
+        "run": 45142112108,
+        "result": "DEB passed; AppImage actual app child survived automation DELETE/session, then normal window close was adopted without weakening full process exit"
+      }
+    ],
+    "failedEvidence": "Earlier failed Actions runs/artifacts remain available; no app bug was inferred from these driver failures. Immutable own app inputs were reused for later repetitions."
+  },
+  "osFixtureChecks": {
+    "run": 45140292922,
+    "harnessCommit": "1ce80667f56cde47fcf10878a39ecdcc2c0d08ea",
+    "result": "Real headless Secret Service store/lookup/clear in an empty isolated HOME and synthetic loopback IMAP protocol passed; daemon exited and own HOME removed",
+    "report": "standalone-linux-host-2026-11-23.json",
+    "reportSha256": "1885e25e8c53541984009a269488a55cac07799cda968fd40b04adcbfe242e74",
+    "limit": "OS fixture readiness only; native Email itself is still pending final packages"
   },
   "localChecks": {
     "provenanceAndIsolationContracts": "4 passed",
