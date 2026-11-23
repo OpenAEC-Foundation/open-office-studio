@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "status": "Completed the agreed bounded Linux Suite acceptance; wider ribbon matrix remains explicitly partial",
+  "fullNativeAcceptance": false,
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05"
+  },
+  "version": "2026.48.1",
+  "branch": "codex/linux-suite-final-acceptance-2026-11-23",
+  "completedScopes": [
+    {
+      "scope": "DEB core368/369 and vertical362",
+      "run": 45189806911,
+      "job": 137745078121,
+      "harness": "e230df9ee4a019db01368d93689893fb2b03d245",
+      "checks": 64,
+      "contentCases": 258,
+      "groupCases": 24,
+      "note": "Original core step passed; original job failed later in an unrelated driver stage. Reused under exact source/package/ELF/probe/report hashes."
+    },
+    {
+      "scope": "Actual Suite AppImage preflight/native missing helper/Cancel/Overwrite/save/fullquit/newPID",
+      "run": 45193170006,
+      "job": 137756775739,
+      "harness": "55a651186c35bde2937a1a8c529c4c2c984d0085",
+      "checks": {
+        "missingPreflight": 13,
+        "positive": 7
+      },
+      "jobConclusion": "success"
+    },
+    {
+      "scope": "DEB374 actual retained control and native short edit/title paint/save/newPID",
+      "run": 45193639082,
+      "job": 137758403838,
+      "harness": "80f85a5cb4ae536f1bf7248fbe4cfeeb2653d7d4",
+      "checks": 19,
+      "sharedFieldAudits": 8,
+      "note": "Step passed; later DEB missing-helper setup failed. Seven original native title images reviewed serially."
+    },
+    {
+      "scope": "DEB378 actual native Cancel/Overwrite/save/newPID",
+      "run": 45193639082,
+      "job": 137758403838,
+      "harness": "80f85a5cb4ae536f1bf7248fbe4cfeeb2653d7d4",
+      "checksThroughPositive": 16,
+      "note": "Positive completed before a later setup error; original failed report unchanged."
+    },
+    {
+      "scope": "Only DEB378 own-child PATH missing-helper case plus necessary fresh-host preflight",
+      "run": 45196900595,
+      "job": 137769907340,
+      "attempt": 1,
+      "harness": "332aa081b7579b39cb39f0499b9d0669b4a3d239",
+      "checks": 13,
+      "jobConclusion": "success"
+    }
+  ],
+  "completedProofs": [
+    {
+      "path": "checkpoint.json",
+      "sha256": "8038be5fbcd0e520774a52ef5a296f7708008fa03ce1267b1dae926f16c3914e"
+    },
+    {
+      "path": "deb374-and-positive.json",
+      "sha256": "edf409cfdff80d1ed7c074478bed0906199f5113ecb4ecef55262b69df26328a"
+    }
+  ],
+  "finalNegative": {
+    "artifact": {
+      "id": 14830235258,
+      "zipBytes": 1126751,
+      "sha256": "1ff5ec2fb1f91245f778408e5a52b57b00f5f25890a383e9e2e6f654fea74160",
+      "privatePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-linux-suite-final-acceptance-2026-11-23\\.local\\final-native-proof\\45196900595\\deb\\14830235258.zip"
+    },
+    "report": {
+      "path": "deb378/missing-report.json",
+      "sha256": "926dde765c14283467f921bddcfc8bab5573581298935047b8697e5ef1dd6c4d"
+    },
+    "packageSha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+    "installedElfSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "missingRequirement": {
+      "status": "passed bounded actual package missing-helper negative",
+      "error": "ErrorSaving failed: Linux requires Zenity for native confirmation dialogs. Install the zenity package and try again.",
+      "targetSha256": "e8622b73654da503d1f273707557d631b0b5b5bcc90eb281d94c235c4fd048f2",
+      "packageType": "deb",
+      "initialHostHelper": "/usr/bin/zenity",
+      "environment": "Only app child PATH cannot resolve helper; host unchanged"
+    },
+    "independentlyVerifiedFinalTarget": {
+      "path": "deb378/unchanged-missing-helper-target.docx",
+      "sha256": "e8622b73654da503d1f273707557d631b0b5b5bcc90eb281d94c235c4fd048f2"
+    },
+    "image": {
+      "originalPath": "linux-p2-native/suite-final-deb-confirm378-missing/missing-helper-error.png",
+      "sha256": "31df59473555c7db23774b435b5dd6e99c0e32358d4bf56c10da26ea41a6a856",
+      "byteIdenticalToReviewedCommittedPath": "appimage/missing-helper-error.png",
+      "review": "Exact-byte deduplication of already serially reviewed real visible error/body image"
+    },
+    "actualGraphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    },
+    "resourceObservations": [
+      {
+        "pid": 5364,
+        "uid": 1001,
+        "comm": "WebKitWebProces",
+        "stateBefore": "Z",
+        "startTime": "113720",
+        "processGroup": 5334,
+        "expectedProcessGroup": 5334,
+        "statBefore": "5364 (WebKitWebProces) Z 1 5334 5334 0 -1 4227084 397110 0 41 0 1531 844 0 0 20 0 2 0 113720 0 0 18446744073709551615 0 0 0 0 0 0 0 4096 8390208 0 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+        "statAfter": "5364 (WebKitWebProces) Z 1 5334 5334 0 -1 4227084 397110 0 41 0 1531 844 0 0 20 0 2 0 113720 0 0 18446744073709551615 0 0 0 0 0 0 0 4096 8390208 0 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+        "stateAfter": "Z",
+        "status": "kernel-exited-before-environment-read",
+        "at": "2026-11-23T14:44:11.927Z"
+      },
+      {
+        "pid": 5510,
+        "uid": 1001,
+        "comm": "WebKitNetworkPr",
+        "stateBefore": "Z",
+        "startTime": "115958",
+        "processGroup": 5334,
+        "expectedProcessGroup": 5334,
+        "statBefore": "5510 (WebKitNetworkPr) Z 1 5334 5334 0 -1 4227084 3172 0 0 0 5 8 0 0 20 0 2 0 115958 0 0 18446744073709551615 0 0 0 0 0 0 0 4096 8389120 0 0 0 17 3 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+        "statAfter": "5510 (WebKitNetworkPr) Z 1 5334 5334 0 -1 4227084 3172 0 0 0 5 8 0 0 20 0 2 0 115958 0 0 18446744073709551615 0 0 0 0 0 0 0 4096 8389120 0 0 0 17 3 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+        "stateAfter": "Z",
+        "status": "kernel-exited-before-environment-read",
+        "at": "2026-11-23T14:44:26.812Z"
+      }
+    ],
+    "cleanup": {
+      "registeredPortalPeers": [
+        {
+          "name": "org.freedesktop.impl.portal.desktop.gtk",
+          "uniqueName": ":1.18",
+          "pid": 5243,
+          "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+          "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+          "startTime": "113517",
+          "busId": "2c6f95d528f033a2f6ebe02a6b045120",
+          "closed": true
+        },
+        {
+          "name": "org.freedesktop.portal.Desktop",
+          "uniqueName": ":1.2",
+          "pid": 5217,
+          "executable": "/usr/libexec/xdg-desktop-portal",
+          "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+          "startTime": "113499",
+          "busId": "2c6f95d528f033a2f6ebe02a6b045120",
+          "closed": true
+        }
+      ],
+      "children": [
+        {
+          "label": "owned portal broker",
+          "pid": 5217,
+          "closed": true
+        },
+        {
+          "label": "owned GTK portal",
+          "pid": 5216,
+          "closed": true
+        },
+        {
+          "label": "owned window manager",
+          "pid": 5215,
+          "closed": true
+        }
+      ],
+      "driverExited": true,
+      "remainingOwnedResources": [],
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    }
+  },
+  "historicalFailuresRetained": [
+    {
+      "run": 45189806911,
+      "note": "Protected unrelated /proc environment scan; native core completed independently"
+    },
+    {
+      "run": 45190839269,
+      "note": "Protected unrelated same-UID environment scan before app start"
+    },
+    {
+      "run": 45191304695,
+      "note": "Cancelled before app operation after known scan defect, no app verdict"
+    },
+    {
+      "run": 45191795863,
+      "note": "Repeated SaveFile observer reused a previous PID proof; separate AppImage terminal WebView response lost on actual exit0"
+    },
+    {
+      "run": 45193639082,
+      "note": "WebKit PID24023 EACCES after completed positive cases; state at the historical error was not captured. No historical zombie claim."
+    }
+  ],
+  "limits": [
+    "Six genuine disabled-Delete states were not reachable through this supported fixture; no synthetic attributes, force CSS, model setters or JS focus were used. Full ribbon nativePass remains false.",
+    "Raw group horizontal clipping exists in four cases; #362 vertical criterion remained strict, with zero clippedY group cases and zero clipped content observations.",
+    "Older black/blank document-body images remain preserved and certify no body paint. New body/title paint is genuinely visible on the explicitly allowed existing Xvfb software graphics path.",
+    "Native field font substitutions and wrapping are explicitly visible; no broad typography or pagination certification.",
+    "Only the canonical P5 Linux Suite DEB and AppImage package bytes are covered. No GPG/signing, RPM, six standalone app, other OS, main merge, tag or publication claim.",
+    "Independent final field content/cache/style/placeholder audit is owned by 9d3b; this receipt records native images and the unchanged shared oracle checks."
+  ],
+  "cleanup": {
+    "allCompletedReportsOwnedApplicationClosed": true,
+    "allCompletedReportsDriverExited": true,
+    "liveOwnedResourcesRemaining": [],
+    "localGuiOrRecordingStarted": false,
+    "localOwnedPreviewServersOrBrowsersStarted": false,
+    "ghWatchProcessesCompleted": true
+  }
+}

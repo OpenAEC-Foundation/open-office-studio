@@ -1,0 +1,7 @@
+# P5 Linux Suite native acceptance
+
+The agreed Linux Suite scopes completed on APP `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree `e30879fd772871e690847c061ef66e6b81808a05`, version 2026.48.1. The immutable original DEB/AppImage transfers were consumed with official artifact, source/job/attempt, report, package and installed/running ELF gates. No application build or parent ZIP download was performed by this consumer.
+
+`final-receipt.json` binds the completed core, AppImage, native title and confirmation cases to their own external QA commits and original artifacts. Core64 and the AppImage scope were not repeated. Native374 retained the real cached field and exact short marker, saved through real native pickers and reopened fresh processes; seven original title images show no observed title/run overlap. The final DEB negative case used only a private child PATH, retained the target hash and showed the actionable missing-Zenity error. Actual user Cancel remained a separate successful native case.
+
+The full ribbon matrix remains partial because six genuine disabled-Delete states were unreachable with the supported fixture. Raw horizontal observations, old blank/black body images and failed attempts remain preserved. The later successful body/title images use the explicitly recorded existing Xvfb/software graphics configuration. No blanket native, all-platform, signed-distribution or publication verdict is made. All completed owned app/driver/portal/window-manager sessions were closed; no local GUI or recording was started.

@@ -1,6 +1,9 @@
 # Final Linux Suite QA preparation
 
-Execution is authorized by the coordinator in [request.json](request.json).
+The agreed execution completed. [request.json](request.json) is now `go=false`
+to prevent another native invocation on later QA/documentation pushes.
+The exact source/package/harness cases and remaining wider-matrix limits are in
+`docs/tests/2026-11-23-linux-suite-p5/final-receipt.json`.
 The own-UID process-scan correction preserves the original failed attempts.
 The DEB continuation reuses the already completed P5 core proof
 from45189806911 under exact official archive/report/source/package/ELF/probe hashes,
