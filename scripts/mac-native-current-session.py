@@ -87,6 +87,8 @@ def main():
                       limits=["Only the missing361 controls are newly executed; earlier exact-package core is explicitly verified and reused",
                               "New-host focus/save/Undo/Redo is checked before Tab/Find/two-document input",
                               "Native modal-dialog Undo and signed-package combination remain separate"])
+    if args.tab_save_oracle:
+        report.update(diagnosticOnly=True, acceptanceRequested=False)
     app = program = pid = app_container = None
     mount = out / "mount"
     mounted = started = False
