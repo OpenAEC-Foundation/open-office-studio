@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+test "${GITHUB_ACTIONS:-}" = true
+test "$(uname -s)" = Linux
+dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME GDK_BACKEND
+baseline=$(gsettings get org.gnome.desktop.interface toolkit-accessibility)
+restore() {
+  result=$?
+  gsettings set org.gnome.desktop.interface toolkit-accessibility "$baseline"
+  gsettings get org.gnome.desktop.interface toolkit-accessibility > .local/xlsb377-native/accessibility-after.txt
+  exit "$result"
+}
+trap restore EXIT
+printf '%s\n' "$baseline" > .local/xlsb377-native/accessibility-before.txt
+gsettings set org.gnome.desktop.interface toolkit-accessibility true
+node .local/xlsb377-harness/qa/xlsb377-native/retest.mjs
