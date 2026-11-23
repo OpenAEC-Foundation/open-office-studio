@@ -9,12 +9,15 @@ not successful test results. The macOS #359 suite blocker takes precedence.
 | Native Windows | Existing tester chat 750b, within its Suite/Writer claim | Assigned, not yet passed |
 | Native macOS | Existing chat 6f92 (`optimalisatie`) | Assigned, not yet passed |
 | Native Linux DEB and AppImage | Existing `writer_362`, after current P2 core proof | Assigned, not yet passed |
-| Actual browser limitation on `/` and `/office/` | This STW QA chat 9d3b | Assigned after canonical payload comparison; current Node guard is not browser evidence |
+| Actual browser limitation on `/` and `/office/` | This STW QA chat 9d3b | Passed: actual Linux Chromium upload/advice + independent saved-DOCX XML equality, run 45150936369 |
 
 These are integration's latest assignments, superseding its initial allocation to
 8020/standalone_linux. Chat 8020 retains GNM; this chat does not take that scope.
-The new browser driver reuses its proven driver at
+The browser driver reuses its proven driver at
 `d21243acad54235e2674f7e89f44db75cf6bcb44`, narrowed to the genuine STW fixture.
+The full browser artifact ZIP was independently hashed and its reports, images,
+source receipts and four saved DOCX files audited; see `browser-audit.json`.
+This actual browser evidence is separate from the historical Node guard.
 
 The actual standalone release packages are not available at this handoff. Integration
 will provide their source/version/artifact/package manifest when each platform's own

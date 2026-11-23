@@ -204,5 +204,54 @@
     "No non-empty table in source",
     "No universal STW variant, font substitution, pagination or complete TOC-field fidelity claim",
     "No Windows/macOS native checks; no browser STW support claim; no release/catalog promotion"
-  ]
+  ],
+  "actualBrowserEvidence": {
+    "status": "passed",
+    "source": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "run": 45150936369,
+    "harnessCommit": "50dcb5dfbf49248c7c126f8881a108981f1bf8d6",
+    "artifactId": 14805758723,
+    "artifactDigest": "sha256:112173947d7aa4046032a9599e6018a92864fee24e1f855ce3e4897503b9cdbd",
+    "routes": [
+      {
+        "route": "/",
+        "actualStwUpload": true,
+        "visibleDesktopDocxAdvice": "Error\n\nOpening failed: Error: This STW file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as DOCX or RTF, then open that copy.",
+        "tabsAndSelectionPreserved": true,
+        "savedDocxXmlEqual": true,
+        "savedFiles": 2,
+        "cleanupConfirmed": true
+      },
+      {
+        "route": "/office/",
+        "actualStwUpload": true,
+        "visibleDesktopDocxAdvice": "Error\n\nOpening failed: Error: This STW file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as DOCX or RTF, then open that copy.",
+        "tabsAndSelectionPreserved": true,
+        "savedDocxXmlEqual": true,
+        "savedFiles": 2,
+        "cleanupConfirmed": true
+      }
+    ],
+    "scope": "Actual Linux Chromium browser limitation; no native app/runtime support claim"
+  },
+  "nativeStatus": {
+    "windows": {
+      "owner": "Existing tester750b via integration",
+      "status": "assigned; result pending"
+    },
+    "linux": {
+      "owner": "Existing writer_362 via integration",
+      "packages": [
+        "DEB",
+        "AppImage"
+      ],
+      "status": "assigned after P2 core proof; result pending"
+    },
+    "macOS": {
+      "owner": "Existing6f92 via integration",
+      "status": "assigned after #359 critical suite check/Writer package; result pending"
+    },
+    "coordination": "Integration9635 remains sole coordinator and supplies actual package/result manifests"
+  }
 }

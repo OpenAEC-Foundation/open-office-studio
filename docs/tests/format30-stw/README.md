@@ -86,13 +86,41 @@ The 13,946 runtime payload entries have canonical JSON SHA-256
 | Platform/route | Evidence | Remaining |
 | --- | --- | --- |
 | Linux private converter + live Writer kernel, canonical DEB runtime payload | Passed on exact P2, including all payload file identities | Native UI/IPC/dialog and installer acceptance |
-| Browser | Node guard passed; additional actual Linux Chromium `/` and `/office/` test in progress | Actual browser artifact audit pending |
+| Browser | Actual Linux Chromium STW upload, visible desktop/DOCX advice, retained active tab and independently unchanged saved DOCX XML pass on `/` and `/office/` | No STW browser conversion support claimed |
 | Windows | No runtime/GUI execution in this assignment | Native checks remain open |
 | macOS | No build or runner claimed | Native checks remain open |
 
 `native-handoff.md` records integration's current Windows, Linux and macOS owners,
 their acceptance steps, and the current browser assignment. Assignments are not
 native passes. The actual standalone app bytes/results remain with integration.
+
+## Actual browser evidence
+
+[45150936369](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45150936369)
+at harness `50dcb5dfbf49248c7c126f8881a108981f1bf8d6` passes both supported routes.
+This is actual Chromium UI at the exact P2 source/tree, not the earlier Node guard.
+The driver reuses the proven GNM browser mechanics from
+`d21243acad54235e2674f7e89f44db75cf6bcb44`, narrowed to STW. It verifies input focus,
+types a unique marker into an existing DOCX, saves through the actual download
+dialog, uploads the real STW through the app's file input, checks visible safe
+advice and preserved tab/selection, then saves the existing document again.
+
+The downloaded artifact ID is `14805758723`, 404,461 bytes, full ZIP SHA-256
+`112173947d7aa4046032a9599e6018a92864fee24e1f855ce3e4897503b9cdbd`.
+`browser-proof/` retains this small exact ZIP plus official run/artifact metadata.
+`browser-audit.json` is the independent audit: all archive bytes/extracted files,
+source/build receipt bindings, STW fixture hash, two visible advice images, active
+tab preservation, all four saved DOCX files, and identical before/after document
+XML are verified. The advice and retained-document screenshots were visually
+inspected. There were no page errors or external browser requests. Both browser
+contexts, Chromium processes and preview servers closed successfully.
+
+To reproduce the read-only evidence audit, extract `browser-proof/artifact.zip`
+under `browser-proof/files`, then run
+`python scripts/format30-stw-browser-audit.py docs/tests/format30-stw/browser-proof OUTPUT.json`.
+This audit invokes neither office runtime nor browser. Native Windows (`750b`),
+Linux DEB/AppImage (`writer_362`) and macOS (`6f92`) results remain pending with
+integration; successful browser advice is not a native STW opening pass.
 
 This is body-text/selected-style/placeholder evidence for one real template.
 Headers/footers, full TOC evaluation, pagination, font substitution, universal STW
