@@ -68,7 +68,11 @@ def main():
         (args.output/"receipt.json").write_text(json.dumps({"nativeAccepted":False,"status":"host-unavailable",
             "source":request["source"],"provenance":proof,"capabilities":capabilities},indent=2)+"\n")
         raise SystemExit(3)
-    session=Session(args.app,args.output,helper);failure=None
+    ocr=None
+    if args.app=="writer":
+        ocr=args.output.parent/"standalone-ocr"
+        subprocess.run(["/usr/bin/swiftc",root/"scripts/standalone-macos/ocr.swift","-o",ocr],check=True)
+    session=Session(args.app,args.output,helper);failure=None;session.ocr=ocr
     session.report.update(source=request["source"],provenance=proof,capabilities=capabilities,
                           visualReviewPassed=False,resourceObservationsReviewed=False,resourceIndependencePassed=False,
                           limitations=["Original native screenshots require visual review.",

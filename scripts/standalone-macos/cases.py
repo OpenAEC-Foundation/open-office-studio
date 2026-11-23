@@ -3,11 +3,14 @@ from pathlib import Path
 import time
 import zipfile
 import xml.etree.ElementTree as ET
-from fixtures import SEEDS,MARKERS,CONTROL
+from fixtures import SEEDS,MARKERS,CONTROL,WRITER_ANCHOR,WRITER_VISIBLE_EDIT
 from native import Unavailable
 from oracles import verify
 from contracts import digest
 from mail_fixture_server import USER,PASSWORD
+from vision import visible_word
+from native import command
+import json
 
 
 def attributes(snapshot):return [n["attributes"] for n in snapshot.get("rawNodes",[])]
@@ -99,7 +102,12 @@ class Case:
     def office(self):
         app=self.s.app
         if app=="writer":
-            self.select(["AXTextArea"],contains=SEEDS[app]);self.append(" "+MARKERS[app],SEEDS[app])
+            target=self.writer_visible(WRITER_ANCHOR,"before-input")
+            self.s.ax("click-point",target)
+            focused=self.focus("Document input")
+            if focused.get("AXDescription")!="Document input" or focused.get("AXRole")!="AXTextArea":
+                raise Unavailable("Actual visible body click did not focus exact Document input")
+            self.s.ax("key","cmd-end");self.s.ax("type"," "+MARKERS[app]+" "+WRITER_VISIBLE_EDIT)
         elif app=="spreadsheet":
             self.select(["AXTextField","AXComboBox"],["Name box"]);self.replace("B2");self.s.ax("key","return");time.sleep(0.4)
             self.focus();self.s.ax("type","42");self.s.ax("key","return")
@@ -119,11 +127,27 @@ class Case:
             # Export and a new PID are necessary but not enough: inspect native value too.
             if not any(n.get("AXValue") in ("42",42) for n in attributes(self.s.ax("snapshot"))):
                 raise Unavailable("Reopened B2 native value 42 not independently visible in AX")
+        elif app=="writer":
+            self.writer_visible(WRITER_VISIBLE_EDIT,"reopened-visible-edit")
         else:
             if not any(MARKERS[app] in str(n.get("AXValue","")) for n in attributes(self.s.ax("snapshot"))):
                 raise Unavailable("Edited text absent from cold-reopened native UI")
         self.s.write("reopened-oracle.json",verify(app,self.fixture));self.s.capture("reopened")
         self.runtime_export()
+
+    def writer_visible(self,text,label):
+        last=None
+        for attempt in range(3):
+            image,snapshot=self.s.capture_original(label+"-"+str(attempt))
+            output=image.with_suffix(".ocr.json")
+            result=command([self.s.ocr,image,output],timeout=30)
+            if result["code"]:raise Unavailable("Native Vision original-pixel inspection failed")
+            try:
+                target=visible_word(json.loads(output.read_text()),snapshot,self.s.process.pid,digest(image),text)
+                self.s.write(image.stem+"-target.json",target)
+                return target
+            except Unavailable as error:last=error;time.sleep(0.5)
+        raise Unavailable("Visible Writer body target unavailable; no input or paint primer sent: "+str(last))
 
     def runtime_export(self):
         app=self.s.app

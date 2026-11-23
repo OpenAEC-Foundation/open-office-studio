@@ -171,6 +171,17 @@ class Session:
         self.observe_resources(label)
         return snapshot
 
+    def capture_original(self,label):
+        self.ax("activate")
+        snapshot=self.ax("snapshot")
+        windows=[w for w in snapshot.get("ownedScreenWindows",[]) if w.get("kCGWindowLayer")==0 and w.get("kCGWindowOwnerPID")==self.process.pid]
+        if len(windows)!=1:raise Unavailable("Exactly one owned on-screen original window required")
+        path=self.root/(str(self.sequence)+"-"+label+"-original.png")
+        result=command(["/usr/sbin/screencapture","-x","-o","-l",str(windows[0]["kCGWindowNumber"]),path])
+        self.write(str(self.sequence)+"-"+label+"-capture.json",result)
+        if result["code"] or not path.is_file():raise Unavailable("Original no-shadow native window capture unavailable")
+        return path,snapshot
+
     def observe_resources(self,label):
         pid=self.process.pid
         self.write(str(self.sequence)+"-resources-"+label+".json",{

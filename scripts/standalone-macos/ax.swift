@@ -27,6 +27,8 @@ report["bundleIdentifier"] = running.bundleIdentifier.map { $0 as Any } ?? NSNul
 report["executableURL"] = running.executableURL.map { $0.path as Any } ?? NSNull()
 report["bundleURL"] = running.bundleURL.map { $0.path as Any } ?? NSNull()
 report["frontmost"] = NSWorkspace.shared.frontmostApplication?.processIdentifier == pid
+let display=CGDisplayBounds(CGMainDisplayID())
+report["mainDisplay"]=["X":display.minX,"Y":display.minY,"Width":display.width,"Height":display.height]
 let app = AXUIElementCreateApplication(pid)
 AXUIElementSetMessagingTimeout(app, 0.3)
 let deadline = Date().addingTimeInterval(10)
@@ -90,7 +92,32 @@ Thread.sleep(forTimeInterval:0.2)
 guard NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {
     report["reason"]="Target did not become frontmost";finish(3)
 }
-if action=="press" || action=="click" {
+if action=="activate" {
+    report["status"]="input-sent";finish()
+} else if action=="click-point" {
+    let fresh=CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String:Any]] ?? []
+    let owned=fresh.filter {($0[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value==pid && ($0[kCGWindowLayer as String] as? NSNumber)?.intValue==0}
+    guard running.bundleIdentifier=="org.openaec.writer-studio",owned.count==1,arguments.count==4,
+          let raw=arguments[3].data(using:.utf8),let spec=try? JSONSerialization.jsonObject(with:raw) as? [String:Any],
+          spec["source"] as? String=="native-original-ocr",let word=spec["word"] as? String,["velvet","marigold"].contains(word),
+          let confidence=spec["confidence"] as? Double,confidence>=0.8,
+          let hash=spec["imageSHA256"] as? String,hash.range(of:"^[a-f0-9]{64}$",options:.regularExpression) != nil,
+          let id=spec["windowId"] as? NSNumber,let actualId=owned[0][kCGWindowNumber as String] as? NSNumber,id==actualId,
+          let expected=spec["bounds"] as? [String:Double],let actual=owned[0][kCGWindowBounds as String] as? [String:Double],
+          ["X","Y","Width","Height"].allSatisfy({k in
+              guard let a=actual[k],let b=expected[k] else {return false}
+              return a.isFinite && b.isFinite && abs(a-b)<0.5
+          }),let x=spec["x"] as? Double,let y=spec["y"] as? Double,x.isFinite,y.isFinite,
+          let left=actual["X"],let top=actual["Y"],let width=actual["Width"],let height=actual["Height"],
+          width>=800,height>=600,left>=display.minX,top>=display.minY,left+width<=display.maxX,top+height<=display.maxY,
+          x>left,x<left+width,y>top+235,y<top+height-35 else {
+        report["reason"]="Original OCR word/window/frontmost geometry no longer valid";finish(3)
+    }
+    for kind in [CGEventType.leftMouseDown,CGEventType.leftMouseUp] {
+        CGEvent(mouseEventSource:nil,mouseType:kind,mouseCursorPosition:CGPoint(x:x,y:y),mouseButton:.left)?.postToPid(pid)
+    }
+    report["clickedOriginalWord"]=spec
+} else if action=="press" || action=="click" {
     guard arguments.count==4,let data=arguments[3].data(using:.utf8),
           let spec=try? JSONSerialization.jsonObject(with:data) as? [String: Any],
           let role=spec["role"] as? String,let field=spec["field"] as? String,let value=spec["value"] as? String,
