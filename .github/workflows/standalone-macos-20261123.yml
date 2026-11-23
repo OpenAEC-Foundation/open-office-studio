@@ -38,6 +38,7 @@ jobs:
           receipts/standalone-ax capabilities > receipts/capabilities.json
           sw_vers > receipts/host-version.txt
           uname -m > receipts/host-architecture.txt
+          python --version > receipts/python-version.txt
           python - <<'PY'
           import hashlib,json,os
           from pathlib import Path
