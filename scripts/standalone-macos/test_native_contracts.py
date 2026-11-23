@@ -4,13 +4,23 @@ import json
 import tempfile
 import unittest
 from unittest.mock import patch
-from native import environment,profile_paths
+from native import environment,profile_paths,forbidden_suite_state
 from run import verify_transfer
 from test_contracts import request
 from contracts import APPS,digest
 
 
 class IsolationTests(unittest.TestCase):
+    def test_suite_namespace_created_after_preflight_is_detected_without_deletion(self):
+        with tempfile.TemporaryDirectory(prefix="standalone-suite-guard-") as t:
+            home=Path(t)
+            self.assertEqual(forbidden_suite_state(home,"42 /own/open-writer-studio"),[])
+            suite=home/"Library/Application Support/org.openaec.office-studio";suite.mkdir(parents=True)
+            receipt=suite/"sentinel";receipt.write_bytes(b"do not delete")
+            found=forbidden_suite_state(home,"43 /wrong/open-office-studio")
+            self.assertIn(str(suite),found);self.assertEqual(receipt.read_bytes(),b"do not delete")
+            self.assertTrue(any("/wrong/open-office-studio" in row for row in found))
+
     def test_environment_drops_suite_developer_and_converter_overrides(self):
         inherited={"HOME":"/Users/own","USER":"own","PATH":"/Suite/Contents/MacOS:/opt/homebrew/bin",
             "OPENAEC_CONVERSIE_PROGRAMMA":"/Suite/soffice","OPENAEC_CONVERSIE_PROFIEL":"/Suite/profile",

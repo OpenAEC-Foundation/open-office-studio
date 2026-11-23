@@ -32,9 +32,14 @@ def environment(inherited):
     return result
 
 
+def forbidden_suite_state(home,processes):
+    found=[str(p) for p in profile_paths(SUITE_ID,home) if p.exists() or p.is_symlink()]
+    found.extend(row for row in processes.splitlines() if row.strip().endswith("/open-office-studio"))
+    return found
+
+
 def suite_absence(root):
     found=[]
-    found.extend(str(p) for p in profile_paths(SUITE_ID,Path.home()) if p.exists() or p.is_symlink())
     for base in (Path("/Applications"),Path.home()/"Applications",Path(root)):
         if base.exists():
             for p in base.rglob("*.app"):
@@ -43,7 +48,7 @@ def suite_absence(root):
                     if info.exists() and plistlib.loads(info.read_bytes()).get("CFBundleIdentifier")==SUITE_ID:found.append(str(p))
                 except (OSError,plistlib.InvalidFileException):continue
     processes=command(["/bin/ps","-axo","pid=,comm="])
-    found.extend(row for row in processes["stdout"].splitlines() if row.strip().endswith("/open-office-studio"))
+    found.extend(forbidden_suite_state(Path.home(),processes["stdout"]))
     if found:raise Unavailable("Suite installed/visible/running: "+json.dumps(found))
     return {"searchedRoots":["/Applications",str(Path.home()/"Applications"),str(root)],"processes":processes,"found":found}
 
@@ -145,6 +150,7 @@ class Session:
                     paths=[line[1:] for line in cwd["stdout"].splitlines() if line.startswith("n")]
                     if cwd["code"] or paths!=[str(self.cwd)]:raise Unavailable("Actual owned process CWD differs or is unavailable")
                     self.report["ownCwdEnvironmentVerified"]=True
+                    self.guard_suite_namespace()
                     self.capture("opened");return last
             except (json.JSONDecodeError,subprocess.TimeoutExpired):pass
             time.sleep(1)
@@ -162,6 +168,7 @@ class Session:
         return value
 
     def capture(self,label):
+        self.guard_suite_namespace()
         snapshot=self.ax("snapshot");windows=snapshot.get("ownedScreenWindows",[])
         for i,window in enumerate(windows):
             if window.get("kCGWindowLayer")!=0:continue
@@ -171,7 +178,18 @@ class Session:
         self.observe_resources(label)
         return snapshot
 
+    def guard_suite_namespace(self):
+        observed=command(["/bin/ps","-axo","pid=,comm="])
+        if observed["code"]:raise Unavailable("Suite process-namespace observation unavailable")
+        found=forbidden_suite_state(Path.home(),observed["stdout"])
+        if found:
+            self.report["suiteAbsent"]=False
+            self.write("forbidden-suite-state.json",{"found":found,"processes":observed,
+                       "scope":"Dedicated app unexpectedly created/used Suite profile or process; no Suite paths deleted"})
+            raise Unavailable("Suite profile/process appeared during standalone operation: "+str(found))
+
     def capture_original(self,label):
+        self.guard_suite_namespace()
         self.ax("activate")
         snapshot=self.ax("snapshot")
         windows=[w for w in snapshot.get("ownedScreenWindows",[]) if w.get("kCGWindowLayer")==0 and w.get("kCGWindowOwnerPID")==self.process.pid]
@@ -195,6 +213,7 @@ class Session:
         try:self.process.wait(timeout=15)
         except subprocess.TimeoutExpired:raise Unavailable("Full normal app quit did not complete")
         self.stop_watch()
+        self.guard_suite_namespace()
         self.write("quit-"+str(pid)+".json",{"pid":pid,"returncode":self.process.returncode,"normalCmdQ":True})
         self.report["fullQuitVerified"]=True
         return pid
@@ -207,6 +226,8 @@ class Session:
 
     def cleanup(self):
         errors=[]
+        if self.report.get("suiteAbsent") is False:
+            errors.append("Unexpected Suite namespace retained outside own declared profile; fresh VM teardown required")
         if self.process and self.process.poll() is None:
             try:self.quit()
             except Exception as error:
