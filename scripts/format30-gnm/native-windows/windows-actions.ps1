@@ -68,6 +68,7 @@ try {
    } while (-not $dialog -and [DateTime]::UtcNow -lt $deadline)
    if (-not $dialog) { throw 'BLOCKED: owned standard native Save dialog not exposed' }
    $fields=$dialog.FindAll([Windows.Automation.TreeScope]::Descendants,[Windows.Automation.Condition]::TrueCondition)
+   $report.dialogControls=@($fields | Where-Object { $_.Current.ProcessId -eq $OwnedPid } | ForEach-Object { @{id=$_.Current.AutomationId;name=$_.Current.Name;className=$_.Current.ClassName;type=$_.Current.ControlType.ProgrammaticName;accessKey=$_.Current.AccessKey;handle=$_.Current.NativeWindowHandle} })
    $matches=@()
    foreach ($candidate in $fields) {
      if ($candidate.Current.ProcessId -ne $OwnedPid -or -not $candidate.Current.IsEnabled) { continue }
@@ -83,12 +84,25 @@ try {
    } else {
      # Read identity from the OS focused HWND, then type through the real
      # keyboard. Never change renderer state, emulate a save, or WM_SETTEXT.
+     if($opening) {
+       # Open starts with focus in the file list on this native host. Use its
+       # ordinary filename mnemonic before requiring the exact Edit identity.
+       # This is native keyboard focus, not a renderer/backend mutation.
+       $null=[StandaloneWindowsNative]::SetForegroundWindow([IntPtr]::new($dialog.Current.NativeWindowHandle))
+       [uint32]$foregroundOpenPid=0
+       $null=[StandaloneWindowsNative]::GetWindowThreadProcessId([StandaloneWindowsNative]::GetForegroundWindow(),[ref]$foregroundOpenPid)
+       if($foregroundOpenPid -ne $OwnedPid){throw 'BLOCKED: native Open dialog did not own foreground'}
+       [Windows.Forms.SendKeys]::SendWait('%n')
+       Start-Sleep -Milliseconds 150
+       $report.filenameFocusKeys='Alt+n in the owned native common Open dialog'
+     }
      [uint32]$dialogPid=0
      $thread=[StandaloneWindowsNative]::GetWindowThreadProcessId([IntPtr]::new($dialog.Current.NativeWindowHandle),[ref]$dialogPid)
      $gui=[StandaloneWindowsNative+GUI]::new(); $gui.cbSize=[Runtime.InteropServices.Marshal]::SizeOf($gui)
      if (-not [StandaloneWindowsNative]::GetGUIThreadInfo($thread,[ref]$gui)) { throw 'BLOCKED: native dialog keyboard focus unavailable' }
      $fieldHandle=$gui.focus; [uint32]$fieldPid=0; $null=[StandaloneWindowsNative]::GetWindowThreadProcessId($fieldHandle,[ref]$fieldPid)
      $class=[Text.StringBuilder]::new(256); $null=[StandaloneWindowsNative]::GetClassName($fieldHandle,$class,256)
+     $report.focusedFilenameCandidate=@{pid=$fieldPid;dialogPid=$dialogPid;className=$class.ToString();controlId=[StandaloneWindowsNative]::GetDlgCtrlID($fieldHandle);handle=$fieldHandle.ToInt64()}
      if ($fieldPid -ne $OwnedPid -or $dialogPid -ne $OwnedPid -or $class.ToString() -cne 'Edit' -or [StandaloneWindowsNative]::GetDlgCtrlID($fieldHandle) -ne 1001) { throw 'BLOCKED: focused native filename identity not established' }
      $ancestor=$fieldHandle; $ownedDialog=$false
      for ($depth=0;$depth -lt 16 -and $ancestor -ne [IntPtr]::Zero;$depth++) {
