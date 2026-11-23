@@ -266,12 +266,14 @@ def main():
             report["experiment"] = "Only missing native361 controls; prior same-package body/core explicitly reused"
             report["host"] = subprocess.check_output(["sw_vers"], text=True)
             remaining = runpy.run_path(str(Path(__file__).with_name("mac-native-361-remaining.py")))
-            remaining["run_remaining"](action, launch_document, open_additional_document, quit_app, lambda: pid,
+            result = remaining["run_remaining"](action, launch_document, open_additional_document, quit_app, lambda: pid,
                                         viewport["maximize_once"], readiness_snapshot, identity, ocr_binary,
                                         out / "native361-remaining", report)
-            report.update(status="native361-remaining-passed", nativePass=True, native361RemainingPassed=True,
+            complete = result["status"] == "passed"
+            report.update(status="native361-remaining-passed" if complete else "native361-find-isolation-passed-tab-retained-failed",
+                          nativePass=complete, native361RemainingPassed=complete, native361FindIsolationPassed=True,
                           issue361FullAcceptance=False,
-                          limits=["Only remaining Tab/cell typing/Find/two-document controls are newly executed",
+                          limits=["Only remaining Tab/cell typing/Find/two-document controls are newly executed" if complete else "Only clean Find/two-document controls and a short cell-typing preflight are newly executed; earlier failed Tab is retained, not retried",
                                   "Earlier same-package body/column core and quit/reopen are explicitly reused",
                                   "Native modal-dialog Undo and signed-package final combination are not executed here"])
             return

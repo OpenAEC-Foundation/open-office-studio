@@ -40,6 +40,30 @@ def verify_previous(identity):
                 scope="Only earlier body/column core and full quit/reopen; not a new execution of those cases")
 
 
+def verify_retained_tab_failure(identity):
+    ref = identity["retained361TabFailure"]
+    relative = Path(ref["reportPath"])
+    if relative.is_absolute() or ".." in relative.parts or not relative.as_posix().startswith("docs/tests/"):
+        raise RuntimeError("Retained failure must be preserved test evidence")
+    path = HERE.parent / relative
+    if sha(path) != ref["reportSha256"]:
+        raise RuntimeError("Retained Tab failure report bytes differ")
+    old = json.loads(path.read_text(encoding="utf-8"))
+    if (old["status"] != "failed" or "last-cell Tab creates one empty fourth row" not in old.get("error", "")
+            or old["native361Remaining"].get("newHostFocusSaveUndoRedoPreflightPassed") is not True):
+        raise RuntimeError("No valid scoped Tab failure to retain")
+    for key in ["sourceCommit", "sourceTree", "declaredVersion", "packageSha256", "executableSha256"]:
+        if old["identity"][key] != identity[key]:
+            raise RuntimeError("Retained failure is for a different source/package/executable")
+    api = lambda route: json.loads(subprocess.check_output(["gh", "api", "repos/OpenAEC-Foundation/open-office-studio/" + route]))
+    run, artifact = api(f"actions/runs/{ref['run']}"), api(f"actions/artifacts/{ref['artifactId']}")
+    if (run["conclusion"] != "failure" or run["head_sha"] != ref["harnessCommit"]
+            or artifact["workflow_run"]["id"] != ref["run"] or artifact["expired"]
+            or artifact["digest"] != "sha256:" + ref["archiveSha256"]):
+        raise RuntimeError("Retained failure immutable execution differs")
+    return dict(ref, status="retained-failed", retested=False)
+
+
 def run_remaining(action, launch_document, open_additional, quit_app, current_pid,
                   viewport, ready_snapshot, identity, ocr, out, report):
     out = Path(out)
@@ -49,6 +73,10 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
              "checks": [], "reusedCore": verify_previous(identity),
              "limits": ["Native modal-dialog Undo not executed here", "Signed package combination requires its own binding"]}
     report["native361Remaining"] = proof
+    independent = identity.get("remaining361Scope") == "find-isolation-only"
+    if independent:
+        proof["retainedTabFailure"] = verify_retained_tab_failure(identity)
+        proof["scope"] = "Clean independent native Find and two-document controls; failed Tab outcome retained"
     source = HERE / "proeven/mac-body-original-361.docx"
     if sha(source) != "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1":
         raise RuntimeError("Original fixture changed")
@@ -145,22 +173,23 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
     save(a, ROWS, "A-host-preflight-restored")
     proof["newHostFocusSaveUndoRedoPreflightPassed"] = True
 
-    body("delta", "A-before-last-cell-navigation")
-    action("chord", "tab"); action("chord", "tab")
-    grid("two native Tabs reach original last cell", ROWS)
-    action("chord", "tab")
-    empty = ROWS + [["", "", ""]]
-    filled = ROWS + [["newrow", "", ""]]
-    grid("last-cell Tab creates one empty fourth row", empty)
-    action("type-test-text", "newrow"); grid("new row native typing", filled)
-    capture("last-cell-Tab-native-typing")
-    save(a, filled, "A-Tab-and-typing")
-    action("chord", "cmd-z"); grid("typing Undo retains Tab-created row", empty)
-    action("chord", "cmd-z"); grid("separate Tab row Undo", ROWS)
-    action("chord", "cmd-shift-z"); grid("separate Tab row Redo", empty)
-    action("chord", "cmd-shift-z"); grid("new-row typing Redo", filled)
-    action("chord", "cmd-z"); grid("new-row typing reset", empty)
-    action("chord", "cmd-z"); grid("Tab row reset", ROWS)
+    if not independent:
+        body("delta", "A-before-last-cell-navigation")
+        action("chord", "tab"); action("chord", "tab")
+        grid("two native Tabs reach original last cell", ROWS)
+        action("chord", "tab")
+        empty = ROWS + [["", "", ""]]
+        filled = ROWS + [["newrow", "", ""]]
+        grid("last-cell Tab creates one empty fourth row", empty)
+        action("type-test-text", "newrow"); grid("new row native typing", filled)
+        capture("last-cell-Tab-native-typing")
+        save(a, filled, "A-Tab-and-typing")
+        action("chord", "cmd-z"); grid("typing Undo retains Tab-created row", empty)
+        action("chord", "cmd-z"); grid("separate Tab row Undo", ROWS)
+        action("chord", "cmd-shift-z"); grid("separate Tab row Redo", empty)
+        action("chord", "cmd-shift-z"); grid("new-row typing Redo", filled)
+        action("chord", "cmd-z"); grid("new-row typing reset", empty)
+        action("chord", "cmd-z"); grid("Tab row reset", ROWS)
 
     body("alpha", "A-before-Find-sentinel")
     insert_right("A Find sentinel column")
@@ -208,5 +237,6 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
     quit_app()
     if sha(source) != "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1":
         raise AssertionError("Immutable original changed")
-    proof.update(status="passed", sourceFixtureUnchanged=True)
+    proof.update(status="find-isolation-passed-tab-retained-failed" if independent else "passed",
+                 findIsolationPassed=True, sourceFixtureUnchanged=True)
     return proof
