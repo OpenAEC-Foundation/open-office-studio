@@ -52,7 +52,9 @@ def default_xlsx_proposal(snapshot,stem):
 
 def xlsb_save_policy377(case,fixture,receipt):
     """Raw-import Cmd-S/ordinary Save proposal and cancel, before any Save As."""
-    source=digest(fixture);proof={"status":"running","nativeAccepted":False,"sourceSHA256":source,"routes":{}}
+    source=digest(fixture);initial=fixture.stat()
+    fingerprint={"sha256":source,"bytes":initial.st_size,"mtimeNs":initial.st_mtime_ns}
+    proof={"status":"running","nativeAccepted":False,"sourceFingerprint":fingerprint,"routes":{}}
     receipt["savePolicy377"]=proof
     try:
         case.select(["AXTextField","AXComboBox"],["Name box"]);case.replace("A1");case.s.ax("key","return")
@@ -85,9 +87,10 @@ def xlsb_save_policy377(case,fixture,receipt):
                 if time.monotonic()>=deadline:raise Unavailable("377 ordinary Cancel did not close the Save As dialog")
                 time.sleep(.2)
             after=unsaved_xlsx_copy(snap,fixture.stem)
-            if after!=before or digest(fixture)!=source:raise Unavailable("377 Cancel changed source bytes or the unsaved working-copy tab")
+            stat=fixture.stat();current={"sha256":digest(fixture),"bytes":stat.st_size,"mtimeNs":stat.st_mtime_ns}
+            if after!=before or current!=fingerprint:raise Unavailable("377 Cancel changed the original source fingerprint or unsaved working-copy tab")
             item.update(status="functional-evidence-collected-review-pending",sourceBytesUnchanged=True,
-                        unsavedWorkingCopyPreserved=True,afterWorkingCopy=after)
+                        sourceFingerprintAfterCancel=current,unsavedWorkingCopyPreserved=True,afterWorkingCopy=after)
             case.s.capture("xlsb377-"+route+"-cancelled")
         proof["status"]="functional-evidence-collected-review-pending"
     except Exception as error:
