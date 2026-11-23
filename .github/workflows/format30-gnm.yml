@@ -1,0 +1,88 @@
+name: Format 30 bounded GNM route proof
+on:
+  push:
+    branches: [codex/formats-30-gnm-2026-11-23]
+    paths: [.github/format30-gnm-candidate.json, .github/workflows/format30-gnm.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: format30-gnm-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  oracle:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent data/type/formula/sheet/source failure contracts
+        run: python -B scripts/format30-gnm/oracle_test.py
+  linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    env:
+      OOS_FORMAT30_GNM_HARNESS: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/checkout@v4
+        with:
+          path: .local/gnm-harness
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Disposable Linux private-runtime extraction dependencies
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev squashfs-tools
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: runtime317-assets-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('assets/kantoorruntime.json', 'assets/lettertypen.json', 'assets/woordenboeken.json') }}
+          restore-keys: |
+            runtime317-assets-${{ runner.os }}-${{ runner.arch }}-
+      - name: Real browser test driver
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Build receipt-bound normal P2 frontend
+        run: node scripts/writer-proefbuild.mjs build .local/gnm-P2-normal /
+      - name: Build receipt-bound supported hosted P2 frontend
+        run: node scripts/writer-proefbuild.mjs build .local/gnm-P2-hosted /office/
+      - name: Actual / and /office/ GNM/Gnumeric rejection and saved-document preservation
+        run: node .local/gnm-harness/scripts/format30-gnm/browser.mjs .local/gnm-P2 .local/gnm-P2-browser-proof
+      - name: Verify canonical own Linux packages before any converter execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B .local/gnm-harness/scripts/format30-gnm/packages.py .local/gnm-harness/.github/format30-gnm-candidate.json .local/gnm-P2-canonical
+      - name: Actual private converters and production input/engine save-reopen
+        run: node .local/gnm-harness/scripts/format30-gnm/probe.mjs .local/gnm-P2-canonical/candidate.json .local/gnm-P2-canonical .local/gnm-P2-converter-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: format30-gnm-P2-Linux-browser-proof
+          path: .local/gnm-P2-browser-proof
+          include-hidden-files: true
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: format30-gnm-P2-Linux-converter-proof
+          path: |
+            .local/gnm-P2-converter-proof
+            .local/gnm-P2-canonical/*.json
+          include-hidden-files: true
+          if-no-files-found: warn
