@@ -277,7 +277,8 @@ for kind in ['appimage','deb']:
         case['remainingOwnedProcesses']=owned(home)
         case['profilePaths']=[str(p.relative_to(home)) for p in home.rglob('*')]
         assert not any('org.openaec.office-studio' in p for p in case['profilePaths'])
-        if case['status']=='passed':assert any('org.openaec.database-studio' in p and ('webkit' in p.lower() or 'storage' in p.lower()) for p in case['profilePaths'])
+        if case['status']=='passed' and not any('org.openaec.database-studio' in p and ('webkit' in p.lower() or 'storage' in p.lower()) for p in case['profilePaths']):
+            case.update(status='failed',error='Actual normal-process own WebKit profile was not observed')
         if not case['remainingOwnedProcesses']:shutil.rmtree(home)
         if kind=='deb':subprocess.run(['sudo','dpkg','--remove','open-database-studio'],check=True)
         (ROOT/'normal-picker-differential.json').write_text(json.dumps(results,indent=2)+'\n')
