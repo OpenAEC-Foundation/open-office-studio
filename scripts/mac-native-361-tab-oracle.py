@@ -95,6 +95,39 @@ def run_oracle(action, launch_document, quit_app, current_pid, viewport, ready_s
     proof["savedSha256"] = sha(saved)
     proof["savedBytesChanged"] = sha(saved) != before_save
     proof["exactExpectedFourRowsAndMarker"] = proof["savedRows"] == ROWS+[["newrow","",""]]
+    if identity.get("tabHistoryOracleApproved") is True:
+        if not proof["exactExpectedFourRowsAndMarker"]:
+            raise AssertionError("History requires the independently saved exact Tab/newrow state")
+        history = []
+        for label, chord in [("Undo-1", "cmd-z"), ("Undo-2", "cmd-z"),
+                             ("Redo-1", "cmd-shift-z"), ("Redo-2", "cmd-shift-z")]:
+            focus = action("snapshot")
+            if (focus.get("focusAfter", {}).get("description") != "Document input"
+                    or focus.get("applicationActive") is not True or focus.get("frontmostPid") != pid):
+                raise PermissionError("History oracle requires actual owned frontmost Document input")
+            before = sha(document)
+            record = {"name": label, "input": action("chord", chord)}
+            record["saveInput"] = action("chord", "cmd-s")
+            end = time.monotonic()+20
+            while True:
+                try:
+                    value = T["saved_rows"](document)
+                    if sha(document) != before or time.monotonic() >= end: break
+                except (OSError, zipfile.BadZipFile):
+                    if time.monotonic() >= end: raise
+                time.sleep(.25)
+            snapshot = out/(label+"-saved.docx"); snapshot.write_bytes(document.read_bytes())
+            record.update(savedRows=T["saved_rows"](snapshot), savedSha256=sha(snapshot),
+                          savedBytesChanged=sha(snapshot)!=before, native=action("raw-snapshot"))
+            history.append(record)
+            proof["historySteps"] = history
+            if (record["savedRows"][:3] != ROWS or len(record["savedRows"]) not in [3,4]
+                    or (len(record["savedRows"])==4 and record["savedRows"][3] not in [["","",""],["newrow","",""]])):
+                raise AssertionError("Bounded history changed an original source cell or unexpected content")
+        proof["historyRoundTripProven"] = (any(s["savedRows"] == ROWS for s in history[:2])
+                                               and history[-1]["savedRows"] == ROWS+[["newrow","",""]])
+        proof["historyGrouping"] = [s["savedRows"] for s in history]
+        proof["historyLimits"] = "Exactly two Undo and two Redo commands, each normally saved; actual grouping retained, no additional input/retry"
     proof["afterSaveAX"] = action("raw-snapshot")
     (out/"after-save-raw-ax.json").write_text(json.dumps(proof["afterSaveAX"],indent=2),encoding="utf-8")
     display=out/"after-save-original-display.png"

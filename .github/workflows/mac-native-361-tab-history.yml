@@ -1,0 +1,41 @@
+name: Native Mac361 bounded Tab history saved XML - diagnostic only
+on:
+  push:
+    branches: [codex/mac-native-body-blocker-20261120]
+    paths: [.github/workflows/mac-native-361-tab-history.yml, .github/mac-native-361-tab-history-request.json]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  product-acceptance:
+    runs-on: macos-latest
+    timeout-minutes: 25
+    env:
+      OOS_361_EXECUTE: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/mac-body-harness
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify the successful Mac job and full canonical artifact before package derivation
+        run: python .local/mac-body-harness/scripts/mac-native-current-fetch.py .local/mac-body-harness/.github/mac-native-361-tab-history-request.json .local/mac361-tab-history-input
+      - name: Exactly three Tabs and planned newrow; two Undo two Redo with saved XML
+        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac361-tab-history-input/identity.json .local/mac361-tab-history-native --acceptance --tab-save-oracle
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac361-tab-history-native-${{ github.sha }}
+          path: |
+            .local/mac361-tab-history-native/
+            .local/mac361-tab-history-input/identity.json
+            .local/mac361-tab-history-input/request.json
+            .local/mac361-tab-history-input/artifact-origin.json
+          include-hidden-files: true
+          if-no-files-found: error

@@ -269,12 +269,14 @@ def main():
             if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
                 raise RuntimeError("Untouched baseline fixture bytes differ")
         if args.tab_save_oracle:
-            report.update(diagnosticOnly=True, experiment="Exactly three native Tabs, then planned newrow and CmdS/XML; earlier AX failures retained")
+            history = identity.get("tabHistoryOracleApproved") is True
+            report.update(diagnosticOnly=True, experiment="Exactly three native Tabs, then planned newrow and CmdS/XML; earlier AX failures retained" +
+                          ("; then exactly two Undo and two Redo with saved XML and actual grouping" if history else ""))
             report["host"] = subprocess.check_output(["sw_vers"],text=True)
             module=runpy.run_path(str(Path(__file__).with_name("mac-native-361-tab-oracle.py")))
             module["run_oracle"](action,launch_document,quit_app,lambda:pid,viewport["maximize_once"],readiness_snapshot,
                                  identity,ocr_binary,out/"native361-Tab-save-oracle",report)
-            report.update(status="tab-save-oracle-observed",nativePass=False,diagnosticOnly=True)
+            report.update(status="tab-history-oracle-observed" if history else "tab-save-oracle-observed",nativePass=False,diagnosticOnly=True)
             return
         if args.remaining361:
             report["experiment"] = "Only missing native361 controls; prior same-package body/core explicitly reused"
