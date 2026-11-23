@@ -1,0 +1,1151 @@
+{
+  "status": "passed",
+  "run": 45155198992,
+  "job": 137626236395,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45155198992",
+  "harnessCommit": "c576379059fa819ac64017f9c84e1e519ce135fa",
+  "harnessFiles": {
+    "proef-gnm-linux-native.mjs": "f4b7e81c907dfc996029c488c9fee11f49849536b896c0b33ab541948d74e3c7",
+    "linux-p2-native-input.mjs": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020",
+    "linux-p2-native-capture.py": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341",
+    "linux-p2-native-package.py": "a9c68b7880b7cb0749689096fee81bce980ecf9fa697dfe7bb93554b95e92d45",
+    "linux-p2-ribbon-native.mjs": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72",
+    "format30-gnm/oracle.py": "7f47fe4fbd5fdc66a1c8179300d257dcef0e1ebae514d7271159c3469dfbb599"
+  },
+  "source": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "artifact": {
+    "id": 14807469215,
+    "name": "gnm-linux-native-p2-c576379059fa819ac64017f9c84e1e519ce135fa",
+    "digest": "sha256:af6201d1238c34efd5f41926322563cd4075115b11215a218904097a0a007ee5",
+    "size_in_bytes": 2223084
+  },
+  "proofArchiveLocallyHashVerified": true,
+  "rawReport": {
+    "path": "raw-native-report.json.gz",
+    "uncompressedSha256": "81cb436bdc47189bb50272f5163e83b14126ff8bc058f974d091a7331ddd4235",
+    "gzipSha256": "242bb21054c5fcdcd57d400d5cde4060a05be07c25f90b20a6f276f13db0819e",
+    "uncompressedBytes": 5541482
+  },
+  "cases": [
+    {
+      "extension": "gnm",
+      "status": "passed",
+      "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "sourceBytes": 2062,
+      "sourcePath": "source.gnm",
+      "xlsx": "gnm-saved.xlsx",
+      "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "firstPid": 5108,
+      "reopenPid": 5774,
+      "cells": 8,
+      "formulas": 4,
+      "sheets": 2,
+      "edit": "Sheet2!A1 = GNM30 EDIT",
+      "originalUnchanged": true
+    },
+    {
+      "extension": "gnumeric",
+      "status": "passed",
+      "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "sourceBytes": 2062,
+      "sourcePath": "source.gnumeric",
+      "xlsx": "gnumeric-saved.xlsx",
+      "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "firstPid": 6137,
+      "reopenPid": 6797,
+      "cells": 8,
+      "formulas": 4,
+      "sheets": 2,
+      "edit": "Sheet2!A1 = GNM30 EDIT",
+      "originalUnchanged": true
+    }
+  ],
+  "nativeSessions": [
+    {
+      "phase": "preflight",
+      "pid": 4731,
+      "sessionId": "e1f206dc-ac80-483b-8824-ce1e356af9e9",
+      "openedCLI": "preflight.xlsx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.npewfE/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/data"
+      }
+    },
+    {
+      "phase": "preflight",
+      "pid": 4993,
+      "sessionId": "75728588-411f-46ef-9094-ae194c4bc440",
+      "openedCLI": "preflight.xlsx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.npewfE/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/data"
+      }
+    },
+    {
+      "phase": "gnm-import",
+      "pid": 5108,
+      "sessionId": "cea4f78f-0768-48ad-919d-799559e52892",
+      "openedCLI": "preflight.xlsx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.npewfE/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/data"
+      }
+    },
+    {
+      "phase": "gnm-reopen",
+      "pid": 5774,
+      "sessionId": "e0dfdccb-6d33-4c93-b054-42384d30cfa0",
+      "openedCLI": "gnm-saved.xlsx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.npewfE/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/data"
+      }
+    },
+    {
+      "phase": "gnumeric-import",
+      "pid": 6137,
+      "sessionId": "f0a95b46-080e-4b8c-99bb-5f4a2431978e",
+      "openedCLI": "preflight.xlsx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.npewfE/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/data"
+      }
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "pid": 6797,
+      "sessionId": "a6e8d378-e15c-400a-9caa-af557e30178c",
+      "openedCLI": "gnumeric-saved.xlsx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.npewfE/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/profile/data"
+      }
+    }
+  ],
+  "cellObservations": [
+    {
+      "phase": "preflight",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "",
+      "selected": [
+        "A1, empty, selected"
+      ],
+      "activeSheets": [
+        "Blad 1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "preflight",
+      "address": "A1",
+      "expected": "GNM PREFLIGHT",
+      "formulaBar": "GNM PREFLIGHT",
+      "selected": [
+        "A1, GNM PREFLIGHT, selected"
+      ],
+      "activeSheets": [
+        "Blad 1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "preflight",
+      "address": "A1",
+      "expected": "GNM PREFLIGHT",
+      "formulaBar": "GNM PREFLIGHT",
+      "selected": [
+        "A1, GNM PREFLIGHT, selected"
+      ],
+      "activeSheets": [
+        "Blad 1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "A1",
+      "expected": "1",
+      "formulaBar": "1",
+      "selected": [
+        "A1, 1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "A2",
+      "expected": "2",
+      "formulaBar": "2",
+      "selected": [
+        "A2, 2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "B1",
+      "expected": "String1",
+      "formulaBar": "String1",
+      "selected": [
+        "B1, String1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "B2",
+      "expected": "String2",
+      "formulaBar": "String2",
+      "selected": [
+        "B2, String2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "C1",
+      "expected": "=2*3",
+      "formulaBar": "=2*3",
+      "selected": [
+        "C1, 6, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "C2",
+      "expected": "=2+3",
+      "formulaBar": "=2+3",
+      "selected": [
+        "C2, 5, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "C3",
+      "expected": "=2-3",
+      "formulaBar": "=2-3",
+      "selected": [
+        "C3, -1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "C4",
+      "expected": "=C1+C2",
+      "formulaBar": "=C1+C2",
+      "selected": [
+        "C4, 11, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "",
+      "selected": [
+        "A1, empty, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "",
+      "selected": [
+        "A1, empty, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-import",
+      "address": "A1",
+      "expected": "GNM30 EDIT",
+      "formulaBar": "GNM30 EDIT",
+      "selected": [
+        "A1, GNM30 EDIT, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "A1",
+      "expected": "1",
+      "formulaBar": "1",
+      "selected": [
+        "A1, 1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "A2",
+      "expected": "2",
+      "formulaBar": "2",
+      "selected": [
+        "A2, 2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "B1",
+      "expected": "String1",
+      "formulaBar": "String1",
+      "selected": [
+        "B1, String1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "B2",
+      "expected": "String2",
+      "formulaBar": "String2",
+      "selected": [
+        "B2, String2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "C1",
+      "expected": "=2*3",
+      "formulaBar": "=2*3",
+      "selected": [
+        "C1, 6, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "C2",
+      "expected": "=2+3",
+      "formulaBar": "=2+3",
+      "selected": [
+        "C2, 5, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "C3",
+      "expected": "=2-3",
+      "formulaBar": "=2-3",
+      "selected": [
+        "C3, -1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "C4",
+      "expected": "=C1+C2",
+      "formulaBar": "=C1+C2",
+      "selected": [
+        "C4, 11, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "GNM30 EDIT",
+      "selected": [
+        "A1, GNM30 EDIT, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnm-reopen",
+      "address": "A1",
+      "expected": "GNM30 EDIT",
+      "formulaBar": "GNM30 EDIT",
+      "selected": [
+        "A1, GNM30 EDIT, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "A1",
+      "expected": "1",
+      "formulaBar": "1",
+      "selected": [
+        "A1, 1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "A2",
+      "expected": "2",
+      "formulaBar": "2",
+      "selected": [
+        "A2, 2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "B1",
+      "expected": "String1",
+      "formulaBar": "String1",
+      "selected": [
+        "B1, String1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "B2",
+      "expected": "String2",
+      "formulaBar": "String2",
+      "selected": [
+        "B2, String2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "C1",
+      "expected": "=2*3",
+      "formulaBar": "=2*3",
+      "selected": [
+        "C1, 6, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "C2",
+      "expected": "=2+3",
+      "formulaBar": "=2+3",
+      "selected": [
+        "C2, 5, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "C3",
+      "expected": "=2-3",
+      "formulaBar": "=2-3",
+      "selected": [
+        "C3, -1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "C4",
+      "expected": "=C1+C2",
+      "formulaBar": "=C1+C2",
+      "selected": [
+        "C4, 11, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "",
+      "selected": [
+        "A1, empty, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "",
+      "selected": [
+        "A1, empty, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-import",
+      "address": "A1",
+      "expected": "GNM30 EDIT",
+      "formulaBar": "GNM30 EDIT",
+      "selected": [
+        "A1, GNM30 EDIT, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-2"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "A1",
+      "expected": "1",
+      "formulaBar": "1",
+      "selected": [
+        "A1, 1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "A2",
+      "expected": "2",
+      "formulaBar": "2",
+      "selected": [
+        "A2, 2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "B1",
+      "expected": "String1",
+      "formulaBar": "String1",
+      "selected": [
+        "B1, String1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "B2",
+      "expected": "String2",
+      "formulaBar": "String2",
+      "selected": [
+        "B2, String2, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "C1",
+      "expected": "=2*3",
+      "formulaBar": "=2*3",
+      "selected": [
+        "C1, 6, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "C2",
+      "expected": "=2+3",
+      "formulaBar": "=2+3",
+      "selected": [
+        "C2, 5, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "C3",
+      "expected": "=2-3",
+      "formulaBar": "=2-3",
+      "selected": [
+        "C3, -1, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "C4",
+      "expected": "=C1+C2",
+      "formulaBar": "=C1+C2",
+      "selected": [
+        "C4, 11, selected"
+      ],
+      "activeSheets": [
+        "Sheet1"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "A1",
+      "expected": null,
+      "formulaBar": "GNM30 EDIT",
+      "selected": [
+        "A1, GNM30 EDIT, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-1"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "address": "A1",
+      "expected": "GNM30 EDIT",
+      "formulaBar": "GNM30 EDIT",
+      "selected": [
+        "A1, GNM30 EDIT, selected"
+      ],
+      "activeSheets": [
+        "Sheet2"
+      ],
+      "panelId": "office-tabpaneel-1"
+    }
+  ],
+  "runtime": {
+    "path": "/usr/libexec/Open Office Studio/kantoorruntime/program/soffice.bin",
+    "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "installedBy": "open-office-studio",
+    "externalOverride": false
+  },
+  "runtimeUI": [
+    {
+      "phase": "gnm-import",
+      "label": "Native runtime status identifies bundled office runtime",
+      "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)"
+    },
+    {
+      "phase": "gnumeric-import",
+      "label": "Native runtime status identifies bundled office runtime",
+      "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)"
+    }
+  ],
+  "checks": 58,
+  "captures": [
+    {
+      "phase": "preflight",
+      "file": "preflight-saved.png",
+      "pid": 4731,
+      "xid": "4194307",
+      "startTime": "22423",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "6be2bec9b09fa193468a755de22f18a8486029f02baff1f85fbc018cfa4628f8",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-import-open-picker-initial.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6291463",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "13a0e6613c0a4c81c555e07ae7fab8ac060f544cd02d2feba144f95695042c6b",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-import-open-picker-typed-path.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6291463",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "8dc511bf9cd6d17dfbfbaae4422d33a538c49b5cb664bb92443dce6f8ec39f7c",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-import-sheet1.png",
+      "pid": 5108,
+      "xid": "4194307",
+      "startTime": "23334",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "16f1730f6a55ed2f080c7357d5af047a98abfeac2d1443a83ffd4a94def5b6e4",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-import-sheet2.png",
+      "pid": 5108,
+      "xid": "4194307",
+      "startTime": "23334",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "24c8568eee54b1d8e8940dfb30fbf56454ce6bdcc7583c418a13fe6e43f75775",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-edited.png",
+      "pid": 5108,
+      "xid": "4194307",
+      "startTime": "23334",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "0cb8333461a43f0c900b86c1ed465550731920cfcb620e2f0538d20e060970e0",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-save-as-xlsx.png",
+      "pid": 5108,
+      "xid": "4194307",
+      "startTime": "23334",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "0152093c024d86bb72d0f26947fb687e733e242e61de59d9b3a190e011641cec",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-import-save-picker-initial.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6292922",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "7685a668758bbd955e6797233c14031fe03a10cf0a1ba657132b9df4334ce1f7",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-import",
+      "file": "gnm-import-save-picker-typed-path.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6292922",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "79f5215547a3312bdcb97bf3009a7577069068e5d4cb3ac3eb1394d3f3c60fe5",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-reopen",
+      "file": "gnm-reopen-sheet1.png",
+      "pid": 5774,
+      "xid": "4194307",
+      "startTime": "25397",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "508a432320b8badc66d32b492f4c858e59957553a0f078223fb9bcaf25f56d83",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-reopen",
+      "file": "gnm-reopen-sheet2.png",
+      "pid": 5774,
+      "xid": "4194307",
+      "startTime": "25397",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "14233477e680bd359a7f28c39da7aab0e75b5184dd0bb89e4d933b3aaca1f888",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnm-reopen",
+      "file": "gnm-reopened-marker.png",
+      "pid": 5774,
+      "xid": "4194307",
+      "startTime": "25397",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "47b3b45c47a44da1be0a338ca82f1f3d4b75f15b3cc304cdee850620c221d669",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-import-open-picker-initial.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6295243",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "cec128d3e4e8f289e6783883e35b09508f4dd7681d3326bdd6f9e9da22a7b1c2",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-import-open-picker-typed-path.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6295243",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "2bfdd85fba6b2fc8c2bead04914dc2a08305580d19be76e8b1d1c5e58bbc3dfd",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-import-sheet1.png",
+      "pid": 6137,
+      "xid": "4194307",
+      "startTime": "26602",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "16f1730f6a55ed2f080c7357d5af047a98abfeac2d1443a83ffd4a94def5b6e4",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-import-sheet2.png",
+      "pid": 6137,
+      "xid": "4194307",
+      "startTime": "26602",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "24c8568eee54b1d8e8940dfb30fbf56454ce6bdcc7583c418a13fe6e43f75775",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-edited.png",
+      "pid": 6137,
+      "xid": "4194307",
+      "startTime": "26602",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "2bd108c6699b7eb740d6390151e4c7d7cd5867ebc4c46ccf325bfb513ea066d9",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-save-as-xlsx.png",
+      "pid": 6137,
+      "xid": "4194307",
+      "startTime": "26602",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "e5b0615e03c821fa1834654294858f3b3a86e5bfa3e386ebdf5624d1baa3f34f",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-import-save-picker-initial.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6296648",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "7685a668758bbd955e6797233c14031fe03a10cf0a1ba657132b9df4334ce1f7",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-import",
+      "file": "gnumeric-import-save-picker-typed-path.png",
+      "kind": "Owned private-session GTK picker",
+      "pid": 4759,
+      "xid": "6296648",
+      "startTime": "22437",
+      "width": 1096,
+      "height": 844,
+      "sha256": "fa515a8f2e3a988a7afb21c94aa70a3ff41b197249a731d6c8a968b0e5c48609",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "file": "gnumeric-reopen-sheet1.png",
+      "pid": 6797,
+      "xid": "4194307",
+      "startTime": "28713",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "dc2c460a60ea52d26e56c8ec9edb86582d5f9fc57dfafe4280cd57d4282d595f",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "file": "gnumeric-reopen-sheet2.png",
+      "pid": 6797,
+      "xid": "4194307",
+      "startTime": "28713",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "159fd182d397dd8c4512a7f4373b451ab84d3ab070637e1c42574e01fcc1e5db",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "gnumeric-reopen",
+      "file": "gnumeric-reopened-marker.png",
+      "pid": 6797,
+      "xid": "4194307",
+      "startTime": "28713",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "185e8c42f675f984938747f696301911e5ea73f897f9ae8dc23a6e53de7371fd",
+      "backend": "owned X11 window pixels"
+    }
+  ],
+  "cleanup": {
+    "driverExited": true,
+    "remainingApplicationPids": [],
+    "ownedApplicationClosed": true,
+    "capture": "Only own X11 window snapshots on disposable host; no persistent desktop capture client"
+  },
+  "limits": [
+    "Virtual X11/software rendering on fresh Ubuntu 22.04 runner; no physical display claim.",
+    "DEB Office only; AppImage and standalone Spreadsheet native acceptance remain separate pending cases.",
+    "Full quit uses WebDriver session close with actual process disappearance/new PID, not application menu Quit.",
+    "Only this genuine two-sheet fixture; no all-Gnumeric-variants claim.",
+    "Font substitution and generic protection/unknown-extension notices are visible. This fixture scope does not certify all formatting, protection or arbitrary Gnumeric variants.",
+    "Synthetic profiles and remote Xvfb/DBus/portal lifetime end with disposable hosted runner teardown; no local GUI or recording session was opened."
+  ],
+  "retainedDriverAttempts": [
+    {
+      "run": 45152092505,
+      "harnessCommit": "13e701c553bcd424e44740ed6aca429fdca05fb1",
+      "artifact": {
+        "id": 14806517592,
+        "name": "gnm-linux-native-p2-13e701c553bcd424e44740ed6aca429fdca05fb1",
+        "digest": "sha256:9b0f727c7cfbc8be0ce6c8dc7c212d120125d74b848a30137668fa3491c39825",
+        "size_in_bytes": 142862
+      },
+      "status": "failed",
+      "failedPhase": "gnm-import",
+      "error": "Error: Picker closed and exact app window resumed",
+      "reportSha256": "a9463e7df0db629cfa9c3407b53c3d85f004c1db3b9dc6604f80d55c79a68bcc",
+      "retainedReport": "driver-attempt-45152092505.json.gz",
+      "cleanup": {
+        "driverExited": true,
+        "remainingApplicationPids": [],
+        "ownedApplicationClosed": true,
+        "capture": "Only own X11 window snapshots on disposable host; no persistent desktop capture client"
+      },
+      "classification": "QA driver fault, not independently reproduced product bug"
+    },
+    {
+      "run": 45152905910,
+      "harnessCommit": "004b353b9267cdc47e01ccb68853fd871e31d995",
+      "artifact": {
+        "id": 14806513845,
+        "name": "gnm-linux-native-p2-004b353b9267cdc47e01ccb68853fd871e31d995",
+        "digest": "sha256:4cd5c717a31295b329f46fdc0f79d4a6981ff08d0e0a1b57bfeef6d294c50ad0",
+        "size_in_bytes": 292913
+      },
+      "status": "failed",
+      "failedPhase": "gnm-import",
+      "error": "Error: Real spreadsheet rendered with Sheet1,Sheet2",
+      "reportSha256": "9ea6415cdc11f7161f3e8e56c7d78f4e695e4ce63c4e71c6c20551f88965afa4",
+      "retainedReport": "driver-attempt-45152905910.json.gz",
+      "cleanup": {
+        "driverExited": true,
+        "remainingApplicationPids": [],
+        "ownedApplicationClosed": true,
+        "capture": "Only own X11 window snapshots on disposable host; no persistent desktop capture client"
+      },
+      "classification": "QA driver fault, not independently reproduced product bug"
+    },
+    {
+      "run": 45153807662,
+      "harnessCommit": "e3b661d101d370bb0aa226841b7e3c1cc5ee7a06",
+      "artifact": {
+        "id": 14806924522,
+        "name": "gnm-linux-native-p2-e3b661d101d370bb0aa226841b7e3c1cc5ee7a06",
+        "digest": "sha256:fbb7638754d3f997ea9d1fd4c8a3f01db38e5985265257a68cce462872ee861c",
+        "size_in_bytes": 10041
+      },
+      "status": "failed",
+      "failedPhase": "setup",
+      "error": "Error: spawnSync dpkg ENOBUFS",
+      "reportSha256": "5fb25a362a8888f9e224538f85a276fd0da38a6aa42cd304859ba4122e139b6e",
+      "retainedReport": "driver-attempt-45153807662.json.gz",
+      "cleanup": {
+        "driverExited": true,
+        "remainingApplicationPids": [],
+        "ownedApplicationClosed": true,
+        "capture": "Only own X11 window snapshots on disposable host; no persistent desktop capture client"
+      },
+      "classification": "QA driver fault, not independently reproduced product bug"
+    },
+    {
+      "run": 45154455074,
+      "harnessCommit": "aa9be13d15e418924a127d48105dd3015bb4cee6",
+      "artifact": {
+        "id": 14806974303,
+        "name": "gnm-linux-native-p2-aa9be13d15e418924a127d48105dd3015bb4cee6",
+        "digest": "sha256:8691b92762d46bd705ce9e2c175420ec1b8976279257c60594f7c7061d2db1ff",
+        "size_in_bytes": 731496
+      },
+      "status": "failed",
+      "failedPhase": "gnm-import",
+      "error": "Error: Command failed: /usr/bin/python3 /home/runner/work/open-office-studio/open-office-studio/.local/gnm-linux-harness/scripts/linux-p2-native-capture.py 4962 6292814 180760 /usr/libexec/xdg-desktop-portal-gtk /home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/gnm-import-picker-initial.png",
+      "reportSha256": "b86469c3d19b331fd90443f1420a149eae49c8054cf90c81b82bf3df1ba8816a",
+      "retainedReport": "driver-attempt-45154455074.json.gz",
+      "cleanup": {
+        "driverExited": true,
+        "remainingApplicationPids": [],
+        "ownedApplicationClosed": true,
+        "capture": "Only own X11 window snapshots on disposable host; no persistent desktop capture client"
+      },
+      "classification": "QA driver fault, not independently reproduced product bug"
+    }
+  ]
+}
