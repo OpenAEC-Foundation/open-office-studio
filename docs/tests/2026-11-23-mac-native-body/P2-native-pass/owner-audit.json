@@ -1,0 +1,252 @@
+{
+  "run": 45151872444,
+  "artifactId": 14806508110,
+  "zipSha256": "82aa18ab0f85bff812cf808520ad4e49c86bd2cc2eb73ac4c123b1f33165ccfd",
+  "harnessCommit": "f5eddfd2a95aa931f0646a97b151a8eca22abfb2",
+  "nativePass": true,
+  "scope": "Mac359 body and bounded361 original-table Undo/Redo/save/fullquit/freshPIDreopen core; NOT full361 Tab/Find/two-document acceptance",
+  "sourceHelpersAndBinariesVerified": true,
+  "allCapturedFilesHashed": true,
+  "viewedOriginalFiles": {
+    "table-original361/initial-ready.png": "d8ff2f0768e59d237d0ade453eacdc93ca5221b43599b6a0787f8bcb6247272c",
+    "table-original361/after-maximize.png": "6415b16ec3693905f6dfd05b0a205df065f0209b073bafa17413ee963bf005cb",
+    "saved-epub356-control/initial-ready.png": "0992d7e911a703e7b8a37cf54eb79f871d4ffe30331c0bf2845afd4335f4c5ea",
+    "saved-epub356-control/after-maximize.png": "fd9aebcfe6dc00b4badef3d438458c97fdbd084ad3013b80dec84a8bfc69e6d5",
+    "native-original-acceptance/original-before-input/original-display.png": "e202aa91e36ab458115aefa09b0c6f9767a5dc050d39f5d3a66a08dd3a3f81f4",
+    "native-control-preflight/reopened-before-input/original-display.png": "343ee5f9fbcfd977d7be518ac39ccc8c164dd44457d441157d047682b805d3a4",
+    "native-original-acceptance/reopened-original-before-input/original-display.png": "e225b944334d104542308bdc2ed442f4651c2c94fe59d72ab1db9392422a93ec"
+  },
+  "firstOriginalBeforeAnyInputAndMaximizeReadable": true,
+  "controlNativePreflightPassed": true,
+  "controlPids": [
+    2371,
+    2972
+  ],
+  "originalTablePids": [
+    3290,
+    4370
+  ],
+  "ribbonFocuses": [
+    {
+      "description": "",
+      "role": "AXRadioButton",
+      "title": "Table Design"
+    },
+    {
+      "description": "",
+      "role": "AXRadioButton",
+      "title": "Table Design"
+    }
+  ],
+  "gridAssertions": [
+    {
+      "name": "native table loaded before diagnostic activation",
+      "rows": 3,
+      "columns": 3
+    },
+    {
+      "name": "original table before body input",
+      "rows": 3,
+      "columns": 3
+    },
+    {
+      "name": "Left insert",
+      "rows": 3,
+      "columns": 4
+    },
+    {
+      "name": "Left immediate Undo",
+      "rows": 3,
+      "columns": 3
+    },
+    {
+      "name": "Left Redo",
+      "rows": 3,
+      "columns": 4
+    },
+    {
+      "name": "Left reset",
+      "rows": 3,
+      "columns": 3
+    },
+    {
+      "name": "Right insert",
+      "rows": 3,
+      "columns": 4
+    },
+    {
+      "name": "Right immediate Undo",
+      "rows": 3,
+      "columns": 3
+    },
+    {
+      "name": "Right Redo",
+      "rows": 3,
+      "columns": 4
+    },
+    {
+      "name": "Right reset",
+      "rows": 3,
+      "columns": 3
+    },
+    {
+      "name": "persistent column",
+      "rows": 3,
+      "columns": 4
+    },
+    {
+      "name": "fresh process reopened persisted table",
+      "rows": 3,
+      "columns": 4
+    }
+  ],
+  "nativeHIDPointerWitnesses": [
+    {
+      "file": "action-027.json",
+      "pid": 2371,
+      "action": "click-body-point",
+      "pointerAfterMove": {
+        "x": 302.625,
+        "y": 417.42919921875
+      }
+    },
+    {
+      "file": "action-051.json",
+      "pid": 3290,
+      "action": "click-body-point",
+      "pointerAfterMove": {
+        "x": 249,
+        "y": 390.4690246582031
+      }
+    },
+    {
+      "file": "action-053.json",
+      "pid": 3290,
+      "action": "click-label",
+      "pointerAfterMove": {
+        "x": 763.5,
+        "y": 77
+      }
+    },
+    {
+      "file": "action-055.json",
+      "pid": 3290,
+      "action": "click-label",
+      "pointerAfterMove": {
+        "x": 212.5,
+        "y": 127
+      }
+    },
+    {
+      "file": "action-063.json",
+      "pid": 3290,
+      "action": "click-label",
+      "pointerAfterMove": {
+        "x": 763,
+        "y": 77
+      }
+    },
+    {
+      "file": "action-065.json",
+      "pid": 3290,
+      "action": "click-label",
+      "pointerAfterMove": {
+        "x": 215.5,
+        "y": 154
+      }
+    },
+    {
+      "file": "action-074.json",
+      "pid": 3290,
+      "action": "click-body-point",
+      "pointerAfterMove": {
+        "x": 249,
+        "y": 390.4690246582031
+      }
+    },
+    {
+      "file": "action-076.json",
+      "pid": 3290,
+      "action": "click-label",
+      "pointerAfterMove": {
+        "x": 763,
+        "y": 77
+      }
+    },
+    {
+      "file": "action-077.json",
+      "pid": 3290,
+      "action": "click-label",
+      "pointerAfterMove": {
+        "x": 215.5,
+        "y": 154
+      }
+    }
+  ],
+  "verifiedOcrTargetReceipts": 5,
+  "controlRestoredTextEqualsSource": true,
+  "controlMediaHashesPreserved": true,
+  "savedOriginalTableCells": [
+    [
+      "alpha",
+      "",
+      "beta",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "omega"
+    ],
+    [
+      "delta",
+      "",
+      "",
+      ""
+    ]
+  ],
+  "savedOriginalTableSha256": "0bc1651a67dcadf6b12fadb91508d2ea28506d3edbb2f2eb4138143578d24683",
+  "allSourceFixturesUnchanged": true,
+  "identity": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "declaredVersion": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14805147807,
+    "artifactName": "open-office-studio-macOS",
+    "archiveSha256": "9b0a335a26590e5f9b617711679f82252b31cdcf9dea1a13115e2955e53caf85",
+    "successfulPlatformJob": 137586342524,
+    "successfulPlatformJobName": "desktop (macos-latest)",
+    "platform": "macOS",
+    "executionApproved": true,
+    "derivePackageIdentityFromVerifiedArchive": true,
+    "deriveExecutableFromVerifiedDmg": true,
+    "macViewportSetup": {
+      "mode": "native-maximize-once",
+      "executionApproved": true
+    },
+    "nativeBodyAcceptanceApproved": true,
+    "nativePointerTransport": "CG HID mouseMoved/down/up with actual cursor and owned frontmost window guards; keyboard unchanged",
+    "nativeControlVisibleAnchors": [
+      "EERSTE",
+      "TWEEDE"
+    ],
+    "nativeControlStartupAXPolicy": "Reuse existing trusted same-owned-PID CannotComplete(-25204)-only bounded15s snapshot readiness; no input retry",
+    "packageMember": "dmg/Open Office Studio_2026.48.1_aarch64.dmg",
+    "packageSha256": "7ba6db8afaf73d3ef5b8d02a978aacd750a239433fb4d7bc3d2ee451ed2a29fd",
+    "packagePath": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-input/Open Office Studio_2026.48.1_aarch64.dmg",
+    "executableSha256": "e1779fe6a7be4be603d6be155715f0d860d6226a99f24a24c76e847c1609cbb0",
+    "executablePath": "/Users/runner/work/_temp/writer361-owned-app-5rg5dc_q/Open Office Studio.app/Contents/MacOS/open-office-studio"
+  },
+  "host": "ProductName:\t\tmacOS\nProductVersion:\t\t26.7.2\nBuildVersion:\t\t25G332\n",
+  "cleanup": {
+    "ownedAppClosed": true,
+    "ownedAppContainerRemoved": true
+  },
+  "priorFailedRunsRemainFailed": [
+    45148679849,
+    45150062617,
+    45150982621
+  ]
+}
