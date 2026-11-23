@@ -175,7 +175,7 @@ jobs:
                   if before!=after:path.write_text(after)
           PYCODE
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 libfuse2 squashfs-tools gnome-keyring libsecret-tools openbox xdg-desktop-portal xdg-desktop-portal-gtk imagemagick
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2 webkit2gtk-driver xvfb dbus-x11 xdotool x11-utils python3-gi gir1.2-gtk-3.0 python3-pyatspi libfuse2 squashfs-tools gnome-keyring libsecret-tools openbox xdg-desktop-portal xdg-desktop-portal-gtk imagemagick
           pnpm --dir .local/standalone-harness install --frozen-lockfile --ignore-scripts
           node --check .local/standalone-harness/scripts/proef-standalone-linux.mjs
           node --check .local/standalone-harness/scripts/standalone-linux-gnm-native.mjs
@@ -198,7 +198,14 @@ jobs:
           standalone_wm=$!
           trap 'kill "$standalone_wm" 2>/dev/null || true' EXIT
           dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
+          set +e
           node .local/standalone-harness/scripts/proef-standalone-linux.mjs
+          standalone_core_status=$?
+          set -e
+          if [ "$STANDALONE_APP" = database ]; then
+            /usr/bin/python3 .local/standalone-harness/scripts/database-normal-picker-probe.py
+          fi
+          exit "$standalone_core_status"
           SH
       - uses: actions/upload-artifact@v4
         if: always()
