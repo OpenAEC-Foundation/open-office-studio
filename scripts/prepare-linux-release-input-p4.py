@@ -25,15 +25,19 @@ def inspect_suite_elf(package):
         if package.suffix == '.deb':
             proc = subprocess.Popen(['dpkg-deb', '--fsys-tarfile', str(package)], stdout=subprocess.PIPE)
             found = []
-            with tarfile.open(fileobj=proc.stdout, mode='r|') as archive:
-                for entry in archive:
-                    if entry.name.removeprefix('./') == member:
-                        assert entry.isfile() and not entry.issym() and not entry.islnk()
-                        found.append(entry)
-                        with archive.extractfile(entry) as src, target.open('wb') as dst:
-                            shutil.copyfileobj(src, dst)
-                        mode = entry.mode
-            assert proc.wait() == 0 and len(found) == 1
+            try:
+                with tarfile.open(fileobj=proc.stdout, mode='r|') as archive:
+                    for entry in archive:
+                        if entry.name.removeprefix('./') == member:
+                            assert entry.isfile() and not entry.issym() and not entry.islnk()
+                            found.append(entry)
+                            with archive.extractfile(entry) as src, target.open('wb') as dst:
+                                shutil.copyfileobj(src, dst)
+                            mode = entry.mode
+            finally:
+                proc.stdout.close()
+                returncode=proc.wait()
+            assert returncode == 0 and len(found) == 1
         else:
             with package.open('rb') as stream:
                 header = stream.read(4 * 1024 * 1024)
