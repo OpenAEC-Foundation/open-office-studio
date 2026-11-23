@@ -216,3 +216,25 @@ artifacts then available. No P4 native STW exports or native approval yet.
 Existing Windows750b/Linux writer_362/macOS6f92 operators and independent
 per-OS start requirements remain unchanged. Publishing remains disabled per
 coordinator; no own GUI/build or main/tag/publication action is authorized here.
+
+## P4 browser original-PNG review: Linux and Windows
+
+Read-only independent review of all16 original final PNGs from run45172148763,
+QA22b82fda992632976ca1b84a78f8335bad7ee14b, on exact P4: PASS for the bounded
+issue374 title/marker layout check. Both Linux and Windows cover `/` and
+`/office/`, each with unchanged Windows output, unmodified converter control,
+actual edit and fresh-context reopen. All12 marker cases visibly contain the
+complete three bands `REPORT TITLE --` / `STW30 EDIT` / `2026-11-23`, without
+visible title/adjacent-glyph overlap or clipping. All4 unmodified controls retain
+the original title without the added marker. The subtitle remains separated.
+
+Each original full PNG was directly viewed and its bytes/SHA256 rechecked after
+review. Per-case source path/hash/findings and supplied official artifact bindings
+are in `evidence/p4-browser-original-png-review-linux-windows.json`. No original
+PNG, first capture, report or DOCX was changed. No new browser/native GUI was run.
+Integration separately audits ZIP/source/receipts/SDK44/paint/capture and actual
+downloaded DOCX contracts; those results are not asserted by this image review.
+
+The existing font-substitution notice is visible; no cross-OS pixel/font identity
+or full-document fidelity is claimed. macOS browser images and all P4 native
+STW acceptance remain pending. This review does not grant native approval.

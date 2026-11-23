@@ -1,0 +1,448 @@
+{
+  "scope": "Independent issue374 original-PNG marker/layout review only",
+  "application": {
+    "commit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+    "tree": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b",
+    "version": "2026.48.1"
+  },
+  "producer": {
+    "qaCommit": "22b82fda992632976ca1b84a78f8335bad7ee14b",
+    "runId": 45172148763,
+    "bindings": "Exact app/QA/artifact bindings supplied and separately audited by integration; this report reviews original PNG bytes only",
+    "artifacts": [
+      {
+        "os": "Linux",
+        "id": 14816943482,
+        "zipSha256": "b6bbaed52064508dce30c966e3440b529f7ad542a4366e00af6f7d61121d9efc"
+      },
+      {
+        "os": "Windows",
+        "id": 14816923853,
+        "zipSha256": "64341c7e96d2eb5abf9e27ceea154c1271438b95dbafc7f9709ca5a08fa9dde0"
+      }
+    ]
+  },
+  "reviewer": "STW QA chat9d3b",
+  "summary": {
+    "originalFinalPngsReviewed": 16,
+    "passed": 16,
+    "failed": 0,
+    "markerCases": 12,
+    "unmodifiedControls": 4,
+    "routes": [
+      "/",
+      "/office/"
+    ],
+    "browserPlatforms": [
+      "Linux",
+      "Windows"
+    ]
+  },
+  "cases": [
+    {
+      "os": "Linux",
+      "route": "/",
+      "case": "after-real-edit",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-normal\\after-real-edit.png",
+      "bytes": 99440,
+      "sha256": "5e5371df423d947c49e8aa49f9b9a0b15d98210b5339706da04c4f61cad69513",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/",
+      "case": "fresh-context-reopen",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-normal\\fresh-context-reopen.png",
+      "bytes": 99039,
+      "sha256": "511e85947e9cffd07346c21e29c2fb98c1a3132c38e41a2a80e86a54ac054d8b",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/",
+      "case": "unchanged-windows-source",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-normal\\unchanged-windows-source.png",
+      "bytes": 99859,
+      "sha256": "531fe44d0431b24ceb70218cad122c17565305644728af6af87c115cb37ce21f",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/",
+      "case": "unmodified-control",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-normal\\unmodified-control.png",
+      "bytes": 90333,
+      "sha256": "18bd481f3d42b7b081ed47e06745979f01841e6d5cb0c4d950b918cd5500853a",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": false,
+      "completeMarkerAndDateVisible": null,
+      "unmodifiedControlHasNoAddedMarker": true,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/office/",
+      "case": "after-real-edit",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-hosted\\after-real-edit.png",
+      "bytes": 99440,
+      "sha256": "5e5371df423d947c49e8aa49f9b9a0b15d98210b5339706da04c4f61cad69513",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/office/",
+      "case": "fresh-context-reopen",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-hosted\\fresh-context-reopen.png",
+      "bytes": 99012,
+      "sha256": "e6f926818bd2a8d98e4c8fa19100c9a5a3773603b2df4609548ec742a927b1ba",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/office/",
+      "case": "unchanged-windows-source",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-hosted\\unchanged-windows-source.png",
+      "bytes": 99859,
+      "sha256": "531fe44d0431b24ceb70218cad122c17565305644728af6af87c115cb37ce21f",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Linux",
+      "route": "/office/",
+      "case": "unmodified-control",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Linux\\app\\.local\\writer-481-QA-field-hosted\\unmodified-control.png",
+      "bytes": 90365,
+      "sha256": "4359dbd858e4428cdedba8a8dcba3c9c92e6fb58da3a4949e95b2694cdb90a5f",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": false,
+      "completeMarkerAndDateVisible": null,
+      "unmodifiedControlHasNoAddedMarker": true,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/",
+      "case": "after-real-edit",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-normal\\after-real-edit.png",
+      "bytes": 110559,
+      "sha256": "8db20d2449a125e61b0f44bb55910255045600510770e7749861730f2f60f151",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/",
+      "case": "fresh-context-reopen",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-normal\\fresh-context-reopen.png",
+      "bytes": 110246,
+      "sha256": "600cf527ca8634dbe34ca92c1c1bf46e7bf43d5b6b3c889ff3a1655aecbc2bd6",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/",
+      "case": "unchanged-windows-source",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-normal\\unchanged-windows-source.png",
+      "bytes": 111312,
+      "sha256": "8627c8b6cde260e9624335388c33d8f428db694707155833bcde26ab825738ab",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/",
+      "case": "unmodified-control",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-normal\\unmodified-control.png",
+      "bytes": 101371,
+      "sha256": "cf6e61e348dcc87d3416f38132ca2f0f2dabc112f42e4eea6f0a818d0f40b742",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": false,
+      "completeMarkerAndDateVisible": null,
+      "unmodifiedControlHasNoAddedMarker": true,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/office/",
+      "case": "after-real-edit",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-hosted\\after-real-edit.png",
+      "bytes": 110559,
+      "sha256": "9827e63c505bf08836be268d5975cd0d476aaf5be0293b8e01c369a6e1ed2efe",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/office/",
+      "case": "fresh-context-reopen",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-hosted\\fresh-context-reopen.png",
+      "bytes": 110246,
+      "sha256": "600cf527ca8634dbe34ca92c1c1bf46e7bf43d5b6b3c889ff3a1655aecbc2bd6",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/office/",
+      "case": "unchanged-windows-source",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-hosted\\unchanged-windows-source.png",
+      "bytes": 111287,
+      "sha256": "ef603aa7520ae8abffb2b7abeaab597cd663a5949527298692bdeb6ae50b78ae",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE --",
+        "STW30 EDIT",
+        "2026-11-23"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": true,
+      "completeMarkerAndDateVisible": true,
+      "unmodifiedControlHasNoAddedMarker": null,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    },
+    {
+      "os": "Windows",
+      "route": "/office/",
+      "case": "unmodified-control",
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\.local\\nov20-ci\\45172148763\\writer-481-browser-QA-Windows\\app\\.local\\writer-481-QA-field-hosted\\unmodified-control.png",
+      "bytes": 101371,
+      "sha256": "cf6e61e348dcc87d3416f38132ca2f0f2dabc112f42e4eea6f0a818d0f40b742",
+      "width": 1400,
+      "height": 1100,
+      "reviewMethod": "Direct visual inspection of the original full PNG via view_image; no crop, rescale, composite, OCR or pixel edits",
+      "result": "passed",
+      "expectedTitleBands": [
+        "REPORT TITLE"
+      ],
+      "expectedTitleBandsVisible": true,
+      "markerExpected": false,
+      "completeMarkerAndDateVisible": null,
+      "unmodifiedControlHasNoAddedMarker": true,
+      "titleOrSuffixGlyphOverlapObserved": false,
+      "titleOrSuffixClippingObserved": false,
+      "subtitleVisibleAndSeparated": true,
+      "sourcePngBytesUnchangedAfterReview": true
+    }
+  ],
+  "observations": [
+    "Original title and complete marker are legible with no visible field/adjacent-text overlap in all12 expected-marker PNGs.",
+    "Four unchanged controls display their original title without an added marker.",
+    "The subtitle remains separated below the rule; the title/marker is not clipped or obscured.",
+    "The existing font-substitution notice is visible; no pixel-identity or font-equivalence claim across OS is made."
+  ],
+  "limits": [
+    "Read-only screenshot review, not another browser/native GUI run.",
+    "No original PNG, cap-first, report or DOCX bytes were changed by this review.",
+    "Integration separately owns ZIP/source/receipt/SDK/paint/capture and DOCX-contract audits.",
+    "macOS browser review remains pending. Native STW acceptance remains pending on actual P4 packages.",
+    "Only the visible first-page title/marker region is accepted for issue374; no whole-document or table-fidelity claim."
+  ]
+}
