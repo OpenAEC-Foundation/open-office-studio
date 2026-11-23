@@ -1,0 +1,263 @@
+{
+  "scope": "PSW/Pocket Word version6 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/psw-qa-2026-11-23-e0d7",
+  "testedHarnessCommit": "fe55bde7978f5f3b58bc90e6a823680b5e44ae87",
+  "evidenceCommitDifference": "Docs/retained evidence and separate offline static analysis only; no product/tested runtime/oracle changes",
+  "source": {
+    "repository": "https://github.com/alexschiller/file-format-commons",
+    "commit": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+    "firstPublicationCommit": "5b36d9ea16a82bcc8963bf470dd0e62017b92804",
+    "path": "files/ffc.psw",
+    "filename": "PocketWord.psw",
+    "blob": "75c0b60f397cfa1ceb96059abab2bf98fa890bea",
+    "bytes": 752,
+    "sha256": "bef5eeabfc34d59d14f7f66796aca17a0b1231c1015ce3d0bc9d32e0c8cf1740",
+    "url": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/files/ffc.psw",
+    "catalogCopy": {
+      "repository": "LibreOffice/core",
+      "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+      "firstPublicationCommit": "9b9d668d45dce3f318d89d54725a4d6cfc750315",
+      "path": "writerperfect/qa/unit/data/writer/libwps/pass/PocketWord.psw",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwps/pass/PocketWord.psw"
+    },
+    "license": "CC0-1.0",
+    "licenseUrl": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/LICENSE",
+    "licenseSha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01",
+    "readmeUrl": "https://raw.githubusercontent.com/alexschiller/file-format-commons/0d508180dfeece7ac8b3e87bd2093755e3f356b1/README.md",
+    "readmeSha256": "8bfa495da2855c0de24210fedf5cf5dcd0c21f3801dc88a29576e71480ab02b9",
+    "variant": "Genuine published Pocket Word family binary {\\pwi header, version6; not WPS/Works, RTF or a renamed DOCX",
+    "coverageLimit": "One Pocket Word version6 binary sample: single text record, original 0x0A bytes, paragraph linkage, font family/10pt. No original headings, tables or lists, so no claims for those; opaque page/line geometry/unknown records, embedded objects/ink/sound/macros, rendering and other PSW variants remain outside acceptance."
+  },
+  "sourceQualificationPassed": true,
+  "run": {
+    "id": 45192485858,
+    "sourceJob": 137754180010,
+    "runtimeJob": 137754393807,
+    "browserJob": 137754395589,
+    "source": "success",
+    "negativeBrowserFunctionCheck": "success",
+    "runtime": "failure only at final strict source assertion after actual downstream engine phases complete",
+    "runner": "ubuntu-22.04",
+    "node": "22.23.5"
+  },
+  "runtimeBinding": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/psw-runtime-input/private",
+    "program": "/home/runner/work/open-office-studio/open-office-studio/.local/psw-runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "runtimeReceipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test"
+  },
+  "converter": {
+    "sourceUnchanged": true,
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "outputSha256": "27039daa910be01fe284d8fc69a3418e327fef75710b41a299bf5bb342a2005c",
+    "outputBytes": 5489,
+    "exitCode": 0
+  },
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "strictSourceAcceptance": false,
+  "fullFormatAcceptance": false,
+  "downstreamEnginePassed": true,
+  "artifacts": [
+    {
+      "id": 14826916824,
+      "name": "psw-runtime-result",
+      "bytes": 39947,
+      "fullZipSha256": "0aef29aabbff02f83ffa16bce7f465643953567348778379fe06d8e7b2d5d438",
+      "verifiedAgainstOfficialMetadata": true
+    },
+    {
+      "id": 14824958989,
+      "name": "psw-browser-limit",
+      "bytes": 1598,
+      "fullZipSha256": "c34700d8f16b3d98ae1729d60a48c59ea01c8047748b593c1a7a4b573dd1667c",
+      "verifiedAgainstOfficialMetadata": true
+    }
+  ],
+  "stages": [
+    {
+      "file": "converted.docx",
+      "bytes": 5489,
+      "sha256": "27039daa910be01fe284d8fc69a3418e327fef75710b41a299bf5bb342a2005c",
+      "sourceCodepointsIncludingEdit": 189,
+      "actualCodepointsIncludingEdit": 187,
+      "paragraphs": 1,
+      "originalPrintableCharactersPreserved": true,
+      "courierNew10ptPreserved": true,
+      "missingOriginalRawLfBytes": 2,
+      "strictSourceAcceptance": false,
+      "nativeLfSemanticsIndependentlyProven": false
+    },
+    {
+      "file": "saved.docx",
+      "bytes": 5397,
+      "sha256": "36a4dd8d17f3dc8bbffcf37cd25b5a80de5cd33db4ed2e7e1a80a880589a6e15",
+      "sourceCodepointsIncludingEdit": 202,
+      "actualCodepointsIncludingEdit": 200,
+      "paragraphs": 1,
+      "originalPrintableCharactersPreserved": true,
+      "courierNew10ptPreserved": true,
+      "missingOriginalRawLfBytes": 2,
+      "strictSourceAcceptance": false,
+      "nativeLfSemanticsIndependentlyProven": false
+    },
+    {
+      "file": "reopened-saved.docx",
+      "bytes": 5397,
+      "sha256": "5e2d1e7e961da4e2ce967373f0ee97ea581d37000829d545bc82813bd6b83516",
+      "sourceCodepointsIncludingEdit": 202,
+      "actualCodepointsIncludingEdit": 200,
+      "paragraphs": 1,
+      "originalPrintableCharactersPreserved": true,
+      "courierNew10ptPreserved": true,
+      "missingOriginalRawLfBytes": 2,
+      "strictSourceAcceptance": false,
+      "nativeLfSemanticsIndependentlyProven": false
+    }
+  ],
+  "remainingObservation": "Original native text contains 189 codepoints including 0x0a at offsets 485/638. Converted DOCX has 187 codepoints, retaining the printable symbols but omitting both controls. Same after edit/UndoRedo/DOCX save/freshreopen. Native LF semantics are not independently proven; strict mismatch retained, not normalized into acceptance.",
+  "issueDisposition": "No new issue or product fix: open/closed PSW and Pocket Word searches returned no scoped report, but native LF/control semantics remain unresolved; no unsupported newline/layout/data-loss claim.",
+  "limits": [
+    "One Pocket Word version6 binary sample: single text record, original 0x0A bytes, paragraph linkage, font family/10pt. No original headings, tables or lists, so no claims for those; opaque page/line geometry/unknown records, embedded objects/ink/sound/macros, rendering and other PSW variants remain outside acceptance.",
+    "No Tauri IPC/native Windows/Linux/macOS/hosted-browser UI/visual/font-rendering or macro acceptance. Real converter/helper/Word SDK run only in Linux CI.",
+    "Source qualified from original CC0 publication and exact byte-identical catalog copy. No renamed DOCX/RTF/WPS/Works or self-export used.",
+    "Native byte oracle is own independently expressed record/ID/text/font decoder; a parser mirror was consulted for layout only, not executed for expected output.",
+    "Nonfatal Vite WebSocket port 24678 warning captured during actual engine helper; edits/save/reopen still completed.",
+    "No catalog/shared-index/product/P5-intake/build/main/release change; WRI crossing proposal withdrawn, earlier proofs unchanged."
+  ],
+  "offlineAnalysis": {
+    "script": "scripts/qa-psw/analyse.py",
+    "platform": "Windows static Python only, no Office/Word runtime",
+    "passed": true,
+    "report": "offline-analysis.json"
+  }
+}

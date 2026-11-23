@@ -1,0 +1,53 @@
+{
+  "method": "Offline own source-byte and DOCX XML replay of complete-ZIP-verified actual CI results; no Office/Word engine execution",
+  "sourceSha256": "bef5eeabfc34d59d14f7f66796aca17a0b1231c1015ce3d0bc9d32e0c8cf1740",
+  "sourceRawLfOffsets": [
+    485,
+    638
+  ],
+  "stages": [
+    {
+      "file": "converted.docx",
+      "bytes": 5489,
+      "sha256": "27039daa910be01fe284d8fc69a3418e327fef75710b41a299bf5bb342a2005c",
+      "sourceCodepointsIncludingEdit": 189,
+      "actualCodepointsIncludingEdit": 187,
+      "paragraphs": 1,
+      "originalPrintableCharactersPreserved": true,
+      "courierNew10ptPreserved": true,
+      "missingOriginalRawLfBytes": 2,
+      "strictSourceAcceptance": false,
+      "nativeLfSemanticsIndependentlyProven": false
+    },
+    {
+      "file": "saved.docx",
+      "bytes": 5397,
+      "sha256": "36a4dd8d17f3dc8bbffcf37cd25b5a80de5cd33db4ed2e7e1a80a880589a6e15",
+      "sourceCodepointsIncludingEdit": 202,
+      "actualCodepointsIncludingEdit": 200,
+      "paragraphs": 1,
+      "originalPrintableCharactersPreserved": true,
+      "courierNew10ptPreserved": true,
+      "missingOriginalRawLfBytes": 2,
+      "strictSourceAcceptance": false,
+      "nativeLfSemanticsIndependentlyProven": false
+    },
+    {
+      "file": "reopened-saved.docx",
+      "bytes": 5397,
+      "sha256": "5e2d1e7e961da4e2ce967373f0ee97ea581d37000829d545bc82813bd6b83516",
+      "sourceCodepointsIncludingEdit": 202,
+      "actualCodepointsIncludingEdit": 200,
+      "paragraphs": 1,
+      "originalPrintableCharactersPreserved": true,
+      "courierNew10ptPreserved": true,
+      "missingOriginalRawLfBytes": 2,
+      "strictSourceAcceptance": false,
+      "nativeLfSemanticsIndependentlyProven": false
+    }
+  ],
+  "downstreamEnginePassed": true,
+  "strictSourceAcceptance": false,
+  "fullFormatAcceptance": false,
+  "meaning": "All printable symbols and font/paragraph structure survive. Two original 0x0a bytes are absent at conversion and remain absent after Word save/freshreopen; native semantics are not independently established, so no confirmed whitespace/layout bug or strict pass is claimed."
+}
