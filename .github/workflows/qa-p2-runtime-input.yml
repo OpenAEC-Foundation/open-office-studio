@@ -1,0 +1,90 @@
+name: P2 Linux runtime-only QA input
+on:
+  push:
+    branches: [codex/qa-runtime-input-p2-2026-11-23]
+    paths:
+      - scripts/p2-runtime-input.py
+      - scripts/p2-runtime-consumer.py
+      - scripts/test-p2-runtime-input.py
+      - .github/workflows/qa-p2-runtime-input.yml
+  workflow_dispatch:
+    inputs:
+      recovery_run:
+        description: Reuse verified DEB from a previous failed prep to avoid a second Desktop ZIP download
+        type: string
+        default: ""
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: p2-runtime-only-qa-input
+  cancel-in-progress: false
+jobs:
+  contracts:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Linux archive selection, provenance gate and mode/link roundtrip contracts
+        run: python scripts/test-p2-runtime-input.py
+  prepare:
+    needs: contracts
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      P2_RUNTIME_RECOVERY_RUN: ${{ inputs.recovery_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/p2-runtime-harness
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Wait only for the exact canonical Linux job
+        run: |
+          python - <<'PY'
+          import json,subprocess,time
+          previous=None
+          for attempt in range(60):
+            j=json.loads(subprocess.check_output(['gh','api','repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137586343061']))
+            assert j['head_sha']=='dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b' and j['run_id']==45143305147
+            state=(j['status'],j['conclusion'])
+            if state!=previous: print('Canonical Linux job:',state,flush=True);previous=state
+            if j['status']=='completed':
+              assert j['conclusion']=='success', 'Canonical Linux job did not pass'
+              break
+            time.sleep(20)
+          else: raise RuntimeError('Canonical Linux job not finished within bounded wait; no archive downloaded')
+          PY
+      - name: Install OS libraries for a headless private-runtime canary only
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libcairo2 libcups2 libdbus-1-3 libfontconfig1 libfreetype6 libglib2.0-0 libice6 libnss3 libsm6 libx11-6 libxext6 libxinerama1 libxrandr2 libxrender1 libxslt1.1 libgl1 libglu1-mesa strace
+      - name: One verified Desktop ZIP download, runtime-only extraction and relocated consumer canary
+        run: python .local/p2-runtime-harness/scripts/p2-runtime-input.py
+      - name: Upload the single shared runtime-only input for five format workers
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-linux-private-runtime-only
+          path: .local/p2-runtime-input/
+          compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
+      - name: Preserve the already verified DEB only when prep fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-runtime-prep-recovery
+          path: .local/p2-runtime-recovery/
+          compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: warn
