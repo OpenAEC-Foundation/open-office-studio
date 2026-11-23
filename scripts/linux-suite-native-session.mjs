@@ -152,7 +152,7 @@ function pids() {
   });
 }
 async function ownedApplicationResources(){
-  return collectOwnedNativeResources({profile:env.XDG_CONFIG_HOME,application,processGroup:driver?.pid});
+  return collectOwnedNativeResources({profile:env.XDG_CONFIG_HOME,application,processGroup:driver?.pid,observe:value=>{const rows=(report.resourceObservations??=[]);if(!rows.some(row=>row.pid===value.pid&&row.startTime===value.startTime&&row.status===value.status))rows.push({...value,at:new Date().toISOString()});}});
 }
 async function freePort() {
   const server = createServer();

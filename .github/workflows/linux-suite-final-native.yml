@@ -20,6 +20,8 @@ jobs:
       source: ${{ steps.pin.outputs.source }}
       packages: ${{ steps.pin.outputs.packages }}
       reusecore: ${{ steps.pin.outputs.reusecore }}
+      debmissing: ${{ steps.pin.outputs.debmissing }}
+      debmode: ${{ steps.pin.outputs.debmode }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -57,6 +59,7 @@ jobs:
           appendFileSync(process.env.GITHUB_OUTPUT,`go=${r.go===true}\nsource=${r.candidate?.commit??''}\n`);
           appendFileSync(process.env.GITHUB_OUTPUT,`packages=${JSON.stringify(r.nativePackages??['deb','appimage'])}\n`);
           appendFileSync(process.env.GITHUB_OUTPUT,`reusecore=${Boolean(r.reusedCore)}\n`);
+          appendFileSync(process.env.GITHUB_OUTPUT,`debmissing=${r.debMissingOnly===true}\ndebmode=${r.debMissingOnly===true?'missing':'both'}\n`);
           JS
   native:
     needs: protocol
@@ -110,21 +113,21 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 .local/suite-harness/scripts/linux-suite-native-package.py ${{ matrix.package }}
       - name: Actual DEB core368/369 and vertical362
-        if: matrix.package == 'deb' && needs.protocol.outputs.reusecore != 'true'
+        if: matrix.package == 'deb' && needs.protocol.outputs.reusecore != 'true' && needs.protocol.outputs.debmissing != 'true'
         run: dbus-run-session -- xvfb-run -a -e .local/core-xvfb.log -s '-screen 0 1800x1200x24 -noreset' node .local/suite-harness/scripts/proef-linux-suite-final-core.mjs
       - name: Reuse already completed identical source DEB ELF and core probe proof
-        if: matrix.package == 'deb' && needs.protocol.outputs.reusecore == 'true'
+        if: matrix.package == 'deb' && needs.protocol.outputs.reusecore == 'true' && needs.protocol.outputs.debmissing != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 .local/suite-harness/scripts/linux-suite-reuse-core.py
       - name: Actual DEB native retained field374 and short native edit
-        if: matrix.package == 'deb'
+        if: matrix.package == 'deb' && needs.protocol.outputs.debmissing != 'true'
         run: |
           dbus-run-session -- xvfb-run -a -e .local/field-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-field374.mjs'
-      - name: Actual DEB declared-runtime Cancel/Overwrite and own child-PATH missing-helper
+      - name: Selected DEB native confirmation cases
         if: matrix.package == 'deb'
         run: |
-          dbus-run-session -- xvfb-run -a -e .local/confirm-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs deb both'
+          dbus-run-session -- xvfb-run -a -e .local/confirm-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs deb ${{ needs.protocol.outputs.debmode }}'
       - name: Actual AppImage own preflight and real missing-helper feedback
         if: matrix.package == 'appimage'
         run: |
@@ -137,6 +140,7 @@ jobs:
         run: |
           dbus-run-session -- xvfb-run -a -e .local/appimage-positive-xvfb.log -s '-screen 0 1800x1200x24 -noreset' bash -c 'dbus-update-activation-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; exec node .local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs appimage present'
       - name: Keep automated, unavailable state and human visual acceptance separate
+        if: matrix.package != 'deb' || needs.protocol.outputs.debmissing != 'true'
         run: node .local/suite-harness/qa/linux-suite-final/aggregate.mjs ${{ matrix.package }}
       - uses: actions/upload-artifact@v4
         if: always()
