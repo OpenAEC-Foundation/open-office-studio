@@ -331,3 +331,32 @@ product code changes; original trace still fails the same acceptance predicate.
 Source/pixel/timing evidence and official ZIP binding are in
 `evidence/p5-mac-capture-sampling-diagnosis.json`. Syntax/static checks pass;
 new actual Mac validation still requires root coordination. No extra CI started.
+
+## P5 Mac browser validation and independent original-image review
+
+The targeted Mac rerun45183129618/attempt1/job137721777872 is successful on
+exact P5 b696ab86/treee30879fd, QA6bff15bf7a4b529e389460b6c0ffa397cfaa1e9a.
+Artifact14823150600 is5588758bytes; its whole ZIP was independently verified:
+`4355f4220b22a521f708fa8f3965f42662e7f1f58f326e47426778bb27ab7864`.
+The one downloaded ZIP is shared with integration for its separate audits.
+
+All8 original final PNGs were directly inspected: `/` and `/office/`, each with
+unchanged Windows output, unmodified control, actual edit and fresh reopen.
+Bounded title/marker layout PASS: all6 marker images show the complete title,
+STW30 EDIT and date in order without overlap/clipping; both controls retain the
+original title only. All8 captures meet the unchanged three-identical-PNG rule
+over201–416ms with extra Mac delay0. Original bytes/hashes were rechecked.
+
+Both source-bound reports pass with7 cases. Read-only preflight checks confirm
+focused body input, caret557.125 versus projected557.13325, exact font76d04c18,
+identity Canvas transform, and pinned layoutWASM/input bindings. The separate
+visible caret-projection limit remains explicit (fullInkEdgeMatched=false);
+this does not assert broader visual caret correctness. Retained cleanup reports
+show contexts/browser/server closed. No own GUI or new CI was started.
+
+Per-image hashes/findings and preflight evidence are in
+`evidence/p5-mac-original-png-review.json`. Integration separately audits source,
+receipts/SDK/paint and actual DOCX contracts; Linux/Windows P5 audit is reported
+complete by integration. All older red receipts/raw data remain intact.
+P5 native STW packages/exports and their independent audits are still pending;
+the successful browser review is not native approval or full route closure.
