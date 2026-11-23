@@ -60,7 +60,7 @@ func nativeMouseClick(_ point: CGPoint) -> Bool {
                   let b = window[kCGWindowBounds as String] as? [String: Any],
                   let x = b["X"] as? Double, let y = b["Y"] as? Double,
                   let w = b["Width"] as? Double, let h = b["Height"] as? Double else { return false }
-            return abs(x-p.x) < .5 && abs(y-p.y) < .5 && abs(w-s.width) < .5 && abs(h-s.height) < .5
+            return abs(x-p.x) < 0.5 && abs(y-p.y) < 0.5 && abs(w-s.width) < 0.5 && abs(h-s.height) < 0.5
         }
         report["mainWindowSelection"] = "Exact unique AX main-window title and geometry; auxiliary CG windows retained"
     }
