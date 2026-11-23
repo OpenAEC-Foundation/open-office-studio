@@ -12,6 +12,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   capability:
+    needs: prepare
+    if: needs.prepare.outputs.hostProbe == 'true'
     runs-on: windows-latest
     timeout-minutes: 6
     steps:
@@ -32,6 +34,7 @@ jobs:
     outputs:
       frozen: ${{ steps.plan.outputs.frozen }}
       apps: ${{ steps.plan.outputs.apps }}
+      hostProbe: ${{ steps.plan.outputs.hostProbe }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

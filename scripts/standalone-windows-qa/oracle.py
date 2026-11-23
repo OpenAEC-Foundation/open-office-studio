@@ -6,8 +6,22 @@ import sqlite3
 import sys
 import xml.etree.ElementTree as ET
 import zipfile
+from email import policy
+from email.parser import BytesParser
 
 def inspect(kind, path):
+    if kind=='email':
+        messages=list(path.glob('append-*.eml')); assert messages, 'No actual IMAP draft APPEND'
+        matched=[]
+        for file in messages:
+            message=BytesParser(policy=policy.default).parsebytes(file.read_bytes())
+            body=message.get_body(preferencelist=('plain','html')) if message.is_multipart() else message
+            if str(message['Subject'])=='STANDALONE23 LOCAL DRAFT' and 'STANDALONE23 DRAFT BODY' in body.get_content():
+                matched.append(dict(file=file.name,sha256=hashlib.sha256(file.read_bytes()).hexdigest()))
+        assert matched, 'Actual saved MIME draft subject/body mismatch'
+        if (path/'report.json').exists():
+            server=json.loads((path/'report.json').read_bytes()); assert server['loopbackOnly'] and server['serversClosed'] and server['smtpDataRejected']==0
+        return dict(kind=kind,status='passed',actualMimeDrafts=matched,noRealMail=True)
     data = path.read_bytes(); result = dict(kind=kind, bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
     if kind in ('writer','spreadsheet','presentation'):
         with zipfile.ZipFile(path) as z:

@@ -75,10 +75,39 @@ export async function databaseCase(qa, phase) {
 }
 
 export async function emailCase(qa, phase) {
-  // Deliberately fail closed until the loopback protocol fixture is available.
-  // Real packaged native backend must never be replaced with DemoBackend.
+  // The real packaged Tauri backend talks only to our synthetic external
+  // loopback protocol fixture. Never replace it with DemoBackend or invoke a
+  // backend mutation directly to bypass the actual account/compose UI.
   const demo=await qa.page.locator('.email-demobalk').allTextContents();
   assert(!demo.some(text=>/demo/i.test(text)), 'Native Email unexpectedly uses demo data');
-  await qa.page.locator('.email-welkom, .email-werkruimte').waitFor();
-  throw Error('BLOCKED: native Email draft/loopback fixture not yet prepared; startup is not functional acceptance');
+  const {page}=qa;
+  await page.locator('.email-welkom, .email-werkruimte').waitFor();
+  if(phase==='initial') {
+    await page.getByRole('button',{name:/^(Add account|Account toevoegen)$/i}).click();
+    const wizard=page.locator('.email-wizard'); await wizard.waitFor();
+    await wizard.locator('.email-vinkje input[type="checkbox"]').first().uncheck();
+    await wizard.getByLabel(/^(Your full name|Uw volledige naam)$/i).fill('Standalone QA');
+    await wizard.getByLabel(/^(Email address|E-mailadres)$/i).fill('qa@localhost');
+    await wizard.locator('input[type="password"]').fill('standalone-synthetic-password');
+    for(const protocol of ['IMAP','SMTP']) {
+      await wizard.getByRole('textbox',{name:new RegExp(`^${protocol} (server|serveradres)$`,'i')}).fill('127.0.0.1');
+      await wizard.getByRole('combobox',{name:new RegExp(`^${protocol} (security|beveiliging)$`,'i')}).selectOption('geen');
+      await wizard.getByRole('spinbutton',{name:new RegExp(`^${protocol} (port|poort)$`,'i')}).fill(String(qa.mail[protocol.toLowerCase()]));
+      await wizard.getByRole('textbox',{name:new RegExp(`^${protocol} (username|gebruikersnaam)$`,'i')}).fill('qa@localhost');
+    }
+    await wizard.getByRole('button',{name:/^(Save anyway|Toch opslaan|Done|Gereed)$/i}).click();
+    await page.getByText('STANDALONE23 LOCAL MESSAGE',{exact:true}).click();
+    await page.getByText('STANDALONE23 LOCAL BODY',{exact:true}).waitFor();
+    await page.getByRole('button',{name:/^(New message|Nieuw bericht)$/i}).click();
+    await page.getByLabel(/^(Subject|Onderwerp)$/i).fill('STANDALONE23 LOCAL DRAFT');
+    const body=page.locator('.email-editor[contenteditable="true"]'); await qa.focus(body,'email-native-compose');
+    await page.keyboard.type('STANDALONE23 DRAFT BODY'); await page.keyboard.press('Control+s');
+    await qa.waitForDraft();
+    const compose=page.locator('.email-opstelvenster');
+    await compose.getByRole('button',{name:/^(Close|Sluiten)$/i}).click();
+  }
+  await page.getByRole('button',{name:/^Drafts|^Concepten/i}).click();
+  await page.getByText('STANDALONE23 LOCAL DRAFT',{exact:true}).click();
+  await page.getByText('STANDALONE23 DRAFT BODY',{exact:true}).waitFor();
+  qa.record({phase,realNativeBackend:true,loopbackOnly:true,draftReadback:true,noSend:true});
 }

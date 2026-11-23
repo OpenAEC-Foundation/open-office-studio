@@ -40,7 +40,7 @@ def main():
     command, plan_path, *rest = sys.argv[1:]
     plan = json.loads(Path(plan_path).read_bytes()); validate(plan)
     if command == 'plan':
-        values = 'frozen=' + str(plan['frozen']).lower() + '\napps=' + json.dumps(APPS) + '\n'
+        values = 'frozen=' + str(plan['frozen']).lower() + '\napps=' + json.dumps(APPS) + '\nhostProbe=' + str(plan.get('hostProbe', False)).lower() + '\n'
         if os.environ.get('GITHUB_OUTPUT'):
             with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out: out.write(values)
         print(values, end=''); return
@@ -49,6 +49,8 @@ def main():
     repo = os.environ['GH_REPO']; assert re.fullmatch(r'[\w.-]+/[\w.-]+', repo)
     def api(endpoint): return json.loads(subprocess.check_output(['gh', 'api', f'repos/{repo}/{endpoint}']))
     run = api(f"actions/runs/{plan['artifactRun']}")
+    commit = api(f"git/commits/{plan['applicationCommit']}")
+    assert commit['tree']['sha'] == plan['applicationTree'], 'Frozen tree differs from actual application commit'
     assert run['head_sha'] == plan['applicationCommit'], 'Canonical build source differs from frozen manifest'
     assert run['status'] == 'completed' and run['conclusion'] == 'success', 'Canonical build not successfully completed'
     artifacts = api(f"actions/runs/{plan['artifactRun']}/artifacts?per_page=100")['artifacts']

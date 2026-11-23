@@ -32,7 +32,7 @@ const install=join(temporary,'installed'), profile=join(temporary,'webview-profi
 const report={schemaVersion:1,applicationCommit:receipt.applicationCommit,applicationTree:receipt.applicationTree,
  version:receipt.version,harnessCommit:process.env.OOS_QA_HARNESS,package:receipt,scope:'Actual isolated standalone Windows native app; never a browser demo',
  status:'failed',steps:[],phases:[],cleanup:{},limitations:[]};
-let child,browser,page,port,installed=false,policyChanged=false,firstPid,primaryError;
+let child,browser,page,port,installed=false,policyChanged=false,firstPid,primaryError,mailChild,mail;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const record=entry=>report.steps.push(entry);
 async function action(name,extra=[]) {
@@ -122,10 +122,18 @@ try {
  await ps('webview-policy.ps1',['-Phase','Enable','-Executable',app.executable,'-StatePath',policy,'-Port',String(port),'-ProfilePath',profile]); policyChanged=true;
  execFileSync('python',['-B',join(driver,'fixtures.py'),join(root,'fixtures')],{stdio:'inherit',timeout:20000});
  const fixtures=JSON.parse(await readFile(join(root,'fixtures/manifest.json'),'utf8'));
+ if(app.key==='email') {
+  mailChild=spawn('python',['-u','-B',join(driver,'loopback-mail.py'),join(root,'mail')],{windowsHide:true,stdio:['pipe','pipe','pipe']});
+  mailChild.stdout.pipe(createWriteStream(join(root,'mail.stdout.txt')));mailChild.stderr.pipe(createWriteStream(join(root,'mail.stderr.txt')));
+  const deadline=Date.now()+10000;
+  while(Date.now()<deadline){try{mail=JSON.parse(await readFile(join(root,'mail/ports.json'),'utf8'));break;}catch{await sleep(100);}}
+  assert(mail && mail.host==='127.0.0.1','Loopback fixture must bind only the local host');
+ }
  const ext={writer:'docx',spreadsheet:'xlsx',presentation:'pptx'}[app.key];
  let input=ext?fixtures[ext].file:app.key==='database'?fixtures.database.file:undefined;
  const original=input?hash(await readFile(input)):null;
- const qa={get page(){return page;},focus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file};
+ const qa={get page(){return page;},focus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,mail,
+  waitForDraft:async()=>{const deadline=Date.now()+20000;while(Date.now()<deadline){try{await oracle('email',join(root,'mail'));return;}catch{await sleep(250);}}throw Error('Real native draft append did not reach loopback fixture');}};
  for(const phase of ['initial','reopened']) {
   const current=await launch(input,phase);
   if(phase==='initial')firstPid=child.pid; else assert.notEqual(child.pid,firstPid,'New process required');
@@ -146,6 +154,7 @@ try {
 } finally {
  try {if(child?.pid && child.exitCode===null) {await action('Close').catch(()=>{});await sleep(1500);if(child.exitCode===null){await run('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true});report.cleanup.forcedOwnedProcessTree=true;}}}catch(error){report.cleanup.processError=String(error);}
  await browser?.close().catch(()=>{});
+ if(mailChild){mailChild.stdin.end();const deadline=Date.now()+5000;while(mailChild.exitCode===null && Date.now()<deadline)await sleep(100);if(mailChild.exitCode===null){mailChild.kill();report.cleanup.mailError='Loopback server failed to close';}else{report.cleanup.loopbackServerClosed=true;if(!primaryError)try{await oracle('email',join(root,'mail'));}catch(error){primaryError=error;report.status='failed-mail-oracle';report.error=String(error);}}}
  try {if(policyChanged)await ps('webview-policy.ps1',['-Phase','Restore','-Executable',app.executable,'-StatePath',policy]);report.cleanup.policyRestored=true;}catch(error){report.cleanup.policyError=String(error);}
  try {if(installed)execFileSync(join(install,'uninstall.exe'),['/S'],{windowsHide:true,timeout:60000});report.cleanup.ownedInstallUninstalled=true;}catch(error){report.cleanup.uninstallError=String(error);}
  report.cleanup.ownedAppExited=!child || child.exitCode!==null;
