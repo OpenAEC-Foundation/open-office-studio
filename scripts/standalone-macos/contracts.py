@@ -57,7 +57,8 @@ def validate_request(value, now=None):
                 or path.name.replace(".", " ").split("_", 1)[0] != APPS[key][0]
                 or path.name not in (expected, expected.replace(" ", "."))):
             raise ValueError("Wrong/unsafe per-app DMG member: " + key)
-        if member in members or not hex_value(package.get("sha256"), 64):
+        parent_bound = package.get("sha256") is None and package.get("hashBinding") == "verified-parent-archive"
+        if member in members or not (hex_value(package.get("sha256"), 64) or parent_bound):
             raise ValueError("Duplicate member or missing package digest")
         members.add(member)
     files = value.get("harnessFiles", {})

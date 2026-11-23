@@ -41,12 +41,13 @@ def extract(request, archive, output):
             with source.open(entry) as src, target.open("xb") as dest:
                 shutil.copyfileobj(src, dest, 1024*1024)
             actual = digest(target)
-            if actual != request["packages"][app]["sha256"]:
+            expected=request["packages"][app]["sha256"]
+            if expected is not None and actual != expected:
                 raise ValueError("Extracted DMG SHA256 differs: "+app)
             proof = {"schemaVersion": 1, "app": app, "source": request["source"],
                      "parentArtifact": request["parentArtifact"], "member": member,
                      "package": {"filename": target.name, "sha256": actual, "bytes": target.stat().st_size},
-                     "nativeAccepted": False}
+                     "memberSHA256DerivedFromVerifiedParent":True,"nativeAccepted": False}
             (target.parent/"provenance.json").write_text(json.dumps(proof, indent=2)+"\n", encoding="utf-8")
             (target.parent/"request.json").write_text(json.dumps(request, indent=2)+"\n", encoding="utf-8")
     return {"app": list(APPS)}
@@ -57,6 +58,9 @@ def main():
     parser.add_argument("output", type=Path);parser.add_argument("--archive", type=Path)
     args=parser.parse_args();request=validate_request(json.loads(args.request.read_text(encoding="utf-8")))
     root=Path(__file__).resolve().parents[2];check_harness(request,root)
+    commit=api("/git/commits/"+request["source"]["commit"])
+    if commit.get("tree",{}).get("sha") != request["source"]["tree"]:
+        raise ValueError("Producer source tree differs from coordinator request")
     parent=request["parentArtifact"]
     run, artifact, job = (api("/actions/runs/"+str(parent["run"])),
                          api("/actions/artifacts/"+str(parent["id"])),

@@ -45,6 +45,7 @@ def verify(app, path, edited=True):
         assert cells["A1"]["value"] == SEEDS[app] and cells["A3"]["value"] == CONTROL
         assert float(cells["B2"]["value"]) == (42 if edited else 2)
         assert cells["C2"]["formula"] == "SUM(B2,1)"
+        assert float(cells["C2"]["value"]) == (43 if edited else 3)
         result["cells"] = cells
     elif app == "presentation":
         with zipfile.ZipFile(path) as bundle:

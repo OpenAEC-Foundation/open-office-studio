@@ -49,7 +49,8 @@ func record(_ e: AXUIElement) -> [String: Any] {
     var result: [String: Any]=[:]
     let secure=string(e,kAXSubroleAttribute)=="AXSecureTextField"
     for key in [kAXRoleAttribute,kAXSubroleAttribute,kAXTitleAttribute,kAXDescriptionAttribute,
-                kAXHelpAttribute,kAXIdentifierAttribute,kAXEnabledAttribute,kAXFocusedAttribute,kAXValueAttribute] {
+                kAXHelpAttribute,kAXIdentifierAttribute,kAXEnabledAttribute,kAXFocusedAttribute,kAXValueAttribute,
+                kAXRoleDescriptionAttribute,kAXModalAttribute] {
         if secure && key==kAXValueAttribute {result[key]="[secure value omitted]";continue}
         if let text=attr(e,key) as? String {result[key]=String(text.prefix(4096))}
         else if let number=attr(e,key) as? NSNumber {result[key]=number}
@@ -80,6 +81,9 @@ if let focused=attr(app,kAXFocusedUIElementAttribute),CFGetTypeID(focused)==AXUI
     report["focused"]=record(focused as! AXUIElement)
 }
 if action=="snapshot" {report["status"]="observed";finish()}
+guard report["bounded"] as? Bool == false, report["childrenTruncated"] as? Bool != true else {
+    report["reason"]="Native tree was truncated; uniqueness cannot be established";finish(3)
+}
 guard CGPreflightPostEventAccess() else {report["reason"]="Native event posting unavailable";finish(3)}
 guard running.activate(options: []) else {report["reason"]="Owned application activation failed";finish(3)}
 Thread.sleep(forTimeInterval:0.2)
@@ -94,7 +98,12 @@ if action=="press" || action=="click" {
           ["AXButton","AXRadioButton","AXCheckBox","AXPopUpButton","AXTextField","AXTextArea","AXComboBox","AXStaticText","AXRow","AXCell"].contains(role) else {
         report["reason"]="Exact semantic native control selector required";finish(2)
     }
-    let matches=queue.prefix(index).filter {string($0.0,kAXRoleAttribute)==role && string($0.0,field)==value}
+    let matches=queue.prefix(index).filter {
+        guard string($0.0,kAXRoleAttribute)==role && string($0.0,field)==value,
+              let actual=frame($0.0),let expected=spec["frame"] as? [String:Double],
+              let x=expected["x"],let y=expected["y"],let w=expected["width"],let h=expected["height"] else {return false}
+        return abs(actual.minX-x)<2 && abs(actual.minY-y)<2 && abs(actual.width-w)<2 && abs(actual.height-h)<2
+    }
     guard matches.count==1,let target=matches.first?.0,let f=frame(target),
           windows.contains(where:{frame($0)?.contains(f)==true}),
           (attr(target,kAXEnabledAttribute) as? Bool) != false else {
@@ -118,7 +127,7 @@ if action=="press" || action=="click" {
         "cmd-o":(31,.maskCommand),"cmd-s":(1,.maskCommand),"cmd-shift-s":(1,[.maskCommand,.maskShift]),
         "cmd-q":(12,.maskCommand),"cmd-a":(0,.maskCommand),"cmd-z":(6,.maskCommand),
         "cmd-end":(124,.maskCommand),"cmd-shift-g":(5,[.maskCommand,.maskShift]),
-        "return":(36,[]),"tab":(48,[]),"escape":(53,[]),"right":(124,[]),"down":(125,[])]
+        "return":(36,[]),"tab":(48,[]),"escape":(53,[]),"right":(124,[]),"down":(125,[]),"end":(119,[])]
     guard arguments.count==4,let (code,flags)=keys[arguments[3]] else {report["reason"]="Unsupported native key";finish(2)}
     for down in [true,false] {
         let event=CGEvent(keyboardEventSource:nil,virtualKey:code,keyDown:down);event?.flags=flags;event?.postToPid(pid)

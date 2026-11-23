@@ -17,6 +17,8 @@ jobs:
     if: contains(github.event.head_commit.message, '[standalone-macos]')
     runs-on: macos-latest
     timeout-minutes: 10
+    outputs:
+      release-ready: ${{ steps.request.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,17 +27,132 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify isolated contracts and independent fixture oracles
-        run: python scripts/standalone-macos/test_contracts.py
+        run: python -m unittest discover -s scripts/standalone-macos -p 'test_*.py'
       - name: Compile actual macOS native helper before touching applications
         run: |
           mkdir -p receipts
           swiftc scripts/standalone-macos/ax.swift -o receipts/standalone-ax
           receipts/standalone-ax capabilities > receipts/capabilities.json
           sw_vers > receipts/host-version.txt
+          uname -m > receipts/host-architecture.txt
           python -c 'import json; p=json.load(open("receipts/capabilities.json")); print(json.dumps(p,indent=2)); assert all(p.get(k) is True for k in ("trusted","screenCaptureAuthorized","eventPostingAuthorized")), "Native runner capabilities unavailable"'
+      - name: Detect coordinator-released immutable package request
+        id: request
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          request = Path('.github/standalone-macos-20261123-request.json')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('ready=' + str(request.is_file()).lower() + '\n')
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: standalone-macos-capabilities-${{ github.sha }}
           path: receipts/
+          if-no-files-found: warn
+  prepare:
+    needs: capabilities
+    if: needs.capabilities.outputs.release-ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+    outputs:
+      matrix: ${{ steps.prepare.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact source and prepare parent archive once without Suite extraction
+        id: prepare
+        run: python scripts/standalone-macos/prepare.py .github/standalone-macos-20261123-request.json transfer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-own-writer
+          path: transfer/writer/
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-own-spreadsheet
+          path: transfer/spreadsheet/
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-own-presentation
+          path: transfer/presentation/
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-own-email
+          path: transfer/email/
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-own-notition
+          path: transfer/notition/
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-own-database
+          path: transfer/database/
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-parent-producer-receipt
+          path: transfer/producer-receipt.json
+          if-no-files-found: warn
+  native:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: standalone-own-${{ matrix.app }}
+          path: own-package
+      - name: Verify own transferred DMG, native preflight and standalone core case
+        env:
+          OWN_APP: ${{ matrix.app }}
+        run: |
+          mkdir -p receipts
+          python scripts/standalone-macos/run.py "$OWN_APP" own-package "receipts/$OWN_APP"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-native-${{ matrix.app }}-${{ github.sha }}
+          path: |
+            receipts/**/*.json
+            receipts/**/*.png
+            receipts/**/*.log
+            receipts/**/*.eml
+            receipts/**/*.docx
+            receipts/**/*.xlsx
+            receipts/**/*.pptx
+            receipts/**/*.openaec-notities
+            receipts/**/*.sqlite
+            receipts/**/*.odt
+            receipts/**/*.ods
+            receipts/**/*.odp
           if-no-files-found: warn
