@@ -250,8 +250,11 @@ navigation bug. Original failure/paint/report hashes and source findings are
 retained in `evidence/p4-mac-caret-driver-diagnosis.json`.
 
 Pinned docx-react0.5.1 YrsInput applies metaKey||ctrlKey as wholeDocument to
-Home/End. Its up/down branch does not make Meta+ArrowUp a document-start
-contract. The Mac-only QA branch now uses real Meta+Home then End and verifies
+Home/End. APP also includes the #358 Command+Up/Down compatibility patch;
+the raw SDK handler alone does not describe actual APP behavior. The old
+Up→Right failure establishes the wrong final edit position, not which step
+failed; Right as field-end was not established. The Mac-only QA branch uses
+real Meta+Home then End and verifies
 the focused body input plus DOM caret position against the observed original
 title ink/baseline before typing. `mac-field-caret.mjs` retains its read-only
 geometry preflight and original PNG; wrong placement fails before mutation.

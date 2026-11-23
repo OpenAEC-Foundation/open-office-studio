@@ -33,7 +33,7 @@
     "sha256": "d17b7a630163623e99d73b8c4b3678397ec0598e332237df1e4737767799e58d",
     "facts": [
       "Pinned YrsInput sends metaKey||ctrlKey as wholeDocument only for Home/End.",
-      "Its up/down branch does not make Meta+ArrowUp a document-start contract.",
+      "RAW SDK observation only: APP includes the existing #358 Command+Up/Down compatibility patch, so raw handler behavior must not be treated as complete APP behavior.",
       "Its home branch uses first paragraph offset0 when wholeDocument is true; plain End uses current paragraph length.",
       "DOM caret uses data-testid=caret and read-only getBoundingClientRect geometry."
     ]
@@ -43,5 +43,25 @@
     "Wrong placement fails before typing; no model/selection setter or product patch.",
     "Win/Linux keep exact Control+Home then End; shared marker, source/cache/boundary audits, paint/capture and save/fresh-reopen criteria unchanged."
   ],
-  "validation": "Syntax checked locally; functional Mac evidence awaits one root-coordinated Mac-only rerun at the exact P4 source/build."
+  "validation": "Syntax checked locally; functional Mac evidence awaits one root-coordinated Mac-only rerun at the exact P4 source/build.",
+  "appCompatibilityCorrection": {
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "issue": 358,
+    "pr": 360,
+    "productCommit": "7632c090",
+    "mergeCommit": "f1085923653bd6e59982807e16a09c5fa3e3d74e",
+    "filesRead": [
+      {
+        "path": "scripts/tekstnavigatie-compatibiliteit.ts",
+        "bytes": 3164,
+        "sha256": "0f91f5edbf41e97ce9b8cfdd62c3e8edfe35ae404f3c91724c5665b43375effa"
+      },
+      {
+        "path": "scripts/tekstnavigatie-macos.test.ts",
+        "bytes": 3674,
+        "sha256": "3c74da03d00a569722b76cee1eda3a315b616942199fb74cac4d26d34d6ef8ca"
+      }
+    ],
+    "conclusion": "Actual APP contains the Apple Command+Up/Down adapter. The failed MetaUp\u2192MetaRight sequence proves only its wrong final edit position; no step or product navigation bug is isolated. MetaRight as field-end was not established. The replacement MetaHome\u2192End/source-projection guard is unaffected."
+  }
 }
