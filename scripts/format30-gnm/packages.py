@@ -49,16 +49,23 @@ def main():
     archive=root/'canonical-linux.zip'
     with archive.open('xb') as stream:subprocess.run(['gh','api',f"repos/{repo}/actions/artifacts/{artifact['id']}/zip"],stdout=stream,check=True)
     archive_sha=sha(archive);assert artifact['digest']=='sha256:'+archive_sha,'Actual canonical ZIP digest differs from GitHub metadata'
-    packages=[];destination=root/'packages';destination.mkdir()
+    packages=[];ancillary=[];destination=root/'packages';destination.mkdir()
     with zipfile.ZipFile(archive) as bundle:
         entries=bundle.infolist();names=[e.filename for e in entries]
+        (root/'archive-entries.json').write_text(json.dumps(names,indent=2)+'\n',encoding='utf-8')
         assert len(entries)==len(set(names)) and len(entries)<10000
         for entry in entries:
             path=PurePosixPath(entry.filename)
             assert not path.is_absolute() and '..' not in path.parts and '\\' not in entry.filename
             assert not stat.S_ISLNK(entry.external_attr>>16)
             if entry.is_dir():continue
-            assert len(path.parts)==2 and path.parts[0] in ('deb','appimage'),'Unexpected canonical Linux installer-root content'
+            # As in the existing reviewed canonical installer classifier, only
+            # direct installer-root files are packages. The desktop upload glob
+            # can also capture nested helper .exe files from an AppDir. They
+            # remain whole-ZIP hash-bound data and are NEVER extracted/executed.
+            if len(path.parts)!=2 or path.parts[0] not in ('deb','appimage','nsis','dmg'):
+                ancillary.append(entry.filename);continue
+            assert path.parts[0] in ('deb','appimage'),f'Unexpected other-platform installer: {entry.filename}'
             assert '2026.48.1' in path.name
             kind='deb' if path.parts[0]=='deb' else 'appimage'
             assert path.suffix==('.deb' if kind=='deb' else '.AppImage') and entry.file_size<2*1024**3
@@ -69,7 +76,7 @@ def main():
     packages.sort(key=lambda p:p['kind'])
     frozen={**plan,'frozen':True,'artifact':dict(name=artifact['name'],id=artifact['id'],archiveSha256=archive_sha,packages=packages),
             'binding':'Root-approved P2 source/run + successful own Linux package checks + official immutable artifact ZIP digest; inner hashes derived after verifying that ZIP. Not a release/native approval.'}
-    receipt=dict(applicationCommit=APP,applicationTree=TREE,desktopRun=RUN,platform='Linux',artifactId=artifact['id'],archiveSha256=archive_sha,packages=packages,
+    receipt=dict(applicationCommit=APP,applicationTree=TREE,desktopRun=RUN,platform='Linux',artifactId=artifact['id'],archiveSha256=archive_sha,packages=packages,ancillaryNotExtracted=ancillary,
                  upstreamRunStatus=run['status'],upstreamRunConclusion=run['conclusion'],linuxJobStatus=job['status'],linuxJobConclusion=job['conclusion'])
     for name,value in [('candidate.json',frozen),('verified.json',receipt),('source-run.json',run),('source-job.json',job),('artifact-metadata.json',artifact)]:
         (root/name).write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
