@@ -203,12 +203,15 @@ try {
     assert(titleBlock?.anchor?.paraId, "Expected source title field anchor");
     const title = session.paragraphs("body").find(p => p.paraId === titleBlock.anchor.paraId);
     assert(title, "Expected editable source title paragraph");
-    report.editTarget = { fieldType: "DOCVARIABLE", paraId: title.paraId, engineOffset: title.text.length,
+    const fieldEnd = Math.max(...titleBlock.paragraph.inlines.map(inline => inline.anchor?.end?.offset ?? 0));
+    assert(fieldEnd > 0, "Use engine field anchor, not plain-text length excluding field embeds");
+    report.editTarget = { fieldType: "DOCVARIABLE", paraId: title.paraId, engineOffset: fieldEnd,
       operation: "Append after source title field; retain original cached title" };
-    const at = { story: "body", paraId: title.paraId, offset: title.text.length };
+    const at = { story: "body", paraId: title.paraId, offset: fieldEnd };
     session.setSelection(at);
     session.beginUndoCapture("body"); session.addUndoBoundary();
-    session.insertText(at, MARKER); session.addUndoBoundary();
+    report.editReceipt = session.insertText(at, MARKER); session.addUndoBoundary();
+    await writeFile(join(root, "engine-edited.json"), JSON.stringify(modelText(session).structured, null, 2));
     checkModel(session, true);
     session.undo(); checkModel(session, false);
     session.redo(); checkModel(session, true);
