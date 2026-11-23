@@ -150,6 +150,38 @@ try {
   }
   report.checks.push({ name: "frozen application, builder, archive and installer identities verified" });
   const installer = join(out, "installer-setup.exe"); await writeFile(installer, bytes);
+  // Independently inspect the real immutable NSIS payload before installation.
+  const payload = join(out, "payload"); await mkdir(payload);
+  let sevenZip = "C:\\Program Files\\7-Zip\\7z.exe";
+  try { await access(sevenZip); } catch { sevenZip = "7z"; }
+  const extraction = execFileSync(sevenZip, ["e", "-y", "-r", `-o${payload}`, installer, "open-office-studio.exe"], { encoding: "utf8", windowsHide: true, timeout: 180_000, maxBuffer: 8 * 1024 * 1024 });
+  await writeFile(join(out, "payload-extraction.log"), extraction);
+  const payloadBytes = await readFile(join(payload, "open-office-studio.exe"));
+  report.payloadExecutableSha256 = sha(payloadBytes);
+  if (identity.expectedPackagedExecutableSha256) assert.equal(report.payloadExecutableSha256, identity.expectedPackagedExecutableSha256);
+  if (report.applicationProvenance) {
+    const rawHash = report.applicationProvenance.executable.sha256;
+    report.bundlePatch = { originalBuildSha256: rawHash, payloadSha256: report.payloadExecutableSha256 };
+    if (report.payloadExecutableSha256 !== rawHash) {
+      assert.equal(report.applicationProvenance.developmentBuild, true);
+      assert.equal(report.applicationProvenance.signingRequired, false);
+      // Pinned CLI2.12.3 writes NSS into the packaged copy, then restores the
+      // original UNK binary in target/release. Only that exact byte substitution
+      // may explain the difference; every other byte must hash to the build proof.
+      const nsis = Buffer.from("__TAURI_BUNDLE_TYPE_VAR_NSS");
+      const unknown = Buffer.from("__TAURI_BUNDLE_TYPE_VAR_UNK");
+      const matches = []; let count = 0;
+      for (let offset = payloadBytes.indexOf(nsis); offset >= 0; offset = payloadBytes.indexOf(nsis, offset + 1)) {
+        assert(++count <= 64, "Unexpected number of bundle-type markers");
+        const restored = Buffer.from(payloadBytes); unknown.copy(restored, offset);
+        if (sha(restored) === rawHash) matches.push(offset);
+      }
+      assert.equal(matches.length, 1, "Exactly one NSIS bundle-type patch must fully explain the build/payload hash difference");
+      Object.assign(report.bundlePatch, { kind: "single NSS-to-UNK substitution in memory only", matchingOffset: matches[0], restoredSha256: rawHash, candidateMarkers: count,
+        source: "https://github.com/tauri-apps/tauri/blob/tauri-cli-v2.12.3/crates/tauri-bundler/src/bundle.rs", sourceGitBlob: "e6709eb590ac17925a50e5393215d020269c6f59" });
+    }
+  }
+  report.checks.push({ name: "independent NSIS payload identity and exact Tauri bundle patch verified" });
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0, 3, 6].map(n => `<w:tr>${expected.slice(n, n + 3).map(cell).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
@@ -163,7 +195,7 @@ try {
   execFileSync(installer, ["/S", `/D=${installation}`], { env, windowsHide: true, timeout: 600_000, stdio: "inherit" });
   const exe = join(installation, "open-office-studio.exe"); await access(exe); await access(join(installation, "uninstall.exe"));
   report.executableSha256 = sha(await readFile(exe));
-  if (report.applicationProvenance) assert.equal(report.executableSha256, report.applicationProvenance.executable.sha256, "Installed executable equals the actual application build");
+  assert.equal(report.executableSha256, report.payloadExecutableSha256, "Installed executable equals the independently extracted immutable NSIS payload");
   report.fileVersion = ps(`(Get-Item -LiteralPath '${exe.replaceAll("'", "''")}').VersionInfo.ProductVersion`);
   assert([identity.version, identity.version + ".0"].includes(report.fileVersion), report.fileVersion);
   const server = createServer(); await new Promise(done => server.listen(0, "127.0.0.1", done)); const port = server.address().port; await new Promise(done => server.close(done));
