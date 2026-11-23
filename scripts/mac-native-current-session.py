@@ -57,10 +57,13 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--acceptance", action="store_true")
     parser.add_argument("--remaining361", action="store_true")
+    parser.add_argument("--tab-save-oracle", action="store_true")
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text(encoding="utf-8"))
     if args.remaining361 and (not args.acceptance or identity.get("remaining361Approved") is not True):
         raise PermissionError("Remaining361 requires its own explicit QA scope")
+    if args.tab_save_oracle and (not args.acceptance or args.remaining361 or identity.get("tabSaveOracleApproved") is not True):
+        raise PermissionError("Tab save oracle requires its own diagnostic scope")
     if args.acceptance and (identity.get("nativeBodyAcceptanceApproved") is not True or identity.get("diagnosticRenderingRoute") is not None):
         raise PermissionError("Acceptance needs an explicitly approved product package; a query-flag diagnostic cannot accept a product fix")
     if sys.platform != "darwin" or os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("OOS_361_EXECUTE") != "1" or identity.get("executionApproved") is not True:
@@ -79,7 +82,7 @@ def main():
                       limits=["Acceptance remains false until genuine native control preflight and the original table case both finish",
                               "Full issue361 Tab/Find/two-document cases are outside this bounded core",
                               "Original OS captures and independent DOCX oracles retained; no canvas readback or scripted model focus"])
-    if args.remaining361:
+    if args.remaining361 or args.tab_save_oracle:
         report.update(issue=361, native359Reopened=False,
                       limits=["Only the missing361 controls are newly executed; earlier exact-package core is explicitly verified and reused",
                               "New-host focus/save/Undo/Redo is checked before Tab/Find/two-document input",
@@ -183,9 +186,10 @@ def main():
             raw = out / "failure-original-raw-ax.json"
             raw.write_text(json.dumps(state, indent=2), encoding="utf-8")
             observe = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))
-            capture = observe["capture_original"](state, pid, out / "failure-original-window.png")
             display = out / "failure-original-display.png"
             subprocess.run(["screencapture", "-x", str(display)], check=True, capture_output=True, timeout=15)
+            report["failureOriginalDisplaySha256"] = hashlib.sha256(display.read_bytes()).hexdigest()
+            capture = observe["capture_original"](state, pid, out / "failure-original-window.png")
             report["failureOriginalEvidence"] = {"capture": capture,
                 "rawSha256": hashlib.sha256(raw.read_bytes()).hexdigest(),
                 "displaySha256": hashlib.sha256(display.read_bytes()).hexdigest(), "extraEditorInputSent": False}
@@ -262,6 +266,14 @@ def main():
         for path, expected in [(original,"f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1"),(control,"c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d")]:
             if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
                 raise RuntimeError("Untouched baseline fixture bytes differ")
+        if args.tab_save_oracle:
+            report.update(diagnosticOnly=True, experiment="Exactly three native Tabs, then planned newrow and CmdS/XML; earlier AX failures retained")
+            report["host"] = subprocess.check_output(["sw_vers"],text=True)
+            module=runpy.run_path(str(Path(__file__).with_name("mac-native-361-tab-oracle.py")))
+            module["run_oracle"](action,launch_document,quit_app,lambda:pid,viewport["maximize_once"],readiness_snapshot,
+                                 identity,ocr_binary,out/"native361-Tab-save-oracle",report)
+            report.update(status="tab-save-oracle-observed",nativePass=False,diagnosticOnly=True)
+            return
         if args.remaining361:
             report["experiment"] = "Only missing native361 controls; prior same-package body/core explicitly reused"
             report["host"] = subprocess.check_output(["sw_vers"], text=True)

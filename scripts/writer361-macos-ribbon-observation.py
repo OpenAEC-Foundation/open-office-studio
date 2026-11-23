@@ -35,6 +35,22 @@ def capture_window(snapshot, pid):
         raise PermissionError("Screen Recording preflight is unavailable/false; no prompt or permission change attempted")
     windows = [w for w in snapshot.get("ownedScreenWindows", [])
                if w.get("pid") == pid and type(w.get("id")) is int and w["id"] > 0]
+    if len(windows) > 1:
+        # Native Find can expose small untitled auxiliary CG windows. Bind the
+        # main capture to the actual unique AXWindow, never to the largest or
+        # first arbitrary window. Preserve all candidates in the original raw.
+        roots = [n for n in snapshot.get("rawNodes", []) if n.get("depth") == 0 and value(n, "AXRole") == "AXWindow"]
+        if len(roots) != 1 or snapshot.get("pid") != pid or snapshot.get("trusted") is not True:
+            raise PermissionError("Multiple CG windows require one verified owned AXWindow")
+        title, position, size = value(roots[0], "AXTitle"), value(roots[0], "AXPosition"), value(roots[0], "AXSize")
+        if not isinstance(title, str) or not title or not isinstance(position, dict) or not isinstance(size, dict):
+            raise PermissionError("Main AX title/geometry unavailable")
+        expected = {"X": position.get("x"), "Y": position.get("y"), "Width": size.get("width"), "Height": size.get("height")}
+        if not all(type(v) in [int, float] and math.isfinite(v) for v in expected.values()):
+            raise PermissionError("Finite main AX geometry required")
+        windows = [w for w in windows if w.get("title") == title and isinstance(w.get("bounds"), dict)
+                   and all(type(w["bounds"].get(k)) in [int, float] and math.isfinite(w["bounds"][k])
+                           and abs(w["bounds"][k]-v) < .5 for k, v in expected.items())]
     if len(windows) != 1:
         raise PermissionError("Expected one on-screen window belonging to the exact verified PID")
     bounds = windows[0].get("bounds")
@@ -57,7 +73,9 @@ def capture_original(snapshot, pid, path):
     width, height = struct.unpack(">II", raw[16:24])
     return {"status": "captured", "path": str(path), "sha256": hashlib.sha256(raw).hexdigest(),
             "pixelWidth": width, "pixelHeight": height, "nativeWindow": window,
-            "unaltered": True, "captureProcessExited": True}
+            "unaltered": True, "captureProcessExited": True,
+            "originalOwnedWindowCount": len(snapshot.get("ownedScreenWindows", [])),
+            "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"}
 
 
 def collect_mac_ribbon_observations(action, out, identity, pid):

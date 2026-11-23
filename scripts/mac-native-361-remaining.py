@@ -128,9 +128,9 @@ def run_remaining(action, launch_document, open_additional, quit_app, current_pi
         folder = out / label; folder.mkdir()
         state = action("raw-snapshot")
         (folder / "raw-ax.json").write_text(json.dumps(state, indent=2), encoding="utf-8")
-        image = PREFLIGHT["OBS"]["capture_original"](state, pid, folder / "original-window.png")
         display = folder / "original-display.png"
         subprocess.run(["screencapture", "-x", str(display)], check=True, capture_output=True, timeout=15)
+        image = PREFLIGHT["OBS"]["capture_original"](state, pid, folder / "original-window.png")
         proof["checks"].append({"name": label + " original pixels", "capture": image, "displaySha256": sha(display)})
 
     def body(word, label, all_words=False):
