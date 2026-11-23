@@ -69,6 +69,10 @@ def main():
     assert command=='prepare' and plan['ready'] and os.environ.get('GITHUB_ACTIONS')=='true'
     root=Path(args[0]);root.mkdir(parents=True,exist_ok=False)
     provenance=root/'provenance';provenance.mkdir()
+    seven=shutil.which('7z') or shutil.which('7z.exe');assert seven,'7-Zip missing before canonical download'
+    tools=subprocess.check_output([seven,'i'],encoding='utf8',timeout=15)
+    assert 'nsis' in tools.lower(),'NSIS extractor unavailable before canonical download'
+    write(provenance/'tool-capability.json',dict(path=seven,nsisHandler=True,description=tools.splitlines()[:5],stage='Before whole canonical download'))
     repo=os.environ['GITHUB_REPOSITORY'];assert re.fullmatch(r'[\w.-]+/[\w.-]+',repo)
     def api(endpoint):return json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/{endpoint}']))
     run=api(f'actions/runs/{RUN}');job=api(f'actions/jobs/{JOB}');commit=api(f'git/commits/{APP}')

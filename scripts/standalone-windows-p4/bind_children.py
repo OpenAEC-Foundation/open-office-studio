@@ -6,13 +6,20 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import time
 from intake import PRODUCTS,APPS,write
 
 root=Path(sys.argv[1]);provenance=root/'provenance'
 binding=json.loads((provenance/'binding-before-child-artifacts.json').read_bytes())
 repo=os.environ['GITHUB_REPOSITORY'];run=int(os.environ['GITHUB_RUN_ID'])
 assert run==binding['preparerRun'] and os.environ['GITHUB_SHA']==binding['preparerHarness']
-artifacts=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}/artifacts?per_page=100']))['artifacts']
+for poll in range(15):
+    artifacts=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}/artifacts?per_page=100']))['artifacts']
+    wanted={f'standalone-windows-p4-{key}-package' for key in PRODUCTS}
+    visible=[a for a in artifacts if a['name'] in wanted and not a['expired'] and re.fullmatch('sha256:[0-9a-f]{64}',a.get('digest',''))]
+    if {a['name'] for a in visible}==wanted:break
+    time.sleep(2)
+else:raise AssertionError('Official child metadata/digests not ready after uploads')
 for key in PRODUCTS:
     name=f'standalone-windows-p4-{key}-package'
     found=[a for a in artifacts if a['name']==name and not a['expired']];assert len(found)==1
