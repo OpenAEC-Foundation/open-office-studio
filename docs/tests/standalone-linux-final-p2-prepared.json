@@ -1,0 +1,749 @@
+{
+  "purpose": "P2-baseline-only",
+  "status": "all twelve package bytes verified and split; native cases pending",
+  "qaRun": 45159559656,
+  "qaCommit": "3637ddddfe4cbc01ec4418257dc40ce9e9532632",
+  "metadataArtifact": {
+    "id": 14809444198,
+    "name": "standalone-linux-input-preparation",
+    "digest": "sha256:481ecb5f824e4fee36e2b39a3f19df84b2cff258984f855420af8b33622a7cfb",
+    "size_in_bytes": 18028
+  },
+  "metadataZipLocallyHashVerified": true,
+  "preparationReceipt": {
+    "source": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "run": 45150438420,
+    "linuxJob": {
+      "id": 137610274931,
+      "run_id": 45150438420,
+      "workflow_name": "Build, sign and publish release",
+      "head_branch": "codex/release-candidate-2026-11-23-p2",
+      "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45150438420",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVRiTGs8AAAAgCjYocw",
+      "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137610274931",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45150438420/job/137610274931",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-23T09:49:21Z",
+      "started_at": "2026-11-23T09:49:22Z",
+      "completed_at": "2026-11-23T10:46:05Z",
+      "name": "Bouwen \u2013 Linux",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-23T09:49:23Z",
+          "completed_at": "2026-11-23T09:49:26Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-23T09:49:26Z",
+          "completed_at": "2026-11-23T09:49:31Z"
+        },
+        {
+          "name": "Ondertekening beschikbaar",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T09:49:31Z",
+          "completed_at": "2026-11-23T09:49:31Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T09:49:31Z",
+          "completed_at": "2026-11-23T09:49:34Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T09:49:34Z",
+          "completed_at": "2026-11-23T09:49:35Z"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-23T09:49:35Z",
+          "completed_at": "2026-11-23T09:49:40Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-23T09:49:40Z",
+          "completed_at": "2026-11-23T09:49:40Z"
+        },
+        {
+          "name": "Updater-artefacten (alleen met geheim en publieke sleutel)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-23T09:49:40Z",
+          "completed_at": "2026-11-23T09:49:40Z"
+        },
+        {
+          "name": "Linux-bouwafhankelijkheden",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-23T09:49:40Z",
+          "completed_at": "2026-11-23T09:50:17Z"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-23T09:50:17Z",
+          "completed_at": "2026-11-23T09:50:21Z"
+        },
+        {
+          "name": "Cache van de vastgepinde kantoorruntime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-23T09:50:21Z",
+          "completed_at": "2026-11-23T09:50:21Z"
+        },
+        {
+          "name": "Lettertypencache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-23T09:50:21Z",
+          "completed_at": "2026-11-23T09:50:22Z"
+        },
+        {
+          "name": "Run node scripts/haal-lettertypen.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-23T09:50:22Z",
+          "completed_at": "2026-11-23T09:50:23Z"
+        },
+        {
+          "name": "Woordenboekencache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-23T09:50:23Z",
+          "completed_at": "2026-11-23T09:50:23Z"
+        },
+        {
+          "name": "Run node scripts/haal-woordenboeken.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-23T09:50:23Z",
+          "completed_at": "2026-11-23T09:50:23Z"
+        },
+        {
+          "name": "Run pnpm versie:check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-23T09:50:23Z",
+          "completed_at": "2026-11-23T09:50:24Z"
+        },
+        {
+          "name": "Vastgelegde versleutelde proefbestanden ophalen",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-23T09:50:24Z",
+          "completed_at": "2026-11-23T09:50:24Z"
+        },
+        {
+          "name": "Run pnpm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-23T09:50:24Z",
+          "completed_at": "2026-11-23T09:54:07Z"
+        },
+        {
+          "name": "Run python -m unittest discover -s tests -v",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-23T09:54:07Z",
+          "completed_at": "2026-11-23T09:54:09Z"
+        },
+        {
+          "name": "Run node scripts/test-kantoor-engines.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-23T09:54:09Z",
+          "completed_at": "2026-11-23T09:54:09Z"
+        },
+        {
+          "name": "Run pnpm test:opdrachten",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-23T09:54:09Z",
+          "completed_at": "2026-11-23T09:54:17Z"
+        },
+        {
+          "name": "Windows-loader voorbereiden",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 22,
+          "started_at": "2026-11-23T09:54:17Z",
+          "completed_at": "2026-11-23T09:54:17Z"
+        },
+        {
+          "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-11-23T09:54:17Z",
+          "completed_at": "2026-11-23T09:56:45Z"
+        },
+        {
+          "name": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-23T09:56:45Z",
+          "completed_at": "2026-11-23T09:58:20Z"
+        },
+        {
+          "name": ".NET 8 voor de signeerclient",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-11-23T09:58:20Z",
+          "completed_at": "2026-11-23T09:58:20Z"
+        },
+        {
+          "name": "Authenticode voorbereiden",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 26,
+          "started_at": "2026-11-23T09:58:20Z",
+          "completed_at": "2026-11-23T09:58:20Z"
+        },
+        {
+          "name": "App Store Connect-sleutel klaarzetten",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 27,
+          "started_at": "2026-11-23T09:58:20Z",
+          "completed_at": "2026-11-23T09:58:20Z"
+        },
+        {
+          "name": "Pakket bouwen (onondertekend)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-11-23T09:58:20Z",
+          "completed_at": "2026-11-23T10:38:39Z"
+        },
+        {
+          "name": "Pakket bouwen (Windows, ondertekend)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 29,
+          "started_at": "2026-11-23T10:38:39Z",
+          "completed_at": "2026-11-23T10:38:39Z"
+        },
+        {
+          "name": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 30,
+          "started_at": "2026-11-23T10:38:39Z",
+          "completed_at": "2026-11-23T10:38:39Z"
+        },
+        {
+          "name": "Authenticode controleren (installer, programma en uninstaller)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 31,
+          "started_at": "2026-11-23T10:38:39Z",
+          "completed_at": "2026-11-23T10:38:39Z"
+        },
+        {
+          "name": "Handtekening en notarisatie controleren (macOS)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 32,
+          "started_at": "2026-11-23T10:38:39Z",
+          "completed_at": "2026-11-23T10:38:39Z"
+        },
+        {
+          "name": "Linux-installers werkelijk uitpakken en controleren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-11-23T10:38:39Z",
+          "completed_at": "2026-11-23T10:40:03Z"
+        },
+        {
+          "name": "Windows-installer werkelijk uitpakken en controleren",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 34,
+          "started_at": "2026-11-23T10:40:03Z",
+          "completed_at": "2026-11-23T10:40:03Z"
+        },
+        {
+          "name": "Meet- en inhoudscontrole voor de meegeleverde runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-11-23T10:40:03Z",
+          "completed_at": "2026-11-23T10:40:08Z"
+        },
+        {
+          "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 36,
+          "started_at": "2026-11-23T10:40:08Z",
+          "completed_at": "2026-11-23T10:40:08Z"
+        },
+        {
+          "name": "Linux native WebKit-interface en private installer controleren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-11-23T10:40:08Z",
+          "completed_at": "2026-11-23T10:43:41Z"
+        },
+        {
+          "name": "Runtimebewijs bewaren",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 38,
+          "started_at": "2026-11-23T10:43:41Z",
+          "completed_at": "2026-11-23T10:43:42Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 39,
+          "started_at": "2026-11-23T10:43:42Z",
+          "completed_at": "2026-11-23T10:45:59Z"
+        },
+        {
+          "name": "Post Woordenboekencache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 72,
+          "started_at": "2026-11-23T10:45:59Z",
+          "completed_at": "2026-11-23T10:45:59Z"
+        },
+        {
+          "name": "Post Lettertypencache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 73,
+          "started_at": "2026-11-23T10:45:59Z",
+          "completed_at": "2026-11-23T10:46:00Z"
+        },
+        {
+          "name": "Post Cache van de vastgepinde kantoorruntime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 74,
+          "started_at": "2026-11-23T10:46:00Z",
+          "completed_at": "2026-11-23T10:46:02Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 75,
+          "started_at": "2026-11-23T10:46:02Z",
+          "completed_at": "2026-11-23T10:46:02Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 76,
+          "started_at": "2026-11-23T10:46:02Z",
+          "completed_at": "2026-11-23T10:46:03Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 77,
+          "started_at": "2026-11-23T10:46:03Z",
+          "completed_at": "2026-11-23T10:46:03Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 78,
+          "started_at": "2026-11-23T10:46:03Z",
+          "completed_at": "2026-11-23T10:46:03Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 79,
+          "started_at": "2026-11-23T10:46:03Z",
+          "completed_at": "2026-11-23T10:46:03Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137610274931",
+      "labels": [
+        "ubuntu-22.04"
+      ],
+      "runner_id": 1000128367,
+      "runner_name": "GitHub Actions 1000128367",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "artifact": {
+      "id": 14808939009,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgwODkzOTAwOQ==",
+      "name": "uitgave-Linux",
+      "size_in_bytes": 4444678701,
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14808939009",
+      "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14808939009/zip",
+      "expired": false,
+      "digest": "sha256:904a128efa87e73b6fb58072c208c348a043f86553d614c5d39fb9de83ea3f09",
+      "created_at": "2026-11-23T10:45:59Z",
+      "updated_at": "2026-11-23T10:45:59Z",
+      "expires_at": "2027-02-21T09:49:10Z",
+      "workflow_run": {
+        "id": 45150438420,
+        "repository_id": 1427673882,
+        "head_repository_id": 1427673882,
+        "head_branch": "codex/release-candidate-2026-11-23-p2",
+        "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+      }
+    },
+    "intake": {
+      "intakeSha256": "22e66e34c7376a01a73c58e6c3bc0bc79ce045f207ebd9084a692f28030daed9",
+      "goSha256": "0202429c89c02e5060b55449b8c6489c571be0135aa6f9acf3d59019a3457330",
+      "intake": {
+        "purpose": "P2-baseline-only",
+        "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1",
+        "run": 45150438420,
+        "attempt": 1,
+        "job": 137610274931,
+        "workflow": ".github/workflows/release.yml",
+        "canonicalBranch": "codex/release-candidate-2026-11-23-p2",
+        "qaCodeCommit": "bc1f13487cb804dda84666f10639164cd548e9f8",
+        "checkedAt": "2026-11-23T10:48:31.556957+00:00",
+        "window": {
+          "runStartedAt": "2026-11-23T09:49:08Z",
+          "jobStartedAt": "2026-11-23T09:49:22Z",
+          "jobCompletedAt": "2026-11-23T10:46:05Z"
+        },
+        "artifact": {
+          "id": 14808939009,
+          "name": "uitgave-Linux",
+          "digest": "sha256:904a128efa87e73b6fb58072c208c348a043f86553d614c5d39fb9de83ea3f09",
+          "bytes": 4444678701,
+          "createdAt": "2026-11-23T10:45:59Z",
+          "updatedAt": "2026-11-23T10:45:59Z",
+          "parent": {
+            "id": 45150438420,
+            "repository_id": 1427673882,
+            "head_repository_id": 1427673882,
+            "head_branch": "codex/release-candidate-2026-11-23-p2",
+            "head_sha": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b"
+          }
+        },
+        "requiredGates": [
+          {
+            "name": "Pakket bouwen (onondertekend)",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 28,
+            "started_at": "2026-11-23T09:58:20Z",
+            "completed_at": "2026-11-23T10:38:39Z"
+          },
+          {
+            "name": "Linux-installers werkelijk uitpakken en controleren",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-11-23T10:38:39Z",
+            "completed_at": "2026-11-23T10:40:03Z"
+          },
+          {
+            "name": "Meet- en inhoudscontrole voor de meegeleverde runtime",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35,
+            "started_at": "2026-11-23T10:40:03Z",
+            "completed_at": "2026-11-23T10:40:08Z"
+          },
+          {
+            "name": "Linux native WebKit-interface en private installer controleren",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 37,
+            "started_at": "2026-11-23T10:40:08Z",
+            "completed_at": "2026-11-23T10:43:41Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 39,
+            "started_at": "2026-11-23T10:43:42Z",
+            "completed_at": "2026-11-23T10:45:59Z"
+          }
+        ],
+        "notApplicableGates": [
+          {
+            "name": "Standaardinstaller controleren met uitsluitend de private runtime",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 36,
+            "started_at": "2026-11-23T10:40:08Z",
+            "completed_at": "2026-11-23T10:40:08Z",
+            "sourceCondition": "runner.os != 'Linux'",
+            "reason": "The separate Linux native alternative is mandatory and SUCCESS"
+          }
+        ]
+      }
+    },
+    "archiveLocallyHashVerified": true,
+    "officeExtracted": false,
+    "apps": [
+      "writer",
+      "spreadsheet",
+      "presentation",
+      "email",
+      "notition",
+      "database"
+    ]
+  },
+  "apps": [
+    {
+      "app": "database",
+      "identity": "org.openaec.database-studio",
+      "executable": "open-database-studio",
+      "inputArtifact": {
+        "id": 14809962956,
+        "name": "standalone-input-database",
+        "digest": "sha256:e95f91c7ce7e5b1b04996d48c2065552ecae3dc3ff84abab07c9275ea3b11fc7",
+        "size_in_bytes": 161072572,
+        "workflow_run": {
+          "id": 45159559656,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/standalone-linux-final-p2-2026-11-23",
+          "head_sha": "3637ddddfe4cbc01ec4418257dc40ce9e9532632"
+        }
+      },
+      "originSha256": "d639ad89616e02d58e5ff72d91d4b99d778716bec2b43414ac37c52206699f61",
+      "packageReportSha256": "8f6a9335a437d8b034aefb105006b24490abb005b392ea998aabfd71a975bd98",
+      "packages": [
+        {
+          "path": "Open Database Studio_2026.48.1_amd64.AppImage",
+          "canonicalMember": "dist-installers/database/appimage/Open Database Studio_2026.48.1_amd64.AppImage",
+          "sha256": "9e49fd6e6195a377aa443187b4ebacf0659dc2a3be0ba2a0f4501adec4c6b4ae",
+          "bytes": 119659000
+        },
+        {
+          "path": "Open Database Studio_2026.48.1_amd64.deb",
+          "canonicalMember": "dist-installers/database/deb/Open Database Studio_2026.48.1_amd64.deb",
+          "sha256": "d89d7d6c53879db362da68e30d8ee712db67fa1feeca55a0ce1de3b764eff824",
+          "bytes": 41406994
+        }
+      ]
+    },
+    {
+      "app": "email",
+      "identity": "org.openaec.email-studio",
+      "executable": "open-email-studio",
+      "inputArtifact": {
+        "id": 14809957948,
+        "name": "standalone-input-email",
+        "digest": "sha256:f0c1255816b728d66660edc8048e5ec39cc8ccf8acce3cb7bc478cfaced80c79",
+        "size_in_bytes": 813701498,
+        "workflow_run": {
+          "id": 45159559656,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/standalone-linux-final-p2-2026-11-23",
+          "head_sha": "3637ddddfe4cbc01ec4418257dc40ce9e9532632"
+        }
+      },
+      "originSha256": "b6f2b4a8333424417643805ed3f1fdc67e832a3cc900709a1f6d941e9f89b2ad",
+      "packageReportSha256": "6e891bfa3b3743c31eba38c68eeec23461e2137bb6eff8dbcd9497a66ba1d595",
+      "packages": [
+        {
+          "path": "Open Email Studio_2026.48.1_amd64.AppImage",
+          "canonicalMember": "dist-installers/email/appimage/Open Email Studio_2026.48.1_amd64.AppImage",
+          "sha256": "70d99bc1dc0d281eb65bdc05ad69b27cc19c3326167ad42ae862e277c8a0a9d1",
+          "bytes": 429853176
+        },
+        {
+          "path": "Open Email Studio_2026.48.1_amd64.deb",
+          "canonicalMember": "dist-installers/email/deb/Open Email Studio_2026.48.1_amd64.deb",
+          "sha256": "e64bddfb697e0a2222888a296f23cd998627189f8150384d0ef72853b81c78e8",
+          "bytes": 383841440
+        }
+      ]
+    },
+    {
+      "app": "notition",
+      "identity": "org.openaec.notition-studio",
+      "executable": "open-notition-studio",
+      "inputArtifact": {
+        "id": 14811140113,
+        "name": "standalone-input-notition",
+        "digest": "sha256:7551b24f5c8ee72ff18f307285d72e8c21aca8ceb0d8523d5f8c1efee4790a2a",
+        "size_in_bytes": 230165504,
+        "workflow_run": {
+          "id": 45159559656,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/standalone-linux-final-p2-2026-11-23",
+          "head_sha": "3637ddddfe4cbc01ec4418257dc40ce9e9532632"
+        }
+      },
+      "originSha256": "c8cbe0bf37d0a6f56d705340d7cd96eb424508cb206c8f83ada430a42cad46b5",
+      "packageReportSha256": "4b377097a4261cad8e289e4e2bb99b9fe82f15a3ab5d2530d0532f554d8d1303",
+      "packages": [
+        {
+          "path": "Open Notition Studio_2026.48.1_amd64.AppImage",
+          "canonicalMember": "dist-installers/notition/appimage/Open Notition Studio_2026.48.1_amd64.AppImage",
+          "sha256": "62dd53969291aa9a3fc53f8c36352d5600bcc1c108bed2bc2ecb54a9a0a668de",
+          "bytes": 153868792
+        },
+        {
+          "path": "Open Notition Studio_2026.48.1_amd64.deb",
+          "canonicalMember": "dist-installers/notition/deb/Open Notition Studio_2026.48.1_amd64.deb",
+          "sha256": "022d0e648a7013edc3dd140311812b2b5bd910b16970eec2ac868428aed02675",
+          "bytes": 76289760
+        }
+      ]
+    },
+    {
+      "app": "presentation",
+      "identity": "org.openaec.presentation-studio",
+      "executable": "open-presentation-studio",
+      "inputArtifact": {
+        "id": 14810062789,
+        "name": "standalone-input-presentation",
+        "digest": "sha256:1e3909875fb584448a37a7456c4b67e56750c7f10688ee454cde10de1193e802",
+        "size_in_bytes": 813760620,
+        "workflow_run": {
+          "id": 45159559656,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/standalone-linux-final-p2-2026-11-23",
+          "head_sha": "3637ddddfe4cbc01ec4418257dc40ce9e9532632"
+        }
+      },
+      "originSha256": "1c2465beb0e48a473b0ae48ef79b8b0d8713dfaab9a9991241fb2a21eb8a2be4",
+      "packageReportSha256": "46e654387258495431928ce5d7efdff28d7c4cdd1346c3c2db30e2a3df712076",
+      "packages": [
+        {
+          "path": "Open Presentation Studio_2026.48.1_amd64.AppImage",
+          "canonicalMember": "dist-installers/presentation/appimage/Open Presentation Studio_2026.48.1_amd64.AppImage",
+          "sha256": "8a634611598adf773f585cbc14e6726d10f20e789bdaaba6be76288b41d6b46a",
+          "bytes": 429853176
+        },
+        {
+          "path": "Open Presentation Studio_2026.48.1_amd64.deb",
+          "canonicalMember": "dist-installers/presentation/deb/Open Presentation Studio_2026.48.1_amd64.deb",
+          "sha256": "2344a6f06ab8ef1f5a804b9a336e72f74d6c4b11ab239e58fad2f28f817e21e7",
+          "bytes": 383900402
+        }
+      ]
+    },
+    {
+      "app": "spreadsheet",
+      "identity": "org.openaec.spreadsheet-studio",
+      "executable": "open-spreadsheet-studio",
+      "inputArtifact": {
+        "id": 14809269456,
+        "name": "standalone-input-spreadsheet",
+        "digest": "sha256:791007c14acf9164d12493cf10441d423e6361c3ab2eab2e417678ca79a27ffd",
+        "size_in_bytes": 813710150,
+        "workflow_run": {
+          "id": 45159559656,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/standalone-linux-final-p2-2026-11-23",
+          "head_sha": "3637ddddfe4cbc01ec4418257dc40ce9e9532632"
+        }
+      },
+      "originSha256": "55ba8a22b6336c1f8c2649e7a1d4c0f3ba9d1bebe685bf70a2660c32d9812b5f",
+      "packageReportSha256": "485c38ff9a37cc21781b0fc19ac08dc9c37b67a09badc4578db3f4072ecda50b",
+      "packages": [
+        {
+          "path": "Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+          "canonicalMember": "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+          "sha256": "214a135377e3c701743b533d1a2991b16dec171cb4548e93f3fe5f8283256349",
+          "bytes": 429828600
+        },
+        {
+          "path": "Open Spreadsheet Studio_2026.48.1_amd64.deb",
+          "canonicalMember": "dist-installers/spreadsheet/deb/Open Spreadsheet Studio_2026.48.1_amd64.deb",
+          "sha256": "6a8ef2f765dbed7b4a275d51fd7d15751a9fc85d3f337967bbbe93b22e550a3c",
+          "bytes": 383874556
+        }
+      ]
+    },
+    {
+      "app": "writer",
+      "identity": "org.openaec.writer-studio",
+      "executable": "open-writer-studio",
+      "inputArtifact": {
+        "id": 14810062724,
+        "name": "standalone-input-writer",
+        "digest": "sha256:199a42aac1ff79963f8ac61b4d03b60d9681f8107796afd1687935f881b033b2",
+        "size_in_bytes": 813652634,
+        "workflow_run": {
+          "id": 45159559656,
+          "repository_id": 1427673882,
+          "head_repository_id": 1427673882,
+          "head_branch": "codex/standalone-linux-final-p2-2026-11-23",
+          "head_sha": "3637ddddfe4cbc01ec4418257dc40ce9e9532632"
+        }
+      },
+      "originSha256": "7b1bf4c2947d155dd1405d07246c8db972ff969863f4f45d8d965598f7b39ac9",
+      "packageReportSha256": "5d9836d0dcaff3df3da2904bf6616c9d69539f1fe5db631b92b3ce2a8dc818f9",
+      "packages": [
+        {
+          "path": "Open Writer Studio_2026.48.1_amd64.AppImage",
+          "canonicalMember": "dist-installers/writer/appimage/Open Writer Studio_2026.48.1_amd64.AppImage",
+          "sha256": "9b3c62b26a15f42d41e109b0c9cd0dddc3a64f936dbb6c7b0dbe4c66810a0bc3",
+          "bytes": 429844984
+        },
+        {
+          "path": "Open Writer Studio_2026.48.1_amd64.deb",
+          "canonicalMember": "dist-installers/writer/deb/Open Writer Studio_2026.48.1_amd64.deb",
+          "sha256": "23ef5b308ed392b0d1124fb223e4a735bddcbf60e4880472ef33f92d229b2490",
+          "bytes": 383800746
+        }
+      ]
+    }
+  ]
+}
