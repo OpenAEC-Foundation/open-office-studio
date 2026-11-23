@@ -6,7 +6,7 @@ not successful test results. The macOS #359 suite blocker takes precedence.
 
 | Check | Assigned by integration | Current evidence |
 | --- | --- | --- |
-| Native Windows | Existing tester chat 750b, within its Suite/Writer claim | Assigned, not yet passed |
+| Native Windows | Existing tester chat 750b, within its Suite/Writer claim | P2 unsigned-suite I/O and final DOCX XML pass, run 45152204418; title-rendering observation remains open, no unconditional visual/standalone pass |
 | Native macOS | Existing chat 6f92 (`optimalisatie`) | Assigned, not yet passed |
 | Native Linux DEB and AppImage | Existing `writer_362`, after current P2 core proof | Assigned, not yet passed |
 | Actual browser limitation on `/` and `/office/` | This STW QA chat 9d3b | Passed: actual Linux Chromium upload/advice + independent saved-DOCX XML equality, run 45150936369 |
@@ -18,6 +18,24 @@ The browser driver reuses its proven driver at
 The full browser artifact ZIP was independently hashed and its reports, images,
 source receipts and four saved DOCX files audited; see `browser-audit.json`.
 This actual browser evidence is separate from the historical Node guard.
+
+The Windows evidence was independently downloaded and its full ZIP hash verified.
+`windows-native-audit.json` confirms native dialog ownership, bundled runtime,
+NSIS-payload/installed-PE equality, normal exits and different PIDs (10060 and4176),
+all eight source blocks/styles/heading/placeholders in the final saved DOCX, and
+cleanup. The native test used the exact ASCII edit marker
+` -- STW30 EDIT 2026-11-23`; the oracle checks that actual variant explicitly.
+Earlier saved bytes were overwritten on resave, so their recorded CI-stage audits
+are distinguished from this chat's independent audit of the retained final file.
+
+Image review found a separate open observation: `stw-opened.png` has a clear title,
+whereas `stw-edited.png` and `reopened.png` show the DOCVARIABLE title cache
+overlapping following text. This is an observation in tester750b's native artifacts,
+not a newly executed native reproduction by this chat. Integration assigned this
+chat source/image/duplicate triage plus one bounded browser comparison; 750b remains
+the sole native Windows operator. Source/original-file preservation is not a visual
+layout pass. Linux still lacks a current owned-picker pass; macOS waits for its
+critical #359 input check and matching Writer package. No completion date is assumed.
 
 The actual standalone release packages are not available at this handoff. Integration
 will provide their source/version/artifact/package manifest when each platform's own

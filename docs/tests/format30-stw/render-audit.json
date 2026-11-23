@@ -1,0 +1,74 @@
+{
+  "status": "independently-reproduced-editor-field-overlap",
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "route": "/",
+  "harnessCommit": "1fd3f4d79a84f0170c5d91d535a0c808ad0f97ef",
+  "run": 45154167386,
+  "artifact": {
+    "id": 14806409519,
+    "digest": "sha256:6abbe498f364cdf884dfffbf28b4be6ab40fb69949daafcba9b0c7eea70fb716",
+    "bytes": 378389
+  },
+  "browser": "Chrome Headless Shell 151.0.7922.34, Playwright Chromium revision1234, Linux ubuntu22.04 (CI installation log)",
+  "viewport": {
+    "width": 1400,
+    "height": 1100,
+    "scale": 1
+  },
+  "buildReceiptSha256": "0e53f533764af061f800ce96599bcc60fbf927c4678e9e5fa650a26d141b4f3f",
+  "buildFiles": 727,
+  "inputs": [
+    {
+      "name": "unmodified-converter-control.docx",
+      "bytes": 15053,
+      "sha256": "b29d6adc44aec4ee64d25555f0aa5560afb0ad24973f2b491789b6bb08e7c992",
+      "noEditsOrSaves": true,
+      "contextClosed": true,
+      "observed": "Captured for independent image review; no automatic visual-pass inference"
+    },
+    {
+      "name": "windows-native-resaved.docx",
+      "bytes": 14764,
+      "sha256": "4dcb51f93bd88f3d4bd3a9956f53cff23613235fe222632734b8090f9ea18310",
+      "noEditsOrSaves": true,
+      "contextClosed": true,
+      "observed": "Captured for independent image review; no automatic visual-pass inference"
+    },
+    {
+      "name": "diagnostic-title-as-text.docx",
+      "bytes": 14732,
+      "sha256": "3df44770eee79c84edc79406f4a6a29365efb18aceaa23bb804d4fc7b3a364e4",
+      "noEditsOrSaves": true,
+      "contextClosed": true,
+      "observed": "Captured for independent image review; no automatic visual-pass inference"
+    }
+  ],
+  "diagnosticSourceAudit": "render-diagnostic-audit.json",
+  "fonts": {
+    "registeredFacesEqual": true,
+    "faces": 42,
+    "fallbackMessagesEqual": true,
+    "messages": [
+      "Attention\n\nFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Courier New → Liberation Mono; approximation (lines and pages may shift): StarSymbol → Liberation Sans, Thorndale → Liberation Sans, Thorndale;Times New Roman;Times;Lucida Serif;Lucida Bright;Timmons;New York;Serif → Liberation Serif. The file keeps the original names."
+    ]
+  },
+  "visualReview": {
+    "method": "Agent visually inspected all three actual browser screenshots; not inferred from CI success",
+    "unmodifiedConverterControl": "Title clear",
+    "unchangedWindowsDocx": "Cached title overlaps following STW30 EDIT run; wrong line breaking",
+    "diagnosticSameStylesAndFonts": "Same visible text wraps cleanly on three title lines when only Title field becomes identical cached plain text",
+    "inference": "Field representation affects layout; identical style/font parts,42 registered faces and fallback advice exclude a font-set change in this comparison. Exact implementation cause not established."
+  },
+  "cleanup": {
+    "contextsClosed": true,
+    "browserClosed": true,
+    "serverClosed": true,
+    "errors": []
+  },
+  "limits": [
+    "Independently executed browser DOCX-render reproduction; Windows native observations belong to tester750b",
+    "Derived flat-field copy is diagnostic only; no fix or native acceptance claim",
+    "No new converter/engine roundtrip or native Linux/macOS run; no full font matrix"
+  ]
+}

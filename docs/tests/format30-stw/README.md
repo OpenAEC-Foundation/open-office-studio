@@ -87,7 +87,7 @@ The 13,946 runtime payload entries have canonical JSON SHA-256
 | --- | --- | --- |
 | Linux private converter + live Writer kernel, canonical DEB runtime payload | Passed on exact P2, including all payload file identities | Native UI/IPC/dialog and installer acceptance |
 | Browser | Actual Linux Chromium STW upload, visible desktop/DOCX advice, retained active tab and independently unchanged saved DOCX XML pass on `/` and `/office/` | No STW browser conversion support claimed |
-| Windows | No runtime/GUI execution in this assignment | Native checks remain open |
+| Windows | Actual native unsigned P2-suite I/O passes; independent artifact, process and final DOCX audits pass | Title-rendering screenshot observation remains open; no unconditional visual or standalone acceptance |
 | macOS | No build or runner claimed | Native checks remain open |
 
 `native-handoff.md` records integration's current Windows, Linux and macOS owners,

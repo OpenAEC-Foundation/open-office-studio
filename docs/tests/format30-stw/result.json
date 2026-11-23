@@ -238,7 +238,12 @@
   "nativeStatus": {
     "windows": {
       "owner": "Existing tester750b via integration",
-      "status": "assigned; result pending"
+      "status": "passed native I/O, open visual observation",
+      "report": "windows-native-audit.json",
+      "nativeRun": 45152204418,
+      "artifactId": 14807501063,
+      "artifactDigest": "sha256:ce7616c7c1fbeaf4fd7c76e7466c3bdc22d8d16bdcda055f6553ea431ae7831d",
+      "limits": "Unsigned P2 suite; no final signed/standalone acceptance; current title overlap under separate bounded triage"
     },
     "linux": {
       "owner": "Existing writer_362 via integration",
@@ -246,12 +251,13 @@
         "DEB",
         "AppImage"
       ],
-      "status": "assigned after P2 core proof; result pending"
+      "status": "pending actual owned-picker pass; portal helper9f321450 prepared by existing owner"
     },
     "macOS": {
       "owner": "Existing6f92 via integration",
-      "status": "assigned after #359 critical suite check/Writer package; result pending"
+      "status": "pending #359 native input preflight and matching Writer package; no STW Mac data"
     },
     "coordination": "Integration9635 remains sole coordinator and supplies actual package/result manifests"
-  }
+  },
+  "routeCompletion": "incomplete: Windows I/O passes but title-rendering observation open; Linux DEB/AppImage and macOS native results pending"
 }
