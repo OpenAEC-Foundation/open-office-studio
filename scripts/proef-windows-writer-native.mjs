@@ -13,6 +13,7 @@ import { chromium } from "playwright";
 import { DOMParser } from "@xmldom/xmldom";
 import { fileURLToPath } from "node:url";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
+import { requireAuthenticode } from "./windows-native-signature.mjs";
 
 assert.equal(process.platform, "win32");
 assert.equal(process.env.GITHUB_ACTIONS, "true");
@@ -21,6 +22,7 @@ const [manifestFile, outputDirectory] = process.argv.slice(2);
 assert(manifestFile && outputDirectory, "Pass frozen candidate JSON and fresh output directory");
 const identity = JSON.parse(await readFile(manifestFile, "utf8"));
 assert.equal(identity.executeNative, true);
+if (process.argv.includes("--require-signed")) assert.equal(identity.requireSigned, true, "Final native route requires an explicitly signed candidate");
 assert.match(identity.applicationCommit, /^[a-f0-9]{40}$/);
 assert.match(identity.applicationTree, /^[a-f0-9]{40}$/);
 if (identity.builderCommit) assert.match(identity.builderCommit, /^[a-f0-9]{40}$/);
@@ -39,6 +41,10 @@ const report = {
   platform: "Windows hosted runner / installed NSIS / actual WebView2 CDP keyboard and pointer",
   limits: ["CDP input on an isolated native WebView2, not a physical user keyboard", "Office Writer core and bundled-runtime detection only; not all module/release acceptance"],
 };
+if (identity.requireSigned) {
+  for (const key of ["producerJobId", "producerRunAttempt"]) assert(Number.isSafeInteger(identity[key]) && identity[key] > 0);
+  report.signatureChecks = [];
+}
 let app, browser, page, policy, installation;
 const processes = [];
 const env = { ...process.env, APPDATA: join(out, "profile/Roaming"), LOCALAPPDATA: join(out, "profile/Local") };
@@ -52,6 +58,12 @@ const edited = [marker + "alpha", ...expected.slice(1)];
 const documentPath = join(out, "Writer native roundtrip.docx");
 function ps(script) {
   return execFileSync("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", script], { encoding: "utf8", windowsHide: true, timeout: 30_000 }).trim();
+}
+function signature(label, path) {
+  const script = `$ErrorActionPreference='Stop';$s=Get-AuthenticodeSignature -LiteralPath '${path.replaceAll("'", "''")}';@{status=$s.Status.ToString();signerSubject=$s.SignerCertificate.Subject;signerThumbprint=$s.SignerCertificate.Thumbprint;timestampSubject=$s.TimeStamperCertificate.Subject;timestampThumbprint=$s.TimeStamperCertificate.Thumbprint}|ConvertTo-Json -Compress`;
+  const result = JSON.parse(execFileSync("pwsh", ["-NoProfile", "-NonInteractive", "-Command", script], { encoding: "utf8", windowsHide: true, timeout: 60_000 }));
+  const evidence = requireAuthenticode({ label, ...result }, identity.expectedSignerSubject);
+  report.signatureChecks.push(evidence);
 }
 async function waitFor(check, label, timeout = 45_000) {
   const end = Date.now() + timeout;
@@ -125,6 +137,25 @@ try {
   const artifact = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${identity.artifactId}`], { encoding: "utf8", windowsHide: true }));
   assert.equal(run.head_sha, identity.builderCommit || identity.applicationCommit);
   assert.equal(artifact.workflow_run.id, identity.runId); assert.equal(artifact.expired, false);
+  const gitCommit = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/git/commits/${identity.applicationCommit}`], { encoding: "utf8", windowsHide: true }));
+  assert.equal(gitCommit.tree.sha, identity.applicationTree);
+  if (identity.requireSigned) {
+    assert.equal(run.head_sha, identity.applicationCommit, "Signed producer must use the exact approved application source");
+    assert.equal(run.path, ".github/workflows/release.yml");
+    assert.equal(run.head_repository.full_name, "OpenAEC-Foundation/open-office-studio");
+    assert.equal(artifact.workflow_run.head_sha, identity.applicationCommit);
+    assert(identity.producerRunAttempt <= run.run_attempt);
+    const list = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/runs/${identity.runId}/attempts/${identity.producerRunAttempt}/jobs?per_page=100`], { encoding: "utf8", windowsHide: true }));
+    const job = list.jobs.find(j => j.id === identity.producerJobId); assert(job);
+    assert.equal(job.run_id, identity.runId); assert.equal(job.run_attempt, identity.producerRunAttempt); assert.equal(job.head_sha, identity.applicationCommit);
+    assert.equal(job.name, "Bouwen – Windows"); assert.equal(job.status, "completed"); assert.equal(job.conclusion, "success");
+    const gates = ["Pakket bouwen (Windows, ondertekend)", "Authenticode controleren (installer, programma en uninstaller)", "Windows-installer werkelijk uitpakken en controleren"];
+    const selected = gates.map(name => { const s = job.steps.find(s => s.name === name); assert(s); assert.equal(s.status, "completed"); assert.equal(s.conclusion, "success"); return s; });
+    const created = Date.parse(artifact.created_at); assert(Number.isFinite(created));
+    assert(Date.parse(job.started_at) <= created && created <= Date.parse(job.completed_at));
+    assert(selected.every(s => Date.parse(s.completed_at) <= created));
+    report.producerSignatureAttestation = { jobId: job.id, attempt: job.run_attempt, startedAt: job.started_at, completedAt: job.completed_at, artifactCreatedAt: artifact.created_at, gates: selected.map(s => ({ name: s.name, completedAt: s.completed_at })) };
+  }
   report.run = { id: run.id, head_sha: run.head_sha, status: run.status, conclusion: run.conclusion };
   report.artifact = { id: artifact.id, name: artifact.name, digest: artifact.digest };
   const zipPath = join(out, "artifact.zip"), fd = openSync(zipPath, "wx");
@@ -159,7 +190,7 @@ try {
   const payloadBytes = await readFile(join(payload, "open-office-studio.exe"));
   report.payloadExecutableSha256 = sha(payloadBytes);
   if (identity.expectedPackagedExecutableSha256) assert.equal(report.payloadExecutableSha256, identity.expectedPackagedExecutableSha256);
-  if (report.applicationProvenance) {
+  if (report.applicationProvenance && !identity.requireSigned) {
     const rawHash = report.applicationProvenance.executable.sha256;
     report.bundlePatch = { originalBuildSha256: rawHash, payloadSha256: report.payloadExecutableSha256 };
     if (report.payloadExecutableSha256 !== rawHash) {
@@ -182,6 +213,11 @@ try {
     }
   }
   report.checks.push({ name: "independent NSIS payload identity and exact Tauri bundle patch verified" });
+  if (identity.requireSigned) {
+    signature("frozen NSIS installer", installer);
+    signature("independently extracted payload", join(payload, "open-office-studio.exe"));
+    report.checks.at(-1).name = "independent signed NSIS payload identity verified; no unsigned binary normalization";
+  }
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0, 3, 6].map(n => `<w:tr>${expected.slice(n, n + 3).map(cell).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
@@ -198,6 +234,10 @@ try {
   assert.equal(report.executableSha256, report.payloadExecutableSha256, "Installed executable equals the independently extracted immutable NSIS payload");
   report.fileVersion = ps(`(Get-Item -LiteralPath '${exe.replaceAll("'", "''")}').VersionInfo.ProductVersion`);
   assert([identity.version, identity.version + ".0"].includes(report.fileVersion), report.fileVersion);
+  if (identity.requireSigned) {
+    signature("installed application", exe);
+    signature("installed uninstaller", join(installation, "uninstall.exe"));
+  }
   const server = createServer(); await new Promise(done => server.listen(0, "127.0.0.1", done)); const port = server.address().port; await new Promise(done => server.close(done));
   env.WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS = `--remote-debugging-port=${port} --remote-debugging-address=127.0.0.1`;
   env.WEBVIEW2_USER_DATA_FOLDER = join(out, "webview-profile");

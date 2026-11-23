@@ -1,0 +1,44 @@
+name: Final signed Windows Suite native roundtrip
+on:
+  push:
+    branches: [codex/windows-final-native-20261123]
+    paths:
+      - .github/windows-final-native-candidate.json
+      - scripts/proef-windows-writer-native.mjs
+      - scripts/windows-native-signature.mjs
+      - scripts/windows-native-signature.test.mjs
+      - .github/workflows/windows-final-native-20261123.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    if: contains(github.event.head_commit.message, '[windows-final-go]')
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: node --test scripts/windows-native-signature.test.mjs
+      - name: Verify actual signed bytes and exercise native Writer save/reopen
+        run: node scripts/proef-windows-writer-native.mjs .github/windows-final-native-candidate.json .local/windows-final-native --require-signed
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-final-native-${{ github.sha }}
+          path: |
+            .local/windows-final-native/report.json
+            .local/windows-final-native/*.png
+            .local/windows-final-native/*.docx
+            .local/windows-final-native/*.log
+            .github/windows-final-native-candidate.json
+          include-hidden-files: true
+          if-no-files-found: warn
