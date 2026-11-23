@@ -14,6 +14,8 @@ import tarfile
 import tempfile
 import time
 
+from source_targets import select_cli_targets
+
 START_EPOCH=os.environ.get('OOS_375_WITNESS_START_EPOCH') or os.environ.get('OOS_375_JOB_START_EPOCH') or str(int(time.time()))
 assert re.fullmatch(r'\d{10}',START_EPOCH) and 0<=time.time()-float(START_EPOCH)<270*60
 START = time.monotonic()-(time.time()-float(START_EPOCH))
@@ -165,6 +167,9 @@ def main():
     REPORT['configureFlags']=flags
     assert sha(source/'autogen.sh')=='a79875cdff86bde59f8ab4c60b6da73cd9be82bf32cbdbb07262b9a712d69ca8'
     run('configure',['perl',str(source/'autogen.sh'),*flags],cwd=source,timeout=900)
+    cli_targets, REPORT['cliTargetSelection'] = select_cli_targets(source, source/'config_host.mk')
+    receipt()
+    run('target-selection-regressions',[BUILD_PYTHON,str(OWN/'test_source_targets.py'),'--source',str(source)])
     assert time.monotonic()-START <=45*60, 'Acquisition/configuration exceeded allocated 45-minute bound'
     REPORT['preparationCompleted']=True
     REPORT['configurationHashes']={p.name:sha(p) for p in [source/'config_host.mk',source/'config_host/config_global.h'] if p.is_file()}
@@ -172,9 +177,7 @@ def main():
         if p.is_file():shutil.copyfile(p,OUT/p.name)
     run('linker-version',['ld','--version'])
     compiler_start=time.monotonic()
-    run('source-cli-prerequisites',['make','-j3','Executable_soffice_bin','Executable_oosplash',
-        'Package_desktop_soffice_sh','Package_filter_xslt','Package_instsetoo_native_setup',
-        'Package_instsetoo_native_setup_ure','Package_instsetoo_native_ooenv'],cwd=source,timeout=210*60)
+    run('source-cli-prerequisites',['make','-j3',*cli_targets],cwd=source,timeout=210*60)
     remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0
     red=run('baseline-red',['make','-j3','CppunitTest_xmloff_draw','CPPUNIT_TEST_NAME=testUOFExplicitRectangleFillColors'],cwd=source,timeout=remaining,check=False)
     log=(OUT/'baseline-red.log').read_text(errors='replace')

@@ -1,0 +1,87 @@
+{
+  "issue": 375,
+  "scope": "Own QA target selection only; importer patch/runtime configuration unchanged",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "patchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+  "historicalConfigRun": 45182719759,
+  "historicalArtifactZIP_SHA256": "3cf159df0870d218067b2f2f46e8b23e247f0ea4151bce9531579bb823df56a3",
+  "selectionOnActualFailedConfig": {
+    "configuredENABLE_OOENV": "",
+    "configSHA256": "dd1a2a7278e926bbb628f48e718ec631d99fbc039f0563faa7710ca14a9ebdd5",
+    "module": "instsetoo_native/Module_instsetoo_native.mk",
+    "moduleSHA256": "36ee079207d9e432e91e55dc67c5068746dd182327f13d5b27df5c4a7fe9fcdf",
+    "targets": [
+      "Executable_soffice_bin",
+      "Executable_oosplash",
+      "Package_desktop_soffice_sh",
+      "Package_filter_xslt",
+      "Package_instsetoo_native_setup",
+      "Package_instsetoo_native_setup_ure"
+    ],
+    "omittedTargets": [
+      "Package_instsetoo_native_ooenv"
+    ],
+    "recipes": [
+      {
+        "target": "Executable_soffice_bin",
+        "path": "desktop/Executable_soffice_bin.mk",
+        "sha256": "39338791b4682995662aae61c37e7d4d55f9c2fc7c590556f2a5f9701fc9d0fc"
+      },
+      {
+        "target": "Executable_oosplash",
+        "path": "desktop/Executable_oosplash.mk",
+        "sha256": "a9a3d59b7d333fa91f06fdf58b0e7cf601b819176c013a887b9c29038c44425a"
+      },
+      {
+        "target": "Package_desktop_soffice_sh",
+        "path": "desktop/Package_soffice_sh.mk",
+        "sha256": "99a39a63a8517cb27c11c0a2531e05c47d3e12bd9d494e71932cca02268573ea"
+      },
+      {
+        "target": "Package_filter_xslt",
+        "path": "filter/Package_xslt.mk",
+        "sha256": "d2e944e98e1e7cf280a1a09c3081505ae0bf070c2116a4b7df93948d71f58d5c"
+      },
+      {
+        "target": "Package_instsetoo_native_setup",
+        "path": "instsetoo_native/Package_setup.mk",
+        "sha256": "e2d579db374c7774650d4070bc526f6b57ac545fd6389d92527a67faf01e9429"
+      },
+      {
+        "target": "Package_instsetoo_native_setup_ure",
+        "path": "instsetoo_native/Package_setup_ure.mk",
+        "sha256": "39618a166e2c9260ea20e8e1afb90c2a63fe326ab9602ef617b4febbaba6c84c"
+      }
+    ],
+    "method": "Pinned module condition plus actual generated config; no configure mutation or make execution"
+  },
+  "localChecks": {
+    "command": "python -B scripts/qa-presentation-375/test_source_targets.py --source .local/375-source",
+    "source": "Small cached pinned primary recipe/module files; not a configured local source build",
+    "testsRun": 7,
+    "exitCode": 0,
+    "result": "OK",
+    "checks": [
+      "Actual failed configuration excludes optional target without changing config bytes",
+      "Explicit TRUE control includes optional target",
+      "Unknown flag rejected",
+      "Missing flag rejected",
+      "Duplicate flag rejected",
+      "Changed pinned module rejected",
+      "Missing required recipe rejected"
+    ]
+  },
+  "syntaxASTParsed": [
+    "source_targets.py",
+    "test_source_targets.py",
+    "source_build.py"
+  ],
+  "localWorkingFileHashes": {
+    "source_targets.py": "e4b572d9ec5de4d5a8a56067aad3e6b07974f1a2f5d7d9d78a7cfcac817d0cbd",
+    "test_source_targets.py": "0a0b820daa9a5b1155769be9db989719118dd9cb45b84dab7ef87f53d885003f",
+    "source_build.py": "6c4d41dde36acabe5f6015152941bc22a31d20c321ea22fb1f7f964927998643"
+  },
+  "newBuildDispatched": false,
+  "cppunitOrProductAcceptance": false,
+  "earlierFailuresUnchanged": true
+}

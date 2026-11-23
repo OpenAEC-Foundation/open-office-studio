@@ -290,3 +290,21 @@ This is a recorded bounded harness proposal only; no new harness/product patch
 or allocation is included. The importer patch, all earlier failures and P2/P5
 release identities remain unchanged. Corrected-runtime Linux functional checks
 and same-source Windows/macOS/browser/native acceptance remain outstanding.
+
+
+## Reviewable target-selection correction after the new user request
+
+The user requested coordination of a correction and one further bounded witness.
+The own QA harness now reads actual generated `ENABLE_OOENV` and includes the
+optional target only for `TRUE`. Before compilation it verifies the exact pinned
+module hash, target recipe declarations/files and their resolved source paths;
+unsupported, missing or duplicate configuration values stop before expensive
+work. No `--enable-ooenv`, importer patch, dependency or source-pin change is made.
+
+Seven local controls pass, using the actual failed-run configuration from the
+verified official ZIP plus explicit positive/negative controls and small cached
+primary source recipes. The same controls are wired before compilation on a
+future actual VM. This is only harness verification, not C++ or runtime
+acceptance. See [`target-selection-correction.json`](target-selection-correction.json).
+At this point no further build has been dispatched; a fresh integration-approved
+allocation and its exact epochs/QA commit remain required.
