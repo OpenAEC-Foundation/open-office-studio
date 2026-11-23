@@ -58,9 +58,9 @@ jobs:
           WEBKIT_DISABLE_DMABUF_RENDERER: "1"
           LIBGL_ALWAYS_SOFTWARE: "1"
         run: |
-          export XDG_CONFIG_HOME="$PWD/.local/xlsb377-native/profile/config"
-          export XDG_DATA_HOME="$PWD/.local/xlsb377-native/profile/data"
-          export XDG_CACHE_HOME="$PWD/.local/xlsb377-native/profile/cache"
+          export XDG_CONFIG_HOME="$PWD/.local/linux-p2-native/xlsb377/profile/config"
+          export XDG_DATA_HOME="$PWD/.local/linux-p2-native/xlsb377/profile/data"
+          export XDG_CACHE_HOME="$PWD/.local/linux-p2-native/xlsb377/profile/cache"
           export XDG_CURRENT_DESKTOP=GNOME
           export GDK_BACKEND=x11
           unset NO_AT_BRIDGE
@@ -78,10 +78,10 @@ jobs:
             .local/xlsb377-input/apt-install.log
             .local/xlsb377-input/verified/verified-input.json
             .local/xlsb377-input/verified/pakketcontrole-Linux.json
-            .local/xlsb377-native/report.json
-            .local/xlsb377-native/*.png
-            .local/xlsb377-native/driver.log
-            .local/xlsb377-native/accessibility-*.txt
+            .local/linux-p2-native/xlsb377/report.json
+            .local/linux-p2-native/xlsb377/*.png
+            .local/linux-p2-native/xlsb377/driver.log
+            .local/linux-p2-native/xlsb377/accessibility-*.txt
             .local/xlsb377-xvfb.log
           include-hidden-files: true
           if-no-files-found: warn

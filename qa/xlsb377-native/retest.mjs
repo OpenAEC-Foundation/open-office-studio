@@ -16,7 +16,7 @@ import { createWriter362Transport, createWriter362XTestInput, writer362DocumentF
 assert.equal(process.platform, "linux");
 assert.equal(process.env.GITHUB_ACTIONS, "true");
 assert.match(process.env.DISPLAY ?? "", /^:\d+(?:\.\d+)?$/);
-const here = dirname(fileURLToPath(import.meta.url)), out = resolve(".local/xlsb377-native");
+const here = dirname(fileURLToPath(import.meta.url)), out = resolve(".local/linux-p2-native/xlsb377");
 const exec = promisify(execFile), hash = (b) => createHash("sha256").update(b).digest("hex");
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const identity = JSON.parse(await readFile('.local/xlsb377-input/identity.json', 'utf8'));

@@ -7,10 +7,10 @@ baseline=$(gsettings get org.gnome.desktop.interface toolkit-accessibility)
 restore() {
   result=$?
   gsettings set org.gnome.desktop.interface toolkit-accessibility "$baseline"
-  gsettings get org.gnome.desktop.interface toolkit-accessibility > .local/xlsb377-native/accessibility-after.txt
+  gsettings get org.gnome.desktop.interface toolkit-accessibility > .local/linux-p2-native/xlsb377/accessibility-after.txt
   exit "$result"
 }
 trap restore EXIT
-printf '%s\n' "$baseline" > .local/xlsb377-native/accessibility-before.txt
+printf '%s\n' "$baseline" > .local/linux-p2-native/xlsb377/accessibility-before.txt
 gsettings set org.gnome.desktop.interface toolkit-accessibility true
 node .local/xlsb377-harness/qa/xlsb377-native/retest.mjs

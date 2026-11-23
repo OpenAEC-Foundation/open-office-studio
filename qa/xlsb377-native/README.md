@@ -25,3 +25,9 @@ from the prepared QA4cb346cc. New files only bind the approved package and CI.
 Source oracle and syntax checks are preparation; actual native evidence is
 pending the dedicated CI run. P2/P3/P4 bytes cannot substitute for P5. No local GUI
 or recording is started, and this does not certify AppImage/signing/other OSes.
+
+Initial run45190211267 passed input/installed-ELF checks but stopped before
+Ctrl+S: the immutable capture helper correctly rejected the caller output path.
+The caller now uses its permitted private evidence subdirectory
+.local/linux-p2-native/xlsb377; helper bytes and feature criteria are unchanged.
+That first partial run is not a native #377 result.
