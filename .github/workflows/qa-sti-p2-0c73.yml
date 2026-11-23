@@ -47,15 +47,17 @@ jobs:
         run: |
           QA=qa/sti-p2-2026-11-23-0c73
           OUT=.local/qa-sti-p2-0c73
+          status=0
           if [ -f "$OUT/converted/prs-strategy.pptx" ]; then
-            python "$QA/check_pptx.py" "$OUT/converted/prs-strategy.pptx" --report "$OUT/converted-oracle-check.json"
+            python "$QA/check_pptx.py" "$OUT/converted/prs-strategy.pptx" --report "$OUT/converted-oracle-check.json" || status=1
           fi
           if [ -f "$OUT/edited.pptx" ]; then
-            python "$QA/check_pptx.py" "$OUT/edited.pptx" --edited --report "$OUT/edited-oracle-check.json"
+            python "$QA/check_pptx.py" "$OUT/edited.pptx" --edited --report "$OUT/edited-oracle-check.json" || status=1
           fi
           if [ -f "$OUT/reopened.pptx" ]; then
-            python "$QA/check_pptx.py" "$OUT/reopened.pptx" --edited --report "$OUT/reopened-oracle-check.json"
+            python "$QA/check_pptx.py" "$OUT/reopened.pptx" --edited --report "$OUT/reopened-oracle-check.json" || status=1
           fi
+          exit "$status"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

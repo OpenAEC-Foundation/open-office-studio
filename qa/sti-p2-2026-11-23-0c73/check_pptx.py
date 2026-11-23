@@ -39,8 +39,8 @@ def verify(file, oracle, edited):
         ids = presentation.find(P + "sldIdLst")
         assert len(ids) == oracle["slideCount"]
         size = presentation.find(P + "sldSz")
-        assert int(size.get("cx")) == oracle["pageSize"]["widthEmu"]
-        assert int(size.get("cy")) == oracle["pageSize"]["heightEmu"]
+        dimensions = {"widthEmu": int(size.get("cx")), "heightEmu": int(size.get("cy"))}
+        exact_size = all(dimensions[k] == oracle["pageSize"][k] for k in dimensions)
         slides = []
         for i, slide in enumerate(ids):
             slide_path = target(presentation_path, local[slide.get(R + "id")])
@@ -58,7 +58,9 @@ def verify(file, oracle, edited):
     return {"file": str(file), "sha256": hashlib.sha256(Path(file).read_bytes()).hexdigest(),
         "sourceFixtureSha256": oracle["fixture"]["sha256"], "edited": edited,
         "slides": slides, "sourceParagraphsVerified": sum(s["paragraphsVerified"] for s in slides),
-        "pageSizePreserved": True, "mediaQualification": oracle["media"]["qualification"], "pass": True}
+        "sourcePageSize": oracle["pageSize"], "actualPageSize": dimensions,
+        "pageSizeExact": exact_size, "allSourceParagraphsPreserved": True,
+        "mediaQualification": oracle["media"]["qualification"], "pass": exact_size}
 
 def main():
     parser = argparse.ArgumentParser()
@@ -69,7 +71,10 @@ def main():
     args = parser.parse_args()
     result = verify(args.file, json.loads(Path(args.oracle).read_text(encoding="utf-8")), args.edited)
     Path(args.report).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"file": args.file, "pass": True, "slides": 7, "paragraphs": 24, "edited": args.edited}))
+    print(json.dumps({"file": args.file, "pass": result["pass"], "slides": 7, "paragraphs": 24,
+        "edited": args.edited, "actualPageSize": result["actualPageSize"], "pageSizeExact": result["pageSizeExact"]}))
+    if not result["pass"]:
+        raise SystemExit("All source text is preserved; strict source page dimensions differ (see report).")
 
 if __name__ == "__main__":
     main()

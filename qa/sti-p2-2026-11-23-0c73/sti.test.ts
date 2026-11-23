@@ -98,11 +98,15 @@ it.skipIf(!process.env.OOS_STI_BINDING)("converts the authentic STI using the ve
     ...s.textStories.flatMap((story: any) => story.paragraphs.map((p: any) => normalize(p.runs.map((r: any) => r.text).join("")))),
     ...paragraphs(s.children ?? []),
   ]).filter(Boolean);
+  const sizeChecks: { edited: boolean; widthEmu: number; heightEmu: number; exactSourceSize: boolean }[] = [];
+  let convertedSize: { widthEmu: number; heightEmu: number };
   function verify(handle: ReturnType<typeof openPresentation>, edited: boolean) {
     const snapshot = handle.snapshot();
     expect(snapshot.slides).toHaveLength(oracle.slideCount);
-    expect(snapshot.widthEmu).toBe(oracle.pageSize.widthEmu);
-    expect(snapshot.heightEmu).toBe(oracle.pageSize.heightEmu);
+    expect(snapshot.widthEmu).toBe(convertedSize.widthEmu);
+    expect(snapshot.heightEmu).toBe(convertedSize.heightEmu);
+    sizeChecks.push({ edited, widthEmu: snapshot.widthEmu, heightEmu: snapshot.heightEmu,
+      exactSourceSize: snapshot.widthEmu === oracle.pageSize.widthEmu && snapshot.heightEmu === oracle.pageSize.heightEmu });
     for (let i = 0; i < oracle.slideCount; i++) {
       const expected = oracle.slides[i].paragraphs.map(normalize);
       if (edited && i === 0) expected[0] = normalize(marker + expected[0]);
@@ -110,6 +114,7 @@ it.skipIf(!process.env.OOS_STI_BINDING)("converts the authentic STI using the ve
     }
   }
   const handle = openPresentation(opened!.bytes);
+  convertedSize = { widthEmu: handle.snapshot().widthEmu, heightEmu: handle.snapshot().heightEmu };
   let saved: Uint8Array;
   try {
     verify(handle, false);
@@ -126,8 +131,15 @@ it.skipIf(!process.env.OOS_STI_BINDING)("converts the authentic STI using the ve
     verify(reopened, true);
     writeFileSync(path.join(output, "reopened.pptx"), reopened.save());
   } finally { reopened.dispose(); }
-  report.nativeRoute = "pass";
-  report.engine = { slides: 7, sourceParagraphs: 24, pageSizePreserved: true, appropriateEdit: "prefix first slide title", marker,
+  const exactSourceSize = sizeChecks.every(s => s.exactSourceSize);
+  report.nativeRoute = exactSourceSize ? "pass" : "content/edit/save/reopen passed; strict source page-size check failed";
+  report.engine = { slides: 7, sourceParagraphs: 24, exactSourcePageSizePreserved: exactSourceSize,
+    pageSizeChecks: sizeChecks, sourcePageSize: oracle.pageSize, convertedSizePreservedAfterEditAndReopen: true,
+    appropriateEdit: "prefix first slide title", marker,
     editSavedAndReopened: true, sourceUnchanged: sha(source) === oracle.fixture.sha256,
     relevantMediaQualification: oracle.media.qualification, visualFidelity: "not tested; no GUI/screen capture" };
+  // Preserve the strict criterion, but finish the independent edit/save/reopen
+  // evidence before reporting a source-size mismatch. Never use converted text
+  // as an oracle or silently widen the original source dimensions.
+  expect(sizeChecks.every(s => s.exactSourceSize), "exact STI source page dimensions at every stage").toBe(true);
 }, 180_000);
