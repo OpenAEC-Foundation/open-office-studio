@@ -41,7 +41,7 @@ def verify(artifact, expected_sha, destination):
                 assert link.resolve(strict=False).is_relative_to(destination.resolve())
         bundle.extractall(destination, filter="data")
     actual = []
-    for path in sorted((destination / "payload").rglob("*")):
+    for path in [destination / "payload"] + sorted((destination / "payload").rglob("*")):
         entry = {"path": path.relative_to(destination).as_posix(), "mode": f"{stat.S_IMODE(path.lstat().st_mode):04o}"}
         if path.is_symlink():
             target = os.readlink(path)

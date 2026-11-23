@@ -221,10 +221,10 @@ def extract_runtime(stream, payload):
 
 def entry_manifest(payload, source_entries=None):
     entries = []
-    for path in sorted(payload.rglob("*")):
+    for path in [payload] + sorted(payload.rglob("*")):
         relative = path.relative_to(payload).as_posix()
         info = path.lstat()
-        entry = {"path": "payload/" + relative, "mode": f"{stat.S_IMODE(info.st_mode):04o}"}
+        entry = {"path": "payload" if path == payload else "payload/" + relative, "mode": f"{stat.S_IMODE(info.st_mode):04o}"}
         if source_entries and relative in source_entries:
             entry["debMetadata"] = source_entries[relative]
         if path.is_symlink():
@@ -307,6 +307,7 @@ def main():
         deb, parent = bind_parent(work)
         for field, expected in (("Package", "open-office-studio"), ("Version", VERSION), ("Architecture", "amd64")):
             assert command("dpkg-deb", "--field", deb, field) == expected
+        parent["deb"]["control"] = {field: command("dpkg-deb", "--field", deb, field) for field in ("Package", "Version", "Architecture", "Depends")}
         payload = work / "producer-payload"
         process = subprocess.Popen(["dpkg-deb", "--fsys-tarfile", str(deb)], stdout=subprocess.PIPE)
         try:
@@ -314,6 +315,8 @@ def main():
         finally:
             process.stdout.close()
         assert process.wait(timeout=60) == 0
+        parent["officeExecutableMetadataOnly"] = executable
+        write_json(RECOVERY / "parent.json", parent)
         receipt_path = payload / META / "receipt.json"
         receipt = json.loads(receipt_path.read_text())
         receipt_sha = sha(receipt_path)
@@ -352,7 +355,7 @@ def main():
                       "resourcesPath": "payload/usr/lib/Open Office Studio",
                       "privateRuntimePath": "payload/" + str(RUNTIME),
                       "canary": {"status": probe["status"], "report": "canary-report.json", "reportSha256": sha(OUT / "canary-report.json")},
-                      "qaRun": int(os.environ["GITHUB_RUN_ID"]), "qaArtifact": "p2-linux-private-runtime-only",
+                      "qaRun": int(os.environ["GITHUB_RUN_ID"]), "qaArtifact": "p2-linux-private-runtime-only", "officeDebArtifact": "p2-linux-office-deb-input",
                       "harnessCommit": command("git", "-C", Path(__file__).resolve().parent.parent, "rev-parse", "HEAD")}
         write_json(OUT / "descriptor.json", descriptor)
         shutil.copy2(RECOVERY / "package-verification-Linux.json", OUT)

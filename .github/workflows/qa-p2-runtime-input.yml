@@ -72,10 +72,20 @@ jobs:
       - name: One verified Desktop ZIP download, runtime-only extraction and relocated consumer canary
         run: python .local/p2-runtime-harness/scripts/p2-runtime-input.py
       - name: Upload the single shared runtime-only input for five format workers
+        id: runtime
         uses: actions/upload-artifact@v4
         with:
           name: p2-linux-private-runtime-only
           path: .local/p2-runtime-input/
+          compression-level: 0
+          include-hidden-files: true
+          if-no-files-found: error
+      - name: Preserve original verified Office DEB separately for the native owner
+        id: office_deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-linux-office-deb-input
+          path: .local/p2-runtime-recovery/
           compression-level: 0
           include-hidden-files: true
           if-no-files-found: error
