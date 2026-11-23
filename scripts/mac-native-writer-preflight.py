@@ -70,7 +70,12 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
     before = body_text(document)
     if "Q" in before:
         raise RuntimeError("Known preflight text must not contain its synthetic Q marker")
-    label = "EPUB EERSTE HOOFDSTUK"
+    # The native caret can overlap the heading's first E (Vision then reads
+    # FPUB). Use exact unique words from those same unchanged headings, with
+    # the existing confidence/geometry/PID checks; never fuzzy-match a line or
+    # select a later screenshot to hide the caret.
+    label = "EERSTE"
+    control_words = ("EERSTE", "TWEEDE")
 
     def persisted(check, message):
         deadline = time.monotonic() + 20
@@ -107,7 +112,7 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
     proof["firstPid"] = first_pid
     ready_control("native control loaded before viewport and body input")
     proof["initialViewport"] = viewport(action, out / "initial-viewport", identity, first_pid)
-    target, receipt = visible_target(action, out / "before-input", first_pid, ocr_binary, label)
+    target, receipt = visible_target(action, out / "before-input", first_pid, ocr_binary, label, control_words)
     proof["checks"].append({"name": "readable original control before body input", "receipt": receipt})
     click_target(action, target)
     focused = action("snapshot").get("focusAfter", {})
@@ -131,7 +136,7 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
     proof["secondPid"] = second_pid
     ready_control("saved native control loaded in the fresh process")
     proof["reopenedViewport"] = viewport(action, out / "reopened-viewport", identity, second_pid)
-    _, receipt = visible_target(action, out / "reopened-before-input", second_pid, ocr_binary, label)
+    _, receipt = visible_target(action, out / "reopened-before-input", second_pid, ocr_binary, label, control_words)
     if sha(document) != restored_sha or body_text(document) != before:
         raise AssertionError("Fresh-process reopen changed saved bytes or restored source text")
     proof["checks"].append({"name": "fresh PID reopened saved original control without input", "receipt": receipt, "savedSha256": restored_sha})
