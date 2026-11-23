@@ -1,0 +1,312 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "scope": "DPT only: native-template source qualification gap and strict P2 filename predicate",
+  "candidate": {
+    "id": "spire",
+    "repository": "eiceblue/Spire.Presentation-for-Java",
+    "commit": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+    "firstPublicationCommit": "d1a74f200d0a311edb895e608900f491704de79c",
+    "path": "Examples/data/Sample_dpt.dpt",
+    "bytes": 71680,
+    "blob": "91bdf2170f976552adb76a932d70a8864a6685b7",
+    "sha256": "14a9dad00f8db4191c5e0ddfa31041e6c491d05a5a05fd0c31624c3d108f2571",
+    "loader": {
+      "path": "Examples/10_conversion/convertDptToDps.java",
+      "bytes": 392,
+      "blob": "2c9d26d0f8a856ac580175bbe3ece01ae3e1f942",
+      "sha256": "b34184184f164b1eabaeee9e9da22c870a1b26d0941829f0307146117772ce0e"
+    },
+    "readme": {
+      "path": "README.md",
+      "bytes": 9318,
+      "blob": "f27f6cd73e655f00751f38648725fbdcf2da58c7",
+      "sha256": "df5a3e821e837270f6907f100acd3b49588c523aa745098f951c39d88cf92b15"
+    },
+    "expectedPresentationStreamSha256": "5ca9c51c47b96fc01c467c0a46c04fbe6dd9fe77b5aabac2a2d12efa58a9146e",
+    "expectedApplication": "WPS 演示",
+    "expectedBuild": "2052-11.1.0.14309",
+    "qualificationGap": "Publisher explicitly loads this CFB as FileFormat.DPT; WPS Presentation app/build metadata is consistent with that family. Applicable example-file license grant not established in reviewed pinned tree/README/license endpoint. Native template-specific internal fields and a live-slide content oracle are not independently decoded. No fixture/content pass or source redistribution."
+  },
+  "diagnosticsPassed": true,
+  "sourceGatePassed": false,
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "qualifiedFixture": null,
+  "sourceOracle": null,
+  "inventories": [
+    {
+      "repository": "eiceblue/Spire.Presentation-for-Java",
+      "commit": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+      "expectedDptPaths": [
+        "Examples/data/Sample_dpt.dpt"
+      ],
+      "treeSha": "4360a64a106946538a1f4e245fa33862adfc3b1d",
+      "truncated": false,
+      "entries": 544,
+      "dptFiles": [
+        {
+          "path": "Examples/data/Sample_dpt.dpt",
+          "sha": "91bdf2170f976552adb76a932d70a8864a6685b7",
+          "size": 71680
+        }
+      ],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "Sayi/poi-tl",
+      "commit": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+      "expectedDptPaths": [],
+      "treeSha": "81edcbd9227a619078c07052830a2cd6a4333bb7",
+      "truncated": false,
+      "entries": 1051,
+      "dptFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE",
+        "plugin/poi-tl-plugin-math/NOTICE"
+      ]
+    },
+    {
+      "repository": "Tom60chat/Extension-List",
+      "commit": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+      "expectedDptPaths": [],
+      "treeSha": "74e784db06e7a76fc3b61189830e241c3b6d0105",
+      "truncated": false,
+      "entries": 111,
+      "dptFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "openpreserve/format-corpus",
+      "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+      "expectedDptPaths": [],
+      "treeSha": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+      "truncated": false,
+      "entries": 892,
+      "dptFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "apache/tika",
+      "commit": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "expectedDptPaths": [],
+      "treeSha": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "truncated": false,
+      "entries": 8118,
+      "dptFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "tika-app/src/main/appended-resources/META-INF/LICENSE",
+        "tika-bundles/tika-bundle-standard/src/main/appended-resources/META-INF/LICENSE",
+        "tika-core/src/main/appended-resources/META-INF/LICENSE",
+        "tika-eval/tika-eval-app/src/main/appended-resources/META-INF/LICENSE",
+        "tika-grpc/src/main/appended-resources/META-INF/LICENSE",
+        "tika-parent/license-header.txt",
+        "tika-parsers/tika-parsers-extended/tika-parser-scientific-package/src/main/appended-resources/META-INF/LICENSE",
+        "tika-parsers/tika-parsers-extended/tika-parser-sqlite3-package/src/main/appended-resources/META-INF/LICENSE",
+        "tika-parsers/tika-parsers-ml/tika-parser-nlp-package/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-atlassian-jwt/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-az-blob/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-es/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-gcs/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-google-drive/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-kafka/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-microsoft-graph/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-opensearch/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-s3/src/main/appended-resources/META-INF/LICENSE",
+        "tika-pipes/tika-pipes-plugins/tika-pipes-solr/src/main/appended-resources/META-INF/LICENSE",
+        "tika-server/tika-server-standard/src/main/appended-resources/META-INF/LICENSE"
+      ]
+    },
+    {
+      "repository": "alexschiller/file-format-commons",
+      "commit": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+      "expectedDptPaths": [],
+      "treeSha": "0d508180dfeece7ac8b3e87bd2093755e3f356b1",
+      "truncated": false,
+      "entries": 70,
+      "dptFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "eiceblue/Spire.Office-for-Java",
+      "commit": "b2451371f696aae6a0582e787356bd6527a4d2c5",
+      "expectedDptPaths": [
+        "Spire.Presentation/data/Sample_dpt.dpt"
+      ],
+      "treeSha": "b2451371f696aae6a0582e787356bd6527a4d2c5",
+      "truncated": false,
+      "entries": 2259,
+      "dptFiles": [
+        {
+          "path": "Spire.Presentation/data/Sample_dpt.dpt",
+          "sha": "91bdf2170f976552adb76a932d70a8864a6685b7",
+          "size": 71680
+        }
+      ],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-.NET",
+      "commit": "cf26ca4587c5cfd78c667da68ebac53f058fb70a",
+      "expectedDptPaths": [],
+      "treeSha": "cf26ca4587c5cfd78c667da68ebac53f058fb70a",
+      "truncated": false,
+      "entries": 800,
+      "dptFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "aspose-slides/Aspose.Slides-for-Java",
+      "commit": "9ef0160fe96031cd3f0808792b6da136763a8d7f",
+      "expectedDptPaths": [],
+      "treeSha": "9ef0160fe96031cd3f0808792b6da136763a8d7f",
+      "truncated": false,
+      "entries": 2209,
+      "dptFiles": [],
+      "licenseNoticePaths": [
+        "LICENSE",
+        "Plugins/Aspose.Slides Java (Maven) for NetBeans/LICENSE",
+        "Plugins/Aspose.Slides Java for Pptx4j/Maven/LICENSE",
+        "Plugins/Aspose_Slides_Java_Maven_for_Eclipse/LICENSE",
+        "Plugins/Aspose_Slides_Java_for_PHP/vendor/composer/LICENSE",
+        "Plugins/Aspose_Slides_Java_for_Ruby/LICENSE",
+        "Plugins/Aspose_Slides_for_Apache_POI/LICENSE"
+      ]
+    },
+    {
+      "repository": "aspose-slides/Aspose.Slides-for-.NET",
+      "commit": "73f0e15894510088edb04e60785e66ee46ff42fe",
+      "expectedDptPaths": [],
+      "treeSha": "73f0e15894510088edb04e60785e66ee46ff42fe",
+      "truncated": false,
+      "entries": 2183,
+      "dptFiles": [],
+      "licenseNoticePaths": [
+        "Demos/Aspose.Slides.Web.Core/Infrastructure/LicenseProvider.cs",
+        "Demos/Aspose.Slides.Web/wwwroot/slides/static/css/viewer/theme/fonts/league-gothic/LICENSE",
+        "Demos/Aspose.Slides.Web/wwwroot/slides/static/css/viewer/theme/fonts/source-sans-pro/LICENSE",
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-Python",
+      "commit": "22975b5c686382bc86e2c8c970c62181c0441730",
+      "expectedDptPaths": [],
+      "treeSha": "22975b5c686382bc86e2c8c970c62181c0441730",
+      "truncated": false,
+      "entries": 344,
+      "dptFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-JavaScript",
+      "commit": "aa190c5bc401c57b94a803f1dd44096b8292630b",
+      "expectedDptPaths": [],
+      "treeSha": "aa190c5bc401c57b94a803f1dd44096b8292630b",
+      "truncated": false,
+      "entries": 360,
+      "dptFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "eiceblue/Spire.Presentation-for-C",
+      "commit": "0bb16d89dc8aaa26cff2f7a9d58d7e3a1054f96d",
+      "expectedDptPaths": [],
+      "treeSha": "0bb16d89dc8aaa26cff2f7a9d58d7e3a1054f96d",
+      "truncated": false,
+      "entries": 344,
+      "dptFiles": [],
+      "licenseNoticePaths": []
+    },
+    {
+      "repository": "LibreOffice/core",
+      "commit": "d9b2d316ec4d546f831415aa75514fa237f1fda4",
+      "subtree": "sd",
+      "tree": "9f8aa260dab374769931a57f470bb12185bb712d",
+      "expectedDptPaths": [],
+      "treeSha": "9f8aa260dab374769931a57f470bb12185bb712d",
+      "truncated": false,
+      "entries": 2459,
+      "dptFiles": [],
+      "licenseNoticePaths": []
+    }
+  ],
+  "inventoryCount": 14,
+  "independentByteDiagnostics": {
+    "container": "CFB version3",
+    "streams": [
+      {
+        "name": "\u0005SummaryInformation",
+        "bytes": 29080,
+        "sha256": "8b43505ec6113f8a23e0f734969ec3c37c6fab6ae0c3e786f3218d109e18742d"
+      },
+      {
+        "name": "\u0005DocumentSummaryInformation",
+        "bytes": 548,
+        "sha256": "692f3e224a4acceaedd8727715114b6f0cb41fe65fcebfbece60dbbe9497855c"
+      },
+      {
+        "name": "PowerPoint Document",
+        "bytes": 38355,
+        "sha256": "5ca9c51c47b96fc01c467c0a46c04fbe6dd9fe77b5aabac2a2d12efa58a9146e"
+      },
+      {
+        "name": "Current User",
+        "bytes": 71,
+        "sha256": "dfadce451b060b7b9fe8b47ae4349c7930b6f612f68508093cf116478a50c3bd"
+      }
+    ],
+    "selectedProperties": {
+      "\u0005SummaryInformation": [
+        {
+          "section": 0,
+          "property": 18,
+          "type": 31,
+          "value": "WPS 演示"
+        }
+      ],
+      "\u0005DocumentSummaryInformation": [
+        {
+          "section": 1,
+          "property": 3,
+          "type": 31,
+          "value": "2052-11.1.0.14309"
+        }
+      ]
+    },
+    "nativeTemplateFieldsDecoded": false,
+    "orderedLiveSlideOracleDerived": false
+  },
+  "publisherEvidence": {
+    "explicitDptLoaderVerified": true,
+    "loaderExecuted": false,
+    "licenseEndpointStatus": 404,
+    "readmeHasTemporarySdkLicenseLink": true,
+    "applicableSampleLicenseGrantEstablished": false,
+    "boundary": "Pinned complete tree/README/license endpoint reviewed; no claim of worldwide absence or automatic SDK-license coverage of sample bytes"
+  },
+  "sharedRuntime": {
+    "pin": "scripts/qa-dpt/unused-runtime-pin.json",
+    "downloaded": false,
+    "consumed": false,
+    "reverified": false
+  },
+  "retention": "JSON reports only. Candidate, README and loader bytes stay outside artifact/Git delivery.",
+  "limits": [
+    "No accepted original native DPT fixture with applicable source permission and independent live-slide/text/object/geometry/media oracle. Source/import/full-format acceptance false.",
+    "CFB stream hashes and WPS application/build metadata are independent byte diagnostics; not a decoded native-template flag, ordered content oracle or visual-fidelity proof.",
+    "No converter/private Office runtime or actual PPTX WASM initialization/edit/UndoRedo/PPTX save/freshreopen/XML content acceptance.",
+    "Filename predicate and synthetic empty negative no-desktop request are actual production function tests in Linux Node; not a DPT file import, hosted-browser UI, Tauri IPC or native Windows/Linux/macOS GUI test.",
+    "No source bytes, publisher loader or README retained in the report artifact/Git delivery. No SDK, suite, producer application or Mac build executed.",
+    "Existing template/ordinary-document filename controls are function controls only, not additional format routes. Shared private runtime pin is retained but not downloaded/consumed/reverified."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "DPT only under #30: existing #382 filename-set omission variant and separate source qualification gap",
+  "application": {"commit":"dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b","tree":"5a644e397ecc6af5452a49b6404edf953687d1b2","version":"2026.48.1"},
+  "branch": "codex/dpt-qa-2026-11-23-e0d7",
+  "testedHarnessCommit": "7543cf17a6e2b04b90eee5fac6ca12f33a24f9ce",
+  "evidenceCommitDifference": "Documentation/retained JSON/ZIP only; no product/harness changes after the tested commit",
+  "run": {"id":45185797593,"job":137730929094,"conclusion":"failure","url":"https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45185797593","runner":"ubuntu-22.04","node":"22.23.5","pnpm":"11.25.0"},
+  "artifact": {"id":14823851357,"bytes":5648,"sha256":"90a744a2faef2af2033c68eb92f848363770beb989161052b836ffaa31dd9760","fullZipDigestVerifiedAgainstOfficialMetadata":true,"entries":["source-gate-report.json","policy-report.json"],"sourceBinariesIncluded":false},
+  "actualChecks": {"pinnedCompleteInventories":14,"independentCfbMetadataDiagnostics":true,"p2ProductSourceUnchanged":true,"negativeProductionNoDesktopPolicy":true,"presentationWasmIdentityOnly":true},
+  "strictTemplateClassification": {"passed":false,"expected":true,"lowercaseActual":false,"uppercaseActual":false,"controls":{"potx":true,"otp":true,"sti":true,"pptx":false},"assertionRelaxed":false,"sameExistingIssue":382},
+  "sourceGatePassed": false,
+  "qualifiedFixture": null,
+  "sourceOracle": null,
+  "sourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "sharedPrivateRuntime": {"pin":"scripts/qa-dpt/unused-runtime-pin.json","downloaded":false,"consumed":false,"reverified":false},
+  "sourceGap": "Explicit publisher FileFormat.DPT loader and WPS Presentation CFB metadata exist, but applicable example-file permission was not established. Native-template fields/live-slide content oracle are not decoded. The second repository copy is the same Git blob.",
+  "notExecuted": ["DPT positive conversion/import","actual presentation WASM initialization/edit/UndoRedo","PPTX save/freshreopen/independent OOXML acceptance","source overwrite or data loss reproduction","Tauri IPC/hosted browser UI/native Windows/Linux/macOS GUI","DPS or any other file-format route"],
+  "inferenceOnly": "False isSjabloon result would skip the generic new-document template wrapper after successful DPT import; not an actual import/save/source-overwrite observation",
+  "issueDisposition": "Confirmed DPT filename-only variant belongs in existing #382: same shared SJABLONEN set omits ETT and DPT; no duplicate or aggregate issue, no product fix/intake"
+}

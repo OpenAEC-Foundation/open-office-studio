@@ -6,6 +6,28 @@ QA-only branch `codex/dpt-qa-2026-11-23-e0d7` starts at exact P2
 `5a644e397ecc6af5452a49b6404edf953687d1b2`, version `2026.48.1`.
 No product/catalog/intake/build/release changes or other active format scope.
 
+## Actual result
+
+[CI 45185797593](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45185797593),
+job `137730929094`, tested harness
+`7543cf17a6e2b04b90eee5fac6ca12f33a24f9ce` on Ubuntu 22.04/Node 22.23.5.
+Source diagnostics and negative no-desktop policy pass. The strict actual
+template assertion **fails**: lowercase and uppercase DPT both return false,
+expected true. POTX/OTP/STI controls return true; ordinary PPTX returns false.
+The assertion is retained unchanged. This is the same shared filename-set
+omission recorded for ETT in existing [#382](https://github.com/OpenAEC-Foundation/open-office-studio/issues/382),
+to which this DPT-only reproduction is added as a variant. No duplicate issue.
+
+The [complete official artifact ZIP](retained/dpt-source-and-policy-result.zip)
+is retained: artifact `14823851357`, 5648 bytes, SHA256
+`90a744a2faef2af2033c68eb92f848363770beb989161052b836ffaa31dd9760`.
+The whole downloaded ZIP was verified against official metadata in
+[artifact.json](artifact.json). It contains exactly the source-gate and policy
+JSON reports, with no source/publisher binaries or source code. Readable copies
+are [source-gate-report.json](source-gate-report.json) and
+[policy-report.json](policy-report.json); the aggregate is [result.json](result.json).
+The evidence commit changes only docs/reports after the tested harness.
+
 ## Published source and qualification boundary
 
 E-iceblue Spire.Presentation-for-Java at
