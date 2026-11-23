@@ -19,6 +19,58 @@ import zipfile
 REPO = 'OpenAEC-Foundation/open-office-studio'
 KEY = '13F6D414ADEE4ED4CD09AC60601D86C93C504D29'
 FORMS = {'Windows': ['x64-setup.exe'], 'macOS': ['aarch64.dmg'], 'Linux': ['amd64.deb', 'amd64.AppImage']}
+P5_SOURCE = 'b696ab86bd1c128729a079b68c0082e6df3d36a5'
+P5_TREE = 'e30879fd772871e690847c061ef66e6b81808a05'
+P5_RUN = 45177730188
+MAC_RUN = 45195055147
+MAC_HEAD = '2af94cdcefa3e88e4980b631d16a88d7d7de5ae8'
+MAC_JOB = 137763371873
+MAC_REF = 'refs/heads/codex/p5-macos-only-producer-20261123'
+MAC_WITNESS = '.local/macos-only-producer-source.json'
+SOURCE_GATE = 'Exacte P5-appbron en afzonderlijke producerhead bewijzen'
+
+
+def producer_spec(request, platform, binding):
+    """Legacy requests stay unchanged; the only different-head exception is frozen P5 Mac."""
+    if 'producerRun' not in binding and 'producerCommit' not in binding:
+        return request['run'], request['source'], False
+    check(type(binding.get('producerRun')) is int and isinstance(binding.get('producerCommit'), str), 'Explicit producer run and commit required together')
+    check((request['source'], request['tree'], request['version'], request['run']) == (P5_SOURCE, P5_TREE, '2026.48.1', P5_RUN), 'Separate producers require the exact frozen P5 application')
+    run_id, head = binding['producerRun'], binding['producerCommit']
+    if (run_id, head) == (P5_RUN, P5_SOURCE):
+        check(platform != 'macOS', 'New P5 Mac declaration must use its explicit Mac-only producer')
+        check(binding['runAttempt'] == 1 and binding['jobId'] == {'Windows':137703365803, 'Linux':137703365848}[platform], 'Original P5 platform job/attempt differs')
+        return run_id, head, False
+    check(platform == 'macOS' and (run_id, head, binding['runAttempt'], binding['jobId']) == (MAC_RUN, MAC_HEAD, 1, MAC_JOB), 'Unapproved separate platform producer')
+    digest = binding.get('sourceWitnessSha256')
+    check(isinstance(digest, str) and len(digest) == 64 and all(c in '0123456789abcdef' for c in digest), 'Frozen Mac source witness digest required')
+    return run_id, head, True
+
+
+def validate_producer_origin(producer, run_id, head, separate_mac):
+    check(producer['id'] == run_id and producer['head_sha'] == head and producer['head_repository']['full_name'] == REPO, 'Producer source/repository mismatch')
+    check(producer['path'] == '.github/workflows/release.yml', 'Expected existing release build workflow')
+    if separate_mac:
+        check(producer['event'] == 'workflow_dispatch' and producer['head_branch'] == MAC_REF.removeprefix('refs/heads/'), 'Mac-only producer event/ref differs')
+
+
+def validate_mac_witness(raw, binding):
+    check(0 < len(raw) < 65536 and hashlib.sha256(raw).hexdigest() == binding['sourceWitnessSha256'], 'Mac source witness bytes/digest differ')
+    witness = json.loads(raw)
+    expected = dict(appHead=P5_SOURCE, appTree=P5_TREE, appVersion='2026.48.1', producerHead=MAC_HEAD,
+        producerWorkflowHead=MAC_HEAD, producerRef=MAC_REF, producerWorkflowRef=f'{REPO}/.github/workflows/release.yml@{MAC_REF}',
+        event='workflow_dispatch', runId=str(MAC_RUN), attempt='1', job='bouwen',
+        checkoutWorkflowSha256='620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64',
+        publiceren='false', nativeAccepted=False, scope='Build-only producer/source binding; no native operation or publication')
+    check(witness == expected and witness.get('nativeAccepted') is False, 'Mac source witness application/producer/run/attempt fields differ')
+    return {'member':MAC_WITNESS, 'sha256':hashlib.sha256(raw).hexdigest(), 'bytes':len(raw), 'witness':witness}
+
+
+def read_mac_witness(z, members, binding):
+    name = PurePosixPath(MAC_WITNESS).name
+    check(name in members and members[name].filename == MAC_WITNESS, 'Required original Mac source witness missing or misplaced')
+    check(members[name].file_size < 65536, 'Mac source witness too large')
+    return validate_mac_witness(z.read(members[name]), binding)
 
 
 def check(condition, message):
@@ -69,8 +121,12 @@ def validate_platform_job(job, platform):
     return [steps[name] for name in required]
 
 
-def validate_artifact_binding(producer, binding, job, artifact, platform):
+def validate_artifact_binding(producer, binding, job, artifact, platform, extra_gates=()):
     gates = validate_platform_job(job, platform)
+    for name in extra_gates:
+        matches = [s for s in job['steps'] if s['name'] == name]
+        check(len(matches) == 1 and matches[0]['status'] == 'completed' and matches[0]['conclusion'] == 'success', 'Required Mac source/signing gate did not pass: '+name)
+        gates.append(matches[0])
     attempt = binding['runAttempt']
     check(type(attempt) is int and 1 <= attempt <= producer['run_attempt'], 'Invalid explicit producer attempt')
     check(job['run_id'] == producer['id'] and job['run_attempt'] == attempt and job['head_sha'] == producer['head_sha'], 'Job producer/attempt/source mismatch')
@@ -119,22 +175,32 @@ def run(request_path, app_path, output_path):
     config = json.loads((app_path/'src-tauri/tauri.conf.json').read_text())
     check(config['bundle']['createUpdaterArtifacts'] is False and not config['plugins']['updater']['pubkey'], 'Updater-enabled candidate requires explicit additional manifest coverage')
     producer = api(f'actions/runs/{run_id}')
-    check(producer['head_sha'] == source and producer['head_repository']['full_name'] == REPO, 'Producer source/repository mismatch')
-    check(producer['path'] == '.github/workflows/release.yml', 'Expected existing release build workflow')
-    artifacts = api(f'actions/runs/{run_id}/artifacts?per_page=100')['artifacts']
-    artifacts = {a['id']: a for a in artifacts}
+    validate_producer_origin(producer, run_id, source, False)
     check(set(request['platforms']) == set(FORMS), 'All three platform artifact bindings required')
-    jobs_by_attempt, selected = {}, {}
+    producers, artifacts_by_run, jobs_by_attempt, selected = {run_id:producer}, {}, {}, {}
     for platform, binding in request['platforms'].items():
+        platform_run, platform_head, separate_mac = producer_spec(request, platform, binding)
+        if platform_run not in producers:
+            producers[platform_run] = api(f'actions/runs/{platform_run}')
+        platform_producer = producers[platform_run]
+        validate_producer_origin(platform_producer, platform_run, platform_head, separate_mac)
+        if platform_run not in artifacts_by_run:
+            artifacts_by_run[platform_run] = {a['id']:a for a in api(f'actions/runs/{platform_run}/artifacts?per_page=100')['artifacts']}
         attempt = binding['runAttempt']
-        check(type(attempt) is int and 1 <= attempt <= producer['run_attempt'], 'Invalid explicit producer attempt')
-        if attempt not in jobs_by_attempt:
-            jobs_by_attempt[attempt] = {j['id']:j for j in api(f'actions/runs/{run_id}/attempts/{attempt}/jobs?per_page=100')['jobs']}
-        job, artifact = jobs_by_attempt[attempt][binding['jobId']], artifacts[binding['artifactId']]
-        validate_artifact_binding(producer, binding, job, artifact, platform)
+        check(type(attempt) is int and 1 <= attempt <= platform_producer['run_attempt'], 'Invalid explicit producer attempt')
+        key = (platform_run, attempt)
+        if key not in jobs_by_attempt:
+            jobs_by_attempt[key] = {j['id']:j for j in api(f'actions/runs/{platform_run}/attempts/{attempt}/jobs?per_page=100')['jobs']}
+        job, artifact = jobs_by_attempt[key][binding['jobId']], artifacts_by_run[platform_run][binding['artifactId']]
+        validate_artifact_binding(platform_producer, binding, job, artifact, platform, (SOURCE_GATE, 'Ondertekening beschikbaar') if separate_mac else ())
         check(artifact['name'] == 'uitgave-'+platform and not artifact['expired'], 'Unexpected/expired platform artifact')
         check(artifact['digest'] == 'sha256:'+binding['archiveSha256'], 'Expected archive binding differs from API')
-        selected[platform] = job, artifact
+        selected[platform] = job, artifact, platform_producer, separate_mac
+    original_mac_failure = None
+    if selected['macOS'][3]:
+        old = jobs_by_attempt[(P5_RUN, 1)][137703365843]
+        check((old['run_id'], old['run_attempt'], old['head_sha'], old['status'], old['conclusion']) == (P5_RUN, 1, P5_SOURCE, 'completed', 'failure'), 'Original failed P5 Mac job identity/status must be retained')
+        original_mac_failure = {'run':P5_RUN, 'attempt':1, 'job':old['id'], 'source':old['head_sha'], 'status':old['status'], 'conclusion':old['conclusion'], 'completedAt':old['completed_at'], 'steps':old['steps']}
     check(not output_path.exists(), 'Output directory must be fresh')
     output_path.mkdir(parents=True)
     checksums, installers, reports, archives, linux_signatures = {}, {}, [], [], []
@@ -146,6 +212,20 @@ def run(request_path, app_path, output_path):
         signing_home, verify_home = temporary/'signing', temporary/'public-only'
         signing_home.mkdir(mode=0o700)
         verify_home.mkdir(mode=0o700)
+        archive = temporary/'parent.zip'
+        def download(platform):
+            artifact = selected[platform][1]
+            check(shutil.disk_usage(temporary).free > artifact['size_in_bytes']+2_500_000_000, 'Insufficient space for one verified archive and one package')
+            with archive.open('xb') as f:
+                subprocess.run(['gh','api',f"repos/{REPO}/actions/artifacts/{artifact['id']}/zip"],stdout=f,check=True)
+            check(archive.stat().st_size == artifact['size_in_bytes'] and sha_file(archive) == request['platforms'][platform]['archiveSha256'], 'Downloaded parent archive size/digest mismatch')
+        mac_witness = None
+        if selected['macOS'][3]:
+            # Inspect the required exception witness BEFORE importing any key.
+            # Keep this one archive and consume it first; no duplicate download.
+            download('macOS')
+            with zipfile.ZipFile(archive) as z:
+                mac_witness = read_mac_witness(z, archive_members(z), request['platforms']['macOS'])
         def gpg(home, *args, data=None):
             return subprocess.run(['gpg', '--homedir', str(home), '--batch', *args], input=data, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
         def verify(signature, payload):
@@ -163,19 +243,19 @@ def run(request_path, app_path, output_path):
             check(public_key.stat().st_size > 0, 'Expected signing key absent')
             gpg(verify_home, '--import', data=public_key.read_bytes())
             (output_path/'openaec-signing-fingerprint.txt').write_text(KEY+'\n')
-            for platform in ('Windows', 'macOS', 'Linux'):
+            for platform in (('macOS', 'Windows', 'Linux') if mac_witness else ('Windows', 'macOS', 'Linux')):
                 binding = request['platforms'][platform]
-                job, artifact = selected[platform]
-                check(shutil.disk_usage(temporary).free > artifact['size_in_bytes']+2_500_000_000, 'Insufficient space for one verified archive and one package')
-                archive = temporary/'parent.zip'
-                with archive.open('wb') as f:
-                    subprocess.run(['gh','api',f"repos/{REPO}/actions/artifacts/{artifact['id']}/zip"],stdout=f,check=True)
-                check(sha_file(archive) == binding['archiveSha256'], 'Downloaded parent archive digest mismatch')
+                job, artifact, platform_producer, separate_mac = selected[platform]
+                if not (platform == 'macOS' and mac_witness):
+                    download(platform)
                 with zipfile.ZipFile(archive) as z:
                     members = archive_members(z)
                     expected = {f"{s['naam'].replace(' ', '.')}_{version}_{suffix}" for s in studios for suffix in FORMS[platform]}
                     expected_reports = {report_name(s,platform) for s in studios} if platform != 'macOS' else set()
-                    check(set(members) == expected | expected_reports, 'Missing or unexpected platform archive members: '+platform)
+                    extra = {PurePosixPath(MAC_WITNESS).name} if separate_mac else set()
+                    check(set(members) == expected | expected_reports | extra, 'Missing or unexpected platform archive members: '+platform)
+                    if separate_mac:
+                        check(read_mac_witness(z, members, binding) == mac_witness, 'Mac source witness changed after preflight')
                     for name in sorted(expected):
                         info = members[name]
                         check(info.file_size > 1_000_000, 'Installer incomplete: '+name)
@@ -202,7 +282,7 @@ def run(request_path, app_path, output_path):
                         canonical = name.replace('pakketcontrole-', 'package-verification-').replace('Database-', 'database-')
                         (output_path/canonical).write_bytes(raw)
                         reports.append({'name':canonical,'platform':platform,'studio':studio['sleutel'],'artifactId':artifact['id'],'member':members[name].filename})
-                archives.append({'platform':platform,'producerAttempt':binding['runAttempt'],'producerJobId':job['id'],'producerJobStartedAt':job['started_at'],'producerJobCompletedAt':job['completed_at'],'artifactId':artifact['id'],'artifactCreatedAt':artifact['created_at'],'archiveSha256':binding['archiveSha256']})
+                archives.append({'platform':platform,'producerRun':platform_producer['id'],'producerCommit':platform_producer['head_sha'],'producerLatestAttemptAtAudit':platform_producer['run_attempt'],'producerConclusionAtAudit':platform_producer['conclusion'],'producerAttempt':binding['runAttempt'],'producerJobId':job['id'],'producerJobStartedAt':job['started_at'],'producerJobCompletedAt':job['completed_at'],'artifactId':artifact['id'],'artifactCreatedAt':artifact['created_at'],'archiveSha256':binding['archiveSha256'],'applicationSourceWitness':mac_witness if separate_mac else None})
                 archive.unlink()
             check(len(installers)==28 and len(reports)==14 and len(linux_signatures)==14, 'Incomplete release set')
             for p in output_path.iterdir():
@@ -215,6 +295,7 @@ def run(request_path, app_path, output_path):
             cleanup = stop_gpg_agents((signing_home,verify_home))
     check(not temporary.exists(), 'Temporary signing-key/payload tree remains')
     receipt = {'kind':'Verified existing installer bytes and prepared signatures; NOT published/native acceptance', 'source':source,'tree':tree,'version':version,'producerRun':run_id,'producerLatestAttemptAtAudit':producer['run_attempt'],'producerLatestConclusionAtAudit':producer['conclusion'],'archives':archives,'installers':installers,'reports':reports,'linuxSignatures':linux_signatures,'releasePayloadChecksums':checksums,'cleanup':{'scopedGpgconfTermination':cleanup,'temporaryKeyAndPayloadTreeRemoved':True,'scopeLimit':'Scoped termination command outcomes and private-directory removal; no global process-inventory claim.'},'publication':False,'mainOrTagWrite':False,'nativeAcceptance':False}
+    receipt['originalMacFailure'] = original_mac_failure
     (output_path/'verification-receipt.json').write_text(json.dumps(receipt,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps({'verifiedInstallers':28,'verifiedReports':14,'signedLinuxPackages':14,'publication':False}))
 
