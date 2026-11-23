@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded completed scopes; remaining DEB374/378 running separately",
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05"
+  },
+  "version": "2026.48.1",
+  "parent": {
+    "run": 45177730188,
+    "job": 137703365848,
+    "attempt": 1,
+    "artifact": 14824745492,
+    "bytes": 4444993178,
+    "sha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5"
+  },
+  "descriptors": {
+    "commit": "3ea5564105d0b4612ad9d0fd05e9a36af261b679",
+    "debSha256": "0c82ca92eaa74a5e631aaf2b8990b40bd24d04830049ed9f48b1cbd3f22e4a03",
+    "appimageSha256": "2ebd84ac4cdb00bb96a9d0617a09a34369cc17333f6941786d69c79e27b61b8a"
+  },
+  "core": {
+    "run": 45189806911,
+    "job": 137745078121,
+    "attempt": 1,
+    "harness": "e230df9ee4a019db01368d93689893fb2b03d245",
+    "harnessSha256": "8624054422ecbff8b8028922a9aed7276cfbc2e121691138bbb66958709fdd9e",
+    "jobConclusion": "failure after completed core in later field driver",
+    "artifact": 14825596587,
+    "zipSha256": "e9cd1b780be2b164288a71a1d23e77190ffae1c24e37208c99e8b3746e44d0f9",
+    "packageSha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+    "installedElfSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "checks": 64,
+    "issue368": "passed bounded native input/history/search/isolation/save controls",
+    "issue369": "passed tested Linux pointer/ArrowDown/Right/Home/End, narrow Delete Enter/Escape vertical focus controls and real keyboard command/document-return/save/reopen",
+    "contentCases": 258,
+    "buttonObservations": 1284,
+    "contentClipped": 0,
+    "badVisibleLabels": 0,
+    "groupCases": 24,
+    "groupClippedY": 0,
+    "groupClippedX": 4,
+    "nativePass": false,
+    "unavailable": [
+      {
+        "theme": "light",
+        "width": 1600,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "light",
+        "width": 923,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "light",
+        "width": 800,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "forge",
+        "width": 1600,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "forge",
+        "width": 923,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      },
+      {
+        "theme": "forge",
+        "width": 800,
+        "group": "Delete",
+        "state": "disabled",
+        "reason": "Real imported table exposes enabled Delete commands; no supported Writer readonly mode was invoked"
+      }
+    ],
+    "cleanup": {
+      "children": [
+        {
+          "label": "owned window manager",
+          "pid": 5080,
+          "closed": true
+        }
+      ],
+      "driverExited": true,
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    },
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": null
+    },
+    "visualScope": "Ten original ribbon PNGs reviewed serially: wide Text both themes, 923 Text both themes, 923 Delete focus/before-after Escape both themes, 800 Delete focus both themes. Rings fit vertically. Document-body black/blank pixels are preserved and certify no body/title paint."
+  },
+  "appimage": {
+    "run": 45193170006,
+    "job": 137756775739,
+    "attempt": 1,
+    "harness": "55a651186c35bde2937a1a8c529c4c2c984d0085",
+    "jobConclusion": "success",
+    "artifact": 14826753707,
+    "zipBytes": 2257615,
+    "zipSha256": "1d229975a6f2c3863261bc84efe52abaf11b3cc8443a2deaa5a38b4574deddae",
+    "packageSha256": "346f8130a710e62d080982d6c0fc45ecd610b49e5b7e8495cce691f2d872fdf6",
+    "runningElfSha256": "24bf634c06847e6a4a94a5ac245cac93af3e76a9e911f06e2d89f1621b4a94fd",
+    "negativeChecks": 13,
+    "positiveChecks": 7,
+    "preflight": {
+      "status": "passed",
+      "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "packageSha256": "346f8130a710e62d080982d6c0fc45ecd610b49e5b7e8495cce691f2d872fdf6",
+      "executableSha256": "24bf634c06847e6a4a94a5ac245cac93af3e76a9e911f06e2d89f1621b4a94fd",
+      "normalFullQuitAndNewPid": true
+    },
+    "missing": {
+      "status": "passed bounded actual package missing-helper negative",
+      "error": "ErrorSaving failed: Linux requires Zenity for native confirmation dialogs. Install the zenity package and try again.",
+      "targetSha256": "e8622b73654da503d1f273707557d631b0b5b5bcc90eb281d94c235c4fd048f2",
+      "packageType": "appimage",
+      "initialHostHelper": null,
+      "environment": "Actual host has no Zenity before documented runtime installation"
+    },
+    "positive": {
+      "status": "passed",
+      "savedSha256": "6c08bd0c5d83b1aa825de717111fa0c53a283eac56914c57eb552a8153380827",
+      "cells": [
+        "Qalpha",
+        "beta",
+        "",
+        "",
+        "",
+        "omega",
+        "delta",
+        "",
+        ""
+      ]
+    },
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    },
+    "actualProcessGraphicsVerified": true,
+    "cleanupMissing": {
+      "registeredPortalPeers": [
+        {
+          "name": "org.freedesktop.impl.portal.desktop.gtk",
+          "uniqueName": ":1.8",
+          "pid": 4704,
+          "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+          "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+          "startTime": "18780",
+          "busId": "2c0dad005f2313adc58f81866b044c36",
+          "closed": true
+        },
+        {
+          "name": "org.freedesktop.portal.Desktop",
+          "uniqueName": ":1.2",
+          "pid": 4705,
+          "executable": "/usr/libexec/xdg-desktop-portal",
+          "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+          "startTime": "18782",
+          "busId": "2c0dad005f2313adc58f81866b044c36",
+          "closed": true
+        }
+      ],
+      "children": [
+        {
+          "label": "owned portal broker",
+          "pid": 4705,
+          "closed": true
+        },
+        {
+          "label": "owned GTK portal",
+          "pid": 4704,
+          "closed": true
+        },
+        {
+          "label": "owned window manager",
+          "pid": 4703,
+          "closed": true
+        }
+      ],
+      "driverExited": true,
+      "remainingOwnedResources": [],
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    },
+    "cleanupPresent": {
+      "registeredPortalPeers": [
+        {
+          "name": "org.freedesktop.impl.portal.desktop.gtk",
+          "uniqueName": ":1.7",
+          "pid": 5463,
+          "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+          "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+          "startTime": "26768",
+          "busId": "2287d3b11222d6a1b0826e2a6b044c87",
+          "closed": true
+        },
+        {
+          "name": "org.freedesktop.portal.Desktop",
+          "uniqueName": ":1.1",
+          "pid": 5464,
+          "executable": "/usr/libexec/xdg-desktop-portal",
+          "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+          "startTime": "26770",
+          "busId": "2287d3b11222d6a1b0826e2a6b044c87",
+          "closed": true
+        }
+      ],
+      "children": [
+        {
+          "label": "owned portal broker",
+          "pid": 5464,
+          "closed": true
+        },
+        {
+          "label": "owned GTK portal",
+          "pid": 5463,
+          "closed": true
+        },
+        {
+          "label": "owned window manager",
+          "pid": 5462,
+          "closed": true
+        }
+      ],
+      "driverExited": true,
+      "remainingOwnedResources": [],
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    },
+    "visualScope": "Five original PNGs reviewed serially: reopened preflight body, actionable missing-helper error, genuine Zenity confirmation, cancellation feedback/retained contents, clean new-PID reopened body. Confirmation-2 is byte-identical to reviewed confirmation-1 and deduplicated."
+  },
+  "pending": {
+    "run": 45193639082,
+    "harness": "80f85a5cb4ae536f1bf7248fbe4cfeeb2653d7d4",
+    "scope": "Only DEB374 real paint/retained and short edited control/save/newPID plus DEB378 confirmation/error; core reused under exact hashes"
+  },
+  "limits": [
+    "No GPG/signature certification, publication, main merge or tag",
+    "No blanket native/all-platform/release pass; complete ribbon matrix remains partial because six genuine disabled Delete states cannot be reached by this supported fixture",
+    "Raw horizontal clipping four group cases preserved; vertical acceptance only for #362",
+    "Core functional/ribbon evidence remains its original no-DMABUF-flag host; body paint is certified only for the new explicitly configured AppImage host",
+    "Original driver failures45189806911/45190839269/45191795863 retained,45191304695 cancelled before app operation after known scan fault",
+    "No local GUI/recording; completed native report cleanups are true; still-running DEB continuation is separate"
+  ],
+  "files": [
+    {
+      "path": "core/report.json",
+      "bytes": 523950,
+      "sha256": "ad4c12c29af287b93f33a76015ffbb785a6cb92134da136193baed7bcf95ed41"
+    },
+    {
+      "path": "core/ribbon-report.json",
+      "bytes": 2239905,
+      "sha256": "496e7684b265bc105a92e37c78271ec19060438fbe28464c8b1ab9391a9f04f5"
+    },
+    {
+      "path": "core/light-923-Delete-keyboard-group-focus.png",
+      "bytes": 54262,
+      "sha256": "351be7514a539e65fa68725f9445c1900a7026e08c09e7e10240f40b648e7972"
+    },
+    {
+      "path": "core/forge-923-Delete-keyboard-group-after-escape.png",
+      "bytes": 54656,
+      "sha256": "5c5a627b6465ee21e85605e692c880492335e7a912f465a41a33875716a88826"
+    },
+    {
+      "path": "appimage/missing-report.json",
+      "bytes": 92966,
+      "sha256": "3b49180e60c8453ade13f09d510c9db897b4b49955d83008fc8767bd25831b64"
+    },
+    {
+      "path": "appimage/present-report.json",
+      "bytes": 80907,
+      "sha256": "e006ee8bc2ce882d9b0c1b25521a06a57e106828e24e534fa4e45747ae69ae95"
+    },
+    {
+      "path": "appimage/preflight-reopened.png",
+      "bytes": 80027,
+      "sha256": "7bc0afe6ffbe2c0d770c771c086d4cafba34372ba3a3182c7724a2a07b183624"
+    },
+    {
+      "path": "appimage/missing-helper-error.png",
+      "bytes": 92453,
+      "sha256": "31df59473555c7db23774b435b5dd6e99c0e32358d4bf56c10da26ea41a6a856"
+    },
+    {
+      "path": "appimage/confirmation-1.png",
+      "bytes": 9886,
+      "sha256": "e70d6b424bf3d5d2ec6c7fe61052b62edb61c64be66756e4be592fed844202cd"
+    },
+    {
+      "path": "appimage/after-native-cancel.png",
+      "bytes": 86057,
+      "sha256": "d8e560c3806134d3e4fa3b07a414953a6b40b55b5269f74d9d97d65eb6d0347d"
+    },
+    {
+      "path": "appimage/positive-new-pid-reopen.png",
+      "bytes": 80894,
+      "sha256": "7192cedced726b947efef9ac15a6f5ee657c096eb7e2f5db9628402fb6f3f940"
+    },
+    {
+      "path": "appimage/confirmed-overwrite.docx",
+      "bytes": 36958,
+      "sha256": "6c08bd0c5d83b1aa825de717111fa0c53a283eac56914c57eb552a8153380827"
+    }
+  ]
+}
