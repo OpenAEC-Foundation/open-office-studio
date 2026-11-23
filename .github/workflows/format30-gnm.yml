@@ -20,7 +20,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Independent data/type/formula/sheet/source failure contracts
-        run: python -B scripts/format30-gnm/oracle_test.py
+        run: |
+          python -B scripts/format30-gnm/oracle_test.py
+          python -B scripts/format30-gnm/packages_test.py
   linux:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
