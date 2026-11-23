@@ -1,0 +1,62 @@
+{
+  "issue": 377,
+  "status": "passed",
+  "scope": "P5 original Suite DEB; native imported-XLSB Ctrl+S and ordinary Save -> XLSX proposal, cancel, unchanged original and dirty working copy only",
+  "appSource": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "appTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "harnessCommit": "f312038536ba5ca05aa31226918e9bd80735efbf",
+  "run": 45190827271,
+  "job": 137748390686,
+  "attempt": 1,
+  "runUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45190827271",
+  "artifact": {
+    "id": 14826475945,
+    "bytes": 724287,
+    "zipSha256": "ae2ed056c652d9e64391d0aed706d0b93aef8869ba867ef4219d15c61cf19067",
+    "wholeOfficialZipLocallyVerified": true
+  },
+  "inputIdentity": "evidence/p5-45190827271/xlsb377-input/identity.json",
+  "rawReport": "evidence/p5-45190827271/linux-p2-native/xlsb377/report.json",
+  "actualProposal": {
+    "ctrlS": ".xlsx",
+    "saveButton": ".xlsx",
+    "runtime": "included with the app / macros off",
+    "visuallyInspected": true
+  },
+  "sourceFingerprint": {
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "bytes": 7651,
+    "mtimeMs": 1795442978860.0806,
+    "ino": 4711639,
+    "dev": 66305
+  },
+  "fingerprintComparisons": 6,
+  "originalUnchanged": true,
+  "workingCopyDirtyAfterBothCancellations": true,
+  "cleanup": {
+    "ownedOfficeClosed": true,
+    "driverGroupClosed": true,
+    "capture": "Synchronous owned-window GDK snapshot processes only; no persistent recording session",
+    "accessibilityRestored": true,
+    "accessibilityBefore": false,
+    "accessibilityAfter": false
+  },
+  "historicalPartial": {
+    "run": 45190211267,
+    "job": 137746259211,
+    "harness": "54de41a320b0851b7454e6f42811586bac222916",
+    "artifact": 14824844391,
+    "bytes": 15335,
+    "zipSha256": "8d545b760080382cf0a4427a3c86d7500cd2363cfec0feb2bf912fbf158f46d5",
+    "wholeOfficialZipLocallyVerified": true,
+    "result": "Caller capture-path guard rejection before Ctrl+S; input and installed ELF verified. No feature pass and no product failure."
+  },
+  "limits": [
+    "Only #377 new-package Ctrl+S and Save proposal/cancellation; no edit, export or repeat of the prior full XLSB matrix.",
+    "Only this bound installed DEB feature check on virtual X11/software graphics; no general standalone-independence, signing, AppImage, hardware or other-platform acceptance.",
+    "Full process quit uses WebDriver DELETE session; menu Quit is not certified.",
+    "No product code, editor bridge, DOM model setters, mocked IPC or direct converter call."
+  ],
+  "publicationAuthorized": false
+}

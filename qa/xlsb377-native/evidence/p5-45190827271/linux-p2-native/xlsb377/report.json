@@ -1,0 +1,1934 @@
+{
+  "status": "passed",
+  "phase": "complete",
+  "source": {
+    "upstreamCommit": "bd7011e96264ddfe5506839319dd610975328a59",
+    "gitBlob": "b304e0826c391c4977d55a0eddca74d39138a7ee",
+    "bytes": 7651,
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/data/xlsb/shared_formula.xlsb",
+    "upstreamTest": "https://github.com/LibreOffice/core/blob/bd7011e96264ddfe5506839319dd610975328a59/sc/qa/unit/subsequent_filters_test2.cxx#L476",
+    "license": "LibreOffice core MPL-2.0; upstream test fixture, unmodified",
+    "formatProof": "workbook.bin/worksheet.bin with 30 BrtFmlaNum records, not renamed XLSX",
+    "macroProjectPresent": false
+  },
+  "origin": {
+    "issue": 377,
+    "executionApproved": true,
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "executablePath": "/usr/bin/open-office-studio",
+    "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "bytes": 99955264,
+    "mode": 493,
+    "parent": {
+      "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+      "appVersion": "2026.48.1",
+      "run": 45177730188,
+      "job": 137703365848,
+      "attempt": 1,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14824745492,
+        "name": "uitgave-Linux",
+        "sha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+        "bytes": 4444993178
+      },
+      "reportArchive": null,
+      "packageReportSha256": "488ac82490f09b8e66b19215b28c452362e0b9730ca8eca27e25bd4bee9e0c78",
+      "packageReportMember": ".local/pakketcontrole-Linux.json",
+      "packageMember": "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb"
+    },
+    "transfer": {
+      "run": 45188332685,
+      "id": 14823809980,
+      "name": "suite-input-office-deb-p5",
+      "zipSha256": "8a63334448a548c7d90923c659ce99082c7a5360d156ce791c3a2d3a62ba0eec",
+      "zipBytes": 383831912
+    },
+    "package": {
+      "kind": "deb",
+      "member": "canonical-office.deb",
+      "sha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+      "bytes": 383828462,
+      "control": {
+        "Package": "open-office-studio",
+        "Version": "2026.48.1",
+        "Architecture": "amd64",
+        "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+      },
+      "payloadElf": {
+        "path": "usr/bin/open-office-studio",
+        "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+        "bytes": 99955264,
+        "mode": 493,
+        "elfClass": 2,
+        "machine": 62
+      }
+    },
+    "descriptorSha256": "0c82ca92eaa74a5e631aaf2b8990b40bd24d04830049ed9f48b1cbd3f22e4a03",
+    "verifierPins": [
+      {
+        "path": "verify-linux-suite-input-p5.py",
+        "commit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+        "sha256": "28742ba3d9a6ba5faca360255ad7de6b5ab9f2c144faa4eb3c0dd17b30ea88e6"
+      },
+      {
+        "path": "prepare-linux-release-input-p5.py",
+        "commit": "67d95a1c27bc597ca8c6be62528db21789ebceb6",
+        "sha256": "f483cb0915318ff9e08f6904d6aeb184cf2c7ee952f34e8faef377bc4daa94ae"
+      }
+    ],
+    "installedEqualsVerifiedPayload": true,
+    "installation": "normal apt dependency resolver",
+    "publicationAuthorized": false,
+    "signatureCertified": false
+  },
+  "harnessCommit": "f312038536ba5ca05aa31226918e9bd80735efbf",
+  "startedAt": "2026-11-23T14:09:38.865Z",
+  "platform": "Linux x64 / installed Office DEB / headed WebKitGTK on private Xvfb and D-Bus",
+  "sessions": [
+    {
+      "phase": "native-377-fixed-package",
+      "pid": 4612,
+      "sessionId": "a0a6f02f-9013-4d57-a2be-e8eeecea917f",
+      "sourcePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb377/input/NativeXLSB-source.xlsb",
+      "ready": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "3, emptyP33, emptyQ33, emptyR33, emptyS33, emptyT33, emptyU33, emptyV33, emptyW33, emptyX33, emptyY33, emptyRow 34A34, emptyB34, emptyC34, emptyD34, emptyE34, emptyF34, emptyG34, emptyH34, emptyI34, emptyJ34, emptyK34, emptyL34, emptyM34, emptyN34, emptyO34, emptyP34, emptyQ34, emptyR34, emptyS34, emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb377/inputToday 14:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.Details\n",
+        "name": "A1",
+        "gridFocused": false
+      },
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 4612,
+        "display": ":99",
+        "activationPerformed": true,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:09:40.438Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T14:09:42.585Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "BODY"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T14:09:42.629Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T14:09:42.642Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T14:09:42.683Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T14:09:42.694Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T14:09:42.724Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T14:09:42.778Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T14:09:42.890Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T14:09:43.014Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T14:09:43.061Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:09:43.205Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:09:43.348Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T14:09:43.360Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T14:09:43.394Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T14:09:43.405Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T14:09:43.432Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+s",
+            "at": "2026-11-23T14:09:43.446Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+s",
+            "at": "2026-11-23T14:09:43.513Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:09:43.777Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:09:43.912Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T14:09:43.924Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T14:09:43.968Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T14:09:44.047Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T14:09:44.098Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T14:09:44.109Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T14:09:44.151Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T14:09:44.163Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T14:09:44.234Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T14:09:44.288Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T14:09:44.360Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T14:09:44.414Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T14:09:44.461Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:09:44.511Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:09:44.643Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T14:09:44.695Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer [data-testid=\"xlsx-formula-input\"]",
+            "at": "2026-11-23T14:09:44.819Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T14:09:44.833Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": "Enter a value or formula",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T14:09:44.903Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .office-snelknop[aria-label=\"Save\"]",
+            "at": "2026-11-23T14:09:44.963Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .office-snelknop[aria-label=\"Save\"]",
+            "at": "2026-11-23T14:09:45.082Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:09:45.136Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:09:45.255Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Escape",
+            "at": "2026-11-23T14:09:45.262Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": true,
+                "role": null,
+                "label": null,
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Escape",
+            "at": "2026-11-23T14:09:45.324Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "before pointer .rekenblad-naamvak",
+            "at": "2026-11-23T14:09:45.381Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "office-snelknop",
+                "focusVisible": false,
+                "role": null,
+                "label": "Save",
+                "id": "",
+                "tag": "BUTTON"
+              }
+            }
+          },
+          {
+            "stage": "after pointer .rekenblad-naamvak",
+            "at": "2026-11-23T14:09:45.413Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+a",
+            "at": "2026-11-23T14:09:45.423Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+a",
+            "at": "2026-11-23T14:09:45.458Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T14:09:45.507Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T14:09:45.535Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native character",
+            "at": "2026-11-23T14:09:45.544Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native character",
+            "at": "2026-11-23T14:09:45.568Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "before native Return",
+            "at": "2026-11-23T14:09:45.619Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "rekenblad-naamvak",
+                "focusVisible": true,
+                "role": null,
+                "label": "Name box",
+                "id": "",
+                "tag": "INPUT"
+              }
+            }
+          },
+          {
+            "stage": "after native Return",
+            "at": "2026-11-23T14:09:45.698Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:09:45.754Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:09:45.864Z",
+            "process": {
+              "pid": 4612,
+              "startTime": "17223",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "66305:98058:99955264:1795439230000"
+            },
+            "windowFocus": "2097155",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "",
+                "focusVisible": false,
+                "role": "gridcell",
+                "label": "A1, 3, selected",
+                "id": "_r_g_-b0-r0-k0",
+                "tag": "SPAN"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 4612,
+          "startTime": "17223",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "66305:98058:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "2097155",
+        "pre": {
+          "windowFocus": null,
+          "windowFocusError": "Error: Command failed: xdotool getwindowfocus\nXGetInputFocus returned the focused window of 1. This is likely a bug in the X server.\nX Error of failed request:  BadWindow (invalid Window parameter)\n  Major opcode of failed request:  20 (X_GetProperty)\n  Resource id in failed request:  0x1\n  Serial number of failed request:  20\n  Current serial number in output stream:  20\n",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:09:40.438Z",
+          "process": {
+            "pid": 4612,
+            "startTime": "17223",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "66305:98058:99955264:1795439230000"
+          },
+          "windowFocus": "2097155",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "",
+              "focusVisible": false,
+              "role": null,
+              "label": null,
+              "id": "",
+              "tag": "BODY"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "phase": "native-377-fixed-package",
+      "selected": "A1",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb377/inputToday 14:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.DetailsInfoFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Calibri → Carlito, Cambria → Caladea. The file keeps the original names.\n",
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "label": "after actual XLSB import",
+      "originalSource": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": 7651,
+        "mtimeMs": 1795442978860.0806,
+        "ino": 4711639,
+        "dev": 66305
+      }
+    },
+    {
+      "label": "ctrl-s",
+      "proposal": {
+        "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)",
+        "extension": ".xlsx",
+        "filename": "NativeXLSB-source",
+        "text": "Save asFile name.xlsxOffice runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)FormatNative formatExcel workbook .xlsxeditablein the appIFCX Office .ifcxEditable Office source stored in an IFCX file; password protection encrypts the embedded source.in the appOpenDocumentOpenDocument Spreadsheet .odseditable; formatting may differvia office runtimeOpenDocument Spreadsheet (flat XML) .fodseditable; formatting may differvia office runtimeOlder Office formatsExcel 97–2003 workbook .xlseditable; formatting may differvia office runtimeTemplatesExcel template .xltxeditable; formatting may differvia office runtimeExcel 97–2003 template .xlteditable; formatting may differvia office runtimeOpenDocument Spreadsheet template .otseditable; formatting may differvia office runtimeWeb and textCSV (comma-separated values) .csvone sheet only; values without formulas and formattingin the appTab-separated text (TSV) .tsvone sheet only; values without formulas and formattingin the appWeb page (HTML) .htmlview only; formulas are lostvia office runtimeData Interchange Format (DIF) .diffirst sheet only; values without formulas and formattingvia office runtimeSYLK .slkfirst sheet only; formulas kept, most formatting is notvia office runtimeMarkdown .mdview of values only; formulas and formatting are lostin the appPDF and imagePDF document .pdflooks as in the print preview; text searchablein the appPNG image (sheet) .pngview only; used range of one sheetin the appProtect with a password to openThis is not write or sheet protection: without the tick the file is saved unencrypted.Cancel Save"
+      }
+    },
+    {
+      "label": "before cancelling ctrl-s",
+      "originalSource": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": 7651,
+        "mtimeMs": 1795442978860.0806,
+        "ino": 4711639,
+        "dev": 66305
+      }
+    },
+    {
+      "label": "after cancelling ctrl-s",
+      "originalSource": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": 7651,
+        "mtimeMs": 1795442978860.0806,
+        "ino": 4711639,
+        "dev": 66305
+      }
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "selected": "A1",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb377/inputToday 14:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.DetailsInfoFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Calibri → Carlito, Cambria → Caladea. The file keeps the original names.\n",
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "label": "save-button",
+      "proposal": {
+        "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)",
+        "extension": ".xlsx",
+        "filename": "NativeXLSB-source",
+        "text": "Save asFile name.xlsxOffice runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)FormatNative formatExcel workbook .xlsxeditablein the appIFCX Office .ifcxEditable Office source stored in an IFCX file; password protection encrypts the embedded source.in the appOpenDocumentOpenDocument Spreadsheet .odseditable; formatting may differvia office runtimeOpenDocument Spreadsheet (flat XML) .fodseditable; formatting may differvia office runtimeOlder Office formatsExcel 97–2003 workbook .xlseditable; formatting may differvia office runtimeTemplatesExcel template .xltxeditable; formatting may differvia office runtimeExcel 97–2003 template .xlteditable; formatting may differvia office runtimeOpenDocument Spreadsheet template .otseditable; formatting may differvia office runtimeWeb and textCSV (comma-separated values) .csvone sheet only; values without formulas and formattingin the appTab-separated text (TSV) .tsvone sheet only; values without formulas and formattingin the appWeb page (HTML) .htmlview only; formulas are lostvia office runtimeData Interchange Format (DIF) .diffirst sheet only; values without formulas and formattingvia office runtimeSYLK .slkfirst sheet only; formulas kept, most formatting is notvia office runtimeMarkdown .mdview of values only; formulas and formatting are lostin the appPDF and imagePDF document .pdflooks as in the print preview; text searchablein the appPNG image (sheet) .pngview only; used range of one sheetin the appProtect with a password to openThis is not write or sheet protection: without the tick the file is saved unencrypted.Cancel Save"
+      }
+    },
+    {
+      "label": "before cancelling save-button",
+      "originalSource": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": 7651,
+        "mtimeMs": 1795442978860.0806,
+        "ino": 4711639,
+        "dev": 66305
+      }
+    },
+    {
+      "label": "after cancelling save-button",
+      "originalSource": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": 7651,
+        "mtimeMs": 1795442978860.0806,
+        "ino": 4711639,
+        "dev": 66305
+      }
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "selected": "A1",
+      "expectedFormula": "1+2",
+      "expectedValue": 3,
+      "actual": {
+        "readiness": {
+          "nameVisible": true,
+          "formulaVisible": true,
+          "nameReadOnly": false,
+          "canvasVisible": true,
+          "fonts": "loaded",
+          "formulaDisabled": false
+        },
+        "saveEnabled": true,
+        "panelBlocked": false,
+        "tab": "NativeXLSB-source.xlsx, unsaved changes",
+        "formula": "=1+2",
+        "panel": "office-tabpaneel-1",
+        "selectedCells": [
+          {
+            "label": "A1, 3, selected",
+            "address": "A1",
+            "text": "A1, 3, selected"
+          }
+        ],
+        "focusedTestId": null,
+        "nativeBackendPresent": true,
+        "ready": true,
+        "saveDialog": null,
+        "dirty": true,
+        "bodySummary": "emptyT34, emptyU34, emptyV34, emptyW34, emptyX34, emptyY34, emptyRow 35A35, emptyB35, emptyC35, emptyD35, emptyE35, emptyF35, emptyG35, emptyH35, emptyI35, emptyJ35, emptyK35, emptyL35, emptyM35, emptyN35, emptyO35, emptyP35, emptyQ35, emptyR35, emptyS35, emptyT35, emptyU35, emptyV35, emptyW35, emptyX35, emptyY35, emptyRow 36A36, emptyB36, emptyC36, emptyD36, emptyE36, emptyF36, emptyG36, emptyH36, emptyI36, emptyJ36, emptyK36, emptyL36, emptyM36, emptyN36, emptyO36, emptyP36, emptyQ36, emptyR36, emptyS36, emptyT36, emptyU36, emptyV36, emptyW36, emptyX36, emptyY36, emptyRow 37A37, emptyB37, emptyC37, emptyD37, emptyE37, emptyF37, emptyG37, emptyH37, emptyI37, emptyJ37, emptyK37, emptyL37, emptyM37, emptyN37, emptyO37, emptyP37, emptyQ37, emptyR37, emptyS37, emptyT37, emptyU37, emptyV37, emptyW37, emptyX37, emptyY37, emptyRow 38A38, emptyB38, emptyC38, emptyD38, emptyE38, emptyF38, emptyG38, emptyH38, emptyI38, emptyJ38, emptyK38, emptyL38, emptyM38, emptyN38, emptyO38, emptyP38, emptyQ38, emptyR38, emptyS38, emptyT38, emptyU38, emptyV38, emptyW38, emptyX38, emptyY38, emptySheet1ABCDEFGHIJKLMNOPQRSTUVWXY1234567891011121314151617181920212223242526272829303132333435363738WORKSPACEHomeOpenEmailNEW FILETextSpreadsheetPresentationNotesDatabase StudioWorking copy · editing, queries, VBASettingsKeyboard shortcutsOpenAEC Foundation Your local officeYour workspace.Write, calculate, present and capture ideas.Open fileCtrl ORecentRecently opened and saved filesClear listNativeXLSB-source.xlsb/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/xlsb377/inputToday 14:09New fileChoose your tool and start with a blank fileTextBlank documentTextSpreadsheetABCDBlank spreadsheetSpreadsheetPresentationBlank presentationPresentationA place for your ideas.Notebooks, sections and pages. Saved locally and automatically.Open Notes OpenAEC Email StudioYour own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.Open Email Discover what you can makeSample filesDesign memoText, styles and a tableMaterials overviewMaterials, formulas and totalsDesign visionSlides, shapes and notesExisting fileBrowse this computerOpen a document, spreadsheet or presentation.DOCXXLSXPPTXYour files stay on your computer.About this versionDOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.LocalOpen Rekenblad Studio100%Unsaved changesCtrl+SAttentionImported as an editable copy; the original is preserved.DetailsInfoFonts substituted because they are not installed on this computer — metric-compatible (same line breaks): Arial → Liberation Sans, Calibri → Carlito, Cambria → Caladea. The file keeps the original names.\n",
+        "name": "A1",
+        "gridFocused": true
+      }
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "fullProcessExit": true
+    },
+    {
+      "label": "after full Office quit",
+      "originalSource": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": 7651,
+        "mtimeMs": 1795442978860.0806,
+        "ino": 4711639,
+        "dev": 66305
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "phase": "native-377-fixed-package",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "ctrl+s",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Return",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Escape",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "ctrl+a",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "character": "A",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "character": "1",
+      "selector": ".rekenblad-naamvak",
+      "backend": "XTest"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "key": "Return",
+      "backend": "XTest"
+    }
+  ],
+  "captures": [
+    {
+      "phase": "native-377-fixed-package",
+      "file": "imported-source.png",
+      "pid": 4612,
+      "xid": "2097155",
+      "startTime": "17223",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "5857202b2a2b2537f21d828854eb0f7cd8ee94b68117c80ccd715603c60cfffe",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "file": "ctrl-s-xlsx-proposal.png",
+      "pid": 4612,
+      "xid": "2097155",
+      "startTime": "17223",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "e95ad083312bb8a453ba84e22aea8f54372c267bc51f496e6fc117b8cb57e88b",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "file": "ctrl-s-cancelled.png",
+      "pid": 4612,
+      "xid": "2097155",
+      "startTime": "17223",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "70afb9c6499b50c3bbd13da0cd617752ca9d19ed3647a2665539ff6ee62506dc",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "file": "save-button-xlsx-proposal.png",
+      "pid": 4612,
+      "xid": "2097155",
+      "startTime": "17223",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "db597f10ea7adccfa5d5e150979ebf178e4c97e0801b0309e74f3c86f2fd5b12",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "native-377-fixed-package",
+      "file": "save-button-cancelled.png",
+      "pid": 4612,
+      "xid": "2097155",
+      "startTime": "17223",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "b6693b7f8904a95939584502336450adb51b5382dd169d7ccab5793fc556f0e1",
+      "backend": "owned X11 window pixels"
+    }
+  ],
+  "cleanup": {
+    "ownedOfficeClosed": true,
+    "driverGroupClosed": true,
+    "capture": "Synchronous owned-window GDK snapshot processes only; no persistent recording session"
+  },
+  "limits": [
+    "Only #377 new-package Ctrl+S and Save proposal/cancellation; no edit, export or repeat of the prior full XLSB matrix.",
+    "Only this bound installed DEB feature check on virtual X11/software graphics; no general standalone-independence, signing, AppImage, hardware or other-platform acceptance.",
+    "Full process quit uses WebDriver DELETE session; menu Quit is not certified.",
+    "No product code, editor bridge, DOM model setters, mocked IPC or direct converter call."
+  ],
+  "sharedHelpers": [
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-capture.py",
+      "sha256": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-ribbon-native.mjs",
+      "sha256": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72"
+    },
+    {
+      "commit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "path": "scripts/linux-p2-native-input.mjs",
+      "sha256": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020"
+    }
+  ],
+  "lastProposal": {
+    "runtime": "Office runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)",
+    "extension": ".xlsx",
+    "filename": "NativeXLSB-source",
+    "text": "Save asFile name.xlsxOffice runtime: LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276 (included with the app, safe profile: macros off)FormatNative formatExcel workbook .xlsxeditablein the appIFCX Office .ifcxEditable Office source stored in an IFCX file; password protection encrypts the embedded source.in the appOpenDocumentOpenDocument Spreadsheet .odseditable; formatting may differvia office runtimeOpenDocument Spreadsheet (flat XML) .fodseditable; formatting may differvia office runtimeOlder Office formatsExcel 97–2003 workbook .xlseditable; formatting may differvia office runtimeTemplatesExcel template .xltxeditable; formatting may differvia office runtimeExcel 97–2003 template .xlteditable; formatting may differvia office runtimeOpenDocument Spreadsheet template .otseditable; formatting may differvia office runtimeWeb and textCSV (comma-separated values) .csvone sheet only; values without formulas and formattingin the appTab-separated text (TSV) .tsvone sheet only; values without formulas and formattingin the appWeb page (HTML) .htmlview only; formulas are lostvia office runtimeData Interchange Format (DIF) .diffirst sheet only; values without formulas and formattingvia office runtimeSYLK .slkfirst sheet only; formulas kept, most formatting is notvia office runtimeMarkdown .mdview of values only; formulas and formatting are lostin the appPDF and imagePDF document .pdflooks as in the print preview; text searchablein the appPNG image (sheet) .pngview only; used range of one sheetin the appProtect with a password to openThis is not write or sheet protection: without the tick the file is saved unencrypted.Cancel Save"
+  },
+  "originalUnchanged": true,
+  "finishedAt": "2026-11-23T14:09:46.074Z"
+}

@@ -1,33 +1,37 @@
-# #377 P5 Linux native retest
+# #377 P5 Linux native retest — passed
 
-App source: b696ab86bd1c128729a079b68c0082e6df3d36a5, tree
-e30879fd772871e690847c061ef66e6b81808a05, version 2026.48.1.
-This harness is separate from the checked-out app source and the actual installed
-original Suite DEB. Root approved only this short feature check.
+The original Suite DEB from frozen P5 b696ab86bd1c128729a079b68c0082e6df3d36a5
+(tree e30879fd772871e690847c061ef66e6b81808a05, version2026.48.1) passed the short
+native case in run45190827271/job137748390686, harnessf3120385. See result.json
+for the complete source/package/input/run/artifact/hash binding and limitations.
 
-Real original XLSB CLI-open -> visible A1/formula/cache and unsaved-copy state;
-real native Ctrl+S -> visible XLSX Save As/bundled runtime -> native Escape.
-Original XLSB SHA/size/mtime/device/inode and fixture bytes must stay unchanged;
-the working copy must remain unsaved. The ordinary Save button repeats only
-this short proposal/cancellation control. Full Office exit and owned driver/
-capture cleanup are required. Existing full XLSB matrix is not repeated.
+Actual original XLSB CLI-open -> selected A1, formula1+2, cached value3 and dirty
+imported copy -> real XTest Ctrl+S -> visible Save As with .xlsx selected and
+bundled safe runtime -> native Escape. Ordinary Save repeats that same short
+proposal/cancellation. Both cancellations preserve the unsaved copy. SHA256,
+size, mtime, inode and device of the original XLSB match at all six checks through
+full Office exit. All five screenshots were inspected, including both dialogs
+and both cancellations. No edit/export/full30-formula matrix is claimed here.
 
-Input is the immutable raw descriptor on 3ea5564105d0b4612ad9d0fd05e9a36af261b679,
-docs/tests/linux-release-input-p5/office-deb-input-descriptor.json, copied without
-newline normalization. The unchanged shared verifier and adjacent import helper
-are pinned by Git bytes and SHA256 in shared/package/pins.json. The adapter
-checks the whole official child ZIP before the canonical verifier, installs with
-normal apt dependency resolution, then checks the actual installed ELF. It never
-downloads the full parent archive, builds the app, or manually installs Zenity.
-
-retest.mjs and its original readonly transport/capture helpers remain unchanged
-from the prepared QA4cb346cc. New files only bind the approved package and CI.
-Source oracle and syntax checks are preparation; actual native evidence is
-pending the dedicated CI run. P2/P3/P4 bytes cannot substitute for P5. No local GUI
-or recording is started, and this does not certify AppImage/signing/other OSes.
+The exact raw descriptor is from3ea5564105d0b4612ad9d0fd05e9a36af261b679,
+docs/tests/linux-release-input-p5/office-deb-input-descriptor.json. The immutable
+canonical verifier and adjacent import helper remain byte-identical to67d95a1c
+and are hashed in shared/package/pins.json. CI verified the full official child
+ZIP before extracting, checked the canonical receipt and payload ELF, installed
+with normal apt dependency resolution, then checked the actual installed ELF.
+The apt log confirms Zenity was newly resolved by the DEB dependency. No parent
+archive download, app build or hidden manual Zenity install occurred here.
 
 Initial run45190211267 passed input/installed-ELF checks but stopped before
-Ctrl+S: the immutable capture helper correctly rejected the caller output path.
-The caller now uses its permitted private evidence subdirectory
-.local/linux-p2-native/xlsb377; helper bytes and feature criteria are unchanged.
-That first partial run is not a native #377 result.
+Ctrl+S because the immutable capture helper rejected the caller output path.
+The caller was corrected only to use its permitted private evidence subdirectory
+.local/linux-p2-native/xlsb377. Shared helper bytes and criteria were unchanged.
+That historical partial run is preserved separately and is no feature result.
+
+Evidence is copied without byte normalization from independently SHA256-verified
+whole official result ZIPs. Own Office PID and native-driver group were closed;
+private accessibility setting was restored false->false. Captures were synchronous
+owned-window GDK snapshots with no persistent recording. No local GUI/profile or
+recording was opened. This is a Suite DEB feature check on virtual X11/software
+graphics; AppImage/signing/standalone independence/other OSes are not certified.
+Menu Quit is not certified; full process exit used WebDriver DELETE session.

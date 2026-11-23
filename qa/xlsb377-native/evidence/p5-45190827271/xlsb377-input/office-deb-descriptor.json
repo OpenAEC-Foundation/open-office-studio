@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "purpose": "P5 verified Suite byte transfer; native acceptance remains consumer-owned",
+  "executionApproved": true,
+  "provenanceScope": "Original Suite package bytes isolated from all six standalone app hosts",
+  "parent": {
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "appVersion": "2026.48.1",
+    "run": 45177730188,
+    "job": 137703365848,
+    "attempt": 1,
+    "jobConclusion": "success",
+    "installerArchive": {
+      "id": 14824745492,
+      "name": "uitgave-Linux",
+      "sha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+      "bytes": 4444993178
+    },
+    "reportArchive": null,
+    "packageReportSha256": "488ac82490f09b8e66b19215b28c452362e0b9730ca8eca27e25bd4bee9e0c78",
+    "packageReportMember": ".local/pakketcontrole-Linux.json",
+    "packageMember": "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb"
+  },
+  "artifact": {
+    "run": 45188332685,
+    "id": 14823809980,
+    "name": "suite-input-office-deb-p5",
+    "zipSha256": "8a63334448a548c7d90923c659ce99082c7a5360d156ce791c3a2d3a62ba0eec",
+    "zipBytes": 383831912
+  },
+  "qaPin": {
+    "producerCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+  },
+  "package": {
+    "kind": "deb",
+    "member": "canonical-office.deb",
+    "sha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+    "bytes": 383828462,
+    "control": {
+      "Package": "open-office-studio",
+      "Version": "2026.48.1",
+      "Architecture": "amd64",
+      "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+    },
+    "payloadElf": {
+      "path": "usr/bin/open-office-studio",
+      "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+      "bytes": 99955264,
+      "mode": 493,
+      "elfClass": 2,
+      "machine": 62
+    }
+  },
+  "signatureBinding": {
+    "status": "Original package hashes verified; no Linux signature certification; publication disabled",
+    "members": [],
+    "publicationAuthorized": false
+  },
+  "embeddedDescriptorNote": "Embedded pre-upload descriptor intentionally has no self-referential ZIP digest; this external descriptor binds the uploaded ZIP"
+}
