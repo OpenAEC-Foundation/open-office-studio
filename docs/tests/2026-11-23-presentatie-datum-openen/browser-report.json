@@ -1,0 +1,36 @@
+{
+  "commit": "06fd06308b0688ab74ef076a59e4266623bb2eba",
+  "dirtyWorktree": false,
+  "platform": "linux",
+  "routes": [
+    {
+      "route": "/",
+      "bundle": "dist",
+      "checks": [
+        "correct source/document/canvas/input route; refreshed cache and dirty status; source not overwritten",
+        "real focused keyboard edit; next-day rerender does not refresh or reset editor",
+        "real download/fresh same-day reopen retains edit/date/fixed date and stays clean",
+        "fresh next-day open refreshes once and marks dirty without rewriting saved source"
+      ],
+      "savedSha256": "8193b6e7d0e2ae065915ba8c4eeff1925af868e32e3861abbd7956b89542613d",
+      "pass": true
+    },
+    {
+      "route": "/office/",
+      "bundle": "dist-hosted",
+      "checks": [
+        "correct source/document/canvas/input route; refreshed cache and dirty status; source not overwritten",
+        "real focused keyboard edit; next-day rerender does not refresh or reset editor",
+        "real download/fresh same-day reopen retains edit/date/fixed date and stays clean",
+        "fresh next-day open refreshes once and marks dirty without rewriting saved source"
+      ],
+      "savedSha256": "8193b6e7d0e2ae065915ba8c4eeff1925af868e32e3861abbd7956b89542613d",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "nativeGui": false,
+  "captureStarted": false,
+  "fixtureSha256": "cf28765a3efa9a7cfac2cb72f32ccbb43f3e4494abf2667c6b5fad11925ec33d"
+}

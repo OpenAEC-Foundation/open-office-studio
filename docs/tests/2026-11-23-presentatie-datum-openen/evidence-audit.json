@@ -1,0 +1,78 @@
+{
+  "run": 45153653733,
+  "testedCommit": "06fd06308b0688ab74ef076a59e4266623bb2eba",
+  "applicationProductCommit": "d96aec716b15bc0a0072993b7772b21727f460fd",
+  "artifacts": [
+    {
+      "id": 14807393129,
+      "name": "presentation-87-date-open-windows",
+      "zipSha256": "e09c328307ef0ba8f7b8ac771978012e67964143f86b6a5fd3144050f5340111",
+      "bytes": 2240,
+      "allExtractedFilesByteVerified": true,
+      "testsPassed": 33,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "id": 14806933739,
+      "name": "presentation-87-date-open-linux",
+      "zipSha256": "a7eb6e05d6d9a00970ab63bff7fe3cf6e0a491ff78cc986e41b5e2e0c81c7d18",
+      "bytes": 96936,
+      "allExtractedFilesByteVerified": true,
+      "testsPassed": 33,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    }
+  ],
+  "browserRoutes": [
+    {
+      "route": "/",
+      "bundle": "dist",
+      "checks": [
+        "correct source/document/canvas/input route; refreshed cache and dirty status; source not overwritten",
+        "real focused keyboard edit; next-day rerender does not refresh or reset editor",
+        "real download/fresh same-day reopen retains edit/date/fixed date and stays clean",
+        "fresh next-day open refreshes once and marks dirty without rewriting saved source"
+      ],
+      "savedSha256": "8193b6e7d0e2ae065915ba8c4eeff1925af868e32e3861abbd7956b89542613d",
+      "pass": true
+    },
+    {
+      "route": "/office/",
+      "bundle": "dist-hosted",
+      "checks": [
+        "correct source/document/canvas/input route; refreshed cache and dirty status; source not overwritten",
+        "real focused keyboard edit; next-day rerender does not refresh or reset editor",
+        "real download/fresh same-day reopen retains edit/date/fixed date and stays clean",
+        "fresh next-day open refreshes once and marks dirty without rewriting saved source"
+      ],
+      "savedSha256": "8193b6e7d0e2ae065915ba8c4eeff1925af868e32e3861abbd7956b89542613d",
+      "pass": true
+    }
+  ],
+  "browserPageErrors": [],
+  "independentSavedFileChecks": [
+    {
+      "file": "source.pptx",
+      "sha256": "cf28765a3efa9a7cfac2cb72f32ccbb43f3e4494abf2667c6b5fad11925ec33d",
+      "autoDate": "01/02/2020",
+      "fixedDate": "Fixed 2020-01-02",
+      "notesEditVerified": false
+    },
+    {
+      "file": "normal-saved.pptx",
+      "sha256": "8193b6e7d0e2ae065915ba8c4eeff1925af868e32e3861abbd7956b89542613d",
+      "autoDate": "11/23/2026",
+      "fixedDate": "Fixed 2020-01-02",
+      "notesEditVerified": true
+    },
+    {
+      "file": "hosted-saved.pptx",
+      "sha256": "8193b6e7d0e2ae065915ba8c4eeff1925af868e32e3861abbd7956b89542613d",
+      "autoDate": "11/23/2026",
+      "fixedDate": "Fixed 2020-01-02",
+      "notesEditVerified": true
+    }
+  ],
+  "qualification": "Byte/hash/XML audit of remote CI evidence only; no local GUI, browser or capture session started."
+}
