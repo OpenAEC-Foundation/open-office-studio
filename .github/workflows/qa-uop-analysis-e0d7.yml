@@ -1,0 +1,35 @@
+name: UOP source-color discrepancy analysis
+on:
+  push:
+    branches: [codex/uop-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-uop/analysis/**
+      - .github/workflows/qa-uop-analysis-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  xml_analysis:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify the small exact previous result, no Office/runtime download
+        run: |
+          python -m py_compile scripts/qa-uop/analysis/*.py
+          python scripts/qa-uop/analysis/consume.py
+      - name: Resolve package theme colors and retain the source discrepancy
+        run: python scripts/qa-uop/analysis/theme_oracle.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: uop-theme-analysis
+          path: .local/uop-analysis/
+          include-hidden-files: true
+          if-no-files-found: error
