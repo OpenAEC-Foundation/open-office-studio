@@ -56,7 +56,7 @@ def click_target(action, target):
     return action("click-body-point", json.dumps(dict(target["point"], windowId=target["nativeWindow"]["id"], bounds=target["nativeWindow"]["bounds"])))
 
 
-def run_preflight(action, launch_document, quit_app, current_pid, viewport, identity, ocr_binary, out, report):
+def run_preflight(action, launch_document, quit_app, current_pid, viewport, identity, ocr_binary, out, report, readiness_snapshot):
     out = Path(out)
     out.mkdir(parents=True, exist_ok=False)
     proof = {"status": "running", "nativeOriginal359361Acceptance": False, "checks": []}
@@ -96,7 +96,7 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
         # body click target or evidence that any edit/save succeeded.
         started = time.monotonic()
         while True:
-            state = action("snapshot")
+            state = readiness_snapshot()
             tables = state.get("tables", [])
             if (len(tables) == 1 and tables[0].get("rowEvidenceAvailable")
                     and tables[0].get("columnEvidenceAvailable")

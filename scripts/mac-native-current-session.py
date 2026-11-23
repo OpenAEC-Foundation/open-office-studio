@@ -289,7 +289,7 @@ def main():
             preflight = runpy.run_path(str(Path(__file__).with_name("mac-native-writer-preflight.py")))
             preflight["run_preflight"](action, launch_document, quit_app, lambda: pid,
                                        viewport["maximize_once"], identity, ocr_binary,
-                                       out / "native-control-preflight", report)
+                                       out / "native-control-preflight", report, readiness_snapshot)
             table = runpy.run_path(str(Path(__file__).with_name("mac-native-writer-table-acceptance.py")))
             table["run_original_table"](action, launch_document, quit_app, lambda: pid,
                                         viewport["maximize_once"], grid, identity, ocr_binary,

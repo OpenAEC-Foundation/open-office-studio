@@ -1,0 +1,645 @@
+{
+  "issue": 359,
+  "status": "blocked",
+  "nativePass": false,
+  "diagnosticOnly": false,
+  "applicationModified": false,
+  "identity": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "declaredVersion": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14805147807,
+    "artifactName": "open-office-studio-macOS",
+    "archiveSha256": "9b0a335a26590e5f9b617711679f82252b31cdcf9dea1a13115e2955e53caf85",
+    "successfulPlatformJob": 137586342524,
+    "successfulPlatformJobName": "desktop (macos-latest)",
+    "platform": "macOS",
+    "executionApproved": true,
+    "derivePackageIdentityFromVerifiedArchive": true,
+    "deriveExecutableFromVerifiedDmg": true,
+    "macViewportSetup": {
+      "mode": "native-maximize-once",
+      "executionApproved": true
+    },
+    "nativeBodyAcceptanceApproved": true,
+    "nativePointerTransport": "CG HID mouseMoved/down/up with actual cursor and owned frontmost window guards; keyboard unchanged",
+    "nativeControlVisibleAnchors": [
+      "EERSTE",
+      "TWEEDE"
+    ],
+    "packageMember": "dmg/Open Office Studio_2026.48.1_aarch64.dmg",
+    "packageSha256": "7ba6db8afaf73d3ef5b8d02a978aacd750a239433fb4d7bc3d2ee451ed2a29fd",
+    "packagePath": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-input/Open Office Studio_2026.48.1_aarch64.dmg",
+    "executableSha256": "e1779fe6a7be4be603d6be155715f0d860d6226a99f24a24c76e847c1609cbb0",
+    "executablePath": "/Users/runner/work/_temp/writer361-owned-app-vi5jfagp/Open Office Studio.app/Contents/MacOS/open-office-studio"
+  },
+  "harnessCommit": "58114e8e46c5d6c46a8f17de5c73ed8caa9c2c50",
+  "sessionDriverSha256": "b3aa631245dabb7df66e063a8b7ec501a0d94270d8ad0491584217e74a50417f",
+  "checks": [
+    {
+      "name": "native table loaded before diagnostic activation",
+      "native": {
+        "action": "snapshot",
+        "applicationActive": true,
+        "bounded": false,
+        "childListsTruncated": true,
+        "errors": {
+          "-25205": 4,
+          "-25212": 2
+        },
+        "focusAfter": {
+          "description": "Document input",
+          "role": "AXTextArea",
+          "title": "Document input"
+        },
+        "focusBefore": {
+          "description": "Document input",
+          "role": "AXTextArea",
+          "title": "Document input"
+        },
+        "frontmostPid": 2566,
+        "pid": 2566,
+        "status": "observed",
+        "tables": [
+          {
+            "columnEvidenceAvailable": true,
+            "columns": 3,
+            "rowEvidenceAvailable": true,
+            "rows": 3
+          }
+        ],
+        "trusted": true,
+        "visited": 395,
+        "window": {
+          "description": "",
+          "role": "AXWindow",
+          "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+        }
+      },
+      "readiness": {
+        "elapsedSeconds": 1.201,
+        "attempts": 1
+      }
+    }
+  ],
+  "limits": [
+    "Acceptance remains false until genuine native control preflight and the original table case both finish",
+    "Full issue361 Tab/Find/two-document cases are outside this bounded core",
+    "Original OS captures and independent DOCX oracles retained; no canvas readback or scripted model focus"
+  ],
+  "cleanup": {
+    "forcedTerminationRequired": true,
+    "ownedAppClosed": true,
+    "ownedAppContainerRemoved": true
+  },
+  "acceptanceRequested": true,
+  "newSwiftHelperCompiledBeforeAppLaunch": true,
+  "helperSourceSha256": "a7f28d316cf0c7bdc30f1e65f7b426f736bd2c0f3803f8219a6b5d7c87dbc156",
+  "helperBinarySha256": "1f8e3514885acec7fbd5da3b18f1ef41bd1d53265aad4642ad955bfd71f5bb95",
+  "ocrHelper": {
+    "sourceSha256": "97fff21fd71fc40db46c6560681ce2fed814e22ac5dbbade1df3b98429372a7c",
+    "binarySha256": "f5fa4d6ff41d788812c884085358248749d88066553398e850b857ceb29d7ea3",
+    "compiledBeforeAppLaunch": true
+  },
+  "executableHashOrigin": "Computed from read-only verified canonical DMG payload before launch, copied program must match",
+  "ownedAppContainer": "/Users/runner/work/_temp/writer361-owned-app-vi5jfagp",
+  "installedVersion": "2026.48.1",
+  "ownedRunnerProfileCreated": true,
+  "fixtures": [
+    {
+      "name": "table-original361",
+      "sha256": "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1",
+      "phases": [
+        {
+          "name": "initial-ready",
+          "timestamp": 1795427713.019409,
+          "applicationActive": true,
+          "frontmostPid": 2566,
+          "capture": {
+            "status": "captured",
+            "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/table-original361/initial-ready.png",
+            "sha256": "d17f89de93a0546902bcb4cb32e3181fd1118572b4c90ea9a19d563a12d06441",
+            "pixelWidth": 1486,
+            "pixelHeight": 996,
+            "nativeWindow": {
+              "bounds": {
+                "Height": 950,
+                "Width": 1440,
+                "X": -208,
+                "Y": 31
+              },
+              "id": 34,
+              "pid": 2566,
+              "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+            },
+            "unaltered": true,
+            "captureProcessExited": true
+          },
+          "tables": [
+            {
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "rawSha256": "490da779a4346c36a28b562c5612a6e653252bc83bc1a6623f7e2c3ccd3a6b42"
+        },
+        {
+          "name": "after-maximize",
+          "timestamp": 1795427722.882039,
+          "applicationActive": true,
+          "frontmostPid": 2566,
+          "capture": {
+            "status": "captured",
+            "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/table-original361/after-maximize.png",
+            "sha256": "82b52433c364ddbaaab9ef512dabbfbbd50a437c2ad3cdd5561e66e3569320c5",
+            "pixelWidth": 1070,
+            "pixelHeight": 723,
+            "nativeWindow": {
+              "bounds": {
+                "Height": 677,
+                "Width": 1024,
+                "X": 0,
+                "Y": 31
+              },
+              "id": 34,
+              "pid": 2566,
+              "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+            },
+            "unaltered": true,
+            "captureProcessExited": true
+          },
+          "tables": [
+            {
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "rawSha256": "08de2dd39914ab4de7d9c677bf8df7a02d1702b44553211e90a7042b9c7a4a9f"
+        }
+      ],
+      "nativePass": false,
+      "observationOnly": true,
+      "pid": 2566,
+      "maximize": {
+        "status": "observed",
+        "pid": 2566,
+        "source": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "packageSha256": "7ba6db8afaf73d3ef5b8d02a978aacd750a239433fb4d7bc3d2ee451ed2a29fd",
+        "executableSha256": "e1779fe6a7be4be603d6be155715f0d860d6226a99f24a24c76e847c1609cbb0",
+        "actionsSent": 1,
+        "limits": [
+          "Only the observed maximized viewport; no359cause/paint-fix claim",
+          "No editor input, script bridge, privacy change or AX size setter"
+        ],
+        "beforeWindow": {
+          "bounds": {
+            "Height": 950,
+            "Width": 1440,
+            "X": -208,
+            "Y": 31
+          },
+          "id": 34,
+          "pid": 2566,
+          "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+        },
+        "beforeMainDisplay": {
+          "bounds": {
+            "Height": 768,
+            "Width": 1024,
+            "X": 0,
+            "Y": 0
+          },
+          "coordinateSystem": "CG global desktop",
+          "id": 1
+        },
+        "maxControl": {
+          "attributes": {
+            "actions": {
+              "axError": 0,
+              "value": [
+                "AXPress",
+                "AXShowMenu",
+                "AXScrollToVisible"
+              ]
+            },
+            "AXDescription": {
+              "status": "available",
+              "truncated": false,
+              "value": "Maximize"
+            },
+            "AXEnabled": {
+              "status": "available",
+              "value": true
+            },
+            "AXFocused": {
+              "status": "available",
+              "value": false
+            },
+            "AXHelp": {
+              "status": "available",
+              "truncated": false,
+              "value": "Maximize"
+            },
+            "AXIdentifier": {
+              "axError": -25212,
+              "status": "unavailable"
+            },
+            "AXPosition": {
+              "status": "available",
+              "value": {
+                "x": 1144,
+                "y": 31
+              }
+            },
+            "AXRole": {
+              "status": "available",
+              "truncated": false,
+              "value": "AXButton"
+            },
+            "AXSelected": {
+              "status": "available",
+              "value": false
+            },
+            "AXSize": {
+              "status": "available",
+              "value": {
+                "height": 31,
+                "width": 44
+              }
+            },
+            "AXSubrole": {
+              "axError": -25212,
+              "status": "unavailable"
+            },
+            "AXTitle": {
+              "status": "available",
+              "truncated": false,
+              "value": "Maximize"
+            },
+            "AXValue": {
+              "status": "available",
+              "truncated": false,
+              "value": ""
+            }
+          },
+          "depth": 6,
+          "index": 22,
+          "parent": 5
+        },
+        "beforeOriginalCapture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/table-original361/maximize/before-ready.png",
+          "sha256": "7f0ffd6fc406ae13b81b7424a102fd1759077424d96c962c2965240c37d4f194",
+          "pixelWidth": 1486,
+          "pixelHeight": 996,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 950,
+              "Width": 1440,
+              "X": -208,
+              "Y": 31
+            },
+            "id": 34,
+            "pid": 2566,
+            "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true
+        },
+        "actionsAttempted": 1,
+        "afterWindow": {
+          "bounds": {
+            "Height": 677,
+            "Width": 1024,
+            "X": 0,
+            "Y": 31
+          },
+          "id": 34,
+          "pid": 2566,
+          "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+        },
+        "afterMainDisplay": {
+          "bounds": {
+            "Height": 768,
+            "Width": 1024,
+            "X": 0,
+            "Y": 0
+          },
+          "coordinateSystem": "CG global desktop",
+          "id": 1
+        },
+        "afterOriginalCapture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/table-original361/maximize/after-maximize.png",
+          "sha256": "09f902895e62ed0fe274a6cf3833b39ea0cdbc0cbd3b29b9be45f83a9c5c93e1",
+          "pixelWidth": 1070,
+          "pixelHeight": 723,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 677,
+              "Width": 1024,
+              "X": 0,
+              "Y": 31
+            },
+            "id": 34,
+            "pid": 2566,
+            "title": "mac-body-original-361.docx — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true
+        }
+      },
+      "originalUnchanged": true,
+      "ownedProcessExitedNormally": true
+    },
+    {
+      "name": "saved-epub356-control",
+      "sha256": "c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d",
+      "phases": [
+        {
+          "name": "initial-ready",
+          "timestamp": 1795427747.251957,
+          "applicationActive": true,
+          "frontmostPid": 3383,
+          "capture": {
+            "status": "captured",
+            "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/saved-epub356-control/initial-ready.png",
+            "sha256": "45c2ad21bcabf6615587ec4d7efd5162fd2cc199c760a143007e084118ee2c71",
+            "pixelWidth": 1486,
+            "pixelHeight": 996,
+            "nativeWindow": {
+              "bounds": {
+                "Height": 950,
+                "Width": 1440,
+                "X": -208,
+                "Y": 31
+              },
+              "id": 48,
+              "pid": 3383,
+              "title": "mac-body-positive-356.docx — Open Office Studio (Text)"
+            },
+            "unaltered": true,
+            "captureProcessExited": true
+          },
+          "tables": [
+            {
+              "columnEvidenceAvailable": true,
+              "columns": 2,
+              "rowEvidenceAvailable": true,
+              "rows": 2
+            }
+          ],
+          "rawSha256": "09fd97c3a68172d4baa072e7f38619bbf339b0d34e94e275d45e5009f5696c94"
+        },
+        {
+          "name": "after-maximize",
+          "timestamp": 1795427757.968329,
+          "applicationActive": true,
+          "frontmostPid": 3383,
+          "capture": {
+            "status": "captured",
+            "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/saved-epub356-control/after-maximize.png",
+            "sha256": "4f59af5179ea5602320b86b24fe57842182ebc856759a1abf47378ae47a58b03",
+            "pixelWidth": 1070,
+            "pixelHeight": 723,
+            "nativeWindow": {
+              "bounds": {
+                "Height": 677,
+                "Width": 1024,
+                "X": 0,
+                "Y": 31
+              },
+              "id": 48,
+              "pid": 3383,
+              "title": "mac-body-positive-356.docx — Open Office Studio (Text)"
+            },
+            "unaltered": true,
+            "captureProcessExited": true
+          },
+          "tables": [
+            {
+              "columnEvidenceAvailable": true,
+              "columns": 2,
+              "rowEvidenceAvailable": true,
+              "rows": 2
+            }
+          ],
+          "rawSha256": "93ce561f7d35e8ce9127007e3cb5914bc9f369fa3233f2f2c30498b9368a47a7"
+        }
+      ],
+      "nativePass": false,
+      "observationOnly": true,
+      "pid": 3383,
+      "maximize": {
+        "status": "observed",
+        "pid": 3383,
+        "source": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "packageSha256": "7ba6db8afaf73d3ef5b8d02a978aacd750a239433fb4d7bc3d2ee451ed2a29fd",
+        "executableSha256": "e1779fe6a7be4be603d6be155715f0d860d6226a99f24a24c76e847c1609cbb0",
+        "actionsSent": 1,
+        "limits": [
+          "Only the observed maximized viewport; no359cause/paint-fix claim",
+          "No editor input, script bridge, privacy change or AX size setter"
+        ],
+        "beforeWindow": {
+          "bounds": {
+            "Height": 950,
+            "Width": 1440,
+            "X": -208,
+            "Y": 31
+          },
+          "id": 48,
+          "pid": 3383,
+          "title": "mac-body-positive-356.docx — Open Office Studio (Text)"
+        },
+        "beforeMainDisplay": {
+          "bounds": {
+            "Height": 768,
+            "Width": 1024,
+            "X": 0,
+            "Y": 0
+          },
+          "coordinateSystem": "CG global desktop",
+          "id": 1
+        },
+        "maxControl": {
+          "attributes": {
+            "actions": {
+              "axError": 0,
+              "value": [
+                "AXPress",
+                "AXShowMenu",
+                "AXScrollToVisible"
+              ]
+            },
+            "AXDescription": {
+              "status": "available",
+              "truncated": false,
+              "value": "Maximize"
+            },
+            "AXEnabled": {
+              "status": "available",
+              "value": true
+            },
+            "AXFocused": {
+              "status": "available",
+              "value": false
+            },
+            "AXHelp": {
+              "status": "available",
+              "truncated": false,
+              "value": "Maximize"
+            },
+            "AXIdentifier": {
+              "axError": -25212,
+              "status": "unavailable"
+            },
+            "AXPosition": {
+              "status": "available",
+              "value": {
+                "x": 1144,
+                "y": 31
+              }
+            },
+            "AXRole": {
+              "status": "available",
+              "truncated": false,
+              "value": "AXButton"
+            },
+            "AXSelected": {
+              "status": "available",
+              "value": false
+            },
+            "AXSize": {
+              "status": "available",
+              "value": {
+                "height": 31,
+                "width": 44
+              }
+            },
+            "AXSubrole": {
+              "axError": -25212,
+              "status": "unavailable"
+            },
+            "AXTitle": {
+              "status": "available",
+              "truncated": false,
+              "value": "Maximize"
+            },
+            "AXValue": {
+              "status": "available",
+              "truncated": false,
+              "value": ""
+            }
+          },
+          "depth": 6,
+          "index": 23,
+          "parent": 5
+        },
+        "beforeOriginalCapture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/saved-epub356-control/maximize/before-ready.png",
+          "sha256": "45c2ad21bcabf6615587ec4d7efd5162fd2cc199c760a143007e084118ee2c71",
+          "pixelWidth": 1486,
+          "pixelHeight": 996,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 950,
+              "Width": 1440,
+              "X": -208,
+              "Y": 31
+            },
+            "id": 48,
+            "pid": 3383,
+            "title": "mac-body-positive-356.docx — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true
+        },
+        "actionsAttempted": 1,
+        "afterWindow": {
+          "bounds": {
+            "Height": 677,
+            "Width": 1024,
+            "X": 0,
+            "Y": 31
+          },
+          "id": 48,
+          "pid": 3383,
+          "title": "mac-body-positive-356.docx — Open Office Studio (Text)"
+        },
+        "afterMainDisplay": {
+          "bounds": {
+            "Height": 768,
+            "Width": 1024,
+            "X": 0,
+            "Y": 0
+          },
+          "coordinateSystem": "CG global desktop",
+          "id": 1
+        },
+        "afterOriginalCapture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/saved-epub356-control/maximize/after-maximize.png",
+          "sha256": "fd9aebcfe6dc00b4badef3d438458c97fdbd084ad3013b80dec84a8bfc69e6d5",
+          "pixelWidth": 1070,
+          "pixelHeight": 723,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 677,
+              "Width": 1024,
+              "X": 0,
+              "Y": 31
+            },
+            "id": 48,
+            "pid": 3383,
+            "title": "mac-body-positive-356.docx — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true
+        }
+      },
+      "originalUnchanged": true,
+      "ownedProcessExitedNormally": true
+    }
+  ],
+  "experiment": "Exact product-package native acceptance; untouched original/control pixels precede all editor input",
+  "host": "ProductName:\t\tmacOS\nProductVersion:\t\t26.7.2\nBuildVersion:\t\t25G332\n",
+  "nativeControlPreflight": {
+    "status": "running",
+    "nativeOriginal359361Acceptance": false,
+    "checks": [],
+    "firstPid": 4097
+  },
+  "reason": "Exactly one owned native window required",
+  "failureOriginalEvidence": {
+    "capture": {
+      "status": "captured",
+      "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/failure-original-window.png",
+      "sha256": "81d33015311a5b606b20d4c4ac79537ce7dad280a3d77f067dc7bc27d96f85d4",
+      "pixelWidth": 1486,
+      "pixelHeight": 996,
+      "nativeWindow": {
+        "bounds": {
+          "Height": 950,
+          "Width": 1440,
+          "X": -208,
+          "Y": 31
+        },
+        "id": 61,
+        "pid": 4097,
+        "title": "native-preflight-private-copy.docx — Open Office Studio (Text)"
+      },
+      "unaltered": true,
+      "captureProcessExited": true
+    },
+    "rawSha256": "d003fa3d24fda9658c80f02faceac9c6e318aceebeebd5361469a6dd49027ee4",
+    "displaySha256": "fdd6caccbb22eaea4c516ea38d235122d5d131e0b355f905ebe26f25949ee983",
+    "extraEditorInputSent": false
+  }
+}

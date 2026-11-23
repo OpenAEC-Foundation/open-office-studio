@@ -1,0 +1,96 @@
+{
+  "run": 45150982621,
+  "artifactId": 14805374397,
+  "zipSha256": "7d80a3536b93c9872e2d747eddc37a303073477bbd24673de6b6ab891cf69b59",
+  "harness": "58114e8e46c5d6c46a8f17de5c73ed8caa9c2c50",
+  "sourceAndBinariesVerified": true,
+  "nativePass": false,
+  "bodyPointerOrCharacterInputSent": 0,
+  "reason": "Control document loading produced one trusted AX CannotComplete(-25204). The control readiness callback missed the already existing bounded readiness policy; no new native input was reached.",
+  "blockedNativeOriginal": {
+    "action": "snapshot",
+    "applicationActive": true,
+    "errors": {
+      "-25204": 1
+    },
+    "frontmostPid": 4097,
+    "pid": 4097,
+    "reason": "Exactly one owned native window required",
+    "status": "blocked",
+    "trusted": true
+  },
+  "existingTemporaryAXRuleAcceptsExactBlockedState": true,
+  "followingRawSnapshotSummaryDerivedNotRaw": {
+    "status": "observed",
+    "pid": 4097,
+    "trusted": true,
+    "errors": {
+      "-25205": 4,
+      "-25212": 2
+    },
+    "frontmostPid": 4097,
+    "applicationActive": true,
+    "window": {
+      "description": "",
+      "role": "AXWindow",
+      "title": "native-preflight-private-copy.docx \u00e2\u20ac\u201d Open Office Studio (Text)"
+    },
+    "tables": [
+      {
+        "columnEvidenceAvailable": true,
+        "columns": 2,
+        "rowEvidenceAvailable": true,
+        "rows": 2
+      }
+    ],
+    "ownedScreenWindows": [
+      {
+        "bounds": {
+          "Height": 950,
+          "Width": 1440,
+          "X": -208,
+          "Y": 31
+        },
+        "id": 61,
+        "pid": 4097,
+        "title": "native-preflight-private-copy.docx \u00e2\u20ac\u201d Open Office Studio (Text)"
+      }
+    ]
+  },
+  "fullFollowingRawSha256": "faffc7f9ffa24bc8a7839d2593ad97f5c881159eb8f61fc5f68d03dde3247b19",
+  "identity": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "declaredVersion": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14805147807,
+    "artifactName": "open-office-studio-macOS",
+    "archiveSha256": "9b0a335a26590e5f9b617711679f82252b31cdcf9dea1a13115e2955e53caf85",
+    "successfulPlatformJob": 137586342524,
+    "successfulPlatformJobName": "desktop (macos-latest)",
+    "platform": "macOS",
+    "executionApproved": true,
+    "derivePackageIdentityFromVerifiedArchive": true,
+    "deriveExecutableFromVerifiedDmg": true,
+    "macViewportSetup": {
+      "mode": "native-maximize-once",
+      "executionApproved": true
+    },
+    "nativeBodyAcceptanceApproved": true,
+    "nativePointerTransport": "CG HID mouseMoved/down/up with actual cursor and owned frontmost window guards; keyboard unchanged",
+    "nativeControlVisibleAnchors": [
+      "EERSTE",
+      "TWEEDE"
+    ],
+    "packageMember": "dmg/Open Office Studio_2026.48.1_aarch64.dmg",
+    "packageSha256": "7ba6db8afaf73d3ef5b8d02a978aacd750a239433fb4d7bc3d2ee451ed2a29fd",
+    "packagePath": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-input/Open Office Studio_2026.48.1_aarch64.dmg",
+    "executableSha256": "e1779fe6a7be4be603d6be155715f0d860d6226a99f24a24c76e847c1609cbb0",
+    "executablePath": "/Users/runner/work/_temp/writer361-owned-app-vi5jfagp/Open Office Studio.app/Contents/MacOS/open-office-studio"
+  },
+  "cleanup": {
+    "forcedTerminationRequired": true,
+    "ownedAppClosed": true,
+    "ownedAppContainerRemoved": true
+  }
+}
