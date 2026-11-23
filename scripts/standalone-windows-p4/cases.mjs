@@ -68,6 +68,10 @@ export async function notitionCase(qa, phase) {
     assert.equal(await page.locator('.notities-boekkiezer select option:checked').textContent(),'STANDALONE23 NOTEBOOK');
     assert((await page.locator('.notities-blok textarea').first().inputValue()).includes('STANDALONE23 NOTE BODY'));
   }
+  // Backup is an ordinary command on the Save/Bewaren ribbon tab, not Home.
+  const backupTab=page.getByRole('tab',{name:/^(Save|Bewaren)$/i});
+  await backupTab.click();
+  assert.equal(await backupTab.getAttribute('aria-selected'),'true');
   const exportButton=page.getByRole('button',{name:/^(Save backup|Back-up opslaan)$/i});
   await exportButton.click();
   const file=await qa.saveNative(`${phase}.openaec-notities`, /^(Notes|Notities)-\d{4}-\d{2}-\d{2}\.openaec-notities$/);
